@@ -43,7 +43,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS +=
 
 .PRECIOUS: testC.h testC.i testC.cpp
 .PRECIOUS: testS.h testS.i testS.cpp
