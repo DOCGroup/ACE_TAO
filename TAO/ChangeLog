@@ -1,3 +1,16 @@
+Sun Oct  3 20:24:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Wait_On_Leader_Follower.cpp:
+	* tao/Wait_On_Leader_Follower.h:
+	* tao/Wait_On_Reactor.cpp:
+	* tao/Wait_On_Reactor.h:
+	* tao/Wait_On_Read.cpp:
+	* tao/Wait_On_Read.h:
+	* tao/Wait_Strategy.h:
+
+	  Changed the method non_blocking () to return a boolean and
+	  improved its const correctness.
+
 Sun Oct  3 19:28:08 2004  Olli Savia  <ops@iki.fi>
 
         * utils/catior/catior.cpp:

@@ -75,8 +75,8 @@ TAO_Wait_On_Read::register_handler (void)
   return 0;
 }
 
-int
-TAO_Wait_On_Read::non_blocking (void)
+bool
+TAO_Wait_On_Read::non_blocking (void) const
 {
   return 0;
 }
@@ -84,6 +84,5 @@ TAO_Wait_On_Read::non_blocking (void)
 bool
 TAO_Wait_On_Read::can_process_upcalls (void) const
 {
-  // Just don't think twice..
   return true;
 }

@@ -43,7 +43,7 @@ public:
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
   virtual int register_handler (void);
-  virtual int non_blocking (void);
+  virtual bool non_blocking (void) const;
   virtual bool can_process_upcalls (void) const;
 };
 

@@ -61,7 +61,7 @@ public:
 
   /// Returns a value to indicate whether the transport needs to set
   /// the socket on which it is waiting to non-blocking mode or not.
-  virtual int non_blocking (void) = 0;
+  virtual bool non_blocking (void) const = 0;
 
   /// Flag that indicates whether we can process requests while
   /// waiting for the reply.

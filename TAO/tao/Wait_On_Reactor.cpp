@@ -103,10 +103,10 @@ TAO_Wait_On_Reactor::register_handler (void)
   return 1;
 }
 
-int
-TAO_Wait_On_Reactor::non_blocking (void)
+bool
+TAO_Wait_On_Reactor::non_blocking (void) const
 {
-  return 1;
+  return true;
 }
 
 bool
