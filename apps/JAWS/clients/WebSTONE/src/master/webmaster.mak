@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Generated NMAKE File, Format Version 4.10
+# Microsoft Developer Studio Generated NMAKE File, Format Version 4.20
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -49,37 +49,39 @@ RSC=rc.exe
 OUTDIR=.\WinRel
 INTDIR=.\WinRel
 
-ALL : ".\WinRel\webmaster.exe" ".\WinRel\webmaster.bsc"
+ALL : "$(OUTDIR)\webmaster.exe" "$(OUTDIR)\webmaster.bsc"
 
 CLEAN : 
-	-@erase ".\WinRel\bench.obj"
-	-@erase ".\WinRel\bench.sbr"
-	-@erase ".\WinRel\errexit.obj"
-	-@erase ".\WinRel\errexit.sbr"
-	-@erase ".\WinRel\getopt.obj"
-	-@erase ".\WinRel\getopt.sbr"
-	-@erase ".\WinRel\parse_file_list.obj"
-	-@erase ".\WinRel\parse_file_list.sbr"
-	-@erase ".\WinRel\rexec.obj"
-	-@erase ".\WinRel\rexec.sbr"
-	-@erase ".\WinRel\statistics.obj"
-	-@erase ".\WinRel\statistics.sbr"
-	-@erase ".\WinRel\sysdep.obj"
-	-@erase ".\WinRel\sysdep.sbr"
-	-@erase ".\WinRel\timefunc.obj"
-	-@erase ".\WinRel\timefunc.sbr"
-	-@erase ".\WinRel\webmaster.bsc"
-	-@erase ".\WinRel\webmaster.exe"
-	-@erase ".\WinRel\webmaster.obj"
-	-@erase ".\WinRel\webmaster.sbr"
+	-@erase "$(INTDIR)\bench.obj"
+	-@erase "$(INTDIR)\bench.sbr"
+	-@erase "$(INTDIR)\errexit.obj"
+	-@erase "$(INTDIR)\errexit.sbr"
+	-@erase "$(INTDIR)\getopt.obj"
+	-@erase "$(INTDIR)\getopt.sbr"
+	-@erase "$(INTDIR)\gettimeofday.obj"
+	-@erase "$(INTDIR)\gettimeofday.sbr"
+	-@erase "$(INTDIR)\parse_file_list.obj"
+	-@erase "$(INTDIR)\parse_file_list.sbr"
+	-@erase "$(INTDIR)\rexec.obj"
+	-@erase "$(INTDIR)\rexec.sbr"
+	-@erase "$(INTDIR)\statistics.obj"
+	-@erase "$(INTDIR)\statistics.sbr"
+	-@erase "$(INTDIR)\sysdep.obj"
+	-@erase "$(INTDIR)\sysdep.sbr"
+	-@erase "$(INTDIR)\timefunc.obj"
+	-@erase "$(INTDIR)\timefunc.sbr"
+	-@erase "$(INTDIR)\webmaster.obj"
+	-@erase "$(INTDIR)\webmaster.sbr"
+	-@erase "$(OUTDIR)\webmaster.bsc"
+	-@erase "$(OUTDIR)\webmaster.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /FR /YX /c
-# ADD CPP /nologo /MTd /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /FR /YX /c
-CPP_PROJ=/nologo /MTd /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE"\
- /FR"$(INTDIR)/" /Fp"$(INTDIR)/webmaster.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /MTd /W3 /GX /O2 /I "WIN32" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /FR /YX /c
+CPP_PROJ=/nologo /MTd /W3 /GX /O2 /I "WIN32" /D "WIN32" /D "NDEBUG" /D\
+ "_CONSOLE" /FR"$(INTDIR)/" /Fp"$(INTDIR)/webmaster.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\WinRel/
 CPP_SBRS=.\WinRel/
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -89,17 +91,18 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 BSC32_FLAGS=/nologo /o"$(OUTDIR)/webmaster.bsc" 
 BSC32_SBRS= \
-	".\WinRel\bench.sbr" \
-	".\WinRel\errexit.sbr" \
-	".\WinRel\getopt.sbr" \
-	".\WinRel\parse_file_list.sbr" \
-	".\WinRel\rexec.sbr" \
-	".\WinRel\statistics.sbr" \
-	".\WinRel\sysdep.sbr" \
-	".\WinRel\timefunc.sbr" \
-	".\WinRel\webmaster.sbr"
+	"$(INTDIR)\bench.sbr" \
+	"$(INTDIR)\errexit.sbr" \
+	"$(INTDIR)\getopt.sbr" \
+	"$(INTDIR)\gettimeofday.sbr" \
+	"$(INTDIR)\parse_file_list.sbr" \
+	"$(INTDIR)\rexec.sbr" \
+	"$(INTDIR)\statistics.sbr" \
+	"$(INTDIR)\sysdep.sbr" \
+	"$(INTDIR)\timefunc.sbr" \
+	"$(INTDIR)\webmaster.sbr"
 
-".\WinRel\webmaster.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+"$(OUTDIR)\webmaster.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
   $(BSC32_FLAGS) $(BSC32_SBRS)
 <<
@@ -112,17 +115,18 @@ LINK32_FLAGS=wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no\
  /pdb:"$(OUTDIR)/webmaster.pdb" /machine:I386 /out:"$(OUTDIR)/webmaster.exe" 
 LINK32_OBJS= \
-	".\WinRel\bench.obj" \
-	".\WinRel\errexit.obj" \
-	".\WinRel\getopt.obj" \
-	".\WinRel\parse_file_list.obj" \
-	".\WinRel\rexec.obj" \
-	".\WinRel\statistics.obj" \
-	".\WinRel\sysdep.obj" \
-	".\WinRel\timefunc.obj" \
-	".\WinRel\webmaster.obj"
+	"$(INTDIR)\bench.obj" \
+	"$(INTDIR)\errexit.obj" \
+	"$(INTDIR)\getopt.obj" \
+	"$(INTDIR)\gettimeofday.obj" \
+	"$(INTDIR)\parse_file_list.obj" \
+	"$(INTDIR)\rexec.obj" \
+	"$(INTDIR)\statistics.obj" \
+	"$(INTDIR)\sysdep.obj" \
+	"$(INTDIR)\timefunc.obj" \
+	"$(INTDIR)\webmaster.obj"
 
-".\WinRel\webmaster.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\webmaster.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -140,41 +144,43 @@ LINK32_OBJS= \
 OUTDIR=.\WinDebug
 INTDIR=.\WinDebug
 
-ALL : ".\WinDebug\webmaster.exe" ".\WinDebug\webmaster.bsc"
+ALL : "$(OUTDIR)\webmaster.exe" "$(OUTDIR)\webmaster.bsc"
 
 CLEAN : 
-	-@erase ".\WinDebug\bench.obj"
-	-@erase ".\WinDebug\bench.sbr"
-	-@erase ".\WinDebug\errexit.obj"
-	-@erase ".\WinDebug\errexit.sbr"
-	-@erase ".\WinDebug\getopt.obj"
-	-@erase ".\WinDebug\getopt.sbr"
-	-@erase ".\WinDebug\parse_file_list.obj"
-	-@erase ".\WinDebug\parse_file_list.sbr"
-	-@erase ".\WinDebug\rexec.obj"
-	-@erase ".\WinDebug\rexec.sbr"
-	-@erase ".\WinDebug\statistics.obj"
-	-@erase ".\WinDebug\statistics.sbr"
-	-@erase ".\WinDebug\sysdep.obj"
-	-@erase ".\WinDebug\sysdep.sbr"
-	-@erase ".\WinDebug\timefunc.obj"
-	-@erase ".\WinDebug\timefunc.sbr"
-	-@erase ".\WinDebug\vc40.idb"
-	-@erase ".\WinDebug\vc40.pdb"
-	-@erase ".\WinDebug\webmaster.bsc"
-	-@erase ".\WinDebug\webmaster.exe"
-	-@erase ".\WinDebug\webmaster.ilk"
-	-@erase ".\WinDebug\webmaster.obj"
-	-@erase ".\WinDebug\webmaster.pdb"
-	-@erase ".\WinDebug\webmaster.sbr"
+	-@erase "$(INTDIR)\bench.obj"
+	-@erase "$(INTDIR)\bench.sbr"
+	-@erase "$(INTDIR)\errexit.obj"
+	-@erase "$(INTDIR)\errexit.sbr"
+	-@erase "$(INTDIR)\getopt.obj"
+	-@erase "$(INTDIR)\getopt.sbr"
+	-@erase "$(INTDIR)\gettimeofday.obj"
+	-@erase "$(INTDIR)\gettimeofday.sbr"
+	-@erase "$(INTDIR)\parse_file_list.obj"
+	-@erase "$(INTDIR)\parse_file_list.sbr"
+	-@erase "$(INTDIR)\rexec.obj"
+	-@erase "$(INTDIR)\rexec.sbr"
+	-@erase "$(INTDIR)\statistics.obj"
+	-@erase "$(INTDIR)\statistics.sbr"
+	-@erase "$(INTDIR)\sysdep.obj"
+	-@erase "$(INTDIR)\sysdep.sbr"
+	-@erase "$(INTDIR)\timefunc.obj"
+	-@erase "$(INTDIR)\timefunc.sbr"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(INTDIR)\webmaster.obj"
+	-@erase "$(INTDIR)\webmaster.sbr"
+	-@erase "$(OUTDIR)\webmaster.bsc"
+	-@erase "$(OUTDIR)\webmaster.exe"
+	-@erase "$(OUTDIR)\webmaster.ilk"
+	-@erase "$(OUTDIR)\webmaster.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FR /YX /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FR /YX /c
-CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /FR"$(INTDIR)/" /Fp"$(INTDIR)/webmaster.pch" /YX /Fo"$(INTDIR)/"\
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "WIN32" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FR /YX /c
+CPP_PROJ=/nologo /MTd /W3 /Gm /GX /Zi /Od /I "WIN32" /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /FR"$(INTDIR)/" /Fp"$(INTDIR)/webmaster.pch" /YX /Fo"$(INTDIR)/"\
  /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\WinDebug/
 CPP_SBRS=.\WinDebug/
@@ -185,17 +191,18 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 BSC32_FLAGS=/nologo /o"$(OUTDIR)/webmaster.bsc" 
 BSC32_SBRS= \
-	".\WinDebug\bench.sbr" \
-	".\WinDebug\errexit.sbr" \
-	".\WinDebug\getopt.sbr" \
-	".\WinDebug\parse_file_list.sbr" \
-	".\WinDebug\rexec.sbr" \
-	".\WinDebug\statistics.sbr" \
-	".\WinDebug\sysdep.sbr" \
-	".\WinDebug\timefunc.sbr" \
-	".\WinDebug\webmaster.sbr"
+	"$(INTDIR)\bench.sbr" \
+	"$(INTDIR)\errexit.sbr" \
+	"$(INTDIR)\getopt.sbr" \
+	"$(INTDIR)\gettimeofday.sbr" \
+	"$(INTDIR)\parse_file_list.sbr" \
+	"$(INTDIR)\rexec.sbr" \
+	"$(INTDIR)\statistics.sbr" \
+	"$(INTDIR)\sysdep.sbr" \
+	"$(INTDIR)\timefunc.sbr" \
+	"$(INTDIR)\webmaster.sbr"
 
-".\WinDebug\webmaster.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+"$(OUTDIR)\webmaster.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
   $(BSC32_FLAGS) $(BSC32_SBRS)
 <<
@@ -210,17 +217,18 @@ LINK32_FLAGS=wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  /pdb:"$(OUTDIR)/webmaster.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/webmaster.exe" 
 LINK32_OBJS= \
-	".\WinDebug\bench.obj" \
-	".\WinDebug\errexit.obj" \
-	".\WinDebug\getopt.obj" \
-	".\WinDebug\parse_file_list.obj" \
-	".\WinDebug\rexec.obj" \
-	".\WinDebug\statistics.obj" \
-	".\WinDebug\sysdep.obj" \
-	".\WinDebug\timefunc.obj" \
-	".\WinDebug\webmaster.obj"
+	"$(INTDIR)\bench.obj" \
+	"$(INTDIR)\errexit.obj" \
+	"$(INTDIR)\getopt.obj" \
+	"$(INTDIR)\gettimeofday.obj" \
+	"$(INTDIR)\parse_file_list.obj" \
+	"$(INTDIR)\rexec.obj" \
+	"$(INTDIR)\statistics.obj" \
+	"$(INTDIR)\sysdep.obj" \
+	"$(INTDIR)\timefunc.obj" \
+	"$(INTDIR)\webmaster.obj"
 
-".\WinDebug\webmaster.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\webmaster.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -263,40 +271,20 @@ LINK32_OBJS= \
 SOURCE=..\bench.c
 DEP_CPP_BENCH=\
 	"..\bench.h"\
+	"..\config.h"\
 	"..\sysdep.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
-NODEP_CPP_BENCH=\
-	"..\config.h"\
-	
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\bench.obj" : $(SOURCE) $(DEP_CPP_BENCH) "$(INTDIR)"
+"$(INTDIR)\bench.obj" : $(SOURCE) $(DEP_CPP_BENCH) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\bench.sbr" : $(SOURCE) $(DEP_CPP_BENCH) "$(INTDIR)"
+"$(INTDIR)\bench.sbr" : $(SOURCE) $(DEP_CPP_BENCH) "$(INTDIR)"
    $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinDebug\bench.obj" : $(SOURCE) $(DEP_CPP_BENCH) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinDebug\bench.sbr" : $(SOURCE) $(DEP_CPP_BENCH) "$(INTDIR)"
-   $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
@@ -305,40 +293,20 @@ BuildCmds= \
 SOURCE=..\errexit.c
 DEP_CPP_ERREX=\
 	"..\bench.h"\
+	"..\config.h"\
 	"..\sysdep.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
-NODEP_CPP_ERREX=\
-	"..\config.h"\
-	
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\errexit.obj" : $(SOURCE) $(DEP_CPP_ERREX) "$(INTDIR)"
+"$(INTDIR)\errexit.obj" : $(SOURCE) $(DEP_CPP_ERREX) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\errexit.sbr" : $(SOURCE) $(DEP_CPP_ERREX) "$(INTDIR)"
+"$(INTDIR)\errexit.sbr" : $(SOURCE) $(DEP_CPP_ERREX) "$(INTDIR)"
    $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinDebug\errexit.obj" : $(SOURCE) $(DEP_CPP_ERREX) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinDebug\errexit.sbr" : $(SOURCE) $(DEP_CPP_ERREX) "$(INTDIR)"
-   $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
@@ -347,85 +315,41 @@ BuildCmds= \
 SOURCE=..\webmaster.c
 DEP_CPP_WEBMA=\
 	"..\bench.h"\
+	"..\config.h"\
 	"..\sysdep.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
-NODEP_CPP_WEBMA=\
-	"..\config.h"\
-	
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\webmaster.obj" : $(SOURCE) $(DEP_CPP_WEBMA) "$(INTDIR)"
+"$(INTDIR)\webmaster.obj" : $(SOURCE) $(DEP_CPP_WEBMA) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\webmaster.sbr" : $(SOURCE) $(DEP_CPP_WEBMA) "$(INTDIR)"
+"$(INTDIR)\webmaster.sbr" : $(SOURCE) $(DEP_CPP_WEBMA) "$(INTDIR)"
    $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinDebug\webmaster.obj" : $(SOURCE) $(DEP_CPP_WEBMA) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinDebug\webmaster.sbr" : $(SOURCE) $(DEP_CPP_WEBMA) "$(INTDIR)"
-   $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
 # Begin Source File
 
 SOURCE=..\timefunc.c
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 DEP_CPP_TIMEF=\
 	"..\bench.h"\
-	"..\sysdep.h"\
-	
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinRel\timefunc.obj" : $(SOURCE) $(DEP_CPP_TIMEF) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinRel\timefunc.sbr" : $(SOURCE) $(DEP_CPP_TIMEF) "$(INTDIR)"
-   $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-DEP_CPP_TIMEF=\
-	"..\bench.h"\
-	"..\sysdep.h"\
-	
-NODEP_CPP_TIMEF=\
 	"..\config.h"\
+	"..\sysdep.h"\
 	
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinDebug\timefunc.obj" : $(SOURCE) $(DEP_CPP_TIMEF) "$(INTDIR)"
+"$(INTDIR)\timefunc.obj" : $(SOURCE) $(DEP_CPP_TIMEF) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinDebug\timefunc.sbr" : $(SOURCE) $(DEP_CPP_TIMEF) "$(INTDIR)"
+"$(INTDIR)\timefunc.sbr" : $(SOURCE) $(DEP_CPP_TIMEF) "$(INTDIR)"
    $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
@@ -433,84 +357,40 @@ BuildCmds= \
 
 SOURCE=..\sysdep.c
 DEP_CPP_SYSDE=\
+	"..\config.h"\
 	"..\sysdep.h"\
 	
-NODEP_CPP_SYSDE=\
-	"..\config.h"\
-	
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\sysdep.obj" : $(SOURCE) $(DEP_CPP_SYSDE) "$(INTDIR)"
+"$(INTDIR)\sysdep.obj" : $(SOURCE) $(DEP_CPP_SYSDE) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\sysdep.sbr" : $(SOURCE) $(DEP_CPP_SYSDE) "$(INTDIR)"
+"$(INTDIR)\sysdep.sbr" : $(SOURCE) $(DEP_CPP_SYSDE) "$(INTDIR)"
    $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinDebug\sysdep.obj" : $(SOURCE) $(DEP_CPP_SYSDE) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinDebug\sysdep.sbr" : $(SOURCE) $(DEP_CPP_SYSDE) "$(INTDIR)"
-   $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
 # Begin Source File
 
 SOURCE=..\statistics.c
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 DEP_CPP_STATI=\
 	"..\bench.h"\
-	"..\sysdep.h"\
-	
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinRel\statistics.obj" : $(SOURCE) $(DEP_CPP_STATI) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinRel\statistics.sbr" : $(SOURCE) $(DEP_CPP_STATI) "$(INTDIR)"
-   $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-DEP_CPP_STATI=\
-	"..\bench.h"\
-	"..\sysdep.h"\
-	
-NODEP_CPP_STATI=\
 	"..\config.h"\
+	"..\sysdep.h"\
 	
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinDebug\statistics.obj" : $(SOURCE) $(DEP_CPP_STATI) "$(INTDIR)"
+"$(INTDIR)\statistics.obj" : $(SOURCE) $(DEP_CPP_STATI) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinDebug\statistics.sbr" : $(SOURCE) $(DEP_CPP_STATI) "$(INTDIR)"
+"$(INTDIR)\statistics.sbr" : $(SOURCE) $(DEP_CPP_STATI) "$(INTDIR)"
    $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
@@ -519,39 +399,19 @@ BuildCmds= \
 SOURCE=..\rexec.c
 DEP_CPP_REXEC=\
 	"..\bench.h"\
+	"..\config.h"\
 	"..\sysdep.h"\
 	
-NODEP_CPP_REXEC=\
-	"..\config.h"\
-	
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\rexec.obj" : $(SOURCE) $(DEP_CPP_REXEC) "$(INTDIR)"
+"$(INTDIR)\rexec.obj" : $(SOURCE) $(DEP_CPP_REXEC) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\rexec.sbr" : $(SOURCE) $(DEP_CPP_REXEC) "$(INTDIR)"
+"$(INTDIR)\rexec.sbr" : $(SOURCE) $(DEP_CPP_REXEC) "$(INTDIR)"
    $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinDebug\rexec.obj" : $(SOURCE) $(DEP_CPP_REXEC) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinDebug\rexec.sbr" : $(SOURCE) $(DEP_CPP_REXEC) "$(INTDIR)"
-   $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
@@ -559,75 +419,56 @@ BuildCmds= \
 
 SOURCE=..\getopt.c
 
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
-
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\getopt.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\getopt.obj" : $(SOURCE) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\getopt.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\getopt.sbr" : $(SOURCE) "$(INTDIR)"
    $(BuildCmds)
-
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
-
-
-BuildCmds= \
-	$(CPP) $(CPP_PROJ) $(SOURCE) \
-	
-
-".\WinDebug\getopt.obj" : $(SOURCE) "$(INTDIR)"
-   $(BuildCmds)
-
-".\WinDebug\getopt.sbr" : $(SOURCE) "$(INTDIR)"
-   $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 ################################################################################
 # Begin Source File
 
-SOURCE=\stone.jim\webstone.src\src\parse_file_list.c
+SOURCE=\nanbor\ACE_wrappers\apps\JAWS\clients\WebSTONE\src\parse_file_list.c
 DEP_CPP_PARSE=\
 	"..\bench.h"\
+	"..\config.h"\
 	"..\sysdep.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
-NODEP_CPP_PARSE=\
-	"..\config.h"\
-	
-
-!IF  "$(CFG)" == "Webmaster - Win32 Release"
-
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinRel\parse_file_list.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+"$(INTDIR)\parse_file_list.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinRel\parse_file_list.sbr" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+"$(INTDIR)\parse_file_list.sbr" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
    $(BuildCmds)
 
-!ELSEIF  "$(CFG)" == "Webmaster - Win32 Debug"
+# End Source File
+################################################################################
+# Begin Source File
 
+SOURCE=\nanbor\ACE_wrappers\apps\JAWS\clients\WebSTONE\src\gettimeofday.c
+DEP_CPP_GETTI=\
+	{$(INCLUDE)}"\sys\timeb.h"\
+	
 
 BuildCmds= \
 	$(CPP) $(CPP_PROJ) $(SOURCE) \
 	
 
-".\WinDebug\parse_file_list.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+"$(INTDIR)\gettimeofday.obj" : $(SOURCE) $(DEP_CPP_GETTI) "$(INTDIR)"
    $(BuildCmds)
 
-".\WinDebug\parse_file_list.sbr" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+"$(INTDIR)\gettimeofday.sbr" : $(SOURCE) $(DEP_CPP_GETTI) "$(INTDIR)"
    $(BuildCmds)
-
-!ENDIF 
 
 # End Source File
 # End Target
