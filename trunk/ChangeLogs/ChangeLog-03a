@@ -1,3 +1,46 @@
+Fri Jan  7 20:01:48 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i,
+	  ace/config-sunos5.5.h: Some platforms seem to lack function
+ 	  prototypes for setreuid() and setreguid(), even though they are
+ 	  in the library.  Therefore, I've added
+  
+ 	  #define ACE_LACKS_SETREGID_PROTOTYPE 
+  
+	  and 
+  
+	  #define ACE_LACKS_SETREGID_PROTOTYPE
+  
+          macros to handle this case.
+  
+	* ace/Process: Added support to allow UNIX applications to 
+	  automagically set the real and effective user/group ids when
+ 	  ACE_Process::spawn() is called.  Thanks to Craig Perras
+ 	  <cperras@watchguard.com> for contributing this.
+
+	* ace: Updated the following files to include 
+  
+          #define ACE_LACKS_SETREGID
+	  #define ACE_LACKS_SETREUID
+  
+          config-chorus.h
+	  config-cray.h:168
+	  config-cygwin32-common.h
+	  config-freebsd-pthread.h
+	  config-freebsd.h:33
+	  config-hpux-9.x.h
+	  config-lynxos.h
+	  config-netbsd.h
+	  config-sunos4-g++.h
+	  config-sunos4-sun4.1.4.h
+	  config-win32-common.h
+  
+          Ideally, Ossama's autoconf stuff will auto-detect anything that
+ 	  I'm missing.
+    
+	* ace/OS: Added wrapper facade methods for setregid() and
+	  setregid().
+
 Fri Jan  7 16:05:32 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:

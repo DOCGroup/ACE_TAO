@@ -9,6 +9,8 @@
 
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETREGID
+#define ACE_LACKS_SETREUID
 
 // Maximum compensation (10 ms) for early return from timed ::select ().
 #if !defined (ACE_TIMER_SKEW)
