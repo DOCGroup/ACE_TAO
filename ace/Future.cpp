@@ -18,7 +18,7 @@ ACE_Future_Rep<T>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
 	      "ref_count_ = %d\n",
-	      this->ref_count_));
+	      (int) this->ref_count_));
   ACE_DEBUG ((LM_INFO,"value_: \n"));
   if (this->value_)
     ACE_DEBUG ((LM_DEBUG," (NON-NULL)\n"));
