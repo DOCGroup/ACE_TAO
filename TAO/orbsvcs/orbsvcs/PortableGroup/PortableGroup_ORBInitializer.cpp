@@ -4,7 +4,9 @@
 
 #include "PortableGroup_ORBInitializer.h"
 
-ACE_RCSID (TAO, PortableGroup_ORBInitializer, "$Id$")
+ACE_RCSID (PortableGroup,
+           PortableGroup_ORBInitializer,
+           "$Id$")
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -26,8 +28,6 @@ TAO_PortableGroup_ORBInitializer::pre_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
-  //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
@@ -38,10 +38,10 @@ TAO_PortableGroup_ORBInitializer::pre_init (
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Security_ORBInitializer::pre_init:\n"
+                    "(%P|%t) PortableGroup_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+                    "(%P|%t)   \"TAO_ORBInitInfo_ptr.\"\n"));
 
       ACE_THROW (CORBA::INTERNAL ());
     }
