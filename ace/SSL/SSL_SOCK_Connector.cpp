@@ -4,6 +4,7 @@
 
 #include "SSL_SOCK_Connector.h"
 
+#include "ace/OS_NS_errno.h"
 #include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
