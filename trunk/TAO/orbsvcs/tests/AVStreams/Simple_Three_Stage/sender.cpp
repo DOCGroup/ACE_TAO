@@ -17,6 +17,8 @@ Sender_Callback::handle_start (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
   SENDER::instance ()->pace_data (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -192,10 +194,12 @@ Sender::init (int argc,
 		      -1);
   else ACE_DEBUG ((LM_DEBUG,
 		   "File opened successfully\n"));		  
- 
-  
+
   // Register the object reference with the Naming Service.
-  if (this->register_sender (ACE_TRY_ENV) == -1)
+  result = this->register_sender (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);

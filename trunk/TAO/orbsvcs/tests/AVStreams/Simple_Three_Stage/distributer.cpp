@@ -376,7 +376,10 @@ main (int argc,
   
       // run the orb till the streams are not destroyed.
       while (!DISTRIBUTER::instance ()->done () && orb->work_pending ())
-        orb->perform_work (ACE_TRY_ENV);
+        {
+          orb->perform_work (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
       
     }
   ACE_CATCHANY
