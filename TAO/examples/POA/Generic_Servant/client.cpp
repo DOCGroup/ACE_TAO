@@ -144,106 +144,98 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  try 
+  // Initialize the ORB
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
+  if (env.exception () != 0)
     {
-      // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-      if (env.exception () != 0)
-        {
-          env.print_exception ("CORBA::ORB_init");
-          return -1;
-        }
-
-      // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
-      if (parse_args_result != 0)
-        return parse_args_result;
-
-      if (IOR == 0)
-        {
-          int result = read_IOR_from_file ();
-          if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
-        }
-
-      // Get an object reference from the argument string.
-      CORBA::Object_var object = orb->string_to_object (IOR, env);
-
-      if (env.exception () != 0)
-        {
-          env.print_exception ("CORBA::ORB::string_to_object");
-          return -1;
-        }
-
-      // Try to narrow the object reference to a Foo reference.
-      Foo_var foo = Foo::_narrow (object.in (), env);
-
-      if (env.exception () != 0)
-        {
-          env.print_exception ("Foo::_narrow");
-          return -1;
-        }
-
-      CORBA::String_var ior =
-        orb->object_to_string (foo.in (), env);
-
-      if (env.exception () != 0)
-        {
-          env.print_exception ("CORBA::ORB::object_to_string");
-          return -1;
-        }
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nConnecting to: %s\n\n",
-                  ior.in ()));
-
-      ACE_Profile_Timer timer;
-      ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-
-      // We start an ACE_Profile_Timer here...
-      timer.start ();
-
-      CORBA::Long result = 0;
-      int i = 0;
-
-      for (i = 0; i < iterations && env.exception () == 0; i++)
-        {
-          if (oneway)
-            // Invoke the doit() method of the foo reference.
-            foo->simply_doit (env);
-          else
-            // Invoke the doit() method of the foo reference.
-            result = foo->doit (env);
-        }
-
-      // stop the timer.
-      timer.stop ();
-      timer.elapsed_time (elapsed_time);
-
-      // compute average time.
-      print_stats (elapsed_time, i);
-
-      if (shutdown_server && env.exception () == 0)
-        foo->shutdown (env);
-
-      if (env.exception () != 0)
-        {
-          env.print_exception ("Foo::doit");
-          return 1;
-        }
-  
-      // Print the result of doit () method of the foo reference.
-      ACE_DEBUG ((LM_DEBUG, "The result of doit is %d\n", result));
-
-      ACE_TIMEPROBE_PRINT;
-
-      ACE_OS::free (IOR);
-  
-      return 0;
-    }
-  catch (CORBA::SystemException &)
-    {
-      env.print_exception ("Some native exception");
+      env.print_exception ("CORBA::ORB_init");
       return -1;
     }
+
+  // Initialize options based on command-line arguments.
+  int parse_args_result = parse_args (argc, argv);
+  if (parse_args_result != 0)
+    return parse_args_result;
+
+  if (IOR == 0)
+    {
+      int result = read_IOR_from_file ();
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
+    }
+
+  // Get an object reference from the argument string.
+  CORBA::Object_var object = orb->string_to_object (IOR, env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("CORBA::ORB::string_to_object");
+      return -1;
+    }
+
+  // Try to narrow the object reference to a Foo reference.
+  Foo_var foo = Foo::_narrow (object.in (), env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("Foo::_narrow");
+      return -1;
+    }
+
+  CORBA::String_var ior =
+    orb->object_to_string (foo.in (), env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("CORBA::ORB::object_to_string");
+      return -1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\nConnecting to: %s\n\n",
+              ior.in ()));
+
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+
+  // We start an ACE_Profile_Timer here...
+  timer.start ();
+
+  CORBA::Long result = 0;
+  int i = 0;
+
+  for (i = 0; i < iterations && env.exception () == 0; i++)
+    {
+      if (oneway)
+        // Invoke the doit() method of the foo reference.
+        foo->simply_doit (env);
+      else
+        // Invoke the doit() method of the foo reference.
+        result = foo->doit (env);
+    }
+
+  // stop the timer.
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+
+  // compute average time.
+  print_stats (elapsed_time, i);
+
+  if (shutdown_server && env.exception () == 0)
+    foo->shutdown (env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("Foo::doit");
+      return 1;
+    }
+  
+  // Print the result of doit () method of the foo reference.
+  ACE_DEBUG ((LM_DEBUG, "The result of doit is %d\n", result));
+
+  ACE_TIMEPROBE_PRINT;
+
+  ACE_OS::free (IOR);
+  
+  return 0;
 }
