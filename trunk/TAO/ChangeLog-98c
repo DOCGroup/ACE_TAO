@@ -1,5 +1,12 @@
 Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/orb_core.cpp (init): Merged in changes for new Naming
+ 	Service-related options that got accidentally overwritten last
+ 	night.
+
+	* docs/Options.html: Added documentation for new Naming
+ 	Service-related options in.
+
 	* tao/orbobj.h: Added documentation for a few static methods.
 
 	* tao/params.h: Changed LOCAL_INLINE macro to TAO_LOCAL_INLINE to
