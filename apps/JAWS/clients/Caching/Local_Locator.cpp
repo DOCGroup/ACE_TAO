@@ -5,7 +5,6 @@
 
 #define ACE_BUILD_DLL
 #include "Local_Locator.h"
-#include "ID_Generator.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Local_Locator.i"

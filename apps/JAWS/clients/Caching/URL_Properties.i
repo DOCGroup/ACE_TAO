@@ -3,7 +3,7 @@
 // $Id$
 
 ACE_INLINE size_t
-ACE_WString_Helper::bsize (ACE_WString *wstr)
+ACE_WString_Helper::bsize (const ACE_WString *wstr)
 {
   return (wstr->length () + 1) * sizeof (ACE_USHORT16);
 }

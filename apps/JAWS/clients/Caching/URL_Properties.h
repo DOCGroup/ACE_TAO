@@ -30,7 +30,7 @@ class ACE_Export ACE_WString_Helper
   //     ACE_WString objects for network communication.
 {
 public:
-  static size_t bsize (ACE_WString *wstr);
+  static size_t bsize (const ACE_WString *wstr);
   // Returns the actual size required to contain the ACE_WString.
 
   static size_t encode (void *buf, ACE_WString *wstr);
