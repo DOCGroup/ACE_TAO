@@ -28,18 +28,6 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 # define PACE_ERRNO_NO_SUPPORT() errno=ENOTSUP
 
-#include <windows.h>
-
-// Perform a mapping of Win32 error numbers into POSIX errnos.
-# define PACE_FAIL_RETURN(RESULT) do { \
-  switch (GetLastError ()) { \
-  case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
-  case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
-  case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
-  case ERROR_PATH_NOT_FOUND:    errno = ENOENT; break; \
-  } \
-  return RESULT; } while (0)
-
 /* A couple useful inline functions for checking whether bits are
    enabled or disabled.
  */
@@ -57,5 +45,20 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 /* Create a string of a server address with a "host:port" format. */
 # define PACE_SERVER_ADDRESS(H,P) H":"P
+
+/* Should later be made to work on non win32 platforms! */
+#if defined (PACE_WIN32)
+#include <windows.h>
+// Perform a mapping of Win32 error numbers into POSIX errnos.
+# define PACE_FAIL_RETURN(RESULT) do { \
+  switch (GetLastError ()) { \
+  case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
+  case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
+  case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
+  case ERROR_PATH_NOT_FOUND:    errno = ENOENT; break; \
+  } \
+  return RESULT; } while (0)
+
+#endif
 
 #endif /* PACE_CONFIG_UTILITY_H */
