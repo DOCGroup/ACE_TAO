@@ -353,7 +353,7 @@ get_more_data(unsigned int *buf_start, int max_length,
 	  "Fatel error: vd.c get_more_data() should not be called, bufLength = %d.!\n",
 	  *length_ptr);
   fprintf(stderr, "  **** Please report this bug. ****\n");
-  exit(1);
+  //  exit(1);
   return 0;
 }
 
