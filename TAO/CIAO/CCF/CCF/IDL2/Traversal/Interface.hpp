@@ -29,10 +29,11 @@ namespace CCF
           map (typeid (SyntaxTree::InterfaceDecl), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::InterfaceDecl> ());
+	  return true;
         }
 
         virtual void
@@ -57,10 +58,11 @@ namespace CCF
           map (typeid (SyntaxTree::InterfaceDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::InterfaceDef> ());
+          return true;
         }
 
         virtual void
@@ -91,10 +93,11 @@ namespace CCF
           map (typeid (SyntaxTree::AbstractInterfaceDecl), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::AbstractInterfaceDecl> ());
+          return true;
         }
 
         virtual void
@@ -119,10 +122,11 @@ namespace CCF
           map (typeid (SyntaxTree::AbstractInterfaceDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::AbstractInterfaceDef> ());
+          return true;
         }
 
         virtual void
@@ -153,10 +157,11 @@ namespace CCF
           map (typeid (SyntaxTree::LocalInterfaceDecl), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::LocalInterfaceDecl> ());
+          return true;
         }
 
         virtual void
@@ -181,10 +186,11 @@ namespace CCF
           map (typeid (SyntaxTree::LocalInterfaceDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::LocalInterfaceDef> ());
+          return true;
         }
 
         virtual void
@@ -215,10 +221,11 @@ namespace CCF
           map (typeid (SyntaxTree::UnconstrainedInterfaceDecl), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::UnconstrainedInterfaceDecl> ());
+          return true;
         }
 
         virtual void
@@ -243,10 +250,11 @@ namespace CCF
           map (typeid (SyntaxTree::UnconstrainedInterfaceDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::UnconstrainedInterfaceDef> ());
+          return true;
         }
 
         virtual void

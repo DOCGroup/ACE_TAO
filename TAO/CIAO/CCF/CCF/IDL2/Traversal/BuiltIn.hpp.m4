@@ -20,10 +20,11 @@ define(`built_in_type', `
           map (typeid (SyntaxTree::$1), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::$1> ());
+	  return true;
         }
 
         virtual void
@@ -70,10 +71,11 @@ namespace CCF
           map (typeid (SyntaxTree::BuiltInTypeDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::BuiltInTypeDef> ());
+	  return true;
         }
 
         virtual void

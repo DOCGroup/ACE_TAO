@@ -5,6 +5,9 @@
 module M
 { 
   interface I {};
+  
+  // typedef Internal I;
+  
   //local interface CCM_I : I {};
 };
 

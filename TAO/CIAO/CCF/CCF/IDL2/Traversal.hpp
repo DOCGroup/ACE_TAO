@@ -11,6 +11,7 @@
 #include "CCF/IDL2/Traversal/Module.hpp"
 #include "CCF/IDL2/Traversal/Operation.hpp"
 #include "CCF/IDL2/Traversal/Translation.hpp"
+#include "CCF/IDL2/Traversal/Typedef.hpp"
 #include "CCF/IDL2/Traversal/TypeId.hpp"
 
 #endif  // CCF_IDL2_TRAVERSAL_HPP

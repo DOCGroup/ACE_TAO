@@ -28,10 +28,11 @@ namespace CCF
           map (typeid (SyntaxTree::HomeDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::HomeDef> ());
+	  return true;
         }
 
         virtual void

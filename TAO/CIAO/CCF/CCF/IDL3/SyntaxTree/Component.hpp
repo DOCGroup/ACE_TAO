@@ -23,14 +23,11 @@ namespace CCF
       //
       class ComponentDecl : public virtual TypeDecl
       {
-      public:
+      protected:
         virtual
         ~ComponentDecl () throw () {}
 
-        ComponentDecl (SimpleName const& name,
-                       ScopePtr const& scope)
-            : Declaration (name, scope),
-              TypeDecl (name, scope)
+        ComponentDecl ()
         {
           type_info (static_type_info ());
         }
@@ -69,10 +66,7 @@ namespace CCF
 
         ComponentForwardDecl (SimpleName const& name,
                               ScopePtr const& scope)
-            : Declaration (name, scope),
-              TypeDecl (name, scope),
-              ComponentDecl (name, scope),
-              TypeForwardDecl (name, scope)
+            : Declaration (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -119,11 +113,7 @@ namespace CCF
                       ScopedName const& inherits,
                       ScopedNameSet const& supports)
             : Declaration (name, scope),
-              TypeDecl (name, scope),
-              TypeDef (name, scope),
-              ComponentDecl (name, scope),
-              Scope (name, scope),
-              inherits_ (scope->table (), inherits)
+              inherits_ (table (), inherits)
         {
           type_info (static_type_info ());
           copy_supports_list (supports);
@@ -133,11 +123,7 @@ namespace CCF
                       ScopePtr const& scope,
                       ScopedNameSet const& supports)
             : Declaration (name, scope),
-              TypeDecl (name, scope),
-              TypeDef (name, scope),
-              ComponentDecl (name, scope),
-              Scope (name, scope),
-              inherits_ (scope->table ())
+              inherits_ (table ())
         {
           type_info (static_type_info ());
           copy_supports_list (supports);
@@ -151,7 +137,7 @@ namespace CCF
                i != supports.end ();
                i++)
           {
-            supports_.insert (InterfaceDefRef (scope ()->table (), *i));
+            supports_.insert (InterfaceDefRef (table (), *i));
           }
         }
 

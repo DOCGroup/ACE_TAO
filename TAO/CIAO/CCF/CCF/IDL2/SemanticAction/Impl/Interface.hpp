@@ -115,6 +115,8 @@ namespace CCF
 
                 if (!passed) throw IncompatibleType (d->declaration_class ());
 
+                //@@ could instead check for XXDef
+		//
                 return d->dynamic_type<TypeDecl> ()->defined ();
               }
 

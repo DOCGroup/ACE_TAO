@@ -28,10 +28,11 @@ namespace CCF
           map (typeid (SyntaxTree::ConcreteEventTypeDef), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::ConcreteEventTypeDef> ());
+	  return true;
         }
 
         virtual void

@@ -311,6 +311,7 @@ namespace CCF
       KeywordParser OUT;
       KeywordParser SINCLUDE;
       KeywordParser SUPPORTS;
+      KeywordParser TYPEDEF;
       KeywordParser TYPEID;
       KeywordParser TYPEPREFIX;
 
@@ -331,7 +332,6 @@ namespace CCF
       //
       // Language
       //
-
       typedef
       Parsing::Rule
       Rule;
@@ -343,9 +343,6 @@ namespace CCF
 
       Rule include_decl;
       Rule system_include_decl;
-
-      Rule type_id;
-      Rule type_prefix;
 
       Rule module_decl;
 
@@ -367,6 +364,13 @@ namespace CCF
       Rule operation_parameter_list;
       Rule operation_parameter;
 
+      Rule typedef_;
+      Rule typedef_type_spec;
+      Rule typedef_declarator_list;
+
+      Rule type_id;
+      Rule type_prefix;
+
     public:
       Parser (CompilerElements::Context& context,
               Diagnostic::Stream& dout,
@@ -384,10 +388,20 @@ namespace CCF
       //
       // Semantic actions
       //
-
       typedef
       NoArgAction<SemanticAction::Scope>
       ScopeAction;
+
+
+      // Attribute
+      //
+      //
+      OneArgAction<IdentifierPtr, SemanticAction::Attribute>
+      act_attribute_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
+      act_attribute_name;
+
 
       // Include
       //
@@ -398,48 +412,10 @@ namespace CCF
       NoArgAction<SemanticAction::Include>
       act_include_end;
 
-      // TypeId
-      //
-      //
-      TwoArgAction<IdentifierPtr,
-                   StringLiteralPtr,
-                   SemanticAction::TypeId>
-      act_type_id_begin;
-
-      NoArgAction<SemanticAction::TypeId>
-      act_type_id_end;
-
-      // TypePrefix
-      //
-      //
-      TwoArgAction<IdentifierPtr,
-                   StringLiteralPtr,
-                   SemanticAction::TypePrefix>
-      act_type_prefix_begin;
-
-      NoArgAction<SemanticAction::TypePrefix>
-      act_type_prefix_end;
-
-      // Module
-      //
-      //
-
-      OneArgAction<SimpleIdentifierPtr, SemanticAction::Module>
-      act_module_begin;
-
-      ScopeAction
-      act_module_open_scope;
-
-      ScopeAction
-      act_module_close_scope;
-
-      NoArgAction<SemanticAction::Module>
-      act_module_end;
 
       // Interface
       //
       //
-
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Interface>
       act_abstract_interface_begin;
 
@@ -461,14 +437,22 @@ namespace CCF
       NoArgAction<SemanticAction::Interface>
       act_interface_end;
 
-      // Attribute
-      //
-      //
-      OneArgAction<IdentifierPtr, SemanticAction::Attribute>
-      act_attribute_type;
 
-      OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
-      act_attribute_name;
+      // Module
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Module>
+      act_module_begin;
+
+      ScopeAction
+      act_module_open_scope;
+
+      ScopeAction
+      act_module_close_scope;
+
+      NoArgAction<SemanticAction::Module>
+      act_module_end;
+
 
       // Operation
       //
@@ -510,6 +494,43 @@ namespace CCF
 
       NoArgAction<SemanticAction::Operation>
       act_operation_end;
+
+
+      // Typedef
+      //
+      //
+      OneArgAction<IdentifierPtr, SemanticAction::Typedef>
+      act_typedef_begin;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Typedef>
+      act_typedef_declarator;
+
+      NoArgAction<SemanticAction::Typedef>
+      act_typedef_end;
+
+
+      // TypeId
+      //
+      //
+      TwoArgAction<IdentifierPtr,
+                   StringLiteralPtr,
+                   SemanticAction::TypeId>
+      act_type_id_begin;
+
+      NoArgAction<SemanticAction::TypeId>
+      act_type_id_end;
+
+
+      // TypePrefix
+      //
+      //
+      TwoArgAction<IdentifierPtr,
+                   StringLiteralPtr,
+                   SemanticAction::TypePrefix>
+      act_type_prefix_begin;
+
+      NoArgAction<SemanticAction::TypePrefix>
+      act_type_prefix_end;
     };
   }
 }
