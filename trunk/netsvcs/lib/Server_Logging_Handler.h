@@ -55,14 +55,14 @@ typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver,
 
 // Define external Acceptor_Ts
 typedef Null_Synch_Logging_Handler_Static_Receiver_Acceptor_T 
-        ACE_Server_Logging_Acceptor_T;
+        ACE_Server_Logging_Acceptor;
 typedef Synch_Thr_Logging_Handler_Static_Receiver_Acceptor_T 
-        ACE_Thr_Server_Logging_Acceptor_T;
+        ACE_Thr_Server_Logging_Acceptor;
 
 //typedef  Synch_Logging_Handler_Receiver_Acceptor_T ACE_Server_Logging_Acceptor_T;
 //typedef  Synch_Thr_Logging_Handler_Receiver_Acceptor_T ACE_Thr_Server_Logging_Acceptor_T;
 
-ACE_SVC_FACTORY_DECLARE (ACE_Server_Logging_Acceptor_T)
-ACE_SVC_FACTORY_DECLARE (ACE_Thr_Server_Logging_Acceptor_T)
+ACE_SVC_FACTORY_DECLARE (ACE_Server_Logging_Acceptor)
+ACE_SVC_FACTORY_DECLARE (ACE_Thr_Server_Logging_Acceptor)
 
 #endif /* SERVER_LOGGING_HANDLER_H */

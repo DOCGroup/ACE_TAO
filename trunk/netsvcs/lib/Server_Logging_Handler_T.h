@@ -122,7 +122,7 @@ public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
                               LOG_MESSAGE_RECEIVER const &receiver);
-  virtual int open (void *= 0);
+  virtual int open (void * = 0);
 };
 
 #if !defined (ACE_HAS_THREADS) 

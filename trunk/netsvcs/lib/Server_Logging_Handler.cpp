@@ -17,76 +17,76 @@ ACE_SVC_FACTORY_DEFINE (ACE_Thr_Server_Logging_Acceptor)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 
 template class Static_Log_Message_Receiver<ACE_NULL_SYNCH>;
-template class ACE_Acceptor<Null_Synch_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-template class ACE_Accept_Strategy<Null_Synch_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<Null_Synch_Logg_Handler_Static_Receiver>;
-template class ACE_Creation_Strategy<Null_Synch_Logg_Handler_Static_Receiver>;
-template class ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logg_Handler_Static_Receiver>;
-template class ACE_Scheduling_Strategy<Null_Synch_Logg_Handler_Static_Receiver>;
-template class ACE_Strategy_Acceptor<Null_Synch_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-template class ACE_Server_Logging_AcceptorT<Null_Synch_Logg_Handler_Static_Receiver, 
+template class ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Accept_Strategy<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<Null_Synch_Logging_Handler_Static_Receiver>;
+template class ACE_Creation_Strategy<Null_Synch_Logging_Handler_Static_Receiver>;
+template class ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver>;
+template class ACE_Scheduling_Strategy<Null_Synch_Logging_Handler_Static_Receiver>;
+template class ACE_Strategy_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Server_Logging_Acceptor_T<Null_Synch_Logging_Handler_Static_Receiver, 
                                             Null_Synch_Static_Receiver, 
-                                            ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logg_Handler_Static_Receiver> >;
-template class ACE_Server_Logging_HandlerT<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Null_Synch_Static_Receiver>;
+                                            ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >;
+template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Null_Synch_Static_Receiver>;
 template class ACE_Server_Logging_Handler<Null_Synch_Static_Receiver>;
 
 #if defined (ACE_HAS_THREADS) 
   template class Static_Log_Message_Receiver<ACE_LOGGER_SYNCH>;
   template class Log_Message_Receiver<ACE_LOGGER_SYNCH>;
 
-  template class ACE_Acceptor<Synch_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Acceptor<Synch_Thr_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Acceptor<Synch_Logg_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Acceptor<Synch_Thr_Logg_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Acceptor<Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Acceptor<Synch_Thr_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Acceptor<Synch_Logging_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Acceptor<Synch_Thr_Logging_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
 
-  template class ACE_Accept_Strategy<Synch_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Accept_Strategy<Synch_Thr_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Accept_Strategy<Synch_Logg_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Accept_Strategy<Synch_Thr_Logg_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Accept_Strategy<Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Accept_Strategy<Synch_Thr_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Accept_Strategy<Synch_Logging_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Accept_Strategy<Synch_Thr_Logging_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
 
-  template class ACE_Concurrency_Strategy<Synch_Logg_Handler_Static_Receiver>;
-  template class ACE_Concurrency_Strategy<Synch_Thr_Logg_Handler_Static_Receiver>;
-  template class ACE_Concurrency_Strategy<Synch_Logg_Handler_Receiver>;
-  template class ACE_Concurrency_Strategy<Synch_Thr_Logg_Handler_Receiver>;
+  template class ACE_Concurrency_Strategy<Synch_Logging_Handler_Static_Receiver>;
+  template class ACE_Concurrency_Strategy<Synch_Thr_Logging_Handler_Static_Receiver>;
+  template class ACE_Concurrency_Strategy<Synch_Logging_Handler_Receiver>;
+  template class ACE_Concurrency_Strategy<Synch_Thr_Logging_Handler_Receiver>;
 
-  template class ACE_Creation_Strategy<Synch_Logg_Handler_Static_Receiver>;
-  template class ACE_Creation_Strategy<Synch_Thr_Logg_Handler_Static_Receiver>;
-  template class ACE_Creation_Strategy<Synch_Logg_Handler_Receiver>;
-  template class ACE_Creation_Strategy<Synch_Thr_Logg_Handler_Receiver>;
+  template class ACE_Creation_Strategy<Synch_Logging_Handler_Static_Receiver>;
+  template class ACE_Creation_Strategy<Synch_Thr_Logging_Handler_Static_Receiver>;
+  template class ACE_Creation_Strategy<Synch_Logging_Handler_Receiver>;
+  template class ACE_Creation_Strategy<Synch_Thr_Logging_Handler_Receiver>;
 
-  template class ACE_Schedule_All_Reactive_Strategy<Synch_Logg_Handler_Static_Receiver>;
-  template class ACE_Schedule_All_Reactive_Strategy<Synch_Logg_Handler_Receiver>;
+  template class ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver>;
+  template class ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver>;
 
-  template class ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logg_Handler_Static_Receiver>;
-  template class ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logg_Handler_Receiver>;
+  template class ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver>;
+  template class ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver>;
 
-  template class ACE_Scheduling_Strategy<Synch_Logg_Handler_Static_Receiver>;
-  template class ACE_Scheduling_Strategy<Synch_Logg_Handler_Receiver>;
-  template class ACE_Scheduling_Strategy<Synch_Thr_Logg_Handler_Static_Receiver>;
-  template class ACE_Scheduling_Strategy<Synch_Thr_Logg_Handler_Receiver>;
+  template class ACE_Scheduling_Strategy<Synch_Logging_Handler_Static_Receiver>;
+  template class ACE_Scheduling_Strategy<Synch_Logging_Handler_Receiver>;
+  template class ACE_Scheduling_Strategy<Synch_Thr_Logging_Handler_Static_Receiver>;
+  template class ACE_Scheduling_Strategy<Synch_Thr_Logging_Handler_Receiver>;
 
-  template class ACE_Strategy_Acceptor<Synch_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Strategy_Acceptor<Synch_Thr_Logg_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Strategy_Acceptor<Synch_Logg_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
-  template class ACE_Strategy_Acceptor<Synch_Thr_Logg_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Strategy_Acceptor<Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Strategy_Acceptor<Synch_Thr_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Strategy_Acceptor<Synch_Logging_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
+  template class ACE_Strategy_Acceptor<Synch_Thr_Logging_Handler_Receiver, LOGGING_PEER_ACCEPTOR>;
 
-  template class ACE_Server_Logging_AcceptorT<Synch_Logg_Handler_Static_Receiver, 
+  template class ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Static_Receiver, 
                                               Synch_Static_Receiver, 
-                                              ACE_Schedule_All_Reactive_Strategy<Synch_Logg_Handler_Static_Receiver> >;
-  template class ACE_Server_Logging_AcceptorT<Synch_Thr_Logg_Handler_Static_Receiver, 
+                                              ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >;
+  template class ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Static_Receiver, 
                                               Synch_Static_Receiver, 
-                                              ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logg_Handler_Static_Receiver> >;
-  template class ACE_Server_Logging_AcceptorT<Synch_Logg_Handler_Receiver, 
+                                              ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >;
+  template class ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Receiver, 
                                               Synch_Receiver, 
-                                              ACE_Schedule_All_Reactive_Strategy<Synch_Logg_Handler_Receiver> >;
-  template class ACE_Server_Logging_AcceptorT<Synch_Thr_Logg_Handler_Receiver, 
+                                              ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver> >;
+  template class ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver, 
                                               Synch_Receiver, 
-                                              ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logg_Handler_Receiver> >;
+                                              ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> >;
 
-  template class ACE_Server_Logging_HandlerT<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Static_Receiver>;
-  template class ACE_Server_Logging_HandlerT<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Static_Receiver>;
-  template class ACE_Server_Logging_HandlerT<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Receiver>;
-  template class ACE_Server_Logging_HandlerT<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Receiver>;
+  template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Static_Receiver>;
+  template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Static_Receiver>;
+  template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Receiver>;
+  template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Receiver>;
 
   template class ACE_Server_Logging_Handler<Synch_Static_Receiver>;
   template class ACE_Thr_Server_Logging_Handler<Synch_Static_Receiver>;

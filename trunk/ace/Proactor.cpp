@@ -287,7 +287,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   ACE_Time_Value absolute_time = this->timer_queue_->gettimeofday () + time;
   
   // Only one guy goes in here at a time
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->lock (), -1);  
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->mutex (), -1);  
 
   // Schedule the timer
   int result = this->timer_queue_->schedule (&handler, 

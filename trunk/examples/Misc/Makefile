@@ -14,9 +14,11 @@ BIN     = test_dump \
 	  test_read_buffer \
 	  test_set \
 	  test_sstring \
-	  test_trace \
-	  test_XtReactor1 \
-	  test_XtReactor2
+	  test_trace 
+
+# Uncomment the following if you want to test out the XtReactor.
+#	  test_XtReactor1 \
+#	  test_XtReactor2
 
 LSRC    = $(addsuffix .cpp,$(BIN))
 

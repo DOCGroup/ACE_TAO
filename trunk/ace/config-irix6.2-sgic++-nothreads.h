@@ -9,6 +9,10 @@
 #define ACE_CONFIG_H
 
 #define ACE_HAS_P_READ_WRITE
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_HAS_SETOWN
+#define ACE_HAS_SYSENT_H
+#define ACE_HAS_SYSINFO
 
 // Include XtReactor into the library.
 #define ACE_HAS_XT
