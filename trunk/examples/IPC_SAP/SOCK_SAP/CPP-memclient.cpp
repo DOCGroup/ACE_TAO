@@ -28,7 +28,7 @@ run_client (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
 
   char buf [MAXPATHLEN];
-  while (gets (buf) >0)
+  while (fgets (buf, MAXPATHLEN, stdin) >0)
     {
       stream.send (buf, ACE_OS::strlen (buf)+1);
       stream.recv (buf, MAXPATHLEN);

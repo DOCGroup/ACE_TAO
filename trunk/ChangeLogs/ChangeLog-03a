@@ -1,3 +1,9 @@
+Thu May 24 15:34:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp: Changed <gets> to
+	  <fgets> to avoid warnings on some platforms.  <gets> is not safe
+	  to use.
+
 Thu May 24 15:28:19 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
