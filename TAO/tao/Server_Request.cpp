@@ -11,7 +11,7 @@
 # include "tao/Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
-const char *TAO_Server_Request_Timeprobe_Description[] = 
+static const char *TAO_Server_Request_Timeprobe_Description[] = 
 { 
   "Server_Request::Server_Request - start",
   "Server_Request::Server_Request - end",
@@ -20,8 +20,12 @@ const char *TAO_Server_Request_Timeprobe_Description[] =
 enum 
 {
   TAO_SERVER_REQUEST_START = 400,
-  TAO_SERVER_REQUEST_END,
+  TAO_SERVER_REQUEST_END
 };
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description, 
+                                  TAO_SERVER_REQUEST_START);
 
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,
