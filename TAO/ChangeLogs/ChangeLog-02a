@@ -1,3 +1,9 @@
+Wed Oct 11 12:34:36 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent.bor:
+
+	  Removed files that shouldn't be listed in this makefile.
+
 Wed Oct 11 10:06:19 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Prevented building FT service in
