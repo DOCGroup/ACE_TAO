@@ -1,3 +1,11 @@
+Fri Jan 28 13:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Multicast_Test_IPV6.cpp:
+          Updated debug message that this test needs multicast and thread
+          support. When this is not available return 0 not 1 just as the
+          other tests do. This way single threaded builds don't flag this
+          test as failed.
+
 Fri Jan 28 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Network_Adapters_Test.{h,cpp}:
