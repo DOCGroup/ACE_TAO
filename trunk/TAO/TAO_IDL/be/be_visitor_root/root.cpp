@@ -164,9 +164,7 @@ int be_visitor_root::visit_root (be_root *node)
                            "Bad context state\n"
                            ), -1);
       }
-    }
-
-  visitor = tao_cg->make_visitor (&ctx);
+    }  visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -304,6 +302,8 @@ be_visitor_root::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+	case TAO_CodeGen::TAO_ROOT_IS:
+	case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -377,6 +377,8 @@ be_visitor_root::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+	case TAO_CodeGen::TAO_ROOT_IS:
+	case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -527,7 +529,9 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-      return 0; // nothing to be done
+	case TAO_CodeGen::TAO_ROOT_IS:
+	case TAO_CodeGen::TAO_ROOT_IH:
+		return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -684,6 +688,8 @@ be_visitor_root::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+	case TAO_CodeGen::TAO_ROOT_IS:
+	case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -757,6 +763,8 @@ be_visitor_root::visit_union (be_union *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+	case TAO_CodeGen::TAO_ROOT_IS:
+	case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -830,6 +838,8 @@ be_visitor_root::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+	case TAO_CodeGen::TAO_ROOT_IS:
+	case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
