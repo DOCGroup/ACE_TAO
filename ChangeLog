@@ -1,3 +1,9 @@
+Mon Jul  5 11:45:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/UUID.cpp (ACE_Utils):
+
+	  Corrected syntax error in ACE_Thread_ID instance.
+
 Mon Jul  5 10:40:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/UUID.cpp (ACE_Utils): Replaced the ACE_Thread_ID constructor
@@ -19,7 +25,7 @@ Sun Jul  4 20:30:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	* ace/OS_NS_Thread.cpp: There was some weirdness in the
 	  to_string() method, which should have been using the local data
  	  members for the thread id and thread handle, but instead was
- 	  calling the Os functions directly...  Thanks to Michael Hollins
+ 	  calling the OS functions directly...  Thanks to Michael Hollins
  	  <michael.hollins@silverbrookresearch.com> for reporting this.
 
 Sat Jul  3 06:46:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>

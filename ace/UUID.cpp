@@ -380,7 +380,7 @@ namespace ACE_Utils
 
     if (variant == 0xc0)
     {
-      ACE_Thread_ID thread_id ();
+      ACE_Thread_ID thread_id;
       char buf [BUFSIZ];
       thread_id.to_string (buf);
       uuid.thr_id (buf);
