@@ -1,3 +1,19 @@
+Sun Jan  3 22:01:37 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Server_i.cpp:
+	  Used rebind () instead of bind (). Because servers dont handle ^C,
+	  once bound contexts stay bound till the Naming Service is up.
+	  This was already being done for clerks. Commented out the IR part.
+	  Fixed warnings in init() and run() methods.
+
+	* orbsvcs/Time_Service/Server_i.h:
+	  Added some comments. Also commented out the IR part, so I could
+	  fix the warnings pointed out by David and check the files in.
+
+	* orbsvcs/Time_Service/Clerk_i.cpp:
+	  Added some comments. Commented out the IR part. Removed warnings
+	  for unreferenced variables
+
 Sun Jan 03 21:39:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (encode_sequence_to_string): Removed extra call to
@@ -7,15 +23,14 @@ Sun Jan 03 21:39:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Sun Jan  3 21:10:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Addded a function to check if it is the first server or clerk.
+	Addded a new function to check if it is the first server or clerk.
 	If it is then get a new context and bind it to the Name Server.
 	The subsequent servers and clerks will bind to this context. The
 	way this was being done previously is by clearing the exception
 	and checking the return value of NamingContext::resolve (). Was
-	working fine on Solaris (probably because I am compiling my orbsvcs
-	with flag -noex ) but threw an exception on NT. I am now handling
-	the exception appropriately. Also corrected a memory problem
-	using CORBA::string_dup.
+	working fine on Solaris but threw an exception on NT. I am now
+	handling the exception appropriately. Also corrected a memory
+	problem using CORBA::string_dup.
 
 	* orbsvcs/Time_Service/Server_i.cpp:
 	* orbsvcs/Time_Service/Server_i.h:
