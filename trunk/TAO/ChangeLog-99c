@@ -1,3 +1,9 @@
+Tue Jun 15 14:50:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Pluggable/PP_Test_i.h:
+	* TAO/performance-tests/Pluggable/PP_Test_i.cpp:
+	  Added ACE_THROW_SPEC code to member functions.
+
 Tue Jun 15 13:24:30 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp:
