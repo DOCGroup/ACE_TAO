@@ -15,6 +15,7 @@
 #include "ace/pre.h"
 
 #include "ace/Shared_Object.h"
+#include "ace/Svc_Conf_Tokens.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -73,6 +74,14 @@ public:
     /// Delete the enclosing object.
     DELETE_THIS = 2
   };
+
+  enum
+    {
+      SERVICE_OBJECT = ACE_SVC_OBJ_T,
+      MODULE = ACE_MODULE_T,
+      STREAM = ACE_STREAM_T,
+      INVALID_TYPE = -1
+    };
 
   // = Initialization and termination methods.
   ACE_Service_Type (const ACE_TCHAR *n,

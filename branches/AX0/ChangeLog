@@ -1,3 +1,34 @@
+Wed May 01 16:08:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/svcconf-convert.pl: Added more debugging info printout.
+	  Fixed incorrect mapping on initializer path/path and
+	  state/params.
+
+	* ace/Service_Object.h: Added enum definition to differentiate
+	  ACE_Service_Type_Impl.  The enum values are taken from
+	  "ace/Svc_Conf_Toekns.h" so that the same service can work with
+	  both classic and XML service configurator frameworks.
+
+
+	* ace/Service_Config.h:
+	* ace/Service_Config.cpp: Added <create_service_type> and
+	  <create_service_type_impl> methods to ensure objects are
+	  allocated in consistent DLL.
+
+	* ACEXML/parser/parser/Parser.cpp: Made the exception messages
+	  more comprehensive so it's easier to determine the origins of
+	  parse errors.
+
+	* ACEXML/apps/svcconf/Svcconf_Handler.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.i:
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp: Added more implementation.
+
+	* examples/ASX/CCM_App/svc.conf.xml:
+	* netsvcs/servers/svc.conf.xml:
+	* tests/Service_Config_Test.conf.xml: Added new XML-based svc.conf files.
+
+	* tests/Service_Config_DLL.cpp: Added xml-based inline svc.conf directives.
+
 Thu Apr 25 00:31:57 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/apps/XML_Apps.dsw: Added new workspace for XML

@@ -3,7 +3,7 @@
 ACE_INLINE
 ACE_Parsed_Info::ACE_Parsed_Info ()
   : name_ (0),
-    service_type_ (INVALID_TYPE),
+    service_type_ (ACE_Service_Type::INVALID_TYPE),
     active_ (1),
     path_ (0),
     init_func_ (0),
@@ -38,9 +38,9 @@ ACE_Parsed_Info::name (void)
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::service_type (Service_Type type)
+ACE_Parsed_Info::service_type (int type)
 {
-  if (this->service_type_ == INVALID_TYPE)
+  if (this->service_type_ == -1)
     {
       this->service_type_ = type;
       return 0;
@@ -48,7 +48,7 @@ ACE_Parsed_Info::service_type (Service_Type type)
   return -1;
 }
 
-ACE_INLINE ACE_Parsed_Info::Service_Type
+ACE_INLINE int
 ACE_Parsed_Info::service_type (void)
 {
   return this->service_type_;
@@ -123,7 +123,7 @@ ACE_Parsed_Info::reset (void)
 {
   delete this->name_;
   this->name_ = 0;
-  this->service_type_ = INVALID_TYPE;
+  this->service_type_ = -1;
   delete this->path_;
   this->path_ = 0;
   delete this->init_func_;

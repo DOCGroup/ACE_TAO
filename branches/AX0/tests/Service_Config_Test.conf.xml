@@ -12,16 +12,16 @@
  <!--  dynamically loaded.  Dynamic loading of each of object will occur in -->
  <!--  a separate thread. -->
  <dynamic id="Test_Object_1" type="Service_Object">
-   <initializer path="_make_Service_Config_DLL" init="Service_Config_DLL" params="2 3"/>
+   <initializer init="_make_Service_Config_DLL" path="Service_Config_DLL" params="2 3"/>
  </dynamic>
  <!--  Test_Object_4 will cause Test_Object_5 and Test_Object_6 to be -->
  <!--  dynamically loaded.  Dynamic loading of each of object will occur in -->
  <!--  a separate thread. -->
  <dynamic id="Test_Object_4" type="Service_Object">
-   <initializer path="_make_Service_Config_DLL" init="Service_Config_DLL" params="5 6"/>
+   <initializer init="_make_Service_Config_DLL" path="Service_Config_DLL" params="5 6"/>
  </dynamic>
  <!--  Final_Object does nothing but print a completion message. -->
  <dynamic id="Final_Object" type="Service_Object">
-   <initializer path="_make_Service_Config_DLL" init="Service_Config_DLL" params="FINAL"/>
+   <initializer init="_make_Service_Config_DLL" path="Service_Config_DLL" params="FINAL"/>
  </dynamic>
 </ACE_Svc_Conf>
