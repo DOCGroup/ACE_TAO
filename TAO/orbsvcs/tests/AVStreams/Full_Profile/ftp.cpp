@@ -176,8 +176,7 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  : endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
-    client_mmdevice_ (&endpoint_strategy_),
+  : client_mmdevice_ (&endpoint_strategy_),
     fdev_ (0),
     address_ (ACE_OS::strdup ("224.9.9.2:12345")),
     fp_ (0),
@@ -185,6 +184,8 @@ Client::Client (void)
     orb_ (TAO_AV_CORE::instance ()->orb ()),
     poa_ (TAO_AV_CORE::instance ()->poa ())
 {
+  endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
+                           TAO_AV_CORE::instance ()->poa ());
 }
 
 
