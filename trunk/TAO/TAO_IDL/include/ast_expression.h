@@ -122,7 +122,7 @@ public:
     , EV_octet                  // Expression value is unsigned char
     , EV_bool                   // Expression value is boolean
     , EV_string                 // Expression value is char *
-    , EV_wstring                // Expression value is wchar_t *
+    , EV_wstring                // Expression value is wide string
     , EV_any                    // Expression value is any of above
     , EV_void                   // Expression value is void (absent)
     , EV_none                   // Expression value is missing
@@ -166,7 +166,7 @@ public:
   AST_Expression(float          f);
   AST_Expression(double         d);
   AST_Expression(char           c);
-  AST_Expression(ACE_CDR::WChar wc);
+  AST_Expression(ACE_OutputCDR::from_wchar wc);
   AST_Expression(unsigned char  uc);
   AST_Expression(UTL_String     *s);
   AST_Expression(UTL_ScopedName *n);

@@ -271,7 +271,7 @@ AST_Expression::AST_Expression(char cv)
   pd_ev->u.cval = cv;
 }
 
-AST_Expression::AST_Expression(ACE_CDR::WChar wcv)
+AST_Expression::AST_Expression(ACE_OutputCDR::from_wchar wcv)
 	      : pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
@@ -282,7 +282,7 @@ AST_Expression::AST_Expression(ACE_CDR::WChar wcv)
 
   pd_ev = new AST_ExprValue;
   pd_ev->et = EV_wchar;
-  pd_ev->u.wcval = wcv;
+  pd_ev->u.wcval = wcv.val_;
 }
 
 /*
@@ -487,9 +487,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_ushort;
       return ev;
     case AST_Expression::EV_wchar:
-      if (ev->u.wcval > (ACE_CDR::WChar) ACE_UINT16_MAX)
-        return NULL;
-      ev->u.usval = (short) ev->u.wcval;
+      ev->u.usval = (unsigned short) ev->u.wcval;
       ev->et = AST_Expression::EV_ushort;
       return ev;
     case AST_Expression::EV_octet:
@@ -566,8 +564,6 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_long;
       return ev;
     case AST_Expression::EV_wchar:
-      if (ev->u.wcval > (ACE_CDR::WChar) ACE_INT32_MAX)
-        return NULL;
       ev->u.lval = (long) ev->u.wcval;
       ev->et = AST_Expression::EV_long;
       return ev;
@@ -1113,12 +1109,15 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_char;
       return ev;
     case AST_Expression::EV_long:
-      if (ev->u.lval < 0)
+      if (ev->u.lval < 0
+          || ev->u.lval > ACE_WCHAR_MAX)
 	      return NULL;
       ev->u.wcval = (ACE_CDR::WChar) ev->u.lval;
       ev->et = AST_Expression::EV_wchar;
       return ev;
     case AST_Expression::EV_ulong:
+      if (ev->u.ulval > ACE_WCHAR_MAX)
+        return NULL;
       ev->u.wcval = (ACE_CDR::WChar) ev->u.ulval;
       ev->et = AST_Expression::EV_wchar;
       return ev;

@@ -377,6 +377,15 @@ AST_Generator::create_expr(char c)
 }
 
 /*
+ * Construct an AST_Expression node denoting a wide character
+ */
+AST_Expression  *
+AST_Generator::create_expr(ACE_OutputCDR::from_wchar wc)
+{
+  return new AST_Expression(wc);
+}
+
+/*
  * Construct an AST_Expression node denoting a 64-bit floating point number
  */
 AST_Expression  *

@@ -1762,12 +1762,12 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             {
             case AST_Expression::EV_char:
               os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)ev->u.cval);
-              // size of bool/char aligned to 4 bytes
+              // size of char aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
             case AST_Expression::EV_bool:
               os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)ev->u.bval);
-              // size of bool/char aligned to 4 bytes
+              // size of bool aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
             case AST_Expression::EV_wchar:
@@ -1779,26 +1779,26 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
 
             case AST_Expression::EV_ushort:
               os->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)ev->u.usval);
-              // size of short/wchar aligned to 4 bytes
+              // size of unsigned short aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_long:
               os->print ("0x%08.8x", (unsigned long)ev->u.lval);
-              // size of short/wchar aligned to 4 bytes
+              // size of long aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_ulong:
               os->print ("0x%08.8x", ev->u.ulval);
-              // size of short/wchar aligned to 4 bytes
+              // size of unsigned long aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_any:
               // enum
               os->print ("0x%08.8x", (unsigned long)ev->u.eval);
-              // size of short/wchar aligned to 4 bytes
+              // size of any aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
@@ -1832,12 +1832,12 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             {
             case AST_Expression::EV_char:
               os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)dv.u.char_val);
-              // size of bool/char aligned to 4 bytes
+              // size of char aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
             case AST_Expression::EV_bool:
               os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)dv.u.bool_val);
-              // size of bool/char aligned to 4 bytes
+              // size of bool aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
             case AST_Expression::EV_wchar:
@@ -1849,26 +1849,26 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
 
             case AST_Expression::EV_ushort:
               os->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)dv.u.ushort_val);
-              // size of short/wchar aligned to 4 bytes
+              // size of unsigned short aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_long:
               os->print ("0x%08.8x", (unsigned long)dv.u.long_val);
-              // size of short/wchar aligned to 4 bytes
+              // size of long aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_ulong:
               os->print ("0x%08.8x", (unsigned long)dv.u.ulong_val);
-              // size of short/wchar aligned to 4 bytes
+              // size of unsigned long aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_any:
               // enum
               os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
-              // size of short/wchar aligned to 4 bytes
+              // size of any aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 

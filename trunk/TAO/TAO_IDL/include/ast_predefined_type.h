@@ -94,7 +94,7 @@ public:
       , PT_double       // Predefined type "double"
       , PT_longdouble   // Predefined type "long double"
       , PT_char         // Predefined type "char"
-      , PT_wchar        // Predefined type "wchar_t"
+      , PT_wchar        // Predefined type "CORBA::WChar"
       , PT_boolean      // Predefined type "boolean"
       , PT_octet        // Predefined type "octet"
       , PT_any          // Predefined type "any"
