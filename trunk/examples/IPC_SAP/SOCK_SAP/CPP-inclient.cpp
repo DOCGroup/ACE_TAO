@@ -209,7 +209,7 @@ Options::shared_client_test (u_short port,
   // Allocate the transmit buffer.
   char *buf;
   ACE_DEBUG((LM_DEBUG,"(%P|%t) allocating buffer, len = %d msglen = %d\n",
-	     len, message_len_));
+             len, message_len_));
 
   ACE_NEW_RETURN (buf,
                   char[this->message_len()],
@@ -355,7 +355,7 @@ Options::twoway_client_test (void *)
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+              ACE_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
               iteration,
               real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
@@ -421,4 +421,3 @@ template class ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
