@@ -56,11 +56,16 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 
+  /// Accessor for the <validator_loaded_> flag
+  static int validator_loaded (void);
+  static void validator_loaded (int f);
 private:
 
   /// Our policy validator
   TAO_BiDirPolicy_Validator *validator_;
 
+  /// Flag to indicate whether validator has been loaded
+  static int validator_loaded_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
