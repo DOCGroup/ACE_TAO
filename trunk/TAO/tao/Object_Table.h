@@ -128,6 +128,9 @@ public:
 
   virtual CORBA::ULong system_id_size (void) const = 0;
   // Size of the system generated id.
+
+  virtual int is_free (const TAO_Object_Table_Entry &item) const = 0;
+  // Implementation checks if <item> is free
 };
 
 class TAO_Export TAO_Object_Table_Iterator
@@ -283,6 +286,7 @@ public:
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                                       CORBA::Environment &env);
   virtual CORBA::ULong system_id_size (void) const;
+  virtual int is_free (const TAO_Object_Table_Entry &item) const;
   virtual TAO_Object_Table_Iterator_Impl *begin (void) const;
   virtual TAO_Object_Table_Iterator_Impl *end (void) const;
 
@@ -386,6 +390,7 @@ public:
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
                                                       CORBA::Environment &env);
   virtual CORBA::ULong system_id_size (void) const;
+  virtual int is_free (const TAO_Object_Table_Entry &item) const;
   virtual TAO_Object_Table_Iterator_Impl *begin () const;
   virtual TAO_Object_Table_Iterator_Impl *end () const;
 

@@ -1,3 +1,9 @@
+Sun Nov 08 14:55:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Table.cpp (find): Fixed the find routine.  It was
+ 	  considering the is_free_ field in all cases, but this field is
+ 	  not used when the dynamic hashing mechanism is used.
+
 Fri Nov  6 19:11:39 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Notifier_i.cpp:

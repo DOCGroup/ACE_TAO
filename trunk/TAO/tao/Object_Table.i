@@ -213,6 +213,13 @@ TAO_Dynamic_Hash_ObjTable::system_id_size (void) const
   return sizeof (CORBA::ULong);
 }
 
+ACE_INLINE int 
+TAO_Dynamic_Hash_ObjTable::is_free (const TAO_Object_Table_Entry &item) const
+{
+  ACE_UNUSED_ARG (item);
+  return 0;
+}
+
 ACE_INLINE
 TAO_Dynamic_Hash_ObjTable_Iterator::TAO_Dynamic_Hash_ObjTable_Iterator (const Impl &impl)
   : impl_ (impl)
@@ -344,6 +351,12 @@ ACE_INLINE CORBA::ULong
 TAO_Linear_ObjTable::system_id_size (void) const
 {
   return sizeof (CORBA::ULong);
+}
+
+ACE_INLINE int 
+TAO_Linear_ObjTable::is_free (const TAO_Object_Table_Entry &item) const
+{
+  return item.is_free_;
 }
 
 ACE_INLINE TAO_Object_Table_Iterator_Impl *
