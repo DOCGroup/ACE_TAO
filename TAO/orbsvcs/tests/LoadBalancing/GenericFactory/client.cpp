@@ -68,6 +68,9 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
 
+      basic->remove_member (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       basic->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
