@@ -211,7 +211,7 @@ be_attribute::gen_client_stubs (void)
   *cs << "STUB_Object *istub;\n\n";
   cs->indent ();
   *cs << "if (this->QueryInterface (IID_STUB_Object, " <<
-    "(void **)&istub) != NOERROR)" << nl;
+    "(void **)&istub) != TAO_NOERROR)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));" <<
@@ -311,7 +311,7 @@ be_attribute::gen_client_stubs (void)
   *cs << "STUB_Object *istub;\n\n";
   cs->indent ();
   *cs << "if (this->QueryInterface (IID_STUB_Object, " <<
-    "(void **)&istub) != NOERROR)" << nl;
+    "(void **)&istub) != TAO_NOERROR)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));" <<

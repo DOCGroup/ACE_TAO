@@ -47,22 +47,68 @@ be_field::gen_client_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  cg->node (this); // pass info thru singleton
-  cg->outstream (cg->client_header ());
-
+  // retrieve field type
   bt = be_type::narrow_from_decl (this->field_type ());
 
+  // make the state based object. The state has been set by the enclosing
+  // parent structure
   s = cg->make_state ();
-  if (s && bt)
-    return s->gen_code (bt, this); // no third parameter here
-  else
-    return -1;
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_field::gen_client_header -"
+                         "codegen failed\n"), -1);
+    }
+  return 0;
 }
 
 // Generates the client-side stubs for the field
 int
 be_field::gen_client_stubs (void)
 {
+  be_type *bt;  // the field type
+  be_state *s;  // code generation state
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // retrieve field type
+  bt = be_type::narrow_from_decl (this->field_type ());
+
+  // make the state based object. The state has been set by the enclosing
+  // parent structure
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_field::gen_client_stubs -"
+                         "codegen failed\n"), -1);
+    }
+  return 0;
+}
+
+// Generates the client-side inline information
+int
+be_field::gen_client_inline (void)
+{
+  be_type *bt;  // the field type
+  be_state *s;  // code generation state
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // retrieve field type
+  bt = be_type::narrow_from_decl (this->field_type ());
+
+  // make the state based object. The state has been set by the enclosing
+  // parent structure
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_field::gen_client_inline -"
+                         "codegen failed\n"), -1);
+    }
   return 0;
 }
 
@@ -82,26 +128,6 @@ be_field::gen_server_skeletons (void)
   return 0;
 }
 
-// Generates the client-side inline information
-int
-be_field::gen_client_inline (void)
-{
-  // The field type may need inline definitions, example:
-  // struct A {
-  //   sequence<long> x;
-  // };
-  be_type *bt = be_type::narrow_from_decl (this->field_type ());
-
-  // The type may be imported, then we cannot generate the inline
-  // info. Note: this does not fall in the general protection against
-  // multiple definition.
-  if (bt->imported ())
-    {
-      return 0;
-    }
-  return bt->gen_client_inline ();
-}
-
 // Generates the server-side inline
 int
 be_field::gen_server_inline (void)
@@ -114,17 +140,12 @@ int
 be_field::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_type *bt;  // our type node
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   cs = cg->client_stubs ();
-  cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
 
   // generate name
@@ -158,6 +179,24 @@ be_field::tc_encap_len (void)
                                           // size of the type
     }
   return this->encap_len_;
+}
+
+// compute the size type of the node in question
+int
+be_field::compute_size_type (void)
+{
+  be_type *type = be_type::narrow_from_decl (this->field_type ());
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_field::compute_size_type - "
+                         "bad field type\n"), -1);
+    }
+
+  // our size type is the same as our type
+  this->size_type (type->size_type ()); // as a side effect will also update
+                                        // the size type of parent
+  return 0;
 }
 
 // Narrowing

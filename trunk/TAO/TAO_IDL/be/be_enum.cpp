@@ -26,6 +26,7 @@
  */
 be_enum::be_enum (void)
 {
+  this->size_type (be_decl::FIXED);
 }
 
 be_enum::be_enum (UTL_ScopedName *n, UTL_StrList *p)
@@ -34,6 +35,7 @@ be_enum::be_enum (UTL_ScopedName *n, UTL_StrList *p)
     UTL_Scope (AST_Decl::NT_enum),
     member_count_ (-1)
 {
+  this->size_type (be_decl::FIXED);
 }
 
 // compute total number of members
@@ -159,7 +161,6 @@ be_enum::gen_client_stubs (void)
       cg->push (TAO_CodeGen::TAO_ENUM_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-      cg->outstream (cs);
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
@@ -250,7 +251,7 @@ be_enum::gen_encapsulation (void)
   long *arr;  // an array holding string names converted to array of longs
 
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cs->indent (); // start from whatever indentation level we were at
 
   *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;

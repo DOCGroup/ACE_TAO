@@ -87,6 +87,10 @@ public:
   DEF_NARROW_FROM_DECL (be_structure);
   DEF_NARROW_FROM_SCOPE (be_structure);
 
+protected:
+  virtual int compute_size_type (void);
+  // compute the size type if it is unknown
+
 private:
   //=helper
 

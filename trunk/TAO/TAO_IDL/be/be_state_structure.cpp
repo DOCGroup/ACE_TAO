@@ -18,33 +18,52 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
-be_state_struct_ch::be_state_struct_ch (void)
+be_state_struct::be_state_struct (void)
 {
 }
 
 // generate code for structure member
 int
-be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
+be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
   TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_field *f;       // field node
   be_structure *bs;  // enclosing structure node
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
+  switch (cg->state ())
+    {
+    case TAO_CodeGen::TAO_STRUCT_CH:
+      os = cg->client_header ();
+      break;
+    case TAO_CodeGen::TAO_STRUCT_CS:
+      os = cg->client_stubs ();
+      break;
+    case TAO_CodeGen::TAO_STRUCT_CI:
+      os = cg->client_inline ();
+      break;
+    }
 
-  os = cg->client_header (); // get client header stream
   f = be_field::narrow_from_decl (d); // downcast to field node
   if (!f)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_structure.cpp - "
+                         "Bad field\n"),
+                        -1);
+    }
 
   bs = be_structure::narrow_from_scope (f->defined_in ());
-  if (bs == NULL)
-    return -1;
+  if (!bs)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_struct.cpp - "
+                         "Bad structure\n"),
+                        -1);
+    }
 
-  // pass the field node just incase it is needed
+  // pass the field node just incase it is needed to generate definition for
+  // sequence
   cg->node (f);
 
   if (!type) // not a recursive call
@@ -53,36 +72,116 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
        // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
-  // generate code based on type. For every case, first downcast to the
-  // appropriate type. If the downcast fails, return error, else proceed. In
-  // some cases, the type itself may need code generation, e.g., anonymous
-  // struct types.
+  // generate code based on type.
   switch (type->node_type ())
     {
     case AST_Decl::NT_interface: // type is an obj reference
       {
-        os->indent (); // start from current indentation
-        *os << bt->nested_type_name (bs, "_var") << " " << f->local_name () <<
-          ";\n\n";
-      }
+        switch (cg->state ())
+          {
+          case TAO_CodeGen::TAO_STRUCT_CH:
+            {
+              os->indent (); // start from current indentation
+              *os << bt->nested_type_name (bs, "_var") << " " << f->local_name
+                () << ";\n";
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CI:
+            {
+              // nothing
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CS:
+            {
+              // nothing
+            }
+            break;
+          default:
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_struct - unknown state\n"), -1);
+            }
+          } // end switch state
+      } // end case interface
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
-        os->indent (); // start from current indentation
-        *os << bt->nested_type_name (bs) << " " << f->local_name () << ";\n\n";
+        switch (cg->state ())
+          {
+          case TAO_CodeGen::TAO_STRUCT_CH:
+            {
+              be_predefined_type *bpd = be_predefined_type::narrow_from_decl
+                (bt);
+              if (!bpd)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_state_struct - "
+                                     "bad predefined type\n"), -1);
+                }
+              os->indent (); // start from current indentation
+              switch (bpd->pt ())
+                {
+                case AST_PredefinedType::PT_any:
+                case AST_PredefinedType::PT_pseudo:
+                  *os << bt->nested_type_name (bs) << "_var " << f->local_name
+                    () << ";\n";
+                  break;
+                default:
+                  *os << bt->nested_type_name (bs) << " " << f->local_name ()
+                      << ";\n";
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CI:
+            {
+              // nothing
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CS:
+            {
+              // nothing
+            }
+            break;
+          default:
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_struct - unknown state\n"), -1);
+            }
+          } // end switch state
       }
       break;
     case AST_Decl::NT_string: // type is a string
       {
-        os->indent (); // start from current indentation
-        if (bt->node_type () == AST_Decl::NT_typedef)
+        switch (cg->state ())
           {
-            *os << bt->nested_type_name (bs, "_var") << " " << f->local_name () << ";\n\n";
-          }
-        else
-          {
-            *os << "CORBA::String_var " << f->local_name () << ";\n\n";
-          }
+          case TAO_CodeGen::TAO_STRUCT_CH:
+            {
+              os->indent (); // start from current indentation
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  *os << bt->nested_type_name (bs, "_var") << " " <<
+                    f->local_name () << ";\n";
+                }
+              else
+                {
+                  *os << "CORBA::String_var " << f->local_name () << ";\n";
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CI:
+            {
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CS:
+            {
+            }
+            break;
+          default:
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_struct - unknown state\n"), -1);
+            }
+          } // end switch state
       }
       break;
       // these are all anonymous types
@@ -92,14 +191,59 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_struct: // type is a struct
     case AST_Decl::NT_union: // type is a union
       {
-        // We first need to generate code for this aggregate type. Check if we
-        // are not called recursively thru a typedef
-        if (bt->node_type () != AST_Decl::NT_typedef)
-          if (bt->gen_client_header () == -1)
-            return -1;
-
-        os->indent ();
-        *os << bt->nested_type_name (bs) << " " << f->local_name () << ";\n\n";
+        switch (cg->state ())
+          {
+          case TAO_CodeGen::TAO_STRUCT_CH:
+            {
+              // We first need to generate code for this aggregate type. Check
+              // if we are not called recursively thru a typedef
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                if (bt->gen_client_header () == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_state_struct - "
+                                       "error generating code for type\n"),
+                                      -1);
+                  }
+              os->indent ();
+              *os << bt->nested_type_name (bs) << " " << f->local_name () <<
+                ";\n";
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CI:
+            {
+              // We first need to generate code for this aggregate type. Check
+              // if we are not called recursively thru a typedef
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                if (bt->gen_client_inline () == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_state_struct - "
+                                       "error generating code for type\n"),
+                                      -1);
+                  }
+            }
+            break;
+          case TAO_CodeGen::TAO_STRUCT_CS:
+            {
+              // We first need to generate code for this aggregate type. Check
+              // if we are not called recursively thru a typedef
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                if (bt->gen_client_stubs () == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_state_struct - "
+                                       "error generating code for type\n"),
+                                      -1);
+                  }
+            }
+            break;
+          default:
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_state_struct - unknown state\n"), -1);
+            }
+          } // end switch state
       }
       break;
     case AST_Decl::NT_except: // type is an exception
@@ -121,8 +265,8 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
       } // end of switch
       //break;  unreachable statement!
     }
-  // the enclosing structure will be variable length the field is variable
-  // length
+  // the enclosing structure will be variable length if the field's type is
+  // variable length
   bs->size_type (type->size_type ());
   return 0;
 }

@@ -46,7 +46,6 @@ be_operation::gen_client_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   ch = cg->client_header ();
-  cg->outstream (ch); // important to set the current stream
 
   ch->indent (); // start with the current indentation level
 
@@ -270,7 +269,7 @@ be_operation::gen_client_stubs (void)
   *cs << "STUB_Object *istub;\n\n";
   cs->indent ();
   *cs << "if (this->QueryInterface (IID_STUB_Object, " <<
-    "(void **)&istub) != NOERROR)" << nl;
+    "(void **)&istub) != TAO_NOERROR)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));" <<
@@ -369,7 +368,6 @@ be_operation::gen_server_header (void)
                                             // operation definition
 
   sh = cg->server_header ();
-  cg->outstream (sh); // set current stream
   sh->indent (); // start with the current indentation level
 
   // every operation is declared virtual
@@ -437,7 +435,6 @@ be_operation::gen_server_skeletons (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   ss = cg->server_skeletons ();
-  cg->outstream (ss); // set current stream
 
   ss->indent (); // start with the current indentation level
 
@@ -638,6 +635,47 @@ int
 be_operation::gen_server_inline (void)
 {
   // nothing to be done
+  return 0;
+}
+
+// compute the size type of the node in question
+int
+be_operation::compute_size_type (void)
+{
+  UTL_ScopeActiveIterator *si;
+  AST_Decl *d;
+  be_decl *bd;
+
+  if (this->nmembers () > 0)
+    {
+      // if there are elements in this scope
+
+      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      // instantiate a scope iterator.
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+          bd = be_decl::narrow_from_decl (d);
+          if (bd != 0)
+            {
+              // our sizetype depends on the sizetype of our members. Although
+              // previous value of sizetype may get overwritten, we are
+              // guaranteed by the "size_type" call that once the value reached
+              // be_decl::VARIABLE, nothing else can overwrite it.
+              this->size_type (bd->size_type ());
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "WARNING (%N:%l) be_operation::compute_size_type - "
+                          "narrow_from_decl returned 0\n"));
+            }
+          si->next ();
+        } // end of while
+      delete si; // free the iterator object
+    }
   return 0;
 }
 

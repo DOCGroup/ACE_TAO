@@ -51,6 +51,7 @@ be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
                                        // VARIABLE
 }
 
+// create a name for ourselves
 int
 be_sequence::create_name (void)
 {
@@ -62,7 +63,7 @@ be_sequence::create_name (void)
 
 
   d = cg->node (); // retrieve the node that was passed in via the CodeGen
-  // object
+                   // object
 
   if (!d)
     return -1; // error, we cannot be free standing.

@@ -395,10 +395,12 @@ Cubit_Client::cube_sequence (int i)
     }
 
   Cubit::vector* output_ptr;
-  // Cube the sequence
-  this->cubit_->cube_sequence (input, output_ptr, this->env_);
+  Cubit::vector_out vout (output_ptr);
 
-  Cubit::vector& output = *output_ptr;
+  // Cube the sequence
+  this->cubit_->cube_sequence (input, vout, this->env_);
+
+  Cubit::vector& output = *vout.ptr ();
 
   if (this->env_.exception () != 0)
     {
@@ -506,7 +508,7 @@ Cubit_Client::print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed
   ACE_DEBUG ((LM_DEBUG,
 	      "%s:\n",
 	      call_name));
-  
+
   if (this->call_count_ > 0  &&  this->error_count_ == 0)
     {
       tmp = 1000 / elapsed_time.real_time;
@@ -564,15 +566,15 @@ Cubit_Client::run (void)
       this->cube_octet (i);
       this->cube_long (i);
       this->cube_struct (i);
-#if defined (TAO_ALSO_TEST_SEQUENCES)
+      //#if defined (TAO_ALSO_TEST_SEQUENCES)
       this->cube_sequence (i);
-#endif /* defined (TAO_ALSO_TEST_SEQUENCES) */
+      //#endif /* defined (TAO_ALSO_TEST_SEQUENCES) */
     }
 
   // stop the timer.
   timer.stop ();
 
-  timer.elapsed_time (elapsed_time);  
+  timer.elapsed_time (elapsed_time);
   // compute call average call time.
   this->print_stats ("cube average call", elapsed_time);
 
@@ -632,7 +634,7 @@ Cubit_Client::run (void)
   // compute call average call time.
   this->print_stats ("cube_union_dii call", elapsed_time);
 
-#if defined (TAO_ALSO_TEST_SEQUENCES)
+  //#if defined (TAO_ALSO_TEST_SEQUENCES)
   // Sequences
   timer.start ();
   this->call_count_ = 0;
@@ -648,9 +650,9 @@ Cubit_Client::run (void)
   timer.elapsed_time (elapsed_time);
   // compute call average call time.
   this->print_stats ("cube_sequence", elapsed_time);
-#endif /* defined (TAO_ALSO_TEST_SEQUENCES) */
+  //#endif /* defined (TAO_ALSO_TEST_SEQUENCES) */
 
-  
+
 
   if (this->exit_later_)
     {
@@ -733,7 +735,7 @@ Cubit_Client::init (int argc, char **argv)
 		      -1);
 
   // Now retrieve the Cubit obj ref corresponding to the key.
-  this->cubit_ = 
+  this->cubit_ =
     this->factory_->make_cubit (this->cubit_key_, this->env_);
 
   if (this->env_.exception () != 0)

@@ -62,10 +62,6 @@ be_typedef::gen_client_header (void)
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
       ch = cg->client_header ();
       cg->push (TAO_CodeGen::TAO_TYPEDEF_CH);
-      cg->node (this); // pass ourselves. For typedefs, this is very important,
-                       // because other nodes's code generation may depend on
-                       // whether they were typedefed or not.
-      cg->outstream (cg->client_header ());
       s = cg->make_state ();
 
       bt = be_type::narrow_from_decl (this->base_type ());
@@ -114,10 +110,6 @@ be_typedef::gen_client_stubs (void)
       cg->push (TAO_CodeGen::TAO_TYPEDEF_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-
-      cg->node (this); // pass ourselves. For typedefs, this is very important,
-                       // because other nodes's code generation may depend on
-                       // whether they were typedefed or not.
 
       s = cg->make_state ();
 
@@ -171,8 +163,6 @@ be_typedef::gen_client_inline (void)
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
       cg->push (TAO_CodeGen::TAO_TYPEDEF_CI);
-      cg->node (this); // pass ourselves
-      cg->outstream (cg->client_inline ());
       s = cg->make_state ();
 
       bt = be_type::narrow_from_decl (this->base_type ());
@@ -309,6 +299,23 @@ be_typedef::tc_encap_len (void)
 
     }
   return this->encap_len_;
+}
+
+// compute the size type of the node in question
+int
+be_typedef::compute_size_type (void)
+{
+  be_type *type = be_type::narrow_from_decl (this->base_type ());
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_typedef::compute_size_type - "
+                         "bad base type\n"), -1);
+    }
+
+  // our size type is the same as our type
+  this->size_type (type->size_type ());
+  return 0;
 }
 
 // Narrowing

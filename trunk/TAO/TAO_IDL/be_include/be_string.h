@@ -74,7 +74,7 @@ public:
 
 protected:
   virtual void compute_tc_name (void);
-  // overridden method
+  // overridden method to compute typecode name
 };
 
 #endif

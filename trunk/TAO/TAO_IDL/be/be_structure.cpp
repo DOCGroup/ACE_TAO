@@ -91,9 +91,6 @@ be_structure::gen_client_header (void)
       cg->push (TAO_CodeGen::TAO_STRUCT_CH); // set current code gen state
 
       ch = cg->client_header ();
-      // pass info
-      cg->node (this);
-      cg->outstream (ch);
 
       ch->indent (); // start from whatever indentation level we were at
       *ch << "struct " << local_name () << nl;
@@ -103,9 +100,9 @@ be_structure::gen_client_header (void)
       // generate code for field members
       if (be_scope::gen_client_header () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_structure::gen_client_header\n"));
-          ACE_ERROR ((LM_ERROR, "code generation for fields failed\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_structure::gen_client_header -"
+                             "codegen for scope failed\n"), -1);
         }
 
       ch->decr_indent ();
@@ -163,7 +160,6 @@ be_structure::gen_client_stubs (void)
 
       cs = cg->client_stubs ();
       // pass info
-      cg->outstream (cs);
       cg->node (this);
 
       // generate the typecode information here
@@ -176,8 +172,9 @@ be_structure::gen_client_stubs (void)
       // encapsulation for the parameters
       if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error generating encapsulation\n\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_structure::gen_client_stubs -"
+                             "codegen for scope failed\n"), -1);
         }
       cs->decr_indent ();
       *cs << "};" << nl;
@@ -195,6 +192,40 @@ be_structure::gen_client_stubs (void)
   return 0;
 }
 
+// Generates the client-side inline information
+int
+be_structure::gen_client_inline (void)
+{
+  if (!this->cli_inline_gen_)
+    {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      cg->push (TAO_CodeGen::TAO_STRUCT_CI); // set current code gen state
+
+      if (this->gen_var_impl () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_structure::gen_client_inline -"
+                             "_var codegen failed\n"), -1);
+        }
+      if (this->size_type () == be_decl::VARIABLE && this->gen_out_impl () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_structure::gen_client_inline -"
+                             "_out codegen failed\n"), -1);
+        }
+      if (be_scope::gen_client_inline () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_structure::gen_client_inline -"
+                             "codegen for scope failed\n"), -1);
+        }
+      this->cli_inline_gen_ = I_TRUE;
+      cg->pop ();
+    }
+  return 0;
+}
+
 // Generates the server-side header information for the structure
 int
 be_structure::gen_server_header (void)
@@ -208,32 +239,6 @@ int
 be_structure::gen_server_skeletons (void)
 {
   // nothing to be done
-  return 0;
-}
-
-// Generates the client-side inline information
-int
-be_structure::gen_client_inline (void)
-{
-  if (!this->cli_inline_gen_)
-    {
-      if (this->gen_var_impl () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_structure: _var impl code gen failed\n"));
-          return -1;
-        }
-      if (this->size_type () == be_decl::VARIABLE && this->gen_out_impl () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_structure: _out impl code gen failed\n"));
-          return -1;
-        }
-      if (be_scope::gen_client_inline () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_structure: code gen failed for scope\n"));
-          return -1;
-        }
-      this->cli_inline_gen_ = I_TRUE;
-    }
   return 0;
 }
 
@@ -348,7 +353,6 @@ be_structure::gen_var_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   ci->indent (); // start with whatever was our current indent level
 
@@ -631,7 +635,6 @@ be_structure::gen_out_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
 
@@ -836,6 +839,47 @@ be_structure::tc_encap_len (void)
       this->encap_len_ += be_scope::tc_encap_len ();
     }
   return this->encap_len_;
+}
+
+// compute the size type of the node in question
+int
+be_structure::compute_size_type (void)
+{
+  UTL_ScopeActiveIterator *si;
+  AST_Decl *d;
+  be_decl *bd;
+
+  if (this->nmembers () > 0)
+    {
+      // if there are elements in this scope
+
+      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      // instantiate a scope iterator.
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+          bd = be_decl::narrow_from_decl (d);
+          if (bd != 0)
+            {
+              // our sizetype depends on the sizetype of our members. Although
+              // previous value of sizetype may get overwritten, we are
+              // guaranteed by the "size_type" call that once the value reached
+              // be_decl::VARIABLE, nothing else can overwrite it.
+              this->size_type (bd->size_type ());
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "WARNING (%N:%l) be_structure::compute_size_type - "
+                          "narrow_from_decl returned 0\n"));
+            }
+          si->next ();
+        } // end of while
+      delete si; // free the iterator object
+    }
+  return 0;
 }
 
 // Narrowing

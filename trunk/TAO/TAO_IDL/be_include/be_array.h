@@ -86,6 +86,11 @@ public:
   // Narrowing
   DEF_NARROW_METHODS2 (be_array, AST_Array, be_type);
   DEF_NARROW_FROM_DECL (be_array);
+
+protected:
+  virtual int compute_size_type (void);
+  // compute the size type if it is unknown
+
 };
 
 #endif

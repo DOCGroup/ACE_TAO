@@ -26,6 +26,7 @@
  */
 be_constant::be_constant (void)
 {
+  this->size_type (be_decl::FIXED);
 }
 
 be_constant::be_constant (AST_Expression::ExprType et,
@@ -35,6 +36,7 @@ be_constant::be_constant (AST_Expression::ExprType et,
   : AST_Constant (et, v, n, p),
     AST_Decl (AST_Decl::NT_const, n, p)
 {
+  this->size_type (be_decl::FIXED);
 }
 
 // ----------------------------------------

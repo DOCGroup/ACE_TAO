@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_enum.h
 //
@@ -13,9 +13,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_ENUM_H)
@@ -38,13 +38,13 @@ public:
   // constructor
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the enum 
+  // Generates the client-side header information for the enum
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the enum
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the enum 
+  // Generates the server-side header information for the enum
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the enum

@@ -58,7 +58,9 @@ TAO_CodeGen::make_state (void)
   switch (this->state ())
     {
     case TAO_STRUCT_CH:
-      return TAO_BE_STATE_STRUCT_CH::instance ();
+    case TAO_STRUCT_CS:
+    case TAO_STRUCT_CI:
+      return TAO_BE_STATE_STRUCT::instance ();
     case TAO_UNION_DISCTYPEDEFN_CH:
       return TAO_BE_STATE_UNION_DISCTYPEDEFN_CH::instance ();
     case TAO_UNION_DISCTYPEDEFN_CI:
