@@ -1,7 +1,7 @@
 //
 //$Id$
 //
-
+// FUZZ: disable check_for_missing_rir_env
 #include <CORBA.h>
 #include <coss/CosNaming.h>
 
