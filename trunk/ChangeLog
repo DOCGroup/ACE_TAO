@@ -2,7 +2,8 @@ Thu Nov  6 10:12:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp:
 
-	  #included "ace/os_include/net/os_if.h" to get if_nametoindex ().
+          Added patch from Bryan Bruesker to use ACE_OS::if_nametoindex ()
+	  instead of plain if_nametoindex ().
 
 Thu Nov  6 09:50:34 2003  Chad Elliott  <elliott_c@ociweb.com>
 
