@@ -1,3 +1,19 @@
+Tue Aug 18 14:15:23 1998  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_aix4.2.GNU: Don't link programs
+	  against libACE.a - just against libACEshr.a (the shared lib).
+
+	* include/makeinclude/platform_hpux_aCC.GNU:
+	* include/makeinclude/platform_hpux_gcc.GNU: Switch support for threads
+	  on and off using "make threads=0" or "make threads=1".  The default
+	  for aCC is to use threads, and for gcc is to not.  I deduced the 
+	  defaults from the old lib settings.  Sorry if the gcc one is wrong.
+
+	* include/config-hpux-10.x.h:
+	* include/config-hpux11.h:  Set threads things based on the setting
+	  of ACE_HAS_THREADS, which gets set in platform_macros.GNU (see above)
+	  to build with threads support.
+
 Tue Aug 18 10:57:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/rules.nested.GNU: 
