@@ -26,9 +26,10 @@ int
 main (int argc, char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  // Initilize the ORB
+
   ACE_TRY
     {
+      // Initilize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

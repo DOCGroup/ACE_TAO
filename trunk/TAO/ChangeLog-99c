@@ -1,3 +1,13 @@
+Wed Jun 09 16:03:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Default_Servant/client.cpp
+	* examples/POA/Forwarding/server.cpp
+	* examples/POA/On_Demand_Activation/server.cpp
+	* examples/POA/RootPOA/RootPOA.cpp
+	* examples/POA/TIE/server.cpp:
+
+	  Simple clean up.  Also fixed one memory leak.
+
 Wed Jun  9 13:43:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/fe: Regenerated the y.tab.cpp file with the new BYACC so
