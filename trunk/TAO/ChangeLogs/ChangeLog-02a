@@ -1,3 +1,9 @@
+Sun Jun 18 20:59:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Leader_Follower.i:
+          Moved lock() method up, it was being used before defined
+          inline.
+
 Sun Jun 18 10:58:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/LongUpcalls/Makefile:
