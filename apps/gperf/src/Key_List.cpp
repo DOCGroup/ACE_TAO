@@ -798,7 +798,11 @@ Key_List::output_keyword_table (void)
 
   for (column = 1; index < head->hash_value; column++)
     {
-      ACE_OS::printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
+      ACE_OS::printf ("%s\"\"%s,%s %s",
+                      l_brace,
+                      option.fill_default (),
+                      r_brace,
+                      column % 9 ? "" : "\n      ");
       index++;
     }
 
