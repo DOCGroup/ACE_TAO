@@ -64,6 +64,7 @@ public:
     TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH,    // ... client header
     TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS,    // ... client source
     TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS,    // ... client source
+    TAO_ARGUMENT_INTERCEPTORS_PARAMLIST,    // ... client source
     TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH,    // ... server header
     TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS,    // ... server source
     TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS,    // ... server source
@@ -268,6 +269,7 @@ public:
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS,   // arglist for request info obj instantiation
     TAO_OPERATION_INTERCEPTORS_ARGLIST_CS,   // private member list list for request info                                          // ... for client source
+    TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
     
     TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
