@@ -185,7 +185,7 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
 
 #if ! defined (ACE_HAS_LONGLONG_T)
 ACE_U_LongLong
-ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll)
+ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll) const
 {
   ACE_U_LongLong ret (lo_, hi_ + ll.hi_);
 
@@ -197,7 +197,7 @@ ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll)
 }
 
 ACE_U_LongLong
-ACE_U_LongLong::operator- (const ACE_U_LongLong &ll)
+ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
 {
   ACE_U_LongLong ret (lo_, hi_ - ll.hi_);
 
@@ -206,6 +206,12 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &ll)
   if (ret.lo_ > old_lo) --ret.hi_; /* borrow from ll.hi_ */
 
   return ret;
+}
+
+u_long
+ACE_U_LongLong::operator/ (const u_long ul) const
+{
+  return hi_ / ul * ULONG_MAX + lo_ / ul;
 }
 
 ACE_U_LongLong &
@@ -233,7 +239,7 @@ ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
 }
 
 void
-ACE_U_LongLong::dump (FILE *file)
+ACE_U_LongLong::dump (FILE *file) const
 {
   // Assumes 32-bit unsigned long, which has 10 decimal digits.
   ::fprintf (file, "%lu%010lu", hi_, lo_);

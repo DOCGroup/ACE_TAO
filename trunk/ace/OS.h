@@ -2371,18 +2371,22 @@ typedef short ACE_pri_t;
       typedef unsigned long long ACE_hrtime_t;
     #endif /* __GNUC__ */
   #else
+    // Provide our own unsigned long long.  This is intended to be
+    // use with ACE_High_Res_Timer, so the division operator assumes
+    // that the quotient fits into a u_long.
     class ACE_U_LongLong
     {
     public:
       ACE_U_LongLong (u_long lo = 0, u_long hi = 0) : hi_ (hi), lo_ (lo) {}
 
-      ACE_U_LongLong operator+ (const ACE_U_LongLong &);
-      ACE_U_LongLong operator- (const ACE_U_LongLong &);
+      ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
+      ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+      u_long operator/ (const u_long) const;
 
       ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
       ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
 
-      void dump (FILE * = stdout);
+      void dump (FILE * = stdout) const;
 
       u_long hi () const { return hi_; }
       u_long lo () const { return lo_; }
@@ -2397,8 +2401,7 @@ typedef short ACE_pri_t;
       u_long lo_;
     };
 
-    // Not ready yet: typedef ACE_U_LongLong ACE_hrtime_t;
-    typedef u_long ACE_hrtime_t;
+    typedef ACE_U_LongLong ACE_hrtime_t;
   #endif /* ACE_HAS_LONGLONG_T */
 #endif /* ACE_HAS_HI_RES_TIMER */
 
