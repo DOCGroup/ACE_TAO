@@ -44,6 +44,9 @@ public:
   Consumer (ACE_Time_Value& worktime, Supplier *fwddest = 0);
   // Constructor
 
+  Consumer (Supplier *fwddest = 0);
+  // Constructor
+
   // = The RtecEventComm::PushConsumer methods
 
   virtual void push (const RtecEventComm::EventSet& events
@@ -52,6 +55,8 @@ public:
   virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
+
+  void setWorkTime(ACE_Time_Value& worktime);
 
 private:
   int deadline_missed_;

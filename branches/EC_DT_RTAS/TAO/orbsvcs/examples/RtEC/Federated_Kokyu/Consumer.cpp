@@ -17,6 +17,12 @@
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
+Consumer::Consumer (Supplier *fwddest)
+  : worktime_(0,0),
+    fwddest_(fwddest)
+{
+}
+
 Consumer::Consumer (ACE_Time_Value& worktime, Supplier *fwddest)
   : worktime_(worktime),
     fwddest_(fwddest)
@@ -131,6 +137,12 @@ void
 Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+void
+Consumer::setWorkTime(ACE_Time_Value& worktime)
+{
+  this->worktime_.set(worktime.sec(),worktime.usec());
 }
 
 // ****************************************************************
