@@ -1,3 +1,10 @@
+Wed Feb 18 16:02:34 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* Commented and indented the follwing files in orbsvcs/orbsvcs/
+	  CosPropertyService.idl
+	  CosPropertyService_i.h
+	  CosPropertyService_i.cpp
+
 Wed Feb 18 12:28:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Thruput/TAO/tmplinst.cpp: 
