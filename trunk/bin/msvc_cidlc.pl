@@ -26,7 +26,7 @@ $Build_Cmd = "/BUILD";
 $use_custom_dir = 0;
 $useenv = '';
 $vc7 = 0;
-$Build_Release=1;
+$Build_Debug = 1;
 
 # Build
 sub Build ($$)
@@ -92,8 +92,8 @@ sub Build_All ()
     $count = 0;
     foreach $c (@configurations) {
         print STDERR "Configuration ".$count++." of ".$#configurations."\n" if ($print_status == 1);
-        if ($Build_Release) {
-            $Status = Build_VC7 ($c, "release");
+        if ($Build_Debug) {
+            $Status = Build_VC7 ($c, "debug");
             return if $Status != 0 && !$Ignore_errors;
         }
     }
