@@ -19,7 +19,7 @@ class Server_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Server_Task (char* ior_file,
+  Server_Task (const char* ior_file,
                CORBA::ORB_ptr sorb,
                ACE_Null_Condition &cond,
                ACE_Thread_Manager *thr_mgr);
