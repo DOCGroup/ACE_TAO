@@ -55,7 +55,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /**
-   * Disable signal <signum>
+   * Disable signal @a signum
    * This is here to prevent Win32 from
    * disabling SPIPE using socket calls
    */

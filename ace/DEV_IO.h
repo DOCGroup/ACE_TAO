@@ -107,7 +107,7 @@ public:
                 int band,
                 int flags) const;
 
-  /// Recv <cntl> and <data> via STREAM pipes.
+  /// Recv @a cntl and @a data via STREAM pipes.
   ssize_t recv (ACE_Str_Buf *cntl,
                 ACE_Str_Buf *data,
                 int *flags) const;

@@ -221,7 +221,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Metrics_Cache_T.i"
+#include "ace/Metrics_Cache_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

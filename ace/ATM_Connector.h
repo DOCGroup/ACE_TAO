@@ -27,10 +27,10 @@
 #include "ace/ATM_QoS.h"
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_LINUX_ATM)
-#include "SOCK_Connector.h"
+#include "ace/SOCK_Connector.h"
 typedef ACE_SOCK_Connector ATM_Connector;
 #else
-#include "XTI_ATM_Mcast.h"
+#include "ace/XTI_ATM_Mcast.h"
 typedef ACE_XTI_ATM_Mcast ATM_Connector;
 #endif
 
