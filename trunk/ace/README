@@ -610,6 +610,17 @@ ACE_LACKS_ACE_IOSTREAM                  Platform can not build
 ACE_LACKS_BSEARCH                       Compiler/platform lacks the
                                         standard C library bsearch()
                                         function
+ACE_LACKS_CMSG_DATA_MACRO               Platform has
+                                        ACE_HAS_4_4BSD_SENDMSG_RECVMSG but does
+                                        not define CMSG_DATA (cmsg) macro.
+ACE_LACKS_CMSG_DATA_MEMBER              Platform has
+                                        ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its
+                                        cmsghdr structure does not contain
+                                        an 'unsigned char cmsg_data[0]'
+                                        member.  (This may be
+                                        'unsigned char __cmsg_data[0]' on some
+                                        platforms, in which case we need
+                                        another macro.)
 ACE_LACKS_COND_TIMEDWAIT_RESET          pthread_cond_timedwait does
                                         *not* reset the time argument
                                         when the lock is acquired.

@@ -23,14 +23,14 @@
 # include "ace/inc_user_config.h"
 
 // Get OS.h to compile on some of the platforms without DIR info yet.
-#if !defined (ACE_HAS_DIRENT)
-typedef int DIR;
-struct dirent {};
+# if !defined (ACE_HAS_DIRENT)
+    typedef int DIR;
+    struct dirent {};
 #endif /* ACE_HAS_DIRENT */
 
-#if defined (ACE_PSOS_TM)
-typedef long long       longlong_t;
-typedef long            id_t;
+# if defined (ACE_PSOS_TM)
+    typedef long long longlong_t;
+    typedef long      id_t;
 #endif /* ACE_PSOS_TM */
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
@@ -102,8 +102,15 @@ typedef long            id_t;
 # endif /* ACE_MAX_FULLY_QUALIFIED_NAME_LEN */
 
 # if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-// control message size to pass a file descriptor
+    // Control message size to pass a file descriptor.
 #   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
+#   if defined (ACE_LACKS_CMSG_DATA_MACRO)
+#     if defined (ACE_LACKS_CMSG_DATA_MEMBER)
+#       define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
+#     else
+#       define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
+#     endif /* ACE_LACKS_CMSG_DATA_MEMBER */
+#   endif /* ACE_LACKS_CMSG_DATA_MACRO */
 # endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
 // Define the default constants for ACE.  Many of these are used for
@@ -1695,13 +1702,13 @@ typedef DWORD  nlink_t;
 // non-supported members at compile time.  Time values are of type
 // ACE_Time_Value for easy comparison.
 
-struct stat 
+struct stat
 {
-  //  mode_t   st_mode;    // UNIX styled file attribute 
-  //  nlink_t  st_nlink;   // number of hard links 
-  ACE_Time_Value st_atime; // time of last access 
-  ACE_Time_Value st_mtime; // time of last data modification 
-  off_t st_size;           // file size, in bytes 
+  //  mode_t   st_mode;    // UNIX styled file attribute
+  //  nlink_t  st_nlink;   // number of hard links
+  ACE_Time_Value st_atime; // time of last access
+  ACE_Time_Value st_mtime; // time of last data modification
+  off_t st_size;           // file size, in bytes
   //  u_long   st_blksize; // optimal blocksize for I/O
   //  u_long   st_flags;   // user defined flags for file
 };
@@ -2933,7 +2940,7 @@ struct iovec
   char *iov_base; // data to be read/written
 };
 
-struct msghdr 
+struct msghdr
 {
   sockaddr * msg_name;
   // optional address
@@ -2941,11 +2948,11 @@ struct msghdr
   int msg_namelen;
   // size of address
 
-  iovec *msg_iov;		
+  iovec *msg_iov;
   /* scatter/gather array */
 
-  int msg_iovlen;		
-  // # elements in msg_iov 
+  int msg_iovlen;
+  // # elements in msg_iov
 
   caddr_t msg_accrights;
   // access rights sent/received
