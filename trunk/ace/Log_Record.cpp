@@ -259,7 +259,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 int
 ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
-                       ostream &s)
+                       ACE_OSTREAM_TYPE &s)
 {
   ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
   int result = this->format_msg (host_name, verbose_flag, verbose_msg);
