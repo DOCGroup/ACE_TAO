@@ -1,3 +1,8 @@
+Thu May 20 12:14:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	  Added missing template instantiations.
+
 Thu May 20 11:06:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
