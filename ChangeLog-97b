@@ -14,6 +14,8 @@ Thu Nov 13 05:47:42 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/Singleton.cpp: register ACE_TSS_Singletons for cleanup with
           Object_Manager.
 
+        * ace/OS.{i,cpp} (gethostbyaddr): added VxWorks support.
+
 Thu Nov 13 02:06:58 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
 
         * ace/Signal.i: Changed to use new Object Manager member.
