@@ -514,7 +514,8 @@ public:
   // we've returned since we've been asked to shut down the value of 1
   // is returned.
 
-  void shutdown (CORBA::Boolean wait_for_completion = 0);
+  void shutdown (CORBA::Boolean wait_for_completion = 0,
+                 CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ());
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks

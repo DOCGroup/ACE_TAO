@@ -239,8 +239,23 @@ CORBA_ORB::open (void)
 }
 
 void
-CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
+CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
+                     CORBA::Environment &ACE_TRY_ENV)
 {
+  // Is the <wait_for_completion> semantics for this thread correct?
+  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // If the ORB::shutdown operation is called, it makes a call on
+  // deactivate with a TRUE etherealize_objects parameter for each POA
+  // manager known in the process; the wait_for_completion parameter
+  // to deactivate will be the same as the similarly named parameter
+  // of ORB::shutdown.
+  this->orb_core_->object_adapter ()->deactivate (wait_for_completion,
+                                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
   // Set the shutdown flag
   this->should_shutdown (1);
 

@@ -64,7 +64,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     etherealize_objects_ (1),
     outstanding_requests_ (0),
     outstanding_requests_condition_ (thread_lock),
-    destroy_pending_ (0)
+    wait_for_completion_pending_ (0)
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -130,10 +130,10 @@ TAO_POA::~TAO_POA (void)
 }
 
 PortableServer::POA_ptr
-TAO_POA::create_POA (const char *adapter_name,
-                     PortableServer::POAManager_ptr poa_manager,
-                     const CORBA::PolicyList &policies,
-                     CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_POA_i (const char *adapter_name,
+                       PortableServer::POAManager_ptr poa_manager,
+                       const CORBA::PolicyList &policies,
+                       CORBA::Environment &ACE_TRY_ENV)
 {
   // If any of the policy objects specified are not valid for the ORB
   // implementation, if conflicting policy objects are specified, or
@@ -156,7 +156,7 @@ TAO_POA::create_POA (const char *adapter_name,
   if (CORBA::is_nil (poa_manager))
     {
       ACE_NEW_THROW_EX (poa_manager_impl,
-                        TAO_POA_Manager (this->orb_core_.object_adapter ()->lock ()),
+                        TAO_POA_Manager (*this->orb_core_.object_adapter ()),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
@@ -178,10 +178,10 @@ TAO_POA::create_POA (const char *adapter_name,
       poa_manager_impl = ACE_dynamic_cast (TAO_POA_Manager *, mgr);
     }
 
-  TAO_POA *poa = this->create_POA (adapter_name,
-                                   *poa_manager_impl,
-                                   tao_policies,
-                                   ACE_TRY_ENV);
+  TAO_POA *poa = this->create_POA_i (adapter_name,
+                                     *poa_manager_impl,
+                                     tao_policies,
+                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Give ownership of the new poa to the auto pointer.
@@ -315,6 +315,10 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
         {
           if (!CORBA::is_nil (this->adapter_activator_.in ()))
             {
+              // Check the state of the POA Manager.
+              this->check_poa_manager_state (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (0);
+
               PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
               ACE_CHECK_RETURN (0);
 
@@ -322,6 +326,8 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
                 this->adapter_activator_->unknown_adapter (self.in (),
                                                            child_name.c_str (),
                                                            ACE_TRY_ENV);
+              ACE_CHECK_RETURN (0);
+
               if (success)
                 {
                   result = this->children_.find (child_name,
@@ -362,6 +368,11 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                     CORBA::Boolean wait_for_completion,
                     CORBA::Environment &ACE_TRY_ENV)
 {
+  // Is the <wait_for_completion> semantics for this thread correct?
+  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->cleanup_in_progress_ = 1;
 
   // This operation destroys the POA and all descendant POAs. The POA
@@ -405,18 +416,9 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // destroying the POAs.
 
   this->deactivate_all_objects_i (etherealize_objects,
+                                  wait_for_completion,
                                   ACE_TRY_ENV);
-
-  while (wait_for_completion &&
-         this->outstanding_requests_ > 0)
-    {
-      this->destroy_pending_ = 1;
-      int result = this->outstanding_requests_condition_.wait ();
-      if (result == -1)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
-    }
+  ACE_CHECK;
 
   // Commit suicide
   delete this;
@@ -692,6 +694,54 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
 
 void
 TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
+                                   CORBA::Boolean wait_for_completion,
+                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  this->deactivate_all_objects_i (etherealize_objects,
+                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->wait_for_completions (wait_for_completion,
+                              ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  while (wait_for_completion &&
+         this->outstanding_requests_ > 0)
+    {
+      this->wait_for_completion_pending_ = 1;
+
+      int result = this->outstanding_requests_condition_.wait ();
+      if (result == -1)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
+}
+
+/* static */
+void
+TAO_POA::check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completion,
+                                               CORBA::Environment &ACE_TRY_ENV)
+{
+  if (wait_for_completion)
+    {
+      TAO_POA_Current_Impl *poa_current_impl = TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+
+      // This thread cannot currently be in an upcall.
+      if (poa_current_impl != 0)
+        {
+          ACE_THROW (CORBA::BAD_INV_ORDER ());
+        }
+    }
+}
+
+void
+TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->etherealize_objects_ = etherealize_objects;
@@ -826,6 +876,17 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           CORBA::Boolean remaining_activations =
             this->active_object_map ().remaining_activations (active_object_map_entry->servant_);
 
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring
+          // once the upcalls complete.  Even though we are releasing
+          // the lock, other threads will not be able to make progress
+          // since <Object_Adapter::non_servant_upcall_in_progress_>
+          // has been set.
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+          ACE_UNUSED_ARG (non_servant_upcall);
+
           // If the cleanup_in_progress parameter is TRUE, the reason
           // for the etherealize operation is that either the
           // deactivate or destroy operation was called with an
@@ -861,6 +922,64 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
 
   if (result != 0)
     {
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
+}
+
+void
+TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
+{
+  PortableServer::POAManager::State state = this->poa_manager_.get_state_i ();
+
+  if (state == PortableServer::POAManager::ACTIVE)
+    {
+      // When a POA manager is in the active state, the associated
+      // POAs will receive and start processing requests (assuming
+      // that appropriate thread resources are available).
+      return;
+    }
+
+  if (state == PortableServer::POAManager::DISCARDING)
+    {
+      // When a POA manager is in the discarding state, the associated
+      // POAs will discard all incoming requests (whose processing has
+      // not yet begun). When a request is discarded, the TRANSIENT
+      // system exception must be returned to the client-side to
+      // indicate that the request should be re-issued. (Of course, an
+      // ORB may always reject a request for other reasons and raise
+      // some other system exception.)
+      ACE_THROW (CORBA::TRANSIENT ());
+    }
+
+  if (state == PortableServer::POAManager::HOLDING)
+    {
+      // When a POA manager is in the holding state, the associated
+      // POAs will queue incoming requests. The number of requests
+      // that can be queued is an implementation limit. If this limit
+      // is reached, the POAs may discard requests and return the
+      // TRANSIENT system exception to the client to indicate that the
+      // client should reissue the request. (Of course, an ORB may
+      // always reject a request for other reasons and raise some
+      // other system exception.)
+
+      // Since there is no queuing in TAO, we immediately raise a
+      // TRANSIENT exception.
+      ACE_THROW (CORBA::TRANSIENT ());
+    }
+
+  if (state == PortableServer::POAManager::INACTIVE)
+    {
+      // The inactive state is entered when the associated POAs are to
+      // be shut down. Unlike the discarding state, the inactive state
+      // is not a temporary state. When a POA manager is in the
+      // inactive state, the associated POAs will reject new
+      // requests. The rejection mechanism used is specific to the
+      // vendor. The GIOP location forwarding mechanism and
+      // CloseConnection message are examples of mechanisms that could
+      // be used to indicate the rejection. If the client is
+      // co-resident in the same process, the ORB could raise the
+      // OBJ_ADAPTER exception to indicate that the object
+      // implementation is unavailable.
       ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 }
@@ -3409,8 +3528,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
-template class ACE_Unbounded_Set<TAO_POA *>;
-template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
 template class auto_ptr<TAO_Id_Assignment_Policy>;
 template class auto_ptr<TAO_Id_Uniqueness_Policy>;
 template class auto_ptr<TAO_Lifespan_Policy>;
@@ -3474,8 +3591,6 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
-#pragma instantiate ACE_Unbounded_Set<TAO_POA *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>
 #pragma instantiate auto_ptr<TAO_Id_Assignment_Policy>
 #pragma instantiate auto_ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate auto_ptr<TAO_Lifespan_Policy>

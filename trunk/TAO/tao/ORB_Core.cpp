@@ -853,7 +853,7 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
   // Need to do double-checked locking here to cover the case of
   // multiple threads using a global resource policy.
   if (poa_manager == 0)
-    poa_manager = new TAO_POA_Manager (this->object_adapter ()->lock ());
+    poa_manager = new TAO_POA_Manager (*this->object_adapter ());
 
   TAO_POA_Policies *root_poa_policies = 0;
   if (policies == 0)

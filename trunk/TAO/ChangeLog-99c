@@ -1,3 +1,54 @@
+Wed May 26 14:01:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POAManager:
+
+	  Fixed hold_requests_i(), discard_requests_i(), and
+	  deactivate_i() such that there is a check for a valid
+	  <wait_for_completion> flag and the <wait_for_completion> flag is
+	  processed correctly on all the POAs that the POA Manager is
+	  managing.
+
+	* tao/POA:
+
+	  Renamed <destroy_pending_> to <wait_for_completion_pending_>
+	  since waiting doesn't only happen on destruction.
+
+	  find_POA_i(): Check the state of the POA Manager before
+	  dispatching a POA creation request to the adapter activator.
+
+	  check_for_valid_wait_for_completions(): The thread that calls a
+	  POA/ORB function with <wait_for_completion> set to true must not
+	  be a dispatch thread itself.  If it is, this would lead to a
+	  deadlock situation.  In this case, the ORB must raise a
+	  CORBA::BAD_INV_ORDER() exception.
+
+	  wait_for_completions(): Waits for outstanding requests on this
+	  POA to complete.
+
+	  cleanup_servant(): We need to let go of the lock before calling
+	  etherealize() on the servant activator.
+
+	* tao/Object_Adapter:
+
+	  deactivate(): The Object Adapter now keeps a list of all active
+	  POA Managers.  This is useful in ORB::shutdown() where we need
+	  to deactivate all the POA Managers.
+
+	  dispatch_servant_i(): Check the state of the POA Manager before
+	  dispatching the client request to the target POA.  Only if the
+	  POA Manager state is active is the request dispatched to the
+	  servant.
+
+	* tao/ORB.cpp (shutdown): Fixed this function such that it
+	  properly deactivates all the POA Managers.
+
+	* tao/Messaging_Policy_i.h: Fixed inherits via dominance warnings.
+
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+	  This test was out of date and needed some maintenance.  Also,
+	  made the reverse map effectiveness checking optional, and added
+	  exception checking code.
+
 Wed May 26 14:56:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OBV/Typed_Events/Event_Types_impl.h: Disabled VC

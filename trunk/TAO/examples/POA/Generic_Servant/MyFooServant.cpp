@@ -67,9 +67,9 @@ MyFooServant::timed_operation (CORBA::ULong timeout,
 }
 
 void
-MyFooServant::shutdown (CORBA::Environment &)
+MyFooServant::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->orb_->shutdown ();
+  this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 
