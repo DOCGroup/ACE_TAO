@@ -1,3 +1,8 @@
+Thu Mar 23 22:28:09 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/Makefile:
+	  Only the TAO_Svc_Utils library is needed in this directory.
+
 Thu Mar 23 20:49:43 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/append.cpp (append), skip.cpp (skip): replaced
