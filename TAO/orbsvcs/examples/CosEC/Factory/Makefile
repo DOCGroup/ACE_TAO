@@ -96,8 +96,6 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -394,8 +392,6 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -727,8 +723,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEC_Utility_Methods_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEC_Utility_Methods_T.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -736,8 +730,6 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1027,8 +1019,6 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1341,8 +1331,6 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
