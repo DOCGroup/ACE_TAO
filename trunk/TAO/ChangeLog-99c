@@ -1,8 +1,15 @@
+Mon Mar 22 14:13:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile,orbsvcs/orbsvcs/Makefile: added ace_components
+          support for TAO_COMPONENTS and ORBSVCS_COMPONENTS, respectively.
+          This allows other Makefiles to determine which components were
+          built into libTAO and liborbsvcs.
+
 Sun Mar 21 22:33:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): The second call to sock_rcvbuf_size()
- 	  should be sock_sndbuf_size().  Thanks to Russ Noseworthy for
- 	  reporting this.
+        * tao/ORB_Core.cpp (init): The second call to sock_rcvbuf_size()
+          should be sock_sndbuf_size().  Thanks to Russ Noseworthy for
+          reporting this.
 
 Sun Mar 21 21:23:44 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -14,77 +21,77 @@ Sun Mar 21 20:52:58 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Mar 21 20:27:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/objref.cpp: 
-	  The test for object references was broken; but only Linux/EGCS
-	  triggered the error.
+        * tests/Param_Test/objref.cpp:
+          The test for object references was broken; but only Linux/EGCS
+          triggered the error.
 
 Sun Mar 21 15:45:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/GIOP.cpp:
-	  Added missing comma in timeprobe message string array.
+        * tao/GIOP.cpp:
+          Added missing comma in timeprobe message string array.
 
 Sun Mar 21 14:47:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): Used #ifdef
- 	  (ACE_LACKS_U_LONGLONG_T) instead of #ifdef (VXWORKS)||(CHORUS)
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): Used #ifdef
+          (ACE_LACKS_U_LONGLONG_T) instead of #ifdef (VXWORKS)||(CHORUS)
 
 Sat Mar 20 23:38:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* tests/MT_Client/server.dsp:
-	* tests/MT_Client/client.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * tests/MT_Client/server.dsp:
+        * tests/MT_Client/client.dsp:
 
-	  Fixed some project settings for the above project files.
+          Fixed some project settings for the above project files.
 
 Sat Mar 20 20:27:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/MT_Client.dsw:
-	  Added projects and workspace for this test, thanks to Irfan
-	  for helping me out with it.
+        * tests/MT_Client/MT_Client.dsw:
+          Added projects and workspace for this test, thanks to Irfan
+          for helping me out with it.
 
-	* tests/MT_Client/README:
-	* tests/MT_Client/run_test.pl:
-	  Added canonical files to the example.
+        * tests/MT_Client/README:
+        * tests/MT_Client/run_test.pl:
+          Added canonical files to the example.
 
-	* tests/MT_Client/client.cpp:
-	  Added an error message in case thread creation fails.
+        * tests/MT_Client/client.cpp:
+          Added an error message in case thread creation fails.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  Added a debug message when orb->shutdown() is called.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Added a debug message when orb->shutdown() is called.
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	  Removed one method from the Profile classes that was only used
-	  here.  Used the constructor instead, which is more efficient,
-	  anyway.
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          Removed one method from the Profile classes that was only used
+          here.  Used the constructor instead, which is more efficient,
+          anyway.
 
-	* orbsvcs/tests/ImplRepo/Makefile:
-	  Removed call to upper level Makefile, that's not the style we
-	  use.
+        * orbsvcs/tests/ImplRepo/Makefile:
+          Removed call to upper level Makefile, that's not the style we
+          use.
 
 Sat Mar 20 19:10:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Connector.h:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_ORB.cpp:
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Profile.i:
-	* tao/IIOP_Profile.cpp:
-	* tao/Invocation.h:
-	* tao/Invocation.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/Pluggable.h:
-	* tao/Pluggable.cpp:
-	  Fixed a nasty concurency problem in the Cached_Connector. The
-	  solution is to separate the path to return the new hint and the
-	  new Svc_Handler from the Cached_Connector (check the ACE
-	  changelog for details).
-	  We store the profile and transport used for an invocation in the
-	  Invocation object to avoid the same concurrency problems. In
-	  this way if another thread changes the profile_in_use() of the
-	  stub object that we are using we are not affected.
-	  We still need to check that the modifications to the MProfile
-	  and to STUB_Object object are thread-safe.
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_ORB.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/IIOP_Profile.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Pluggable.h:
+        * tao/Pluggable.cpp:
+          Fixed a nasty concurency problem in the Cached_Connector. The
+          solution is to separate the path to return the new hint and the
+          new Svc_Handler from the Cached_Connector (check the ACE
+          changelog for details).
+          We store the profile and transport used for an invocation in the
+          Invocation object to avoid the same concurrency problems. In
+          this way if another thread changes the profile_in_use() of the
+          stub object that we are using we are not affected.
+          We still need to check that the modifications to the MProfile
+          and to STUB_Object object are thread-safe.
 
 Sat Mar 20 15:21:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -117,151 +124,151 @@ Sat Mar 20 14:40:10 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sat Mar 20 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile:
-	* tests/MT_Client/Makefile:
-	* tests/MT_Client/client.cpp:
-	* tests/MT_Client/server.conf:
-	* tests/MT_Client/server.cpp:
-	* tests/MT_Client/test.idl:
-	* tests/MT_Client/test_i.cpp:
-	* tests/MT_Client/test_i.h:
-	* tests/MT_Client/test_i.i:
-	  New test that runs a MT client using the same object reference
-	  is all threads. Notice that this may be a bad idea
-	  performance-wise, but it must work correctly.
+        * tests/Makefile:
+        * tests/MT_Client/Makefile:
+        * tests/MT_Client/client.cpp:
+        * tests/MT_Client/server.conf:
+        * tests/MT_Client/server.cpp:
+        * tests/MT_Client/test.idl:
+        * tests/MT_Client/test_i.cpp:
+        * tests/MT_Client/test_i.h:
+        * tests/MT_Client/test_i.i:
+          New test that runs a MT client using the same object reference
+          is all threads. Notice that this may be a bad idea
+          performance-wise, but it must work correctly.
 
 Sat Mar 20 13:38:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Timeprobe.h:
-	  Left some macros uncommented which would lead to link
-	  errors when building TAO. Fixed.
+        * tao/Timeprobe.h:
+          Left some macros uncommented which would lead to link
+          errors when building TAO. Fixed.
 
 Sat Mar 20 11:06:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_query): Only print an error message if
- 	  the TAO_debug level is > 0.  Also, make sure to terminate the
- 	  line with '\n'.  Thanks to Russ Noseworthy for reporting this.
+        * tao/ORB.cpp (multicast_query): Only print an error message if
+          the TAO_debug level is > 0.  Also, make sure to terminate the
+          line with '\n'.  Thanks to Russ Noseworthy for reporting this.
 
 Sat Mar 20 01:34:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Timeprobe.h:
-	* tao/CDR.cpp:
-	* tao/Connect.cpp:
-	* tao/GIOP.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Invocation.cpp:
-	* tao/Operation_Table.cpp:
-	* tao/ORB.cpp:
-	* tao/POA.cpp:
-	* tao/Servant_Base.cpp:
-	* tao/Server_Request.cpp:
-	* tao/Stub.cpp:
-	  Renamed the timeprobe macros that are pertinent to
-	  the pluggable protocols test and added a macro to
-	  Timeprobe.h that turns off all the others.
+        * tao/Timeprobe.h:
+        * tao/CDR.cpp:
+        * tao/Connect.cpp:
+        * tao/GIOP.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/Operation_Table.cpp:
+        * tao/ORB.cpp:
+        * tao/POA.cpp:
+        * tao/Servant_Base.cpp:
+        * tao/Server_Request.cpp:
+        * tao/Stub.cpp:
+          Renamed the timeprobe macros that are pertinent to
+          the pluggable protocols test and added a macro to
+          Timeprobe.h that turns off all the others.
 
 Fri Mar 19 22:04:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/decode.cpp (decode):
-	  When decoding an Any we need to create a Message_Block, use
-	  append() to copy the contents of the CDR stream and then store
-	  the message block into the any for later decoding (when we
-	  either use DynAny or we have enough static information).
-	  The manipulation of the Message_Block was incorrect: the data
-	  was copied using an OutputCDR stream, that copies the contents
-	  but acts on a duplicate of the Message_Block, thus, it does not
-	  update the wr_ptr() and rd_ptr().
-	  We corrected this problem and things are happy again.
+        * tao/decode.cpp (decode):
+          When decoding an Any we need to create a Message_Block, use
+          append() to copy the contents of the CDR stream and then store
+          the message block into the any for later decoding (when we
+          either use DynAny or we have enough static information).
+          The manipulation of the Message_Block was incorrect: the data
+          was copied using an OutputCDR stream, that copies the contents
+          but acts on a duplicate of the Message_Block, thus, it does not
+          update the wr_ptr() and rd_ptr().
+          We corrected this problem and things are happy again.
 
-	* examples/POA/DSI/Database_i.h (class DatabaseImpl): Switched the
-	  memory allocator to be a local one rather than a persistent one.
+        * examples/POA/DSI/Database_i.h (class DatabaseImpl): Switched the
+          memory allocator to be a local one rather than a persistent one.
 
 Fri Mar 19 19:15:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Stub.h:
-	* tao/IIOP_ORB.h:
-	* Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp:
-	* Benchmark/Marshal_Test/TAO/marshalS.cpp:
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	* utils/catior/catior.cpp:
-	  Removed last references to IIOP_Object.
+        * tao/Stub.h:
+        * tao/IIOP_ORB.h:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/TAO/marshalS.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * utils/catior/catior.cpp:
+          Removed last references to IIOP_Object.
 
 Fri Mar 19 17:55:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/CurrentC.h:
-	* tao/DynAnyC.h:
-	* tao/PolicyC.h:
-	* tao/POAC.h:
-	* tao/Object_KeyC.h:
-	  Added the _ptr_type and _var_type typedefs for these
-	  non-regenerated classes. Thanks to
-	  Carl Grinstead <grinstea@tsunami.com> and
-	  James A. Risinger <james@tsunami.com>
-	  for pointing out the oversight.
+        * tao/CurrentC.h:
+        * tao/DynAnyC.h:
+        * tao/PolicyC.h:
+        * tao/POAC.h:
+        * tao/Object_KeyC.h:
+          Added the _ptr_type and _var_type typedefs for these
+          non-regenerated classes. Thanks to
+          Carl Grinstead <grinstea@tsunami.com> and
+          James A. Risinger <james@tsunami.com>
+          for pointing out the oversight.
 
 Fri Mar 19 14:56:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/CDR.h:
-	* tao/CDR.cpp:
-	* tao/Connect.cpp:
-	* tao/GIOP.cpp:
-	* tao/IIOP_ORB.cpp:
-	* tao/Invocation.h:
-	* tao/Invocation.i:
-	* tao/Invocation.cpp:
-	* tao/Typecode.cpp:
-	* tao/decode.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* utils/catior/Makefile:
-	* utils/catior/catior.cpp:
-	  The CDR class changed to ACE_CDR.
+        * tao/corbafwd.h:
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+        * tao/Connect.cpp:
+        * tao/GIOP.cpp:
+        * tao/IIOP_ORB.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/Typecode.cpp:
+        * tao/decode.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * utils/catior/Makefile:
+        * utils/catior/catior.cpp:
+          The CDR class changed to ACE_CDR.
 
-	* TAO_IDL/util/utl_global.cpp:
-	  By default we must generate "tao/corba.h" instead of
-	  <tao/corba.h>; in other words the compiler behaves as if the if
-	  the "-in" option was used.
+        * TAO_IDL/util/utl_global.cpp:
+          By default we must generate "tao/corba.h" instead of
+          <tao/corba.h>; in other words the compiler behaves as if the if
+          the "-in" option was used.
 
-	* TAO_IDL/driver/drv_args.cpp:
-	  Added an error message if the -i option is missused, only -ic
-	  and -in are valid.
+        * TAO_IDL/driver/drv_args.cpp:
+          Added an error message if the -i option is missused, only -ic
+          and -in are valid.
 
-	* Updated the dependencies since to exploit the change in the
-	  generate #includes.
+        * Updated the dependencies since to exploit the change in the
+          generate #includes.
 
 Fri Mar 19 14:27:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/examples/POA/DSI/Database_i.cpp:
-	  Changed DatabaseImpl::Entry::_is_a() to use >>= before
-	  comparing arg values. This slows down the test code, but
-	  TAO defers populating the void* field of the Any until
-	  necessary (most of the time ;-)), which speeds up everything else.
+        * TAO/examples/POA/DSI/Database_i.cpp:
+          Changed DatabaseImpl::Entry::_is_a() to use >>= before
+          comparing arg values. This slows down the test code, but
+          TAO defers populating the void* field of the Any until
+          necessary (most of the time ;-)), which speeds up everything else.
 
 Fri Mar 19 14:20:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Server_Request.cpp:
-	  Fixed an incorrect (and on closer inspection, unnecessary)
-	  use of TAO_CHECK_ENV. Also added a release() for a newly
-	  allocated (and immedialtely duplicated) message block.
+        * tao/Server_Request.cpp:
+          Fixed an incorrect (and on closer inspection, unnecessary)
+          use of TAO_CHECK_ENV. Also added a release() for a newly
+          allocated (and immedialtely duplicated) message block.
 
 Fri Mar 19 01:19:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Server_Request.h:
-	  Typo in comments.
+        * tao/Server_Request.h:
+          Typo in comments.
 
-	* tao/Server_Request.cpp:
-	  Fixed IIOP_Server_Request::arguments(), which was
-	  totally broken, with a change suggested by Carlos.
+        * tao/Server_Request.cpp:
+          Fixed IIOP_Server_Request::arguments(), which was
+          totally broken, with a change suggested by Carlos.
 
 1999-03-18  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	  Returning from a query where the request_id had been seen wasn't
-	  allocating memory for the out parameters. This was causing an
-	  unwholesome seg fault. Thanks to Pradeep Gore
-	  <pradeep@cs.wustl.edu> for discovering this.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+          Returning from a query where the request_id had been seen wasn't
+          allocating memory for the out parameters. This was causing an
+          unwholesome seg fault. Thanks to Pradeep Gore
+          <pradeep@cs.wustl.edu> for discovering this.
 
 Thu Mar 18 21:06:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -327,89 +334,89 @@ Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/POA.cpp: Phase one of the new POA design is complete.
 
-	  - We now have support for active demuxing of user defined
-	    ids. This is achieved by using a active demux hint field in
-	    the object key.
+          - We now have support for active demuxing of user defined
+            ids. This is achieved by using a active demux hint field in
+            the object key.
 
-	  - We have support for reactivating servants with system
-	    generated ids.  In this case, system ids are simply generated
-	    by incrementing a counter. Note that in this case, the id ->
-	    servant map is a hash map since active demux keys cannot be
-	    reused once deactivated. However, the good news is that the
-	    active demux key can be used as the hint in the object key.
+          - We have support for reactivating servants with system
+            generated ids.  In this case, system ids are simply generated
+            by incrementing a counter. Note that in this case, the id ->
+            servant map is a hash map since active demux keys cannot be
+            reused once deactivated. However, the good news is that the
+            active demux key can be used as the hint in the object key.
 
-	  - The use of the hint in the object key is optional.  If used,
-	    the lookups are faster (unless the hint is invalidated by a
-	    deactivation or by restarting a persistent POA).  However,
-	    using the hint results in a larger IOR, and more memory being
-	    used in the active object map.  This option can be controlled
-	    through the -ORBactivehintinids runtime switch and is turned
-	    on by default.
+          - The use of the hint in the object key is optional.  If used,
+            the lookups are faster (unless the hint is invalidated by a
+            deactivation or by restarting a persistent POA).  However,
+            using the hint results in a larger IOR, and more memory being
+            used in the active object map.  This option can be controlled
+            through the -ORBactivehintinids runtime switch and is turned
+            on by default.
 
-	  - If the applications knows that reactivations will not occur,
-	    they can simply use the old scheme of directly using the
-	    active demux key as the system id.  This will (a) make the IOR
-	    shorter, (b) less memory will be used in the active object
-	    map, and (c) the lookups will be quicker and (more)
-	    predictable.
+          - If the applications knows that reactivations will not occur,
+            they can simply use the old scheme of directly using the
+            active demux key as the system id.  This will (a) make the IOR
+            shorter, (b) less memory will be used in the active object
+            map, and (c) the lookups will be quicker and (more)
+            predictable.
 
-	  - Etherialization of servants (through the use of a Servant
-	    Activator) is temporarily disabled.  Once we fix the reference
-	    counting on the servants, this will start working again.
+          - Etherialization of servants (through the use of a Servant
+            Activator) is temporarily disabled.  Once we fix the reference
+            counting on the servants, this will start working again.
 
-	  - Removed the POA exceptions from the list of system exceptions,
-	    and reverted them back to being user exceptions.
+          - Removed the POA exceptions from the list of system exceptions,
+            and reverted them back to being user exceptions.
 
-	  - Timestamps are no longer used in persistent object keys.
+          - Timestamps are no longer used in persistent object keys.
 
-	  - Removed the TAO specific synchronization POA policy.  In the
-	    new POA design, this scheme will not be required.  Also,
-	    removed the POA locking example in
-	    $TAO_ROOT/examples/POA/locking.
+          - Removed the TAO specific synchronization POA policy.  In the
+            new POA design, this scheme will not be required.  Also,
+            removed the POA locking example in
+            $TAO_ROOT/examples/POA/locking.
 
-	* examples/POA/Identity/: Added new example to test a whole bunch
-	  of conversions from servant to id to reference. The example is
-	  designed to test the new POA IOR creation and its Active Object
-	  Map.
+        * examples/POA/Identity/: Added new example to test a whole bunch
+          of conversions from servant to id to reference. The example is
+          designed to test the new POA IOR creation and its Active Object
+          Map.
 
-	* tao: Added support for minimalCORBA to TAO. For some
-	  applications CORBA is too large to meet exacting size and
-	  performance requirements. Such scenarios require a cut-down
-	  version of CORBA. This cut-down version is called
-	  minimumCORBA. minimumCORBA defines a profile (or subset) of
-	  CORBA where the following features are removed:
+        * tao: Added support for minimalCORBA to TAO. For some
+          applications CORBA is too large to meet exacting size and
+          performance requirements. Such scenarios require a cut-down
+          version of CORBA. This cut-down version is called
+          minimumCORBA. minimumCORBA defines a profile (or subset) of
+          CORBA where the following features are removed:
 
-	  - Dynamic Invocation Interface
-	  - Dynamic Skeleton Interface
-	  - Dynamic Any
-	  - Interface Repository
-	  - Interceptors
-	  - Advance POA features:
-	    - Servant Managers
-	    - Adaptor Activators
-	    - Most POA Manager features
+          - Dynamic Invocation Interface
+          - Dynamic Skeleton Interface
+          - Dynamic Any
+          - Interface Repository
+          - Interceptors
+          - Advance POA features:
+            - Servant Managers
+            - Adaptor Activators
+            - Most POA Manager features
 
-	  On platforms that use the Makefiles, simply minimum_corba=1. On
-	  Win32, define TAO_HAS_MINIMUM_CORBA in the orbconf.h file.
+          On platforms that use the Makefiles, simply minimum_corba=1. On
+          Win32, define TAO_HAS_MINIMUM_CORBA in the orbconf.h file.
 
-	* tao/Makefile: Added support for measuring subsets of TAO.  These
-	  subsets are not independent, but are useful in providing an idea
-	  of how big different components of the ORB are.
+        * tao/Makefile: Added support for measuring subsets of TAO.  These
+          subsets are not independent, but are useful in providing an idea
+          of how big different components of the ORB are.
 
-	* tao/Server_Strategy_Factory.cpp: Remove the active object map
-	  creation responsibilities from this class.  Now it simply holds
-	  on to the creation parameters and feeds them to the active
-	  object map constructor.
+        * tao/Server_Strategy_Factory.cpp: Remove the active object map
+          creation responsibilities from this class.  Now it simply holds
+          on to the creation parameters and feeds them to the active
+          object map constructor.
 
-	* tao/Sequence_T.i (operator->): Added operator-> to
-	  TAO_Object_Manager.  Also, made the in() method return a
-	  non-const pointer.  Missing still is operator= taking
-	  T::var_type. Other managers should also be check for these
-	  features (Carlos said he'll look into it).
+        * tao/Sequence_T.i (operator->): Added operator-> to
+          TAO_Object_Manager.  Also, made the in() method return a
+          non-const pointer.  Missing still is operator= taking
+          T::var_type. Other managers should also be check for these
+          features (Carlos said he'll look into it).
 
-	* examples/POA/Loader/run_test.pl:
-	* examples/POA/On_Demand_Loading/run_test.pl:
-	* examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
 
           - We now have support for active demuxing of user defined
             ids. This is achieved by using a active demux hint field in
