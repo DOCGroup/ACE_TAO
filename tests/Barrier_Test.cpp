@@ -75,7 +75,7 @@ main (int, char *[])
   ACE_Barrier tester_barrier (n_threads);
   ACE_hthread_t *thread_handles;
   
-  ACE_NEW_RETURN (thread_handles, ACE_hthread_t, -1);
+  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[n_threads], -1);
   
   Tester_Args args (tester_barrier, n_iterations);
 
