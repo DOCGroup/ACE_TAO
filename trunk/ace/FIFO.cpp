@@ -27,7 +27,7 @@ ACE_FIFO::open (const ACE_TCHAR *r, int flags, int perms,
                 LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO::open");
-  ACE_OS::strncpy (this->rendezvous_, r, MAXPATHLEN);
+  ACE_OS::strsncpy (this->rendezvous_, r, MAXPATHLEN);
 
 #if defined (ACE_PSOS_DIAB_MIPS)
   if ( ACE_OS::mkfifo (this->rendezvous_, perms) == -1
