@@ -53,13 +53,13 @@ public:
   /// Default constructor
   ACE_Timer_Node_T (void);
 
-  /// Dtor.
+  /// Destructor
   ~ACE_Timer_Node_T (void);
 
   /// Useful typedef ..
   typedef ACE_Timer_Node_Dispatch_Info_T <TYPE> DISPATCH_INFO;
 
-  /// singly linked list
+  /// Singly linked list
   void set (const TYPE &type,
             const void *a,
             const ACE_Time_Value &t,
@@ -67,7 +67,7 @@ public:
             ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
 
-  /// doubly linked list version
+  /// Doubly linked list version
   void set (const TYPE &type,
             const void *a,
             const ACE_Time_Value &t,
@@ -87,37 +87,37 @@ public:
   /// Get the asynchronous completion token.
   const void *get_act (void);
 
-  /// set the asynchronous completion token.
+  /// Set the asynchronous completion token.
   void set_act (void *act);
 
-  /// get the timer value.
+  /// Get the timer value.
   const ACE_Time_Value &get_timer_value (void) const;
 
-  /// set the timer value.
+  /// Set the timer value.
   void set_timer_value (const ACE_Time_Value &timer_value);
 
-  /// get the timer interval.
+  /// Get the timer interval.
   const ACE_Time_Value &get_interval (void) const;
 
   /// Set the timer interval.
   void set_interval (const ACE_Time_Value &interval);
 
-  /// get the previous pointer.
+  /// Get the previous pointer.
   ACE_Timer_Node_T<TYPE> *get_prev (void);
 
-  /// set the previous pointer.
+  /// Set the previous pointer.
   void set_prev (ACE_Timer_Node_T<TYPE> *prev);
 
-  /// get the next pointer.
+  /// Get the next pointer.
   ACE_Timer_Node_T<TYPE> *get_next (void);
 
-  /// set the next pointer.
+  /// Set the next pointer.
   void set_next (ACE_Timer_Node_T<TYPE> *next);
 
-  /// get the timer_id.
+  /// Get the timer_id.
   long get_timer_id (void) const;
 
-  /// set the timer_id.
+  /// Set the timer_id.
   void set_timer_id (long timer_id);
 
   /// Get the dispatch info. The dispatch information is got
@@ -126,7 +126,6 @@ public:
   /// @@TODO: We may want to have a copying version too, so that our
   /// interface will be complete..
   void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info);
-
 
   /// Dump the state of an TYPE.
   void dump (void) const;
@@ -227,7 +226,7 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
 
   /**
-   * Schedule <type> that will expire after <delay> amount of time,
+   * Schedule <type> that will expire at <future_time>,
    * which is specified in absolute time.  If it expires then <act> is
    * passed in as the value to the <functor>.  If <interval> is != to
    * <ACE_Time_Value::zero> then it is used to reschedule the <type>
@@ -243,7 +242,7 @@ public:
    */
   virtual long schedule (const TYPE &type,
                          const void *act,
-                         const ACE_Time_Value &delay,
+                         const ACE_Time_Value &future_time,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
 
   /**
@@ -386,7 +385,7 @@ public:
 
 
   /// This method will call the <functor> with the <type>, <act> and
-  /// <time>
+  /// <cur_time>
   /* virtual */ void upcall (TYPE &type,
                        const void *act,
                        const ACE_Time_Value &cur_time);
@@ -467,7 +466,7 @@ public:
                const void *arg,
                const ACE_Time_Value &cur_time);
 
-  /// This method is called when the timer is canceled
+  /// This method is called when the timer is cancelled
   int cancellation (TIMER_QUEUE &timer_queue,
                     ACE_Event_Handler *handler);
 
