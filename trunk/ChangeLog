@@ -1,3 +1,8 @@
+Tue Nov 23 15:20:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+	  Fixed auto_ptr config for GNU-G builds.
+
 Tue Nov 23 07:56:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
