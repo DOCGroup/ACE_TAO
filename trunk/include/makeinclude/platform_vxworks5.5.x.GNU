@@ -163,12 +163,12 @@ ifeq ("$(TOOL)","gnu")
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
-TEMPLATES_FLAG=-fmerge-templates
+  C++FLAGS += -fmerge-templates
 endif
 
 # TEMPLATES_FLAG is set by platform_g++_common.GNU
 ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
-  C++FLAGS += $(TEMPLATES_FLAG)
+  CPPFLAGS += $(TEMPLATES_FLAG)
 endif
 endif  # TOOl == gnu
 
@@ -196,6 +196,16 @@ else
   C++FLAGS += -Xrtti-off -DACE_LACKS_RTTI
 endif
 endif # rtti
+
+ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
+ifeq ("$(TOOL)","diab")
+  C++FLAGS += -Xchar-signed
+else
+ifeq ("$(TOOL)","gnu")
+  C++FLAGS += -fsigned-char
+endif
+endif
+endif
 
 ifneq ($(optimize),1)
   CC_OPTIM_NORMAL =
