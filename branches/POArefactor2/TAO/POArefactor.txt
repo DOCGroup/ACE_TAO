@@ -1,3 +1,12 @@
+Tue Oct 26 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Request_Processing_Strategy.cpp:
+          Changed the implementation of set_servant_manager, the spec is more
+          precise what should happen, first it is only allowed to set it once,
+          in case already set a bad_inv_order exception is thrown, twice, when
+          it is set to nil, or given an invalid interface a obj_adapter
+          exception is given
+
 Tue Oct 26 13:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp.i}:
