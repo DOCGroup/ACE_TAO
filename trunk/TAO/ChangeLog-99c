@@ -1,3 +1,18 @@
+Wed Jul 28 18:28:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/ub_string.cpp:
+	* TAO/tests/Param_Test/bd_string.cpp:
+	  Plugged some memroy leaks reported by Purify.
+
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	  Fixed the last problem with generated code in IDL_Test,
+	  related to the T_var and T_forany const [] operator, which
+	  wasn't compiling for multidimensional arrays.
+
+	* TAO/tests/IDL_Test/README:
+	  Added more info about the IDL compiler warning output when
+	  a module is reopened and the platform lacks namespaces.
+
 Wed Jul 28 15:47:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: Added new marco ACE_HAS_UIOP. If the user has not
