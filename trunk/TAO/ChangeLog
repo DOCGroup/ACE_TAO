@@ -1,3 +1,14 @@
+Tue Feb 10 11:18:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+        
+          Added unindent macro insertion to the output stream after
+          visiting each raise_* operation in the generated internal
+          class _tao_*_ExceptionHolder, to keep the indentation from
+          growing with each operation. Also added a comment to the
+          instantiation of the operation visitor, justifying the use of
+          the one for the generated implementation classes.
+
 Tue Feb 10 17:20:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Anyop/Makefile.bor:
