@@ -242,7 +242,13 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
           if (size != sequence_length - 1)
             ACE_THROW_RETURN (IOP::Codec::TypeMismatch (), 0);
 
-          ACE_Message_Block mb (size + ACE_CDR::MAX_ALIGNMENT);
+          // The ACE_CDR::mb_align() call can shift the rd_ptr by up
+          // to ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset
+          // adjustment can move the rd_ptr by up to the same amount.
+          // We accommodate this by including
+          // 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional space in
+          // the message block.
+          ACE_Message_Block mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
           ACE_CDR::mb_align (&mb);
           ptr_arith_t offset =
             ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;

@@ -304,7 +304,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
   ACE_NEW_THROW_EX (union_typecode,
                     CORBA_TypeCode (CORBA::tk_union,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -386,7 +386,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
   ACE_NEW_THROW_EX (enum_typecode,
                     CORBA_TypeCode (CORBA::tk_enum,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -457,7 +457,7 @@ TAO_TypeCodeFactory_i::create_alias_tc (
   ACE_NEW_THROW_EX (alias_typecode,
                     CORBA_TypeCode (CORBA::tk_alias,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -603,7 +603,7 @@ TAO_TypeCodeFactory_i::create_sequence_tc (
   ACE_NEW_THROW_EX (sequence_typecode,
                     CORBA_TypeCode (CORBA::tk_sequence,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -651,7 +651,7 @@ TAO_TypeCodeFactory_i::create_array_tc (
   ACE_NEW_THROW_EX (array_typecode,
                     CORBA_TypeCode (CORBA::tk_array,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -732,7 +732,7 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
   ACE_NEW_THROW_EX (value_box_typecode,
                     CORBA_TypeCode (CORBA::tk_value_box,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -1160,7 +1160,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
   ACE_NEW_THROW_EX (new_typecode,
                     CORBA_TypeCode (kind,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
