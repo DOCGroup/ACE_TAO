@@ -1068,3 +1068,50 @@ project(UUIDTest) : acetest {
     UUIDTest.cpp
   }
 }
+
+project(INET Addr Test IPV6) : acetest {
+  exename = INET_Addr_Test_IPV6
+  Source_Files {
+  INET_Addr_Test_IPV6.cpp
+  }
+}
+
+project(Max Default Port Test IPV6) : acetest {
+  exename = Max_Default_Port_Test_IPV6
+  Source_Files {
+  Max_Default_Port_Test_IPV6.cpp
+  }
+}
+
+project(Multicast Test IPV6) : acetest {
+  exename = Multicast_Test_IPV6
+  Source_Files {
+  Multicast_Test_IPV6.cpp
+  }
+}
+
+project(Multihomed INET Addr Test IPV6) : acetest {
+  exename =   Multihomed_INET_Addr_Test_IPV6
+  Source_Files {
+  Multihomed_INET_Addr_Test_IPV6.cpp
+  }
+}
+
+project(Proactor Test IPV6) : acetest {
+  exename =  Proactor_Test_IPV6
+  Source_Files {
+   Proactor_Test_IPV6.cpp
+  }
+}
+
+project(SOCK Send Recv Test IPV6) : acetest {
+  exename = SOCK_Send_Recv_Test_IPV6
+  Source_Files {
+  SOCK_Send_Recv_Test_IPV6.cpp
+  }
+}
+
+
+
+
+
