@@ -14,6 +14,12 @@ namespace CIAO
 {
 
 ////////////////////////////////////////////////////////////////
+
+  Container::Container (void)
+  {
+    ACE_ASSERT (0);
+  }
+
   Container::Container (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o))
   {
@@ -39,6 +45,11 @@ namespace CIAO
 
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
   Session_Container::serial_number_ (0);
+
+  Session_Container::Session_Container (void)
+  {
+    ACE_ASSERT (0);
+  }
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         bool static_config_flag,
@@ -244,8 +255,6 @@ namespace CIAO
                      Deployment::ImplEntryPointNotFound,
                      Deployment::InstallationFailure))
   {
-
-    ACE_DEBUG ((LM_DEBUG, "I am here to install the home\n"));
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 

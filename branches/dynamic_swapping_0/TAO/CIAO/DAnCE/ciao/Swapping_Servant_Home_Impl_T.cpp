@@ -189,6 +189,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_DEBUG, "got home obj ref\n"));
     CORBA::Object_var hobj =
       this->container_->get_home_objref (this
                                     ACE_ENV_ARG_PARAMETER);
@@ -215,6 +216,8 @@ namespace CIAO
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
           (ec, home, this, this->container_);
 
+    ACE_DEBUG ((LM_DEBUG, "adding to servant map\n"));
+
     this->container_->add_servant_map (oid, svt);
 
     this->dynamic_servant_map_.bind (oid, svt);
@@ -222,6 +225,8 @@ namespace CIAO
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
+
+    ACE_DEBUG ((LM_DEBUG, "returning the reference\n"));
 
     return ho._retn ();
   }

@@ -49,6 +49,8 @@ namespace CIAO
         Facet_Consumer
       };
 
+    explicit Container (void);
+
     Container (CORBA::ORB_ptr o);
 
     virtual ~Container (void) = 0;
@@ -148,6 +150,8 @@ namespace CIAO
   {
   public:
 
+    explicit Session_Container (void);
+
     // @@ (OO) Does the static_config_flag really need to be an int?
     //         It appears to be a boolean value.  Please use bool
     //         instead.
@@ -203,14 +207,12 @@ namespace CIAO
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-/*
     virtual void add_servant_map (PortableServer::ObjectId &oid,
                                   Dynamic_Component_Servant_Base* servant
                                   ACE_ENV_ARG_DECL) = 0;
 
     virtual void delete_servant_map (PortableServer::ObjectId &oid
                                      ACE_ENV_ARG_DECL) = 0;
-*/
     // Install a component servant.
     CORBA::Object_ptr install_component (PortableServer::Servant p,
                                          PortableServer::ObjectId_out oid
@@ -222,11 +224,9 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-/*
     virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-*/
 
     // Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref,
