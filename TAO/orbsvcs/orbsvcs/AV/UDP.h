@@ -127,7 +127,7 @@ protected:
  * @class TAO_AV_UDP_Acceptor
  * @brief 
  */
-class TAO_AV_UDP_Acceptor
+class TAO_AV_Export TAO_AV_UDP_Acceptor
   :public TAO_AV_Acceptor
 {
 public:
@@ -216,7 +216,7 @@ private:
  * @class TAO_AV_UDP_Flow_Factory
  * @brief 
  */
-class TAO_AV_UDP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
+class TAO_AV_Export TAO_AV_UDP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   /// Initialization hook.

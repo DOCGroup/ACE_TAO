@@ -1,3 +1,17 @@
+Mon Jul  2 23:13:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.h
+        * orbsvcs/orbsvcs/AV/Transport.h
+        * orbsvcs/orbsvcs/AV/UDP.h
+
+        Added TAO_AV_Export to more classes to fix Borland DLL builds.
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.bor
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.bor
+  
+        Added more linker flags to fix Borland DLL builds.
+
 Mon Jul  2 19:32:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Queued_Message_Test/Queued_Message_Test.cpp:

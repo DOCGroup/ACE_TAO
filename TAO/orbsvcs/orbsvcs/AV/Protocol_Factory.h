@@ -23,7 +23,7 @@
  * @class TAO_AV_Protocol_Object
  * @brief
  */
-class TAO_AV_Protocol_Object
+class TAO_AV_Export TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_Protocol_Object (void);
