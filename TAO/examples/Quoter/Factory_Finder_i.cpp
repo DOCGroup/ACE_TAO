@@ -34,7 +34,7 @@ Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i (void)
 
 CosLifeCycle::Factories *
 Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
-                                       CORBA::Environment &_env_there)
+                                       CORBA::Environment &TAO_IN_ENV_there)
 {
   CORBA::Environment env_here;
 
@@ -58,7 +58,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
@@ -73,7 +73,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
   // see if there is an exception, if yes then throw the NoFactory exception
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
@@ -82,7 +82,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
   // Check if it is a valid Quoter Factory reference
   if (CORBA::is_nil (quoterFactoryObject_var.in())) 
     { // throw a NoFactory exception  
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
   else 
@@ -96,7 +96,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
       if (env_here.exception () != 0) 
         {
           // Throw a NoFactory exception.
-          _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
           return 0;
         }
 
@@ -106,7 +106,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
       // Check if it is a valid Quoter Factory reference.
       if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
         {      
-          _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
           return 0;
         }
 

@@ -15,7 +15,7 @@ Grid_i::Grid_i (void)
 //  Constructor.
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
-                CORBA::Environment &_env)
+                CORBA::Environment &TAO_IN_ENV)
   : width_ (x),
     height_ (y)
 {
@@ -44,7 +44,7 @@ void
 Grid_i::set (CORBA::Short x,
 	     CORBA::Short y,
 	     CORBA::Long value,
-	     CORBA::Environment &_env)
+	     CORBA::Environment &TAO_IN_ENV)
 {
   if (x < 0
       || y < 0
@@ -60,7 +60,7 @@ Grid_i::set (CORBA::Short x,
 CORBA::Long
 Grid_i::get (CORBA::Short x,
              CORBA::Short y,
-             CORBA::Environment &_env)
+             CORBA::Environment &TAO_IN_ENV)
 {
   if (x < 0
       || y < 0
@@ -74,27 +74,27 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short 
-Grid_i::width (CORBA::Environment &_env)
+Grid_i::width (CORBA::Environment &TAO_IN_ENV)
 {
   return this->width_;
 }
 
 CORBA::Short 
-Grid_i::height (CORBA::Environment &_env)
+Grid_i::height (CORBA::Environment &TAO_IN_ENV)
 {
   return this->height_;
 }
 
 void 
 Grid_i::width (CORBA::Short x,
-	       CORBA::Environment &_env)
+	       CORBA::Environment &TAO_IN_ENV)
 {
   this->width_ = x;
 }
 
 void 
 Grid_i::height (CORBA::Short y,
-		CORBA::Environment &_env)
+		CORBA::Environment &TAO_IN_ENV)
 {
   this->height_ = y;
 }
@@ -102,7 +102,7 @@ Grid_i::height (CORBA::Short y,
 // Destroy the grid
 
 void 
-Grid_i::destroy (CORBA::Environment &_env)
+Grid_i::destroy (CORBA::Environment &TAO_IN_ENV)
 {
   // Delete the array.
   for (int i = 0; i < height_; i++)
@@ -153,7 +153,7 @@ Grid_Factory_i::~Grid_Factory_i (void)
 Grid_ptr 
 Grid_Factory_i::make_grid (CORBA::Short width,
                            CORBA::Short height,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   Grid_i *grid_ptr = 0;
  
@@ -171,10 +171,10 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
   ACE_NEW_THROW_RETURN (grid_ptr,
-			Grid_i (width, height, _env),
+			Grid_i (width, height, TAO_IN_ENV),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			Grid::_nil ());
 
   // Register the Grid pointer.
-  return grid_ptr->_this (_env);
+  return grid_ptr->_this (TAO_IN_ENV);
 }
