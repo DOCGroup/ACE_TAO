@@ -1,3 +1,21 @@
+Fri Oct 24 14:08:12  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* Improved the compiler to make Unions work. The most subtle error
+	was the way the private section of the class for unions was being
+	generated. TAO's Typecode library expected the union members to be
+	inside of a C++  union declaration inside the private
+	section. Whereas the compiler was generating each member
+	separately.
+
+	Another source of error was bad typecode tables getting
+	generated. This is now fixed.
+
+	* TAO/tests/IDL_Cubit: The cubit_i.cpp for cube_union was doing
+	wrong calculations for structs. This was due to my copy-paste
+	tendency and not verifying if it was correct or not. This has been
+	fixed. The README file is updated to reflect the fact that this
+	directory contains code that uses the IDL compiler.
+
 Fri Oct 24 01:54:00 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.14, released Fri Oct 24 01:54:00 1997.
