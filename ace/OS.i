@@ -7681,6 +7681,8 @@ ACE_OS::tzset (void)
 {
 # if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
+# elif defined (VXWORKS)
+  errno = ENOTSUP;
 # else
   ::tzset ();   // For UNIX platforms.
 # endif
@@ -7697,6 +7699,8 @@ ACE_OS::timezone (void)
   struct timezone zone;
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
+# elif defined (VXWORKS)
+  ACE_NOTSUP_RETURN (-1);
 # else
   return ::timezone;   // For UNIX platforms.
 #endif
