@@ -21,13 +21,6 @@
 #if !defined (TAO_REQUEST_H)
 #  define TAO_REQUEST_H
 
-#if 0
-#  include "ace/OS.h"
-
-#  include "tao/sequence.h"
-#  include "tao/except.h"
-#endif
-
 class ACE_Svc_Export CORBA_Request : public IUnknown
 {
 public:

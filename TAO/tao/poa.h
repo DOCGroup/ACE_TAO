@@ -19,24 +19,15 @@
 #if !defined (TAO_POA_H)
 #define TAO_POA_H
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include "ace/SOCK_Stream.h"
-#include "tao/orb.h"
-#include "tao/sequence.h"
-#include "tao/svrrqst.h"
-#endif  /* 0 */
-
 #include "tao/corba.h"
 
 class TAO_GIOP_RequestHeader;
 
 // @@ Why does this inherit from IUnknown?
 class ACE_Svc_Export CORBA_POA : public IUnknown
-{
   // = TITLE
   //    The <{TAO}> Basic Object Adapter.
+{
 public:
   CORBA_POA (CORBA::ORB_ptr orb_arg,
              CORBA::Environment &env);

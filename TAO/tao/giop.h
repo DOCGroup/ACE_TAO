@@ -34,17 +34,6 @@
 #if !defined (TAO_GIOP_H)
 #  define TAO_GIOP_H
 
-#if 0
-#  include "ace/OS.h"
-#  include "ace/SOCK_Stream.h"
-
-#  include "tao/orb.h"
-#  include "tao/stub.h"
-
-#  include "tao/iiopobj.h"		// XXX -- not generic!
-#  include "tao/factories.h"
-#endif
-
 // namespace TAO_IOP
 
 // Assigned Protocol/Profile tag values.  ORB protcols may be
