@@ -7,7 +7,7 @@ interface Time
   //    Defines an interface that encapsulates operations that 
   //    return the current time of day and shuts down the server.
 
-  long time ();
+  long current_time ();
   // Returns the current time of day on another machine.
 
   oneway void shutdown ();

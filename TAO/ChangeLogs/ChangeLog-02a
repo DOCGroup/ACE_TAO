@@ -1,3 +1,12 @@
+Mon Feb 14 08:25:32 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Simple/time/Time.idl:
+        * examples/Simple/time/Time_Client_i.cpp:
+        * examples/Simple/time/Time_i.cpp:
+        * examples/Simple/time/Time_i.h:
+          The Time interface had a time method in it (A no-no in IDL).  
+          Changed time () to current_time ().
+
 Mon Feb 14 02:47:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Interceptors/server.cpp (main): Changed to activate the
