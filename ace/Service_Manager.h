@@ -26,13 +26,27 @@
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
   // = TITLE
-  //     Provide a standard service that returns a list of all
-  //     services in the Service Repository.
+  //     Provide a standard ACE service for managing all the services
+  //     configured in an <ACE_Service_Repository>.
+  //
+  // = DESCRIPTION
+  //     This 
 public:
+  // = Initialization and termination hooks.
   ACE_Service_Manager (void);
+  // Constructor.
+
   ~ACE_Service_Manager (void);
-  virtual int list_services (void);
+  // Destructor.
+
+protected:
+  // = Perform the various meta-services.
   virtual int reconfigure_services (void);
+  // Trigger a remote reconfiguration of the Service Configurator.
+
+  virtual int list_services (void);
+  // Determine all the services offered by this daemon and return the
+  // information back to the client.
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ASYS_TCHAR *argv[]);
@@ -59,10 +73,20 @@ private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
   ACE_SOCK_Stream client_stream_;
+  // Connection to the client (we only support one client connection
+  // at a time).
+
   ACE_SOCK_Acceptor acceptor_;
+  // Acceptor instance.
+
   int debug_;
+  // Keep track of the debugging level.
+
   int signum_;
+  // The signal used to trigger reconfiguration.
+
   static u_short DEFAULT_PORT_;
+  // Default port for the Acceptor to listen on.
 };
 
 #if defined (__ACE_INLINE__)
