@@ -64,18 +64,6 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
     this->host_ = host;
 }
 
-TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const TAO_SHMIOP_Profile &pfile)
-  : TAO_Profile (pfile.tag ()),
-    host_ (pfile.host_),
-    port_ (pfile.port_),
-    version_ (pfile.version_),
-    object_key_ (pfile.object_key_),
-    object_addr_ (pfile.object_addr_),
-    hint_ (pfile.hint_),
-    orb_core_ (pfile.orb_core_)
-{
-}
-
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char *string,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Environment &ACE_TRY_ENV)
@@ -107,26 +95,29 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (TAO_ORB_Core *orb_core)
 int
 TAO_SHMIOP_Profile::set (const ACE_INET_Addr &addr)
 {
-  this->port_ = addr.get_port_number();
+  char tmp_host[MAXHOSTNAMELEN + 1];
 
-  if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ())
+  if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ()
+      || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
-      const char *temp = addr.get_host_addr ();
-      if (temp == 0)
-        return -1;
+      const char *tmp = addr.get_host_addr ();
+      if (tmp == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("SHMIOP_Profile::set ")
+                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("cannot determine hostname")));
+          return -1;
+        }
       else
-        this->host_ = temp;
+        this->host_ = tmp;
     }
   else
-    {
-      char temphost[MAXHOSTNAMELEN + 1];
+    this->host_ = CORBA::string_dup (tmp_host);
 
-      if (addr.get_host_name (temphost,
-                              sizeof temphost) != 0)
-        return -1;
-
-      this->host_ = CORBA::string_dup (temphost);
-    }
+  this->port_ = addr.get_port_number();
 
   return 0;
 }
@@ -351,14 +342,11 @@ CORBA::ULong
 TAO_SHMIOP_Profile::hash (CORBA::ULong max,
                           CORBA::Environment &)
 {
-  CORBA::ULong hashval;
-
-  // Just grab a bunch of convenient bytes and hash them; could do
-  // more (hostname, full key, exponential hashing) but no real need
-  // to do so except if performance requires a more costly hash.
-
-  hashval = this->object_key_.length () * this->port_;
-  hashval += this->version_.minor;
+  CORBA::ULong hashval =
+    ACE::hash_pjw (this->host_.in ())
+    + this->port_
+    + this->version_.minor
+    + this->tag ();
 
   if (this->object_key_.length () >= 4)
     {
@@ -402,28 +390,12 @@ TAO_SHMIOP_Profile::reset_hint (void)
     this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
-TAO_SHMIOP_Profile &
-TAO_SHMIOP_Profile::operator= (const TAO_SHMIOP_Profile &src)
-{
-  this->version_ = src.version_;
-
-  this->object_key_ = src.object_key_;
-
-  this->object_addr_.set (src.object_addr_);
-
-  this->port_ = src.port_;
-
-  this->host_ = src.host_;
-
-  return *this;
-}
-
 char *
 TAO_SHMIOP_Profile::to_string (CORBA::Environment &)
 {
   CORBA::String_var key;
   TAO_POA::encode_sequence_to_string (key.inout(),
-                                      this->object_key ());
+                                      this->object_key_);
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
                   3 /* "loc" */ +

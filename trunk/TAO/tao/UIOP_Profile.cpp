@@ -57,16 +57,6 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
 {
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
-  : TAO_Profile (pfile.tag ()),
-    version_ (pfile.version_),
-    object_key_ (pfile.object_key_),
-    object_addr_ (pfile.object_addr_),
-    hint_ (pfile.hint_),
-    orb_core_ (pfile.orb_core_)
-{
-}
-
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
@@ -201,16 +191,10 @@ CORBA::ULong
 TAO_UIOP_Profile::hash (CORBA::ULong max,
                         CORBA::Environment &)
 {
-  CORBA::ULong hashval = 0;
-
-  // Just grab a bunch of convenient bytes and hash them; could do
-  // more (rendezvous_point, full key, exponential hashing)
-  // but no real need to do so except if performance requires a more
-  // costly hash.
-
-  hashval = this->object_key_.length () *
-    ACE_OS::atoi (this->rendezvous_point ());  // @@ Is this valid?
-  hashval += this->version_.minor;
+  CORBA::ULong hashval =
+    ACE::hash_pjw (this->rendezvous_point ())
+    + this->version_.minor
+    + this->tag ();
 
   if (this->object_key_.length () >= 4)
     {
@@ -239,24 +223,12 @@ TAO_UIOP_Profile::reset_hint (void)
     this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
-TAO_UIOP_Profile &
-TAO_UIOP_Profile::operator= (const TAO_UIOP_Profile &src)
-{
-  this->version_ = src.version_;
-
-  this->object_key_ = src.object_key_;
-
-  this->object_addr_.set (src.object_addr_);
-
-  return *this;
-}
-
 char *
 TAO_UIOP_Profile::to_string (CORBA::Environment &)
 {
   CORBA::String_var key;
   TAO_POA::encode_sequence_to_string (key.inout(),
-                                      this->object_key ());
+                                      this->object_key_);
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
                   3 /* "loc" */ +
