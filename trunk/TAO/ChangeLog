@@ -1,3 +1,9 @@
+Fri Jan  9 23:50:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/Miop/McastHello/McastHello.cpp:
+
+	  Fixed a warning in BCB6 in builds.
+
 Fri Jan  9 18:02:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL_Test/enum_in_struct.idl:

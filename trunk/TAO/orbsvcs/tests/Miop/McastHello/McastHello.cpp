@@ -34,7 +34,7 @@ McastHello::send_large_octet_array (const Test::Octets &payload ACE_ENV_ARG_DECL
   CORBA::Boolean valid_payload = 1;
   for (CORBA::ULong i = 0; i < payload.length (); ++i)
     {
-      if (payload [i] != i % 256)
+      if ((CORBA::ULong) payload [i] != i % 256)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: (%P|%t) McastHello::send_large_octet_array, "
