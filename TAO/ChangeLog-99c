@@ -1,3 +1,10 @@
+Wed Sep 15 13:51:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	  At David's suggestion, removed the temporary variables
+	  in the array sequence operator[] functions - maybe
+	  that will make SunCC4 happy.
+
 Wed Sep 15 11:17:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Policy_Manager.h:
