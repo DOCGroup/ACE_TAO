@@ -2,22 +2,44 @@
 
 Description:
 
-	This is a simple latency test, a server runs using a thread
-pool reactor, the client creates several threads that send requests to 
-the server and record latency and throughput statistics.
+	This is a simple latency test, single threaded and
+multi-threaded clients and servers are included.
+
+= Thread pool test:
+
+	The server runs using a thread pool reactor, the client
+  creates several threads that send requests to the server and record
+  latency and throughput statistics.
 
 	Command line options on the client and server can be used to
-control the number of threads in the server and the client, the amount
-work performed on each request, the number of requests per thread,
-etc.
+  control the number of threads in the server and the client, the
+  amount work performed on each request, the number of requests per
+  thread, etc.
 
-Expected output:
+  - Expected output:
 	The server prints out the IOR of the object it serves. The
-client prints the results on a per-thread basis as well as the
-aggregated numbers.
+  client prints the results on a per-thread basis as well as the
+  aggregated numbers.
 
-How to run:
+  - How to run:
 	You can use the run_test.pl script to run it or:
 
 $ server -ORBSvcConf server.conf -n 2
 $ client -ORBSvcConf client.conf -n 4 -i 1000
+
+= Single threaded test:
+
+	The server uses a regular (but lock-free) reactor, the client
+  uses a single thread to issue all the requests; since no extra
+  threads are created all the locks can be disabled, minimizing
+  latency.
+
+  - Expected output:
+	As in the multi-threaded test, the client only prints the
+  results for its single thread.
+
+  - How to run:
+	You can use the run_test.pl script or:
+
+$ st_server -ORBSvcConf st_server.conf
+$ st_client -ORBSvcConf st_client.conf -i 1000
