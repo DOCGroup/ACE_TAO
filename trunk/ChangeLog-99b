@@ -1,5 +1,9 @@
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* ace/config-lynxos.h: Enabled ACE_POSIX_AIOCB_PROACTOR for this
+	platform, since <pthread_sigmask> was not available. Without
+	<pthread_sigmask>, SIG_Proactor can not work correctly.
+
 	* ace/config-linux-lxpthreads.h:
  	Removed ACE_HAS_AIO_CALLS. Even simple aio calls test is hanging. 
 
