@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:609
+// be\be_codegen.cpp:617
 
 #ifndef _TAO_IDL_ORIG_IFR_BASICS_CPP_
 #define _TAO_IDL_ORIG_IFR_BASICS_CPP_
@@ -35,7 +35,6 @@
 
 #include "IFR_BasicS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
-#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Basic_SArguments.h"
@@ -22810,7 +22809,7 @@ POA_CORBA::ExtLocalInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1575
+// be\be_visitor_root/root.cpp:1582
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
