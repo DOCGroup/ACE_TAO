@@ -1,3 +1,23 @@
+Wed Aug 20 17:36:02 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+	* performance-tests/mico:
+	  Directory where mico specific tests will be added
+
+	* performance-tests/mico/mico-thrput-st:
+	  Single threaded throughput tests for the MICO ORB
+	
+	* performance-tests/mico/mico-thrput-st/server.cc:
+	* performance-tests/mico/mico-thrput-st/client.cc:
+	* performance-tests/mico/mico-thrput-st/RoundTrip_impl.cc:
+	* performance-tests/mico/mico-thrput-st/RoundTrip_impl.h:
+	* performance-tests/mico/mico-thrput-st/Makefile:
+	* performance-tests/mico/mico-thrput-st/mico-env:
+	* performance-tests/mico/mico-thrput-st/RoundTrip.idl:
+	  Single threaded througput test for MICO ORB. This experiment
+	uses the same interface as the one used in TAO for generating
+	daily performance stats. Further, the test also uses ACE for
+	generating results.
+
 Wed Aug 20 17:19:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/cidlc.mpc:
