@@ -1219,10 +1219,10 @@ sub generate_default_target_names {
 
     ## If it's neither an exe or library target, we will search
     ## through the source files for a main()
-    my(@sources) = $self->get_component_list('source_files');
     if (!$self->lib_target()) {
       my($fh)      = new FileHandle();
       my($exename) = undef;
+      my(@sources) = $self->get_component_list('source_files', 1);
       foreach my $file (@sources) {
         if (open($fh, $file)) {
           while(<$fh>) {
@@ -1541,9 +1541,8 @@ sub remove_duplicated_files {
 
   ## Find out which source files are listed
   foreach my $name (keys %$names) {
-    my($comps) = $$names{$name};
-    foreach my $key (keys %$comps) {
-      my($array) = $$comps{$key};
+    foreach my $key (keys %{$$names{$name}}) {
+      my($array) = $$names{$name}->{$key};
       my($count) = scalar(@$array);
       for(my $i = 0; $i < $count; ++$i) {
         ## Is the source file in the component array?
@@ -1685,40 +1684,38 @@ sub list_generated_file {
   my($ofile)   = shift;
 
   if (defined $self->{'generated_exts'}->{$gentype}->{$tag}) {
-    my(@gen)     = $self->get_component_list($gentype);
     my(@genexts) = $self->generated_extensions($gentype, $tag);
 
     $file = $self->escape_regex_special($file);
 
-    foreach my $gen (@gen) {
-      ## If we are converting slashes, then we need to
-      ## convert the component back to forward slashes
-      if ($self->{'convert_slashes'}) {
-        $gen =~ s/\\/\//g;
-      }
-
-      ## Remove the extension
-      my($start) = $gen;
-      foreach my $ext (@{$self->{'valid_components'}->{$gentype}}) {
-        $gen =~ s/$ext$//;
-        if ($gen ne $start) {
-          last;
-        }
-      }
-
-      ## See if we need to add the file
-      foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
-        foreach my $genext (@genexts) {
-          if ("$pf$gen$genext" =~ /$file(.*)?$/) {
-            my($created) = "$file$1";
-            $created =~ s/\\//g;
-            if (!$self->already_added($array, $created)) {
-              if (defined $ofile) {
-                $created = $self->prepend_gendir($created, $ofile, $gentype);
-              }
-              push(@$array, $created);
+    my($names) = $self->{$tag};
+    foreach my $name (keys %$names) {
+      foreach my $key (keys %{$$names{$name}}) {
+        foreach my $gen (@{$$names{$name}->{$key}}) {
+          ## Remove the extension
+          my($start) = $gen;
+          foreach my $ext (@{$self->{'valid_components'}->{$gentype}}) {
+            $gen =~ s/$ext$//;
+            if ($gen ne $start) {
+              last;
             }
-            last;
+          }
+
+          ## See if we need to add the file
+          foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
+            foreach my $genext (@genexts) {
+              if ("$pf$gen$genext" =~ /$file(.*)?$/) {
+                my($created) = "$file$1";
+                $created =~ s/\\//g;
+                if (!$self->already_added($array, $created)) {
+                  if (defined $ofile) {
+                    $created = $self->prepend_gendir($created, $ofile, $gentype);
+                  }
+                  push(@$array, $created);
+                }
+                last;
+              }
+            }
           }
         }
       }
@@ -1736,9 +1733,8 @@ sub add_corresponding_component_files {
   foreach my $filetag (@$ftags) {
     my($names) = $self->{$filetag};
     foreach my $name (keys %$names) {
-      my($comps) = $$names{$name};
-      foreach my $comp (keys %$comps) {
-        foreach my $sfile (@{$$comps{$comp}}) {
+      foreach my $comp (keys %{$$names{$name}}) {
+        foreach my $sfile (@{$$names{$name}->{$comp}}) {
           my($scopy) = $sfile;
           $scopy =~ s/\.[^\.]+$//;
           push(@all, $scopy);
@@ -1747,15 +1743,13 @@ sub add_corresponding_component_files {
     }
   }
 
-  my(@exts)  = ();
-  my($names) = $self->{$tag};
-
+  my(@exts) = ();
   foreach my $ext (@{$self->{'valid_components'}->{$tag}}) {
-    my($ecpy) = $ext;
-    $ecpy =~ s/\\//g;
-    push(@exts, $ecpy);
+    push(@exts, $ext);
+    $exts[$#exts] =~ s/\\//g;
   }
 
+  my($names) = $self->{$tag};
   foreach my $name (keys %$names) {
     my($comps) = $$names{$name};
     foreach my $comp (keys %$comps) {
@@ -1926,10 +1920,8 @@ sub get_component_list {
   my(@list)      = ();
 
   foreach my $name (keys %$names) {
-    my($comps)  = $$names{$name};
-    foreach my $key (sort keys %$comps) {
-      my($array)  = $$comps{$key};
-      push(@list, @$array);
+    foreach my $key (keys %{$$names{$name}}) {
+      push(@list, @{$$names{$name}->{$key}});
     }
   }
 
@@ -2075,7 +2067,7 @@ sub get_custom_value {
       my($cinput)  = $input;
       $cinput =~ s/\.[^\.]+$//;
       foreach my $pf (@{$self->{'generated_exts'}->{$based}->{'pre_filename'}}) {
-        foreach my $vc (sort keys %{$self->{'valid_components'}}, $generic) {
+        foreach my $vc (keys %{$self->{'valid_components'}}, $generic) {
           push(@outputs,
                $self->check_custom_output($based, $pf,
                                           $cinput, $vc, $vcomps{$vc}));
@@ -2494,12 +2486,8 @@ sub relative {
             if (index($icwd, $ival) == 0) {
               my($current) = $icwd;
               substr($current, 0, length($ival)) = '';
-              while($current =~ /^\\/) {
-                $current =~ s/^\///;
-              }
 
-              my($count) = ($current =~ tr/\///);
-              $ival = '../' x $count;
+              $ival = '../' x ($current =~ tr/\///);
               $ival =~ s/\/$//;
               if ($self->{'convert_slashes'}) {
                 $ival = $self->slash_to_backslash($ival);

@@ -75,7 +75,7 @@ sub parse_line {
     }
     if ($name =~ /\*/) {
       $name =~ s/\*/.*/g;
-      foreach my $key (sort keys %ENV) {
+      foreach my $key (keys %ENV) {
         if ($key =~ /^$name$/ && !exists $self->{'reldefs'}->{$key}) {
           ## Put this value at the front since it doesn't need
           ## to be built up from anything else.  It is a stand-alone
@@ -383,7 +383,7 @@ sub run {
         }
         $file = $base;
       }
-      print 'Generating output using ';
+      print 'Generating ' . $self->extractType($name) . ' output using ';
       if ($file eq '') {
         print 'default input';
       }

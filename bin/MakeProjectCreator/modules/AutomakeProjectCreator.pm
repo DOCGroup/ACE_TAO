@@ -59,7 +59,7 @@ sub fill_value {
         }
       }
     }
-    my($str) = join(':', sort keys %vpath);
+    my($str) = join(':', keys %vpath);
     if ($str ne '') {
       $value = 'VPATH = .:' . $str . $self->crlf();
     }

@@ -79,28 +79,12 @@ sub parse_line {
       $value = $self->create_array($value);
     }
     else {
-      $value = '';
+      $value = [];
     }
 
     if ($op eq '+=') {
-      my($ref) = $$current[$self->{'cindex'}]->{$name};
-      if (defined $ref) {
-        if (UNIVERSAL::isa($ref, 'ARRAY')) {
-          if (UNIVERSAL::isa($value, 'ARRAY')) {
-            push(@$ref, @$value);
-          }
-          else {
-            push(@$ref, $value);
-          }
-        }
-        else {
-          if (UNIVERSAL::isa($value, 'ARRAY')) {
-            $$current[$self->{'cindex'}]->{$name} .= " @$value";
-          }
-          else {
-            $$current[$self->{'cindex'}]->{$name} .= $value;
-          }
-        }
+      if (defined $$current[$self->{'cindex'}]->{$name}) {
+        push(@{$$current[$self->{'cindex'}]->{$name}}, @$value);
       }
       else {
         $$current[$self->{'cindex'}]->{$name} = $value;
