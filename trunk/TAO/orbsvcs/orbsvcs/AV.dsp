@@ -172,6 +172,10 @@ SOURCE=.\AVStreamsS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\default_resource.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\Endpoint_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -269,6 +273,10 @@ SOURCE=.\AVStreamsS.h
 # Begin Source File
 
 SOURCE=.\AVStreamsS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\default_resource.h
 # End Source File
 # Begin Source File
 
