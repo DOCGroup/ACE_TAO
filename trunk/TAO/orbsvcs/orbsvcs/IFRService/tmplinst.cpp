@@ -149,6 +149,11 @@ template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
 template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::HomeDescription, TAO_HomeDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ExceptionDescription, TAO_ExceptionDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::EventPortDescription, TAO_EventPortDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::UsesDescription, TAO_UsesDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::ProvidesDescription, TAO_ProvidesDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription, TAO_ComponentDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ValueMember, TAO_ValueMemberDef_i>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -290,5 +295,10 @@ template class TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeD
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::HomeDescription, TAO_HomeDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ExceptionDescription, TAO_ExceptionDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::EventPortDescription, TAO_EventPortDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::UsesDescription, TAO_UsesDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::ProvidesDescription, TAO_ProvidesDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription, TAO_ComponentDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ValueMember, TAO_ValueMemberDef_i>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
