@@ -49,10 +49,17 @@
 #include "ace/Synch.h"
 
 // Active Object Table
-#include "tao/Object_Table.h"
+#include "tao/Active_Object_Map.h"
 
 class TAO_POA;
 class TAO_POA_Manager;
+
+class TAO_Export TAO_ObjectId_Hash
+{
+public:
+  u_long operator () (const PortableServer::ObjectId &id) const;
+  // Returns hash value.
+};
 
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
@@ -509,24 +516,10 @@ public:
            TAO_POA *parent,
            CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  TAO_POA (const String &adapter_name,
-           TAO_POA_Manager &poa_manager,
-           const TAO_POA_Policies &policies,
-           TAO_POA *parent,
-           TAO_Object_Table &active_object_map,
-           CORBA_Environment &_env = CORBA_Environment::default_environment ());
-
   virtual TAO_POA *clone (const String &adapter_name,
                           TAO_POA_Manager &poa_manager,
                           const TAO_POA_Policies &policies,
                           TAO_POA *parent,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
-
-  virtual TAO_POA *clone (const String &adapter_name,
-                          TAO_POA_Manager &poa_manager,
-                          const TAO_POA_Policies &policies,
-                          TAO_POA *parent,
-                          TAO_Object_Table &active_object_map,
                           CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual ~TAO_POA (void);
@@ -619,7 +612,7 @@ protected:
 
   virtual TAO_POA_Policies &policies (void);
 
-  virtual TAO_Object_Table &active_object_map (void) const;
+  virtual TAO_Active_Object_Map &active_object_map (void) const;
 
   virtual void delete_child (const String &child,
                              CORBA_Environment &_env = CORBA_Environment::default_environment ());
@@ -740,7 +733,7 @@ protected:
 
   TAO_POA *parent_;
 
-  TAO_Object_Table *active_object_map_;
+  TAO_Active_Object_Map *active_object_map_;
 
   int delete_active_object_map_;
 

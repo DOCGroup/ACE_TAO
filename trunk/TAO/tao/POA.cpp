@@ -826,7 +826,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
     policies_ (policies),
     parent_ (parent),
     active_object_map_ (0),
-    delete_active_object_map_ (1),
     adapter_activator_ (),
     servant_activator_ (),
     servant_locator_ (),
@@ -851,46 +850,16 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
   this->create_active_object_map ();
 }
 
-TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
-                  TAO_POA_Manager &poa_manager,
-                  const TAO_POA_Policies &policies,
-                  TAO_POA *parent,
-                  TAO_Object_Table &active_object_map,
-                  CORBA::Environment &env)
-  : name_ (adapter_name),
-    poa_manager_ (poa_manager),
-    policies_ (policies),
-    parent_ (parent),
-    active_object_map_ (&active_object_map),
-    delete_active_object_map_ (0),
-    adapter_activator_ (),
-    servant_activator_ (),
-    servant_locator_ (),
-    default_servant_ (0),
-    children_ (),
-    lock_ (0),
-    closing_down_ (0),
-    persistent_ (policies.lifespan () == PortableServer::PERSISTENT),
-    system_id_ (policies.id_assignment () == PortableServer::SYSTEM_ID),
-    creation_time_ (ACE_OS::gettimeofday ())
-{
-  // Create a lock for ourselves
-  this->create_internal_lock ();
-
-  // Set the complete name of this POA
-  this->set_complete_name ();
-
-  // Register self with manager
-  this->poa_manager_.register_poa (this, env);
-}
-
 void
 TAO_POA::create_active_object_map (void)
 {
   int user_id_policy = !this->system_id ();
+  int unique_id_policy = this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID;
 
   // Create the active_object_map
-  this->active_object_map_ = new TAO_Object_Table (user_id_policy);
+  ACE_NEW (this->active_object_map_,
+           TAO_Active_Object_Map (user_id_policy,
+                                  unique_id_policy));
 }
 
 void
@@ -923,8 +892,8 @@ TAO_POA::create_internal_lock (void)
 
 TAO_POA::~TAO_POA (void)
 {
-  if (this->delete_active_object_map_)
-    delete active_object_map_;
+  // Delete the active object map
+  delete this->active_object_map_;
 
   // Delete the dynamically allocated lock
   delete this->lock_;
@@ -1277,7 +1246,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
           while (1)
             {
-              TAO_Object_Table::iterator iterator = this->active_object_map ().begin ();
+              TAO_Active_Object_Map::iterator iterator = this->active_object_map ().begin ();
               if (iterator == this->active_object_map ().end () 
                   || env.exception () != 0)
                 break;
@@ -1285,6 +1254,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
               PortableServer::Servant servant = 0;
               PortableServer::ObjectId id ((*iterator).id_);
 
+              // Remove from the active object map
               int result = this->active_object_map ().unbind (id, servant);
               if (result != 0)
                 {
@@ -1295,6 +1265,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
               CORBA::Boolean remaining_activations = 0;
 
+              // Check for remaining activations
               if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
                   this->active_object_map ().find (servant) != -1)
                 remaining_activations = 1;
@@ -1487,6 +1458,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   if (env.exception () != 0)
     return 0;
 
+  // Add to the active object map
   if (this->active_object_map ().bind (new_id.in (), servant) == -1)
     {
       CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
@@ -1611,6 +1583,7 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &oid,
 
       CORBA::Boolean remaining_activations = 0;
 
+      // Check for remaining activations
       if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
           this->active_object_map ().find (servant) != -1)
         remaining_activations = 1;
@@ -1710,12 +1683,11 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
 
   // If the POA has the UNIQUE_ID policy and the specified servant is
   // active, the Object Id associated with that servant is returned.
-  PortableServer::ObjectId_var id;
-  PortableServer::ObjectId_out id_out (id);
+  PortableServer::ObjectId id;
   if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
-      this->active_object_map ().find (servant, id_out) != -1)
-    {
-      return id._retn ();
+      this->active_object_map ().find (servant, id) != -1)
+    {      
+      return new PortableServer::ObjectId (id);
     }
 
   // If the POA has the IMPLICIT_ACTIVATION policy and either the POA
@@ -3347,7 +3319,7 @@ template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Object_Table_Iterator_Impl>;
+template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_POA>;
 template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Synchronization_Policy>;
@@ -3374,7 +3346,7 @@ template class auto_ptr<TAO_Id_Assignment_Policy>;
 template class auto_ptr<TAO_Id_Uniqueness_Policy>;
 template class auto_ptr<TAO_Implicit_Activation_Policy>;
 template class auto_ptr<TAO_Lifespan_Policy>;
-template class auto_ptr<TAO_Object_Table_Iterator_Impl>;
+template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_POA>;
 template class auto_ptr<TAO_Request_Processing_Policy>;
 template class auto_ptr<TAO_Synchronization_Policy>;
@@ -3387,7 +3359,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Table_Iterator_Impl>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Synchronization_Policy>
@@ -3413,7 +3385,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate auto_ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate auto_ptr<TAO_Implicit_Activation_Policy>
 #pragma instantiate auto_ptr<TAO_Lifespan_Policy>
-#pragma instantiate auto_ptr<TAO_Object_Table_Iterator_Impl>
+#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_POA>
 #pragma instantiate auto_ptr<TAO_Request_Processing_Policy>
 #pragma instantiate auto_ptr<TAO_Synchronization_Policy>

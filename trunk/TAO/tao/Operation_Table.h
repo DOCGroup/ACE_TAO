@@ -110,14 +110,6 @@ private:
   // the enumerated value indicating the lookup strategy
 };
 
-// Dynamic hashing.  We use template specialization here to use const
-// char* as the external ID. The template specialization is needed
-// since the "hash" method is not defined on type "char *".
-typedef ACE_Hash_Map_Manager<const char *,
-                             TAO_Skeleton,
-                             ACE_SYNCH_NULL_MUTEX>
-        OP_MAP_MANAGER;
-
 class TAO_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
 {
   // = TITLE
@@ -150,6 +142,13 @@ public:
   // on failure.
 
 private:
+  typedef ACE_Hash_Map_Manager_Ex<const char *,
+                                  TAO_Skeleton,
+                                  ACE_Hash<const char *>,
+                                  ACE_Equal_To<const char *>,
+                                  ACE_Null_Mutex>
+        OP_MAP_MANAGER;
+
   OP_MAP_MANAGER hash_;
   // The hash table data structure.
 };

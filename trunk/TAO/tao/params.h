@@ -190,24 +190,14 @@ public:
   TAO_LOCAL_INLINE ~TAO_OA_Parameters (void);
   // Destructor
 
-  void demux_strategy (const char *strategy);
-  // Specify the demultiplexing strategy to be used via <{strategy}>.
-  // Valid values are one of (case matters) "linear", "dynamic_hash",
-  // "user_def", or "active_demux".  If the value is not valid, then
-  // <Dynamic Hash> is used as a default.
+  TAO_LOCAL_INLINE TAO_Active_Object_Map_Impl *userdef_lookup_strategy_for_user_id_policy (void);
+  // return the lookup strategy for the user id policy
 
-  TAO_LOCAL_INLINE void demux_strategy (TAO_Demux_Strategy s);
-  // Specify the demultiplexing strategy to be used.
+  TAO_LOCAL_INLINE TAO_Active_Object_Map_Impl *userdef_lookup_strategy_for_system_id_policy (void);
+  // return the lookup strategy for the system id policy
 
-  TAO_LOCAL_INLINE TAO_Demux_Strategy demux_strategy (void);
-  // Return the demultiplexing strategy being used.
-
-  TAO_LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table_Impl *&ot);
-  // Provide a way for user defined object key lookup strategies to be
-  // plugged in.
-
-  TAO_LOCAL_INLINE TAO_Object_Table_Impl *userdef_lookup_strategy (void);
-  // return the lookup strategy
+  TAO_LOCAL_INLINE TAO_Reverse_Active_Object_Map_Impl *userdef_reverse_lookup_strategy_for_unique_id_policy (void);
+  // return the reverse lookup strategy for unique id policy 
 
   TAO_LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
   // set the table size for lookup table
@@ -216,14 +206,8 @@ public:
   // get the table size for the lookup table
 
 private:
-  TAO_Demux_Strategy demux_;
-  // demux strategy
-
   CORBA::ULong tablesize_;
   // size of object lookup table
-
-  TAO_Object_Table_Impl *ot_;
-  // concrete lookup table instance
 };
 
 #if defined (__ACE_INLINE__)

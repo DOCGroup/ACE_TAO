@@ -55,13 +55,6 @@ TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence &rhs)
 {
 }
 
-ACE_INLINE u_long
-TAO_Base_Sequence::hash (void) const
-{
-  return ACE::hash_pjw ((const char *) this->buffer_,
-                        this->length_);
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_Base_Sequence::release (void) const
 {
