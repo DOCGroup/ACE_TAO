@@ -5,11 +5,11 @@
 #include "tao/DynamicInterface/Server_Request.h"
 
 #include "tao/NVList.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID (DSI, 
-           Database_i, 
+ACE_RCSID (DSI,
+           Database_i,
            "$Id$")
 
 DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)

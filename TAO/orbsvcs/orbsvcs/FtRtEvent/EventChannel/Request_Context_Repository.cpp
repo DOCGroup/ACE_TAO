@@ -4,7 +4,7 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
 
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/IOP_IORC.h"
 #include "ace/TSS_T.h"
 
