@@ -39,7 +39,7 @@ class Client
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (Simple_Server_ptr server, int niterations);
+  Client (Simple_Server_ptr server, ACE_UINT32 niterations);
   // ctor
 
   virtual ~Client (void) {};
