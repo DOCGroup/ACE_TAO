@@ -109,25 +109,39 @@
 
 // include all the *.i file here
 #if defined (__ACE_INLINE__)
-#include "tao/cdr.i" //always
-#include "tao/typecode.i"
-#include "tao/any.i"
 #include "tao/boa.i"
 #include "tao/giop.i"
-#include "tao/object.i"  // should always be
-#include "tao/orbobj.i"
 #include "tao/svrrqst.i"
 //#include "tao/factories.i"
 #include "tao/params.i"
-#include "tao/client_factory.i"
 #include "tao/server_factory.i"
 #include "tao/default_client.i"
 #include "tao/default_server.i"
-#include "tao/marshal.i" // always
-#include "tao/iiopobj.i"
 #include "tao/iioporb.i"
 #include "tao/connect.i"
 #include "tao/roa.i"
 #endif /* __ACE_INLINE__ */
+
+#  if !defined(__ACE_INLINE__)
+#    undef ACE_INLINE
+#    define ACE_INLINE inline
+#    define do_undef_on_ACE_INLINE
+#  endif
+
+#include "tao/any.i"
+#include "tao/cdr.i" //always
+#include "tao/object.i"  // should always be included
+#include "tao/marshal.i" // always
+#include "tao/typecode.i"
+#include "tao/orbobj.i"
+#include "tao/iiopobj.i"
+#include "tao/client_factory.i"
+
+#  if defined(do_undef_on_ACE_INLINE)
+#    undef do_undef_on_ACE_INLINE
+#    undef ACE_INLINE
+#    define ACE_INLINE
+#  endif
+
 
 #endif /* TAO_CORBA_H */
