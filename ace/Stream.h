@@ -92,6 +92,15 @@ public:
   // Return the top module on the stream (right below the stream
   // head).
 
+  virtual int insert (const ACE_TCHAR *prev_name,
+                      ACE_Module<ACE_SYNCH_USE> *mod);
+  // Insert a new module <mod> below the named module <prev_name>.
+
+  virtual int replace (const ACE_TCHAR *replace_name,
+                       ACE_Module<ACE_SYNCH_USE> *mod,
+                       int flags = M_DELETE);
+  // Replace the named module <replace_name> with a new module <mod>.
+
   virtual int remove (const ACE_TCHAR *mod,
                       int flags = M_DELETE);
   // Remove the named module <mod> from the stream.  This bypasses the
