@@ -93,7 +93,8 @@ TAO_Connection_Handler::svc_i (void)
          && result >= 0)
     {
       result =
-        this->transport_->handle_input_i (max_wait_time);
+        this->transport_->handle_input_i (ACE_INVALID_HANDLE,
+                                          max_wait_time);
 
       if (result == -1 && errno == ETIME)
         {
