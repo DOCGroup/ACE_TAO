@@ -66,7 +66,7 @@ main (int argc, char *argv[])
   CORBA::Environment env;
   char *orb_name = "internet";
 
-  CORBA::ORB_ptr	orb_ptr = CORBA::ORB_init (argc, argv, orb_name, env);
+  CORBA::ORB_ptr orb_ptr = CORBA::ORB_init (argc, argv, orb_name, env);
 
   if (env.exception () != 0) 
     {
