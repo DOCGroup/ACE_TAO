@@ -394,10 +394,10 @@ CORBA_ORB_RequestSeq::replace (CORBA::ULong max,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>;
-template class TAO_Object_Manager<CORBA_Request,CORBA_Request_var>;
+template class TAO_Pseudo_Object_Manager<CORBA_Request,CORBA_Request_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>
-#pragma instantiate TAO_Object_Manager<CORBA_Request,CORBA_Request_var>
+#pragma instantiate TAO_Pseudo_Object_Manager<CORBA_Request,CORBA_Request_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

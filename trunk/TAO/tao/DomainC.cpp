@@ -409,8 +409,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
+  template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>
+# pragma instantiate TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */

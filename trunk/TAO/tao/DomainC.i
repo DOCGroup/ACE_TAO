@@ -13,9 +13,9 @@ CORBA_DomainManager::CORBA_DomainManager (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DomainManager::CORBA_DomainManager (TAO_Stub *objref, 
-                                     TAO_ServantBase *_tao_servant, 
-				     CORBA::Boolean _tao_collocated) // constructor
+CORBA_DomainManager::CORBA_DomainManager (TAO_Stub *objref,
+                                     TAO_ServantBase *_tao_servant,
+                                     CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
@@ -38,7 +38,7 @@ CORBA_DomainManager_var::CORBA_DomainManager_var (CORBA::DomainManager_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE CORBA::DomainManager_ptr 
+ACE_INLINE CORBA::DomainManager_ptr
 CORBA_DomainManager_var::ptr (void) const
 {
   return this->ptr_;
@@ -74,19 +74,19 @@ CORBA_DomainManager_var::operator= (const CORBA::DomainManager_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_DomainManager_var::operator const CORBA::DomainManager_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_DomainManager_var::operator CORBA::DomainManager_ptr &() // cast 
+ACE_INLINE
+CORBA_DomainManager_var::operator CORBA::DomainManager_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::DomainManager_ptr 
+ACE_INLINE CORBA::DomainManager_ptr
 CORBA_DomainManager_var::operator-> (void) const
 {
   return this->ptr_;
@@ -112,7 +112,7 @@ CORBA_DomainManager_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::DomainManager_ptr 
+ACE_INLINE CORBA::DomainManager_ptr
 CORBA_DomainManager_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -166,7 +166,7 @@ CORBA_DomainManager_out::operator= (CORBA_DomainManager_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_DomainManager_out::operator CORBA_DomainManager_ptr &() // cast
 {
   return this->ptr_;
@@ -178,7 +178,7 @@ CORBA_DomainManager_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_DomainManager_ptr 
+ACE_INLINE CORBA_DomainManager_ptr
 CORBA_DomainManager_out::operator-> (void)
 {
   return this->ptr_;
@@ -219,7 +219,7 @@ CORBA_ConstructionPolicy_var::CORBA_ConstructionPolicy_var (CORBA_ConstructionPo
   : ptr_ (p)
 {}
 
-ACE_INLINE CORBA_ConstructionPolicy_ptr 
+ACE_INLINE CORBA_ConstructionPolicy_ptr
 CORBA_ConstructionPolicy_var::ptr (void) const
 {
   return this->ptr_;
@@ -255,19 +255,19 @@ CORBA_ConstructionPolicy_var::operator= (const CORBA_ConstructionPolicy_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_ConstructionPolicy_var::operator const CORBA_ConstructionPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_ConstructionPolicy_var::operator CORBA_ConstructionPolicy_ptr &() // cast 
+ACE_INLINE
+CORBA_ConstructionPolicy_var::operator CORBA_ConstructionPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ConstructionPolicy_ptr 
+ACE_INLINE CORBA_ConstructionPolicy_ptr
 CORBA_ConstructionPolicy_var::operator-> (void) const
 {
   return this->ptr_;
@@ -293,7 +293,7 @@ CORBA_ConstructionPolicy_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ConstructionPolicy_ptr 
+ACE_INLINE CORBA_ConstructionPolicy_ptr
 CORBA_ConstructionPolicy_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -347,7 +347,7 @@ CORBA_ConstructionPolicy_out::operator= (CORBA_ConstructionPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_ConstructionPolicy_out::operator CORBA_ConstructionPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -359,7 +359,7 @@ CORBA_ConstructionPolicy_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ConstructionPolicy_ptr 
+ACE_INLINE CORBA_ConstructionPolicy_ptr
 CORBA_ConstructionPolicy_out::operator-> (void)
 {
   return this->ptr_;
@@ -428,25 +428,25 @@ CORBA_DomainManagerList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_DomainManagerList_var::operator const CORBA_DomainManagerList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_DomainManagerList_var::operator CORBA_DomainManagerList &() // cast 
+ACE_INLINE
+CORBA_DomainManagerList_var::operator CORBA_DomainManagerList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_DomainManagerList_var::operator CORBA_DomainManagerList &() const// cast 
+ACE_INLINE
+CORBA_DomainManagerList_var::operator CORBA_DomainManagerList &() const// cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var> 
+ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
 CORBA_DomainManagerList_var::operator[] (CORBA::ULong slot)
 {
   return this->ptr_->operator[] (slot);
@@ -464,7 +464,7 @@ CORBA_DomainManagerList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE CORBA_DomainManagerList *&
 CORBA_DomainManagerList_var::out (void)
 {
@@ -525,7 +525,7 @@ CORBA_DomainManagerList_out::operator= (CORBA_DomainManagerList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_DomainManagerList_out::operator CORBA_DomainManagerList *&() // cast
 {
   return this->ptr_;
@@ -543,7 +543,7 @@ CORBA_DomainManagerList_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var> 
+ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
 CORBA_DomainManagerList_out::operator[] (CORBA::ULong slot)
 {
   return this->ptr_->operator[] (slot);
@@ -682,4 +682,3 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_DomainManagerLis
   }
   return 0; // error
 }
-

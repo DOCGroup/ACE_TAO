@@ -737,8 +737,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Pollable_ptr &_tao
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_Pollable,CORBA_Pollable_var>;
+  template class TAO_Object_Manager<CORBA_Pollable,CORBA_Pollable_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  pragma instantiate TAO_Object_Field_T<CORBA_Pollable,CORBA_Pollable_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_Pollable,CORBA_Pollable_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::DIIPollable_ptr _tao_elem)
@@ -793,8 +795,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DIIPollable_ptr &
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>;
+  template class TAO_Object_Manager<CORBA::DIIPollable,CORBA::DIIPollable_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  pragma instantiate TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>
+#  pragma instantiate TAO_Object_Manager<CORBA::DIIPollable,CORBA::DIIPollable_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, CORBA_PollableSet_ptr _tao_elem)
@@ -849,8 +853,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet_ptr &_
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_PollableSet,CORBA_PollableSet_var>;
+  template class TAO_Object_Manager<CORBA_PollableSet,CORBA_PollableSet_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  pragma instantiate TAO_Object_Field_T<CORBA_PollableSet,CORBA_PollableSet_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_PollableSet,CORBA_PollableSet_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA_PollableSet::NoPossiblePollable &_tao_elem) // copying
