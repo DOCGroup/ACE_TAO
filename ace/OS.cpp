@@ -2389,7 +2389,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #       if defined (ACE_HAS_PTHREADS_DRAFT4)
           result = ::pthread_attr_setsched (&attr, spolicy);
-#       elif defined (ACE_HAS_PTHREADS_DRAFT6)
+#       elif defined (ACE_HAS_PTHREADS_DRAFT6) && !defined(ACE_USE_ADAPT_RETVAL)
           result = ::pthread_attr_setschedpolicy (&attr, spolicy);
 #       else  /* draft 7 or std */
           ACE_ADAPT_RETVAL(::pthread_attr_setschedpolicy (&attr, spolicy),
@@ -2601,10 +2601,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ::pthread_attr_delete (&attr);
 
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
+#       if defined(ACE_USE_ADAPT_RETVAL)
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
+                                                  &attr,
+                                                  thread_args->entry_point (),
+                                                  thread_args),
+                                result),
+              int, -1, result);
+#       else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL (::pthread_create (thr_id, &attr,
                                 thread_args->entry_point (),
                                 thread_args),
               int, -1, result);
+#       endif /* !ACE_USE_ADAPT_RETVAL */
   ::pthread_attr_destroy (&attr);
 
 #     else /* this is draft 7 or std */
@@ -3190,7 +3199,13 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 #     endif /*  ACE_HAS_FSU_PTHREADS */
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#       if defined(ACE_USE_ADAPT_RETVAL)
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
+                                           ace_result_),
+                         int, -1);
+#       else /* ACE_USE_ADAPT_RETVAL */
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
+#       endif /* !ACE_USE_ADAPT_RETVAL */
 #     else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
                                          ace_result_),
@@ -3260,7 +3275,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
 #       elif defined (ACE_HAS_PTHREADS_DRAFT4)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
-#       elif defined (ACE_HAS_PTHREADS_DRAFT6)
+#       elif defined (ACE_HAS_PTHREADS_DRAFT6) && !defined (ACE_USE_ADAPT_RETVAL)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #       else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
@@ -3327,7 +3342,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
 #     elif defined (ACE_HAS_PTHREADS_DRAFT4)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
-#     elif defined (ACE_HAS_PTHREADS_DRAFT6)
+#     elif defined (ACE_HAS_PTHREADS_DRAFT6) && !defined (ACE_USE_ADAPT_RETVAL)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #     else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
