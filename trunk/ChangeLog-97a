@@ -1,3 +1,8 @@
+Wed Apr 16 09:35:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Map_Manager.cpp (free_search_structure): changed type of
+	  loop index to size_t to avoid signed/unsigned mismatch.
+
 Wed Apr 16 04:07:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Strategies_T: Widened the constructor interface for
