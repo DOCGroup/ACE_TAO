@@ -41,6 +41,169 @@
 
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
+/******************************************************************
+
+* Assume that ACE_MALLOC_ALIGN is the number of bytes of the alignment
+  of the platform. Usually, this will be 4 on most platforms.  Some
+  platforms require this to be 8.  In any case, this macro should
+  always be a 2's power.
+
+* Malloc_Header structure.
+
+  Notice that sizeof (ACE_Malloc_Header) must be multiple of
+  ACE_MALLOC_ALIGN
+
+   +-----------------------------------------+
+   |MALLOC_HEADER_PTR *next_block_;          |
+   |   // Points to next free Malloc_Header  |
+   |   // in this chain.                     |
+   +-----------------------------------------+
+   |size_t size_;                            |
+   |   // Size of buffer associate with      |
+   |   // this Malloc_Header                 |
+   }   // The size is in number of           |
+   |   // Malloc_Header (including this one.)|
+   +-----------------------------------------+
+   |long paddings_[ACE_MALLOC_PADDING_SIZE]; |
+   |   // Padding long array.  This purpose  |
+   |   // of this padding array is to adjust |
+   |   // the sizeof (Malloc_Header) to be   |
+   |   // multiple of ACE_MALLOC_ALIGN.      |
+   |   // If you are sure that               |
+   |   //    sizeof (MALLOC_HEADER_PTR)      |
+   |   //  + sizeof (size_t) is a multiple   |
+   |   // of ACE_MALLOC_ALIGN, then you can  |
+   |   // #define ACE_MALLOC_PADDING_SIZE 0  |
+   |   // to complete remove this data member|
+   |   // from Malloc_Header.  Otherwise,    |
+   |   // ACE will try to figure out the     |
+   |   // correct value of this macro.       |
+   |   // However, the calculation does not  |
+   |   // always do the right thing and in   |
+   |   // some rare cases, you'll need to    |
+   |   // tweak this value by defining the   |
+   |   // macro (ACE_MALLOC_PADDING_SIZE)    |
+   |   // explicitly.                        |
+   +-----------------------------------------+
+
+* Name_Node
+
+  ACE_Malloc allows searching thru it's allocated buffer using names.
+  Name_Node is an internal data structure that ACE_Malloc used to
+  maintain a linked list that manages this (name, buffer) mappings.
+
+   +-----------------------------------------+
+   |char *name_;                             |
+   |   // Points to a dynamically allocated  |
+   |   // char buffer that holds the name    |
+   |   // of this node.  This buffer is      |
+   |   // allocated from using this          |
+   |   // ACE_MALLOC instance that owns this |
+   |   // Name_Node (so it always points to  |
+   |   // a buffer owned by its Malloc.      |
+   +-----------------------------------------+
+   |char *pointer_;                          |
+   |   // Points to the content that <name_> |
+   |   // referring to.  Like <name_>, the   |
+   |   // context always resides within the  |
+   |   // Malloc.                            |
+   +-----------------------------------------+
+   |NAME_NODE_PTR next_;                     |
+   +-----------------------------------------+
+   |NAME_NODE_PTR prev_;                     |
+   |   // Name Node linked list pointers.    |
+   +-----------------------------------------+
+
+
+* Control_Block
+
+  Only the first ACE_Malloc instance that uses
+  the shared memory will initialize the control block because all
+  later instances are supposed to share the memory with the first
+  instance.  The following diagram shows the initial value of a
+  Control_Block.
+
+   +-----------------------------------------+
+   |NAME_NODE_PTR name_head_;                |<---- NULL
+   |   // Entry point for double-linked list.|
+   |   // Initialized to NULL pointer to     |
+   |   // indicate an empty list.            |
+   +-----------------------------------------+
+   |MALLOC_HEADER_PTR freep_;                |
+   |   // Pointer to last un-allocated       |
+   |   // malloc_header linked list.         |---+
+   +-----------------------------------------+   |
+   |char lock_name_[MAXNAMELEN];             |   |
+   |   // The global name of the lock.       |   |
+   +-----------------------------------------+   |
+   |Malloc_Stats malloc_stats_;              |   |
+   |   // (Optional statistic information.   |   |
+   |   //  Do not exist if                   |   |
+   |   //  ACE_HAS_MALLOC_STATS is not       |   |
+   |   //  defined.                          |   |
+   +-----------------------------------------+   |
+   |long align_[CONTROL_BLOCK_ALIGN_LONGS];  |   |
+   |   //                                    |   |
+   +-----------------------------------------+   |
+   |Malloc_Header base_;                     |<--+
+   |  // Dummy node used to anchor the       |
+   |  // freelist.                           |<--+
+   |                           +-------------+   |
+   |                           |next_        |---+
+   |                           +-------------+
+   |                           |size_        |----> 0
+   +-----------------------------------------+
+
+  The first ACE_Malloc initializes the control block by allocating a
+  memory block of size equal to or greater than sizeof (control block)
+  (rounded to the closest <rounded_bytes>) and invokes the placement
+  new's on to initialize the control block and its internal
+  pointers/data structures.  If the extra memory (memory after the
+  <base_> in the following diagram) is enough to create a
+  Malloc_Header chain, one is created and added to the freelist list.
+  That is, if the memory size returned by init_acquire() is greater
+  than the sizeof Control_Block, the control block is initialized to
+  the following diagram:
+
+
+   +-------------------------------------
+   |name_head_;                          |
+   +-------------------------------------+
+   |MALLOC_HEADER_PTR freep_;            |--+
+   +-------------------------------------+  |
+   |lock_name_[...];                     |  |
+   +-------------------------------------+  |
+   |malloc_stats_; (Optional)            |  |
+   +-------------------------------------+  |
+   |align_[...];                         |  |
+   +-------------------------------------+  |
+   |Malloc_Header base_;                 |<-+
+   |                         +-----------+
+   |                         |next_;     |--+
+   |                         +-----------+  |
+   |                         |size_ = 0; |  |
+   +=====================================+  |
+   |Malloc_Header base_;                 |<-+
+   |                         +-----------+
+   |                         |next_;     |
+   |                         +-----------+
+   |                         |size_ = 3; |
+   +-------------------------------------+
+   |Malloc_Header base_;                 |
+   |                         +-----------+
+   |   (Uninitialized)       |next_;     |
+   |                         +-----------+
+   |                         |size_;     |
+   +-------------------------------------+
+   |Malloc_Header base_;                 |
+   |                         +-----------+
+   |   (Uninitialized)       |next_;     |
+   |                         +-----------+
+   |                         |size_;     |
+   +-------------------------------------+
+
+***********************************************************/
+
 struct ACE_Export ACE_Malloc_Stats
 // TITLE
 //    This keeps stats on the usage of the memory manager.
