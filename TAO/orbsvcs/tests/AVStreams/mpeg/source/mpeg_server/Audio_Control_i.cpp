@@ -167,7 +167,7 @@ Audio_Control_i::set_peer (char *&peer,
 
   */
   
-  ACE_INET_Addr client_data_addr (peer);
+  ACE_INET_Addr client_data_addr (peer_addr_str);
   // Data (UDP) Address of the client.
   
   ACE_DEBUG ((LM_DEBUG,
