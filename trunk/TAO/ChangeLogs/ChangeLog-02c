@@ -5141,7 +5141,7 @@ Fri Oct 25 21:48:30 2002  Ossama Othman  <ossama@uci.edu>
 
           New PortableInterceptor::ObjectReferenceFactory implementation
           designed to excerise the
-          PortableInterceptor::IORInfo::current_factory() attributed, the
+          PortableInterceptor::IORInfo::current_factory() attribute, the
           POA's ObjectReferenceFactory support.
 
         * tests/ORT/ServerORBInitializer.h:
