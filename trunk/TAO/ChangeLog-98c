@@ -1,16 +1,21 @@
+Mon Sep 28 21:35:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time_Utilities.cpp: removed #define ACE_BUILD_DLL.
+          Thanks to Irfan for reporting that it's not correct.
+
 Mon Sep 28 16:39:30 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h: 
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 	
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp: Replaced
- 	the use of ACE_Unbounded_Set with ACE_Unbounded_Queue, fixing the
- 	inconsistent results of stats.
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp: Replaced
+        the use of ACE_Unbounded_Set with ACE_Unbounded_Queue, fixing the
+        inconsistent results of stats.
 
 Mon Sep 28 15:39:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (create_object_key): Don't add the space for
- 	  persistent_key_type_length and creation_time_length when
- 	  POA_NO_TIMESTAMP is defined.
+        * tao/POA.cpp (create_object_key): Don't add the space for
+          persistent_key_type_length and creation_time_length when
+          POA_NO_TIMESTAMP is defined.
 
 Mon Sep 28 15:03:02 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
