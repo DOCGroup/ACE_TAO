@@ -120,7 +120,7 @@ Worker_Task::svc (void)
       // Process message here.
       //
 
-      for (int j = 0; j < message_size; ++j)
+      for (size_t j = 0; j < message_size; ++j)
         {
           // Eat a little CPU
           /* takes about 40.2 usecs on a 167 MHz Ultra2 */
@@ -203,8 +203,8 @@ IO_Task::svc (void)
     {
       ACE_Message_Block *message_block = 0;
       ACE_NEW_RETURN (message_block,
-                      ACE_Message_Block (0,
-                                         ACE_Message_Block::MB_STOP),
+                      ACE_Message_Block ((size_t)0,
+                                         (int)ACE_Message_Block::MB_STOP),
                       -1);
 
       int result = this->putq (message_block);
@@ -280,7 +280,7 @@ main (int argc, ASYS_TCHAR *argv[])
   size_t i = 0;
 
   ACE_NEW_RETURN (data_block,
-                  ACE_Data_Block,
+                  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >,
                   -1);
 
   for (i = 0; i < number_of_messages; ++i)
@@ -335,10 +335,26 @@ main (int argc, ASYS_TCHAR *argv[])
   IO_Task io (&message_queue);
 
   // Activate the workers.
+  priority =
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
+     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+
+  flags = THR_BOUND | THR_SCHED_FIFO;
+
   result = io.activate (THR_BOUND);
   if (result != 0)
     {
-      return result;
+      flags = THR_BOUND;
+      priority = ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
+                                                 ACE_SCOPE_THREAD);
+      result = io.activate (flags,
+                            1,
+                            1,
+                            priority);
+      if (result != 0)
+        {
+          return result;
+        }
     }
 
   // Wait for all threads to terminate.
@@ -367,3 +383,16 @@ main (int argc, ASYS_TCHAR *argv[])
 
   return result;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
+template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
+#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
