@@ -1,8 +1,12 @@
 Thu Oct 29 11:44:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.6.h: changed ACE_THREAD_POSIX_SEM to
-          ACE_HAS_POSIX_SEM.  It looked like a typo.  Thanks to
-          Ossama for reporting it.
+          ACE_HAS_POSIX_SEM.  It looked like a typo.
+          Only #define ACE_HAS_POSIX_SEM if _POSIX_PTHREAD_SEMANTICS is
+          #defined.  Thanks to Ossama for help with this.
+
+          Also, removed ACE_HAS_PTHREADS_STD because it's
+          #defined in config-sunos5.5.h.
 
 Wed Oct 28 14:30:01 1998  Rainer Blome <rainer_blome@de.ibm.com>
 
