@@ -19,7 +19,7 @@
 #if !defined (TAO_CORBACOM_H)
 #define TAO_CORBACOM_H
 
-#include <objbase.h>		// Win32 name for "compobj.h"
+//#include <objbase.h>		// Win32 name for "compobj.h"
 
 #if	SIZEOF_BOOL != 0
 typedef bool			CORBA_Boolean;

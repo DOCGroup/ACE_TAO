@@ -20,8 +20,9 @@
 #if !defined (TAO_XDR_H)
 #define	TAO_XDR_H
 
-#include	<sys/types.h>
-#include	<netinet/in.h>
+#include "ace/OS.h"
+
+#include "tao/typecode.h"
 
 // Define on systems that fully support exceptions ... excluding
 // some very common platforms like G++ and VC++ 2.2

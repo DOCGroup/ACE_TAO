@@ -6,8 +6,15 @@
 //
 // Implementation of Named Value List
 
-#include        "orb.h"
-#include        <initguid.h>
+#include <objbase.h>
+#include <initguid.h>
+
+#include "ace/Synch_T.h"
+
+#include "tao/orb.h"
+#include "tao/any.h"
+#include "tao/except.h"
+#include "tao/nvlist.h"
 
 // COM's IUnknown support
 

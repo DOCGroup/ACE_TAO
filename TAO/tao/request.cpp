@@ -4,11 +4,13 @@
 //
 // Implementation of Dynamic Invocation Interface
 //
-#include "orb.h"
-#include "stub.h"
+#include <objbase.h>
 #include <initguid.h>
 
-#include "cdr.h"
+#include "tao/orb.h"
+#include "tao/stub.h"
+#include "tao/cdr.h"
+#include "tao/nvlist.h"
 
 // {77420085-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Request,

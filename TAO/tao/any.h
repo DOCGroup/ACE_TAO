@@ -19,7 +19,11 @@
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
-extern const IID IID_CORBA_Any;
+#include <objbase.h>
+
+#include "ace/Synch_T.h"
+
+extern "C" const IID IID_CORBA_Any;
 
 class ACE_Svc_Export CORBA_Any : public IUnknown
   // = TITLE

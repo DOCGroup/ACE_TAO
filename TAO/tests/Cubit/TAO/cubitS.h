@@ -14,6 +14,8 @@ implementation
 #define	_SKEL_CUBIT_HH
 
 #include "cubitC.h"
+#include "tao/orbobj.h"
+#include "tao/nvlist.h"
 
 class _skel_Cubit;
 typedef _skel_Cubit *_skel_Cubit_ptr;

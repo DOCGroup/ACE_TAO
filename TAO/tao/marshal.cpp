@@ -19,9 +19,9 @@
 // 
 // ============================================================================
 
-#include        "orb.h"
-#include        "align.h"
-#include	"cdr.h"
+#include "tao/orb.h"
+#include "tao/align.h"
+#include "tao/cdr.h"
 
 #if	defined (HAVE_WIDEC_H)
 #		include <widec.h>

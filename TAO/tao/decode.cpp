@@ -20,9 +20,10 @@
 // 
 // ============================================================================
 
-#include        "orb.h"
-#include        "cdr.h"
-#include        "giop.h"
+#include "tao/orb.h"
+#include "tao/cdr.h"
+#include "tao/giop.h"
+#include "tao/debug.h"
 
 #if     defined (HAVE_WIDEC_H)
 #               include <widec.h>
