@@ -1671,7 +1671,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // Don't bother to check <in_use_> if the program is shutting
       // down.  Doing so will cause a new ACE_TSS object getting
       // created again.
-      if (!ACE_Object_Manager::shutting_down () 
+      if (!ACE_Object_Manager::shutting_down ()
           && !in_use_->test_and_clear (info.key_))
         --info.thread_count_;
 
@@ -5192,6 +5192,30 @@ ace_sysconf_dump (void)
               ACE_OS::sysconf (_SC_VERSION)));
 }
 # endif /* CHORUS */
+
+ACE_OS_WString::ACE_OS_WString (const ACE_USHORT16 *s)
+  : rep_ (0)
+{
+  size_t len = ACE_OS::strlen (s);
+  ACE_NEW (this->rep_, char[len]);
+  for (size_t i = 0; i < len; i++)
+    this->rep_[i] = s[i];
+
+  this->rep_[len] = '\0';
+  return;
+}
+
+ACE_OS_CString::ACE_OS_CString (const char *s)
+  : rep_ (0)
+{
+  size_t len = ACE_OS::strlen (s);
+  ACE_NEW (this->rep_, ACE_USHORT16[len]);
+  for (size_t i = 0; i < len; i++)
+    this->rep_[i] = s[i];
+
+  this->rep_[len] = '\0';
+  return;
+}
 
 # if defined (ACE_HAS_WINCE)
 ACE_CE_Bridge *ACE_CE_Bridge::default_text_bridge_ = 0;
