@@ -1,9 +1,10 @@
 Fri Jun 18 16:54:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Message_Block_Test.cpp: Removed template instantiations
- 	  for ACE_Message_Queue_Iterator and
- 	  ACE_Message_Queue_Reverse_Iterator.  They are already available
- 	  in the ace library.
+	* tests/Message_Queue_Test.cpp:
+	* tests/Message_Block_Test.cpp:
+	  Removed template instantiations for ACE_Message_Queue_Iterator
+	  and ACE_Message_Queue_Reverse_Iterator.  They are already
+	  available in the ace library.
 
 	* ace/Service_Types.cpp: Added explicit instantiations for
  	  ACE_Message_Queue_Reverse_Iterator.  ACE_Message_Queue and
