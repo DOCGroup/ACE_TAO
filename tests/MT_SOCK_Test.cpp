@@ -165,7 +165,7 @@ server (void *arg)
       // Create a new ACE_SOCK_Stream endpoint (note automatic restart
       // if errno == EINTR).
 
-      while ((result = peer_acceptor->accept (new_stream, ,
+      while ((result = peer_acceptor->accept (new_stream,
                                               &cli_addr)) != -1)
         {
           char *t = ACE_ALPHABET;
