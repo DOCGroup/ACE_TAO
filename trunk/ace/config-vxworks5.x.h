@@ -18,7 +18,6 @@
 # include "ace/config-g++-common.h"
 # undef ACE_HAS_TEMPLATE_SPECIALIZATION
 
-# define ACE_HAS_VERBOSE_NOTSUP
 # define ACE_LACKS_IOSTREAM_FX
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN ace_main
