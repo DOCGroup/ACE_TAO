@@ -1,9 +1,5 @@
 #include "LB_CPU_Utilization_Monitor.h"
-
 #include "tao/ORB_Constants.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <iostream>
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
