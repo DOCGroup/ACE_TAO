@@ -300,11 +300,24 @@ sub update_version_files () {
     "BUG-REPORT-FORM $exec_suffix");
   return 1 if $? >> 8;
 
-  if ($kit =~ /^tao/) {
+  if (! "$exec_prefix"  &&  $kit =~ /^tao/) {
     system ("$exec_prefix" .
       "perl -pi -e 's/ACE VERSION:.*/ACE VERSION: $ace_version/' " .
       "BUG-REPORT-FORM $exec_suffix");
     return 1 if $? >> 8;
+
+    open (TAO_VERSION_H, "> tao/Version.h")  ||
+      die "$0: unable to open tao/Version.h\n";
+
+    print TAO_VERSION_H
+      "// \$Id\$\n" .
+      "// This is an automatically generated file.\n\n" .
+      "\#define TAO_MAJOR_VERSION ${major_version}\n" .
+      "\#define TAO_MINOR_VERSION ${minor_version}\n" .
+      "\#define TAO_BETA_VERSION ${beta_version}\n" .
+      "\#define TAO_VERSION \"${version}\"\n";
+
+    close TAO_VERSION_H;
   }
 
   if (! "$exec_prefix"  &&  $kit =~ /^ace/) {
@@ -314,10 +327,10 @@ sub update_version_files () {
     print ACE_VERSION_H
       "// \$Id\$\n" .
       "// This is an automatically generated file.\n\n" .
-      "\#define ACE_MAJOR_VERSION (${major_version}u)\n" .
-      "\#define ACE_MINOR_VERSION (${minor_version}u)\n" .
-      "\#define ACE_BETA_VERSION (${beta_version}u)\n" .
-      "\#define ACE_VERSION \"${version}\\0\"\n";
+      "\#define ACE_MAJOR_VERSION ${major_version}\n" .
+      "\#define ACE_MINOR_VERSION ${minor_version}\n" .
+      "\#define ACE_BETA_VERSION ${beta_version}\n" .
+      "\#define ACE_VERSION \"${version}\"\n";
 
     close ACE_VERSION_H;
   }
@@ -353,7 +366,8 @@ sub update_changelog () {
             "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog ace/Version.h");
   } elsif ($kit =~ /tao/) {
     system ("$cvs commit -m'$version' VERSION BUG-REPORT-FORM ChangeLog " .
-            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog");
+            "tao/Version.h " .
+            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog tao/Version.h");
   }
   return 1 if $? >> 8;
 
