@@ -103,6 +103,25 @@ extern "C" void * _dlsym (void *, const char *);
 # include /**/ <sysent.h>
 #endif /* ACE_HAS_SYSENT_H_*/
 
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+using std::bsearch;
+using std::qsort;
+# if defined (ACE_WIN32)
+using std::_tzset;
+using std::_timezone;
+# else
+using std::tzset;
+using std::timezone;
+# endif
+using std::difftime;
+using std::ctime;
+using std::localtime;
+using std::gmtime;
+using std::asctime;
+using std::strftime;
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
 # if !defined (m88k) && !defined (SCO)
 extern "C" int gettimeofday (struct timeval *tp, void * = 0);

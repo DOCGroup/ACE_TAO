@@ -1170,6 +1170,12 @@ extern "C" pthread_t pthread_self (void);
 #   endif /* VXWORKS */
 # endif /* ACE_LACKS_SYSTIME_H */
 
+# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+using std::time_t;
+using std::tm;
+# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
 typedef struct timespec

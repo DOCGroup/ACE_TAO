@@ -29,6 +29,12 @@
 #include "ace/OS_Export.h"
 #include /**/ <stddef.h>
 
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+using std::size_t;
+using std::wint_t;
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+
 class ACE_OS_Export ACE_OS_String
   // = TITLE
   //     This class is a wrapper for string operations

@@ -6,4 +6,6 @@
 
 BINDIR = $(CORE_BINDIR)
 
+INSTALL_THIS_TARGET = 1
+
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>

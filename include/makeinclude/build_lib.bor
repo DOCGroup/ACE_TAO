@@ -1,6 +1,6 @@
 #
 # Rules for building a static library
-# 
+#
 # Inputs:
 # ~~~~~~~
 # NAME - undecorated name of target
@@ -25,13 +25,11 @@ $(TARGET): $(OBJFILES)
 	+-)
 !
 
-clean:
-	@copy &&!
-@del $(OBJFILES:.obj=.obj ^
-@del )
-! clean_$(NAME)~.bat 1> NUL
-	-@clean_$(NAME)~.bat 2> NUL
-	@del clean_$(NAME)~.bat
+!include <$(ACE_ROOT)\include\makeinclude\clean.bor>
+
+INSTALL_TYPES = lib includes
+
+!include <$(ACE_ROOT)\include\makeinclude\install.bor>
 
 !ifdef CPPDIR
 .path.cpp = $(CPPDIR)
@@ -42,6 +40,5 @@ clean:
 .cpp.obj:
 	@$(MAKE_OBJDIR)
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
-        
-.autodepend
 
+.autodepend
