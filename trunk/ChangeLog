@@ -51,13 +51,11 @@ Mon Feb 21 12:43:41 2005  Steve Huston  <shuston@riverace.com>
 	  adjustment based on the address family in use.
 	  Close the listen_handle_ when this object is destroyed.
 
->>>>>>> 4.8406
 Mon Feb 21 15:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Added missing semi colon after the Identity test
 
->>>>>>> 4.8405
 Mon Feb 21 07:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RMCast/Send_Msg/Send_Msg.mpc:
@@ -96,7 +94,6 @@ Fri Feb 18 18:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/tao_orb_tests.lst:
           Don't try to run bug_1551_regression on Irix
 
->>>>>>> 4.8404
 Fri Feb 18 09:46:25 2005  Dale Wilson  <wilson_d@ociweb.com>
 
         * NEWS:
