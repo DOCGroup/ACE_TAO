@@ -1,3 +1,8 @@
+Tue May 18 11:26:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/tests.mpc: Replaced the "exename" lines for ACE_Test,
+	  ACE_Init_Test, and FIFO_Test. Somehow they got lost...
+
 Tue May 18 11:07:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
