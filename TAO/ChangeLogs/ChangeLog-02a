@@ -1,3 +1,9 @@
+Wed Feb 21 10:50:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/Options.html: Changed the documentation for
+	  -ORBConnectionCachingStrategy and -ORBPurgePercentage
+	  options. 
+
 Wed Feb 21 07:27:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
