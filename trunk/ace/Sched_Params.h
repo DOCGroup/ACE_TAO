@@ -13,7 +13,7 @@
 //    28 January 1997
 //
 // = AUTHOR
-//    David Levine and Carlos O'Ryan
+//    David Levine <levine@cs.wustl.edu> and Carlos O'Ryan <coryan@uci.edu>
 //
 // ============================================================================
 
