@@ -1,3 +1,18 @@
+Wed Sep  1 17:08:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO/tao/IIOP_Connect.i:
+	* TAO/tao/IIOP_Connect.cpp:
+	* TAO/tao/UIOP_Connect.i:
+	* TAO/tao/UIOP_Connect.cpp:
+	  Moved virtual methods the the .cpp file, there is no sense in
+	  inlining them.
+
+	* TAO/tao/corbafwd.h:
+	  Defined protocol TAG for the Boeing custom protocol.
+
+	* TAO/tao/Profile.h:
+	  Minor cosmetic fixes
+
 Wed Sep 01 16:32:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IORS.h:

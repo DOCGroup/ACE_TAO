@@ -1669,6 +1669,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
 // #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
 // #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
+#define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeign Custom Protocol */
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile tagged components in TAO.

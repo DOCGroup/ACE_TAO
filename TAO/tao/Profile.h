@@ -62,7 +62,7 @@ public:
   const TAO_Tagged_Components& tagged_components (void) const;
   TAO_Tagged_Components& tagged_components (void);
   // Access the tagged components, notice that they they could be
-  // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0) 
+  // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
 
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV) = 0;
