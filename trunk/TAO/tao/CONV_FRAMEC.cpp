@@ -757,11 +757,4 @@ CORBA::Boolean operator>> (
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-template class TAO_Unbounded_Sequence<CONV_FRAME::CodeSetId>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Sequence<CONV_FRAME::CodeSetId>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_CPP_ */
