@@ -229,7 +229,6 @@ TAO_SFP::start_stream (const char *local_addr,int Credit)
     }
   else
       ACE_ERROR_RETURN ((LM_ERROR,"Invalid messaged received while Start expected\n"),-1);
-  return 0;
 }
 
 // Sends the ACE_Message_Block data as a frame, fragmenting if necessary.
@@ -822,8 +821,6 @@ TAO_SFP::read_simple_frame (void)
         return 0;
       int byte_order = frame_header.flags & 0x1;
       int message_len = frame_header.message_size;
-      if (frame_header.message_size < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"Negative message size\n"),0);
       ACE_Message_Block *message_block;
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (message_len),
@@ -1012,8 +1009,6 @@ TAO_SFP::read_fragment (void)
       ACE_DEBUG ((LM_DEBUG,"frag number = %d, frag size = %d,source id  = %d\n",
                   fragment.frag_number,fragment.frag_sz,fragment.source_id));
 
-      if (fragment.frag_sz < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"negative fragment size:\n"),0);
       ACE_Message_Block *data;
       ACE_NEW_RETURN (data,
                       ACE_Message_Block(fragment.frag_sz),
