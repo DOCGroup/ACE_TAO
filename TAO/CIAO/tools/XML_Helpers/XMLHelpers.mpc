@@ -1,0 +1,2 @@
+project(Helper_Test): aceexe, acexml {
+}

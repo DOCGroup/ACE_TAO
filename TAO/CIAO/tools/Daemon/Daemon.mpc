@@ -1,0 +1,22 @@
+project(CIAO_Daemon): ciao_server {
+
+  libs += TAO_IORTable
+  libpaths += $(TAO_ROOT)/tao/IORTable
+
+  Source_Files {
+    CIAO_Daemon.cpp
+  }
+}
+
+project(DaemonController) : ciao_server, acexml {
+
+  Source_Files {
+    DaemonController.cpp
+    controller_i.cpp
+    Daemon_Commands.cpp
+    Softpkg_Commands.cpp
+    ../XML_Helpers/XML_Utils.cpp
+    ../XML_Helpers/Softpkg_Handlers.cpp
+    ../XML_Helpers/Cascadable_DocHandler.cpp
+  }
+}

@@ -1006,6 +1006,8 @@ CORBA::Object_ptr
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  // @@ Call ccm_activate here.
+
   return ho._retn ();
 
 }
