@@ -2,6 +2,7 @@
 
 // This file contains executor implementations.
 
+#include "hello_executor_export.h"
 #include "helloEC.h"
 
 #if !defined (HELLO_EXECUTORS_H)
@@ -37,4 +38,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure));
 };
+
+// We still need to figure out a way to clean up the object created by
+// the factory correctly.   Like we did in ACE_FACTORY macro, with a
+// Gobbler function.
+
+extern "C" HELLO_EXECUTOR_Export ::Components::HomeExecutorBase_ptr
+createHelloHome_Impl (void);
+
 #endif /* HELLO_EXECUTORS_H */

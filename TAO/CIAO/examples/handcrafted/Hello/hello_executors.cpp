@@ -43,3 +43,9 @@ HelloHome_Impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new HelloWorld_Impl ();
 }
+
+extern "C" HELLO_EXECUTOR_Export ::Components::HomeExecutorBase_ptr
+createHelloHome_Impl (void)
+{
+  return new HelloHome_Impl ();
+}
