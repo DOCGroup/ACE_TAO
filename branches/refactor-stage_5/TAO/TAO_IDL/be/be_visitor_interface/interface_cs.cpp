@@ -266,11 +266,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_local ())
     {
-      *os << node->local_name () << "_ptr proxy =" << be_idt_nl
+      *os << "if (CORBA::is_nil (_tao_objref))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << node->local_name () << "_ptr proxy =" << be_idt_nl
           << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref);"
-          << be_uidt_nl
-          << "proxy->_add_ref ();" << be_nl
-          << "return proxy;" << be_uidt_nl
+          << be_uidt_nl << be_nl
+          << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
   else

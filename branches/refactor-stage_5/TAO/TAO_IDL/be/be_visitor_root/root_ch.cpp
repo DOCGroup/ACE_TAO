@@ -65,7 +65,8 @@ be_visitor_root_ch::init (void)
       *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
-          << "class Collocation_Proxy_Broker;" << be_uidt_nl
+          << "class Collocation_Proxy_Broker;" << be_nl << be_nl
+          << "template<typename T> class Narrow_Utils;" << be_uidt_nl
           << "}";
     }
 
