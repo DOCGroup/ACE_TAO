@@ -115,11 +115,6 @@ ange */
 // platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
-// ***** NOT SURE YET ***** However, this doesn't seem to be
-// used any where, so I just put it in.  ;0
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Compiler/platform has <alloca.h>
 //#define ACE_HAS_ALLOCA_H
 
