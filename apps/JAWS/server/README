@@ -126,29 +126,32 @@ directories of usernames.
 
 The following are TODO items for JAWS:
 
-	(a) JAWS currently only supports simple responses, ala
-	    HTTP/0.9.
-
-	(b) JAWS currently does not support CGI scripts.
-
-	(c) JAWS currently does not parse request headers, but is
-	    smart enough to ignore them.
-
-	(d) JAWS will support HTTP/1.1 eventually, including
-	    persistent connections.
-
-	(e) JAWS can be more aggressive with its threading strategies,
-	    such as:
-	    (*) parallelize HTTP protocol processing, similar to
-	        PHTTPD.
-	    (*) create threads on demand up to a certain high-water
-	        mark.
-	    (*) prioritize threads to give more important requests
-	        more execution time.
-	    (*) apply throttling, similar to THTTPD.
-
-	(f) For this simple implementation, the file cache is never
-	    flushed.  This will be changed for the next full release.
+status|task
+------+-----------------------
+BETTER| (a) JAWS currently only supports simple responses, ala
+      |	    HTTP/0.9.
+      |
+FIXED | (b) JAWS currently does not support CGI scripts.
+      |
+BETTER| (c) JAWS currently does not parse request headers, but is
+      |	    smart enough to ignore them.
+      |
+      |	(d) JAWS will support HTTP/1.1 eventually, including
+      |	    persistent connections.
+      |
+      |	(e) JAWS can be more aggressive with its threading strategies,
+      |	    such as:
+      |	    (*) parallelize HTTP protocol processing, similar to
+      |	        PHTTPD.
+      |	    (*) create threads on demand up to a certain high-water
+      |	        mark.
+      |	    (*) prioritize threads to give more important requests
+      |	        more execution time.
+      |	    (*) apply throttling, similar to THTTPD.
+      |
+FIXED |	(f) For this simple implementation, the file cache is never
+      |	    flushed.  This will be changed for the next full release.
+      |
 
 Questions, comments, corrections, suggestions are welcome.  Please
 feel free to send me any such correspondence.

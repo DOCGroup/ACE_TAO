@@ -1,5 +1,7 @@
 Fri May 30 23:19:03 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* README: updated to better reflect the status of JAWS.
+
 	* main.cpp (handler): Added a signal handler for SIGINT, and also
 	  set SIG_IGN for SIGCLD.  The first handler calls exit (0) if
 	  SIGINT is received, so that static destructors are called.  The
