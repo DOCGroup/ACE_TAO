@@ -423,8 +423,11 @@ foreach $i (@BUILD_LIST) {
 
     local $current_dir = $i;
     local $last_error = "";
+    local $this_error = 0;
+    local $this_warning = 0;
     while (<MAKE>) {
         chop;
+        $this_error = $this_warning = 0;
         if ($^O eq 'hpux'
             && m/^Warning:[ \t]+[0-9]+ future errors were detected/) {
             next;
@@ -438,6 +441,13 @@ foreach $i (@BUILD_LIST) {
         }
         if (m/error:/i || m/error /i
             || m/^make(\[[0-9]+\])?: \*\*\*/) {
+            $this_error = 1;
+        }
+        if ($^O eq 'aix'
+            && m/\d+-\d+ \([SI]\)/) {
+            $this_error = 1;
+        }
+        if ($this_error) {
             if ($last_error ne $current_dir
                 || STATUS eq "COMPILATION WARNING") {
               $STATUS = "COMPILATION ERROR";
@@ -448,6 +458,17 @@ foreach $i (@BUILD_LIST) {
         if (m/warning:/i
 	    || m/warning /i
 	    || m/Info: /i) {
+            $this_warning = 1;
+            if ($^O eq 'aix'
+                && m/^ld: \d+-\d+ WARNING: Duplicate symbol: .*ACE.*/) {
+                $this_warning = 0;
+            }
+        }
+        if ($^O eq 'aix'
+            && m/\d+-\d+ \(W\)/) {
+            $this_warning = 1;
+        }
+        if ($this_warning) {
           if ($last_error ne $current_dir) {
             if ($STATUS eq "OK") {
               $STATUS = "COMPILATION WARNING";
