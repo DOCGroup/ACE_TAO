@@ -50,6 +50,9 @@ Mon Sep 22 18:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Valuetype/Value_VarOut_T.cpp: Fixed compile errors with g++
 	  from the last checkin.
 
+	* tao/default_environment.h: New file where the global accessor to
+	  the default environment from TSS is placed.
+
 	* tao/Makefile.tao:
 	* tao/BiDir_GIOP/Makefile:
 	* tao/Domain/Makefile:
@@ -70,7 +73,6 @@ Mon Sep 22 18:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/TypeCodeFactory/Makefile:
 	* tao/Utils/Makefile:
 	* tao/Valuetype/Makefile: Updated dependencies.
-
 
 Mon Sep 22 10:17:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
