@@ -268,12 +268,13 @@
 # endif /* __BYTE_ORDER */
 #else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
-# if defined (i386) || defined (__i386__) || defined (_M_IX386) || \
+# if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
      defined (vax) || defined (__alpha)
     // We know these are little endian.
 #   define ACE_LITTLE_ENDIAN 0123X
 #   define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
 # else
+dasdsa
     // Otherwise, we'll assume big endian.
 #   define ACE_BIG_ENDIAN 3210X
 #   define ACE_BYTE_ORDER ACE_BIG_ENDIAN
