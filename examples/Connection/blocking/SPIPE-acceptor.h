@@ -15,6 +15,10 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Asynch_IO.h"
 
+// This only works on Win32 platforms and on Unix platforms
+// supporting POSIX aio calls.
+#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+
 // This is the class that does the work once the ACE_Oneshot_Acceptor
 // has accepted a connection.
 
@@ -69,5 +73,6 @@ private:
   // Signal handler method.
 };
 
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
 #endif /* SP_ACCEPTOR_H */
 

@@ -39,6 +39,10 @@
 #  error You need a newer version (>= 2.0) of mingw32/w32api
 #endif
 
+#if (__MINGW32_MAJOR_VERSION >= 3)
+#  define ACE_HAS_SSIZE_T
+#endif
+
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_HAS_STRERROR
