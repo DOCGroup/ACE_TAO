@@ -8,7 +8,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 
-ACE_RCSID(tao, POA, "$Id$")
+ACE_RCSID (PortableServer, POA, "$Id$")
 
 
 TAO_POA_Cached_Policies::TAO_POA_Cached_Policies ()

@@ -4,7 +4,7 @@
 
 #include "PortableGroup_Hooks.h"
 
-ACE_RCSID (TAO_PortableServer,
+ACE_RCSID (PortableServer,
            PortableGroup_Hooks,
            "$Id$")
 

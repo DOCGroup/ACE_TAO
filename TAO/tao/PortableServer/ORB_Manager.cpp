@@ -17,7 +17,7 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            ORB_Manager,
            "$Id$")
 

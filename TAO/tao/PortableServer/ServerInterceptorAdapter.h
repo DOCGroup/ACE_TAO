@@ -34,6 +34,9 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/Interceptor_List.h"
 
+class TAO_ServerRequest;
+
+
 namespace TAO
 {
   class ServerRequestInfo;
@@ -51,9 +54,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    ServerRequestInterceptor_Adapter (
-      TAO_ServerRequestInterceptor_List::TYPE &interceptors,
-      size_t & stack_size);
+    ServerRequestInterceptor_Adapter (TAO_ServerRequest & server_request);
 
     /**
      * @name PortableInterceptor Client Side Interception Points
@@ -67,7 +68,7 @@ namespace TAO
     /// point. It will be used as the first interception point and it is
     /// proprietary to TAO.
     /// @@ Will go away once Bug 1369 is fixed
-    void tao_ft_interception_point (TAO_ServerRequestInfo *ri ,
+    void tao_ft_interception_point (TAO::ServerRequestInfo * ri ,
                                     CORBA::OctetSeq_out oc
                                     ACE_ENV_ARG_DECL);
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
@@ -79,26 +80,26 @@ namespace TAO
     /// @note This method should have been the "starting" interception
     ///       point according to the interceptor spec. This will be
     ///       fixed once Bug 1369 is completely done.
-    void receive_request_service_contexts (TAO_ServerRequestInfo * ri
+    void receive_request_service_contexts (TAO::ServerRequestInfo * ri
                                            ACE_ENV_ARG_DECL);
 
     /// This method an "intermediate" server side interception point.
-    void receive_request (TAO_ServerRequestInfo * ri
+    void receive_request (TAO::ServerRequestInfo * ri
                           ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
     /// interception points.
-    void send_reply (TAO_ServerRequestInfo * ri
+    void send_reply (TAO::ServerRequestInfo * ri
                      ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
     /// interception points.
-    void send_exception (TAO_ServerRequestInfo * ri
+    void send_exception (TAO::ServerRequestInfo * ri
                          ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
     /// interception points.
-    void send_other (TAO_ServerRequestInfo * ri
+    void send_other (TAO::ServerRequestInfo * ri
                      ACE_ENV_ARG_DECL);
     //@}
 

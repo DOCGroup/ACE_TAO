@@ -136,11 +136,11 @@ namespace TAO
 };
 
 #if defined (__ACE_INLINE__)
-#include "tao/Special_Basic_SArgument_T.inl"
+#include "tao/PortableServer/Special_Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Special_Basic_SArgument_T.cpp"
+#include "tao/PortableServer/Special_Basic_SArgument_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

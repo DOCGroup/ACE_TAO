@@ -3,14 +3,15 @@
 #include "Upcall_Wrapper.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/PortableServer/Upcall_Wrapper.inl"
+# include "Upcall_Wrapper.inl"
 #endif  /* __ACE_INLINE_*/
-
-#include "tao/TAO_Server_Request.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_Guard.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+#include "tao/TAO_Server_Request.h"
+#include "tao/CDR.h"
 
 
 ACE_RCSID (PortableServer,
@@ -46,23 +47,31 @@ TAO::Upcall_Wrapper::pre_upcall (void)
 
   ACE_TRY
     {
-      TAO::PICurrent_Guard pi_guard (_tao_ri.server_request (),
+      TAO::PICurrent_Guard pi_guard (this->server_request_,
                                      true  /* Copy TSC to RSC */);
 
-      this->interceptor_adapter_.receive_request (this->request_info_
+      this->interceptor_adapter_.receive_request (&this->request_info_
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      // @@ TODO:  FILL IN THE BLANKS!
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (false);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+  return true;
 }
 
 bool
 TAO::Upcall_Wrapper::post_upcall (void)
 {
-  _tao_server_request.init_reply ();
+  this->server_request_.init_reply ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-  if (!_tao_vfr.location_forwarded ())
+  if (!this->interceptor_adapter_.location_forwarded ())
     {
 #endif /* TAO_HAS_INTERCEPTORS */
 

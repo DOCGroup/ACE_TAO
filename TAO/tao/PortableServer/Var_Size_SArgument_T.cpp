@@ -3,14 +3,14 @@
 #ifndef TAO_VAR_SIZE_SARGUMENT_T_C
 #define TAO_VAR_SIZE_SARGUMENT_T_C
 
-#include "tao/Var_Size_SArgument_T.h"
+#include "tao/PortableServer/Var_Size_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Var_Size_SArgument_T.inl"
+#include "tao/PortableServer/Var_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            Var_Size_SArgument_T,
            "$Id$")
 

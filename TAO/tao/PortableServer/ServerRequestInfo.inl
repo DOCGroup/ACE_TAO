@@ -2,20 +2,23 @@
 //
 // $Id$
 
+#include "tao/PortableServer/Object_Adapter.h"
+
 
 ACE_INLINE
 TAO::ServerRequestInfo::ServerRequestInfo (
   TAO::Argument ** args,
   size_t nargs,
   TAO_ServerRequest & server_request,
-  TAO_Object_Adapter::Servant_Upcall * servant_upcall,
+  void * servant_upcall,
   PortableServer::ServantBase * servant,
   CORBA::TypeCode_ptr * exceptions,
   size_t nexceptions)
   : args_ (args)
   , nargs_ (nargs)
   , server_request_ (server_request)
-  , servant_upcall_ (servant_upcall)
+  , servant_upcall_ (
+      static_cast<TAO_Object_Adapter::Servant_Upcall *> (servant_upcall))
   , servant_ (servant)
   , exceptions_ (exceptions)
   , nexceptions_ (nexceptions)

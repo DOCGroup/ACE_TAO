@@ -11,11 +11,23 @@
 #include "ServerRequestInfo.h"
 #include "PICurrent_Guard.h"
 
+#include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
+
 
 ACE_RCSID (PortableServer,
            ServerInterceptorAdapter,
            "$Id$")
 
+
+TAO::ServerRequestInterceptor_Adapter::ServerRequestInterceptor_Adapter (
+  TAO_ServerRequest & server_request)
+  : interceptors_ (server_request.orb_core ()->server_request_interceptors ())
+  , len_ (interceptors_.size ())
+  , stack_size_ (server_request.interceptor_count ())
+  , location_forwarded_ (false)
+{
+}
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/UB_String_SArguments.h"
+#include "UB_String_SArguments.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            Special_Basic_SArguments,
            "$Id$")
 
