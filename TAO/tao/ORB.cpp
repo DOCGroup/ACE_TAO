@@ -53,9 +53,9 @@
 # else
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
-#   if !defined (ACE_WIN32)
+#   if !defined (ACE_WIN32)  &&  !defined (__DECCXX)
 using std::set_unexpected;
-#   endif /* !ACE_WIN32 */
+#   endif /* ! ACE_WIN32  &&  ! __DECCXX */
 #  else
 #   include /**/ <exception.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
@@ -2050,7 +2050,7 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
   return 0;
 }
 
-void 
+void
 CORBA_ORB::_tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
                                              int delete_callback)
 {
