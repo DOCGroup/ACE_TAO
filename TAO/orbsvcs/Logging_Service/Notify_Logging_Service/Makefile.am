@@ -5,22 +5,34 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.Scheduling_Service.am 
+## Makefile.Notify_Logging_Service.am 
 
-noinst_PROGRAMS = Scheduling_Service
+noinst_PROGRAMS = Notify_Logging_Service
 
-Scheduling_Service_CPPFLAGS = \
+Notify_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
-Scheduling_Service_SOURCES = \
-  Scheduling_Service.cpp
+Notify_Logging_Service_SOURCES = \
+  Notify_Logging_Server.cpp \
+  Notify_Logging_Service.cpp
 
-Scheduling_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
+Notify_Logging_Service_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsNotifyLogAdmin.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsEventLogAdmin.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -33,7 +45,7 @@ Scheduling_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
-  Scheduling_Service.h
+  Notify_Logging_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:
