@@ -234,6 +234,7 @@ HTTP_Server::thread_per_request (void)
                                                   this->tm_),
                       -1);
 
+
       if (t->open (&grp_id) != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Thread_Per_Request_Task::open"),
