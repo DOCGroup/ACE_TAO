@@ -23,8 +23,7 @@ ACE_RCSID(tao, IIOP_Connection_Handler, "$Id$")
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    tcp_properties_ (0),
-    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+    tcp_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -41,8 +40,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Properties *, arg)),
-    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+                     (TAO_IIOP_Properties *, arg))
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
@@ -248,7 +246,7 @@ TAO_IIOP_Connection_Handler::fetch_handle (void)
 int
 TAO_IIOP_Connection_Handler::resume_handler (void)
 {
-  return this->resume_flag_;
+  return TAO_RESUMES_CONNECTION_HANDLER;
 }
 
 int
@@ -256,12 +254,8 @@ TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
-  //  TAO_Resume_Handle  resume_handle (this->orb_core (),
-  //                                   this->fetch_handle ());
-  // @@todo: We need to figure out whether we buy anything by resuming
-  // the handle ourseleves. AFAICS, I dont think we buy anything. But
-  // I am not sure. Somebody can correct me if I am wrong.
-  this->resume_flag_ = TAO_DOESNT_RESUME_CONNECTION_HANDLER;
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->get_handle ());
   return this->transport ()->handle_output ();
 }
 
@@ -332,9 +326,8 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
   // Increase the reference count on the upcall that have passed us.
   this->incr_pending_upcalls ();
 
-  this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
   TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->fetch_handle ());
+                                    this->get_handle ());
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 
