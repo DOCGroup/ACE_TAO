@@ -92,7 +92,8 @@ CORBA::Boolean
 Video_Control_i::fast_backward (const Video_Control::FFpara &para,
                                 CORBA::Environment& env)
 {
-  return 0;
+  return this->get_video_control_handler ()->fast_backward (para,
+                                                            env);
 }
 
 
