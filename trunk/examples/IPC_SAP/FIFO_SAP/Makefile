@@ -42,16 +42,17 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/FIFO-Msg-client.o .shobj/FIFO-Msg-client.: FIFO-Msg-client.cpp \
+.obj/FIFO-Msg-client.o .obj/FIFO-Msg-client. .shobj/FIFO-Msg-client.o .shobj/FIFO-Msg-client.: FIFO-Msg-client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send_Msg.h \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -60,19 +61,19 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Send.i \
  $(ACE_ROOT)/ace/FIFO_Send_Msg.i
-.obj/FIFO-Msg-server.o .shobj/FIFO-Msg-server.: FIFO-Msg-server.cpp \
+.obj/FIFO-Msg-server.o .obj/FIFO-Msg-server. .shobj/FIFO-Msg-server.o .shobj/FIFO-Msg-server.: FIFO-Msg-server.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv_Msg.h \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -81,18 +82,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Recv.i \
  $(ACE_ROOT)/ace/FIFO_Recv_Msg.i
-.obj/FIFO-client.o .shobj/FIFO-client.: FIFO-client.cpp \
+.obj/FIFO-client.o .obj/FIFO-client. .shobj/FIFO-client.o .shobj/FIFO-client.: FIFO-client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -101,17 +102,17 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Send.i
-.obj/FIFO-server.o .shobj/FIFO-server.: FIFO-server.cpp \
+.obj/FIFO-server.o .obj/FIFO-server. .shobj/FIFO-server.o .shobj/FIFO-server.: FIFO-server.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -120,17 +121,17 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Recv.i
-.obj/FIFO-test.o .shobj/FIFO-test.: FIFO-test.cpp \
+.obj/FIFO-test.o .obj/FIFO-test. .shobj/FIFO-test.o .shobj/FIFO-test.: FIFO-test.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -139,7 +140,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Recv.i \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO_Send.i
