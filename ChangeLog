@@ -1,3 +1,11 @@
+Sun Jul  4 20:30:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_Thread.cpp: There was some weirdness in the
+	  to_string() method, which should have been using the local data
+ 	  members for the thread id and thread handle, but instead was
+ 	  calling the Os functions directly...  Thanks to Michael Hollins
+ 	  <michael.hollins@silverbrookresearch.com> for reporting this.
+
 Sat Jul  3 06:46:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-openbsd.h:

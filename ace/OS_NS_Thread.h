@@ -716,8 +716,8 @@ public:
   ACE_hthread_t handle (void);
   void handle (ACE_hthread_t);
 
-  void to_string (char*);
-
+  // Create a string representation of the thread id.
+  void to_string (char *thr_string);
 
   // != Comparison operator.
   bool operator== (const ACE_Thread_ID &) const;
