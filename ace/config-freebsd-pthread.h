@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// $Id$
+// config-freebsd-pthread.h
 
 // ***** This configuration file is still under debugging. *****
 // ***** It still doesn't work quite the way it expected to. *****
@@ -22,18 +22,6 @@
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
-#define ACE_HAS_CHARPTR_DL
-#define ACE_USES_ASM_SYMBOL_IN_DLSYM	  
-
-// sched.h still not fully support on FreeBSD ?
-// this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
-enum schedparam_policy {
-        SCHED_RR,
-        SCHED_IO,
-        SCHED_FIFO,
-        SCHED_OTHER
-};
-
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
 #define ACE_NEEDS_SYSTIME_H

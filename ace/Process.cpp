@@ -280,6 +280,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
       // Server process.  The fork succeeded.
       return this->child_id_;
     }
+
+  return 0;
 #endif /* ACE_WIN32 */
 }
 
@@ -633,7 +635,7 @@ ACE_Process_Options::command_line_argv (void)
   return command_line_argv_;
 }
 
-char * const *
+char **
 ACE_Process_Options::env_argv (void)
 {
   return environment_argv_;

@@ -641,6 +641,7 @@ private:
   // Name of the token.
 };
 
+
 // 7..
 class ACE_Export ACE_Token_Proxy
   // = TITLE

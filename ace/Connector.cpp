@@ -361,16 +361,9 @@ ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
 	  this->create_AST (sh, synch_options);
 	}
       else
-	{
-	  // Make sure to save/restore the errno since <close> may
-	  // change it.
-
-	  int error = errno;
-	  // Make sure to close down the Channel to avoid descriptor
-	  // leaks.
-	  sh->close (0);
-	  errno = error;
-	}
+	// Make sure to close down the Channel to avoid descriptor
+	// leaks.
+	sh->close (0);
       return -1;
     }
   else 

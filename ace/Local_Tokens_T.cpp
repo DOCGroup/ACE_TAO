@@ -1,7 +1,6 @@
 // Local_Tokens_T.cpp
 // $Id$
 
-#if 0
 #if !defined (ACE_LOCAL_TOKENS_T_C)
 #define ACE_LOCAL_TOKENS_T_C
 
@@ -54,4 +53,3 @@ ACE_Token_Name<TYPE>::dump (void) const
 }
 
 #endif /* ACE_LOCAL_TOKENS_T_C */
-#endif /* 0 */

@@ -33,7 +33,6 @@
 
 // got struct timespec
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_CLOCK_GETTIME
 #define ACE_LACKS_STRRECVFD
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -48,8 +47,7 @@
 // Platforms lacks UNIX domain sockets.
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_UTSNAME_T
-#define ACE_HAS_PTHREADS_1003_DOT_1C
-//#define ACE_LACKS_SETSCHED
+#define ACE_LACKS_SETSCHED
 
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_MADVISE

@@ -112,11 +112,11 @@ Producer::svc (void)
   ACE_NEW_THREAD;
 
   // Keep reading stdin, until we reach EOF. 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (char c = 'a'; c <= 'z'; c++)
     {
       // Allocate a new message.
       char d[2];
-      d[0] = *c;
+      d[0] = c;
       d[1] = '\0';
 
       ACE_Message_Block *mb;
@@ -152,7 +152,7 @@ Consumer::svc (void)
 
   ACE_Message_Block *mb = 0;
   int result = 0;
-  char *c = ACE_ALPHABET;
+  char c = 'a';
   char *output;
 
   // Keep looping, reading a message out of the queue, until we
@@ -171,7 +171,7 @@ Consumer::svc (void)
       if (length > 0)
 	{
 	  output = mb->rd_ptr ();
-	  ACE_ASSERT (*c == output[0]);
+	  ACE_ASSERT (c == output[0]);
 	  c++;
 	}
       mb->release ();

@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -20,7 +21,6 @@
 //   
 // ============================================================================
 
-#if 0
 #if !defined (ACE_LOCAL_TOKENS_T_H)
 #define ACE_LOCAL_TOKENS_T_H
 
@@ -93,4 +93,3 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_LOCAL_TOKENS_T_H */
-#endif /* 0 */

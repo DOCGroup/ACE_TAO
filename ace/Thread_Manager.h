@@ -289,7 +289,7 @@ protected:
 		       ACE_Task_Base *task = 0);
   // Create a new thread (must be called with locks held).
 
-protected:
+private:
   int resize (size_t);
   // Resize the pool of Thread_Descriptors.
 

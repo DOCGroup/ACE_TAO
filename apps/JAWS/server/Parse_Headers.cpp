@@ -60,10 +60,6 @@ Headers::complete_header_line (char * const header_line)
   // Else, if the next character is printable, we have a complete header line.
   // Else, presumably the next character is '\0', so the header is incomplete.
 
-  // return -1 if end of line but not complete header line
-  // return 0 if no end of line marker
-  // return 1 if complete header line
-
   ptr = header_line;
   if (! this->end_of_line (ptr, offset)) return 0;
 
@@ -87,7 +83,7 @@ Headers::complete_header_line (char * const header_line)
 
     default:
       if (isalpha (ptr[offset])) return 1;
-      else return -1;
+      else return 0;
     }
   } while (this->end_of_line (ptr, offset));
 

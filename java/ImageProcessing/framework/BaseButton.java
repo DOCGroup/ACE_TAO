@@ -154,15 +154,13 @@ class HelpButton extends BaseButton
   public HelpButton (String title, String desc, ImageApp parent)
   {
     super (title, desc, parent);
-    this.parent_ = parent;
   }
 
   public boolean action (Event e, Object arg)
   {
-    DialogManager.popDialog (DialogType.HELP, null, this.parent_);
+    System.out.println ("Help selected");
     return true;
   }
-  ImageApp parent_ = null;
 }
 
 class ChoicePanel extends Panel
@@ -208,7 +206,7 @@ class ChoicePanel extends Panel
     String displayString = null;
     String filterName = this.choice_.getSelectedItem ();
 
-    if (filterName.compareTo ("Filters:") == 0)
+    if (filterName.compareTo ("None") == 0)
       displayString = "No filter selected";
     else
       {
