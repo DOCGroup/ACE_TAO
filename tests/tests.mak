@@ -6321,6 +6321,7 @@ DEP_CPP_PROCES=\
 
 SOURCE=.\Conn_Test.cpp
 DEP_CPP_CONN_=\
+	"..\ace\LOCK_SOCK_Acceptor.cpp"\
 	".\Conn_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -6361,6 +6362,7 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\LOCK_SOCK_Acceptor.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
