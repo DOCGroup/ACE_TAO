@@ -160,6 +160,8 @@ Session::start (const Test::Session_List &other_sessions
     if (this->active_thread_count_ != this->thread_count_)
       return;
 
+    this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+
     this->barrier_.wait ();
 
     if (this->running_ != 0)
