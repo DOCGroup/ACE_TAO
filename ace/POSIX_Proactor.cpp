@@ -1699,10 +1699,10 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   // store index!!, not pointer in signal info
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
-#ifdef (__FreeBSD__)
-  result->aio_sigevent.sigev_value.sival_int = retval;
-#else
+#if defined (__FreeBSD__)
   result->aio_sigevent.sigev_value.sigval_int = retval;
+#else
+  result->aio_sigevent.sigev_value.sival_int = retval;
 #endif /* __FreeBSD__ */
 
   return retval;
