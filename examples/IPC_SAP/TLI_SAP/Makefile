@@ -13,12 +13,12 @@ BIN   = ftp-client \
 	db-client \
 	db-server \
 	CPP-client \
-	CPP-server
+	CPP-server \
+	CPP-client-XA \
+	CPP-server-XA
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 
-LDLIBS= 
- 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
