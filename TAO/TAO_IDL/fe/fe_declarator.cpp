@@ -107,6 +107,12 @@ FE_Declarator::compose (AST_Decl *d)
 
   ct = AST_Type::narrow_from_decl (d);
 
+  if (ct == 0)
+    {
+      idl_global->err ()->not_a_type (d);
+      return 0;
+    }
+
   // All uses of forward declared interfaces must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
