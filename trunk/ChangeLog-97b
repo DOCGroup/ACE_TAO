@@ -1,3 +1,7 @@
+Thu Oct 23 20:37:44 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Array.*: added ACE_Array_Iterator.
+
 Thu Oct 23 17:28:11 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Mem_Map.i (close_filemapping_handle): Moved this above its
@@ -81,6 +85,9 @@ Wed Oct 22 21:22:35 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/Reactor_Performance_Test.cpp (client): removed declaration
 	  of loop index "i" because it shadowed a local.  Also, the loop
 	  index declaration caused a signed/unsigned comparison.
+
+	* ace/Singleton.cpp: temporarily disabled ACE_Guards until
+	  the lock acquistion is fixed.
 
 Wed Oct 22 17:53:26 1997  Steve Huston  <shuston@riverace.com>
 
