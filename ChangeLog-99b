@@ -1,3 +1,21 @@
+Fri Feb 19 18:18:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.{h,i,cpp}: Added ACE_OS_WString and ACE_OS_CString which
+	  should only be used within ACE_OS to perform conversion between
+	  wchar strings and char string.
+	  Changed the wide/multibyte conversion macros to use
+	  ACE_OS_?String classes and removed dependencies to Auto_Ptr.h
+	  and SString.h.
+
+	* ace/config-win32-common.h: Removed checked for (_DLL) if
+	  ACE_HAS_DLL = 0.  Otherwise, the static build won't compile.
+
+	* ace/Token_Manager.cpp (release_token):
+	* ace/Service_Manager.cpp (list_services): Changed
+	  ASYS_MULTIBYTE_STRING to ASYS_ONLY_MULTIBYTE_STRING.  Because
+	  the new conversion classes have stronger type checking, these
+	  errors weren't found until now.
+
 Fri Feb 19 17:01:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: moved ACE from OS_FILES to UTILS_FILES.
