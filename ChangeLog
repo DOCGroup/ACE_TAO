@@ -1,3 +1,11 @@
+Fri Jan 23 10:30:12 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/create_ace_build.pl:
+
+          Exclude .exp files and ensure that we can stat() the real file
+          before checking the modification time in
+          backup_and_copy_changed().
+
 Fri Jan 23 09:41:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vc7.mpd:
