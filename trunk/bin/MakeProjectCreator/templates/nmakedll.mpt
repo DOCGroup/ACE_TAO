@@ -2,7 +2,6 @@ configurations        = Release Debug "Static Release" "Static Debug"
 platforms             = Win32
 default_configuration = Debug
 common_defines        = WIN32 _WINDOWS
-pch_defines           = ACE_USING_PCH
 
 Win32 {
   machine_description = x86
@@ -79,7 +78,7 @@ MFC Release {
   type_code             = 0x0102
   use_debug_libraries   = 0
   compile_flags         = /W3 /GX /O2 /MD /Zi /Ob2 /GR
-  defines               = NDEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
   intermediate_dir      = MFC_Release
@@ -95,7 +94,7 @@ MFC Debug {
   type_code             = 0x0102
   use_debug_libraries   = 1
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
-  defines               = _DEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = MFC_Debug
   intermediate_dir      = MFC_Debug
@@ -111,7 +110,7 @@ Static MFC Release {
   type_code             = 0x0104
   use_debug_libraries   = 0
   compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
-  defines               = NDEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_MFC_Release
   intermediate_dir      = Static_MFC_Release
@@ -126,7 +125,7 @@ Static MFC Debug {
   type_code             = 0x0104
   use_debug_libraries   = 1
   compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
-  defines               = _DEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Static_MFC_Debug
   intermediate_dir      = Static_MFC_Debug
@@ -135,3 +134,4 @@ Static MFC Debug {
   need_libflags         = 1
 }
 
+conditional_include "vcfullmacros"

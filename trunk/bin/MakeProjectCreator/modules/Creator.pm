@@ -47,7 +47,7 @@ sub new {
   my($toplevel)  = shift;
   my($baseprojs) = shift;
   my($type)      = shift;
-  my($self)      = Parser::new($class);
+  my($self)      = Parser::new($class, $inc);
 
   $self->{'relative'}       = $relative;
   $self->{'template'}       = $template;
@@ -56,7 +56,6 @@ sub new {
   $self->{'grammar_type'}   = $type;
   $self->{'type_check'}     = $type . '_defined';
   $self->{'global_read'}    = 0;
-  $self->{'include'}        = $inc;
   $self->{'current_input'}  = '';
   $self->{'progress'}       = $progress;
   $self->{'addtemp'}        = $addtemp;
@@ -314,21 +313,6 @@ sub generate_default_file_list {
 }
 
 
-sub search_include_path {
-  my($self)     = shift;
-  my($file)     = shift;
-  my($found)    = undef;
-  my($includes) = $self->get_include_path();
-  foreach my $include (@$includes) {
-    if (-r "$include/$file") {
-      $found = "$include/$file";
-      last;
-    }
-  }
-  return $found;
-}
-
-
 sub windows_crlf {
   #my($self) = shift;
   if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
@@ -508,12 +492,6 @@ sub restore_state {
 sub get_global_cfg {
   my($self) = shift;
   return $self->{'global'};
-}
-
-
-sub get_include_path {
-  my($self) = shift;
-  return $self->{'include'};
 }
 
 

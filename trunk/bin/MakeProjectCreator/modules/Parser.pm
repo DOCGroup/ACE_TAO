@@ -29,10 +29,13 @@ my($cwd) = Cwd::getcwd();
 # ************************************************************
 
 sub new {
-  my($class)  = shift;
-  my($self)   = $class->SUPER::new();
+  my($class) = shift;
+  my($inc)   = shift;
+  my($self)  = $class->SUPER::new();
 
   $self->{'line_number'} = 0;
+  $self->{'include'}     = $inc;
+
   return $self;
 }
 
@@ -128,6 +131,27 @@ sub slash_to_backslash {
   my($file) = shift;
   $file =~ s/\//\\/g;
   return $file;
+}
+
+
+sub get_include_path {
+  my($self) = shift;
+  return $self->{'include'};
+}
+
+
+sub search_include_path {
+  my($self)  = shift; 
+  my($file)  = shift; 
+  my($found) = undef; 
+
+  foreach my $include (@{$self->{'include'}}) {
+    if (-r "$include/$file") {
+      $found = "$include/$file";
+      last;
+    }
+  }  
+  return $found;
 }
 
 
