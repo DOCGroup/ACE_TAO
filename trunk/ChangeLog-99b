@@ -1,9 +1,11 @@
 Wed Feb 03 21:50:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added ACE_HAS_BROKEN_ENUMS with
-          Green Hills, because it's needed with 1.8.9.  Thanks to
-          Jacob Jones <Jacob.J.Jones@notesmta.gd-is.com> for reporting
-          this.
+          Green Hills, because it's needed with 1.8.9.  And, added
+          ACE_HAS_STANDARD_CPP_LIBRARY #define to 1, for Green Hills 1.8.9,
+          but commented out because it doesn't work with 1.8.8.
+          Thanks to Jacob Jones <Jacob.J.Jones@notesmta.gd-is.com> for
+          reporting these.
 
 Wed Feb 03 14:57:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
