@@ -1,3 +1,10 @@
+Mon May 24 12:11:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (ACE_SOCKCALL_RETURN): Fixed macro by comparing against
+	  FAILVALUE rather than SOCKET_ERROR.  Some winsock calls don't
+	  return SOCKET_ERROR.  Thanks to Christopher Kohlhoff
+	  <chris@kohlhoff.com> for reporting this problem.
+
 Sun May 23 11:33:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	 Changes for the following enhancement in the Proactor
@@ -6,35 +13,35 @@ Sun May 23 11:33:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
  	 waiting for completions and end the event loop.  Thanks to Edwin
  	 D. Windes <ewindes@usa.net> for reporting the issue.
 
-	* ace/Proactor.h: 
+	* ace/Proactor.h:
 	* ace/Proactor.cpp: Added static helper methods and states to post
  	  the wakeup completions to the CompletionPort.
 
-	* ace/Asynch_IO.h: 	  		
+	* ace/Asynch_IO.h:
 	* ace/Asynch_IO.cpp: Added a method <handle_wakeup> to the
  	  ACE_Handler.
 
-	* ace/Object_Manager.cpp   
+	* ace/Object_Manager.cpp
 	* ace/Object_Manager.h: Added a new Thread_Mutex called
  	  <ACE_PROACTOR_EVENT_LOOP_LOCK> to protect the thread count in
  	  the event loop.
 
-	* ace/POSIX_Asynch_IO.cpp  
-	* ace/POSIX_Proactor.cpp   
-	* ace/POSIX_Proactor.h     
-	* ace/Proactor.cpp         
-	* ace/Proactor.h           
-	* ace/Proactor_Impl.h  
+	* ace/POSIX_Asynch_IO.cpp
+	* ace/POSIX_Proactor.cpp
+	* ace/POSIX_Proactor.h
+	* ace/Proactor.cpp
+	* ace/Proactor.h
+	* ace/Proactor_Impl.h
     	* ace/WIN32_Proactor.cpp
 	* ace/WIN32_Proactor.h:
-  	  Changes for posting wakeup completions.			
+  	  Changes for posting wakeup completions.
 
 	* examples/Reactor/Proactor/test_end_event_loop.cpp:
 	* examples/Reactor/Proactor/test_end_event_loop.dsp:
 	* examples/Reactor/Proactor/post_completions.dsp:
 	* examples/Reactor/Proactor/Makefile: Test file the
-	  <end_event_loop> enhancement. 
-	
+	  <end_event_loop> enhancement.
+
 Sat May 22 16:57:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/FlReactor.cpp: Sun/CC doesn't like reinterpret cast when
