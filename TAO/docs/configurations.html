@@ -63,7 +63,7 @@ Roadmap</h3>
       <ul>
         <li><a href="#reactive">Single-threaded, reactive model.</a></li>
 
-        <li><a href="#tpc">Single ORB, multiple threads, thread-per-connection
+        <li><a href="#tpc">Multiple threads, single ORB, thread-per-connection
             model.</a></li>
 
         <li><a href="#multiorb">Multiple threads, multiple ORBs,
@@ -72,7 +72,7 @@ Roadmap</h3>
         <li><a href="#multiorb-tpc">Multiple threads, multiple ORBs,
             thread-per-connection model.</a></li>
 
-        <li><a href="#tpool">Multiple threads, thread-pool model.</a></li>
+        <li><a href="#tpool">Multiple threads, single ORB, thread-pool model.</a></li>
 
         <li><a href="#multiorb-tpool">Multiple threads,
             ORB-per-thread, thread-pool reactive model.</a></li>
@@ -325,7 +325,7 @@ The following are common ORB configurations used by TAO applications.<P>
       <P>Check out the <tt><a href="../examples/Simple/grid/">Grid</a></tt>
       for an example of this configuration. <P>
 
-  <li> <a NAME="tpc"></a>Single ORB, multiple threads, thread-per-connection
+  <li> <a NAME="tpc"></a>Multiple threads, single ORB, thread-per-connection
       model.</li> <P>
 
       <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
@@ -504,7 +504,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
     </table>
     <P>
     <tt><a href="../tests/MT_Server">MT_Server</a></tt> is a good
-    example on using <i>multiple threads, thread-pool</i>
+    example on using <i>multiple threads, single ORB, thread-pool</i>
     configuration.<P>
 <P><li>
     Multiple threads, multiple ORBs, thread-pool model.<a NAME="multiorb-tpool"></a>
