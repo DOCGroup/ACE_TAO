@@ -1,3 +1,11 @@
+Mon Aug 11 02:31:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO/orbsvcs/tests/Redundant_Naming/Makefile:
+          Added the following missing libraries to LDLIBS: -lTAO_Valuetype
+          -lTAO_ObjRefTemplate -lTAO_IORInterceptor. They were getting
+          added automagically in shared builds but must be supplied
+          explicitly for static builds.
+
 Mon Aug 11 00:35:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Load_Balancing_persistent/Load_Balancer_i.h:
