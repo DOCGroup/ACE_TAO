@@ -167,10 +167,10 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
 }
 
 void
-TAO_IIOP_Profile::parse_string (const char *string,
+TAO_IIOP_Profile::parse_string (const char *ior,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  if (!string || !*string)
+  if (!ior || !*ior)
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA_SystemException::_tao_minor_code (
@@ -183,17 +183,22 @@ TAO_IIOP_Profile::parse_string (const char *string,
   // version is one that we accept.
 
   // Check for version
-  if (isdigit (string [0]) &&
-      string[1] == '.' &&
-      isdigit (string [2]) &&
-      string[3] == '@')
+  if (isdigit (ior [0]) &&
+      ior[1] == '.' &&
+      isdigit (ior [2]) &&
+      ior[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that
       // with a grain of salt]
-      this->version_.set_version ((char) (string [0] - '0'),
-                                  (char) (string [2] - '0'));
-      string += 4;
+      this->version_.set_version ((char) (ior[0] - '0'),
+                                  (char) (ior[2] - '0'));
+      ior += 4;
       // Skip over the "N.n@"
+    }
+  else
+    {
+      // CORBA spec requires 1.0 if a version isn't specified.
+      this->version_.set_version (1, 0);
     }
 
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
@@ -208,16 +213,12 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  CORBA::String_var copy (string);
 
-  char *start = copy.inout ();
-  char *cp_pos = ACE_OS::strchr (start, ':');  // Look for a port
+  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
 
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
-
-  if (okd == 0)
+  if (okd == 0 || okd == ior)
     {
-      // No object key delimiter!
+      // No object key delimiter or no hostname specified.
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
@@ -225,71 +226,50 @@ TAO_IIOP_Profile::parse_string (const char *string,
                    CORBA::COMPLETED_NO));
     }
 
-  // The default port number.
-  const char def_port [] = ":683";
-
-  // Length of port.
-  CORBA::ULong length = 0;
-
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  // Length of <cp>
-  CORBA::ULong length_cp =
-    ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
+  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
 
-  CORBA::String_var cp = CORBA::string_alloc (length_cp);
-
-  if (cp_pos == 0)
+  if (cp_pos == ior)
     {
-      // No host/port delimiter! Dont raise an exception. Use the
-      // default port No. 683
-      ACE_OS::strcpy (cp, def_port);
-      ACE_OS::strcat (cp, okd);
+      // No hostname specified!  It is required by the spec.
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+  else if (cp_pos != 0)
+    {
+      // A port number or port name was specified.
+      CORBA::ULong length_port = okd - cp_pos - 1;
 
-      length =
-        ACE_OS::strlen (cp.in ()) -
-        ACE_OS::strlen ((const char *)okd) -
-        1;
+      CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      length_host =
-        ACE_OS::strlen (start) +
-        sizeof (def_port) -
-        ACE_OS::strlen (cp.in ()) -1;
+      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      tmp[length_port] = '\0';
+
+      this->endpoint_.port_ =
+        ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
+
+      length_host = cp_pos - ior;
     }
   else
-    {
-      // The port is specified:
-      cp = (const char *)cp_pos;
+    length_host = okd - ior;
 
-      length =
-        ACE_OS::strlen (cp.in ())
-        - ACE_OS::strlen ((const char *)okd) + 1;
-
-      length_host =
-        ACE_OS::strlen ((const char *)start)
-        - ACE_OS::strlen (cp.in ());
-    }
-
-  CORBA::String_var tmp = CORBA::string_alloc (length);
-
-  ACE_OS::strncpy (tmp.inout (), cp.in () + 1, length);
-  tmp[length] = '\0';
-
-  this->endpoint_.port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
-
-  tmp = CORBA::string_alloc (length_host);
+  CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), start, length_host);
+  ACE_OS::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
 
-  ACE_INET_Addr host_addr;
-
   if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
+      ACE_INET_Addr host_addr;
+
       char tmp_host [MAXHOSTNAMELEN + 1];
 
       // If no host is specified: assign the default host, i.e. the
@@ -297,55 +277,28 @@ TAO_IIOP_Profile::parse_string (const char *string,
       if (host_addr.get_host_name (tmp_host,
                                    sizeof (tmp_host)) != 0)
         {
-          const char *tmp = host_addr.get_host_addr ();
-          if (tmp == 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("\n\nTAO (%P|%t) ")
-                            ACE_TEXT ("IIOP_Profile::parse_string ")
-                            ACE_TEXT ("- %p\n\n"),
-                            ACE_TEXT ("cannot determine hostname")));
+          // Can't get the IP address since the INET_Addr wasn't
+          // initialized.  Just throw an exception.
 
-              // @@ What's the right exception to throw here?
-              ACE_THROW (CORBA::INV_OBJREF (
-                           CORBA_SystemException::_tao_minor_code (
-                             TAO_DEFAULT_MINOR_CODE,
-                             EINVAL),
-                           CORBA::COMPLETED_NO));
-            }
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("IIOP_Profile::parse_string ")
+                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("cannot determine hostname")));
 
-          this->endpoint_.host_ = tmp;
+          // @@ What's the right exception to throw here?
+          ACE_THROW (CORBA::INV_OBJREF (
+                       CORBA_SystemException::_tao_minor_code (
+                         TAO_DEFAULT_MINOR_CODE,
+                         EINVAL),
+                       CORBA::COMPLETED_NO));
         }
       else
-        {
-          this->endpoint_.host_ = (const char *) tmp_host;
-        }
+        this->endpoint_.host_ = CORBA::string_dup (tmp_host);
     }
 
-  if (this->endpoint_.object_addr_.set (this->endpoint_.port_,
-                                        this->endpoint_.host_.in ()) == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("Error Occured !")
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
-                      ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
-        }
-
-      // @@ What's the right exception to throw here?
-      ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
-    }
-
-  start = ++okd;  // increment past the object key separator
-
-  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
+  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, okd + 1);
 }
 
 CORBA::Boolean
