@@ -23,8 +23,8 @@
 #include<queue>
 #include<stack>
 
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+//#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+//(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 using std::map;
 using std::vector;
 using std::string;
@@ -37,7 +37,7 @@ using std::less;
 using std::pair;
 using std::multimap;
 
-#endif // ACE_USES
+//#endif // ACE_USES
 
 
 
