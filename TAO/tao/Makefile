@@ -18,7 +18,6 @@ PUB_HDRS = Align CDR GIOP IIOP_Object IIOP_ORB Connect Params \
 
 ORBCORE_SRCS = \
 	Any \
-	CORBA_Cls \
 	Exception \
 	NVList \
 	Object \
@@ -234,7 +233,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -294,10 +292,8 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
-.obj/CORBA_Cls.o .obj/CORBA_Cls.so .shobj/CORBA_Cls.o .shobj/CORBA_Cls.so: CORBA_Cls.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -412,7 +408,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -472,7 +467,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp \
@@ -590,7 +584,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -650,7 +643,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp \
@@ -768,7 +760,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -828,7 +819,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Object.cpp \
@@ -946,7 +936,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1006,7 +995,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
@@ -1124,7 +1112,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1184,7 +1171,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(ACE_ROOT)/ace/Service_Repository.h \
@@ -1313,7 +1299,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1373,7 +1358,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/tao/poa_macros.h \
@@ -1494,7 +1478,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1554,7 +1537,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  POAC.h POAS.h
@@ -1673,7 +1655,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1733,7 +1714,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  POAS.h
@@ -1852,7 +1832,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -1912,7 +1891,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Request.o .obj/Request.so .shobj/Request.o .shobj/Request.so: Request.cpp \
@@ -2030,7 +2008,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2090,7 +2067,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Sequence.o .obj/Sequence.so .shobj/Sequence.o .shobj/Sequence.so: Sequence.cpp \
@@ -2208,7 +2184,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2268,7 +2243,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Server_Request.o .obj/Server_Request.so .shobj/Server_Request.o .shobj/Server_Request.so: Server_Request.cpp \
@@ -2386,7 +2360,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2446,7 +2419,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp \
@@ -2564,7 +2536,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2624,7 +2595,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Arg_Shifter.o .obj/Arg_Shifter.so .shobj/Arg_Shifter.o .shobj/Arg_Shifter.so: Arg_Shifter.cpp Arg_Shifter.h
@@ -2743,7 +2713,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2803,7 +2772,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.so .shobj/Client_Strategy_Factory.o .shobj/Client_Strategy_Factory.so: Client_Strategy_Factory.cpp \
@@ -2921,7 +2889,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2981,7 +2948,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Connect.o .obj/Connect.so .shobj/Connect.o .shobj/Connect.so: Connect.cpp \
@@ -3099,7 +3065,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -3159,7 +3124,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -3279,7 +3243,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -3339,7 +3302,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/decode.o .obj/decode.so .shobj/decode.o .shobj/decode.so: decode.cpp \
@@ -3457,7 +3419,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -3517,7 +3478,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/deep_copy.o .obj/deep_copy.so .shobj/deep_copy.o .shobj/deep_copy.so: deep_copy.cpp \
@@ -3635,7 +3595,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -3695,7 +3654,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/deep_free.o .obj/deep_free.so .shobj/deep_free.o .shobj/deep_free.so: deep_free.cpp \
@@ -3813,7 +3771,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -3873,7 +3830,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/default_client.o .obj/default_client.so .shobj/default_client.o .shobj/default_client.so: default_client.cpp \
@@ -3992,7 +3948,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -4051,7 +4006,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/default_server.o .obj/default_server.so .shobj/default_server.o .shobj/default_server.so: default_server.cpp \
@@ -4170,7 +4124,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -4227,7 +4180,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
@@ -4347,7 +4299,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -4407,7 +4358,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/encode.o .obj/encode.so .shobj/encode.o .shobj/encode.so: encode.cpp \
@@ -4525,7 +4475,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -4585,7 +4534,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/GIOP.o .obj/GIOP.so .shobj/GIOP.o .shobj/GIOP.so: GIOP.cpp \
@@ -4703,7 +4651,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -4763,7 +4710,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -4883,7 +4829,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -4943,7 +4888,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/IIOP_ORB.o .obj/IIOP_ORB.so .shobj/IIOP_ORB.o .shobj/IIOP_ORB.so: IIOP_ORB.cpp \
@@ -5061,7 +5005,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -5121,7 +5064,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/IIOP_Interpreter.o .obj/IIOP_Interpreter.so .shobj/IIOP_Interpreter.o .shobj/IIOP_Interpreter.so: IIOP_Interpreter.cpp \
@@ -5239,7 +5181,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -5299,7 +5240,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Marshal.o .obj/Marshal.so .shobj/Marshal.o .shobj/Marshal.so: Marshal.cpp \
@@ -5417,7 +5357,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -5477,7 +5416,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Object_Table.o .obj/Object_Table.so .shobj/Object_Table.o .shobj/Object_Table.so: Object_Table.cpp \
@@ -5597,7 +5535,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -5657,7 +5594,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp \
@@ -5775,7 +5711,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -5835,7 +5770,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp \
@@ -5953,7 +5887,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -6013,7 +5946,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(ACE_ROOT)/ace/Service_Repository.h \
@@ -6145,7 +6077,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -6205,7 +6136,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Server_Strategy_Factory.o .obj/Server_Strategy_Factory.so .shobj/Server_Strategy_Factory.o .shobj/Server_Strategy_Factory.so: Server_Strategy_Factory.cpp \
@@ -6323,7 +6253,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -6383,7 +6312,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Servant_Base.o .obj/Servant_Base.so .shobj/Servant_Base.o .shobj/Servant_Base.so: Servant_Base.cpp \
@@ -6501,7 +6429,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -6561,7 +6488,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/TAO_Internal.o .obj/TAO_Internal.so .shobj/TAO_Internal.o .shobj/TAO_Internal.so: TAO_Internal.cpp \
@@ -6684,7 +6610,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -6741,7 +6666,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
@@ -6862,7 +6786,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -6922,7 +6845,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp TAO.h \
@@ -7040,7 +6962,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA_Cls.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -7100,7 +7021,6 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA_Cls.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h
 .obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
