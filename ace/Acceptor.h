@@ -181,6 +181,9 @@ protected:
   /// Concrete factory for accepting connections from clients...
   ACE_PEER_ACCEPTOR peer_acceptor_;
 
+  /// Needed to reopen the socket if <accept> fails.
+  ACE_PEER_ACCEPTOR_ADDR peer_acceptor_addr_;
+
   /**
    * Flags that indicate how <SVC_HANDLER>'s should be initialized
    * prior to being activated.  Right now, the only flag that is
@@ -192,6 +195,9 @@ protected:
   /// Flag that indicates whether it shall use <select> in the
   /// <accept>-loop.
   int use_select_;
+
+  /// Needed to reopen the socket if <accept> fails.
+  int reuse_addr_;
 };
 
 /**

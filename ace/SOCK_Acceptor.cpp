@@ -342,3 +342,9 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
 		ACE_LIB_TEXT ("%p\n"),
 		ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
 }
+
+int 
+ACE_SOCK_Acceptor::close (void)
+{
+  return ACE_SOCK::close ();
+}
