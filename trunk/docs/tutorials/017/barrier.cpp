@@ -47,7 +47,8 @@ int Test::svc(void)
         // Initialize the random number generator.  We'll use this to
         // create sleep() times in each thread.  This will help us see 
         // if the barrier synch is working.
-    ACE_RANDR_TYPE seed = ACE_OS::thr_self();
+    ACE_Time_Value now(ACE_OS::gettimeofday());
+    ACE_RANDR_TYPE seed = now.usec();
     ACE_OS::srand(seed);
     int delay;
 
