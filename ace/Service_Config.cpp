@@ -420,11 +420,12 @@ ACE_Service_Config::process_directives (void)
             {
               // Invalid svc.conf file.  We'll report it here and
               // break out of the method.
-              ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          // @@ Beware of the WString here...  Not
-                          // sure how to fix this with %p...
-                          ASYS_TEXT (sptr->fast_rep ())));
+              if (ACE::debug ())
+                ACE_DEBUG ((LM_DEBUG,
+                            ASYS_TEXT ("%p\n"),
+                            // @@ Beware of the WString here...  Not
+                            // sure how to fix this with %p...
+                            ASYS_TEXT (sptr->fast_rep ())));
               errno = ENOENT;
               return -1;
             }
