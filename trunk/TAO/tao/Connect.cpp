@@ -18,7 +18,7 @@ ACE_RCSID(tao, Connect, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Connect_Timeprobe_Description[] =
-  { 
+  {
     "Server_Connection_Handler::send_response - start",
     "Server_Connection_Handler::send_response - end",
 
@@ -257,11 +257,11 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                               this->orb_core_,
                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   // The request_id_ field in request will be 0 if something went
   // wrong before it got a chance to read it out.
   request_id = request.request_id ();
-  
+
   response_required = request.response_expected ();
 
 #if !defined (TAO_NO_IOR_TABLE)
@@ -270,39 +270,39 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       CORBA::String_var object_id;
-      
+
       object_id = (char *) request.object_key ().get_buffer ();
       object_id [request.object_key ().length ()] = '\0';
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "Simple Object key %s. Doing the Table Lookup ...\n",
 		  object_id.in ()));
-      
+
       CORBA::Object_ptr object_reference;
-      
-      // Do the Table Lookup. 
-      int status = 
-	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id.in (), 
+
+      // Do the Table Lookup.
+      int status =
+	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id.in (),
 							 object_reference);
-      
-      // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.      
-      
+
+      // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
+
       if (CORBA::is_nil (object_reference) || status == -1)
 	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), -1);
-      
+
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
-      
+
       CORBA::Object_ptr dup = CORBA::Object::_duplicate (object_reference);
-      
+
       ACE_THROW_RETURN (PortableServer::ForwardRequest (dup), -1);
     }
-  
+
 #endif
-  
+
   // So, we read a request, now handle it using something more
   // primitive than a CORBA2 ServerRequest pseudo-object.
-  
+
   // @@ (CJC) We need to create a TAO-specific request which will hold
   // context for a request such as the connection handler ("this") over
   // which the request was received so that the servicer of the request
@@ -311,7 +311,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   // One thing which me must be careful of is that responses are sent
   // with a single write so that they're not accidentally interleaved
   // over the transport (as could happen using TCP).
-  
+
   this->orb_core_->root_poa ()->dispatch_servant (request.object_key (),
                                                   request,
                                                   0,
@@ -320,7 +320,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   // NEED TO CHECK FOR any errors present in <env> and set the return
   // code appropriately.
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
 
@@ -371,13 +371,13 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 //     {
 //       ACE_DEBUG ((LM_DEBUG,
 // 		  "TAO Object Key Prefix found in the object key.\n"));
-     
-      
-//       // Do the Table Lookup. Raise a location forward exception or 
+
+
+//       // Do the Table Lookup. Raise a location forward exception or
 //       // a non-exist exception.
 
 //       // CORBA::Object_ptr object_reference;
-//       // int s = 
+//       // int s =
 //       //     table->lookup (request.object_key (),
 //       //                    object_reference);
 //       // if (s == -1)
@@ -416,8 +416,9 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
     {
       // we got no exception, so the object is here
       status = TAO_GIOP_OBJECT_HERE;
-      ACE_DEBUG ((LM_DEBUG,
-                  "handle_locate has been called: found\n"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO: (%P|%t) handle_locate() : found\n"));
     }
   else if (serverRequest.exception_type () != TAO_GIOP_NO_EXCEPTION)
     {
@@ -750,7 +751,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
           // required.
           if (TAO_orbdebug)
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) %s: closing conn, no exception, "
+                        "TAO: (%P|%t) %s: closing conn, no exception, "
                         "but expecting response\n",
                         "TAO_Server_Connection_Handler::handle_input"));
           //          this->handle_close ();
@@ -763,7 +764,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       // close the socket.
       if (TAO_orbdebug)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %s: closing conn, no exception, "
+                    "TAO: (%P|%t) %s: closing conn, no exception, "
                     "but expecting response\n",
                     "TAO_Server_Connection_Handler::handle_input"));
       //      this->handle_close ();

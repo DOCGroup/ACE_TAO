@@ -107,6 +107,7 @@ void
 TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                             TAO_GIOP::Message_Type message_type,
                             CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
@@ -131,22 +132,46 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // assert (this->data_ != 0);
 
   if (this->data_ == 0)
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
   TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
 
-  // The connection registry is also responsible for selecting the
-  // profile to use based on some policy or the current forwarding state.
-  // We will use the returned profile
-  // Note: data_->profile_in_use () == profile
-  this->profile_ = this->data_->profile_in_use ();
+  if (conn_reg == 0)
+    ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
-  this->transport_ = conn_reg->connect (this->data_, ACE_TRY_ENV);
-  ACE_CHECK;
+  // @@ It seems like this is the right spot to re-order the profiles
+  // based on the policies in the ORB.
+  // The following text was here:
+  //     The connection registry is also responsible for selecting the
+  //     profile to use based on some policy or the current forwarding
+  //     state.
+  // IMHO this is not right, the connector registry only finds one
+  // connector for the given policies, if the connector is not
+  // available (say the user wants an ATM connection, but we don't
+  // have the protocol) then we give it another profile to try.
 
-  const TAO_ObjectKey *key = &this->profile_->object_key();
+  // Loop until a connection is established or there aren't any more
+  // profiles to try.
+ for (;;)
+    {
+      // Get the current profile...
+      this->profile_ = this->data_->profile_in_use ();
+
+      if (this->transport_ != 0)
+        this->transport_->idle ();
+      int result = conn_reg->connect (this->data_, this->transport_);
+      if (result == 0)
+        break;
+
+      // Try moving to the next profile and starting over, if that
+      // fails then we must raise the TRANSIENT exception.
+      if (this->data_->next_profile_retry () == 0)
+        ACE_THROW (CORBA::TRANSIENT (CORBA::COMPLETED_NO));
+    }
+
+  const TAO_ObjectKey& key = this->profile_->object_key();
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_CONNECT);
 
@@ -170,12 +195,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Build the outgoing message, starting with generic GIOP header.
 
-  CORBA::Boolean bt =
-    TAO_GIOP::start_message (message_type,
-                             this->out_stream_,
-                             this->orb_core_);
-
-  if (bt != 1)
+  if (TAO_GIOP::start_message (message_type,
+                               this->out_stream_,
+                               this->orb_core_) == 0)
     ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_START_MSG);
@@ -214,12 +236,13 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
     case TAO_GIOP::LocateRequest:
       this->out_stream_ << this->my_request_id_;
-      this->out_stream_ << *key;
+      this->out_stream_ << key;
       break;
 
     default:
       ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
+
   if (!this->out_stream_.good_bit ())
     ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
@@ -231,14 +254,14 @@ TAO_GIOP_Invocation::write_request_header_std
      (const TAO_GIOP_ServiceContextList& svc_ctx,
       CORBA::ULong request_id,
       CORBA::Boolean is_roundtrip,
-      const TAO_opaque* key,
+      const TAO_opaque& key,
       const char* opname,
       CORBA::Principal_ptr principal)
 {
   this->out_stream_ << svc_ctx;
   this->out_stream_ << request_id;
   this->out_stream_ << CORBA::Any::from_boolean (is_roundtrip);
-  this->out_stream_ << *key;
+  this->out_stream_ << key;
   this->out_stream_ << opname;
   this->out_stream_ << principal;
   return 1;
@@ -249,13 +272,13 @@ TAO_GIOP_Invocation::write_request_header_lite
      (const TAO_GIOP_ServiceContextList&,
       CORBA::ULong request_id,
       CORBA::Boolean is_roundtrip,
-      const TAO_opaque* key,
+      const TAO_opaque& key,
       const char* opname,
       CORBA::Principal_ptr)
 {
   this->out_stream_ << request_id;
   this->out_stream_ << CORBA::Any::from_boolean (is_roundtrip);
-  this->out_stream_ << *key;
+  this->out_stream_ << key;
   this->out_stream_ << opname;
   return 1;
 }
@@ -265,7 +288,7 @@ TAO_GIOP_Invocation::write_request_header
      (const TAO_GIOP_ServiceContextList& svc_ctx,
       CORBA::ULong request_id,
       CORBA::Boolean is_roundtrip,
-      const TAO_opaque* key,
+      const TAO_opaque& key,
       const char* opname,
       CORBA::Principal_ptr principal)
 {
@@ -289,42 +312,55 @@ TAO_GIOP_Invocation::write_request_header
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
-TAO_GIOP_ReplyStatusType
+int
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  if (this->transport_ == 0 ||
-      this->transport_->send_request (this->orb_core_,
-                                      this->out_stream_,
-                                      is_roundtrip) == -1)
+  if (this->transport_ == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                      TAO_INVOKE_EXCEPTION);
+
+  int result =
+    this->transport_->send_request (this->orb_core_,
+                                    this->out_stream_,
+                                    is_roundtrip);
+
+  //
+  // @@ highly desirable to know whether we wrote _any_ data; if
+  // we wrote none, then there's no chance the call completed and
+  // applications don't have to deal with those nasty
+  // indeterminate states where they can't immediatly tell if
+  // what's safe to do.
+  //
+  // @@ also, there might have been a GIOP::CloseConnection
+  // message in the input queue.  If so, this request should be
+  // treated as a (full) "rebind" case.  Can't do that from this
+  // point in the code however!  Some minor restructuring needs to
+  // happen.
+  //
+
+  if (result == -1)
     {
-      // send_request () closed the connection; we just set the
-      // handler to 0 here.
+      // send_request () closed the connection, we just have to forget
+      // about the hint.
       this->profile_->reset_hint ();
 
-      //
-      // @@ highly desirable to know whether we wrote _any_ data; if
-      // we wrote none, then there's no chance the call completed and
-      // applications don't have to deal with those nasty
-      // indeterminate states where they can't immediatly tell if
-      // what's safe to do.
-      //
-      // @@ also, there might have been a GIOP::CloseConnection
-      // message in the input queue.  If so, this request should be
-      // treated as a (full) "rebind" case.  Can't do that from this
-      // point in the code however!  Some minor restructuring needs to
-      // happen.
-      //
-      ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
+      return TAO_INVOKE_RESTART;
     }
-  return TAO_GIOP_NO_EXCEPTION;
+
+  // @@ Maybe the right place to do this is once the reply is
+  //    received? But what about oneways?
+  this->data_->set_valid_profile ();
+
+  return TAO_INVOKE_OK;
 }
 
 // ****************************************************************
 
-TAO_GIOP_ReplyStatusType
+int
 TAO_GIOP_Invocation::close_connection (void)
 {
   // Special case of forwarding -- server was closing the
@@ -338,53 +374,66 @@ TAO_GIOP_Invocation::close_connection (void)
   // false error reports to applications.
 
   this->transport_->close_connection ();
+  this->transport_->idle ();
+  this->transport_ = 0;
+
   this->profile_->reset_hint ();
+  this->profile_ = 0;
 
   // @@ Get rid of any forwarding profiles and reset
-  // the profile list to point to the first profile! FRED
-  // For now we will not deal with recursive forwards!
-  // TAO_GIOP_SYSTEM_EXCEPTION;
+  //    the profile list to point to the first profile!
+  // FRED For now we will not deal with recursive forwards!
 
-  data_->reset_profiles ();
+  this->data_->reset_profiles ();
   // sets the forwarding profile to 0 and deletes the old one;
   // rewinds the profiles list back to the first one.
 
-  return TAO_GIOP_LOCATION_FORWARD;
+  return TAO_INVOKE_RESTART;
 }
-
 
 // Handle the GIOP Reply with status = LOCATION_FORWARD
 // Replace the IIOP Profile. The call is then automatically
 // reinvoked by the STUB_Object::do_static_call method.
 
-TAO_GIOP_ReplyStatusType
+int
 TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                                        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // It can be assumed that the GIOP header and the reply header
   // are already handled. Further it can be assumed that the
   // reply body contains an object reference to the new object.
   // This object pointer will be now extracted.
 
-  CORBA::Object_ptr object_ptr = 0;
+  CORBA::Object_var object = 0;
 
-  if ( (inp_stream >> object_ptr) == 0)
+  if ( (inp_stream >> object.inout ()) == 0)
     {
-      this->transport_->close_connection ();
+      // @@ Why whould we want to close this connection?
+      //    this->transport_->close_connection ();
+
+      // @@ If a forward exception or a LOCATION_FORWARD reply is sent
+      //    then the request couldn't have completed. But we need to
+      //    re-validate this to ensure "at most once" semantics.
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO),
-                        TAO_GIOP_SYSTEM_EXCEPTION);
+                        TAO_INVOKE_EXCEPTION);
     }
 
   // The object pointer has to be changed to a STUB_Object pointer
   // in order to extract the profile.
 
-  STUB_Object *stubobj = object_ptr->_stubobj ();
+  STUB_Object *stubobj = object->_stubobj ();
 
   if (stubobj == 0)
     {
-      this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
-                        TAO_GIOP_SYSTEM_EXCEPTION);
+      // @@ Why whould we want to close this connection?
+      //    this->transport_->close_connection ();
+
+      // @@ If a forward exception or a LOCATION_FORWARD reply is sent
+      //    then the request couldn't have completed. But we need to
+      //    re-validate this to ensure "at most once" semantics.
+      ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                        TAO_INVOKE_EXCEPTION);
     }
 
   // Make a copy of the IIOP profile in the forwarded objref,
@@ -400,315 +449,189 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // New for Multiple profile.  Get the MProfile list from the
   // forwarded object refererence
 
-  data_->add_forward_profiles (stubobj->get_profiles ());
+  this->data_->add_forward_profiles (stubobj->get_profiles ());
   // store the new profile list and set the first forwarding profile
   // note: this has to be and is thread safe.  Also get_profiles returns
   // a pointer to a new MProfile object which we give to data_ (Our
   // STUB_Object.)
 
-  // The object is no longer needed, because we have now the STUB_Object
-  // @@ Is this exception safe?
-  CORBA::release (object_ptr);
-
+  // @@ Why do we clear the environment?
   ACE_TRY_ENV.clear ();
 
   // We may not need to do this since TAO_GIOP_Invocations
   // get created on a per-call basis. For now we'll play it safe.
 
-  return TAO_GIOP_LOCATION_FORWARD;
+  if (this->data_->next_profile () == 0)
+    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO),
+                      TAO_INVOKE_EXCEPTION);
+
+  return TAO_INVOKE_RESTART;
 }
 
 // ****************************************************************
 
-TAO_GIOP_ReplyStatusType
+int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+  int retval = this->invoke_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
-  ACE_UNUSED_ARG (retval);
 
-  // This blocks until the response is read.  In the current version,
-  // there is only one client thread that ever uses this connection,
-  // so most response messages are illegal.
-  //
-  // THREADING NOTE: to make more efficient use of connection
-  // resources, we'd multiplex I/O on connections.  For example, one
-  // thread would write its GIOP::Request (or GIOP::LocateRequest etc)
-  // message and block for the response, then another would do the
-  // same thing.  When a response came back, it would be handed to the
-  // thread which requested it.
-  //
-  // Currently the connection manager doesn't support such fine
-  // grained connection locking, and also this server implementation
-  // wouldn't take advantage of that potential concurrency in requests
-  // either.  There are often performance losses coming from
-  // fine-grained locks being used inappropriately; there's some
-  // evidence that locking at the level of requests loses on at least
-  // some platforms.
-  //
-  // @@ In all MT environments, there's a cancellation point lurking
-  // here; need to investigate.  Client threads would frequently be
-  // canceled sometime during recv_request ... the correct action to
-  // take on being canceled is to issue a CancelRequest message to the
-  // server and then imediately let other client-side cancellation
-  // handlers do their jobs.
-  //
-  // In C++, that basically means to unwind the stack using almost
-  // normal procedures: all destructors should fire, and some "catch"
-  // blocks should probably be able to handle things like releasing
-  // pointers. (Without unwinding the C++ stack, resources that must
-  // be freed by thread cancellation won't be freed, and the process
-  // won't continue to function correctly.)  The tricky part is that
-  // according to POSIX, all C stack frames must also have their
-  // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
-  // environment.
-
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
-                                                     this->inp_stream_,
-                                                     this->orb_core_);
-
-  this->transport_->resume_connection (this->orb_core_->reactor ());
-  // suspend was called in TAO_Client_Connection_Handler::handle_input
-
-  switch (m)
+  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
+  // we have a user exception.
+  // @@ This is a bit brittle, think about a better implementation.
+  if (retval == TAO_INVOKE_EXCEPTION)
     {
-    case TAO_GIOP::Reply:
-      // handle reply ... must be right one etc
-      break;
+      // Match the exception interface repository id with the
+      // exception in the exception list.
+      // This is important to decode the exception.
 
-    case TAO_GIOP::CloseConnection:
-      return (TAO_GIOP_Invocation::close_connection ());
+      CORBA::String_var buf;
 
-    case TAO_GIOP::Request:
-    case TAO_GIOP::CancelRequest:
-    case TAO_GIOP::LocateRequest:
-    case TAO_GIOP::LocateReply:
-    default:
-      // These are all illegal messages to find.  If found, they could
-      // be indicative of client bugs (lost track of input stream) or
-      // server bugs; maybe the request was acted on, maybe not, we
-      // can't tell.
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
-                  TAO_GIOP::message_name (m)));
-      // FALLTHROUGH ...
-
-    case TAO_GIOP::CommunicationError:
-    case TAO_GIOP::MessageError:
-      // Couldn't read it for some reason ... exception's set already,
-      // so just tell the other end about the trouble (closing the
-      // connection) and return.
-
-      // FALLTHROUGH
-
-    case TAO_GIOP::EndOfFile:
-      // @@ This should only refer to "getting GIOP MessageError" message only.
-      this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
-    }
-
-  // Process reply message.  Again, due to the single threading in
-  // this code, only the reply to this request is allowed to be coming
-  // back.
-  //
-  // NOTE: if the response really _isn't_ for this thread, it's now
-  // treated as an error in which synchronization can't be recovered.
-  // There might be cases where it _could_ be recovered ... e.g. maybe
-  // for some reason the previous call couldn't pick up its response.
-  // It'd be worth investigating (and handling) any such cases.
-  //
-  // NOTE: since this implementation supports no ORB services
-  // (notably, the transaction service, which is the only one that's
-  // currently defined), the reply context is discarded.  Normally
-  // it'd be fed, component at a time, to the relevant services.
-  //
-  // NOTE: As security support kicks in, this is the right place to
-  // verify a digital signature, if that is required in this
-  // particular runtime security environment.  How to know if that's
-  // the case?  It's likely that standard Internet IPSEC
-  // infrastructure (RFC 1825 through 1827, and successors) will be
-  // used to enforce many security policies; integrity and privacy
-  // guarantees may be provided by the network, and need no support
-  // here.
-
-  TAO_GIOP_ServiceContextList reply_ctx;
-  CORBA::ULong request_id;
-  CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
-
-  this->inp_stream_ >> reply_ctx;
-  if (!this->inp_stream_.good_bit ())
-    {
-      this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
-    }
-
-  if (!this->inp_stream_.read_ulong (request_id)
-      || request_id != this->my_request_id_
-      || !this->inp_stream_.read_ulong (reply_status)
-      || reply_status > TAO_GIOP_LOCATION_FORWARD)
-    {
-      this->transport_->close_connection ();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
-    }
-
-  // If there was no exception, let the caller parse the normal
-  // response.  Otherwise parse and handle the response; we always
-  // know how to deal with the standard exceptions, and the caller
-  // provides a list of allowed user-defined exceptions so that we
-  // know how to unmarshal those too (without IFR consultation).
-  //
-  // When requests are forwarded, we just store the revised profile
-  // data in this objref structure.  The expectation is that the call
-  // will be reissued until someone gives up on a forwarding chain,
-  // and that other calls will reap the benefit of the forwarding work
-  // by this thread.
-  //
-  // NOTE: should ensure that from here on, all system exceptions
-  // return COMPLETED_YES status ... even ones reported by code which
-  // we call.
-
-  switch (reply_status)
-    {
-    case TAO_GIOP_NO_EXCEPTION:
-      break;
-
-    case TAO_GIOP_USER_EXCEPTION:
-    case TAO_GIOP_SYSTEM_EXCEPTION:
-      {
-        // @@ TODO This code is not exception safe. Notice how on
-        // every exit path we have to invoke TAO_GIOP::send_error,
-        // this should be handled by the destructor of some class;
-        // which is disabled on the normal exit paths.
-        // Plus <buf> should be stored in a CORBA::String_var
-
-        char* buf;
-        CORBA::String_var buf_holder; // Used to clean up dynamic allocated string
-                                      // in <buf>.
-
-        // Pull the exception ID out of the marshaling buffer.
+      // Pull the exception ID out of the marshaling buffer.
+      if (this->inp_stream_.read_string (buf.inout ()) == 0)
         {
-          if (this->inp_stream_.read_string (buf) == 0)
-            {
-              this->transport_->close_connection ();
-              ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
-            }
+          // @@ Why do we close the connection. Only the request
+          //    failed, but the connection seems to be still
+          //    valid!
+          // this->transport_->close_connection ();
+          ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES),
+                            TAO_INVOKE_EXCEPTION);
         }
 
-        buf_holder = buf;       // Assume ownership of <buf>
+      for (CORBA::ULong i = 0;
+           i < exceptions.count ();
+           i++)
+        {
+          CORBA::TypeCode_ptr tcp = exceptions.item (i, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
-        if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
-          {
-            CORBA_Exception *exception =
-              TAO_Exceptions::create_system_exception (buf_holder.in (), ACE_TRY_ENV);
-            ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
+          const char *xid = tcp->id (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
-            if (exception != 0)
-              {
-                this->inp_stream_.decode (exception->_type (),
-                                          &exception, 0,
-                                          ACE_TRY_ENV);
-                ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
+          if (ACE_OS::strcmp (buf.in (), xid) != 0)
+            continue;
 
-                ACE_TRY_ENV.exception (exception);
-                return TAO_GIOP_SYSTEM_EXCEPTION;
-              }
-            else
-              {
-                // @@ TODO We should have policies to handle this
-                // error, for instance:
-                // + the spec requires us to silently raise a
-                // CORBA::UNKNOWN exception
-                // + Don't print a message and try
-                // + Print the message and try
-                // + Print the message and rasize CORBA::UNKNOWN
-                ACE_ERROR ((LM_ERROR,
-                            "Received Reply with SYSTEM_EXCEPTION "
-                            "status, but unknown or invalid "
-                            "exception.\n"
-                            "Trying to interpret as a user exception"));
-              }
-          }
-          {
-            // Find it in the operation description and then use that
-            // to get the typecode.
-            // This is important to decode the exception.
+          // @@ In the old days the exceptions where catched and the
+          // connection was closed, that doesn't make any sense:
+          // this is a client side problem, for one particular
+          // request.
+          // this->transport_->close_connection ();
+          // ACE_RETHROW;
 
-            for (CORBA::ULong i = 0;
-                 i < exceptions.count ();
-                 i++)
-              {
-                CORBA::TypeCode_ptr tcp = 0;
-                int loop_continue = 0;
-                ACE_TRY
-                  {
-                    tcp = exceptions.item (i, ACE_TRY_ENV);
-                    ACE_TRY_CHECK;
+          const ACE_Message_Block* cdr =
+            this->inp_stream_.start ();
+          CORBA_Any any (tcp, cdr);
+          CORBA_Exception *exception;
+          ACE_NEW_THROW_RETURN (exception,
+                                CORBA_UnknownUserException (any),
+                                CORBA::NO_MEMORY (CORBA::COMPLETED_YES),
+                                TAO_INVOKE_EXCEPTION);
 
-                    const char *xid = tcp->id (ACE_TRY_ENV);
-                    ACE_TRY_CHECK;
+          // @@ Think about a better way to raise the exception here,
+          // maybe we need some more macros?
+          ACE_TRY_ENV.exception (exception);
+          return TAO_INVOKE_EXCEPTION;
+        }
 
-                    if (ACE_OS::strcmp (buf_holder.in (), xid) != 0)
-                      loop_continue = 1;
-                  }
-                ACE_CATCH (CORBA_SystemException, ex)
-                  {
-                    this->transport_->close_connection ();
-                    ACE_RETHROW;
-                  }
-                ACE_ENDTRY;
-                ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
+      // If we couldn't find the right exception, report it as
+      // CORBA::UNKNOWN.
 
-                if (loop_continue)
-                  continue;
-
-                const ACE_Message_Block* cdr =
-                  this->inp_stream_.start ();
-                CORBA_Any any (tcp, cdr);
-                CORBA_Exception *exception =
-                  new CORBA_UnknownUserException (any);
-                ACE_TRY_ENV.exception (exception);
-                return TAO_GIOP_USER_EXCEPTION;
-              }
-          }
-
-        // If we couldn't find the right exception, report it as
-        // CORBA::UNKNOWN.
-
-        ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
-      }
-    // NOTREACHED
-
-    case TAO_GIOP_LOCATION_FORWARD:
-      return (this->location_forward (this->inp_stream_, ACE_TRY_ENV));
+      // @@ It would seem like if the remote exception is a
+      //    UserException we can assume that the request was
+      //    completed.
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES),
+                        TAO_INVOKE_EXCEPTION);
     }
 
-  // All standard exceptions from here on in the call path know for
-  // certain that the call "completed" ... except in the case of
-  // system exceptions which say otherwise, and for
-  // TAO_GIOP_LOCATION_FORWARD responses.
-
-  return (TAO_GIOP_ReplyStatusType) reply_status;
+  return retval;
 }
 
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 //
-// This invoke method is for the stubs to use
+// This is used by the generated stubs.
 
-TAO_GIOP_ReplyStatusType
+int
 TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     CORBA::ULong except_count,
                                     CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+  int retval = this->invoke_i (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+
+  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
+  // we have a user exception.
+  // @@ This is a bit brittle, think about a better implementation.
+  if (retval == TAO_INVOKE_EXCEPTION)
+    {
+      // Match the exception interface repository id with the
+      // exception in the exception list.
+      // This is important to decode the exception.
+
+      CORBA::String_var buf;
+
+      // Pull the exception ID out of the marshaling buffer.
+      if (this->inp_stream_.read_string (buf.inout ()) == 0)
+        {
+          // @@ Why do we close the connection. Only the request
+          //    failed, but the connection seems to be still
+          //    valid!
+          // this->transport_->close_connection ();
+          ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES),
+                            TAO_INVOKE_EXCEPTION);
+        }
+
+      for (CORBA::ULong i = 0;
+           i < except_count;
+           i++)
+        {
+          CORBA::TypeCode_ptr tcp = excepts[i].tc;
+          const char *xid = tcp->id (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+          if (ACE_OS::strcmp (buf.in (), xid) != 0)
+            continue;
+
+          // match
+          CORBA::Exception_ptr exception = excepts[i].alloc ();
+
+          if (exception == 0)
+            ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_YES),
+                              TAO_INVOKE_EXCEPTION);
+
+          this->inp_stream_.decode (exception->_type (),
+                                    exception, 0,
+                                    ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+          // @@ Think about a better way to raise the exception here,
+          // maybe we need some more macros?
+          ACE_TRY_ENV.exception (exception);
+          return TAO_INVOKE_EXCEPTION;
+        }
+
+      // If we couldn't find the right exception, report it as
+      // CORBA::UNKNOWN.
+
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES),
+                        TAO_INVOKE_EXCEPTION);
+    }
+
+  return retval;
+}
+
+int
+TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
   ACE_UNUSED_ARG (retval);
 
@@ -748,6 +671,9 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
+  // @@ Fred: if it makes sense to have a wrapper for send_request on
+  //    the TAO_Transport class then it should also make sense to have
+  //    one for recv_request(), right?
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
                                                      this->inp_stream_,
                                                      this->orb_core_);
@@ -758,11 +684,14 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   switch (m)
     {
     case TAO_GIOP::Reply:
-      // handle reply ... must be right one etc
+      // The reply is handled at the end of this switch() statement.
       break;
 
     case TAO_GIOP::CloseConnection:
-      return (TAO_GIOP_Invocation::close_connection ());
+      // Try the same profile again, but open a new connection.
+      // If that fails then we go to the next profile.
+      this->profile_->reset_hint ();
+      return TAO_INVOKE_RESTART;
 
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
@@ -773,24 +702,38 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       // be indicative of client bugs (lost track of input stream) or
       // server bugs; maybe the request was acted on, maybe not, we
       // can't tell.
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
-                  TAO_GIOP::message_name (m)));
-      // FALLTHROUGH ...
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO: (%P|%t) illegal GIOP message (%s) "
+                    "in response to my Request!\n",
+                    TAO_GIOP::message_name (m)));
+      // FALLTHROUGH
+
+    case TAO_GIOP::MessageError:
+      // @@ Maybe the transport should be closed by recv_request?
+      // FALLTHROUGH
 
     case TAO_GIOP::CommunicationError:
-    case TAO_GIOP::MessageError:
-      // Couldn't read it for some reason ... exception's set already,
+      // Couldn't read it for some reason... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-
       // FALLTHROUGH
 
     case TAO_GIOP::EndOfFile:
-      // @@ This should only refer to "getting GIOP MessageError" message only.
-      this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
+      // In all those cases the message was (apparently) sent, but we
+      // couldn't read the reply. To satisfy the "at most once"
+      // semantics of CORBA we must raise an exception at this point
+      // and *not* try to transparently restart the request.
+
+      // We must also reset the state of this object, because the next 
+      // invocation may perfectly work.
+      this->close_connection ();
+
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
     }
+
+  // Note: we only get here if the status was TAO_GIOP::Reply...
 
   // Process reply message.  Again, due to the single threading in
   // this code, only the reply to this request is allowed to be coming
@@ -816,15 +759,23 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   // guarantees may be provided by the network, and need no support
   // here.
 
+
+  // @@ Here is a big difference between GIOP 1.[01] and GIOP 1.2, the
+  // order of the reply_ctx and the request_id fields!
+
   TAO_GIOP_ServiceContextList reply_ctx;
   CORBA::ULong request_id;
-  CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
+  CORBA::ULong reply_status; // TAO_GIOP_ReplyStatusType
 
   this->inp_stream_ >> reply_ctx;
   if (!this->inp_stream_.good_bit ())
     {
+      // @@ Fred: Do we really want to close the connection here? This
+      //    is a problem, but we haven't lost synchronization with the
+      //    server or anything.
       this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
     }
 
   if (!this->inp_stream_.read_ulong (request_id)
@@ -832,9 +783,14 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
+      // @@ Fred: Do we really want to close the connection here? This
+      //    is a problem, but we haven't lost synchronization with the
+      //    server or anything.
       this->transport_->close_connection ();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
     }
 
   // If there was no exception, let the caller parse the normal
@@ -856,9 +812,9 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   switch (reply_status)
     {
     case TAO_GIOP_NO_EXCEPTION:
+    case TAO_GIOP_USER_EXCEPTION:
       break;
 
-    case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
         // @@ TODO This code is not exception safe. Notice how on
@@ -867,134 +823,96 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
         // which is disabled on the normal exit paths.
         // Plus <buf> should be stored in a CORBA::String_var
 
-        char* buf;
-        CORBA::String_var buf_holder; // Used to clean up dynamically allocated
-                                      // <buf> upon exceptions or return
+        CORBA::String_var buf;
 
         // Pull the exception ID out of the marshaling buffer.
-        {
-          if (this->inp_stream_.read_string (buf) == 0)
-            {
-              this->transport_->close_connection ();
-              ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
-            }
-        }
-
-        buf_holder = buf;       // Assume ownership of <buf>
-
-        // Find it in the operation description and then use that to
-        // get the typecode.  Use it to unmarshal the exception's
-        // value; if that exception is not allowed by this operation,
-        // fail (next).
-
-        // placeholder to decode the exception
-        CORBA::Exception *exception = 0;
-        CORBA::TypeCode_ptr tcp = 0;
-
-        if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
+        if (this->inp_stream_.read_string (buf.inout ()) == 0)
           {
-            exception =
-              TAO_Exceptions::create_system_exception (buf_holder.in (), ACE_TRY_ENV);
-            ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
-
-            if (exception != 0)
-              {
-                this->inp_stream_.decode (exception->_type (),
-                                          exception, 0,
-                                          ACE_TRY_ENV);
-                ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
-
-                // @@ What do we do if an exception is raised while
-                // demarshaling an exception????
-                ACE_TRY_ENV.exception (exception);
-                return TAO_GIOP_SYSTEM_EXCEPTION;
-              }
-          }
-        // else // this else is commented out, see the coment above
-          {
-            // search the table of exceptions and see if there is a match
-            for (CORBA::ULong i = 0;
-                 i < except_count;
-                 i++)
-              {
-                int loop_continue = 0;
-                ACE_TRY
-                  {
-                    tcp = excepts[i].tc;
-                    const char *xid = tcp->id (ACE_TRY_ENV);
-                    ACE_TRY_CHECK;
-
-                    if (ACE_OS::strcmp (buf_holder.in (), (char *)xid) != 0)
-                      loop_continue = 1;
-                    else
-                      {
-                        // match
-                        exception = excepts[i].alloc ();
-
-                        this->inp_stream_.decode (exception->_type (),
-                                                  exception, 0,
-                                                  ACE_TRY_ENV);
-                        ACE_TRY_CHECK;
-                      }
-                  }
-                ACE_CATCH (CORBA_SystemException, ex)
-                  {
-                    this->transport_->close_connection ();
-                    ACE_RETHROW;
-                  }
-                ACE_ENDTRY;
-                ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
-
-                if (loop_continue)
-                  continue;
-
-                ACE_TRY_ENV.exception (exception);
-                return TAO_GIOP_USER_EXCEPTION;
-              } // end of loop
+            // @@ Why do we close the connection. Only the request
+            //    failed, but the connection seems to be still
+            //    valid!
+            this->transport_->close_connection ();
+            ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_EXCEPTION);
           }
 
-        // If we couldn't find the right exception, report it as
-        // CORBA::UNKNOWN.
+        CORBA_Exception *exception =
+          TAO_Exceptions::create_system_exception (buf.in (),
+                                                   ACE_TRY_ENV);
+        ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
-        ACE_TRY_ENV.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
-        return TAO_GIOP_SYSTEM_EXCEPTION;
+        if (exception == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_ERROR ((LM_ERROR,
+                          "TAO: (%P|%t) Received Reply "
+                          "with SYSTEM_EXCEPTION status."
+                          "But unknown or invalid exception.\n"));
+            ACE_NEW_RETURN (exception,
+                            CORBA::UNKNOWN,
+                            TAO_INVOKE_EXCEPTION);
+          }
+        // @@ We can clearly use compiled marshaling in this
+        //    case. All system exceptions are guaranteed to
+        //    have the same fields (according to the spec).
+        this->inp_stream_.decode (exception->_type (),
+                                  &exception, 0,
+                                  ACE_TRY_ENV);
+        ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+        // @@ Think about a better way to raise the exception here,
+        // maybe we need some more macros?
+        ACE_TRY_ENV.exception (exception);
+        return TAO_INVOKE_EXCEPTION;
       }
-    // NOTREACHED
+      // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-      return (this->location_forward (this->inp_stream_, ACE_TRY_ENV));
+      return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
     }
 
-  // All standard exceptions from here on in the call path know for
-  // certain that the call "completed" ... except in the case of
-  // system exceptions which say otherwise, and for
-  // TAO_GIOP_LOCATION_FORWARD responses.
-
-  return (TAO_GIOP_ReplyStatusType) reply_status;
+  return reply_status;
 }
-
 
 // ****************************************************************
 
-
 // Send request, block until any reply comes back
 
-TAO_GIOP_ReplyStatusType
+int
 TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Send Request, return on error or if we're done
+  // @@ TODO This method is very similar to invoke_i(), we should try
+  //    to refactor them.
 
-  // @@ This appears broken, the send_request returns -1
-  if (this->transport_->send_request (this->orb_core_,
-                                      this->out_stream_,
-                                      1) == -1)
+  if (this->transport_ == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                      TAO_INVOKE_EXCEPTION);
+
+  int result =
+    this->transport_->send_request (this->orb_core_,
+                                    this->out_stream_,
+                                    1);
+
+
+  if (result == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
       this->profile_->reset_hint ();
-      ACE_TRY_ENV.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE));
-      return TAO_GIOP_SYSTEM_EXCEPTION;
+
+      // @@ This code abort if the connection for the currenct profile
+      //    fails.  Should we transparently try new profiles until one
+      //    works? Or is that something that a higher level component
+      //    should decide?  Remember that LocateRequests are part of
+      //    the strategy to establish a connection.
+      ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
     }
+
+  // @@ Maybe the right place to do this is once the reply is
+  //    received? But what about oneways?
+  this->data_->set_valid_profile ();
 
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
                                                      this->inp_stream_,
@@ -1005,66 +923,90 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   switch (m)
     {
-    case TAO_GIOP::CloseConnection:
-      return (this->close_connection ());
-
-    case TAO_GIOP::LocateReply:
-      // Handle the reply
-      // Especially set the new location
-
-      CORBA::ULong request_id;
-      CORBA::ULong locate_status;      // TAO_GIOP_LocateStatusType
-
-      if (!this->inp_stream_.read_ulong (request_id)
-          || request_id != this->my_request_id_
-          || !this->inp_stream_.read_ulong (locate_status))
-        {
-          this->transport_->close_connection ();
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) bad Response header\n"));
-          ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
-        }
-      switch (locate_status)
-        {
-        case TAO_GIOP_UNKNOWN_OBJECT:
-          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
-          /* not reached */
-        case TAO_GIOP_OBJECT_HERE:
-          return TAO_GIOP_NO_EXCEPTION;
-          /* not reached */
-        case TAO_GIOP_OBJECT_FORWARD:
-          return (this->location_forward (this->inp_stream_, ACE_TRY_ENV));
-          /* not reached */
-        }
-      /* not reached */
     case TAO_GIOP::Reply:
+      // Thereply is handled at the end of this switch() statement.
+      break;
+
+    case TAO_GIOP::CloseConnection:
+      // Try the same profile again, but open a new connection.
+      // If that fails then we go to the next profile.
+      this->profile_->reset_hint ();
+      return TAO_INVOKE_RESTART;
+
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
+    case TAO_GIOP::LocateReply:
     default:
       // These are all illegal messages to find.  If found, they could
       // be indicative of client bugs (lost track of input stream) or
       // server bugs; maybe the request was acted on, maybe not, we
       // can't tell.
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
-                  TAO_GIOP::message_name (m)));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO: (%P|%t) illegal GIOP message (%s) "
+                    "in response to my LocateRequest!\n",
+                    TAO_GIOP::message_name (m)));
       // FALLTHROUGH ...
 
-    case TAO_GIOP::CommunicationError:
     case TAO_GIOP::MessageError:
+      // @@ Maybe the transport should be closed by recv_request?
+      // FALLTHROUGH
+
+    case TAO_GIOP::CommunicationError:
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
       // FALLTHROUGH
 
     case TAO_GIOP::EndOfFile:
-      // @@ This should only refer to "getting GIOP MessageError" message only.
-      this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
+      // In all those cases the message was (apparently) sent, but we
+      // couldn't read the reply. To satisfy the "at most once"
+      // semantics of CORBA we must raise an exception at this point
+      // and *not* try to transparently restart the request.
+      // FALLTHROUGH
+
+      this->close_connection ();
+
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
     }
 
-  ACE_NOTREACHED (return TAO_GIOP_NO_EXCEPTION);
+  // Note: we only get here if the status was TAO_GIOP::LocateReply
+
+  CORBA::ULong request_id;
+  CORBA::ULong locate_status; // TAO_GIOP_LocateStatusType
+
+  if (!this->inp_stream_.read_ulong (request_id)
+      || request_id != this->my_request_id_
+      || !this->inp_stream_.read_ulong (locate_status))
+    {
+      // @@ Fred: Do we really want to close the connection here? This
+      //    is a problem, but we haven't lost synchronization with the
+      //    server or anything.
+      this->transport_->close_connection ();
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
+    }
+
+  switch (locate_status)
+    {
+    case TAO_GIOP_OBJECT_HERE:
+      break;
+
+    case TAO_GIOP_UNKNOWN_OBJECT:
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_YES),
+                        TAO_INVOKE_EXCEPTION);
+      // NOTREACHED
+
+    case TAO_GIOP_OBJECT_FORWARD:
+      return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
+      // NOTREACHED
+    }
+
+  return TAO_INVOKE_OK;
 }
 
 // ****************************************************************

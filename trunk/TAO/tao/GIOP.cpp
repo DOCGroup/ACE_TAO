@@ -219,13 +219,6 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
   // networking infrastructure (e.g., IPSEC).
 
   size_t header_len = TAO_GIOP_HEADER_LEN;
-  // @@ Ug, not sure what to do with this IIOP specific code!
-  //    An idea would be to change this to ->use_lite_protocol
-  //    that way it is not IIOP specific.  fredk
-  //
-  // Fred: actually this is not IIOP specific; a better name would be
-  // "GIOP lite".... Carlos
-  //
   // Fred: this is actually a good start to think about pluggable
   //       "messaging protocols" (maybe this is a bad name, but I want
   //       to stress the difference with the pluggable "transport
@@ -270,25 +263,30 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
   // this guarantees to send all data (bytes) or return an error
   ssize_t n = transport->send (stream.begin ());
 
-  if (n == -1) {
-    if (TAO_orbdebug) {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault %p\n",
-                  transport->handle (), "GIOP::send_request ()"));
-    }
+  if (n == -1)
+    {
+      if (TAO_orbdebug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO: (%P|%t) closing conn %d after fault %p\n",
+                      transport->handle (),
+                      "GIOP::send_request ()"));
+      }
     transport->close_connection ();
-    return 0 ;
+    return 0;
   }
 
-  // @@ Don't know about this one, when will we get a 0 from the write if we
-  //    assume that there is data to write.  I would only expect a 0 if there
-  //    was nothing to send or if nonblocking.
+  // @@ Don't know about this one, when will we get a 0 from the write
+  //    if we assume that there is data to write.  I would only expect
+  //    a 0 if there was nothing to send or if nonblocking.
   if (n == 0)
   {
     if (TAO_orbdebug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) GIOP::send_request (): "
-                  "EOF, closing conn %d\n", transport->handle()));
+                  "TAO: (%P|%t) GIOP::send_request () "
+                  "EOF, closing conn %d\n",
+                  transport->handle()));
     }
     transport->close_connection ();
     return 0;
@@ -371,13 +369,18 @@ error_message [TAO_GIOP_HEADER_LEN] =
 void
 TAO_GIOP::send_error (TAO_Transport *transport)
 {
+  // @@ How does this works with GIOP lite?
+
   TAO_GIOP::dump_msg ("send_error",
                       (const u_char *) error_message,
                       TAO_GIOP_HEADER_LEN);
+
   ACE_HANDLE which = transport->handle ();
+
   // @@ Carlos, can you please check to see if <send_n> should have
   // it's reply checked?
-  if (transport->send ((const u_char *)error_message, TAO_GIOP_HEADER_LEN) == -1)
+  if (transport->send ((const u_char *)error_message,
+                       TAO_GIOP_HEADER_LEN) == -1)
   {
     if (TAO_orbdebug != 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -386,11 +389,12 @@ TAO_GIOP::send_error (TAO_Transport *transport)
   }
 
   if (TAO_orbdebug) {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted transport handle %d\n", transport->handle ()));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) aborted transport handle %d\n",
+                transport->handle ()));
   }
-  // @@
+  // @@ Why do we close the connection at this point?
   transport->close_connection ();
-  transport = 0;
 }
 
 ssize_t
@@ -441,9 +445,6 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
 
-  TAO_GIOP::Message_Type retval;
-  CORBA::ULong message_size;
-
   // Read the message header off the wire.
   //
   // THREADING NOTE: the connection manager handed us this connection
@@ -486,17 +487,20 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
           // an exception, since for most servers it's not an error.
           // Is it _never_ an error?  Not sure ...
           /* NOTREACHED */
+
         case -1: // error
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_ERROR,
-                        "(%P|%t) GIOP::recv_request header socket error %p\n",
+                        "(%P|%t) GIOP::recv_request header %p\n",
                         "read_buffer"));
           break;
           /* NOTREACHED */
+
         default:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_ERROR,
-                        "(%P|%t) GIOP::recv_request header read failed, only %d of %d bytes\n",
+                        "(%P|%t) GIOP::recv_request header read failed, "
+                        "only %d of %d bytes\n",
                         len,
                         header_len));
           break;
@@ -506,12 +510,14 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
       return TAO_GIOP::CommunicationError;
     }
 
-  // NOTE: if message headers, or whome messages, get encrypted in
+  // NOTE: if message headers, or whole messages, get encrypted in
   // application software (rather than by the network infrastructure)
   // they should be decrypted here ...
 
   // First make sure it's a GIOP message of any version.
 
+  TAO_GIOP::Message_Type retval;
+  CORBA::ULong message_size;
   if (TAO_GIOP::parse_header (msg,
                               msg.do_byte_swap_,
                               retval,
@@ -519,8 +525,9 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
                               orb_core) == -1)
     {
       TAO_GIOP::send_error (transport);
-      return TAO_GIOP::EndOfFile; // We didn't really receive
-                                  // anything useful here.
+       // We didn't really receive anything useful here.
+      return TAO_GIOP::CommunicationError;
+                                  
     }
 
   // Make sure we have the full length in memory, growing the buffer
@@ -557,37 +564,37 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
         case 0:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) TAO_GIOP::recv_request body, EOF on transport handle %d\n",
+                        "(%t) End of connection, transport handle %d\n",
                         transport->handle ()));
-          break;
+          return TAO_GIOP::EndOfFile;
           /* NOTREACHED */
+
         case -1:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_ERROR,
-                        "(%P|%t) TAO_GIOP::recv_request () body %p\n",
+                        "(%P|%t) TAO_GIOP::recv_request - body %p\n",
                         "read_buffer"));
           break;
           /* NOTREACHED */
+
         default:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_ERROR,
-                        "(%P|%t) short read, only %d of %d bytes\n",
+                        "TAO: (%P|%t) GIOP::recv_request body read failed, "
+                        "only %d of %d bytes\n",
                         len,
                         message_size));
           break;
           /* NOTREACHED */
         }
 
-      // clean up, and ...
-      if (TAO_orbdebug)
-        ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
       return TAO_GIOP::CommunicationError;
     }
 
   TAO_GIOP::dump_msg ("recv",
-                      ACE_reinterpret_cast (u_char *,
-                                            header),
+                      ACE_reinterpret_cast (u_char *, header),
                       message_size + header_len);
+
   return retval;
 }
 

@@ -1,3 +1,50 @@
+Tue Mar 23 00:22:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/Invocation.cpp:
+	* tao/Stub.h:
+	* tao/Stub.cpp:
+	  Major changes to the start() and invoke() methods, they now
+	  control most of the loop for connection establishment and
+	  forwarding. The clients only need to restart the request if the
+	  invoke method returns TAO_INVOKE_RESTART.
+	  Also factored out the common code for several versions of the
+	  invoke() method.
+	  Fixed severe error in protocol implementation, a successful
+	  write followed by a read error must result in a COMM_FAILURE
+	  exception.
+ 	  Carefully examined what exceptions and what status code to raise 
+	  from start() and invoke().
+	  Re-organized the implementation of do_static_call and
+	  do_dynamic_call to use the new features of the invocation
+	  classes.
+	  Cleaned up the LocationRequest implementation.
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	  No exceptions are raised by the connector, simply an error code
+	  is returned.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
+	  Changed the IDL compiler to exploit the new features in the
+	  Invocation classes.
+
+	* tao/IIOP_Transport.cpp:
+	* tao/GIOP.cpp:
+	  Cleaned up error propagation.
+
+	* tao/Environment.cpp:
+	* tao/Connect.cpp:
+	  Minor cosmetic fixes.
+	  Improved error messages format.
+
+	* tao/Object.cpp: 
+	  Reimplemented some methods using the new form of compiled
+	  marshaling.
+
 Mon Mar 22 17:32:19 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tao/IIOP_ORB.cpp: Removed an extra ACE_DEBUG.
