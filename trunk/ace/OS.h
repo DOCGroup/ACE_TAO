@@ -2926,13 +2926,13 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 extern int t_errno;
 #endif /* ACE_LACKS_T_ERRNO */
 
-#if defined (DIGITAL_UNIX)
-// Digital Unix 4.0 needs this declaration.  With it, ::sigwait ()
-// works with cxx -pthread.
+#if defined (DIGITAL_UNIX) && defined (__DECCXX_VER)
+// cxx on Digital Unix 4.0 needs this declaration.  With it,
+// ::sigwait () works with cxx -pthread.  g++ does _not_ need it.
 extern "C" int __P_C(sigwait) __((const sigset_t *set, int *sig));
 #elif !defined (ACE_HAS_SIGWAIT)
 extern "C" int sigwait (sigset_t *set);
-#endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
+#endif /* ! (DIGITAL_UNIX && __DECCXX_VER) && ! ACE_HAS_SIGWAIT */
 
 #if defined (ACE_HAS_SELECT_H)
 #include /**/ <sys/select.h>
