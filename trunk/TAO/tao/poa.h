@@ -463,6 +463,9 @@ public:
   virtual int locate_servant (const TAO_ObjectKey &key,
                               CORBA::Environment &env);
 
+  virtual PortableServer::Servant find_servant (const TAO_ObjectKey &key,
+                                                CORBA::Environment &env);
+
   static char name_separator (void);
 
   static char id_separator (void);
@@ -586,8 +589,17 @@ protected:
                      char c, 
                      int pos = TAO_POA::String::npos) const;
 
-  virtual int locate_servant_i (const TAO_ObjectKey &key,
-                                CORBA::Environment &env);
+  enum LOCATION_RESULT 
+  {
+    FOUND,
+    DEFAULT_SERVANT,
+    SERVANT_MANAGER,
+    NOT_FOUND
+  };
+
+  virtual LOCATION_RESULT locate_servant_i (const TAO_ObjectKey &key,
+                                            PortableServer::Servant &servant,
+                                            CORBA::Environment &env);
 
   virtual PortableServer::Servant locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                                             const char *operation,

@@ -1,3 +1,12 @@
+Mon Mar 16 18:26:51 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Default_Servant/File_i.cpp (open): Fixed string being
+ 	  passed to create_reference_with_id(). The test now works.
+
+	* tao/poa.cpp (find_servant): Added new method to the POA. It
+ 	  finds and returns the servant related to the key passed by the
+ 	  user.
+
 Mon Mar 16 15:27:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface.cpp: 

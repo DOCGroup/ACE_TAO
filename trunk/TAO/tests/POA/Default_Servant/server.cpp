@@ -140,7 +140,7 @@ main (int argc, char **argv)
     }
   
   CORBA::Object_var file_system =
-    first_poa->id_to_reference (file_system_oid.in(), env);
+    first_poa->id_to_reference (file_system_oid.in (), env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::id_to_reference");
