@@ -289,6 +289,12 @@
 #define ACE_UNIQUE_NAME_LEN 100
 #endif /* ACE_UNIQUE_NAME_LEN */
 
+#if !defined (ACE_MAX_DGRAM_SIZE)
+// value of IP_MAXPACKET as defined in <netinet/ip.h>
+// which may not exist in some platforms.
+#define ACE_MAX_DGRAM_SIZE 65535
+#endif /* ACE_MAX_DGRAM_SIZE */
+
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
@@ -574,11 +580,6 @@ typedef struct
 #endif /* ACE_HAS_UNICODE */
 
 #define ACE_MAX_DEFAULT_PORT 65535
-
-#if !defined (ACE_MAX_DGRAM_SIZE)
-// This is just a guess...
-#define ACE_MAX_DGRAM_SIZE 8196
-#endif /* ACE_MAX_DGRAM_SIZE */
 
 #if ! defined(MAXPATHLEN)
 #define MAXPATHLEN  1024
