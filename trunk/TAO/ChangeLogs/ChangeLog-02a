@@ -1,3 +1,9 @@
+Fri Apr 05 08:16:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_BiDir/client.dsp (RSC): 
+	* tests/MT_BiDir/server.dsp: Fixed minor problems with include
+	  path.  This should hopefully fix compile errors on Win32. 
+
 Fri Apr  5 09:32:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tests/Makefile.bor:
