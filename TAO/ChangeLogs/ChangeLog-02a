@@ -100,6 +100,8 @@ Mon Mar 27 23:30:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/corbafwd.h: Changed the macro checking statements of
 	  aforementioned macros.
 
+          [Bug 504]
+
 Mon Mar 27 20:37:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/POAC.cpp:
