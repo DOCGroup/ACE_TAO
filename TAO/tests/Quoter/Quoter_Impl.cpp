@@ -60,7 +60,11 @@ Quoter_Factory_Impl::create_quoter (const char *name,
 
 // Constructor
 
-Quoter_Impl::Quoter_Impl (const char *name)
+Quoter_Impl::Quoter_Impl (const char *name, 
+			  const unsigned char use_LifeCycle_Service, 
+			  PortableServer::POA_ptr poa)
+  : use_LifeCycle_Service_ (use_LifeCycle_Service),
+    poa_ (poa)
 {
   ACE_UNUSED_ARG (name);
 }
@@ -99,7 +103,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // The name of the Generic Factory
       CosLifeCycle::Key factoryKey (2);  // max = 2
       
-      if (this->useLifeCycleService_ == 1)
+      if (this->use_LifeCycle_Service_ == 1)
 	{
 	  // use the LifeCycle Service
 	  factoryKey.length(1);
@@ -120,11 +124,14 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // Only a NoFactory exception might have occured, so if it
       // occured, then go immediately back.
       if (_env_there.exception() != 0)
-	// _env_there contains already the exception.            
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Quoter::copy: Exception occured while trying to find a factory.\n"),
-			  CosLifeCycle::LifeCycleObject::_nil());
-                          
+	{
+	  // _env_there contains already the exception.            
+	  ACE_ERROR ((LM_ERROR,
+		      "Quoter::copy: Exception occured while trying to find a factory.\n"));
+	  
+	  return CosLifeCycle::LifeCycleObject::_nil();
+	}
+      
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
       
@@ -140,9 +147,11 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
           TAO_CHECK_ENV;
 	  
           if (CORBA::is_nil (quoter_Factory_var.in ()))
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "Quoter::copy: Narrow failed. Factory is not valid.\n"),
-			      CosLifeCycle::LifeCycleObject::_nil());
+	    {
+	      ACE_ERROR ((LM_ERROR,
+			  "Quoter::copy: Narrow failed. Factory is not valid.\n"));
+	      return CosLifeCycle::LifeCycleObject::_nil();
+	    }
 	  
           // Try to get a Quoter created by this factory.
           // and duplicate the pointer to it
@@ -159,10 +168,10 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
               if (i == factories_ptr->length ())
                 {
                   _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
-		  ACE_ERROR_RETURN ((LM_ERROR,
-				     "Quoter::copy: Last factory did not work. \n"
-				     "No more factories are available. I give up.\n"),
-				    CosLifeCycle::LifeCycleObject::_nil());
+		  ACE_ERROR ((LM_ERROR,
+			      "Quoter::copy: Last factory did not work. \n"
+			      "No more factories are available. I give up.\n"));
+		  return CosLifeCycle::LifeCycleObject::_nil();		  
                 }
               else
                 {
@@ -183,7 +192,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
     {
       TAO_TRY_ENV.print_exception ("SYS_EX");
       // Report a NoFactory exception back to the caller
-      _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
+      _env_there.exception (new CosLifeCycle::NoFactory ());
       return CosLifeCycle::LifeCycleObject::_nil();
     }
   TAO_ENDTRY;
@@ -201,30 +210,40 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
   
   TAO_TRY
     {
-      // Create a new Quoter over there
+      // We need to have a Factory Finder
       if (CORBA::is_nil (there))
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter::move: No Factory Finder, don't know how to go on.\n"));
+		      "Quoter_Impl::move: No Factory Finder, don't know how to go on.\n"));
 	  _env_there.exception (new CosLifeCycle::NoFactory ());
 	  return;	  
 	}
 
+      // We need to have access to the POA
+      if (CORBA::is_nil (poa_))
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "Quoter_Impl::move: No access to the POA. Cannot move.\n"));
+	  _env_there.exception (new CosLifeCycle::NotMovable ());
+	  return;	  
+	}
+
+      // Create a new Quoter over there
       CosLifeCycle::LifeCycleObject_var lifeCycleObject_var =       
 	this->copy (there, the_criteria, _env_there);
 
       if (_env_there.exception () != 0)
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter::move: Exception while creating new Quoter.\n"));
+		      "Quoter_Impl::move: Exception while creating new Quoter.\n"));
 	  // The exception is already contained in the right environment
 	  return;
 	}
 
-      if (CORBA::is_nil (quoter_Factory_var.in ()))
+      if (CORBA::is_nil (lifeCycleObject_var.in ()))
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter::move: Created Quoter is not valid.\n"));
+		      "Quoter_Impl::move: Created Quoter is not valid.\n"));
 	  _env_there.exception (new CosLifeCycle::NoFactory ());
 	  return;
 	}
@@ -232,7 +251,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
       // Set the POA, so that the requests will be forwarded to the new location
       
       // new location
-      CORBA::Object_var forward_to_var = (CORBA::Object_var) quoter_var;
+      CORBA::Object_var forward_to_var = (CORBA::Object_ptr) lifeCycleObject_var.in();
       
       if (!CORBA::is_nil (forward_to_var.in ()))
 	{
