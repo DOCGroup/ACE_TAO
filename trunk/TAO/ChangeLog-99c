@@ -1,7 +1,9 @@
 Wed Apr 21 09:25:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/NestedUpcall/MT_Client_Test/client.cpp (main),
-          examples/Quoter/client.cpp (main):
+          examples/Quoter/client.cpp (main),
+          performance-tests/Cubit/COOL/MT_Cubit/client.cpp
+            (do_priority_inversion_test):
           replaced ACE_SCHED_FIFO with THR_SCHED_FIFO in activate calls.
           Thanks to Carlos for finding this subtle error.
 
