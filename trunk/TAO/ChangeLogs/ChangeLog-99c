@@ -8160,14 +8160,14 @@ Thu Sep 03 05:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * TAO_IDL/be/be_visitor_factory.cpp,
           TAO_IDL/be/be_visitor_operation.cpp,
           TAO_IDL/be_include/be_visitor_operation.h,
-          TAO_IDL/be_include/be_visitor_operation\ami_handler_operation_ss.h
-          TAO_IDL/be_include/be_visitor_operation\ami_handler_operation_ss.cpp:
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_ss.h
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_ss.cpp:
           Cleaned up the naming conventions to make AMI code
           generation more readable. The ami_handler_operation_ss files
           were introduced to support this.
 
-        * TAO_IDL/be_include/be_visitor_operation\ami_handler_servant_operation_ss.h
-          TAO_IDL/be_include/be_visitor_operation\ami_handler_servant_operation_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_servant_operation_ss.h
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_servant_operation_ss.cpp:
           These files got replaced by ones with different names. See comment above.
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp
@@ -10084,7 +10084,7 @@ Thu Aug 19 20:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu Aug 19 18:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler_T.cpp: modified uses of
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: modified uses of
           ACE_AUTO_PTR_RESET macro to pass type with which auto_ptr is
           instantiated.
 
@@ -10098,7 +10098,7 @@ Thu Aug 19 18:34:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Aug 19 17:25:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler_T.cpp: changed default
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: changed default
           value to which RT_Info period is initialized to 1 instead of 0,
           to avoid divide-by-zero errors when creates are used to lay out
           all operations and utilization is assessed by an adaptive
