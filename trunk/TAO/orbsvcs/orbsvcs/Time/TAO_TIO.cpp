@@ -48,6 +48,8 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
       TimeBase::TimeT up2 =
 	uto->time (TAO_TRY_ENV) + uto->inaccuracy (TAO_TRY_ENV);
 
+      TAO_CHECK_ENV;
+
       if (lb1 == lb2 && up1 == up2)
 	{
 	  ACE_NEW_RETURN (tio,
@@ -153,6 +155,8 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       TimeBase::TimeT up2 =
 	tio->time_interval (TAO_TRY_ENV).upper_bound;
 
+      TAO_CHECK_ENV;
+
       if (lb1 == lb2 && up1 == up2)
 	{
 	  ACE_NEW_RETURN (tio_i,
@@ -250,6 +254,7 @@ TAO_TIO::time (CORBA::Environment &_env)
 				     0),
 			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			    CosTime::UTO::_nil ());
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
