@@ -10,15 +10,15 @@ It also has a method to shutdown the server.
 
 run_test.pl : This is a perl script to run the server and client as :
 ------------
-	      server
-	      client  -x -b 100 -y Vishal -z Kachroo
+	      server -o ior_file
+	      client -o ior_file
 
 	      There are other command line options available for the server and client which are explained as below.
 
 server:
 -------
 
-server [-d] [-o IOR_file_name]
+server [-d] [-o IOR_file_name] [-n]
 
 Options:
 -------
@@ -86,3 +86,8 @@ The client executes the following tests :
    more than the current balance. The server throws an exception which is
    passed to the client and the client displays the reason for the
    exception.
+
+
+
+
+
