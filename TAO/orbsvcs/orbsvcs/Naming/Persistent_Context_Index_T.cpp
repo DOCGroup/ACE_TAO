@@ -128,6 +128,9 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::open (LPCTSTR file_name,
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::init (void)
 {
+  // Return value of this function (necessary to keep compilers quiet).
+  int status = 0;
+
   if (index_->current_size () == 0)
     // CASE 1:there are no Naming Contexts registered.  We need to create
     // one.
@@ -181,7 +184,9 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::init (void)
           this->bind ("NameService",
                       c_impl->counter_,
                       c_impl->context_.map ());
-          return 0;
+
+          // Everything went successfully.
+          status = 0;
             }
       ACE_CATCHANY
         {
@@ -190,15 +195,13 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::init (void)
         }
       ACE_ENDTRY;
       ACE_CHECK_RETURN (-1);
-
-      // Below will never be reached, but the compiler is not smart to
-      // figure it out.  This will keep the warnings away.
-      ACE_NOTREACHED (return -1;)
     }
 
   else
     // CASE 2:Recreate all Naming Contexts.
-    return recreate_all ();
+    status = recreate_all ();
+
+  return status;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
