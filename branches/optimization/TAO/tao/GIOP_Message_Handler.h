@@ -69,8 +69,14 @@ public:
   /// Return the underlying message state
   TAO_GIOP_Message_State &message_state (void);
 
-  /// Return the pointer to the underlying Message Block
-  ACE_Message_Block *message_block (void);
+  /// Return the pointer to the data block within the message block
+  ACE_Data_Block *data_block (void) const;
+
+  /// Return the pointer to the datablock by duplicating it.
+  ACE_Data_Block *data_block_dup (void);
+
+  /// Return the rd_ptr of the <current_buffer_>
+  char *rd_ptr (void) const;
 
 private:
 

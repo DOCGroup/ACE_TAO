@@ -7,12 +7,18 @@ TAO_GIOP_Message_Handler::message_state (void)
   return this->message_state_;
 }
 
-ACE_INLINE ACE_Message_Block *
-TAO_GIOP_Message_Handler::message_block (void)
+ACE_INLINE ACE_Data_Block *
+TAO_GIOP_Message_Handler::data_block (void) const
 {
-  // The read pointer should be after the  GIOP header
-  return &this->current_buffer_;
+  return this->current_buffer_.data_block ();
 }
+
+ACE_INLINE ACE_Data_Block *
+TAO_GIOP_Message_Handler::data_block_dup (void)
+{
+  return this->current_buffer_.data_block ()->duplicate ();
+}
+
 
 ACE_INLINE void
 TAO_GIOP_Message_Handler::reset (int /*reset_flag*/)
@@ -22,4 +28,10 @@ TAO_GIOP_Message_Handler::reset (int /*reset_flag*/)
 
   // Reset the current buffer
   this->current_buffer_.reset ();
+}
+
+ACE_INLINE char *
+TAO_GIOP_Message_Handler::rd_ptr (void) const
+{
+  return this->current_buffer_.rd_ptr ();
 }

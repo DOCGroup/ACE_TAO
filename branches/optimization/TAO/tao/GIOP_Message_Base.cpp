@@ -80,9 +80,7 @@ void
 TAO_GIOP_Message_Base::reset (int reset_flag)
 {
   // Reset the message state
-  this->message_handler_.message_state ().reset (reset_flag);
-  this->message_handler_.message_block ()->reset ();
-
+  this->message_handler_.reset (reset_flag);
 }
 
 int
@@ -204,7 +202,7 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
     {
       size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
-      char *buf = this->message_handler_.message_block ()->rd_ptr ();
+      char *buf = this->message_handler_.rd_ptr ();
       buf -= len;
       size_t msg_len =
         state.message_size + len;
@@ -315,21 +313,21 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@@Is it necessary  here?
   this->output_->reset ();
 
-  // Get the Message Block from the handler
-  ACE_Message_Block *msg_block =
-    this->message_handler_.message_block ();
+  /************************************************************/
+  // @@ This comment was there when we were using multiple reads. Let
+  // it be here  till a point it doesn't make sense _ bala
 
   // Take out all the information from the <message_state> and reset
   // it so that nested upcall on the same transport can be handled.
   //
-
   // Notice that the message_state is only modified in one thread at a
   // time because the reactor does not call handle_input() for the
   // same Event_Handler in two threads at the same time.
+  /************************************************************/
 
   // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (msg_block->data_block ()->duplicate (),
-                          ACE_CDR_BYTE_ORDER,
+  TAO_InputCDR input_cdr (this->message_handler_.data_block_dup (),
+                          this->message_handler_.message_state ().byte_order,
                           orb_core);
 
 
@@ -343,11 +341,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@ Needed for DOORS
   //  orb_core->services_log_msg_rcv (this->message_state_);
 
-  // Reset the message state. Now, we are ready for the next nested
-  // upcall if any.
-  // ###########Wrong????
-  msg_block->reset ();
-  this->message_handler_.message_state ().reset (0);
+  // Reset the message handler to receive upcalls if any
+  this->message_handler_.reset (0);
 
 
   int retval = 0;
@@ -377,13 +372,9 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  // Get the Message Block from the handler
-  ACE_Message_Block *msg_block =
-    this->message_handler_.message_block ();
-
   // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (msg_block->data_block ()->duplicate (),
-                          ACE_CDR_BYTE_ORDER);
+  TAO_InputCDR input_cdr (this->message_handler_.data_block_dup (),
+                          this->message_handler_.message_state ().byte_order);
 
   // When the data block is used for creating the CDR stream, we loose
   // track of the read pointer of the message block in the message
@@ -392,9 +383,7 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
-  // ###########Wrong????
-  msg_block->reset ();
-  this->message_handler_.message_state ().reset (0);
+  this->message_handler_.reset (0);
 
   // We know we have some reply message. Check whether it is a
   // GIOP_REPLY or GIOP_LOCATE_REPLY to take action.
