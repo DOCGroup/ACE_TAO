@@ -28,13 +28,20 @@
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 
+#if defined(_MSC_VER)
+
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
+# pragma warning(disable:4250)
+
+// This disables a "may need dll-interface" warning from MSVC.  It's
+// being too paranoid in this case, too.
+# pragma warning(disable:4251)
+
 #endif /* _MSC_VER */
 
 /// Forward declarations.
@@ -154,7 +161,7 @@ public:
    *       increase in footprint will occur due to this template
    *       instance.
    */
-  typedef ACE_Array_Base<void *> Table;
+  typedef ACE_Array_Base<CORBA::Any> Table;
 
   /// Constructor
   TAO_PICurrent_Impl (void);
@@ -243,9 +250,10 @@ private:
  *
  * Since copies between the request scope current and thread scope
  * current must also occur if an exception is thrown, e.g. made
- * available to the receive_exception() and send_exception()
- * interception points, the "guard" idiom is used to make this action
- * exception-safe.
+ * available to the send_exception() interception points, the "guard"
+ * idiom is used to make this action exception-safe.
+ *
+ * @note This Guard class is only used on the server side.
  */
 class TAO_Export TAO_PICurrent_Guard
 {
@@ -280,6 +288,15 @@ private:
   /// The PICurrent implementation whose slot table will filled with
   /// the contents of another PICurrent's slot table.
   TAO_PICurrent_Impl *dest_;
+
+  /// Flag that indicates if the TSC is to be copied to the RSC.
+  /**
+   * If false, then the RSC must be deep copied upon leaving the
+   * request scope and entering the thread scope.  This is necessary
+   * since the RSC slot table is no longer available upon leaving the
+   * thread scope, meaning that a logical copy is not enough.
+   */
+  CORBA::Boolean tsc_to_rsc_;
 
 };
 

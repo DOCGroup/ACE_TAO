@@ -46,7 +46,8 @@ class ServerRequestInterceptor
 public:
 
   /// Constructor.
-  ServerRequestInterceptor (PortableInterceptor::SlotId id);
+  ServerRequestInterceptor (PortableInterceptor::SlotId id,
+                            PortableInterceptor::Current_ptr pi_current);
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -96,9 +97,12 @@ public:
 
 private:
 
-  // The PICurrent slot ID allocated to this application during ORB
-  // initialization.
+  /// The PICurrent slot ID allocated to this application during ORB
+  /// initialization.
   PortableInterceptor::SlotId slot_id_;
+
+  /// Reference to the PICurrent object.
+  PortableInterceptor::Current_var pi_current_;
 
 };
 
