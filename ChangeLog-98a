@@ -1,3 +1,8 @@
+Thu Apr 09 18:06:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/High_Res_Timer.i (hrtime_to_tv): Cast the parameter for usec
+ 	  to long.  It can be fixed because of Darrell's vigilance.
+
 Thu Apr 09 17:55:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-10.x.h, config-hpux11.h, config-aix-4.2.x.h:
