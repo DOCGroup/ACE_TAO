@@ -3589,12 +3589,12 @@ extern "C"
   typedef short ACE_pri_t;
 #   endif /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
 
-#   if defined (ACE_HAS_HI_RES_TIMER)
+#   if defined (ACE_HAS_HI_RES_TIMER) &&  !defined (ACE_LACKS_LONGLONG_T)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
   typedef hrtime_t ACE_hrtime_t;
-#   else
+#   else  /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
   typedef ACE_UINT64 ACE_hrtime_t;
-#   endif /* ACE_HAS_HI_RES_TIMER */
+#   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 
 # endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
