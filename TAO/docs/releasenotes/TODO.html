@@ -211,8 +211,7 @@
 	</P>
       </LI>
 
-      <LI><P>One GIOP 1.1 is implemented we could use fragments to
-	  minimize the buffer allocations:
+      <LI><P>Use GIOP 1.1 fragments to minimize the buffer allocations:
 	  the buffer could be fixed size and we simply send fragments
 	  for each buffer.
 	</P>
@@ -345,135 +344,14 @@
 	</P>
       </LI>
 
-      <LI><P>Support native C++ exceptions.
-	This entails the following subtasks:<P>
-	<OL>
-	  <LI>Create exceptions with the right dynamic type on the
-	      client side.
-	    For SII this should be simple:
-	      the stub give us a list of the
-	      possible user exceptions together with the factory methods
-	      to allocate an exception of each type;
-	      if the exception is not on that list we throw a
-	      <CODE>CORBA::UNKNOWN</CODE>.
-	      For DII we have to throw a
-	      <CODE>CORBA::UnknownUserException</CODE>;
-	      the user will receive the real exception inside an
-	      <CODE>Any</CODE> then and she will have to extract it
-	      either using the &gt&gt= operator or using the
-	      forthcoming <CODE>DynAny</CODE>.
-	    System exceptions are even easier, we always know how
-	      to create them.
-	    <BR>[STATUS] SII is working OK, we still need to complete
-	    the support for DII.
-	    <BR>[STATUS] The DII support was completed, but remains
-	    untested.
-	  <P></LI>
-
-	  <LI>Add the _raise() method to the exceptions.
-	    <BR>[DONE]
-	  <P></LI>
-
-	  <LI>On the server side: catch any CORBA exceptions thrown by
-	    the upcall, and then transform that into the
-	    proper <CODE>Reply</CODE> to the client side.
-	    In the case of another C++ exception should we do
-	    something?
-	    <BR>[DONE]
-	  <P></LI>
-
-	  <LI>On the client side, after creating the exception with
-	    the right dynamic type we must invoke
-	    <CODE>_raise()</CODE> on it.
-	    <BR>[DONE]
-	  <P></LI>
-
-	  <LI>Provide a TSS default value for the CORBA_Environment,
-	    all the methods in the ORB library should use this
-	    default.
-	    <BR>[DONE]
-	  <P></LI>
-
-	  <LI><B>IDL Compiler:</B> The IDL compiler should be able to
-            generate the 
-	    alternative mapping, but with the TSS default for the env
-	    argument.
-	    <BR>[DONE]
-	  <P></LI>
-
-	  <LI><B>IDL Compiler:</B> The IDL compiler should generate the
-            standard mapping, without the environment argument.
-	  <P></LI>
-	  
-	  <LI><P>In general we will need to complete and debug the
-	      <CODE>TAO_TRY</CODE> macros;
-	      they have limitations when dealing with the
-	      alternative mapping, but are very useful.
-	      <BR>[STATUS] This seems to be OK now, the code seems to
-	      compile and work correctly now.
-	      <BR>[STATUS] We need a new macro (TAO_TRY_THROW) to use
-	      inside the TAO_TRY blocks, because TAO_THROW will not go
-	      into the TAO_CATCH blocks, even if the exceptions match.
-	      <BR>[STATUS] Nanbor implemented a much better set of
-	      macros, that can be used with other ORBs, it is
-	      implemented in <CODE>$ACE_ROOT/ace/CORBA_macros.h</CODE>
-	    </P>
-	  </LI>
-
-	  <LI>We need to test the ORB for resource leaking in the
-	    presence of exceptions.
-	  <P></LI>
-
-	  <LI>We <EM>could</EM> write portable server side code with
-	    any of the mappings above if we use a macro for the env
-	    argument, but the results are ugly:
-	    <PRE>
-// IDL
-interface Foo {
-  void bar (in long x);
-};
-
-// C++ 
-class Foo {
-  void bar (CORBA::Long x TAO_ENV_ARG)
-               TAO_THROW_SPEC ((CORBA::SystemException));
-};
-	    </PRE>
-	    note the missing comma before the TAO_ENV_ARG parameter.
-            <P>
-            </P> A different alternative is to generate both
-            functions, and make the default implementation just invoke
-            the other:
-	    <PRE>
-// IDL
-interface Foo {
-  void bar (in long x);
-};
-
-// C++ 
-class POA_Foo {
-  void bar (CORBA::Long x, CORBA::Environment& env)
-               TAO_THROW_SPEC ((CORBA::SystemException))
-  {
-    this->bar (x);
-  }
-  void bar (CORBA::Long x)
-               TAO_THROW_SPEC ((CORBA::SystemException)) = 0;
-};
-	    </PRE>
-            The problem is: which alternative should be the pure
-            virtual function? Which one is overriden by the user?
-	  <P></LI>
-
-	</OL>
-	<BR>[STATUS] The main task ahead is to generate the conforming
-	mapping for the server side, i.e. remove the
-	<CODE>CORBA::Environment</CODE> argument and generate the
-	throw specs.
-	We need to wait for the compiled marshaling support to
-	implement this feature, otherwise the number of conflicts,
-	visitors and factories will grow without limit.
-      </P>
+      <LI><P><B>ORB: </B> Stress test the ORB in the presence of
+	  exceptions, verifying that no resources are leaked, all
+	  locks are released, etc.
+	</P>
+	<P>Note: small experiments indicate that everything is OK, and 
+	  several tests raise exceptions without problems, but we need 
+	  an intensive test of this features.
+	</P>
       </LI>
 
       <LI><P><B>EC:</B> Automate EC multicast group usage. This probably
@@ -510,18 +388,13 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI>Support GIOP 1.1 in the ORB (fragments)
-      <P></LI>
-
-      <LI>Support IIOP 1.1 in the ORB
-      <P></LI>
-
-      <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
-	preserve end-to-end QoS.
-      <P></LI>
-
-      <LI>Support IIOP 1.2 in the ORB
-      <P></LI>
+      <LI><P><B>ORB: </B> Use the IIOP 1.1 profile info to pass QoS
+	  info and use it to preserve end-to-end QoS.
+	  <BR>[STATUS] The tagged component for encoding QoS
+	  information was created, but the server does not create it,
+	  neither does the client use that information.
+	</P>
+      </LI>
 
       <LI>The size of pre-allocated buffer for the outgoing CDR
 	streams is defined at compilation time; but if we use an
@@ -533,23 +406,11 @@ class POA_Foo {
 	number of calls to ORB_Core_instance()
       <P></LI>
  
-      <LI><B>IDL Compiler:</B> The IDL compiler front-end should be
-        case insensitive,
-	more precisely it should flag identifiers that only differ by
-        case as a conflict and verify that all uses of an identifier
-        have the same case.
-      <P></LI>
-
       <LI><B>IDL Compiler:</B> The operation tables do not need to be
         statics, they could be created on creation of the first
         servant of that type. 
       <P></LI>
       
-      <LI><B>IDL Compiler:</B>Support for unions with default cases
-        (implicit or explicit)
-	in the IDL compiler is incomplete.
-      <P></LI>
-
       <LI><P>It seems that some memory is leaked from the ORB cached
 	  connector; but Purify gets confused by the fact that TAO
 	  dynamically loads libTAO, so it could be just a bogus report.
@@ -560,9 +421,12 @@ class POA_Foo {
         type in the IDL compiler 
       <P></LI>
 
-      <LI>CDR stream support for <CODE>wchar</CODE> is flaky or at
-        least untested.
-      <P></LI>
+      <LI><P>CDR stream support for <CODE>wchar</CODE> is flaky or at
+	  least untested.
+	  <BR>[STATUS] This is slowly beign implemented, and so are
+	  codeset translators inside the CDR streams.
+	</P>
+      </LI>
 
       <LI>Add &lt&lt and &gt&gt operators to the
 	<CODE>CORBA::Request</CODE> class, to simplify DII invocations
@@ -577,26 +441,6 @@ class POA_Foo {
 	</P>
       </LI>
       
-      <LI><P><B>ORB:</B>
-	  Support multiple calls to ORB_init().
-	  This requires several changes:
-	<UL>
-	  <LI>Object references must keep an explicit reference to the
-	    ORB that created them. In turn this requires that CDR
-	    streams carry the ORB pointer for object reference
-	    decoding.
-	  </LI>
-	  <LI>We must keep a table of ORB pointers based on the
-	    <CODE>-ORBid</CODE> option.
-	  </LI>
-	  <LI>The hint on the cached connector has to be revised if
-	    support for zero locks in the cached connector is going to 
-	    work.
-	  </LI>
-	</UL>
-        </P>
-      </LI>
-
       <LI><P><B>ORB:</B>
 	  Support multiple endpoints in the ORB.
 	  Some interesting concurrency models (such as
@@ -621,20 +465,8 @@ class POA_Foo {
 	startup/shutdown.
       <P></LI>
 
-      <LI><B>EC:</B> Debug interval computation in Linux (and NT?)
-      <P></LI>
-
       <LI><B>IDL Compiler:</B> The IDL compiler could generate a static
         method to access the interface repository ID of a class.
-      <P></LI>
-
-      <LI><B>IDL Compiler:</B> The IDL compiler should support
-	<CODE>#include "orb.idl"</CODE> properly.
-	IMHO it should not
-	add any <CODE>#include</CODE> to the generated code and the
-	<CODE>orb.idl</CODE> file should contain all the declarations,
-	except for the pseudo objects that are should be hardcoded
-	into the compiler.
       <P></LI>
 
       <LI>The current scheme for the orbsvcs leaves the user without
@@ -672,11 +504,6 @@ class POA_Foo {
 	  <P></LI>
 	</UL>
       <P></LI>
-
-      <LI><P><B>IDL Compiler:</B> The methods on the server side
-          <B>must</B> have a throw spec, check CORBA 2.2, 20.35
-        </P>
-      </LI>
 
       <LI><P>According to Vinoski and Henning the
 	  <CODE>CORBA::Policy</CODE> objects are also locality
@@ -734,14 +561,6 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P><B>POA:</B> The <CODE>SINGLE_THREAD_MODEL</CODE> for the
-	  POA requires that at most one concurrent call is invoked on
-	  each servant in that POA.
-	  <BR>[STATUS] Irfan is working on it as part of the POA
-	  concurrency fixes.
-	</P>
-      </LI>
-
       <LI><P><CODE>$TAO_ROOT/orbsvcs/tests</CODE> may require the same
 	  hierarchy changes that were done in
 	  <CODE>$TAO_ROOT/tests</CODE>.
@@ -751,17 +570,6 @@ class POA_Foo {
       <LI><P>Can <CODE>_duplicate()</CODE> raise an exception?
 	  If so the mapping that we generate is not correct for
 	  platforms without native C++ exceptions.
-	</P>
-      </LI>
-
-      <LI><P><B>ORB:</B>
-	  The implementation for the leader-follower
-	  model on the client side has bug:
-	  it will add the current thread to the follower list every
-	  time it returns from waiting in the condition variable,
-	  assuming that it was signaled and removed every time.
-	  <BR>[STATUS] This is not a big problem because only a
-	  warning is printed out.
 	</P>
       </LI>
 
@@ -853,12 +661,6 @@ class POA_Foo {
         </P>
       </LI>
 
-      <LI><P>We need support for the timeout policies specified in
-	  CORBAmessaging. The timeouts can control connection and
-	  total request time.
-        </P>
-      </LI>
-
       <LI><P><B>ORB:</B>
 	  Decouple the ORB from interpretive marshaling. This style of 
 	  marshaling will not be required for many applications, and
@@ -885,26 +687,20 @@ class POA_Foo {
 	    It may be possible to agressively reduce the footprint by
 	    removing both <CODE>skip</CODE> and <CODE>Any</CODE>.
 	  </LI>
+	  <LI>Exceptions are marshaled using the interpretive engine,
+	    there is no reason why the skeletons couldn't do that job.
+	  </LI>
 	</UL>
 	</P>
       </LI>
 
-      <LI><P>The <CODE>TAO_Object_Manager</CODE> class needs an
-	  assigment operator from <CODE>T_var</CODE>.
-	  Either change the class to have two arguments or 
-	  use the <CODE>T::_var_type</CODE> trait.
-	  We also have to change the class generated by the IDL
-	  compiler.
-	  Similar changes maybe required for the
-	  <CODE>TAO_String_Manager</CODE> and the
-	  <CODE>TAO_Object_Field</CODE> classes.
-	</P>
-      </LI>
-
-    <HR>
+    <HR></HR>
 
   <!-- Things below this point are "big" tasks" that -->
   <!-- could require major work -->
+
+    <LI><P><B>ORB: </B>Support IIOP 1.2 in the ORB</P>
+    </LI>
 
       <LI><P>Provide mechanisms to marshal arguments into a CDR
           stream, Jon Biggar contributed his proposal to the CORBA 2.3
@@ -1110,8 +906,249 @@ encapsulation format.
 <HR><P>
       <H3>Completed Tasks</H3>
 
-    <OL>
-      <LI><P><B>EC:</B>The new implementation of the EC does not send
+    <OL> 
+      <LI><P>The <CODE>TAO_Object_Manager</CODE> class needs an
+	  assigment operator from <CODE>T_var</CODE>.
+	  Either change the class to have two arguments or 
+	  use the <CODE>T::_var_type</CODE> trait.
+	  We also have to change the class generated by the IDL
+	  compiler.
+	  Similar changes maybe required for the
+	  <CODE>TAO_String_Manager</CODE> and the
+	  <CODE>TAO_Object_Field</CODE> classes.
+	  <BR>[DONE] Bala implemented this feature.
+	</P>
+      </LI>
+
+      <LI><P><B>ORB:</B>
+	  The implementation for the leader-follower
+	  model on the client side has bug:
+	  it will add the current thread to the follower list every
+	  time it returns from waiting in the condition variable,
+	  assuming that it was signaled and removed every time.
+	  <BR>[STATUS] This is not a big problem because only a
+	  warning is printed out.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P><B>POA:</B> The <CODE>SINGLE_THREAD_MODEL</CODE> for the
+	  POA requires that at most one concurrent call is invoked on
+	  each servant in that POA.
+	  <BR>[STATUS] Irfan is working on it as part of the POA
+	  concurrency fixes.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P><B>IDL Compiler:</B> The methods on the server side
+          <B>must</B> have a throw spec, check CORBA 2.2, 20.35
+	  <BR>[DONE] Andy implemented this as part of the support for
+	  native C++ exceptions.
+        </P>
+      </LI>
+
+      <LI><P><B>IDL Compiler:</B> The IDL compiler should support
+	  <CODE>#include "orb.idl"</CODE> properly.
+	  IMHO it should not
+	  add any <CODE>#include</CODE> to the generated code and the
+	  <CODE>orb.idl</CODE> file should contain all the declarations,
+	  except for the pseudo objects that are should be hardcoded
+	  into the compiler.
+	  <BR>[DONE] Jeff (and others?) implemented this feature, the
+	  contents of the &lt;orb.idl&gt; file may need some work, but that
+	  is easy to fix.
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B> Debug interval computation in Linux (and NT?)
+	  <BR>[DONE] There was a problem with the ACE_High_Res_Timer
+	  initialization.
+	</P>
+      </LI>
+
+      <LI><P><B>ORB:</B>
+	  Support multiple calls to ORB_init().
+	  This requires several changes:
+	<UL>
+	  <LI>Object references must keep an explicit reference to the
+	    ORB that created them. In turn this requires that CDR
+	    streams carry the ORB pointer for object reference
+	    decoding.
+	    <BR>[DONE]
+	  </LI>
+	  <LI>We must keep a table of ORB pointers based on the
+	    <CODE>-ORBid</CODE> option.
+	    <BR>[DONE]
+	  </LI>
+	  <LI>The hint on the cached connector has to be revised if
+	    support for zero locks in the cached connector is going to 
+	    work.
+	    <BR>[POSTPONED] The new cached connector implementation
+	    will change this anyway.
+	  </LI>
+	</UL>
+        </P>
+      </LI>
+
+      <LI><P><B>IDL Compiler:</B>Support for unions with default cases 
+	  (implicit or explicit)
+	  in the IDL compiler is incomplete.
+	  <BR>[DONE] Andy implemented this features.
+	</P>
+      </LI>
+
+      <LI><P><B>IDL Compiler:</B> The IDL compiler front-end should be
+	  case insensitive,
+	  more precisely it should flag identifiers that only differ by
+	  case as a conflict and verify that all uses of an identifier
+	  have the same case.
+	  <BR>[DONE] Jeff implemented this feature, there is an option 
+	  to disable it for backwards compatibility.
+	</P>
+      </LI>
+
+      <LI><P>Support GIOP 1.1 in the ORB (fragments)
+	  <BR>[DONE] The ORB should be able to receive GIOP 
+	</P>
+      <P></LI>
+
+      <LI>Support IIOP 1.1 in the ORB
+      <P></LI>
+
+      <LI><P>Support native C++ exceptions.
+	This entails the following subtasks:<P>
+	<OL>
+	  <LI>Create exceptions with the right dynamic type on the
+	      client side.
+	    For SII this should be simple:
+	      the stub give us a list of the
+	      possible user exceptions together with the factory methods
+	      to allocate an exception of each type;
+	      if the exception is not on that list we throw a
+	      <CODE>CORBA::UNKNOWN</CODE>.
+	      For DII we have to throw a
+	      <CODE>CORBA::UnknownUserException</CODE>;
+	      the user will receive the real exception inside an
+	      <CODE>Any</CODE> then and she will have to extract it
+	      either using the &gt&gt= operator or using the
+	      forthcoming <CODE>DynAny</CODE>.
+	    System exceptions are even easier, we always know how
+	      to create them.
+	    <BR>[STATUS] SII is working OK, we still need to complete
+	    the support for DII.
+	    <BR>[STATUS] The DII support was completed, but remains
+	    untested.
+	  <P></LI>
+
+	  <LI>Add the _raise() method to the exceptions.
+	    <BR>[DONE]
+	  <P></LI>
+
+	  <LI>On the server side: catch any CORBA exceptions thrown by
+	    the upcall, and then transform that into the
+	    proper <CODE>Reply</CODE> to the client side.
+	    In the case of another C++ exception should we do
+	    something?
+	    <BR>[DONE]
+	  <P></LI>
+
+	  <LI>On the client side, after creating the exception with
+	    the right dynamic type we must invoke
+	    <CODE>_raise()</CODE> on it.
+	    <BR>[DONE]
+	  <P></LI>
+
+	  <LI>Provide a TSS default value for the CORBA_Environment,
+	    all the methods in the ORB library should use this
+	    default.
+	    <BR>[DONE]
+	  <P></LI>
+
+	  <LI><B>IDL Compiler:</B> The IDL compiler should be able to
+            generate the 
+	    alternative mapping, but with the TSS default for the env
+	    argument.
+	    <BR>[DONE]
+	  <P></LI>
+
+	  <LI><B>IDL Compiler:</B> The IDL compiler should generate the
+            standard mapping, without the environment argument.
+	    <BR>[DONE]
+	  <P></LI>
+	  
+	  <LI><P>In general we will need to complete and debug the
+	      <CODE>TAO_TRY</CODE> macros;
+	      they have limitations when dealing with the
+	      alternative mapping, but are very useful.
+	      <BR>[STATUS] This seems to be OK now, the code seems to
+	      compile and work correctly now.
+	      <BR>[STATUS] We need a new macro (TAO_TRY_THROW) to use
+	      inside the TAO_TRY blocks, because TAO_THROW will not go
+	      into the TAO_CATCH blocks, even if the exceptions match.
+	      <BR>[STATUS] Nanbor implemented a much better set of
+	      macros, that can be used with other ORBs, it is
+	      implemented in <CODE>$ACE_ROOT/ace/CORBA_macros.h</CODE>
+	    </P>
+	  </LI>
+
+	  <LI>We need to test the ORB for resource leaking in the
+	    presence of exceptions.
+	  <P></LI>
+
+	  <LI>We <EM>could</EM> write portable server side code with
+	    any of the mappings above if we use a macro for the env
+	    argument, but the results are ugly:
+	    <PRE>
+// IDL
+interface Foo {
+  void bar (in long x);
+};
+
+// C++ 
+class Foo {
+  void bar (CORBA::Long x TAO_ENV_ARG)
+               TAO_THROW_SPEC ((CORBA::SystemException));
+};
+	    </PRE>
+	    note the missing comma before the TAO_ENV_ARG parameter.
+            <P>
+            </P> A different alternative is to generate both
+            functions, and make the default implementation just invoke
+            the other:
+	    <PRE>
+// IDL
+interface Foo {
+  void bar (in long x);
+};
+
+// C++ 
+class POA_Foo {
+  void bar (CORBA::Long x, CORBA::Environment& env)
+               TAO_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->bar (x);
+  }
+  void bar (CORBA::Long x)
+               TAO_THROW_SPEC ((CORBA::SystemException)) = 0;
+};
+	    </PRE>
+            The problem is: which alternative should be the pure
+            virtual function? Which one is overriden by the user?
+	  <P></LI>
+
+	</OL>
+	<BR>[STATUS] The main task ahead is to generate the conforming
+	mapping for the server side, i.e. remove the
+	<CODE>CORBA::Environment</CODE> argument and generate the
+	throw specs.
+	We need to wait for the compiled marshaling support to
+	implement this feature, otherwise the number of conflicts,
+	visitors and factories will grow without limit.
+      </P>
+      </LI>
+
+     <LI><P><B>EC:</B>The new implementation of the EC does not send
 	  <CODE>disconnect</CODE> messages on shutdown, this has to be 
 	  implemented.
 	  <BR>[DONE]
