@@ -1,7 +1,12 @@
+Tue Mar 13 13:02:05 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
+	
+        * utils/catior/catior.cpp: Removed tab charactres from the
+          previous change.
+	
 Tue Mar 13 12:38:19 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
         
         * tao/TAO_Internal.cpp: Removed tab characters from the previous
-	  change.  
+          change.  
 
 Tue Mar 13 12:18:52 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
 
