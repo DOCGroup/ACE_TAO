@@ -137,7 +137,23 @@ private:
   // separates the error value from the result, and also permits
   // timeouts.
 
-  // = Handle reference counting and object lifetime for ACE_Future_Rep<T>.
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+  // = Constructor and destructor private
+  ACE_Future_Rep (void);
+  ~ACE_Future_Rep (void);
+
+  int ready (void);
+  // Is result available?
+
+  // = Handle ref counting and object lifetime for ACE_Future_Rep<T>.
+
+  // These methods must go after the others to work around a bug with
+  // Borland's C++ Builder.
 
   static ACE_Future_Rep<T> *create (void);
   // Create a ACE_Future_Rep<T> and initialize the reference count.
@@ -161,19 +177,6 @@ private:
   // are no more references to rep. Then assigns new_rep to rep.
   //
   // Precondition(rep != 0 && new_rep != 0)
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-  // = Constructor and destructor private
-  ACE_Future_Rep (void);
-  ~ACE_Future_Rep (void);
-
-  int ready (void);
-  // Is result available?
 
   T *value_;
   // Pointer to the result.
