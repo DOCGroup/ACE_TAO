@@ -1,3 +1,8 @@
+Sun Jul 19 22:21:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * apps/gperf/src/new.cpp (new): wrapped assignment with
+          parens where used as a conditional.
+
 Sun Jul 19 00:48:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE.cpp (ldfind): Re-enabled searching for *d.dll before
