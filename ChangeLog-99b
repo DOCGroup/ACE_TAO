@@ -5,6 +5,11 @@ Wed Mar 03 11:31:00 1999  David L. Levine  <levine@cs.wustl.edu>
           And, reverted to the previous version of the file.  The
           last version was apparently committed by mistake.
 
+        * include/makeinclude/wrapper_macros.GNU (ACE_HAS_GNUG_PRE_2_8):
+          added support for eg++.  Assume that it's egcs, and therefore
+          ACE_HAS_GNUG_PRE_2_8 is set to 0.  Thanks to Russell L. Carter
+          <rcarter@consys.com> for supplying a patch.
+
 Wed Mar  3 09:35:20 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * ace/Memory_Pool.cpp (handle_signal): Added a check to see if the
