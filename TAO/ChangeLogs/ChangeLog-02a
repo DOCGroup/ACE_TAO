@@ -1,3 +1,8 @@
+Sat Apr 15 20:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/TAO.dsp: Rectified the lost Smart_PRoxies.{h,cpp,i} entries
+	  in the .dsp by adding them once again.
+	
 Sat Apr 15 14:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
