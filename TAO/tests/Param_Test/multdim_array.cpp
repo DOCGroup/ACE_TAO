@@ -13,9 +13,10 @@
 //      Bala
 //
 // ============================================================================
-
+# if 0
 #include "helper.h"
 #include "multdim_array.h"
+
 
 ACE_RCSID(Param_Test, fixed_array, "$Id$")
 
@@ -206,3 +207,5 @@ Test_Multdim_Array::print (const Param_Test::Multdim_Array_slice *a)
         }
     }
 }
+
+#endif 

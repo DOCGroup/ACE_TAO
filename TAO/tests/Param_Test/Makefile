@@ -93,7 +93,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 override TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h \
 			 -cs Cli.cpp -ci Cli.i \
-			 -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i
+			 -ss Ser.cpp -sT Ser_T.cpp  
 
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 CPPFLAGS += -I$(TAO_ROOT) $(TSS_ORB_FLAG)
