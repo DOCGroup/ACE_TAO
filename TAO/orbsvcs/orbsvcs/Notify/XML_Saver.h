@@ -23,7 +23,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 /**
@@ -81,7 +81,7 @@ private:
 
 };
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #include /**/ "ace/post.h"
 #endif /* XML_SAVER_H */

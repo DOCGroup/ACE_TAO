@@ -32,7 +32,7 @@
  * It is used by the Event Manager as a key to find subscription lists.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_NOTIFY::Topology_Savable
+class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
 {
 public:
   /// Constuctor
@@ -72,11 +72,11 @@ public:
   void dump (void) const;
 
   /// Initialize from an NVPList, return false on failure
-  bool init(const TAO_NOTIFY::NVPList& attrs);
+  bool init(const TAO_Notify::NVPList& attrs);
 
-  // TAO_NOTIFY::Topology_Object
+  // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
 
 protected:
   /// Init this object.

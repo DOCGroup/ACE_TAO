@@ -18,14 +18,14 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class PLUGTOP_Export Test_Saver : public TAO_NOTIFY::Topology_Saver
+class PLUGTOP_Export Test_Saver : public TAO_Notify::Topology_Saver
 {
 public:
   Test_Saver();
 
    virtual bool begin_object (CORBA::Long id,
       const ACE_CString &type,
-      const TAO_NOTIFY::NVPList& attrs,
+      const TAO_Notify::NVPList& attrs,
       bool changed
       ACE_ENV_ARG_DECL);
 

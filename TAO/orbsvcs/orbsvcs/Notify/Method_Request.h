@@ -38,7 +38,6 @@ public:
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL) = 0;
-
 };
 
 /***********************************************************************/

@@ -127,6 +127,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
     Notify {
       Notify/Admin.cpp
       Notify/AdminProperties.cpp
+      Notify/Bit_Vector.cpp
       Notify/Buffering_Strategy.cpp
       Notify/Builder.cpp
       Notify/Consumer.cpp
@@ -134,6 +135,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
       Notify/CosNotify_Initializer.cpp
       Notify/CosNotify_Service.cpp
       Notify/Default_Factory.cpp
+      Notify/Delivery_Request.cpp
       Notify/ETCL_Filter.cpp
       Notify/ETCL_FilterFactory.cpp
       Notify/Event.cpp
@@ -160,6 +162,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
       Notify/Notify_EventChannelFactory_i.cpp
       Notify/Object.cpp
       Notify/Peer.cpp
+      Notify/Persistent_File_Allocator.cpp
       Notify/POA_Helper.cpp
       Notify/Properties.cpp
       Notify/PropertySeq.cpp
@@ -168,12 +171,17 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
       Notify/ProxyConsumer.cpp
       Notify/ProxySupplier.cpp
       Notify/QoSProperties.cpp
+      Notify/Random_File.cpp
       Notify/Reactive_Task.cpp
       Notify/Refcountable.cpp
       Notify/Reconnection_Registry.cpp
+      Notify/Routing_Slip.cpp
+      Notify/Routing_Slip_Persistence_Manager.cpp
+      Notify/Routing_Slip_Queue.cpp
       Notify/Subscription_Change_Worker.cpp
       Notify/Supplier.cpp
       Notify/SupplierAdmin.cpp
+      Notify/Standard_Event_Persistence.cpp
       Notify/ThreadPool_Task.cpp
       Notify/Timer_Queue.cpp
       Notify/Timer_Reactor.cpp

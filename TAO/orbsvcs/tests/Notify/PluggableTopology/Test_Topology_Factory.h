@@ -15,14 +15,14 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class PLUGTOP_Export Test_Topology_Factory : public TAO_NOTIFY::Topology_Factory
+class PLUGTOP_Export Test_Topology_Factory : public TAO_Notify::Topology_Factory
 {
 public:
   Test_Topology_Factory ();
   /////////////////////////////////////////////////
   // override virtual methods from Topology_Factory
-  virtual TAO_NOTIFY::Topology_Saver* create_saver ();
-  virtual TAO_NOTIFY::Topology_Loader* create_loader ();
+  virtual TAO_Notify::Topology_Saver* create_saver ();
+  virtual TAO_Notify::Topology_Loader* create_loader ();
 };
 
 ACE_FACTORY_DECLARE (PLUGTOP, Test_Topology_Factory)

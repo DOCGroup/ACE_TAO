@@ -10,8 +10,7 @@ ACE_RCSID (Notify, TAO_Notify_ProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
 #include "../AdminProperties.h"
-#include "../Method_Request_Lookup.h"
-#include "../Worker_Task.h"
+#include "../Properties.h"
 #include "AnyEvent.h"
 #include "PushSupplier.h"
 
@@ -60,10 +59,7 @@ TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
     }
 
   TAO_Notify_AnyEvent_No_Copy event (any);
-
-  TAO_Notify_Method_Request_Lookup_No_Copy request (&event, this);
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+  this->push_i (&event ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -104,7 +100,7 @@ TAO_Notify_ProxyPushConsumer::get_proxy_type_name (void) const
 }
 
 void
-TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;

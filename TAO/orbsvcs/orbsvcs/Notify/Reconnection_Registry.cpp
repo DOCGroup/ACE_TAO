@@ -17,7 +17,7 @@
 #include "Properties.h"
 #include "Topology_Saver.h"
 #include <ace/Vector_T.h>
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
     : highest_id_(0)
@@ -242,7 +242,7 @@ namespace TAO_NOTIFY
   }
 
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -23,6 +23,7 @@
 #include "ace/Copy_Disabled.h"
 
 #include "tao/PortableServer/PortableServer.h"
+#include "ID_Factory.h"
 
 /**
  * @class TAO_Notify_POA_Helper
@@ -78,11 +79,15 @@ protected:
   /// Generate a unique id for each POA created.
   ACE_CString get_unique_id (void);
 
+  /// Convert id to ObjectID
+  PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
+
+protected:
   /// POA
   PortableServer::POA_var poa_;
 
-  /// Convert id to ObjectID
-  PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
+  /// ID Factory for objects.
+  TAO_Notify_ID_Factory id_factory_;
 };
 
 #if defined (__ACE_INLINE__)

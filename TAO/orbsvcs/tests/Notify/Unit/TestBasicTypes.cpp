@@ -13,7 +13,7 @@
 using namespace CORBA;
 namespace CN = CosNotification;
 
-using namespace TAO_NOTIFY;
+using namespace TAO_Notify;
 
 // Tests for simple basic types that don't require the creation
 // of a Notify Service, or complex setup.

@@ -21,16 +21,16 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #include "ace/Service_Object.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   class Event_Persistence_Factory;
 
   /// Interface to be implemented by specific strategies
-  class TAO_Notify_Export Event_Persistence_Strategy: public ACE_Service_Object
+  class TAO_Notify_Serv_Export Event_Persistence_Strategy: public ACE_Service_Object
   {
   public:
 
@@ -41,7 +41,7 @@ namespace TAO_NOTIFY
     virtual void reset () = 0;
   };
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #include /**/ "ace/post.h"
 #endif /* EVENT_PERSISTENCE_STRATEGY_H */

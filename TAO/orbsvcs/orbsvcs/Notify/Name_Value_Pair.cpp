@@ -34,7 +34,7 @@ namespace
   }
 }
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   NVP::NVP()
   {
@@ -214,14 +214,14 @@ namespace TAO_NOTIFY
     return list_[ndx];
   }
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<TAO_NOTIFY::NVP>;
-template class ACE_Array<TAO_NOTIFY::NVP>;
-template class ACE_Vector<TAO_NOTIFY::NVP>;
+template class ACE_Array_Base<TAO_Notify::NVP>;
+template class ACE_Array<TAO_Notify::NVP>;
+template class ACE_Vector<TAO_Notify::NVP>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<TAO_NOTIFY::NVP>
-#pragma instantiate ACE_Array<TAO_NOTIFY::NVP>
-#pragma instantiate ACE_Vector<TAO_NOTIFY::NVP>
+#pragma instantiate ACE_Array_Base<TAO_Notify::NVP>
+#pragma instantiate ACE_Array<TAO_Notify::NVP>
+#pragma instantiate ACE_Vector<TAO_Notify::NVP>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

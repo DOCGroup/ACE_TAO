@@ -11,7 +11,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   /**
    * \brief A queue of Routing_Slips waiting to be persisted.

@@ -5,11 +5,9 @@
 #include "ace/OS.h"
 #include <tao/debug.h>
 //#define DEBUG_LEVEL 9 // uncomment to force debug messages
-#ifndef DEBUG_LEVEL
-# define DEBUG_LEVEL TAO_debug_level
-#endif //DEBUG_LEVEL
+#define DEBUG_LEVEL TAO_debug_level // coment to force debug messages
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 Random_File::Random_File()
@@ -153,7 +151,7 @@ Random_File::sync()
   return result;
 }
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

@@ -305,37 +305,37 @@ TAO_Notify_Object::timer (void)
 
 namespace {
   template<class T>
-    void add_qos_attr(TAO_NOTIFY::NVPList& attrs, const T& prop) {
+    void add_qos_attr(TAO_Notify::NVPList& attrs, const T& prop) {
       if (prop.is_valid())
       {
-        attrs.push_back(TAO_NOTIFY::NVP (prop));
+        attrs.push_back(TAO_Notify::NVP (prop));
       }
     }
 // Note : These instantiations have to be here because each namespace {}
 // is unique.
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template void add_qos_attr<TAO_Notify_Property_Boolean>(
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_Boolean&);
+  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&);
 template void add_qos_attr<TAO_Notify_Property_T<int> >(
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_T<int>&);
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&);
 template void add_qos_attr<TAO_Notify_Property_T<unsigned long long> >(
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_T<unsigned long long>&);
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<unsigned long long>&);
 template void add_qos_attr<TAO_Notify_Property_T<short> >(
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_T<short>&);
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<short>&);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate void add_qos_attr<TAO_Notify_Property_Boolean>(\
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_Boolean&)
+  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&)
 #pragma instantiate void add_qos_attr<TAO_Notify_Property_T<int> >(\
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_T<int>&)
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&)
 #pragma instantiate void add_qos_attr<TAO_Notify_Property_T<unsigned long long> >(\
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_T<unsigned long long>&)
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<unsigned long long>&)
 #pragma instantiate void add_qos_attr<TAO_Notify_Property_T<short> >(\
-  TAO_NOTIFY::NVPList&, const TAO_Notify_Property_T<short>&)
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<short>&)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 } // namespace
 
 void
-TAO_Notify_Object::save_attrs (TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_Object::save_attrs (TAO_Notify::NVPList& attrs)
 {
   add_qos_attr(attrs, this->qos_properties_.event_reliability ());
   add_qos_attr(attrs, this->qos_properties_.connection_reliability ());
@@ -347,7 +347,7 @@ TAO_Notify_Object::save_attrs (TAO_NOTIFY::NVPList& attrs)
 }
 
 void
-TAO_Notify_Object::load_attrs(const TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
 {
   attrs.load (this->qos_properties_.event_reliability ());
   attrs.load (this->qos_properties_.connection_reliability ());

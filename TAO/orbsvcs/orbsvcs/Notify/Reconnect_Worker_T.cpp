@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   template<class TOPOOBJ>
   Reconnect_Worker<TOPOOBJ>::Reconnect_Worker()
@@ -34,6 +34,6 @@ namespace TAO_NOTIFY
     o->reconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #endif /* RECONNECT_WORKER_CPP */

@@ -10,11 +10,9 @@
 #include "ace/Dynamic_Service.h"
 
 //#define DEBUG_LEVEL 9
-#ifndef DEBUG_LEVEL
-# define DEBUG_LEVEL TAO_debug_level
-#endif //DEBUG_LEVEL
+#define DEBUG_LEVEL TAO_debug_level
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   Routing_Slip_Queue::Routing_Slip_Queue (size_t allowed)
     : allowed_ (allowed)
@@ -111,12 +109,12 @@ namespace TAO_NOTIFY
 } // namespace
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_NOTIFY::Routing_Slip_Ptr>;
-template class ACE_Unbounded_Queue<TAO_NOTIFY::Routing_Slip_Ptr>;
-template class ACE_Unbounded_Queue_Iterator<TAO_NOTIFY::Routing_Slip_Ptr>;
+template class ACE_Node<TAO_Notify::Routing_Slip_Ptr>;
+template class ACE_Unbounded_Queue<TAO_Notify::Routing_Slip_Ptr>;
+template class ACE_Unbounded_Queue_Iterator<TAO_Notify::Routing_Slip_Ptr>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_NOTIFY::Routing_Slip_Ptr>
-#pragma instantiate ACE_Unbounded_Queue<TAO_NOTIFY::Routing_Slip_Ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_NOTIFY::Routing_Slip_Ptr>
+#pragma instantiate ACE_Node<TAO_Notify::Routing_Slip_Ptr>
+#pragma instantiate ACE_Unbounded_Queue<TAO_Notify::Routing_Slip_Ptr>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Notify::Routing_Slip_Ptr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

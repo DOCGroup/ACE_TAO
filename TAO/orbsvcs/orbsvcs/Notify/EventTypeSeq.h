@@ -30,7 +30,7 @@
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
   : public ACE_Unbounded_Set <TAO_Notify_EventType>
-  , public TAO_NOTIFY::Topology_Object
+  , public TAO_Notify::Topology_Object
 
 {
  typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
@@ -70,11 +70,11 @@ public:
   /// Print the contents.
   void dump (void) const;
 
-  // TAO_NOTIFY::Topology_Object
+  // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual TAO_NOTIFY::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
+    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
   virtual void release (void);
 
 };

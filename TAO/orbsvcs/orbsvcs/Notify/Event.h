@@ -35,6 +35,42 @@
 
 class TAO_Notify_Consumer;
 class TAO_Notify_EventType;
+class TAO_Notify_Event;
+
+typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> TAO_Notify_Event_var_Base;
+
+/**
+ * @class TAO_Notify_Event_var
+ *
+ * @brief A Non-Copy version of the smart pointer that hides the constructors.
+ *
+ */
+class TAO_Notify_Event_var : public TAO_Notify_Event_var_Base
+{
+public:
+  /// Default Constructor
+  TAO_Notify_Event_var (void);
+
+protected:
+  /// Constructor
+  TAO_Notify_Event_var (const TAO_Notify_Event* event);
+};
+
+/**
+ * @class TAO_Notify_Event
+ *
+ * @brief A smart pointer that allows construction from a TAO_Notify_Event
+ *
+ */
+class TAO_Notify_Event_Copy_var : public TAO_Notify_Event_var
+{
+public:
+  /// Default Constructor
+  TAO_Notify_Event_Copy_var (void);
+
+  /// Constructor
+  TAO_Notify_Event_Copy_var (const TAO_Notify_Event* event);
+};
 
 /**
  * @class TAO_Notify_Event
@@ -88,7 +124,7 @@ public:
   virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const = 0;
 
   /// Return a pointer to a copy of this event on the heap
-  const TAO_Notify_Event * queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const;
+  void queueable_copy (TAO_Notify_Event_var & ptr ACE_ENV_ARG_DECL) const;
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR & cdr) const = 0;
@@ -123,41 +159,6 @@ protected:
   TAO_Notify_Property_Boolean reliable_;
 
   TAO_Notify_Event * event_on_heap_;
-};
-
-typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> TAO_Notify_Event_var_Base;
-
-/**
- * @class TAO_Notify_Event_var
- *
- * @brief A Non-Copy version of the smart pointer that hides the constructors.
- *
- */
-class TAO_Notify_Event_var : public TAO_Notify_Event_var_Base
-{
-public:
-  /// Default Constructor
-  TAO_Notify_Event_var (void);
-
-protected:
-  /// Constructor
-  TAO_Notify_Event_var (const TAO_Notify_Event* event);
-};
-
-/**
- * @class TAO_Notify_Event
- *
- * @brief A smart pointer that allows construction from a TAO_Notify_Event
- *
- */
-class TAO_Notify_Event_Copy_var : public TAO_Notify_Event_var
-{
-public:
-  /// Default Constructor
-  TAO_Notify_Event_Copy_var (void);
-
-  /// Constructor
-  TAO_Notify_Event_Copy_var (const TAO_Notify_Event* event);
 };
 
 #if defined (__ACE_INLINE__)

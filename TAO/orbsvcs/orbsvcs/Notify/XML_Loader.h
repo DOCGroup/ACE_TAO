@@ -31,7 +31,7 @@
 
 #include "ace/streams.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
  /// \brief Load Notification Service Topology from an XML file.
@@ -80,7 +80,7 @@ private:
   bool live_;
 };
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #include /**/ "ace/post.h"
 #endif /* XML_LOADER_H */

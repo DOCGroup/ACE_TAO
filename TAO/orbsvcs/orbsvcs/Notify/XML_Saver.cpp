@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   XML_Saver::XML_Saver(bool timestamp)
     : output_ (0)
@@ -257,4 +257,4 @@ namespace TAO_NOTIFY
     return buffer;
   }
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */

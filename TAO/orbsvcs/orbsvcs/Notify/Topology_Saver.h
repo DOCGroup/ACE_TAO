@@ -24,7 +24,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   /**
   * \brief An interface to be implemented by objects that save Topology.
@@ -104,7 +104,7 @@ namespace TAO_NOTIFY
      */
     virtual void close (ACE_ENV_SINGLE_ARG_DECL);
   };
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #include /**/ "ace/post.h"
 

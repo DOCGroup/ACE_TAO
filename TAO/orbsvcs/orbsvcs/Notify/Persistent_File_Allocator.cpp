@@ -6,11 +6,9 @@
 #include "ace/OS_NS_string.h"
 
 //#define DEBUG_LEVEL 9
-#ifndef DEBUG_LEVEL
-# define DEBUG_LEVEL TAO_debug_level
-#endif //DEBUG_LEVEL
+#define DEBUG_LEVEL TAO_debug_level
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
@@ -386,18 +384,18 @@ Persistent_File_Allocator::run()
   this->thread_active_ = false;
 }
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<size_t>;
 template class ACE_Unbounded_Stack<size_t>;
-template class ACE_Node<TAO_NOTIFY::Persistent_Storage_Block*>;
-template class ACE_Unbounded_Queue<TAO_NOTIFY::Persistent_Storage_Block*>;
-template class ACE_Unbounded_Queue_Iterator<TAO_NOTIFY::Persistent_Storage_Block*>;
+template class ACE_Node<TAO_Notify::Persistent_Storage_Block*>;
+template class ACE_Unbounded_Queue<TAO_Notify::Persistent_Storage_Block*>;
+template class ACE_Unbounded_Queue_Iterator<TAO_Notify::Persistent_Storage_Block*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<size_t>
 #pragma instantiate ACE_Unbounded_Stack<size_t>
-#pragma instantiate ACE_Node<TAO_NOTIFY::Persistent_Storage_Block*>
-#pragma instantiate ACE_Unbounded_Queue<TAO_NOTIFY::Persistent_Storage_Block*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_NOTIFY::Persistent_Storage_Block*>
+#pragma instantiate ACE_Node<TAO_Notify::Persistent_Storage_Block*>
+#pragma instantiate ACE_Unbounded_Queue<TAO_Notify::Persistent_Storage_Block*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Notify::Persistent_Storage_Block*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

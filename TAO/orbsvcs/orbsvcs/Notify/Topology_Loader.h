@@ -23,7 +23,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 /// A forward declaration.
@@ -66,7 +66,7 @@ public:
   virtual void close (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #include /**/ "ace/post.h"
 

@@ -53,7 +53,7 @@ public:
   /// Release
   virtual void release (void);
 
-  virtual void load_attrs (const TAO_NOTIFY::NVPList& attrs);
+  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
 protected:
 

@@ -79,6 +79,13 @@ public:
   TAO_Notify_SupplierAdmin* supplier_admin (void);
 
 protected:
+  /// Accept an event from the Supplier
+  void push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL);
+
+  /// Is this part of a reliable channel
+  bool supports_reliable_events () const;
+
+protected:
   ///= Data Members.
   /// The SA parent.
   TAO_Notify_SupplierAdmin* supplier_admin_;

@@ -11,8 +11,6 @@ ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushConsumer, "$Id$")
 #include "tao/debug.h"
 #include "SequencePushSupplier.h"
 #include "../AdminProperties.h"
-#include "../Method_Request_Lookup.h"
-#include "../Worker_Task.h"
 #include "../Structured/StructuredEvent.h"
 #include "../Properties.h"
 
@@ -86,10 +84,8 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
       const CosNotification::StructuredEvent& notification = event_batch[i];
 
       TAO_Notify_StructuredEvent_No_Copy event (notification);
-
-      TAO_Notify_Method_Request_Lookup_No_Copy request (&event, this);
-
-      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+      this->push_i (&event ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -111,7 +107,7 @@ TAO_Notify_SequenceProxyPushConsumer::get_proxy_type_name (void) const
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;

@@ -100,11 +100,11 @@ TAO_Notify_ConsumerAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-TAO_NOTIFY::Topology_Object*
+TAO_Notify::Topology_Object*
 TAO_Notify_ConsumerAdmin::load_child (const ACE_CString &type,
-  CORBA::Long id, const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL)
+  CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
 {
-  TAO_NOTIFY::Topology_Object* result = this;
+  TAO_Notify::Topology_Object* result = this;
   if (type == "proxy_push_supplier")
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
@@ -151,11 +151,11 @@ TAO_Notify_ConsumerAdmin::load_child (const ACE_CString &type,
   return result;
 }
 
-TAO_NOTIFY::Topology_Object*
+TAO_Notify::Topology_Object*
 TAO_Notify_ConsumerAdmin::load_proxy (
   CORBA::Long id,
   CosNotifyChannelAdmin::ClientType ctype,
-  const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL)
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
   TAO_Notify_ProxySupplier * proxy =
@@ -461,6 +461,24 @@ TAO_Notify_ConsumerAdmin::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
                    ))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosEventChannelAdmin::ProxyPullSupplier::_nil ());
+}
+
+TAO_Notify_ProxySupplier *
+TAO_Notify_ConsumerAdmin::find_proxy_supplier (
+    TAO_Notify::IdVec & id_path,
+    size_t position
+    ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_ProxySupplier * result = 0;
+  size_t path_size = id_path.size ();
+  if (position < path_size)
+  {
+    TAO_Notify_ProxySupplier_Find_Worker find_worker;
+    TAO_Notify_Proxy * proxy = find_worker.find (id_path[position], *this->proxy_container_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    result = dynamic_cast <TAO_Notify_ProxySupplier *> (proxy);
+  }
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

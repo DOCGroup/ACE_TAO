@@ -80,7 +80,7 @@ TAO_Notify_ProxyPushSupplier::get_proxy_type_name (void) const
 }
 
 void
-TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;

@@ -7,8 +7,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "Delivery_Request.h"
-#include "Delivery_Method_Lookup.h"
-#include "Delivery_Method_Dispatch.h"
 #include "Worker_Task.h"
 #include "ProxyConsumer.h"
 #include "ProxySupplier.h"
@@ -17,15 +15,15 @@
 #include "Routing_Slip_Queue.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
+#include "Method_Request_Lookup.h"
+#include "Method_Request_Dispatch.h"
 
 //#define DEBUG_LEVEL 9
-#ifndef DEBUG_LEVEL
-# define DEBUG_LEVEL TAO_debug_level
-#endif //DEBUG_LEVEL
+#define DEBUG_LEVEL TAO_debug_level
 
 #define QUEUE_ALLOWED 1
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 ///////////////////////
 // Routing_Slip Statics
@@ -52,14 +50,16 @@ size_t Routing_Slip::count_enter_deleting_ = 0;
 size_t Routing_Slip::count_enter_terminal_ = 0;
 
 Routing_Slip_Ptr
-Routing_Slip::create (
-  const TAO_Notify_Event_Ptr& event)
+Routing_Slip::create (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL)
 {
-  Routing_Slip_Ptr result(new Routing_Slip (event));
+  Routing_Slip * prs;
+  ACE_NEW_THROW_EX (prs, Routing_Slip (event), CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (Routing_Slip_Ptr());
+  Routing_Slip_Ptr result(prs);
   result->this_ptr_ = result; // let the pointers touch so they use the same ref count
 
   // note we don't care about ultra-precise stats, so no guard for these
-  if (DEBUG_LEVEL > 1 && ((result->sequence_ % 100) == 0))
+  if (DEBUG_LEVEL > 8 && ((result->sequence_ % 100) == 0))
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Routing_Slip_Statistics\n")
@@ -109,33 +109,44 @@ Routing_Slip::create (
   Routing_Slip_Ptr result;
   ACE_Message_Block * event_mb = 0;
   ACE_Message_Block * rs_mb = 0;
-  if (rspm->reload (event_mb, rs_mb))
-  {
-    TAO_InputCDR cdr_event (event_mb);
-    TAO_Notify_Event_Ptr event (TAO_Notify_Event::unmarshal (cdr_event));
-    if (event != 0)
+  ACE_TRY_NEW_ENV
     {
-      result = create (event);
-      TAO_InputCDR cdr_rs (rs_mb);
-      if ( result->unmarshal (ecf, cdr_rs))
+      if (rspm->reload (event_mb, rs_mb))
       {
-        result->set_rspm (rspm);
-      }
-      else
-      {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for routing slip.\n")
-          ));
-        result.reset ();
+        TAO_InputCDR cdr_event (event_mb);
+        TAO_Notify_Event_Copy_var event (TAO_Notify_Event::unmarshal (cdr_event));
+        if (event.get () != 0)
+        {
+          result = create (event ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          TAO_InputCDR cdr_rs (rs_mb);
+          if ( result->unmarshal (ecf, cdr_rs))
+          {
+            result->set_rspm (rspm);
+          }
+          else
+          {
+            ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for routing slip.\n")
+              ));
+            result.reset ();
+          }
+        }
+        else
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for event.\n")
+            ));
+        }
       }
     }
-    else
+  ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for event.\n")
+        ACE_TEXT ("(%P|%t) Routing_Slip::create: Exception reloading event.\n")
         ));
     }
-  }
+  ACE_ENDTRY;
   delete event_mb;
   delete rs_mb;
 
@@ -153,7 +164,7 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 }
 
 Routing_Slip::Routing_Slip(
-      const TAO_Notify_Event_Ptr& event)
+      const TAO_Notify_Event_var& event)
   : is_safe_ (false)
   , until_safe_ (internals_)
   , this_ptr_ (0)
@@ -184,7 +195,7 @@ Routing_Slip::create_persistence_manager()
   if (this->rspm_ == 0)
   {
     Event_Persistence_Strategy * strategy =
-      ACE_Dynamic_Service <TAO_NOTIFY::Event_Persistence_Strategy>::instance ("Event_Persistence");
+      ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence");
     if (strategy != 0)
     {
       Event_Persistence_Factory * factory = strategy->get_factory ();
@@ -197,7 +208,7 @@ Routing_Slip::create_persistence_manager()
   return this->rspm_ != 0;
 }
 
-const TAO_Notify_Event_Ptr &
+const TAO_Notify_Event_var &
 Routing_Slip::event () const
 {
   return this->event_;
@@ -214,11 +225,11 @@ Routing_Slip::wait_persist ()
 }
 
 void
-Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
+Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT(pc != 0);
 
-  TAO_Notify_Refcountable_Guard pcgrd(*pc);
+  TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> pcgrd(pc);
 
   Routing_Slip_Guard guard (this->internals_);
 
@@ -234,7 +245,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
   this->delivery_requests_.push_back (request);
-  Delivery_Method_Lookup method (request, pc);
+  TAO_Notify_Method_Request_Lookup_Queueable method (request, pc);
 
   if (this->state_ == rssCREATING)
   {
@@ -242,7 +253,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
     {
       enter_state_transient (guard);
     }
-    else if (ACE_Dynamic_Service <TAO_NOTIFY::Event_Persistence_Strategy>::instance ("Event_Persistence") == 0)
+    else if (ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence") == 0)
     {
       enter_state_transient (guard);
     }
@@ -260,16 +271,69 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
     }
   }
   guard.release ();
-  pc->worker_task()->exec (method);
+  pc->worker_task()->execute (method ACE_ENV_ARG_PARAMETER);
 }
+#if 0 // forward
+void
+Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
+{
+  // must be the first action
+  ACE_ASSERT (this->state_ == rssCREATING);
+
+  TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> psgrd(ps);
+  Routing_Slip_Guard guard (this->internals_);
+
+  enter_state_transient (guard);
+  size_t request_id = delivery_requests_.size ();
+
+  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Forward %s; completed %d of %d\n"),
+      this->sequence_,
+      ACE_static_cast (int, request_id),
+      filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
+      ACE_static_cast (int, this->complete_requests_),
+      ACE_static_cast (int, this->delivery_requests_.size ())
+      ));
+
+  Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
+  if (! ps->has_shutdown() )
+    {
+      this->delivery_requests_.push_back (request);
+//      Delivery_Method_Dispatch method (request, ps, filter);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      guard.release ();
+      if (DEBUG_LEVEL > 8)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
+                    "proxy supplier %d\n",
+                    this->sequence_,
+                    ACE_static_cast (int, request_id),
+                    ps->id()));
+      ps->worker_task()->execute (method);
+    }
+  else
+    {
+      if (DEBUG_LEVEL > 5)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
+                    "proxy supplier %d; already shut down\n",
+                    this->sequence_,
+                    ACE_static_cast (int, request_id),
+                    ps->id()));
+    }
+}
+#endif // forward
 
 void
-Routing_Slip::dispatch (TAO_Notify_ProxySupplier* ps, bool filter)
+Routing_Slip::dispatch (
+  TAO_Notify_ProxySupplier* ps,
+  bool filter
+  ACE_ENV_ARG_DECL)
 {
   // cannot be the first action
   ACE_ASSERT (this->state_ != rssCREATING);
 
-  TAO_Notify_Refcountable_Guard psgrd(*ps); //@@todo : Need to guard anything else?
+  TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> psgrd(ps);
   Routing_Slip_Guard guard (this->internals_);
 
   size_t request_id = delivery_requests_.size ();
@@ -287,7 +351,7 @@ Routing_Slip::dispatch (TAO_Notify_ProxySupplier* ps, bool filter)
   if (! ps->has_shutdown() )
     {
       this->delivery_requests_.push_back (request);
-      Delivery_Method_Dispatch method (request, ps, filter);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ACE_DEBUG ((LM_DEBUG,
@@ -296,7 +360,8 @@ Routing_Slip::dispatch (TAO_Notify_ProxySupplier* ps, bool filter)
                     this->sequence_,
                     ACE_static_cast (int, request_id),
                     ps->id()));
-      ps->worker_task()->exec (method);
+      ps->worker_task()->execute (method ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else
     {
@@ -778,14 +843,21 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
     {
       ACE_TRY_NEW_ENV
       {
-        if (code == Delivery_Method_Dispatch::persistence_code)
+        if (code == TAO_Notify_Method_Request_Dispatch::persistence_code)
         {
-          Delivery_Request_Ptr request(new Delivery_Request(this_ptr_, this->delivery_requests_.size ()));
-          Delivery_Method * method = Delivery_Method_Dispatch::create (
-            request,
-            ecf,
-            cdr
-            ACE_ENV_ARG_PARAMETER);
+          Delivery_Request * prequest;
+          ACE_NEW_THROW_EX (
+            prequest,
+            Delivery_Request(this_ptr_, this->delivery_requests_.size ()),
+            CORBA::NO_MEMORY ());
+          ACE_TRY_CHECK;
+          Delivery_Request_Ptr request(prequest);
+          TAO_Notify_Method_Request_Dispatch_Queueable * method =
+            TAO_Notify_Method_Request_Dispatch::unmarshal (
+              request,
+              ecf,
+              cdr
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (method != 0)
           {
@@ -793,14 +865,15 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
             this->delivery_methods_.push_back (method);
           }
         }
-        else if (code == Delivery_Method_Lookup::persistence_code)
+        else if (code == TAO_Notify_Method_Request_Lookup::persistence_code)
         {
           Delivery_Request_Ptr request(new Delivery_Request(this_ptr_, this->delivery_requests_.size ()));
-          Delivery_Method * method = Delivery_Method_Lookup::create (
-            request,
-            ecf,
-            cdr
-            ACE_ENV_ARG_PARAMETER);
+          TAO_Notify_Method_Request_Lookup_Queueable * method =
+              TAO_Notify_Method_Request_Lookup::unmarshal (
+                request,
+                ecf,
+                cdr
+                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK
           if (method != 0)
           {
@@ -830,7 +903,7 @@ Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   size_t count = this->delivery_methods_.size ();
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
-    this->delivery_methods_[nmethod] ->execute (TAO_Notify_Method_Request_Queueable::EXECUTE ACE_ENV_ARG_PARAMETER);
+    this->delivery_methods_[nmethod]->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
   this->delivery_methods_.clear ();
 }
@@ -854,27 +927,27 @@ Routing_Slip::should_retry () const
 } // namespace
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<TAO_NOTIFY::Routing_Slip>;
-template class ACE_Strong_Bound_Ptr<TAO_NOTIFY::Routing_Slip, TAO_SYNCH_MUTEX>;
-template class ACE_Auto_Basic_Ptr<TAO_NOTIFY::Delivery_Request>;
-template class ACE_Strong_Bound_Ptr<TAO_NOTIFY::Delivery_Request,TAO_SYNCH_MUTEX>;
-template class ACE_Vector <TAO_NOTIFY::Delivery_Request_Ptr>;
-template class ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_NOTIFY::Delivery_Request,TAO_SYNCH_MUTEX> >;
-template class ACE_Vector <TAO_NOTIFY::Delivery_Request *>;
-template class ACE_Array_Base<TAO_NOTIFY::Delivery_Request *>;
-template class ACE_Dynamic_Service <TAO_NOTIFY::Event_Persistence_Strategy>;
-template class ACE_Array_Base<TAO_NOTIFY::Delivery_Method*>;
-template class ACE_Vector<TAO_NOTIFY::Delivery_Method*>;
+template class ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>;
+template class ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip, TAO_SYNCH_MUTEX>;
+template class ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>;
+template class ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>;
+template class ACE_Vector <TAO_Notify::Delivery_Request_Ptr>;
+template class ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >;
+template class ACE_Vector <TAO_Notify::Delivery_Request *>;
+template class ACE_Array_Base<TAO_Notify::Delivery_Request *>;
+template class ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>;
+template class ACE_Array_Base<TAO_Notify_Method_Request_Dispatch_No_Copy*>;
+template class ACE_Vector<TAO_Notify_Method_Request_Dispatch_No_Copy*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_NOTIFY::Routing_Slip>
-#pragma instantiate ACE_Strong_Bound_Ptr<TAO_NOTIFY::Routing_Slip,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_NOTIFY::Delivery_Request>
-#pragma instantiate ACE_Strong_Bound_Ptr<TAO_NOTIFY::Delivery_Request,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Vector <TAO_NOTIFY::Delivery_Request_Ptr>
-#pragma instantiate ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_NOTIFY::Delivery_Request,TAO_SYNCH_MUTEX> >
-#pragma instantiate ACE_Vector <TAO_NOTIFY::Delivery_Request *>
-#pragma instantiate ACE_Array_Base<TAO_NOTIFY::Delivery_Request *>
-#pragma instantiate ACE_Dynamic_Service <TAO_NOTIFY::Event_Persistence_Strategy>
-#pragma instantiate ACE_Array_Base<TAO_NOTIFY::Delivery_Method*>
-#pragma instantiate ACE_Vector<TAO_NOTIFY::Delivery_Method*>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>
+#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>
+#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request_Ptr>
+#pragma instantiate ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >
+#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request *>
+#pragma instantiate ACE_Array_Base<TAO_Notify::Delivery_Request *>
+#pragma instantiate ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>
+#pragma instantiate ACE_Array_Base<TAO_Notify_Method_Request_Dispatch_No_Copy*>
+#pragma instantiate ACE_Vector<TAO_Notify_Method_Request_Dispatch_No_Copy*>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

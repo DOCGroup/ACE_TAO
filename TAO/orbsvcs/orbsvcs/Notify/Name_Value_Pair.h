@@ -25,7 +25,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   /**
    * \brief Name/Value Pair
@@ -92,7 +92,7 @@ namespace TAO_NOTIFY
   private:
     ACE_Vector<NVP> list_;
   };
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #if defined (__ACE_INLINE__)
 #include "Name_Value_Pair.inl"

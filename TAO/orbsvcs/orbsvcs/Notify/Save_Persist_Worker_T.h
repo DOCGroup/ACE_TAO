@@ -20,7 +20,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   /**
    * \brief Iterate through children saving persistent topology information.
@@ -43,7 +43,7 @@ namespace TAO_NOTIFY
     Topology_Saver& saver_;
     bool want_all_children_;
   };
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Save_Persist_Worker_T.cpp"

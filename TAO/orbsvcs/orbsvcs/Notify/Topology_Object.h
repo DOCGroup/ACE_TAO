@@ -27,14 +27,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-/// \namespace TAO_NOTIFY
+/// \namespace TAO_Notify
 /// \brief A namespace to be used by all of TAO's Notification Service implementation.
 ///
 /// The initial implementation used the TAO_Notify_ prefix rather than a namespace.  As part
-/// of the reliable Notification Service project we started using this TAO_NOTIFY namespace,
+/// of the reliable Notification Service project we started using this TAO_Notify namespace,
 /// but there are still many parts of the Notification Service that are in the global namespace
 /// with a TAO_NS prefix.
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   static const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
@@ -186,7 +186,7 @@ namespace TAO_NOTIFY
     bool child_change (ACE_ENV_SINGLE_ARG_DECL);
   };
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #if defined (__ACE_INLINE__)
 #include "Topology_Object.inl"

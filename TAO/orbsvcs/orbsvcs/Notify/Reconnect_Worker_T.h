@@ -20,7 +20,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   /**
    * \brief Iterate through children reconnecting after reloading persistent information.
@@ -35,7 +35,7 @@ namespace TAO_NOTIFY
     // override virtual ESF_Worker method
     virtual void work (TOPOOBJ* o ACE_ENV_ARG_DECL);
   };
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Reconnect_Worker_T.cpp"

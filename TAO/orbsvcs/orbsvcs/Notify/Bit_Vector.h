@@ -26,7 +26,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 /// \brief Simple bit vector.

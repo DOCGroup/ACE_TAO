@@ -11,7 +11,7 @@ Test_Saver::Test_Saver()
 bool
 Test_Saver::begin_object(CORBA::Long id,
       const ACE_CString &type,
-      const TAO_NOTIFY::NVPList& attrs,
+      const TAO_Notify::NVPList& attrs,
       bool changed
       ACE_ENV_ARG_DECL_NOT_USED)
 {

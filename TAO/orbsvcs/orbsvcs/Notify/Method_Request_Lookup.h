@@ -24,7 +24,9 @@
 #include "ProxySupplier.h"
 #include "ProxyConsumer.h"
 #include "Consumer_Map.h"
+#include "Delivery_Request.h"
 
+class TAO_Notify_Method_Request_Lookup_Queueable;
 class TAO_Notify_Event;
 
 /**
@@ -38,8 +40,19 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
   , public TAO_Notify_Method_Request_Event
 {
 public:
+
+  /// an arbitrary code (Octet) to identify this type of request in persistent storage
+  enum {persistence_code = 2};
+
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Lookup ();
+
+  /// Static method used to reconstruct a Method Request Dispatch
+  static TAO_Notify_Method_Request_Lookup_Queueable * unmarshal (
+    TAO_Notify::Delivery_Request_Ptr & delivery_request,
+    TAO_Notify_EventChannelFactory &ecf,
+    TAO_InputCDR & cdr
+    ACE_ENV_ARG_DECL);
 
 protected:
   /// Constuctor
@@ -70,10 +83,15 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
   , public TAO_Notify_Method_Request_Queueable
 {
 public:
-  /// Constuctor
+  /// Constuctor from event
   TAO_Notify_Method_Request_Lookup_Queueable (
     const TAO_Notify_Event_var& event,
-    TAO_Notify_ProxyConsumer* proxy_consumer);
+    TAO_Notify_ProxyConsumer * proxy_consumer);
+
+  /// Constuctor from delivery request
+  TAO_Notify_Method_Request_Lookup_Queueable (
+    TAO_Notify::Delivery_Request_Ptr & request,
+    TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Destructor
   ~TAO_Notify_Method_Request_Lookup_Queueable ();

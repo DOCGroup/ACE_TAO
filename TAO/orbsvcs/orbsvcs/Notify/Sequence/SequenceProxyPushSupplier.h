@@ -61,7 +61,7 @@ public:
 
   virtual const char * get_proxy_type_name (void) const;
 
-  virtual void load_attrs (const TAO_NOTIFY::NVPList& attrs);
+  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
   /// = Servant methods
   virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)

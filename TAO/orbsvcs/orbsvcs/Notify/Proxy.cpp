@@ -125,7 +125,7 @@ TAO_Notify_Proxy::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 }
 
 void
-TAO_Notify_Proxy::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_Proxy::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
 {
   bool changed = this->children_changed_;
   this->children_changed_ = false;
@@ -133,7 +133,7 @@ TAO_Notify_Proxy::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG
 
   if (is_persistent ())
   {
-    TAO_NOTIFY::NVPList attrs;
+    TAO_Notify::NVPList attrs;
     this->save_attrs(attrs);
 
     const char * type_name = this->get_proxy_type_name ();
@@ -159,7 +159,7 @@ TAO_Notify_Proxy::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG
 }
 
 void
-TAO_Notify_Proxy::save_attrs (TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
 {
   TAO_Notify_Object::save_attrs(attrs);
   TAO_Notify_Peer * peer = this->peer();
@@ -168,16 +168,16 @@ TAO_Notify_Proxy::save_attrs (TAO_NOTIFY::NVPList& attrs)
     ACE_CString ior;
     if (peer->get_ior(ior))
     {
-      attrs.push_back (TAO_NOTIFY::NVP("PeerIOR", ior));
+      attrs.push_back (TAO_Notify::NVP("PeerIOR", ior));
     }
   }
 }
 
-TAO_NOTIFY::Topology_Object*
+TAO_Notify::Topology_Object*
 TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL)
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
 {
-  TAO_NOTIFY::Topology_Object* result = this;
+  TAO_Notify::Topology_Object* result = this;
   if (type == "subscriptions")
   {
     // since we initialized our subscribed types to everything

@@ -18,10 +18,10 @@
 // Forward declarations of referenced classes
 class TAO_Notify_EventChannelFactory;
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
-// Forward declarations of TAO_NOTIFY classes/pointers/collections declared
+// Forward declarations of TAO_Notify classes/pointers/collections declared
 // in this header
 class Delivery_Request;
 /// A reference-counted smart pointer to a Delivery_Request.
@@ -29,7 +29,7 @@ typedef ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX> Delivery_Request
 
 typedef ACE_Unbounded_Queue<Delivery_Request_Ptr> Delivery_Request_Queue;
 
-// Forward declarations of TAO_NOTIFY classes/pointers/collections referenced
+// Forward declarations of TAO_Notify classes/pointers/collections referenced
 // in this header
 
 class Routing_Slip;
@@ -72,7 +72,7 @@ public:
   void complete ();
 
   /// \brief An accessor method for the event associated with the Routing Slip that owns this Delivery request.
-  const TAO_Notify_Event_Copy_var & event () const;
+  const TAO_Notify_Event_var & event () const;
 
   /// \brief An accessor method for the routing slip that owns this request.
   const Routing_Slip_Ptr & routing_slip ()const;
@@ -91,6 +91,12 @@ public:
   ///
   /// Called during persistent event storage.
   void marshal (TAO_OutputCDR & cdr);
+
+  /// expose routing slip method
+  unsigned long sequence () const;
+
+  /// expose routing slip method
+  bool should_retry () const;
 
   // Meaningless, but needed by ACE_Vector on some platforms (gcc2.x LynxOS)
   bool operator == (const Delivery_Request & rhs) const;

@@ -786,7 +786,15 @@ Consumer_Main::Consumer_Main ()
   , use_naming_service_ (true)
   , serial_number_ (0)
   , disconnect_on_exit_ (false)
+  , structured_count_(0)
+  , sequence_count_(0)
+  , any_count_(0)
   , id_file_ ("consumer.ids")
+  , ec_id_ (0)
+  , sa_id_ (0)
+  , structured_proxy_id_ (0)
+  , sequence_proxy_id_ (0)
+  , any_proxy_id_ (0)
   , reconnection_callback_ (*this)
   , reconnecting_ (false)
 {
@@ -1040,13 +1048,13 @@ Consumer_Main::save_ids()
     int imode = ACE_static_cast (int, this->mode_);
     ACE_OS::fprintf (idf,
       "%d,%d,%d,%d,%d,%d,%d,\n",
-      imode,
-      ec_id_,
-      sa_id_,
-      structured_proxy_id_,
-      sequence_proxy_id_,
-      any_proxy_id_,
-      endflag);
+      static_cast<int> (imode),
+      static_cast<int> (ec_id_),
+      static_cast<int> (sa_id_),
+      static_cast<int> (structured_proxy_id_),
+      static_cast<int> (sequence_proxy_id_),
+      static_cast<int> (any_proxy_id_),
+      static_cast<int> (endflag) );
     ACE_OS::fclose (idf);
   }
 }
@@ -1056,7 +1064,7 @@ Consumer_Main::load_ids()
 {
   bool ok = false;
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "w");
+    ACE_OS::fopen (this->id_file_.c_str (), "r");
 
   if (idf != 0)
   {
@@ -1106,7 +1114,7 @@ Consumer_Main::load_ids()
           ok = value == 12345;
           break;
         default:
-          ACE_OS::fprintf (stderr, ACE_TEXT ("Warning: too many fields in saved id file.\n"));
+          ACE_OS::fprintf (stderr, ACE_TEXT ("Consumer: Warning: too many fields in saved id file.\n"));
           ok = false;
           break;
         }
@@ -1347,20 +1355,19 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Consumer: Create event channel %d\n"),
-        ACE_static_cast (int, this->ec_id_)
+        static_cast<int> (this->ec_id_)
         ));
     }
   }
 
+  // save channel id
   if (ok && this->channel_file_.length() > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
     if (chf != 0)
     {
-      char buffer[100];
-      ACE_OS::fgets (buffer, sizeof(buffer), chf);
-      ACE_OS::fclose (chf);
-      this->ec_id_ = ACE_OS::atoi (buffer);
+      fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
+      fclose (chf);
     }
   }
 }
@@ -1495,14 +1502,6 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     ok = ! CORBA::is_nil (proxy.in ());
-#ifdef TEST_SET_QOS
-    // temporary
-    if (ok)
-    {
-      set_proxy_qos (proxy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-#endif // TEST_SET_QOS
     if (ok && this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG,

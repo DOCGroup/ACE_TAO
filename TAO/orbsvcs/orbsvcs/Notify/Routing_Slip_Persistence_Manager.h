@@ -28,7 +28,7 @@
 #include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 // Some forward declarations.
 class Standard_Event_Persistence_Factory;
@@ -255,7 +255,7 @@ private:
   ACE_Message_Block * routing_slip_mb_;
 };
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #include /**/ "ace/post.h"
 #endif /* ROUTING_SLIP_PERSISTENCE_MANAGER_H */

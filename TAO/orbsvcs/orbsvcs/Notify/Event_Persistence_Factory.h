@@ -21,20 +21,15 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
-//#include "Event_Persistence_Strategy.h"
-//#include "Persistent_File_Allocator.h"
-//#include "Routing_Slip_Persistence_Manager.h"
-//#include <ace/SString.h>
-
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   class Routing_Slip_Persistence_Manager;
   class Persistent_Callback;
 
   /// interface to be implemented by specific Event_Persistence_Factories
-  class TAO_Notify_Export Event_Persistence_Factory
+  class TAO_Notify_Serv_Export Event_Persistence_Factory
   {
   public:
     /// Create a Persistence Manager
@@ -46,7 +41,7 @@ namespace TAO_NOTIFY
     virtual Routing_Slip_Persistence_Manager * first_reload_manager () = 0;
 
   };
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #include /**/ "ace/post.h"
 #endif /* EVENT_PERSISTENCE_FACTORY_H */

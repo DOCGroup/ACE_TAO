@@ -90,12 +90,12 @@ TAO_Notify_Consumer::enqueue_request (
   TAO_Notify_Method_Request_Event * request
   ACE_ENV_ARG_DECL)
 {
-  const TAO_Notify_Event * pevent = request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Notify_Event_var event_var;
+  request->event ()->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  TAO_Notify_Event_Copy_var event (pevent);
   TAO_Notify_Method_Request_Event_Queueable * queue_entry;
   ACE_NEW_THROW_EX (queue_entry,
-    TAO_Notify_Method_Request_Event_Queueable (*request, event),
+    TAO_Notify_Method_Request_Event_Queueable (*request, event_var),
     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
@@ -120,12 +120,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
         ACE_static_cast (int, this->proxy ()->id ()),
         request->sequence ()
           ));
-      const TAO_Notify_Event * pevent = request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      TAO_Notify_Event_var event_var;
+      request->event ()->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (false);
-      TAO_Notify_Event_Copy_var event (pevent);
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
-        TAO_Notify_Method_Request_Event_Queueable (*request, event),
+        TAO_Notify_Method_Request_Event_Queueable (*request, event_var),
         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (false);
       this->pending_events_->enqueue_tail (queue_entry);
@@ -139,12 +139,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
         ACE_static_cast (int, this->proxy ()->id ()),
         request->sequence ()
         ));
-      const TAO_Notify_Event * pevent = request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      TAO_Notify_Event_var event_var;
+      request->event ()->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (false);
-      TAO_Notify_Event_Copy_var event (pevent);
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
-        TAO_Notify_Method_Request_Event_Queueable (*request, event),
+        TAO_Notify_Method_Request_Event_Queueable (*request, event_var),
         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (false);
       this->pending_events_->enqueue_tail (queue_entry);

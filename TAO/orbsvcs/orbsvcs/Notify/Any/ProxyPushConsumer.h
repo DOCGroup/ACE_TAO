@@ -53,10 +53,10 @@ public:
   /// Release
   virtual void release (void);
 
-//  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
+//  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
   virtual const char * get_proxy_type_name (void) const;
 
-  virtual void load_attrs (const TAO_NOTIFY::NVPList& attrs);
+  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods

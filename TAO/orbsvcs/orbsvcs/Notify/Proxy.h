@@ -36,7 +36,7 @@ class TAO_Notify_Peer;
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Proxy
-  : public TAO_NOTIFY::Topology_Parent
+  : public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Peer;
 
@@ -106,14 +106,14 @@ public:
   /// Override, TAO_Notify_Object::qos_changed
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
-  // TAO_NOTIFY::Topology_Object
+  // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual void save_attrs(TAO_NOTIFY::NVPList& attrs);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_attrs(TAO_Notify::NVPList& attrs);
   virtual const char * get_proxy_type_name (void) const = 0;
 
-  virtual TAO_NOTIFY::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
+    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
 
 protected:
 
