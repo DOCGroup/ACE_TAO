@@ -398,7 +398,11 @@ typedef unsigned __int64 ACE_UINT64;
                 #include /**/ <winsock2.h>
         #endif /* _WINSOCK2API */
 
-        #if !defined _MSWSOCK_
+				#if defined (ACE_HAS_FORE_ATM_WS2)
+					#include /**/ <ws2atm.h>
+				#endif /*ACE_HAS_FORE_ATM_WS2 */
+
+				#if !defined _MSWSOCK_
                 #include /**/ <mswsock.h>
         #endif /* _MSWSOCK_ */
 
