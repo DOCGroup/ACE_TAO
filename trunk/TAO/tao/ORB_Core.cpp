@@ -46,7 +46,6 @@
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
 #include "ace/Object_Manager.h"
-#include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 
@@ -319,24 +318,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // -1 is unknown, default to what the resource factory sets.
   // @@ This is just for backwards compatibility.
 
-#if defined (TAO_DEBUG)
-  // Make it a little easier to debug programs using this code.
-  {
-    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
-
-    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-    if (value != 0)
-      {
-        TAO_debug_level = ACE_OS::atoi (value);
-        if (TAO_debug_level <= 0)
-          TAO_debug_level = 1;
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
-      }
-  }
-#endif  /* TAO_DEBUG */
-
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
@@ -390,8 +371,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           //
           // All preconnect or endpoint strings should be of the above form(s).
 
-          set_endpoint_helper (current_arg
-                               ACE_ENV_ARG_PARAMETER);
+          this->set_endpoint_helper (current_arg
+                                     ACE_ENV_ARG_PARAMETER);
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -780,7 +761,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // now, I (Priyanka) am leaving so that both options can be
           // used.
 
-          set_endpoint_helper (current_arg
+          this->set_endpoint_helper (current_arg
                                ACE_ENV_ARG_PARAMETER);
           arg_shifter.consume_arg ();
         }
@@ -2853,9 +2834,6 @@ template class ACE_Lock_Adapter<TAO_SYNCH_MUTEX>;
 template class ACE_Reverse_Lock<TAO_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >;
 
-template class ACE_Env_Value<int>;
-template class ACE_Env_Value<u_int>;
-
 template class TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
@@ -2884,9 +2862,6 @@ template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 
 #pragma instantiate ACE_Reverse_Lock<TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >
-
-#pragma instantiate ACE_Env_Value<int>
-#pragma instantiate ACE_Env_Value<u_int>
 
 #pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
