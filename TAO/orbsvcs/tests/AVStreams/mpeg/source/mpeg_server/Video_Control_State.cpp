@@ -19,9 +19,10 @@ CORBA::Boolean
 Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
                                  Video_Control::INITvideoReply_out reply)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_Control_State::init_video called\n"));
   int failureType = 0;
   // This is independent of the state and hence we implement it here
-
+  
   // video file string
   for (int i=0;i<init_para.videofile.length (); i++)
     VIDEO_SINGLETON::instance ()->videoFile[i] = init_para.videofile[i];
@@ -80,6 +81,9 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
   }
 
   // Set the Reply parameter values
+  ACE_NEW_RETURN (reply,
+                  Video_Control::INITvideoReply,
+                  CORBA::B_FALSE);
  
   reply->totalHeaders = VIDEO_SINGLETON::instance ()->numS;
   reply->totalGroups = VIDEO_SINGLETON::instance ()->numG;
@@ -99,8 +103,8 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
 
   reply->pattern.length (VIDEO_SINGLETON::instance ()->patternSize);
   // copy the sequence of char..
-  for ( i=0; i<PATTERN_SIZE;i++)
-    reply->pattern[i] = VIDEO_SINGLETON::instance ()->pattern[i];
+  for ( i = 0; i < VIDEO_SINGLETON::instance ()->patternSize; i++)
+    reply->pattern [i] = VIDEO_SINGLETON::instance ()->pattern [i];
   
   reply->live = VIDEO_SINGLETON::instance ()->live_source;
   reply->format = VIDEO_SINGLETON::instance ()->video_format;
@@ -129,7 +133,7 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
    
     if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo ();
   }
-  return 0;
+  return CORBA::B_TRUE;
 }
 
 
