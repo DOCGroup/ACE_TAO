@@ -2,11 +2,11 @@
 
 //=============================================================================
 /**
- *  @file   ImplRepo.pidl
+ *  @file   ServerObject.pidl
  *
  * $Id$
  *
- * This file was used to generate the code in ImplRepo{C,S,S_T}.{h,i,cpp}
+ * This file was used to generate the code in ServerObject{C,S}.{h,inl,cpp}
  *
  * The command used to generate code from this file is:
  *
