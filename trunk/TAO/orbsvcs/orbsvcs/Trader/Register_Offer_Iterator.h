@@ -72,8 +72,8 @@ private:
 };
 
 
-#if defined (TAO_TEMPLATES_REQUIRE_SOURCE)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Register_Offer_Iterator.cpp"
-#endif /* TAO_TEMPLATES_REQUIRE_SOURCE */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_REGISTER_OFFER_ITERATOR_H */

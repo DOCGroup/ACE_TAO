@@ -224,6 +224,7 @@ TAO_Trader_Factory::create_linked_trader (void)
 
 }
 
+
 #ifdef ACE_HAS_THREADS
 /*
 TAO_Trader_Factory::TAO_TRADER*

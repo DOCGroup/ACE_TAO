@@ -302,6 +302,8 @@ private:
   
   Request_Ids request_ids_;
   // A list of recent request_id_stems 
+
+  //  TAO_Register_Offer_Iterator<TRADER> msvc_dummy_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -19,8 +19,6 @@
 #define TAO_LOOKUP_C
 
 #include "Lookup.h"
-#include "ace/Auto_Ptr.h"
-#include <iostream.h>
 
 #include "Query_Only_Offer_Iterator.h"
 #include "Register_Offer_Iterator.h"
@@ -695,8 +693,8 @@ federated_query (const CosTrading::LinkNameSeq& links,
 }
 
 template <class TRADER> void
-TAO_Lookup<TRADER>
-::forward_query (const CosTrading::TraderName& starting_trader,
+TAO_Lookup<TRADER>::
+forward_query (const CosTrading::TraderName& starting_trader,
 		 const char *type,
 		 const char *constr,
 		 const char *pref,
