@@ -34,7 +34,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#interfrepo">Interface Repository</a></li>
 
 <li>
-<a href="#nservices">CORBA Naming Service</a></li>
+<a href="#nservices">CORBA Naming Service and Interoperable Naming Service</a></li>
 
 <li>
 <a href="#tservices">CORBA Trading Service</a></li>
@@ -50,9 +50,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <li>
 <a href="#ts">CORBA Time Service</a></li>
-
-<li>
-<a href="#ins">CORBA InterOperable Naming Service</a></li>
 
 <li>
 <a href="#ec">CORBA Event Service</a></li>
@@ -166,13 +163,14 @@ Verified support for the "long long" and "unsigned long long" datatypes.
 On platforms that do not support 64 bit longs we provided <i>partial</i>
 emulation through ACE_U_LongLong.</li>
 
-<li>
-Perfect Hashed Operation Lookup Strategy has been added to the IDL Compiler.
--P flag to the&nbsp;<tao_idl>enables the perfect hased lookup strategy.
-This strategy uses <a href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">GPERF</a>,
-the GNU's Perfect Hash Function Generator written by Dr.Douglas C. Schmidt.
-Right now, GPERF works only on Solaris. Any work on porting GPERF to other
-platforms will be highly appreciated.&nbsp;</L1></li>
+<li> Perfect Hashed Operation Lookup Strategy has been added to the
+IDL Compiler.  -P flag to <code>tao_idl</code> enables the perfect
+hased lookup strategy.  This strategy uses <a
+href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">GPERF</a>, the
+GNU's Perfect Hash Function Generator written by Dr.Douglas
+C. Schmidt.  Right now, GPERF works only on Solaris. Any work on
+porting GPERF to other platforms will be highly
+appreciated.</L1></li>
 
 <li>
 Significantly improved the support for unions. The default case is yet
@@ -188,15 +186,15 @@ templates have problems on most compilers.</li>
 <li>
 The &lt;&lt;= and >>= operators for user-defined types are now generated.</li>
 
-<li>
-Completely redesigned the IDL compiler using the Visitor patterns. Many
-incomplete issues have been resolved. These include support for "sequence
-of typecodes", passing object references as in, inout, and out parameters.
-Code generation for sequences is also properly handled i.e., for a named
-sequence such as "typedef sequence&nbsp;<char>CharSeq;", we now generate
-a new class (and hence a type) called "class CharSeq". Arrays are still
-being worked out and will be done soon. An important difference in the
-generated code is that the skeletons now use a table driven approach very
+<li> Completely redesigned the IDL compiler using the Visitor
+patterns. Many incomplete issues have been resolved. These include
+support for "sequence of typecodes", passing object references as in,
+inout, and out parameters.  Code generation for sequences is also
+properly handled i.e., for a named sequence such as <CODE>typedef
+sequence&lt;char&gt;CharSeq;</CODE>, we now generate a new class (and
+hence a type) called "class CharSeq". Arrays are still being worked
+out and will be done soon. An important difference in the generated
+code is that the skeletons now use a table driven approach very
 similar to the stubs.</li>
 
 <li>
@@ -245,8 +243,8 @@ is mainly contained in the generated header file directly in the class
 declaration.</li>
 
 <li>
-The IDL Compiler generates templates for&nbsp; servant implementations. The options
-are -GI [ h |&nbsp; s | b | e | c ]</li>
+The IDL Compiler generates templates for servant implementations. The options
+are -GI [ h | s | b | e | c ]</li>
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
@@ -282,18 +280,6 @@ include support for Unions.</li>
 Use <a href="http://www.cs.utah.edu/projects/flux/flick/">Flick</a> (from
 the University of Utah) to generate compiled stubs.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <p>Goal is to measure the code size of the interpretive stubs generated
 by TAO IDL compiler <i>vs</i> code size of compiled stubs. Then compare
 the performance of each. We want to prove the thesis that TAO IDL compiler
@@ -306,13 +292,15 @@ of size/performance/determinism will be made.
 Tweak the IDL compiler to generate code that's more easily integrated back
 into the ORB Core, e.g., POA, etc. This will depend largely on our ability
 to generalize the changes necessary to generated code.</li>
-</ul>
 
 <li>
 The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having the
 source code generated serveral times should be reduced. To do this, an
-extra pass over the internal representation of the IDL file has to be done.&nbsp;
+extra pass over the internal representation of the IDL file has to be done.<P>
+</ul>
+
+
 <hr></li>
 
 <br><!--#include virtual="orbcore.html" -->
@@ -434,12 +422,16 @@ and transport protocols for a given platform.</li>
 
 <hr>
 <h3>
-<a NAME="poa"></a>Portable Object Adapter</h3>
+<a NAME="poa"></a>Portable Object Adapter (POA)</h3>
 Point of contact: <a href="mailto:irfan@cs.wustl.edu">Irfan Pyarali</a>
+
+The POA associates servants with the ORB and demultiplexes incoming
+requests to servants. <P>
+
 <p>Current Status:
 <ul>
 <li>
-TAO fully supports the POA spec. This section will carry updates as available.</li>
+TAO supports the POA spec. This section will carry updates as available.</li>
 </ul>
 Known issues:
 <ul>
@@ -448,26 +440,14 @@ The synchronization in the POA is broken. For example, the locks are held
 across the invocation on the servant. The locks are also held across the
 invocation on the AdapterActivator. This forces the use of recursive locks
 inside the POA. However, the problem with recursive locks is that multiple
-threads cannot dispatch requests on the same POA simultaneous.</li>
+threads cannot dispatch requests on the same POA simultaneous.</li><P>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Add the new RefCountServantBase class to TAO. This reference counted base
 class was added to the CORBA specification to avoid race conditions for
 servant deletion in threaded servers. <a href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
-contains the relevant text.</li>
+contains the relevant text.</li><P>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Currently, the complete POA name is used as the POA identity. This scheme
 is inefficient in many ways including: (a) the complete POA name can be
@@ -476,63 +456,49 @@ method call from the client to the server; (b) it is varible in size, and
 therefore, does not lend itself to smart and effective parsing; (c) the
 searching based on the complete POA name is very ineffient.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <p>The correct solution here is to use an active demux table, and flatten
 the POA hierarchy. This will help in the searching since active demuxing
 is fast and predictable. This will also help in the parsing since the demux
 key will be fixed size.
 <p>Note that for persistent ids, we have to pass the complete POA name
-in addition to the demux key in order to handle POA creation on demand.
-<li>
-Timestamps in persistent IORs are note required. They should be removed.</li>
+in addition to the demux key in order to handle POA creation on demand.<P>
 
 <li>
-POA exceptions should be removed from the list of system exceptions.</li>
+Timestamps in persistent IORs are not required. They should be removed.</li> <P>
+
+<li>
+POA exceptions should be removed from the list of system
+    exceptions.</li> <P>
 
 <li>
 We need to separate out the POA functionality required to support the full
 CORBA spec from the POA functionality required to support the Minimal CORBA
-spec.</li>
+spec.</li> <P>
 
 <li>
 We need to investigate whether it feasible for us to provide active demuxing
 for the USER_ID policy. Currently, the best we do with the USER_ID policy
-is a hash table based demuxing.</li>
+is a hash table based demuxing.</li> <P>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<p>Note that we have to pass the user id in addition to the demux key in
-order to handle servant creation on demand.
+Note that we have to pass the user id in addition to the demux key in
+order to handle servant creation on demand. <P>
 <li>
 We can potentially add active demuxing for method name lookup. The benefit
 of this optimization is questionable since the current perfect hashing
-scheme provide very good and predictable behavior.</li>
+scheme provide very good and predictable behavior.</li> <P>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<p>Also, note that this optimization will require many changes. We would
+Also, note that this optimization will require many changes. We would
 have to use the help of the IDL compiler to modify the object key that
 is passed for every method call differently. Note that this scheme doesn't
 work in the case of multiple inheritance or when the client stubs are not
-TAO.
+TAO.<P>
+
 <li>
 There are some POA objects in a typical server that are not freed up properly,
 resulting in a memory leak. This is not very significant since the leak
-does not grow. However, it still needs a fix.</li>
+does not grow. However, it still needs a fix.</li> <P>
+</UL>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
 Future work:
 <ul>
 <li>
@@ -540,53 +506,57 @@ Determine the degree to which we will support the full semantics of remote
 objects on a collocated object. The spec mandates that collocated object
 should behave <i>exactly</i> like remote objects, but that means that request
 will have to be queued rather than calling a method directly, and this
-could be hazardous to our quest for real-time ORB status.</li>
+could be hazardous to our quest for real-time ORB status.</li><P>
 
 <li>
 Provide extensions of the specification to ensure real-time delivery of
-messages.</li>
+messages.</li> <P>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
-Recently completed work:
-<br>&nbsp;
-<br>&nbsp;
+</ul>
+Recently completed work:<P>
 <ul>
 <li>
 Support for collocation should be much better now because the POA can tell
-if we created the object reference.</li>
+if we created the object reference.</li><P>
 
 <li>
 The POA now supports active demultiplexing of servants in the SYSTEM_ID
 policy. This should make the POA faster and more predictable since there
 is no hashing involved and the index of the slot where the servant is registered
-is in the Object Key.</li>
+is in the Object Key.</li> <P>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
-
+</UL>
 <hr>
 <h3>
 <a NAME="interfrepo"></a>Interface Repository</h3>
-Point of contact: <a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a>
-<p>Current Status:
-<p>Known Issues:
-<p>Recent Work:
-<p>Future Work:
+Point of contact: <a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a><P>
+
+The Interface Repository provides run-time information about IDL
+interfaces.  Using this information, it is possible for a program to
+encounter an object whose interface was not known when the program was
+compiled, yet, be able to determine what operations are valid on the
+object and make invocations on it using the DII.
+
+<p>Current Status: TDB
+<p>Known Issues: TDB
+<p>Recent Work: TDB
+<p>Future Work: TDB
 <p>
 <hr>
 <h3>
-<a NAME="nservices"></a>CORBA Naming Service</h3>
-Point of contact: <a href="mailto:marina@cs.wustl.edu">Marina Spivak</a>
-<p>Current status (as of Jan 11 1999):
+<a NAME="nservices"></a>CORBA Naming Service and Interoperable Naming Service</h3>
+Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
+Spivak</a> and <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
+<p>
+
+The CORBA <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
+Naming Service</a> supports a hierarchical mapping between sequences
+of strings and object references.  The CORBA <A
+HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">Interoperable
+Naming Service</A> defines a standard way for clients and servers to
+locate the Naming Service. <P>
+
+<p>Current status (as of 22nd Feb 1999):
 <ul>
 <li>
 Implementation of the CORBA Naming Service spec is complete.</li>
@@ -596,18 +566,34 @@ Recently completed work:
 <li>
 The implementation of the Naming Service has been upgraded to use TAO's
 exception macros, which allow it to work both with C++ exceptions and without.</li>
-
 <li>
 Destroy method has been updated.</li>
-
 <li>
 More test examples have been added to TAO/orbsvcs/tests/Simple_Naming.</li>
 </ul>
+
 Work in progress:
 <ul>
 <li>
 Currently the bindings are stored as a table in memory. Work is under way
 to provide persistance option for the Naming Service.</li>
+
+<LI> Currently adding support for the Interoperable Naming Service,
+which enables the ORB to support IORs in user-friendly URL formats
+using the <CODE>iioploc</CODE> and <CODE>iiopname</CODE> formats.
+These features allow the ORB to configured to return arbitrary object
+references from <CODE>CORBA::ORB::resolve_initial_references</CODE>
+for non-locality-constrained objects.  In addition, two standard
+<CODE>CORBA::ORB_init</CODE> arguments are being added to override the
+TAO's initial reference configuration. The service provides an
+extension to the existing Naming Service to include conversions to and
+from URL-style IORs.
+
+<LI>The Naming Service is being used as an agent to understand IIOP
+request messages from clients and respond with reply messages with a
+LOCATION_FORWARD status. Work is in progress for the client-side
+lookup tables built through commandline arguments to the ORB,
+<CODE>-ORBInitRef</CODE> and <CODE>-ORBDefaultInitRef</CODE>.<P>
 </ul>
 Future work:
 <ul>
@@ -615,21 +601,20 @@ Future work:
 Replication of the bindings to other Naming Service's currently running.
 It will probably be modeled after the LDAP Multi-Master Replication Protocol.</li>
 </ul>
-For general documentation on the Naming Service please read <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
-Naming Service Specification</a>.
+
 <p>
 <hr>
 <h3>
 <a NAME="tservices"></a>CORBA Trading Service</h3>
 Point of contact: <a href="mailto:sbw1@cs.wustl.edu">Seth Widoff</a>
-<p>The TAO Trading Service is a transient implementation of the COS Trading
-Service speficiation that meets the Linked Trader conformance criteria
---- it implements the <tt>Lookup</tt>, <tt>Register</tt>, <tt>Admin</tt>,
-and <tt>Link</tt> interfaces, but not the <tt>Proxy</tt> interface. Notably,
-the TAO trader supports the following features:
-<ul>
-<li>
-Multithreaded operation;</li>
+
+<p>The <a href="http://www.omg.org/corba/sectrans.htm#trader"> Trading
+Service</a> is an implementation of the COS Trading Service
+speficiation that meets the Linked Trader conformance criteria --- it
+implements the <tt>Lookup</tt>, <tt>Register</tt>, <tt>Admin</tt>, and
+<tt>Link</tt> interfaces, but not the <tt>Proxy</tt>
+interface. Notably, the TAO trader supports the following features:<P>
+<ul> <li> Multithreaded operation;</li>
 
 <li>
 Trader federations and distributed queries;</li>
@@ -658,17 +643,15 @@ The Proxy Interface.</li>
 <li>
 Persistent storage of service types and offers.</li>
 </ul>
-For general documentation of the Trading Service, please read <a href="http://www.omg.org/corba/sectrans.htm#trader">The
-Trading Service Specification.</a>
 <p>
 <hr>
 <h3>
 <a NAME="pservices"></a>CORBA Property Service</h3>
 Point of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Babu Arulanthu</a>
-<p>Current status (as of May&nbsp; 02, 1998)
-<p>All the interfaces of this service have been implemented.&nbsp; Please
-go through the&nbsp; test examples at&nbsp; $TAO/orbsvcs/tests/CosPropertyService.&nbsp;
-Property Service is&nbsp; now used by the AVStreams that is currently being
+<p>Current status (as of May 2nd, 1998)
+<p>All the interfaces of this service have been implemented.  Please
+go through the test examples at $TAO/orbsvcs/tests/CosPropertyService.
+Property Service is now used by the AVStreams that is currently being
 developed for TAO. More testing is being done.
 <p>For general documentation of the Property Service, please read <a href="http://www.omg.org/corba/sectrans.htm#prop">The
 Property Service Specification.</a>
@@ -678,19 +661,21 @@ Property Service Specification.</a>
 <a NAME="cservices"></a>CORBA Concurrency Service</h3>
 Point of contact: <a href="mailto:tworm@cs.wustl.edu">Torben Worm</a>
 <p>Current status (as of May 3rd):
+
+The <a href="http://www.omg.org/corba/sectrans.htm#concur">
+Concurrency Service</a> provides a mechanism that allows clients to
+acquire and release various types of locks in a distributed system.<P>
+
 <ul>
 <li>
-A simple version of the concurrency service has been implemented, i.e.
+A simple version of the Concurrency Service has been implemented, i.e.
 a version without transactions. It is currently being tested.</li>
 </ul>
 Future Work:
 <ul>
 <li>
 Implementation of the Concurrency Service with transactions</li>
-</ul>
-For general documentation of the Concurrency Service, please read
-<a href="http://www.omg.org/corba/sectrans.htm#concur">The
-Concurrency Service Specification.</a>
+</ul><P>
 <hr WIDTH="100%">
 <h3>
 <a NAME="av"></a>CORBA Audio/Video Control Service</h3>
@@ -713,11 +698,14 @@ Integrating the mpeg-1 streaming application with the trading service.</li>
 <hr>
 <p><a NAME="ts"></a><b>CORBA Time Service</b>
 <p>Point of contact: <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
-<p>TAO's Time Service allows clients to connect to Time Service Clerks
-and obtain globally synchronized time. This time is calculated from the
-time obtained from one or more Time Servers running on multiple machines
-in the network. The service uses the TAO Implementation Repository to activate
-the time servers on demand.
+
+<p> The <a href="ftp://ftp.omg.org/pub/docs/formal/97-02-22.pdf">Time Service</a>
+ allows clients to connect to Time Service Clerks and obtain globally
+synchronized time. This time is calculated from the time obtained from
+one or more Time Servers running on multiple machines in the
+network. The service uses the TAO Implementation Repository to
+activate the time servers on demand.
+
 <p>Current status (as of 10th Jan 1999):
 <ul>
 <li>
@@ -733,25 +721,8 @@ algorithm can be used in the future.</li>
 <li>
 Implementation of the Timer Event Service.</li>
 </ul>
-For OMG's documentation on the Time Service please read&nbsp; <a href="ftp://ftp.omg.org/pub/docs/formal/97-02-22.pdf">The
-Time Service Specification. (.pdf)</a>
 <p>
 
-<hr WIDTH="100%">
-
-<p><a NAME="ins"></a><b>CORBA InterOperable Naming Service</b>
-<p>Point of contact: <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
-<p>This service enables the ORB to support IORs in user-friendly URL formats. The formats to be supported are iioploc and iiopname. It also allows the ORB to be administratively configured to return arbitrary object references from CORBA::ORB::resolve_initial_references for non-locality-constrained objects. In addition to this required implementation-specific configuration, two CORBA::ORB_init arguments are provided to override the ORB initial reference configuration. The service provides an extension to the existing Naming Service to include conversions to and from URL style IORs.
-
-<p>Current status (as of 22nd Feb 1999):
-<ul>
-<li>
-The Naming Service is being used as an agent to understand IIOP request messages from clients and respond with reply messages with a LOCATION_FORWARD status. Work is in progress for the client side lookup tables built through commandline arguments to the ORB,  -ORBInitRef and -ORBDefaultInitRef. The following components of TAO are involved in the implementation : the ORB, ORB Core, ORB parameters and IIOP_ORB.</li>
-</ul>
-For OMG's documentation on the InterOperable Naming Service please read <a href="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">The
-InterOperable Naming Service. (.pdf)</a>
-<br>
-<br>
 <hr WIDTH="100%">
 <h3>
 <a NAME="ec"></a>CORBA Event Service</h3>
@@ -783,7 +754,7 @@ service with the default name "CosEventChannel".</li>
 <br>Please read the associated README for more details.
 
 <li>
-CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:&nbsp;
+CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:
 This test demonstrates how multiple CosEC's connect to one RtEC and how
 multiple consumers and producers exchange events in this configuration.</li>
 </ul>
@@ -791,18 +762,19 @@ multiple consumers and producers exchange events in this configuration.</li>
 Known bugs:</h3>
 <ul>
 <li>
-CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:&nbsp;
+CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:
 Once the tests are done, the control doesn't return to the shell,
 you have to say CTRL-C to get back to the prompt.
 </li>
 </ul>
 
+<hr WIDTH="100%">
 <!--#include virtual="ec.html" -->
 <p>
 <hr>
 <h3>
 <a NAME="scheduling"></a>TAO's Scheduling Service</h3>
-Point of contact:&nbsp; <a href="mailto:cdgill@cs.wustl.edu">Chris Gill</a>
+Point of contact: <a href="mailto:cdgill@cs.wustl.edu">Chris Gill</a>
 and <a href="mailto:levine@cs.wustl.edu">David Levine</a>
 <p>Currently Implemented Features:
 <ul>
@@ -831,25 +803,25 @@ strategy to use for that priority level.</li>
 Future work:
 <ul>
 <li>
-&nbsp;Implement heap-based dispatching queues.</li>
+Implement heap-based dispatching queues.</li>
 
 <li>
-&nbsp;Add support for additional configurability, especially in the type
+Add support for additional configurability, especially in the type
 of dispatching strategy (list vs. heap) that will be used to dispatch operations
 at a given static priority level.</li>
 
 <li>
-&nbsp;Benchmark the various alternative strategies to obtain performance
+Benchmark the various alternative strategies to obtain performance
 profiles across different operation loads and OS platforms.</li>
 
 <li>
-&nbsp;Add increased functionality. Requests and suggestions are welcome.</li>
+Add increased functionality. Requests and suggestions are welcome.</li>
 </ul>
 
 <hr>
 <h3>
 <a NAME="logging"></a>TAO's Logging Service</h3>
-Point of contact:&nbsp; <a href="mailto:mjb2@cs.wustl.edu">Matt Braun</a>
+Point of contact: <a href="mailto:mjb2@cs.wustl.edu">Matt Braun</a>
 <p>Current status (as of August 4'th):
 <ul>
 <li>
@@ -859,7 +831,7 @@ from multiple clients. It is currently in the testing stage.</li>
 Future work:
 <ul>
 <li>
-&nbsp;Add increased functionality. Requests and suggestions are welcome.</li>
+Add increased functionality. Requests and suggestions are welcome.</li>
 </ul>
 
 <hr>
@@ -961,8 +933,6 @@ and <a href="mailto:cdgill@cs.wustl.edu">Chris Gill</a>.
 <p><a href="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE</a> is documented
 in detail <a href="http://www.cs.wustl.edu/~schmidt/Dove.ps.gz">online</a>.
 This discussion focuses on the following goals:
-<br>&nbsp;
-<br>&nbsp;
 <ul>
 <li>
 Have a DOVE Browser running using Java Beans as vizualization components.</li>
@@ -1012,7 +982,7 @@ Enhancing MIB functionality</li>
 <li>
 Monitoring the AV Streaming Service</li>
 </ul>
-For more information on the DOVE demo, please refer to: $TAO_ROOT/orbsvcs/tests/Simulator/README&nbsp;
+For more information on the DOVE demo, please refer to: $TAO_ROOT/orbsvcs/tests/Simulator/README.<P>
 <hr>
 <h3>
 <a NAME="forwarding"></a>Location Forwarding</h3>
@@ -1039,6 +1009,6 @@ Kircher</a>.
 <p>For more information see <a href="../locate_request.html">Locate request</a>
 <p>
 <hr>
-<p>Back to the TAO <a href="../index.html">documentation index</a>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
+<p>Back to the TAO <a href="../index.html">documentation index</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </body>
 </html>
