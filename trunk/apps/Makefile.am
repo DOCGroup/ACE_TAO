@@ -13,11 +13,6 @@
 ## needed to process this file.
 AUTOMAKE_OPTIONS = 1.4
 
-## The following directories aren't compiled by default since haven't
-## finished integrating it into ACE...
-##
-## Orbix-Examples
-
 if COMPILE_GPERF
 GPERF_DIR = gperf
 else

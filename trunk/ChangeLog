@@ -1,3 +1,22 @@
+Wed Dec  5 15:35:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* apps/Makefile.am:
+	* docs/ACE-categories.html:
+	  Removed left over references to Orbix handler.
+
+	* apps/JAWS/remora/app/Makefile:
+	* apps/JAWS/remora/app/stdmk:
+	* apps/JAWS/remora/app/test.cc:
+	* apps/JAWS/remora/app/remora.idl:
+	* apps/JAWS/remora/app/Remora_Export.h:
+	* apps/JAWS/remora/app/Remora_Export.i:
+	* apps/JAWS/remora/app/Remora_Export.cc:
+	* apps/JAWS/remora/app/Remora_Import.h:
+	* apps/JAWS/remora/app/Remora_Import.i:
+	* apps/JAWS/remora/app/Remora_Import.cc:
+	  Another directory that could only compile if ORBeline was still
+	  available.
+
 Wed Dec 05 14:47:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/ace_dll.dsp:
