@@ -11,6 +11,29 @@ Mon Feb 10 18:08:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* THANKS: Added Otis Nyandoro to the hall of fame.
 
+Mon Feb 10 18:02:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Don't special-case SEH support on ACE_HAS_WINCE. First,
+          CE can do SEH; second, the switching of this on/off can and should
+          be done in the config file.
+
+        * ace/config-win32-common.h: Enable ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+          for WinCE.
+
+          Thanks to Emmanuel Thevenot Beaufort
+          <emmanuel.thevenot-beaufort@jci.com> for this fix.
+
+        * ace/Handle_Set.{h i}: Remove the ACE_Handle_Set destructor for
+          ACE_HAS_WINCE. The need for this predates the supported vc 3 and 4
+          compilers, and having it in there triggers an SEH warning.
+
+        * ace/SPIPE_Stream.i: Follow-up to:
+          Mon Feb 10 09:22:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+          Added the need for ACE_HAS_WINSOCK2 to enable this code. The calls
+          and structures used aren't available in Winsock1.
+
+        * ace/config-wince.h: Disable Winsock2 for CE versions less than 4.0.
+
 Mon Feb 10 12:14:35 2003  Jeffrey Graham <jgraham@titan.com>
 
 	* bin/ace-install:
@@ -61,7 +84,7 @@ Mon Feb 10 19:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           all but a single copy of the code. When linking an exe that refers
           to a singleton template in a dll, the linker would choose one
           of the template code instances in the exe's .obj files, and
-	  completely ignore the instance that was exported by the dll.
+          completely ignore the instance that was exported by the dll.
 
           The key to the solution is that it appears that the borland linker
           chooses the first instance of the template symbols that it sees. The
