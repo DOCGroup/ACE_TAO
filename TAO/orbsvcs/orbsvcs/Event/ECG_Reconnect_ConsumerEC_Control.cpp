@@ -19,6 +19,9 @@ TAO_ECG_Reconnect_ConsumerEC_Control::
     gateway_ (gateway),
     orb_ (CORBA::ORB::_duplicate (orb)),
     is_consumer_ec_connected_ (1)
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+    , timer_id_ (-1)
+#endif /* TAO_HAS_CORBA_MESSAGING != 0*/
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();
@@ -200,11 +203,11 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        long id = this->reactor_->schedule_timer (&this->adapter_,
-                                                  0,
-                                                  this->rate_,
-                                                  this->rate_);
-        if (id == -1)
+        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+                                                    0,
+                                                    this->rate_,
+                                                    this->rate_);
+        if (timer_id_ == -1)
           return -1;
       }
     }
@@ -221,9 +224,12 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
 int
 TAO_ECG_Reconnect_ConsumerEC_Control::shutdown (void)
 {
-  int r =
-    this->reactor_->remove_handler (&this->adapter_,
-                                    ACE_Event_Handler::DONT_CALL);
+  int r = 0;
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  r = this->reactor_->cancel_timer (timer_id_);
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
   this->adapter_.reactor (0);
   return r;
 }

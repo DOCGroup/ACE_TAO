@@ -686,8 +686,8 @@ public:
              RtecEventChannelAdmin::Dependency &dep);
 
   // = Get/set timer returned from the reactor.
-  int timer_id (void);
-  void timer_id (int);
+  long timer_id (void);
+  void timer_id (long);
 
   // = Get/set preemption priority.
   RtecScheduler::OS_Priority preemption_priority (void);
@@ -698,7 +698,7 @@ protected:
   virtual int execute (void* arg = 0);
 
   /// For cancelling timers.
-  int timer_id_;
+  long timer_id_;
 
   /// Store the preemption priority so we can cancel the correct timer.
   /// The priority values may change during the life.
