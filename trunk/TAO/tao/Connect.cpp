@@ -238,6 +238,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   this->orb_core_->root_poa ()->dispatch_servant (request.object_key (),
                                                   request,
                                                   0,
+                                                  this->orb_core_,                                                  
                                                   env);
 
 
@@ -291,6 +292,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   the_poa->dispatch_servant (serverRequest.object_key (),
                              serverRequest,
                              0,
+                             this->orb_core_,                                                  
                              env);
 
 
@@ -1116,12 +1118,10 @@ TAO_Client_Connection_Handler::close (u_long flags)
 
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_INET_Addr> >
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class HASH_ADDR;
 template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
 template class TAO_SVC_TUPLE;
 template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
@@ -1131,7 +1131,6 @@ template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate HASH_ADDR
 #pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
 #pragma instantiate TAO_SVC_TUPLE
 #pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>

@@ -664,8 +664,13 @@ extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (ACE_WIN32)
 #pragma warning(disable:4231)
-extern template size_t
+
+extern template u_long
+ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const;
+
+extern template u_long
 ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const;
+
 #endif /* ACE_WIN32 */
 
 #endif /* TAO_ORB_CORE_H */

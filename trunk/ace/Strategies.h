@@ -139,12 +139,21 @@ public:
   virtual ~ACE_Hashable (void);
   // Destructor.
 
-  virtual u_long hash (void) const = 0;
-  // Computes and returns hash value.  
+  virtual u_long hash (void) const;
+  // Computes and returns hash value.  This "caches" the hash value to
+  // improve performance.
 
 protected:
   ACE_Hashable (void);
   // Protected constructor.
+
+  virtual u_long hash_i (void) const = 0;
+  // This is the method that actually performs the non-cached hash
+  // computation.
+
+  u_long hash_value_;
+  // Pre-computed hash-value.
+
 };
 
 class ACE_Export ACE_Refcountable
