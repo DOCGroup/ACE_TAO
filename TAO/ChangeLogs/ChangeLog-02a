@@ -1,3 +1,8 @@
+Fri Jan 19 08:22:34 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB.cpp:
+          Add missing #include for "ace/Reactor.h".
+
 Thu Jan 18 15:43:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_structure.cpp:
@@ -10,7 +15,7 @@ Thu Jan 18 10:40:29 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/README.txt:
 
-          Updated to include some docs on the use of 
+          Updated to include some docs on the use of
           -ORBDefaultInitRef with the ImR.
 
 Thu Jan 18 08:31:21 2001  Carlos O'Ryan  <coryan@uci.edu>
