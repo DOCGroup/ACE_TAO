@@ -1,3 +1,17 @@
+Sat Dec 05 21:45:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers_T.cpp,Local_Name_Space_T.cpp,
+          Name_Request_Reply.cpp,Process.cpp,Service_Config.cpp,
+          Service_Manager.cpp,Svc_Conf.y,Svc_Conf_Tokens.h,
+          Svc_Conf_y.cpp,Time_Request_Reply.cpp,Trace.cpp:
+          added if NDEBUG protection to some local variables and
+          ACE_UNUSED_ARG to some parameters to avoid compiler warnings
+          when ACE_DEBUG is disabled.  Thanks to Faron Dutton
+          <fdutton@avxus.com> for reporting this.
+
+        * ace/Makefile (Svc_Conf_Tokens.h): escaped $Id$ string so
+          that it doesn't get expanding in the Makefile itself.
+
 Sat Dec  5 16:06:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Local_Name_Space_T.cpp: Protected some of the ACE_DEBUG
