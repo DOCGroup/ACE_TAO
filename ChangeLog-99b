@@ -30,6 +30,9 @@ Tue Feb 09 10:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/Service_Types.{i,cpp},README: removed obsolete references to
           Service_Record.
 
+        * tests/MT_Reactor_Timer_Test.cpp (main): added printout with numbers
+          of expected and actual events, if result is not ACE_MAX_TIMERS + 2
+
         * include/makeinclude/wrapper_macros.GNU: added BUILD line with both
           shared_libs and static_libs enabled, so that individual Makefiles
           don't need a BUILD line.
