@@ -4,30 +4,40 @@
 
 TAO_Offer_Modifier::
 TAO_Offer_Modifier (const char* type_name,
-		    TYPE_STRUCT* type_struct,
+		    CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
 		    CosTrading::Offer& offer)
   : offer_ (offer),
     type_ (type_name)
 {
-  typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
-
   CosTrading::PropertySeq& prop_seq = this->offer_.properties;
-  SERVICE_TYPE_REPOS::PropStructSeq& pstructs = type_struct->props;
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq&
+    pstructs = type_struct->props;
   int pstructs_length = pstructs.length (),
     props_length = prop_seq.length ();
 
   // Separate the type defined properties into mandatory and readonly
   for (int i = 0; i < pstructs_length; i++)
     {
-      if (pstructs[i].mode == SERVICE_TYPE_REPOS::PROP_MANDATORY)
-	this->mandatory_.insert (string (pstructs[i].name));
-      else if (pstructs[i].mode == SERVICE_TYPE_REPOS::PROP_READONLY)
-	this->readonly_.insert (string (pstructs[i].name));
+      if (pstructs[i].mode ==
+	  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
+	{
+	  TAO_String_Hash_Key prop_name ((const char *) pstructs[i].name);
+	  this->mandatory_.insert (prop_name);
+	}
+      else if (pstructs[i].mode ==
+	       CosTradingRepos::ServiceTypeRepository::PROP_READONLY)
+	{
+	  TAO_String_Hash_Key prop_name ((const char *) pstructs[i].name);
+	  this->readonly_.insert (prop_name);
+	}
     }
 
   // Insert the properties of the offer into a map.
   for (i = 0; i < props_length; i++)
-    this->props_[string (prop_seq[i].name)] = &prop_seq[i];
+    {
+      TAO_String_Hash_Key prop_name = (const char*) prop_seq[i].name;
+      this->props_.bind (prop_name, &prop_seq[i]);
+    }
 }
 
 void
@@ -39,21 +49,21 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes,
 		  CosTrading::IllegalPropertyName,
 		  CosTrading::DuplicatePropertyName))
 {
-  PROP_NAMES delete_me;
+  Prop_Names delete_me;
   // Validate that the listed property names can be deleted
   for (int i = 0, length = deletes.length (); i < length; i++)
     {
-      CosTrading::PropertyName dname = (char*)((const char *) deletes[i]);
+      const char* dname = (const char *) deletes[i];
       if (! TAO_Trader_Base::is_valid_identifier_name (dname))
 	TAO_THROW (CosTrading::IllegalPropertyName (dname));
       else
 	{
-	  string prop_name (dname);
-	  if (this->mandatory_.find (prop_name) != this->mandatory_.end ())
+	  TAO_String_Hash_Key prop_name (dname);
+	  if (this->mandatory_.find (prop_name) == 0)
 	    TAO_THROW (CosTrading::Register::MandatoryProperty (this->type_, dname));
-	  else if ((delete_me.insert (prop_name)).second == 0)
+	  else if (delete_me.insert (prop_name) == 1)
 	    TAO_THROW (CosTrading::DuplicatePropertyName (dname));
-	  else if (this->props_.find (prop_name) == this->props_.end ())
+	  else if (this->props_.find (prop_name) == 0)
 	    TAO_THROW (CosTrading::Register::UnknownPropertyName (dname));
 	}
     }
@@ -61,8 +71,8 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes,
   // Delete those properties from the offer.
   for (i = 0; i < length; i++)
     {
-      string prop_name = (const char *) deletes[i];
-      this->props_.erase (prop_name);
+      TAO_String_Hash_Key prop_name = (const char *) deletes[i];
+      this->props_.unbind (prop_name);
     } 
 }
 
@@ -74,22 +84,21 @@ merge_properties (const CosTrading::PropertySeq& modifies,
 		   CosTrading::DuplicatePropertyName,
 		   CosTrading::Register::ReadonlyProperty))
 {
-  PROP_NAMES modify_me;
+  Prop_Names modify_me;
   // Ensure that the proposed changes aren't to readonly properties or
   // otherwise invalid.
   for (int i = 0, length = modifies.length (); i < length; i++)
     {
-      CosTrading::PropertyName mname =
-	(char*) ((const char *) modifies[i].name);
+      const char*  mname =(const char *) modifies[i].name;
       if (! TAO_Trader_Base::is_valid_identifier_name (mname))
 	TAO_THROW (CosTrading::IllegalPropertyName (mname));
       else
 	{
-	  string prop_name (mname);
-	  if (this->readonly_.find (prop_name) != this->readonly_.end () &&
-	      this->props_.find (prop_name) == this->props_.end ())
+	  TAO_String_Hash_Key prop_name (mname);
+	  if (this->readonly_.find (prop_name) == 0 &&
+	      this->props_.find (prop_name) == 0)
 	    TAO_THROW (CosTrading::Register::ReadonlyProperty (this->type_, mname));
-	  else if ((modify_me.insert (prop_name)).second == 0)
+	  else if (modify_me.insert (prop_name) == 1)
 	    TAO_THROW (CosTrading::DuplicatePropertyName (mname));
 	}
     }
@@ -97,16 +106,15 @@ merge_properties (const CosTrading::PropertySeq& modifies,
   for (i = 0; i < length; i++)
     {
       // Add a property to the destination if it doesn't already exist.
-      pair <PROPS::iterator, bool> insert_return = 
-	this->props_.insert (make_pair (string (modifies[i].name),
-					(CosTrading::Property *) &modifies[i]));
+      Props::ENTRY* existing_entry = 0;
+      TAO_String_Hash_Key prop_name ((const char*) modifies[i].name);
 
-      // Modify a property if it already exists in the destination.
-      if (! insert_return.second)
+      if (this->props_.bind (prop_name,
+			     (CosTrading::Property *) &modifies[i],
+			     existing_entry) == 1)
 	{
-	  PROPS::iterator& dup = insert_return.first;
-	  CosTrading::Property* prop = (*dup).second;
-
+	  // Modify a property if it already exists in the destination.
+	  CosTrading::Property* prop = existing_entry->int_id_;	  
 	  prop->value = modifies[i].value;
 	}
     }
@@ -121,12 +129,12 @@ TAO_Offer_Modifier::affect_change (void)
   // Create a new property list reflecting the deletes, modifies, and
   // add operations performed, and place this property list in the
   // offer. 
-  prop_seq.length (this->props_.size ());
-  for (PROPS::iterator props_iter = this->props_.begin ();
-       props_iter != this->props_.end ();
+  prop_seq.length (this->props_.current_size ());
+  for (Props::iterator props_iter (this->props_);
+       ! props_iter.done ();
        props_iter++, elem++)
     {
-      prop_seq[elem] = *(*props_iter).second;
+      prop_seq[elem] = *(*props_iter).int_id_;
     }
 
   this->offer_.properties = prop_seq;

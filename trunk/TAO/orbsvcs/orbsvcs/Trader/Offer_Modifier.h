@@ -17,8 +17,8 @@
 #ifndef ACE_OFFER_MODIFIER_H
 #define ACE_OFFER_MODIFIER_H
 
-#include "stl.h"
 #include "Trader.h"
+#include "ace/Containers.h"
 
 class TAO_Offer_Modifier
 // = TITLE
@@ -28,10 +28,8 @@ class TAO_Offer_Modifier
 {
 public:
 
-  typedef CosTradingRepos::ServiceTypeRepository::TypeStruct TYPE_STRUCT;  
-  
   TAO_Offer_Modifier (const char* type,
-		      TYPE_STRUCT* type_struct,
+		      CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
 		      CosTrading::Offer& offer);
   // Modify an <offer> of type <type>, whose properties are described
   // by <type_struct>
@@ -59,16 +57,23 @@ public:
   
 private:
 
-  typedef set< string, less <string> > PROP_NAMES;
-  typedef map< string, CosTrading::Property*, less <string> > PROPS;
+  typedef ACE_Unbounded_Set<TAO_String_Hash_Key> Prop_Names;
 
+  typedef ACE_Hash_Map_Manager
+    <
+    TAO_String_Hash_Key,
+    CosTrading::Property*,
+    ACE_Null_Mutex
+    >
+    Props;
+  
   const char* type_;
   // The type of the offer.
   
-  PROPS props_;
+  Props props_;
   // The map of properties in the offer.
   
-  PROP_NAMES readonly_, mandatory_;
+  Prop_Names readonly_, mandatory_;
   // The set of readonly and mandatory property names in the offer's
   // type.
   
