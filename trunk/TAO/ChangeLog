@@ -1,3 +1,8 @@
+Thu Jan  6 18:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Fixed casing in orb_types filenames.
+
 Thu Jan  6 15:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orb.idl:
