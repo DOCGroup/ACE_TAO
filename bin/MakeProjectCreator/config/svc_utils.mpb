@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver, taolib_with_idl {
-  after   += Svc_Utils
-  libs    += TAO_Svc_Utils
-}

@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(RTCORBA Policies Server): rt_server {
-  avoids += minimum_corba
-}

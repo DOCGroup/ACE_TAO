@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver,taoidldefaults {
-  after += Deployment_stub
-  libs  += Deployment_stub
-  includes += $(CIAO_ROOT)/DAnCE/ciao $(CIAO_ROOT)/DAnCE
-  idlflags += -I$(CIAO_ROOT)/DAnCE -I$(CIAO_ROOT)/DAnCE/ciao -Sc
-}
