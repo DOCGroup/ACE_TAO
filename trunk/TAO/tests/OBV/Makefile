@@ -12,7 +12,8 @@
 
 DIRS  = Any \
         Factory \
-        Forward
+        Forward \
+        TC_Alignment
 
 
 ifndef TAO_ROOT
