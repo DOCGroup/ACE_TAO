@@ -465,7 +465,7 @@ public:
     COMPLETED_MAYBE    // can't say what happened; retry unsafe
   };
 
-  enum ExceptionType
+  enum exception_type
   {
     // = Exception type.
 
@@ -473,6 +473,8 @@ public:
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
   };
+
+  CORBA::TypeCode_ptr _tc_exception_type;
 
   // all the system exception classes
 #define TAO_SYSTEM_EXCEPTION(name) \

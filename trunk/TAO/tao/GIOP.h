@@ -351,7 +351,7 @@ public:
   static const char *message_name (TAO_GIOP::Message_Type which);
   // Returns the stringified <MsgType>.
 
-  static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type);
+  static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
   // Convert the exception type from CORBA to GIOP
 
 

@@ -1,3 +1,17 @@
+Sat May  8 15:02:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP.h (TAO_GIOP): 
+	* tao/GIOP.cpp:
+	* tao/Connect.cpp:
+	* tao/corbafwd.h:
+	Changed the exception type defined as an enum in corbafwd.h as
+	'ExceptionType' to 'exception_type'. 'exception_type' seems to be
+	the right way of defining according to the spec. The previous spelling 
+	'ExceptionType' seems to a spill out of the CORBA-DCOM, CORBA-OLE specs. 
+	Changes to other *.cpp and *.h files listed above to acommodate the 
+	change made in corbafwd.h.
+	
+
 Sat May 08 08:42:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: added missing
