@@ -3,7 +3,9 @@
 #
 
 DIRS = \
+        Any \
         Factory \
-        Forward
+        Forward \
+        TC_Alignment
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
