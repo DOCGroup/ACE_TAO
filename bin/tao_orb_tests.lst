@@ -54,7 +54,7 @@ TAO/tests/RTScheduling/VoidData/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/RTScheduling/Thread_Cancel/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/RTScheduling/DT_Spawn/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/RTScheduling/Current/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/RTScheduling/Scheduling_Interceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/RTScheduling/Scheduling_Interceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC
 TAO/tests/OBV/Any/run_test.pl
 TAO/tests/OBV/Collocated/Forward/run_test.pl
 TAO/tests/OBV/Factory/run_test.pl
