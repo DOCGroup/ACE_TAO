@@ -1,3 +1,16 @@
+Tue May  4 23:50:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/ORB.{h,cpp}:
+	* tao/Typecode_Constants.cpp:
+	  Added typedef'd strings ORBid to CORBA and
+	  ObjectId to CORBA_ORB, along with their typecodes.
+	  
+	  Also moved the typecode initialization for the exception
+	  InconsistentTypeCode out of ORB.cpp and into
+	  Typecode_Constants. Also cosmetized Typecode_Constants
+	  a little.
+
 Tue May  4 21:46:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp:
