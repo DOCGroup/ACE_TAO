@@ -43,8 +43,17 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
         ACE_Sched_Params::priority_min (this->policy_);
 
 #if (TAO_HAS_RT_CORBA == 1)
+
+      CORBA::Object_var obj =
+        this->orb_->orb_core ()->priority_mapping_manager ();
+      
+      TAO_Priority_Mapping_Manager_var mapping_manager = 
+        TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                               ACE_TRY_ENV);
+
       RTCORBA::PriorityMapping *pm =
-        this->orb_->orb_core ()->priority_mapping_manager ()->mapping ();
+        mapping_manager.in ()->mapping ();
+
       const CORBA::Short corba_priority = (*i)->priority ();
       CORBA::Short native_priority;
       if (pm->to_native (corba_priority, native_priority) == 1)

@@ -91,7 +91,10 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
   if (is_client_propagated)
     {
       // Get client priority.
-      if (invocation->orb_core_->get_thread_priority (state.client_priority_)
+      if (invocation->orb_core_->get_protocols_hooks ()
+          ->get_thread_priority (invocation->orb_core_,
+                                 state.client_priority_,
+                                 ACE_TRY_ENV) 
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1,
                                            CORBA::COMPLETED_NO));
@@ -221,10 +224,14 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
             // mode == TAO::USE_THREAD_PRIORITY
             {
               CORBA::Short priority;
-              if (invocation->orb_core_->get_thread_priority (priority)
+              if (invocation->orb_core_->get_protocols_hooks
+                  ()->get_thread_priority (invocation->orb_core_,
+                                           priority,
+                                           ACE_TRY_ENV) 
                   == -1)
                 ACE_THROW (CORBA::DATA_CONVERSION (1,
                                                    CORBA::COMPLETED_NO));
+
               invocation->endpoint_selection_state_.min_priority_ =
                 priority;
               invocation->endpoint_selection_state_.max_priority_ =

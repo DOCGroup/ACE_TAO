@@ -564,19 +564,19 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 
       CORBA::ULong type_value = 0;
 
-      // @@ Throws CORBA::NO_PERMISSION as of now.
-      //    Not sure if this is right .. since validate_policy_type
-      //    throws a INV_Policy exception and am throwing
-      //    NO_PERMISSION exception now.
+      // @@ Not sure if this is right.
+      //    This method was throwing CORBA::NO_PERMISSION when the
+      //    if statements (which are now in the validate_policy_type
+      //    hook) were true. I am using the same hook method
+      //    for two other methods which need to throw
+      //    CORBA::INV_Policy (). So, in here, I am not checking the
+      //    CORBA::Environment variable, but checking on the value of
+      //    type_value to throw the right exception. - Priyanka
       this->orb_core_->get_protocols_hooks ()->validate_policy_type (slot,
                                                                      type_value,
                                                                      ACE_TRY_ENV);
-      ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
-                        0);
-
-      if (type_value == 0)
-        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
-                          0);
+      if (type_value == 0 | type_value == 3)
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
     }
 
   // We are not required to check for consistency of <policies> with
@@ -973,16 +973,14 @@ TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
   if (override == 0)
     return exposed;
 
-  CORBA::Policy *policy =
+  CORBA::Policy_var policy =
     this->orb_core_->get_protocols_hooks ()->
-    effective_priority_banded_connection_hook (
-                                               override,
+    effective_priority_banded_connection_hook (override,
                                                exposed,
                                                ACE_TRY_ENV);
-  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                    0);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  return policy;
+  return policy.in ();
 }
 
 CORBA::Policy *
@@ -1008,8 +1006,12 @@ TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
                                                 override.in (),
                                                 exposed.in (),
                                                 ACE_TRY_ENV);
-  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                    0);
+  ACE_CHECK_RETURN (0);
+
+  /*if (
+  ACE_CHECK_RETURN (CORBA::INV_POLICY (),
+                    CORBA::Policy::_nil ());
+  */
 
   return policy.in ();
 }

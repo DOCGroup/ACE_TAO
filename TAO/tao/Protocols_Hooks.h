@@ -77,11 +77,6 @@ public:
                            CORBA::Short &p,
                            int &in_range);
 
-  virtual void select_endpoint_hook (TAO_GIOP_Invocation *invocation,
-                                     CORBA::Policy *client_protocol_policy,
-                                     TAO_Profile *&profile,
-                                     CORBA::Environment &ACE_TRY_ENV);
-
   /**
    * Hook to check and override the exposed policies if needed
    *
@@ -93,6 +88,34 @@ public:
   virtual CORBA::Policy *effective_client_protocol_hook (CORBA::Policy *override,
                                                          CORBA::Policy *exposed,
                                                          CORBA::Environment &);
+
+  /**
+   * Accessor and modifier to the current thread priority, used to
+   * implement the RTCORBA::Current interface, but it is faster for
+   * some critical components.  If TAO_HAS_RT_CORBA == 0, the
+   * operations are no-ops.
+   */
+  //@{
+  virtual int get_thread_priority (TAO_ORB_Core *,
+                           CORBA::Short &,
+                           CORBA::Environment &);
+
+  virtual int set_thread_priority (TAO_ORB_Core *,
+                           CORBA::Short,
+                           CORBA::Environment &);
+
+  //@}
+
+  virtual void set_priority_mapping (TAO_ORB_Core *,
+                                     TAO_Resource_Factory *,
+                                     CORBA::Environment &);
+  
+  /// Sets the default_policies for ORB.
+  /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
+  /// default RTCORBA policies: ServerProtocolPolicy and
+  /// ClientProtocolPolicy.
+  virtual int set_default_policies (TAO_ORB_Core *orb_core);
+
 };
 
 #include "ace/post.h"

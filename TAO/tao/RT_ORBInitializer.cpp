@@ -12,6 +12,7 @@ ACE_RCSID (tao, RT_ORBInitializer, "$Id$")
 #include "tao/RTCORBAC.h"
 #include "tao/RT_Policy_i.h"
 #include "tao/RT_Protocols_Hooks.h"
+#include "tao/Priority_Mapping_Manager.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 
@@ -23,6 +24,10 @@ TAO_RT_ORBInitializer::pre_init (
 {
   // Sets the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
   TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
+
+  // Set the Priority_Mapping_Manager
+  TAO_Priority_Mapping_Manager *manager = new TAO_Priority_Mapping_Manager;
+  TAO_ORB_Core::priority_mapping_manager (manager);
 
   // Sets the client_protocol policy.
   TAO_RT_Protocols_Hooks::set_client_protocols_hook

@@ -427,6 +427,9 @@ public:
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
 
+  /// Accessor method for the default_policies_
+  TAO_Policy_Manager_Impl *get_default_policies (void);
+
   /**
    * The thread has a default environment to simplify porting between
    * platforms that support native C++ exceptions and those that
@@ -551,15 +554,21 @@ public:
 #if (TAO_HAS_RT_CORBA == 1)
 
   /// Access the RTORB.
-  TAO_RT_ORB *rt_orb (void);
+  CORBA::Object_ptr rt_orb (CORBA::Environment &ACE_TRY_ENV);
 
   /// Access the RT Current.
-  TAO_RT_Current *rt_current (void);
+  //@{
+  CORBA::Object_ptr rt_current (void);
+  void rt_current (CORBA::Object_ptr current);
+  //@}
 
   /// Access the priority mapping manager class.  This is a TAO
   /// extension but there is no standard for setting priority mapping
   /// either.
-  TAO_Priority_Mapping_Manager *priority_mapping_manager (void);
+  //@{
+  CORBA::Object_ptr priority_mapping_manager (void);
+  static void priority_mapping_manager (CORBA::Object_ptr manager);
+  //@}
 
   /// Methods for obtaining ORB implementation default values for RT
   /// policies.
@@ -599,17 +608,6 @@ public:
   // be "RT_Protocols_Hooks".
   static const char *protocols_hooks_name_;
   
-  /**
-   * Accessor and modifier to the current thread priority, used to
-   * implement the RTCORBA::Current interface, but it is faster for
-   * some critical components.  If TAO_HAS_RT_CORBA == 0, the
-   * operations are no-ops.
-   */
-  //@{
-  int get_thread_priority (CORBA::Short &priority);
-  int set_thread_priority (CORBA::Short  priority);
-  //@}
-
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
 
@@ -884,10 +882,12 @@ protected:
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
   //@}
 
-  /// Set ORB-level policy defaults for this ORB.  Currently sets
-  /// default RTCORBA policies: ServerProtocolPolicy and
-  /// ClientProtocolPolicy.
-  int set_default_policies (void);
+#if (TAO_HAS_RT_CORBA == 1)
+
+  /// Obtain and cache the RT_ORB factory object reference
+  void resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
@@ -1141,13 +1141,13 @@ protected:
   *client_priority_policy_selector_;
 
   /// Implementation of RTCORBA::RTORB interface.
-  TAO_RT_ORB *rt_orb_;
+  CORBA::Object_ptr rt_orb_;
 
   /// Implementation of RTCORBA::RTCurrent interface.
-  TAO_RT_Current *rt_current_;
+  CORBA::Object_ptr rt_current_;
 
   /// Manager for setting priority mapping.
-  TAO_Priority_Mapping_Manager *priority_mapping_manager_;
+  static CORBA::Object_ptr priority_mapping_manager_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
