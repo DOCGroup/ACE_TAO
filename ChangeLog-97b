@@ -1,5 +1,45 @@
 Sat Sep  6 00:21:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+         * ace/Synch_T.h: Added new constructors:
+
+	   ACE_Guard(ACE_LOCK& l) : lock_(&l)
+	   { this->owner_ = this->acquire(); }
+
+	   ACE_Read_Guard(ACE_LOCK& m) : ACE_Guard(&m)
+	   { this->owner_ = this->acquire_read(); }
+
+	   ACE_Write_Guard(ACE_LOCK& m) : ACE_Guard(&m)
+	   { this->owner_ = this->acquire_write(); }
+
+	   Remove default argument to current Guard classes.
+
+	   ACE_Guard(ACE_LOCK&l, int block)
+	   ACE_Read_Guard(ACE_LOCK& m, int block)
+	   ACE_Write_Guard(ACE_LOCK&m, int block)
+	   with the current semantic.
+
+	   This change allows OS platforms with
+	   ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION or ACE_HAS ??? PRAGMA
+	   ???, to> invoke common case constructor in a more efficient
+	   way.  Thanks to Arturo for this.
+
+	* ace/Synch_T.h: ACE_Guard's destructor should be:
+
+	  ~ACE_Guard() { this->release(); }
+
+	  and not
+
+	  ~ACE_Guard() { if (this->owner_ != -1) this->release(); }
+
+	  because ACE_Guard::release has this test.  Thanks to Arturo for
+ 	  reporting this.
+
+	* ace/ARGV.cpp: Declared the char* parameters for the ACE_ARGV
+ 	  class constructors as const.  Since they are copied in the
+ 	  constructors, this is a safe thing to do.  This makes it easier
+ 	  to pass the result of string::c_str() to it.  Thanks to Stephen
+ 	  Coy <stevec@magna.com.au> for this suggestion.
+
 	* ace/Thread_Manager.cpp: We were missing a Guard in the
  	  ACE_Thread_Manager::at_exit() method.
 
