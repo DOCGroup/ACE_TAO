@@ -232,16 +232,42 @@ JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
 
 void
 JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
-                        ACE_Message_Block* mb,
-                        unsigned int size)
+                        ACE_Message_Block *,
+                        unsigned int)
 {
+  // Create our own handler and message block
+  JAWS_Data_Block *ndb = new JAWS_Data_Block;
+  if (ndb == 0)
+    {
+      ioh->accept_error ();
+      return;
+    }
+
+  JAWS_Data_Block *db = ioh->message_block ();
+  JAWS_IO_Handler *nioh =
+    db->policy ()->ioh_factory ()->create_io_handler ();
+  if (nioh == 0)
+    {
+      delete ndb;
+      ioh->accept_error ();
+      return;
+    }
+
+  ndb->task (db->task ());
+  ndb->policy (db->policy ());
+  ndb->io_handler (nioh);
+  nioh->task (db->task ());
+  nioh->message_block (ndb)
+
   JAWS_Asynch_IO_Handler *aioh =
-    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, nioh);
+
+  aioh->accept_called_already (1);
 
   ACE_Asynch_Accept aa;
 
   if (aa.open (*(aioh->handler ()), aioh->handle ()) == -1
-      || aa.accept (*mb, size) == -1)
+      || aa.accept (*ndb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE) == -1)
     aioh->accept_error ();
 }
 
