@@ -1,3 +1,21 @@
+Tue Sep 29 19:17:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Tao/tests/DynAny_Test/server.dsp:
+	* Tao/tests/DynAny_Test/client.dsp:
+	* Tao/tests/DynAny_Test/tckind.idl:
+	* Tao/tests/DynAny_Test/DynAny.idl:
+	* Tao/tests/DynAny_Test/DynAny_i.{h,cpp}:
+	* Tao/tests/DynAny_Test/DynArray_i.{h,cpp}:
+	* Tao/tests/DynAny_Test/DynEnum_i.{h,cpp}:
+	* Tao/tests/DynAny_Test/DynSequence_i.{h,cpp}:
+	* Tao/tests/DynAny_Test/DynStruct_i.{h,cpp}:
+	* Tao/tests/DynAny_Test/DynUnion_i.{h,cpp}:
+	  Removed from repository. Some are going to TAO and some
+	  are just obsolete (new test code will be written).
+
+	* Tao/tests/DynAny_Test/DynAny_Test.dsw:
+	  Updated to reflect removed projects.
+
 Tue Sep 29 15:33:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Explicit_Activation/run_test.pl: Added the ability
