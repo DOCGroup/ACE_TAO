@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SPIPE_STREAM_H
 #define ACE_SPIPE_STREAM_H
@@ -27,7 +26,26 @@
 /**
  * @class ACE_SPIPE_Stream
  *
- * @brief Define an ACE_SPIPE_Stream.
+ * @brief Defines the methods in the <ACE_SPIPE_Stream> abstraction.
+ *
+ * <buf> is the buffer to write from or receive into.
+ * <len> is the number of bytes to transfer.
+ *
+ * The "_n()" I/O methods keep looping until all the data has been
+ * transferred.  These methods also work for sockets in non-blocking
+ * mode i.e., they keep looping on EWOULDBLOCK.
+ *
+ * The return values for the "*_n()" methods match the return values
+ * from the non "_n()" methods and are specified as follows:
+ * - The number of bytes transferred is returned.
+ * - On error, -1 is returned, errno is set to appropriate error.
+ * - On EOF, 0 is returned, errno is irrelevant.
+ *
+ * Methods with <iovec> parameter are I/O vector variants of the I/O
+ * operations.
+ * 
+ * The <send> and <revc> operations use "message" semantics rather
+ * than "bytestream" semantics.  
  */
 class ACE_Export ACE_SPIPE_Stream : public ACE_SPIPE
 {
@@ -51,17 +69,17 @@ public:
   /// Recv an open FD from another process.
   int recv_handle (strrecvfd &recvfd) const;
 
-  /// Send n bytes, keep trying until n are sent.
-  ssize_t send_n (const void *buf, size_t n) const;
+  /// Send <len> bytes, keep trying until <len> are sent.
+  ssize_t send_n (const void *buf, size_t len) const;
 
-  /// Recv n bytes, keep trying until n are received.
-  ssize_t recv_n (void *buf, size_t n) const;
+  /// Recv <len> bytes, keep trying until <len> are received.
+  ssize_t recv_n (void *buf, size_t len) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
-  ssize_t send (const void *buf, size_t n) const;
+  ssize_t send (const void *buf, size_t len) const;
 
   /// Recv bytes via STREAM pipes using "band" mode.
-  ssize_t recv (void *buf, size_t n) const;
+  ssize_t recv (void *buf, size_t len) const;
 
   /// Send <cntl> and <data> via STREAM pipes.
   ssize_t send (const ACE_Str_Buf *cntl,
@@ -85,11 +103,11 @@ public:
                 int *band,
                 int *flags) const;
 
-  /// Send iovecs via <::writev>.
-  ssize_t send (const iovec iov[], int n) const;
+  /// Send iovecs via the OS "gather-write" operation.
+  ssize_t send (const iovec iov[], int len) const;
 
-  /// Recv iovecs via <::readv>.
-  ssize_t recv (iovec iov[], int n) const;
+  /// Recv iovecs via the OS "scatter-read" operation.
+  ssize_t recv (iovec iov[], int len) const;
 
   /**
    * Send N char *ptrs and int lengths.  Note that the char *'s
@@ -97,7 +115,7 @@ public:
    * count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
    */
-  ssize_t send (size_t n, ...) const;
+  ssize_t send (size_t len, ...) const;
 
   /**
    * This is an interface to ::readv, that doesn't use the struct
@@ -106,26 +124,26 @@ public:
    * *total* number of trailing arguments, *not* a couple of the
    * number of tuple pairs!
    */
-  ssize_t recv (size_t n, ...) const;
+  ssize_t recv (size_t len, ...) const;
 
-  /// Send <n> bytes via Win32 WriteFile using overlapped I/O.
-  ssize_t send (const void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  /// Send <len> bytes via Win32 <WriteFile> using overlapped I/O.
+  ssize_t send (const void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv <n> bytes via Win32 ReadFile using overlapped I/O.
-  ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  /// Recv <len> bytes via Win32 <ReadFile> using overlapped I/O.
+  ssize_t recv (void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size <n> to the stream.
+  /// Send an <iovec> of size <len> to the stream.
   ssize_t sendv (const iovec iov[],
-                 int n) const;
+                 int len) const;
 
-  /// Send an <iovec> of size <n> to the stream.  Will block until all
+  /// Send an <iovec> of size <len> to the stream.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
-                   int n) const;
+                   int len) const;
 
-  /// Receive an <iovec> of size <n> to the stream.
+  /// Receive an <iovec> of size <len> to the stream.
   ssize_t recvv_n (iovec iov[],
-                   int n) const;
+                   int len) const;
 
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;

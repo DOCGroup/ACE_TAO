@@ -102,7 +102,7 @@ ACE_Pipe::open (int buffer_size)
     }
 # endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
 
-#elif defined (ACE_HAS_STREAM_PIPES) || defined(__QNX__)
+#elif defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
   ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
