@@ -30,7 +30,7 @@ Time_Client_i::run (const char *name,
   ACE_TRY
     {
       //Make the RMI.
-      CORBA::Long timedate = client->time (ACE_TRY_ENV);
+      CORBA::Long timedate = client->current_time (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
       // Print out value
