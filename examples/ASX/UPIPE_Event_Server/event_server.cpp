@@ -10,6 +10,10 @@
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# include <iostream.h>
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
