@@ -8,7 +8,7 @@ DIRS = \
 	PortableServer \
 	DynamicAny \
 	DynamicInterface \
-        IFR_Client |
+        IFR_Client \
 	IORTable \
 	IORManipulation \
 	Strategies \
