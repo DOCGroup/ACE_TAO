@@ -127,7 +127,7 @@ class TAO_Export TAO_ORB_Core
   //   Resource_Factory will simply return a pointer to the global
   //   instance.
   //
-  friend class CORBA_ORB;
+  friend class TAO_ORB_Table;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
@@ -359,9 +359,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the ORB and free resources
 
-  int destroyed (void);
-  // Get the destroyed flag value
-
   void check_shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Check if ORB has shutdown.  If it has, throw an exception.
@@ -381,6 +378,9 @@ public:
                                     TAO_default_environment ());
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
+
+  const char *orbid (void) const;
+  // Return ORBid string.
 
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
@@ -451,7 +451,7 @@ protected:
   TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.
 
-  char* orbid_;
+  char *orbid_;
   // The ORBid for this ORB.
 
   TAO_Resource_Factory *resource_factory_;
@@ -544,9 +544,6 @@ protected:
 
   int has_shutdown_;
   // Flag which denotes that the ORB has been shutdown.
-
-  int destroyed_;
-  // Flag which denotes that the ORB has been shutdown and destroyed.
 
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
