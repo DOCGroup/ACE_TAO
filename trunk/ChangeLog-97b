@@ -1,3 +1,14 @@
+Thu Nov 20 17:53:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Make
+ 	  sure make sure that the semaphores created by the program are
+ 	  released as well as the storage files deleted.  Thanks to Tom
+ 	  Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for reporting
+ 	  this.
+
+	* ace: Added a new version of config-osf1-3.2.h.  Thanks to Dani
+ 	  Flexer <danif@ivory-sw.com> for updating this.
+
 Thu Nov 20 18:22:24 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/README
@@ -21,11 +32,6 @@ Thu Nov 20 18:22:24 1997  Steve Huston  <shuston@riverace.com>
 
 	* examples/IPC_SAP/TLI_SAP/CPP-client.cpp: Changed 'char *host' to
 	  'const char *host' so it can be initialized from a const char string.
-
-Thu Nov 20 17:53:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace: Added a new version of config-osf1-3.2.h.  Thanks to Dani
- 	  Flexer <danif@ivory-sw.com> for updating this.
 
 Thu Nov 20 14:19:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 

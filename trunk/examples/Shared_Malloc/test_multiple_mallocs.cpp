@@ -37,7 +37,10 @@ main (int, char *[])
   void *data = 0; 
 
   if (shmem_request->find ("foo", data) == 0)
-    ACE_OS::printf ("%s\n", data);
+    {
+      ACE_OS::printf ("%s\n", data);
+      shmem_request->remove ();
+    }
   else
     {
       data = shmem_request->malloc (ACE_OS::strlen (REQUEST_STRING) + 1);
@@ -47,13 +50,18 @@ main (int, char *[])
   data = 0;
 
   if (shmem_response->find ("foo", data) == 0)
-    ACE_OS::printf ("%s\n", data);
+    {
+      ACE_OS::printf ("%s\n", data);
+      shmem_response->remove ();
+    }
   else
     {
       data = shmem_response->malloc (ACE_OS::strlen (RESPONSE_STRING) + 1);
       ACE_OS::strcpy ((char *) data, RESPONSE_STRING);
       shmem_response->bind ("foo", data);
     }
+
+  ACE_OS::printf ("Run again to see results and release resources.\n");
 
   return 0;
 }
