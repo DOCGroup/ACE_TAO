@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 
 NAME = http_client
 OBJFILES = \
