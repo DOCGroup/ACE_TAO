@@ -28,7 +28,7 @@
 #define ACE_HAS_VOIDPTR_MMAP
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG

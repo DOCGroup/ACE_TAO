@@ -166,7 +166,7 @@
 
 #define ACE_LACKS_MSYNC
 
-#define ACE_LACKS_PARAM_H
+#define ACE_LACKS_SYS_PARAM_H
 
 #define ACE_LACKS_PWD_FUNCTIONS
 

@@ -449,28 +449,9 @@ AC_CHECK_HEADER([dlfcn.h],
     ],[])
   ],)
 
-AC_CHECK_HEADER([malloc.h],
-  ,
-  [AC_DEFINE([ACE_LACKS_MALLOC_H])])
+ACE_CHECK_LACKS_HEADERS(inttypes.h malloc.h memory.h stdint.h)
 
-AC_CHECK_HEADER([memory.h],
-  ,
-  [AC_DEFINE([ACE_LACKS_MEMORY_H])])
-
-AC_CHECK_HEADER([stdint.h],
-  ,
-  [AC_DEFINE(ACE_LACKS_STDINT_H)])
-
-AC_CHECK_HEADER([inttypes.h],
-  ,
-  [AC_DEFINE(ACE_LACKS_INTTYPES_H)])
-
-AC_CHECK_HEADER([bytesex.h],
-  [AC_DEFINE([ACE_HAS_BYTESEX_H])])
-
-dnl We don't need to explicitly include this on linux.
-dnl AC_CHECK_HEADER([features.h],
-dnl  [AC_DEFINE([ACE_HAS_FEATURES_H])])
+ACE_CHECK_HAS_HEADERS(bytesex.h)
 
 AC_CHECK_HEADER([sys/msg.h],
   [
@@ -518,16 +499,12 @@ AC_CHECK_HEADER([sys/msg.h],
 AC_CHECK_HEADER([sys/sem.h],,)
 AC_CHECK_HEADER([sys/shm.h],,)
 
-AC_CHECK_HEADER([sys/param.h],
-  [],
-  [AC_DEFINE([ACE_LACKS_PARAM_H])])
+ACE_CHECK_LACKS_HEADERS(sys/param.h)
 
 AC_CHECK_HEADER([sys/priocntl.h],[],[])
 
 dnl Check for <ucontext.h> _before_ <sys/procfs.h>
-AC_CHECK_HEADER([ucontext.h],
-  [],
-  [AC_DEFINE([ACE_LACKS_UCONTEXT_H])])
+ACE_CHECK_LACKS_HEADERS(ucontext.h)
 
 AC_CHECK_HEADER([sys/procfs.h],
   [
@@ -559,36 +536,25 @@ AC_CHECK_HEADER([sys/procfs.h],
      ])
   ],)
 
-AC_CHECK_HEADER([select.h],
-  [AC_DEFINE([ACE_HAS_SELECT_H])])
+ACE_CHECK_HAS_HEADERS(select.h)
 
-AC_CHECK_HEADER([sys/select.h],
-  [],
-  [AC_DEFINE([ACE_LACKS_SYS_SELECT_H])])
+ACE_CHECK_LACKS_HEADERS(sys/select.h)
 
-AC_CHECK_HEADER([netinet/tcp.h],
-  [],
-  [AC_DEFINE([ACE_LACKS_TCP_H])])
+ACE_CHECK_LACKS_HEADERS(netinet/tcp.h)
 
-AC_CHECK_HEADER([sys/sockio.h],
-  [AC_DEFINE([ACE_HAS_SOCKIO_H])])
+ACE_CHECK_HAS_HEADERS(sys/sockio.h)
 
-AC_CHECK_HEADER([sysent.h],
-  [AC_DEFINE([ACE_HAS_SYSENT_H])],)
+ACE_CHECK_HAS_HEADERS(sysent.h)
 
 AC_CHECK_HEADER([sys/systeminfo.h],[],[])
 
-AC_CHECK_HEADER([sys/filio.h],
-  [AC_DEFINE([ACE_HAS_SYS_FILIO_H])],)
+ACE_CHECK_HAS_HEADERS(sys/filio.h)
 
-AC_CHECK_HEADER([sys/uio.h],,)
+ACE_CHECK_LACKS_HEADERS(sys/uio.h)
 
-AC_CHECK_HEADER([sys/ioctl.h],
-   [AC_DEFINE([ACE_HAS_SYS_IOCTL_H])],)
+ACE_CHECK_HAS_HEADERS(sys/ioctl.h)
 
-AC_CHECK_HEADER([sys/types.h],
-  ,
-  [AC_DEFINE([ACE_LACKS_SYS_TYPES_H])])
+ACE_CHECK_LACKS_HEADERS(sys/types.h)
 
 AC_CHECK_HEADER([sys/termios.h],
   [
@@ -877,15 +843,12 @@ AC_CHECK_HEADER([strings.h],
      ],)
   ],)
 
-AC_CHECK_HEADER([sys/syscall.h],
-  [AC_DEFINE([ACE_HAS_SYSCALL_H])],)
+ACE_CHECK_HAS_HEADERS(sys/syscall.h)
 
 AC_CHECK_HEADER([poll.h],
   [AC_DEFINE([ACE_HAS_POLL])],)
 
-dnl We want AC_CHECK_HEADERS so that "HAVE_PWD_H" gets defined if we have it.
-dnl "HAVE_PWD_H" is used in one of the tests later on.
-AC_CHECK_HEADERS([pwd.h],,)
+ACE_CHECK_LACKS_HEADERS(pwd.h)
 
 AC_CHECK_HEADER([regexpr.h],
   [AC_DEFINE([ACE_HAS_REGEX])],)
@@ -894,40 +857,31 @@ AC_CHECK_HEADER([stropts.h],
   [AC_DEFINE([ACE_HAS_STREAMS])],
   [AC_DEFINE([ACE_LACKS_STROPTS_H])])
 
-AC_CHECK_HEADER([siginfo.h],
-  ,
-  [AC_DEFINE([ACE_LACKS_SIGINFO_H])])
+ACE_CHECK_LACKS_HEADERS(siginfo.h)
 
-AC_CHECK_HEADER([unistd.h],
-  ,
-  [AC_DEFINE([ACE_LACKS_UNISTD_H])])
+ACE_CHECK_LACKS_HEADERS(unistd.h)
 
-AC_CHECK_HEADER([utime.h],
-  [AC_DEFINE([ACE_HAS_UTIME])],)
+ACE_CHECK_LACKS_HEADERS(utime.h)
 
 dnl This check will be disabled until we can get ACE to compile when it
 dnl ACE_HAS_WCHAR is defined on UN*X systems
 dnl AC_CHECK_HEADER([wchar.h],
 dnl   [AC_DEFINE([ACE_HAS_WCHAR])],)
 
-AC_CHECK_HEADER([libc.h],
-  [AC_DEFINE([ACE_HAS_LIBC_H])])
+ACE_CHECK_HAS_HEADERS(libc.h)
 
-AC_CHECK_HEADER([osfcn.h],
-  [AC_DEFINE([ACE_HAS_OSFCN_H])])
+ACE_CHECK_HAS_HEADERS(osfcn.h)
 
 AC_CHECK_HEADER([new],
   [AC_DEFINE([ACE_HAS_NEW_NO_H])],
   [
-   AC_CHECK_HEADER([new.h],
-    [AC_DEFINE([ACE_HAS_NEW_H])])
+   ACE_CHECK_HAS_HEADERS([new.h])
   ])
 
 AC_CHECK_HEADER([stdexcept],
   [AC_DEFINE([ACE_HAS_STDEXCEPT_NO_H])],
   [
-   AC_CHECK_HEADER([exception.h],
-     [AC_DEFINE([ACE_HAS_EXCEPTION_H])])
+   ACE_CHECK_HAS_HEADERS([exception.h])
   ])
 
 dnl ace/OS.i can #include <cstring>,not #include <cstring.h>
@@ -991,23 +945,6 @@ ACE_CACHE_CHECK([if sprintf() returns char*],
   ],[AC_DEFINE([ACE_HAS_CHARPTR_SPRINTF])],)
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-dnl Check for getopt() prototype
-ACE_CACHE_CHECK([for getopt() prototype],[ace_cv_lib_getopt_proto],[
-  AC_EGREP_HEADER([getopt],[unistd.h],
-    [
-     ace_cv_lib_getopt_proto=yes
-    ],
-    [
-     AC_EGREP_HEADER([[^_]+getopt],[stdlib.h],
-       [
-        ace_cv_lib_getopt_proto=yes
-       ],
-       [
-        ace_cv_lib_getopt_proto=no
-       ])
-    ])
-],,[AC_DEFINE([ACE_LACKS_GETOPT_PROTO])])
-
 dnl Check for old malloc() prototype.
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 ACE_CACHE_CHECK([for old malloc() prototype],
@@ -1029,66 +966,55 @@ ACE_CACHE_CHECK([for old malloc() prototype],
   ],[AC_DEFINE([ACE_HAS_OLD_MALLOC])],)
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
+
+dnl Check for getopt() prototype
+AC_CHECK_DECL([getopt],
+              [],
+              [AC_DEFINE([ACE_LACKS_GETOPT_PROTOTYPE], 1,
+                         [Define to 1 if platform lacks the declaration
+                         of getopt().])],
+              [#include <stdlib.h>
+              #ifndef ACE_LACKS_UNISTD_H
+              # include <unistd.h>
+              #endif])
+
 dnl Check for *_timedwait() prototypes
 dnl TODO: We only check for one of the *_timedwait() prototypes.
 dnl       Is this enough?
-ACE_CACHE_CHECK([for *_timedwait() prototypes],[ace_cv_lib_timedwait_proto],[
-  AC_EGREP_HEADER([recv_timedwait],[pthread.h],
-    [
-     ace_cv_lib_timedwait_proto=yes
-    ],
-    [
-     AC_EGREP_HEADER([recv_timedwait],[fcntl.h],
-       [
-        ace_cv_lib_timedwait_proto=yes
-       ],
-       [
-        ace_cv_lib_timedwait_proto=no
-       ])
-    ])
-],,[AC_DEFINE([ACE_LACKS_TIMEDWAIT_PROTOTYPES])])
+AC_CHECK_DECL([recv_timedwait],
+              [],
+              [AC_DEFINE([ACE_LACKS_TIMEDWAIT_PROTOTYPES], 1,
+                         [Define to 1 if platform lacks the declarations
+                         of recv_timedwait, send_timedwait, etc.])],
+              [#include <pthread.h>
+	       #include <fcntl.h>])
 
-dnl Check for ualarm prototype in unistd.h.
-dnl Most Unices seem to put it there (?)
-ACE_CACHE_CHECK([for ualarm() prototype],[ace_cv_lib_ualarm_proto],[
-   AC_EGREP_HEADER([ualarm],[unistd.h],
-                   [
-                    ace_cv_lib_ualarm_proto=yes
-                   ],
-                   [
-                    ace_cv_lib_ualarm_proto=no
-                   ])
-],,[AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE])])
+dnl Check for ualarm prototype
+AC_CHECK_DECL([ualarm],
+              [],
+	      [AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE], 1,
+	                 [Define to 1 if platform lacks the declaration 
+			 of ualarm().])], 
+              [#include <unistd.h>])
 
 dnl Check for getrusage prototype in sys/resource.h
-ACE_CACHE_CHECK([for getrusage() in sys/resource.h],
-    [ace_cv_lib_has_getrusage_proto],[
-      AC_EGREP_HEADER([getrusage],[sys/resource.h],
-         [
-          ace_cv_lib_has_getrusage_proto=yes
-         ],
-         [
-          ace_cv_lib_has_getrusage_proto=no
-         ])
-],[AC_DEFINE([ACE_HAS_GETRUSAGE_PROTO])],)
+AC_CHECK_DECL([getrusage],
+	      [AC_DEFINE([ACE_HAS_GETRUSAGE_PROTOTYPE], 1,
+			 [Define to 1 if platform has the declaration
+			 of getrusage().])],
+	      [],
+	      [#include <sys/resource.h>])
 
-dnl Check for {get,set}rlimit prototypes in sys/resource.h
-ACE_CACHE_CHECK([for getrlimit() and setrlimit() in sys/resource.h],
-    [ace_cv_lib_has_getsetrlimit_proto],[
-      AC_EGREP_HEADER([getrlimit],[sys/resource.h],
-         [
-          AC_EGREP_HEADER([getrlimit],[sys/resource.h],
-             [
-              ace_cv_lib_has_getsetrlimit_proto=yes
-             ],
-             [
-              ace_cv_lib_has_getsetrlimit_proto=no
-             ])
-         ],
-         [
-          ace_cv_lib_has_getsetrlimit_proto=no
-         ])
-],,[AC_DEFINE([ACE_LACKS_RLIMIT_PROTOTYPE])])
+dnl Check for {get,set}rlimit prototypes 
+AC_CHECK_DECL([getrlimit],[],[],[#include <sys/resource.h>])
+AC_CHECK_DECL([setrlimit],[],[],[#include <sys/resource.h>])
+if test "$ac_cv_have_decl_getrlimit" != yes ||
+   test "$ac_cv_have_decl_setrlimit" != yes; then
+  AC_DEFINE([ACE_LACKS_RLIMIT_PROTOTYPE], 1,
+            [Define to 1 if platform lacks the declaration of 
+            {get,set}rlimit().])
+fi
+
 
 dnl Check for platforms that don't declare dl* functions
 dnl as extern "C" in dlfcn.h.
@@ -3179,9 +3105,15 @@ AC_LANG_POP([C])
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
-AC_CHECK_FUNCS([execv execvp execve],
-  ,
-  [AC_DEFINE([ACE_LACKS_EXEC])])
+AC_CHECK_FUNC(execv)
+AC_CHECK_FUNC(execvp)
+AC_CHECK_FUNC(execve)
+
+if test "$ac_cv_func_execv" != yes &&
+   test "$ac_cv_func_execvp" != yes &&
+   test "$ac_cv_func_execve" != yes; then
+  AC_DEFINE([ACE_LACKS_EXEC])
+fi
 
 ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
 
@@ -3426,15 +3358,12 @@ fi
 
 ACE_CHECK_LACKS_FUNCS(fork)
 
-AC_CHECK_FUNC([getrlimit],
-  [
-   AC_CHECK_FUNC([setrlimit],
-     ,
-     [AC_DEFINE([ACE_LACKS_RLIMIT])])
-  ],
-  [
-   AC_DEFINE([ACE_LACKS_RLIMIT])
-  ])
+AC_CHECK_FUNC([getrlimit])
+AC_CHECK_FUNC([setrlimit])
+if test "$ac_cv_func_getrlimit" != yes || 
+   test "$ac_cv_func_setrlimit" != yes; then
+  AC_DEFINE([ACE_LACKS_RLIMIT])
+fi
 
 AC_CHECK_FUNC([sysinfo],
   [
@@ -3449,82 +3378,79 @@ ACE_CHECK_LACKS_FUNCS(lstat readlink rename recvmsg sendmsg)
 
 ACE_CHECK_HAS_FUNCS(getrusage)
 
-AC_CHECK_FUNC([getpgid],
-  [
-   dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-   dnl needed to make the getpgid() prototype visible.
-   ACE_CACHE_CHECK([for getpgid prototype],
-     [ace_cv_lib_has_getpgid_prototype],
-     [
-      ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-      AC_EGREP_HEADER([[^_]+getpgid], [unistd.h],
-        [
-         ace_cv_lib_has_getpgid_prototype=yes
-        ],
-        [
-         ace_cv_lib_has_getpgid_prototype=no
-        ])
-      dnl Reset the compiler flags
-      CPPFLAGS="$ace_save_CPPFLAGS"
-     ],, [AC_DEFINE([ACE_LACKS_GETPGID_PROTOTYPE])])
-  ],
-  [
-   AC_DEFINE([ACE_LACKS_GETPGID])
-  ])
+ACE_CHECK_LACKS_FUNCS([getpgid])
+if test "$ac_cv_func_getpgid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the getpgid() prototype visible.
+  ACE_CACHE_CHECK([for getpgid prototype],
+    [ace_cv_lib_has_getpgid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+getpgid], [unistd.h],
+       [
+        ace_cv_lib_has_getpgid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_getpgid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_GETPGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
+  [Define to 1 if platform lacks getpgid() declaration in <unistd.h>.])
+fi
 
 ACE_CHECK_LACKS_FUNCS(getppid)
 
-AC_CHECK_FUNC([setregid],
-  [
-   dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-   dnl needed to make the setregid() prototype visible.
-   ACE_CACHE_CHECK([for setregid prototype],
-     [ace_cv_lib_has_setregid_prototype],
-     [
-      ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-      AC_EGREP_HEADER([[^_]+setregid], [time.h],
-        [
-         ace_cv_lib_has_setregid_prototype=yes
-        ],
-        [
-         ace_cv_lib_has_setregid_prototype=no
-        ])
-      dnl Reset the compiler flags
-      CPPFLAGS="$ace_save_CPPFLAGS"
-     ],, [AC_DEFINE([ACE_LACKS_SETREGID_PROTOTYPE])])
-  ],
-  [
-   AC_DEFINE([ACE_LACKS_SETREGID])
-  ])
+ACE_CHECK_LACKS_FUNCS([setregid])
+if test "$ac_cv_func_setregid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setregid() prototype visible.
+  ACE_CACHE_CHECK([for setregid prototype],
+    [ace_cv_lib_has_setregid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setregid], [unistd.h],
+       [
+        ace_cv_lib_has_setregid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setregid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETREGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETREGID_PROTOTYPE],
+  [Define to 1 if platform lacks setregid() declaration in <unistd.h>.])
+fi
 
-AC_CHECK_FUNC([setreuid],
-  [
-   dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-   dnl needed to make the setreuid() prototype visible.
-   ACE_CACHE_CHECK([for setreuid prototype],
-     [ace_cv_lib_has_setreuid_prototype],
-     [
-      ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-      AC_EGREP_HEADER([[^_]+setreuid], [time.h],
-        [
-         ace_cv_lib_has_setreuid_prototype=yes
-        ],
-        [
-         ace_cv_lib_has_setreuid_prototype=no
-        ])
-      dnl Reset the compiler flags
-      CPPFLAGS="$ace_save_CPPFLAGS"
-     ],, [AC_DEFINE([ACE_LACKS_SETREUID_PROTOTYPE])])
-  ],
-  [
-   AC_DEFINE([ACE_LACKS_SETREUID])
-  ])
+ACE_CHECK_LACKS_FUNCS([setreuid])
+if test "$ac_cv_func_setreuid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setreuid() prototype visible.
+  ACE_CACHE_CHECK([for setreuid prototype],
+    [ace_cv_lib_has_setreuid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setreuid], [unistd.h],
+       [
+        ace_cv_lib_has_setreuid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setreuid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETREUID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETREUID_PROTOTYPE],
+  [Define to 1 if platform lacks setreuid() declaration in <unistd.h>.])
+fi
 
 AC_CHECK_FUNC([getpagesize],
   [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
@@ -4302,7 +4228,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
 #ifndef _REENTRANT
 # define _REENTRANT
 #endif
-#ifdef HAVE_PWD_H
+#ifndef ACE_LACKS_PWD_H
 # include <pwd.h>
 #endif
 #ifndef ACE_LACKS_SYS_TYPES_H
@@ -5877,7 +5803,7 @@ ACE_CACHE_CHECK([for reentrant function macros],
 # include <sys/time.h>
 #endif
 
-#if defined (HAVE_PWD_H)
+#if !defined (ACE_LACKS_PWD_H)
 # include <pwd.h>
 #endif
 

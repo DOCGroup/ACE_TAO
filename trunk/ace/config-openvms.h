@@ -293,7 +293,7 @@
                                         gethostbyaddr_r,
                                         gethostbyname_r,
                                         getservbyname_r).*/
-#define ACE_LACKS_PARAM_H 1
+#define ACE_LACKS_SYS_PARAM_H 1
                                         /*Platform lacks <sys/param.h>
                                         (e.g., MVS)*/
 #define ACE_LACKS_PRI_T 1

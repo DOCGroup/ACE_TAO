@@ -84,7 +84,7 @@ struct ip_mreq
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 #if !defined (ACE_HAS_FSU_PTHREADS)
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).

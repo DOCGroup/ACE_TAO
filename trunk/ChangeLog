@@ -1,12 +1,121 @@
+Sun Aug  8 07:12:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Start converting checks for for prototypes to use AC_CHECK_DECL
+	  instead of AC_EGREP_CPP or AC_EGREP_HEADER.
+
+	* ace/OS_NS_sys_resource.inl:
+	  Changed so conditionals aren't used inside macro call.
+
+	* m4/subsets.m4:
+	  Changed AC_HELP_STRING to AS_HELP_STRING.
+
+	* ace/config-sco-4.2-nothread.h:
+	* ace/config-sco-5.0.0-mit-pthread.h:
+	* ace/config-sco-5.0.0.h:
+	* ace/config-tandem.h:
+	  Removed (commented-out) definition of ACE_HAS_SYSCALL_GETRUSAGE.
+
+	* ace/config-hpux11.h:
+	* ace/config-hpux-11.00.h:
+	  Removed ACE_HAS_SYSCALL_GETRUSAGE.  getrusage() was added in
+	  HPUX 10.10.
+
+	* configure.ac:
+	  Fixed check for setregid() and setreuid() prototypes to look for
+	  them in <unistd.h>, not <time.h>.
+
+	* m4/config_h.m4:
+	  Replace some AH_TEMPLATE definitions.  ACE_CHECK_HAS_HEADERS and
+	  ACE_CHECK_LACKS_HEADERS provide autoheader templates themselves.
+
+	* configure.ac:
+	  Replace some calls to AC_CHECK_HEADERS with ACE_CHECK_HAS_HEADERS
+	  or ACE_CHECK_LACKS_HEADERS.
+
+	* m4/ace_headers.m4:
+	  New file, with ACE_CHECK_HAS_HEADERS and ACE_CHECK_LACKS_HEADERS
+	  autoconf macros.  These macros are similar to AC_CHECK_HEADERS,
+	  but define either ACE_HAS_<foo> or ACE_LACKS_<foo>.
+
+	* ace/OS_NS_unistd.inl:
+	* config-rtems.h:
+	  Changed name of feature test macro ACE_HAS_GETOPT_PROTO to
+	  ACE_HAS_GETOPT_PROTOTYPE.
+
+	* ace/config-linux-common.h:
+	* ace/config-unixware-7.1.0:
+	* ace/config-unixware-7.1.0.udk.h:
+	* ace/os_include/sys/os_resource.h:
+	  Changed name of feature test macro ACE_HAS_GETRUSAGE_PROTO to
+	  ACE_HAS_GETRUSAGE_PROTOTYPE.
+
+	* ace/Basic_Types.h:
+	* ace/config-chorus.h:
+	* ace/config-integritySCA.h:
+	* ace/config-mvs.h:
+	* ace/config-openvms.h:
+	* ace/config-psos-diab.h:
+	* ace/config-psos-diab-mips.h:
+	* ace/config-psos-diab-ppc.h:
+	* ace/config-psos-tm.h:
+	* ace/config-psosim-g++.h:
+	* ace/config-tandem.h:
+	* ace/config-vxworks5.x.h:
+	* ace/config-win32-common.h:
+	* ace/os_include/os_limits.h:
+	  Changed name of feature test macro ACE_LACKS_PARAM_H to
+	  ACE_LACKS_SYS_PARAM_H.
+
+	* ace/OS.inl:
+	* ace/config-dgux-4.11-epc.h:
+	* ace/config-freebsd.h:
+	* ace/config-hpux-10.x.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-hpux11.h:
+	* ace/config-irix5.2.h:
+	* ace/config-irix5.3-g++.h:
+	* ace/config-irix5.3-sgic++.h:
+	* ace/config-irix6.x-common.h:
+	* ace/config-linux-common.h:
+	* ace/config-m88k.h:
+	* ace/config-macosx-panther.h:
+	* ace/config-macosx.h:
+	* ace/config-netbsd.h:
+	* ace/config-openbsd.h:
+	* ace/config-osf1-3.2.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-sco-4.2-nothread.h:
+	* ace/config-sco-5.0.0-mit-pthread.h:
+	* ace/config-sco-5.0.0.h:
+	* ace/config-sunos4-g++.h:
+	* ace/config-sunos4-lucid3.2.h:
+	* ace/config-sunos4-sun3.x.h:
+	* ace/config-sunos4-sun4.1.4.h:
+	* ace/config-sunos4-sun4.x.h:
+	* ace/config-sunos5.4-centerline-2.x.h:
+	* ace/config-sunos5.4-g++.h:
+	* ace/config-sunos5.4-sunc++-4.x.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-tandem.h:
+	* ace/config-unixware-2.01-g++.h:
+	* ace/config-unixware-2.1.2-g++.h:
+	* ace/config-unixware-7.1.0.h:
+	* ace/config-unixware-7.1.0.udk.h:
+	* ace/os_include/sys/os_resource.h:
+	  Changed name of feature test macro ACE_HAS_SYSCALL_H to
+	  ACE_HAS_SYS_SYSCALL_H.
+
 Sat Aug  7 10:43:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/OS_NS_string.cpp:
         * ace/OS_NS_string.h:
         * ace/OS_NS_string.inl:
-        
+
           Uninlined the ACE_OS::strerror() method, so the #include of ACE.h
           necessitated by the changes in
-          
+
           Fri Aug  6 07:58:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
           can be moved to the .cpp file.
@@ -228,10 +337,10 @@ Thu Aug  5 07:45:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	  ACE_CHECK_LACKS_FUNCS provide autoheader templates themselves.
 
 	* configure.ac:
-	  Replace some calls to AC_CHECK_FUNC with ACE_CHECK_HAS_FUNCS or
-	  ACE_CHECK_LACKS_FUNC.
+	  Replace some calls to AC_CHECK_FUNCS with ACE_CHECK_HAS_FUNCS or
+	  ACE_CHECK_LACKS_FUNCS.
 
-	* m4/ace_headers.m4:
+	* m4/ace_functions.m4:
 	  New file, with ACE_CHECK_HAS_FUNCS and ACE_CHECK_LACKS_FUNCS
 	  autoconf macros.  These macros are similar to AC_CHECK_FUNCS,
 	  but define either ACE_HAS_<foo> or ACE_LACKS_<foo>.

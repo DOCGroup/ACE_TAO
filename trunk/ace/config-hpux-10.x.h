@@ -67,7 +67,7 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 // But doesn't have a prototype for syscall()
 #define ACE_LACKS_SYSCALL
 

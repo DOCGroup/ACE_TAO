@@ -227,7 +227,7 @@
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
-#define ACE_HAS_GETRUSAGE_PROTO
+#define ACE_HAS_GETRUSAGE_PROTOTYPE
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -292,7 +292,7 @@
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY

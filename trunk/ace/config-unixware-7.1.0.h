@@ -119,7 +119,7 @@
 
 /* Platform has a getrusage () prototype in sys/resource.h that differs from
    the one in ace/OS.i. */
-#define ACE_HAS_GETRUSAGE_PROTO 1
+#define ACE_HAS_GETRUSAGE_PROTOTYPE 1
 
 /* Denotes that GNU has cstring.h as standard which redefines memchr() */
 #define ACE_HAS_GNU_CSTRING_H
@@ -268,7 +268,7 @@
 #define ACE_HAS_SVR4_TLI 1
 
 /* Compiler/platform contains the <sys/syscall.h> file. */
-#define ACE_HAS_SYSCALL_H 1
+#define ACE_HAS_SYS_SYSCALL_H 1
 
 /* Platform supports system configuration information */
 #define ACE_HAS_SYSINFO 1
