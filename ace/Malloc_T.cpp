@@ -185,7 +185,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
       if (rounded_bytes > (sizeof *this->cb_ptr_ + sizeof (ACE_Malloc_Header)))
         {
           // If we've got any extra space at the end of the control
-          // block, then skip past the dummy ACE_Malloc_Header to
+          // block, then skip past the dummy <ACE_Malloc_Header> to
           // point at the first free block.
           ACE_Malloc_Header *p = ((ACE_Malloc_Header *) (this->cb_ptr_->freep_)) + 1;
 
@@ -206,8 +206,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
           AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
 
           // Insert the newly allocated chunk of memory into the free
-          // list.  Skip over the ACE_Malloc_Header when returning
-          // pointer.
+          // list.  Add "1" to skip over the <ACE_Malloc_Header> when
+          // freeing the pointer.
           this->shared_free (p + 1);
         }
     }
@@ -344,7 +344,6 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
           currp = (ACE_Malloc_Header *)
             this->memory_pool_.acquire (nunits * sizeof (ACE_Malloc_Header),
                                         chunk_bytes);
-
           if (currp != 0)
             {
               AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
@@ -355,8 +354,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
               currp->s_.size_ = chunk_bytes / sizeof (ACE_Malloc_Header);
 
               // Insert the newly allocated chunk of memory into the
-              // free list.  Skip over the ACE_Malloc_Header when
-              // returning pointer.
+              // free list.  Add "1" to skip over the
+              // <ACE_Malloc_Header> when freeing the pointer since
+              // the first thing <free> does is decrement by this
+              // amount.
               this->shared_free (currp + 1);
               currp = this->cb_ptr_->freep_;
             }

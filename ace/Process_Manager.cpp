@@ -57,7 +57,7 @@ ACE_Process_Manager::dump (void) const
 
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)
   : proc_id_ (-1),
-    grp_id_ (-1)
+    grp_id_ (0)
 {
   ACE_TRACE ("ACE_Process_Descriptor::ACE_Process_Descriptor");
 }

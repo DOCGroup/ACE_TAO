@@ -54,10 +54,14 @@ static MALLOC *
 myallocator (const void *base_addr = 0)
 {
   static ACE_MMAP_Memory_Pool_Options options (base_addr);
-  static MALLOC static_allocator ("test_file",
-                                  "test_lock",
-                                  &options);
-  return &static_allocator;
+  static MALLOC *static_allocator;
+
+  ACE_NEW_RETURN (static_allocator,
+                  MALLOC ("test_file",
+                          "test_lock",
+                          &options),
+                  0);
+  return static_allocator;
 }
 
 static Test_Data *
