@@ -1,3 +1,332 @@
+Wed Aug 25 16:03:29 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Server.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.h:
+	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+
+	  Integrated many memory leak fixes for the Naming Service
+	  originally done in OCITAO 1.3a.  All relevant original changelog
+	  entries are below:
+
+        Thu Jul 22 11:31:30 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * utils/nslist/nsdel.cpp (main):
+        
+                  Added a new option, --destroy, that can be used to destroy the
+                  specified context after the unbind.  If the context is unbound
+                  but not destroyed using "nsdel", then the context will leak
+                  within the Naming Service because no NS client will be able to
+                  resolve() to get a reference to it again.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+                  (TAO_Storable_Naming_Context::DTOR):
+        
+                  Corrected a problem where the file that acts as persistent
+                  backing store for context information didn't get removed when
+                  the context had been destroyed via the "destroy()" operation.
+                  This should address [RT 4221].
+        
+        Wed Jul  7 15:41:33 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
+                  Made deletion of servant_activator_ conditional on the
+                  use_servant_activator_ member variable, since servant_activator_
+                  should only have a value when use_servant_activator_ is true.
+                  For safety sake, however, we now also explicitly initialize
+                  servant_activator_ to zero.
+        
+                  This should fix scoreboard problems on tests that instantiate a
+                  TAO_Naming_Server directly in their code rather than starting up
+                  a naming service executable, such as TAO/examples/Simple/grid.
+        
+        Fri Jul  2 10:16:06 2004  Rich Seibel <seibel_r@ociweb.com>
+        
+                * utils/nslist/nsadd.cpp:
+                  Integrated change from Dave Knox at Intrado Inc. to add the
+                  ability to add a new context to the Naming Service.
+                  At the same time, I pulled over the DOC group change to
+                  automatically add any intermediate contexts.  RT4014.
+        
+                * utils/nslist/runtest.pl:
+                  New test added to test the ability to use the above.
+        
+        Wed Jun 30 12:29:50 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+                  (File_Open_Lock_and_Check::File_Open_Lock_and_Check):
+                  Added an else clause to delete the file returned from
+                  create_stream in case none of the other branches were executed.
+                  This eliminates a continuous leak seen only using the "-u"
+                  option on the Naming Service.
+        
+        Wed Jun 30 12:29:18 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+                  (TAO_Naming_Server::DTOR): Added an explicit delete for the
+                  servant_activator_.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h
+                  (ServantActivator): Eliminated the inheritance from
+                  TAO_RefcountedLocalObject.  The inheritance was placed there
+                  with the thought that the servant would be reference counted
+                  and, thus, its lifecycle magically managed.  Empirical evidence
+                  shows otherwise, so we have these two changes.  This eliminates
+                  a one-time 88 byte or so leak when running the Naming Service
+                  with flat file persistence.
+        
+        Mon Jun 21 16:43:06 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp: Forgot to
+                  update this when I did the entry below.
+        
+        Mon Jun 21 12:17:35 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h
+                  (TAO_Storable_Naming_Context):
+                * tao/ORB_Core.{h,cpp} (instance_):
+        
+                  Changed use of auto_ptr<> to ACE_Auto_Ptr<> to avoid
+                  compatibility problems on VC6 platforms.
+        
+        Sun Jun 20 09:34:46 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp: More tweaks in
+                  various places to use *_var's in() method in order to de-warn
+                  about ambiguous conversions on certain compilers.
+        
+                * orbsvcs/tests/ImplRepo/NameService/run_test.pl: Increaed the
+                  waitforfile_timed timeout value so the test could succeed on
+                  slow/overloaded nightly build platforms.
+        
+        Sat Jun 19 00:21:28 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+                  (~TAO_Storable_Naming_Context): Sigh...removed code residue from
+                  debugging the problem below that was causing rampant breakage on
+                  any platform that wasn't glibc-based.
+        
+        Fri Jun 18 17:34:22 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+                  (~TAO_Storable_Naming_Context): Got rid of the call to remove
+                  the file.  Having the remove in here broke persistence when all
+                  the memory leaks got fixed, because upon destruction it would
+                  end up removing the file for the context.  This should fix the
+                  failures of the persistent variant of the Simple_Naming test.
+        
+                  A point worth noting is that I originally thought that the
+                  remove() needed to be moved into a different, new method so that
+                  when a context got unbound the file would get properly removed.
+                  While I can find no place in the code where an unbind calls the
+                  equivalent of remove(), anecdotal evidence shows that, indeed,
+                  the files get removed at unbind time, and everything works the
+                  way it's supposed to.  Mysterious...
+        
+        Fri Jun 18 13:52:07 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/IOR_Multicast.cpp (~TAO_IOR_Multicast): Changed
+                  to use the leave() method, since apparently *all* unsubscribe
+                  methods are deprecated.
+        
+        Fri Jun 18 13:34:01 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp: Tweaks in
+                  various places to use the ORB_var's in() method in order to
+                  de-warn on gcc 3.2.
+        
+                * orbsvcs/orbsvcs/IOR_Multicast.cpp (~TAO_IOR_Multicast):
+                  Eliminated use of deprecated unargumented unsubscribe() call,
+                  and use the correct calls instead.  This should get rid of the
+                  deprecation message printed out when the naming service
+                  terminates, which was also upsetting the Simple_Naming test
+                  output processing script (see below).
+        
+                * orbsvcs/Naming_Service/Naming_Server.cpp (operator()): Made the
+                  message only get printed out when the debug level is turned on.
+                  Seems that the multithreaded version of the Simple_Naming test
+                  was seeing this message, not expecting it, and declaring that
+                  the test had failed.
+        
+        Thu Jun 17 18:30:52 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/Naming_Service/Naming_Service.cpp (fini): Add call to
+                  the naming server object's fini method so things get properly
+                  removed/deallocated.
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (fini): Moved code that
+                  was in the destructor into here in order to parallel the
+                  allocation of things occurring in the init*() methods.
+        
+                  Also changed to get the reactor through orb->orb_core() rather
+                  than TAO_ORB_Core_instance(), which is old and decrepit.
+        
+                  Hopefully this fixes core dumps on exit when using "-m 1".
+        
+        Tue Jun 15 17:34:42 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (DTOR):
+        
+                  Removed the delete of the servant activator.  Turns out that
+                  reference-counting the servant activator was enough.  This
+                  should fix a core dump observed in the nightly builds on exit
+                  from the Naming Service.
+        
+        Mon Jun 14 13:56:22 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_with_orb):
+        
+                  Fixed message printed in exception so that it has the correct
+                  class name.
+        
+        Mon Jun 14 12:22:03 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                  Corrected a bunch of memory leaks throughout the naming
+                  service.  Details below...
+        
+                * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (close):
+        
+                  Properly close the flat file to reclaim memory allocated in the
+                  system's stdio library.
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_with_orb):
+        
+                  Use auto_ptr<> to hold the persistence factory so that it gets
+                  properly cleaned up.
+        
+                  The servant activator accepts and holds on to a pointer to the
+                  persistence factory.  However, we don't always create a servant
+                  activator.  We need to use auto_ptr<> over the persistence
+                  factory to insure proper cleanup in the case of an exception or
+                  in the case where we don't use use servant activator, so the
+                  code is a little goofy, and we end up releasing the pointer from
+                  the auto_ptr<> if the servant activator's in use.
+        
+                  There's probably a better way to handle this, such as reference
+                  counting, but I wanted going for the minimal thing that worked.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.*:
+        
+                  Refined the role of the activator with regard to ownership of
+                  and responsibility for managing the persistence factory--the
+                  activator is now responsible for cleaning up the persistence
+                  factory.
+        
+                  The destructor now performs its duty.
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_new_naming):
+        
+                  Change to hold the heap-allocated servant activator in a data
+                  member rather than a local so that we can clean it up when we're
+                  finished rather than just leak it.
+        
+                * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (DTOR):
+        
+                  Make sure everything gets cleaned up.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        
+                  Discontinued use of the TAO_Persistent_*Id classes.  These
+                  classes were designed and implemented to be used with the
+                  Persistent store, which is memory-mapped.   Therefore, they
+                  assume that some external entity will be doing any and all
+                  dynamic allocations, and that they should do none lest they
+                  screw it up.
+        
+                  We now have analogous TAO_Storable_*Id classes which DO assume
+                  responsibility for managing their dynamically-allocated memory.
+                  For the moment, since they are not used anywhere except within
+                  the Storable_Naming_Context, they do not have their own files.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.* (gfl_):
+        
+                  Wrap in an auto_ptr<> so that the stream gets properly destroyed
+                  at the proper time and doesn't leak.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+                  (shared_bind):
+        
+                  Capture the return from object_to_string in a String_var to
+                  eliminate a leak.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp (DTOR):
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp (recreate_all):
+        
+                  Use an auto_ptr<> to capture the values returned from
+                  create_stream() so that they get properly destroyed.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h (TAO_Storable_Bindings_Map):
+        
+                  Hold the ORB reference in a _var rather than a _ptr so it gets
+                  properly refcounted.
+        
+                * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        
+                  Mixed-in TAO_Local_RefCounted_Object hoping that the POA called
+                  the reference-counting methods, and, thus, it would insure that
+                  the POA would manage the activator's instance automagically.
+                  Alas, this didn't appear to work, but I can't see any harm in
+                  leaving this in for now.
+        
+        Mon Jun 14 12:06:45 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/Naming_Service/Naming_Service.*:
+        
+                  Added a fini() method to clean up resources acquired/allocated
+                  in the init*() methods.  The onus is on the application to call
+                  fini(), however.
+        
+                * orbsvcs/Naming_Service/Naming_Server.cpp (main):
+        
+                  Added call to new fini() method to insure proper cleanup.
+
+        Mon Jun  7 11:13:44 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+                * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+
+                  Defined our own TAO_ORBSVCS_MAXSIG as "one plus the largest
+                  signal number to which we pay attention", rather than using
+                  SIGRTMIN.  This should be portable across all platforms.
+        
+                  Bracketed use of actual signal names in the convenience CTOR by
+                  ACE_LACKS_UNIX_SIGNALS so that non-Unix platforms actually
+                  compile.
+        
+        Fri Jun  4 16:16:02 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+        
+                * orbsvcs/orbsvcs/Shutdown_Utilities.h:
+                * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+                * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        
+                  Added a new utility class to the Svc_Utils library that makes it
+                  easy to have a service propertly shut itself down in response to
+                  a signal.  The motivation for this was an apparent memory leak
+                  in the Naming Service and the desire to use purify-like tools to
+                  diagnose.  However, the service never shut itself down properly,
+                  so purify would not produce a leak report.
+        
+                * orbsvcs/Naming_Service/Naming_Service.h (shutdown):
+                * orbsvcs/Naming_Service/Naming_Service.cpp (shutdown):
+        
+                  Added a new method to shut down the Naming Service.
+        
+                * orbsvcs/Naming_Service/Naming_Server.cpp:
+        
+                  Added code to use the new shutdown utility classes to gracefully
+                  shut down the naming service.
+
 Wed Aug 25 15:06:35 2004  Rich Seibel <seibel_r@ociweb.com>
 
         * examples/PluggableUDP/tests/SimplePerformance/client.cpp:

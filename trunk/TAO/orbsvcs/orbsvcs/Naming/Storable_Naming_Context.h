@@ -16,13 +16,93 @@
 
 #include "Hash_Naming_Context.h"
 #include "ace/Hash_Map_Manager.h"
-#include "Persistent_Entries.h"
 
 #include "Storable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_Naming_Export TAO_Storable_IntId
+{
+public:
+  // = Initialization and termination methods.
+  /// Constructor.
+  TAO_Storable_IntId (void);
+
+  /// Constructor.
+  TAO_Storable_IntId (/* in */ const char * ior,
+                        CosNaming::BindingType type /* = CosNaming::nobject */);
+
+  /// Copy constructor.
+  TAO_Storable_IntId (const TAO_Storable_IntId & rhs);
+
+  /// Destructor.
+  ~TAO_Storable_IntId (void);
+
+  /// Assignment operator.
+  void operator= (const TAO_Storable_IntId & rhs);
+
+  // = Data members.
+
+  /// Stringified IOR to be stored in a Persistent Naming Context.
+  CORBA::String_var  ref_;
+
+  /// Binding type for <ref_>.
+  CosNaming::BindingType type_;
+};
+
+class TAO_Naming_Export TAO_Storable_ExtId
+{
+public:
+  // = Initialization and termination methods.
+
+  /// Constructor.
+  TAO_Storable_ExtId (void);
+
+  /// Constructor.
+  TAO_Storable_ExtId (/* in */ const char *id,
+                        /* in */ const char *kind);
+
+  /// Copy constructor.
+  TAO_Storable_ExtId (const TAO_Storable_ExtId & rhs);
+
+  /// Destructor.
+  ~TAO_Storable_ExtId (void);
+
+  // = Assignment and comparison methods.
+
+  /// Assignment operator (does copy memory).
+  void operator= (const TAO_Storable_ExtId & rhs);
+
+  /// Equality comparison operator (must match both id_ and kind_).
+  int operator== (const TAO_Storable_ExtId &rhs) const;
+
+  /// Inequality comparison operator.
+  int operator!= (const TAO_Storable_ExtId &rhs) const;
+
+  /// <hash> function is required in order for this class to be usable by
+  /// ACE_Hash_Map_Manager.
+  u_long hash (void) const;
+
+  // = Data members.
+
+  /// <id> portion of the name to be associated with some object
+  /// reference in a Storable Naming Context.
+  CORBA::String_var id_;
+
+  /// <kind> portion of the name to be associated with some object
+  /// reference in a Storable Naming Context.
+  CORBA::String_var kind_;
+
+  // Accessors.
+  // follow the mapping rules!
+
+  const char * id (void);
+  const char * kind (void);
+
+};
+
 
 /**
  * @class TAO_Storable_Bindings_Map
@@ -38,8 +118,8 @@ class TAO_Naming_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
 public:
 
   /// Underlying data structure - typedef for ease of use.
-  typedef ACE_Hash_Map_Manager<TAO_Persistent_ExtId,
-                               TAO_Persistent_IntId,
+  typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
+                               TAO_Storable_IntId,
                                ACE_Null_Mutex> HASH_MAP;
 
   // = Initialization and termination methods.
@@ -116,7 +196,7 @@ private:
   /// Hash map used for storage.
   HASH_MAP map_;
 
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 
 };
 
@@ -297,7 +377,7 @@ protected:
    */
   TAO_Storable_Bindings_Map *storable_context_;
 
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 
   ACE_CString name_;
 
@@ -320,7 +400,7 @@ protected:
   static const char * root_name_;
 
   /// The pointer to the global file used to allocate new contexts
-  static TAO_Storable_Base *gfl_;
+  static ACE_Auto_Ptr<TAO_Storable_Base> gfl_;
 
 /**
  * @class File_Open_Lock_and_Check

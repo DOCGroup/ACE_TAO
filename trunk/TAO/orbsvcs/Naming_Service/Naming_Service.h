@@ -42,8 +42,14 @@ public:
   virtual int init (int argc, ACE_TCHAR* argv[]);
   // Initialize the Naming Service with the arguments.
 
+  virtual int fini (void);
+  // The opposite of init().
+
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Run the TAO_Naming_Service.
+
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  // Shut down the TAO_Naming_Service; you must still call fini().
 
   virtual ~TAO_Naming_Service (void);
   // Destructor.

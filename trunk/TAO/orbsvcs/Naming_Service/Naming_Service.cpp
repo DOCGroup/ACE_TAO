@@ -122,6 +122,35 @@ TAO_Naming_Service::run (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
+void
+TAO_Naming_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+int
+TAO_Naming_Service::fini (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  this->my_naming_server_.fini();
+
+  ACE_TRY
+  {
+    // destroy implies shutdown
+    this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::fini");
+    return -1;
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
 // Destructor.
 TAO_Naming_Service::~TAO_Naming_Service (void)
 {
