@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial Introduction</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<HR>
+<H3>
+ACE Tutorials</H3>
+
+The original audience for these tutorials was the <A
+HREF="http://www.lads.com">Automated Design Systems</A> (ADS) IPC
+team, lead by <A HREF="mailto:jcej@lads.com">James Johnson</A>. Since
+then, the scope has been changed to include anyone who wants to learn
+about the ACE framework. Hopefully, even experienced ACE programmers
+will find something new here. With a framework as encompassing as ACE,
+it is easy to become an expert in one area and know little or nothing
+about others.
+
+<P> <HR WIDTH="100%"> <H3> What is ACE?</H3> The <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> framework was
+developed mostly by <A HREF="http://www.cs.wustl.edu/~schmidt">Douglas
+C. Schmidt's</A> team at Washington University. The framework attempts
+to abstract the details of many things across many operating
+systems. Some of the things abstracted include: network programming,
+multi-threading, shared memory and resource locking. 
+<!--#include virtual="/~schmidt/ACE-versions-i.html" -->
+
+<HR WIDTH="50%" align=left>
+<H3>
+Why Use ACE?</H3>
+A key reason to use ACE is simple: <I>write a multi-threaded networked
+application on one platform and quickly be able to use it on another</I>.
+This is important for many projects because it is necessary for applications
+to communicate with one another. For instance, many applications will exist
+on both UNIX and Win32 platforms within a local area network. <P>
+
+<HR WIDTH="50%" align=left>
+<H3>
+What about TAO?</H3>
+In the early stages, these tutorials won't address The ACE ORB (<A HREF="http://www.cs.wustl.edu/~schmidt">TAO</A>).
+However, if you want to request a tutorial on some aspect of TAO or even
+create one yourself, I'll be glad to integrate those into these tutorials.
+It's rare when folks want to write documentation, so nothing will be refused!
+
+<P>
+<HR WIDTH="100%">
+<H3>
+The Tutorials</H3>
+
+<P><HR WIDTH="50%" align=left><P>
+<H4>
+Your basic Client/Server hookup</H4>
+
+<OL>
+<LI>
+<A HREF="001/page01.html">A
+Simple Server</A></LI>
+
+<LI>
+<A HREF="002/page01.html">A
+Simpler Server</A></LI>
+
+<LI>
+<A HREF="003/page01.html">Finally,
+a Client</A></LI>
+
+<LI>
+<A HREF="004/page01.html">A
+much <I>cooler</I> client</A></LI>
+</OL>
+
+<P><HR WIDTH="50%" align=left><P>
+<H4>
+A word about concurrency</H4>
+
+<OL>
+<LI>
+<A HREF="005/page01.html">No
+threads, nothing fancy, just do the work!</A></LI>
+
+<LI>
+<A HREF="006/page01.html">I'd
+like to dedicate... a thread to each connection.</A></LI>
+
+<LI>
+<A HREF="007/page01.html">Let's
+pool our resources:&nbsp; a fixed-size pool of threads.</A></LI>
+</OL>
+
+<P><HR WIDTH="50%" align=left><P>
+<H4>
+Finding servers on your network</H4>
+
+<OL>
+<LI>
+<A HREF="008/page01.html">Calling
+all servers!</A></LI>
+
+<LI>
+<A HREF="009/page01.html">Discriminating tastes...</A></LI>
+</OL>
+
+<P><HR WIDTH="50%" align=left><P>
+
+<H4>
+A word about ACE_Message_Queue</H4>
+
+<OL>
+<LI>
+<A HREF="010/page01.html">Puttin' data</A></LI>
+<LI>
+<A HREF="011/page01.html">What about non-trivial data?</A></LI>
+<!--
+<LI>
+<A HREF="012/page01.html">Puttin' pointers</A></LI>
+-->
+</OL>
+<HR>
+
+<P>Back to the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-tutorials.html">ACE
+tutorials</A> page.
+
+<P>
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</HTML>
+
