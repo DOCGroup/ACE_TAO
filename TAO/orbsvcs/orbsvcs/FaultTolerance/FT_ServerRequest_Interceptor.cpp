@@ -4,6 +4,7 @@
 #include "tao/IOP_IORC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/DynamicC.h"
+#include "tao/Typecode.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "ace/Log_Msg.h"
 

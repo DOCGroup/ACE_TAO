@@ -1,3 +1,18 @@
+Tue Oct 28 22:22:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/FT_ORB.dsp:
+
+          Updated project file list.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+          Added include of tao/Typecode.h.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+
+          Replaced instances of TAO_INVOKE_EXCEPTION with
+          TAO::TAO_INVOKE_SYSTEM_EXCEPTION.
+
 Tue Oct 28 22:12:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
