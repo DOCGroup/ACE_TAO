@@ -418,6 +418,10 @@ public:
   /// ListenPoints
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
+  /// Return the messaging object that is used to format the data that
+  /// needs to be sent.
+  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
+
 protected:
   /** @name Template methods
    *
@@ -458,10 +462,6 @@ protected:
    * @return The old event handler
    */
   virtual TAO_Connection_Handler * invalidate_event_handler_i (void) = 0;
-
-  /// Return the messaging object that is used to format the data that
-  /// needs to be sent.
-  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
 
   /// Write the complete iovec chain to the connection.
   /**

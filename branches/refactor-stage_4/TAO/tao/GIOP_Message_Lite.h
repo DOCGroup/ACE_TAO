@@ -200,6 +200,8 @@ private:
   /// Header length
   virtual size_t header_length (void) const;
 
+  virtual TAO_OutputCDR &out_stream (void);
+
 private:
 
   /// Write the request header in to <msg>
@@ -258,6 +260,8 @@ private:
   // The byte order..
   // NOTE: GIOP lite cannot work between heterogenous platforms..
   CORBA::Octet byte_order_;
+
+  TAO_OutputCDR cdr_;
 };
 
 

@@ -166,6 +166,9 @@ public:
 
   /// Header length
   virtual size_t header_length (void) const = 0;
+
+  /// Accessor for the output CDR stream
+  virtual TAO_OutputCDR &out_stream (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)

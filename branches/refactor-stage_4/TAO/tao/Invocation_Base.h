@@ -20,15 +20,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
+#include "ace/Global_Macros.h"
 
 namespace  CORBA
 {
   class Object;
+  class SystemException;
 }
 
 namespace TAO
 {
-  /// Enums for inovcation types
+  class Argument;
+
+  /// Enums for invocation types
   enum Invocation_Type {
     TAO_ONEWAY_INVOCATION,
     TAO_TWOWAY_INVOCATION
@@ -59,42 +64,37 @@ namespace TAO
   {
   public:
     Invocation_Base (CORBA::Object *target,
-                     TAO::Argument **args,
+                     Argument **args,
                      int arg_number,
                      char *operation,
                      int op_len,
                      TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                     TAO::Invocation_Type mode = TAO_SYNCHRONOUS_INVOCATION);
+                     TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
 
     void invoke (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  protected:
+  private:
     /// Dont allow default initializations
     Invocation_Base (void);
 
-    int oneway_invocation (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-
-    int twoway_invocation (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    Invocation_Base & operator = (const Invocation_Base &);
 
   private:
     CORBA::Object *target_;
 
-    TAO_Argument **args_;
+    Argument **args_;
 
-    int args_number_;
+    int number_args_;
 
     const char *operation_;
 
     int op_len_;
 
-    TAO_Invocation_Type type_;
+    Invocation_Type type_;
 
-    TAO_Invocation_Mode mode_;
+    Invocation_Mode mode_;
   };
 } // End namespace TAO
 

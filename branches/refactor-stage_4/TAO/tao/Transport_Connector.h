@@ -34,10 +34,11 @@ class TAO_Profile;
 class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Connect_Strategy;
+class TAO_Transport;
 
 namespace TAO
 {
-  class Profile_Connection_Resolver;
+  class Profile_Transport_Resolver;
 }
 /**
  * @class TAO_Connector
@@ -99,10 +100,10 @@ public:
   /**
    * Call is very similar to the previous one but with a timeout.
    */
-  virtual TAO_Transport * connect (TAO::Profile_Connection_Resolver *r,
-                                   TAO_Endpoint *ep,
-                                   ACE_Time_Value *timeout
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Transport* connect (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Endpoint *ep,
+                                  ACE_Time_Value *timeout
+                                  ACE_ENV_ARG_DECL);
 
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in <cdr>
@@ -129,6 +130,10 @@ protected:
   virtual int make_connection (TAO_GIOP_Invocation *invocation,
                                TAO_Transport_Descriptor_Interface *desc,
                                ACE_Time_Value *timeout) = 0;
+
+  virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
+                                          TAO_Transport_Descriptor_Interface &desc,
+                                          ACE_Time_Value *timeout) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

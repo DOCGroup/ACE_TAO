@@ -9,8 +9,10 @@
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-#include "tao/Endpoint.h"
-#include "tao/Base_Transport_Property.h"
+//$Id$
+#include "Endpoint.h"
+#include "Base_Transport_Property.h"
+#include "Profile_Transport_Resolver.h"
 
 ACE_RCSID (tao,
            Invocation_Endpoint_Selectors,
@@ -61,7 +63,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 
 void
 TAO_Default_Endpoint_Selector::select_endpoint (
-  TAO::Profile_Connection_Resolver *r
+  TAO::Profile_Transport_Resolver *r
   ACE_ENV_ARG_DECL)
 {
   do
@@ -69,14 +71,14 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       r->profile (r->stub ()->profile_in_use ());
 
       size_t endpoint_count =
-        this->profile_->endpoint_count();
+        r->profile ()->endpoint_count();
 
       TAO_Endpoint *ep =
         r->profile ()->endpoint ();
 
       for (size_t i = 0; i < endpoint_count; ++i)
         {
-          int retval =
+          bool retval =
             r->try_connect (ep ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
@@ -88,7 +90,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
           ep = ep->next ();
         }
     }
-  while (this->stub_->next_profile_retry () != 0);
+  while (r->stub ()->next_profile_retry () != 0);
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
@@ -162,13 +164,4 @@ TAO_Default_Endpoint_Selector::endpoint_from_profile (
     }
 
   return 0;
-}
-
-
-int
-TAO_Default_Endpoint_Selector::endpoint_from_profile (
-    TAO::Profile_Connection_Resolver *r
-    ACE_ENV_ARG_DECL)
-{
-
 }

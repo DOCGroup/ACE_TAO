@@ -20,13 +20,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
 #include "Service_Context.h"
 #include "target_specification.h"
 
 
-// @@ Bala: Why is this not part of the RequestHeader?!
 /**
  * @class TAO_Operation_Details
  *

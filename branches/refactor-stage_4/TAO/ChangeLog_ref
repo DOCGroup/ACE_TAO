@@ -1,3 +1,77 @@
+Sat Jul 05 16:46:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	
+        * tao/Array_VarOut_T.inl: Fixed a compile error on Win32 which
+	  probably resulted from the merge.
+	 
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Moved the OutpoutCDR to this
+	  class. Provided an accessor to access the CDR stream. The init
+	  () method now initializes CDR stream's GIOP version numbers. 
+	
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:  Similar changes as GIOP for GIOP
+	  lite. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Added two new methods,
+	  make_connection () and connect (). These two methods perform
+	  similar tasks as that of other functions but use a
+	  Profile_Transport_Resolver class instead of the Invocation
+	  class. These methods are required for us to deprecate the GIOP
+	  classes. 
+	
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Provided concrete implementation for the
+	  make_connection () method.
+
+	* tao/IIOP_Transport.cpp: #if 0'ed the GIOP lite stuff. Looks like
+	  it is a waste in TAO. We can slowly start deprecating it.
+
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h: New class that will serve as a bridge
+	  class for the IDL compiler. The class is intentionally kept
+	  simple so that the IDL the exposed code to the application will
+	  not take much time to compile. The complexity is hidden off
+	  elsewhere which will be within the ORB. 
+	
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/Invocation_Endpoint_Selectors.h: Added a new method
+	  select_endpoint () which uses the resolver class. 
+	
+	* tao/ORB_Core.cpp: 
+	
+	* tao/Pluggable_Messaging.h: Added an accessor for the getting the
+	  outbound CDR streams. 
+	  
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: Concrete implementations for synchronous
+	  twoway and oneway operations. We have preliminary support for
+	  simple twoway operations. 
+
+	* tao/TAO.dsp: Added the new files into the project file. 
+	
+	* tao/Transport.h: Made the method messaging_object () to be
+	  publically accessible. 
+
+	* tao/operation_details.h: 
+	* tao/target_specification.h: Cosmetic fixes. 
+	
+	* tao/Profile_Transport_Resolver.cpp: 
+	* tao/Profile_Transport_Resolver.h: Simple class that does 
+
+	  - selects the profile and the endpoint within the profile on
+	    which the invocation is to be made. 
+
+	  - finds out a connection from the transport cache if there is
+	    a free one available or creates a new connection if needed. 
+
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h: Base class that encapsulates a bunch of
+	  common invocation code. I am still not sure whether this should
+	  be used as a base class or a helper utility class. Using it as a
+	  base class creates a deeply coupled structure. 
+
 Wed Jul  2 06:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Connection_Resolver.cpp:
@@ -15,6 +89,7 @@ Wed Jul  2 06:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Transport_Connector.cpp:
 	* tao/Transport_Connector.h: Temporary checkto move things to my
 	  laptop. 
+	  
 
 Tue Jul  1 07:08:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

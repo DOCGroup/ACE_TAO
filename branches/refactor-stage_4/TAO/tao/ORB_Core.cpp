@@ -2697,6 +2697,7 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
       has_timeout = 0;
       return;
     }
+
   (*connection_timeout_hook) (this, stub, has_timeout, time_value);
 }
 
