@@ -1,6 +1,48 @@
-Sun Sep 20 22:14:46 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+Sun Sep 20 22:41:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* README: File added.
+	* examples/Simple/echo/Echo_i.cpp:
+	  changes in Echo::echo() made.
+	
+
+Sun Sep 20 22:39:52 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
+
+	* ChangeLog, orbsvcs/orbsvcs/AVStreams.idl: *** empty log message ***
+
+Sun Sep 20 22:32:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ChangeLog, examples/Simple/echo/README: *** empty log message ***
+	  file added.
+	
+Sun Sep 20 21:54:24 1998  Marina Igorevna Spivak  <marina@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.h, ChangeLog, orbsvcs/orbsvcs/Naming/Naming_Utils.h, orbsvcs/orbsvcs/Naming/Naming_Utils.cpp, orbsvcs/orbsvcs/Naming/Entries.h, orbsvcs/orbsvcs/Naming/Entries.cpp, orbsvcs/orbsvcs/Naming/CosNaming_i.cpp, orbsvcs/orbsvcs/CosNaming.idl:
+	*** empty log message ***
+
+Sun Sep 20 20:59:38 1998  Vishal Kachroo  <vishal@waltz.cs.wustl.edu>
+
+	* ChangeLog: *** empty log message ***
+
+Sun Sep 20 20:42:29 1998  Marina Igorevna Spivak  <marina@waltz.cs.wustl.edu>
+
+	* ChangeLog, tao/corba.h: *** empty log message ***
+
+Sun Sep 20 20:36:32 1998  Vishal Kachroo  <vishal@waltz.cs.wustl.edu>
+
+	* examples/Simple/bank/AccountManager_i.cpp, examples/Simple/bank/Bank.idl, examples/Simple/bank/Client_i.cpp, examples/Simple/bank/Client_i.h, examples/Simple/bank/README, examples/Simple/bank/Server_i.cpp, examples/Simple/bank/run_test.pl:
+	*** empty log message ***
+
+Sun Sep 20 01:21:07 1998  Darrell E. Brunsch  <brunsch@waltz.cs.wustl.edu>
+
+	* ChangeLog: IIOP_Object changes.
+
+	* tao/IIOP_Object.cpp, tao/IIOP_Object.h, tao/IIOP_Object.i:
+	Fixed the static call to revert back to the original profile when the
+	forwarded profile fails.
+
+1998-09-20  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Simple/echo/Echo_i.cpp: 
+	changes in method Echo::echo.
 
 Sun Sep 20 21:20:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
