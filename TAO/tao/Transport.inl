@@ -80,6 +80,17 @@ TAO_Transport::id (int id)
   this->id_ = id;
 }
 
+ACE_INLINE int
+TAO_Transport::queue_is_empty (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->handler_lock_,
+                    -1);
+  return this->queue_is_empty_i ();
+}
+
+
 
 ACE_INLINE int
 TAO_Transport::flush_timer_pending (void) const
