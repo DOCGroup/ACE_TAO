@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_SCHED_FILTER_BUILDER_H
+#include "ace/pre.h"
 #define TAO_EC_SCHED_FILTER_BUILDER_H
 
 #include "EC_Filter_Builder.h"
@@ -86,4 +87,5 @@ private:
 #include "EC_Sched_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_SCHED_FILTER_BUILDER_H */

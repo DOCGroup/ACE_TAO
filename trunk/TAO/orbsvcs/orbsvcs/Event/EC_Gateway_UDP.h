@@ -51,6 +51,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_GATEWAY_UDP_H
+#include "ace/pre.h"
 #define TAO_EC_GATEWAY_UDP_H
 
 #include "ace/SOCK_CODgram.h"
@@ -662,4 +663,5 @@ private:
 #include "EC_Gateway_UDP.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_EVENT_CHANNEL_UDP_H */

@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_ESTYPES_H
+#include "ace/pre.h"
 #define ACE_LOCAL_ESTYPES_H
 
 #include "tao/corba.h"
@@ -46,4 +47,5 @@ typedef RtecEventComm::Event RtecEventComm_Event;
 #include "Local_ESTypes.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_LOCAL_ESTYPES_H */

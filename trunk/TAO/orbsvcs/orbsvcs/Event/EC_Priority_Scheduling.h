@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_PRIORITY_SCHEDULING_H
+#include "ace/pre.h"
 #define TAO_EC_PRIORITY_SCHEDULING_H
 
 #include "EC_Scheduling_Strategy.h"
@@ -81,4 +82,5 @@ private:
 #include "EC_Priority_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_PRIORITY_SCHEDULING_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_WORKER_H
+#include "ace/pre.h"
 #define TAO_EC_WORKER_H
 
 #include "tao/corba.h"
@@ -48,4 +49,5 @@ public:
 #pragma implementation ("EC_Worker.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_EC_WORKER_H */

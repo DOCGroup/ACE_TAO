@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_TYPES_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_TYPES_H
 
 #include "orbsvcs/CosNotifyFilterC.h"
@@ -185,4 +186,5 @@ typedef ACE_Unbounded_Set<TAO_Notify_Event_Listener*> EVENT_LISTENER_LIST;
 typedef ACE_Unbounded_Set<TAO_Notify_Update_Listener*> UPDATE_LISTENER_LIST;
 // list of update listeners.
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_TYPES_H */

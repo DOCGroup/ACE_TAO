@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_MESSAGING_POLICY_I_H
+#include "ace/pre.h"
 #define TAO_MESSAGING_POLICY_I_H
 
 #include "tao/orbconf.h"
@@ -145,4 +146,5 @@ private:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_MESSAGING_POLICY_I_H */

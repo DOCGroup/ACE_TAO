@@ -17,6 +17,7 @@
 //
 // ============================================================================
 #ifndef TAO_GIOP_MESSAGE_LITE_H
+#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_LITE_H
 
 #include "tao/GIOP_Server_Request.h"
@@ -162,4 +163,5 @@ const size_t TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET = 4;
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_LITE_H*/

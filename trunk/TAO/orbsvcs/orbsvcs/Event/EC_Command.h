@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_COMMAND_H
+#include "ace/pre.h"
 #define TAO_EC_COMMAND_H
 
 #include "ace/Functor.h"
@@ -203,4 +204,5 @@ private:
 #pragma implementation ("EC_Command.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_EC_COMMAND_H */

@@ -19,6 +19,7 @@
 // ================================================================
 
 #ifndef TAO_IDL_TIMEBASEC_H
+#include "ace/pre.h"
 #define TAO_IDL_TIMEBASEC_H
 
 #include "tao/Any.h"
@@ -164,4 +165,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_TIMEBASEC_H */

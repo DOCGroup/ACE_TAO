@@ -24,6 +24,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_TIMEOUT_GENERATOR_H
+#include "ace/pre.h"
 #define TAO_EC_TIMEOUT_GENERATOR_H
 
 #include "orbsvcs/orbsvcs_export.h"
@@ -98,4 +99,5 @@ private:
 #include "EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_TIMEOUT_GENERATOR_H */

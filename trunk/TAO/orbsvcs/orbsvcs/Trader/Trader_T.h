@@ -17,6 +17,7 @@
 // ========================================================================
 
 #ifndef TAO_TRADER_H
+#include "ace/pre.h"
 #define TAO_TRADER_H
 
 #include "Trader.h"
@@ -255,4 +256,5 @@ public:
 #include "Trader_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
+#include "ace/post.h"
 #endif /* ACE_TRADER_H */

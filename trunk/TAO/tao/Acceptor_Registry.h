@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_ACCEPTOR_REGISTRY_H
+#include "ace/pre.h"
 #define TAO_ACCEPTOR_REGISTRY_H
 
 #include "tao/Pluggable.h"
@@ -106,4 +107,5 @@ private:
 #include "tao/Acceptor_Registry.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_ACCEPTOR_REGISTRY_H */

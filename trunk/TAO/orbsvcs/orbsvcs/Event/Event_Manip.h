@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_EVENT_MANIP_H
+#include "ace/pre.h"
 #define TAO_EC_EVENT_MANIP_H
 
 #include "orbsvcs/RtecEventCommC.h"
@@ -143,4 +144,5 @@ private:
 #include "Event_Manip.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_EVENT_MANIP_H */

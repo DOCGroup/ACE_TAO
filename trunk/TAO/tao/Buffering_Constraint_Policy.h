@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_BUFFERING_CONSTRAINT_POLICY_H
+#include "ace/pre.h"
 #define TAO_BUFFERING_CONSTRAINT_POLICY_H
 
 #include "tao/orbconf.h"
@@ -95,4 +96,5 @@ private:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_BUFFERING_CONSTRAINT_POLICY_H */

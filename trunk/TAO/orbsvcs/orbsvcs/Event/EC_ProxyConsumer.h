@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_PROXYCONSUMER_H
+#include "ace/pre.h"
 #define TAO_EC_PROXYCONSUMER_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -173,4 +174,5 @@ private:
 #include "EC_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_PROXYCONSUMER_H */

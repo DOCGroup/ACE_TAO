@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TLS_ITERATOR_H
+#include "ace/pre.h"
 #define TLS_ITERATOR_H
 
 #include "orbsvcs/DsLogAdminS.h"
@@ -84,4 +85,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TLS_ITERATOR_H */

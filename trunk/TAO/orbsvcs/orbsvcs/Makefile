@@ -28,7 +28,9 @@ include $(TAO_ROOT)/rules.tao.GNU
 override TAO_IDLFLAGS += \
         -I$(TAO_ROOT) -Ge 1 \
         -Wb,export_macro=TAO_ORBSVCS_Export \
-        -Wb,export_include=orbsvcs_export.h
+        -Wb,export_include=orbsvcs_export.h \
+        -Wb,pre_include=ace/pre.h \
+        -Wb,post_include=ace/post.h
 
 ifndef TAO_ORBSVCS
   #### Please see docs/configurations.html#orbsvcs for documentation of

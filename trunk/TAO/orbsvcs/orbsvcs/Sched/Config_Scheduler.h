@@ -1,6 +1,7 @@
 // $Id$
 
 #ifndef ACE_CONFIG_SCHEDULER_H
+#include "ace/pre.h"
 #define ACE_CONFIG_SCHEDULER_H
 
 #include "ace/OS.h"
@@ -176,6 +177,7 @@ private:
 #include "Config_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_SCHEDULER_H */
 
 

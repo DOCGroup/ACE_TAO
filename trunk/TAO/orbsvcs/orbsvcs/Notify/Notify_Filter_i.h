@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_FILTER_I_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_FILTER_I_H
 
 #include "Notify_Constraint_Interpreter.h"
@@ -198,4 +199,5 @@ private:
   CONSTRAINT_EXPR_ENTRY;
 };
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_FILTER_I_H */

@@ -24,6 +24,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_EVENT_CHANNEL_H
+#include "ace/pre.h"
 #define TAO_EC_EVENT_CHANNEL_H
 
 #include "EC_Factory.h"
@@ -319,4 +320,5 @@ private:
 #include "EC_Event_Channel.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_EVENT_CHANNEL_H */

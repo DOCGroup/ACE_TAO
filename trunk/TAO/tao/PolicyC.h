@@ -9,6 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_POLICYC_H
+#include "ace/pre.h"
 #define TAO_IDL_POLICYC_H
 
 #include "tao/CurrentC.h"
@@ -600,4 +601,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyCurrent_ptr &
 
 #endif /* defined INLINE */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_POLICYC_H */

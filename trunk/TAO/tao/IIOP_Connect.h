@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_CONNECT_H
+#include "ace/pre.h"
 #define TAO_IIOP_CONNECT_H
 
 #include "ace/Reactor.h"
@@ -189,4 +190,5 @@ protected:
 #include "tao/IIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_IIOP_CONNECT_H */

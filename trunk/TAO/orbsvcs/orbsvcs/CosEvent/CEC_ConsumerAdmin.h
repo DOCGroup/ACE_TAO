@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_CEC_CONSUMERADMIN_H
+#include "ace/pre.h"
 #define TAO_CEC_CONSUMERADMIN_H
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -172,4 +173,5 @@ private:
 #include "CEC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CEC_CONSUMERADMIN_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_VAROUT_H
+#include "ace/pre.h"
 #define TAO_VAROUT_H
 
 #include "tao/Object.h"
@@ -126,4 +127,5 @@ private:
 #pragma implementation ("varout.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_VAROUT_H */

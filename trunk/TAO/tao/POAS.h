@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_IDL_POAS_H
+#include "ace/pre.h"
 #define TAO_IDL_POAS_H
 
 #include "tao/POAC.h"
@@ -1219,4 +1220,5 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_POAS_H */

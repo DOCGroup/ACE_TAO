@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef NOTIFY_FILTERADMIN_H
+#include "ace/pre.h"
 #define NOTIFY_FILTERADMIN_H
 
 #include "Notify_ID_Pool_T.h"
@@ -96,4 +97,5 @@ private:
   // Id generator for proxy suppliers
 };
 
+#include "ace/post.h"
 #endif /* NOTIFY_FILTERADMIN_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef DYNSCHED_H
+#include "ace/pre.h"
 #define DYNSCHED_H
 
 #include "ace/ACE.h"
@@ -530,6 +531,7 @@ private:
 #include "DynSched.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* DYNSCHED_H */
 
 // EOF

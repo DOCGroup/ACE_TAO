@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_TRANSIENT_NAMING_CONTEXT_H
+#include "ace/pre.h"
 #define TAO_TRANSIENT_NAMING_CONTEXT_H
 
 #include "Hash_Naming_Context.h"
@@ -176,4 +177,5 @@ protected:
   // non-virtual methods.
 };
 
+#include "ace/post.h"
 #endif /* TAO_TRANSIENT_NAMING_CONTEXT_H */

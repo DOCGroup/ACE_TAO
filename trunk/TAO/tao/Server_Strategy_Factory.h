@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
+#include "ace/pre.h"
 #define TAO_SERVER_STRATEGY_FACTORY_H
 
 #include "tao/corbafwd.h"
@@ -126,4 +127,5 @@ protected:
   // Active object map creation parameters.
 };
 
+#include "ace/post.h"
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
+#include "ace/pre.h"
 #define TAO_AV_ENDPOINT_STRATEGY_H
 
 #include "AVStreams_i.h"
@@ -166,4 +167,5 @@ protected:
 // Include the templates here.
 #include "Endpoint_Strategy_T.h"
 
+#include "ace/post.h"
 #endif /* TAO_AV_ENDPOINT_STRATEGY_H */

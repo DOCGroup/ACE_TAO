@@ -27,6 +27,7 @@
 // and Pluggable_Messaging_Interface.
 //
 #ifndef TAO_PLUGGABLE_MESSAGE_H
+#include "ace/pre.h"
 #define TAO_PLUGGABLE_MESSAGE_H
 
 #include "tao/corbafwd.h"
@@ -182,4 +183,5 @@ public:
 # include "tao/Pluggable_Messaging.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_PLUGGABLE_MESSAGE_H*/

@@ -15,6 +15,7 @@
 // ========================================================================
 
 #ifndef TAO_DYNSTRUCT_I_H
+#include "ace/pre.h"
 #define TAO_DYNSTRUCT_I_H
 
 #include "tao/orbconf.h"
@@ -211,4 +212,5 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#include "ace/post.h"
 #endif /* TAO_DYNSTRUCT_I_H */

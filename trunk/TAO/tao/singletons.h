@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef TAO_SINGLETONS_H
+#include "ace/pre.h"
 #define TAO_SINGLETONS_H
 
 #include "ace/Singleton.h"
@@ -47,4 +48,5 @@ typedef ACE_Singleton<TAO_Marshal_Alias, ACE_SYNCH_RECURSIVE_MUTEX> TAO_MARSHAL_
 typedef ACE_Singleton<TAO_Marshal_Except, ACE_SYNCH_RECURSIVE_MUTEX> TAO_MARSHAL_EXCEPT;
 typedef ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_RECURSIVE_MUTEX> TAO_MARSHAL_WSTRING;
 
+#include "ace/post.h"
 #endif /* TAO_SINGLETONS_H */

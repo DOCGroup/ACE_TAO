@@ -14,6 +14,7 @@
 // ====================================================================
 
 #ifndef TAO_DYNUNION_I_T_H
+#include "ace/pre.h"
 #define TAO_DYNUNION_I_T_H
 
 #include "tao/corbafwd.h"
@@ -73,4 +74,5 @@ private:
 #pragma implementation ("DynUnion_i_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_DYNUNION_I_T_H */

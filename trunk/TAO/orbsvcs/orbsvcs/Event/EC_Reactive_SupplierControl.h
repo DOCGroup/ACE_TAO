@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_REACTIVE_SUPPLIERCONTROL_H
+#include "ace/pre.h"
 #define TAO_EC_REACTIVE_SUPPLIERCONTROL_H
 
 #include "EC_SupplierControl.h"
@@ -140,4 +141,5 @@ private:
 #include "EC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_SUPPLIERCONTROL_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_SFP_H
+#include "ace/pre.h"
 #define TAO_AV_SFP_H
 
 #include "orbsvcs/AV/AV_export.h"
@@ -264,4 +265,5 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_AV_SFP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_AV_SFP_Flow_Factory)
 
+#include "ace/post.h"
 #endif /* TAO_SFP_H */

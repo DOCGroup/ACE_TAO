@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TAO_FORWARDING_SERVANT_H
+#include "ace/pre.h"
 #define TAO_FORWARDING_SERVANT_H
 
 #include "tao/orbconf.h"
@@ -62,4 +63,5 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#include "ace/post.h"
 #endif /* TAO_FORWARDING_SERVANT_H */

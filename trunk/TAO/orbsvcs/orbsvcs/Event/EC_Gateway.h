@@ -31,6 +31,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_GATEWAY_H
+#include "ace/pre.h"
 #define TAO_EC_GATEWAY_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -195,4 +196,5 @@ private:
   // We talk to the EC (as a consumer) using this proxy.
 };
 
+#include "ace/post.h"
 #endif /* ACE_EC_GATEWAY_H */

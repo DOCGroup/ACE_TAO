@@ -11,6 +11,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_OBJECT_KEYC_H
+#include "ace/pre.h"
 #define TAO_IDL_OBJECT_KEYC_H
 
 #include "tao/corbafwd.h"
@@ -98,4 +99,5 @@ private:
 #include "tao/Object_KeyC.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_OBJECT_KEYC_H */

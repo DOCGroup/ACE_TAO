@@ -1,5 +1,6 @@
 // $Id$
 #ifndef TAO_NOTIFY_PUSHSUPPLIER_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_PUSHSUPPLIER_H
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
@@ -74,4 +75,5 @@ class TAO_Notify_PushSupplier : public POA_CosNotifyComm::PushSupplier, public P
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_PUSHSUPPLIER_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_VALUEFACTORY_MAP_H
+#include "ace/pre.h"
 #define TAO_VALUEFACTORY_MAP_H
 
 #include "ace/Hash_Map_Manager.h"
@@ -79,4 +80,5 @@ typedef ACE_Singleton<TAO_ValueFactory_Map, ACE_SYNCH_MUTEX>
 #endif /* __ACE_INLINE__) */
 
 #endif /* TAO_HAS_VALUETYPE */
+#include "ace/post.h"
 #endif /* TAO_VALUEFACTORY_MAP_H */

@@ -5,6 +5,7 @@
 // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
 // ------------------------------
 #ifndef TAO_ORBSVCS_EXPORT_H
+#include "ace/pre.h"
 #define TAO_ORBSVCS_EXPORT_H
 
 #include "ace/OS.h"
@@ -31,5 +32,6 @@
 #  define TAO_ORBSVCS_SINGLETON_DECLARATION(T)
 #endif     /* TAO_ORBSVCS_HAS_DLL */
 
+#include "ace/post.h"
 #endif     /* TAO_ORBSVCS_EXPORT_H */
            // End of auto generated file.

@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_ID_POOL_T_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_ID_POOL_T_H
 
 #include "ace/OS.h"
@@ -101,4 +102,5 @@ class TAO_Notify_ID_Pool_Ex : public TAO_Notify_ID_Pool <ID_TYPE>
 #pragma implementation ("Notify_ID_Pool_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_ID_POOL_T_H */

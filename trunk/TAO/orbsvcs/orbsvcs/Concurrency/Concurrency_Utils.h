@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef _CONCURRENCY_SERVER_H
+#include "ace/pre.h"
 #define _CONCURRENCY_SERVER_H
 
 #include "tao/corba.h"
@@ -61,4 +62,5 @@ private:
   // This is the lock set factory activated under the POA.
 };
 
+#include "ace/post.h"
 #endif /* _CONCURRENCY_SERVER_H */

@@ -15,6 +15,7 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_RESOURCE_MANAGER
+#include "ace/pre.h"
 #define TAO_NOTIFY_RESOURCE_MANAGER
 
 #include "Notify_ID_Pool_T.h"
@@ -154,4 +155,5 @@ class TAO_Notify_Resource_Manager
   // Id generator for poa's.
 };
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_RESOURCE_MANAGER */

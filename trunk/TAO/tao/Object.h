@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_CORBA_OBJECT_H
+#include "ace/pre.h"
 #define TAO_CORBA_OBJECT_H
 
 #include "tao/corbafwd.h"
@@ -321,4 +322,5 @@ operator>> (TAO_InputCDR&, CORBA_Object*&);
 # include "tao/Object.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CORBA_OBJECT_H */

@@ -25,6 +25,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_PUSHCONSUMER_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_PUSHCONSUMER_H
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
@@ -112,4 +113,5 @@ class TAO_Notify_PushConsumer : public POA_CosNotifyComm::PushConsumer, public P
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_PUSHCONSUMER_H */

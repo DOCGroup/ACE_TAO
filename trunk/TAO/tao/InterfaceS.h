@@ -9,6 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_INTERFACES_H_
+#include "ace/pre.h"
 #define _TAO_IDL_INTERFACES_H_
 
 #include "tao/POA_CORBA.h"
@@ -42,4 +43,5 @@
 
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
+#include "ace/post.h"
 #endif /* _TAO_IDL_INTERFACES_H_ */

@@ -17,6 +17,7 @@
 //
 // ============================================================================
 #ifndef TAO_GIOP_ASSORTED_HEADERS_H
+#include "ace/pre.h"
 #define TAO_GIOP_ASSORTED_HEADERS_H
 #include "tao/GIOPC.h"
 
@@ -78,4 +79,5 @@ private:
 # include "tao/GIOP_Assorted_Headers.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_GIOP_ASSORTED_HEADERS_H*/

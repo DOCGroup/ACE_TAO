@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_IDL_POAC_H
+#include "ace/pre.h"
 #define TAO_IDL_POAC_H
 
 #include "tao/PolicyC.h"
@@ -2632,4 +2633,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA_ptr &)
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+#include "ace/post.h"
 #endif /* TAO_IDL_POAC_H */

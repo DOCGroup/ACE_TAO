@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_RESOURCE_H
+#include "ace/pre.h"
 #define TAO_DEFAULT_RESOURCE_H
 
 #include "tao/Resource_Factory.h"
@@ -159,4 +160,5 @@ protected:
 ACE_STATIC_SVC_DECLARE (TAO_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Resource_Factory)
 
+#include "ace/post.h"
 #endif /* TAO_DEFAULT_CLIENT_H */

@@ -33,6 +33,7 @@
 // ============================================================================
 
 #ifndef _CC_LOCKSET_H
+#include "ace/pre.h"
 #define _CC_LOCKSET_H
 
 #include "ace/Synch.h"
@@ -177,4 +178,5 @@ private:
   // Queue to hold the requested locks not yet granted.
 };
 
+#include "ace/post.h"
 #endif /* _CC_LOCKSET_H */

@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef TAO_ORB_H
+#include "ace/pre.h"
 #define TAO_ORB_H
 
 #include "tao/corbafwd.h"
@@ -900,4 +901,5 @@ operator>> (istream &, CORBA::WString_out &);
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_ORB_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_POA_H
+#include "ace/pre.h"
 #define TAO_POA_H
 
 // String
@@ -813,4 +814,5 @@ protected:
 # include "tao/POA.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_POA_H */

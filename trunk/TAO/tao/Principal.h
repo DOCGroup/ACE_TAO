@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_PRINCIPAL_H
+#include "ace/pre.h"
 #define TAO_PRINCIPAL_H
 
 #include "tao/corbafwd.h"
@@ -157,4 +158,5 @@ operator>> (TAO_InputCDR&, CORBA_Principal*&);
 # include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_PRINCIPAL_H */

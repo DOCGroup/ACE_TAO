@@ -35,6 +35,7 @@
  * @(#) $Header$
  */
 #ifndef TAO_AV_NTP_TIME_H
+#include "ace/pre.h"
 #define TAO_AV_NTP_TIME_H
 
 #include "ace/OS.h"
@@ -93,4 +94,5 @@ ACE_INLINE timeval unixtime()
   ACE_Time_Value tv = ACE_OS::gettimeofday();
         return ((timeval) tv);
 }
+#include "ace/post.h"
 #endif /* TAO_AV_NTP_TIME_H */

@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef TAO_RTCORBAFWD_H
+#include "ace/pre.h"
 #define TAO_RTCORBAFWD_H
 
 #include "tao/corbafwd.h"
@@ -71,4 +72,5 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) RTCORBA
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_RTCORBAFWD_H */

@@ -19,6 +19,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_WRONG_TRANSACTIONC_H
+#include "ace/pre.h"
 #define TAO_IDL_WRONG_TRANSACTIONC_H
 
 #include "tao/orbconf.h"
@@ -87,4 +88,5 @@ operator>> (TAO_InputCDR &, CORBA_WrongTransaction &);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#include "ace/post.h"
 #endif /* ifndef TAO_IDL_WRONG_TRANSACTIONC_H */

@@ -27,6 +27,7 @@
 // ============================================================================
 
 #ifndef TAO_INTERCEPTOR_H
+#include "ace/pre.h"
 #define TAO_INTERCEPTOR_H
 
 #include "tao/InterceptorS.h"
@@ -163,4 +164,5 @@ private:
 #include "tao/Interceptor.i"
 #endif /* defined INLINE */
 
+#include "ace/post.h"
 #endif /* TAO_INTERCEPTOR_H */

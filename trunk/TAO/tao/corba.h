@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_MASTER_CORBA_H
+#include "ace/pre.h"
 #define TAO_MASTER_CORBA_H
 
 // ACE specific includes
@@ -102,4 +103,5 @@
 #endif /* ACE_WIN32 */
 #endif /* ACE_NESTED_CLASS */
 
+#include "ace/post.h"
 #endif /* TAO_MASTER_CORBA_H */

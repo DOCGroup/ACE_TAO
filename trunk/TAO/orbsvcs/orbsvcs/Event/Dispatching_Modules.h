@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef ACE_DISPATCHING_MODULES_H
+#include "ace/pre.h"
 #define ACE_DISPATCHING_MODULES_H
 
 #include "tao/Timeprobe.h"
@@ -502,6 +503,7 @@ public:
 #include "Dispatching_Modules.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_DISPATCHING_MODULES_H */
 
 

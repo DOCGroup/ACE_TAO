@@ -27,6 +27,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_SUPPLIER_FILTER_H
+#include "ace/pre.h"
 #define TAO_EC_SUPPLIER_FILTER_H
 
 #include "orbsvcs/RtecEventCommC.h"
@@ -143,4 +144,5 @@ private:
 #include "EC_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_SUPPLIER_FILTER_H */

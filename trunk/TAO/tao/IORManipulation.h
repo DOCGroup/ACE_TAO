@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_IOR_MANIPULATION_H
+#include "ace/pre.h"
 #define TAO_IOR_MANIPULATION_H
 
 #include "tao/Object.h"
@@ -94,4 +95,5 @@ public:
       ));
 };
 
+#include "ace/post.h"
 #endif /* TAO_IOR_MANIPULATION_H */

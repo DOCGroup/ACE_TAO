@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_HASH_NAMING_CONTEXT_H
+#include "ace/pre.h"
 #define TAO_HASH_NAMING_CONTEXT_H
 
 #include "Naming_Context_Interface.h"
@@ -224,4 +225,5 @@ protected:
   // is the root Naming Context for the server, i.e., it is un<destroy>able.
 };
 
+#include "ace/post.h"
 #endif /* TAO_HASH_NAMING_CONTEXT_H */

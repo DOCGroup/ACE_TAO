@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_UTO_H
+#include "ace/pre.h"
 #define TAO_UTO_H
 
 #include "orbsvcs/TimeServiceS.h"
@@ -106,4 +107,5 @@ private:
   // for them.
 };
 
+#include "ace/post.h"
 #endif /* TAO_UTO_H */

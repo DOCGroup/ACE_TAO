@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_PLUGGABLE_H
+#include "ace/pre.h"
 #define TAO_PLUGGABLE_H
 
 #include "tao/corbafwd.h"
@@ -381,4 +382,5 @@ private:
 # include "tao/Pluggable.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif  /* TAO_PLUGGABLE_H */

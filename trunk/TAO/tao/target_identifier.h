@@ -20,6 +20,7 @@
 // @@ Bala: Please don't start global macros with _ and an uppercase
 // character. Those names are reserved for the implementation.
 #ifndef _TAO_TARGET_SPECIFICATION_H_
+#include "ace/pre.h"
 #define _TAO_TARGET_SPECIFICATION_H_
 
 #include "tao/Object_KeyC.h"
@@ -113,4 +114,5 @@ private:
 #include "target_identifier.i"
 #endif /* defined INLINE */
 
+#include "ace/post.h"
 #endif /*_TAO_TARGET_SPECIFICATION_H_ */

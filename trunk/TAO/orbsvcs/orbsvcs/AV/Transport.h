@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_TRANSPORT_H
+#include "ace/pre.h"
 #define TAO_AV_TRANSPORT_H
 
 #include "ace/Acceptor.h"
@@ -223,4 +224,5 @@ protected:
 #include "Transport.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_AV_TRANSPORT_H */

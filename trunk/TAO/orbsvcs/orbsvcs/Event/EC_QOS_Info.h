@@ -22,6 +22,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_QOS_INFO_H
+#include "ace/pre.h"
 #define TAO_EC_QOS_INFO_H
 
 #include "orbsvcs/RtecSchedulerC.h"
@@ -62,4 +63,5 @@ public:
 #include "EC_QOS_Info.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_EVENT_CHANNEL_H */

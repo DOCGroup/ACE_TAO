@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
+#include "ace/pre.h"
 #define TAO_ACTIVE_OBJECT_MAP_H
 
 #include "tao/Key_Adapters.h"
@@ -590,4 +591,5 @@ public:
 # include "tao/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_ACTIVE_OBJECT_MAP_H */

@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_DISPATCHING_H
+#include "ace/pre.h"
 #define TAO_EC_DISPATCHING_H
 
 #include "orbsvcs/RtecEventCommC.h"
@@ -106,4 +107,5 @@ public:
 #include "EC_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_DISPATCHING_H */

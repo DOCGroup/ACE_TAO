@@ -41,6 +41,7 @@
 // ============================================================================
 
 #ifndef TAO_TRY_MACROS_H
+#include "ace/pre.h"
 #define TAO_TRY_MACROS_H
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -353,4 +354,5 @@ return
   if (OBJ.locked () == 0) \
       TAO_THROW_ENV_RETURN (EXCEPTION,ENV,RETURN)
 #endif /* TAO_USES_DEPRECATED_TAO_TRY_MACROS */
+#include "ace/post.h"
 #endif /* TAO_TRY_MACROS_H */

@@ -15,6 +15,7 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_PROXY_SUPPLIER_T_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_PROXY_SUPPLIER_T_H
 
 #include "Notify_Proxy_T.h"
@@ -161,4 +162,5 @@ virtual void subscription_change (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_PROXY_SUPPLIER_T_H */

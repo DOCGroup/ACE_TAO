@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_CEC_SUPPLIERADMIN_H
+#include "ace/pre.h"
 #define TAO_CEC_SUPPLIERADMIN_H
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -146,4 +147,5 @@ public:
 #include "CEC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CEC_SUPPLIERADMIN_H */

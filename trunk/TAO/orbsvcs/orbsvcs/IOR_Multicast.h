@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef TAO_IOR_MULTICAST_H
+#include "ace/pre.h"
 #define TAO_IOR_MULTICAST_H
 
 #include "tao/corba.h"
@@ -110,5 +111,6 @@ private:
 
 };
 
+#include "ace/post.h"
 #endif /* TAO_IOR_MULTICAST_H */
 

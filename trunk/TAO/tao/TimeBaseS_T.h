@@ -16,6 +16,7 @@
 // ================================================================
 
 #ifndef TAO_IDL_TIMEBASES_T_H
+#include "ace/pre.h"
 #define TAO_IDL_TIMEBASES_T_H
 
 #if defined(_MSC_VER)
@@ -44,4 +45,5 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_TIMEBASES_T_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_WAIT_STRATEGY_H
+#include "ace/pre.h"
 #define TAO_WAIT_STRATEGY_H
 
 #include "tao/corbafwd.h"
@@ -269,4 +270,5 @@ public:
   virtual int register_handler (void);
 };
 
+#include "ace/post.h"
 #endif /* TAO_WAIT_STRATEGY_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TLS_LOGMGR_I_H
+#include "ace/pre.h"
 #define TLS_LOGMGR_I_H
 
 #include "orbsvcs/DsLogAdminS.h"
@@ -76,4 +77,5 @@ protected:
   DsLogAdmin::LogId max_id_;
   // The Max id assigned so far.
 };
+#include "ace/post.h"
 #endif /* TLS_LOGMGR_I_H */

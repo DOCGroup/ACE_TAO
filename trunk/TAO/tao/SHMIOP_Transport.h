@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_SHMIOP_TRANSPORT_H
+#include "ace/pre.h"
 #define TAO_SHMIOP_TRANSPORT_H
 
 #include "tao/corbafwd.h"
@@ -203,4 +204,5 @@ public:
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
+#include "ace/post.h"
 #endif  /* TAO_SHMIOP_TRANSPORT_H */

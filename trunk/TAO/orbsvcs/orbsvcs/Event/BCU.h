@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_BCU_H
+#include "ace/pre.h"
 #define ACE_BCU_H
 
 #include "ace/OS.h"
@@ -38,4 +39,5 @@ TAO_ORBSVCS_Export u_long ACE_BCU (u_long n);
 TAO_ORBSVCS_Export u_long ACE_BCU (u_long number, u_long n);
 // Check if <number> is prime (via ACE::is_prime ()) <n> times.
 
+#include "ace/post.h"
 #endif /* ACE_BCU_H */

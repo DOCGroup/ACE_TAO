@@ -36,6 +36,7 @@
  */
 
 #ifndef TAO_AV_MEDIA_TIMER_H
+#include "ace/pre.h"
 #define TAO_AV_MEDIA_TIMER_H
 
 #include "ace/OS.h"
@@ -56,4 +57,5 @@ class MediaTimer
   ACE_UINT32 offset_;   /* random offset */
 };
 
+#include "ace/post.h"
 #endif /* TAO_AV_MEDIA_TIMER_H */

@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_OBSERVERSTRATEGY_H
+#include "ace/pre.h"
 #define TAO_EC_OBSERVERSTRATEGY_H
 
 #include "EC_Worker.h"
@@ -284,4 +285,5 @@ private:
 #include "EC_ObserverStrategy.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_OBSERVERSTRATEGY_H */

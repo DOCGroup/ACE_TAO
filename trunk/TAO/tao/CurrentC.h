@@ -24,6 +24,7 @@
 // ============================================================================
 
 #ifndef TAO_IDL_CURRENTC_H
+#include "ace/pre.h"
 #define TAO_IDL_CURRENTC_H
 
 #ifndef TAO_EXPORT_MACRO
@@ -160,4 +161,5 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_CURRENTC_H */

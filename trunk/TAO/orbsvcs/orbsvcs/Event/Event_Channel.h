@@ -28,6 +28,7 @@
 // ============================================================================
 
 #ifndef ACE_EVENT_CHANNEL_H
+#include "ace/pre.h"
 #define ACE_EVENT_CHANNEL_H
 
 #include "ace/Containers.h"
@@ -1433,4 +1434,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ACE_EVENT_CHANNEL_H */

@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_ORB_CORE_H
+#include "ace/pre.h"
 #define TAO_ORB_CORE_H
 
 #include "tao/corbafwd.h"
@@ -748,4 +749,5 @@ TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 # include "tao/ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_ORB_CORE_H */

@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_RESOURCE_FACTORY_H
+#include "ace/pre.h"
 #define TAO_RESOURCE_FACTORY_H
 
 #include "ace/Service_Object.h"
@@ -179,4 +180,5 @@ public:
   // Configure the priority mapping for the ORB
 };
 
+#include "ace/post.h"
 #endif /* TAO_RESOURCE_FACTORY_H */

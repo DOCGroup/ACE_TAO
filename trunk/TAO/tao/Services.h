@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_SERVICES_H
+#include "ace/pre.h"
 #define TAO_SERVICES_H
 
 #include "tao/Sequence.h"
@@ -545,4 +546,5 @@ CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_S
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_SERVICES_H */

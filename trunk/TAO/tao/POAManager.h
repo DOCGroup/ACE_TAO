@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_POAMANAGER_H
+#include "ace/pre.h"
 #define TAO_POAMANAGER_H
 
 #include "tao/POAS.h"
@@ -103,4 +104,5 @@ protected:
 # include "tao/POAManager.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_POAMANAGER_H */

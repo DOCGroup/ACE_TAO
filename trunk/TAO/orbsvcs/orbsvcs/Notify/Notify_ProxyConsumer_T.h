@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_PROXYCONSUMER_T_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_PROXYCONSUMER_T_H
 
 #include "Notify_Proxy_T.h"
@@ -102,4 +103,5 @@ virtual void offer_change (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_PROXYPUSHCONSUMER_T_H */

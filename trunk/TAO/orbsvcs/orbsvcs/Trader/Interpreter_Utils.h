@@ -1,6 +1,7 @@
 // $Id$
 
 #ifndef TAO_INTERPRETER_UTILS_H
+#include "ace/pre.h"
 #define TAO_INTERPRETER_UTILS_H
 
 #include "ace/Hash_Map_Manager.h"
@@ -63,4 +64,5 @@ public:
   // is <code>.
 };
 
+#include "ace/post.h"
 #endif /* TAO_INTERPRETER_UTILS_H */

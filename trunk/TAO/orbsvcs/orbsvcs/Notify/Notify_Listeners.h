@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_LISTENERS_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_LISTENERS_H
 
 #include "Notify_Types.h"
@@ -50,4 +51,5 @@ class TAO_Notify_Update_Listener
   // Callback method to supply updates.
 };
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_LISTENERS_H */

@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef TAO_ASYNCH_INVOCATION_H
+#include "ace/pre.h"
 #define TAO_ASYNCH_INVOCATION_H
 
 #include "tao/Invocation.h"
@@ -143,4 +144,5 @@ private:
 #  include "tao/Asynch_Invocation.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

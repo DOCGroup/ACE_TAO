@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef COSPROPERTYSERVICE_I_H
+#include "ace/pre.h"
 #define COSPROPERTYSERVICE_I_H
 
 #include "ace/OS.h"
@@ -608,4 +609,5 @@ private:
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* COSPROPERTYSERVICE_I_H */
