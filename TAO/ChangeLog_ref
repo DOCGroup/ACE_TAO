@@ -2,10 +2,13 @@ Mon Aug 11 09:52:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Fixed_Array_Argument_T.inl:
         * tao/Var_Array_Argument_T.inl:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.h:
 
           In the constructor of the IN argument class, changed the cast
           of the argument (from const S to S_slice*) to use the C++
-          const_cast instead of the C-type cast.
+          const_cast instead of the C-type cast. Also changed the signature
+          of the constructor to take a const S_slice * instead of const S.
 
 Mon Aug 11 09:05:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 

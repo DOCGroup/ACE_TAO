@@ -32,7 +32,7 @@ namespace TAO
   class In_Var_Array_Argument_T : public Argument
   {
   public:
-    In_Var_Array_Argument_T (const S x);
+    In_Var_Array_Argument_T (const S_slice * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 
