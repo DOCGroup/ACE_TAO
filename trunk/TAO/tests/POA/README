@@ -1,0 +1,36 @@
+The following TAO applications explain the various POA interfaces and their usage scenarios.
+Individual README files in the respective directories explain these applications further.
+        . RootPOA
+
+                This example explains how to obtain the name of the RootPOA.
+
+        . NewPOA
+
+                This example explains the operations involved in creation of new POAs.
+
+        . FindPOA
+
+                This example explains registering an adapter activator for a POA and also the find_POA operation.
+
+        . Default_Servant:
+
+
+        . Generic_Servant
+
+                A simple interface (Foo) is defined here and its implementations, server and client programs are
+                availabale, which can be used for testing POA applications.
+                The client program in this library is used for testing the Explicit_Activation example.
+
+        . On_Demand_Activation
+
+
+
+        . Explicit_Activation
+
+                This example does not work as of now. It will be fixed soon. This application explains
+                various operations involved in the explicit activation of objects.
+
+        . Explicit_Activation_POA_Ids:
+
+
+        .
