@@ -30,7 +30,9 @@ envinfo_SOURCES = \
 
 envinfo_LDADD = \
  $(top_builddir)/ace/libACE.la
-TESTS = auto_run_tests.pl
+
+## This doesn't work... needs a way to separate build and source.
+##TESTS = auto_run_tests.pl
 
 
 ## Clean up template repositories, etc.

@@ -21,7 +21,8 @@ noinst_PROGRAMS =
 ## Makefile.Test_Output.am 
 
 dist_check_SCRIPTS = run_test.lst run_test.pl
-TESTS = run_test.pl
+TESTS = $(noinst_PROGRAMS)
+TEST_ENVIRONMENT = $(srcdir)/run_test.pl -t
 
 noinst_LTLIBRARIES = libTest_Output.la
 
