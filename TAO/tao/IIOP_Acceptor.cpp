@@ -107,7 +107,6 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      // @@ Use autopointer here.
       TAO_IIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_IIOP_Profile (this->hosts_[i],
@@ -160,7 +159,7 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
         iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
                                          pfile);
         break;
-      }      
+      }
     }
 
   // If <mprofile> doesn't contain a IIOP_Profile, we need to create
@@ -183,11 +182,11 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
           iiop_profile = 0;
           return -1;
         }
-      
+
       if (this->orb_core_->orb_params ()->std_profile_components () != 0)
         {
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-      
+
           CONV_FRAME::CodeSetComponentInfo code_set_info;
           code_set_info.ForCharData.native_code_set  =
             TAO_DEFAULT_CHAR_CODESET_ID;
@@ -200,8 +199,8 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
     }
 
   // Add any remaining acceptor endpoints to the IIOP_Profile.
-  for (; 
-       index < this->endpoint_count_; 
+  for (;
+       index < this->endpoint_count_;
        ++index)
     {
       TAO_IIOP_Endpoint *endpoint = 0;
@@ -212,8 +211,8 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
                       -1);
       endpoint->priority (this->priority_);
       iiop_profile->add_endpoint (endpoint);
-    }  
-  
+    }
+
   return 0;
 }
 
