@@ -1,0 +1,282 @@
+<!-- $Id$ -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>ACE FMM</title>
+  </head>
+
+  <body bgcolor=#ffffff>
+<center>
+<font face=helvetica size=5>ACE Frequently Made Mistakes</font>
+
+<br>
+<br>
+<table border=0 cellpadding=3 cellspacing=1 width=550>
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+	ACE_Task::getq() returns the error
+	<b>resource temporarily unavailable</b>
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+	Your Task is a subclass of ACE_Task&lt;ACE_NULL_SYNCH&gt; and
+	you are using it in a multithreaded program.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+	Try using ACE_Task&lt;ACE_MT_SYNCH&gt;
+	instead so that the associated Message_Queue
+	is configured for access by multiple threads.
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+	ACE_Task::wait() throws an assert violation
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+	When you activate()d your Task, you specified
+	THR_DETACHED, which causes wait() to be unable to perform what you
+	want it to.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+	Make sure you specify the flag THR_JOINABLE when activating
+	 your ACE_Task object.
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+	 Apparent race conditions when spawning threads (or activating Tasks)
+	from within a constructor.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+	You are not guaranteed to have a valid <b>this</b> pointer
+	until the constructor has exited.  Threads spawned from
+	a constructor are free to run
+	immediately, and may attempt to use an invalid <b>this</b> pointer.
+
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+	Move your Task activations and other thread-spawning activites
+	<b>out</b> of the constructor.
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+	Compiler issues warnings/erros regarding using too few template
+	arguments, such as "'ACE_Svc_Handler' : too few template arguments".
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+	Instead of using the appropriate macro, you supplied an actual class
+	name as a parameter.  This will fail depending upon platform and compiler,
+	due to the way templates are handled.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+	Instead of instantiating a template class like <b>ACE_Svc_Handler&lt;<u>ACE_SOCK_Stream</u>, ACE_NULL_SYNCH&gt;</b>, use the form of <b>ACE_Svc_Handler&lt;<u>ACE_SOCK_STREAM</u>, ACE_NULL_SYNCH&gt;</b> which circumvents the platform peculiarities by using the macro. This also applies to some other template classes.
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+	Unable to compare ACE_thread_t variables (such as ACE_Thread::self())
+        using operator== ().
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+	On some platforms, thread ids are numeric, and on some, they aren't. On some 
+	implementations, simple a == b comparisons
+	are legal and sane.  Some are not.
+ 
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+	Use the <b>ACE_OS::thr_equal()</b> function to reliably compare thread
+	ids, regardless of platform.
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+	ACE_Reactor::run_event_loop() does not seem to function correctly 
+	for a Reactor created in your application.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+	You have not set the ACE_Reactor::instance() to refer to your new reactor.
+	run_event_loop only functions on the reactor currently installed as the
+	global Singleton.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+	Use the <b>ACE_Reactor::instance(ACE_Reactor *,
+        int delete_reactor = 0)</b> static method to install your reactor as the global 
+	Singleton before calling run_event_loop().
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+
+
+
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+Infinite recursion when you invoke ACE_Reactor::remove_handler()
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+You are invoking remove_handler() from within handle_close() (or a
+method  invoked by handle_close()) but you have not specified the
+DONT_CALL flag.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+Be sure to <b>OR</b> in the DONT_CALL flag in this situation.<br>
+e.g. --<br>
+<ul><pre>
+int MyHandler::handle_close (ACE_HANDLE handle,
+                             ACE_Reactor_Mask close_mask)
+{
+    ...
+    my_reactor_-&gt;remove_handler( this,
+                                ACE_Event_Handler::READ_MASK |
+                                ACE_Event_Handler::DONT_CALL );
+    ...
+    return 0;
+}
+</pre></ul>
+
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+<!--
+
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+</td>
+<td align=left valign=top>
+
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
+-->
+<tr>
+<td align=center colspan=2>
+<font size=2>maintained by <a href="mailto:bob@werken.com">bob@werken.com</a></font>
+</td>
+</tr>
+
+</table>
+</center>
+</body>
+</html>
+

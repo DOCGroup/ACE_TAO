@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+Well, this has certainly been one of the more verbose tutorials to
+date.  I must say "thanks" to everyone who stuck it out this far!
+<P>
+A quick review of what we've done:
+<UL>
+
+<LI>Create a simple client application and Client object that uses a
+Protocol Stream without really knowing how they work.  The app (and
+object) rely on the public interface of the Protocol Stream to get the 
+job done.  At this level the protocol details are irrelevant.
+<P>
+<LI>Next, we create a simple server application and Server object
+similar to the client.  The Protocol Stream is of course used and we
+have to know a little more so that we can insert a <i>reader</i> that
+will ultimately process the data from the client.
+<P>
+<LI>We then go into the details of the Protocol_Stream implementation
+and it's Protocol_Task object that forms the basis for the stream
+tasks.  Each object is kept as small and simple as possible to improve 
+reusability and future maintenance.
+<P>
+<LI>Finally, the individual protocol objects are discused.  Separate
+objects for the peer interface were created as well as the bogus
+compressor and encryptor.  The protocol can be extended or modified by 
+creating new such objects and installing them in the Protocol_Stream's 
+open() method.
+
+</UL>
+<P>
+
+It doesn't sound like much but it certainly took a bunch of files to
+get there.  It's easy to get lost in the details when there's so much
+to cover so you're encouraged to go over things a couple of times.
+As always, enhancments of the tutorials is welcome!
+<P>
+Here's the complete file list:
+<UL>
+<LI><A HREF="client">Makefile</A>
+<P>
+<LI><A HREF="Makefile.client">client Makefile</A>
+<LI><A HREF="client.cpp">client.cpp</A>
+<LI><A HREF="Client_i.h">Client_i.h</A>
+<LI><A HREF="Client_i.cpp">Client_i.cpp</A>
+<P>
+<LI><A HREF="Makefile.server">Server Makefile</A>
+<LI><A HREF="server.cpp">server.cpp</A>
+<LI><A HREF="Server_i.h">Server_i.h</A>
+<LI><A HREF="Server_i.cpp">Server_i.cpp</A>
+<LI><A HREF="Handler.h">Handler.h</A>
+<LI><A HREF="Handler.cpp">Handler.cpp</A>
+<P>
+<LI><A HREF="Protocol_Stream.cpp">Protocol_Stream.cpp</A>
+<LI><A HREF="Protocol_Stream.h">Protocol_Stream.h</A>
+<LI><A HREF="Protocol_Task.cpp">Protocol_Task.cpp</A>
+<LI><A HREF="Protocol_Task.h">Protocol_Task.h</A>
+<P>
+<LI><A HREF="Xmit.cpp">Xmit.cpp</A>
+<LI><A HREF="Xmit.h">Xmit.h</A>
+<LI><A HREF="Recv.cpp">Recv.cpp</A>
+<LI><A HREF="Recv.h">Recv.h</A>
+<P>
+<LI><A HREF="Compressor.cpp">Compressor.cpp</A>
+<LI><A HREF="Compressor.h">Compressor.h</A>
+<LI><A HREF="Crypt.cpp">Crypt.cpp</A>
+<LI><A HREF="Crypt.h">Crypt.h</A>
+</UL>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>

@@ -1,0 +1,49 @@
+// $Id$
+// This will have all nwe definitions that will go in to 
+// CORBA from now onwards.
+
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef string  ORBid;
+
+  interface NamedValue
+    {
+      readonly attribute Identifier name;
+      readonly attribute any value;
+      readonly attribute Flags flags;
+    };
+
+  enum exception_type
+  {
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION
+  };
+
+  typedef sequence<Request_ptr> RequestSeq;
+  
+  typedef string ObjectId; 
+  typedef sequence <ObjectId> ObjectIdList;
+
+  typedef unsigned short ServiceType; 
+  typedef unsigned long ServiceOption; 
+  typedef unsigned long ServiceDetailType;
+
+  struct ServiceDetail 
+  { 
+    ServiceDetailType service_detail_type;
+    sequence <octet> service_detail; 
+  }; 
+   
+   struct ServiceInformation 
+   { 
+     sequence <ServiceOption> service_options; 
+     sequence <ServiceDetail> service_details; 
+   };
+
+};
+
+#pragma prefix ""
