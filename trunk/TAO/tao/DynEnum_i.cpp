@@ -32,8 +32,12 @@ TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any &any)
       // The type will be correct if this constructor called from a
       // factory function, but it could also be called by the user,
       // so.....
-      if (TAO_DynAny_i::unalias (this->type_.in (),
-                                 ACE_TRY_ENV) == CORBA::tk_enum)
+      int tk =
+        TAO_DynAny_i::unalias (this->type_.in (),
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (tk == CORBA::tk_enum)
         {
           // Get the CDR stream of the argument.
           ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -61,9 +65,10 @@ TAO_DynEnum_i::TAO_DynEnum_i (CORBA_TypeCode_ptr tc)
   ACE_TRY
     {
       // Need to check if called by user.
-      if (TAO_DynAny_i::unalias (tc,
-                                 ACE_TRY_ENV)
-          != CORBA::tk_enum)
+      int tk = TAO_DynAny_i::unalias (tc,
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (tk != CORBA::tk_enum)
         ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
     }
   ACE_CATCHANY
@@ -344,119 +349,103 @@ TAO_DynEnum_i::insert_any (const CORBA::Any&,
 CORBA::Boolean
 TAO_DynEnum_i::get_boolean (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Octet
 TAO_DynEnum_i::get_octet (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Char
 TAO_DynEnum_i::get_char (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Short
 TAO_DynEnum_i::get_short (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::UShort
 TAO_DynEnum_i::get_ushort (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Long
 TAO_DynEnum_i::get_long (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::ULong
 TAO_DynEnum_i::get_ulong (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Float
 TAO_DynEnum_i::get_float (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Double
 TAO_DynEnum_i::get_double (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 char *
 TAO_DynEnum_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Object_ptr
 TAO_DynEnum_i::get_reference (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::TypeCode_ptr
 TAO_DynEnum_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::LongLong
 TAO_DynEnum_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-
 #if defined (ACE_LACKS_LONGLONG_T)
   CORBA::LongLong tmp = {0, 0};
-  return tmp;
 #else  /* ! ACE_LACKS_LONGLONG_T */
-  return 0;
+  CORBA::LongLong tmp = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
+
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), tmp);
 }
 
 CORBA::ULongLong
 TAO_DynEnum_i::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::WChar
 TAO_DynEnum_i::get_wchar (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 CORBA::Any_ptr
 TAO_DynEnum_i::get_any (CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::BAD_OPERATION ());
-  return 0;
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
