@@ -169,9 +169,10 @@ ifeq ($(templates),)
         templates = explicit
       else
         # Assume it's Forte Update 1 or later. Implicit template
-        # instantiation seems to work.
+        # instantiation seemed to work but I spoke too soon. Maybe a future
+        # version will :-(
         #
-        templates = automatic
+        templates = explicit
       endif
     endif
   endif

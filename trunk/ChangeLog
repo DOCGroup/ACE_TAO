@@ -1,3 +1,11 @@
+Fri Apr 12 00:15:32 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * ace/config-sunos5.5.h:
+
+          Reverted to status quo. If and when things go fine, I will
+          re-enable them. Too many things breaking currently.
+
 Thu Apr 11 20:37:53 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/OS.i (ftell):
@@ -23,10 +31,10 @@ Thu Apr 11 18:29:27 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Apr 11 22:07:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Added missing 
-	  Log_Record.h include.	
+	* netsvcs/lib/Client_Logging_Handler.cpp: Added missing
+	  Log_Record.h include.
 
-	* tests/Svc_Handler_Test.cpp:  
+	* tests/Svc_Handler_Test.cpp:
 	  Changed ACE_Log_Record::MAXLOGMSGLEN to ACE_MAXLOGMSGLEN.
 
 Thu Apr 11 20:04:22 UTC 2002  Don Hinton  <dhinton@ieee.org>
