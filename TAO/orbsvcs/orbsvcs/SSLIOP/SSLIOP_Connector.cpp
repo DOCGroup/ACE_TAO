@@ -542,7 +542,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       ssl_endpoint->qop (qop);
       ssl_endpoint->trust (trust);
-      ssl_endpoint->credentials (credentials);
+      ssl_endpoint->credentials (credentials.in ());
 
       // Add the handler to Cache
       int retval =
@@ -575,7 +575,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
   CORBA::Policy_var policy =
     stub->get_policy (Security::SecInvocationCredentialsPolicy
                       TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
   SecurityLevel2::InvocationCredentialsPolicy_var creds_policy =
     SecurityLevel2::InvocationCredentialsPolicy::_narrow (
