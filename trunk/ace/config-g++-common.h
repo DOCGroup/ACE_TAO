@@ -20,6 +20,16 @@
 #   define ACE_HAS_TYPENAME_KEYWORD
     // It has gets (), but warns about using it (on Linux) at link time.
 #   define ACE_LACKS_GETS
+# else
+    // Let's find out
+
+#   define ACE_HAS_ANSI_CASTS
+#   define ACE_HAS_CPLUSPLUS_HEADERS
+#   define ACE_HAS_STDCPP_STL_INCLUDES
+#   define ACE_HAS_TEMPLATE_TYPEDEFS
+#   define ACE_HAS_TYPENAME_KEYWORD
+#   define ACE_LACKS_GETS
+
 # endif /* __GNUC__ >= 2.90 */
 
 # if __GNUC__ == 2 && __GNUC_MINOR__ != 91

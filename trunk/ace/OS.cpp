@@ -635,6 +635,40 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   va_end (ap);
   return result;
 }
+
+#if defined (ACE_LACKS_GETS)
+char *
+ACE_OS::gets (char *str, int n)
+{
+  // ACE_TRACE ("ACE_OS::gets");
+  int c;
+  char *s = str;
+
+  if (n < 0) n = 0;
+  if (n == 0) str = 0;
+  else n--;
+
+  while ((c = getchar ()) != '\n')
+    {
+
+#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+      if (c == EOF && errno == EINTR && ACE_LOG_MSG->restart ())
+        continue;
+#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
+
+      if (c == EOF)
+        break;
+
+      if (n > 0)
+        n--, *s++ = c;
+    }
+  *s = '\0';
+
+  // ACE_OSCALL_RETURN (::gets (str), char *, 0);
+  return (c == EOF) ? 0 : str;
+}
+#endif /* ACE_LACKS_GETS */
+
 #else
 int
 fprintf (FILE *fp, char *format, const char *msg)

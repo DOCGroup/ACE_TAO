@@ -4126,6 +4126,13 @@ public:
   static int printf (const char *format, ...);
 #if !defined (ACE_LACKS_GETS)
   static char *gets (char *str);
+#else
+  // A better gets ().
+  //   If n == 0, input is swallowed, but NULL is returned.
+  //   Otherwise, reads up to n-1 bytes (not including the newline),
+  //              then swallows rest up to newline
+  //              then swallows newline
+  static char *gets (char *str, int n = 0);
 #endif /* ACE_LACKS_GETS */
   static int puts (const char *s);
 #endif /* ! ACE_HAS_WINCE */
@@ -5614,7 +5621,7 @@ private:
 # if defined (ASYS_INLINE)
 #   undef ASYS_INLINE
 # endif /* ASYS_INLINE */
-# define ASYS_INLINE 
+# define ASYS_INLINE
 #else
 # define ASYS_INLINE inline
 # if defined (ACE_HAS_INLINED_OSCALLS)
