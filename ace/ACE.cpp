@@ -1336,6 +1336,7 @@ ACE::sock_error (int error)
       /* NOTREACHED */
     }
 #else
+  ACE_UNUSED_ARG (error);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_WIN32 */
 }
