@@ -1,3 +1,11 @@
+Mon Dec  2 20:09:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/URL_Addr.cpp:
+        * ACEXML/common/XML_Codecs.cpp: Added missing explicit template
+          instantiations to build clean on Sun Workshop 5.
+
 Mon Dec  2 19:41:27 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Rather than close connections outright
