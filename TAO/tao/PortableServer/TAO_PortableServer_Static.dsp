@@ -273,10 +273,6 @@ SOURCE=.\POAManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Validator.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableServer.h
 # End Source File
 # Begin Source File
@@ -402,10 +398,6 @@ SOURCE=.\POA_Policy_Set.cpp
 # Begin Source File
 
 SOURCE=.\POAManager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Policy_Validator.cpp
 # End Source File
 # Begin Source File
 
