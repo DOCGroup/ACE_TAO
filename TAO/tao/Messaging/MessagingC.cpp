@@ -30,6 +30,7 @@
 
 
 #include "Messaging.h"
+#include "tao/CDR.h"
 #include "tao/Object_T.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
@@ -53,71 +54,71 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4578), 
-  ACE_NTOHL (0x63657074), 
-  ACE_NTOHL (0x696f6e48), 
-  ACE_NTOHL (0x6f6c6465), 
-  ACE_NTOHL (0x723a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4578),
+  ACE_NTOHL (0x63657074),
+  ACE_NTOHL (0x696f6e48),
+  ACE_NTOHL (0x6f6c6465),
+  ACE_NTOHL (0x723a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/ExceptionHolder:1.0
     16,
-  ACE_NTOHL (0x45786365), 
-  ACE_NTOHL (0x7074696f), 
-  ACE_NTOHL (0x6e486f6c), 
+  ACE_NTOHL (0x45786365),
+  ACE_NTOHL (0x7074696f),
+  ACE_NTOHL (0x6e486f6c),
   ACE_NTOHL (0x64657200),  // name = ExceptionHolder
     0, // value modifier
   CORBA::tk_null, // no stateful base valuetype
 
 3, // member count
     20,
-  ACE_NTOHL (0x69735f73), 
-  ACE_NTOHL (0x79737465), 
-  ACE_NTOHL (0x6d5f6578), 
-  ACE_NTOHL (0x63657074), 
+  ACE_NTOHL (0x69735f73),
+  ACE_NTOHL (0x79737465),
+  ACE_NTOHL (0x6d5f6578),
+  ACE_NTOHL (0x63657074),
   ACE_NTOHL (0x696f6e00),  // name = is_system_exception
     CORBA::tk_boolean,
 
   1, // data member visibility marker
 
   11,
-  ACE_NTOHL (0x62797465), 
-  ACE_NTOHL (0x5f6f7264), 
+  ACE_NTOHL (0x62797465),
+  ACE_NTOHL (0x5f6f7264),
   ACE_NTOHL (0x65720000),  // name = byte_order
     CORBA::tk_boolean,
 
   1, // data member visibility marker
 
   20,
-  ACE_NTOHL (0x6d617273), 
-  ACE_NTOHL (0x68616c65), 
-  ACE_NTOHL (0x645f6578), 
-  ACE_NTOHL (0x63657074), 
+  ACE_NTOHL (0x6d617273),
+  ACE_NTOHL (0x68616c65),
+  ACE_NTOHL (0x645f6578),
+  ACE_NTOHL (0x63657074),
   ACE_NTOHL (0x696f6e00),  // name = marshaled_exception
     CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f63), 
-    ACE_NTOHL (0x74657453), 
-    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f63),
+    ACE_NTOHL (0x74657453),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
         9,
-    ACE_NTOHL (0x4f637465), 
-    ACE_NTOHL (0x74536571), 
+    ACE_NTOHL (0x4f637465),
+    ACE_NTOHL (0x74536571),
     ACE_NTOHL (0x0),  // name = OctetSeq
         CORBA::tk_sequence, // typecode kind
     12, // encapsulation length
@@ -148,7 +149,7 @@ namespace Messaging
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
     Messaging::ExceptionHolder * p
@@ -157,7 +158,7 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Value_Traits<Messaging::ExceptionHolder>::tao_remove_ref (
     Messaging::ExceptionHolder * p
@@ -166,7 +167,7 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::tao_remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Value_Traits<Messaging::ExceptionHolder>::tao_release (
     Messaging::ExceptionHolder * p
@@ -182,7 +183,7 @@ Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
+
   return dynamic_cast< ::Messaging::ExceptionHolder * > (v);
 }
 
@@ -322,7 +323,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -439,7 +440,7 @@ Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
@@ -780,7 +781,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

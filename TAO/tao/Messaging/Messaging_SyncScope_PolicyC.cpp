@@ -30,6 +30,7 @@
 
 
 #include "Messaging_SyncScope_PolicyC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "ace/OS_NS_string.h"
@@ -88,7 +89,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -201,7 +202,7 @@ Messaging::SyncScopePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_SyncScopePolicy[] =
 {
@@ -309,7 +310,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

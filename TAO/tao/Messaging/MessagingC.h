@@ -43,8 +43,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Messaging/messaging_export.h"
-#include "tao/CDR.h"
+#include "messaging_export.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Valuetype/ValueBase.h"

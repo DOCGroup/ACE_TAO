@@ -30,6 +30,7 @@
 
 
 #include "Messaging_No_ImplC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
@@ -53,7 +54,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_Priority[] =
 {
@@ -91,7 +92,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RebindMode[] =
 {
@@ -130,7 +131,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
@@ -169,7 +170,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_Ordering[] =
 {
@@ -243,7 +244,7 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -356,7 +357,7 @@ Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RebindPolicy[] =
 {
@@ -394,7 +395,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_PriorityRange[] =
 {
@@ -526,7 +527,7 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -639,7 +640,7 @@ Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RequestPriorityPolicy[] =
 {
@@ -717,7 +718,7 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -830,7 +831,7 @@ Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_ReplyPriorityPolicy[] =
 {
@@ -907,7 +908,7 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1020,7 +1021,7 @@ Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RequestStartTimePolicy[] =
 {
@@ -1099,7 +1100,7 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1212,7 +1213,7 @@ Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RequestEndTimePolicy[] =
 {
@@ -1290,7 +1291,7 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1403,7 +1404,7 @@ Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_ReplyStartTimePolicy[] =
 {
@@ -1481,7 +1482,7 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1594,7 +1595,7 @@ Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_ReplyEndTimePolicy[] =
 {
@@ -1671,7 +1672,7 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1784,7 +1785,7 @@ Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RelativeRequestTimeoutPolicy[] =
 {
@@ -1830,7 +1831,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
 {
@@ -1966,7 +1967,7 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2079,7 +2080,7 @@ Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RoutingPolicy[] =
 {
@@ -2153,7 +2154,7 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2266,7 +2267,7 @@ Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_MaxHopsPolicy[] =
 {
@@ -2340,7 +2341,7 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2453,7 +2454,7 @@ Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_QueueOrderPolicy[] =
 {
@@ -3414,7 +3415,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
