@@ -83,11 +83,6 @@ TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::release (
 TAO_Default_ORT::ObjectReferenceTemplate *
 TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
 {
-  if (v == 0)
-    {
-      return 0;
-    }
-  
   return dynamic_cast< ::TAO_Default_ORT::ObjectReferenceTemplate * > (v);
 }
 
