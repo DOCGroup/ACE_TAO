@@ -69,9 +69,9 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                                       ex_data,
                                       ex_count);
 
-    while (status != TAO_INVOKE_SUCCESS ||
+    /*while (status != TAO_INVOKE_SUCCESS ||
            status != TAO_INVOKE_FAILURE)
-      {
+           {*/
         Profile_Transport_Resolver resolver (stub);
 
         resolver.resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -124,7 +124,7 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                  EINVAL),
                CORBA::COMPLETED_NO));
           }
-      }
+        /*}*
   }
 
 
