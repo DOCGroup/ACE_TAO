@@ -74,12 +74,6 @@ char *
 NContextExt_Client_i::get_name ()
 {
 
-  // @@ You should use the ACE_OS version of these functions...
-  // @@ For randomized tests it it important to print the seed,
-  //    should the test fail you want to run it again with the same
-  //    seed.  The canonical trick is to receive the seed as a command
-  //    line argument, if the argument is not there you initialize it
-  //    using time() or something like that (ACE_OS::gethrtime??)
   // USe time (NULL) to produce the seed:
   srand (time (0));
 
