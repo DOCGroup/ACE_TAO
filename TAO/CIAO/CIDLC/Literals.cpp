@@ -25,7 +25,7 @@ namespace StringLiterals
     "//       http://www.isis.vanderbilt.edu/\n"
     "//\n"
     "// Information about CIAO is available at:\n"
-    "//    http://www.cs.wustl.edu/~nanbor/projects/CIAO-src/docs/index.html"
+    "//    http://www.dre.vanderbilt.edu/CIAO"
     "\n\n";
 
   char const* const STRS[SIZE] =
@@ -56,11 +56,14 @@ namespace StringLiterals
     "::Components::InvalidConfiguration",                 // EXCP_ICF
     "::Components::CookieRequired",                       // EXCP_CR
     "::Components::BadEventType",                         // EXCP_BET
+    "::Components::CCMException",                         // EXCP_CE
 
     // Commonly used Components module members.
     "::Components::Cookie",                               // COMP_CK
     "::Components::NameList & /* names */",               // COMP_NAMES
     "::Components::EventConsumerBase",                    // COMP_ECB
+    "::Components::EnterpriseComponent",                  // COMP_EC
+    "::Components::SessionContext",                       // COMP_SC
 
     // This could change - don't want it scattered all over.
     "namespace CIAO_GLUE",                                // GLUE_NS
@@ -72,6 +75,9 @@ namespace StringLiterals
     "CIDLC::RepositoryIdGenerator::TypeId",               // TYPE_ID
     "CIDLC::RepositoryIdGenerator::TypePrefix",           // TYPE_PREFIX
     "CIDLC::RepositoryIdGenerator::RepoId",               // REPO_ID
+
+    "// Your code here.",                                 // YCH
+    "//==================================================================", // SEP
 
     "variable-size"                                       // VAR_SIZE
   };

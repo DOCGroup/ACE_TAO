@@ -20,6 +20,7 @@ using std::string;
 using std::ostream;
 using std::endl;
 
+using namespace StringLiterals;
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 
@@ -457,7 +458,7 @@ namespace
     virtual void
     inherits_none (Type&)
     {
-      os << " : ::Components::EnterpriseComponent";
+      os << " : " << STRS[COMP_EC];
     }
 
     virtual void
@@ -751,7 +752,7 @@ namespace
     inherits_none (Type&)
     {
       //@@ should be os << " : ::Components::CCMContext";
-      os << " : ::Components::SessionContext";
+      os << " : " << STRS[COMP_SC];
     }
 
     virtual void
@@ -870,7 +871,7 @@ namespace
     virtual void
     returns (SemanticGraph::HomeFactory&)
     {
-      os << "::Components::EnterpriseComponent ";
+      os << STRS[COMP_EC] << " ";
     }
 
     virtual void
@@ -927,7 +928,7 @@ namespace
     virtual void
     returns (SemanticGraph::HomeFinder&)
     {
-      os << "::Components::EnterpriseComponent ";
+      os << STRS[COMP_EC] << " ";
     }
 
     virtual void
@@ -1120,10 +1121,10 @@ namespace
     virtual void
     names (Type& h)
     {
-      os<< "{"
-        << "::Components::EnterpriseComponent "
-        << "create () raises (::Components::CCMException);"
-        << "}";
+      os << "{"
+         << STRS[COMP_EC] << " "
+         << "create () raises (" << STRS[EXCP_CE] << ");"
+         << "}";
     }
 
     virtual void
@@ -1470,7 +1471,7 @@ namespace
       // Traversal::ComponentExecutor::implements (i, implements_traverser_);
 
       // os << ", "
-      //    << "::Components::SessionContext";
+      //    << STRS[COMP_SC];
     }
 
     virtual void
@@ -1661,7 +1662,7 @@ generate (CommandLine const& cl,
 
   // Dump file header.
   //
-  os << StringLiterals::COPYRIGHT;
+  os << COPYRIGHT;
 
   // Set auto-indentation for os.
   //

@@ -22,6 +22,7 @@
 
 #include "ExecutorMappingGenerator.hpp"
 #include "ServantGenerator.hpp"
+#include "ExecImplGenerator.hpp"
 /*
 #include "RepositoryIdGenerator.hpp"
 */
@@ -37,8 +38,8 @@ class ErrorDetector : public std::streambuf
 {
 public:
   ErrorDetector (std::streambuf* prev)
-      : error_ (false),
-        prev_ (*prev)
+    : error_ (false),
+      prev_ (*prev)
   {
   }
 
@@ -96,6 +97,7 @@ main (int argc, char* argv[])
 
     ExecutorMappingGenerator lem_gen;
     ServantGenerator svnt_gen (cl);
+    ExecImplGenerator impl_gen (cl);
     /*
     RepositoryIdGenerator repid_gen;
     */
@@ -109,6 +111,7 @@ main (int argc, char* argv[])
       lem_gen.options (d);
       svnt_gen.options (d);
       desc_gen.options (d);
+      impl_gen.options (d);
 
       d.add_option (CL::OptionDescription (
                       "trace-semantic-actions",
@@ -118,6 +121,11 @@ main (int argc, char* argv[])
       d.add_option (CL::OptionDescription (
                       "preprocess-only",
                       "Run preprocessor only and output result to stdout.",
+                      true));
+
+      d.add_option (CL::OptionDescription (
+                      "gen-exec-impl",
+                      "Generate the executor implementation classes.",
                       true));
 
       d.add_option (CL::OptionDescription (
@@ -282,6 +290,12 @@ main (int argc, char* argv[])
     // Generate servant code.
     {
       svnt_gen.generate (tu, file_path);
+    }
+
+    // Generate executor implementation code.
+    if (cl.get_value ("gen-exec-impl", false))
+    {
+      impl_gen.generate (tu, file_path);
     }
 
     /*
