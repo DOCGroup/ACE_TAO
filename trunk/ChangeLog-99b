@@ -1,59 +1,65 @@
+Sun Oct 03 10:17:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): added casts of
+          func (to ACE_THR_FUNC) and its return value (to void *)
+          so that this function will compile for VxWorks and pSOS.
+
 Sat Oct  2 18:54:38 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.{cpp,h}: Added ACE_Protocol_info as a
-	  parameter to the QoS enabled private method subscribe_ifs. This
-	  allows the use of ACE_Protocol_Info->iAddressFamily in the call
-	  to join_leaf (). Thanks to Vidya Narayanan 
-	  <CVN065@lmpsil02.comm.mot.com> for pointing this out.
+        * ace/SOCK_Dgram_Mcast.{cpp,h}: Added ACE_Protocol_info as a
+          parameter to the QoS enabled private method subscribe_ifs. This
+          allows the use of ACE_Protocol_Info->iAddressFamily in the call
+          to join_leaf (). Thanks to Vidya Narayanan
+          <CVN065@lmpsil02.comm.mot.com> for pointing this out.
 
 Sat Oct  2 16:20:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-kcc-common.h: The macro __KCC_VERSION was not
-	  available in 3.3e so we switched to check the existence of this
-	  macro to decide the availability of auto_ptr::reset().  Thanks
-	  to Ossama for noticing this bug.
+        * ace/config-kcc-common.h: The macro __KCC_VERSION was not
+          available in 3.3e so we switched to check the existence of this
+          macro to decide the availability of auto_ptr::reset().  Thanks
+          to Ossama for noticing this bug.
 
 Sat Oct  2 16:10:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Linux (glibc 2.x) has lseek64() so define ACE_HAS_LLSEEK.
+          Linux (glibc 2.x) has lseek64() so define ACE_HAS_LLSEEK.
 
-	* ace/OS.i (llseek):
+        * ace/OS.i (llseek):
 
-	  Removed external declaration for llseek() on Linux.  Linux uses
-	  lseek64(), not llseek().  Updated macro checks to use lseek64()
-	  for Linux.  [Bug 276]
+          Removed external declaration for llseek() on Linux.  Linux uses
+          lseek64(), not llseek().  Updated macro checks to use lseek64()
+          for Linux.  [Bug 276]
 
 Sat Oct  2 16:01:50 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ace/INET_Addr.h (ACE_INET_Addr): Removed an unnecessary "protocol"
-	  string.  Thanks to Jeff and Ossama for reporting this.
+        * ace/INET_Addr.h (ACE_INET_Addr): Removed an unnecessary "protocol"
+          string.  Thanks to Jeff and Ossama for reporting this.
 
 Sat Oct  2 12:50:43 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ace/INET_Addr: Previous, it was not possible to specify the
-	  proto argument in the ACE_INET_Addr constructor because it was
- 	  hard-coded to "tcp".  Now, this can be passed as a parameter.
-  	  Thanks to Jaymes Galvin <galvinj@agcs.com> for this suggestion.
+        * ace/INET_Addr: Previous, it was not possible to specify the
+          proto argument in the ACE_INET_Addr constructor because it was
+          hard-coded to "tcp".  Now, this can be passed as a parameter.
+          Thanks to Jaymes Galvin <galvinj@agcs.com> for this suggestion.
 
 Fri Oct  1 14:44:12 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.h : Added the Winsock2 GQOS related #defines to this
-	  file. The #defines are limited to the ones used in the ACE QOS 
-	  example.
-   	
-	* ACE_wrappers/examples/QOS/server.cpp:
-	* ACE_wrappers/examples/QOS/client.cpp:
-	* ACE_wrappers/examples/QOS/QosEvent.h: 
-	  Changed the QOS example to use the ACE flags instead of Windows 
-	  flags. Removed the #defines from the example and moved them to 
-	  OS.h
+        * ace/OS.h : Added the Winsock2 GQOS related #defines to this
+          file. The #defines are limited to the ones used in the ACE QOS
+          example.
+
+        * ACE_wrappers/examples/QOS/server.cpp:
+        * ACE_wrappers/examples/QOS/client.cpp:
+        * ACE_wrappers/examples/QOS/QosEvent.h:
+          Changed the QOS example to use the ACE flags instead of Windows
+          flags. Removed the #defines from the example and moved them to
+          OS.h
 
 Fri Oct  1 13:14:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ChangeLog: Added more Borland support.  Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for this.
+        * ChangeLog: Added more Borland support.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for this.
 
 Fri Oct 01 13:05:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -118,7 +124,7 @@ Thu Sep 30 10:07:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Sep 29 20:58:45 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/config-win32.h:
+        * ace/config-win32.h:
         * ace/config-win32-common.h:
           Winsock2.h wasn't being included before my checks of the
           winsock version, so I moved it to -common.h instead.

@@ -2504,9 +2504,10 @@ ACE_Thread_Adapter::invoke (void)
             // Invoke the start hook to give the user a chance to
             // perform some initialization processing before the
             // <func> is invoked.
-            status = hook->start (func, arg);
+            status = hook->start (ACE_static_cast (ACE_THR_FUNC, func), arg);
           else
-            status = (*func) (arg);  // Call thread entry point.
+            // Call thread entry point.
+            status = ACE_reinterpret_cast (void *, (*func) (arg));
 
 #if defined (ACE_PSOS)
           // pSOS thread functions do not return a value.
@@ -6807,16 +6808,16 @@ ACE_OS_Object_Manager::print_error_message (u_int line_number, LPCTSTR message)
 int
 ACE_OS_Object_Manager::starting_up (void)
 {
-  return ACE_OS_Object_Manager::instance_  
-    ? instance_->starting_up_i () 
+  return ACE_OS_Object_Manager::instance_
+    ? instance_->starting_up_i ()
     : 1;
 }
 
 int
 ACE_OS_Object_Manager::shutting_down (void)
 {
-  return ACE_OS_Object_Manager::instance_  
-    ? instance_->shutting_down_i () 
+  return ACE_OS_Object_Manager::instance_
+    ? instance_->shutting_down_i ()
     : 1;
 }
 
