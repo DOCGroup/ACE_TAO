@@ -1,3 +1,14 @@
+Wed Jul  3 12:01:35 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Exceptions/Test.idl:
+	* tests/AMH_Exceptions/Makefile:
+	* tests/AMH_Exceptions/run_test.pl:
+	* tests/AMH_Exceptions/server.cpp:
+	* tests/AMH_Exceptions/client.cpp:
+	  One button test to test AMH exceptions (IDL-compiler generation
+	  of ExceptionHolders as well as run-time throwing of AMH
+	  Exceptions).
+
 Wed Jul  3 11:23:10 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
