@@ -35,11 +35,11 @@ public:
   ACE_INET_Addr (const sockaddr_in *, int len);
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
-  ACE_INET_Addr (u_short port_number, const char host_name[]);
+  ACE_INET_Addr (u_short port_number, const ASYS_TCHAR host_name[]);
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>. 
 
-  ACE_INET_Addr (const char address[]);
+  ACE_INET_Addr (const ASYS_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -51,11 +51,11 @@ public:
   // <ip_addr>.  This method assumes that <port_number> and <ip_addr>
   // are in host byte order.
 
-  ACE_INET_Addr (const char port_name[], const char host_name[]);
+  ACE_INET_Addr (const ASYS_TCHAR port_name[], const ASYS_TCHAR host_name[]);
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name> and the remote <host_name>.
 
-  ACE_INET_Addr (const char port_name[], ACE_UINT32 ip_addr);
+  ACE_INET_Addr (const ASYS_TCHAR port_name[], ACE_UINT32 ip_addr);
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name> and an Internet <ip_addr>.  This method assumes that
   // <ip_addr> is in host byte order.
@@ -65,7 +65,7 @@ public:
   int set (const ACE_INET_Addr &);
   // Initializes from another <ACE_INET_Addr>.
 
-  int set (u_short port_number, const char host_name[], 
+  int set (u_short port_number, const ASYS_TCHAR host_name[], 
 	   int encode = 1);
   // Initializes an <ACE_INET_Addr> from a <port_number> and the
   // remote <host_name>.  If <encode> is enabled then <port_number> is
@@ -81,16 +81,16 @@ public:
   // they are assumed to be in network byte order already and are
   // passed straight through.
 
-  int set (const char port_name[], const char host_name[]);
+  int set (const ASYS_TCHAR port_name[], const ASYS_TCHAR host_name[]);
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name> and the remote <host_name>.
 
-  int set (const char port_name[], ACE_UINT32 ip_addr);
+  int set (const ASYS_TCHAR port_name[], ACE_UINT32 ip_addr);
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name> and an Internet address.  This assumes that <ip_addr>
   // is already in network byte order.
 
-  int set (const char addr[]);
+  int set (const ASYS_TCHAR addr[]);
   // Initializes an <ACE_INET_Addr> from the <addr>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -106,12 +106,12 @@ public:
   virtual void set_addr (void *, int len);
   // Set a pointer to the address.
 
-  virtual int addr_to_string (char addr[], size_t) const;
+  virtual int addr_to_string (ASYS_TCHAR addr[], size_t) const;
   // Transform the current <ACE_INET_Addr> address into string format,
   // which is in the form "ip-number:port-number" (e.g.,
   // "tango.cs.wustl.edu:1234" or "128.252.166.57:1234").
 
-  virtual int string_to_addr (const char address[]);
+  virtual int string_to_addr (const ASYS_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -127,12 +127,12 @@ public:
   u_short get_port_number (void) const;
   // Return the port number, converting it into host byte order.
 
-  int get_host_name (char hostname[], size_t hostnamelen) const;
+  int get_host_name (ASYS_TCHAR hostname[], size_t hostnamelen) const;
   // Return the character representation of the name of the host,
   // storing it in the <hostname> (which is assumed to be
   // <hostnamelen> bytes long).  This version is reentrant.
 
-  const char *get_host_name (void) const;
+  const ASYS_TCHAR *get_host_name (void) const;
   // Return the character representation of the hostname (this version
   // is non-reentrant since it returns a pointer to a static data
   // area).
