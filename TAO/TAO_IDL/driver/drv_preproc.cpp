@@ -348,7 +348,7 @@ DRV_pre_proc(char *myfile)
            << GTDEVEL(": preprocessor ")
            << arglist[0]
            << GTDEVEL(" returned with an error\n");
-      exit (1);
+      ACE_OS::exit (1);
     }
   // TODO: Manage problems in the pre-processor, in the previous
   // version the current process would exit if the pre-processor
