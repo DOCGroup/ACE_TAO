@@ -5078,6 +5078,13 @@ ACE_OS::dlsym (void *handle, ACE_DL_TYPE symbolname)
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #if defined (ACE_LACKS_POSIX_PROTO)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
+#elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
+  char asm_symbolname [MAXPATHLEN] ;
+  if (strlen (symbolname) + 2 > sizeof asm_symbolname)
+    return 0 ;
+  ACE_OS::strcpy (asm_symbolname, "_") ;
+  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
+  ACE_OSCALL_RETURN (::dlsym (handle, asm_symbolname), void *, 0);
 #else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #endif /* ACE_LACKS_POSIX_PROTO */
