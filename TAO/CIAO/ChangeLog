@@ -1,3 +1,12 @@
+Mon Oct 11 23:41:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/OEP/Display/GPS/GPS.mpc:
+	* examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+	* examples/OEP/Display/RateGen/RateGen.mpc:
+
+	  Fixed typos that broke the builds.
+
 Mon Oct 11 11:02:41 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CodeGenerationKit/IndentationIDL.hpp:
