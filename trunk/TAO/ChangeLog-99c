@@ -1,3 +1,7 @@
+Sat Nov 27 15:04:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * TAO version 1.0.9 released.
+
 Fri Nov 26 09:30:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
