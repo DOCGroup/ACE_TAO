@@ -1,3 +1,8 @@
+Sat Jan 24 01:24:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.cpp (destroy_i): Changed etherealize objects to correct
+ 	  report remaining_activations.
+
 Fri Jan 23 10:55:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/objtable.cpp: 
