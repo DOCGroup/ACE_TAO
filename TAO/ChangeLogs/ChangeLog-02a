@@ -1,3 +1,8 @@
+Sat Nov 25 15:06:16 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	  Defererence _var of pname to pointer via .in () operator.
+
 Fri Nov 24 19:21:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
