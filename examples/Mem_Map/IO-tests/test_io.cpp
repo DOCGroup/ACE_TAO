@@ -137,6 +137,7 @@ main (int argc, char *argv[])
   parse_args (argc, argv);
 
   ACE_Sig_Action sa ((ACE_SignalHandler) cleanup, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   if ((input_fp = ACE_OS::fopen (input_filename, "r")) == 0)
     ACE_OS::perror (input_filename), ACE_OS::exit (1);
