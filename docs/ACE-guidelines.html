@@ -711,7 +711,20 @@ bgcolor="#ffffff">
   <li>Be <em>very</em> careful with <code>ACE_ASSERT</code>.  It
       must only be used to check values; it may never be used to
       wrap a function call, or any other statement.  That's because
-      the statement will disappear when ACE_NDEBUG is enabled.<p>
+      the statement will disappear when ACE_NDEBUG is enabled.  For
+      example, this code is BAD:
+      <pre>
+      ACE_ASSERT (this-&gt;next (retv) != 0);  // BAD CODE!
+      </pre>
+
+      Instead, the above should be coded this way:
+
+      <pre>
+      int result = this-&gt;next (retv);
+      ACE_ASSERT (result != 0);
+      ACE_UNUSED_ARG (result);
+      </pre>
+<p>
 </ul>
 
 
