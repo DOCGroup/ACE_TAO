@@ -54,7 +54,7 @@ enum TAO_GIOP_Message_Status
  * reading the header and the payload seperately.
  */
 
-class TAO_GIOP_Message_Reactive_Handler
+class TAO_Export TAO_GIOP_Message_Reactive_Handler
 {
 public:
 

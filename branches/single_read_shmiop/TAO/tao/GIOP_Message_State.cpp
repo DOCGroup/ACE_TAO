@@ -14,12 +14,12 @@ ACE_RCSID(tao, GIOP_Message_State, "$Id$")
 
   TAO_GIOP_Message_State::TAO_GIOP_Message_State (TAO_ORB_Core* /*orb_core*/)
   : byte_order (TAO_ENCAP_BYTE_ORDER),
-    more_fragments (0),
     message_type (TAO_GIOP_MESSAGERROR),
     message_size (0),
     request_id (0),
     // Problem similar to GIOP_Message_handler.cpp - Bala
-    fragmented_messages (ACE_CDR::DEFAULT_BUFSIZE)
+    fragmented_messages (ACE_CDR::DEFAULT_BUFSIZE),
+    more_fragments (0)
 {
   //giop_version.major = TAO_DEF_GIOP_MAJOR;
   //giop_version.minor = TAO_DEF_GIOP_MINOR;

@@ -330,20 +330,6 @@ public:
                 size_t len,
                 const ACE_Time_Value *timeout = 0);
 
-  /// Read len bytes from into buf, by calling recv_n
-  /**
-   * This method serializes on handler_lock_, guaranteeing that only
-   * thread can execute it on the same instance concurrently.
-   *
-   * @param buffer ORB allocated buffer where the data should be
-   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
-   * not clear this this is the best place to specify this.  The actual
-   * timeout values will be kept in the Policies.
-   */
-  ssize_t recv_n (char *buffer,
-                  size_t len,
-                  const ACE_Time_Value *timeout = 0);
-
 
   /// Return the identifier for this transport instance.
   /**
@@ -433,17 +419,6 @@ protected:
   virtual ssize_t recv_i (char *buffer,
                           size_t len,
                           const ACE_Time_Value *timeout = 0) = 0;
-
-  // Read len bytes from into buf, by calling recv_n ()
-  /**
-   * @param buffer ORB allocated buffer where the data should be
-   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
-   * not clear this this is the best place to specify this.  The actual
-   * timeout values will be kept in the Policies.
-   */
-  virtual ssize_t recv_n_i (char *buffer,
-                            size_t len,
-                            const ACE_Time_Value *timeout = 0);
 
 public:
 
@@ -557,14 +532,6 @@ protected:
   virtual void transition_handler_state_i (void) = 0;
 
 public:
-  /// Indicates whether the reactor is used by the protocol for
-  /// signalling.
-  /**
-   * @todo: This method needs to go. This is part of the hack for
-   * making SHMIOP work at the last minute for TAO 1.1.13
-   */
-  virtual int reactor_signalling (void);
-
   /// Method for the connection handler to signify that it
   /// is being closed and destroyed.
   virtual void connection_handler_closing (void);

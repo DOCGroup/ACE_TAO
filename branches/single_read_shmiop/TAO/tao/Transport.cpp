@@ -552,11 +552,6 @@ TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
   ACE_NOTSUP_RETURN (-1);
 }
 
-int
-TAO_Transport::reactor_signalling (void)
-{
-  return 0;
-}
 
 void
 TAO_Transport::connection_handler_closing (void)
@@ -717,30 +712,6 @@ TAO_Transport::recv (char *buffer,
   return this->recv_i (buffer, len, timeout);
 }
 
-ssize_t
-TAO_Transport::recv_n (char *buffer,
-                       size_t len,
-                       const ACE_Time_Value *timeout)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->handler_lock_,
-                            -1));
-
-  if (this->check_event_handler_i ("TAO_Transport::recv") == -1)
-    return -1;
-
-  // now call the template method
-  return this->recv_n_i (buffer, len, timeout);
-}
-
-ssize_t
-TAO_Transport::recv_n_i (char *buffer,
-                         size_t len,
-                         const ACE_Time_Value *timeout)
-{
-
-}
 
 int
 TAO_Transport::generate_locate_request (

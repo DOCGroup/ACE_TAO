@@ -108,12 +108,6 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
-  /// Indicates whether the reactor is used by the protocol for
-  /// signalling.
-  virtual int reactor_signalling (void);
-
-  //@}
-
 private:
   /// Process the message that we have read
   int process_message (void);
