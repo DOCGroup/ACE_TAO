@@ -1,3 +1,14 @@
+Mon Feb  5 16:48:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/IFR_Service/Servant_Locator.cpp:
+        * orbsvcs/IFR_Service/Servant_Locator.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+
+          Added minimum CORBA guards around code that won't compile under
+          minimum CORBA.
+
 Mon Feb  5 15:57:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Object.cpp:
