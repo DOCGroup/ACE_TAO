@@ -658,7 +658,7 @@ spawn_threads (ACCEPTOR *acceptor,
                     ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
-        ACE_OS::perror ("wait");
+        ACE_OS::perror (ASYS_TEXT ("wait"));
 
       status = -1;
     }
@@ -727,7 +727,7 @@ main (int argc, ASYS_TCHAR *argv[])
       status = spawn_threads (&acceptor, &server_addr);
 #else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 
+                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
                   1));
 #endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
     }
