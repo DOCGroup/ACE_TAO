@@ -1,3 +1,12 @@
+Fri Dec 18 06:08:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/High_Res_Timer: Made several methods const.  Thanks to Ulf
+ 	  Jaehrig <jaehrig@desys.com> for reporting this.
+
+	* ace/Thread.h (ACE_Thread): Removed a stray join(ACE_Thread_ID)
+ 	  method.  Thanks to Jody Hagins <jody@atdesk.com> for reporting
+ 	  this.
+
 Thu Dec 17 21:06:30 EST 1998  James CE Johnson <jcej@lads.com>
 
 	* docs/tutorials/000:
