@@ -10,8 +10,9 @@ require ACEutils;
 
 $client_conf="client.global.conf";
 $client_process="client";
-$debug_level='0';
-$threads='10';
+$debug_level='5';
+$threads='2';
+$iterations='1';
 
 foreach $i (@ARGV) {
   if ($i eq '-tss') {
@@ -39,7 +40,7 @@ $CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
 		       " -ORBsvcconf $client_conf "
 		       . "-ORBdebuglevel $debug_level"
 		       . " -k file://$iorfile "
-		       . " -n $threads -i 1000");
+		       . " -n $threads -i $iterations");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

@@ -66,6 +66,14 @@ private:
   // The number of iterations on each client thread.
 };
 
+class Handler : public POA_AMI_Simple_Server_Handler
+{
+public:
+  Handler (void) {};
+ 
+  ~Handler (void) {};
+};
+
 int
 main (int argc, char *argv[])
 {
@@ -94,6 +102,26 @@ main (int argc, char *argv[])
                             1);
         }
 
+      // Activate POA to handle the call back.
+      
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references("RootPOA");
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
+      
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
       Client client (server.in (), niterations);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -104,8 +132,6 @@ main (int argc, char *argv[])
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
-      server->shutdown (ACE_TRY_ENV);
     }
   ACE_CATCHANY
     {
@@ -142,25 +168,26 @@ Client::svc (void)
       ACE_TRY_CHECK;
 #endif
 
+      Handler handler;
+      AMI_Simple_Server_Handler_var the_handler =
+        handler._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       CORBA::Long number = 0;
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          number = server_->get_number (ACE_TRY_ENV);
+          server_->sendc_get_number (the_handler.in (),
+                                     ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          ACE_ASSERT (number == 931232);
-
-          //          ACE_DEBUG ((LM_DEBUG,
-          //                      "get_number = %d\n",
-          //                      number));
-
-          //server_->test_method (ACE_TRY_ENV);
-          //ACE_TRY_CHECK;
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
+
+      number = server_->get_number (ACE_TRY_ENV);
+      
+      ACE_DEBUG ((LM_DEBUG, "(%P | %t) get_number = %d\n", number));
     }
   ACE_CATCHANY
     {

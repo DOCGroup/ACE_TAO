@@ -51,6 +51,8 @@ public:
 
 private:
   CORBA::ORB_var orb_;
+
+  CORBA::Long number_;
 };
 
 #if defined(__ACE_INLINE__)

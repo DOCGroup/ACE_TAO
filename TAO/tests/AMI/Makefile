@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN =  server simple-client 
+BIN =  server simple-client client
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 

@@ -508,7 +508,9 @@ POA_AMI_Simple_Server_Handler::_create_collocated_objref (const char* repository
 void
 POA_AMI_Simple_Server_Handler::get_number (CORBA::Long l, CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG, "%N:%l:%d\n", l));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P | %t):POA_AMI_Simple_Server_Handler::get_number = %d\n",
+              l));
 }
 
 void
