@@ -51,7 +51,7 @@ public:
   int wait (const ACE_Time_Value * = 0) {errno = ETIME; return -1;}
 
   /// Returns -1 with <errno> == <ETIME>.
-  int wait (ACE_Null_Mutex &m,
+  int wait (ACE_Null_Mutex &,
             const ACE_Time_Value * = 0) {errno = ETIME; return -1;}
 
   /// Returns 0.

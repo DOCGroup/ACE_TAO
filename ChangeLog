@@ -1,3 +1,8 @@
+Wed Aug  6 14:13:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Null_Condition.h (vait):
+          Removed unused variable in method declaration to quash a warning.
+
 Wed Aug  6 03:29:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Additional includes required by recent subsetting.
