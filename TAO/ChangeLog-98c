@@ -1,66 +1,70 @@
+Fri Dec 11 08:54:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * VERSION: added ace-users/comp.soft-sys.ace info.
+
 Fri Dec 11 07:28:54 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
 
-	  Added #include for newy added files described below.
+          Added #include for newy added files described below.
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
 
-	  We no longer generate all the code for the base sequence classes
-	  in the header file itself (Recall that these base sequence
-	  classes are used for platforms that do not support template
-	  specialization OR require explicit template instantiation). 
-	  Instead, the implementation of all the methods of the
-	  classes is now generated in the *.i (inlined) file. The reason
-	  for doing this was to handle problems with sequences of forward
-	  declared interfaces. Code for sequences of forward declared
-	  interfaces would use operations such as _duplicate, _nil, and
-	  others that get defined only when the actual interface
-	  definition is seen. To circumvent this problem, we now generate
-	  only the class definition in the header file and all the
-	  implementation is moved to the inline file. Thanks to Ron Barack
-	  (rab@terminal.cz) for submitting the bugreport.
+          We no longer generate all the code for the base sequence classes
+          in the header file itself (Recall that these base sequence
+          classes are used for platforms that do not support template
+          specialization OR require explicit template instantiation).
+          Instead, the implementation of all the methods of the
+          classes is now generated in the *.i (inlined) file. The reason
+          for doing this was to handle problems with sequences of forward
+          declared interfaces. Code for sequences of forward declared
+          interfaces would use operations such as _duplicate, _nil, and
+          others that get defined only when the actual interface
+          definition is seen. To circumvent this problem, we now generate
+          only the class definition in the header file and all the
+          implementation is moved to the inline file. Thanks to Ron Barack
+          (rab@terminal.cz) for submitting the bugreport.
 
-	  In addition, I realized that these base sequence classes were
-	  used only when the platform requires explicit template
-	  instantiation or does not support template specialization. For
-	  the other cases, the code for these base classes was never used
-	  and it was unnecessarily increasing the footprint. Hence, we now
-	  generate these base sequence classes and its associated inlined
-	  code inside conditional macro which we call AHETI (please see
-	  generated code).
+          In addition, I realized that these base sequence classes were
+          used only when the platform requires explicit template
+          instantiation or does not support template specialization. For
+          the other cases, the code for these base classes was never used
+          and it was unnecessarily increasing the footprint. Hence, we now
+          generate these base sequence classes and its associated inlined
+          code inside conditional macro which we call AHETI (please see
+          generated code).
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-	  TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+          TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
 
-	  Added code and new methods so that code for the base sequence
-	  classes can be generated in the *.i file.
+          Added code and new methods so that code for the base sequence
+          classes can be generated in the *.i file.
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
 
-	  Newly added files that generate code for the base sequences in
-	  the *.i file.
-	
+          Newly added files that generate code for the base sequences in
+          the *.i file.
+
 Thu Dec 10 21:48:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Consumer_Signal_Handler.h: 
-	* examples/Callback_Quoter/Consumer_Input_Handler.h:  
-	* examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+        * examples/Callback_Quoter/Consumer_Input_Handler.h:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
 
-	  Replaced #include <signal.h> by #include "ace/OS.h" and also
-	  changed all #include <ace/foo.h> to #include "ace/foo.h" wherever
-	  applicable. Thanks to David for pointing out these discrepancies.
+          Replaced #include <signal.h> by #include "ace/OS.h" and also
+          changed all #include <ace/foo.h> to #include "ace/foo.h" wherever
+          applicable. Thanks to David for pointing out these discrepancies.
 
 Thu Dec 10 09:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
