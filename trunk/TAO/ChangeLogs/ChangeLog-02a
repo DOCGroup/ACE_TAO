@@ -1,9 +1,19 @@
+Fri Mar 31 20:59:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (activate_poa): AdapterNonExistent
+	  exceptions raised while processing a request should be caught
+	  and converted into OBJECT_NOT_EXIST.  Remember that
+	  AdapterNonExistent is a server side exception and the client
+	  does not know about this exception.  If this conversion does not
+	  take place, it will get handled as a UNKNOWN exception on the
+	  client.  Thanks to Carlos for pointing this out.
+
 Fri Mar 31 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
 	  Added a <_proxy_> member per TAO_interface_Smart_PRoxy_Base
 	  so that the <base_proxy_> got be narrowed and stored for future
-	  invocations. Also added generation of export macros for the 
+	  invocations. Also added generation of export macros for the
 	  smart proxy classes. Thanks to Aniruddha Gokhale
 	  <gokhale@research.bell-labs.com> for pointing this out.
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (get_proxy):
@@ -15,15 +25,15 @@ Fri Mar 31 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  harm the design in any way because the factory is unregistered
 	  only during the first invocation of the smart proxy. And
 	  anyways, to use create a smart proxy its necessary to create a
-	  smart proxy factory.	
+	  smart proxy factory.
 	* tao/TAO.dsp:
 	* tao/TAO_Static.dsp:
 	  Added Smart_Proxies.{i,h,cpp} to both these workspaces.
 	* docs/Smart_Proxies.html: Updated the documentation.
-	
+
 Fri Mar 31 18:36:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp (write_reply_header): 
+	* tao/GIOP_Message_Accept_State.cpp (write_reply_header):
 	* tao/GIOP_Message_Accept_State.h:
 	* tao/GIOP_Message_Accept_State.i:
 	* tao/GIOP_Message_Acceptors.cpp:
