@@ -252,6 +252,7 @@ int FT_ReplicaFactory_i::idle (int & result ACE_ENV_ARG_DECL)
         // unless result is non-zero.
         // non-zero result means panic.
         replica->idle(result ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
       }
     }
   }
