@@ -1,3 +1,37 @@
+Thu Aug 10 17:24:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+
+	  Added BoundsC.i to project.
+
+	* tao/DynAnyC.i:
+	* tao/IORC.i:
+	* tao/ImplRepoC.i:
+	* tao/InterceptorC.i:
+	* tao/InterfaceC.i:
+	* tao/MessagingC.i:
+	* tao/PolicyC.i:
+	* tao/PortableServerC.i:
+	* tao/RTCORBAC.i:
+	* tao/Sequence.cpp:
+	* tao/Sequence.i:
+	* tao/Sequence_T.i:
+	* tao/Services.i:
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+
+	  In the sequence get_buffer operation, in the case where the orphan 
+	  argument is 0 and the buffer has not yet been allocated, we needed
+	  to set the sequence's release_ member to 1 after allocating the buffer.
+	  Otherwise there is a potential memory leak. Thanks to Chad Elliott
+	  <elliott_c@ociweb.com> for getting the ball rolling by tracking this
+	  down in CONV_FRAMEC.i.
+
 Thu Aug 10 16:30:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/FT_Service/FT_CORBA_ServiceC.h (UserException):
