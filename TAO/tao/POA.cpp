@@ -1315,7 +1315,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                                                    system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());    
+                            CORBA::Object::_nil ());
         }
     }
   else
@@ -1347,17 +1347,18 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
                           CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN and either the UNIQUE_ID or
-  // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
-  // exception is raised.
+  // IMPLICIT_ACTIVATION policies; or it requires the USE_DEFAULT_SERVANT
+  // policy; if not present, the WrongPolicy exception is raised.
   if (!(this->policies ().servant_retention () == PortableServer::RETAIN
         && (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID
-            || this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
+            || this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION))
+      && !(this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT))
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
     }
 
-  // This operation has three possible behaviors.
+  // This operation has four possible behaviors.
 
   // If the POA has the UNIQUE_ID policy and the specified servant is
   // active, the Object Id associated with that servant is returned.
@@ -1404,6 +1405,37 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
 
       return user_id._retn ();
     }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+  // If the POA has the USE_DEFAULT_SERVANT policy, the servant
+  // specified is the default servant, and the operation is being
+  // invoked in he context of executin a request on the default
+  // servant, then the ObjectId associated with the current invocation
+  // is returned.
+  if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
+    {
+      // Compare the servant specified in the parameter list to the
+      // default servant registered with this POA.
+      PortableServer::Servant default_servant = this->default_servant_.in ();
+      if (default_servant != 0 &&
+          default_servant == servant)
+        {
+          // If they are the same servant, then check if we are in an
+          // upcall.
+          TAO_POA_Current_Impl *poa_current_impl =
+            TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
+          // If we are in an upcall on the default servant, return the
+          // ObjectId associated with the current invocation.
+          if (poa_current_impl != 0 &&
+              servant == poa_current_impl->servant ())
+            {
+              return poa_current_impl->get_object_id (ACE_TRY_ENV);
+            }
+        }
+    }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Otherwise, the ServantNotActive exception is raised.
   ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
