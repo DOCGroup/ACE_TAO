@@ -201,8 +201,8 @@ ACE_Thread_Descriptor::at_exit (void *object,
      ACE_NEW_RETURN (cleanup, ACE_At_Thread_Exit_Func(object,cleanup_hook,param), -1);
      this->at_push(cleanup);
    }
-  return 0;
 #endif /* ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+  return 0;
 }
 
 void
