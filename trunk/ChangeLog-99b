@@ -1,3 +1,9 @@
+Fri Jul 16 00:07:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Cached_Accept_Conn_Test.cpp (test_connection_management):
+	  Changed the test to allow for both one listen endpoint or
+	  multiple listen endpoints.
+
 Thu Jul 15 22:42:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Message_Queue.h: (ACE_MESSAGE_QUEUE_DEFAULT_TYPE):
