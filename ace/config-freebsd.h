@@ -27,15 +27,22 @@
 // Platform specific directives
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
+#define ACE_LACKS_READDIR_R
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
 #define ACE_HAS_DIRENT
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #define ACE_LACKS_SIGSET
-#define ACE_HAS_SIGINFO_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_SI_ADDR
+
+#if (__FreeBSD__ > 2)
+#define ACE_HAS_SIGINFO_T
+#endif /* __FreeBSD__ > 2 */
+
+// Use of <malloc.h> is deprecated.
+#define ACE_LACKS_MALLOC_H
 
 // This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
 #if defined(FreeBSD_2_1)
@@ -162,6 +169,7 @@ ange */
 
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+#define ACE_HAS_NONCONST_MSGSND
 
 // #define ACE_HAS_SIGWAIT
 

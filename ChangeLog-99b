@@ -1,3 +1,11 @@
+Mon Jan 11 10:23:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added ACE_LACKS_READDIR_R.
+	* ace/config-freebsd.h: Added ACE_LACKS_READDIR_R,
+	  ACE_HAS_NONCONST_MSGSND, ACE_LACKS_MALLOC_H.  ACE_HAS_SIGINFO_T
+	  only applies to 3.0 and above.  Thanks to Ivan Pascal
+	  <pascal@info.tsu.ru> for reporting the change.
+
 Sun Jan 10 21:52:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Message_Queue_Notifications_Test.cpp (iterator_test):
