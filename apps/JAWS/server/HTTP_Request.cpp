@@ -186,10 +186,10 @@ HTTP_Request::cgi (void) const
   return this->cgi_;
 }
 
-const char * const *
+const char **
 HTTP_Request::cgi_env (void) const
 {
-  return this->cgi_env_;
+  return (const char **)this->cgi_env_;
 }
 
 const char *
