@@ -106,18 +106,10 @@ all: idl_src_files
 #
 # Override defaults in outputdir.bor
 #
-!ifdef STATIC
 STATIC_DIR=.
-!endif
-!ifdef DEBUG
 DEBUG_DIR=.
-!endif
-!ifdef PASCAL
 PASCAL_DIR=.
-!endif
-!ifdef UNICODE
 UNICODE_DIR=.
-!endif
 
 INSTALL_DLLDIR=$(INSTALL_DIR)\lib
 INCLUDES_INSTALL=1
