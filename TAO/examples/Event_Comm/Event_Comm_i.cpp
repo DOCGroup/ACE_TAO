@@ -119,9 +119,6 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   this->regexp (compile_buffer);
   ACE_ASSERT (this->regexp () != 0);
 
-  ACE_DEBUG ((LM_DEBUG, "criteria = %sm regexp = %s",
-              this->criteria(), this->regexp()));
-
   // Increment the reference count since we are keeping a copy of
   // this...
   this->consumer_ = Event_Comm::Consumer::_duplicate (this->consumer_);
@@ -138,6 +135,14 @@ Consumer_Entry::~Consumer_Entry (void)
 Notifier_i::Notifier_i (size_t size)
   : map_ (size)
 {
+// if platforms (such as win32) do not support the REGEXP functions 
+// such as <compile> and <step> then warn the user that the regular
+// expression feature is not available.
+	#ifndef ACE_HAS_REGEX	
+	ACE_DEBUG ((LM_DEBUG, "\n WARNING: This platform does not support the functions\
+	for regular expressions.\n\
+	The filtering criteria will not work.\n"));
+	#endif //#ifndef ACE_HAS_REGEX
 }
 
 // Add a new consumer to the table, being careful to check for
