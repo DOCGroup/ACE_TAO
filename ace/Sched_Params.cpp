@@ -215,8 +215,9 @@ ACE_Sched_Params::next_priority (const Policy policy,
         return THREAD_PRIORITY_TIME_CRITICAL;
       case THREAD_PRIORITY_TIME_CRITICAL:
         return THREAD_PRIORITY_TIME_CRITICAL;
+      default:
+        return priority;  // unknown priority:  should never get here
     }
-  return -1;
 #elif defined (ACE_HAS_THREADS)
   // including STHREADS, DCETHREADS, and PTHREADS
   const int max = priority_max (policy, scope);
@@ -244,7 +245,9 @@ ACE_Sched_Params::previous_priority (const Policy policy,
   switch (priority)
     {
       case THREAD_PRIORITY_IDLE:
-        return THREAD_PRIORITY_BELOW_NORMAL;
+        return THREAD_PRIORITY_IDLE;
+      case THREAD_PRIORITY_LOWEST:
+        return THREAD_PRIORITY_IDLE;
       case THREAD_PRIORITY_BELOW_NORMAL:
         return THREAD_PRIORITY_LOWEST;
       case THREAD_PRIORITY_NORMAL:
@@ -255,8 +258,9 @@ ACE_Sched_Params::previous_priority (const Policy policy,
         return THREAD_PRIORITY_ABOVE_NORMAL;
       case THREAD_PRIORITY_TIME_CRITICAL:
         return THREAD_PRIORITY_HIGHEST;
+      default:
+        return priority;  // unknown priority:  should never get here
     }
-  return -1;
 #elif defined (ACE_HAS_THREADS)
   // including STHREADS, DCETHREADS, and PTHREADS
   const int min = priority_min (policy, scope);
