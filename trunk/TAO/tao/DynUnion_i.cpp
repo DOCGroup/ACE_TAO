@@ -1292,11 +1292,16 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
+
+// For Chorus and VxWorks
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_longlong:
         ACE_NEW_THROW_RETURN (retval,
                               ::DU_Extractor<CORBA::LongLong>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
+#endif /* ACE_LACKS_LONGLONG_T */
+
         return retval;
       case CORBA::tk_ulonglong:
         ACE_NEW_THROW_RETURN (retval,
