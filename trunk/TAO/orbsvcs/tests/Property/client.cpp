@@ -440,11 +440,11 @@ Client::test_delete_properties (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_properties\n"));
   CosPropertyService::PropertyNames prop_names;
-  prop_names.length (3);
+  prop_names.length (4);
   prop_names [0] = CORBA::string_dup ("char_property");
   prop_names [1] = CORBA::string_dup ("short_property");
   prop_names [2] = CORBA::string_dup ("long_property");
-  //  prop_names [3] = CORBA::string_dup ("no_property");
+  prop_names [4] = CORBA::string_dup ("no_property");
   ACE_DEBUG ((LM_DEBUG,
               "Length of sequence %d, Maxlength : %d\n",
               prop_names.length (),
@@ -776,7 +776,7 @@ Client::test_get_property_value (CORBA::Environment &env)
                            "invalid object reference\n"),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG, "IOR retrieved. Seems to be in good shape\n"));
+      ACE_DEBUG ((LM_DEBUG, "IOR retrieved\n"));
     }
   TAO_CATCHANY
     {
