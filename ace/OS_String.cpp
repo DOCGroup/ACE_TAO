@@ -424,9 +424,8 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
     *lasts += 1;
   return s ;
 }
-#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
-#if defined (ACE_HAS_WCHAR)
+# if defined (ACE_HAS_WCHAR)
 wchar_t*
 ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
 {
@@ -446,7 +445,8 @@ ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, AC
     *lasts += 1;
   return s ;
 }
-#endif  // ACE_HAS_WCHAR
+# endif  // ACE_HAS_WCHAR
+#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
 #if !defined (ACE_HAS_MEMCHR)
 const void *
