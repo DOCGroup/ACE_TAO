@@ -171,11 +171,9 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      AST_Expression *e = ub->label ()->label_val ();
-
       *os << "// set the discriminant val" << be_nl;
 
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -241,7 +239,7 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
     {
       *os << "// set the discriminant val" << be_nl;
 
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -309,7 +307,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -379,7 +377,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -450,7 +448,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -599,7 +597,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -666,7 +664,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -694,7 +692,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -723,7 +721,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -821,7 +819,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
@@ -957,7 +955,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset ("; 
+      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";

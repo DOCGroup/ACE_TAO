@@ -1,3 +1,14 @@
+Sat Feb 27 20:05:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp: 
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp: 
+	  Removed unused variables.
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp: 
+	  The temporary used to read the discriminant must be declared
+	  using the fully qualified name of the type, because the
+	  operator>> is in the global scope.
+
 Fri Feb 26 23:41:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Oops, unlinking
