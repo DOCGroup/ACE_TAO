@@ -1,3 +1,8 @@
+Fri Jul 26 21:00:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: Fixed a unused variable warning in g++
+	  builds. 
+
 Fri Jul 26 20:08:41 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4_g++.GNU: Corrected option for
