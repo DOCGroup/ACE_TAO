@@ -106,17 +106,24 @@ void
 Sender::shutdown (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  // File reading is complete, destroy the stream.
-  AVStreams::flowSpec stop_spec;
-  this->streamctrl_->destroy (stop_spec
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_TRY
+  {
+    // File reading is complete, destroy the stream.
+    AVStreams::flowSpec stop_spec;
+    this->streamctrl_->destroy (stop_spec
+                                ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
       // Shut the orb down.
-  TAO_AV_CORE::instance ()->orb ()->shutdown (0
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
+    TAO_AV_CORE::instance ()->orb ()->shutdown (0
+                                                ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "shutdown\n");
+    }
+  ACE_ENDTRY;
 }
 
 int
