@@ -351,7 +351,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           this->current_->cont (cont);
           this->current_ = cont;
           cont->rd_ptr (i->rd_ptr ());
-          cont->wr_ptr (i->rd_ptr ());
+          cont->wr_ptr (i->wr_ptr ());
         }
       else
         {
