@@ -1,3 +1,19 @@
+Fri Jul 14 22:00:34 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/fcntl.inl (creat):
+
+	  WIN32 doesn't support integers as file handles. Note here,
+	  we return -1 for failure and we cast a HANDLE to an int
+	  for success.
+
+	  Also, emulated support for POSIX creat. The ACE_OS version
+	  extensively uses thread protection. This is commented out and
+	  may be added in later, when threads are implemented in PACE.
+
+	* pace/fcntl.h (creat):
+
+	  Comments regarding return values == (int)*HANDLE for WIN32.
+
 Fri Jul 14 21:20:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/types.h:
