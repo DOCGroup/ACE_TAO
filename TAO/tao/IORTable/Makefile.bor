@@ -10,13 +10,14 @@ OBJFILES = \
 	$(OBJDIR)\Table_Adapter.obj \
 	$(OBJDIR)\IOR_Table_Impl.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DTAO_IORTABLE_BUILD_DLL
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORTABLE_CFLAGS) \
+	-DTAO_IORTABLE_BUILD_DLL
 
 CPPDIR = .
 
 INCDIR_NAME = tao/IORTable
 INCLUDES = \
-         *.h *.i \
+	*.h *.i \
 	 IORTable.pidl
 
 LIBFILES = $(TAO_LIB) $(ACE_LIB)
