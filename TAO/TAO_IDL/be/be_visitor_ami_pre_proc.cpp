@@ -71,16 +71,13 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
 int
 be_visitor_ami_pre_proc::visit_module (be_module *node)
 {
-  if (!node->imported ())
+  if (this->visit_scope (node) == -1)
     {
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_pre_proc::"
-                             "visit_module - "
-                             "visit scope failed\n"),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ami_pre_proc::"
+                         "visit_module - "
+                         "visit scope failed\n"),
+                        -1);
     }
 
   return 0;
@@ -89,7 +86,8 @@ be_visitor_ami_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
-  if (node->imported () || node->is_local () || node->is_abstract ())
+  // We check for an imported node after generating the reply handler.
+  if (node->is_local () || node->is_abstract ())
     {
       return 0;
     }
@@ -106,7 +104,12 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
 
-  be_valuetype *excep_holder = this->create_exception_holder (node);
+  be_valuetype *excep_holder = 0;
+  
+  if (! node->imported ())
+    {
+      excep_holder = this->create_exception_holder (node);
+    }
 
   be_interface *reply_handler = this->create_reply_handler (node,
                                                             excep_holder);
@@ -120,6 +123,10 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 
       // Remember from whom we were cloned
       reply_handler->original_interface (node);
+
+      // If this was created for an imported node, it will be wrong
+      // unless we set it.
+      reply_handler->set_imported (node->imported ());
     }
   else
     {
@@ -128,6 +135,14 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                          "visit_interface - "
                          "creating the reply handler failed\n"),
                         -1);
+    }
+
+  // After generating the reply handler for imported nodes, so they
+  // can be looked up as possible parents of a reply handler from
+  // a non-imported node, we can skip the rest of the function.
+  if (node->imported ())
+    {
+      return 0;
     }
 
   // Set the proper strategy.
@@ -489,7 +504,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
 
-  if (node->nmembers () > 0)
+  if (! node->imported () && node->nmembers () > 0)
     {
       this->elem_number_ = 0;
       // Initialize an iterator to iterate thru our scope.
@@ -1281,7 +1296,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
     {
       parent = parents[i];
 
-      if (parent->is_abstract () || parent->imported ())
+      if (parent->is_abstract ())
         {
           continue;
         }
@@ -1366,7 +1381,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
         {
           parent = parents[j];
 
-          if (parent->is_abstract () || parent->imported ())
+          if (parent->is_abstract ())
             {
               continue;
             }
@@ -1374,21 +1389,12 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
           ACE_CString rh_local_name = 
             prefix + parent->local_name ()->get_string () + suffix;
 
-          AST_Decl *parent_scope = ScopeAsDecl (parent->defined_in ());
-
           UTL_ScopedName *rh_parent_name = 
-            (UTL_ScopedName *) parent_scope->name ()->copy ();
+            ACE_static_cast (UTL_ScopedName *, parent->name ()->copy ());
 
-          ACE_NEW_RETURN (id,
-                          Identifier (rh_local_name.c_str ()),
-                          0);
-
-          ACE_NEW_RETURN (sn,
-                          UTL_ScopedName (id,
-                                          0),
-                          0);
-
-          rh_parent_name->nconc (sn);
+          rh_parent_name->last_component ()->replace_string (
+                                                 rh_local_name.fast_rep ()
+                                               );
 
           AST_Decl *d = 
             node->defined_in ()->lookup_by_name (rh_parent_name,
@@ -1402,7 +1408,13 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
           rh_parent_name->destroy ();
         }
 
-      n_rh_parents = index;
+      // Just a sanity check until we're sure this works in all use cases.
+      if (n_rh_parents != index)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "reply handler parent iteration mismatch\n"),
+                            0);
+        }
     }
 
   return retval;
