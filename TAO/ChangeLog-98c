@@ -1,3 +1,13 @@
+Mon May 25 10:04:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.cpp: 
+	  Removed some superflous memory allocations and copys.
+
+	* tao/CDR.cpp: 
+	  write_octet_array_mb() was returning -1, but it should return a
+	  CORBA_Boolean, thanks to David Levine (levine@cs.wust.edu) for
+	  detecting this one.
+
 Mon May 25 09:55:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sequence.cpp (TAO_Unbounded_Sequence ctor): initialize base
