@@ -1,3 +1,15 @@
+Mon Mar 31 09:00:54 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Logger/Acceptor-server/server_loggerd.cpp,
+	  examples/Reactor/Misc/pingpong.cpp,
+	  examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp,
+	  examples/Shared_Malloc/Malloc.cpp:
+	  added template specializations.
+
+	* examples/Threads/Makefile, performance-tests/Misc/Makefile:
+	  moved context_switch_time.cpp from examples/Threads to
+	  performance-tests/Misc.
+
 Sun Mar 30 12:52:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Malloc.h: The block begining with:
