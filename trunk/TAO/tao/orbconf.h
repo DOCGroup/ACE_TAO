@@ -242,16 +242,6 @@
 #  pragma warning (disable:4355) /* disable C4355 warning */
 #endif /* defined (_WIN32) */
 
-#if !defined (TAO_CONST)
-// Something to document the fact that we want to put 'const' in front
-// of a type, but that it won't turn out the way we want, e.g., we
-// really want to express that a CORBA_String is const, but since
-// CORBA_String is a char*, the const modifies the pointer and not the
-// pointed-to, and some compilers (like SGI's EDG-derived thang)
-// complain.
-#define TAO_CONST
-#endif /* TAO_CONST */
-
 // The IDL compiler can generate the classes corresponding to IDL
 // sequences in two ways:
 // + Use the TAO templates for sequences,
@@ -344,27 +334,6 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 // CORBA Messaging
 #define TAO_HAS_CORBA_MESSAGING
 
-// The maximum value for an standard PolicyType, we use this trick to
-// pack the standard policies and the TAO extension in a single
-// array.
-// The motivation for such a low-level optimization is that policies
-// can be set on a per-object level, allocating a complex data
-// structure (such as a hash map) or a big array for each object is
-// not feasible.
-#define TAO_MAX_STANDARD_POLICIES 64
-
-// The number of TAO specific policies
-#define TAO_POLICIES_COUNT 32
-
-// The size of the Policy array, the number of policies supported in
-// TAO is limited by this number.
-#define TAO_MAX_POLICIES (TAO_MAX_STANDARD_POLICIES+TAO_POLICIES_COUNT)
-
-// TAO may define its own policies, they are defined in a range far
-// from the standard policies.
-#define TAO_MIN_PROPIETARY_POLICY 1024
-#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT)
-
 // Define the policy types as literals, so they can be used in switch
 // statements
 #define TAO_MESSAGING_REBIND_POLICY_TYPE 23
@@ -392,5 +361,9 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #if !defined(TAO_DEF_GIOP_MINOR)
 #define TAO_DEF_GIOP_MINOR 1
 #endif /* TAO_DEF_GIOP_MINOR */
+
+// By default TAO generate the OMG standard profile components
+// (ORB_TYPE and CODE_SETS)
+#define TAO_STD_PROFILE_COMPONENTS
 
 #endif  /* TAO_ORB_CONFIG_H */

@@ -46,10 +46,16 @@ TAO_UIOP_Profile::hint (void)
   return this->hint_;
 }
 
-ACE_INLINE TAO_Profile *
-TAO_UIOP_Profile::_nil (void)
+ACE_INLINE const TAO_Tagged_Components&
+TAO_UIOP_Profile::tagged_components (void) const
 {
-  return (TAO_UIOP_Profile *) 0;
+  return this->tagged_components_;
+}
+
+ACE_INLINE TAO_Tagged_Components&
+TAO_UIOP_Profile::tagged_components (void)
+{
+  return this->tagged_components_;
 }
 
 #endif  /* !defined ACE_LACKS_UNIX_DOMAIN_SOCKETS */

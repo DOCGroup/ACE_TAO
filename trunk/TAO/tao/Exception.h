@@ -57,7 +57,7 @@ public:
   const char *_id (void) const;
   // Return the repository ID of the Exception.
 
-  TAO_CONST CORBA::TypeCode_ptr _type (void) const;
+  CORBA::TypeCode_ptr _type (void) const;
   // Return the TypeCode corresponding to the currently stored.
 
   // = To implement the narrow method.

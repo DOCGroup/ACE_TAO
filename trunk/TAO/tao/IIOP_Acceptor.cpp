@@ -68,6 +68,16 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   if (mprofile.give_profile (pfile) == -1)
     return -1;
 
+  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+    return 0;
+
+  pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
+
+  CONV_FRAME::CodeSetComponentInfo code_set_info;
+  code_set_info.ForCharData.native_code_set  = TAO_DEFAULT_CHAR_CODESET_ID;
+  code_set_info.ForWcharData.native_code_set = TAO_DEFAULT_WCHAR_CODESET_ID;
+  pfile->tagged_components ().set_code_sets (code_set_info);
+
   return 0;
 }
 

@@ -901,8 +901,56 @@ TAO_NAMESPACE CORBA
 
 // ****************************************************************
 
+// @@ The following numbers where requested to the OMG, we should
+//    obtain them in the next few days.
+
+// These numbers were assigned by the OMG.  Do *NOT* change.
+// The ASCII representation is "TAO\x00", we can request more ORB
+// types later.
+#define TAO_ORB_TYPE 0x54414f00U
+
+// There numbers are assigned by the OpenGroup, a database is
+// available at ftp://ftp.opengroup.orb/pub/codeset_registry/
+#define TAO_CODESET_ID_ISO8859_1 0x00010001U
+#define TAO_CODESET_ID_UNICODE   0x00010109U
+
+// There are the default codesets that TAO declares, of course they
+// could be different on each platform, once the complete support for
+// character sets is implemented
+#define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
+#define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
+
+// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
+// define our own profile ids in TAO.
+// @@ The macros below are suggestions and some list of the protocols
+//    we have thought of...
+// #define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Unix Domain */
+// #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
+// #define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
+// #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
+// #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
+// #define TAO_TAG_MCAST_PROFILE  0x54414f05U /* IP/Multicast */
+// #define TAO_TAG_CPCI_PROFILE   0x54414f06U /* Compact/PCI */
+// #define TAO_TAG_VME_PROFILE    0x54414f07U /* VME Bus */
+// #define TAO_TAG_NTNP_PROFILE   0x54414f08U /* NT Named Pipes */
+// #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
+// #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
+// #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
+
+// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
+// define our own profile tagged components in TAO.
+
+// Store the priority range in the *server* so the client can choose
+// the right endpoint
+#define TAO_TAG_PRIORITY_RANGE 0x54414f00U
+// #define TAO_TAG_ANOTHER_COMPONENT 0x54414f01U
+
+// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
+// define our own service context list entries.
+// #define TAO_SOME_SVC_CONTEXT_ENTRY 0x54414f00U
+
 // This number was assigned by the OMG.  Do *NOT* change at random.
-// The ASCII represetantion is TA0xxxx, close enough since they only
+// The ASCII representation is TA0xxxx, close enough since they only
 // take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
 // that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
 // there to remind us of that.

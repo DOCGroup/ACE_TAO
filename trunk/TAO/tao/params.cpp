@@ -17,7 +17,9 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF),
-    use_lite_protocol_ (0)
+    use_lite_protocol_ (0),
+    use_dotted_decimal_addresses_ (0),
+    std_profile_components_ (1)
 {
 }
 
@@ -109,7 +111,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
 }
 
 
-/* Note ACE_Node<ACE_CString>, ACE_Unbounded_Set<ACE_CString> and 
- * ACE_Unbounded_Set_Iterator<ACE_CString> * are instantiated in 
+/* Note ACE_Node<ACE_CString>, ACE_Unbounded_Set<ACE_CString> and
+ * ACE_Unbounded_Set_Iterator<ACE_CString> * are instantiated in
  * Service_Config.cpp so we do not explicitly instantiate here.
  */
