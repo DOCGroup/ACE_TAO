@@ -1,3 +1,7 @@
+Tue Jul  6 16:35:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        
+        * replaced calls to printf in IORTest.ccp with ACE_DEBUG
+
 Tue Jul  6 15:55:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/Options.html:
