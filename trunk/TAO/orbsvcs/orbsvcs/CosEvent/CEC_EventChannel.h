@@ -30,6 +30,7 @@
 
 #include "CEC_Defaults.h"
 #include "event_export.h"
+#include "ace/Hash_Map_Manager.h"
 
 /**
  * @class TAO_CEC_EventChannel_Attributes
@@ -100,6 +101,20 @@ private:
 class TAO_Event_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
 {
 public:
+  class ServantBaseHash
+  {
+  public:
+    u_long operator() (PortableServer::ServantBase* const & ptr) const {
+      return ACE_reinterpret_cast(u_long, ptr);
+    }
+  };
+
+  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
+                                  unsigned int,
+                                  ServantBaseHash,
+                                  ACE_Equal_To<PortableServer::ServantBase*>,
+                                  TAO_SYNCH_MUTEX> ServantRetryMap;
+
   /**
    * constructor
    * If <own_factory> is not 0 it assumes ownership of the factory.
@@ -238,6 +253,8 @@ public:
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  ServantRetryMap& get_servant_retry_map (void);
+
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
@@ -277,6 +294,8 @@ private:
   /// suppliers
   TAO_CEC_ConsumerControl *consumer_control_;
   TAO_CEC_SupplierControl *supplier_control_;
+
+  ServantRetryMap retry_map_;
 };
 
 #if defined (__ACE_INLINE__)

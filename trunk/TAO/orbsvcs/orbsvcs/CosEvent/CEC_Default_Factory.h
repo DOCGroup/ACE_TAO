@@ -199,6 +199,9 @@ private:
   /// The consumer and supplier control timeout in usecs
   ACE_Time_Value consumer_control_timeout_;
   ACE_Time_Value supplier_control_timeout_;
+
+  /// The number of retries before disconnecting a proxy
+  unsigned int proxy_disconnect_retries_;
 };
 
 #if defined (__ACE_INLINE__)

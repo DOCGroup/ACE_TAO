@@ -49,6 +49,17 @@ TAO_CEC_ConsumerControl::system_exception (TAO_CEC_ProxyPushSupplier *,
 {
 }
 
+bool
+TAO_CEC_ConsumerControl::need_to_disconnect (PortableServer::ServantBase*)
+{
+  return true;
+}
+
+void
+TAO_CEC_ConsumerControl::successful_transmission (PortableServer::ServantBase*)
+{
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

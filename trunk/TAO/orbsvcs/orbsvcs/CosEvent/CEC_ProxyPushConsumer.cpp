@@ -28,10 +28,13 @@ TAO_CEC_ProxyPushConsumer::
 
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
+
+  this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 
 TAO_CEC_ProxyPushConsumer::~TAO_CEC_ProxyPushConsumer (void)
 {
+  this->event_channel_->get_servant_retry_map ().unbind (this);
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
