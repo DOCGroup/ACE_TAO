@@ -95,9 +95,8 @@ typedef void *ACE_MALLOC_T;
     // (03.10 and before) a failed new threw bad_alloc. After that (03.13
     // and above) the exception thrown is dependent on the below settings.
 #    if (HPUX_VERS >= 1100)
-#      if (((__HP_aCC <  32500 && !defined (RWSTD_NO_NAMESPACE)) || \
-            (__HP_aCC >= 32500 && defined (_HP_NAMESPACE_STD))) \
-           || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
+#      if ((__HP_aCC < 32500 && !defined (RWSTD_NO_NAMESPACE)) || \
+           defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
 #        define ACE_bad_alloc std::bad_alloc
 #        define ACE_nothrow   std::nothrow
 #        define ACE_nothrow_t std::nothrow_t
@@ -107,7 +106,7 @@ typedef void *ACE_MALLOC_T;
 #        define ACE_nothrow_t nothrow_t
 #      endif /* __HP_aCC */
 #    elif ((__HP_aCC <  12500 && !defined (RWSTD_NO_NAMESPACE)) || \
-           (__HP_aCC >= 12500 && defined (_HP_NAMESPACE_STD)))
+           defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
 #      define ACE_bad_alloc std::bad_alloc
 #      define ACE_nothrow   std::nothrow
 #      define ACE_nothrow_t std::nothrow_t

@@ -55,13 +55,6 @@ protected:
   virtual int handle_events (ACE_Time_Value &wait_time);
 
   /**
-   * Dispatch a single set of events.  If <milli_seconds> elapses
-   * before any events occur, return 0. Return 1 if a completion is
-   * dispatched. Return -1 on errors.
-   */
-  virtual int handle_events (u_long milli_seconds);
-
-  /**
    * Block indefinitely until at least one event is dispatched.
    * Dispatch a single set of events.  If <wait_time> elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
@@ -70,27 +63,19 @@ protected:
    */
   virtual int handle_events (void);
 
-
-  /// Check AIO for completion, error and result status
-  /// Return: 1 - AIO completed , 0 - not completed yet
-  virtual int get_result_status ( ACE_POSIX_Asynch_Result* asynch_result,
-                                   int & error_status,
-                                   int & return_status );
- 
-
- 
-  /// From ACE_POSIX_AIOCB_Proactor.
-  /// Attempt to cancel running request
-  virtual int cancel_aiocb (ACE_POSIX_Asynch_Result *result);
-  virtual int cancel_aio (ACE_HANDLE handle);
-
   /// Find free slot to store result and aiocb pointer
-  virtual int allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
+  virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
 
- /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
+  /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method
   virtual int notify_completion (int sig_num);
 
+  /**
+   * Dispatch a single set of events.  If <milli_seconds> elapses
+   * before any events occur, return 0. Return 1 if a completion is
+   * dispatched. Return -1 on errors.
+   */
+  int handle_events_i (u_long milli_seconds);
  
   /// semaphore variable to notify
   /// used to wait the first AIO start

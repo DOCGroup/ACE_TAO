@@ -77,19 +77,28 @@
 // Compiler can't handle calls like foo->operator T *()
 #    define ACE_HAS_BROKEN_CONVERSIONS
 
-// Compiler supports C++ exception handling. However, the user can ask for this
-// to be turned off. If so (using make exceptions=0) then this def is not set.
-// By default, it is set in wrapper_macros.GNU.
-// #    define ACE_HAS_EXCEPTIONS 1
+// Compiler supports C++ exception handling. It's on by default. If the
+// +noeh compiler option is used to disable exceptions, the compiler defines
+// __HPACC_NOEH.
+#    if !defined (__HPACC_NOEH)
+#      define ACE_HAS_EXCEPTIONS 1
+#    endif
 
-// If the platform_macros.GNU file turned on ACE_HAS_STANDARD_CPP_LIBRARY
-// then we're using the -AA option, so we have standard C++ library,
-// including the standard iostreams. Else, we have the old iostreams.
-#    if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+// If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
+// The -AA option enables the 2.0 standard C++ library. If not used, then
+// we have the old, 1.2.1 C++ library.
+#    if defined (_HP_NAMESPACE_STD)
+#      if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#        undef ACE_HAS_STANDARD_CPP_LIBRARY
+#      endif
+#      define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+#      endif
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
-#    endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#    endif /* _HP_NAMESPACE_STD */
 
 #    define ACE_HAS_TYPENAME_KEYWORD
 
@@ -169,6 +178,9 @@
 
 #include /**/ <sys/stdsyms.h>
 
+// HP-UX is a POSIX-compliant system - see what's available.
+#include "ace/config-posix.h"
+
 ////////////////////////////////////////////////////////////////////////////
 //
 // General OS information - see README for more details on what they mean
@@ -197,8 +209,7 @@
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif  /* __LP64__ */
 
-// Platform can do async I/O (aio_*)
-#define ACE_HAS_AIO_CALLS
+// Platform can do async I/O (aio_*) (set up in config-posix.h)
 // ... but seems to require this in order to keep from hanging.  Needs some
 // investigation, maybe with HP.  John Mulhern determined this value
 // empirically.  YMMV.  If it does vary, set it up in your own config.h which
@@ -400,7 +411,11 @@
 #    define ACE_MT_SAFE 1
 #  endif
 
+// HP-UX doesn't define _POSIX_THREADS since it doesn't implement all
+// features (lacks thread priority inheritance and protection), so
+// config-posix.h doesn't get this one...
 #  define ACE_HAS_PTHREADS
+
 #  define ACE_HAS_PTHREADS_STD
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #  define ACE_HAS_PTHREAD_CONTINUE
@@ -415,7 +430,7 @@
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+#  define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 #include "ace/post.h"
