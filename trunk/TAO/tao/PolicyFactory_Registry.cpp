@@ -93,17 +93,17 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Map_Entry<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr>;
+template class ACE_Map_Iterator_Base<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
+template class ACE_Map_Manager<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Map_Entry<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr>
+#pragma instantiate ACE_Map_Iterator_Base<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Manager<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
