@@ -263,6 +263,9 @@ public:
   /// Post <this> to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
+  /// Accessor for the scatter read flag
+  int scatter_enabled (void) const;
+
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Stream factory.
@@ -273,7 +276,8 @@ protected:
                                        const void* act,
                                        ACE_HANDLE event,
                                        int priority,
-                                       int signal_number = 0);
+                                       int signal_number = 0,
+                                       int scatter_enabled = 0);
 
   /// Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
@@ -292,6 +296,9 @@ protected:
 
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
+
+  /// Flag for scatter read
+  int scatter_enabled_;
 };
 
 /**
@@ -321,6 +328,16 @@ public:
             const void *act,
             int priority,
             int signal_number = 0);
+
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  int readv (ACE_Message_Block &message_block,
+             u_long bytes_to_read,
+             const void *act,
+             int priority,
+             int signal_number = 0);
 
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Stream (void);
@@ -423,6 +440,9 @@ public:
   /// Post <this> to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
+  /// Accessor for the gather write flag
+  int gather_enabled (void) const;
+
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
@@ -433,7 +453,8 @@ protected:
                                         const void* act,
                                         ACE_HANDLE event,
                                         int priority,
-                                        int signal_number = 0);
+                                        int signal_number = 0,
+                                        int gather_enabled = 0);
 
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -453,6 +474,9 @@ protected:
 
   /// I/O handle used for writing.
   ACE_HANDLE handle_;
+
+  /// Flag for gather write
+  int gather_enabled_;
 };
 
 /**
@@ -482,6 +506,16 @@ public:
              const void *act,
              int priority,
              int signal_number = 0);
+
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  int writev (ACE_Message_Block &message_block,
+              u_long bytes_to_write,
+              const void *act,
+              int priority,
+              int signal_number = 0);
 
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Stream (void);
@@ -603,7 +637,8 @@ protected:
                                      u_long offset_high,
                                      ACE_HANDLE event,
                                      int priority,
-                                     int signal_number = 0);
+                                     int signal_number = 0,
+                                     int scatter_enabled = 0);
 
   /// ACE_Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
@@ -651,6 +686,20 @@ public:
             int priority,
             int signal_number = 0);
 
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  * NOTE: Each data block payload must be at least the size of a system memory page 
+  * and must be aligned on a system memory page size boundary
+  */
+  int readv (ACE_Message_Block &message_block,
+             u_long bytes_to_read,
+             u_long offset,
+             u_long offset_high,
+             const void *act,
+             int priority,
+             int signal_number = 0);
+
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File (void);
 
@@ -690,6 +739,16 @@ private:
             const void *act,
             int priority,
             int signal_number = 0);
+
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  int readv (ACE_Message_Block &message_block,
+             u_long bytes_to_read,
+             const void *act,
+             int priority,
+             int signal_number = 0);
 };
 
 /**
@@ -787,7 +846,8 @@ protected:
                                       u_long offset_high,
                                       ACE_HANDLE event,
                                       int priority,
-                                      int signal_number = 0);
+                                      int signal_number = 0,
+                                      int gather_enabled = 0);
 
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -831,6 +891,20 @@ public:
              int priority,
              int signal_number = 0);
 
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  * NOTE: Each data block payload must be at least the size of a system memory page 
+  * and must be aligned on a system memory page size boundary
+  */
+  int writev (ACE_Message_Block &message_block,
+              u_long bytes_to_write,
+              u_long offset,
+              u_long offset_high,
+              const void *act,
+              int priority,
+              int signal_number = 0);
+
   /// Destrcutor.
   virtual ~ACE_WIN32_Asynch_Write_File (void);
 
@@ -870,6 +944,16 @@ private:
              const void *act,
              int priority,
              int signal_number = 0);
+
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  int writev (ACE_Message_Block &message_block,
+              u_long bytes_to_write,
+              const void *act,
+              int priority,
+              int signal_number = 0);
 };
 
 /**

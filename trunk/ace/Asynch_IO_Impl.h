@@ -164,6 +164,18 @@ public:
                     int priority,
                     int signal_number) = 0;
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  virtual int readv (ACE_Message_Block &message_block,
+                     u_long bytes_to_read,
+                     const void *act,
+                     int priority,
+                     int signal_number) = 0;
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+
 protected:
   /// Do-nothing constructor.
   ACE_Asynch_Read_Stream_Impl (void);
@@ -218,6 +230,18 @@ public:
                      int priority,
                      int signal_number) = 0;
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  virtual int writev (ACE_Message_Block &message_block,
+                      u_long bytes_to_write,
+                      const void *act,
+                      int priority,
+                      int signal_number) = 0;
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+  
 protected:
   /// Do-nothing constructor.
   ACE_Asynch_Write_Stream_Impl (void);
@@ -277,6 +301,22 @@ public:
                     int priority,
                     int signal_number) = 0;
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * memory page and must be aligned on a system memory page size boundary
+  */
+  virtual int readv (ACE_Message_Block &message_block,
+                     u_long bytes_to_read,
+                     u_long offset,
+                     u_long offset_high,
+                     const void *act,
+                     int priority,
+                     int signal_number) = 0;
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+
   // We don;t need to redefine the following function again because it
   // has already been defined in ACE_Asynch_Read_Stream_Impl.  But we
   // still need it here to supress a overwriting pure virtual function
@@ -288,6 +328,18 @@ public:
                     const void *act,
                     int priority,
                     int signal_number) = 0;
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  virtual int readv (ACE_Message_Block &message_block,
+                     u_long bytes_to_read,
+                     const void *act,
+                     int priority,
+                     int signal_number) = 0;
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 protected:
   /// Do-nothing constructor.
@@ -336,7 +388,24 @@ public:
                      u_long offset_high,
                      const void *act,
                      int priority,
-                    int signal_number) = 0;
+                     int signal_number) = 0;
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * memory page and must be aligned on a system memory page size boundary
+  */
+  virtual int writev (ACE_Message_Block &message_block,
+                      u_long bytes_to_write,
+                      u_long offset,
+                      u_long offset_high,
+                      const void *act,
+                      int priority,
+                      int signal_number) = 0;
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+
 
   // We don;t need to redefine the following function again because it
   // has already been defined in ACE_Asynch_Write_Stream_Impl.  But we
@@ -349,6 +418,18 @@ public:
                      const void *act,
                      int priority,
                      int signal_number) = 0;
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  virtual int writev (ACE_Message_Block &message_block,
+                      u_long bytes_to_write,
+                      const void *act,
+                      int priority,
+                      int signal_number) = 0;
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 protected:
   /// Do-nothing constructor.

@@ -225,13 +225,15 @@ ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (ACE_Ha
                                                                           const void* act,
                                                                           ACE_HANDLE event,
                                                                           int priority,
-                                                                          int signal_number)
+                                                                          int signal_number,
+                                                                          int scatter_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
-    handle_ (handle)
+    handle_ (handle),
+    scatter_enabled_ (scatter_enabled)
 {
 }
 
@@ -248,7 +250,24 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (u_long bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  this->message_block_.wr_ptr (bytes_transferred);
+  if (!this->scatter_enabled ())
+    this->message_block_.wr_ptr (bytes_transferred);
+  else
+  {
+    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    {
+      if (mb->size () >= bytes_transferred)
+      {
+        mb->wr_ptr (bytes_transferred);
+        bytes_transferred = 0;
+      }
+      else
+      {
+        mb->wr_ptr (mb->size ());
+        bytes_transferred -= mb->size ();
+      }
+    }
+  }
 
   // Create the interface result class.
   ACE_Asynch_Read_Stream::Result result (this);
@@ -330,6 +349,12 @@ ACE_WIN32_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proacto
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+int
+ACE_WIN32_Asynch_Read_Stream_Result::scatter_enabled (void) const
+{
+  return this->scatter_enabled_;
+}
+
 ACE_WIN32_Asynch_Read_Stream::ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Read_Stream_Impl (),
@@ -365,6 +390,90 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
     delete result;
 
   return return_val;
+}
+
+int
+ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
+                                     u_long bytes_to_read,
+                                     const void *act,
+                                     int priority,
+                                     int signal_number)
+{
+  // Create the Asynch_Result.
+  ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Read_Stream_Result (*this->handler_,
+                                                       this->handle_,
+                                                       message_block,
+                                                       bytes_to_read,
+                                                       act,
+                                                       this->win32_proactor_->get_handle (),
+                                                       priority,
+                                                       signal_number,
+                                                       1), // scatter read enabled
+                  -1);
+
+  // do the scatter recv
+  iovec iov[ACE_IOV_MAX];
+  int iovcnt = 0;
+  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
+  {
+    iov[iovcnt].iov_base  = msg->wr_ptr ();
+    iov[iovcnt].iov_len   = msg->size ();
+    ++iovcnt;
+    if (iovcnt >= ACE_IOV_MAX)
+    {
+      delete result;
+      return -1;
+    }
+  }
+
+  result->set_error (0); // Clear error before starting IO.
+
+  u_long bytes_recvd = 0;
+  u_long flags = 0;
+
+  int initiate_result = ::WSARecv (ACE_reinterpret_cast (SOCKET, result->handle ()),
+                                   ACE_reinterpret_cast (WSABUF *, iov),
+                                   iovcnt,
+                                   &bytes_recvd,
+                                   &flags,
+                                   result,
+                                   0);
+
+  if (0 == initiate_result)
+    // Immediate success: the OVERLAPPED will still get queued.
+    return 1;
+
+  ACE_ASSERT (initiate_result == SOCKET_ERROR);
+
+  // If initiate failed, check for a bad error.
+  ACE_OS::set_errno_to_last_error ();
+  switch (errno)
+  {
+    case ERROR_IO_PENDING:
+      // The IO will complete proactively: the OVERLAPPED will still
+      // get queued.
+      initiate_result = 0;
+      break;
+
+    default:
+      // Something else went wrong: the OVERLAPPED will not get
+      // queued.
+
+      if (ACE::debug ())
+      {
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_LIB_TEXT ("%p\n"),
+                    ACE_LIB_TEXT ("WSARecv")));
+      }
+
+      delete result;
+      initiate_result = -1;
+      break;
+  }
+
+  return initiate_result;
 }
 
 ACE_WIN32_Asynch_Read_Stream::~ACE_WIN32_Asynch_Read_Stream (void)
@@ -465,13 +574,15 @@ ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (ACE_
                                                                             const void* act,
                                                                             ACE_HANDLE event,
                                                                             int priority,
-                                                                            int signal_number)
+                                                                            int signal_number,
+                                                                            int gather_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
-    handle_ (handle)
+    handle_ (handle),
+    gather_enabled_ (gather_enabled)
 {
 }
 
@@ -488,7 +599,25 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  this->message_block_.rd_ptr (bytes_transferred);
+  if (!this->gather_enabled ())
+    this->message_block_.rd_ptr (bytes_transferred);
+  else
+  {
+    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    {
+      if (mb->length () >= bytes_transferred)
+      {
+        mb->rd_ptr (bytes_transferred);
+        bytes_transferred = 0;
+      }
+      else
+      {
+        size_t len = mb->length ();
+        mb->rd_ptr (len);
+        bytes_transferred -= len;
+      }
+    }
+  }
 
   // Create the interface result class.
   ACE_Asynch_Write_Stream::Result result (this);
@@ -570,6 +699,12 @@ ACE_WIN32_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proact
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
+int
+ACE_WIN32_Asynch_Write_Stream_Result::gather_enabled (void) const
+{
+  return this->gather_enabled_;
+}
+
 ACE_WIN32_Asynch_Write_Stream::ACE_WIN32_Asynch_Write_Stream (ACE_WIN32_Proactor *win32_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Write_Stream_Impl (),
@@ -604,6 +739,86 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
     delete result;
 
   return return_val;
+}
+
+int
+ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
+                                       u_long bytes_to_write,
+                                       const void *act,
+                                       int priority,
+                                       int signal_number)
+{
+  ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Write_Stream_Result (*this->handler_,
+                                                        this->handle_,
+                                                        message_block,
+                                                        bytes_to_write,
+                                                        act,
+                                                        this->win32_proactor_->get_handle (),
+                                                        priority,
+                                                        signal_number,
+                                                        1), // gather write enabled
+                  -1);
+
+  // do the gather send
+  iovec iov[ACE_IOV_MAX];
+  int iovcnt = 0;
+  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
+  {
+    iov[iovcnt].iov_base  = msg->rd_ptr ();
+    iov[iovcnt].iov_len   = msg->length ();
+    ++iovcnt;
+    if (iovcnt >= ACE_IOV_MAX)
+    {
+      delete result;
+      return -1;
+    }
+  }
+
+  u_long bytes_sent = 0;
+
+  int initiate_result = ::WSASend (ACE_reinterpret_cast (SOCKET, result->handle ()),
+                                   ACE_reinterpret_cast (WSABUF *, iov),
+                                   iovcnt,
+                                   &bytes_sent,
+                                   0, // flags
+                                   result,
+                                   0);
+
+  if (0 == initiate_result)
+    // Immediate success: the OVERLAPPED will still get queued.
+    return 1;
+
+  ACE_ASSERT (initiate_result == SOCKET_ERROR);
+
+  // If initiate failed, check for a bad error.
+  ACE_OS::set_errno_to_last_error ();
+  switch (errno)
+  {
+    case ERROR_IO_PENDING:
+      // The IO will complete proactively: the OVERLAPPED will still
+      // get queued.
+      initiate_result = 0;
+      break;
+
+    default:
+      // Something else went wrong: the OVERLAPPED will not get
+      // queued.
+
+      if (ACE::debug ())
+      {
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_LIB_TEXT ("%p\n"),
+                    ACE_LIB_TEXT ("WSASend")));
+      }
+
+      delete result;
+      initiate_result = -1;
+      break;
+  }
+
+  return initiate_result;
 }
 
 ACE_WIN32_Asynch_Write_Stream::~ACE_WIN32_Asynch_Write_Stream (void)
@@ -687,7 +902,8 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handle
                                                                       u_long offset_high,
                                                                       ACE_HANDLE event,
                                                                       int priority,
-                                                                      int signal_number)
+                                                                      int signal_number,
+                                                                      int scatter_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
@@ -698,7 +914,8 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handle
                                          act,
                                          event,
                                          priority,
-                                         signal_number)
+                                         signal_number,
+                                         scatter_enabled)
 {
   this->Offset = offset;
   this->OffsetHigh = offset_high;
@@ -717,7 +934,24 @@ ACE_WIN32_Asynch_Read_File_Result::complete (u_long bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  this->message_block_.wr_ptr (bytes_transferred);
+  if (!this->scatter_enabled ())
+    this->message_block_.wr_ptr (bytes_transferred);
+  else
+  {
+    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    {
+      if (mb->size () >= bytes_transferred)
+      {
+        mb->wr_ptr (bytes_transferred);
+        bytes_transferred = 0;
+      }
+      else
+      {
+        mb->wr_ptr (mb->size ());
+        bytes_transferred -= mb->size ();
+      }
+    }
+  }
 
   // Create the interface result class.
   ACE_Asynch_Read_File::Result result (this);
@@ -865,6 +1099,102 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
   return return_val;
 }
 
+int
+ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
+                                   u_long bytes_to_read,
+                                   u_long offset,
+                                   u_long offset_high,
+                                   const void *act,
+                                   int priority,
+                                   int signal_number)
+{
+  ACE_WIN32_Asynch_Read_File_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Read_File_Result (*this->handler_,
+                                                     this->handle_,
+                                                     message_block,
+                                                     bytes_to_read,
+                                                     act,
+                                                     offset,
+                                                     offset_high,
+                                                     this->win32_proactor_->get_handle (),
+                                                     priority,
+                                                     signal_number,
+                                                     1), // scatter read enabled
+                  -1);
+
+  // do the scatter read
+  FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
+  int buffer_pointers_count = 0;
+
+  // Each buffer must be at least the size of a system memory page 
+  // and must be aligned on a system memory page size boundary
+
+  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
+  {
+    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+      = ACE_reinterpret_cast (size_t, msg->wr_ptr ());
+    *ACE_reinterpret_cast (size_t *, 
+                           ACE_reinterpret_cast (char *, 
+                                                 &buffer_pointers[buffer_pointers_count]) + 4)
+      = 0;
+    ++buffer_pointers_count;
+    if (buffer_pointers_count >= ACE_IOV_MAX)
+    {
+      delete result;
+      return -1;
+    }
+  }
+
+  // last one should be completely 0
+  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+    = 0;
+  *ACE_reinterpret_cast (size_t *, 
+                         ACE_reinterpret_cast (char *, 
+                                               &buffer_pointers[buffer_pointers_count]) + 4)
+    = 0;
+
+  result->set_error (0); // Clear error before starting IO.
+
+  int initiate_result = ::ReadFileScatter (result->handle (),
+                                   buffer_pointers,
+                                   bytes_to_read,
+                                   0, // reserved, must be NULL
+                                   result);
+
+  if (0 != initiate_result)
+    // Immediate success: the OVERLAPPED will still get queued.
+    return 1;
+
+  // If initiate failed, check for a bad error.
+  ACE_OS::set_errno_to_last_error ();
+  switch (errno)
+  {
+    case ERROR_IO_PENDING:
+      // The IO will complete proactively: the OVERLAPPED will still
+      // get queued.
+      initiate_result = 0;
+      break;
+
+    default:
+      // Something else went wrong: the OVERLAPPED will not get
+      // queued.
+
+      if (ACE::debug ())
+      {
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_LIB_TEXT ("%p\n"),
+                    ACE_LIB_TEXT ("ReadFileScatter")));
+      }
+
+      delete result;
+      initiate_result = -1;
+      break;
+  }
+
+  return initiate_result;
+}
+
 ACE_WIN32_Asynch_Read_File::~ACE_WIN32_Asynch_Read_File (void)
 {
 }
@@ -881,6 +1211,20 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                              act,
                                              priority,
                                              signal_number);
+}
+
+int
+ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
+                                   u_long bytes_to_read,
+                                   const void *act,
+                                   int priority,
+                                   int signal_number)
+{
+  return ACE_WIN32_Asynch_Read_Stream::readv (message_block,
+                                              bytes_to_read,
+                                              act,
+                                              priority,
+                                              signal_number);
 }
 
 // Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -920,7 +1264,8 @@ ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Hand
                                                                         u_long offset_high,
                                                                         ACE_HANDLE event,
                                                                         int priority,
-                                                                        int signal_number)
+                                                                        int signal_number,
+                                                                        int gather_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_Asynch_Write_File_Result_Impl (),
@@ -931,7 +1276,8 @@ ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Hand
                                           act,
                                           event,
                                           priority,
-                                          signal_number)
+                                          signal_number,
+                                          gather_enabled)
 {
   this->Offset = offset;
   this->OffsetHigh = offset_high;
@@ -950,7 +1296,25 @@ ACE_WIN32_Asynch_Write_File_Result::complete (u_long bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  this->message_block_.rd_ptr (bytes_transferred);
+  if (!this->gather_enabled ())
+    this->message_block_.rd_ptr (bytes_transferred);
+  else
+  {
+    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    {
+      if (mb->length () >= bytes_transferred)
+      {
+        mb->rd_ptr (bytes_transferred);
+        bytes_transferred = 0;
+      }
+      else
+      {
+        size_t len = mb->length ();
+        mb->rd_ptr (len);
+        bytes_transferred -= len;
+      }
+    }
+  }
 
   // Create the interface result class.
   ACE_Asynch_Write_File::Result result (this);
@@ -1096,6 +1460,100 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
   return return_val;
 }
 
+int
+ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
+                                     u_long bytes_to_write,
+                                     u_long offset,
+                                     u_long offset_high,
+                                     const void *act,
+                                     int priority,
+                                     int signal_number)
+{
+  ACE_WIN32_Asynch_Write_File_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Write_File_Result (*this->handler_,
+                                                      this->handle_,
+                                                      message_block,
+                                                      bytes_to_write,
+                                                      act,
+                                                      offset,
+                                                      offset_high,
+                                                      this->win32_proactor_->get_handle (),
+                                                      priority,
+                                                      signal_number,
+                                                      1), // gather write enabled
+                  -1);
+
+  // do the gather write
+  FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
+  int buffer_pointers_count = 0;
+
+  // Each buffer must be at least the size of a system memory page 
+  // and must be aligned on a system memory page size boundary
+
+  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
+  {
+    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+      = ACE_reinterpret_cast (size_t, msg->rd_ptr ());
+    *ACE_reinterpret_cast (size_t *, 
+                           ACE_reinterpret_cast (char *, 
+                                                 &buffer_pointers[buffer_pointers_count]) + 4)
+      = 0;
+    ++buffer_pointers_count;
+    if (buffer_pointers_count >= ACE_IOV_MAX)
+    {
+      delete result;
+      return -1;
+    }
+  }
+
+  // last one should be completely 0
+  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+    = 0;
+  *ACE_reinterpret_cast (size_t *, 
+                         ACE_reinterpret_cast (char *, 
+                                               &buffer_pointers[buffer_pointers_count]) + 4)
+    = 0;
+
+  int initiate_result = ::WriteFileGather (result->handle (),
+                                           buffer_pointers,
+                                           bytes_to_write,
+                                           0, // reserved, must be NULL
+                                           result);
+
+  if (0 != initiate_result)
+    // Immediate success: the OVERLAPPED will still get queued.
+    return 1;
+
+  // If initiate failed, check for a bad error.
+  ACE_OS::set_errno_to_last_error ();
+  switch (errno)
+  {
+    case ERROR_IO_PENDING:
+      // The IO will complete proactively: the OVERLAPPED will still
+      // get queued.
+      initiate_result = 0;
+      break;
+
+    default:
+      // Something else went wrong: the OVERLAPPED will not get
+      // queued.
+
+      if (ACE::debug ())
+      {
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_LIB_TEXT ("%p\n"),
+                    ACE_LIB_TEXT ("WriteFileGather")));
+      }
+
+      delete result;
+      initiate_result = -1;
+      break;
+  }
+
+  return initiate_result;
+}
+
 ACE_WIN32_Asynch_Write_File::~ACE_WIN32_Asynch_Write_File (void)
 {
 }
@@ -1112,6 +1570,20 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                act,
                                                priority,
                                                signal_number);
+}
+
+int
+ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
+                                     u_long bytes_to_write,
+                                     const void *act,
+                                     int priority,
+                                     int signal_number)
+{
+  return ACE_WIN32_Asynch_Write_Stream::writev (message_block,
+                                                bytes_to_write,
+                                                act,
+                                                priority,
+                                                signal_number);
 }
 
 // Methods belong to ACE_WIN32_Asynch_Operation base class. These
