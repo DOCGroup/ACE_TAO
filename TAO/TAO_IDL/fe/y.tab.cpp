@@ -896,7 +896,7 @@ int yychar;			/* current input token number */
 #define YYLEX()		yycvtok(yylex())
 /*
 ** yycvtok - return a token if i is a wchar_t value that exceeds 255.
-**	If i<255, i itself is the token.  If i>255 but the neither 
+**	If i<255, i itself is the token.  If i>255 but the neither
 **	of the 30th or 31st bit is on, i is already a token.
 */
 #if defined(__STDC__) || defined(__cplusplus)
@@ -917,7 +917,7 @@ int yycvtok(i) int i;
 		while ((last>=first)&&(first>=0)) {/*Binary search loop*/
 			mid = (first+last)/2;
 			j = yymbchars[mid].character;
-			if( j==i ){/*Found*/ 
+			if( j==i ){/*Found*/
 				return yymbchars[mid].tvalue;
 			}else if( j<i ){
 				first = mid + 1;
@@ -1359,7 +1359,7 @@ int yyparse()
 	*/
 	switch( yytmp )
 	{
-		
+
 case 4:
 # line 240 "idl.yy"
 {
@@ -3292,4 +3292,3 @@ case 285:
 	}
 	goto yystack;		/* reset registers in driver code */
 }
-

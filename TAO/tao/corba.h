@@ -93,7 +93,7 @@ class TAO_Export PortableServer
   // = TITLE
   //   Portable Server (POA) name space.
 public:
-  
+
   typedef TAO_ServantBase ServantBase;
   typedef ServantBase *Servant;
 

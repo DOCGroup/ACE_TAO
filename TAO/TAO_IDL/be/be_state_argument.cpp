@@ -2242,7 +2242,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_ARGUMENT_CS:
           case TAO_CodeGen::TAO_ARGUMENT_SH:
-            *os << bt->name () << arg->local_name () << ", ";
+            *os << bt->name () << " " << arg->local_name () << ", ";
             break;
           case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
           case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
