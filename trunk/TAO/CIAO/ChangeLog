@@ -1,3 +1,9 @@
+Wed Sep 24 20:59:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc: Fixed problems that
+	  missed my last checkiin "Sun Sep 21 17:07:45 2003  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>".
+
 Sun Sep 21 17:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/generate_component_mpc.pl: Appended the value provided to
