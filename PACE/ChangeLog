@@ -1,3 +1,14 @@
+Mon Jul  3 19:30:39 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/posix/time.*:
+	  Added macros, typedefs, clock(), and difftime().
+
+ 	* pace/posix/unistd.*:
+	  Added macros, typedefs, tcgetpgrp(), tcsetpgrp().
+
+	* pace/posix/utime.*:
+	  Added macros and typedefs.
+
 Mon Jul  3 9:45:00 2000 John Heitmann <jwh1@cs.wustl.edu>
 
         * pace/config/types.h:
