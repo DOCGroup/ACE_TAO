@@ -12,14 +12,14 @@
 LDLIBS     =  -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS = svr.cpp cubit_i.cpp Task_Client.cpp client.cpp Util_Thread.cpp
+PROG_SRCS = server.cpp cubit_i.cpp Task_Client.cpp client.cpp Util_Thread.cpp
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o svr.o cubit_i.o 
+CUBIT_SVR_OBJS = cubitC.o cubitS.o server.o cubit_i.o 
 CUBIT_CLIENT_OBJS = cubitC.o Task_Client.o client.o Util_Thread.o
 
-BIN = svr client
+BIN = server client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -37,7 +37,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
 #CPPFLAGS += -DACE_NLOGGING
-CPPFLAGS += -DPRIORITY_INV_TEST
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
@@ -51,7 +50,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
 $(IDL_SRC): cubit.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
-svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
+server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
