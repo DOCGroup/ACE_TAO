@@ -15,6 +15,7 @@
 # include "ace/Service_Repository.h"
 # include "ace/Synch.h"
 # include "ace/Service_Types.h"
+# include "export_mac.h"
 
 # if defined (ACE_HAS_THREADS)
 
@@ -43,7 +44,7 @@ private:
 };
 #   endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 
-class ACE_Svc_Export Benchmark_Base : public ACE_Service_Object
+class SYNCHLIB_Export Benchmark_Base : public ACE_Service_Object
 {
   // = TITLE
   //     Base class for all benchmarking objects.
@@ -80,7 +81,7 @@ protected:
 #   endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 };
 
-class ACE_Svc_Export Benchmark_Method_Base : public Benchmark_Base
+class SYNCHLIB_Export Benchmark_Method_Base : public Benchmark_Base
 {
   // = TITLE
   //     This class identifies itself as Benmarking Method class.
@@ -108,7 +109,7 @@ protected:
   Benchmark_Method_Base (void);
 };
 
-class ACE_Svc_Export Benchmark_Performance_Test_Base : public Benchmark_Base
+class SYNCHLIB_Export Benchmark_Performance_Test_Base : public Benchmark_Base
 {
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
