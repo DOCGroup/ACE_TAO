@@ -9,6 +9,8 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Min_Max.h"
+#include "ace/OS_Memory.h"
 // #include "ace/Strategies.h"
 #include "ace/Recyclable.h"
 
@@ -57,9 +59,9 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
   // upon the <purge_percent>.
   size_t entries_to_remove
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(size_t,
-                               ACE_static_cast(double, purge_percent)
-                               / 100 * current_map_size));
+               ACE_static_cast (size_t,
+                                ACE_static_cast(double, purge_percent)
+                                / 100 * current_map_size));
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
 

@@ -22,8 +22,7 @@
 #include "ace/Global_Macros.h"
 #include "ace/Default_Constants.h"
 #include "ace/Log_Priority.h"
-#include "ace/Basic_Types.h"
-#include "ace/OS_Errno.h"
+#include "ace/OS.h"
 
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
