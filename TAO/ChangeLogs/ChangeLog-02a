@@ -1,3 +1,10 @@
+Fri Dec 28 15:30:40 2001  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	  Removed an ACE_DEBUG statement that was causing SUN_OS builds 
+	  to fail.  The DEBUG statement should have been removed anyways
+	  before the file was initially commited.
+
 Fri Dec 28 16:29:05 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.dsp:  Added
