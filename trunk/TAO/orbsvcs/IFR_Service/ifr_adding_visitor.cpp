@@ -2046,15 +2046,15 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
             current_scope->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          if (kind == CORBA::dk_Interface || kind == CORBA::dk_Component)
+          if (kind == CORBA::dk_Value || kind == CORBA::dk_Event)
             {
-              CORBA::ExtInterfaceDef_var iface =
-                CORBA::ExtInterfaceDef::_narrow (current_scope
-                                                 ACE_ENV_ARG_PARAMETER);
+              CORBA::ExtValueDef_var value =
+                CORBA::ExtValueDef::_narrow (current_scope
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::ExtAttributeDef_var new_def =
-                iface->create_ext_attribute (
+                value->create_ext_attribute (
                     node->repoID (),
                     node->local_name ()->get_string (),
                     node->version (),
@@ -2068,13 +2068,15 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
             }
           else
             {
-              CORBA::ExtValueDef_var value =
-                CORBA::ExtValueDef::_narrow (current_scope
-                                             ACE_ENV_ARG_PARAMETER);
+              // We are an interface, a local interface, an abstract
+              // interface or a component. This narrow covers them all.
+              CORBA::InterfaceAttrExtension_var iface =
+                CORBA::InterfaceAttrExtension::_narrow (current_scope
+                                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::ExtAttributeDef_var new_def =
-                value->create_ext_attribute (
+                iface->create_ext_attribute (
                     node->repoID (),
                     node->local_name ()->get_string (),
                     node->version (),

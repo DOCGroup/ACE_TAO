@@ -1,3 +1,18 @@
+Wed Mar 24 14:27:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp (visit_attribute):
+        
+          Fixed bug where creation of attribute entries in the IFR was
+          not working for local and abstract interfaces.
+          
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp (describe_i):
+        
+          Fixed mistake in code opening subsection for each attribute
+          under the "attrs" subsection of a component entry in the IFR.
+          Thanks to Vincent Seignole <vincent.seignole@wanadoo.fr> for
+          reporting the problem in accessing the name and repository id of 
+          component attributes.
+
 Wed Mar 24 11:02:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.h:
