@@ -2,6 +2,7 @@
 
 PORT=20001
 IORFILE=theior
+INVOCATION=sii
 start_server()
 {
   ./server -ORBport $PORT -o $IORFILE 2>&1 | sed -e 's/^/SERVER: /' &
@@ -12,11 +13,11 @@ trap "start_server" 17
 trap "rm -f $IORFILE" 0
 start_server
 
-TYPES="short ubstring fixed_struct var_struct nested_struct struct_seq objref"
+TYPES="short ubstring fixed_struct strseq var_struct nested_struct struct_seq objref"
 for type in $TYPES
 do
   echo "BEGIN Testing type $type"
   sleep 2	# Give the server a chance to start up
-  ./client -f `cat $IORFILE` -t $type 2>&1 | sed -e "s/^/CLIENT($type): /"
+  ./client -f `cat $IORFILE` -i $INVOCATION -t $type 2>&1 | sed -e "s/^/CLIENT($type): /"
   echo "END   Testing type $type"
 done 
