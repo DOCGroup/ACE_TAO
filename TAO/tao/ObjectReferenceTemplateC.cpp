@@ -672,7 +672,7 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:95
 
 void
-tao_PortableInterceptor_ObjectReferenceTemplate_add_ref (
+PortableInterceptor::ObjectReferenceTemplate_life::tao_add_ref (
     PortableInterceptor::ObjectReferenceTemplate *p
   )
 {
@@ -680,13 +680,13 @@ tao_PortableInterceptor_ObjectReferenceTemplate_add_ref (
 }
 
 void
-tao_PortableInterceptor_ObjectReferenceTemplate_remove_ref (
+PortableInterceptor::ObjectReferenceTemplate_life::tao_remove_ref (
     PortableInterceptor::ObjectReferenceTemplate *p
   )
 {
   CORBA::remove_ref (p);
 }
-
+#if 0
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:298
 
@@ -871,7 +871,7 @@ PortableInterceptor::ObjectReferenceTemplate_out::operator-> (void)
 }
 
 // *************************************************************
-
+#endif /* 0 */
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:138
 
@@ -979,7 +979,7 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
   new_object = ObjectReferenceTemplate::_downcast (base);
   return retval;
 }
-
+#if 0
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:103
 
@@ -1128,7 +1128,7 @@ void PortableInterceptor::ObjectReferenceTemplateSeq::_tao_any_destructor (void 
 }
 
 #endif /* end #if !defined */
-
+#endif /* 0 */
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
