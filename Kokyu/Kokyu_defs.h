@@ -84,7 +84,7 @@ namespace Kokyu
     int immediate_activation_;
   };
 
-  
+
   struct QoSDescriptor
   {
     Priority_t preemption_priority_;
@@ -129,7 +129,7 @@ namespace Kokyu
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>
-int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
+ACE_INLINE int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.i"

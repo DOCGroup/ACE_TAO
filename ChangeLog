@@ -1,3 +1,8 @@
+Wed Aug 27 13:25:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu_defs.h: Added inline qualification to operator != to
+	  fix warnings in SunOS_SunCC53 build.
+
 Wed Aug 27 17:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_cancel.cpp:
