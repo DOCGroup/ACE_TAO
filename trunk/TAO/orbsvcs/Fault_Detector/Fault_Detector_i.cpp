@@ -196,7 +196,7 @@ void TAO::Fault_Detector_i::notify()
 //static
 ACE_THR_FUNC_RETURN TAO::Fault_Detector_i::thr_func (void * arg)
 {
-  TAO::Fault_Detector_i * detector = ACE_static_cast (TAO::Fault_Detector_i * , arg);
+  TAO::Fault_Detector_i * detector = static_cast<TAO::Fault_Detector_i * > (arg);
   detector->run ();
   return 0;
 }

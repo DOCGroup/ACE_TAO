@@ -98,8 +98,7 @@ TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t,
       act = 0;
     }
   else
-    act = ACE_reinterpret_cast (ACE_Command_Base *,
-                                const_cast<void *> (vp));
+    act = reinterpret_cast<ACE_Command_Base *> (const_cast<void *> (vp));
 
   return result;
 }
@@ -235,8 +234,7 @@ TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t prio
       act = 0;
     }
   else
-    act = ACE_reinterpret_cast (ACE_Command_Base *,
-                                const_cast<void *> (vp));
+    act = reinterpret_cast<ACE_Command_Base *> (const_cast<void *> (vp));
 
   return result;
 }
@@ -261,8 +259,7 @@ int
 TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                         const void *vp)
 {
-  ACE_Command_Base *act = ACE_static_cast(ACE_Command_Base*,
-                                          const_cast<void*> (vp));
+  ACE_Command_Base *act = static_cast<ACE_Command_Base*> (const_cast<void*> (vp));
 
   if (act == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Priority_Timer::handle_timeout: "

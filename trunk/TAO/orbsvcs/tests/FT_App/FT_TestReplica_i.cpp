@@ -40,9 +40,9 @@ namespace
   template<typename BUFFER>
   void storeLong(BUFFER & state, size_t offset, long value)
   {
-    state[offset    ] = ACE_static_cast (unsigned char, value >> 24);
-    state[offset + 1] = ACE_static_cast (unsigned char, value >> 16);
-    state[offset + 2] = ACE_static_cast (unsigned char, value >>  8);
+    state[offset    ] = static_cast<unsigned char> (value >> 24);
+    state[offset + 1] = static_cast<unsigned char> (value >> 16);
+    state[offset + 2] = static_cast<unsigned char> (value >>  8);
     state[offset + 3] = static_cast<unsigned char> (value      );
   }
 

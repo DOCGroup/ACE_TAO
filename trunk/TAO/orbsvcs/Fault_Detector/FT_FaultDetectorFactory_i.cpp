@@ -474,8 +474,8 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   {
     // note: these should be unsigned long, but
     // ACE_Time_Value wants longs.
-    long uSec = ACE_static_cast (long, (value / timeT_per_uSec) % uSec_per_sec);
-    long sec = ACE_static_cast (long, (value / timeT_per_uSec) / uSec_per_sec);
+    long uSec = static_cast<long> ((value / timeT_per_uSec) % uSec_per_sec);
+    long sec = static_cast<long> ((value / timeT_per_uSec) / uSec_per_sec);
     ACE_Time_Value atv(sec, uSec);
     TAO::Fault_Detector_i::set_time_for_all_detectors(atv);
   }
@@ -601,7 +601,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
   else
   {
-    object_type = ACE_const_cast (char *, "unknown");
+    object_type = const_cast<char *> ("unknown");
     // Not required: missingParameter = 1;
     ACE_DEBUG ((LM_DEBUG, "Object type not given.\n"));
   }

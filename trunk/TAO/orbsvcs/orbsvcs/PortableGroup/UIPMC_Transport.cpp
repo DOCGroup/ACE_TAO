@@ -125,15 +125,15 @@ TAO_UIPMC_Transport::write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long uni
 
   CORBA::Octet unique_id[MIOP_ID_DEFAULT_LENGTH];
 
-  unique_id[0] = ACE_static_cast (CORBA::Octet, unique & 0xff);
-  unique_id[1] = ACE_static_cast (CORBA::Octet, (unique & 0xff00) >> 8);
-  unique_id[2] = ACE_static_cast (CORBA::Octet, (unique & 0xff0000) >> 16);
-  unique_id[3] = ACE_static_cast (CORBA::Octet, (unique & 0xff000000) >> 24);
+  unique_id[0] = static_cast<CORBA::Octet> (unique & 0xff);
+  unique_id[1] = static_cast<CORBA::Octet> ((unique & 0xff00) >> 8);
+  unique_id[2] = static_cast<CORBA::Octet> ((unique & 0xff0000) >> 16);
+  unique_id[3] = static_cast<CORBA::Octet> ((unique & 0xff000000) >> 24);
 
-  unique_id[4] = ACE_static_cast (CORBA::Octet, counter & 0xff);
-  unique_id[5] = ACE_static_cast (CORBA::Octet, (counter & 0xff00) >> 8);
-  unique_id[6] = ACE_static_cast (CORBA::Octet, (counter & 0xff0000) >> 16);
-  unique_id[7] = ACE_static_cast (CORBA::Octet, (counter & 0xff000000) >> 24);
+  unique_id[4] = static_cast<CORBA::Octet> (counter & 0xff);
+  unique_id[5] = static_cast<CORBA::Octet> ((counter & 0xff00) >> 8);
+  unique_id[6] = static_cast<CORBA::Octet> ((counter & 0xff0000) >> 16);
+  unique_id[7] = static_cast<CORBA::Octet> ((counter & 0xff000000) >> 24);
 
   unique_id[8] = 0;
   unique_id[9] = 0;
@@ -234,8 +234,7 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
 
   miop_hdr.write_octet_array (miop_magic, 4);   // Magic
   miop_hdr.write_octet (0x10);                  // Version
-  CORBA::Octet *flags_field = ACE_reinterpret_cast (CORBA::Octet *,
-                                                    miop_hdr.current ()->wr_ptr ());
+  CORBA::Octet *flags_field = reinterpret_cast<CORBA::Octet *> (miop_hdr.current ()->wr_ptr ());
 
   // Write flags octet:
   //  Bit        Description
@@ -247,13 +246,11 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
   // Packet Length
   // NOTE: We can save pointers and write them later without byte swapping since
   //       in CORBA, the sender chooses the endian.
-  CORBA::UShort *packet_length = ACE_reinterpret_cast (CORBA::UShort *,
-                                                       miop_hdr.current ()->wr_ptr ());
+  CORBA::UShort *packet_length = reinterpret_cast<CORBA::UShort *> (miop_hdr.current ()->wr_ptr ());
   miop_hdr.write_short (0);
 
   // Packet number
-  CORBA::ULong *packet_number = ACE_reinterpret_cast (CORBA::ULong *,
-                                                      miop_hdr.current ()->wr_ptr ());
+  CORBA::ULong *packet_number = reinterpret_cast<CORBA::ULong *> (miop_hdr.current ()->wr_ptr ());
   miop_hdr.write_ulong (0);
 
   // Number of packets field
@@ -400,7 +397,7 @@ TAO_UIPMC_Transport::recv (char *buf,
 
   // Make sure that the length field is legal.
   if (id_length > MIOP_MAX_LENGTH_ID ||
-      ACE_static_cast (ssize_t, MIOP_ID_CONTENT_OFFSET + id_length) > n)
+      static_cast<ssize_t> (MIOP_ID_CONTENT_OFFSET + id_length) > n)
     {
       if (TAO_debug_level > 0)
         {

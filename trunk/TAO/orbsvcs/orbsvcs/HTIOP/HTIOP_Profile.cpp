@@ -155,7 +155,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
-        ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
+        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
 
       length_host = cp_pos - ior;
     }
@@ -213,7 +213,7 @@ CORBA::Boolean
 TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
   const TAO::HTIOP::Profile *op =
-    ACE_dynamic_cast (const TAO::HTIOP::Profile *, other_profile);
+    dynamic_cast<const TAO::HTIOP::Profile *> (other_profile);
 
   if (op == 0)
     return 0;

@@ -1,3 +1,100 @@
+Fri Jan 28 07:53:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+	* orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+	* orbsvcs/LoadBalancer/LoadManager.cpp:
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+	* orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+	* orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+	* orbsvcs/PSS/PSDL_Datastore.cpp:
+	* orbsvcs/PSS/PSDL_OctetSeq.cpp:
+	* orbsvcs/examples/LoadBalancing/server.cpp:
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp:
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+	* orbsvcs/orbsvcs/Time_Utilities.i:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+	* orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.i:
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+	* orbsvcs/orbsvcs/Notify/AllocTracker.h:
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Notify/PropertySeq.cpp:
+	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
+	* orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+	* orbsvcs/tests/Concurrency/CC_tests.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.i:
+	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+	* orbsvcs/tests/Notify/Blocking/common.cpp:
+	* orbsvcs/tests/Notify/Discarding/common.cpp:
+	* orbsvcs/tests/Notify/Ordering/common.cpp:
+	* orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+	* orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
+	* orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.h:
+	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+
+          Converted ACE_{static,dynamic,reinterpret,const}_cast macros
+          calls to their standard C++ counterparts.
+
 Fri Jan 28 07:18:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/AMH/Sink_Server/AMH_Servant.cpp:

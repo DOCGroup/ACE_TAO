@@ -497,8 +497,7 @@ TAO_LB_LoadMinimum::get_location (
                       // n == 0:  Use previously selected location.
                       // n == 1:  Use current location.
                       const CORBA::ULong n =
-                        ACE_static_cast (CORBA::ULong,
-                                         NUM_MEMBERS * ACE_OS::rand ()
+                        static_cast<CORBA::ULong> (NUM_MEMBERS * ACE_OS::rand ()
                                          / (RAND_MAX + 1.0));
 
                       ACE_ASSERT (n == 0 || n == 1);

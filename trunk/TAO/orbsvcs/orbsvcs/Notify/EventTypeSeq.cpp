@@ -57,7 +57,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
 
   if (this->find (special) == 0)
     {
-      event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size () - 1));
+      event_type_seq.length (static_cast<CORBA::ULong> (this->size () - 1));
     }
   else
       event_type_seq.length (static_cast<CORBA::ULong> (this->size ()));

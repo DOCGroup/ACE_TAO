@@ -611,11 +611,10 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
           offset = TAO_SFP_FRAGMENT_SIZE_OFFSET;
         }
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-      *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = total_len;
+      *reinterpret_cast<CORBA::ULong *> (buf + offset) = total_len;
 #else
       if (!stream.do_byte_swap ())
-        *ACE_reinterpret_cast (CORBA::ULong *,
-                               buf + offset) = total_len;
+        *reinterpret_cast<CORBA::ULong *> (buf + offset) = total_len;
       else
         ACE_CDR::swap_4 (reinterpret_cast<char *> (&total_len),
                          buf + offset);

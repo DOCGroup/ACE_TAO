@@ -665,8 +665,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   sdes.add_item (my_ssrc,
                  RTCP_SDES_CNAME,
-                 ACE_static_cast (unsigned char,
-                                  ACE_OS::strlen(this->output_.cname())),
+                 static_cast<unsigned char> (ACE_OS::strlen(this->output_.cname())),
                  this->output_.cname());
   if (bye)
     {

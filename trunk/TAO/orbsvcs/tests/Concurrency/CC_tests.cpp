@@ -65,21 +65,21 @@ char *
 CC_Test::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {
   if (mode==CosConcurrencyControl::read)
-    return ACE_const_cast (char *, "read");
+    return const_cast<char *> ("read");
 
   if (mode==CosConcurrencyControl::write)
-    return ACE_const_cast (char *, "write");
+    return const_cast<char *> ("write");
 
   if (mode==CosConcurrencyControl::upgrade)
-    return ACE_const_cast (char *, "upgrade");
+    return const_cast<char *> ("upgrade");
 
   if (mode==CosConcurrencyControl::intention_read)
-    return ACE_const_cast (char *, "intension_read");
+    return const_cast<char *> ("intension_read");
 
   if (mode==CosConcurrencyControl::intention_write)
-    return ACE_const_cast (char *, "intension_write");
+    return const_cast<char *> ("intension_write");
 
-  return ACE_const_cast (char *, "unknown lock mode");
+  return const_cast<char *> ("unknown lock mode");
 }
 
 // ================================
@@ -232,7 +232,7 @@ Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
   ACE_TRY
     {
       CORBA::Object_var ccls_obj =
-        this->naming_service_->get_obj_from_name (ACE_const_cast (char *, ""),
+        this->naming_service_->get_obj_from_name (const_cast<char *> (""),
                                                   my_name_
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -279,7 +279,7 @@ Test_Unlock_Already_Created_LockSet::run (int /* times_to_run */)
   ACE_TRY
     {
       CORBA::Object_var ccls_obj =
-        this->naming_service_->get_obj_from_name (ACE_const_cast (char *, ""), my_name_
+        this->naming_service_->get_obj_from_name (const_cast<char *> (""), my_name_
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

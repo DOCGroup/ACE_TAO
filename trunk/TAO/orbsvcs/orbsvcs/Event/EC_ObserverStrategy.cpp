@@ -285,7 +285,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   RtecEventChannelAdmin::DependencySet& dep = qos.dependencies;
 
-  dep.length (ACE_static_cast (CORBA::ULong, headers.current_size () + 1));
+  dep.length (static_cast<CORBA::ULong> (headers.current_size () + 1));
 
   dep[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   dep[0].event.header.source = static_cast<CORBA::ULong> (headers.current_size ());

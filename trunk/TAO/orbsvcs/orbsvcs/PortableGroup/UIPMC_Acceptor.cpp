@@ -301,7 +301,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = ACE_static_cast (int, len - begin); // Handle last endpoint differently
+        end = static_cast<int> (len - begin); // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -313,7 +313,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) UIPMC option <%s> is ")
