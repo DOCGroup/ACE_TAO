@@ -33,6 +33,8 @@ fi
 
 s_id=$!;
 
+server_start_size=`top -p $s_id -n 1 -b | grep $US| awk '{print $5}'`;
+
 # Just sleep for 2 seconds.
 sleep 2;
 # Check whether the server has started 
@@ -46,17 +48,15 @@ if test -f $file
     sleep 30;
     # Get the size once the client has made sufficient invocations. 
     s_invocations=`top -p $s_id -n 1 -b | grep $US| awk '{print $5}'`;
-
+    actual_server_growth= s_invocations - server_start_size;
     if test $OPT == 1
         then 
         echo $DATE $s_invocations >> $DEST/source/server_opt_ior_size.txt
+        echo $DATE $actual_server_growth >> $DEST/source/opt_ior_size.txt
         else
         echo $DATE $s_invocations >> $DEST/source/server_ior_size.txt
+        echo $DATE $actual_server_growth >> $DEST/source/actual_ior_size.txt
     fi
-
-    # Get teh size of the client after all the invocations
-    c_invocations=`top -p $c_id -n 1 -b | grep $US| awk '{print $5}'`;
-    echo $DATE $c_invocations >> $DEST/source/client_ior_size.txt
 
     # Kill the server and client. We will look at better ways of doing
     # this later. 
@@ -69,8 +69,8 @@ fi
 
 
 cd $DEST/source
-
-FILES="server server_opt client"
+STRING="for 50000 IORs"
+FILES="server_opt opt server actual"
 for i in $FILES ; do
 /usr/bin/tac ${i}_ior_size.txt > $DEST/data/${i}_ior_size.txt
 /usr/bin/tail -5 ${i}_ior_size.txt > $DEST/data/LAST_${i}_ior_size.txt
