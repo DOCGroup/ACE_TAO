@@ -6,6 +6,7 @@
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ * @author and Don Hinton <dhinton@ieee.org>
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
  *
@@ -15,15 +16,50 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/Event/event_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "ace/Event_Handler.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/Synch.h"
+#include "ace/Atomic_Op.h"
+#include "tao/Synch_Refcountable.h"
+//#include "tao/Utils/Servant_Var.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+/**
+ * @class TAO_ECG_Mcast_Socket
+ *
+ * @brief Refcounted wrapper for ACE_SOCK_Dgram_Mcast
+ *
+ * This class is a simple refcounted wrapper around ACE_SOCK_Dgram_Mcast that
+ * makes takes care of deleting itself if the refcount drops to zero.
+ */
+class TAO_RTEvent_Export TAO_ECG_Mcast_Socket : 
+  public ACE_SOCK_Dgram_Mcast, private TAO_Synch_Refcountable
+{
+public:
+  /// Default Constructor
+  TAO_ECG_Mcast_Socket (ACE_SOCK_Dgram_Mcast::options opts =
+                          ACE_SOCK_Dgram_Mcast::DEFOPTS,
+                        ACE_Lock *lock = 0);
+
+  int increment (void);
+  int decrement (void);
+  int refcount (void) const;
+
+private:
+  /// We need a friend so that we have a private dtor>
+  friend class ACE_SOCK_Dgram_Mcast;
+
+  /// Destructor.  Force it on the Heap, so we can call delete this in
+  /// decrement().
+  ~TAO_ECG_Mcast_Socket (void);
+};
 
 class TAO_ECG_UDP_Receiver;
 
@@ -46,7 +82,8 @@ public:
    * expected using <net_if>
    */
   TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
-                    const ACE_TCHAR *net_if = 0);
+                    const ACE_TCHAR *net_if = 0,
+                    ACE_Lock *lock = 0);
 
   /// Destructor
   virtual ~TAO_ECG_Mcast_EH (void);
@@ -69,7 +106,7 @@ public:
   int close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Reactor callbacks
-  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
   /// The Observer methods
   void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
@@ -90,7 +127,9 @@ public:
    * compilers.
    */
 
-  class Observer : public POA_RtecEventChannelAdmin::Observer
+  class Observer 
+    : public virtual POA_RtecEventChannelAdmin::Observer
+    , public virtual PortableServer::RefCountServantBase
   {
   public:
     /// We report changes in the EC subscriptions to the event
@@ -113,6 +152,10 @@ public:
   };
 
 private:
+  /// Find the socket mapped to a particular fd.  find() holds a lock and calls
+  /// increment () on the socket, if found, and returns a pointer to it.
+  TAO_ECG_Mcast_Socket *find (ACE_HANDLE fd);
+
   typedef ACE_Unbounded_Set<ACE_INET_Addr> Address_Set;
 
   /// Compute the list of multicast addresses that we need to be
@@ -178,15 +221,26 @@ private:
   ACE_TCHAR *net_if_;
 
   /// Define the collection used to keep the iterator
-  typedef ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex> Subscriptions_Map;
-  typedef ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex> Subscriptions_Iterator;
+  typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
+          Subscriptions_Map;
+  typedef ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
+          Subscriptions_Iterator;
 
-  /// @@ Please describe this map and its role in the class!
+  /// Map of multicast address to sockets, used to manage the subscription
+  /// to multicast address by the update_{consumer|supplier} () methods.
   Subscriptions_Map subscriptions_;
 
-  /// The datagram used to receive the data.
-  typedef ACE_Array_Base<ACE_SOCK_Dgram_Mcast*> Socket_List;
-  Socket_List sockets_;
+  typedef ACE_Hash_Map_Manager<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
+          Handle_Map;
+  typedef ACE_Hash_Map_Iterator<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
+          Handle_Iterator;
+
+  /// Map of ACE_HANDLEs to sockets.  Used to find the appropriate socket in
+  /// calls to handle_input ().
+  Handle_Map handles_;
+
+  /// The lock used to protect the lists.
+  ACE_Lock *lock_;
 
   /// We callback to this object when a message arrives.
   TAO_ECG_UDP_Receiver* receiver_;

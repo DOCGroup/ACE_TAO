@@ -1,3 +1,24 @@
+Fri Dec  6 05:20:28 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.{h,i,cpp}: Refactored
+	  code to properly remove event handlers from the reactor.  This 
+	  included refcounting the event handlers.  Added ifdef for 
+	  ACE_LACKS_PERFECT_MULTICAST_FILTERING so that platforms that
+	  bind the multicast address by default don't even try to 
+	  join multiple groups on a single socket before adding a new
+	  socket. Also added a deactivator for the Observer class to 
+	  help simplify deactivation on shutdown and in case of exceptions.
+	  Thanks to Russ Noseworthy for reporting this.
+
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile: Added link to 
+	  libTAO_Utils to pick up Implicit_Deactivator.
+
 Thu Dec  5 14:42:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Server_Connection_Purging/client.cpp: Fixed a warning in

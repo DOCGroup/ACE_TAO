@@ -1,7 +1,7 @@
 # $Id$
 
 SRC = $(BIN:%=%$(VAR).cpp)
-LDLIBS= -lTAO_RTEvent -lTAO_Svc_Utils -lTAO_Messaging -lTAO_PortableServer -lTAO
+LDLIBS= -lTAO_RTEvent -lTAO_Svc_Utils -lTAO_Messaging -lTAO_PortableServer -lTAO -lTAO_Utils
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
