@@ -13,7 +13,7 @@ bgcolor="#ffffff">
 <H3>TAO Interoperable Naming Service</H3>
 
 The CORBA <A
-HREF="ftp://ftp.omg.org/pub/docs/orbos/99-09-01.pdf">Interoperable
+HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">Interoperable
 Naming Service</A> (INS) service allows the ORB to be configured
 administratively to return object references from
 <CODE>CORBA::ORB::resolve_initial_references</CODE> for non-locality
@@ -22,14 +22,14 @@ constrained objects.  The service also introduces the
 be used to bootstrap services not available at ORB installation time.
 <P>
 
-This document presents an overview of TAO's INS implementation and
-addresses common questions. <P>
+This document presents an overview of how these features are
+implemented in TAO and addresses common questions. <P>
 
 <HR align=left width=80% ><P>
 <H4>How does <CODE>resolve_initial_references</CODE> work ?</H4><P>
 
-The following is the order that <CODE>resolve_initial_references</CODE>
-locates a service: <P>
+The following is the order of mechanisms checked by <CODE>resolve_initial_references</CODE>
+for locating a service: <P>
 
 <OL>
 <LI><A HREF="#oir">ORBInitRef</A> <br>
@@ -96,7 +96,7 @@ The ORB default initial reference argument assists in resolution of
     argument results in a new multiple profile URL equivalent to the following: <P>
     <CODE>iioploc://tango.cs.wustl.edu:8989/NameService</CODE> <br>
     <CODE>iioploc://merengue.cs.wustl.edu:9999/NameService</CODE> <p>
-    
+
     The URL is passed to <CODE>CORBA::ORB::string_to_object</CODE> to obtain the
     initial reference for the service.
 </DL>
