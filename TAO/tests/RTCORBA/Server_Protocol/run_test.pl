@@ -13,6 +13,8 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
 $server_reverse_conf    = PerlACE::LocalFile ("server_reverse.conf");
+$server_iiop_conf       = PerlACE::LocalFile ("server_iiop.conf");
+$server_uiop_conf       = PerlACE::LocalFile ("server_uiop.conf");
 $server_shmiop_conf     = PerlACE::LocalFile ("server_shmiop.conf");
 $server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt.conf");
 
@@ -26,12 +28,10 @@ $server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt.conf");
      "-ORBsvcconf $server_shmiop_conf -ORBendpoint shmiop://",
 
      "-ORBEndpoint uiop:// "
-     ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
-     ." -ORBsvcconf $server_shmiop_conf -p 1413566208",
+     ." -ORBsvcconf $server_uiop_conf -p 1413566208",
 
-     "-ORBEndpoint uiop:// "
-     ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
-     ." -ORBsvcconf $server_shmiop_conf -p 1413566210 ");
+     " -ORBendpoint shmiop:// "
+     ." -ORBsvcconf $server_shmiop_conf -p 1413566210");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
@@ -58,15 +58,16 @@ if ($^O eq "MSWin32") {
 
          "-ORBsvcconf $server_shmiop_conf -ORBendpoint shmiop://",
 
-         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
-         ." -ORBsvcconf $server_shmiop_conf -p 0",
+         "-ORBendpoint iiop://"
+         ." -ORBsvcconf $server_iiop_conf -p 0",
 
-         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
+         "-ORBendpoint shmiop:// "
          ." -ORBsvcconf $server_shmiop_conf -p 1413566210");
 
     $comments[3] =
-        "Overriding ORB Default Server Protocol Policy in the POA "
-            ."(POA Server Protocol set to IIOP only): \n";
+         "* Overriding ORB Default Server Protocol Policy in the POA\n"
+         ."          (POA Server Protocol set to IIOP only): \n",
+
 }
 
 print STDERR "********** RTCORBA Server Protocol Policy Unit Test\n";
