@@ -31,24 +31,16 @@ ACE_Dynamic_Service<SERVICE>::instance (const char *name)
   
   if (ACE_Service_Repository::instance ()->find (name,
                                                  &svc_rec) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("find")),
-                      0);
+    return 0;
 
   const ACE_Service_Type_Impl *type = svc_rec->type ();
   
   if (type == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,  
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("type")),
-                      0);
+    return 0;
   else
     {
       const void *obj = type->object ();
-      // This should be an RTTI typesafe downcast...
-      SERVICE *n = (SERVICE *) obj;
-      return n;
+      return ACE_dynamic_cast (SERVICE *, obj);
     }
 }
 
