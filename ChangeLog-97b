@@ -1,3 +1,24 @@
+Fri Oct 10 15:21:07 1997    <irfan@TWOSTEP>
+
+	* ace/Connector.cpp (create_AST): The register_handler() method
+ 	  now needs to explicitly be given the handle to wait on. This is
+ 	  because the get_handle() method of Connector has been
+ 	  depricated.
+
+	* examples/Connection/non_blocking/test_sock_connector.cpp (main):
+ 	  Since this test waits on the STDIN handle to become ready, we
+ 	  have to make sure that the WFMO_Reactor is used on Win32. This
+ 	  is necessary since select() on NT does not support waiting on
+ 	  STDIN.
+
+	* examples/Connection/non_blocking/CPP-connector.cpp (open): On
+ 	  Win32, the std handle must be registered directly (and not as a
+ 	  socket).  On non-Win32, the std handle must be registered as a
+ 	  normal handle with the READ mask. Since on Win32, STDIN is used
+ 	  directly as an waitable handle, handle_signal will be called
+ 	  instead of handle_input. Therefore, we had to add handle_signal
+ 	  to the event_handler.
+
 Fri Oct 10 15:16:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/WFMO_Reactor.{h,cpp}:
