@@ -1,3 +1,10 @@
+Thu May 15 12:21:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/SOCK_SEQPACK_Association.cpp:
+          Added missing explicit template instantiation for
+          ACE_Auto_Array_Ptr/ACE_Auto_Basic_Array_Ptr<sockaddr_in>, needed
+          at least for SUNWspro_6.2.
+
 Thu May 15 07:08:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
