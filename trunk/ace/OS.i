@@ -2486,25 +2486,21 @@ ACE_OS::select (int width,
 		const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE_OS::select");
-#ifdef ACE_HAS_NONCONST_SELECT_TIMEVAL
-#  define ___ACE_TIMEOUT copyptr
+#if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // We must defend against non-conformity!
-  ACE_Time_Value* copyptr = timeout;
   ACE_Time_Value copy;
-  if (timeout != NULL)
+
+  if (timeout != 0)
     {
       copy = *timeout;
-      copyptr = &copy;
+      timeout = &copy;
     }
-#else
-#  define ___ACE_TIMEOUT timeout
-#endif
+#endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width, 
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
 				 (ACE_FD_SET_TYPE *) efds, 
-				 (timeval *) ___ACE_TIMEOUT) , int, -1);
-#undef ___ACE_TIMEOUT
+				 (timeval *) timeout) , int, -1);
 }
 
 ACE_INLINE int 

@@ -1,4 +1,7 @@
-Thu Feb  6 15:45:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (select): Simplified Chris' fixes for the weird
+	  Linux select() semantics.
 
 	* ace/OS: Added a new accessor method called waiters() in
  	  ACE_cond_t that returns the number of waiters on the condition

@@ -151,6 +151,7 @@ worker (void *args)
 
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 
+  // Make this thread the owner of the Reactor's event loop.
   reactor->owner (ACE_Thread::self ());
 
   ACE_Time_Value timeout (4);
