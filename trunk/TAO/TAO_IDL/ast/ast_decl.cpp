@@ -122,6 +122,15 @@ AST_Decl::AST_Decl(NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
     }
 }
 
+AST_Decl::~AST_Decl (void)
+{
+  if (this->pd_name)
+    {
+      delete this->pd_name;
+      this->pd_name = 0;
+    }
+}
+
 /*
  * Private operations
  */

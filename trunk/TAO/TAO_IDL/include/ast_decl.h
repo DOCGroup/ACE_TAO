@@ -138,7 +138,7 @@ public:
   // Constructor(s)
   AST_Decl();
   AST_Decl(NodeType type, UTL_ScopedName *n, UTL_StrList *pragmas);
-  virtual ~AST_Decl() {}
+  virtual ~AST_Decl();
 
   // Data Accessors
   idl_bool imported();
