@@ -230,10 +230,12 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
       if (ACE::send (this->logging_output_,
 		     (char *) &log_record,
 		     len) == -1)
-	// Switch over to logging to stderr for now.  Eventually,
-	// we'll try to queue up the message, try to reestablish a
-	// connection, and then send the queued data once we've
-	// reconnect to the logging server.
+	// Switch over to logging to stderr for now.  At some point,
+	// we'll improve the implementation to queue up the message,
+	// try to reestablish a connection, and then send the queued
+	// data once we've reconnect to the logging server.  If you'd
+	// like to implement this functionality and contribute it back
+	// to ACE that would be great!
 	this->logging_output_ = ACE_STDERR;
     }
 
