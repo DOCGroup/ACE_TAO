@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// RB_Tree.i
-
 /////////////////////////////////////////
 // template class RB_Tree_Node<KEY, T> //
 /////////////////////////////////////////
@@ -29,7 +27,7 @@ RB_Tree_Node<KEY, T>::color (RB_Tree_Node_Color c)
   // set color of the node
 
 template <class KEY, class T>
-ACE_INLINE RB_Tree_Node<KEY, T>::RB_Tree_Node_Color
+ACE_INLINE RB_Tree_Node_Color
 RB_Tree_Node<KEY, T>::color ()
 {
   return color_;

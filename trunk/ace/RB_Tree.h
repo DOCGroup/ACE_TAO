@@ -17,7 +17,7 @@
 #if !defined (ACE_RB_TREE_H)
 #define ACE_RB_TREE_H
 
-// enum RB_Tree_Node_Color {RED, BLACK};
+enum RB_Tree_Node_Color {RED, BLACK};
 
 #include "ace/ACE.h"
 
@@ -29,8 +29,6 @@ template <class KEY, class T>
 class RB_Tree_Node
 {
 public:
-  enum RB_Tree_Node_Color {RED, BLACK};
-
   RB_Tree_Node (const KEY &k, const T &t);
   // constructor
 
