@@ -28,43 +28,7 @@
 // Include the split up ACE_OS classes
 #include "ace/OS_Dirent.h"
 #include "ace/OS_String.h"
-
-# if !defined (ACE_MALLOC_ALIGN)
-#   define ACE_MALLOC_ALIGN ((int) sizeof (long))
-# endif /* ACE_MALLOC_ALIGN */
-
-// Allow an installation to replace the lowest-level allocation
-// functions without changing the source of ACE.
-//
-// To do this, simple #define ACE_*_FUNC macros in config.h to
-// the names of the site-specific functions, e.g.,
-//
-//   #define ACE_MALLOC_FUNC  dlmalloc
-//   #define ACE_CALLOC_FUNC  dlcalloc
-//   #define ACE_FREE_FUNC    dlfree
-//   #define ACE_REALLOC_FUNC dlrealloc
-//
-// For completeness' sake, you should probably put
-//   #define ACE_HAS_STRDUP_EMULATION
-// too, so that you guarantee that strdup() calls your desired mallocator
-// and not the system mallocator.
-//
-# if !defined (ACE_MALLOC_FUNC)
-#   define ACE_MALLOC_FUNC ::malloc
-# endif
-# if !defined (ACE_CALLOC_FUNC)
-#   define ACE_CALLOC_FUNC ::calloc
-# endif
-# if !defined (ACE_FREE_FUNC)
-#   define ACE_FREE_FUNC ::free
-# endif
-# if !defined (ACE_REALLOC_FUNC)
-#   define ACE_REALLOC_FUNC ::realloc
-# endif
-
-# if !defined (ACE_HAS_POSITION_INDEPENDENT_POINTERS)
-#   define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-# endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
+#include "ace/OS_Memory.h"
 
 // States of a recyclable object.
 enum ACE_Recyclable_State
@@ -832,7 +796,7 @@ typedef int key_t;
 
 #     if !defined(SIG_DFL)
 #       define SIG_DFL (ACE_SignalHandler) 0
-#     endif  // philabs
+#     endif  /* philabs */
 
 #   endif /* defined (ACE_PSOSIM) */
 
@@ -1884,7 +1848,7 @@ struct stat
 #       define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #       define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
 #       define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#     else // UNICOS is missing a sched_get_priority_min() implementation
+#     else /* UNICOS is missing a sched_get_priority_min() implementation */
 #       define ACE_PROC_PRI_FIFO_MIN  0
 #       define ACE_PROC_PRI_RR_MIN    0
 #       define ACE_PROC_PRI_OTHER_MIN 0
@@ -2893,12 +2857,6 @@ typedef int sig_atomic_t;
 typedef int ssize_t;
 # endif /* ACE_HAS_SSIZE_T */
 
-# if defined (ACE_HAS_OLD_MALLOC)
-typedef char *ACE_MALLOC_T;
-# else
-typedef void *ACE_MALLOC_T;
-# endif /* ACE_HAS_OLD_MALLOC */
-
 # if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
 #   if defined (ACE_HAS_SIG_C_FUNC)
@@ -2933,7 +2891,7 @@ typedef void (*ACE_SignalHandler)(int);
 typedef void (*ACE_SignalHandlerV)(void);
 #   else
 typedef void (*ACE_SignalHandlerV)(int);
-#   endif  //  m88k        /*  with SVR4_SIGNAL_T */
+#   endif  /*  m88k */       /*  with SVR4_SIGNAL_T */
 # elif defined (ACE_WIN32)
 typedef void (__cdecl *ACE_SignalHandler)(int);
 typedef void (__cdecl *ACE_SignalHandlerV)(int);
@@ -3188,7 +3146,7 @@ PAGE_NOCACHE  */
 #     define _O_EXCL  O_EXCL
 #     define _O_TRUNC O_TRUNC
       // 0x0800 is used for O_APPEND.  0x08 looks free.
-#     define _O_TEMPORARY 0x08 // see fcntl.h
+#     define _O_TEMPORARY 0x08 /* see fcntl.h */
 #     define _O_RDWR   O_RDWR
 #     define _O_WRONLY O_WRONLY
 #     define _O_RDONLY O_RDONLY
@@ -4949,9 +4907,10 @@ struct ACE_Protocol_Info
 #define ACE_FLAG_MULTIPOINT_D_LEAF    0x10
 
 #define ACE_QOS_NOT_SPECIFIED            0xFFFFFFFF
-#define ACE_SERVICETYPE_NOTRAFFIC        0x00000000  // No data in this direction.
-#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000002  // Controlled Load.
-#define ACE_SERVICETYPE_GUARANTEED       0x00000003  // Guaranteed.
+#define ACE_SERVICETYPE_NOTRAFFIC        0x00000000  /* No data in this */
+                                                     /* direction. */
+#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000002  /* Controlled Load. */
+#define ACE_SERVICETYPE_GUARANTEED       0x00000003  /* Guaranteed. */
 
 #define ACE_JL_SENDER_ONLY    0x01
 #define ACE_JL_BOTH           0x04
@@ -5201,7 +5160,10 @@ private:
   // (ACT).
 };
 
-class ACE_Export ACE_OS : public ACE_OS_Dirent, public ACE_OS_String
+class ACE_Export ACE_OS 
+  : public ACE_OS_Dirent, 
+    public ACE_OS_String,
+    public ACE_OS_Memory
 {
   // = TITLE
   //     This class defines an OS independent programming API that
@@ -5586,32 +5548,6 @@ public:
                           size_t maxsize,
                           const char *format,
                           const struct tm *timeptr);
-
-  // = A set of wrappers for memory managment.
-  static void *sbrk (int brk);
-  static void *calloc (size_t elements,
-                       size_t sizeof_elements);
-  static void *malloc (size_t);
-  static void *realloc (void *,
-                        size_t);
-  static void free (void *);
-
-  // = A set of wrappers for memory copying operations.
-  static int memcmp (const void *t,
-                     const void *s,
-                     size_t len);
-  static const void *memchr (const void *s,
-                             int c,
-                             size_t len);
-  static void *memcpy (void *t,
-                       const void *s,
-                       size_t len);
-  static void *memmove (void *t,
-                        const void *s,
-                        size_t len);
-  static void *memset (void *s,
-                       int c,
-                       size_t len);
 
   // = A set of wrappers for System V message queues.
   static int msgctl (int msqid,

@@ -1868,6 +1868,25 @@ SOURCE=.\OS_Dirent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_Memory.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\OS_String.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4170,6 +4189,10 @@ SOURCE=.\OS_Dirent.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_Memory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OS_String.h
 # End Source File
 # Begin Source File
@@ -5039,6 +5062,10 @@ SOURCE=.\OS.i
 # Begin Source File
 
 SOURCE=.\OS_Dirent.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Memory.inl
 # End Source File
 # Begin Source File
 

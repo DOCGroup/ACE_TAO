@@ -1,3 +1,48 @@
+Sat Jun  3 21:18:43 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS_Memory.cpp: (added)
+        * ace/OS_Memory.h: (added)
+        * ace/OS_Memory.inl: (added)
+
+          Another bit of OS split off.  Memory contains all the 
+          malloc, calloc, etc. stuff.
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace-dll.icc:
+        * ace/ace-lib.icc:
+        * ace/ace.icc:
+        * ace/ace_dll.dsp:
+        * ace/ace_dll_ce.dsp:
+        * ace/ace_lib.dsp:
+
+          Needed to add OS_Memory to the makefiles/projects.
+
+        * ace/OS_Dirent.cpp:
+        * ace/OS_Dirent.h:
+        * ace/OS_Dirent.inl:
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+
+          Over the years, the functions in OS.i have gotten way too
+          large and complicated to make sense being inlined.  But the
+          problem is too many were complicated only on some platforms,
+          while being really simple (and inline-able) on others.  
+
+          So the question is, how to separate two versions of a function
+          into the .cpp and .inl files.  The latest solution is to do
+          this.  For the simple stuff, keep it in the .inl file, but for
+          complicated versions, add another method to the class (like
+          foo_emulation for foo) and call that from the .inl file.
+
+          This gives us the best of both worlds, and should be
+          the easiest to understand of the possible ways of doing 
+          this.
+
 Sat Jun  3 18:51:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:

@@ -91,6 +91,12 @@ public:
   static void seekdir (DIR *,
                        long loc);
   static void rewinddir (DIR *);
+
+private:
+  // Win32 emulation functions
+  static DIR *opendir_emulation (const ACE_TCHAR *filename);
+  static void closedir_emulation (DIR *);
+  static struct dirent *readdir_emulation (DIR *);
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

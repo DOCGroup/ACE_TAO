@@ -103,7 +103,9 @@ public:
   static wchar_t *strstr (wchar_t *s, const wchar_t *t);
   static const wchar_t *strstr (const wchar_t *s, const wchar_t *t);
   static wchar_t *strnstr (wchar_t *s, const wchar_t *t, size_t len);
-  static const wchar_t *strnstr (const wchar_t *s, const wchar_t *t, size_t len);
+  static const wchar_t *strnstr (const wchar_t *s, 
+                                 const wchar_t *t, 
+                                 size_t len);
 #endif /* ACE_HAS_WCHAR */
 
   static char *strdup (const char *s); // Uses malloc
@@ -136,8 +138,33 @@ public:
   static wint_t to_lower (wint_t c);
 #endif /* ACE_HAS_WCHAR */
 
+  // = A set of wrappers for memory copying operations.
+  static int memcmp (const void *t, const void *s, size_t len);
+  static const void *memchr (const void *s, int c, size_t len);
+  static void *memcpy (void *t, const void *s, size_t len);
+  static void *memmove (void *t, const void *s, size_t len);
+  static void *memset (void *s, int c, size_t len);
+
   static int ace_isspace (const ACE_TCHAR s);
   static int ace_isprint (const ACE_TCHAR s);
+
+private:
+  // = These are emulation or platform specific versions of methods.
+  static const void *memchr_emulation (const void *s, int c, size_t len);
+  static char *strchr_emulation (char *s, int c);
+  static const char *strchr_emulation (const char *s, int c);
+  static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
+  static char *strrchr_emulation (char *s, int c);
+  static const char *strrchr_emulation (const char *s, int c);
+  static int strcasecmp_emulation (const char *s, const char *t);
+
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strchr_emulation (wchar_t *s, wint_t c);
+  static const wchar_t *strchr_emulation (const wchar_t *s, wint_t c);
+  static wchar_t *strrchr_emulation (wchar_t *s, wint_t c);
+  static const wchar_t *strrchr_emulation (const wchar_t *s, wint_t c);
+  static int strcasecmp_emulation (const wchar_t *s, const wchar_t *t);
+#endif /* ACE_HAS_WCHAR */
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
