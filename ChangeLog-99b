@@ -1,3 +1,9 @@
+Sat Sep 11 12:18:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Pipe.cpp: Make sure to use SOCK_STREAM rather than SOCK_DGRAM
+	  when creating a socketpair.  Thanks to Dave Madden for reporting
+ 	  this.
+
 Mon Sep 13 13:31:23 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* ace/Arg_Shifter.cpp (get_the_parameter): continued -ORB parsing
