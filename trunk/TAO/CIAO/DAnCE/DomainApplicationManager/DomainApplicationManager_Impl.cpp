@@ -4,7 +4,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 
-#include "CIAO/DnC/Config_Handlers/DnC_Dump.h"
+#include "CIAO/DAnCE/Config_Handlers/DnC_Dump.h"
 
 #include "NodeManager/NodeDaemonC.h"
 
