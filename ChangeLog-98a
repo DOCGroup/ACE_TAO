@@ -1,3 +1,8 @@
+Fri Jan 23 12:24:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (sleep): Fixed a typo where tv_sec was being set rather
+ 	  than tv_usec.  Thanks to Gonzo for pointing this out.
+
 Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/IOStream.h: use std::string if
