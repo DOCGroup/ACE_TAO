@@ -230,20 +230,20 @@ void
 Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (())
 {
-  CORBA::ULong session_count =
+  const CORBA::ULong session_count =
     this->other_sessions_.length ();
   for (CORBA::ULong j = 0; j != session_count; ++j)
     {
       ACE_TRY
         {
-#if (TAO_HAS_MESSAGING == 1)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
           CORBA::PolicyList_var unused;
-          this->other_sessions_[j]->_validate_connection(unused
-                                                         ACE_ENV_ARG_PARAMETER);
+          this->other_sessions_[j]->_validate_connection (unused
+                                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 #else
-          (void) this->other_sessions_[j]->_is_a("Not_An_IDL_Type"
-                                                 ACE_ENV_ARG_PARAMETER);
+          (void) this->other_sessions_[j]->_is_a ("Not_An_IDL_Type"
+                                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 #endif /* TAO_HAS_MESSAGING == 1 */
         }
