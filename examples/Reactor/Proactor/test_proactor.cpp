@@ -160,7 +160,7 @@ Receiver::open (ACE_HANDLE handle,
       
       // <complete> for Accept would have already moved the <wr_ptr>
       // forward. Update it to the beginning position.
-      duplicate.wr_ptr (-bytes_transferred);
+      duplicate.wr_ptr (duplicate.wr_ptr () - bytes_transferred);
 
 
       // This will call the callback.
