@@ -1,3 +1,8 @@
+Fri Apr 11 17:00:00 2003  Roy Pollock <rpollock@ghs.com>
+
+	* orbsvcs/orbsvcs/AV/global.h: INTEGRITY already has typedefs of
+	  UINT2 and UINT4, so protect the declarations with !defined(INTEGRITY)
+
 Fri Apr 11 15:12:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IFR_Client/IFR_BaseS.h: Added this dummy header file so that
