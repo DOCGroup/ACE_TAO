@@ -1,5 +1,9 @@
 Tue Aug 11 12:35:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.i (fopen): On WinCE, reset the handle to 0 if CreateFile
+ 	  fails so we can detect errors when using the emulated FILE
+	  pointer on CE.
+
 	* tests/test_config.h (~ACE_Test_Output): Changed !defined
 	  (ACE_HAS_WINCE) to !defined (ACE_WIN32).  When using non-static
 	  object manager, the singleton ACE_Log_Msg may no longer exist
