@@ -42,7 +42,7 @@ TAO_EC_Kokyu_Dispatching::activate (void)
 {
   if (!lanes_setup_)
     setup_lanes ();
-  
+
   this->dispatcher_->activate ();
 
   //ACE_DEBUG ((LM_DEBUG, "Kokyu dispatcher activated\n"));
@@ -92,7 +92,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
   attrs.sched_scope (disp_sched_scope_);
 
   // Create Kokyu::Dispatcher using factory
-  Kokyu::Dispatcher_Auto_Ptr 
+  Kokyu::Dispatcher_Auto_Ptr
     tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
   this->dispatcher_ = tmp;
   this->lanes_setup_ = 1;
@@ -124,40 +124,58 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL)
 {
-    if (this->dispatcher_.get () == 0)
-        this->setup_lanes ();
-    
-    void* buf = 
-      this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() ENTER\n"));
 
-    if (buf == 0)
-      ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                   CORBA::COMPLETED_NO));
+  if (this->dispatcher_.get () == 0)
+    this->setup_lanes ();
+
+  void* buf =
+    this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
+
+  if (buf == 0)
+    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                 CORBA::COMPLETED_NO));
 
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =
     new (buf) TAO_EC_Kokyu_Push_Command (proxy,
                                          consumer,
                                          event, this->allocator_);
-    
-  /*    
-  TAO_EC_Kokyu_Push_Command *cmd =
-    new TAO_EC_Kokyu_Push_Command (proxy,
-                                   consumer,
-                                 event, 0);
-  */
-    
+
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() RT_Info handle: %i\n",qos_info.rt_info));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() Event type: %i\n",event[0].header.type));
+
   // Convert TAO_EC_QOS_Info to QoSDescriptor
-  RtecScheduler::RT_Info *rt_info = 
+  RtecScheduler::RT_Info *rt_info =
     this->scheduler_->get(qos_info.rt_info);
+
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() RT_Info period: %i00nsec\n",
+             rt_info->period));
 
   Kokyu::QoSDescriptor qosd;
   qosd.preemption_priority_ = rt_info->preemption_priority;
-  qosd.deadline_ = rt_info->period;
+  //TODO: Set QoSDescriptor period?
+  //RT_Info period is in 100nsec, so convert to msec and set
+  long msec_period = rt_info->period/10000; //1/10000 msec per nsec
+  qosd.period_.msec(msec_period);
+  qosd.deadline_.msec(msec_period); //assume deadline same as period
+  //qosd.period_ = rt_info->period;
+  //qosd.deadline_ = rt_info->period;
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
-  
+
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor period: %isec %iusec\n",
+             qosd.period_.sec(),
+             qosd.period_.usec()));
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor deadline: %isec %iusec\n",
+             qosd.deadline_.sec(),
+             qosd.deadline_.usec()));
+
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() before dispatcher->dispatch()\n"));
   this->dispatcher_->dispatch(cmd,qosd);
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() after dispatcher->dispatch()\n"));
+
+  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() LEAVE\n"));
 }
 
 // ****************************************************************
@@ -186,7 +204,7 @@ TAO_EC_Kokyu_Push_Command::execute ()
 
   ACE_TRY
     {
-      //ACE_DEBUG ((LM_DEBUG, 
+      //ACE_DEBUG ((LM_DEBUG,
       //            "(%t) Command object executed.\n"));
 
       this->proxy_->push_to_consumer (this->consumer_.in (),
