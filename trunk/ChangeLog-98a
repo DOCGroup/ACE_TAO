@@ -1,5 +1,8 @@
 Thu Jan  8 15:58:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* apps/Gateway/{Peer,Gateway}/Options.{h,cpp}: Added a missing
+ 	  #define ACE_BUILD_DLL and a missing ACE_Svc_Export.
+
 	* ace/Select_Reactor.cpp (suspend_i): The clr_bit call was
  	  mistakenly made on the write mask, rather than the read mask.
   	  Thanks to Billy Quinn <ace-users@lads.com> for reporting this.

@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#define ACE_BUILD_DLL
+
 #include "ace/Get_Opt.h"
 #include "Event.h"
 #include "Options.h"

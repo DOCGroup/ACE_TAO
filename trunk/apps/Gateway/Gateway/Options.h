@@ -19,7 +19,7 @@
 
 #include "ace/Synch.h"
 
-class Options
+class ACE_Svc_Export Options
 {
   // = TITLE
   //     Singleton that consolidates all Options for a gatewayd.
