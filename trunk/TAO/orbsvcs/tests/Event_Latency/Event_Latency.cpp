@@ -535,10 +535,6 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 		}
 	      TAO_CHECK_ENV;
 	    } 
-	  TAO_CATCH (RtecEventComm::Disconnected, d)
-	    {
-	      ACE_ERROR ((LM_ERROR, "(%t) Latency_Supplier::push: disconnected.\n"));
-	    }
 	  TAO_CATCHANY
 	    {
 	      ACE_ERROR ((LM_ERROR, "(%t) %s Latency_Supplier::push:"
@@ -798,7 +794,7 @@ main (int argc, char *argv [])
 	orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
+			   " (%P|%t) Unable to get the Naming Service.\n"),
 			  1);
 
       CosNaming::NamingContext_var naming_context = 

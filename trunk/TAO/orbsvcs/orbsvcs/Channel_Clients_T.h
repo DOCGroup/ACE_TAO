@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// $Id $
+// $Id$
 //
 // ============================================================================
 //
@@ -24,12 +24,12 @@
 #ifndef ACE_CHANNEL_CLIENTS_T_H
 #define ACE_CHANNEL_CLIENTS_T_H
 
-#include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/RtecEventCommS.h"
 
-// TODO: Add throw specs to this classes.
+// @@ TODO: Add throw specs to this classes.
 
 template <class TARGET>
-class ACE_PushConsumer_Adapter : public RtecEventComm::PushConsumer
+class ACE_PushConsumer_Adapter : public POA_RtecEventComm::PushConsumer
 // = TITLE
 //    ACE Push Consumer Adapter
 //
@@ -41,7 +41,7 @@ public:
   // Forwards all calls to <owner>.
 
   virtual void push (const RtecEventComm::EventSet& events,
-		     CORBA::Environment &);
+		     CORBA::Environment &_env);
   // Forwards to target_.
 
   virtual void disconnect_push_consumer (CORBA::Environment &);
@@ -54,7 +54,7 @@ private:
 // ************************************************************
 
 template <class TARGET>
-class ACE_PushSupplier_Adapter : public RtecEventComm::PushSupplier
+class ACE_PushSupplier_Adapter : public POA_RtecEventComm::PushSupplier
 // = TITLE
 //    ACE Push Supplier Adapter
 //
