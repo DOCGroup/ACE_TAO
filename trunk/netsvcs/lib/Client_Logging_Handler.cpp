@@ -216,7 +216,9 @@ int
 ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 {
   if (this->logging_output_ == ACE_STDERR)
-    log_record.print ("<localhost>", 0, stderr);
+    log_record.print ("<localhost>",
+                      ACE_Log_Msg::instance ()->flags (),
+                      stderr);
   else
     {
       long len = log_record.length ();
@@ -236,7 +238,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 
   if (orig_ostream)
     log_record.print ("<localhost>",
-                      0,
+                      ACE_Log_Msg::instance ()->flags (),
                       *orig_ostream);
   return 0;
 }
