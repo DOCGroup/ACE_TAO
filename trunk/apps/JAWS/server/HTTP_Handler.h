@@ -83,19 +83,20 @@ protected:
 protected:
   // = Completion methods inherited from <JAWS_IO_Handler>.
 
-  void read_complete (ACE_Message_Block &data);
-  void read_error (void);
-  void transmit_file_complete (void);
-  void transmit_file_error (int result);
-  void receive_file_complete (void);
-  void receive_file_error (int result);
-  void write_error (void);
-  void confirmation_message_complete (void);
-  void error_message_complete (void);
+  virtual void read_complete (ACE_Message_Block &data);
+  virtual void read_error (void);
+  virtual void transmit_file_complete (void);
+  virtual void transmit_file_error (int result);
+  virtual void receive_file_complete (void);
+  virtual void receive_file_error (int result);
+  virtual void write_error (void);
+  virtual void confirmation_message_complete (void);
+  virtual void error_message_complete (void);
 
 public:
   enum 
   {
+    MAX_SOCKBUFSIZE = 64 * 1024,
     MAX_REQUEST_SIZE = 8192,
     METHODSIZ = 10, 
     VERSIONSIZ = 10
