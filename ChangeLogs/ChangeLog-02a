@@ -1,3 +1,10 @@
+Mon Feb 19 16:38:08 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.{h,cpp}:
+	Added method void handle (ACE_HANDLE) and made it call the base
+	class's handle(ACE_HANDLE) method to remove warning about
+	partial overloading. Fix suggested by Irfan.
+
 Sun Feb 18 21:55:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/OS.h:
