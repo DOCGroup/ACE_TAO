@@ -1,7 +1,7 @@
 <?xml version="1.0"?> <!-- -*- SGML -*-  -->
 
 <!-- XML doesn't really support the following $(CIAO_ROOT) syntax :) -->
-<!DOCTYPE softpkg SYSTEM "$(CIAO_ROOT)/docs/XML/componentassembly.dtd">
+<!DOCTYPE componentassembly SYSTEM "$(CIAO_ROOT)/docs/XML/componentassembly.dtd">
 
 <componentassembly id="Single-process HUDisplay assembly">
   <componentfiles>
@@ -20,7 +20,6 @@
 
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
     <processcollocation>
-
       <homeplacement id="a_RateGenHome">
         <componentfileref idref="com-RateGen"/>
         <componentinstantiation id="a_RateGen"/>
@@ -35,8 +34,7 @@
         <componentfileref idref="com-NavDisplay"/>
         <componentinstantiation id="a_NavDisplay"/>
       </homeplacement>
-
-    </processcollocation>
+      </processcollocation>
   </partitioning>
 
   <connections>
@@ -70,6 +68,7 @@
       </usesport>
       <providesport>
         <providesidentifier>MyLocation</providesidentifier>
+        <componentinstantiationref idref="a_GPS"/>
       </providesport>
     </connectinterface>
 

@@ -1,62 +1,95 @@
 Wed Apr 02 17:08:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-M bin/generate_component_mpc.pl
-M docs/XML/componentassembly.dtd
-M examples/handcrafted/Display/CIAO_Installation_Data.ini
-A examples/handcrafted/Display/HUDisplay.cad
-M examples/handcrafted/Display/NavDisplay/NavDisplay.mpc
-A examples/handcrafted/Display/NavDisplay/client.cpp
-A examples/handcrafted/Display/NavDisplay/run_test.pl
-A examples/handcrafted/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/AddNavUnitCmd.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/Command.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/MapView.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.csd
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.ssd
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavUnit.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/NavUnit.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/NodeItem.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/NodeItem.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/QuitCmd.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/QuitCmd.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/README
-A examples/handcrafted/Display/NavDisplayGUI_exec/RootPanel.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/RootPanel.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/UpdatePositionCmd.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/Worker.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/Worker.h
-A examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/moc_MapView.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/moc_NodeItem.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp
-A examples/handcrafted/Display/NavDisplayGUI_exec/run_test.pl
-A examples/handcrafted/Display/NavDisplayGUI_exec/trolltech.gif
-A examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.gif
-M examples/handcrafted/Hello/client.dsp
-M examples/handcrafted/Hello/hello_executors.dsp
-M examples/handcrafted/Hello/hello_servants.dsp
-M examples/handcrafted/Hello/hello_stub.dsp
-A tools/XML_Helpers/Assembly_Handlers.cpp
-A tools/XML_Helpers/Assembly_Handlers.h
-A tools/XML_Helpers/Assembly_Handlers.inl
-A tools/XML_Helpers/Assembly_Spec.cpp
-A tools/XML_Helpers/Assembly_Spec.h
-A tools/XML_Helpers/Assembly_Spec.inl
-M tools/XML_Helpers/Helper_Test.dsp
-M tools/XML_Helpers/Softpkg_Handlers.cpp
-M tools/XML_Helpers/Softpkg_Handlers.h
-M tools/XML_Helpers/Softpkg_Handlers.inl
-M tools/XML_Helpers/XML_Utils.cpp
-M tools/XML_Helpers/XML_Utils.h
-M tools/XML_Helpers/main.cpp
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.inl:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Spec.inl:
+	* tools/XML_Helpers/Helper_Test.dsp: Added implementations for
+	  handling componentassembly XML documents and building the
+	  assembly specification information.  These handlers currently
+	  process only "crucial" information needed to get a system up and
+	  running, i.e., they do not yet extract all types of information
+	  in a componentassembly document.
+
+	  Also important is that all XML handlers in CIAO assume all XML
+	  documents they process are valid and well-formed.  ACEXML
+	  currently does not validate XML document yet.  Therefore, you
+	  need to validate the XML documents using other XML parser (such
+	  as msxml) shall CIAO's assembly parsing behave strangely as the
+	  handlers assume a validator has already taken up most of the
+	  checking responsibility.
+
+	* tools/XML_Helpers/Softpkg_Handlers.cpp:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/Softpkg_Handlers.inl:
+	* tools/XML_Helpers/XML_Utils.cpp:
+	* tools/XML_Helpers/XML_Utils.h: Added a new
+	  parse_componentassembly utility function and moved some of the
+	  helper functions out of Softpkg_Handlers.
+
+	* tools/XML_Helpers/main.cpp:
+
+	* bin/generate_component_mpc.pl: Added dependent library to the
+	  list of libraries client program links to.
+
+	* docs/XML/componentassembly.dtd: Fixed a typo in DTD definition.
+
+	* examples/handcrafted/Display/HUDisplay.cad: Added a
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplay/client.cpp:
+	* examples/handcrafted/Display/NavDisplay/run_test.pl: Added a
+	  client program to test the component.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/AddNavUnitCmd.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/Command.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.csd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.ssd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavUnit.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavUnit.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NodeItem.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NodeItem.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/QuitCmd.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/QuitCmd.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/README:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/RootPanel.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/RootPanel.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/UpdatePositionCmd.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/Worker.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/Worker.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_NodeItem.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/run_test.pl:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/trolltech.gif:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.gif:
+	  Added a Qt GUI based component to showcase how we can
+	  reconfigure a system using different component easily.  Thanks
+	  to Andrey Nechypurenko <andreynech@mchp.siemens.com> for
+	  contributing the implementation.
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini: Added
+	  deployment information for the new GUI NavDisplay component
+	  implementation.
+
+	* examples/handcrafted/Hello/client.dsp:
+	* examples/handcrafted/Hello/hello_executors.dsp:
+	* examples/handcrafted/Hello/hello_servants.dsp:
+	* examples/handcrafted/Hello/hello_stub.dsp:  Hmm, I probably
+	  checked in the MPC/MWC generated project accidentally.  :)
 
 Mon Mar 24 16:17:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
