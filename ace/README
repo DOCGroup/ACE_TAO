@@ -169,6 +169,7 @@ ACE_HAS_TIMOD_H				Platform supports TLI timod STREAMS module
 ACE_HAS_TIUSER_H			Platform supports TLI tiuser header
 ACE_HAS_TLI				Platform supports TLI
 ACE_HAS_TLI_PROTOTYPES			Platform provides TLI function prototypes
+ACE_HAS_UALARM				Platform supports ualarm()
 ACE_HAS_UCONTEXT_T			Platform supports ucontext_t (which is used in the extended signal API).
 ACE_HAS_UNION_WAIT			The wait() system call takes a (union wait *) rather than int *
 ACE_HAS_UNIXWARE_SVR4_SIGNAL_T		Has inconsistent SVR4 signal stuff, but not the same as the other platforms

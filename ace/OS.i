@@ -1291,7 +1291,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   // ACE_TRACE ("ACE_OS::mutex_destroy");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (::pthread_mutex_destroy (m), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m), ace_result_), int, -1);
@@ -1328,7 +1328,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (pthread_mutex_lock (m), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), ace_result_),
@@ -1414,7 +1414,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (pthread_mutex_trylock (m), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), ace_result_),
@@ -1515,7 +1515,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (pthread_mutex_unlock (m), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), ace_result_),
@@ -1671,7 +1671,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
   // ACE_TRACE ("ACE_OS::cond_destroy");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (::pthread_cond_destroy (cv), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_destroy (cv), ace_result_), int, -1);
@@ -1740,7 +1740,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 // ACE_TRACE ("ACE_OS::cond_signal");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (::pthread_cond_signal (cv), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_signal (cv),ace_result_),
@@ -1761,7 +1761,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 // ACE_TRACE ("ACE_OS::cond_broadcast");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (::pthread_cond_broadcast (cv), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_broadcast (cv), 
@@ -1786,7 +1786,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_wait");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (::pthread_cond_wait (cv, external_mutex), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_wait (cv, external_mutex), ace_result_), 
@@ -1817,7 +1817,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
 
 #if (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_FSU_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL (timeout == 0
 	      ? ::pthread_cond_wait (cv, external_mutex)
 	      : ::pthread_cond_timedwait (cv, external_mutex, 
@@ -1846,9 +1846,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	      int, -1, result);
 #endif /* ACE_HAS_STHREADS */
   if (timeout != 0)
-    {
-      timeout->set (ts); // Update the time value before returning.
-    }
+    timeout->set (ts); // Update the time value before returning.
+
   return result;
 #else
   ACE_UNUSED_ARG (cv);
@@ -4126,14 +4125,14 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 
 # if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   int result;
-  result = ::pthread_getprio(thr_id);
-  if (result != -1) {
-    prio = result;
-    return 0;
-}
-  else {
+  result = ::pthread_getprio (thr_id);
+  if (result != -1) 
+    {
+      prio = result;
+      return 0;
+    }
+  else 
     return -1;
-}
 # else
 
   struct sched_param param;
@@ -5411,17 +5410,32 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 }
 
 ACE_INLINE u_int 
-ACE_OS::alarm (u_int delay)
+ACE_OS::alarm (u_int secs)
 {
   // ACE_TRACE ("ACE_OS::alarm");
 
 #if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_UNUSED_ARG (delay);
+  ACE_UNUSED_ARG (secs);
   
   ACE_NOTSUP_RETURN (0);
 #else
-  return ::alarm (delay);
+  return ::alarm (secs);
 #endif /* ACE_WIN32 || VXWORKS */
+}
+
+ACE_INLINE u_int 
+ACE_OS::ualarm (u_int usecs, u_int interval)
+{
+  // ACE_TRACE ("ACE_OS::ualarm");
+
+#if defined (ACE_HAS_UALARM)
+  return ::ualarm (usecs, interval);
+#else
+  ACE_UNUSED_ARG (usecs);
+  ACE_UNUSED_ARG (interval);
+  
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_UALARM */
 }
 
 ACE_INLINE int 
