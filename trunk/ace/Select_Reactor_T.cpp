@@ -655,9 +655,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
   ACE_TRACE ("ACE_Select_Reactor_T::handle_error");
   if (errno == EINTR)
     return this->restart_;
-#if defined (__MVS__)
-  // On MVS Open Edition, there can be a number of failure codes on a bad
-  // socket, so check_handles on anything other than EINTR.
+#if defined (__MVS__) || defined (ACE_WIN32)
+  // On MVS Open Edition and Win32, there can be a number of failure codes
+  // on a bad socket, so check_handles on anything other than EINTR.
   else
     return this->check_handles ();
 #else
