@@ -228,6 +228,7 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
+    case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
       return new be_visitor_operation_argument (new_ctx);
 
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH:
@@ -250,6 +251,8 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARGUMENT_DEMARSHAL_SS:
     case TAO_CodeGen::TAO_ARGUMENT_MARSHAL_SS:
       return new be_visitor_args_marshal_ss (new_ctx);
+    case TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS:
+      return new be_visitor_args_post_marshal_ss (new_ctx);
 
     case TAO_CodeGen::TAO_ATTRIBUTE_CH:
     case TAO_CodeGen::TAO_ATTRIBUTE_CS:

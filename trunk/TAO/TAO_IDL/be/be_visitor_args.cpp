@@ -1221,6 +1221,7 @@ int be_visitor_args_vardecl_ss::visit_interface (be_interface *node)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
+      *os << "CORBA::Object_ptr _tao_base_" << arg->local_name () << ";\n";
       *os << bt->name () << "_ptr _tao_ptr_" << arg->local_name () << ";" << be_nl;
       *os << bt->name () << "_out " << arg->local_name ()
           << " (_tao_ptr_" << arg->local_name () << ");\n";
@@ -1251,6 +1252,7 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
+      *os << "CORBA::Object_ptr _tao_base_" << arg->local_name () << ";\n";
       *os << bt->name () << "_ptr _tao_ptr_" << arg->local_name () << ";" << be_nl;
       *os << bt->name () << "_out " << arg->local_name ()
           << " (_tao_ptr_" << arg->local_name () << ");\n";
@@ -1541,15 +1543,9 @@ int be_visitor_args_marshal_ss::visit_interface (be_interface *)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-      if (this->ctx_->state () == TAO_CodeGen::TAO_ARGUMENT_DEMARSHAL_SS)
-        *os << "&_tao_base_" << arg->local_name ();
-      else
-        *os << "&" << arg->local_name ();
-      break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "&_tao_ptr_" << arg->local_name ();
+      *os << "&_tao_base_" << arg->local_name ();
       break;
     }
   return 0;
@@ -1564,15 +1560,9 @@ int be_visitor_args_marshal_ss::visit_interface_fwd (be_interface_fwd *)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-      if (this->ctx_->state () == TAO_CodeGen::TAO_ARGUMENT_DEMARSHAL_SS)
-        *os << "&_tao_base_" << arg->local_name ();
-      else
-        *os << "&" << arg->local_name ();
-      break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "&_tao_ptr_" << arg->local_name ();
+      *os << "&_tao_base_" << arg->local_name ();
       break;
     }
   return 0;
@@ -2070,14 +2060,23 @@ int be_visitor_args_post_upcall_ss::visit_enum (be_enum *node)
 int be_visitor_args_post_upcall_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       break;
     case AST_Argument::dir_INOUT: // inout
+      os->indent ();
+      *os << "CORBA::release (_tao_base_" << arg->local_name () << ");"
+          << be_nl;
+      *os << "_tao_base_" << arg->local_name () << " = " << arg->local_name ()
+          << ";\n";
       break;
     case AST_Argument::dir_OUT:
+      os->indent ();
+      *os << "_tao_base_" << arg->local_name () << " = _tao_ptr_"
+          << arg->local_name () << ";\n";
       break;
     }
   return 0;
@@ -2086,14 +2085,23 @@ int be_visitor_args_post_upcall_ss::visit_interface (be_interface *node)
 int be_visitor_args_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       break;
     case AST_Argument::dir_INOUT: // inout
+      os->indent ();
+      *os << "CORBA::release (_tao_base_" << arg->local_name () << ");"
+          << be_nl;
+      *os << "_tao_base_" << arg->local_name () << " = " << arg->local_name ()
+          << ";\n";
       break;
     case AST_Argument::dir_OUT:
+      os->indent ();
+      *os << "_tao_base_" << arg->local_name () << " = _tao_ptr_"
+          << arg->local_name () << ";\n";
       break;
     }
   return 0;
@@ -2214,9 +2222,8 @@ int be_visitor_args_post_upcall_ss::visit_typedef (be_typedef *node)
   return node->primitive_base_type ()->accept (this);
 }
 
-#if 0
 // ************************************************************************
-//  visitor for doing any post-processing after the upcall is made
+//  visitor for doing any post-processing after the marshaling is done
 // ************************************************************************
 
 be_visitor_args_post_marshal_ss::be_visitor_args_post_marshal_ss (be_visitor_context *ctx)
@@ -2294,14 +2301,16 @@ int be_visitor_args_post_marshal_ss::visit_enum (be_enum *node)
 int be_visitor_args_post_marshal_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      break;
     case AST_Argument::dir_INOUT: // inout
-      break;
     case AST_Argument::dir_OUT:
+      os->indent ();
+      *os << "CORBA::release (_tao_base_" << arg->local_name () << ");\n";
       break;
     }
   return 0;
@@ -2310,14 +2319,16 @@ int be_visitor_args_post_marshal_ss::visit_interface (be_interface *node)
 int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      break;
     case AST_Argument::dir_INOUT: // inout
-      break;
     case AST_Argument::dir_OUT:
+      os->indent ();
+      *os << "CORBA::release (_tao_base_" << arg->local_name () << ");\n";
       break;
     }
   return 0;
@@ -2437,4 +2448,3 @@ int be_visitor_args_post_marshal_ss::visit_typedef (be_typedef *node)
   this->ctx_->alias (node);
   return node->primitive_base_type ()->accept (this);
 }
-#endif

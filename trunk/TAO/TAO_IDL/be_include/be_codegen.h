@@ -68,7 +68,9 @@ public:
     TAO_ARGUMENT_VARDECL_SS,                 // declaration of argument
                                              // variable in skeleton (server)
     TAO_ARGUMENT_MARSHAL_SS,                 // passing argument node to the
-    TAO_ARGUMENT_DEMARSHAL_SS,               // demarshal and marshal operations
+    TAO_ARGUMENT_DEMARSHAL_SS,               // demarshal and marshal
+                                             // operations
+    TAO_ARGUMENT_POST_MARSHAL_SS,
     TAO_ARGUMENT_PRE_UPCALL_SS,              // preprocessing of argument
                                              // variable before upcall
     TAO_ARGUMENT_UPCALL_SS,                  // passing argument variable to upcall
@@ -212,6 +214,7 @@ public:
     TAO_OPERATION_ARG_DEMARSHAL_SS,          //   and argument variables to the
     TAO_OPERATION_RETVAL_MARSHAL_SS,         //   marshal and demarshal operations
     TAO_OPERATION_ARG_MARSHAL_SS,
+    TAO_OPERATION_ARG_POST_MARSHAL_SS,
     TAO_OPERATION_RETVAL_ASSIGN_SS,          // assigning to return type
                                              // variable
     TAO_OPERATION_ARG_PRE_UPCALL_SS,         // pre upcall processing
