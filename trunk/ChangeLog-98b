@@ -1,9 +1,14 @@
+Thu May 07 22:06:13 1998  Ben Eng  <ben@jetpen.com>
+
+        * ace/config-kcc-common.h,config-linux-{common,kcc}.h: updated
+          KCC/Linux support, and integrated into config-linux-common.h.
+
 Thu May  7 20:32:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp
- 	  (main): Oops, we need to move the unlink() AFTER we create the
- 	  file...  Thanks to Sandro Doro <doros@aureus.sublink.org> for
- 	  reporting this.
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp
+          (main): Oops, we need to move the unlink() AFTER we create the
+          file...  Thanks to Sandro Doro <doros@aureus.sublink.org> for
+          reporting this.
 
 Thu May 07 19:08:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -11,38 +16,38 @@ Thu May 07 19:08:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu May  7 14:10:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Timer_Hash_T.h: 
-	* ace/Timer_Hash_T.cpp: 
-	* ace/Timer_Heap_T.cpp: 
-	* ace/Timer_Wheel_T.cpp: 
-	  The classes had a INHERITED typedef for the base class, but
-	  Solaris defines a macro by the same name. This causes very weird
-	  problems with EGCS (and probably other g++ versions).
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
+          The classes had a INHERITED typedef for the base class, but
+          Solaris defines a macro by the same name. This causes very weird
+          problems with EGCS (and probably other g++ versions).
 
 Thu May 07 04:15:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Profile_Timer.cpp (elapsed_time): Treat Win32 differently
-	  so I can use this function with WinCE Emulation build.  The
-	  problem is that Win32 can't convert __int64 to double.
+        * ace/Profile_Timer.cpp (elapsed_time): Treat Win32 differently
+          so I can use this function with WinCE Emulation build.  The
+          problem is that Win32 can't convert __int64 to double.
 
-	* ace/OS.{h,cpp} (ACE_Time_Value): (Win32 only) Added a new static
-	  const member (Time_To_The_Beginning) of type DWORDLONG (unsigned
-	  _int64) to adjust the time skew between FILETIME and POSIX time.
-	  Changed the type of _100ns to ULARGE_INTEGER to eliminate
-	  unnecessary computation. 
+        * ace/OS.{h,cpp} (ACE_Time_Value): (Win32 only) Added a new static
+          const member (Time_To_The_Beginning) of type DWORDLONG (unsigned
+          _int64) to adjust the time skew between FILETIME and POSIX time.
+          Changed the type of _100ns to ULARGE_INTEGER to eliminate
+          unnecessary computation.
 
 Wed May  6 23:58:40 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* ace/XtReactor.cpp: 
-	  The signature for the open() method of the notify pipe has been
-	  modified.
+        * ace/XtReactor.cpp:
+          The signature for the open() method of the notify pipe has been
+          modified.
 
 Wed May  6 23:28:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
- 	  Fixed a couple of mistakes that were causing the UNIX domain
- 	  sockets not to work.  Thanks to Sandro Doro
- 	  <doros@aureus.sublink.org> for recommending this.
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+          Fixed a couple of mistakes that were causing the UNIX domain
+          sockets not to work.  Thanks to Sandro Doro
+          <doros@aureus.sublink.org> for recommending this.
 
         * performance-tests/Misc/context_switch_time.cpp (svc): An 'i'
           was being defined twice, gorp!  It's fixed now!
