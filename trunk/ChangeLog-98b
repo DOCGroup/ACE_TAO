@@ -1,26 +1,31 @@
+Thu Dec 31 10:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers_T.cpp (ACE_Fixed_Set::insert): removed
+          blank line between function header and body.
+
 Thu Dec 31 09:40:09 1998  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SOCK_Stream: Added a new ACE_SOCK_Stream constructor that
- 	  initializes the underlying ACE_HANDLE automagically.
+        * ace/SOCK_Stream: Added a new ACE_SOCK_Stream constructor that
+          initializes the underlying ACE_HANDLE automagically.
 
 Wed Dec 30 17:07:21 1998  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Containers_T.h: Clarified that the insert() method on
- 	  ACE_Unbounded_Stack doesn't allow duplicates.  Thanks to Susan
- 	  Liebeskind <susan.liebeskind@gtri.gatech.edu> for reporting
- 	  this.
+        * ace/Containers_T.h: Clarified that the insert() method on
+          ACE_Unbounded_Stack doesn't allow duplicates.  Thanks to Susan
+          Liebeskind <susan.liebeskind@gtri.gatech.edu> for reporting
+          this.
 
 Wed Dec 30 14:41:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/ACE.cpp:
-	  Sometimes the get_ip_interfaces routine was returning 0.0.0.0 as
-	  a valid address, we explicitly avoid that now.
+        * ace/ACE.cpp:
+          Sometimes the get_ip_interfaces routine was returning 0.0.0.0 as
+          a valid address, we explicitly avoid that now.
 
 Wed Dec 30 14:34:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/GenExportH.BAT: Added '\$\I\d\$' string in generated file.
-	  Also in generated file, make XXX_HAS_DLL defined to 1 if it
-	  isn't defined already.
+        * bin/GenExportH.BAT: Added '\$\I\d\$' string in generated file.
+          Also in generated file, make XXX_HAS_DLL defined to 1 if it
+          isn't defined already.
 
 Wed Dec 30 13:22:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
