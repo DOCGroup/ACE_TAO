@@ -1,3 +1,17 @@
+Mon Mar  8 15:52:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/POSIX_Asynch_IO.{h cpp}: Added ACE_POSIX_Asynch_Read_Dgram and
+	  ACE_POSIX_Asynch_Write_Dgram functionality. These were previously
+	  left as "not supported". The functions don't offer the
+	  immediate-success feature available on Windows, and the Dgram
+	  socket must be "connected" as there's no address-specification
+	  feature available in the asynch IO facility on POSIX.
+
+	* ace/POSIX_Proactor.cpp: Comment out the signal setup; this should
+	  not be necessary and, indeed, is erroneous, at least on Linux.
+	  It's commented out instead of removed in case further testing on
+	  other platforms determines that it is needed sometimes.
+
 Mon Mar  8 13:48:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* NEWS:
