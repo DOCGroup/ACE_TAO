@@ -380,7 +380,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
 TAO_Default_Server_Creation_Strategy::
 TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager *t)
-  :  TAO_Server_Strategy_Factory::CREATION_STRATEGY (t)
+  :  ACE_Creation_Strategy<TAO_Server_Connection_Handler> (t)
 {
 }
 
