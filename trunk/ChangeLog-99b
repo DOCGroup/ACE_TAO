@@ -1,3 +1,13 @@
+Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Updated NT Alpha configurations.
+
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:
+          Added NT Alpha configurations.
+
 Mon Jan 18 22:14:00 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/011/message_queue.cpp: 
