@@ -1,3 +1,9 @@
+Wed Jun 11 16:27:41 2003  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv1/Logging_Client.cpp:
+	* examples/C++NPv2/TP_Reactor_Logging_Server.cpp: Fixed compile error
+	  arising from: Wed Jun 11 07:28:57 2003  Balachandran Natarajan
+
 Wed Jun 11 07:28:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/config-lynxos.h: 
