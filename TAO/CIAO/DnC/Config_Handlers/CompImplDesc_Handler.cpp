@@ -134,7 +134,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("implements")))
             {
               // fetch the handler
-              CompIntrDesc_Handler compIntrDesc_handler (iter_, false);
+              CCD_Handler compIntrDesc_handler (iter_, false);
 
               // delegate the populating process
               compIntrDesc_handler.process_ComponentInterfaceDescription (cid.implements);
