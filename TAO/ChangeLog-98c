@@ -1,36 +1,41 @@
+Mon Jul 27 17:15:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple/dyn_plot: added this perl script,
+          which was used to generate plots for the DASC '98 paper.
+
 Mon Jul 27 17:11:07 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	  Fixed compiler errors with g++ 2.7.2. Thanks to good ol' Sergio
-	  <sergiof@microsoft.com> for pointing this out. 
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+          Fixed compiler errors with g++ 2.7.2. Thanks to good ol' Sergio
+          <sergiof@microsoft.com> for pointing this out.
 
 Mon Jul 27 16:55:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/NestedUpcall/MT_Client_Test/run_test.pl: 
-	* tests/NestedUpcall/Reactor/run_test.pl: 
-	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
-	* tests/Simple/run_test.pl: 
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
-	  Capture the client status and return it, also wait (or kill) the
-	  server before exit.
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+        * tests/NestedUpcall/Reactor/run_test.pl:
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+        * tests/Simple/run_test.pl:
+        * tests/Cubit/TAO/DII_Cubit/run_test.pl:
+        * tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          Capture the client status and return it, also wait (or kill) the
+          server before exit.
 
-	* tests/Param_Test/results.h: 
-	* tests/Param_Test/results.cpp: 
-	* tests/Param_Test/client.cpp: 
-	  Print the test name *before* attempting to run it, so the output
-	  is visible even on a crash. Also print an easy to grep message
-	  on test failure.
+        * tests/Param_Test/results.h:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/client.cpp:
+          Print the test name *before* attempting to run it, so the output
+          is visible even on a crash. Also print an easy to grep message
+          on test failure.
 
-	* tests/Param_Test/run_test.pl: 
-	  By default use ORBport 0 and run the tests 5 times (just for
-	  luck).
+        * tests/Param_Test/run_test.pl:
+          By default use ORBport 0 and run the tests 5 times (just for
+          luck).
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	  Made the push() methods on the Supplier_Module and the
-	  Consumer_Module virtual, so users can provide their own.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+          Made the push() methods on the Supplier_Module and the
+          Consumer_Module virtual, so users can provide their own.
 
 Mon Jul 27 1:26:44 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -40,53 +45,53 @@ Mon Jul 27 1:26:44 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Mon Jul 27 12:44:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Invocation.cpp (start): Modified the code in
-	  TAO_ARL_USES_SAME_CONNECTOR_PORT so the connector always binds
- 	  to the host IP address specified in the ORB Core.  Thanks to
- 	  Fred Kuhns <fredk@arl.wustl.edu> for pointing this out.
+        * tao/Invocation.cpp (start): Modified the code in
+          TAO_ARL_USES_SAME_CONNECTOR_PORT so the connector always binds
+          to the host IP address specified in the ORB Core.  Thanks to
+          Fred Kuhns <fredk@arl.wustl.edu> for pointing this out.
 
 Sun Jul 26 21:01:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-		Added preliminary argument processing code so
-	that we can allocate memory for data structures for the
-	number of threads specified on the command line.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+                Added preliminary argument processing code so
+        that we can allocate memory for data structures for the
+        number of threads specified on the command line.
 
 Sun Jul 26 16:58:54 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed the argument
-	processing of  low priority servants.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed the argument
+        processing of  low priority servants.
 
 Sun Jul 26 16:02:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Removed a line in unset_leader_wake_up_follower
-	  which did not belong there any more.
+        * tao/ORB_Core.cpp: Removed a line in unset_leader_wake_up_follower
+          which did not belong there any more.
 
 Sun Jul 26 13:50:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/tests/Concurrency/Makefile: 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	* orbsvcs/tests/Trading/Makefile: 
-	* tests/NestedUpcall/Reactor/Makefile: 
-	* tests/NestedUpcall/Triangle_Test/Makefile: 
-	* tests/POA/Default_Servant/Makefile: 
-	* tests/POA/Generic_Servant/Makefile: 
-	  The realclean target was not removing all the files.	
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/Logger/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+        * tests/NestedUpcall/Reactor/Makefile:
+        * tests/NestedUpcall/Triangle_Test/Makefile:
+        * tests/POA/Default_Servant/Makefile:
+        * tests/POA/Generic_Servant/Makefile:
+          The realclean target was not removing all the files.
 
 Sun Jul 26 10:11:07 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* orbsvcs/Trading_Service/Trading_Service.cpp: 
-	* orbsvcs/tests/Trading/colocated_test.cpp: 
-	  MSVC++ and std::auto_ptr don't like implicit conversions from
-	  the pointer type to the auto_ptr, this is (I believe) the
-	  standard behavior.
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+          MSVC++ and std::auto_ptr don't like implicit conversions from
+          the pointer type to the auto_ptr, this is (I believe) the
+          standard behavior.
 
-	* orbsvcs/tests/Logger/server.dsp: 
-	* orbsvcs/tests/Logger/client.dsp: 
-	  Added missing files to the project.
+        * orbsvcs/tests/Logger/server.dsp:
+        * orbsvcs/tests/Logger/client.dsp:
+          Added missing files to the project.
 
 Sun Jul 26 09:17:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
