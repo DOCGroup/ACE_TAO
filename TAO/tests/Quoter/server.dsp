@@ -89,11 +89,11 @@ LINK32=link.exe
 # PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\QuoterC.cpp
+SOURCE=.\Quoter_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\QuoterImpl.cpp
+SOURCE=.\QuoterC.cpp
 # End Source File
 # Begin Source File
 
@@ -107,6 +107,10 @@ SOURCE=.\server.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h"
+# Begin Source File
+
+SOURCE=.\Quoter_Impl.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\QuoterC.h
