@@ -25,6 +25,7 @@ DIRS = \
 	Leader_Followers \
 	MProfile \
 	Multiple_Inheritance \
+        Native_Exceptions \
 	Nested_Event_Loop \
 	ORB_destroy \
 	ORB_init \
