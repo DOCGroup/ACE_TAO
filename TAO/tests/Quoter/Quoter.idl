@@ -112,6 +112,8 @@ module Stock
       //
       typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
 
+      typedef CosLifeCycle::Criteria Criteria;
+
       exception NotAvailable { string reason; };
       // raised if the questioned configuration is not available
 
@@ -127,7 +129,7 @@ module Stock
       string getPreferences ();
       // get the preferences, not implemented
 
-      void setCriteria (in CosLifeCycle::Criteria criteria);
+      void setCriteria (in Criteria criteria);
       // set the Criteria which is searched for keywords
     };
 };
