@@ -140,7 +140,8 @@ public:
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+                       CORBA::SystemException,
+                       DynamicAny::DynAny::InvalidValue
       ));
 
     virtual CORBA::Boolean equal (
