@@ -1,3 +1,9 @@
+Thu Jan  8 11:03:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+
+	  Fixed a warning due to wrong macro usage.
+
 Thu Jan  8 16:46:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/tao_idl.mpc:

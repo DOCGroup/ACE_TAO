@@ -82,6 +82,7 @@ TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
   ACE_TRY_NEW_ENV
   {
     fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
   ACE_CATCHALL
   {
