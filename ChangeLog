@@ -1,3 +1,11 @@
+Wed Nov 24 12:24:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/notification_serv.mpb:
+
+          Added the svc_utils base project.  The CosNotification_Serv
+          library needs it and this should fix static link errors for
+          Notify_Service.
+
 Wed Nov 24 09:44:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
