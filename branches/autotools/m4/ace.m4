@@ -249,7 +249,7 @@ dnl line, then "no_x" is set to "yes."
      AC_MSG_WARN([existing gperf may be overwritten during installation])
    fi
   ])
-dnl AM_CONDITIONAL(COMPILE_GPERF, test X$ace_user_with_gperf = Xyes)
+AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
 
 #AC_ARG_WITH([tao],
 # AC_HELP_STRING([--with-tao],[build TAO (the ACE ORB) [[yes]]]),
