@@ -29,7 +29,7 @@ public:
 
 private:
   /// Make sure that the current thread has a connection available.
-  void validate_connection (TAO_ENV_SINGLE_ARG_DECL);
+  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The object reference used for this test

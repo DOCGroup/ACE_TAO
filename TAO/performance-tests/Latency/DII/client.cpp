@@ -82,14 +82,14 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
@@ -103,14 +103,14 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           CORBA::Request_var request =
-            object->_request ("test_method" TAO_ENV_ARG_PARAMETER);
+            object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::ULongLong dummy = 0;
           request->add_in_arg("send_time") <<= dummy;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -122,13 +122,13 @@ main (int argc, char *argv[])
           CORBA::ULongLong start = ACE_OS::gethrtime ();
 
           CORBA::Request_var request =
-            object->_request ("test_method" TAO_ENV_ARG_PARAMETER);
+            object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           request->add_in_arg("send_time") <<= start;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -159,10 +159,10 @@ main (int argc, char *argv[])
       if (do_shutdown)
         {
           CORBA::Request_var request =
-            object->_request ("shutdown" TAO_ENV_ARG_PARAMETER);
+            object->_request ("shutdown" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          request->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
         }

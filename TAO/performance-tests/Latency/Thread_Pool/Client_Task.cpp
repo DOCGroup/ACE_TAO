@@ -15,17 +15,17 @@ Client_Task::Client_Task (Test::Roundtrip_ptr roundtrip,
 int
 Client_Task::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->validate_connection (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i != this->niterations_; ++i)
         {
           CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-          (void) this->roundtrip_->test_method (start TAO_ENV_ARG_PARAMETER);
+          (void) this->roundtrip_->test_method (start ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -50,14 +50,14 @@ Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
 }
 
 void
-Client_Task::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ULongLong dummy = 0;
   for (int i = 0; i != 100; ++i)
     {
       ACE_TRY
         {
-          (void) this->roundtrip_->test_method (dummy TAO_ENV_ARG_PARAMETER);
+          (void) this->roundtrip_->test_method (dummy ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY {} ACE_ENDTRY;

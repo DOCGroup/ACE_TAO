@@ -24,7 +24,7 @@ Roundtrip_Handler::dump_results (ACE_UINT32 gsf)
 
 void
 Roundtrip_Handler::test_method (Test::Timestamp send_time
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->pending_callbacks_--;
@@ -35,13 +35,13 @@ Roundtrip_Handler::test_method (Test::Timestamp send_time
 
 void
 Roundtrip_Handler::test_method_excep (Test::AMI_RoundtripExceptionHolder *holder
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       this->pending_callbacks_--;
-      holder->raise_test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
+      holder->raise_test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -52,19 +52,19 @@ Roundtrip_Handler::test_method_excep (Test::AMI_RoundtripExceptionHolder *holder
 }
 
 void
-Roundtrip_Handler::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Roundtrip_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Roundtrip_Handler::shutdown_excep (Test::AMI_RoundtripExceptionHolder *holder
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      holder->raise_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      holder->raise_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
