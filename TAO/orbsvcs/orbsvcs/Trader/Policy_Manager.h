@@ -18,6 +18,8 @@
 #define TAO_POLICY_MANAGER_H
 
 #include "stl.h"
+#include "orbsvcs/CosTradingC.h"
+#include "Policies.h"
 
 class TAO_Policy_Manager
 // = TITLE
