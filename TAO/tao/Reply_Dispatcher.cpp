@@ -68,6 +68,10 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
+  // Must reset the message state, it is possible that the same reply
+  // dispatcher is used because the request must be re-sent.
+  this->message_state_.reset (0);
+
   if (&this->message_state_ != message_state)
     {
       // The Transport Mux Strategy did not use our Message_State to
