@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_ConsumerAdmin_i.h
-//
-// = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::ConsumerAdmin interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_ConsumerAdmin_i.h
+ *
+ *  $Id$
+ *
+ * Implements the CosNotifyChannelAdmin::ConsumerAdmin interface.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef TAO_NOTIFY_CONSUMERADMIN_I_H
 #define TAO_NOTIFY_CONSUMERADMIN_I_H
 #include "ace/pre.h"
@@ -47,22 +44,23 @@ class TAO_Notify_Event_Processor;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_ConsumerAdmin_i
+ *
+ * @brief TAO_Notify_ConsumerAdmin_i
+ *
+ * Implements the CosNotifyChannelAdmin::ConsumerAdmin interface.
+ */
 class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventListener, public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   TAO_Notify_ConsumerAdmin_i
-  //
-  // = DESCRIPTION
-  //   Implements the CosNotifyChannelAdmin::ConsumerAdmin interface.
-  //
 
  public:
+  /// Constructor
+  /// <myChannel> is this objects parent.
   TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_i* myChannel);
-  // Constructor
-  // <myChannel> is this objects parent.
 
+  /// Destructor
   virtual ~TAO_Notify_ConsumerAdmin_i (void);
-  // Destructor
 
   // = TAO_Notify_RefCounted
   virtual CORBA::ULong _incr_refcnt (void);
@@ -73,48 +71,48 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventList
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
   //= TAO_Notify_EventListener methods
+  /// Callback methods to supply the event to the listener.
   virtual void dispatch_event (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
-  // Callback methods to supply the event to the listener.
 
+  /// Evaluates true if this event is acceptable by the listener.
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent ACE_ENV_ARG_DECL);
-  // Evaluates true if this event is acceptable by the listener.
 
+  /// Ask the listener to relinqish any bindings and prepare to be disposed.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  // Ask the listener to relinqish any bindings and prepare to be disposed.
 
+  /// The Worker task associated with the event listener for event dispatching
   virtual TAO_Notify_Worker_Task* event_dispatch_task (void);
-  // The Worker task associated with the event listener for event dispatching
 
+  /// The Worker task associated with the event listener for filter evaluation.
+  ///= Admin Methods.
   virtual TAO_Notify_Worker_Task* filter_eval_task (void);
-  // The Worker task associated with the event listener for filter evaluation.
-  //= Admin Methods.
 
+  /// Initialize the Consumer Admin.
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
              PortableServer::POA_ptr my_POA
              ACE_ENV_ARG_DECL);
-  // Initialize the Consumer Admin.
 
+  /// Return the CORBA object for this servant.
   CosNotifyChannelAdmin::ConsumerAdmin_ptr get_ref (ACE_ENV_SINGLE_ARG_DECL);
-  // Return the CORBA object for this servant.
 
+  /// Accesor for the event manager.
   TAO_Notify_Event_Manager* get_event_manager (void);
-  // Accesor for the event manager.
 
+  /// Get our filter admin.
   TAO_Notify_FilterAdmin_i& get_filter_admin (void);
-  // Get our filter admin.
 
+  /// Deactivate servant from <proxy_pushsupplier_POA_>.
   void deactivate_proxy_pushsupplier (PortableServer::Servant servant ACE_ENV_ARG_DECL);
-  // Deactivate servant from <proxy_pushsupplier_POA_>.
 
+  /// Register with parent for subscription updates.
   void register_listener (TAO_Notify_EventListener *listener ACE_ENV_ARG_DECL);
-  // Register with parent for subscription updates.
 
+  /// Unregister with parent from subscription updates.
   void unregister_listener (TAO_Notify_EventListener *listener ACE_ENV_ARG_DECL);
-  // Unregister with parent from subscription updates.
 
+  /// This id is no longer in use.It can be reused by <proxy_pushsupplier_ids_>
   void proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
-  // This id is no longer in use.It can be reused by <proxy_pushsupplier_ids_>
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
@@ -310,92 +308,93 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
 
 protected:
   // = Helper methods
+  /// Destroy CA
   void destroy_i (ACE_ENV_SINGLE_ARG_DECL);
-  // Destroy CA
 
+ /// Obtain a proxy pushsupplier object
  CORBA::Object_ptr obtain_struct_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
- // Obtain a proxy pushsupplier object
 
+ /// Obtain a structured proxy pushsupplier object.
  CORBA::Object_ptr obtain_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
- // Obtain a structured proxy pushsupplier object.
 
+ /// Obtain a sequence proxy pushsupplier object.
  CORBA::Object_ptr obtain_sequence_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
- // Obtain a sequence proxy pushsupplier object.
 
  // = Data members
+ /// The locking strategy.
  ACE_Lock* lock_;
- // The locking strategy.
 
+ /// The reference count.
  CORBA::ULong refcount_;
- // The reference count.
 
+ /// Flag to tell if the child poa's should be destroyed.
  CORBA::Boolean destory_child_POAs_;
- // Flag to tell if the child poa's should be destroyed.
 
+ /// The channel to which we belong.
  TAO_Notify_EventChannel_i* event_channel_;
- // The channel to which we belong.
 
+ /// The factory for channel objects.
  TAO_Notify_CO_Factory* channel_objects_factory_;
- // The factory for channel objects.
 
+ /// The factory for POA based containers.
  TAO_Notify_POA_Factory* poa_factory_;
- // The factory for POA based containers.
 
+ /// Event manager objects factory,
  TAO_Notify_EMO_Factory* event_manager_objects_factory_;
- // Event manager objects factory,
 
+ /// Collection objects factory
  TAO_Notify_Collection_Factory* collection_factory_;
- // Collection objects factory
 
+ /// The event manager to use.
  TAO_Notify_Event_Manager* event_manager_;
- // The event manager to use.
 
+ /// The inter filter operator to use.
  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
- // The inter filter operator to use.
 
+ /// My ID.
  CosNotifyChannelAdmin::AdminID my_id_;
- // My ID.
 
+ /// The POA in which we live.
  PortableServer::POA_var my_POA_;
- // The POA in which we live.
 
+ /// The POA in which all our push suppliers live.
+ /// We create and own this POA.
  PortableServer::POA_var proxy_pushsupplier_POA_;
- // The POA in which all our push suppliers live.
- // We create and own this POA.
 
+ /// The list of event types that all our proxys are interested in receiving.
  TAO_Notify_EventType_List subscription_list_;
- // The list of event types that all our proxys are interested in receiving.
 
+ /// The list of event listeners that have registered with us
   TAO_Notify_EventListener_List* event_listener_list_;
- // The list of event listeners that have registered with us
 
+  /// Id generator for proxy push suppliers.
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
    CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushsupplier_ids_;
-  // Id generator for proxy push suppliers.
 
+  /// Handle QoS admin methods.
   TAO_Notify_QoSAdmin_i qos_admin_;
-  // Handle QoS admin methods.
 
+  /// Handles the Filter Admin methods.
   TAO_Notify_FilterAdmin_i filter_admin_;
-  // Handles the Filter Admin methods.
 
+  /// The dispatching task to send events to a listener group affiliated with this admin.
   TAO_Notify_Worker_Task* dispatching_task_;
-  // The dispatching task to send events to a listener group affiliated with this admin.
 
+  /// The filter evaluation task for this admin.
   TAO_Notify_Worker_Task* filter_eval_task_;
-  // The filter evaluation task for this admin.
 };
 
 /****************************************************************************************************/
 
+/**
+ * @class TAO_Notify_Filter_Command_Worker
+ *
+ * @brief TAO_Notify_Filter_Command_Worker
+ *
+ * Enqueue each listener for the filter evaluation command.
+ */
 class TAO_Notify_Export TAO_Notify_Filter_Command_Worker : public TAO_ESF_Worker<TAO_Notify_EventListener>
 {
-  // = TITLE
-  //   TAO_Notify_Filter_Command_Worker
-  //
-  // = DESCRIPTION
-  //   Enqueue each listener for the filter evaluation command.
-  //
 public:
   TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor, CORBA::Boolean eval_parent);
 
@@ -410,14 +409,15 @@ protected:
 
 /****************************************************************************************************/
 
+/**
+ * @class TAO_Notify_Dispatch_Command_Worker
+ *
+ * @brief TAO_Notify_Dispatch_Command_Worker
+ *
+ * Worker to invoke the dispatch command for each member of the collection.
+ */
 class TAO_Notify_Export TAO_Notify_Dispatch_Command_Worker : public TAO_ESF_Worker<TAO_Notify_EventListener>
 {
-  // = TITLE
-  //   TAO_Notify_Dispatch_Command_Worker
-  //
-  // = DESCRIPTION
-  //   Worker to invoke the dispatch command for each member of the collection.
-  //
 public:
   TAO_Notify_Dispatch_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor);
   ~TAO_Notify_Dispatch_Command_Worker ();

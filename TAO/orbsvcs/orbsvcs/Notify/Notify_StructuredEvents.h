@@ -1,21 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Notification
-//
-// = FILENAME
-//   Notify_StructuredEvents.h
-//
-// = DESCRIPTION
-//   For use with the Sequence (Push/Pull)(Consumer/Supplier)
-//
-// = AUTHOR
-//   Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_StructuredEvents.h
+ *
+ *  $Id$
+ *
+ * For use with the Sequence (Push/Pull)(Consumer/Supplier)
+ *
+ *
+ *  @author Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_STRUCTURED_EVENTS_H
 #define TAO_NOTIFY_STRUCTURED_EVENT_H
@@ -28,14 +24,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Notify_StructuredEvents
+ *
+ * @brief TAO_Notify_StructuredEvents
+ *
+ * This class is the concrete prototype for the Structured Event Types.
+ */
 class TAO_Notify_Export TAO_Notify_StructuredEvents : public TAO_Notify_Event
 {
-  // = TITLE
-  //   TAO_Notify_StructuredEvents
-  //
-  // = DESCRIPTION
-  //   This class is the concrete prototype for the Structured Event Types.
-  //
 public:
   TAO_Notify_StructuredEvents (const CosNotification::EventBatch& notifications);
   virtual ~TAO_Notify_StructuredEvents ();
@@ -56,21 +53,21 @@ public:
 
 protected:
 
+  /// Load the QoS properties these events from <data_>.
   void init_QoS (void);
-  // Load the QoS properties these events from <data_>.
 
   // = Data Members
+  /// The data
   CosNotification::EventBatch data_;
-  // The data
 
+  /// The events that matched the filter
   TAO_Unbounded_Sequence<CORBA::ULong> matching_;
-  // The events that matched the filter
 
+  /// Was do_match () called?
   int match_called_;
-  // Was do_match () called?
 
+  /// The event types of <data_>
   TAO_Notify_EventType event_type_;
-  // The event types of <data_>
 };
 
 #include "ace/post.h"

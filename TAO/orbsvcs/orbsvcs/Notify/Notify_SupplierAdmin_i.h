@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_SupplierAdmin_i.h
-//
-// = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::SupplierAdmin interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_SupplierAdmin_i.h
+ *
+ *  $Id$
+ *
+ * Implements the CosNotifyChannelAdmin::SupplierAdmin interface.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_SUPPLIERADMIN_I_H
 #define TAO_NOTIFY_SUPPLIERADMIN_I_H
@@ -41,43 +38,44 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_SupplierAdmin_i
+ *
+ * @brief TAO_Notify_SupplierAdmin_i
+ *
+ * Implements the CosNotifyChannelAdmin::SupplierAdmin interface.
+ */
 class TAO_Notify_Export TAO_Notify_SupplierAdmin_i : public POA_CosNotifyChannelAdmin::SupplierAdmin, public PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   TAO_Notify_SupplierAdmin_i
-  //
-  // = DESCRIPTION
-  //   Implements the CosNotifyChannelAdmin::SupplierAdmin interface.
-  //
 
 public:
   // @@ Pradeep: you may want to drop the _i suffix, it buys you
   // nothing..
 
+  /// Constructor
+  /// <event_channel> is this objects parent.
   TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* event_channel);
-  // Constructor
-  // <event_channel> is this objects parent.
 
+  /// Destructor
   virtual ~TAO_Notify_SupplierAdmin_i ();
-  // Destructor
 
+  ///Initialize the Supplier Admin.
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
              PortableServer::POA_ptr my_POA
              ACE_ENV_ARG_DECL);
-  //Initialize the Supplier Admin.
 
   // @@ Pradeep: could this method be const?  Try to use const
   // operations when possible.
+  /// Get our filter admin.
   TAO_Notify_FilterAdmin_i& get_filter_admin (void);
-  // Get our filter admin.
 
+  /// Deactivate servant from <proxy_pushconsumer_POA_>.
   void deactivate_proxy_pushconsumer (PortableServer::Servant servant
                                       ACE_ENV_ARG_DECL);
-  // Deactivate servant from <proxy_pushconsumer_POA_>.
 
+  /// This id is no longer in use.It can be reused by <proxy_pushconsumer_ids_>
   void proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
-  // This id is no longer in use.It can be reused by <proxy_pushconsumer_ids_>
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
@@ -87,11 +85,11 @@ public:
     CORBA::SystemException
   ));
 
+  /// Return the CORBA object for this servant.
   CosNotifyChannelAdmin::SupplierAdmin_ptr get_ref (ACE_ENV_SINGLE_ARG_DECL);
-  // Return the CORBA object for this servant.
 
+  /// Accesor for the event manager.
   TAO_Notify_Event_Manager* get_event_manager (void);
-  // Accesor for the event manager.
 
   // @@ Pradeep: Don't forget to indent this stuff, at the very least
   // it should not start in the first column!
@@ -251,54 +249,54 @@ virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
 
 protected:
   // = Helper methods
+  /// Obtain a proxy pushconsumer object
   CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
-  // Obtain a proxy pushconsumer object
 
+  /// Obtain a structured proxy pushconsumer object.
   CORBA::Object_ptr obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
-  // Obtain a structured proxy pushconsumer object.
 
+  /// Obtain a sequence pushconsumer object
   CORBA::Object_ptr obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
-  // Obtain a sequence pushconsumer object
 
   // = Data members
+  /// The channel to which we belong.
   TAO_Notify_EventChannel_i* event_channel_;
-  // The channel to which we belong.
 
+  /// The factory for channel objects.
   TAO_Notify_CO_Factory* channel_objects_factory_;
-  // The factory for channel objects.
 
+  /// The factory for POA based containers.
   TAO_Notify_POA_Factory* poa_factory_;
-  // The factory for POA based containers.
 
+  /// The locking strategy.
   ACE_Lock* lock_;
-  // The locking strategy.
 
+  /// Flag to tell if the child poa's should be destroyed.
   CORBA::Boolean destory_child_POAs_;
-  // Flag to tell if the child poa's should be destroyed.
 
+  /// The inter filter operator to use.
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
-  // The inter filter operator to use.
 
+  /// My ID.
   CosNotifyChannelAdmin::AdminID my_id_;
-  // My ID.
 
+  /// This is the POA in which we live.
   PortableServer::POA_var my_POA_;
-  // This is the POA in which we live.
 
+  /// The POA in which all our push consumers live.
+  /// We create and own this POA.
   PortableServer::POA_var proxy_pushconsumer_POA_;
-  // The POA in which all our push consumers live.
-  // We create and own this POA.
 
   // @@ Pradeep: you may want to use a typedef for that template.
+  /// Id generator for proxy push consumers.
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
     CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushconsumer_ids_;
-  // Id generator for proxy push consumers.
 
+  /// Handle QoS admin methods.
   TAO_Notify_QoSAdmin_i qos_admin_;
-  // Handle QoS admin methods.
 
+  /// Handles the Filter Admin methods.
   TAO_Notify_FilterAdmin_i filter_admin_;
-  // Handles the Filter Admin methods.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_Filter_i.h
-//
-// = DESCRIPTION
-//
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Filter_i.h
+ *
+ *  $Id$
+ *
+ *
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_FILTER_I_H
 #define TAO_NOTIFY_FILTER_I_H
@@ -36,25 +33,24 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_Filter_i
+ *
+ */
+
 class TAO_Notify_Export TAO_Notify_Filter_i : public POA_CosNotifyFilter::Filter,
   public PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   TAO_Notify_Filter_i
-  // = DESCRIPTION
-  //
-  //
-
 public:
-  //Constructor
+  /// Constructor
   TAO_Notify_Filter_i (const char* constraint_grammar);
 
-  //Destructor
+  /// Destructor
   virtual ~TAO_Notify_Filter_i (void);
 
+  /// Activate with the default POA
   CosNotifyFilter::Filter_ptr
   get_ref (ACE_ENV_SINGLE_ARG_DECL);
-  // Activate with the default POA
 
 virtual char * constraint_grammar (
     ACE_ENV_SINGLE_ARG_DECL
@@ -186,14 +182,14 @@ private:
       // Constraint Interpreter.
     };
 
+  /// Id generator for ConstraintInfo's.
   TAO_Notify_ID_Pool <CosNotifyFilter::ConstraintID> constraint_expr_ids_;
-  // Id generator for ConstraintInfo's.
 
+  /// A list of the constraints stored in this filter.
   ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
                         ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*),
                         TAO_SYNCH_MUTEX>
   constraint_expr_list_;
-  // A list of the constraints stored in this filter.
 
   typedef ACE_Hash_Map_Iterator <CosNotifyFilter::ConstraintID,
                                  ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*),

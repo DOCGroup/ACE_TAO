@@ -1,25 +1,21 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Notification
-//
-// = FILENAME
-//   Notify_Factory.h
-//
-// = DESCRIPTION
-//   A collection of factories -
-//   a) A factory for event channel objects - the EC factory, EC, Admins, Proxys, et al.
-//   b) A factory for collections.
-//   c) A factory for POA's.
-//   d) A factory for manager objects.
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Factory.h
+ *
+ *  $Id$
+ *
+ * A collection of factories -
+ * a) A factory for event channel objects - the EC factory, EC, Admins, Proxys, et al.
+ * b) A factory for collections.
+ * c) A factory for POA's.
+ * d) A factory for manager objects.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_FACTORY_H
 #define NOTIFY_FACTORY_H
@@ -38,35 +34,36 @@ class TAO_Notify_Collection_Factory;
 class TAO_Notify_EMO_Factory;
 class TAO_Notify_EventChannelFactory_i;
 
+ /**
+  * @class TAO_Notify_Factory
+  *
+  * @brief TAO_Notify_Factory
+  *
+  * This classes initializes the static default factories.
+  */
 class TAO_Notify_Export TAO_Notify_Factory
 {
-  // = TITLE
-  //   TAO_Notify_Factory
-  //
-  // = DESCRIPTION
-  //   This classes initializes the static default factories.
-  //
  public:
+  /// The factory for channel objects.
   static TAO_Notify_CO_Factory* get_channel_objects_factory (void);
-  // The factory for channel objects.
 
+  /// The factory for POA's.
   static TAO_Notify_POA_Factory* get_poa_factory (void);
-  // The factory for POA's.
 
+  /// Factory for all collections in the notify service.
   static TAO_Notify_Collection_Factory* get_collection_factory (void);
-  // Factory for all collections in the notify service.
 
+  /// The event manager objects.
   static TAO_Notify_EMO_Factory* create_event_manager_objects_factory (void);
-  // The event manager objects.
 
  protected:
   friend class TAO_Notify_EventChannelFactory_i;
 
+  /// Initalize the services.
   static void init (ACE_ENV_SINGLE_ARG_DECL);
-  // Initalize the services.
 
+  /// shutdown the svcs.
   static void shutdown (void);
-  // shutdown the svcs.
 
   // = Data Members
   static TAO_Notify_CO_Factory* co_factory_;

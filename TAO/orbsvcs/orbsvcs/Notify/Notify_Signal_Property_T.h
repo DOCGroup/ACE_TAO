@@ -1,20 +1,17 @@
-// $Id$
-// =========================================================================
-//
-// = LIBRARY
-//   CosNotification
-//
-// = FILENAME
-//   Notify_Signal_Property_T.h
-//
-// = DESCRIPTION
-//   Template class to allow conditional waits on changes of values.
-//   It implements an extremely small subset of ACE_Atomic_Op<>.
-//
-// = AUTHOR
-//    Chad Elliott <elliott_c@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Signal_Property_T.h
+ *
+ *  $Id$
+ *
+ * Template class to allow conditional waits on changes of values.
+ * It implements an extremely small subset of ACE_Atomic_Op<>.
+ *
+ *
+ *  @author Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 #ifndef TAO_NOTIFY_SIGNAL_PROPERTY_T_H
 #define TAO_NOTIFY_SIGNAL_PROPERTY_T_H
 #include "ace/pre.h"
