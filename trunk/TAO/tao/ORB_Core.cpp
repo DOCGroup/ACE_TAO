@@ -837,6 +837,18 @@ TAO_ORB_Core::root_poa (TAO_POA *np)
   return old_poa;
 }
 
+int
+TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
+{
+  // Inherit properties/objects used in ORB_Core from the
+  // parent thread.  
+
+  this->root_poa (p->root_poa ());
+  // At the moment, only root_poa needs to be inherited.
+
+  return 0;
+}
+
 void
 TAO_ORB_Core::create_and_set_root_poa (void)
 {
