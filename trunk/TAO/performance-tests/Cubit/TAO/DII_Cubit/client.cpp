@@ -216,7 +216,8 @@ DII_Cubit_Client::init (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Get a Cubit object with a DII request on the Cubit factory.
-      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", ACE_TRY_ENV));
+      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", 
+                                                               ACE_TRY_ENV));
 
       ACE_TRY_CHECK;
 
@@ -311,7 +312,9 @@ DII_Cubit_Client::read_ior (char *filename)
                        "Unable to open %s for writing: %p\n",
                        filename),
                       -1);
+
   ACE_Read_Buffer ior_buffer (this->f_handle_);
+
   this->factory_IOR_ = ior_buffer.read ();
 
   if (this->factory_IOR_ == 0)
@@ -787,15 +790,20 @@ DII_Cubit_Client::run (void)
   for (int j = 0; j < NUMBER_OF_TESTS; j++)
     {
       this->call_count_ = 0;
+
       this->error_count_ = 0;
+
       dii_timer.start ();
 
       for (i = 0; i < this->loop_count_; i++)
         (this->*op_array_[j])();
 
       dii_timer.stop ();
+
       dii_timer.elapsed_time (dii_elapsed_time);
-      this->print_stats (this->stats_messages_[j], dii_elapsed_time);
+
+      this->print_stats (this->stats_messages_[j], 
+                         dii_elapsed_time);
     }
 
   ACE_TRY_NEW_ENV
@@ -810,6 +818,7 @@ DII_Cubit_Client::run (void)
 
           // Cubit::shutdown () is a oneway operation.
           req->send_oneway (ACE_TRY_ENV);
+
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
