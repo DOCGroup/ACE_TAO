@@ -8,6 +8,9 @@
 # ftp://service.boulder.ibm.com/aix/fixes/v4/os/bos.rte.bind_cmds.4.2.0.4.bff
 
 debug = 1
+# xlC builds the shared lib from the static lib, so need to build both.
+shared_libs_only = 0
+static_libs = 1
 
 CC	    = xlC
 CXX	    = xlC_r
