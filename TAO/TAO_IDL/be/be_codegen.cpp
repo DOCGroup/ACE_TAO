@@ -117,7 +117,7 @@ TAO_CodeGen::upcase (const char *str)
     {
       if (isalpha (str [i]))
         {
-          upcase_str[i] = ::toupper (str [i]);
+          upcase_str[i] = toupper (str [i]);
         }
       else
         {
@@ -162,7 +162,7 @@ TAO_CodeGen::client_header (const char *fname)
             {
               if (isalpha (fname [i]))
                 {
-                  macro_name[i+9] = ::toupper (fname [i]);
+                  macro_name[i+9] = toupper (fname [i]);
                 }
             }
           ACE_OS::strcat (macro_name, "_H_");
@@ -278,7 +278,7 @@ TAO_CodeGen::server_header (const char *fname)
             {
               if (isalpha (fname [i]))
                 {
-                  macro_name[i+9] = ::toupper (fname [i]);
+                  macro_name[i+9] = toupper (fname [i]);
                 }
             }
           ACE_OS::strcat (macro_name, "_H_");
