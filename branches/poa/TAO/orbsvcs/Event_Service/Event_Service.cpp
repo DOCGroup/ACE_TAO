@@ -45,23 +45,31 @@ int main (int argc, char *argv[])
       // Register Event_Service with Naming Service.
       ACE_EventChannel* ec;
       ACE_NEW_RETURN (ec, ACE_EventChannel, -1);
-      CORBA::Object::_duplicate(ec);
+      TAO_CHECK_ENV;
+
+      RtecEventChannelAdmin::EventChannel_ptr impl = 
+	ec->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::String str =
-	orb->object_to_string (ec, TAO_TRY_ENV);
+	orb->object_to_string (impl, TAO_TRY_ENV);
       ACE_OS::puts ((char *) str);
 
       CosNaming::Name channel_name (1);
       channel_name[0].id = CORBA::string_dup ("EventService");
       channel_name.length (1);
-      naming_context->bind (channel_name, ec, TAO_TRY_ENV);
+      naming_context->bind (channel_name, impl, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       orb->run ();
 
-      CORBA::release (ec);
+      naming_context->unbind (channel_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      CORBA::release (impl);
+      TAO_CHECK_ENV;
+
+      delete ec;
     }
   TAO_CATCHANY
     {
