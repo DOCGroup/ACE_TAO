@@ -17,7 +17,7 @@ Fri Jun  1 12:37:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
           The previous band used for an invalid band falls into valid
 	  priority band under Tru64. 
 
-	Thanks to Irfan for pointing these.
+	  Thanks to Irfan for pointing these.
 
 Fri Jun  1 11:28:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
