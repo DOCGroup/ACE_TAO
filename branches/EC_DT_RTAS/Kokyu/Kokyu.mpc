@@ -7,6 +7,7 @@ project(Kokyu) : acelib {
   includes += $(ACE_ROOT)/Kokyu
 
   specific(gnuace) {  
+    libs += dsui
     libpaths += $(DATASTREAM_ROOT)/lib
     includes += $(DATASTREAM_ROOT)/include
   }
