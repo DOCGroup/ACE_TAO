@@ -63,7 +63,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("there are %d interfaces\n"), how_many));
 
       for (size_t i = 0; i < how_many; i++)
-	ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"), the_addr_array[i].get_host_addr ()));
+	ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
+                    ACE_TEXT_CHAR_TO_TCHAR (the_addr_array[i].get_host_addr ())));
 
       delete [] the_addr_array;
     }
