@@ -1,3 +1,12 @@
+Sun May 30 21:23:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/sfp.idl : 
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	
+	  Fixed the case-only difference in IDL by suffixing a _Msg to all
+	  enumerators as a temporary fix until the OMG AVStreams RTF fixes
+	  the SFP idl.
+
 Sun May 30 16:23:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
