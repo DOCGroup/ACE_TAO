@@ -643,13 +643,14 @@ Receiver::open (ACE_HANDLE handle, ACE_Message_Block &)
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
 
+    // Don't buffer serial sends.
     this->handle_ = handle;
     int nodelay = 1;
     ACE_SOCK_Stream option_setter (handle);
-    if (-1 == option_setter.set_option (SOL_SOCKET,
-                              TCP_NODELAY,
-                              &nodelay,
-                              sizeof (nodelay)))  // Don't buffer serial sends.
+    if (-1 == option_setter.set_option (IPPROTO_TCP,
+                                        TCP_NODELAY,
+                                        &nodelay,
+                                        sizeof (nodelay)))
       ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
 
     if (this->ws_.open (*this, this->handle_) == -1)
@@ -1225,13 +1226,15 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
+
+    // Don't buffer serial sends.
     this->handle_ = handle;
     int nodelay = 1;
     ACE_SOCK_Stream option_setter (handle);
-    if (option_setter.set_option (SOL_SOCKET,
-                              TCP_NODELAY,
-                              &nodelay,
-                              sizeof (nodelay)))  // Don't buffer serial sends.
+    if (option_setter.set_option (IPPROTO_TCP,
+                                  TCP_NODELAY,
+                                  &nodelay,
+                                  sizeof (nodelay)))
       ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
 
     // Open ACE_Asynch_Write_Stream
