@@ -8,10 +8,11 @@ Wed Oct 29 00:29:52 1997    <irfan@TWOSTEP>
 	* ace/LOCK_SOCK_Acceptor: New class added to ACE (it was
  	  originally a class in JAWS).  It specialize ACE_SOCK_Acceptor to
  	  lock around <accept>.  This class is particular useful if you
- 	  want to have multiple threads accepting on the same endpoint.
-  	  Thanks to James Hu who initially wrote this class for JAWS.
-  	  Thanks also to Johannes Gutleber <Johannes.Gutleber@cern.ch> who
- 	  decided to use this in the Conn_Test.
+ 	  want to have multiple threads accepting on the same endpoint and
+ 	  the system does not support have thread safe accept.  Thanks to
+ 	  James Hu who initially wrote this class for JAWS.  Thanks also
+ 	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> who decided to
+ 	  use this in the Conn_Test.
 
 	* tests/Conn_Test.cpp: Updated to use the new LOCK_SOCK_Acceptor.
 
