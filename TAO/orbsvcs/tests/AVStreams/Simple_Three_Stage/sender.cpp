@@ -20,7 +20,8 @@ Sender_StreamEndPoint::get_callback (const char *,
   ACE_TRY_NEW_ENV
     {
       CORBA::Any_ptr streamctrl_any =
-        this->get_property_value ("Related_StreamCtrl"
+        this->get_property_value (ACE_const_cast (CosPropertyService::PropertyName,
+                                                  "Related_StreamCtrl"
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

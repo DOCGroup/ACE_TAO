@@ -154,10 +154,12 @@ LB_server::create_object_group (void)
         PortableGroup::MEMB_APP_CTRL;
       property.val <<= msv;
 
-      this->object_group_ = this->lm_->create_object (repository_id,
-                                                      criteria,
-                                                      this->fcid_.out ()
-                                                      ACE_ENV_ARG_PARAMETER);
+      this->object_group_ = 
+        this->lm_->create_object (ACE_const_cast (PortableGroup::TypeId,
+                                                  repository_id),
+                                  criteria,
+                                  this->fcid_.out ()
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

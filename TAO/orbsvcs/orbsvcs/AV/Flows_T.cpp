@@ -26,7 +26,8 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (const char *flowname)
     {
       CORBA::Any flowname_any;
       flowname_any <<= flowname;
-      this->define_property ("Flow",
+      this->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                             "Flow"),
                              flowname_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -61,7 +62,8 @@ TAO_FDev<T_Producer, T_Consumer>::flowname (const char *flow_name)
     {
       CORBA::Any flowname_any;
       flowname_any <<= flow_name;
-      this->define_property ("Flow",
+      this->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                             "Flow"),
                              flowname_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
