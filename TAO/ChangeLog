@@ -1,7 +1,21 @@
+Fri Feb 14 09:12:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: New file
+	  with the scheduling policy information for the client. 
+	
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf: Added the
+	  scheduling policy information for the server.
+	
+	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: Sript now
+	  use the above configuration files when running the test. 
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf: Removed from
+	  the repository. 
+
 Fri Feb 14 08:35:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/RTCORBA/Activity/Activity.cpp: Fixed compile errors in
-	  builds where exceptions have turned off.
+	  builds where exceptions have turned off. 
 
 Fri Feb 14 12:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -43,13 +43,14 @@ unlink $iorfile;
 unlink $data_file;
 
 $server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
+$client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
 
 $server_args =
     "-o $iorfile -ORBdebuglevel $debug_level -ORBsvcconf $server_conf "
     ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
 
 $client_args =
-    "-o file://$iorfile  "
+    "-ORBSvcConf $client_conf -o file://$iorfile  "
     ."-a $priority1 -b $priority2 -e 1413566210 -f 0 -n $iterations";
 
 $SV = new PerlACE::Process ("server", $server_args);
