@@ -73,7 +73,9 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
             }
         }
       else
-        ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
+        {
+          ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
+        }
     }
   ACE_CATCHANY
     {
@@ -191,7 +193,6 @@ TAO_DynStruct_i::set_members (const CORBA::NameValuePairSeq& value,
           else
             {
               ACE_THROW (CORBA_DynAny::InvalidSeq ());
-              break;
             }
         }
     }
