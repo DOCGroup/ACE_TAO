@@ -222,6 +222,13 @@ ACE_Semaphore::acquire (void)
 }
 
 ACE_INLINE int
+ACE_Semaphore::acquire (ACE_Time_Value &tv)
+{
+// ACE_TRACE ("ACE_Semaphore::acquire");
+  return ACE_OS::sema_wait (&this->semaphore_, tv);
+}
+
+ACE_INLINE int
 ACE_Semaphore::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Semaphore::tryacquire");
