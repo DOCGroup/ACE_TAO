@@ -53,6 +53,14 @@ namespace TAO
       return strategy;
     }
 
+    void
+    ImplicitActivationStrategyFactoryImpl::destroy (
+      ImplicitActivationStrategy * /*strategy*/
+      ACE_ENV_ARG_DECL_NOT_USED)
+    {
+      // Noop because both types are singletons
+    }
+
     ACE_STATIC_SVC_DEFINE (
         ImplicitActivationStrategyFactoryImpl,
         ACE_TEXT ("ImplicitActivationStrategyFactory"),

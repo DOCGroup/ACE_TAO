@@ -36,6 +36,11 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual LifespanStrategy* create (
         ::PortableServer::LifespanPolicyValue value) = 0;
+
+      /// Cleanup the given strategy instance
+      virtual void destroy (
+        LifespanStrategy *strategy
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }

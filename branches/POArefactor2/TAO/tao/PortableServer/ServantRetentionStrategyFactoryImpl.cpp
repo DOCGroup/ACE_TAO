@@ -15,6 +15,7 @@ namespace TAO
     ServantRetentionStrategyFactoryImpl::~ServantRetentionStrategyFactoryImpl (void)
     {
     }
+
     ServantRetentionStrategy*
     ServantRetentionStrategyFactoryImpl::create (
       ::PortableServer::ServantRetentionPolicyValue value)

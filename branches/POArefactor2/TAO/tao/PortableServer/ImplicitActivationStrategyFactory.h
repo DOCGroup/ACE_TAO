@@ -36,6 +36,10 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual ImplicitActivationStrategy* create (
         ::PortableServer::ImplicitActivationPolicyValue value) = 0;
+
+      virtual void destroy (
+        ImplicitActivationStrategy *strategy
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }

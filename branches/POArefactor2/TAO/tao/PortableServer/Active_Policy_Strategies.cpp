@@ -50,7 +50,11 @@ namespace TAO
       servant_retention_strategy_ (0),
       thread_strategy_factory_ (0),
       servant_retention_strategy_factory_ (0),
-      request_processing_strategy_factory_ (0)
+      request_processing_strategy_factory_ (0),
+      lifespan_strategy_factory_ (0),
+      implicit_activation_strategy_factory_ (0),
+      id_uniqueness_strategy_factory_ (0),
+      id_assignment_strategy_factory_ (0)
     {
     }
 
@@ -67,19 +71,19 @@ namespace TAO
 
       /**/
 
-      IdAssignmentStrategyFactory *id_assignment_strategy_factory =
+      id_assignment_strategy_factory_ =
         ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
 
-      if (id_assignment_strategy_factory != 0)
-        id_assignment_strategy_ = id_assignment_strategy_factory->create (policies.id_assignment());
+      if (id_assignment_strategy_factory_ != 0)
+        id_assignment_strategy_ = id_assignment_strategy_factory_->create (policies.id_assignment());
 
       /**/
 
-      IdUniquenessStrategyFactory *id_uniqueness_strategy_factory =
+      id_uniqueness_strategy_factory_ =
         ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
 
-      if (id_uniqueness_strategy_factory != 0)
-        id_uniqueness_strategy_ = id_uniqueness_strategy_factory->create (policies.id_uniqueness());
+      if (id_uniqueness_strategy_factory_ != 0)
+        id_uniqueness_strategy_ = id_uniqueness_strategy_factory_->create (policies.id_uniqueness());
 
       /**/
 
@@ -100,26 +104,24 @@ namespace TAO
 
       /**/
 
-      LifespanStrategyFactory *lifespan_strategy_factory =
+      lifespan_strategy_factory_ =
         ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyFactory");
 
-      if (lifespan_strategy_factory != 0)
-        lifespan_strategy_ = lifespan_strategy_factory->create (policies.lifespan());
+      if (lifespan_strategy_factory_ != 0)
+        lifespan_strategy_ = lifespan_strategy_factory_->create (policies.lifespan());
 
       /**/
 
-      ImplicitActivationStrategyFactory *implicit_activation_strategy_factory =
+      implicit_activation_strategy_factory_ =
         ACE_Dynamic_Service<ImplicitActivationStrategyFactory>::instance ("ImplicitActivationStrategyFactory");
 
-      if (implicit_activation_strategy_factory != 0)
-        implicit_activation_strategy_ = implicit_activation_strategy_factory->create (policies.implicit_activation());
+      if (implicit_activation_strategy_factory_ != 0)
+        implicit_activation_strategy_ = implicit_activation_strategy_factory_->create (policies.implicit_activation());
 
       /**/
 
 // @todo, check if all pointers are != 0
 
-      // @@Johnny Race here too. Please see below for why there is a
-      // race.
       if (lifespan_strategy_ != 0)
         {
           lifespan_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
@@ -169,7 +171,7 @@ namespace TAO
 
       if (lifespan_strategy_ != 0)
         {
-          lifespan_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          lifespan_strategy_factory_->destroy (lifespan_strategy_ ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           lifespan_strategy_ = 0;
@@ -178,19 +180,25 @@ namespace TAO
       if (request_processing_strategy_ != 0)
         {
           request_processing_strategy_factory_->destroy (request_processing_strategy_ ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
           request_processing_strategy_ = 0;
         }
 
       if (id_uniqueness_strategy_ != 0)
         {
-          id_uniqueness_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          id_uniqueness_strategy_factory_->destroy (id_uniqueness_strategy_ ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          id_uniqueness_strategy_ = 0;
         }
 
       if (implicit_activation_strategy_ != 0)
         {
-          implicit_activation_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          implicit_activation_strategy_factory_->destroy (implicit_activation_strategy_ ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          implicit_activation_strategy_ = 0;
         }
 
       if (thread_strategy_ != 0)
@@ -211,8 +219,10 @@ namespace TAO
 
       if (id_assignment_strategy_ != 0)
         {
-          id_assignment_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          id_assignment_strategy_factory_->destroy (id_assignment_strategy_ ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          id_assignment_strategy_ = 0;
         }
     }
   }

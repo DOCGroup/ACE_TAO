@@ -36,6 +36,11 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual IdUniquenessStrategy* create (
         ::PortableServer::IdUniquenessPolicyValue value) = 0;
+
+      /// Cleanup the given strategy instance
+      virtual void destroy (
+        IdUniquenessStrategy *strategy
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }

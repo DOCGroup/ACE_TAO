@@ -63,6 +63,14 @@ namespace TAO
       return strategy;
     }
 
+    void
+    IdUniquenessStrategyFactoryImpl::destroy (
+      IdUniquenessStrategy *strategy
+      ACE_ENV_ARG_DECL)
+    {
+      // todo
+    }
+
     ACE_STATIC_SVC_DEFINE (
         IdUniquenessStrategyFactoryImpl,
         ACE_TEXT ("IdUniquenessStrategyFactory"),

@@ -36,6 +36,10 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual IdAssignmentStrategy* create (
         ::PortableServer::IdAssignmentPolicyValue value) = 0;
+
+      virtual void destroy (
+        IdAssignmentStrategy *strategy
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }

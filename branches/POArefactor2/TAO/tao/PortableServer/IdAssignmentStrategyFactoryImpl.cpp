@@ -52,6 +52,14 @@ namespace TAO
       return strategy;
     }
 
+    void
+    IdAssignmentStrategyFactoryImpl::destroy (
+      IdAssignmentStrategy */*strategy*/
+      ACE_ENV_ARG_DECL_NOT_USED)
+    {
+      // Noop because both types are singletons
+    }
+
     ACE_STATIC_SVC_DEFINE (
         IdAssignmentStrategyFactoryImpl,
         ACE_TEXT ("IdAssignmentStrategyFactory"),

@@ -21,7 +21,7 @@ namespace TAO
       ::PortableServer::LifespanPolicyValue value)
     {
       LifespanStrategy* strategy = 0;
-
+// @todo make these loadable
       switch (value)
       {
         case ::PortableServer::PERSISTENT :
@@ -37,6 +37,14 @@ namespace TAO
       }
 
       return strategy;
+    }
+
+    void
+    LifespanStrategyFactoryImpl::destroy (
+      LifespanStrategy *strategy
+      ACE_ENV_ARG_DECL)
+    {
+      delete strategy;
     }
 
     ACE_STATIC_SVC_DEFINE (

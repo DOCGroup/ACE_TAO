@@ -36,6 +36,10 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual ImplicitActivationStrategy* create (
         ::PortableServer::ImplicitActivationPolicyValue value);
+
+      virtual void destroy (
+        ImplicitActivationStrategy *strategy
+        ACE_ENV_ARG_DECL);
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ImplicitActivationStrategyFactoryImpl)
