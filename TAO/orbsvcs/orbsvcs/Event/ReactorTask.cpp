@@ -110,7 +110,7 @@ int ACE_ES_Reactor_Task::svc_one()
   ACE_TIMEPROBE (" Reactor_Task - events handled");
 
   if (done_)
-    ACE_DEBUG ((LM_DEBUG, "(%t) Timer Task is done.\n"));
+    ACE_DEBUG ((LM_DEBUG, "EC (%t) Timer Task is done.\n"));
 
   return done_;
 }
