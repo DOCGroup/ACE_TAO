@@ -1,3 +1,11 @@
+Fri Mar 15 07:15:28 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+
+          Forgot about Windows.  I added the new Naming files from
+          Thu Mar 14 09:26:54 2002 to the CosNaming project files.
+
 Fri Mar 15 00:46:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * TAO/tao/ORB_Core.cpp:
