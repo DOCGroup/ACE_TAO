@@ -170,7 +170,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       if (new_stream.get_rwflag ())
 	result = ACE_OS::ioctl (new_stream.get_handle (),
                                 I_PUSH,
-                                "tirdwr");
+                                ACE_const_cast (char *, "tirdwr"));
 #endif /* I_PUSH */
     }
   else if (!(errno == EWOULDBLOCK || errno == ETIME))
