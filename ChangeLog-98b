@@ -3,6 +3,10 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/MT_Reactor_Timer_Test.cpp (handle_exception,
           handle_timeout): added ACE_UNUSED_ARG's.
 
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+          added #include of ace/streams.h, because the dump ()
+          method uses ofstream.
+
 Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
