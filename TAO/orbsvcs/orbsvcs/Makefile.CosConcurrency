@@ -37,7 +37,8 @@ CPP_SRCS += \
         Concurrency/CC_Lock \
         Concurrency/CC_LockSet \
         Concurrency/CC_LockSetFactory \
-        Concurrency/Concurrency_Utils
+        Concurrency/Concurrency_Utils \
+        Concurrency/Concurrency_Loader
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
