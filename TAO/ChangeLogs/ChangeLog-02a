@@ -1,4 +1,11 @@
-Wed May 29 13:28:12 2002 Johnny Willemsen  <jwillemsen@remedy.nl?
+Wed May 29 09:15:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+
+          Fixed repeat definitions of loop counters.
+
+Wed May 29 13:28:12 2002 Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Strategies/DIOP_Acceptor.h:
 	* tao/Strategies/DIOP_Connector.h:
