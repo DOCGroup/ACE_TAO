@@ -261,6 +261,10 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
         }
       else
         {
+          // Release the <Message_Block> since we're shutting down and
+          // don't need it anymore.
+
+          mb->release ();
           // Deactivate the message queue and return.
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("\n(%t) deactivating queue for %d threads, ")
