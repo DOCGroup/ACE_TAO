@@ -109,6 +109,8 @@ private:
   // Disallow copying by not implementing the following . . .
   ACE_Object_Manager (const ACE_Object_Manager &);
   ACE_Object_Manager &operator= (const ACE_Object_Manager &);
+
+  int  shutting_down_;		// Non-zero if this being destroyed
 };
 
 #if defined (__ACE_INLINE__)
