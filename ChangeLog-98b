@@ -1,3 +1,25 @@
+Fri Aug  7 13:58:58 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* bin/envinfo.cpp: 
+	Added this program, which will print the version information for
+	ACE, the OS and C++ compiler. The idea is to use this when posting
+	to the ACE mailing list.
+
+	* ace/ACE.h: 
+	* ace/ACE.cpp: 
+	Added static methods to retrieve compiler information (name, major
+	version, minro version, beta version).
+	
+	* ace/config-sunos5.5.h: 
+	Defined the compiler information macros for this platform.
+
+	* bin/Makefile: 
+	Modified the Makefile to support multiple binaries in the
+	directory (according to tests/Makefile).
+
+	* bin/clone.cpp: 
+	Added RCS Id.
+
 Fri Aug  7 12:46:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Activation_Queue.h: Updated the documentation to indicate

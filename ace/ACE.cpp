@@ -40,6 +40,46 @@ ACE::beta_version (void)
   return ACE_BETA_VERSION;
 }
 
+const char* const
+ACE::compiler_name (void)
+{
+#ifdef ACE_CC_NAME
+  return ACE_CC_NAME;
+#else
+  return "";
+#endif
+}
+
+u_int
+ACE::compiler_major_version (void)
+{
+#ifdef ACE_CC_MAJOR_VERSION
+  return ACE_CC_MAJOR_VERSION;
+#else
+  return 0;
+#endif
+}
+
+u_int
+ACE::compiler_minor_version (void)
+{
+#ifdef ACE_CC_MINOR_VERSION
+  return ACE_CC_MINOR_VERSION;
+#else
+  return 0;
+#endif
+}
+
+u_int
+ACE::compiler_beta_version (void)
+{
+#ifdef ACE_CC_BETA_VERSION
+  return ACE_CC_BETA_VERSION;
+#else
+  return 0;
+#endif
+}
+
 void
 ACE::unique_name (const void *object,
                   LPTSTR name,
