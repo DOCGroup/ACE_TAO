@@ -564,8 +564,14 @@ namespace ACE
 
   /// Returns a string containing the error message corresponding to a
   /// WinSock error.  This works around an omission in the Win32 API.
+  /// @internal
   extern ACE_Export const ACE_TCHAR * sock_error (int error);
 
+  /// Determins whether the given error code corresponds to to a
+  /// WinSock error. If so returns true, false otherwise.
+  /// @internal
+  extern ACE_Export bool is_sock_error (int error);
+  
   /**
    * Checks if process with <pid> is still alive.  Returns 1 if it is
    * still alive, 0 if it isn't alive, and -1 if something weird
