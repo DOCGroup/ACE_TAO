@@ -14,6 +14,8 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
+#include "tao/PortableServer/Loadable_Thread_Policy.h"
+
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
@@ -62,13 +64,18 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Thread_Policy *thread_policy = 0;
+  TAO::Loadable_Thread_Policy *policy =
+    ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+           "Loadable_Thread_Policy");
+
+  return policy->create(value);
+/*  TAO_Thread_Policy *thread_policy = 0;
   ACE_NEW_THROW_EX (thread_policy,
                     TAO_Thread_Policy (value),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
 
-  return thread_policy;
+  return thread_policy;*/
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

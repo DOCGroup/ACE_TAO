@@ -41,7 +41,7 @@
 #endif /* _MSC_VER */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
+/*
 class TAO_PortableServer_Export TAO_Thread_Policy :
   public PortableServer::ThreadPolicy,
   public TAO_Local_RefCounted_Object
@@ -74,7 +74,7 @@ public:
 
 protected:
   PortableServer::ThreadPolicyValue value_;
-};
+};*/
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

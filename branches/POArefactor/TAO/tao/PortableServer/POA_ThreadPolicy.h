@@ -17,8 +17,6 @@
 #include "portableserver_export.h"
 #include "ThreadPolicyC.h"
 #include "tao/LocalObject.h"
-#include "ace/Service_Object.h"
-#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,31 +33,11 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export Thread_Policy_Value : public virtual ACE_Service_Object
-  {
-    public:
-      virtual PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  };
-
-
-  class TAO_PortableServer_Export ORB_CTRL_Thread_Policy : public Thread_Policy_Value
-  {
-    public:
-      virtual PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
-
-  class TAO_PortableServer_Export SINGLE_THREAD_Thread_Policy : public Thread_Policy_Value
-  {
-    public:
-      virtual PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+  class Thread_Policy_Value;
 
   class TAO_PortableServer_Export POA_ThreadPolicy :
     public virtual PortableServer::ThreadPolicy,
-    public virtual CORBA::LocalObject
+    public virtual TAO_Local_RefCounted_Object
   {
     public:
       POA_ThreadPolicy (PortableServer::ThreadPolicyValue value);
@@ -73,12 +51,12 @@ namespace TAO
       PortableServer::ThreadPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
+      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
      private:
        Thread_Policy_Value *value_;
   };
-
-  ACE_STATIC_SVC_DECLARE (ORB_CTRL_Thread_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, ORB_CTRL_Thread_Policy)
 }
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

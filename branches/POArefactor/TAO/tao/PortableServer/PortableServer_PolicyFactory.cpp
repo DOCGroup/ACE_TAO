@@ -1,5 +1,7 @@
 #include "PortableServer_PolicyFactory.h"
 #include "POA_Policies.h"
+#include "Loadable_Thread_Policy.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
            PortableServer_PolicyFactory,
@@ -16,8 +18,21 @@ TAO_PortableServer_PolicyFactory::create_policy (
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   if (type == PortableServer::THREAD_POLICY_ID)
-    return TAO_Thread_Policy::create (value
-                                      ACE_ENV_ARG_PARAMETER);
+  {
+  PortableServer::ThreadPolicyValue thrvalue;
+  if ((value >>= thrvalue) == 0)
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                      CORBA::Policy::_nil ());
+
+  TAO::Loadable_Thread_Policy *policy =
+    ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+           "Loadable_Thread_Policy");
+
+  return policy->create(thrvalue);
+
+//    return TAO_Thread_Policy::create (value
+//                                      ACE_ENV_ARG_PARAMETER);
+  }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -19,6 +19,7 @@
 
 #include "portableserver_export.h"
 #include "POA_Policy.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,21 +34,34 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+namespace PortableServer
+{
+  enum ThreadPolicyValue;
+  class ThreadPolicy;
+  typedef ThreadPolicy* ThreadPolicy_ptr;
+}
+
 namespace TAO
 {
+  class POA_ThreadPolicy;
 
   class TAO_PortableServer_Export Loadable_Thread_Policy :
      public virtual POA_Policy
   {
     public:
-      virtual ~POA_Policy (void);
+      virtual ~Loadable_Thread_Policy (void);
 
       /// Return the cached policy type for this policy.
       TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
       TAO_Policy_Scope _tao_scope (void) const;
+
+      PortableServer::ThreadPolicy_ptr create (PortableServer::ThreadPolicyValue value);
   };
+
+  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Loadable_Thread_Policy)
+  ACE_FACTORY_DECLARE (TAO_PortableServer, Loadable_Thread_Policy)
 }
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

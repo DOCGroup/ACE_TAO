@@ -12,7 +12,7 @@ ACE_RCSID(PortableServer, POA_Policies, "$Id$")
 
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
+/*
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value)
   : value_ (value)
 {
@@ -80,7 +80,7 @@ TAO_Thread_Policy::create (const CORBA::Any &val
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
-}
+} */
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

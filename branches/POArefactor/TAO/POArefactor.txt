@@ -1,3 +1,26 @@
+Wed Sep 15 12:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Thread_Policy_Value.{h,cpp}:
+          New file with the thread policy value base and derived classes,
+          moved out of Loadable_Thread_Policy
+
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Changed the way we retrieve the thread policy
+
+        * tao/PortableServer.h:
+          Added new *C.h files, without this existing apps don't build
+
+        * tao/PortableServer.cpp:
+          Added svc conf directives to process the new classes
+
+        * tao/POA_Thread_Policy.{h,cpp}:
+          Added missing policy_type method
+
+        * tao/POA_Policies.{h,cpp}:
+          Commented out the TAO_Thread_Policy, we have a new implementation
+
 Wed Sep 15 09:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/orbsvcs/PortableGroup/GOA.{h,cpp}:

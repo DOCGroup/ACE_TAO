@@ -216,6 +216,9 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     new_transient_poa_map.release ();
 }
 
+#include "Loadable_Thread_Policy.h"
+#include "ace/Dynamic_Service.h"
+
 void
 TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
                                            ACE_ENV_ARG_DECL)
@@ -225,8 +228,14 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   // Thread policy.
-  TAO_Thread_Policy thread_policy (PortableServer::ORB_CTRL_MODEL);
-  policies.merge_policy (&thread_policy ACE_ENV_ARG_PARAMETER);
+  TAO::Loadable_Thread_Policy *policy =
+    ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+           "Loadable_Thread_Policy");
+
+  CORBA::Policy_ptr thread_policy = policy->create(PortableServer::ORB_CTRL_MODEL);
+
+//  TAO_Thread_Policy thread_policy (PortableServer::ORB_CTRL_MODEL);
+  policies.merge_policy (thread_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -1,5 +1,6 @@
 #include "POA_ThreadPolicy.h"
 #include "PortableServerC.h"
+#include "Thread_Policy_Value.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -8,20 +9,6 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  PortableServer::ThreadPolicyValue
-  ORB_CTRL_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    return PortableServer::ORB_CTRL_MODEL;
-  }
-
-  PortableServer::ThreadPolicyValue
-  SINGLE_THREAD_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    return PortableServer::SINGLE_THREAD_MODEL;
-  }
-
   POA_ThreadPolicy::POA_ThreadPolicy (PortableServer::ThreadPolicyValue value) :
     value_ (0)
   {
@@ -31,11 +18,13 @@ namespace TAO
         {
           this->value_ =
             ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
+          break;
         }
         case PortableServer::SINGLE_THREAD_MODEL :
         {
           this->value_ =
             ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");
+          break;
         }
       }
   }
@@ -66,15 +55,10 @@ namespace TAO
     return value_->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
-  ACE_STATIC_SVC_DEFINE (
-      ORB_CTRL_Thread_Policy,
-      ACE_TEXT ("ORB_CTRL_Thread_Policy"),
-      ACE_SVC_OBJ_T,
-      &ACE_SVC_NAME (ORB_CTRL_Thread_Policy),
-      ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-      0
-    )
-
-  ACE_FACTORY_DEFINE (TAO_PortableServer, ORB_CTRL_Thread_Policy)
+  CORBA::PolicyType
+  POA_ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return PortableServer::THREAD_POLICY_ID;
+  }
 }
-
