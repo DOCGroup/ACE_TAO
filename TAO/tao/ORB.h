@@ -777,6 +777,7 @@ public:
   static CORBA::TypeCode_ptr _tc_PolicyType;
 
 private:
+  friend class CORBA_ORB;
   static ORB_ptr instance_;
   // Points to the "default ORB."
 };  // end of class (namespace) CORBA
