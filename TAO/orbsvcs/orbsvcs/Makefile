@@ -17,39 +17,30 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 # the export_include IDL flag.
 TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h 
 
-IDL_FILES = \
-	CosConcurrencyControlC \
-	CosConcurrencyControlS \
-	CosNamingC \
-	CosNamingS \
-	CosLifeCycleC \
-	CosLifeCycleS \
-	CosPropertyServiceS \
-	CosPropertyServiceC \
-	CosTimeBaseC \
-	CosTimeBaseS \
-	LoggerC \
-	LoggerS \
-	RtecEventCommC \
-	RtecEventCommS \
-	RtecSchedulerC \
-	RtecSchedulerS \
-	RtecEventChannelAdminC \
-	RtecEventChannelAdminS \
-	LifeCycleServiceC \
-	LifeCycleServiceS \
-	CosTradingC \
-	CosTradingS
+IDL_SRCS= \
+	CosConcurrencyControl \
+	CosNaming \
+	CosLifeCycle \
+	CosPropertyService \
+	CosTimeBase \
+	Logger \
+	RtecEventComm \
+	RtecScheduler \
+	RtecEventChannelAdmin \
+	LifeCycleService \
+	CosTrading
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
 ## Add the IDL-compiler generated files
-IDL_FILES += \
-	AVStreamsS \
-	AVStreamsC \
-	Null_MediaCtrlS \
-	Null_MediaCtrlC
+IDL_SRCS += \
+	AVStreams \
+	Null_MediaCtrl
 endif
+
+IDL_FILES = \
+	$(addsuffix S, $(IDL_SRCS)) \
+	$(addsuffix C, $(IDL_SRCS))
 
 FILES= $(IDL_FILES) \
 	Event_Utilities \
@@ -144,20 +135,22 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
 
-.PRECIOUS: CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h
-.PRECIOUS: CosTimeBaseC.cpp CosTimeBaseS.cpp CosTimeBaseC.h CosTimeBaseS.h
-.PRECIOUS: CosTradingC.cpp CosTradingS.cpp CosTradingC.h CosTradingS.h
-.PRECIOUS: CosLifeCycleC.cpp CosLifeCycleS.cpp CosLifeCycleC.h CosLifeCycleS.h
-.PRECIOUS: LifeCycleServiceC.cpp LifeCycleServiceS.cpp LifeCycleServiceC.h LifeCycleServiceS.h
-.PRECIOUS: RtecSchedulerC.cpp RtecSchedulerS.cpp RtecSchedulerC.h RtecSchedulerS.h
-.PRECIOUS: RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h
-.PRECIOUS: RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h
-.PRECIOUS: LoggerC.cpp LoggerS.cpp LoggerC.h LoggerS.h
+IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
 
-.PRECIOUS: CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h
-.PRECIOUS: AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h
-.PRECIOUS: CosConcurrencyControlC.cpp CosConcurrencyControlS.cpp CosConcurrencyControlC.h CosConcurrencyControlS.h
-.PRECIOUS: Null_MediaCtrlC.cpp Null_MediaCtrlS.cpp Null_MediaCtrlC.h Null_MediaCtrlS.h
+#
+# Extra dependencies not catched by make depend.
+#
+$(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): CosTimeBase.idl
+$(foreach ext, $(IDL_EXT), RtecEventComm$(ext)): CosTimeBase.idl
+$(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): CosTimeBase.idl
+$(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
+$(foreach ext, $(IDL_EXT), LifeCycleService$(ext)): CosLifeCycle.idl
+$(foreach ext, $(IDL_EXT), CosLifeCycle$(ext)): CosNaming.idl
+$(foreach ext, $(IDL_EXT), AVStreams_Full$(ext)): AVStream.idl
+$(foreach ext, $(IDL_EXT), AVStreams$(ext)): CosPropertyService.idl
+#$(foreach ext, $(IDL_EXT), CosConcurrencyControl$(ext)): CosTransactions.idl
+
+.PRECIOUS: $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 idl_stubs: $(addsuffix .h, $(IDL_FILES))
 
@@ -165,8 +158,7 @@ clean:
 	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
-	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
+	-/bin/rm -rf $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

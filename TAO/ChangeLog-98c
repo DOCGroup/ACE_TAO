@@ -39,6 +39,12 @@ Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Param_Test/any.cpp: 
 	  Fixed ambiguous call to >>= also reported by John Mulhern
 
+	* orbsvcs/orbsvcs/Makefile: 
+	  The maintaince of the .PRECIOUS directives for IDL generated
+	  files was becoming a nightmare, it is automated now.
+	  Some IDL files include others, we need to add an explicit
+	  dependency in those cases.
+
 Fri Jul 24 17:00:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp (open_queue):
