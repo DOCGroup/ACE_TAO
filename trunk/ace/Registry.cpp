@@ -27,7 +27,7 @@ ACE_RCSID(ace, Registry, "$Id$")
 LPCTSTR ACE_Registry::STRING_SEPARATOR = ACE_TEXT ("\\");
 
 int 
-ACE_Registry::Name_Component::operator== (const Name_Component &rhs)
+ACE_Registry::Name_Component::operator== (const Name_Component &rhs) const
 {
   return 
     rhs.id_ == this->id_ &&
@@ -35,7 +35,7 @@ ACE_Registry::Name_Component::operator== (const Name_Component &rhs)
 }
 
 int 
-ACE_Registry::Name_Component::operator!= (const Name_Component &rhs)
+ACE_Registry::Name_Component::operator!= (const Name_Component &rhs) const
 {
   return !this->operator== (rhs);
 }
@@ -69,7 +69,7 @@ ACE_Registry::Binding::Binding (const Istring &name,
 
 
 int 
-ACE_Registry::Binding::operator== (const Binding &rhs)
+ACE_Registry::Binding::operator== (const Binding &rhs) const
 {
   return 
     rhs.name_ == this->name_ &&
@@ -77,7 +77,7 @@ ACE_Registry::Binding::operator== (const Binding &rhs)
 }
 
 int 
-ACE_Registry::Binding::operator!= (const Binding &rhs)
+ACE_Registry::Binding::operator!= (const Binding &rhs) const
 {
   return !this->operator== (rhs);
 }
