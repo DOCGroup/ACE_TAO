@@ -1,3 +1,9 @@
+Wed Jan 07 21:52:20 1998    <coryan@MILONGA>
+
+	* TAO_IDL/tao_idl.dsp: 
+	  Added the new native_* functions to the project file.
+	  Also use the new tao_idl.cpp file in the top level directory.
+
 Wed Jan  7 20:20:56 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/NS_CosNaming.cpp:
