@@ -1,3 +1,11 @@
+Mon Oct 13 18:22:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added #include of ValueFactory.h to stub source file, if 
+          a valuetype has been seen and this file has not already
+          been included in the stub header file.
+
 Mon Oct 13 18:20:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/TAO_Examples.dsw
