@@ -20,6 +20,7 @@ BIN =   Aio_Platform_Test \
         Buffer_Stream_Test \
         Cache_Map_Manager_Test \
         Cached_Accept_Conn_Test \
+        Cached_Allocator_Test \
         Cached_Conn_Test \
         Capabilities_Test \
         CDR_File_Test \
