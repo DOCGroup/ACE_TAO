@@ -1,3 +1,8 @@
+Wed Dec 18 16:21:36 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i} and ace/INET_Addr.cpp:  more VxWorks
+	  gethostbyname () tweaks
+
 Wed Dec 18 15:24:13 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Proactor.cpp (ACE_Proactor): Initialize completion_port_ to
