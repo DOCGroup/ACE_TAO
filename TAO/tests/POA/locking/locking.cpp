@@ -1,6 +1,6 @@
 // $Id$
 
-// ===========================================================================================
+// ==================================================
 // = LIBRARY
 //    TAO/tests/POA/NewPOA
 //
@@ -8,18 +8,13 @@
 //    NewPOA.cpp
 //
 // = DESCRIPTION
-//    This program demonstrates creation of new POAs, as children of the root POA or the
-//    existing POA.
-//    There are five new POA created in this example.
-//    The hierarchy of POAs looks like this.
 //
-//             /-->first_poa-->first_poa/second_poa
-//    RootPOA--
-//             \-->third_poa-->third_poa/fourth_poa-->third_poa/fourth_poa/fifth_poa
+//    This program demonstrates creation of new POAs using TAO
+//    specific locking policies
 //
 // = AUTHOR
 //    Irfan Pyarali
-// ===========================================================================================
+// ==================================================
 
 #include "ace/streams.h"
 #include "tao/corba.h"
@@ -41,7 +36,7 @@ main (int argc, char **argv)
   CORBA::Object_var obj =
     orb->resolve_initial_references ("RootPOA");
 
-  // _narrow() the Object to get the POA object, i.e., the root_poa.
+  // _narrow () the Object to get the POA object, i.e., the root_poa.
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (obj.in (), env);
 
@@ -52,26 +47,16 @@ main (int argc, char **argv)
     }
 
   // Policies for the new POAs
-  CORBA::PolicyList policies (2);
-  policies.length (2);
+  CORBA::PolicyList policies (1);
+  policies.length (1);
 
-  // Threading policy
+  // TAO specific threading policy
   policies[0] =
-    root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL, env);
+    root_poa->create_TAO_POA_locking_policy (PortableServer::USE_THREAD_LOCK, env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("PortableServer::POA::create_thread_policy");
-      return -1;
-    }
-
-  // Lifespan policy
-  policies[1] =
-    root_poa->create_lifespan_policy (PortableServer::TRANSIENT, env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_lifespan_policy");
+      env.print_exception ("create_TAO_POA_locking");
       return -1;
     }
 
@@ -88,29 +73,20 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // TAO specific threading policy
+  policies[0] =
+    root_poa->create_TAO_POA_locking_policy (PortableServer::USE_NULL_LOCK, env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("create_TAO_POA_locking");
+      return -1;
+    }
+
   // Creation of the new POA, i.e. firstPOA/secondPOA
   name += TAO_POA::name_separator ();
   name += "secondPOA";
   PortableServer::POA_var second_poa =
-    root_poa->create_POA (name.c_str (),
-                          PortableServer::POAManager::_nil (),
-                          policies,
-                          env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_POA");
-      return -1;
-    }
-
-  // Creating thirdPOA/fourthPOA/fifthPOA. The non-existing thirdPOA
-  // and thirdPOA/fourthPOA are created automatically.
-  name = "thirdPOA";
-  name += TAO_POA::name_separator ();
-  name += "forthPOA";
-  name += TAO_POA::name_separator ();
-  name += "fifthPOA";
-
-  PortableServer::POA_var fifth_poa =
     root_poa->create_POA (name.c_str (),
                           PortableServer::POAManager::_nil (),
                           policies,
@@ -162,20 +138,11 @@ main (int argc, char **argv)
       return -1;
     }
 
-  CORBA::String_var fifth_poa_name =
-    fifth_poa->the_name (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
-
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n%s\n%s\n%s\n",
+              "%s\n%s\n%s\n",
               root_poa_name.in (),
               first_poa_name.in (),
-              second_poa_name.in (),
-              fifth_poa_name.in ()));
+              second_poa_name.in ()));
   
   // This should destroy all its children
   root_poa->destroy (CORBA::B_TRUE,

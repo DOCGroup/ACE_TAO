@@ -218,6 +218,36 @@ protected:
   PortableServer::POA_var poa_;
 };
 
+// **************************************************
+//
+// TAO spcific POA locking policy (non-standard)
+//
+// **************************************************
+
+class TAO_Export TAO_POA_Locking_Policy : public POA_PortableServer::TAO_POA_LockingPolicy
+{
+public:
+  TAO_POA_Locking_Policy (PortableServer::TAO_POA_LockingPolicyValue value,
+                          PortableServer::POA_ptr poa);
+
+  TAO_POA_Locking_Policy (const TAO_POA_Locking_Policy &rhs);
+
+  virtual PortableServer::TAO_POA_LockingPolicyValue value (CORBA::Environment &env);
+
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
+
+  virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
+
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
+protected:
+  PortableServer::TAO_POA_LockingPolicyValue value_;
+
+  PortableServer::POA_var poa_;
+};
+
 class TAO_Export TAO_POA_Policies
 {
 public:
@@ -245,6 +275,15 @@ public:
   virtual PortableServer::RequestProcessingPolicyValue request_processing (void) const;
   virtual void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
+  // **************************************************
+  //
+  // TAO spcific POA locking policy (non-standard)
+  //
+  // **************************************************
+
+  virtual PortableServer::TAO_POA_LockingPolicyValue TAO_POA_locking (void) const;
+  virtual void TAO_POA_locking (PortableServer::TAO_POA_LockingPolicyValue value);
+
   virtual void parse_policies (const CORBA::PolicyList &policies,
                                CORBA::Environment &env);
 
@@ -268,6 +307,14 @@ protected:
   PortableServer::ServantRetentionPolicyValue servant_retention_;
 
   PortableServer::RequestProcessingPolicyValue request_processing_;
+
+  // **************************************************
+  //
+  // TAO spcific POA locking policy (non-standard)
+  //
+  // **************************************************
+
+  PortableServer::TAO_POA_LockingPolicyValue TAO_POA_locking_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -364,6 +411,15 @@ public:
 
   virtual PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
                                                                                         CORBA::Environment &env);
+
+  // **************************************************
+  //
+  // TAO spcific POA locking policy (non-standard)
+  //
+  // **************************************************
+
+  virtual PortableServer::TAO_POA_LockingPolicy_ptr create_TAO_POA_locking_policy (PortableServer::TAO_POA_LockingPolicyValue value,
+                                                                                   CORBA::Environment &env);
 
   virtual CORBA::String the_name (CORBA::Environment &env);
 
@@ -594,7 +650,7 @@ protected:
                      char c, 
                      int pos = TAO_POA::String::npos) const;
 
-// Should really be protected, but some compilers complain
+  // Should really be protected, but some compilers complain
 public:
   enum LOCATION_RESULT 
   {
@@ -647,6 +703,8 @@ protected:
   
   static CORBA::ULong object_key_type_length (void);
 
+  virtual void create_internal_lock (void);
+
   String name_;
 
   String complete_name_;
@@ -673,7 +731,7 @@ protected:
 
   CHILDREN children_;
 
-  ACE_Lock_Adapter<ACE_Null_Mutex> lock_;
+  ACE_Lock *lock_;
 
   int closing_down_;
 
@@ -738,7 +796,7 @@ protected:
 
   int closing_down_;
 
-  ACE_Lock_Adapter<ACE_Null_Mutex> lock_;
+  ACE_Lock *lock_;
 
   typedef ACE_Unbounded_Set<TAO_POA *> POA_COLLECTION;
 
@@ -752,66 +810,6 @@ public:
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
                                           CORBA::Environment &env);
-};
-
-class TAO_Export TAO_Strategy_POA : public TAO_POA
-{
-public:
-
-  TAO_Strategy_POA (const String &adapter_name,
-                    TAO_POA_Manager &poa_manager,
-                    const TAO_POA_Policies &policies,
-                    TAO_POA *parent,
-                    CORBA::Environment &env);
-
-  TAO_Strategy_POA (const String &adapter_name,
-                    TAO_POA_Manager &poa_manager,
-                    const TAO_POA_Policies &policies,
-                    TAO_POA *parent,
-                    TAO_Object_Table &active_object_map,
-                    CORBA::Environment &env);
-
-  virtual TAO_POA *clone (const String &adapter_name,
-                          TAO_POA_Manager &poa_manager,
-                          const TAO_POA_Policies &policies,
-                          TAO_POA *parent,
-                          CORBA::Environment &env);
-
-  virtual TAO_POA *clone (const String &adapter_name,
-                          TAO_POA_Manager &poa_manager,
-                          const TAO_POA_Policies &policies,
-                          TAO_POA *parent,
-                          TAO_Object_Table &active_object_map,
-                          CORBA::Environment &env);
-
-  virtual ~TAO_Strategy_POA (void);
-
-protected:
-
-  virtual ACE_Lock &lock (void);
-
-  ACE_Lock *lock_;
-
-  typedef TAO_Strategy_POA SELF;
-};
-
-class TAO_Export TAO_Strategy_POA_Manager : public TAO_POA_Manager
-{
-public:
-
-  TAO_Strategy_POA_Manager (void);
-
-  virtual TAO_POA_Manager *clone (void);
-
-  virtual ~TAO_Strategy_POA_Manager (void);
-
-protected:
-
-  virtual ACE_Lock &lock (void);
-
-  ACE_Lock *lock_;
-
-  typedef TAO_Strategy_POA_Manager SELF;
 };
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current

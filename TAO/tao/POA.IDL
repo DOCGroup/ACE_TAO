@@ -126,6 +126,22 @@ module PortableServer
 
   // **************************************************
   //
+  // TAO spcific POA locking policy (non-standard)
+  //
+  // **************************************************
+
+  enum TAO_POA_LockingPolicyValue {
+    USE_DEFAULT_LOCK,
+    USE_NULL_LOCK,
+    USE_THREAD_LOCK
+  };
+  interface TAO_POA_LockingPolicy : CORBA::Policy
+    {
+      readonly attribute TAO_POA_LockingPolicyValue value;
+    };
+
+  // **************************************************
+  //
   // POAManager interface
   //
   // **************************************************
@@ -261,6 +277,16 @@ module PortableServer
       RequestProcessingPolicy
         create_request_processing_policy
         (in RequestProcessingPolicyValue value);
+
+      // **************************************************
+      //
+      // TAO spcific POA locking policy (non-standard)
+      //
+      // **************************************************
+
+      TAO_POA_LockingPolicy
+        create_TAO_POA_locking_policy
+        (in TAO_POA_LockingPolicyValue value);
 
       //--------------------------------------------------
       //

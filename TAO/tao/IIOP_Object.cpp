@@ -365,8 +365,6 @@ IIOP_Object::key (CORBA::Environment &)
   return new TAO_ObjectKey (this->profile.object_key);
 }
 
-// It will usually be used by the _bind call.
-//
 // Note that if the repository ID (typeID) is NULL, it will make
 // narrowing rather expensive, though it does ensure that type-safe
 // narrowing code gets thoroughly exercised/debugged!  Without a
