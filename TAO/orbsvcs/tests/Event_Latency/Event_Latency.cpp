@@ -212,6 +212,11 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
               ORBSVCS_Time::TimeT_to_hrtime (ec_send,
                                              events[i].header.ec_send_time);
 
+              const long to_ec_nsecs = ACE_CU64_TO_CU32 (ec_recv - creation);
+              ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
+                                    to_ec_nsecs % ACE_ONE_SECOND_IN_NSECS /
+                                      1000);
+
               ACE_Time_Value in_ec;
               ACE_Time_Value from_ec;
               if (! short_circuit_EC)

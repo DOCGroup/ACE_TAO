@@ -70,7 +70,6 @@ public:
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
-  virtual ACE_Event_Handler *acceptor (void);
   virtual int is_collocated (const TAO_Profile* profile);
   virtual CORBA::ULong endpoint_count (void);
 

@@ -120,12 +120,6 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
   return profile->object_addr () == this->address_;
 }
 
-ACE_Event_Handler *
-TAO_IIOP_Acceptor::acceptor (void)
-{
-  return &base_acceptor_;
-}
-
 int
 TAO_IIOP_Acceptor::close (void)
 {
@@ -362,7 +356,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1) 
+          if (slot == ACE_static_cast (int, len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) IIOP option <%s> is "
