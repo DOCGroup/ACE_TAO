@@ -1,3 +1,11 @@
+Mon Sep 20 07:00:15 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+	  Use the argc/argv prototype for main, apparently the ACE
+	  renaming of main() does not work for the other standard
+	  prototype for main().
+
 Sun Sep 19 14:19:06 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/README:

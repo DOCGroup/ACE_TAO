@@ -18,7 +18,7 @@ struct Foo
 CORBA::ULong const TEST_INT_MAX = 32;
 CORBA::ULong const TEST_FOO_MAX = 64;
 
-int main()
+int main(int,char*[])
 {
   typedef TAO::bounded_sequence<int,TEST_INT_MAX> int_sequence;
 
