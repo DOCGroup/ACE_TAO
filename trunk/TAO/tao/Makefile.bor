@@ -27,6 +27,8 @@ OBJFILES = \
 	$(OBJDIR)\CONV_FRAMES.obj \
 	$(OBJDIR)\corbafwd.obj \
 	$(OBJDIR)\CORBA_String.obj \
+	$(OBJDIR)\CORBALOC_Parser.obj \
+	$(OBJDIR)\CORBANAME_Parser.obj \
 	$(OBJDIR)\CurrentC.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \

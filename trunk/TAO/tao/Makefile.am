@@ -84,10 +84,14 @@ ORB_CORE_FILES = \
   Any.cpp \
   Bind_Dispatcher_Guard.cpp \
   CORBA_String.cpp \
+  CORBALOC_Parser.cpp \
+  CORBANAME_Parser.cpp \
   CurrentC.cpp \
   Exception.cpp \
   WrongTransactionC.cpp \
   Environment.cpp \
+  DLL_Parser.cpp \
+  FILE_Parser.cpp \
   Object.cpp \
   ObjectIDList.cpp \
   ORB.cpp \
