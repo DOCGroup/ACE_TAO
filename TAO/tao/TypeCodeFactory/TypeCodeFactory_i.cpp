@@ -1046,7 +1046,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
   ACE_NEW_THROW_EX (result,
                     CORBA_TypeCode (kind,
                                     consolidated_block.length (),
-                                    consolidated_block.base (),
+                                    consolidated_block.rd_ptr (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
