@@ -183,7 +183,7 @@ protected:
   virtual void reschedule (ACE_Timer_Node *) = 0;
   // Reschedule an "interval" <ACE_Timer_Node>.
 
-  virtual ACE_Timer_Queue_Iterator &iterator (void) = 0;
+  virtual ACE_Timer_Queue_Iterator &iter (void) = 0;
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
   virtual ACE_Timer_Node *alloc_node (void) = 0;

@@ -1,4 +1,22 @@
+Fri Jan 17 01:16:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Added an equivalent set of
+ 	  ACE_LSOCK_{STREAM,ACCEPTOR,CONNECTOR} macros to complement the
+ 	  ones for ACE_SOCK_*.  Thanks to Gonzalo Diethelm
+ 	  <gonzo@ing.puc.cl> for suggesting this.
+
 Thu Jan 16 17:03:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* include/makeinclude: Added support for shared object files
+	  on Linux.  Thanks to Marius Kjeldahl <mariusk@sn.no,
+	  marius@funcom.com> for his help with this. 
+
+	* ace: Merged in the IRIX support, mainly the missing netdb reentrant 
+	  functions.  Thanks to Gonzalo Diethelm <gonzo@ing.puc.cl>
+	  and Carlos O'Ryan <coryan@mat.puc.cl> for their help.
+
+	* ace/Timer_{List,Heap,Queue}: Changed iterator() to iter() to
+ 	  avoid name clashes with STL (ugh).
 
 	* ace/Timer_{Heap,List}.cpp: Added ACE_BUILD_DLL so that things
  	  will link.  Thanks to John Morey for reporting this.

@@ -13,7 +13,11 @@ CC		= cc
 CXX		= CC
 DLD		= $(CXX)
 LD		= $(CXX) 
-CPPFLAGS	+= -ptused -prelink +pp -D_SGI_MP_SOURCE -woff 3203,3209,3161,3262,3665
+CPPFLAGS	+= -ptused -prelink -D_SGI_MP_SOURCE 
+# For the new 32 bit C++ compiler (-n32)
+#CPPFLAGS	+= -n32 -woff 1174,1209,1375,1506,1110,1552,1021,1171
+# For the old C++ compiler (-32)
+CPPFLAGS	+= +pp -woff 3203,3209,3161,3262,3665
 LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace" -Wl,-woff,85
 LIBS		+= -lpthread
 PIC		= -KPIC

@@ -179,7 +179,7 @@
 
 // DJT added 6/6/96
 // uses ctime_r & asctime_r with only two parameters vs. three
-#define ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
 #define ACE_HAS_BROKEN_IF_HEADER
 //#define ACE_HAS_REENTRANT_FUNCTIONS

@@ -238,6 +238,11 @@ typedef int key_t;
 #define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
 #define ACE_SOCK_STREAM ACE_SOCK_Stream
 
+// Handle ACE_LSOCK_*
+#define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor
+#define ACE_LSOCK_CONNECTOR ACE_LSOCK_Connector
+#define ACE_LSOCK_STREAM ACE_LSOCK_Stream
+
 // Handle ACE_TLI_*
 #define ACE_TLI_ACCEPTOR ACE_TLI_Acceptor
 #define ACE_TLI_CONNECTOR ACE_TLI_Connector
@@ -290,6 +295,11 @@ typedef int key_t;
 #define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
 #define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
 #define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+
+// Handle ACE_LSOCK_*
+#define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor, ACE_UNIX_Addr
+#define ACE_LSOCK_CONNECTOR ACE_LSOCK_Connector, ACE_UNIX_Addr
+#define ACE_LSOCK_STREAM ACE_LSOCK_Stream, ACE_UNIX_Addr
 
 // Handle ACE_TLI_*
 #define ACE_TLI_ACCEPTOR ACE_TLI_Acceptor, ACE_INET_Addr
@@ -2448,6 +2458,14 @@ public:
 private:
   ACE_OS (void);
   // Ensure we can't define an instance of this class.
+
+#if defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  static int netdb_acquire (void);
+  static int netdb_release (void);
+
+  static int netdb_mutex_inited_;
+  static ACE_mutex_t netdb_mutex_;
+#endif /* defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 };
 
 // A useful abstraction for expressions involving operator new since

@@ -2145,6 +2145,24 @@ ACE_OS::event_reset (ACE_event_t *event)
 #define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
 #endif /* ACE_WIN32 */
 
+#if defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+#define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
+  do \
+  { \
+    if (ACE_OS::netdb_acquire ())  \
+      return FAILVALUE; \
+    else \
+      { \
+        TYPE ace_result_; \
+        ACE_OSCALL(OP,TYPE,FAILVALUE,ace_result_); \
+	if (ace_result_ != FAILVALUE) \
+          ::memcpy (TARGET, ace_result_, SIZE); \
+        ACE_OS::netdb_release (); \
+        return ace_result_; \
+      } \
+  } while(0)
+#endif /* defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+
 ACE_INLINE char *
 ACE_OS::strcat (char *s, const char *t)
 {
@@ -2428,8 +2446,14 @@ ACE_OS::getprotobyname_r (const char *name,
   else
     return 0;
 #else
-  ACE_SOCKCALL_RETURN (::getprotobyname_r (name, result, buffer, sizeof (ACE_PROTOENT_DATA)),
-		       struct protoent *, 0);
+#if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_NETDBCALL_RETURN (::getprotobyname (name),
+			struct protoent *, 0,
+			buffer, sizeof (ACE_PROTOENT_DATA));
+#else
+    ACE_SOCKCALL_RETURN (::getprotobyname_r (name, result, buffer, sizeof (ACE_PROTOENT_DATA)),
+  		       struct protoent *, 0);
+#endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #else
   ACE_UNUSED_ARG(buffer);
@@ -2465,8 +2489,14 @@ ACE_OS::getprotobynumber_r (int proto,
   else
     return 0;
 #else
+#if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_NETDBCALL_RETURN (::getprotobynumber (proto),
+			struct protoent *, 0,
+			buffer, sizeof (ACE_PROTOENT_DATA));
+#else
   ACE_SOCKCALL_RETURN (::getprotobynumber_r (proto, result, buffer, sizeof (ACE_PROTOENT_DATA)),
-		       struct protoent *, 0);
+  		       struct protoent *, 0);
+#endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #else
   ACE_UNUSED_ARG(buffer);
@@ -2697,10 +2727,16 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
       return (struct hostent *) 0;
     }
 #else
+#if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_NETDBCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type),
+			struct hostent *, 0,
+			buffer, sizeof (ACE_HOSTENT_DATA));
+#else
   ACE_SOCKCALL_RETURN (::gethostbyaddr_r (addr, length, type, result, 
-					  buffer, sizeof (ACE_HOSTENT_DATA), 
-					  h_errnop),
-		       struct hostent *, 0);
+  					  buffer, sizeof (ACE_HOSTENT_DATA), 
+  					  h_errnop),
+  		       struct hostent *, 0);
+#endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   char laddr[length];
@@ -2740,9 +2776,15 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
       return (struct hostent *) 0;
     }
 #else
+#if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_NETDBCALL_RETURN (::gethostbyname (name),
+			struct hostent *, 0,
+			buffer, sizeof (ACE_HOSTENT_DATA));
+#else
   ACE_SOCKCALL_RETURN (::gethostbyname_r (name, result, buffer, 
 					  sizeof (ACE_HOSTENT_DATA), h_errnop), 
 		       struct hostent *, 0);
+#endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   char lname[::strlen (name) + 1];
@@ -2780,9 +2822,15 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
   else
     return (struct servent *) 0;
 #else
+#if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_NETDBCALL_RETURN (::getservbyname (svc, proto),
+			struct servent *, 0,
+			buf, sizeof (ACE_SERVENT_DATA));
+#else
   ACE_SOCKCALL_RETURN (::getservbyname_r (svc, proto, result, buf,
-					  sizeof (ACE_SERVENT_DATA)),
-		       struct servent *, 0);
+  					  sizeof (ACE_SERVENT_DATA)),
+  		       struct servent *, 0);
+#endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   char lsvc[::strlen (svc) + 1];
@@ -5142,7 +5190,7 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
   // ACE_TRACE ("ACE_OS::ctime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
-#if defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
+#if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result;
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pctime_r (t, buf), char *, 0, result);
@@ -5153,7 +5201,7 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
   return buf;
 #else
   ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), char *, 0);
-#endif /* defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R) */
+#endif /* defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) */
 #else
   char *result;
   ACE_OSCALL (::ctime (t), char *, 0, result);
@@ -5198,7 +5246,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 {
   // ACE_TRACE ("ACE_OS::asctime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
-#if defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
+#if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result;
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pasctime_r(t, buf), char *, 0, result);
@@ -5209,7 +5257,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   return buf;
 #else
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
-#endif /* ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R */
+#endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #else
   char *result;
   ACE_OSCALL (::asctime (t), char *, 0, result);

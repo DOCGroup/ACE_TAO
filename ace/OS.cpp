@@ -14,6 +14,43 @@
 #include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+
+int ACE_OS::netdb_mutex_inited_ = 0;
+
+ACE_mutex_t ACE_OS::netdb_mutex_;
+
+int 
+ACE_OS::netdb_acquire (void)
+{
+  if (ACE_OS::netdb_mutex_inited_ == 0)
+    {
+      if (ACE_OS::thread_mutex_init (&ACE_OS::netdb_mutex_) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+			   "ACE_OS::netdb_acquire[init]"), -1);
+      ACE_OS::netdb_mutex_inited_ = 1;
+    }
+
+  if (ACE_OS::thread_mutex_lock (&ACE_OS::netdb_mutex_) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+		       "ACE_OS::netdb_acquire[lock]"), -1);
+  return 0;
+}
+
+int 
+ACE_OS::netdb_release (void)
+{
+  if (ACE_OS::netdb_mutex_inited_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+		       "ACE_OS::netdb_release[inited]"), -1);
+  
+  if (ACE_OS::thread_mutex_unlock (&ACE_OS::netdb_mutex_) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+		       "ACE_OS::netdb_release[unlock]"), -1);
+  return 0;
+}
+#endif /* defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+
 void 
 ACE_OS::flock_t::dump (void) const
 {

@@ -819,10 +819,10 @@ class ACE_Export ACE_Thread_Mutex_Guard
   // = TITLE
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
-  //     an ACE_Mutex.
+  //     an <ACE_Thread_Mutex>.
   //
   // = DESCRIPTION
-  //     This should be a specialization of ACE_Guard, but compiler
+  //     This should be a specialization of <ACE_Guard>, but compiler
   //     bugs in older C++ compilers preclude this...
 {
 public:
