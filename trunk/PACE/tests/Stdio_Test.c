@@ -109,5 +109,8 @@ main (int argc, char **argv)
 
   printf("pace_fclose %s\n", success);
 
+
+  PACE_UNUSED_ARG (argc);
+  PACE_UNUSED_ARG (argv);
   return 0;
 }
