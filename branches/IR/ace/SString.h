@@ -19,12 +19,6 @@
 
 #include "ace/ACE.h"
 
-#if defined (UNICODE)
-#define ACE_TString ACE_WString
-#else /* UNICODE */
-#define ACE_TString ACE_CString
-#endif /* UNICODE */
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -491,6 +485,15 @@ ACE_Export ACE_INLINE ACE_WString operator + (const ACE_WString &, const ACE_WSt
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+// This allows one to use W or C String based on the Unicode 
+// setting
+#if defined (UNICODE)
+typedef ACE_WString ACE_TString;
+#else /* UNICODE */
+typedef ACE_CString ACE_TString;
+#endif /* UNICODE */
+
 
 // ************************************************************
 
