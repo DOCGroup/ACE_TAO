@@ -5,7 +5,8 @@ Fri Nov 13 12:03:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Under some versions of IRIX 6.X the readdir_r() prototype does
 	  not show up unless threads support (actually POSIX1c support) is
 	  enabled. I've change the config file to only use readdir_r() if
-	  threads are enabled.
+	  threads are enabled. Thanks to Bob Olson <olson@mcs.anl.gov> for
+	  reporting this problem.
 
 Fri Nov 13 08:55:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
