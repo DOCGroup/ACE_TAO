@@ -1,3 +1,9 @@
+Wed Jan 28 10:26:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* ace/TMCast/README:
+
+	  Fixed a few typos.
+
 Wed Jan 28 09:17:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
