@@ -1110,7 +1110,10 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
   TAO_POA_Policies &poa_policies = this->poa_.policies ();
 
   // CLIENT_PROPAGATED PriorityModel processing.
-  if (poa_policies.priority_model () == TAO_POA_Policies::CLIENT_PROPAGATED)
+  if (poa_policies.priority_model ()
+      == TAO_POA_Policies::CLIENT_PROPAGATED
+      && poa_policies.server_priority ()
+      != TAO_INVALID_PRIORITY)
     {
       // Remember current thread's priority.
       if (poa_.orb_core ().get_thread_priority (this->original_priority_)
