@@ -1,3 +1,27 @@
+Tue Jan 22 17:21:15 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	  Made stupid mistake in last round of changes: I did not test on
+	  a platform without exceptions enabled.
+	  This revealed a number of inconsistencies in the generated code,
+	  as well as very complicated logic to process arrays, sequences
+	  and interfaces as return arguments.
+	  Unfortunately, we were generating '_tao_safe_retval' for some
+	  types, and using _tao_retval for a dummy variable.  In yet other
+	  places we generated such a variable but not used it, yuck.
+	  I have made the generated code mode consistent, this allows the
+	  re-use in the last change, but it forces us to always call the
+	  return variable (if any) '_tao_retval'.
+
 Tue Jan 22 19:14:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:

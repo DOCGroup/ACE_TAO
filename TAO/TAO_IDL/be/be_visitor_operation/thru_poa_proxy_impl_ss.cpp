@@ -131,20 +131,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
       if (!this->void_return_type (bt))
         {
           os->indent ();
-          *os << "ACE_UNUSED_ARG (";
-          ctx = *this->ctx_;
-          ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (bt->accept (visitor) == -1))
-            {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-                                 "gen_check_exception - "
-                                 "codegen failed\n"),
-                                -1);
-            }
-          *os << ");" << be_nl;
+          *os << "ACE_UNUSED_ARG (_tao_retval);" << be_nl;
         }
     }
 

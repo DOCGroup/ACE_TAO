@@ -244,7 +244,6 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
   if (be_global->use_raw_throw ())
     {
       *os << "throw "
@@ -262,12 +261,12 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
     }
   *os << exception_name << " (" << exception_arguments << ")";
 
-  if (this->void_return_type (return_type))
+  if (return_type == 0 || this->void_return_type (return_type))
     {
       *os << ");\n";
       return 0;
     }
-  *os << "," << be_nl;
+  *os << ",";
 
   // Non-void return type....
   be_visitor_context ctx (*this->ctx_);
