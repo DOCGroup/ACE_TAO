@@ -92,12 +92,36 @@ sub write_comps {
       }
     }
   }
+  my($need_dirs) = ($#dirs > -1);
 
   ## Store the local projects in a separate list
-  my(@lprj) = ();
+  my(@lprj)   = ();
+  my(%dirprj) = ();
   foreach my $project (@list) {
     if ($project !~ /\//) {
       push(@lprj, $project);
+      if ($need_dirs && defined $targnum{$project}) {
+        foreach my $number (@{$targnum{$project}}) {
+          if ($list[$number] =~ /\//) {
+            ## If any local project depends on a project that is not
+            ## in this directory, we can not rely on the directory
+            ## recursion to get the correct dependencies.  We will do
+            ## all projects as local targets.
+            @lprj = ();
+            foreach my $prj (@list) {
+              push(@lprj, $prj);
+              if ($prj =~ /\//) {
+                $dirprj{$prj} = 1;
+              }
+            }
+            $need_dirs = 0;
+            last;
+          }
+        }
+        if (!$need_dirs) {
+          last;
+        }
+      }
     }
   }
 
@@ -109,7 +133,7 @@ sub write_comps {
       print $fh ' ', $$pjs{$project}->[0];
     }
     print $fh $crlf;
-    if ($#dirs > -1) {
+    if ($need_dirs) {
       foreach my $dir (@dirs) {
         print $fh "\t\$(KEEP_GOING)\@cd $dir && \$(MAKE) \$(\@)$crlf";
       }
@@ -127,7 +151,14 @@ sub write_comps {
         }
       }
       print $fh $crlf,
-                "\t\$(KEEP_GOING)\@\$(MAKE) -f $project$crlf";
+                "\t\$(KEEP_GOING)\@";
+      if (defined $dirprj{$project}) {
+        print $fh "cd ", dirname($project),
+                  " && \$(MAKE) -f ", basename($project), $crlf;
+      }
+      else {
+        print $fh "\$(MAKE) -f $project$crlf";
+      }
     }
     print $fh $crlf,
               "REMAINING_TARGETS := \$(subst all, , \$(TARGETS_NESTED:.nested=))$crlf",
@@ -140,9 +171,16 @@ sub write_comps {
   ## They will be handled serially by make.
   print $fh "\$(REMAINING_TARGETS):$crlf";
   foreach my $project (@lprj) {
-    print $fh "\t\$(KEEP_GOING)\@\$(MAKE) -f $project \$(\@)$crlf";
+    print $fh "\t\$(KEEP_GOING)\@";
+    if (defined $dirprj{$project}) {
+      print $fh "cd ", dirname($project),
+                " && \$(MAKE) -f ", basename($project), " \$(\@)", $crlf;
+    }
+    else {
+      print $fh "\$(MAKE) -f $project \$(\@)$crlf";
+    }
   }
-  if ($#dirs > -1) {
+  if ($need_dirs) {
     foreach my $dir (@dirs) {
       print $fh "\t\$(KEEP_GOING)\@cd $dir && \$(MAKE) \$(\@)$crlf";
     }
