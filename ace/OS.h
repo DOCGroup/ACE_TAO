@@ -1876,16 +1876,6 @@ public:
 #   endif /* ! ACE_WIN32 */
 # endif /* ACE_HAS_BROKEN_BITSHIFT */
 
-// Signature for registering a cleanup function that is used by the
-// <ACE_Object_Manager> and the <ACE_Thread_Manager>.
-# if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" {
-# endif /* ACE_HAS_SIG_C_FUNC */
-typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
-# if defined (ACE_HAS_SIG_C_FUNC)
-}
-# endif /* ACE_HAS_SIG_C_FUNC */
-
 # if defined (ACE_WIN32)
 // Default WIN32 structured exception handler.
 int ACE_SEH_Default_Exception_Selector (void *);
