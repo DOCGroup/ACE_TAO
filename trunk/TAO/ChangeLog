@@ -1,3 +1,17 @@
+Mon Mar 17 09:51:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp (fe_add_module):
+
+          Added a check for a 0 prefix (as opposed to one that is
+          an empty string) before doing a string compare. As a result
+          of the change in the entry below, it became possible for
+          this to happen when checking for previous openings of a
+          module, in order to pass along any prefix that may have
+          been applied to the previous opening. If a prefix of 0
+          is found, this now indicates that we are looking at the
+          global scope, and can break out of the checking loop
+          immediately.
+
 Fri Mar 14 21:50:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
