@@ -6477,7 +6477,11 @@ private:
     // introduces other stuff that breaks things, like <memory>, which
     // screws up auto_ptr.
 #     include /**/ <new>
-#     define ACE_bad_alloc bad_alloc
+#     if defined (__HP_aCC) && !defined (RWSTD_NO_NAMESPACE)
+#       define ACE_bad_alloc std::bad_alloc
+#     else
+#       define ACE_bad_alloc bad_alloc
+#     endif /* RWSTD_NO_NAMESPACE */
 #   endif /* __SUNPRO_CC */
 
 #   define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \

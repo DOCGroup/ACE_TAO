@@ -81,6 +81,9 @@
 // Compiler supports template specialization.
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// Compiler's runtime new throws bad_alloc on out-of-memory condition.
+#  define ACE_NEW_THROWS_EXCEPTIONS
+
 #endif /* __cplusplus < 199707L */
 
 // Compiler supports the ssize_t typedef.
