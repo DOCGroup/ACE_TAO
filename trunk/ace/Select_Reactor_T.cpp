@@ -1031,7 +1031,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
   int io_handlers_dispatched = 0;
   int other_handlers_dispatched = 0;
-
+  int signal_occurred = 0;
   // The following do/while loop keeps dispatching as long as there
   // are still active handles.  Note that the only way we should ever
   // iterate more than once through this loop is if signals occur
@@ -1054,8 +1054,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       this->state_changed_ = 0;
 
       // Perform the Template Method for dispatching all the handlers.
-
-      int signal_occurred = 0;
 
       // First check for interrupts.
       if (active_handle_count == -1)
@@ -1113,7 +1111,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
     }
   while (active_handle_count > 0);
 
-  return io_handlers_dispatched + other_handlers_dispatched;
+  return io_handlers_dispatched + other_handlers_dispatched+signal_occurred;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
