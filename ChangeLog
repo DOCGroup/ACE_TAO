@@ -1,3 +1,15 @@
+Sat Dec  6 19:27:26 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/aix_hack_for_main.cpp: New file that is here to be
+	  compiled first, along with Main.cpp, before any real test.
+	  This simply gets Main.o ready for all the other tests.
+	  This gets things back to where each test need only compile
+	  one source file, and the AIX C++ hack to delete the tempinc
+	  directory works again.
+
+	* tests/Makefile.tests: Add aix_hack_for_main to the front of the
+	  BIN set of tests. It must be first in order for this hack to work.
+
 Sat Dec  6 09:28:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:
