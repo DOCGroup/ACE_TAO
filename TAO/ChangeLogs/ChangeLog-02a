@@ -12,6 +12,8 @@ Fri Apr  6 16:41:42 2001  Angelo Corsaro  <angelo@cs.wustl.edu>
 	  caused by the fact that we were testing for a non null servant.
 	  This bug has been now fixed, and collocation will work as
 	  expected even if the POA has the NON RETAIN policy set.
+	  Thanks to Peter Phillips<pphillip@home.com> for traking
+	  down the problem.
 
 Fri Apr  6 17:08:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
