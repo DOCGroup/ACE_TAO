@@ -1,3 +1,8 @@
+Sun Apr 20 11:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Timer_Queue.dsw:
+          Added missing dependencies between the projects.
+
 Sat Apr 19 02:53:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/generate_compile_stats.sh:
