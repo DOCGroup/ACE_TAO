@@ -287,7 +287,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
     if (TAO_orbdebug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) GIOP::send_request (): ",
+                  "(%P|%t) GIOP::send_request (): "
                   "EOF, closing conn %d\n", transport->handle()));
     }
     transport->close_connection ();
