@@ -1,19 +1,24 @@
+Tue Oct 27 08:39:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp: reverted to version 1.29
+          because 1.30 doesn't work.
+
 Tue Oct 27 06:00:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.35 released.
 
 1998-10-26  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/tests/Trading/colocated_test.cpp:
-	  In an effort to be efficient, in certain methods I was stealing
-	  sequence buffers from 'in' parameters that would have otherwise
-	  needed to have been copied. However, this doesn't work in the
-	  colocated case, since those 'in' parameters are passed directly
-	  rather than copied over the wire. This was causing the the trader's
-	  colocated_test to fail. Thanks to Jim Penny
-	  <jpenny@universal-fasteners.com> for reporting this.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+          In an effort to be efficient, in certain methods I was stealing
+          sequence buffers from 'in' parameters that would have otherwise
+          needed to have been copied. However, this doesn't work in the
+          colocated case, since those 'in' parameters are passed directly
+          rather than copied over the wire. This was causing the the trader's
+          colocated_test to fail. Thanks to Jim Penny
+          <jpenny@universal-fasteners.com> for reporting this.
 
 Mon Oct 26 18:53:49 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -28,71 +33,71 @@ Mon Oct 26 18:40:03 1998  Jeff Parsons <jp4@cs.wustl.edu>
         * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
         * TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
           Fixed a bug reported in the DII Cubit test. Removed -s option
- 	  from server (harmful), also from client (not harmful but
- 	  useless) and removed these args from the perl file.  Thanks to
- 	  Jim Penny <jpenny@universal-fasteners.com> for reporting this.
-  	  Also fixed a typo in the perl file (thanks, Carlos).
+          from server (harmful), also from client (not harmful but
+          useless) and removed these args from the perl file.  Thanks to
+          Jim Penny <jpenny@universal-fasteners.com> for reporting this.
+          Also fixed a typo in the perl file (thanks, Carlos).
 
 Mon Oct 26 18:28:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Updated dependencies for all the Makefiles.
+        * Updated dependencies for all the Makefiles.
 
 Mon Oct 26 16:01:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/DynAny_Test: Made the run_tests.pl script have
-	  755 permission.  Thanks to Jim Penny
-	  <jpenny@universal-fasteners.com> for reporting this.
+        * tests/DynAny_Test: Made the run_tests.pl script have
+          755 permission.  Thanks to Jim Penny
+          <jpenny@universal-fasteners.com> for reporting this.
 
 Mon Oct 26 14:22:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* examples/POA/DSI/README
-	* examples/POA/DSI/run_test.pl
-	* examples/POA/DSI/server.cpp
-	* examples/POA/DSI/client.cpp
-	* tests/Multiple_Inheritance/run_test.pl
-	* tests/Multiple_Inheritance/server.cpp
-	* tests/Multiple_Inheritance/client.cpp
-	  Fixed command line arguments to conform to Irfan's
-	  specifications. 
-	
+        * examples/POA/DSI/README
+        * examples/POA/DSI/run_test.pl
+        * examples/POA/DSI/server.cpp
+        * examples/POA/DSI/client.cpp
+        * tests/Multiple_Inheritance/run_test.pl
+        * tests/Multiple_Inheritance/server.cpp
+        * tests/Multiple_Inheritance/client.cpp
+          Fixed command line arguments to conform to Irfan's
+          specifications.
+
 Mon Oct 26 12:01:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
-	  Replaced the final "return 0;", because other compilers,
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Replaced the final "return 0;", because other compilers,
           such as g++, warned without it.  But now, it's wrapped with
           ACE_NOTREACHED.
 
 Mon Oct 26 09:57:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
-	  Removed a redundant "return 0;" found on each >>= operator. This
-	  was causing nasty warnings in some compilers.
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Removed a redundant "return 0;" found on each >>= operator. This
+          was causing nasty warnings in some compilers.
 
 Mon Oct 26 09:34:32 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): While scanning
-	for #include'd idl file, we should also look for <file.idl> other
-	than "file.idl". Thanks to "John Geiss" <jtgb@eci-esyst.com> for
-	reporting this problem. 
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): While scanning
+        for #include'd idl file, we should also look for <file.idl> other
+        than "file.idl". Thanks to "John Geiss" <jtgb@eci-esyst.com> for
+        reporting this problem.
 
 Mon Oct 26 00:05:54 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_to_service): Changed htons to ACE_HTONS.
-  	  This change allows TAO to have reduced dependencies to system
- 	  libraries.  Thanks to Paul K. Fisher <pfisher@plexware.com> for
- 	  suggesting this change.
+        * tao/ORB.cpp (multicast_to_service): Changed htons to ACE_HTONS.
+          This change allows TAO to have reduced dependencies to system
+          libraries.  Thanks to Paul K. Fisher <pfisher@plexware.com> for
+          suggesting this change.
 
 Mon Oct 26 00:03:44 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -111,7 +116,7 @@ Sun Oct 25 20:26:59 1998  Jeff Parsons <jp4@cs.wustl.edu>
         * TAO/tests/DynAny_Test/test_dynstruct.cpp:
         * TAO/tests/DynAny_Test/test_dynunion.cpp:
           Fixed some memory leaks - the ones that are left
-          are all similar, but I'm not sure how to approach 
+          are all similar, but I'm not sure how to approach
           it yet.
 
 Sun Oct 25 16:12:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
