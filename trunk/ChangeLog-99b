@@ -1,3 +1,9 @@
+Sat Sep 18 18:49:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/config-win32-borland.h:
+	  Undefined ACE_HAS_BROKEN_IMPLICIT_CONST_CAST as 
+	  suggested by Christopher Kohlhoff <chris@kohlhoff.com>.
+
 Sat Sep 18 17:31:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/QOS: Improved the conformance to ACE programming
