@@ -41,7 +41,6 @@ SUBDIRS = ace \
 EXTRA_DIST = \
         ACE-INSTALL.html \
         ACE-install.sh \
-        ACE-lessons.html \
         ACE.DSW \
         BIBLIOGRAPHY \
         BUG-REPORT-FORM \
