@@ -12,17 +12,19 @@ OBJFILES = \
         $(OBJDIR)\Server_i.obj \
         $(OBJDIR)\Event_Types_impl.obj \
         $(OBJDIR)\Simple_util.obj \
-	$(OBJDIR)\server.obj
+        $(OBJDIR)\server.obj
 
 CFLAGS = \
-	$(ACE_CFLAGS) \
+        $(ACE_CFLAGS) \
         $(TAO_CFLAGS) \
-        $(TAO_PORTABLESERVER_CFLAGS)
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_VALUETYPE_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB)
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_VALUETYPE_LIB)
 
 IDLFILES = \
         $(IDLDIR)\Event_Types.idl
