@@ -1,3 +1,9 @@
+Thu Apr 29 18:35:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Request.{h,cpp}:
+	  Added no-op versions of send_deferred, get_response,
+	  and poll_response. These just throw CORBA::NO_IMPLEMENT.
+
 Thu Apr 29 17:28:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	Added support to allow Policy objects to be locality constraint.
