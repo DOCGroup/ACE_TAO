@@ -1,9 +1,7 @@
+// -*- C++ -*-
+//
 // $Id$
 
-template<typename S_ptr, typename S_var>
-ACE_INLINE
-TAO::In_Object_SArgument_T<S_ptr,S_var>::In_Object_SArgument_T (void)
-{}
 
 template<typename S_ptr, typename S_var>
 ACE_INLINE
