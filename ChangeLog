@@ -1,9 +1,15 @@
+Wed Apr 16 08:41:27 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SString.h:
+
+	  Include "ace/OS.h" to pull in functions in the "ACE_OS" scope.
+
 Wed Apr 16 09:07:26 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
 
           Fixed a usage of undefined reference.
-          
+
         * bin/MakeProjectCreator/templates/nmake.mpd:
 
           Make sure that idl gets processed before building the precompiled
