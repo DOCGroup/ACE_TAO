@@ -97,14 +97,14 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
 
 template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
-						  ACE_Allocator *allocator)
+						  ACE_Allocator *alloc)
 {
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
-  if (allocator == 0)
-    allocator = ACE_Service_Config::alloc ();
+  if (alloc == 0)
+    alloc = ACE_Service_Config::alloc ();
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
 
   // This assertion is here to help track a situation that shouldn't happen,
   // but did with Sun C++ 4.1 (before a change to this class was made:
@@ -121,22 +121,22 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
 
 template <class EXT_ID, class INT_ID, class LOCK>
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (size_t size,
-								  ACE_Allocator *allocator)
-  : allocator_ (allocator),
+								  ACE_Allocator *alloc)
+  : allocator_ (alloc),
     total_size_ (0),
     cur_size_ (0)
 {
-  if (this->open (size, allocator) == -1)
+  if (this->open (size, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Hash_Map_Manager\n"));
 }
 
 template <class EXT_ID, class INT_ID, class LOCK> 
-ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (ACE_Allocator *allocator)
-  : allocator_ (allocator),
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (ACE_Allocator *alloc)
+  : allocator_ (alloc),
     total_size_ (0),
     cur_size_ (0)
 {
-  if (this->open (ACE_DEFAULT_MAP_SIZE, allocator) == -1)
+  if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Hash_Map_Manager\n"));
 }
 

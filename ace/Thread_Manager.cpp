@@ -209,8 +209,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (result != 0)
     {
       // _Don't_ clobber errno here!  result is either 0 or -1, and
-      // ACE_OS::thr_create () already set errno!    D. Levine 28 Mar 1997
-      // errno = result;
+      // ACE_OS::thr_create () already set errno!  D. Levine 28 Mar
+      // 1997 errno = result;
       return -1;
     }
   else
@@ -219,8 +219,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 			     grp_id, task);
 }
 
-// Create a new thread running FUNC.  *Must* be called with the lock_
-// held...
+// Create a new thread running <func>.  *Must* be called with the
+// <lock_> held...
 
 int 
 ACE_Thread_Manager::spawn (ACE_THR_FUNC func, 

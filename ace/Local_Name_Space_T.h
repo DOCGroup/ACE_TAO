@@ -57,7 +57,7 @@ class ACE_Name_Space_Map : public MAP_MANAGER
   //     guaranteed the address of the SHARED_MALLOC allocator is
   //     meaningful!
 public:
-  ACE_Name_Space_Map (ALLOCATOR *allocator);
+  ACE_Name_Space_Map (ALLOCATOR *alloc);
   // Constructor.
 
   // = The following methods are Proxies to the underlying methods
@@ -66,23 +66,23 @@ public:
   // process, and then call down to perform the intended operation.
   int bind (const ACE_NS_String &, 
 	    const ACE_NS_Internal &,
-	    ALLOCATOR *allocator);
+	    ALLOCATOR *alloc);
 
   int unbind (const ACE_NS_String &, 
 	      ACE_NS_Internal &,
-	      ALLOCATOR *allocator);
+	      ALLOCATOR *alloc);
 
   int rebind (const ACE_NS_String &, 
 	      const ACE_NS_Internal &,
 	      ACE_NS_String &, 
 	      ACE_NS_Internal &,
-	      ALLOCATOR *allocator);
+	      ALLOCATOR *alloc);
 
   int find (const ACE_NS_String &, 
 	    ACE_NS_Internal &,
-	    ALLOCATOR *allocator);
+	    ALLOCATOR *alloc);
 
-  int close (ALLOCATOR* allocator);
+  int close (ALLOCATOR *alloc);
   
 private:
 };
