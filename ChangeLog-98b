@@ -1,7 +1,5 @@
 Wed Sep 16 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32.h: Disabled using Gperf on NT temporarily.
-
 	* ace/OS.i (open): Added SetFilePointer to move the file pointer
 	  of the opened file to end of file if _O_APPEND is specified on
 	  Win32.
