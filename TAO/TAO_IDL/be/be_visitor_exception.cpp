@@ -180,8 +180,12 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
                              "codegen for scope failed\n"), -1);
         }
 
-      os->decr_indent ();
-      *os << "};" << be_nl;
+      // generate the static *_alloc method
+      os->indent ();
+      // this is TAO extension
+      *os << "// the alloc method. This is TAO extension" << be_nl;
+      *os << "static CORBA::Exception *_alloc (void);" << be_uidt_nl;
+      *os << "}; // exception " << node->name () << be_nl;
 
       // generate the Any <<= and >>= operators
       os->indent ();
@@ -410,6 +414,15 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->decr_indent ();
       *os << "}\n\n";
 
+      // generate the _alloc method
+      os->indent ();
+      *os << "// TAO extension - the _alloc method" << be_nl;
+      *os << "CORBA::Exception *" << node->name ()
+          << "::_alloc (void)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return new " << node->name () << ";" << be_uidt_nl;
+      *os << "}\n\n";
+
       // Any <<= and >>= operators
       os->indent ();
       *os << "void operator<<= (CORBA::Any &_tao_any, const "
@@ -487,14 +500,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         ", CORBA::B_FALSE);" << be_nl;
       *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_" <<
         node->flatname () << ";\n\n";
-
-      // generate the _alloc method
-      os->indent ();
-      *os << "static CORBA::Exception *" << node->flatname ()
-          << "_alloc (void)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "return new " << node->name () << ";" << be_uidt_nl;
-      *os << "}\n\n";
 
       node->cli_stub_gen (I_TRUE);
     }

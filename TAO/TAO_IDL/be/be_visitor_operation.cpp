@@ -3236,7 +3236,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
           *os << "{";
           *os << excp->tc_name ();
           *os << ", ";
-          *os << excp->flatname () << "_alloc}";
+          *os << excp->name () << "::_alloc}";
           ei->next ();
           if (!ei->is_done ())
             {
