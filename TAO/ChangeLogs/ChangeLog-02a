@@ -1,3 +1,10 @@
+Thu Mar 22 12:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * docs/release_notes/index.html:
+        
+          Updated the release notes to reflect the latest status of
+          AMI, e.g. AMI timeouts. 
+
 Thu Mar 22 09:25:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/RejectInsecure/Makefile:
