@@ -44,7 +44,7 @@ namespace TAO
 
     /// Create a new id uniqueness policy
     /**
-     * @note If all the compilers supportedcovariant return types we could
+     * @note If all the compilers supported covariant return types we could
      * change this to a CORBA::Policy_ptr create() call, which is defined
      * as pure virtual in the base. This is something for the future.
      */
