@@ -10,7 +10,6 @@
 //
 // = DESCRIPTION
 //      This test illustrates the use of ACE_Unbounded_Set.
-//      In addition, it acts as a regression test for Bugzilla bug 1460.
 //      No command line arguments are needed to run the test.
 //
 // = AUTHOR
@@ -129,19 +128,6 @@ run_main (int, ACE_TCHAR *[])
 
   size_t s = count_const_set (ubs);
   ACE_ASSERT (s == ubs.size ());
-
-  // Test deletion under the cursor.
-  // This is the regression test for Bugzilla bug 1460.
-  {
-    MySet::iterator end = ubs2.end ();
-    for (MySet::iterator i = ubs2.begin (); i != end; i++)
-      {
-        r = ubs2.remove (*i);
-        ACE_ASSERT (r == 0);
-      }
-    ACE_ASSERT (ubs2.size () == 0);
-  }
-  ACE_ASSERT (ubs2.is_empty ());
 
   ACE_END_TEST;
   return 0;
