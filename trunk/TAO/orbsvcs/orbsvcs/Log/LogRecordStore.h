@@ -118,6 +118,9 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
  protected:
 
+  /// The size of a LogRecord	 
+  size_t log_record_size(const DsLogAdmin::LogRecord &rec);
+
   /// Assigned to a new RecordId and then incremented
   /// @@ Should I have a list of reclaimed id's for when records are
   /// deleted?

@@ -100,9 +100,8 @@ TAO_LogRecordStore::log (DsLogAdmin::LogRecord &rec)
     }
 
   // Increment the number of records in the log
-  ++(this->num_records_);
-  this->current_size_ =
-    this->current_size_ + sizeof (rec);
+  ++this->num_records_;
+  this->current_size_ += log_record_size(rec);
 
   return 0;
 }
@@ -134,9 +133,8 @@ TAO_LogRecordStore::remove (DsLogAdmin::RecordId id)
       return -1;
     }
 
-  --(this->num_records_);
-  this->current_size_ =
-    this->current_size_ - sizeof (rec);
+  --this->num_records_;
+  this->current_size_ -= log_record_size(rec);
   // TODO: return ids to a reuse list.
 
   return 0;
@@ -170,11 +168,31 @@ TAO_LogRecordStore::purge_old_records (void)
 }
 
 
-
 TAO_LogRecordStore::LOG_RECORD_STORE &
 TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;
+}
+
+size_t
+TAO_LogRecordStore::log_record_size(const DsLogAdmin::LogRecord &rec)
+{
+  CORBA::TypeCode_ptr tc;
+  ACE_Message_Block *mb;
+  size_t mb_size;
+  
+  // Extract the typecode and message block from the record.
+  tc = rec.info.type ();
+  mb = rec.info._tao_get_cdr ();  // TAO extension
+
+  if (mb != NULL) {
+    // Get the size of the actual data in the ACE_Message_Block.
+    mb_size = mb->length ();
+  } else {
+    mb_size = 0;
+  }
+
+  return sizeof (rec) + mb_size;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
