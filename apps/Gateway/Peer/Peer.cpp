@@ -344,7 +344,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       // it directly without having to repeatedly muck with it...
       event->header_.decode ();
 
-      if (event->header_.len_ > sizeof event->data_)
+      if (event->header_.len_ > ACE_INT32 (sizeof event->data_))
         {
           // This data_ payload is too big!
           errno = EINVAL;
@@ -497,7 +497,7 @@ Peer_Handler::subscribe (void)
 
   Subscription *subscription = (Subscription *) ((Event *) mb->rd_ptr ())->data_;
   subscription->connection_id_ = Options::instance ()->connection_id ();
-  this->transmit (mb, sizeof *subscription, SUBSCRIPTION_EVENT);
+  return this->transmit (mb, sizeof *subscription, SUBSCRIPTION_EVENT);
 }
 
 // Action that receives events from the Gateway.
