@@ -59,9 +59,7 @@ test_create_object_before_servant_reactivation (
 
 
   PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId ("TestServant"
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::string_to_ObjectId ("TestServant");
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (
@@ -127,9 +125,7 @@ test_create_object_before_POA_reactivation(
   ACE_CHECK;
 
   PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId ("TestServant"
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::string_to_ObjectId ("TestServant");
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (oid.in (),
