@@ -37,6 +37,9 @@ public:
 
   Basic_Handler (DOMNodeIterator* iter, bool release = false);
 
+  Basic_Handler (DOMDocument* doc, DOMNodeIterator* iter, 
+                 bool release = false);
+
   ~Basic_Handler (void);
 
   REF_MAP& id_map()

@@ -84,6 +84,10 @@ public:
   CAD_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  CAD_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the component assembly description
   void process_ComponentAssemblyDescription (::Deployment::ComponentAssemblyDescription &cad);
   

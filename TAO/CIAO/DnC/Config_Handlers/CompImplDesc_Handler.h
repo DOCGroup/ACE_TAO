@@ -70,6 +70,11 @@ class Config_Handler_Export CompImplDesc_Handler: public Basic_Handler
   CompImplDesc_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  CompImplDesc_Handler (DOMDocument* doc, 
+                        DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the monolithic deployment description
   void process_ComponentImplementationDescription (::Deployment::ComponentImplementationDescription &cid);
 

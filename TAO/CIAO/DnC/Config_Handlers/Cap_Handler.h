@@ -81,6 +81,10 @@ public:
   CAP_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  CAP_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   void process_Capability (Deployment::Capability &ret_struct);
   // process elements of type Capability definitions in
   // the descriptor files

@@ -76,6 +76,10 @@ public:
   Domain_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  Domain_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the Domain type
   void process_domain (Deployment::Domain& domain);
 

@@ -64,6 +64,11 @@ public:
   CompIntrDesc_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { };
 
+  /// constructor
+  CompIntrDesc_Handler (DOMDocument* doc, 
+                        DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { };
+
   /// Process the component package description
   void process_ComponentInterfaceDescription (::Deployment::ComponentInterfaceDescription &CompIntrDesc);
 

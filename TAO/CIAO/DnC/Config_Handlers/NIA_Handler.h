@@ -58,6 +58,10 @@ public:
   NIA_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  NIA_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the package configuration
   void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
 };

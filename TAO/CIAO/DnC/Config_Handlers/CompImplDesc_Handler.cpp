@@ -28,6 +28,14 @@ BEGIN_DEPLOYMENT_NAMESPACE
 void CompImplDesc_Handler::process_ComponentImplementationDescription
 (::Deployment::ComponentImplementationDescription &cid)
 {
+  this->iter_->nextNode();
+  ACE_TString root_node_name;
+
+  root_node_name = XMLString::transcode
+    (this->doc_->getDocumentElement ()->getNodeName ());
+
+  ACE_DEBUG ((LM_DEBUG, "root node name is %s \n", root_node_name.c_str ()));
+
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
        node = this->iter_->nextNode())
