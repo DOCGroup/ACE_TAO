@@ -28,7 +28,7 @@
       subsystems. (See: <a href="../configurations.html">Configuration
       Guide</a>.)</LI>
 
-  <LI>Supports <TT>resolve_initial_references("NameService")</TT>
+  <LI>Supports <TT>resolve_initial_references("&ltCORBA Service&gt")</TT>
 	using ACE support for multicast.</LI>
 </UL><p>
 
@@ -40,7 +40,7 @@
       shutdown method which allow other process to shutdown a remote
       ORB.  Althought this may be the "right" thing to do in TAO, it
       is not CORBA compliant and hurts the portability of object
-      implementation.
+      implementation. <br>
 
       A common way of getting around this problem is to cache the ORB
       pointer in the object when it is created and simply use the
@@ -48,33 +48,11 @@
       multiple ORBs in a process and a POA may be shared by several
       ORBs.  That means, we may not handling the object with the same
       ORB it was created. Collocation optimization further complicated
-      the problem.
+      the problem. <br>
 
       At the moment, using TAO_ORB_Core_instance ()->orb () is the
       only sane way to get arond the problem.  Though there may be a
       better way.<p>
-
-  <li>The acceptor on the server side doesn't get opened until calling
-      CORBA_ORB::run ().  And that's when we check whether the port
-      the server wants to listen on is available or not.  (Unless we
-      specify ORBport to be 0, which implicitly ask the ORB to open
-      the connection in ORB_init so we know how to export object
-      IORs.)  The problem of this approach is that the port the server
-      is listen on may not be available.  Since we export object IORs
-      based on the port specified (or the default port,) without
-      checking the availability of the port, we may announce a bad IOR
-      end-point which the server will never be able to listen on.
-
-      A possible solution might be opening the server acceptor
-      whenever it is trying to export an IOR.<p>
-
-  <li>The ORB doesn't handle the nested upcalls correctly.  This seems
-      to be stemmed from the incorrect suspension/resumption of file
-      descriptor in connection management.  It appears to work fine
-      when two client and server calling each other from invoking an
-      object method.  This, however, is broken when a third ORB
-      makes use of the object exported by the original client when the
-      nested upcalls are in progress.<p>
 
   <LI>The current demarshalling scheme may not work in cases of
       complex types such as sequences of unions or anys or object
@@ -113,6 +91,18 @@
       the Select_Reactor.  Usually, if you have TSS ORB and are using reactive
       concurrency startegy, the ORB are not accessed by multiple
       threads, then, you can safely turn the lock off.<p>
+
+  <li>Strategized the connection management scheme so that we
+      don't always have to pay the price of a look up in the
+      connection cache.  Basically, we "hold" a service handler for a
+      string of requests.  <p>
+
+  <li>There is no need to call ORB::open if the port is 0.  It will
+      automagically be called when the first stub is created.<p>
+
+  <li>The ORB now handles nested upcalls correctly.  See <a
+      href="../leader_follower.html"> this </a> for details on the
+      design of the solution. <p>
 
   <li>Making the collocation table configurable.  We can either
       use a global collocation table to share objects among ORBs,
@@ -396,12 +386,6 @@
 <UL>
   <li>Performance optimizations, such as:
       <ol>
-        <li>Strategize the connection management scheme so that we
-            don't always have to pay the price of a look up in the
-            connection cache.  Basically, we want to be able to "hold" a
-            service handler for a string of requests.  And, of course,
-            do this in a portable manner.</LI>
-
         <li>Replace all uses of <code>new</code> and
             <code>delete</code> with allocators that can be put into
             TSS.  The main motivation for this is to eliminate lock
