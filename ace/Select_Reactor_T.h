@@ -124,12 +124,12 @@ public:
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1);
 
-  /// Initialize <ACE_Select_Reactor> with size <size>.  
-  /// If <disable_notify_pipe> is non-0 then the reactor will
+  /// Initialize @c ACE_Select_Reactor with size @arg size.
+  /// If @arg disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
-  /// but will elide the <notify()> feature.  If <mask_signals> is 
+  /// but will elide the notification feature.  If @arg mask_signals is 
   /// 1 the reactor is "signal-safe" when dispatching handlers to
-  /// signal events, whereas if <mask_signals> is 0 the reactor will
+  /// signal events, whereas if @arg mask_signals is 0 the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
   /// fine if your application doesn't use the reactor to handle signals).
   /**
@@ -149,12 +149,12 @@ public:
                         int mask_signals = 1);
 
   /**
-   * Initialize the <ACE_Select_Reactor> to manage
-   * <max_number_of_handles>.  If <restart> is non-0 then the
-   * <ACE_Reactor>'s <handle_events> method will be restarted
-   * automatically when <EINTR> occurs.  If <signal_handler> or
-   * <timer_queue> are non-0 they are used as the signal handler and
-   * timer queue, respectively.  If <disable_notify_pipe> is non-0 the
+   * Initialize the @c ACE_Select_Reactor to manage
+   * @arg max_number_of_handles.  If @arg restart is non-0 then the
+   * @c ACE_Reactor's @c handle_events method will be restarted
+   * automatically when @c EINTR occurs.  If @arg signal_handler or
+   * @arg timer_queue are non-0 they are used as the signal handler and
+   * timer queue, respectively.  If @arg disable_notify_pipe is non-0 the
    * notification pipe is not created, thereby saving two I/O handles.
    *
    * @note On Unix platforms, the maximum_number_of_handles parameter
