@@ -3,5 +3,5 @@
 
 project : taolib_with_idl, orbsvcs_output {
   tagname     = TAO_ORBSVCS
-  includes   += $(TAO_ROOT)/orbsvcs
+  includes   += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs
 }

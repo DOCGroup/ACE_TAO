@@ -3280,9 +3280,13 @@ ACEXML_Parser::parse_comment (void)
       ACEXML_Char fwd = this->get ();
       if ((fwd == '-' && state < 2) ||
           (fwd == '>' && state == 2))
-        state += 1;
+        {
+          state += 1;
+        }
       else
-        state = 0;              // Reset parse state.
+        {
+          state = 0;              // Reset parse state.
+        }
     }
   return 0;
 }

@@ -54,6 +54,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   Object_ID oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
+  oid.pid = events[0].header.eid.pid;
   oid.queue_id = events[0].header.eid.queue_id;
   oid.type = events[0].header.type;
 
