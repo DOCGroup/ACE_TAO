@@ -262,7 +262,7 @@ namespace Deployment
 
   // SubcomponentPortEndpoint
 
-  void DnC_Dump::dump (const ::Deployment::SubcomponentPortEndpoint &spe)
+  void DnC_Dump::dump (const ::Deployment::SubcomponentPortEndpoint&)
   {
     /*
     ACE_DEBUG ((LM_DEBUG, "SubcomponentPortEndpoint: \n"));
