@@ -1,0 +1,75 @@
+// $Id$
+
+// ===========================================================
+//
+// @file GPSE.idl
+//
+// Generated based on $(CIAO_ROOT)/docs/templates/Executor.idl
+//
+// @author Nanbor Wang <nanbor@cs.wustl.edu>
+//
+// ===========================================================
+
+#ifndef GPSE_IDL
+#define GPSE_IDL
+
+#include "CCM_Container.idl"    // Found in $(CIAO_ROOT)/ciao
+                                // For various definitions of container
+                                // internal/callback interfaces
+#include "GPS.idl"  // Original component IDL definition
+#include "../HUDisplayE.idl"
+
+module HUDisplay {
+
+  // Component Main Executor Interface.  We currently do not
+  // support Executor-based implementation.
+
+  local interface CCM_GPS_Executor
+  : ::Components::EnterpriseComponent
+  {
+  };
+
+  // Monolithic component executor.
+  // For implementing monolithic component call back interface.
+
+  local interface CCM_GPS
+  : ::Components::EnterpriseComponent
+  {
+    CCM_position get_MyLocation ();
+
+    void push_Refresh (in tick ev);
+  };
+
+  /**
+   * Component Context Interface
+   *
+   * Notice that we are taking a shortcut here to inherit the
+   * component-specific context from SessionContext directly instead
+   * of CCMContext.
+   */
+  local interface CCM_GPS_Context
+  : Components::SessionContext
+  {
+    void push_Ready (in tick ev);
+  };
+
+  local interface CCM_GPSHomeExplicit
+  : ::Components::HomeExecutorBase
+  {
+  };
+
+  local interface CCM_GPSHomeImplicit
+  {
+    ::Components::EnterpriseComponent create ()
+      raises (::Components::CCMException);
+  };
+
+  local interface CCM_GPSHome
+    : CCM_GPSHomeExplicit,
+      CCM_GPSHomeImplicit
+  {
+  };
+
+};
+
+#endif /* GPSE_IDL */
