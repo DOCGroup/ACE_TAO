@@ -237,8 +237,7 @@ public:
                      CORBA::SystemException,
                      CosNaming::NamingContext::NotFound,
                      CosNaming::NamingContext::CannotProceed,
-                     CosNaming::NamingContext::InvalidName,
-                     CosNaming::NamingContext::AlreadyBound
+                     CosNaming::NamingContext::InvalidName
                      ));
 
   /// Returns the Default POA of this Servant object
