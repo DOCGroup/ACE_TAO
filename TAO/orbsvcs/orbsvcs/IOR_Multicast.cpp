@@ -168,7 +168,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   if (ACE_OS::strcmp (service_name,
                       "NameService") != 0
       && ACE_OS::strcmp (service_name,
-                         "TradingService") != 0)
+                         "TradingService") != 0
+      && ACE_OS::strcmp (service_name,
+                         "ImplRepoService") != 0
+                         )
     {
       // The client has requested an IOR other than for the
       // Name/Trading Service.  Lookup the table for the IOR. The call
