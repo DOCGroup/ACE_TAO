@@ -28,11 +28,18 @@
 class TAO_ORBSVCS_Export TAO_Persistent_IntId
 {
   // = TITLE
-  //     Stores information a context keeps for each bound name.
+  //     Helper class for TAO_Persistent_Bindings_Map: unifies several
+  //     data items, so they can be stored together as a  <value>
+  //     for a <key> in a hash table holding the state of a Persistent
+  //     Naming Context.
   //
   // = DESCRIPTION
-  //     Each bound name is associated with an object reference and
-  //     the type of binding.
+  //     This class holds a strigified IOR and a binding type, so
+  //     they can be stored together as a <value> for a <key> in a
+  //     hash table holding the state of a Persistent Naming Context.
+  //
+  //     Memory for the ior isn't allocated/deallocated, this class just
+  //     copies a pointer.
 public:
   // = Initialization and termination methods.
   TAO_Persistent_IntId (void);
@@ -49,28 +56,32 @@ public:
   // Destructor.
 
   void operator= (const TAO_Persistent_IntId & rhs);
-  // Assignment operator (does copy memory).
+  // Assignment operator.
 
-  CosNaming::BindingType type (void);
-  //
+  // = Data members.
 
-  const char * ref_;
-  // This should be allocated from shared/mmap memory.
+  const char *ref_;
+  // Stringified IOR to be stored in a Persistent Naming Context.
 
   CosNaming::BindingType type_;
-  // Indicator of whether the object is a NamingContext that should
-  // participate in name resolution when compound names are used.
+  // Binding type for <ref_>.
 };
 
 class TAO_ORBSVCS_Export TAO_Persistent_ExtId
 {
   // = TITLE
-  //    Stores the name to which an object is bound.
+  //     Helper class for TAO_Persistent_Bindings_Map: unifies several
+  //     data items, so they can be stored together as a  <key>
+  //     for a <value> in a hash table holding the state of a Persistent
+  //     Naming Context.
   //
   // = DESCRIPTION
-  //    This class is used as the External ID for the
-  //    <ACE_Hash_Map_Manager>.  We do not allocate memory for <id>
-  //    and <kind>, we do not deallocate it.
+  //     This class holds id and kind strings, so
+  //     they can be stored together as a <key> for a <value> in a
+  //     hash table holding the state of a Persistent Naming Context.
+  //
+  //     Memory for id and kind isn't allocated/deallocated, this
+  //     class just copies pointers.
 public:
   // = Initialization and termination methods.
 
@@ -87,6 +98,8 @@ public:
   ~TAO_Persistent_ExtId (void);
   // Destructor.
 
+  // = Assignment and comparison methods.
+
   void operator= (const TAO_Persistent_ExtId & rhs);
   // Assignment operator (does copy memory).
 
@@ -97,13 +110,21 @@ public:
   // Inequality comparison operator.
 
   u_long hash (void) const;
-  // This class has to have a hash for use with ACE_Hash_Map_Manager.
+  // <hash> function is required in order for this class to be usable by
+  // ACE_Hash_Map_Manager.
+
+  // = Data members.
 
   const char * id_;
+  // <kind> portion of the name to be associated with some object
+  // reference in a Persistent Naming Context.
+
   const char * kind_;
-  // These point into shared/mmaped memory.
+  // <id> portion of the name to be associated with some object
+  // reference in a Persistent Naming Context.
 
   // Accessors.
+
   const char * id (void);
   const char * kind (void);
 };
@@ -111,11 +132,17 @@ public:
 class TAO_ORBSVCS_Export TAO_Persistent_Index_IntId
 {
   // = TITLE
-  //     Stores information about a context.
+  //     Helper class for TAO_Persistent_Context_Index: unifies several
+  //     data items, so they can be stored together as a  <value>
+  //     for a <key> in a hash table holding the state of a Persistent
+  //     Context Index.  (Persistent Context Index is like directory
+  //     that stores info about every active Naming Context).
   //
   // = DESCRIPTION
-  //     Each context
-  //     the type of binding.
+  //     This class holds a counter and a hash map pointers, so
+  //     they can be stored together as a <value> for a <key> in a
+  //     hash table holding the state of a Persistent Context Index.
+  //
 public:
   // = Initialization and termination methods.
   TAO_Persistent_Index_IntId (void);
@@ -135,23 +162,30 @@ public:
   void operator= (const TAO_Persistent_Index_IntId & rhs);
   // Assignment operator (does copy memory).
 
+  // = Data members.
+
   ACE_UINT32 *counter_;
-  //
+  // Pointer to a Persistent Naming Context's counter.
 
   ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
     TAO_Persistent_IntId> * hash_map_;
-  // The pointer to the context's bindings hash map.
+  // Pointer to a Persistent Naming Context's hash map.
 };
 
 class TAO_ORBSVCS_Export TAO_Persistent_Index_ExtId
 {
   // = TITLE
-  //    Stores the poa_id of a context.
+  //    Helper class for TAO_Persistent_Context_Index: holds
+  //    Persistent Naming Context POA id, so it can be stored as a <key>
+  //    for a <value> in a hash table holding state of a Persistent
+  //    Context Index.  (Persistent Context Index is like directory
+  //    that stores info about every active Naming Context).
   //
   // = DESCRIPTION
-  //    This class is used as the External ID for the
-  //    <ACE_Hash_Map_Manager>.  We do not allocate memory for
-  //    <poa_id>, we do not deallocate it.
+  //    We need this wrapper class around the actual data because we must
+  //    provide <hash> function for it to work with
+  //    ACE_Hash_Map_Manager.
+  //
 public:
   // = Initialization and termination methods.
 
@@ -167,6 +201,8 @@ public:
   ~TAO_Persistent_Index_ExtId (void);
   // Destructor.
 
+  // = Assignment and comparison methods.
+
   void operator= (const TAO_Persistent_Index_ExtId & rhs);
   // Assignment operator (does copy memory).
 
@@ -177,11 +213,14 @@ public:
   // Inequality comparison operator.
 
   u_long hash (void) const;
-  // This class has to have a hash for use with ACE_Hash_Map_Manager.
+  // <hash> function is required in order for this class to be usable by
+  // ACE_Hash_Map_Manager.
+
+  // = Data member.
 
   const char * poa_id_;
-  // These point into shared/mmaped memory.
-
+  // POA id to be associated with the rest of the info for some
+  // Persistent Naming Context in the Persistent Context Index.
 };
 
 #endif /* TAO_PERSISTENT_ENTRIES_H */

@@ -37,6 +37,9 @@ class TAO_ORBSVCS_Export TAO_Bindings_Map
 
 public:
 
+  virtual ~TAO_Bindings_Map (void);
+  // Destructor.
+
   virtual size_t current_size (void) = 0;
   // Return current number of entries (name bindings) in the
   // underlying hash map.
