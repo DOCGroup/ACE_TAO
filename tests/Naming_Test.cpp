@@ -23,6 +23,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, Naming_Test, "$Id$")
 

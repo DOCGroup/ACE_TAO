@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/FILE_Connector.h"
 #include "ace/Svc_Handler.h"
 

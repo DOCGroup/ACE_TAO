@@ -20,6 +20,8 @@
 // ============================================================================
 
 #include "Upgradable_RW_Test.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")

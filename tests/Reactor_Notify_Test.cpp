@@ -22,6 +22,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Task.h"
 #include "ace/Pipe.h"

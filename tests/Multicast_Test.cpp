@@ -39,12 +39,15 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
 #include "ace/Signal.h"
+#include "ace/Min_Max.h"
 
 ACE_RCSID(tests, Multicast_Test, "$Id$")
 

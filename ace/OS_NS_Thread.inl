@@ -4,6 +4,7 @@
 #include "ace/OS_NS_macros.h"
 // for timespec_t, perhaps move it to os_time.h
 #include "ace/Time_Value.h"
+#include "ace/OS_NS_sys_mman.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
