@@ -7,6 +7,13 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+MAKEFILE = Makefile
+LIBNAME  = libTAO_RTPortableServer
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
+
+ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -15,13 +22,6 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(corba_messaging),1)
-
-MAKEFILE = Makefile
-LIBNAME  = libTAO_RTPortableServer
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
-
-ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA
 
 CPP_SRCS += \
   RTPortableServer \
