@@ -159,6 +159,9 @@ public:
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 
+  /// Verify whether the buffer has dispatchable info  or not.
+  virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
+
   /// Called back by the <ACE_Select_Reactor> when a thread wants to
   /// unblock us.
   virtual int handle_input (ACE_HANDLE handle);

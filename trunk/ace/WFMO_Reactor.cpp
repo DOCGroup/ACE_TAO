@@ -2179,12 +2179,16 @@ ACE_WFMO_Reactor::dump (void) const
 }
 
 int
-ACE_WFMO_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
-                                                 ACE_Handle_Set &rd_mask)
+ACE_WFMO_Reactor_Notify::dispatch_notifications (int & /*number_of_active_handles*/,
+                                                 ACE_Handle_Set & /*rd_mask*/)
 {
-  ACE_UNUSED_ARG (number_of_active_handles);
-  ACE_UNUSED_ARG (rd_mask);
   return -1;
+}
+
+int
+ACE_WFMO_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer & /*buffer*/)
+{
+  return 0;
 }
 
 ACE_HANDLE

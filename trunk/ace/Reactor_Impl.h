@@ -74,6 +74,9 @@ public:
   /// the <Reactor_Impl>
   virtual ACE_HANDLE notify_handle (void) = 0;
 
+  /// Verify whether the buffer has dispatchable info  or not.
+  virtual int is_dispatchable (ACE_Notification_Buffer &buffer)= 0;
+
   /// Handle one of the notify call on the <handle>. This could be
   /// because of a thread trying to unblock the <Reactor_Impl>
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer) = 0;
