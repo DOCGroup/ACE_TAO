@@ -10,13 +10,6 @@
 
 ACE_RCSID (TAO, RTScheduler_Loader, "$Id$")
 
-TAO_RTScheduler_Loader::TAO_RTScheduler_Loader (void)
-{
-}
-
-TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
-{
-}
 
 int
 TAO_RTScheduler_Loader::init (int argc,
@@ -41,7 +34,7 @@ TAO_RTScheduler_Loader::init (int argc,
 
       /// Register the RTCORBA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
-                        TAO_RTScheduler_Initializer,
+                        TAO_RTScheduler_ORB_Initializer,
                         CORBA::NO_MEMORY (
 					  CORBA_SystemException::_tao_minor_code (
 										  TAO_DEFAULT_MINOR_CODE,

@@ -68,10 +68,9 @@
 TAO_NAMESPACE  CORBA
 {
 
+	typedef void* VoidData;	
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
-  
-  typedef void* VoidData;
 
 }
 TAO_NAMESPACE_CLOSE // module CORBA
@@ -745,16 +744,6 @@ TAO_NAMESPACE  RTScheduling
     // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::RTScheduling::Current::IdType * id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-    
-    // TAO_IDL - Generated from
-    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::RTScheduling::Current::IdType * get_current_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
