@@ -2,41 +2,27 @@
 
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
-#include "ace/Get_Opt.h"
 #include "Custom_Network_Priority_Mapping.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
+#include "ace/Get_Opt.h"
 #include "tao/Policy_Manager.h"
 
-const char *ior = "file://test1.ior";
-int n = 1;
-int desired_priority = 0;
+static const char *ior = "file://simple_servant.ior";
+static int iterations = 1;
+static int corba_priority = RTCORBA::minPriority;
+static int shutdown_server = 0;
 
-int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+enum Priority_Level
 {
-  if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
-                       msg),
-                      -1);
-  else
-    return 0;
-}
-
-enum
-  {
-    OBJECT,
-    THREAD,
-    ORB
-  };
+  OBJECT,
+  THREAD,
+  ORB
+};
 
 void
 change_network_priority (int enable_network_priority,
-                         int level,
+                         Priority_Level level,
                          Test_var &server,
                          CORBA::ORB_ptr orb)
 {
@@ -45,16 +31,13 @@ change_network_priority (int enable_network_priority,
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "RTORB is nil\n"));
-
-      //Set the tcp protocol protperties
+      // Set the tcp protocol protperties
       RTCORBA::TCPProtocolProperties_var tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
@@ -80,16 +63,15 @@ change_network_priority (int enable_network_priority,
                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
       switch (level)
         {
-          //Change policy at ORB level
+          // Change policy at ORB level
         case ORB:
           {
-            // PolicyManager.
             object = orb->resolve_initial_references ("ORBPolicyManager"
                                                       ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
+
             CORBA::PolicyManager_var policy_manager =
               CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
@@ -97,31 +79,45 @@ change_network_priority (int enable_network_priority,
             policy_manager->set_policy_overrides (policy_list,
                                                   CORBA::SET_OVERRIDE
                                                   ACE_ENV_ARG_PARAMETER);
-
             ACE_TRY_CHECK;
+
             break;
           }
-          //Change policy at THREAD level
-        case THREAD:
-          orb->orb_core ()->policy_current ().set_policy_overrides (policy_list,
-                                                                    CORBA::SET_OVERRIDE
-                                                                    ACE_ENV_ARG_PARAMETER);
 
-          ACE_TRY_CHECK;
-          break;
-          //Change policy at OBJECT level
+          // Change policy at THREAD level
+        case THREAD:
+          {
+            object =
+              orb->resolve_initial_references ("PolicyCurrent"
+                                               ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            CORBA::PolicyCurrent_var policy_current =
+              CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            policy_current->set_policy_overrides (policy_list,
+                                                  CORBA::SET_OVERRIDE
+                                                  ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            break;
+          }
+
+          // Change policy at OBJECT level
         case OBJECT:
           {
             CORBA::Object_var object = server->_set_policy_overrides (policy_list,
                                                                       CORBA::SET_OVERRIDE
                                                                       ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
+
             server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
+
             break;
           }
-        };
-
+        }
     }
   ACE_CATCHANY
     {
@@ -131,12 +127,10 @@ change_network_priority (int enable_network_priority,
   ACE_ENDTRY;
 }
 
-
-
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:p:sc");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:p:x:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -145,29 +139,35 @@ parse_args (int argc, char *argv[])
       case 'k':
         ior = get_opts.opt_arg ();
         break;
-      case 'n':// number of itarations
-        n = ACE_OS::atoi (get_opts.opt_arg ());
+
+        // number of itarations
+      case 'n':
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case 'p':// desired priority
-        desired_priority = ACE_OS::atoi (get_opts.opt_arg ());
+
+        // corba priority
+      case 'p':
+        corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case 'c':
-        ior = "file://test1.ior";
+
+        // shutdown server
+      case 'x':
+        shutdown_server = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case 's':
-        ior = "file://test2.ior";
-        break;
-      case '?':
+
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-n <number_of_iterations>"
-                           "-p <desired priority>"
-                           "-s [test server setting dscp]"
-                           "-c [test client setting dscp]"
+                           "usage:  %s\n"
+                           "\t-k <ior> [default is %s]\n"
+                           "\t-n <number of invocations> [defaults to %d]\n"
+                           "\t-p <corba priority> [defaults to %d]\n"
+                           "\t-x <shutdown server> [defaults to %d]\n"
                            "\n",
-                           argv [0]),
+                           argv [0],
+                           ior,
+                           iterations,
+                           corba_priority,
+                           shutdown_server),
                           -1);
       }
 
@@ -187,7 +187,6 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -204,17 +203,10 @@ main (int argc, char *argv[])
         Test::_narrow (client_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (server.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: Object reference <%s> is nil\n",
-                             ior),
-                            -1);
-        }
-
-      //Resolve the Network priority Mapping Manager
-      CORBA::Object_var object = orb->resolve_initial_references ("NetworkPriorityMappingManager"
-                                                                  ACE_ENV_ARG_PARAMETER);
+      // Resolve the Network priority Mapping Manager
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("NetworkPriorityMappingManager"
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
@@ -228,56 +220,46 @@ main (int argc, char *argv[])
                        TAO_Custom_Network_Priority_Mapping,
                        -1);
 
-      //Set the desired corba priority on the network mapping manager
-      cnpm->desired_priority (desired_priority);
+      // Set the desired corba priority on the network mapping manager
+      cnpm->corba_priority (corba_priority);
 
-      //Load the custom network priority mapping object in the network priority      //mapping manager. The user can thus add his own priority mapping.
+      // Load the custom network priority mapping object in the
+      // network priority mapping manager. The user can thus add his
+      // own priority mapping.
       mapping_manager->mapping (cnpm);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Desired Priority = %d\n",
-                  desired_priority));
-
-      int enp = 0;       //enable_network_priority
+      int enable_network_priority = 1;
 
       // Make several invocation,
-      for (int i = 0; i < n; ++i)
+      for (int i = 0; i < iterations; ++i)
         {
+          toggle (enable_network_priority);
+
           switch (i)
             {
-            case 0://Set
-            case 1://Unset
-              toggle (enp);
-              change_network_priority (enp, ORB, server ,orb.in ());
+            case 0:
+            case 1:
+              change_network_priority (enable_network_priority, ORB, server, orb.in ());
               break;
-            case 2://Set
-            case 3://Unset
-              toggle (enp);
-              change_network_priority (enp, THREAD, server, orb.in ());
+            case 2:
+            case 3:
+              change_network_priority (enable_network_priority, THREAD, server, orb.in ());
               break;
-            case 4://Set
-            case 5://Unset
             default:
-              toggle (enp);
-              change_network_priority (enp, OBJECT, server, orb.in ());
+              change_network_priority (enable_network_priority, OBJECT, server, orb.in ());
               break;
-            };
+            }
 
-          server->test_method (0 ACE_ENV_ARG_PARAMETER);
+          server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
         }
 
       // Shut down Server ORB.
-      server->shutdown ();//(0 ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::DATA_CONVERSION, ex)
-    {
-      ACE_PRINT_EXCEPTION(ex,
-                          "Most likely, this is due to the in-ability "
-                          "to set the thread priority.");
-      return -1;
+      if (shutdown_server)
+        {
+          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

@@ -373,17 +373,14 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
                                           (int *) &tos ,
                                           (int) sizeof (tos));
 
-      if(TAO_debug_level)
+      if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - IIOP_Connection_Handler::"
-                      "set_dscp_codepoint, failed to set Diffserv"
-                      " codepoint - try running as superuser\n"));
-
-          ACE_DEBUG((LM_DEBUG,
-                     "TAO (%P|%t) - IIOP_Connection_Handler::"
-                     "set_dscp_codepoint, set tos: ret: %d %x\n",
-                     ret, tos));
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      tos,
+                      ret,
+                      ret == -1 ? "try running as superuser" : ""));
         }
 
       this->dscp_codepoint_ = tos;
