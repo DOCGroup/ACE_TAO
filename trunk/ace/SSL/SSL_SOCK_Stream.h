@@ -4,54 +4,56 @@
 // ============================================================================
 //
 // = LIBRARY
-//    ace
+//    ACE_SSL
 //
 // = FILENAME
 //    SSL_SOCK_Stream.h
 //
 // = AUTHOR
 //    John Heitmann
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//    Ossama Othman <othman@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@ece.uci.edu>
+//    Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
 
-#include "SSL.h"
+#include "ace/SOCK_Stream.h"
 
 #if defined (ACE_HAS_SSL)
 
-#include "ace/SOCK_Stream.h"
+#include "SSL_SOCK.h"
+#include "SSL_Context.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL
+class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
 {
   // = TITLE
   //    Defines methods in the <ACE_SSL_SOCK_Stream> abstraction.
   //
   // = DESCRIPTION
-  //    This adds ssl functionality to an <ACE_SOCK_IO> interface by
+  //    This adds SSL functionality to an <ACE_SOCK_IO> interface by
   //    wrapping around an <ACE_SSL_SOCK_Stream> implementation.
   //
 public:
   // = Initializtion and termination functions.
 
-  ACE_SSL_SOCK_Stream (void);
-  // Constructor (sets the underlying <ACE_HANDLE> with <h>, and
-  // <SSL*> with <session>). If the handle in <session> does not
-  // match <h>, it will set <session's> handle to <h>.
+  ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
+                         ACE_SSL_Context::instance ());
+  // Constructor
 
-  ACE_SSL_SOCK_Stream (ACE_HANDLE h);
-  // Constructor (sets <ACE_HANDLE> with the handle in <session>
-  // and the underlying <SSL*> with session.
+  ACE_SSL_SOCK_Stream (ACE_HANDLE h,
+                       ACE_SSL_Context *context =
+                         ACE_SSL_Context::instance ());
+  // Constructor
 
   ~ACE_SSL_SOCK_Stream (void);
-  //Destructor
+  // Destructor
 
   ssize_t send (const void *buf,
                 size_t n,
@@ -198,58 +200,33 @@ public:
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
 
-  void dump (void) const;
-  // Dump the state of an object.
-
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  int set_option (int level,
-                  int option,
-                  void *optval,
-                  int optlen) const;
-  // Wrapper around the setsockopt() system call.
+  ACE_SSL_Context *context (void) const;
+  // Return a pointer to the underlying SSL context.
 
-  int get_option (int level,
-                  int option,
-                  void *optval,
-                  int *optlen) const;
-  // Wrapper around the getsockopt() system call.
-
-  int control (int cmd, void *) const;
-  // Interface for ioctl.
-
-  // = Common I/O handle options related to sockets.
-
-  int enable (int value) const;
-  // Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
-  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-  // which is passed as the <value>.
-
-  int disable (int value) const;
-  // Disable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
-  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-  // which is passed as the <value>.
-
-  int get_local_addr (ACE_Addr &) const;
-  // Return the local endpoint address in the referenced <ACE_Addr>.
-
-  int get_remote_addr (ACE_Addr &) const;
-  // Return the address of the remotely connected peer (if there is
-  // one), in the referenced ACE_Addr. Returns 0 if successful, else -1.
-
-  ACE_HANDLE get_handle (void) const;
-  // Get the underlying handle
-
-  void set_handle (ACE_HANDLE handle);
-  // Set the underlying handle
+  SSL *ssl (void) const;
+  // Return a pointer to the underlying SSL structure.
 
   friend class ACE_SSL_SOCK_Connector;
-  friend class ACE_SSL_SOCK_Acceptor;
+  // friend class ACE_SSL_SOCK_Acceptor;
 
-private:
-  ACE_SOCK_Stream& peer (void);
-  // Return the underlying <ACE_SOCK_Stream> which ssl runs on top of.
+  void set_handle (ACE_HANDLE fd);
+  // Overridden set_handle() method.
+
+protected:
+
+  ACE_SOCK_Stream & peer (void);
+  // Return the underlying <ACE_SOCK_Stream> which SSL runs atop of.
+
+protected:
+
+  ACE_SSL_Context *context_;
+  // The SSL context.
+
+  SSL *ssl_;
+  // The SSL session.
 
   ACE_SOCK_Stream stream_;
   // The stream which works under the ssl connection.

@@ -1,15 +1,14 @@
-//
+// -*- C++ -*-
 // $Id$
 //
 
 #define ACE_BUILD_DLL
 
 #include "SSL_SOCK_Acceptor.h"
-#include "SSL.h"
-
-#include "ace/Synch.h"
 
 #if defined (ACE_HAS_SSL)
+
+#include <openssl/err.h>
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
@@ -82,7 +81,34 @@ ACE_SSL_SOCK_Acceptor::shared_accept_finish (ACE_SSL_SOCK_Stream& new_stream,
   ACE_UNUSED_ARG (reset_new_handle);
 #endif /* ACE_WIN32 */
 
-  return new_handle == ACE_INVALID_HANDLE ? -1 : 0;
+  if (new_handle == ACE_INVALID_HANDLE)
+    return -1;
+
+  return this->ssl_accept (new_stream);
+}
+
+int
+ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
+{
+  if (SSL_is_init_finished (new_stream.ssl ()))
+    return 0;
+
+  ::SSL_set_accept_state (new_stream.ssl ());
+
+  int status = ::SSL_accept (new_stream.ssl ());
+  if (status < 0)
+    {
+      if (::BIO_sock_should_retry (status))
+        {
+          errno = EAGAIN;
+        }
+      else
+        ERR_print_errors_fp (stderr);
+
+      return -1;
+    }
+
+  return 0;
 }
 
 // General purpose routine for accepting new connections.
@@ -131,21 +157,9 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
         remote_addr->set_size (len);
     }
 
-  if(!new_stream.ssl_init_finished ()
-     && new_stream.get_SSL_fd () != new_stream.get_handle ())
-    {
-      if (new_stream.set_SSL_fd (new_stream.get_handle ())
-          == -1)
-        return -1;
-    }
-
-  return (((new_stream.accept () == -1)
-           && errno == EAGAIN
-           && timeout == 0) ?
-          -1 :
-          this->shared_accept_finish (new_stream,
-                                      in_blocking_mode,
-                                      reset_new_handle));
+  return this->shared_accept_finish (new_stream,
+				     in_blocking_mode,
+				     reset_new_handle);
 }
 
 int
@@ -154,7 +168,7 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                ACE_Addr *remote_addr,
                                ACE_Time_Value *timeout,
                                int restart,
-                               int reset_new_handle) const
+			       int reset_new_handle) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::accept");
 
@@ -195,64 +209,9 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
         remote_addr->set_size (len);
     }
 
-  if(!new_stream.ssl_init_finished ()
-     && new_stream.get_SSL_fd () != new_stream.get_handle ())
-    {
-      if (new_stream.set_SSL_fd (new_stream.get_handle ())
-          == -1)
-        return -1;
-    }
-
-  return (((new_stream.accept() == -1)
-           && errno == EAGAIN
-           && timeout == 0) ?
-          -1 :
-          this->shared_accept_finish (new_stream,
-                                      in_blocking_mode,
-                                      reset_new_handle));
-}
-
-int
-ACE_SSL_SOCK_Acceptor::enable (int value) const
-{
-  ACE_TRACE ("ACE_SSL_SOCK_Acceptor::enable");
-  switch (value)
-    {
-#ifdef SIGURG
-    case SIGURG:
-    case ACE_SIGURG:
-#endif  /* SIGURG */
-    case SIGIO:
-    case ACE_SIGIO:
-    case ACE_CLOEXEC:
-      ACE_NOTSUP_RETURN (-1);
-    case ACE_NONBLOCK:
-      return this->acceptor_.enable (value);
-    default:
-      return -1;
-    }
-  return 0;
-}
-int
-ACE_SSL_SOCK_Acceptor::disable (int value) const
-{
-  ACE_TRACE("ACE_SSL_SOCK_Acceptor::disable");
-  switch (value)
-    {
-#ifdef SIGURG
-    case SIGURG:
-    case ACE_SIGURG:
-#endif  /* SIGURG */
-    case SIGIO:
-    case ACE_SIGIO:
-    case ACE_CLOEXEC:
-      ACE_NOTSUP_RETURN (-1);
-    case ACE_NONBLOCK:
-      return this->acceptor_.disable (value);
-    default:
-      return -1;
-    }
-  return 0;
+  return this->shared_accept_finish (new_stream,
+				     in_blocking_mode,
+				     reset_new_handle);
 }
 
 #endif /* ACE_HAS_SSL */
