@@ -1,3 +1,13 @@
+Mon Jul 06 14:58:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Object.{h,cpp}:
+	* tao/Object.{h,i,cpp}:
+	* tao/Server_Request.{h,cpp}:
+	* tao/compat/objbase.h: Renamed REFIID to TAO_REFIID and
+	  DEFINE_GUID to TAO_DEFINE_GUID to avoid conflict with MSVC's
+	  COM.  We don't support COM at this moment.  Thanks to Maximilian
+	  Hoferer <mhoferer@krones.de> for noticing this.
+
 Mon Jul 06 09:07:36 1998  Steve Huston  <shuston@riverace.com>
 
 	* tao/ORB_Core.{i cpp}: Removed redundant preprocessing token 
