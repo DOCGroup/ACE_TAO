@@ -37,6 +37,10 @@
 #  define ACE_HAS_REENTRANT_FUNCTIONS
    // But this one is not like other platforms
 #  define ACE_CTIME_R_RETURNS_INT
+   // And _REENTRANT must be set, even if not using threads.
+#  if !defined (_REENTRANT)
+#    define _REENTRANT
+#  endif /* _REENTRANT */
 
 #else                                   // 10.30
 // Don't know yet... probably will be 10.20 but with some different thread
@@ -85,6 +89,9 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
+
+// select's timeval arg is non-const
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
@@ -188,9 +195,6 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #  if !defined (ACE_MT_SAFE)
         #define ACE_MT_SAFE 1
 #  endif
-
-// The threads version of select loses const-ness of the timeval arg
-#  define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_DRAFT4
