@@ -24,7 +24,11 @@
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
-ACE_INLINE void POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
+
+
+ACE_INLINE
+void
+POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -41,9 +45,11 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1941
+// be\be_interface.cpp:2024
 
-ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
+ACE_INLINE
+void
+POA_CORBA::ConstructionPolicy::copy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -60,9 +66,11 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1941
+// be\be_interface.cpp:2024
 
-ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
+ACE_INLINE
+void
+POA_CORBA::ConstructionPolicy::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
@@ -79,7 +87,7 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1244
+// be\be_interface.cpp:1332
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::_get_policy_type (
@@ -102,7 +110,7 @@ POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::_get_policy_type (
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1244
+// be\be_interface.cpp:1332
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_get_policy_type (
@@ -125,7 +133,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_get_policy_type (
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1244
+// be\be_interface.cpp:1332
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::copy (
@@ -148,7 +156,7 @@ POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::copy (
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1244
+// be\be_interface.cpp:1332
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy (
@@ -171,7 +179,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy (
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1244
+// be\be_interface.cpp:1332
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::destroy (
@@ -194,7 +202,7 @@ POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::destroy (
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1244
+// be\be_interface.cpp:1332
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::destroy (

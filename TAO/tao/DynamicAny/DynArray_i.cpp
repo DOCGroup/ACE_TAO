@@ -5,6 +5,7 @@
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
            DynArray_i,
@@ -131,14 +132,14 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc
 
   this->init_common ();
 
-  CORBA::TypeCode_var elemtype = 
+  CORBA::TypeCode_var elemtype =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (CORBA::ULong i = 0; i < numfields; ++i)
     {
       // Recursively initialize each element.
-      this->da_members_[i] = 
+      this->da_members_[i] =
         TAO_DynAnyFactory::make_dyn_any (elemtype.in ()
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -157,7 +158,7 @@ TAO_DynArray_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
 
   while (kind != CORBA::tk_array)
     {
-      element_type = 
+      element_type =
         element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
@@ -166,7 +167,7 @@ TAO_DynArray_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval = 
+  CORBA::TypeCode_ptr retval =
     element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 

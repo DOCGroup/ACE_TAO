@@ -30,8 +30,7 @@
 
 
 #include "DynamicAny.h"
-#include "ace/OS_NS_string.h"
-
+#include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -88,16 +87,16 @@ TAO::Objref_Traits<DynamicAny::DynAny>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*DynamicAny__TAO_DynAny_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::InvalidValue::InvalidValue (void)
@@ -182,7 +181,7 @@ void DynamicAny::DynAny::InvalidValue::_tao_decode (
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (void)
@@ -395,7 +394,7 @@ TAO::Objref_Traits<DynamicAny::DynFixed>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -536,7 +535,7 @@ TAO::Objref_Traits<DynamicAny::DynEnum>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -775,7 +774,7 @@ TAO::Objref_Traits<DynamicAny::DynStruct>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -916,7 +915,7 @@ TAO::Objref_Traits<DynamicAny::DynUnion>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1148,7 +1147,7 @@ TAO::Objref_Traits<DynamicAny::DynSequence>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1289,7 +1288,7 @@ TAO::Objref_Traits<DynamicAny::DynArray>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1430,7 +1429,7 @@ TAO::Objref_Traits<DynamicAny::DynValue>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1571,7 +1570,7 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1924,7 +1923,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

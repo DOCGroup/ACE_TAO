@@ -5,6 +5,7 @@
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
            DynSequence_i,
@@ -169,7 +170,7 @@ TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval = 
+  CORBA::TypeCode_ptr retval =
     element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
