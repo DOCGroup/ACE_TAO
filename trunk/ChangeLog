@@ -1,3 +1,11 @@
+Sun Mar  4 19:27:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg_NT_Event_Log.h:
+        * ace/OS.cpp:
+
+          Disabled Log_Msg_NT_Event_Log on Windows CE.
+
 Sun Mar 04 13:19:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * etc/tao.doxygen:
