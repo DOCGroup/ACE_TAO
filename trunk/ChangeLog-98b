@@ -1,3 +1,11 @@
+Wed May 27 13:45:24 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE.cpp (handle_timed_complete): Fixed problem where
+	  successful connect was being reported as a failure (P90).
+
+	* tests/SOCK_Connector_Test.cpp: Added a test for a successful
+	  non-blocking connect (tests fix from above).
+
 Wed May 27 07:04:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Service_Config.cpp: default debug_ to 1 instead
@@ -44,37 +52,6 @@ Tue May 26 00:35:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           Different tables are used internally by consulting the
           minimum_id for each table.  It is up to the user to make sure
           that multiple tables do not share the same event id range.
-
-Sat Apr 18 01:28:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * ace/Timeprobe.h (class ACE_Timeprobe): Changed ACE_Timeprobe to
-          use ACE_OS::gethrtime().
-
-Thu Apr 16 04:14:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * ace/Timeprobe:
-
-          This class is used to instrument code.  This is accomplished by
-          inserting time probes at different location in the code.
-          ACE_Timeprobe then measures the time difference between two time
-          probes.
-
-          This class provides a lightweight implementation for measuring
-          the time required to execute code between two time probes.  When
-          a time probe executes, it records the time, the id of the
-          calling thread, and an event description.  The event description
-          can either be an unsigned long or a string (char *).  If string
-          are used, care must be taken cause only pointer copies are done
-          and the string data is *not* copied.
-
-          The recorded time probes can then be printed by calling
-          print_times().  If you have used unsigned longs as event
-          descriptions in any of your time probes, you must provide an
-          event description table that maps the unsigned longs to readable
-          strings.  This map is a simple array of strings, and the event
-          number is used as the index into the array when looking for the
-          event description.  If you have only used strings for the event
-          description, this map is not necessary.
 
 Sat May 23 21:52:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -889,17 +866,6 @@ Fri May  8 03:43:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           Thanks to the inspiration from Arturo Montes
           <mitosys@colomsat.net.co>.
 
-Wed May 06 18:35:21 1998  Steve Huston  <shuston@riverace.com>
-
-        * ace/ACE.cpp (get_ip_interfaces): Reset buf_len before each call to
-          get_reg_key to get registry value for device's IP address.  It gets
-          overwritten on each call to get_reg_key.
-
-        * include/makeinclude/platform_mvs.GNU: Added definition for PIC.
-          Though not related to position-independent-code, it is a switch that
-          makes shared lib builds work right.  Removed the old SOBUILD def.
-          Thanks to Chuck Gehr for helping with this strategy.
-
 Thu May 07 22:06:13 1998  Ben Eng  <ben@jetpen.com>
 
         * ace/config-kcc-common.h,config-linux-{common,kcc}.h: updated
@@ -911,65 +877,6 @@ Thu May  7 20:32:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           (main): Oops, we need to move the unlink() AFTER we create the
           file...  Thanks to Sandro Doro <doros@aureus.sublink.org> for
           reporting this.
-
-Wed May  6 02:57:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/Filecache.h (ACE_Filecache_Handle): Removed
-          ACE_EXPORT_DECLARE and specified ACE_Export directly for
-          ACE_Filecache_Handle and ACE_Filecache in calss declarations.
-
-        * ace/Thread_Manager.{h,i,cpp}: A bug was found by Arturo Montes
-          <mitosys@colomsat.net.co> who noticed that when a thread was
-          spawned and then exited immediately, its thread descriptor might
-          get freed before even get registered into the thread table kept
-          by the Thread_Manager.  Although it doesn't make any sense to
-          spawn a thread just to let it return immediately, a middleware
-          shouldn't restrict the way how users want to use it.
-
-          I got around this problem by adding a lock into
-          Thread_Descriptor.  Before spawning a thread, the Thread Manager
-          will first grab the lock.  It won't release the lock until
-          calling append thread, at which point, the Thread_Descriptor of
-          the thread has been stashed into the table.  Removing the
-          Thread_Descriptor also requires to hold this lock and release
-          the lock before the Thread_Descriptor is "freed."  Therefore,
-          if a thread exit before its Thread_Manager ever gets a chance to
-          register it, it will block and waiting.
-
-          The type of the lock is defined by ACE_DEFAULT_THREAD_MANAGER_LOCK
-          which, by default, is ACE_Thread_Mutex.  User can change the
-          definition by defining in their config.h file.  For example, if
-          you can be sure that all your threads will run for an extended
-          long time (which, in most case, should be true,) you can disable
-          this feature by defining this as a ACE_Null_Mutex to speed up
-          spawning and termination of threads.
-
-          (thread_desc_freelist_): Added a free list to Thread_Manager to
-          recycle Thread_Descriptor.  By default, this free list
-          pre-allocate 0 Thread_Descriptor and has low-water-mark of 1,
-          increment count 1 and a huge (25000) high water mark.  That is,
-          if you use a Thread_Manager for an extended period of time, you
-          won't have to dynamically allocate memory for Thread_Descriptor
-          for every thread after your system is stable (the thread count
-          fluctuates between some certain values.)
-
-          There are two ways to change the settings.  First, by defining
-          ACE_DEFAULT_THREAD_MANAGER_LWM, ACE_DEFAULT_THREAD_MANAGER_HWM,
-          ACE_DEFAULT_THREAD_MANAGER_INC, and
-          ACE_DEFAULT_THREAD_MANAGER_PREALLOC in your <config.h> file.
-          This changes the default setting of your ACE.  (The global
-          Thread_Manager use this setting.)  Or, you can specify these
-          values when creating a Thread_Manager.
-
-        * ace/Free_List.cpp (alloc,dealloc): Don't grab the lock in these
-          two functions.  They only get called from add() and remove()
-          which hold the lock before making the call.  Actually, they also
-          gets called from the constructor and destructor.  But that
-          shouldn't be a problem.
-
-        * tests/Reactor_Notify_Test.cpp (run_test): Moved the #endif of
-          ACE_HAS_THREADS down to avoid compilation error on non-threaded
-          platforms.
 
 Thu May 07 19:08:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
