@@ -590,8 +590,6 @@ ACE_HAS_XTI                             Platform has XTI
                                         of TLI).  Implies ACE_HAS_TLI
                                         but uses a different header
                                         file.
-ACE_HAS_YIELD_VOID_PTR                  Platform requires pthread_yield() to take a NULL.
-
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
                                         VxWorks and Chorus)
 ACE_LACKS_ACE_IOSTREAM                  Platform can not build

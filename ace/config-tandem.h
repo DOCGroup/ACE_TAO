@@ -210,8 +210,6 @@
 // must* take extern C functions.
 //ACE_HAS_THR_C_FUNC                    The pthread_create() routine *must*
 // take extern C functions.
-//ACE_HAS_YIELD_VOID_PTR                Platform requires pthread_yield() to
-// take a NULL.
 //ACE_LACKS_CONDATTR_PSHARED            Platform has no implementation of
 // pthread_condattr_setpshared(), even though it supports pthreads!
 //ACE_LACKS_PTHREAD_THR_SIGSETMASK      Platform lacks pthread_thr_
