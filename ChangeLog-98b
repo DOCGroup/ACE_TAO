@@ -1,3 +1,14 @@
+Mon Jul  6 15:24:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/Logger/client.h
+	* tests/Logger/client.cpp
+	* orbsvcs/orbsvcs/Log/Logger_i.h
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp
+	* orbsvcs/orbsvcs/Logger.idl
+
+	Routine checkin. Ignore the man behind that curtain....
+	Fully working version complete, but not yet Purified. 
+	
 Mon Jul  6 14:24:11 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
 	Add a pause after each send_n()(i.e. ipcSend()) as a temporary
@@ -368,6 +379,18 @@ Sat Jun 27 00:27:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           - Introduced enums and took the magic numbers out.
 
+Fri Jun	26 20:37:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+	* tests/Logger/clnt.h
+	* tests/Logger/clnt.cpp
+	* tests/Logger/svr.cpp
+	* orbsvcs/orbsvcs/Log/Logger_i.h
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp
+	* orbsvcs/orbsvcs/Logger.idl
+
+	The current status of this is incomplete. The svr* test is guaranteed
+	to be nonfunctional (I cannot yet speak for the rest). 
+
+	
 Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/test_config.h: Don't close the ofstream before opening the
