@@ -1,3 +1,11 @@
+Wed Oct 18 10:20:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Exception.cpp (TAO_SYSTEM_EXCEPTION): 
+	  Added helper functions for the insertion and extraction
+	  operators. This would help reduce the Foot Print since instead
+	  of the same code repeated for each of the 30 or so exceptions,
+	  there will be 30 or so invocations of these helper methods.
+	
 Wed Oct 18 10:49:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
