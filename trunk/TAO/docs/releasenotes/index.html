@@ -411,12 +411,16 @@ code if the target platform does not support namespaces. For such platforms, TAO
 maps the IDL 'module' keyword to a class instead of to 'namespace', and C++ does
 not allow template class declarations to occur inside another class. </li>
 
+<li>
+IDL compiler can now process multiple IDL files per execution, on all platforms.
+A separate process is spawned for each file. IDL files and command line options
+may appear in any order on the command line. Any option not starting with '-' will
+be treated as a filename.</li>
+
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
 <ul>
-<LI>At this point there are no known problems with the IDL compiler
-</LI>
 </ul>
 Future work:
 <ul>
