@@ -112,7 +112,7 @@ public:
   };
 
   typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
-  // typedef ACE_Array<RtecEventComm::EventHeader> Headers;
+  typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 
   virtual void event_ids (Headers& headers) = 0;
   // Compute the disjunction of all the event types that could be of

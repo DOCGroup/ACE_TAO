@@ -1,3 +1,36 @@
+Wed Feb 17 10:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  I added an strategy to support the Event Channel observers. The
+	  Event Channel uses this strategy to implement the
+	  append_observer(), remove_observer() methods and it informs the
+	  strategy of any changes in the set of consumers and/or
+	  suppliers.
+
+	* orbsvcs/orbsvcs/Event/EC_Filter.h:
+	  Added a typedef for the HeaderSet iterator.
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	  Made the iterator over the set of consumers a public interface.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	  Minor cosmetic fixes.
+
 Tue Feb 16 17:15:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vb.{h,cpp}: 

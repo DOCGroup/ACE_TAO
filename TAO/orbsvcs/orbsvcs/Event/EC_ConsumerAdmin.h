@@ -52,7 +52,7 @@ class TAO_EC_ConsumerAdmin : public POA_RtecEventChannelAdmin::ConsumerAdmin
   //   ProxyPushSupplier objects.
   //
   // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_EC_Event_Channel object 
+  //   It does not assume ownership of the TAO_EC_Event_Channel object
   //
   // = LOCKING
   //   No provisions for locking, access must be serialized
