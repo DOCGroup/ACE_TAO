@@ -147,10 +147,6 @@ extern "C" {
    */
   PACE_INLINE int pace_sigwaitinfo (const pace_sigset_t * set, pace_siginfo_t * info);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/signal.inl"
@@ -160,5 +156,9 @@ extern "C" {
 #    include "pace/win32/signal.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SIGNAL_H */
