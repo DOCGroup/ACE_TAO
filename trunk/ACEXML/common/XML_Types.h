@@ -14,18 +14,16 @@
 //=============================================================================
 
 #ifndef _ACEXML_XML_TYPES_H_
-# define _ACEXML_XML_TYPES_H_
+#define _ACEXML_XML_TYPES_H_
 
 #include "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/SString.h"
-#include "ACEXML/common/ACEXML_Export.h"
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
 typedef wchar_t ACEXML_UTF16;
@@ -46,7 +44,7 @@ typedef char ACEXML_UTF8;
  * ACEXML_Char only maps to ACEXML_UTF16 when ACE_USES_WCHAR is defined.
  * Here we assume sizeof (wchar_t) is always 2 bytes.
  *
- * Defulat XML strings will use UTF-8 encoding.  We would like to use
+ * Default XML strings will use UTF-8 encoding.  We would like to use
  * the string classes in standard C++ Library here.  But they are not
  * very portable yet (as far as I know,) and I'll just use ACE_CString
  * for now, unless UNICODE support is turned on.  Notice that you
@@ -66,7 +64,7 @@ typedef ACE_CString ACEXML_String;
 #   define __ACEXML_INLINE__ inline
 # else
 #   if defined (__ACEXML_INLINE__)
-#     undefine __ACEXML_INLINE__
+#     undef __ACEXML_INLINE__
 #   endif /* __ACEXML_INLINE__ */
 # endif /* (!ACEXML_HAS_INLINE) && (__ACE_INLINE__) || (ACEXML_HAS_INLINE == 1) */
 
