@@ -1,3 +1,19 @@
+Tue Feb 17 16:05:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Chris G. updated the file list of
+	  this project.  
+
+	* orbsvcs/orbsvcs/Time_Utilities.h:
+	* orbsvcs/orbsvcs/Event_Utilities.h: Added MS keayword,
+	  TAO_ORBSVCS_Export.
+
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp: Updated project setting to
+	  take the advantage of TAO naming service.
+	
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsp: Updated project
+	  setting to use DLL version of orbsvcs.
+
 Tue Feb 17 15:39:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Makefile:
