@@ -1,3 +1,55 @@
+Fri May 12 12:13:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/varbase.h:
+	  Added new file varbase.h and included it in corbafwd.h. This
+	  new file contains a base class declaration for the object _var
+	  classes called TAO_Base_var. Declaring (but not implementing)
+	  a private copy constructor and assignment operator that takes
+	  a reference to this base class as the rhs will cause a compile-
+	  time error if a "widening assignment" happens - when a var of
+	  a derived interface is assigned to a var of its ancestor. This is
+	  what we want, the CORBA spec forbids it.
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	  Changes to generate the declarations mentioned above in the
+	  *C.h files, as well as a call to the var base class default
+	  constructor in the initialization of the var copy constructor
+	  (as demanded by Sun egcs) in the *C.i files.
+
+	* tao/CurrentC.h:
+	* tao/DomainC.h:
+	* tao/DynAnyC.h:
+	* tao/IORC.h:
+	* tao/ImplRepoC.h:
+	* tao/InterceptorC.h:
+	* tao/InterfaceC.h:
+	* tao/MessagingC.h:
+	* tao/POAC.h:
+	* tao/PolicyC.h:
+	* tao/PollableC.h:
+	* tao/TAOC.h:
+	* tao/CurrentC.i:
+	* tao/DomainC.i:
+	* tao/DynAnyC.i:
+	* tao/IORC.i:
+	* tao/ImplRepoC.i:
+	* tao/InterceptorC.i:
+	* tao/InterfaceC.i:
+	* tao/MessagingC.i:
+	* tao/POAC.i:
+	* tao/PolicyC.i:
+	* tao/PollableC.i:
+	* tao/TAOC.i:
+	  Changes to hand-crafted files reflecting the changes to generated 
+	  code.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Addition of varbase.h and some missing generated .i files to the
+	  projects.
+
 Fri May 12 09:17:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Param_Test/any.cpp:
