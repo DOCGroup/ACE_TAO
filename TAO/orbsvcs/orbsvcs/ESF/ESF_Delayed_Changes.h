@@ -26,6 +26,8 @@ template<class Target,class Object> class TAO_ESF_Disconnected_Command;
 template<class Target,class Object> class TAO_ESF_Reconnected_Command;
 template<class Target> class TAO_ESF_Shutdown_Command;
 
+class ACE_Command_Base;
+
 /**
  * @class TAO_ESF_Delayed_Changes
  *

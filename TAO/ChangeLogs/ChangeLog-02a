@@ -1,134 +1,142 @@
+Mon May 21 16:54:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+          Add missing forward declaration for ACE_Command_Base.  Thanks to
+          the SAIC guys for pointing this out: Frank J. Hodum
+          <fhodum@dctd.saic.com> and J. Russell Noseworthy
+          <rnosewor@objectsciences.com>
+
 Mon May 21 15:39:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tests/Native_Exceptions/test_i.{h,cpp}:
-	* tests/DSI_Gateway/test_i.{h,cpp}:
-	* tests/Timed_Buffered_Oneways/test_i.{h,cpp}:
-	* tests/Portable_Interceptors/Dynamic/test_i.{h,cpp}:
-	* tests/Endpoint_Per_Priority/test_i.{h,cpp}:
-	* tests/Forwarding/test_i.{h,cpp}:
+        * tests/Native_Exceptions/test_i.{h,cpp}:
+        * tests/DSI_Gateway/test_i.{h,cpp}:
+        * tests/Timed_Buffered_Oneways/test_i.{h,cpp}:
+        * tests/Portable_Interceptors/Dynamic/test_i.{h,cpp}:
+        * tests/Endpoint_Per_Priority/test_i.{h,cpp}:
+        * tests/Forwarding/test_i.{h,cpp}:
 
-	Fixed compilation errors in Forte Update 1.
+        Fixed compilation errors in Forte Update 1.
 
 Sun May 20 12:30:52 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* performance-tests/Callback/Server_i.{h,cpp}:
-	* performance-tests/Callback/Callback_i.{h,cpp}:
-	* performance-tests/Latency/test_i.{h,cpp}:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.{h,cpp}:
-	  Fixed compile errors in Forte update 1.
+        * performance-tests/Callback/Server_i.{h,cpp}:
+        * performance-tests/Callback/Callback_i.{h,cpp}:
+        * performance-tests/Latency/test_i.{h,cpp}:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.{h,cpp}:
+          Fixed compile errors in Forte update 1.
 
 Sun May 20 10:43:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/OctetSeq/test_i.{h,cpp}:
-	* tests/MT_Server/test_i.{h,cpp}:
-	* tests/Nested_Event_Loop/test_i.{h,cpp}:
-	* tests/Leader_Followers/test_i.{h,cpp}
-	* tests/Object_Loader/Test_i.{h,cpp}:
-	* tests/Single_Read/test_i.{h,cpp}: Fixed compile errors in Forte
-	  update 1.
+        * tests/OctetSeq/test_i.{h,cpp}:
+        * tests/MT_Server/test_i.{h,cpp}:
+        * tests/Nested_Event_Loop/test_i.{h,cpp}:
+        * tests/Leader_Followers/test_i.{h,cpp}
+        * tests/Object_Loader/Test_i.{h,cpp}:
+        * tests/Single_Read/test_i.{h,cpp}: Fixed compile errors in Forte
+          update 1.
 
 Sat May 19 20:37:00 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tests/Connection_Purging/server.dsp: Fixed an error on Win32
-	  platforms
+        * tests/Connection_Purging/server.dsp: Fixed an error on Win32
+          platforms
 
 Sat May 19 17:00:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Profile.cpp (parse_string):
+        * tao/IIOP_Profile.cpp (parse_string):
 
-	  Fixed misguided code that appended a default port to the address
-	  string in the event one wasn't specified, only to be converted
-	  to an integer.  Just use the integer value!
+          Fixed misguided code that appended a default port to the address
+          string in the event one wasn't specified, only to be converted
+          to an integer.  Just use the integer value!
 
-	  Fixed broken code that attempted to extract the specified port
-	  from the address string.  The code was unnecessarily
-	  complicated.  It is surprising that the old code actually
-	  worked.
+          Fixed broken code that attempted to extract the specified port
+          from the address string.  The code was unnecessarily
+          complicated.  It is surprising that the old code actually
+          worked.
 
-	  Made the code more efficient by removing an unnecessary
-	  allocation and several string operations.
+          Made the code more efficient by removing an unnecessary
+          allocation and several string operations.
 
-	  Throw a CORBA::INV_OBJREF exception if no hostname was
-	  specified.  A hostname is required by the spec.
+          Throw a CORBA::INV_OBJREF exception if no hostname was
+          specified.  A hostname is required by the spec.
 
-	  If no version is specified, default to IIOP 1.0, as dictated by
-	  the spec.
+          If no version is specified, default to IIOP 1.0, as dictated by
+          the spec.
 
-	* tao/IIOP_Endpoint.cpp (TAO_IIOP_Endpoint):
+        * tao/IIOP_Endpoint.cpp (TAO_IIOP_Endpoint):
 
-	  If a port isn't specified, use the default IANA assigned IIOP
-	  port (683).  This constructor is only used on the client side.
+          If a port isn't specified, use the default IANA assigned IIOP
+          port (683).  This constructor is only used on the client side.
 
-	  Force the address family type of the INET_Addr to be invalid.
-	  It will be set when it is first accessed from the
-	  IIOP_Endpoint.  This delays resolution of the IP address until
-	  the first request is made.  For some reason this functionality
-	  was once again disabled.
+          Force the address family type of the INET_Addr to be invalid.
+          It will be set when it is first accessed from the
+          IIOP_Endpoint.  This delays resolution of the IP address until
+          the first request is made.  For some reason this functionality
+          was once again disabled.
 
-	* tao/RT_Policy_i.cpp (hook):
+        * tao/RT_Policy_i.cpp (hook):
 
-	  Fixed all misuses of the emulated exception macros, and lack
-	  thereof.
+          Fixed all misuses of the emulated exception macros, and lack
+          thereof.
 
-	  Fixed misuses of ACE_static_cast where an ACE_dynamic_cast was
-	  needed.
+          Fixed misuses of ACE_static_cast where an ACE_dynamic_cast was
+          needed.
 
 Sat May 19 17:17:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
-	* docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
-	* orbsvcs/Notify_Service/README,
-	* tests/Param_Test/anyop.cpp (main),
-  	* tests/Param_Test/manipulation.cpp: Fixed all uses of
-	  "iioploc://" with "corbaloc:iiop:".  Thanks to Craig Rodrigues
- 	  for suggesting this.
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
+        * docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
+        * orbsvcs/Notify_Service/README,
+        * tests/Param_Test/anyop.cpp (main),
+        * tests/Param_Test/manipulation.cpp: Fixed all uses of
+          "iioploc://" with "corbaloc:iiop:".  Thanks to Craig Rodrigues
+          for suggesting this.
 
 Sat May 19 11:02:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed a problem
-	  while trying to check for availability of a connection. A call
-	  was made to cache the transport rather than to find the
-	  transport. Looks like "cut-and-paste"yopia :)
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed a problem
+          while trying to check for availability of a connection. A call
+          was made to cache the transport rather than to find the
+          transport. Looks like "cut-and-paste"yopia :)
 
 Sat May 19 09:09:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/NULL_Connection_Purging_Strategy.h: Made some
-	  cosmetic changes.
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h: Made some
+          cosmetic changes.
 
-	* tao/Strategies/NULL_Connection_Purging_Strategy.cpp: Fixed a
-	  compile error with Win32 builds.
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp: Fixed a
+          compile error with Win32 builds.
 
 Sat May 19 08:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/Event_Service/Makefile:
-	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
-	  dependencies.  This should take care of the NoInterceptors
-	  build.
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Makefile: Updated
+          dependencies.  This should take care of the NoInterceptors
+          build.
 
 Fri May 18 22:16:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp: Fixed a warning in
-	  g++ builds.
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp: Fixed a warning in
+          g++ builds.
 
 Fri May 18 19:49:04 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+        * orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
 
-	  Removed "-ORBDebugLevel 4" from the client and server command
-	  line options.  It caused an absurd amount of useless output for
-	  this test.
+          Removed "-ORBDebugLevel 4" from the client and server command
+          line options.  It caused an absurd amount of useless output for
+          this test.
 
-	* orbsvcs/tests/Security/Makefile (DIRS):
+        * orbsvcs/tests/Security/Makefile (DIRS):
 
-	  Added `SecurityLevel1' directory to the list of directories to
-	  build.
+          Added `SecurityLevel1' directory to the list of directories to
+          build.
 
 Fri May 18 16:30:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/FILE_Parser.cpp (parse_string):
+        * tao/FILE_Parser.cpp (parse_string):
 
-	  Added missing ACE_CHECK_RETURN after the ACE_ENDTRY macro.  It
-	  is required since the caught exception is re-thrown.
+          Added missing ACE_CHECK_RETURN after the ACE_ENDTRY macro.  It
+          is required since the caught exception is re-thrown.
 
 Fri May 18 15:27:11 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -198,9 +206,9 @@ Fri May 18 14:23:22 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri May 18 12:23:31 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-	  Added missing explicit template instantiations for
-	  ACE_Hash_Map_Iterator_Ex and ACE_Hash_Map_Reverse_Iterator_Ex.
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+          Added missing explicit template instantiations for
+          ACE_Hash_Map_Iterator_Ex and ACE_Hash_Map_Reverse_Iterator_Ex.
 
 Fri May 18 10:30:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -215,40 +223,40 @@ Fri May 18 10:30:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Fri May 18 06:53:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage,
-  	* orbsvcs/tests/AVStreams/Simple_Three_Stage,
-  	* orbsvcs/tests/AVStreams/Component_Switching:
-	  Added makefiles for BCB.  Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for contributing this.
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage,
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage,
+        * orbsvcs/tests/AVStreams/Component_Switching:
+          Added makefiles for BCB.  Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for contributing this.
 
 Thu May 17 23:37:04 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
 
-	  Added this script for use with quick "one-button" automated
-	  testing (e.g. the nightly builds).
+          Added this script for use with quick "one-button" automated
+          testing (e.g. the nightly builds).
 
 Thu May 17 23:15:29 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h (scenario_):
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp (receive_request_service_contexts):
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h (scenario_):
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp (receive_request_service_contexts):
 
-	  Added a field used to keep track of the scenario count.  It is
-	  used to get around the inability to call
-	  RequestInfo::arguments() in the
-	  receive_request_service_contexts() a interception point.  This
-	  allows the test to finally run to completion.  [Bug 726]
+          Added a field used to keep track of the scenario count.  It is
+          used to get around the inability to call
+          RequestInfo::arguments() in the
+          receive_request_service_contexts() a interception point.  This
+          allows the test to finally run to completion.  [Bug 726]
 
 Thu May 17 22:29:08 2001  Ossama Othman  <ossama@uci.edu>
 
         * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
 
-	  Only increment the ending interception point count if the
-	  appropriate test is being run.  For example, don't increment the
-	  ending client side interception point count if the server side
-	  test is running.  This fixes a problem where the test would fail
-	  due to an incorrect interception point count.
+          Only increment the ending interception point count if the
+          appropriate test is being run.  For example, don't increment the
+          ending client side interception point count if the server side
+          test is running.  This fixes a problem where the test would fail
+          due to an incorrect interception point count.
 
 Thu May 17 15:48:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
