@@ -1,9 +1,13 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef TAO_INTERCEPTORS_H
 #define TAO_INTERCEPTORS_H
 
-#include "tao/corba.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -17,8 +21,8 @@
 #endif /* _MSC_VER */
 
 class Echo_Client_Request_Interceptor
-:  public PortableInterceptor::ClientRequestInterceptor//,
-   //  public CORBA::LocalObject
+  : public PortableInterceptor::ClientRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
@@ -73,8 +77,8 @@ private:
 };
 
 class Echo_Server_Request_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor//,
-//    public CORBA::LocalObject
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
