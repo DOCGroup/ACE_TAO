@@ -4,6 +4,8 @@
 #include "tao/corba.h"
 #include "Naming_Utils.h"
 #include "ace/Arg_Shifter.h"
+#include "Hash_Naming_Context.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
@@ -90,12 +92,30 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
                                     size_t context_size)
 {
-  ACE_NEW_RETURN (this->naming_context_impl_,
-                  TAO_NamingContext (poa,
-                                     "root",
-                                     context_size,
-                                     1),
+  TAO_Naming_Context *c = 0;
+  TAO_Hash_Naming_Context *c_impl = 0;
+
+  ACE_NEW_RETURN (c_impl,
+                  TAO_Hash_Naming_Context (poa,
+                                           "NameService",
+                                           context_size,
+                                           1),
                   -1);
+  // Put c_impl into the auto pointer temporarily, in case next
+  // allocation fails.
+  ACE_Auto_Basic_Ptr<TAO_Hash_Naming_Context> impl_temp (c_impl);
+
+  ACE_NEW_RETURN (c,
+                  TAO_Naming_Context (c_impl),
+                  -1);
+  // Allocation succeeded, get rid of auto pointer.
+  impl_temp.release ();
+
+  // Set implementation's pointer to it's abstraction.
+  c_impl->interface (c);
+
+  // Now wrap this pointer into Auto_Ptr until everything succeeds.
+  ACE_Auto_Basic_Ptr<TAO_Naming_Context> c_temp (c);
 
   TAO_TRY
     {
@@ -103,12 +123,12 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         PortableServer::string_to_ObjectId ("NameService");
 
       poa->activate_object_with_id (id.in (),
-                                    this->naming_context_impl_,
+                                    c,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->naming_context_ =
-        this->naming_context_impl_->_this (TAO_TRY_ENV);
+        c->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Stringify the objref we'll be implementing, and print it to
@@ -123,6 +143,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         ACE_DEBUG ((LM_DEBUG,
                     "NameService IOR is <%s>\n",
                     this->naming_service_ior_.in ()));
+
+      // everything succeeded, so set the pointer, get rid of Auto_Ptr.
+      this->naming_context_impl_ = c_temp.release ();
 
 #if defined (ACE_HAS_IP_MULTICAST)
       // Get reactor instance from TAO.
@@ -182,7 +205,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
 // Returns the "NameService" NamingContext implementation object.
 
-TAO_NamingContext &
+TAO_Naming_Context &
 TAO_Naming_Server::get_naming_context (void)
 {
   return *this->naming_context_impl_;
