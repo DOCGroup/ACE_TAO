@@ -136,23 +136,6 @@ ACE_Thread_Condition<MUTEX>::dump (void) const
   ACE_Condition<MUTEX>::dump ();
 }
 
-template <class MUTEX> void
-ACE_Process_Condition<MUTEX>::dump (void) const
-{
-// ACE_TRACE ("ACE_Process_Condition<MUTEX>::dump");
-
-  ACE_Condition<MUTEX>::dump ();
-}
-
-template <class MUTEX>
-ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m, 
-						     LPCTSTR name,
-						     void *arg)
-  : ACE_Condition<MUTEX> (m, USYNC_PROCESS, name, arg)
-{
-// ACE_TRACE ("ACE_Process_Condition<MUTEX>::ACE_Process_Condition");
-}
-
 template <class MUTEX>
 ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m, 
 				     int type, 

@@ -1225,7 +1225,8 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   // This call will automatically release the mutex and wait on the semaphore.
-  result = ::SignalObjectAndWait (*external_mutex, cv->sema_, INFINITE, FALSE);
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (*external_mutex, cv->sema_, INFINITE, FALSE), result),
+              int, -1, result);
 #else
   // We keep the lock held just long enough to increment the count of
   // waiters by one.  Note that we can't keep it held across the call
@@ -1236,12 +1237,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // Wait to be awakened by a ACE_OS::cond_signal() or
   // ACE_OS::cond_broadcast().
-  result = ::WaitForSingleObject (cv->sema_, INFINITE);
+  result = ACE_OS::sema_wait (cv->sema_);
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-  if (result != WAIT_OBJECT_0)
-    // This is a hack, we need to find an appropriate mapping...
-    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-  else 
+  if (result != -1)
     {
       // If we are broadcasting, then we need to be smarter about
       // locking since there can now be multiple threadsd in the

@@ -824,6 +824,22 @@ ACE_Process_Barrier::dump (void) const
   ACE_Barrier::dump ();
 }
 
+template <class MUTEX> void
+ACE_Process_Condition<MUTEX>::dump (void) const
+{
+// ACE_TRACE ("ACE_Process_Condition<MUTEX>::dump");
+
+  ACE_Condition<MUTEX>::dump ();
+}
+
+template <class MUTEX>
+ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m, 
+						     LPCTSTR name,
+						     void *arg)
+  : ACE_Condition<MUTEX> (m, USYNC_PROCESS, name, arg)
+{
+// ACE_TRACE ("ACE_Process_Condition<MUTEX>::ACE_Process_Condition");
+}
 #endif /* 0 */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex)
