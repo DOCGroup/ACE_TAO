@@ -23,15 +23,15 @@ run successfully, these conditions must be met:
 --  ACE_ROOT/bin must be in the system path.
 
 
-How to use the NT_ImplRepo_Service
+How to use NT_ImplRepo_Service
 ==================================
 
-To set the options for the TAO ImplRepo Sevice, go to the Services icon
+To set the options for the TAO NT ImplRepo Sevice, go to the Services icon
 in the Settings group under the start menu (start menu -> settings ->
-services). There, highlight the NT_ImplRepo_Service, which is the name
+services). There, highlight "TAO NT ImplRepo Service", which is the name
 used by the ImplRepo Service when it is registered. After it's
 highlighted, you should see at the bottom of the dialog box an area to
-specify options for ImplRepo_Service. Just enter the options you wish in 
+specify options for ImplRepo_Service.exe. Just enter the options you wish in 
 that edit box and everything should just work. However, some options, such as
 -ORBDebugLevel, won't work since an NT service can't write output to
 standard out.
