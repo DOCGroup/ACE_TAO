@@ -1,3 +1,8 @@
+Fri Oct 09 15:27:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (~App_Allocated): Free up the memory pool
+	  before deleting the allocators.
+
 Fri Oct  9 13:42:47 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/results/REMOTE/README: added this
