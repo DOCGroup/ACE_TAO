@@ -2,13 +2,15 @@
 
 #include "Notify_Test_Client.h"
 
-ACE_RCSID(Notify_Tests, Notify_Test_Client, "$Id$")
+ACE_RCSID (lib,
+           Notify_Test_Client,
+           "$Id$")
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
 Notify_Test_Client::Notify_Test_Client (void)
-  : done_ (0)
+  : done_ (false)
 {
   // @@ Later: accept the inter filter operator as a param.
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
@@ -132,7 +134,7 @@ Notify_Test_Client::ORB_run (void)
 void
 Notify_Test_Client::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  this->done_ = 1;
+  this->done_ = true;
 }
 
 CORBA::ORB_ptr
