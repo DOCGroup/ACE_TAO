@@ -1,3 +1,16 @@
+Wed Jun  7 12:27:13 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* Makefile:
+	  Added Makefile for upper level pace directory.
+        * pace/Makefile:
+          Changed Makefile to fit in with the general makefile scheme in
+          ACE and TAO.
+        * config/compiler.h:
+          Defined PACE_HAS_INLINE even for C files so that the functions
+          will be directly added with the .h file.
+        * tests/{Makefile,Stdio_Test.c,Posix_SP_Test.c}:
+          Adding Makefile and tests to the tests directory.
+
 Mon Jun  5 17:43:07 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* docs/todo.txt:
