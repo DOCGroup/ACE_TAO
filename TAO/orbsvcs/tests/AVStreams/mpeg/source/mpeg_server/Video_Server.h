@@ -120,7 +120,7 @@ public:
 
   int register_handler (void);
   // this will register this sig_handler
-  // with the reactor
+  // with the reactor for SIGALRM
 
   virtual int shutdown (ACE_HANDLE, 
                         ACE_Reactor_Mask);
