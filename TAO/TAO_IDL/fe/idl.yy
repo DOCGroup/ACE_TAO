@@ -1227,31 +1227,31 @@ positive_int_expr :
               switch (ev->et)
               {
                 case AST_Expression::EV_ushort:
-                  if ($1->ev ()->u.usval == 0)
+                  if (ev->u.usval == 0)
                     {
                       good_expression = 0;
                     }
                   break;
                 case AST_Expression::EV_ulong:
-                  if ($1->ev ()->u.ulval == 0)
+                  if (ev->u.ulval == 0)
                     {
                       good_expression = 0;
                     }
                   break;
                 case AST_Expression::EV_ulonglong:
-                  if ($1->ev ()->u.ullval == 0)
+                  if (ev->u.ullval == 0)
                     {
                       good_expression = 0;
                     }
                   break;
                 case AST_Expression::EV_octet:
-                  if ($1->ev ()->u.oval == 0)
+                  if (ev->u.oval == 0)
                     {
                       good_expression = 0;
                     }
                   break;
                 case AST_Expression::EV_bool:
-                  if ($1->ev ()->u.bval == 0)
+                  if (ev->u.bval == 0)
                     {
                       good_expression = 0;
                     }
