@@ -15,8 +15,14 @@ public class ListFiles
     this.browser_ = browser;
     try
       {
-	this.fileIcon_ = new Icon (parent.getCodeBase () + "doc01.gif", parent);
-	this.dirIcon_ = new Icon (parent.getCodeBase () + "file03.gif", parent);
+	this.fileIcon_ = new Icon (parent.getCodeBase () + 
+				   "../ImageProcessing/framework/" +
+				   "doc01.gif", 
+				   parent);
+	this.dirIcon_ = new Icon (parent.getCodeBase () + 
+				  "../ImageProcessing/framework/" +
+				  "file03.gif", 
+				  parent);
       }
     catch (MalformedURLException e)
       {
