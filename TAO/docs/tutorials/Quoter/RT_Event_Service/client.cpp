@@ -5,9 +5,6 @@
 #include "Stock_Consumer.h"
 #include <orbsvcs/CosNamingC.h>
 #include <orbsvcs/Event_Utilities.h>
-#include <iostream>
-
-using namespace std;
 
 int main (int argc, char* argv[])
 {

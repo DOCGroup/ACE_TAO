@@ -4,9 +4,6 @@
 
 #include "Stock_Factory_i.h"
 #include "Stock_i.h"
-#include <iostream>
-
-using namespace std;
 
 Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 {
