@@ -365,7 +365,12 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   // on platforms that do not provide the faulting address through
   // signals or exceptions.
   if (guess_on_fault_)
-    return this->remap (0);
+    {
+      off_t current_file_offset = ACE_OS::filesize (this->mmap_.handle ());
+
+      // Extend the mapping to cover the size of the backing store.
+      return this->map_file (current_file_offset);
+    }
   else
     return -1;
 }
