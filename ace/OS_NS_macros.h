@@ -27,8 +27,8 @@
 
 #if defined (ACE_WIN32)
 # define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) \
-  do { TYPE ace_result_ = (TYPE) OP; \
-      if (ace_result_ == FAILVALUE) { int ___ = ::WSAGetLastError (); errno = ___; return (TYPE) FAILVALUE; } else return ace_result_; \
+  do { TYPE ace_result_ = static_cast< TYPE > (OP); \
+      if (ace_result_ == FAILVALUE) { int ___ = ::WSAGetLastError (); errno = ___; return static_cast< TYPE > (FAILVALUE); } else return ace_result_; \
   } while (0)
 #else
 # define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
