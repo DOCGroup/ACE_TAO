@@ -1,3 +1,8 @@
+Tue Mar  6 16:11:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp (read_messages): Added a new method
+	  read_messages () that would avoid code duplication. 
+
 Tue Mar  6 13:44:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Quoter/run_test.pl:
