@@ -1,3 +1,8 @@
+Wed Apr  7 16:36:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ACE-INSTALL.html: Put a note in saying to rebuild all 
+          when upgrading releases.
+
 Wed Apr 07 14:25:47 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Addr.{h,cpp}: modified files to compile for
