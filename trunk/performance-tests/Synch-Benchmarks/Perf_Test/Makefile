@@ -8,8 +8,9 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LIB	= libSynch_Tests.a
-SHLIB	= libSynch_Tests.$(SOEXT)
+CXXFLAGS += -I../
+LIB	= libPerf_Tests.a
+SHLIB	= libPerf_Tests.$(SOEXT)
 
 FILES	= Benchmark_Performance \
 	  Performance_Test_Options \
@@ -72,6 +73,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -145,6 +147,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -214,6 +217,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -300,6 +304,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -388,6 +393,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -476,6 +482,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -564,6 +571,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -652,6 +660,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -740,6 +749,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -828,6 +838,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -916,6 +927,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1004,6 +1016,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1092,6 +1105,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1181,6 +1195,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1266,6 +1281,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1356,6 +1372,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1445,6 +1462,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1523,6 +1541,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1601,6 +1620,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-linux-lxpthreads.h \
  $(ACE_ROOT)/ace/config-linux-common.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
