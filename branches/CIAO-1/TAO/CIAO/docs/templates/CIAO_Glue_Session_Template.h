@@ -182,20 +182,41 @@ namespace CIAO_GLUE
 
 # else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie connect_[receptacle name] (in [uses type] c)
+    ::Components::Cookie_ptr connect_[receptacle name] (in [uses type] c)
       raises (::Components::ExceedConnectionLimit,
               ::Components::InvalidConnection);
-    [uses type] disconnect_[receptacle name] (in ::Components::Cookie ck)
+    [uses type] disconnect_[receptacle name] (in ::Components::Cookie_ptr ck)
       raises (::Components::InvalidConnection);
 
     // Multiplex [receptacle name] connections
 
-    // @@ TO-DO: Need a fast and simple connection caching mechanism
-    // which also allow fast indexing thru "cookie".  I will also need
-    // a cookie base class in CIAO core.
+    CIAO::Active_Objref_Map ciao_muses_[receptacle name]_;
 # endif [receptacle name]
 #end foreach [receptacle name] with [uses type]
 
+    // Operations for emits interfaces.
+#foreach [emit name] with [eventtype] in (list of all emitters) generate:
+    void connect_[emit name] (in [eventtype]Consumer_ptr c)
+      raises (::Components::AlreadyConnected);
+
+    [eventtype]Consumer_ptr disconnect_[emit name] ()
+      raises (::Components::NoConnection);
+
+    [eventtype]Consumer_var ciao_emits_[emit name]_consumer_;
+#end foreach [emit name] with [eventtype]
+
+    // Operations for publishes interfaces.
+#foreach [publish name] with [eventtype] in (list of all publishers) generate:
+      ::Components::Cookie_ptr
+      subscribe_[publish name] ([eventtype]Consumer_ptr c)
+        raises (::Components::ExceededConnectionLimit);
+
+      [eventtype]Consumer_ptr
+      unsubscribe_[publish name] (::Components::Cookie_ptr ck)
+        raises (::Components::InvalidConnection);
+
+    CIAO::Active_Objref_Map ciao_publishes_[publish name]_map_;
+#end foreach [publish name] with [eventtype]
     // Other CCMContext specific operations seem quite straightforward
     // to me.  Well, so far.
   };
@@ -226,14 +247,50 @@ namespace CIAO_GLUE
 
     // Operations for receptacles interfaces.
 
+#foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+# if [receptacle name] is a simplex receptacle ('uses')
+    // Simplex [receptacle name] connection management operations
+    void connect_[receptacle name] (in [uses type] c)
+      raises (::Components::AlreadyConnected,
+              ::Components::InvalidConnection);
+    [uses type] disconnect_[receptacle name] ()
+      raises (::Components::NoConnection);
+    [uses type] get_connection_[receptacle name] ();
+# else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+    // Multiplex [receptacle name] connection management operations
+    ::Components::Cookie_ptr connect_[receptacle name] (in [uses type] c)
+      raises (::Components::ExceedConnectionLimit,
+              ::Components::InvalidConnection);
+    [uses type] disconnect_[receptacle name] (in ::Components::Cookie_ptr ck)
+      raises (::Components::InvalidConnection);
+    [receptacle name]Connections get_connections_[receptacle name] ();
+# endif [receptacle name]
+#end foreach [receptacle name] with [uses type]
+
     // Operations for consumers interfaces.
 #foreach [consumer name] with [eventtype] in (list of all consumers) generate:
     [eventtype]Consumer_ptr get_consumer_[consumer name] ();
-#end foreach [facet name] with [facet type]
+#end foreach [facet name] with [eventtype]
 
     // Operations for emits interfaces.
+#foreach [emit name] with [eventtype] in (list of all emitters) generate:
+    void connect_[emit name] (in [eventtype]Consumer_ptr c)
+      raises (::Components::AlreadyConnected);
+
+    [eventtype]Consumer_ptr disconnect_[emit name] ()
+      raises (::Components::NoConnection);
+#end foreach [emit name] with [eventtype]
 
     // Operations for publishes interfaces.
+#foreach [publish name] with [eventtype] in (list of all publishers) generate:
+      ::Components::Cookie_ptr
+      subscribe_[publish name] ([eventtype]Consumer_ptr c)
+        raises (::Components::ExceededConnectionLimit);
+
+      [eventtype]Consumer_ptr
+      unsubscribe_[publish name] (::Components::Cookie_ptr ck)
+        raises (::Components::InvalidConnection);
+#end foreach [publish name] with [eventtype]
 
     // Operations for Navigation interface
     virtual CORBA::Object_ptr provide_facet (const char * name
@@ -251,7 +308,7 @@ namespace CIAO_GLUE
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations for Receptacles interface
-    virtual ::Components::Cookie * connect (const char * name,
+    virtual ::Components::Cookie_ptr connect (const char * name,
                                             CORBA::Object_ptr connection
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -260,7 +317,7 @@ namespace CIAO_GLUE
                        Components::AlreadyConnected,
                        Components::ExceededConnectionLimit));
     virtual void disconnect (const char * name,
-                             Components::Cookie * ck
+                             Components::Cookie_ptr ck
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
@@ -284,15 +341,15 @@ namespace CIAO_GLUE
                                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
-    virtual ::Components::Cookie * subscribe (const char * publisher_name,
-                                              Components::EventConsumerBase_ptr subscriber
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Components::Cookie_ptr subscribe (const char * publisher_name,
+                                                Components::EventConsumerBase_ptr subscriber
+                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::AlreadyConnected,
                        Components::InvalidConnection));
     virtual void unsubscribe (const char * publisher_name,
-                              Components::Cookie * ck
+                              Components::Cookie_ptr ck
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
