@@ -7,27 +7,24 @@
 CFG=basic_perf - Win32 static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "basic_perf.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "basic_perf.mak" CFG="basic_perf - Win32 static Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "basic_perf - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "basic_perf - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "basic_perf - Win32 static Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "basic_perf - Win32 static Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "basic_perf - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "basic_perf - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "basic_perf - Win32 static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "basic_perf - Win32 static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -104,7 +101,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
-# ADD LINK32 acesd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
+# ADD LINK32 acesd.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "basic_perf - Win32 static Release"
 
@@ -129,9 +126,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-# ADD LINK32 aces.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
+# ADD LINK32 aces.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
