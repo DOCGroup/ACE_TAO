@@ -1,3 +1,14 @@
+Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp: Removed template instantiation
+	  regarding ACE_Read_Mutex<Thread_Mutex>. Added template
+	  instantiations for ACE_Pair<VALUE, int> and
+	  ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
+
+	* ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
+	  include list since it caused problems when native exceptions were
+	  enabled. 
+
 Mon Jun 14 21:41:40 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/Connector.h: Added a comment to clarify that if
@@ -10,7 +21,7 @@ Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/Synch.cpp: Declared template definitions for
 	  ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
 	  while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
-	  suggesting this.
+	  suggesting this. 
 
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
