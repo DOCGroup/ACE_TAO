@@ -62,36 +62,29 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_STRUCTURE_AST_STRUCTURE_HH
 #define _AST_STRUCTURE_AST_STRUCTURE_HH
 
 // Representation of structure:
 //
-// NOTE: add(AST_ConcreteType *) is defined here because a structure
+// NOTE: add (AST_ConcreteType *) is defined here because a structure
 // can contain locally defined types in addition to fields.
 //
-// NOTE: add(AST_EnumValue *) is defined here because enums can
+// NOTE: add (AST_EnumValue *) is defined here because enums can
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope. It is unlikely that
 // a BE writer will need to overload this function in AST_Structure.
-
-/*
-** DEPENDENCIES: ast_concrete_type.hh, utl_scope.hh, utl_scoped_name.hh,
-**               utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
 
 class TAO_IDL_FE_Export AST_Structure : public virtual AST_ConcreteType,
                                         public virtual UTL_Scope
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Structure ();
+  // Constructor(s).
+  AST_Structure (void);
 
   AST_Structure (UTL_ScopedName *n,
                  UTL_StrList *p,
@@ -104,42 +97,48 @@ public:
                  idl_bool local,
                  idl_bool abstract);
 
+  // Destructor.
   virtual ~AST_Structure (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope);
   DEF_NARROW_FROM_DECL(AST_Structure);
   DEF_NARROW_FROM_SCOPE(AST_Structure);
 
   virtual int member_count (void);
-  // return the count of members
+  // Return the count of members.
 
-  virtual idl_bool      is_local (void);
+  virtual idl_bool is_local (void);
   // Overwrite the is_local method.
 
-  // AST Dumping
-  virtual void          dump(ostream &o);
+  virtual idl_bool in_recursion (AST_Type *node = 0);
+  // Are we or the node represented by node involved in recursion.
+
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
   // Cleanup function.
   virtual void destroy (void);
 
 private:
-  friend int tao_yyparse();
-  // Scope Management Protocol
+  friend int tao_yyparse (void);
+  // Scope Management Protocol.
 
-  virtual AST_Union     *fe_add_union(AST_Union         *u);
-  virtual AST_Structure *fe_add_structure(AST_Structure *s);
-  virtual AST_Field     *fe_add_field(AST_Field         *f);
-  virtual AST_Enum      *fe_add_enum(AST_Enum           *e);
-  virtual AST_EnumVal   *fe_add_enum_val(AST_EnumVal    *v);
+  virtual AST_Union *fe_add_union (AST_Union *u);
 
-  //=helper
+  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+
+  virtual AST_Field *fe_add_field (AST_Field *f);
+
+  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+
+  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
   int compute_member_count (void);
-  // count the number of members
+  // Count the number of members.
 
   int member_count_;
-  // number of members
+  // Number of members.
 
   idl_bool local_struct_;
   // We also need to determine whether we contain any local type.

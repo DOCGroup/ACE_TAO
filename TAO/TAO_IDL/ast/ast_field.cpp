@@ -62,64 +62,56 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_field.cc - Implementation of class AST_Field
- *
- * AST_Fields denote fields in IDL structure, union and exception
- * declarations. AST_Field is also used as a superclass of AST_Argument
- * and AST_UnionBranch.
- * AST_Fields have a field type (a subclass of AST_Type) and a name
- * (a UTL_ScopedName)
- *
- * AST_Field supplies two constructors, one to be used in constructing
- * AST_Field nodes, the other to be used in constructing AST_Argument
- * nodes and AST_UnionBranch nodes.
- */
+// AST_Fields denote fields in IDL structure, union and exception
+// declarations. AST_Field is also used as a superclass of AST_Argument
+// and AST_UnionBranch.
+// AST_Fields have a field type (a subclass of AST_Type) and a name
+// (a UTL_ScopedName).
 
-#include        "idl.h"
-#include        "idl_extern.h"
+// AST_Field supplies two constructors, one to be used in constructing
+// AST_Field nodes, the other to be used in constructing AST_Argument
+// nodes and AST_UnionBranch nodes.
+
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_field, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
+// Constructor(s) and destructor.
 
-/*
- * Default constructor
- */
-AST_Field::AST_Field ()
-         : pd_field_type (NULL), 
+// Default constructor.
+AST_Field::AST_Field (void)
+         : pd_field_type (0), 
            pd_visibility (vis_NA)
 {
 }
 
-/*
- * To be used when constructing an AST_Field node
- */
+// To be used when constructing an AST_Field node.
 AST_Field::AST_Field (AST_Type *ft, 
                       UTL_ScopedName *n, 
                       UTL_StrList *p,
                       Visibility vis)
-         : AST_Decl (AST_Decl::NT_field, n, p),
-           pd_field_type (ft), 
-           pd_visibility (vis)
+  : AST_Decl (AST_Decl::NT_field, 
+              n, 
+              p),
+    pd_field_type (ft), 
+    pd_visibility (vis)
 {
 }
 
-/*
- * To be used when constructing a node of a subclass of AST_Field
- */
+// To be used when constructing a node of a subclass of AST_Field.
 AST_Field::AST_Field (AST_Decl::NodeType nt, 
                       AST_Type *ft,
                       UTL_ScopedName *n, 
                       UTL_StrList *p, 
                       Visibility vis)
-         : AST_Decl (nt, n, p),
-           pd_field_type (ft), 
-           pd_visibility (vis)
+  : AST_Decl (nt, 
+              n, 
+              p),
+    pd_field_type (ft), 
+    pd_visibility (vis)
 {
 }
 
@@ -127,26 +119,13 @@ AST_Field::~AST_Field (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_Field node to the ostream o
- */
+// Dump this AST_Field node to the ostream o.
 void
 AST_Field::dump (ostream &o)
 {
-  switch (visibility ())
+  switch (this->pd_visibility)
     {
     case vis_PRIVATE:
       o << "private ";
@@ -157,29 +136,26 @@ AST_Field::dump (ostream &o)
     case vis_NA:
       break;
     }
-  pd_field_type->local_name ()->dump (o);
+
+  this->pd_field_type->local_name ()->dump (o);
   o << " ";
-  local_name ()->dump (o);
+  this->local_name ()->dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Type *
-AST_Field::field_type ()
+AST_Field::field_type (void)
 {
-  return pd_field_type;
+  return this->pd_field_type;
 }
 
 AST_Field::Visibility
-AST_Field::visibility ()
+AST_Field::visibility (void)
 {
-  return pd_visibility;
+  return this->pd_visibility;
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Field, AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Field)

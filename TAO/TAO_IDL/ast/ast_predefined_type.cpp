@@ -62,37 +62,33 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_predefined_type.cc - Implementation of class AST_PredefinedType
- *
- * AST_PredefinedType nodes denote the various predefined types such
- * as long, short, etc. that are available in IDL. Each AST_PredefinedType
- * node has a field (the value of this field is from the enum
- * AST_PredefinedType::PredefinedType) which denotes the specific predefined
- * type that this node represents. There is only one node in the entire
- * AST which represents each predefined type, such as long etc.
- */
+// AST_PredefinedType nodes denote the various predefined types such
+// as long, short, etc. that are available in IDL. Each AST_PredefinedType
+// node has a field (the value of this field is from the enum
+// AST_PredefinedType::PredefinedType) which denotes the specific predefined
+// type that this node represents. There is only one node in the entire
+// AST which represents each predefined type, such as long etc.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_predefined_type, "$Id$")
 
-/*
- * Constructor(s)
- */
-AST_PredefinedType::AST_PredefinedType ()
-	: pd_pt(PT_long)
+// Constructor(s).
+AST_PredefinedType::AST_PredefinedType (void)
+	: pd_pt (PT_long)
 {
 }
 
 AST_PredefinedType::AST_PredefinedType (PredefinedType t, 
                                         UTL_ScopedName *n,
 				                                UTL_StrList *p)
- : AST_Decl(AST_Decl::NT_pre_defined, n, p),
-	 pd_pt(t)
+ : AST_Decl (AST_Decl::NT_pre_defined, 
+             n, 
+             p),
+	 pd_pt (t)
 {
 }
 
@@ -100,38 +96,23 @@ AST_PredefinedType::~AST_PredefinedType (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_PredefinedType node to the ostream o
- */
+// Dump this AST_PredefinedType node to the ostream o.
 void
-AST_PredefinedType::dump(ostream &o)
+AST_PredefinedType::dump (ostream &o)
 {
-  AST_Decl::dump(o);
+  AST_Decl::dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_PredefinedType::PredefinedType
-AST_PredefinedType::pt()
+AST_PredefinedType::pt (void)
 {
-  return pd_pt;
+  return this->pd_pt;
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType)
 IMPL_NARROW_FROM_DECL(AST_PredefinedType)

@@ -67,17 +67,11 @@ public:
   virtual MANAGED_TYPE managed_type (void);
   // Return the managed type.
 
-  virtual idl_bool unbounded (void) const;
-  // Is this sequence bounded or not.
-
   // Scope management functions.
   virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
 
   virtual be_decl *decl (void);
   // Overridden method on the be_scope class.
-
-  virtual idl_bool in_recursion (be_type *node = 0);
-  // Are we or the node represented by node involved in recursion.
 
   virtual void destroy (void);
   // Cleanup method.
@@ -97,9 +91,6 @@ protected:
   // Helper to create_name.
 
 private:
-  idl_bool unbounded_;
-  // Whether we are bounded or unbounded.
-
   MANAGED_TYPE mt_;
   // Our managed type.
 };

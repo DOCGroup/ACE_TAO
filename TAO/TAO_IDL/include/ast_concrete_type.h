@@ -62,35 +62,30 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH
 #define _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH
 
-// Class for all concrete types
-//
-// This is useful to group together IDL types other than objects
-
-/*
-** DEPENDENCIES: ast_type.hh, ast_decl.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
+// Class for all concrete types.
+// This is useful to group together IDL types other than objects.
 
 class TAO_IDL_FE_Export AST_ConcreteType : public virtual AST_Type
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_ConcreteType ();
+  // Constructor(s).
+  AST_ConcreteType (void);
+
   AST_ConcreteType (AST_Decl::NodeType nt, 
                     UTL_ScopedName *n, 
                     UTL_StrList *p);
 
+  // Destructor.
   virtual ~AST_ConcreteType (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_ConcreteType, AST_Type);
   DEF_NARROW_FROM_DECL(AST_ConcreteType);
 };

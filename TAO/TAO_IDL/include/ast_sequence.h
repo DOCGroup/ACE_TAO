@@ -62,29 +62,22 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_SEQUENCE_AST_SEQUENCE_HH
 #define _AST_SEQUENCE_AST_SEQUENCE_HH
 
 // Representation of sequence declaration:
 //
-// A sequence is a combination of a maximum size and a base type
-
-/*
-** DEPENDENCIES: ast_concrete_type.hh, ast_type.hh, ast_decl.hh,
-**               ast_expression.hh
-**
-** USE: Included from ast.hh
-*/
+// A sequence is a combination of a maximum size and a base type.
 
 class TAO_IDL_FE_Export AST_Sequence : public virtual AST_ConcreteType
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Sequence ();
+  // Constructor(s).
+  AST_Sequence (void);
 
   AST_Sequence (AST_Expression *max_size,
                 AST_Type *bt,
@@ -93,21 +86,35 @@ public:
 
   virtual ~AST_Sequence (void);
 
-  // Data Accessors
-  AST_Expression *max_size();
-  AST_Type *base_type();
+  virtual idl_bool in_recursion (AST_Type *node = 0);
+  // Are we or the node represented by node involved in recursion.
 
-  // Narrowing
+  // Data Accessors.
+  AST_Expression *max_size (void);
+
+  AST_Type *base_type (void);
+
+  virtual idl_bool unbounded (void) const;
+  // Is this sequence bounded or not.
+
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Sequence, AST_ConcreteType);
   DEF_NARROW_FROM_DECL(AST_Sequence);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  AST_Expression                *pd_max_size;   // Maximum sequence size
-  AST_Type                      *pd_base_type;  // Sequence base type
+  // Data.
+  AST_Expression *pd_max_size;
+  // Maximum sequence size.
+
+  AST_Type *pd_base_type;
+  // Sequence base type.
+
+  idl_bool unbounded_;
+  // Whether we are bounded or unbounded.
+
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

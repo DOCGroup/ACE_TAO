@@ -62,86 +62,80 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_check.cc - Check AST nodes representing fwd declared interfaces
- *		  after parse of AST is completed.
- *
- * The check ensures that for every forward declared interface we also
- * saw a full definition of that interface.
- */
+// The check ensures that for every forward declared interface we also
+// saw a full definition of that interface.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_check, "$Id$")
 
-/*
- * Static storage for remembering nodes
- */
-static AST_InterfaceFwd	**ast_fwds = NULL;
-static long		ast_n_fwds_used = 0;
-static long		ast_n_fwds_alloc = 0;
+// Static storage for remembering nodes.
+static AST_InterfaceFwd	**ast_fwds = 0;
+static long	ast_n_fwds_used = 0;
+static long	ast_n_fwds_alloc = 0;
 
 #undef	INCREMENT
 #define	INCREMENT	64
 
-/*
- * Store a node representing a forward declared interface
- */
+// Store a node representing a forward declared interface.
 void
-AST_record_fwd_interface(AST_InterfaceFwd *n)
+AST_record_fwd_interface (AST_InterfaceFwd *n)
 {
-  AST_InterfaceFwd	**o_ast_fwds;
-  long			o_ast_n_fwds_alloc;
-  long			i;
+  AST_InterfaceFwd **o_ast_fwds = 0;
+  long o_ast_n_fwds_alloc = 0;
 
-  /*
-   * Make sure there's space to store one more
-   */
-  if (ast_n_fwds_used == ast_n_fwds_alloc) {
-    if (ast_n_fwds_alloc == 0) {
-      ast_n_fwds_alloc = INCREMENT;
-      ast_fwds = new AST_InterfaceFwd *[ast_n_fwds_alloc];
-    } else {
-      o_ast_fwds = ast_fwds;
-      o_ast_n_fwds_alloc = ast_n_fwds_alloc;
+  // Make sure there's space to store one more.
+  if (ast_n_fwds_used == ast_n_fwds_alloc) 
+    {
+      if (ast_n_fwds_alloc == 0) 
+        {
+          ast_n_fwds_alloc = INCREMENT;
+          ACE_NEW (ast_fwds,
+                   AST_InterfaceFwd *[ast_n_fwds_alloc]);
+        } 
+      else 
+        {
+          o_ast_fwds = ast_fwds;
+          o_ast_n_fwds_alloc = ast_n_fwds_alloc;
 
-      ast_n_fwds_alloc += INCREMENT;
-      ast_fwds = new AST_InterfaceFwd *[ast_n_fwds_alloc];
+          ast_n_fwds_alloc += INCREMENT;
+          ACE_NEW (ast_fwds,
+                   AST_InterfaceFwd *[ast_n_fwds_alloc]);
 
-      for (i = 0; i < o_ast_n_fwds_alloc; i++)
-        ast_fwds[i] = o_ast_fwds[i];
+          for (long i = 0; i < o_ast_n_fwds_alloc; i++)
+            {
+              ast_fwds[i] = o_ast_fwds[i];
+            }
 
-      delete o_ast_fwds;
+          delete o_ast_fwds;
+        }
     }
-  }
-  /*
-   * Insert new node
-   */
+
+  // Insert new node.
   ast_fwds[ast_n_fwds_used++] = n;
 }
 
-/*
- * Check that all forward declared interfaces were also defined
- */
+// Check that all forward declared interfaces were also defined.
 void
-AST_check_fwd_interface()
+AST_check_fwd_interface (void)
 {
-  long			i;
-  AST_InterfaceFwd	*d;
-  AST_Interface		*itf;
+  AST_InterfaceFwd *d = 0;
+  AST_Interface	*itf = 0;
 
-  for (i = 0; i < ast_n_fwds_used; i++) {
-    d = ast_fwds[i];
-    itf = d->full_definition();
-    if (!(itf->is_defined()))
-      {
-        // The old pointer may now be garbage.
-        itf->set_file_name (idl_global->filename ());
+  for (long i = 0; i < ast_n_fwds_used; i++) 
+    {
+      d = ast_fwds[i];
+      itf = d->full_definition ();
 
-        idl_global->err()->fwd_decl_not_defined(itf);
-      }
-  }
+      if (!itf->is_defined ())
+        {
+          // The old pointer may now be garbage.
+          itf->set_file_name (idl_global->filename ());
+
+          idl_global->err ()->fwd_decl_not_defined (itf);
+        }
+    }
 }

@@ -62,41 +62,41 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_attribute.cc - Implementation of class AST_Attribute.cc
- *
- * AST_Attribute nodes denote IDL attribute declarations.
- * AST_Attribute nodes are AST_Fields with a readonly indication.
- * Hence they have a name (an UTL_ScopedName), a type (a subtype
- * of AST_Type) and a boolean indicating whether the attribute is
- * readonly.
- */
+// AST_Attribute nodes denote IDL attribute declarations.
+// AST_Attribute nodes are AST_Fields with a readonly indication.
+// Hence they have a name (an UTL_ScopedName), a type (a subtype
+// of AST_Type) and a boolean indicating whether the attribute is
+// readonly.
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_attribute, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Attribute::AST_Attribute()
-             : pd_readonly(I_TRUE)
+// Constructor(s) and destructor.
+AST_Attribute::AST_Attribute (void)
+  : pd_readonly (I_TRUE)
 {
 }
 
-AST_Attribute::AST_Attribute(idl_bool ro,
-                             AST_Type *ft,
-                             UTL_ScopedName *n,
-                             UTL_StrList *p,
-                             idl_bool local,
-                             idl_bool abstract)
-             : AST_Field(AST_Decl::NT_attr, ft, n, p),
-               AST_Decl(AST_Decl::NT_attr, n, p),
-               COMMON_Base (local, abstract),
-               pd_readonly(ro)
+AST_Attribute::AST_Attribute (idl_bool ro,
+                              AST_Type *ft,
+                              UTL_ScopedName *n,
+                              UTL_StrList *p,
+                              idl_bool local,
+                              idl_bool abstract)
+  : AST_Field (AST_Decl::NT_attr, 
+               ft, 
+               n, 
+               p),
+    AST_Decl (AST_Decl::NT_attr, 
+              n, 
+              p),
+    COMMON_Base (local, 
+                 abstract),
+    pd_readonly (ro)
 {
 }
 
@@ -104,40 +104,25 @@ AST_Attribute::~AST_Attribute (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_Attribute to the ostream o
- */
+// Dump this AST_Attribute to the ostream o.
 void
-AST_Attribute::dump(ostream &o)
+AST_Attribute::dump (ostream &o)
 {
-  o << (pd_readonly == I_TRUE ? "readonly" : "") << " attribute ";
-  AST_Field::dump(o);
+  o << (this->pd_readonly == I_TRUE ? "readonly" : "") 
+    << " attribute ";
+  AST_Field::dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 idl_bool
-AST_Attribute::readonly()
+AST_Attribute::readonly (void)
 {
-  return pd_readonly;
+  return this->pd_readonly;
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Attribute, AST_Field)
 IMPL_NARROW_FROM_DECL(AST_Attribute)

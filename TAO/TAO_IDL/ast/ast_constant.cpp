@@ -62,166 +62,140 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_constant.cc - Implementation of class AST_Constant
- *
- * AST_Constant nodes denote IDL constant declarations.
- * AST_Constants have a value (an AST_Expression) and a value type
- * (a value from the enum AST_Expression::ExprType).
- * AST_Constant has two constructors, one for use in creating constants
- * and the other for use in creating enumerators (see the class
- * AST_EnumVal)
- */
+// AST_Constant nodes denote IDL constant declarations.
+// AST_Constants have a value (an AST_Expression) and a value type
+// (a value from the enum AST_Expression::ExprType).
+// AST_Constant has two constructors, one for use in creating constants
+// and the other for use in creating enumerators (see the class
+// AST_EnumVal).
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_constant, "$Id$")
 
-/*
- * Static functions
- */
+// Static functions.
 
-/*
- * Convert a value from the enum AST_Expression::ExprType to a char *
- */
+// Convert a value from the enum AST_Expression::ExprType to a char *.
 static const char *
-exprtype_to_string(AST_Expression::ExprType et)
+exprtype_to_string (AST_Expression::ExprType et)
 {
-  switch (et) {
-  case AST_Expression::EV_short:
-    return "short";
-  case AST_Expression::EV_ushort:
-    return "unsigned short";
-  case AST_Expression::EV_long:
-    return "long";
-  case AST_Expression::EV_ulong:
-    return "unsigned long";
-  case AST_Expression::EV_float:
-    return "float";
-  case AST_Expression::EV_double:
-    return "double";
-  case AST_Expression::EV_char:
-    return "char";
-  case AST_Expression::EV_octet:
-    return "octet";
-  case AST_Expression::EV_bool:
-    return "boolean";
-  case AST_Expression::EV_string:
-    return "string";
-  case AST_Expression::EV_any:
-    return "any";
-  case AST_Expression::EV_void:
-    return "void";
-  case AST_Expression::EV_none:
-    return "none";
-  case AST_Expression::EV_ulonglong:
-    return "unsigned long long";
-  case AST_Expression::EV_longlong:
-    return "long long";
-  case AST_Expression::EV_wchar:
-    return "wchar";
-  case AST_Expression::EV_wstring:
-    return "wstring";
-  case AST_Expression::EV_longdouble:
-    return NULL;
-  }
-  return NULL;
+  switch (et) 
+    {
+    case AST_Expression::EV_short:
+      return "short";
+    case AST_Expression::EV_ushort:
+      return "unsigned short";
+    case AST_Expression::EV_long:
+      return "long";
+    case AST_Expression::EV_ulong:
+      return "unsigned long";
+    case AST_Expression::EV_float:
+      return "float";
+    case AST_Expression::EV_double:
+      return "double";
+    case AST_Expression::EV_char:
+      return "char";
+    case AST_Expression::EV_octet:
+      return "octet";
+    case AST_Expression::EV_bool:
+      return "boolean";
+    case AST_Expression::EV_string:
+      return "string";
+    case AST_Expression::EV_any:
+      return "any";
+    case AST_Expression::EV_void:
+      return "void";
+    case AST_Expression::EV_none:
+      return "none";
+    case AST_Expression::EV_ulonglong:
+      return "unsigned long long";
+    case AST_Expression::EV_longlong:
+      return "long long";
+    case AST_Expression::EV_wchar:
+      return "wchar";
+    case AST_Expression::EV_wstring:
+      return "wstring";
+    case AST_Expression::EV_longdouble:
+      return 0;
+    }
+
+  return 0;
 }
 
-/*
- * Constructor(s) and destructor
- */
+// Constructor(s) and destructor.
 
-/*
- * Default constructor
- */
-AST_Constant::AST_Constant()
-	    : pd_constant_value(NULL), pd_et(AST_Expression::EV_none)
-{
-}
-
-/*
- * Used in constructing AST_EnumVal nodes
- */
-AST_Constant::AST_Constant(AST_Expression::ExprType t,
-			   AST_Decl::NodeType nt,
-			   AST_Expression *v,
-			   UTL_ScopedName *n,
-			   UTL_StrList *p)
-	    : AST_Decl(nt, n, p),
-	      pd_constant_value(idl_global->gen()->create_expr(v, t)),
-	      pd_et(t)
+// Default constructor.
+AST_Constant::AST_Constant (void)
+  : pd_constant_value (0), 
+    pd_et (AST_Expression::EV_none)
 {
 }
 
-/*
- * Used when constructing AST_Constant nodes
- */
-AST_Constant::AST_Constant(AST_Expression::ExprType t,
-			   AST_Expression *v,
-			   UTL_ScopedName *n,
-			   UTL_StrList *p)
-	    : AST_Decl(AST_Decl::NT_const, n, p),
-	      pd_constant_value(idl_global->gen()->create_expr(v, t)),
-	      pd_et(t)
+// Used in constructing AST_EnumVal nodes.
+AST_Constant::AST_Constant (AST_Expression::ExprType t,
+			                      AST_Decl::NodeType nt,
+			                      AST_Expression *v,
+			                      UTL_ScopedName *n,
+			                      UTL_StrList *p)
+  : AST_Decl (nt, 
+              n, 
+              p),
+	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_et (t)
+{
+}
+
+// Used when constructing AST_Constant nodes.
+AST_Constant::AST_Constant (AST_Expression::ExprType t,
+			                      AST_Expression *v,
+			                      UTL_ScopedName *n,
+			                      UTL_StrList *p)
+  : AST_Decl (AST_Decl::NT_const, 
+              n, 
+              p),
+	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_et (t)
 {
 }
 
 AST_Constant::~AST_Constant (void)
 {
-  if (this->pd_constant_value)
+  if (this->pd_constant_value != 0)
     {
       delete this->pd_constant_value;
       this->pd_constant_value = 0;
     }
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_Constant node to the ostream o
- */
+// Dump this AST_Constant node to the ostream o.
 void
-AST_Constant::dump(ostream &o)
+AST_Constant::dump (ostream &o)
 {
-  o << "const " << exprtype_to_string(pd_et) << " ";
-  local_name()->dump(o);
+  o << "const " << exprtype_to_string (pd_et) << " ";
+  this->local_name ()->dump (o);
   o << " = ";
-  pd_constant_value->dump(o);
+  this->pd_constant_value->dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Expression *
-AST_Constant::constant_value()
+AST_Constant::constant_value (void)
 {
-  return pd_constant_value;
+  return this->pd_constant_value;
 }
 
 AST_Expression::ExprType
-AST_Constant::et()
+AST_Constant::et (void)
 {
-  return pd_et;
+  return this->pd_et;
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Constant, AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Constant)

@@ -182,16 +182,16 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
     }
 
   // Computes the repoID.
-  compute_repoID ();
+  this->compute_repoID ();
 
   // Computes the fully scoped name.
-  compute_full_name ();
+  AST_Decl::compute_full_name ();
 
   // Computes the fully scoped typecode name.
-  compute_tc_name ();
+  this->compute_tc_name ();
 
   // Compute the flattened fully scoped name.
-  compute_flat_name ();
+  this->compute_flat_name ();
 }
 
 // Overriden method.
@@ -383,12 +383,12 @@ be_predefined_type::compute_repoID (void)
         }
       else
         {
-	        be_decl::compute_repoID ();
+	        AST_Decl::compute_repoID ();
         }
 
       break;
     default:
-      be_decl::compute_repoID ();
+      AST_Decl::compute_repoID ();
       break;
     }
 }

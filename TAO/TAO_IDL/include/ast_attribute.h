@@ -62,29 +62,22 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_ATTRIBUTE_AST_ATTRIBUTE_HH
 #define _AST_ATTRIBUTE_AST_ATTRIBUTE_HH
 
 // Representation of attribute declaration:
-//
 // An attribute is a field with a readonly property
-
-/*
-** DEPENDENCIES: ast_field.hh, ast_type.hh, utl_scoped_name.hh,
-**               utl_strlist.hh, ast_decl.hh
-**
-** USE: Included from ast.h
-*/
 
 class TAO_IDL_FE_Export AST_Attribute : public virtual AST_Field
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Attribute ();
+  // Constructor(s).
+  AST_Attribute (void);
+
   AST_Attribute (idl_bool readonly,
                  AST_Type *ft,
                  UTL_ScopedName *n,
@@ -92,21 +85,25 @@ public:
                  idl_bool local,
                  idl_bool abstract);
 
+  // Destructor.
   virtual ~AST_Attribute (void);
 
-  // Data Accessors
-  idl_bool readonly();
+  // Data Accessors.
 
-  // Narrowing
+  idl_bool readonly (void);
+
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Attribute, AST_Field);
   DEF_NARROW_FROM_DECL(AST_Attribute);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  const idl_bool                pd_readonly;    // Is attribute read-only?
+  // Data.
+
+  const idl_bool pd_readonly;
+  // Is attribute read-only?
 };
 
 #endif           // _AST_ATTRIBUTE_AST_ATTRIBUTE_HH

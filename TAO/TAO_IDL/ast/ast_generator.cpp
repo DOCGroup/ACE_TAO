@@ -62,73 +62,70 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_generator.cc - Implements the base AST node generator
- *
- * The generator protocol is explained in detail in the IDL CFE
- * design document.
- * The AST_Generator class provides operations to instantiate any
- * of the AST nodes. It contains an operation for every constructor
- * of every AST class.
- */
+// The generator protocol is explained in detail in the IDL CFE
+// design document.
+// The AST_Generator class provides operations to instantiate any
+// of the AST nodes. It contains an operation for every constructor
+// of every AST class.
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 #include "ace/config-all.h"
 
 ACE_RCSID(ast, ast_generator, "$Id$")
 
-/*
- * Constructors
- */
+// Public operations.
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-/*
- * Construct an AST_PredefinedType node (a predefined type)
- */
+// Construct an AST_PredefinedType node (a predefined type).
 AST_PredefinedType *
-AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
-                                      UTL_ScopedName *n,
-                                      UTL_StrList *p)
+AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
+                                       UTL_ScopedName *n,
+                                       UTL_StrList *p)
 {
-  return new AST_PredefinedType(t, n, p);
+  AST_PredefinedType *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_PredefinedType (t, 
+                                      n, 
+                                      p),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Module node (a module)
- */
-AST_Module      *
+// Construct an AST_Module node (a module).
+AST_Module *
 AST_Generator::create_module (UTL_Scope *,
                               UTL_ScopedName *n,
                               UTL_StrList *p)
 {
-  return new AST_Module(n, p);
+  AST_Module *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Module (n, 
+                              p),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Root node (a node representing the root of an AST)
- */
+// Construct an AST_Root node (a node representing the root of an AST).
 AST_Root *
-AST_Generator::create_root(UTL_ScopedName *n,
-                           UTL_StrList *p)
+AST_Generator::create_root (UTL_ScopedName *n,
+                            UTL_StrList *p)
 {
-  return new AST_Root(n, p);
+  AST_Root *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Root (n, 
+                            p),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Interface node (an interface)
- */
-AST_Interface   *
+//     Construct an AST_Interface node (an interface).
+AST_Interface *
 AST_Generator::create_interface (UTL_ScopedName *n,
                                  AST_Interface **ih,
                                  long nih,
@@ -138,39 +135,52 @@ AST_Generator::create_interface (UTL_ScopedName *n,
                                  idl_bool l,
                                  idl_bool a)
 {
-  return new AST_Interface (n,
-                            ih,
-                            nih,
-                            ih_flat,
-                            nih_flat,
-                            p,
-                            l,
-                            a);
+  AST_Interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Interface (n,
+                                 ih,
+                                 nih,
+                                 ih_flat,
+                                 nih_flat,
+                                 p,
+                                 l,
+                                 a),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_InterfaceFwd node (a node representing the forward
- * declaration of an interface)
- */
+// Construct an AST_InterfaceFwd node (a node representing the forward
+// declaration of an interface).
 AST_InterfaceFwd *
-AST_Generator::create_interface_fwd(UTL_ScopedName *n,
-                                    UTL_StrList *p,
-                                    idl_bool local,
-                                    idl_bool abstract)
+AST_Generator::create_interface_fwd (UTL_ScopedName *n,
+                                     UTL_StrList *p,
+                                     idl_bool local,
+                                     idl_bool abstract)
 {
-  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, 0, 0, p, local, abstract),
-                               n,
-                               p);
+  AST_InterfaceFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_InterfaceFwd (this->create_interface (n, 
+                                                            0, 
+                                                            -1, 
+                                                            0, 
+                                                            0, 
+                                                            p, 
+                                                            local, 
+                                                            abstract),
+                                    n,
+                                    p),
+                  0);
+
+  return retval;
 }
 
-/*
- * Create a be_valuetype node
- */
+// Create a be_valuetype node.
 AST_Interface *
-AST_Generator::create_valuetype(UTL_ScopedName *,
-                                AST_Interface ** /* ih */,
-                                long /* nih */,
-                                UTL_StrList *)
+AST_Generator::create_valuetype (UTL_ScopedName *,
+                                 AST_Interface ** /* ih */,
+                                 long /* nih */,
+                                 UTL_StrList *)
 {
   // Valuetypes are represented as be_valuetype derived from be_interface,
   // which derives from AST_Interface. If you construct a backend which
@@ -184,347 +194,476 @@ AST_Generator::create_valuetype(UTL_ScopedName *,
   return 0;
 }
 
-/*
- * Create a be_valuetype_fwd node
- */
+// Create a be_valuetype_fwd node.
 AST_InterfaceFwd *
 AST_Generator::create_valuetype_fwd (UTL_ScopedName *,
                                      UTL_StrList *)
 {
   // see note in create_valuetype()
-  // dummy placeholder must return true from is_valuetype()
+  // dummy placeholder must return true from is_valuetype().
 
   ACE_ASSERT (0);
   return 0;
 }
 
 
-/*
- * Construct an AST_Exception node (an exception)
- */
-AST_Exception   *
-AST_Generator::create_exception(UTL_ScopedName *n,
-                                UTL_StrList *p,
-                                idl_bool local,
-                                idl_bool abstract)
+// Construct an AST_Exception node (an exception).
+AST_Exception *
+AST_Generator::create_exception (UTL_ScopedName *n,
+                                 UTL_StrList *p,
+                                 idl_bool local,
+                                 idl_bool abstract)
 {
-  return new AST_Exception(n, p, local, abstract);
+  AST_Exception *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Exception (n, 
+                                 p, 
+                                 local, 
+                                 abstract),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Structure node (a struct)
- */
-AST_Structure   *
-AST_Generator::create_structure(UTL_ScopedName *n,
-                                UTL_StrList *p,
-                                idl_bool local,
-                                idl_bool abstract)
+// Construct an AST_Structure node (a struct).
+AST_Structure *
+AST_Generator::create_structure (UTL_ScopedName *n,
+                                 UTL_StrList *p,
+                                 idl_bool local,
+                                 idl_bool abstract)
 {
-  return new AST_Structure(n, p, local, abstract);
+  AST_Structure *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Structure (n, 
+                                 p, 
+                                 local, 
+                                 abstract),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Enum node (an enum)
- */
-AST_Enum        *
-AST_Generator::create_enum(UTL_ScopedName *n,
-                           UTL_StrList *p,
-                           idl_bool local,
-                           idl_bool abstract)
-{
-  return new AST_Enum(n, p, local, abstract);
-}
-
-/*
- * Construct an AST_Operation node (an operation on an interface)
- */
-AST_Operation   *
-AST_Generator::create_operation(AST_Type *rt,
-                                AST_Operation::Flags fl,
-                                UTL_ScopedName *n,
-                                UTL_StrList *p,
-                                idl_bool local,
-                                idl_bool abstract)
-{
-  return new AST_Operation(rt, fl, n, p, local, abstract);
-}
-
-/*
- * Construct an AST_Field node (a field in a struct, union or exception)
- */
-AST_Field       *
-AST_Generator::create_field(AST_Type *ft,
-                            UTL_ScopedName *n,
+// Construct an AST_Enum node (an enum).
+AST_Enum *
+AST_Generator::create_enum (UTL_ScopedName *n,
                             UTL_StrList *p,
-                            AST_Field::Visibility vis)
+                            idl_bool local,
+                            idl_bool abstract)
 {
-  return new AST_Field(ft, n, p, vis);
+  AST_Enum *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Enum (n, 
+                            p, 
+                            local, 
+                            abstract),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Argument node (an argument to an operation)
- */
-AST_Argument    *
-AST_Generator::create_argument(AST_Argument::Direction d,
-                               AST_Type *ft,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
+// Construct an AST_Operation node (an operation on an interface).
+AST_Operation *
+AST_Generator::create_operation (AST_Type *rt,
+                                 AST_Operation::Flags fl,
+                                 UTL_ScopedName *n,
+                                 UTL_StrList *p,
+                                 idl_bool local,
+                                 idl_bool abstract)
 {
-  return new AST_Argument(d, ft, n, p);
+  AST_Operation *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Operation (rt, 
+                                 fl, 
+                                 n, 
+                                 p, 
+                                 local, 
+                                 abstract),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Attribute node (an attribute)
- */
-AST_Attribute   *
-AST_Generator::create_attribute(idl_bool ro,
+// Construct an AST_Field node (a field in a struct, union or exception).
+AST_Field *
+AST_Generator::create_field (AST_Type *ft,
+                             UTL_ScopedName *n,
+                             UTL_StrList *p,
+                             AST_Field::Visibility vis)
+{
+  AST_Field *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Field (ft, 
+                             n, 
+                             p, 
+                             vis),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Argument node (an argument to an operation).
+AST_Argument *
+AST_Generator::create_argument (AST_Argument::Direction d,
                                 AST_Type *ft,
                                 UTL_ScopedName *n,
-                                UTL_StrList *p,
+                                UTL_StrList *p)
+{
+  AST_Argument *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Argument (d, 
+                                ft, 
+                                n, 
+                                p),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Attribute node (an attribute).
+AST_Attribute *
+AST_Generator::create_attribute (idl_bool ro,
+                                 AST_Type *ft,
+                                 UTL_ScopedName *n,
+                                 UTL_StrList *p,
+                                 idl_bool local,
+                                 idl_bool abstract)
+{
+  AST_Attribute *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Attribute (ro,
+                                 ft,
+                                 n,
+                                 p,
+                                 local,
+                                 abstract),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Union node (a union).
+AST_Union *
+AST_Generator::create_union (AST_ConcreteType *dt,
+                             UTL_ScopedName *n,
+                             UTL_StrList *p,
+                             idl_bool local,
+                             idl_bool abstract)
+{
+  AST_Union *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Union (dt,
+                             n,
+                             p,
+                             local,
+                             abstract),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_UnionBranch node (a branch in a union).
+AST_UnionBranch *
+AST_Generator::create_union_branch (UTL_LabelList *ll,
+                                    AST_Type *ft,
+                                    UTL_ScopedName *n,
+                                    UTL_StrList *p)
+{
+  AST_UnionBranch *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_UnionBranch (ll, 
+                                   ft, 
+                                   n, 
+                                   p),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_UnionLabel node (a label in a union).
+AST_UnionLabel *
+AST_Generator::create_union_label (AST_UnionLabel::UnionLabel ul,
+                                   AST_Expression *v)
+{
+  AST_UnionLabel *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_UnionLabel (ul, 
+                                  v),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Constant node (a constant).
+AST_Constant *
+AST_Generator::create_constant (AST_Expression::ExprType et,
+                                AST_Expression *ev,
+                                UTL_ScopedName *n,
+                                UTL_StrList *p)
+{
+  AST_Constant *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Constant (et, 
+                                ev, 
+                                n, 
+                                p),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a symbolic name.
+AST_Expression *
+AST_Generator::create_expr (UTL_ScopedName *n)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (n),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression denoting a coercion.
+AST_Expression *
+AST_Generator::create_expr (AST_Expression *v,
+                            AST_Expression::ExprType t)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (v, 
+                                  t),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a binary combinator.
+// of two other AST_Expression nodes
+AST_Expression  *
+AST_Generator::create_expr (AST_Expression::ExprComb c,
+                            AST_Expression *v1,
+                            AST_Expression *v2)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (c, 
+                                  v1, 
+                                  v2),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a long integer.
+AST_Expression *
+AST_Generator::create_expr (long v)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (v),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a long integer being used.
+// as a boolean
+AST_Expression *
+AST_Generator::create_expr (long v, 
+                            AST_Expression::ExprType t)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (v, 
+                                  t),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting an unsigned long integer.
+AST_Expression *
+AST_Generator::create_expr (unsigned long v)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (v),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a string (a char *
+// encapsulated as String).
+AST_Expression *
+AST_Generator::create_expr (UTL_String *s)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (s),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a character.
+AST_Expression *
+AST_Generator::create_expr (char c)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (c),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a wide character.
+AST_Expression *
+AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (wc),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a wide string.
+AST_Expression *
+AST_Generator::create_expr (char *s)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (s),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Expression node denoting a 64-bit floating point number.
+AST_Expression *
+AST_Generator::create_expr (double d)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (d),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_EnumVal node (an enumerator).
+AST_EnumVal *
+AST_Generator::create_enum_val (unsigned long v,
+                                UTL_ScopedName *n,
+                                UTL_StrList *p)
+{
+  AST_EnumVal *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_EnumVal (v, 
+                               n, 
+                               p),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Array node (an array type or field modifier).
+AST_Array *
+AST_Generator::create_array (UTL_ScopedName *n,
+                             unsigned long ndims,
+                             UTL_ExprList *dims,
+                             idl_bool local,
+                             idl_bool abstract)
+{
+  AST_Array *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Array (n,
+                             ndims,
+                             dims,
+                             local,
+                             abstract),
+                  0);
+
+  return retval;
+}
+
+// Construct an AST_Sequence node (a sequence type definition).
+AST_Sequence *
+AST_Generator::create_sequence (AST_Expression *ms,
+                                AST_Type *bt,
                                 idl_bool local,
                                 idl_bool abstract)
 {
-  return new AST_Attribute(ro,
-                           ft,
-                           n,
-                           p,
-                           local,
-                           abstract);
+  AST_Sequence *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Sequence (ms, 
+                                bt, 
+                                local, 
+                                abstract),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_Union node (a union)
- */
-AST_Union       *
-AST_Generator::create_union(AST_ConcreteType *dt,
-                            UTL_ScopedName *n,
-                            UTL_StrList *p,
-                            idl_bool local,
-                            idl_bool abstract)
+// Construct an AST_String node (a string type definition).
+AST_String *
+AST_Generator::create_string (AST_Expression *ms)
 {
-  return new AST_Union(dt,
-                       n,
-                       p,
-                       local,
-                       abstract);
+  AST_String *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_String (ms),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_UnionBranch node (a branch in a union)
- */
-AST_UnionBranch *
-AST_Generator::create_union_branch(UTL_LabelList *ll,
-                                   AST_Type *ft,
-                                   UTL_ScopedName *n,
-                                   UTL_StrList *p)
+// Construct an AST_String node denoting a wide string type definition.
+AST_String      *
+AST_Generator::create_wstring (AST_Expression *ms)
 {
-  return new AST_UnionBranch(ll, ft, n, p);
+  AST_String *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_String (ms, 
+                              sizeof(ACE_OS::WChar)),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_UnionLabel node (a label in a union)
- */
-AST_UnionLabel  *
-AST_Generator::create_union_label(AST_UnionLabel::UnionLabel ul,
-                                  AST_Expression *v)
-{
-  return new AST_UnionLabel(ul, v);
-}
-
-/*
- * Construct an AST_Constant node (a constant)
- */
-AST_Constant    *
-AST_Generator::create_constant(AST_Expression::ExprType et,
-                               AST_Expression *ev,
+// Construct an AST_Typedef node (a typedef).
+AST_Typedef *
+AST_Generator::create_typedef (AST_Type *bt,
                                UTL_ScopedName *n,
-                               UTL_StrList *p)
-{
-  return new AST_Constant(et, ev, n, p);
-}
-
-/*
- * Construct an AST_Expression node denoting a symbolic name
- */
-AST_Expression  *
-AST_Generator::create_expr(UTL_ScopedName *n)
-{
-  return new AST_Expression(n);
-}
-
-/*
- * Construct an AST_Expression denoting a coercion
- */
-AST_Expression  *
-AST_Generator::create_expr(AST_Expression *v,
-                           AST_Expression::ExprType t)
-{
-  return new AST_Expression(v, t);
-}
-
-/*
- * Construct an AST_Expression node denoting a binary combinator
- * of two other AST_Expression nodes
- */
-AST_Expression  *
-AST_Generator::create_expr(AST_Expression::ExprComb c,
-                           AST_Expression *v1,
-                           AST_Expression *v2)
-{
-  return new AST_Expression(c, v1, v2);
-}
-
-/*
- * Construct an AST_Expression node denoting a long integer
- */
-AST_Expression  *
-AST_Generator::create_expr(long v)
-{
-  return new AST_Expression(v);
-}
-
-/*
- * Construct an AST_Expression node denoting a long integer being used
- * as a boolean
- */
-AST_Expression  *
-AST_Generator::create_expr(long v, AST_Expression::ExprType t)
-{
-  return new AST_Expression(v, t);
-}
-
-/*
- * Construct an AST_Expression node denoting an unsigned long integer
- */
-AST_Expression  *
-AST_Generator::create_expr(unsigned long v)
-{
-  return new AST_Expression(v);
-}
-
-/*
- * Construct an AST_Expression node denoting a string (a char *
- * encapsulated as String)
- */
-AST_Expression  *
-AST_Generator::create_expr(UTL_String *s)
-{
-  return new AST_Expression(s);
-}
-
-/*
- * Construct an AST_Expression node denoting a character
- */
-AST_Expression  *
-AST_Generator::create_expr(char c)
-{
-  return new AST_Expression(c);
-}
-
-/*
- * Construct an AST_Expression node denoting a wide character
- */
-AST_Expression  *
-AST_Generator::create_expr(ACE_OutputCDR::from_wchar wc)
-{
-  return new AST_Expression(wc);
-}
-
-/*
- * Construct an AST_Expression node denoting a wide string
- */
-AST_Expression  *
-AST_Generator::create_expr(char *s)
-{
-  return new AST_Expression(s);
-}
-
-/*
- * Construct an AST_Expression node denoting a 64-bit floating point number
- */
-AST_Expression  *
-AST_Generator::create_expr(double d)
-{
-  return new AST_Expression(d);
-}
-
-/*
- * Construct an AST_EnumVal node (an enumerator)
- */
-AST_EnumVal     *
-AST_Generator::create_enum_val(unsigned long v,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
-{
-  return new AST_EnumVal(v, n, p);
-}
-
-/*
- * Construct an AST_Array node (an array type or field modifier)
- */
-AST_Array       *
-AST_Generator::create_array(UTL_ScopedName *n,
-                            unsigned long ndims,
-                            UTL_ExprList *dims,
-                            idl_bool local,
-                            idl_bool abstract)
-{
-  return new AST_Array(n,
-                       ndims,
-                       dims,
-                       local,
-                       abstract);
-}
-
-/*
- * Construct an AST_Sequence node (a sequence type definition)
- */
-AST_Sequence    *
-AST_Generator::create_sequence(AST_Expression *ms,
-                               AST_Type *bt,
+                               UTL_StrList *p,
                                idl_bool local,
                                idl_bool abstract)
 {
-  return new AST_Sequence(ms, bt, local, abstract);
+  AST_Typedef *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Typedef (bt, 
+                               n, 
+                               p, 
+                               local, 
+                               abstract),
+                  0);
+
+  return retval;
 }
 
-/*
- * Construct an AST_String node (a string type definition)
- */
-AST_String      *
-AST_Generator::create_string(AST_Expression *ms)
-{
-  return new AST_String(ms);
-}
-
-/*
- * Construct an AST_String node denoting a wide string type definition
- */
-AST_String      *
-AST_Generator::create_wstring(AST_Expression *ms)
-{
-  return new AST_String(ms, sizeof(ACE_OS::WChar));
-}
-
-/*
- * Construct an AST_Typedef node (a typedef)
- */
-AST_Typedef     *
-AST_Generator::create_typedef(AST_Type *bt,
-                              UTL_ScopedName *n,
-                              UTL_StrList *p,
-                              idl_bool local,
-                              idl_bool abstract)
-{
-  return new AST_Typedef(bt, n, p, local, abstract);
-}
-
-/*
- * Construct an AST_Native node
- */
+// Construct an AST_Native node.
 AST_Native *
 AST_Generator::create_native (UTL_ScopedName *n,
                               UTL_StrList *p)
 {
-  return new AST_Native (n, p);
+  AST_Native *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Native (n, 
+                              p),
+                  0);
+
+  return retval;
 }
+

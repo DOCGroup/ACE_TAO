@@ -62,7 +62,7 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 #define _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
@@ -72,18 +72,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Instances of this class are inserted into the global context by
 // the front end before the start of parsing.
 
-/*
-** DEPENDENCIES: ast_concrete_type.hh, utl_scoped_name.hh, utl_strlist.hh,
-**               ast_decl.hh
-**
-** USE: Included from ast.hh
-*/
-
 class TAO_IDL_FE_Export AST_PredefinedType : public virtual AST_ConcreteType
 {
 public:
-  // Enum for all the different predefined types
-  enum PredefinedType {
+  // Enum for all the different predefined types.
+  enum PredefinedType 
+    {
         PT_long         // Predefined type "long"
       , PT_ulong        // Predefined type "unsigned long"
       , PT_longlong     // Predefined type "long long"
@@ -100,12 +94,12 @@ public:
       , PT_any          // Predefined type "any"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
-  };
+    };
 
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_PredefinedType ();
+  // Constructor(s).
+  AST_PredefinedType (void);
 
   AST_PredefinedType (PredefinedType t, 
                       UTL_ScopedName *n, 
@@ -113,19 +107,21 @@ public:
 
   virtual ~AST_PredefinedType (void);
 
-  // Data Accessors
-  PredefinedType        pt();
+  // Data Accessors.
+  PredefinedType pt (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType);
   DEF_NARROW_FROM_DECL(AST_PredefinedType);
 
   // AST Dumping
-  virtual void          dump(ostream &o);
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  const PredefinedType  pd_pt;          // The specific predefined type
+  // Data.
+
+  const PredefinedType pd_pt;
+  // The specific predefined type.
 };
 
 #endif           // _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH

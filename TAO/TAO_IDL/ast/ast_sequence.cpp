@@ -62,29 +62,23 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_sequence.cc - Implementation of class AST_Sequence
- *
- * AST_Sequence nodes represent IDL sequence declarations.
- * AST_Sequence is a subclass of AST_ConcreteType.
- * AST_Sequence nodes have a maximum size (an AST_Expression which
- * must evaluate to a positive integer) and a base type (a subclass
- * of AST_Type).
- */
+// AST_Sequence nodes represent IDL sequence declarations.
+// AST_Sequence is a subclass of AST_ConcreteType.
+// AST_Sequence nodes have a maximum size (an AST_Expression which
+// must evaluate to a positive integer) and a base type (a subclass
+// of AST_Type).
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_sequence, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Sequence::AST_Sequence ()
- : pd_max_size(0),
-	 pd_base_type(NULL)
+// Constructor(s) and destructor.
+AST_Sequence::AST_Sequence (void)
+ : pd_max_size (0),
+	 pd_base_type (0)
 {
 }
 
@@ -93,61 +87,105 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
                             idl_bool local,
                             idl_bool abstract)
  : AST_Decl(AST_Decl::NT_sequence,
-            new UTL_ScopedName (new Identifier ("sequence", 1, 0, I_FALSE),
-                                NULL),
-            NULL),
-                      COMMON_Base (bt->is_local () || local,
-                                   abstract),
-                      pd_max_size(ms),
-                      pd_base_type(bt)
+            new UTL_ScopedName (new Identifier ("sequence", 
+                                                1, 
+                                                0, 
+                                                I_FALSE),
+                                0),
+            0),
+   COMMON_Base (bt->is_local () || local,
+                abstract),
+   pd_max_size (ms),
+   pd_base_type (bt)
 {
+  // Check if we are bounded or unbounded. An expression value of 0 means
+  // unbounded.
+  if (ms->ev ()->u.ulval == 0)
+    {
+      this->unbounded_ = I_TRUE;
+    }
+  else
+    {
+      this->unbounded_ = I_FALSE;
+    }
 }
 
 AST_Sequence::~AST_Sequence (void)
 {
 }
 
-/*
- * Private operations
- */
+// Public operations.
 
-/*
- * Public operations
- */
+idl_bool
+AST_Sequence::in_recursion (AST_Type *node)
+{
+  if (node == 0)
+    {
+      // There has to be a parameter
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) AST_Sequence::")
+                         ACE_TEXT ("in_recursion - ")
+                         ACE_TEXT ("bad parameter node\n")),
+                        0);
+    }
 
-/*
- * Redefinition of inherited virtual operations
- */
+  AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
 
-/*
- * Dump this AST_Sequence node to the ostream o
- */
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) AST_Sequence::")
+                         ACE_TEXT ("in_recursion - ")
+                         ACE_TEXT ("bad base type\n")),
+                        0);
+    }
+
+  if (!ACE_OS::strcmp (node->full_name (), 
+                       type->full_name ()))
+    {
+      // They match.
+      return 1;
+    }
+  else
+    {
+      // Not in recursion.
+      return 0;
+    }
+}
+
+// Redefinition of inherited virtual operations.
+
+// Dump this AST_Sequence node to the ostream o.
 void
-AST_Sequence::dump(ostream &o)
+AST_Sequence::dump (ostream &o)
 {
   o << "sequence <";
-  pd_base_type->dump(o);
+  this->pd_base_type->dump (o);
   o << ", ";
-  pd_max_size->dump(o);
+  this->pd_max_size->dump (o);
   o << ">";
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size()
+AST_Sequence::max_size (void)
 {
-  return pd_max_size;
+  return this->pd_max_size;
 }
 
 AST_Type *
-AST_Sequence::base_type()
+AST_Sequence::base_type (void)
 {
-  return pd_base_type;
+  return this->pd_base_type;
 }
 
-// Narrowing
+idl_bool
+AST_Sequence::unbounded (void) const
+{
+  return this->unbounded_;
+}
+
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_Sequence, AST_ConcreteType)
 IMPL_NARROW_FROM_DECL(AST_Sequence)

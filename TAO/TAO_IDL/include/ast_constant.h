@@ -62,7 +62,7 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_CONSTANT_AST_CONSTANT_HH
 #define _AST_CONSTANT_AST_CONSTANT_HH
@@ -77,41 +77,47 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // parameter. This constructor is used from AST_EnumVal, which is
 // just a glorified AST_Constant
 
-/*
-** DEPENDENCIES: ast_decl.hh, ast_expression.hh, utl_scoped_name.hh,
-**               utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Constant();
-  AST_Constant(AST_Expression::ExprType et, AST_Decl::NodeType nt,
-               AST_Expression *ev, UTL_ScopedName *n, UTL_StrList *p);
-  AST_Constant(AST_Expression::ExprType et, AST_Expression *ev,
-               UTL_ScopedName *n, UTL_StrList *p);
+  // Constructor(s).
+  AST_Constant (void);
+
+  AST_Constant (AST_Expression::ExprType et, 
+                AST_Decl::NodeType nt,
+                AST_Expression *ev, 
+                UTL_ScopedName *n, 
+                UTL_StrList *p);
+
+  AST_Constant (AST_Expression::ExprType et, 
+                AST_Expression *ev,
+                UTL_ScopedName *n, 
+                UTL_StrList *p);
+
+  // Destructor.
   virtual ~AST_Constant (void);
 
-  // Data Accessors
-  AST_Expression *constant_value();
-  AST_Expression::ExprType et();
+  // Data Accessors.
+  AST_Expression *constant_value (void);
+
+  AST_Expression::ExprType et (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Constant, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Constant);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  AST_Expression                *pd_constant_value;     // The value
-  AST_Expression::ExprType      pd_et;                  // Its expr type
+  // Data.
+  AST_Expression *pd_constant_value;
+  // The value.
+
+  AST_Expression::ExprType pd_et;
+  // Its expression type.
 };
 
 #endif           // _AST_CONSTANT_AST_CONSTANT_HH

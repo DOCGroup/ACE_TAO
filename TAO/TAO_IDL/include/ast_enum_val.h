@@ -62,41 +62,36 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_ENUM_VAL_AST_ENUM_VAL_HH
 #define _AST_ENUM_VAL_AST_ENUM_VAL_HH
 
-// Representation of enumerator in enum:
-//
-// An enumerator is a constant of type unsigned long
+// Representation of enumerator in enum.
 
-/*
-** DEPENDENCIES: ast_constant.hh, utl_scoped_name.hh, utl_strlist.hh,
-**               ast_decl.hh
-**
-** USE: Included from ast.hh
-*/
+// An enumerator is a constant of type unsigned long.
 
 class TAO_IDL_FE_Export AST_EnumVal : public virtual AST_Constant
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_EnumVal ();
+  // Constructor(s).
+  AST_EnumVal (void);
+
   AST_EnumVal (unsigned long v, 
                UTL_ScopedName *n, 
                UTL_StrList *p);
 
+  // Destructor.
   virtual ~AST_EnumVal (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_EnumVal, AST_Constant);
   DEF_NARROW_FROM_DECL(AST_EnumVal);
 
-  // AST Dumping
-  virtual void                  dump(ostream &);
+  // AST Dumping.
+  virtual void dump (ostream &);
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH

@@ -62,61 +62,67 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_ARRAY_AST_ARRAY_HH
 #define _AST_ARRAY_AST_ARRAY_HH
 
 // Representation of array declaration:
-//
 // An array is a combination of a list of dimensions and a base type
-
-/*
-** DEPENDENCIES: ast_concrete_type.hh, utl_exprlist.hh, ast_type.hh,
-**               ast_decl.hh
-**
-** USE: Included from ast.hh
-*/
 
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Array ();
+  // Constructor(s).
+  AST_Array (void);
+
   AST_Array (UTL_ScopedName *n,
              unsigned long ndims,
              UTL_ExprList *dims,
              idl_bool local,
              idl_bool abstract);
 
+  // Destructor.
   virtual ~AST_Array (void);
 
-  // Data Accessors
-  unsigned long n_dims();
-  AST_Expression **dims();
-  void             set_dims(AST_Expression **, unsigned long);
-  AST_Type        *base_type();
-  void             set_base_type(AST_Type *nbt);
+  // Data Accessors.
 
-  // Narrowing
+  unsigned long n_dims (void);
+
+  AST_Expression **dims (void);
+
+  void set_dims (AST_Expression **, 
+                 unsigned long);
+
+  AST_Type *base_type (void);
+
+  void set_base_type (AST_Type *nbt);
+
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Array, AST_ConcreteType);
   DEF_NARROW_FROM_DECL(AST_Array);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  unsigned long                 pd_n_dims;      // How many dimensions?
-  AST_Expression                **pd_dims;      // Their expressions
-  AST_Type                      *pd_base_type;  // Base type of array
+  // Data.
 
-  // Operations
+  unsigned long pd_n_dims;
+  // How many dimensions?
 
-  // Compute how many dimensions
-  AST_Expression               **compute_dims(UTL_ExprList *dims,
-                                             unsigned long ndims);
+  AST_Expression **pd_dims;
+  // Their expressions.
+
+  AST_Type *pd_base_type;
+  // Base type of array.
+
+  // Operations.
+
+  // Compute how many dimensions.
+  AST_Expression **compute_dims (UTL_ExprList *dims,
+                                 unsigned long ndims);
 };
 
 #endif           // _AST_ARRAY_AST_ARRAY_HH

@@ -62,25 +62,19 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_structure.cc - Implementation of class AST_Structure
- *
- * AST_Structure nodes denote IDL struct declarations.
- * AST_Structure is a subclass of AST_ConcreteType and of UTL_Scope (the
- * structure's fields are managed in a scope).
- */
+// AST_Structure nodes denote IDL struct declarations.
+// AST_Structure is a subclass of AST_ConcreteType and of UTL_Scope (the
+// structure's fields are managed in a scope).
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_structure, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Structure::AST_Structure()
+// Constructor(s) and destructor.
+AST_Structure::AST_Structure (void)
   : member_count_ (-1),
     local_struct_ (-1)
 {
@@ -90,9 +84,12 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
                               UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (AST_Decl::NT_struct, n, p),
+ : AST_Decl (AST_Decl::NT_struct, 
+             n, 
+             p),
    UTL_Scope (AST_Decl::NT_struct),
-   COMMON_Base (local, abstract),
+   COMMON_Base (local, 
+                abstract),
    member_count_ (-1),
    local_struct_ (-1)
 {
@@ -103,9 +100,12 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                               UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl(nt, n, p),
+ : AST_Decl (nt, 
+             n, 
+             p),
    UTL_Scope(nt),
-   COMMON_Base (local, abstract),
+   COMMON_Base (local, 
+                abstract),
    member_count_ (-1),
    local_struct_ (-1)
 {
@@ -115,289 +115,402 @@ AST_Structure::~AST_Structure (void)
 {
 }
 
-// compute total number of members
+// Are we or the parameter node involved in any recursion?
+idl_bool
+AST_Structure::in_recursion (AST_Type *node)
+{
+  if (node == 0)
+    {
+      // We are determining the recursive status for ourselves.
+      node = this;
+    }
+
+  // Proceed if the number of members in our scope is greater than 0.
+  if (this->nmembers () > 0)
+    {
+      // Initialize an iterator to iterate over our scope.
+      UTL_ScopeActiveIterator *si = 0;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      -1);
+      // Continue until each element is visited.
+      while (!si->is_done ())
+        {
+          AST_Field *field = 
+            AST_Field::narrow_from_decl (si->item ());
+
+          if (field == 0)
+            // This will be an enum value or other legitimate non-field
+            // member - in any case, no recursion.
+            {
+              si->next ();
+              continue;
+            }
+
+          AST_Type *type = 
+            AST_Type::narrow_from_decl (field->field_type ());
+
+          if (type == 0)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%N:%l) AST_Structure::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field type\n")),
+                                0);
+            }
+
+          if (type->in_recursion (node))
+            {
+              delete si;
+              return 1;
+            }
+
+          si->next ();
+        }
+
+      delete si;
+    }
+
+  // Not in recursion.
+  return 0;
+}
+
+// Compute total number of members.
 int
 AST_Structure::compute_member_count (void)
 {
-  UTL_ScopeActiveIterator *si;  // iterator
-
   this->member_count_ = 0;
 
-  // if there are elements in this scope
+  // If there are elements in this scope.
   if (this->nmembers () > 0)
     {
-      // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this,
-                                        UTL_Scope::IK_decls);
+      // Instantiate a scope iterator.
+      UTL_ScopeActiveIterator *si = 0;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      -1);
 
-      while (!(si->is_done ()))
+      while (!si->is_done ())
         {
           this->member_count_++;
           si->next ();
-        } // end of while
+        }
 
-      delete si; // free the iterator object
+      delete si;
     }
 
   return 0;
 }
 
-// return the member count
+// Return the member count.
 int
 AST_Structure::member_count (void)
 {
   if (this->member_count_ == -1)
-    this->compute_member_count ();
+    {
+      this->compute_member_count ();
+    }
 
   return this->member_count_;
 }
 
 idl_bool
-AST_Structure::is_local ()
+AST_Structure::is_local (void)
 {
-    if (this->local_struct_ == -1)
-      {
-        if (this->is_local_)
+  if (this->local_struct_ == -1)
+    {
+      if (this->is_local_)
+        {
           this->local_struct_ = this->is_local_;
-        else
-          {
-            this->local_struct_ = 0;
-            UTL_ScopeActiveIterator *si;  // iterator
+        }
+      else
+        {
+          this->local_struct_ = 0;
 
-            if (this->nmembers () > 0)
-              {
-                // instantiate a scope iterator.
-                si = new UTL_ScopeActiveIterator (this,
-                                                  UTL_Scope::IK_decls);
+          if (this->nmembers () > 0)
+            {
+              // Instantiate a scope iterator.
+              UTL_ScopeActiveIterator *si = 0;
+              ACE_NEW_RETURN (si,
+                              UTL_ScopeActiveIterator (this,
+                                                       UTL_Scope::IK_decls),
+                              0);
 
-                while (!(si->is_done ()))
-                  {
-                    if (si->item ()->is_local ())
-                      {
-                        this->local_struct_ = I_TRUE;
-                        break;
-                      }
-                    si->next ();
-                  } // end of while
+              while (!si->is_done ())
+                {
+                  if (si->item ()->is_local ())
+                    {
+                      this->local_struct_ = I_TRUE;
+                      break;
+                    }
 
-                delete si; // free the iterator object
-              }
-          }
-      }
-    return this->local_struct_;
+                  si->next ();
+                }
+
+              delete si;
+            }
+        }
+    }
+
+  return this->local_struct_;
 }
 
-/*
- * Private operations
- */
+// Private operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Add this AST_Field node (a field declaration) to this scope
- */
-AST_Field *AST_Structure::fe_add_field(AST_Field *t)
+// Add this AST_Field node (a field declaration) to this scope.
+AST_Field *
+AST_Structure::fe_add_field (AST_Field *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to scope
-   */
-  add_to_scope(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add an AST_Structure node (a manifest struct type) to this scope
- */
-AST_Structure *AST_Structure::fe_add_structure(AST_Structure *t)
+// Add an AST_Structure node (a manifest struct type) to this scope.
+AST_Structure *
+AST_Structure::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to local types
-   */
-  add_to_local_types(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add an AST_Union node (a manifest union type) to this scope
- */
-AST_Union *AST_Structure::fe_add_union(AST_Union *t)
+// Add an AST_Union node (a manifest union type) to this scope.
+AST_Union *
+AST_Structure::fe_add_union (AST_Union *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to local types
-   */
-  add_to_local_types(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add this AST_Enum node (a manifest enum declaration) to this scope
- */
-AST_Enum *AST_Structure::fe_add_enum(AST_Enum *t)
+// Add this AST_Enum node (a manifest enum declaration) to this scope.
+AST_Enum *
+AST_Structure::fe_add_enum (AST_Enum *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to local types
-   */
-  add_to_local_types(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add this AST_EnumVal node (an enumerator declaration) to this scope.
- * This is done to conform to the C++ scoping rules which declare
- * enumerators in the enclosing scope (in addition to declaring them
- * in the enum itself)
- */
-AST_EnumVal *AST_Structure::fe_add_enum_val(AST_EnumVal *t)
+// Add this AST_EnumVal node (an enumerator declaration) to this scope.
+// This is done to conform to the C++ scoping rules which declare
+// enumerators in the enclosing scope (in addition to declaring them
+// in the enum itself).
+AST_EnumVal *
+AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to scope
-   */
-  add_to_scope(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Dump this AST_Structure node to the ostream o
- */
+// Dump this AST_Structure node to the ostream o.
 void
-AST_Structure::dump(ostream &o)
+AST_Structure::dump (ostream &o)
 {
   if (this->is_local ())
-    o << "(local) ";
+    {
+      o << "(local) ";
+    }
   else
-    o << "(abstract) ";
+    {
+      o << "(abstract) ";
+    }
 
   o << "struct ";
-  AST_Decl::dump(o);
+  AST_Decl::dump (o);
   o << " {\n";
-  UTL_Scope::dump(o);
-  idl_global->indent()->skip_to(o);
+  UTL_Scope::dump (o);
+  idl_global->indent ()->skip_to( o);
   o << "}";
 }
 
@@ -406,7 +519,7 @@ AST_Structure::destroy (void)
 {
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Structure)
 IMPL_NARROW_FROM_SCOPE(AST_Structure)

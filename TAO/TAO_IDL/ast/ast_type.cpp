@@ -62,31 +62,27 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_type.cc - Implementation of class AST_Type
- *
- * AST_Type is the base class for all AST classes which represent
- * IDL type constructs.
- */
+// AST_Type is the base class for all AST classes which represent
+// IDL type constructs.
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_type, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Type::AST_Type ()
+// Constructor(s) and destructor.
+AST_Type::AST_Type (void)
 {
 }
 
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n,
                     UTL_StrList *p)
-  : AST_Decl (nt, n, p)
+  : AST_Decl (nt, 
+              n, 
+              p)
 {
 }
 
@@ -94,19 +90,14 @@ AST_Type::~AST_Type (void)
 {
 }
 
-/*
- * Private operations
- */
+// Public operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
+idl_bool
+AST_Type::in_recursion (AST_Type *)
+{
+  // By default we are not involved in recursion.
+  return 0;
+}
 
 // Narrowing
 IMPL_NARROW_METHODS1(AST_Type, AST_Decl)

@@ -62,25 +62,19 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_exception.cc - Implementation of class AST_Exception
- *
- * AST_Exceptions denote IDL exception declarations
- * AST_Exceptions are a subclass of AST_Decl (they are not types!)
- * and of UTL_Scope
- */
+// AST_Exceptions denote IDL exception declarations
+// AST_Exceptions are a subclass of AST_Decl (they are not types!)
+// and of UTL_Scope.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_exception, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Exception::AST_Exception()
+// Constructor(s) and destructor.
+AST_Exception::AST_Exception (void)
 {
 }
 
@@ -88,8 +82,13 @@ AST_Exception::AST_Exception(UTL_ScopedName *n,
                              UTL_StrList *p,
                              idl_bool local,
                              idl_bool abstract)
-  : AST_Structure(AST_Decl::NT_except, n, p, local, abstract),
-    COMMON_Base (local, abstract)
+  : AST_Structure (AST_Decl::NT_except, 
+                   n, 
+                   p, 
+                   local, 
+                   abstract),
+    COMMON_Base (local, 
+                 abstract)
 {
 }
 
@@ -97,220 +96,322 @@ AST_Exception::~AST_Exception (void)
 {
 }
 
-/*
- * Private operations
- */
+// Public operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Add this AST_Field node to the current scope
- */
-AST_Field *AST_Exception::fe_add_field(AST_Field *t)
+// Are we or the parameter node involved in any recursion?
+idl_bool
+AST_Exception::in_recursion (AST_Type *node)
 {
-  AST_Decl *d;
+  if (node == 0)
+    {
+      // We are determining the recursive status for ourselves.
+      node = this;
+    }
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Proceed if the number of members in our scope is greater than 0.
+  if (this->nmembers () > 0)
+    {
+      // Initialize an iterator to iterate thru our scope.
+      UTL_ScopeActiveIterator *si = 0;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      -1);
+      // Continue until each element is visited.
+      while (!si->is_done ())
+        {
+          AST_Field *field = 
+            AST_Field::narrow_from_decl (si->item ());
+
+          if (field == 0)
+            {
+              delete si;
+
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%N:%l) AST_Exception::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field node\n")),
+                                0);
+            }
+
+          AST_Type *type = 
+            AST_Type::narrow_from_decl (field->field_type ());
+
+          if (type == 0)
+            {
+              delete si;
+
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%N:%l) AST_Exception::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field type\n")),
+                                0);
+            }
+
+          if (type->in_recursion (node))
+            {
+              delete si;
+              return 1;
+            }
+
+          si->next ();
+        } 
+
+      delete si;
+    } 
+
+  // Not in recursion
+  return 0;
+}
+
+// Private operations.
+
+// Add this AST_Field node to the current scope.
+AST_Field *
+AST_Exception::fe_add_field (AST_Field *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to scope
-   */
-  add_to_scope(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add this AST_Union (manifest type declaration) to the current scope
- */
-AST_Union *AST_Exception::fe_add_union(AST_Union *t)
+// Add this AST_Union (manifest type declaration) to the current scope.
+AST_Union *
+AST_Exception::fe_add_union (AST_Union *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to local types
-   */
-  add_to_local_types(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add this AST_Structure (manifest type declaration) to the current
- * scope
- */
-AST_Structure *AST_Exception::fe_add_structure(AST_Structure *t)
+// Add this AST_Structure (manifest type declaration) to the current
+// scope.
+AST_Structure *
+AST_Exception::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error2(UTL_Error::EIDL_REDEF, t, this);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error2  (UTL_Error::EIDL_REDEF, 
+                                       t, 
+                                       this);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to local types
-   */
-  add_to_local_types(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add this AST_Enum (manifest type declaration) to the current scope
- */
-AST_Enum *AST_Exception::fe_add_enum(AST_Enum *t)
+// Add this AST_Enum (manifest type declaration) to the current scope.
+AST_Enum *
+AST_Exception::fe_add_enum (AST_Enum *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this, 
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to local types
-   */
-  add_to_local_types(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Add this AST_EnumVal (enumerator declaration) to the current scope.
- * This is done to conform to the C++ scoping rules which declare
- * enumerators in the enclosing scope (in addition to declaring them
- * in the enum itself)
- */
-AST_EnumVal *AST_Exception::fe_add_enum_val(AST_EnumVal *t)
+// Add this AST_EnumVal (enumerator declaration) to the current scope.
+// This is done to conform to the C++ scoping rules which declare
+// enumerators in the enclosing scope (in addition to declaring them
+// in the enum itself).
+AST_EnumVal *
+AST_Exception::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d;
+  AST_Decl *d = 0;
 
-  /*
-   * Already defined and cannot be redefined? Or already used?
-   */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (referenced (d, t->local_name ())) 
+        {
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
+                                       t, 
+                                       this, 
+                                       d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     d);
+          return 0;
+        }
     }
-    if (referenced(d, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
-    }
-  }
-  /*
-   * Add it to scope
-   */
-  add_to_scope(t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+
+  // Add it to scope.
+  this->add_to_scope (t);
+ 
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
 
   return t;
 }
 
-/*
- * Dump this AST_Exception node to the ostream o
- */
+// Dump this AST_Exception node to the ostream o.
 void
-AST_Exception::dump(ostream &o)
+AST_Exception::dump (ostream &o)
 {
   o << "exception ";
-  local_name()->dump(o);
+  this->local_name ()->dump (o);
   o << " {\n";
-  UTL_Scope::dump(o);
-  idl_global->indent()->skip_to(o);
+  UTL_Scope::dump (o);
+  idl_global->indent ()->skip_to (o);
   o << "}";
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Exception, AST_Structure)
 IMPL_NARROW_FROM_DECL(AST_Exception)
 IMPL_NARROW_FROM_SCOPE(AST_Exception)
