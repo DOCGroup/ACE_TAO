@@ -16,12 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Basic_SArgument_T.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableServer/Basic_SArgument_T.h"
 #include "tao/Arg_Traits_T.h"
 
 
@@ -33,7 +34,7 @@ namespace TAO
    *
    */
   template<>
-  class TAO_Export SArg_Traits<void>
+  class TAO_PortableServer_Export SArg_Traits<void>
   {
   public:
 
@@ -50,55 +51,55 @@ namespace TAO
    */
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::Short>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::Short>
     : public Basic_SArg_Traits_T<CORBA::Short>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::Long>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::Long>
     : public Basic_SArg_Traits_T<CORBA::Long>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::UShort>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::UShort>
     : public Basic_SArg_Traits_T<CORBA::UShort>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::ULong>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::ULong>
     : public Basic_SArg_Traits_T<CORBA::ULong>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::Float>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::Float>
     : public Basic_SArg_Traits_T<CORBA::Float>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::Double>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::Double>
     : public Basic_SArg_Traits_T<CORBA::Double>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::LongLong>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::LongLong>
     : public Basic_SArg_Traits_T<CORBA::LongLong>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::ULongLong>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::ULongLong>
     : public Basic_SArg_Traits_T<CORBA::ULongLong>
   {
   };
 
   template<>
-  class TAO_Export SArg_Traits<CORBA::LongDouble>
+  class TAO_PortableServer_Export SArg_Traits<CORBA::LongDouble>
     : public Basic_SArg_Traits_T<CORBA::LongDouble>
   {
   };
