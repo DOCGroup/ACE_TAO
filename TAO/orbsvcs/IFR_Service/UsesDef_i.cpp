@@ -25,14 +25,14 @@ TAO_UsesDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_UsesDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_UsesDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_UsesDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+TAO_UsesDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -40,7 +40,7 @@ TAO_UsesDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
 }
 
 IR::InterfaceDef_ptr 
-TAO_UsesDef_i::interface_type (CORBA::Environment &ACE_TRY_ENV)
+TAO_UsesDef_i::interface_type (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -48,7 +48,7 @@ TAO_UsesDef_i::interface_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Boolean 
-TAO_UsesDef_i::is_multiple (CORBA::Environment &ACE_TRY_ENV)
+TAO_UsesDef_i::is_multiple (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO

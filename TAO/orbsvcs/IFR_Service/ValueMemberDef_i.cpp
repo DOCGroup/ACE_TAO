@@ -27,14 +27,14 @@ TAO_ValueMemberDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_ValueMemberDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_ValueMemberDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_ValueMemberDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+TAO_ValueMemberDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -42,7 +42,7 @@ TAO_ValueMemberDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::TypeCode_ptr 
-TAO_ValueMemberDef_i::type (CORBA::Environment &ACE_TRY_ENV)
+TAO_ValueMemberDef_i::type (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -50,7 +50,7 @@ TAO_ValueMemberDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 IR::IDLType_ptr 
-TAO_ValueMemberDef_i::type_def (CORBA::Environment &ACE_TRY_ENV)
+TAO_ValueMemberDef_i::type_def (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -58,15 +58,15 @@ TAO_ValueMemberDef_i::type_def (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_ValueMemberDef_i::type_def (IR::IDLType_ptr type_def,
-                                CORBA::Environment &ACE_TRY_ENV)
+TAO_ValueMemberDef_i::type_def (IR::IDLType_ptr /* type_def */,
+                                CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA::Visibility 
-TAO_ValueMemberDef_i::access (CORBA::Environment &ACE_TRY_ENV )
+TAO_ValueMemberDef_i::access (CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -74,8 +74,8 @@ TAO_ValueMemberDef_i::access (CORBA::Environment &ACE_TRY_ENV )
 }
 
 void 
-TAO_ValueMemberDef_i::access (CORBA::Visibility access,
-                              CORBA::Environment &ACE_TRY_ENV )
+TAO_ValueMemberDef_i::access (CORBA::Visibility /* access */,
+                              CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO

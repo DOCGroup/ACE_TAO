@@ -27,14 +27,14 @@ TAO_ProvidesDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_ProvidesDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_ProvidesDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_ProvidesDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+TAO_ProvidesDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -42,7 +42,7 @@ TAO_ProvidesDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
 }
 
 IR::InterfaceDef_ptr 
-TAO_ProvidesDef_i::interface_type (CORBA::Environment &ACE_TRY_ENV)
+TAO_ProvidesDef_i::interface_type (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
