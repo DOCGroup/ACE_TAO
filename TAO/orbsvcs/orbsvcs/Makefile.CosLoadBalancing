@@ -30,12 +30,16 @@ ACE_SHLIBS = \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-# The Load Balancer requires AMI.
+# The Load Balancer requires AMI and PortableInterceptor support.
 ifeq ($(ami),0)
 LIB      =
 SHLIB    =
 endif  # !ami
 
+ifeq ($(interceptors),0)
+LIB      =
+SHLIB    =
+endif  # !interceptors
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
