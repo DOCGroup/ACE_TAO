@@ -1,27 +1,27 @@
 Sat Aug 22 20:13:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added instructions for adding Alpha 
-	  configurations to MSVC 5 project files.
+        * ACE-INSTALL.html: Added instructions for adding Alpha
+          configurations to MSVC 5 project files.
 
 Sat Aug 22 13:24:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Message_Queue_Notifications_Test.cpp: Surrounded the
- 	  ACE_Barrier with conditional compilations for ACE_HAS_THREADS.
-  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+        * tests/Message_Queue_Notifications_Test.cpp: Surrounded the
+          ACE_Barrier with conditional compilations for ACE_HAS_THREADS.
+          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
 
-	* tests/Message_Queue_Notifications_Test.cpp: Cleaned up the
- 	  formatting a bit.
+        * tests/Message_Queue_Notifications_Test.cpp: Cleaned up the
+          formatting a bit.
 
-	* tests: Renamed MsgQueue_Notifications_Test.{cpp,bpr,dsp} to
- 	  Message_Queue_Notifications_Test.{cpp,bpr,dsp} to be more
- 	  consistent with spelling.
+        * tests: Renamed MsgQueue_Notifications_Test.{cpp,bpr,dsp} to
+          Message_Queue_Notifications_Test.{cpp,bpr,dsp} to be more
+          consistent with spelling.
 
-	* ace/OS.h: Moved the ACE_timer_t down a bit in the file so that
- 	  ACE_UINT is defined.  Thanks to Naga for reporting this.
+        * ace/OS.h: Moved the ACE_timer_t down a bit in the file so that
+          ACE_UINT is defined.  Thanks to Naga for reporting this.
 
-	* ace/OS.h: Added a "no-op" typedef for ACE_Rusage for platforms
- 	  that don't support it.  Thanks to David Levine for reporting
- 	  this.
+        * ace/OS.h: Added a "no-op" typedef for ACE_Rusage for platforms
+          that don't support it.  Thanks to David Levine for reporting
+          this.
 
 Sat Aug 22 07:59:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -33,6 +33,15 @@ Sat Aug 22 07:59:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added egcs section.  Thanks to
           Ganesh Pai <gpai@voicetek.com> for a portion of it.
+
+        * examples/IPC_SAP/UPIPE_SAP/ex1.cpp (peer1); removed spurious
+          "new" in ACE_NEW_RETURN involcation.
+
+        * examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp: untabified.
+
+        * examples/IPC_SAP/UPIPE_SAP/Makefile: updated dependencies
+          so that the module will build, now that auto_builtin_ptr.h
+          has been removed.
 
 Sat Aug 22 00:27:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
