@@ -1230,7 +1230,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       return NULL;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
-      ev->u.oval = (ev->u.bval == I_FALSE) ? 1 : 0;
+      ev->u.oval = (unsigned char) ((ev->u.bval == I_FALSE) ? 1 : 0);
       ev->et = AST_Expression::EV_octet;
       return ev;
     case AST_Expression::EV_float:
