@@ -1,3 +1,16 @@
+Tue Mar 16 07:55:10 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Fixed a bug where workspaces that contain projects that depend
+          upon projects outside the local directory would have invalid
+          dependencies.
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Rewrote the 'if' handling code to be complete and support multiple
+          or's, and's and not's.
+
 Tue Mar 16 06:22:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

@@ -507,97 +507,80 @@ sub get_flag_overrides {
 }
 
 
+sub process_compound_if {
+  my($self)   = shift;
+  my($str)    = shift;
+  my($status) = 0;
+
+  if ($str =~ /\|\|/) {
+    my($ret) = 0;
+    foreach my $v (split(/\s*\|\|\s*/, $str)) {
+      $ret |= $self->process_compound_if($v);
+      if ($ret != 0) {
+        return 1;
+      }
+    }
+  }
+  elsif ($str =~ /\&\&/) {
+    my($ret) = 1;
+    foreach my $v (split(/\s*\&\&\s*/, $str)) {
+      $ret &&= $self->process_compound_if($v);
+      if ($ret == 0) {
+        return 0;
+      }
+    }
+    $status = 1;
+  }
+  else {
+    ## See if we need to reverse the return value
+    my($not) = 0;
+    if ($str =~ /^!(.*)/) {
+      $not = 1;
+      $str = $1;
+    }
+
+    ## Get the value based on the string
+    my($val) = ($str =~ /flag_overrides\(([^\)]+),\s*([^\)]+)\)/ ?
+                               $self->get_flag_overrides($1, $2) :
+                               $self->get_value($str));
+
+    ## See if any portion of the value is defined and not empty
+    my($ret) = 0;
+    if (defined $val) {
+      if (UNIVERSAL::isa($val, 'ARRAY')) {
+        foreach my $v (@$val) {
+          if ($v ne '') {
+            $ret = 1;
+            last;
+          }
+        }
+      }
+      elsif ($val ne '') {
+        $ret = 1;
+      }
+    }
+    return ($not ? !$ret : $ret);
+  }
+
+  return $status;
+}
+
+
 sub handle_if {
   my($self)   = shift;
   my($val)    = shift;
   my($name)   = 'endif';
 
   push(@{$self->{'lstack'}}, $self->get_line_number() . " $val");
-  if (!$self->{'if_skip'}) {
-    my($true)  = 1;
-    push(@{$self->{'sstack'}}, $name);
-    if ($val !~ /\|\|/ && $val =~ /^!(.*)/) {
-      $val = $1;
-      $val =~ s/^\s+//;
-      $true = 0;
-    }
-
-    if ($val =~ /flag_overrides\(([^\)]+),\s*([^\)]+)\)/) {
-      $val = $self->get_flag_overrides($1, $2);
-    }
-    else {
-      if ($val =~ /\|\|/) {
-        my($str) = $val;
-        $val = undef;
-        foreach my $v (split(/\s*\|\|\s*/, $str)) {
-          if ($v =~ /^!(.*)/) {
-            my($p) = $self->get_value($1);
-            if (!defined $p || $p eq '') {
-              $val = 'some non-empty value';
-              last;
-            }
-          }
-          else {
-            my($p) = $self->get_value($v);
-            if (defined $p && $p ne '') {
-              $val = $p;
-              last;
-            }
-          }
-        }
-      }
-      elsif ($val =~ /\&\&/) {
-        my($str) = $val;
-        $val = 'some non-empty value';
-        foreach my $v (split(/\s*\&\&\s*/, $str)) {
-          if ($v =~ /^!(.*)/) {
-            my($p) = $self->get_value($1);
-            if (defined $p && $p ne '') {
-              $val = undef;
-              last;
-            }
-          }
-          else {
-            my($p) = $self->get_value($v);
-            if (!defined $p || $p eq '') {
-              $val = undef;
-              last;
-            }
-          }
-        }
-      }
-      else {
-        $val = $self->get_value($val)
-      }
-    }
-
-    if (defined $val) {
-      if (UNIVERSAL::isa($val, 'ARRAY')) {
-        my($empty) = 1;
-        foreach my $v (@$val) {
-          if ($v ne '') {
-            $empty = 0;
-            last;
-          }
-        }
-        if ($empty) {
-          $val = undef;
-        }
-      }
-      elsif ($val eq '') {
-        $val = undef;
-      }
-    }
-
-    if (!defined $val) {
-      $self->{'if_skip'} = $true;
-    }
-    else {
-      $self->{'if_skip'} = !$true;
-    }
+  if ($self->{'if_skip'}) {
+    push(@{$self->{'sstack'}}, "*$name");
   }
   else {
-    push(@{$self->{'sstack'}}, "*$name");
+    ## Determine if we are skipping the portion of this if statement
+    ## $val will always be defined since we won't get into this method
+    ## without properly parsing the if statement.
+    $self->{'if_skip'} = !$self->process_compound_if($val);
+    push(@{$self->{'sstack'}}, $name);
   }
 }
 
