@@ -373,7 +373,7 @@ int main (int argc, ACE_TCHAR *argv [])
   else
     {
       l_argv[0] = argv[0];
-      l_argv[1] = (ACE_TCHAR *) ACE_TEXT ("-sfoo");
+      l_argv[1] = (ACE_TCHAR *) ACE_TEXT ("-slog/Logging_Strategy_Test.log");
       l_argv[2] = (ACE_TCHAR *) ACE_TEXT ("-o");
       l_argv[3] = 0;
 
@@ -424,6 +424,7 @@ int main (int argc, ACE_TCHAR *argv [])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error ending reactor.\n"),
                       1);
+
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("DLLs not supported on this platform\n")));
