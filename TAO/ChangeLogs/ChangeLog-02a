@@ -1,3 +1,8 @@
+Thu Apr 27 11:48:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	  Removed an extra 'break' statement.
+
 Wed Apr 26 20:11:09 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Makefile:
