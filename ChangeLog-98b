@@ -1,3 +1,11 @@
+Sat Oct 24 08:34:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Updated the fstat() and stat() calls to work properly
+ 	  on the Solaris for Intel platform, which does weird things to
+ 	  the fstat() and stat() functions to handle 32 and 64 bit file
+ 	  offsets.  Thanks to Daniel Nieten <dnieten@bellsouth.net> for
+ 	  reporting this.
+
 Sat Oct 24 02:13:11 1998  Detlef Backer <Detlef.Becker@med.siemens.de>
 
 	* ace/OS.cpp (invoke): ACE_Thread_Adapter::invoke() swapped the
