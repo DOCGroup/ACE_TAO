@@ -1,7 +1,11 @@
 Tue Jun 29 09:21:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* ace/OS.h:
 	* ace/OS.i:
-	  Fixed ACE_OS::sendto() call...
+	  Fixed the unix version ACE_OS::sendto() call.
+	  Also fixed the Win32 version and the Win32 version of
+	  ACE_OS::recvfrom, had to change the signatures to make them safe
+	  and fit the WinSock2 interfaces.
 
 Tue Jun 29 07:07:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
