@@ -2,8 +2,11 @@ Sat Sep  7 23:22:20 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 
 	* bin/make_release: The tar ball that is put out during the
 	  release, is copied now to the the previous_versions directory 
-	  with the appopriate version information. This shoudl work right
-	  since this was tested against a local repo.
+	  with the appopriate version information. This should work right
+	  since this was tested against a local repo. 
+
+	  Thanks to Preston A. Elder <prez@gentoo.org>  for motivating
+	  this change. 
 
 Sat Sep  7 18:03:21 2002  Steve Huston  <shuston@riverace.com>
 
