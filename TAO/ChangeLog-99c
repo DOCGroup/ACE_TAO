@@ -1,3 +1,7 @@
+Thu Jun 03 13:44:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_message): Fixed use of <transport>.
+
 Thu Jun 03 13:30:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
