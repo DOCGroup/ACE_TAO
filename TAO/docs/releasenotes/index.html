@@ -1017,7 +1017,7 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of July 18, 2000): 
+<p>Current Status (as of July 22, 2000): 
 <ul>
 
 <li> Implementation of Interface.idl completed, for types fully supported
@@ -1031,9 +1031,9 @@ resolve_initial_references ("InterfaceRespository") completed.</li><p>
 
 <li> Multicast discovery of IFR service debugged and tested.</li><p>
 
-<li> Read/write locking option added to IFR service. This option should be
-used if the IFR service is started using a service config file that
-chooses the thread-per-request threading model.</li><p>
+<li> Read/write locking option added.</li><p>
+
+<li> Persistent IFR tested.</li><p>
 
 </ul>
 
@@ -1079,7 +1079,12 @@ IOR has been added to TAO. Testing has been done using loopback on NT,
 loopback on Solaris, and remotely between these two platforms in both
 directions.</li><p>
 
-<li> Read/write locking option added.</li><p>
+<li> Read/write locking option added to IFR service. This option should be
+used if the IFR service is started using a service config file that
+chooses the thread-per-request threading model.</li><p>
+
+<li> A test of the persistence option for the IFR added in the directory
+ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test.</li><p>
 
 </ul>
 
