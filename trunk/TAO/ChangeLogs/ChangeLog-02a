@@ -1,6 +1,11 @@
+Mon Jan 14 09:27:44 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Added missing
+	  PortableGroup directory for POA_Hooks.
+
 Mon Jan 14 09:19:43 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/AMI_Latency/client.cpp: 
+	* performance-tests/AMI_Latency/client.cpp:
 	  Fixed compile error.
 
 Mon Jan 14 08:49:31 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
