@@ -1,3 +1,16 @@
+Tue Jun 25 23:22:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SOCK_Dgram_Mcast.i:
+	* ace/SOCK_Dgram_Mcast_T.cpp: Removed.
+	* ace/SOCK_Dgram_Mcast_T.h: Removed.
+	* ace/SOCK_Dgram_Mcast_T.i: Removed.
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
+	  Reverted these files to before June 9.  Existing code in QoS and
+	  AVStreams were broken do to the changes.
+
 Tue Jun 25 14:45:31 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Comment out
