@@ -255,11 +255,7 @@ typedef unsigned char ACE_Byte;
 # if defined (ACE_HAS_WINCE) && (_WIN32_WCE < 400)
 typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
 # endif
-# if defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
-typedef std::ptrdiff_t ptr_arith_t;
-# else
 typedef ptrdiff_t ptr_arith_t;
-# endif /* __BORLANDC__ && __BORLANDC__ >= 0x600 */
 
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)
