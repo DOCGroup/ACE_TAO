@@ -130,13 +130,11 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id) const
 {
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *nc_this =
-    (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *)
-    this;
+    (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *) this;
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
 
   size_t slot = 0;
-  return nc_this->find_and_return_index (ext_id,
-                                         slot);
+  return nc_this->find_and_return_index (ext_id, slot);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
@@ -144,12 +142,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id,
                                                  INT_ID &int_id) const
 {
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *nc_this =
-    (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *)
-    this;
+    (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *) this;
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
 
-  return nc_this->find_i (ext_id,
-                          int_id);
+  return nc_this->find_i (ext_id, int_id);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int

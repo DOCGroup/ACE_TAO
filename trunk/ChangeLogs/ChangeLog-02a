@@ -1,3 +1,9 @@
+Mon Jan 22 10:21:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Map_Manager.h: Clarify that find() returns 0, rather than
+	  saying "a non-negative number".  Thanks to Albert Wijna
+ 	  <albert.wijnja@meco.nl> for clarifying this.
+
 Mon Jan 22 15:38:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Containers_T.h:

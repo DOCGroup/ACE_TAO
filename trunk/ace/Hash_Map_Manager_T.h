@@ -249,8 +249,8 @@ public:
               INT_ID &old_int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
-  /// Locate <ext_id> and pass out parameter via <int_id>.  If found,
-  /// return 0, returns -1 if not found.
+  /// Locate <ext_id> and pass out parameter via <int_id>.  
+  /// Return 0 if found, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             INT_ID &int_id) const;
 
