@@ -1215,7 +1215,8 @@ extern EXPORT_NAME##_Export ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLA
  * following macro.
  *
  * @param SERVICE_CLASS The name of the class that implements the
- *    service, must derive from ACE_Service_Configurator.
+ *    service, must be derived (directly or indirectly) from
+ *    ACE_Service_Object.
  * @param NAME The name for this service, this name is used by the
  *    service configurator to match configuration options provided in
  *    the svc.conf file.
