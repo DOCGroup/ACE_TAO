@@ -121,8 +121,8 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-// SunOS 4 style prototype for gettimeofday
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// Platform/compiler supports void * as second parameter to gettimeofday().
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 // HP/UX has an undefined syscall for GETRUSAGE...
 #define ACE_HAS_SYSCALL_GETRUSAGE

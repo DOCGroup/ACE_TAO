@@ -52,6 +52,7 @@ ACE_OS::gettimeofday (void)
   tv.tv_usec = tb.tb_low / 1000L;
 #else
 # if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
+  defined(ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \
   (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k) && !defined (SCO))
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
 # elif defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)

@@ -88,8 +88,8 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-// ???
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// Platform/compiler supports void * as second parameter to gettimeofday().
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 // HP/UX has an undefined syscall for GETRUSAGE...
 //#define ACE_HAS_SYSCALL_GETRUSAGE
