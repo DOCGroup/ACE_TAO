@@ -174,6 +174,25 @@ public:
 // ****************************************************************
 
 /**
+ * @class TAO_CORBA_Priority_Normalizer
+ *
+ * @brief Used to keep Strategy library separate from the RT library.
+ **/
+class TAO_Export TAO_CORBA_Priority_Normalizer
+{
+public:
+
+  /// Virtual destructor
+  virtual ~TAO_CORBA_Priority_Normalizer (void);
+
+  /// Normalize CORBA Priority
+  virtual CORBA::Boolean normalize (CORBA::Short corba_priority,
+                                    CORBA::Short &normalized_corba_priority);
+};
+
+// ****************************************************************
+
+/**
  * @class TAO_ORB_Core
  *
  * @brief Encapsulates the state of an ORB.
@@ -260,6 +279,13 @@ public:
 
   /// Get the POA extension initializers.
   TAO_POA_Extension_Initializer *poa_extension_initializer (void);
+
+  /// Get the priority normalizer.
+  TAO_CORBA_Priority_Normalizer *corba_priority_normalizer (void) const;
+
+  /// Set the priority normalizer.  Takes over the memory management
+  //of <new_normalizer>: <new_normalizer> will be deleted.
+  void corba_priority_normalizer (TAO_CORBA_Priority_Normalizer *new_normalizer);
 
   /// @name Collocation Strategies
   //@{
@@ -1251,6 +1277,9 @@ protected:
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
+
+  /// CORBA Priority Normalizer.
+  TAO_CORBA_Priority_Normalizer *corba_priority_normalizer_;
 };
 
 // ****************************************************************
