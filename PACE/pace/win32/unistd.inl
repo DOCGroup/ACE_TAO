@@ -373,10 +373,7 @@ PACE_INLINE
 pace_ssize_t
 pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
 {
-  PACE_UNUSED_ARG (fildes);
-  PACE_UNUSED_ARG (buf);
-  PACE_UNUSED_ARG (nbyte);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+  return pace_win32_read (fildes, buf, nbyte);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 

@@ -1,3 +1,22 @@
+Tue Mar 13 12:58:09 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/win32/setjmp.inl:
+          Removed function calls to setjmp and sigsetjmp since
+          these are now macros.
+
+        * pace/win32/stdio.c:
+          Adding pace_win32_fseek function to support pace_fseek.
+
+        * pace/win32/time.inl:
+          Adding support for tzset for Windows.
+
+        * pace/win32/unistd.c:
+          Adding call to pace_win32_read function and cleaned up
+          pace_write code.
+
+        * pace/win32/unistd.inl:
+          Adding pace_win32_read function to support pace_read.
+
 Wed Feb 28 15:04:41 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/string.inl (pace_strtok_r):
