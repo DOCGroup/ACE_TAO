@@ -389,7 +389,6 @@ namespace CIAO
                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-
     PortableServer::ObjectId_var id =
       this->component_poa_->reference_to_id (objref
                                              ACE_ENV_ARG_PARAMETER);
