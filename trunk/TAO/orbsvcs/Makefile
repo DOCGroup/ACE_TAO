@@ -23,6 +23,7 @@ DIRS  = orbsvcs \
 	Trading_Service \
 	LoadBalancer \
 	TAO_Service \
+	PSS \
         tests \
 	performance-tests \
         examples

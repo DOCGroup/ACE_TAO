@@ -1,6 +1,11 @@
-Thu Jul 25 08:10:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+Thu Jul 25 09:25:49 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
+	* orbsvcs/examples/Makefile: 
+	  Added ORT and PSS to the list.
 
+	* orbsvcs/Makefile: 
+	  Added PSS to the list of directories.
+	
 Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/PSS/PSDL.ll:
