@@ -282,7 +282,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = 131;
+    CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -336,7 +336,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = 131;
+    CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -389,7 +389,7 @@ void CORBA_Policy::destroy (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
-    CORBA::Short flag = 131;
+    CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);

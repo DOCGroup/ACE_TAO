@@ -225,7 +225,7 @@ IR::DefinitionKind CORBA::IRObject::def_kind (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -342,7 +342,7 @@ void CORBA::IRObject::destroy (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -674,7 +674,7 @@ char * IR_Contained::id (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -792,7 +792,7 @@ void IR_Contained::id (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -908,7 +908,7 @@ char * IR_Contained::name (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1026,7 +1026,7 @@ void IR_Contained::name (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1142,7 +1142,7 @@ char * IR_Contained::version (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1260,7 +1260,7 @@ void IR_Contained::version (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1377,7 +1377,7 @@ IR_Container_ptr IR_Contained::defined_in (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1494,7 +1494,7 @@ char * IR_Contained::absolute_name (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1612,7 +1612,7 @@ IR_Repository_ptr IR_Contained::containing_repository (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1791,7 +1791,7 @@ IR_Contained::Description * IR_Contained::describe (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -1911,7 +1911,7 @@ void IR_Contained::move (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -4906,7 +4906,7 @@ IR_Contained_ptr IR_Container::lookup (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -5033,7 +5033,7 @@ IR_ContainedSeq * IR_Container::contents (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -5163,7 +5163,7 @@ IR_ContainedSeq * IR_Container::lookup_name (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -5531,7 +5531,7 @@ IR_Container::DescriptionSeq * IR_Container::describe_contents (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -5660,7 +5660,7 @@ IR_ModuleDef_ptr IR_Container::create_module (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -5791,7 +5791,7 @@ IR_ConstantDef_ptr IR_Container::create_constant (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -5923,7 +5923,7 @@ IR_StructDef_ptr IR_Container::create_struct (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6055,7 +6055,7 @@ IR_UnionDef_ptr IR_Container::create_union (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6187,7 +6187,7 @@ IR_EnumDef_ptr IR_Container::create_enum (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6318,7 +6318,7 @@ IR_AliasDef_ptr IR_Container::create_alias (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6450,7 +6450,7 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6588,7 +6588,7 @@ IR_ValueDef_ptr IR_Container::create_value (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6725,7 +6725,7 @@ IR_ValueBoxDef_ptr IR_Container::create_value_box (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6856,7 +6856,7 @@ IR_ExceptionDef_ptr IR_Container::create_exception (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -6986,7 +6986,7 @@ IR_NativeDef_ptr IR_Container::create_native (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -7612,7 +7612,7 @@ CORBA::TypeCode_ptr IR_IDLType::type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -7961,7 +7961,7 @@ IR_Contained_ptr IR_Repository::lookup_id (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8086,7 +8086,7 @@ CORBA::TypeCode_ptr IR_Repository::get_canonical_typecode (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8211,7 +8211,7 @@ IR_PrimitiveDef_ptr IR_Repository::get_primitive (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8336,7 +8336,7 @@ IR_StringDef_ptr IR_Repository::create_string (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8461,7 +8461,7 @@ IR_WstringDef_ptr IR_Repository::create_wstring (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8587,7 +8587,7 @@ IR_SequenceDef_ptr IR_Repository::create_sequence (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8714,7 +8714,7 @@ IR_ArrayDef_ptr IR_Repository::create_array (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -8841,7 +8841,7 @@ IR_FixedDef_ptr IR_Repository::create_fixed (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -9281,7 +9281,7 @@ IR_ComponentDef_ptr IR_ComponentRepository::create_component (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -9415,7 +9415,7 @@ IR_HomeDef_ptr IR_ComponentRepository::create_home (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -10034,7 +10034,7 @@ CORBA::TypeCode_ptr IR_ConstantDef::type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -10152,7 +10152,7 @@ IR_IDLType_ptr IR_ConstantDef::type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -10270,7 +10270,7 @@ void IR_ConstantDef::type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -10388,7 +10388,7 @@ CORBA::Any * IR_ConstantDef::value (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -10506,7 +10506,7 @@ void IR_ConstantDef::value (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -11215,7 +11215,7 @@ IR_StructMemberSeq * IR_StructDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -11333,7 +11333,7 @@ void IR_StructDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -11665,7 +11665,7 @@ CORBA::TypeCode_ptr IR_UnionDef::discriminator_type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -11783,7 +11783,7 @@ IR_IDLType_ptr IR_UnionDef::discriminator_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -11901,7 +11901,7 @@ void IR_UnionDef::discriminator_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -12019,7 +12019,7 @@ IR_UnionMemberSeq * IR_UnionDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -12137,7 +12137,7 @@ void IR_UnionDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -12511,7 +12511,7 @@ IR_EnumMemberSeq * IR_EnumDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -12629,7 +12629,7 @@ void IR_EnumDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -12960,7 +12960,7 @@ IR_IDLType_ptr IR_AliasDef::original_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -13078,7 +13078,7 @@ void IR_AliasDef::original_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -13594,7 +13594,7 @@ IR::PrimitiveKind IR_PrimitiveDef::kind (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -13908,7 +13908,7 @@ CORBA::ULong IR_StringDef::bound (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -14026,7 +14026,7 @@ void IR_StringDef::bound (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -14354,7 +14354,7 @@ CORBA::ULong IR_WstringDef::bound (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -14472,7 +14472,7 @@ void IR_WstringDef::bound (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -14800,7 +14800,7 @@ CORBA::UShort IR_FixedDef::digits (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -14918,7 +14918,7 @@ void IR_FixedDef::digits (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15034,7 +15034,7 @@ CORBA::Short IR_FixedDef::scale (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15152,7 +15152,7 @@ void IR_FixedDef::scale (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15508,7 +15508,7 @@ CORBA::ULong IR_SequenceDef::bound (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15626,7 +15626,7 @@ void IR_SequenceDef::bound (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15743,7 +15743,7 @@ CORBA::TypeCode_ptr IR_SequenceDef::element_type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15861,7 +15861,7 @@ IR_IDLType_ptr IR_SequenceDef::element_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -15979,7 +15979,7 @@ void IR_SequenceDef::element_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -16348,7 +16348,7 @@ CORBA::ULong IR_ArrayDef::length (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -16466,7 +16466,7 @@ void IR_ArrayDef::length (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -16583,7 +16583,7 @@ CORBA::TypeCode_ptr IR_ArrayDef::element_type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -16701,7 +16701,7 @@ IR_IDLType_ptr IR_ArrayDef::element_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -16819,7 +16819,7 @@ void IR_ArrayDef::element_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -17189,7 +17189,7 @@ CORBA::TypeCode_ptr IR_ExceptionDef::type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -17308,7 +17308,7 @@ IR_StructMemberSeq * IR_ExceptionDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -17426,7 +17426,7 @@ void IR_ExceptionDef::members (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -18186,7 +18186,7 @@ CORBA::TypeCode_ptr IR_AttributeDef::type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -18304,7 +18304,7 @@ IR_IDLType_ptr IR_AttributeDef::type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -18422,7 +18422,7 @@ void IR_AttributeDef::type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -18538,7 +18538,7 @@ IR::AttributeMode IR_AttributeDef::mode (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -18656,7 +18656,7 @@ void IR_AttributeDef::mode (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -19610,7 +19610,7 @@ CORBA::TypeCode_ptr IR_OperationDef::result (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -19728,7 +19728,7 @@ IR_IDLType_ptr IR_OperationDef::result_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -19846,7 +19846,7 @@ void IR_OperationDef::result_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -19964,7 +19964,7 @@ IR_ParDescriptionSeq * IR_OperationDef::params (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20082,7 +20082,7 @@ void IR_OperationDef::params (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20198,7 +20198,7 @@ IR::OperationMode IR_OperationDef::mode (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20316,7 +20316,7 @@ void IR_OperationDef::mode (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20434,7 +20434,7 @@ IR_ContextIdSeq * IR_OperationDef::contexts (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20552,7 +20552,7 @@ void IR_OperationDef::contexts (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20670,7 +20670,7 @@ IR_ExceptionDefSeq * IR_OperationDef::exceptions (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -20788,7 +20788,7 @@ void IR_OperationDef::exceptions (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22256,7 +22256,7 @@ IR_InterfaceDefSeq * IR_InterfaceDef::base_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22374,7 +22374,7 @@ void IR_InterfaceDef::base_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22490,7 +22490,7 @@ CORBA::Boolean IR_InterfaceDef::is_abstract (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22608,7 +22608,7 @@ void IR_InterfaceDef::is_abstract (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22724,7 +22724,7 @@ CORBA::Boolean IR_InterfaceDef::is_local (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22842,7 +22842,7 @@ void IR_InterfaceDef::is_local (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -22959,7 +22959,7 @@ CORBA::Boolean IR_InterfaceDef::is_a (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -23090,7 +23090,7 @@ IR_AttributeDef_ptr IR_InterfaceDef::create_attribute (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -23228,7 +23228,7 @@ IR_OperationDef_ptr IR_InterfaceDef::create_operation (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -24577,7 +24577,7 @@ CORBA::TypeCode_ptr IR_ValueMemberDef::type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -24695,7 +24695,7 @@ IR_IDLType_ptr IR_ValueMemberDef::type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -24813,7 +24813,7 @@ void IR_ValueMemberDef::type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -24929,7 +24929,7 @@ CORBA::Visibility IR_ValueMemberDef::access (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -25047,7 +25047,7 @@ void IR_ValueMemberDef::access (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -25418,7 +25418,7 @@ IR_InterfaceDefSeq * IR_ValueDef::supported_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -25536,7 +25536,7 @@ void IR_ValueDef::supported_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -25654,7 +25654,7 @@ IR_InitializerSeq * IR_ValueDef::initializers (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -25772,7 +25772,7 @@ void IR_ValueDef::initializers (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -25889,7 +25889,7 @@ IR_ValueDef_ptr IR_ValueDef::base_value (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26007,7 +26007,7 @@ void IR_ValueDef::base_value (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26125,7 +26125,7 @@ IR_ValueDefSeq * IR_ValueDef::abstract_base_values (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26243,7 +26243,7 @@ void IR_ValueDef::abstract_base_values (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26359,7 +26359,7 @@ CORBA::Boolean IR_ValueDef::is_abstract (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26477,7 +26477,7 @@ void IR_ValueDef::is_abstract (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26593,7 +26593,7 @@ CORBA::Boolean IR_ValueDef::is_custom (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26711,7 +26711,7 @@ void IR_ValueDef::is_custom (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26827,7 +26827,7 @@ CORBA::Boolean IR_ValueDef::is_truncatable (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -26945,7 +26945,7 @@ void IR_ValueDef::is_truncatable (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -27062,7 +27062,7 @@ CORBA::Boolean IR_ValueDef::is_a (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -27191,7 +27191,7 @@ IR_ValueMemberDef_ptr IR_ValueDef::create_value_member (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -27326,7 +27326,7 @@ IR_AttributeDef_ptr IR_ValueDef::create_attribute (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -27464,7 +27464,7 @@ IR_OperationDef_ptr IR_ValueDef::create_operation (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -28879,7 +28879,7 @@ IR_IDLType_ptr IR_ValueBoxDef::original_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -28997,7 +28997,7 @@ void IR_ValueBoxDef::original_type_def (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -29328,7 +29328,7 @@ IR_InterfaceDef_ptr IR_ProvidesDef::interface_type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -29722,7 +29722,7 @@ IR_InterfaceDef_ptr IR_UsesDef::interface_type (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -29839,7 +29839,7 @@ CORBA::Boolean IR_UsesDef::is_multiple (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -30612,7 +30612,7 @@ CORBA::Boolean IR_EventDef::is_a (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -30736,7 +30736,7 @@ IR_ValueDef_ptr IR_EventDef::event (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -31701,7 +31701,7 @@ IR_InterfaceDefSeq * IR_ComponentDef::supported_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -31819,7 +31819,7 @@ void IR_ComponentDef::supported_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -31936,7 +31936,7 @@ IR_ComponentDef_ptr IR_ComponentDef::base_component (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32055,7 +32055,7 @@ IR_ProvidesDefSeq * IR_ComponentDef::provides_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32174,7 +32174,7 @@ IR_UsesDefSeq * IR_ComponentDef::uses_interfaces (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32293,7 +32293,7 @@ IR_EmitsDefSeq * IR_ComponentDef::emits_events (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32412,7 +32412,7 @@ IR_PublishesDefSeq * IR_ComponentDef::publishes_events (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32531,7 +32531,7 @@ IR_ConsumesDefSeq * IR_ComponentDef::consumes_events (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32648,7 +32648,7 @@ CORBA::Boolean IR_ComponentDef::is_basic (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32770,7 +32770,7 @@ IR_ProvidesDef_ptr IR_ComponentDef::create_provides (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -32902,7 +32902,7 @@ IR_UsesDef_ptr IR_ComponentDef::create_uses (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -33034,7 +33034,7 @@ IR_EmitsDef_ptr IR_ComponentDef::create_emits (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -33165,7 +33165,7 @@ IR_PublishesDef_ptr IR_ComponentDef::create_publishes (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -33296,7 +33296,7 @@ IR_ConsumesDef_ptr IR_ComponentDef::create_consumes (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -34280,7 +34280,7 @@ CORBA::Boolean IR_PrimaryKeyDef::is_a (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -34404,7 +34404,7 @@ IR_ValueDef_ptr IR_PrimaryKeyDef::primary_key (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35183,7 +35183,7 @@ IR_HomeDef_ptr IR_HomeDef::base_home (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35301,7 +35301,7 @@ IR_ComponentDef_ptr IR_HomeDef::managed_component (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35419,7 +35419,7 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::primary_key (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35538,7 +35538,7 @@ IR_FactoryDefSeq * IR_HomeDef::factories (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35657,7 +35657,7 @@ IR_FinderDefSeq * IR_HomeDef::finders (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35774,7 +35774,7 @@ CORBA::Boolean IR_HomeDef::is_basic (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -35896,7 +35896,7 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::create_primary_key (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -36028,7 +36028,7 @@ IR_FactoryDef_ptr IR_HomeDef::create_factory (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -36161,7 +36161,7 @@ IR_FinderDef_ptr IR_HomeDef::create_finder (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -37259,7 +37259,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_struct_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -37389,7 +37389,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_union_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -37519,7 +37519,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_enum_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -37648,7 +37648,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_alias_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -37777,7 +37777,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_exception_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -37905,7 +37905,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_interface_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38031,7 +38031,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_string_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38156,7 +38156,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_wstring_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38282,7 +38282,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_fixed_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38409,7 +38409,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_sequence_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38536,7 +38536,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_array_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38666,7 +38666,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38797,7 +38797,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_box_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -38925,7 +38925,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_native_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -39051,7 +39051,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_recursive_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -39177,7 +39177,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_abstract_interface_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -39304,7 +39304,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_component_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -39431,7 +39431,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_home_tc (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = 131;
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
