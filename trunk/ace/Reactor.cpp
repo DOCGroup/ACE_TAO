@@ -111,7 +111,13 @@ ACE_Reactor::instance (ACE_Reactor *r,
     ACE_Reactor::delete_reactor_ = 0;
 
   ACE_Reactor::reactor_ = r;
-  ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_);
+
+  // We can't register the Reactor singleton as a framework component twice.
+  // Therefore we test to see if we had an existing reactor instance, which
+  // if so means it must have already been registered.
+  if (t == 0)
+    ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_);
+
   return t;
 }
 

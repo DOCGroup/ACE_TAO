@@ -835,27 +835,10 @@ ACE_Service_Config::fini_svcs (void)
   if (ACE_Service_Repository::instance () != 0)
     result = ACE_Service_Repository::instance ()->fini ();
 
-  // Since the fini() method of the objects inside the service
-  // repository may reference the ACE singletons, they must be
-  // destroyed after the objects have been finalized.
-  ACE_Service_Config::close_singletons ();
-
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
 
   return result;
-}
-
-int
-ACE_Service_Config::close_singletons (void)
-{
-  ACE_TRACE ("ACE_Service_Config::close_singletons");
-
-#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  ACE_Thread_Manager::close_singleton ();
-#endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
-
-  return 0;
 }
 
 // Perform user-specified close activities and remove dynamic memory.

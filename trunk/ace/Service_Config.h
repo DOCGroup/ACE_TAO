@@ -240,13 +240,6 @@ public:
    */
   static int close_svcs (void);
 
-  /**
-   * Delete the dynamically allocated Singletons (i.e., the <Reactor>,
-   * <Proactor>, <ReactorEx>, and <Thread_Manager>.
-   * Returns 0.
-   */
-  static int close_singletons (void);
-
   /// True if reconfiguration occurred.
   static int reconfig_occurred (void);
 
