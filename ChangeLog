@@ -1,3 +1,18 @@
+Mon Nov 11 12:39:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/FIFO_Send_Msg.cpp (send): When setting iovec length,
+          static_cast the int length to size_t; the target is not an
+          int (as the strbuf length is). When returning the sent byte
+          count, don't include any additional bytes added internally
+          for record framing.
+
+        * tests/FIFO_Test.cpp: New test to exercise basic and overflow
+          message-based FIFO I/O.
+
+        * tests/Makefile:
+        * tests/run_test.lst: Added FIFO_Test. Disabled on MSVC builds
+          since Windows doesn't have FIFOs.
+
 Mon Nov 11 09:58:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/CDR_Stream.i (write_boolean): Add casts to ACE_CDR::Octet to
