@@ -22,6 +22,9 @@ Thu Aug 05 14:57:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tests/Collocation/Collocation.dsw:
 	* tests/Collocation/README: Adapt the above changes.
 
+	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca> for
+	  motivating the change.
+
 Thu Aug 05 14:38:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.cpp (be_interface_type_strategy):
