@@ -71,10 +71,17 @@ ACE_INLINE void
 TAO_SSLIOP_Endpoint::credentials (const TAO::SSLIOP::OwnCredentials_ptr creds)
 {
   this->credentials_ = TAO::SSLIOP::OwnCredentials::_duplicate (creds);
+  this->credentials_set_ = 1;
 }
 
 ACE_INLINE TAO::SSLIOP::OwnCredentials *
 TAO_SSLIOP_Endpoint::credentials (void) const
 {
   return this->credentials_.in ();
+}
+
+ACE_INLINE int
+TAO_SSLIOP_Endpoint::credentials_set (void) const
+{
+  return this->credentials_set_;
 }

@@ -1,23 +1,52 @@
+Mon Jan 31 16:56:25 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.i:
+
+          Modified the order of execution in ssliop_connect. The change to
+          SSLIOP_Endpoint was to add an explicit flag for determining that
+          initialization was complete. The problem this addresses is that
+          the SSLIOP_Endpoint is used to query the connection cache before
+          all of its state is set. The qop, trust, and credentials members
+          are all set after the query, but before a new connection is
+          bound to the cache. This leads to redundant connections in the
+          cache if two or more SSLIOP_endpoints happen to point to the
+          same peer using the same security options.
+
+        * orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/test.idl:
+        * orbsvcs/tests/Security/MT_SSLIOP/test_i.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/test_i.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/test_i.i:
+
+          Added a second interface to the test so that the behavior
+          indicated above could be tested.
+
 Mon Jan 31 16:06:28 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-        
+
           - In the generated _nil() method for interfaces, changed
             the C-style cast of 0 to the *_ptr type to a C++-style
             static_cast<>.
-            
+
           - In the generated _is_a() method for the skeleton, removed
             the unnecessary cast to char* on the first argument
             passed to ACE_OS::strcmp().
-            
+
           - Also in the generated _is_a() method for the skeleton,
             changed the 'if (...) return 1 else return 0;' style
             to just 'return (...)' since the expression (..)
             already evaluates to the required boolean return type.
-            
+
           Thanks to Johnny Willemsen <jwillemsen@rememedy.nl> for
           suggesting the first two of the above changes.
 

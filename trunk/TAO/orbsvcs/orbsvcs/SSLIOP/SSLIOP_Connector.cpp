@@ -500,6 +500,44 @@ TAO::SSLIOP::Connector::ssliop_connect (
   TAO::SSLIOP::Connection_Handler *svc_handler = 0;
   TAO_Transport *transport = 0;
 
+  // Before we can check the cache to find an existing connection, we
+  // need to make sure the ssl_endpoint is fully initialized with the
+  // local security information. This endpoint initalized by the
+  // profile does not (and cannot) contain the desired QOP, trust, or
+  // credential information which is necesary to uniquely identify
+  // this connection.
+  if (!ssl_endpoint->credentials_set())
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) Initializing SSLIOP_Endpoint \n")
+                    ));
+
+      if (this->base_connector_.creation_strategy ()->make_svc_handler (
+               svc_handler) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
+                        ACE_TEXT ("service handler.\n")));
+
+          return 0;
+        }
+
+      ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>
+        safe_handler (svc_handler);
+      TAO::SSLIOP::OwnCredentials_var credentials =
+        this->retrieve_credentials (resolver->stub (),
+                                    svc_handler->peer ().ssl ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      svc_handler = safe_handler.release ();
+      ssl_endpoint->qop (qop);
+      ssl_endpoint->trust (trust);
+      ssl_endpoint->credentials (credentials.in ());
+    }
+
   // Check the Cache first for connections
   if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
         desc,
@@ -552,7 +590,8 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // too late if another thread pick up the completion and
       // potentially deletes the handler before we get a chance to
       // increment the reference count.
-      if (this->base_connector_.creation_strategy ()->make_svc_handler (
+      if (svc_handler == 0 &&
+          this->base_connector_.creation_strategy ()->make_svc_handler (
                svc_handler) != 0)
         {
           if (TAO_debug_level > 0)
@@ -610,12 +649,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
           ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
         }
-
-      TAO::SSLIOP::OwnCredentials_var credentials =
-        this->retrieve_credentials (resolver->stub (),
-                                    svc_handler->peer ().ssl ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
 
       svc_handler = safe_handler.release ();
 
@@ -708,10 +741,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
                     "new SSL connection to port %d on transport[%d]\n",
                     remote_address.get_port_number (),
                     svc_handler->peer ().get_handle ()));
-
-      ssl_endpoint->qop (qop);
-      ssl_endpoint->trust (trust);
-      ssl_endpoint->credentials (credentials.in ());
 
       // Add the handler to Cache
       int retval =
