@@ -40,14 +40,12 @@
 // ... and the final standard even!
 #define ACE_HAS_PTHREADS_STD
 
-#define ACE_HAS_PTHREAD_SIGMASK                 // JCEJ 12/19/96
-
 #if !defined (ACE_MT_SAFE)
         #define ACE_MT_SAFE 1                           // JCEJ 12/22/96        #1
 #endif
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE         // jcej 12/22/96        #2
 #define PTHREAD_MIN_PRIORITY            0       // JCEJ 12/22/96        #3
-#if defined(ACE_HAS_PTHREAD_SIGMASK)
+#if !defined(ACE_LACKS_PTHREAD_SIGMASK)
 #  define PTHREAD_MAX_PRIORITY          99      // CJC  02/11/97
 #else
 #  define PTHREAD_MAX_PRIORITY          32      // JCEJ 12/22/96        #3
