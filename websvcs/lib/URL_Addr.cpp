@@ -450,8 +450,7 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
 
   LPCTSTR string = address;
   string += http_size;
-  ASYS_TCHAR separator[] = ASYS_TEXT("//");
-  string += sizeof(separator)/sizeof(separator[0]) - 1;
+  string += 2; // == strlen ("//");
 
   // Make a copy of the string to manipulate it.
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (string), -1);
@@ -721,8 +720,7 @@ ACE_FTP_Addr::string_to_addr (LPCTSTR address)
 
   LPCTSTR string = address;
   string += ftp_size;
-  ASYS_TCHAR separator[] = ASYS_TEXT("//");
-  string += sizeof(separator)/sizeof(separator[0]) - 1;
+  string += 2; // == strlen ("//");
 
   // Make a copy of the string to manipulate it.
   ASYS_TCHAR *t;
