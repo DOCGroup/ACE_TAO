@@ -1,3 +1,13 @@
+Thu Sep 16 08:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_HAS_POSIX_SEM and ACE_LACKS_NAMED_POSIX_SEM
+
+        * ace/OS_NS_sys_mman.{h,inl}:
+          Moved include ace/os_include/sys/os_mman.h from inl to header
+          file, so that we get all the needed constants when building
+          with Cygwin and inlining disabled
+
 Thu Sep 16 07:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/config_h.m4:
