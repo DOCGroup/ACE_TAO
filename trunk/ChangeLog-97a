@@ -1,15 +1,55 @@
+Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (open): Make sure to perform the
+ 	  daemonization logic first so that we get a new process created
+ 	  before initializing reactors, etc.  Thanks to Adrian Salt
+ 	  <acsalt@magi.com> for reporting this.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
+	  Changed ACE::INVALID_HANDLE to ACE_INVALID_HANDLE.
+	  Thanks to Dani Flexer <danif@alice.actcom.co.il> for
+	  reporting this.
+
+	* tests/Conn_Test.cpp (compare_i): Changed the comparison from
+	  a1 == a2 to a1 != a2 since this appears to be what is needed.
+	  We need to improve the comments here!
+
+	* tests/Conn_Test.cpp: Split the definition of the Svc_Handler
+ 	  template into its own Conn_Test.h file to work around "features"
+ 	  with AIX C++.  Thanks to Chris Lahey for reporting this.
+
+	* ace/Containers.cpp: Fixed a bug in the set() method for
+ 	  ACE_Unbounded_Queue.  Again, thank goodness for cs242!
+
+	* ace/Containers.cpp: Fixed a bug in the enqueue_head() logic for
+ 	  ACE_Unbounded_Queue.  Thank goodness for cs242 ;-).
+
+	* ace/Containers.cpp: Added a destructor for ACE_Node to keep the
+ 	  compilers happy.
+
+Tue May 06 11:31:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/*.cpp: removed break statements after
+	  ACE_RETURNs to avoid unreachable statement warnings from
+	  GHS.  
+
+	* ace/OS.cpp (mktime): added time_t cast of -1 (error) return
+	  to avoid compiler warning.
+
+	* ace/config-vxworks-ghs-1.8.h: added ACE_LACKS_SIGNED_CHAR.
+
+	* ace/Containers.cpp (dequeue_head): fixed typos in variable names.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+	  removed #ifdef ACE_HAS_TLI around some template specializations so
+	  that this subproject will build on platforms non-TLI platforms such
+	  as Linux.
+
 Tue May  6 17:02:54 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.{h,i}: Added strftime ().  Also, enhanced strcasecmp
 	  implementation to account for lexicographical ordering for
 	  mismatches.
-
-Tue May 06 14:36:03 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* netsvcs/lib/*.cpp: removed break statements after ACE_RETURNs to avoid unreachable
-	  statement warnings from GHS.
-
-Tue May  6 12:43:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* apps/JAWS/server/Parse_Headers.{h,cpp} (class Headers_Map):
           Changed signature of casting operator to return a pointer
@@ -44,44 +84,6 @@ Tue May  6 12:43:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
           Cosmetic changes for ACE coding style.
 
           SGI fixes.
-
-Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
-	  Changed ACE::INVALID_HANDLE to ACE_INVALID_HANDLE.
-	  Thanks to Dani Flexer <danif@alice.actcom.co.il> for
-	  reporting this.
-
-	* tests/Conn_Test.cpp (compare_i): Changed the comparison from
-	  a1 == a2 to a1 != a2 since this appears to be what is needed.
-	  We need to improve the comments here!
-
-	* tests/Conn_Test.cpp: Split the definition of the Svc_Handler
- 	  template into its own Conn_Test.h file to work around "features"
- 	  with AIX C++.  Thanks to Chris Lahey for reporting this.
-
-	* ace/Containers.cpp: Fixed a bug in the set() method for
- 	  ACE_Unbounded_Queue.  Again, thank goodness for cs242!
-
-	* ace/Containers.cpp: Fixed a bug in the enqueue_head() logic for
- 	  ACE_Unbounded_Queue.  Thank goodness for cs242 ;-).
-
-	* ace/Containers.cpp: Added a destructor for ACE_Node to keep the
- 	  compilers happy.
-
-Tue May 06 11:31:49 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/OS.cpp (mktime): added time_t cast of -1 (error) return
-	  to avoid compiler warning.
-
-	* ace/config-vxworks-ghs-1.8.h: added ACE_LACKS_SIGNED_CHAR.
-
-	* ace/Containers.cpp (dequeue_head): fixed typos in variable names.
-
-	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
-	  removed #ifdef ACE_HAS_TLI around some template specializations so
-	  that this subproject will build on platforms non-TLI platforms such
-	  as Linux.
 
 Tue May  6 00:00:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 

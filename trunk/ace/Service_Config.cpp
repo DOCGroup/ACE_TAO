@@ -587,6 +587,10 @@ ACE_Service_Config::open (const char program_name[])
 {   
   ACE_TRACE ("ACE_Service_Config::open");
 
+  // Become a daemon before doing anything else.
+  if (ACE_Service_Config::be_a_daemon_)
+    ACE_Service_Config::start_daemon ();	 
+
   // Only use STDERR if the users hasn't already set the flags.
   if (ACE_LOG_MSG->open (program_name, 
 			 ACE_LOG_MSG->flags () ? ACE_LOG_MSG->flags () : (u_long) ACE_Log_Msg::STDERR,
@@ -616,9 +620,6 @@ ACE_Service_Config::open (const char program_name[])
       // We created it, so we own it!
       ACE_Service_Config::delete_reactor_ = 1;
     }
-
-  if (ACE_Service_Config::be_a_daemon_)
-    ACE_Service_Config::start_daemon ();	 
 
   // Register ourselves to receive reconfiguration requests via
   // signals!
@@ -958,6 +959,15 @@ ACE_Service_Config::reconfig_occurred (sig_atomic_t config_occurred)
 {
   ACE_TRACE ("ACE_Service_Config::reconfig_occurred");
   ACE_Service_Config::reconfig_occurred_ = config_occurred;
+}
+
+// Become a daemon (i.e., run as a "background" process).
+
+int
+ACE_Service_Config::start_daemon (void)
+{
+  ACE_TRACE ("ACE_Service_Config::start_daemon");
+  return ACE::daemonize ();
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)

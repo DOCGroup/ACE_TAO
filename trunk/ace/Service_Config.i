@@ -3,15 +3,6 @@
 
 // Service_Config.i
 
-// Become a daemon (i.e., run as a "background" process).
-
-ACE_INLINE int
-ACE_Service_Config::start_daemon (void)
-{
-  ACE_TRACE ("ACE_Service_Config::start_daemon");
-  return ACE::daemonize ();
-}
-
 // This is the primary entry point into the ACE_Service_Config (the
 // constructor just handles simple initializations).
 
