@@ -1,5 +1,7 @@
 /* -*- C++ -*- */
+
 // $Id$
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 #undef ACE_INLINE
@@ -772,6 +774,12 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
   // ACE_TRACE ("ACE_OS::clock_gettime");
 #if defined (ACE_HAS_CLOCK_GETTIME)
   ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
+#elif defined (ACE_PSOS)
+  ACE_UNUSED_ARG (clockid);	 
+  ACE_PSOS_Time_t pt;
+  int result = ACE_PSOS_Time_t::get_system_time(pt);
+  *ts = ACE_static_cast (struct timespec, pt);
+  return result;
 #else
   ACE_UNUSED_ARG (clockid);
   ACE_UNUSED_ARG (ts);
@@ -803,7 +811,7 @@ ACE_OS::gettimeofday (void)
 #if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
   (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k) && !defined (SCO))
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
-#elif defined (VXWORKS) || defined (CHORUS)
+#elif defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
   struct timespec ts;
@@ -929,6 +937,8 @@ ACE_OS::_exit (int status)
   // ACE_TRACE ("ACE_OS::_exit");
 #if defined (VXWORKS)
   ::exit (status);
+#elif defined (ACE_PSOSIM)
+  ::u_exit (status);
 #else
   ::_exit (status);
 #endif /* VXWORKS */
@@ -1957,6 +1967,12 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   s->sema_ = 0;
   return result;
 #endif /* ACE_HAS_STHREADS */
+#elif defined (ACE_PSOS) 
+  /* TBD - move this into threaded section with mutithreaded port */
+  int result;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_delete (s->sema_), result), int, -1, result);
+  s->sema_ = 0;
+  return result;  
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2044,6 +2060,17 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 
   return s->sema_ ? 0 : -1;
 #endif /* ACE_HAS_STHREADS */
+#elif defined (ACE_PSOS)  
+  /* TBD - move this into threaded section with mutithreaded port */
+  int result;
+  ACE_OS::memcpy (s->name_, name, sizeof (s->name_));
+  // default semaphore creation flags to priority based, global across nodes
+  u_long flags = 0;
+  flags |= (type & SM_LOCAL) ? SM_LOCAL : SM_GLOBAL;
+  flags |= (type & SM_FIFO) ? SM_FIFO : SM_PRIOR;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_create (s->name_, count, flags, &(s->sema_)),
+                                result), int, -1, result);
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (count);
@@ -2087,6 +2114,11 @@ ACE_OS::sema_post (ACE_sema_t *s)
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semGive (s->sema_), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
+#elif defined (ACE_PSOS)  
+  /* TBD - move this into threaded section with mutithreaded port */
+  int result;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_v (s->sema_), result), int, -1, result);
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2168,6 +2200,12 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     // got the semaphore
     return 0;
 #endif /* ACE_HAS_STHREADS */
+#elif defined (ACE_PSOS)  
+  /* TBD - move this into threaded section with mutithreaded port */
+  int result;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_NOWAIT, 0), result), 
+                                int, -1, result);
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2230,6 +2268,12 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, WAIT_FOREVER), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
+#elif defined (ACE_PSOS)  
+  /* TBD - move this into threaded section with mutithreaded port */
+  int result;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, 0), result), 
+                                int, -1, result);
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2305,6 +2349,14 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
               tv.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, ticks), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
+#elif defined (ACE_PSOS)  
+  /* TBD - move this into threaded section with mutithreaded port */
+  int result;
+  u_long ticks = tv.sec() * KC_TICKS2SEC +
+                 tv.usec () * KC_TICKS2SEC / ACE_ONE_SECOND_IN_USECS;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, ticks), result), 
+                                int, -1, result);
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (tv);
@@ -5800,6 +5852,8 @@ ACE_OS::exit (int status)
   // ACE_TRACE ("ACE_OS::exit");
 #if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
+#elif defined (ACE_PSOSIM)
+  ::u_exit (status);
 #else
   ::exit (status);
 #endif /* ACE_WIN32 */
@@ -6643,8 +6697,10 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   // Does not block, if no access, returns -1 and set errno = EBUSY;
   ACE_OSCALL (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1, result);
 
+#if ! defined (ACE_PSOS)
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
     errno = EBUSY;
+#endif /* ! defined (ACE_PSOS) */
 
   return result;
 #endif /* ACE_WIN32 */
@@ -6680,8 +6736,10 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   // Does not block, if no access, returns -1 and set errno = EBUSY;
   ACE_OSCALL (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1, result);
 
+#if ! defined (ACE_PSOS)
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
     errno = EBUSY;
+#endif /* ! defined (ACE_PSOS) */
 
   return result;
 #endif /* ACE_WIN32 */
@@ -6998,7 +7056,7 @@ ACE_OS::gethrtime (void)
   ACE_OS::readPPCTimeBase (most, least);
   return ACE_U_LongLong (least, most);
 
-#elif defined (ACE_HAS_CLOCK_GETTIME)
+#elif defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS)
   // e.g., VxWorks (besides POWERPC && GreenHills) . . .
   struct timespec ts;
 
@@ -7247,6 +7305,11 @@ ACE_OS::sleep (u_int seconds)
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
   ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
+#elif defined (ACE_PSOS)
+  timeval wait;
+  wait.tv_sec = seconds;
+  wait.tv_sec = 0;
+  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &wait), int, -1);
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
@@ -7277,6 +7340,39 @@ ACE_OS::nanosleep (const struct timespec *requested,
   // be available on the platform.  On Solaris 2.x, both functions
   // require linking with -lposix4.
   return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
+#elif defined (ACE_PSOS)
+  double ticks = KC_TICKS2SEC * requested->tv_sec +
+                 ( ACE_static_cast (double, requested->tv_nsec) *
+                   ACE_static_cast (double, KC_TICKS2SEC) ) /
+                 ACE_static_cast (double, ACE_ONE_SECOND_IN_NSECS);
+
+  if (ticks > ACE_static_cast (double, ACE_PSOS_Time_t::max_ticks))
+  {
+    ticks -= ACE_static_cast (double, ACE_PSOS_Time_t::max_ticks);
+    remaining->tv_sec = ACE_static_cast (time_t, 
+                                         (ticks / 
+                                          ACE_static_cast (double, 
+                                                           KC_TICKS2SEC)));
+    ticks -= ACE_static_cast (double, remaining->tv_sec) * 
+             ACE_static_cast (double, KC_TICKS2SEC);
+
+    remaining->tv_nsec = 
+      ACE_static_cast (long, 
+                       (ticks * ACE_static_cast (double, 
+                                                 ACE_ONE_SECOND_IN_NSECS)) /
+                       ACE_static_cast (double, KC_TICKS2SEC));
+
+    ::tm_wkafter (ACE_PSOS_Time_t::max_ticks);
+  }
+  else
+  {
+    remaining->tv_sec = 0;
+    remaining->tv_nsec = 0;
+    ::tm_wkafter (ACE_static_cast (u_long, ticks));
+  }
+
+  // tm_wkafter always returns 0
+  return 0;
 #else
   ACE_UNUSED_ARG (remaining);
 
