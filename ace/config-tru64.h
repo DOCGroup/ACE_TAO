@@ -11,9 +11,9 @@
 
 #if defined (DIGITAL_UNIX)
 #  include "ace/config-osf1-4.0.h"
-#  if DIGITAL_UNIX >= 0x40F
+#  if DIGITAL_UNIX >= 0x40E
 #    define ACE_LACKS_SYSTIME_H
-#  endif /* DIGITAL_UNIX >= 0x40F */
+#  endif /* DIGITAL_UNIX >= 0x40E */
 #  if DIGITAL_UNIX >= 0x500
 #    define _LIBC_POLLUTION_H_
 #  endif /* DIGITAL_UNIX >= 0x500 */
