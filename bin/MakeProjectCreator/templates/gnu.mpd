@@ -254,11 +254,13 @@ ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
 <%if(flag_overrides(idl_file, idlgendir))%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>$(ext))
 <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
 <%if(idlgendir)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%idlgendir%>/<%basenoextension(idl_file)%>$(ext))
 <%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp <%idlgendir%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
@@ -305,10 +307,8 @@ realclean: clean <%compclean%>
 <%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
-<%if(custom_types)%>
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif
-<%endif%>
 
 <%marker(bottom)%>
