@@ -34,7 +34,7 @@ class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 public:
   // = Initialization routine.
   ACE_SOCK_Dgram_Mcast (void);
-  // Note that there is no open ().  This cannot be used unless you
+  // Note that there is no <open>.  This cannot be used unless you
   // subscribe to the multicast group.  If you just want to send (and
   // not listen) to the multicast group, use ACE_SOCK_Dgram or
   // ACE_SOCK_CODgram.
