@@ -28,7 +28,9 @@ CHORUS = 1
 CROSS-COMPILE = 1
 
 debug = 1
-exceptions =
+ifndef exceptions
+  exceptions =
+endif # exceptions
 optimize = 1
 shared_libs =
 static_libs = 1
