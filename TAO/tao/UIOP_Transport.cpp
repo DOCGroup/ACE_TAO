@@ -157,7 +157,7 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
   // @@ This should be implemented in the transport object, which
   //    would query the profile to obtain the version...
   if (TAO_GIOP::start_message (profile->version (),
-                               TAO_GIOP::Request,
+                               TAO_GIOP::LocateRequest,
                                output,
                                orb_core) == 0)
     ACE_THROW (CORBA::MARSHAL ());

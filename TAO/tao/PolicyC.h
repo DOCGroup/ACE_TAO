@@ -256,7 +256,7 @@ class TAO_Export  CORBA_PolicyList_out
 public:
   CORBA_PolicyList_out (CORBA_PolicyList *&);
   CORBA_PolicyList_out (CORBA_PolicyList_var &);
-  CORBA_PolicyList_out (CORBA_PolicyList_out &);
+  CORBA_PolicyList_out (const CORBA_PolicyList_out &);
   CORBA_PolicyList_out &operator= (CORBA_PolicyList_out &);
   CORBA_PolicyList_out &operator= (CORBA_PolicyList *);
   operator CORBA_PolicyList *&();
