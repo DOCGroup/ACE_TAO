@@ -7,7 +7,7 @@
 
 #include "CCF/CompilerElements/Diagnostic.hpp"
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
 using namespace CCF::CIDL;
