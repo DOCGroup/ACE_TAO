@@ -6,9 +6,9 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>GPS Executor Artifact</label>
   <UUID>9617ed9a-d127-4797-836a-0a3b3d7d8b12</UUID>
-  <location>BMDevice_exec.so</location>
+  <location>BMDevice_exec</location>
   <dependsOn>
-    <name>ACE_TAO_CIAO</name>
+    <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
   </dependsOn>
   <dependsOn>

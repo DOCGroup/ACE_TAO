@@ -6,9 +6,9 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>GPS Stub Artifact</label>
   <UUID>c7264c15-d373-4d01-84ee-d37536599240</UUID>
-  <location>BMDevice_stub.so</location>
+  <location>BMDevice_stub</location>
   <dependsOn>
-    <name>ACE_TAO_CIAO</name>
+    <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
   </dependsOn>
 </Deployment:ImplementationArtifactDescription>
