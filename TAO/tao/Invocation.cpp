@@ -445,6 +445,8 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_synchronous,
 
       this->endpoint_->reset_hint ();
 
+      this->restart_flag_ = 1;
+
       return TAO_INVOKE_RESTART;
     }
 
