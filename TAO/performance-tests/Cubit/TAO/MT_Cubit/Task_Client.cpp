@@ -353,8 +353,8 @@ Client::get_high_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  JITTER_ARRAY_ITERATOR iterator =
-    this->ts_->global_jitter_array_[0]->begin ();
+  JITTER_ARRAY_ITERATOR iterator (*this->ts_->global_jitter_array_[0]);
+  //    this->ts_->global_jitter_array_[0]->begin (); @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
 
   // latency in usecs.
   ACE_timer_t *latency = 0;
@@ -369,7 +369,9 @@ Client::get_high_priority_jitter (void)
       jitter += difference * difference;
 
       ACE_DEBUG ((LM_DEBUG, "high sample: %12.4f\n", *latency)); // ????
-      stats.sample (ACE_round (*latency));
+      if (stats.sample (ACE_round (*latency)) == -1)
+	ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
+      
     }
 
   // Return the square root of the sum of the differences computed
@@ -410,8 +412,8 @@ Client::get_low_priority_jitter (void)
     {
       ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j])); // ????
 
-      JITTER_ARRAY_ITERATOR iterator =
-        this->ts_->global_jitter_array_ [j]->begin ();
+      JITTER_ARRAY_ITERATOR iterator ( *this->ts_->global_jitter_array_[j]);
+	//        this->ts_->global_jitter_array_ [j]->begin (); @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
 
       ACE_timer_t number_of_calls =
         this->ts_->count_ [j] / this->ts_->granularity_;
@@ -427,7 +429,7 @@ Client::get_low_priority_jitter (void)
           ++number_of_samples;
           ACE_timer_t difference = *latency - average;
           jitter += difference * difference;
-          ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
+	  ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
           stats.sample (ACE_round (*latency));
         }
     }
@@ -457,8 +459,8 @@ Client::get_jitter (u_int id)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  JITTER_ARRAY_ITERATOR iterator =
-    this->ts_->global_jitter_array_ [id]->begin ();
+  JITTER_ARRAY_ITERATOR iterator ( *this->ts_->global_jitter_array_[id]);
+    //    this->ts_->global_jitter_array_ [id]->begin (); @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
 
   ACE_timer_t number_of_calls =
     this->ts_->count_[id] / this->ts_->granularity_;
@@ -475,7 +477,7 @@ Client::get_jitter (u_int id)
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
       ACE_DEBUG ((LM_DEBUG, "thread %d latency: %12.4f\n", id, *latency)); // ????
-      stats.sample (ACE_round (*latency * 10));
+      stats.sample (ACE_round (*latency));
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1155,6 +1157,8 @@ Client::do_test (void)
   ACE_timer_t sleep_time = // usec
     (ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_)/this->frequency_;
   u_int i;
+  int result = 0;
+
   for (i = 0;
        // keep running for loop count, OR
        i < this->ts_->loop_count_
@@ -1200,7 +1204,9 @@ Client::do_test (void)
           // we make calls at the required frequency.
           delta = this->calc_delta (real_time,delta);
           this->latency_ += real_time * this->ts_->granularity_;
-          this->my_jitter_array_->insert (real_time);
+
+          if ((result = this->my_jitter_array_->enqueue_tail (real_time)) != 0) 
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Error: my_jitter_array->enqueue_tail() returned %d\n", result));
         }
       if (this->ts_->thread_per_rate_ == 1
           && id_ < (this->ts_->thread_count_ - 1))
@@ -1268,3 +1274,5 @@ Client::run_tests (void)
   this->print_stats ();
   return 0;
 }
+
+
