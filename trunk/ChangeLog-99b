@@ -1,3 +1,8 @@
+Wed Jan 20 13:38:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (readdir_r): added ACE_UNUSED_ARG (entry)
+          without ACE_HAS_REENTRANT_FUNCTIONS.
+
 Wed Jan 20 01:48:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (symbol): Remembered to pass down the
