@@ -1,3 +1,8 @@
+Fri Jun 21 00:21:48 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (dump):
+	  Switch from ACE_SYNCH_MUTEX to ACE_SYNCH_RECURSIVE_MUTEX.
+ 
 Thu Jun 20 14:32:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Synch.cpp (ACE_recursive_mutex_state): Replaced the
