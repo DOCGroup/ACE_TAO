@@ -108,7 +108,7 @@ Periodic_Task::dump_stats (ACE_TCHAR* msg)
 
   ACE_CString fname (buf);
 
-  ACE_OS::sprintf (buf,"#%s #name %s, priority %d, period %d exec_time %d phase %d iter_ %d , load_ %d",
+  ACE_OS::sprintf (buf,"#%s #name %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d",
                    msg, name_.c_str(), task_priority_, period_, exec_time_, phase_, iter_, load_);
 
   task_stats_->dump_samples (fname.c_str (), buf,
