@@ -490,6 +490,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
 
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
+      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB);
       visitor = tao_cg->make_visitor (&ctx);
 
       if (!visitor || (bt->accept (visitor) == -1))

@@ -103,7 +103,7 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -124,7 +124,7 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -145,7 +145,7 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -195,7 +195,7 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -216,7 +216,7 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -237,7 +237,7 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -351,7 +351,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           {
             if (scope == this->ctx_->scope ()
                 && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
               {
                 *os << "const ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
@@ -372,7 +372,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           {
             if (scope == this->ctx_->scope ()
                 && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
@@ -393,7 +393,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           {
             if (scope == this->ctx_->scope ()
                 && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
@@ -435,7 +435,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           {
             if (scope == this->ctx_->scope ()
                 && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
               {
                 *os << "const ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
@@ -456,7 +456,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           {
             if (scope == this->ctx_->scope ()
                 && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
@@ -477,7 +477,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           {
             if (scope == this->ctx_->scope ()
                 && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
@@ -528,7 +528,7 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -549,7 +549,7 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -570,7 +570,7 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -658,7 +658,7 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -679,7 +679,7 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -700,7 +700,7 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -750,7 +750,7 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -771,7 +771,7 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -792,7 +792,7 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
       {
         if (scope == this->ctx_->scope ()
             && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
