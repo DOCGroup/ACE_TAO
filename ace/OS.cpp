@@ -889,16 +889,19 @@ void
 ACE_OS::mutex_lock_cleanup (void *mutex)
 {
 ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PACE)
+  pace_pthread_mutex_t *p_lock = (pace_pthread_mutex_t *) mutex;
+  pace_pthread_mutex_unlock (p_lock);
+# elif defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_PTHREADS)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
+#  else
+  ACE_UNUSED_ARG (mutex);
+#  endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (mutex);
-# endif /* ACE_HAS_PTHREADS */
-#else
-  ACE_UNUSED_ARG (mutex);
-#endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_PACE */
 }
 
 #if defined (ACE_HAS_WINCE)
@@ -951,7 +954,7 @@ int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   ACE_TRACE ("ACE_OS::fprintf");
-# if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   ACE_NOTSUP_RETURN (-1);
 # else /* ACE_HAS_WINCE */
   int result = 0;
@@ -1024,6 +1027,9 @@ char *
 ACE_OS::gets (char *str, int n)
 {
   ACE_TRACE ("ACE_OS::gets");
+#if defined (ACE_HAS_PACE)
+  return pace_fgets (str, n, stdin);
+#else
   int c;
   char *s = str;
 
@@ -1048,6 +1054,7 @@ ACE_OS::gets (char *str, int n)
   if (s) *s = '\0';
 
   return (c == EOF) ? 0 : str;
+#endif /*  ACE_HAS_PACE  */
 }
 
 int
