@@ -80,9 +80,6 @@ class CORBA_Object_var;
 class CORBA_Object_out;
 //typedef class CORBA_Object *CORBA_Object_ptr;
 
-class CORBA_ORB_var;
-class CORBA_ORB_out;
-
 class CORBA_ServerRequest;
 //typedef class CORBA_ServerRequest *CORBA_ServerRequest_ptr;
 
@@ -445,9 +442,6 @@ public:
   typedef CORBA_Object *Object_ptr;
   typedef CORBA_Object_var Object_var;
   typedef CORBA_Object_out Object_out;
-
-  typedef CORBA_ORB_var ORB_var;
-  typedef CORBA_ORB_out ORB_out;
 
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
