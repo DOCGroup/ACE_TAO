@@ -1,5 +1,7 @@
 Thu Apr 22 16:35:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/config-sunos5.5.h: Added KAI C++ compiler support.
+
 	* docs/exceptions.html: Explicitly state that ACE try macros will
 	  replace TAO try macros and advise users to take action if they
 	  are still using TAO try macros.  Thanks to Don Busch
