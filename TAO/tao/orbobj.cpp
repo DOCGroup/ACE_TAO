@@ -549,7 +549,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   return 0;
 }
 
-#define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>
+#define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
