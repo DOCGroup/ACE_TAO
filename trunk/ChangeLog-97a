@@ -26,7 +26,11 @@ Fri Mar 28 11:34:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp,
 	                            Transceiver/transceiver.cpp,
-	           UPIPE_Event_Server/{Consumer,Supplier}_Router.cpp:
+	           Connection/blocking/SPIPE-{acceptor,connector}.cpp,
+	                      misc/Connection_Handler.cpp,test_upipe.cpp,
+	           Logger/simple-server/server_loggerd.cpp,
+	           UPIPE_Event_Server/{Consumer,Supplier}_Router.cpp,
+		   performance-tests/Synch-Benchmarks/Options.cpp:
 	  added template specializations.
 
 Thu Mar 27 21:10:59 1997  David L. Levine  <levine@cs.wustl.edu>
