@@ -33,10 +33,13 @@ be_structure::be_structure (void)
 {
 }
 
-be_structure::be_structure (UTL_ScopedName *n, 
-                            UTL_StrList *p)
+be_structure::be_structure (UTL_ScopedName *n,
+                            UTL_StrList *p,
+                            idl_bool local,
+                            idl_bool abstract)
   : AST_Decl (AST_Decl::NT_struct, n, p),
     UTL_Scope (AST_Decl::NT_struct),
+    COMMON_Base (local, abstract),
     member_count_ (-1)
 {
 }
@@ -53,7 +56,7 @@ be_structure::compute_member_count (void)
   if (this->nmembers () > 0)
     {
       // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this, 
+      si = new UTL_ScopeActiveIterator (this,
                                         UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
@@ -86,12 +89,12 @@ be_structure::gen_var_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_var", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_var",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -100,7 +103,7 @@ be_structure::gen_var_defn (char *)
   ch = cg->client_header ();
 
   // generate the var definition (always in the client header).
-  // Depending upon the data type, there are some differences which 
+  // Depending upon the data type, there are some differences which
   // we account for here.
 
   ch->indent (); // start with whatever was our current indent level
@@ -120,7 +123,7 @@ be_structure::gen_var_defn (char *)
   // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
-      *ch << namebuf << " (const " << this->local_name () 
+      *ch << namebuf << " (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
@@ -135,13 +138,13 @@ be_structure::gen_var_defn (char *)
   // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
-      *ch << namebuf << " &operator= (const " << this->local_name () 
+      *ch << namebuf << " &operator= (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
   // arrow operator
   *ch << local_name () << " *operator-> (void);" << nl;
-  *ch << "const " << this->local_name () 
+  *ch << "const " << this->local_name ()
       << " *operator-> (void) const;" << nl;
   *ch << nl;
 
@@ -152,7 +155,7 @@ be_structure::gen_var_defn (char *)
 
   if (this->size_type () == be_decl::VARIABLE)
     {
-      *ch << "operator " << this->local_name () 
+      *ch << "operator " << this->local_name ()
           << " *&(); // variable-size types only" << nl;
     }
 
@@ -175,7 +178,7 @@ be_structure::gen_var_defn (char *)
       *ch << local_name () << " *_retn (void);" << nl;
     }
 
-  // generate an additional member function 
+  // generate an additional member function
   // that returns the underlying pointer
   *ch << this->local_name () << " *ptr (void) const;\n";
 
@@ -194,7 +197,7 @@ be_structure::gen_var_defn (char *)
 
 // Implementation of the _var class, generated in the inline file.
 int
-be_structure::gen_var_impl (char *, 
+be_structure::gen_var_impl (char *,
                             char *)
 {
   TAO_OutStream *ci; // output stream
@@ -222,7 +225,7 @@ be_structure::gen_var_impl (char *,
 
   // default constr
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname 
+  *ci << fname << "::" << lname
       << " (void) // default constructor" << nl;
   *ci << "  " << ": ptr_ (0)" << nl;
   *ci << "{}\n\n";
@@ -230,7 +233,7 @@ be_structure::gen_var_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->local_name () 
+  *ci << fname << "::" << lname << " (" << this->local_name ()
       << " *p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
@@ -238,12 +241,12 @@ be_structure::gen_var_impl (char *,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const ::" << fname 
+  *ci << fname << "::" << lname << " (const ::" << fname
       << " &p) // copy constructor" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "  ACE_NEW (this->ptr_, " << "::" << this->name () 
+  *ci << "  ACE_NEW (this->ptr_, " << "::" << this->name ()
       << " (*p.ptr_));" << nl;
   *ci << "else" << nl;
   *ci << "  this->ptr_ = 0;\n";
@@ -255,11 +258,11 @@ be_structure::gen_var_impl (char *,
     {
       *ci << "// fixed-size types only" << nl;
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (const " 
+      *ci << fname << "::" << lname << " (const "
           << "::" << this->name () << " &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      *ci << "ACE_NEW (this->ptr_, " << "::" << this->name () 
+      *ci << "ACE_NEW (this->ptr_, " << "::" << this->name ()
           << " (p));\n";
       ci->decr_indent ();
       *ci << "}\n\n";
@@ -278,7 +281,7 @@ be_structure::gen_var_impl (char *,
   // assignment operator from a pointer
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << this->local_name () 
+  *ci << fname << "::operator= (" << this->local_name ()
       << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -291,7 +294,7 @@ be_structure::gen_var_impl (char *,
   // assignment operator from _var
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (const ::" << fname 
+  *ci << fname << "::operator= (const ::" << fname
       << " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -299,7 +302,7 @@ be_structure::gen_var_impl (char *,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
-  *ci << "ACE_NEW_RETURN (this->ptr_, " << "::" << this->name () 
+  *ci << "ACE_NEW_RETURN (this->ptr_, " << "::" << this->name ()
       << " (*p.ptr_), *this);\n";
   ci->decr_indent ();
   *ci << "}" << nl;
@@ -313,7 +316,7 @@ be_structure::gen_var_impl (char *,
       ci->indent ();
       *ci << "// fixed-size types only" << nl;
       *ci << "ACE_INLINE " << fname << " &" << nl;
-      *ci << fname << "::operator= (const " << "::" << this->name () 
+      *ci << fname << "::operator= (const " << "::" << this->name ()
           << " &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -321,7 +324,7 @@ be_structure::gen_var_impl (char *,
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "delete this->ptr_;" << nl;
-      *ci << "ACE_NEW_RETURN (this->ptr_, ::" 
+      *ci << "ACE_NEW_RETURN (this->ptr_, ::"
           << this->name () << " (p), *this);\n";
       ci->decr_indent ();
       *ci << "}" << nl;
@@ -352,7 +355,7 @@ be_structure::gen_var_impl (char *,
   // other extra methods - 3 cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::operator const " << "::" << this->name () 
+  *ci << fname << "::operator const " << "::" << this->name ()
       << " &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -362,7 +365,7 @@ be_structure::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::operator " << "::" << this->name () 
+  *ci << fname << "::operator " << "::" << this->name ()
       << " &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -372,7 +375,7 @@ be_structure::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::operator " << "::" << this->name () 
+  *ci << fname << "::operator " << "::" << this->name ()
       << " &() const // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -386,7 +389,7 @@ be_structure::gen_var_impl (char *,
       ci->indent ();
       *ci << "// variable-size types only" << nl;
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::operator " << "::" << this->name () 
+      *ci << fname << "::operator " << "::" << this->name ()
           << " *&() // cast " << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -484,12 +487,12 @@ be_structure::gen_out_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_out", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_out",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -519,7 +522,7 @@ be_structure::gen_out_defn (char *)
   // assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators
   // assignment
-  *ch << namebuf << " &operator= (" 
+  *ch << namebuf << " &operator= ("
       << this->local_name () << " *);" << nl;
   // operator ()
   *ch << "operator " << this->local_name () << " *&();" << nl;
@@ -542,7 +545,7 @@ be_structure::gen_out_defn (char *)
 }
 
 int
-be_structure::gen_out_impl (char *, 
+be_structure::gen_out_impl (char *,
                             char *)
 {
   TAO_OutStream *ci; // output stream
@@ -550,20 +553,20 @@ be_structure::gen_out_impl (char *,
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_out", 
+  ACE_OS::sprintf (fname,
+                   "%s_out",
                    this->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_out", 
+  ACE_OS::sprintf (lname,
+                   "%s_out",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -583,7 +586,7 @@ be_structure::gen_out_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << "::" 
+  *ci << fname << "::" << lname << " (" << "::"
       << this->name () << " *&p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
@@ -595,7 +598,7 @@ be_structure::gen_out_impl (char *,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->local_name () 
+  *ci << fname << "::" << lname << " (" << this->local_name ()
       << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
@@ -608,7 +611,7 @@ be_structure::gen_out_impl (char *,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const ::" << fname 
+  *ci << fname << "::" << lname << " (const ::" << fname
       << " &p) // copy constructor" << nl;
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
@@ -641,7 +644,7 @@ be_structure::gen_out_impl (char *,
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << "::" << this->name () 
+  *ci << fname << "::operator " << "::" << this->name ()
       << " *&() // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -685,7 +688,7 @@ be_structure::compute_size_type (void)
     {
       // if there are elements in this scope
 
-      si = new UTL_ScopeActiveIterator (this, 
+      si = new UTL_ScopeActiveIterator (this,
                                         UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 

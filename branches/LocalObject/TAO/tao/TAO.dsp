@@ -1354,25 +1354,6 @@ SOURCE=.\InterceptorC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterceptorS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"

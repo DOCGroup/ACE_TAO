@@ -47,7 +47,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   long i; // loop index
   static char namebuf [NAMEBUFSIZE]; // holds the class name
 
-  if (node->srv_hdr_gen () || node->imported () || node->is_local_interface ())
+  if (node->srv_hdr_gen () || node->imported () || node->is_local ())
     return 0;
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);

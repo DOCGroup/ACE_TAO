@@ -189,11 +189,11 @@ public:
   // Return a reference to the object key of profile in-use.
   // If there's no in-use profile, then the program will
   // probably crash.  This method does not create a new copy.
-#endif /* 0 */
 
   virtual void * _tao_QueryInterface (ptr_arith_t type);
   // Downcasting this object pointer to some other derived class.
   // This QueryInterface stuff only work for local object.
+#endif /* 0 */
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::LocalObject_ptr _ptr_type;

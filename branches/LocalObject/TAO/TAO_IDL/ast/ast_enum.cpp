@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -86,10 +86,13 @@ AST_Enum::AST_Enum()
 {
 }
 
-AST_Enum::AST_Enum (UTL_ScopedName *n, 
-                    UTL_StrList *p)
+AST_Enum::AST_Enum (UTL_ScopedName *n,
+                    UTL_StrList *p,
+                    idl_bool local,
+                    idl_bool abstract)
        : AST_Decl(AST_Decl::NT_enum, n, p),
 	 UTL_Scope(AST_Decl::NT_enum),
+         COMMON_Base (local, abstract),
 	 pd_enum_counter(0)
 {
 }
@@ -175,7 +178,7 @@ munge_name_for_enumval(UTL_ScopedName *n, Identifier *last_component)
 
   return hold;
 }
-  
+
 /*
  * Redefinition of inherited virtual operations
  */
@@ -190,7 +193,7 @@ AST_EnumVal *AST_Enum::fe_add_enum_val(AST_EnumVal *t)
 
   if (t != NULL) {
     t1 = idl_global->gen()->create_enum_val
-      (t->constant_value()->coerce(AST_Expression::EV_ulong)->u.ulval, 
+      (t->constant_value()->coerce(AST_Expression::EV_ulong)->u.ulval,
        t->name(), t->pragmas());
     t->set_name(munge_name_for_enumval(t->name(), t->local_name()));
     t1->set_name(munge_name_for_enumval(t1->name(), t1->local_name()));
@@ -236,6 +239,11 @@ AST_Enum::dump(ostream &o)
 {
   UTL_ScopeActiveIterator *i = new UTL_ScopeActiveIterator(this, IK_decls);
   AST_Decl		    *d;
+
+  if (this->is_local ())
+    o << "(local) ";
+  else if (this->is_abstract ())
+    o << "(abstract) ";
 
   o << "enum ";
   local_name()->dump(o);

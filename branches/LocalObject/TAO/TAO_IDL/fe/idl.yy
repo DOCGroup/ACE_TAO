@@ -1257,7 +1257,9 @@ type_declarator :
               AST_Type * tp = d->compose($1);
               if (tp == NULL)
 		     continue;
-	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
+	      t = idl_global->gen()->create_typedef(tp, d->name(), p,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
 	      (void) s->fe_add_typedef(t);
 	    }
 	    delete l;
@@ -1506,7 +1508,10 @@ struct_type :
 	   * to the enclosing scope
 	   */
 	  if (s != NULL) {
-	    d = idl_global->gen()->create_structure(n, p);
+	    d = idl_global->gen()->create_structure(n,
+                                                    p,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
 	    (void) s->fe_add_structure(d);
 	  }
 	  /*
@@ -1675,7 +1680,11 @@ union_type :
             if (tp == NULL) {
               idl_global->err()->not_a_type($9);
             } else {
-	      u = idl_global->gen()->create_union(tp, n, p);
+	      u = idl_global->gen()->create_union(tp,
+                                                  n,
+                                                  p,
+                                                  s->is_local (),
+                                                  s->is_abstract ());
 	      (void) s->fe_add_union(u);
  	    }
 	  }
@@ -1960,7 +1969,10 @@ enum_type :
 	   * enclosing scope
 	   */
 	  if (s != NULL) {
-	    e = idl_global->gen()->create_enum(n, p);
+	    e = idl_global->gen()->create_enum(n,
+                                               p,
+                                               s->local (),
+                                               s->abstract ());
 	    /*
 	     * Add it to its defining scope
 	     */
@@ -2050,6 +2062,7 @@ sequence_type_spec
 	   */
 	  if (idl_global->scopes()->top() == NULL)
 	    idl_global->scopes()->pop();
+          UTL_Scope *s = idl_global->scopes()->top_non_null ();
 	  /*
 	   * Create a node representing a sequence
 	   */
@@ -2063,7 +2076,10 @@ sequence_type_spec
 	    if (tp == NULL)
 	      ; // Error will be caught in FE_Declarator.
 	    else {
-	      $$ = idl_global->gen()->create_sequence($4, tp);
+	      $$ = idl_global->gen()->create_sequence($4,
+                                                      tp,
+                                                      s->is_local (),
+                                                      s->is_abstract ());
 	      /*
 	       * Add this AST_Sequence to the types defined in the global scope
 	       */
@@ -2081,6 +2097,7 @@ sequence_type_spec
 	   */
 	  if (idl_global->scopes()->top() == NULL)
 	    idl_global->scopes()->pop();
+          UTL_Scope *s = idl_global->scopes()->top_non_null ();
 	  /*
 	   * Create a node representing a sequence
 	   */
@@ -2094,7 +2111,9 @@ sequence_type_spec
 	      $$ =
 	        idl_global->gen()->create_sequence(
 		  	     idl_global->gen()->create_expr((unsigned long) 0),
-			     tp);
+			     tp,
+                             s->is_local (),
+                             s->is_abstract ());
 	      /*
 	       * Add this AST_Sequence to the types defined in the global scope
 	       */
@@ -2371,7 +2390,10 @@ exception :
 	   * the enclosing scope
 	   */
 	  if (s != NULL) {
-	    e = idl_global->gen()->create_exception(n, p);
+	    e = idl_global->gen()->create_exception(n,
+                                                    p,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
 	    (void) s->fe_add_exception(e);
 	  }
 	  /*

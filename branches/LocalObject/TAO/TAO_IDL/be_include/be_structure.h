@@ -43,7 +43,10 @@ public:
   be_structure (void);
   // default constructor
 
-  be_structure (UTL_ScopedName *n, UTL_StrList *p);
+  be_structure (UTL_ScopedName *n,
+                UTL_StrList *p,
+                idl_bool local,
+                idl_bool abstract);
   // constructor
 
   virtual int gen_var_defn (char *local_name = 0);

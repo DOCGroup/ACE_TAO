@@ -48,7 +48,7 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
 
   if (!node->cli_hdr_gen () &&  // not already generated and
       !node->imported () &&     // not imported
-      !node->is_local_interface ()) // and not local interface.
+      !node->is_local ())       // and not local interface.
     {
       // Grab the stream.
       os = this->ctx_->stream ();

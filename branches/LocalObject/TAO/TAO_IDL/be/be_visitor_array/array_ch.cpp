@@ -423,6 +423,9 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
 int
 be_visitor_array_ch::gen_forany_defn (be_array *node)
 {
+  if (node->is_local ())
+    return 0;
+
   TAO_OutStream *os = this->ctx_->stream (); // output stream
   char namebuf [NAMEBUFSIZE];  // names
   char foranyname [NAMEBUFSIZE];  // forany class names

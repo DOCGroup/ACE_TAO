@@ -35,13 +35,16 @@ be_union::be_union (void)
   this->has_constructor (I_TRUE);  // always the case
 }
 
-be_union::be_union (AST_ConcreteType *dt, 
-                    UTL_ScopedName *n, 
-                    UTL_StrList *p)
-  : AST_Union (dt, n, p),
-    AST_Structure (AST_Decl::NT_union, n, p),
+be_union::be_union (AST_ConcreteType *dt,
+                    UTL_ScopedName *n,
+                    UTL_StrList *p,
+                    idl_bool local,
+                    idl_bool abstract)
+  : AST_Union (dt, n, p, local, abstract),
+    AST_Structure (AST_Decl::NT_union, n, p, local, abstract),
     AST_Decl (AST_Decl::NT_union, n, p),
     UTL_Scope (AST_Decl::NT_union),
+    COMMON_Base (local, abstract),
     member_count_ (-1),
     default_index_ (-2)
 {
@@ -61,7 +64,7 @@ be_union::compute_member_count (void)
   if (this->nmembers () > 0)
     {
       // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this, 
+      si = new UTL_ScopeActiveIterator (this,
                                         UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
@@ -91,7 +94,7 @@ be_union::compute_default_index (void)
   if (this->nmembers () > 0)
     {
       // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this, 
+      si = new UTL_ScopeActiveIterator (this,
                                         UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
@@ -147,12 +150,12 @@ be_union::gen_var_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_var", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_var",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -181,7 +184,7 @@ be_union::gen_var_defn (char *)
   // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
-      *ch << namebuf << " (const " << this->local_name () 
+      *ch << namebuf << " (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
@@ -189,7 +192,7 @@ be_union::gen_var_defn (char *)
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
   // assignment operator from a pointer
-  *ch << namebuf << " &operator= (" 
+  *ch << namebuf << " &operator= ("
       << this->local_name () << " *);" << nl;
   // assignment from _var
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
@@ -197,13 +200,13 @@ be_union::gen_var_defn (char *)
   // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
-      *ch << namebuf << " &operator= (const " << this->local_name () 
+      *ch << namebuf << " &operator= (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
   // arrow operator
   *ch << local_name () << " *operator-> (void);" << nl;
-  *ch << "const " << this->local_name () 
+  *ch << "const " << this->local_name ()
       << " *operator-> (void) const;" << nl;
   *ch << nl;
 
@@ -214,7 +217,7 @@ be_union::gen_var_defn (char *)
 
   if (this->size_type () == be_decl::VARIABLE)
     {
-      *ch << "operator " << this->local_name () 
+      *ch << "operator " << this->local_name ()
           << " *&(); // variable-size types only" << nl;
     }
 
@@ -256,7 +259,7 @@ be_union::gen_var_defn (char *)
 // implementation of the _var class. All of these get generated in the inline
 // file
 int
-be_union::gen_var_impl (char *, 
+be_union::gen_var_impl (char *,
                         char *)
 {
   TAO_OutStream *ci; // output stream
@@ -264,20 +267,20 @@ be_union::gen_var_impl (char *,
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _var names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_var", 
+  ACE_OS::sprintf (fname,
+                   "%s_var",
                    this->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_var", 
+  ACE_OS::sprintf (lname,
+                   "%s_var",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -302,7 +305,7 @@ be_union::gen_var_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->local_name () 
+  *ci << fname << "::" << lname << " (" << this->local_name ()
       << " *p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
@@ -315,7 +318,7 @@ be_union::gen_var_impl (char *,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "  ACE_NEW (this->ptr_, ::" << this->name () 
+  *ci << "  ACE_NEW (this->ptr_, ::" << this->name ()
       << " (*p.ptr_));" << nl;
   *ci << "else" << nl;
   *ci << "  this->ptr_ = 0;\n";
@@ -327,11 +330,11 @@ be_union::gen_var_impl (char *,
     {
       *ci << "// fixed-size types only" << nl;
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (const ::" 
+      *ci << fname << "::" << lname << " (const ::"
           << this->name () << " &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      *ci << "ACE_NEW (this->ptr_, ::" << this->name () 
+      *ci << "ACE_NEW (this->ptr_, ::" << this->name ()
           << " (p));\n";
       ci->decr_indent ();
       *ci << "}\n\n";
@@ -350,7 +353,7 @@ be_union::gen_var_impl (char *,
   // assignment operator from a pointer
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (" << this->local_name () 
+  *ci << fname << "::operator= (" << this->local_name ()
       << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -371,7 +374,7 @@ be_union::gen_var_impl (char *,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
-  *ci << "ACE_NEW_RETURN (this->ptr_, ::" << this->name () 
+  *ci << "ACE_NEW_RETURN (this->ptr_, ::" << this->name ()
       << " (*p.ptr_), *this);\n";
   ci->decr_indent ();
   *ci << "}" << nl;
@@ -385,7 +388,7 @@ be_union::gen_var_impl (char *,
       ci->indent ();
       *ci << "// fixed-size types only" << nl;
       *ci << "ACE_INLINE ::" << fname << " &" << nl;
-      *ci << fname << "::operator= (const ::" << this->name () 
+      *ci << fname << "::operator= (const ::" << this->name ()
           << " &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -393,7 +396,7 @@ be_union::gen_var_impl (char *,
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "delete this->ptr_;" << nl;
-      *ci << "ACE_NEW_RETURN (this->ptr_, ::" 
+      *ci << "ACE_NEW_RETURN (this->ptr_, ::"
           << this->name () << " (p), *this);\n";
       ci->decr_indent ();
       *ci << "}" << nl;
@@ -424,7 +427,7 @@ be_union::gen_var_impl (char *,
   // other extra methods - 3 cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const ::" << this->name () 
+  *ci << fname << "::operator const ::" << this->name ()
       << " &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -434,7 +437,7 @@ be_union::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator ::" << this->name () 
+  *ci << fname << "::operator ::" << this->name ()
       << " &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -444,7 +447,7 @@ be_union::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator ::" << this->name () 
+  *ci << fname << "::operator ::" << this->name ()
       << " &() const// cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -458,7 +461,7 @@ be_union::gen_var_impl (char *,
       ci->indent ();
       *ci << "// variable-size types only" << nl;
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::operator ::" << this->name () 
+      *ci << fname << "::operator ::" << this->name ()
           << " *&() // cast " << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -555,12 +558,12 @@ be_union::gen_out_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_out", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_out",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -612,7 +615,7 @@ be_union::gen_out_defn (char *)
 }
 
 int
-be_union::gen_out_impl (char *, 
+be_union::gen_out_impl (char *,
                         char *)
 {
   TAO_OutStream *ci; // output stream
@@ -620,20 +623,20 @@ be_union::gen_out_impl (char *,
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_out", 
+  ACE_OS::sprintf (fname,
+                   "%s_out",
                    this->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_out", 
+  ACE_OS::sprintf (lname,
+                   "%s_out",
                    this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -653,7 +656,7 @@ be_union::gen_out_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->local_name () 
+  *ci << fname << "::" << lname << " (" << this->local_name ()
       << " *&p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
@@ -665,7 +668,7 @@ be_union::gen_out_impl (char *,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->local_name () 
+  *ci << fname << "::" << lname << " (" << this->local_name ()
       << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
@@ -678,7 +681,7 @@ be_union::gen_out_impl (char *,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const ::" << fname 
+  *ci << fname << "::" << lname << " (const ::" << fname
       << " &p) // copy constructor" << nl;
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
@@ -686,7 +689,7 @@ be_union::gen_out_impl (char *,
   // assignment operator from _out &
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (const ::" << fname 
+  *ci << fname << "::operator= (const ::" << fname
       << " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -711,7 +714,7 @@ be_union::gen_out_impl (char *,
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator ::" << this->name () 
+  *ci << fname << "::operator ::" << this->name ()
       << " *&() // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -755,7 +758,7 @@ be_union::compute_size_type (void)
     {
       // if there are elements in this scope
 
-      si = new UTL_ScopeActiveIterator (this, 
+      si = new UTL_ScopeActiveIterator (this,
                                         UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
@@ -875,12 +878,12 @@ be_union::compute_default_value (void)
 
   // instantiate a scope iterator.
   UTL_ScopeActiveIterator *si
-    = new UTL_ScopeActiveIterator (this, 
+    = new UTL_ScopeActiveIterator (this,
                                    UTL_Scope::IK_decls);
   while (!(si->is_done ()))
     {
       // get the next AST decl node
-      be_union_branch *ub = 
+      be_union_branch *ub =
         be_union_branch::narrow_from_decl (si->item ());
       if (ub)
         {
@@ -1165,8 +1168,8 @@ idl_bool
 be_union::has_duplicate_case_labels (void)
 {
   // instantiate a scope iterator.
-  UTL_ScopeActiveIterator *si = 
-    new UTL_ScopeActiveIterator (this, 
+  UTL_ScopeActiveIterator *si =
+    new UTL_ScopeActiveIterator (this,
                                  UTL_Scope::IK_decls);
 
   while (!si->is_done ())

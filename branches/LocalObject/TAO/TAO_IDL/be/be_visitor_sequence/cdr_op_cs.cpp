@@ -55,7 +55,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
   else
     {
-      if (node->cli_stub_cdr_op_gen () || node->imported ())
+      if (node->cli_stub_cdr_op_gen () ||
+          node->imported () ||
+          node->is_local ())
         return 0;
 
       TAO_OutStream *os = this->ctx_->stream ();

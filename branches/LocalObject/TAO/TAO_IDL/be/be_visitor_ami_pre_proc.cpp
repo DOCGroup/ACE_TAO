@@ -76,7 +76,7 @@ be_visitor_ami_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
-  if (!node->imported () && !node->is_local_interface ())
+  if (!node->imported () && !node->is_local ())
     {
       AST_Module *module = AST_Module::narrow_from_scope (node->defined_in ());
       if (!module)
@@ -365,7 +365,9 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                  0,  // number of inherited interfaces
                                                  0,  // ancestors
                                                  0,  // number of ancestors
-                                                 0); // pragmas
+                                                 0,  // pragmas
+                                                 0,  // not local
+                                                 0); // not abstract
   inherit_intf->set_name (inherit_name);
 
   be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
@@ -390,12 +392,15 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
   p_intf[0] = ACE_static_cast (AST_Interface *, inherit_intf);
 
-  be_interface *reply_handler = new be_interface (reply_handler_name,  // name
-                                                  p_intf,             // list of inherited
-                                                  1,                  // number of inherited
-                                                  p_intf,                  // list of ancestors
-                                                  1,                  // number of ancestors
-                                                  0);                 // pragmas
+  be_interface *reply_handler =
+    new be_interface (reply_handler_name, // name
+                      p_intf,             // list of inherited
+                      1,                  // number of inherited
+                      p_intf,             // list of ancestors
+                      1,                  // number of ancestors
+                      0,                  // pragmas
+                      0,                  // non-local
+                      0);                 // non-abstract
   reply_handler->set_name (reply_handler_name);
 
   // Now our customized valuetype is created, we have to
@@ -604,6 +609,8 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
       UTL_ScopedName *field_name = ACE_static_cast (UTL_ScopedName *, parent->name ()->copy ());
       field_name->last_component ()->replace_string (excep_holder_name.rep ());
       be_interface *field_type= new be_interface (field_name,
+                                                  0,
+                                                  0,
                                                   0,
                                                   0,
                                                   0,

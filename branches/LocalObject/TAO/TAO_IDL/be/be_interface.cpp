@@ -49,10 +49,13 @@ be_interface::be_interface (UTL_ScopedName *n,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
-                            UTL_StrList *p)
-  : AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
+                            UTL_StrList *p,
+                            idl_bool local,
+                            idl_bool abstract)
+  : AST_Interface (n, ih, nih, ih_flat, nih_flat, p, local, abstract),
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
+    COMMON_Base (local, abstract),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     strategy_ (new be_interface_default_strategy (this)),
@@ -2109,44 +2112,6 @@ be_interface::replacement (void)
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)
-
-be_local_interface::be_local_interface (UTL_ScopedName *n,
-                                        AST_Interface **ih,
-                                        long nih,
-                                        AST_Interface **ih_flat,
-                                        long nih_flat,
-                                        UTL_StrList *p)
-  : be_interface (n, ih, nih, ih_flat, nih_flat, p),
-    AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
-    AST_Decl (AST_Decl::NT_interface, n, p),
-    UTL_Scope (AST_Decl::NT_interface)
-{
-}
-
-idl_bool
-be_local_interface::is_local_interface ()
-{
-  return 1;
-}
-
-be_abstract_interface::be_abstract_interface (UTL_ScopedName *n,
-                                              AST_Interface **ih,
-                                              long nih,
-                                              AST_Interface **ih_flat,
-                                              long nih_flat,
-                                              UTL_StrList *p)
-  : be_interface (n, ih, nih, ih_flat, nih_flat, p),
-    AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
-    AST_Decl (AST_Decl::NT_interface, n, p),
-    UTL_Scope (AST_Decl::NT_interface)
-{
-}
-
-idl_bool
-be_abstract_interface::is_abstract_interface ()
-{
-  return 1;
-}
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

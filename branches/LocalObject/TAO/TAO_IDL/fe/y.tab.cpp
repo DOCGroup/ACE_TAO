@@ -1272,7 +1272,7 @@ tao_yyinrecovery:
             if (5 < tao_yydebug)
                 printf("tao_yydebug: state %d, error recovery discards token %d (%s)\n",
                     tao_yystate, tao_yychar, tao_yys);
-            else 
+            else
                 TAO_YYDEBUG_DISCARD_TOKEN(tao_yystate, tao_yychar, tao_yys, tao_yyssp-tao_yyss);
         }
 #endif
@@ -2366,7 +2366,9 @@ case 153:
               AST_Type * tp = d->compose(tao_yyvsp[-2].dcval);
               if (tp == NULL)
 		     continue;
-	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
+	      t = idl_global->gen()->create_typedef(tp, d->name(), p,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
 	      (void) s->fe_add_typedef(t);
 	    }
 	    delete l;
@@ -2585,7 +2587,10 @@ case 202:
 	   * to the enclosing scope
 	   */
 	  if (s != NULL) {
-	    d = idl_global->gen()->create_structure(n, p);
+	    d = idl_global->gen()->create_structure(n,
+                                                    p,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
 	    (void) s->fe_add_structure(d);
 	  }
 	  /*
@@ -2776,7 +2781,11 @@ case 226:
             if (tp == NULL) {
               idl_global->err()->not_a_type(tao_yyvsp[-2].dcval);
             } else {
-	      u = idl_global->gen()->create_union(tp, n, p);
+	      u = idl_global->gen()->create_union(tp,
+                                                  n,
+                                                  p,
+                                                  s->is_local (),
+                                                  s->is_abstract ());
 	      (void) s->fe_add_union(u);
  	    }
 	  }
@@ -3081,7 +3090,10 @@ case 255:
 	   * enclosing scope
 	   */
 	  if (s != NULL) {
-	    e = idl_global->gen()->create_enum(n, p);
+	    e = idl_global->gen()->create_enum(n,
+                                               p,
+                                               s->is_local (),
+                                               s->is_abstract ());
 	    /*
 	     * Add it to its defining scope
 	     */
@@ -3172,6 +3184,7 @@ case 266:
 	   */
 	  if (idl_global->scopes()->top() == NULL)
 	    idl_global->scopes()->pop();
+          UTL_Scope *s = idl_global->scopes()->top ();
 	  /*
 	   * Create a node representing a sequence
 	   */
@@ -3185,7 +3198,7 @@ case 266:
 	    if (tp == NULL)
 	      ; /* Error will be caught in FE_Declarator.*/
 	    else {
-	      tao_yyval.dcval = idl_global->gen()->create_sequence(tao_yyvsp[-2].exval, tp);
+	      tao_yyval.dcval = idl_global->gen()->create_sequence(tao_yyvsp[-2].exval, tp, s->is_local (), s->is_abstract ());
 	      /*
 	       * Add this AST_Sequence to the types defined in the global scope
 	       */
@@ -3204,6 +3217,7 @@ case 267:
 	   */
 	  if (idl_global->scopes()->top() == NULL)
 	    idl_global->scopes()->pop();
+          UTL_Scope *s = idl_global->scopes()->top_non_null ();
 	  /*
 	   * Create a node representing a sequence
 	   */
@@ -3217,7 +3231,9 @@ case 267:
 	      tao_yyval.dcval =
 	        idl_global->gen()->create_sequence(
 		  	     idl_global->gen()->create_expr((unsigned long) 0),
-			     tp);
+			     tp,
+                             s->is_local (),
+                             s->is_abstract ());
 	      /*
 	       * Add this AST_Sequence to the types defined in the global scope
 	       */
@@ -3511,7 +3527,10 @@ case 295:
 	   * the enclosing scope
 	   */
 	  if (s != NULL) {
-	    e = idl_global->gen()->create_exception(n, p);
+	    e = idl_global->gen()->create_exception(n,
+                                                    p,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
 	    (void) s->fe_add_exception(e);
 	  }
 	  /*

@@ -37,11 +37,15 @@ be_sequence::be_sequence (void)
   this->has_constructor (I_TRUE);      // always the case
 }
 
-be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
-  : AST_Sequence (v, t),
+be_sequence::be_sequence (AST_Expression *v,
+                          AST_Type *t,
+                          idl_bool local,
+                          idl_bool abstract)
+  : AST_Sequence (v, t, t->is_local () || local, abstract),
     AST_Decl (AST_Decl::NT_sequence,
               NULL,
               NULL),
+    COMMON_Base (t->is_local () || local, abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
   // check if we are bounded or unbounded. An expression value of 0 means
@@ -101,12 +105,12 @@ be_sequence::gen_name (void)
 
       // Some platforms define IDL sequences as template classes
       // and some do not. If the nested sequence were defined in
-      // the scope of the enclosing sequence, we would have to 
+      // the scope of the enclosing sequence, we would have to
       // not only define the nested class in two places, but also
       // deal with the fact that, for the template classes, the
-      // enclosing sequence's template type is a class defined 
+      // enclosing sequence's template type is a class defined
       // inside it. So we define the nested sequence in the next
-      // scope up, and the existing code generation works for both 
+      // scope up, and the existing code generation works for both
       // template and non-template implementations of IDL sequences.
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
@@ -161,9 +165,9 @@ be_sequence::create_name (be_typedef *node)
           // add our local name as the last component
           n->nconc (
               new UTL_ScopedName (
-                  new Identifier (ACE_OS::strdup (namebuf), 
+                  new Identifier (ACE_OS::strdup (namebuf),
                                   1,
-                                  0, 
+                                  0,
                                   I_FALSE),
                   NULL
                 )

@@ -48,7 +48,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
   // No CDR operations for locality constraint interfaces.
   if (node->cli_inline_cdr_op_gen () ||
       node->imported () ||
-      node->is_local_interface ())
+      node->is_local ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();

@@ -62,7 +62,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // first generate the code for the static methods
   // Local interfaces don't have any operators.
-  if (! node->is_local_interface ())
+  if (! node->is_local ())
     *os << "void "
         << node->name () << "::_tao_any_destructor (void *x)" << be_nl
         << "{" << be_idt_nl
@@ -81,7 +81,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
 
   // Local interfaces have slightly different _narrow implementation.
-  if (! node->is_local_interface ())
+  if (! node->is_local ())
     {
       // Remote _narrow implementation.
       *os << "if (CORBA::is_nil (obj))" << be_idt_nl
@@ -116,7 +116,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "::_nil ();" << be_uidt_nl;
 
 
-  if (! node->is_local_interface ())
+  if (! node->is_local ())
     {
       // Remote _uncheck_narrow implementation.
       *os << "if (! obj->_is_local ())" << be_idt_nl
@@ -193,7 +193,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // generate the is_a method.  _is_a is not supported on local objects.
-  if (! node->is_local_interface ())
+  if (! node->is_local ())
     {
       os->indent ();
       *os << "CORBA::Boolean " << node->full_name () << "::_is_a (" <<
@@ -252,7 +252,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}\n\n";
 
   // Smart Proxy classes
-  if (! node->is_local_interface ())
+  if (! node->is_local ())
     {
       be_visitor_context ctx (*this->ctx_);
       be_visitor *visitor = 0;

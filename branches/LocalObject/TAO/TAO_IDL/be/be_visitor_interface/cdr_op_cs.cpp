@@ -43,7 +43,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   // already generated and/or we are imported. Don't do anything.
   if (node->cli_stub_cdr_op_gen () ||
       node->imported () ||
-      node->is_local_interface ())
+      node->is_local ())
     return 0;
 
   // set the substate as generating code for the types defined in our scope

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -74,8 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * and a name (an UTL_ScopedName).
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_typedef, "$Id$")
 
@@ -87,11 +87,14 @@ AST_Typedef::AST_Typedef ()
 {
 }
 
-AST_Typedef::AST_Typedef (AST_Type *bt, 
-                          UTL_ScopedName *n, 
-                          UTL_StrList *p)
+AST_Typedef::AST_Typedef (AST_Type *bt,
+                          UTL_ScopedName *n,
+                          UTL_StrList *p,
+                          idl_bool local,
+                          idl_bool abstract)
  : AST_Decl (AST_Decl::NT_typedef, n, p),
-	 pd_base_type(bt)
+   COMMON_Base (local, abstract),
+         pd_base_type(bt)
 {
 }
 
@@ -118,6 +121,11 @@ AST_Typedef::~AST_Typedef (void)
 void
 AST_Typedef::dump(ostream &o)
 {
+  if (this->is_local ())
+    o << "(local) ";
+  else
+    o << "(abstract) ";
+
   o << "typedef ";
   pd_base_type->dump(o);
   o << " ";

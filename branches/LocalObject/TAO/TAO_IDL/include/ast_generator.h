@@ -132,15 +132,21 @@ public:
 
   // Create a node representing an exception
   virtual AST_Exception *create_exception(UTL_ScopedName *n,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
 
   // Create a node representing a structure
   virtual AST_Structure *create_structure(UTL_ScopedName *n,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
 
   // Create a node representing an enum
   virtual AST_Enum      *create_enum(UTL_ScopedName *n,
-                                     UTL_StrList *p);
+                                     UTL_StrList *p,
+                                     idl_bool local,
+                                     idl_bool abstract);
 
   // Create a node representing an operation on an interface
   virtual AST_Operation *create_operation(AST_Type *rt,
@@ -170,7 +176,9 @@ public:
   // Create a node representing a union
   virtual AST_Union     *create_union(AST_ConcreteType *dt,
                                       UTL_ScopedName *n,
-                                      UTL_StrList *p);
+                                      UTL_StrList *p,
+                                      idl_bool local,
+                                      idl_bool abstract);
 
   // Create a node representing one branch in a union
   virtual AST_UnionBranch *create_union_branch(UTL_LabelList *ll,
@@ -217,7 +225,9 @@ public:
 
   // Create a node representing a sequence type
   virtual AST_Sequence  *create_sequence(AST_Expression *v,
-                                         AST_Type *bt);
+                                         AST_Type *bt,
+                                         idl_bool local,
+                                         idl_bool abstract);
 
   // Create a node representing a string type
   virtual AST_String    *create_string(AST_Expression *v);
@@ -228,7 +238,9 @@ public:
   // Create a node representing a type renaming (typedef)
   virtual AST_Typedef   *create_typedef(AST_Type *bt,
                                         UTL_ScopedName *n,
-                                        UTL_StrList *p);
+                                        UTL_StrList *p,
+                                        idl_bool local,
+                                        idl_bool abstract);
 
   // Create a node representing a native
   virtual AST_Native    *create_native (UTL_ScopedName *n,

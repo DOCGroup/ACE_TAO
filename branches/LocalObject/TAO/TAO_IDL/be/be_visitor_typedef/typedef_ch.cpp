@@ -125,7 +125,9 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
         }
 
       // generate the typecode decl for this typedef node
-      if (!node->imported ())
+      // @@ NW: !bt->is_local () is a hack.  There should be a way to
+      // propagate bt's info up to typedef.
+      if (!node->imported () && !node->is_local () && !bt->is_local ())
         {
           // by using a visitor to declare and define the TypeCode, we have the
           // added advantage to conditionally not generate any code. This will be

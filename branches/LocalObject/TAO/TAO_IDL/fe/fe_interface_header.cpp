@@ -431,7 +431,7 @@ idl_bool
 FE_InterfaceHeader::check_further (AST_Interface *i)
 {
   if (i && ! i->is_valuetype () &&
-      (this->is_local () || !i->is_local_interface ()))
+      (this->is_local () || !i->is_local ()))
     {
       return 1;
     }
