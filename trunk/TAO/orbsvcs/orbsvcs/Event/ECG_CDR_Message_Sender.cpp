@@ -201,7 +201,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
   CORBA::ULong header[TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)
                      + ACE_CDR::MAX_ALIGNMENT];
-  char* buf = ACE_reinterpret_cast(char*,header);
+  char* buf = reinterpret_cast<char*>(header);
   TAO_OutputCDR cdr (buf, sizeof(header));
   cdr.write_boolean (TAO_ENCAP_BYTE_ORDER);
   // Insert some known values in the padding bytes, so we can smoke

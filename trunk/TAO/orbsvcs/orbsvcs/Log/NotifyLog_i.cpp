@@ -59,8 +59,8 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
   CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   DsNotifyLogAdmin::NotifyLog_var log =
-    notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, ACE_static_cast(const CosNotification::QoSProperties, *qos),
-                               ACE_static_cast(const CosNotification::AdminProperties, *admin), id);
+    notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties>(*qos),
+                               static_cast<const CosNotification::AdminProperties>(*admin), id);
 
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
@@ -82,8 +82,8 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
   CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   DsNotifyLogAdmin::NotifyLog_var log =
-    notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, ACE_static_cast(const CosNotification::QoSProperties, *qos),
-                               ACE_static_cast(const CosNotification::AdminProperties, *admin));
+    notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties>(*qos),
+                               static_cast<const CosNotification::AdminProperties>(*admin));
 
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());

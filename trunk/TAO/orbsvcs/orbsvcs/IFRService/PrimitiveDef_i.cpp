@@ -63,7 +63,7 @@ TAO_PrimitiveDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "pkind",
                                              pkind);
 
-  switch (ACE_static_cast (CORBA::PrimitiveKind, pkind))
+  switch (static_cast<CORBA::PrimitiveKind>(pkind))
   {
     case CORBA::pk_null:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_null);
@@ -135,6 +135,6 @@ TAO_PrimitiveDef_i::kind_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "pkind",
                                              pkind);
 
-  return ACE_static_cast (CORBA::PrimitiveKind, pkind);
+  return static_cast<CORBA::PrimitiveKind>(pkind);
 }
 

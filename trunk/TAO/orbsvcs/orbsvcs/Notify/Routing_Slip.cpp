@@ -81,22 +81,22 @@ Routing_Slip::create (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL)
       ACE_TEXT ("  enter_complete               \t%d\n")
       ACE_TEXT ("  enter_deleting               \t%d\n")
       ACE_TEXT ("  enter_terminal               \t%d\n")
-      , ACE_static_cast (int, count_enter_transient_)
-      , ACE_static_cast (int, count_continue_transient_)
-      , ACE_static_cast (int, count_enter_reloaded_)
-      , ACE_static_cast (int, count_enter_new_)
-      , ACE_static_cast (int, count_continue_new_)
-      , ACE_static_cast (int, count_enter_complete_while_new_)
-      , ACE_static_cast (int, count_enter_saving_)
-      , ACE_static_cast (int, count_enter_saved_)
-      , ACE_static_cast (int, count_enter_updating_)
-      , ACE_static_cast (int, count_enter_changed_while_saving_)
-      , ACE_static_cast (int, count_continue_changed_while_saving_)
-      , ACE_static_cast (int, count_enter_changed_)
-      , ACE_static_cast (int, count_continue_changed_)
-      , ACE_static_cast (int, count_enter_complete_)
-      , ACE_static_cast (int, count_enter_deleting_)
-      , ACE_static_cast (int, count_enter_terminal_)
+      , static_cast<int>(count_enter_transient_)
+      , static_cast<int>(count_continue_transient_)
+      , static_cast<int>(count_enter_reloaded_)
+      , static_cast<int>(count_enter_new_)
+      , static_cast<int>(count_continue_new_)
+      , static_cast<int>(count_enter_complete_while_new_)
+      , static_cast<int>(count_enter_saving_)
+      , static_cast<int>(count_enter_saved_)
+      , static_cast<int>(count_enter_updating_)
+      , static_cast<int>(count_enter_changed_while_saving_)
+      , static_cast<int>(count_continue_changed_while_saving_)
+      , static_cast<int>(count_enter_changed_)
+      , static_cast<int>(count_continue_changed_)
+      , static_cast<int>(count_enter_complete_)
+      , static_cast<int>(count_enter_deleting_)
+      , static_cast<int>(count_enter_terminal_)
       ));
   }
   return result;
@@ -241,9 +241,9 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: lookup, completed %d of %d\n"),
       this->sequence_,
-      ACE_static_cast (int, request_id),
-      ACE_static_cast (int, this->complete_requests_),
-      ACE_static_cast (int, this->delivery_requests_.size ())
+      static_cast<int>(request_id),
+      static_cast<int>(this->complete_requests_),
+      static_cast<int>(this->delivery_requests_.size ())
       ));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
@@ -292,10 +292,10 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Forward %s; completed %d of %d\n"),
       this->sequence_,
-      ACE_static_cast (int, request_id),
+      static_cast<int>(request_id),
       filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
-      ACE_static_cast (int, this->complete_requests_),
-      ACE_static_cast (int, this->delivery_requests_.size ())
+      static_cast<int>(this->complete_requests_),
+      static_cast<int>(this->delivery_requests_.size ())
       ));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
@@ -310,7 +310,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
                     "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
                     "proxy supplier %d\n",
                     this->sequence_,
-                    ACE_static_cast (int, request_id),
+                    static_cast<int>(request_id),
                     ps->id()));
       ps->worker_task()->execute (method);
     }
@@ -321,7 +321,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
                     "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
-                    ACE_static_cast (int, request_id),
+                    static_cast<int>(request_id),
                     ps->id()));
     }
 }
@@ -344,10 +344,10 @@ Routing_Slip::dispatch (
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Dispatch %s; completed %d of %d\n"),
       this->sequence_,
-      ACE_static_cast (int, request_id),
+      static_cast<int>(request_id),
       filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
-      ACE_static_cast (int, this->complete_requests_),
-      ACE_static_cast (int, this->delivery_requests_.size ())
+      static_cast<int>(this->complete_requests_),
+      static_cast<int>(this->delivery_requests_.size ())
       ));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
@@ -361,7 +361,7 @@ Routing_Slip::dispatch (
                     "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
                     "proxy supplier %d\n",
                     this->sequence_,
-                    ACE_static_cast (int, request_id),
+                    static_cast<int>(request_id),
                     ps->id()));
       ps->worker_task()->execute (method ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -373,7 +373,7 @@ Routing_Slip::dispatch (
                     "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
-                    ACE_static_cast (int, request_id),
+                    static_cast<int>(request_id),
                     ps->id()));
     }
 }
@@ -393,9 +393,9 @@ Routing_Slip::delivery_request_complete (size_t request_id)
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: delivery_request_complete #%d: completed %d of %d\n"),
       this->sequence_,
-      ACE_static_cast (int, request_id),
-      ACE_static_cast (int, this->complete_requests_),
-      ACE_static_cast (int, this->delivery_requests_.size ())
+      static_cast<int>(request_id),
+      static_cast<int>(this->complete_requests_),
+      static_cast<int>(this->delivery_requests_.size ())
       ));
   State state = this->state_;
   switch (state)
@@ -439,7 +439,7 @@ Routing_Slip::delivery_request_complete (size_t request_id)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected delivery_request_complete in state %d\n"),
-        ACE_static_cast (int, this->state_)
+        static_cast<int>(this->state_)
         ));
       break;
     }
@@ -495,7 +495,7 @@ Routing_Slip::at_front_of_persist_queue ()
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing Slip %d: Unexpected at_front_of_persist_queue in state %d\n"),
         this->sequence_,
-        ACE_static_cast (int, this->state_)
+        static_cast<int>(this->state_)
         ));
       break;
     }
@@ -556,7 +556,7 @@ Routing_Slip::persist_complete ()
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected transition in state %d\n"),
-        ACE_static_cast (int, this->state_)
+        static_cast<int>(this->state_)
         ));
       break;
     }

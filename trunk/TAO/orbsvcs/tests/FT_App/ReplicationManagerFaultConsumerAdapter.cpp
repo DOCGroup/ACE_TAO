@@ -249,7 +249,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     size_t replicaCount = this->replica_iors_.size();
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Number of replicas being monitored: (%u)\n"),
-      ACE_static_cast (unsigned int, replicaCount)
+      static_cast<unsigned int>(replicaCount)
     ));
     for (size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {

@@ -260,9 +260,9 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
   miop_hdr.write_ulong (num_fragments);
 
   // UniqueId
-  ptrdiff_t unique_id = ACE_reinterpret_cast (ptrdiff_t, iov);
+  ptrdiff_t unique_id = reinterpret_cast<ptrdiff_t>(iov);
   this->write_unique_id (miop_hdr,
-                         ACE_static_cast (unsigned long, unique_id));
+                         static_cast<unsigned long>(unique_id));
 
   // Send the buffers.
   current_fragment = &fragments[0];
@@ -387,15 +387,15 @@ TAO_UIPMC_Transport::recv (char *buf,
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (byte_order == ACE_CDR_BYTE_ORDER)
     {
-      id_length = *ACE_reinterpret_cast (ACE_CDR::ULong*, &buf[MIOP_ID_LENGTH_OFFSET]);
+      id_length = *reinterpret_cast<ACE_CDR::ULong*>(&buf[MIOP_ID_LENGTH_OFFSET]);
     }
   else
     {
       ACE_CDR::swap_4 (&buf[MIOP_ID_LENGTH_OFFSET],
-                       ACE_reinterpret_cast (char*, &id_length));
+                       reinterpret_cast<char*>(&id_length));
     }
 #else
-  id_length = *ACE_reinterpret_cast (ACE_CDR::ULong*, &buf[MIOP_ID_LENGTH_OFFSET]);
+  id_length = *reinterpret_cast<ACE_CDR::ULong*>(&buf[MIOP_ID_LENGTH_OFFSET]);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
   // Make sure that the length field is legal.

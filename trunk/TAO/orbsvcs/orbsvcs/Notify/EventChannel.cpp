@@ -565,7 +565,7 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
-      , ACE_static_cast (int, id)
+      , static_cast<int>(id)
       ));
 
     // call special builder method to reload
@@ -591,7 +591,7 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
-      , ACE_static_cast (int, id)
+      , static_cast<int>(id)
       ));
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
 

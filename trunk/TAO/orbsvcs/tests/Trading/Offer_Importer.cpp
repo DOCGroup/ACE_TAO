@@ -110,7 +110,7 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
 
               ACE_DEBUG ((LM_DEBUG, "*** Query through %s to destination %s.\n",
                           ACE_static_cast (const char*, link_name_seq[0u]),
-                          ACE_static_cast (const char*, link_name_seq2[i])));
+                          static_cast<const char*>(link_name_seq2[i])));
 
               trader_name[0] = CORBA::string_dup (link_name_seq[0u]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
@@ -212,7 +212,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
                 {
                   const char *policy_name = (*limits_applied_ptr)[j];
                   ACE_DEBUG ((LM_DEBUG, "%s\n",
-                              ACE_static_cast (const char*, policy_name)));
+                              static_cast<const char*>(policy_name)));
                 }
             }
         }

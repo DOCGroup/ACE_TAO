@@ -305,7 +305,7 @@ generate_offer_id (const char *service_type_name, CORBA::ULong id)
 
   // hold portions of id string.
   CosTrading::OfferId offer_id =
-     CORBA::string_alloc (ACE_static_cast (CORBA::ULong, total_size));
+     CORBA::string_alloc (static_cast<CORBA::ULong>(total_size));
   char* return_value = 0;
   ACE_OS::sprintf (offer_id, "%016u%s", id, service_type_name);
 

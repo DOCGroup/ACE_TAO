@@ -122,7 +122,7 @@ Any_String (const CORBA::Any& any)
 #else
       double temp =
 # if defined (ACE_CONFIG_WIN32_H)
-      ACE_static_cast(double, ACE_static_cast (CORBA::LongLong, ull));
+      ACE_static_cast(double, static_cast<CORBA::LongLong>(ull));
 # else
               ull;
 # endif /* ACE_CONFIG_WIN32_H */

@@ -61,11 +61,9 @@ TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::set_remote_address\n"));
 
-  ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,
-                                               address);
+  ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(address);
   this->peer_addr_ = *inet_addr;
-  TAO_AV_UDP_Transport *transport = ACE_dynamic_cast (TAO_AV_UDP_Transport*,
-                                                      this->transport_);
+  TAO_AV_UDP_Transport *transport = dynamic_cast<TAO_AV_UDP_Transport*>(this->transport_);
 
   return transport->set_remote_address (*inet_addr);
 }
@@ -224,7 +222,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
       if (i->length () > 0)
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = ACE_static_cast (u_long, i->length ());
+          iov[iovcnt].iov_len  = static_cast<u_long>(i->length ());
           iovcnt++;
 
           // The buffer is full make a OS call.  @@ TODO this should
@@ -442,8 +440,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
     {
       flow_handler = this->entry_->control_handler ();
 
-      local_addr = ACE_dynamic_cast (ACE_INET_Addr*,
-                                     this->entry_->get_local_control_addr ());
+      local_addr = dynamic_cast<ACE_INET_Addr*>(this->entry_->get_local_control_addr ());
     }
   else
     {
@@ -610,13 +607,13 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   if (flow_component == TAO_AV_Core::TAO_AV_CONTROL)
     {
       this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname());
-    inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->control_address ());
+    inet_addr = dynamic_cast<ACE_INET_Addr*>(entry->control_address ());
     }
   else
     {
       this->flowname_ = entry->flowname ();
-      inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
-      control_inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->control_address ());
+      inet_addr = dynamic_cast<ACE_INET_Addr*>(entry->address ());
+      control_inet_addr = dynamic_cast<ACE_INET_Addr*>(entry->control_address ());
     }
 
   TAO_AV_Flow_Handler *flow_handler = 0;
@@ -630,8 +627,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
       flow_handler = this->entry_->control_handler ();
       flow_handler->set_remote_address (inet_addr);
 
-      local_addr = ACE_dynamic_cast (ACE_INET_Addr*,
-                                     this->entry_->get_local_control_addr ());
+      local_addr = dynamic_cast<ACE_INET_Addr*>(this->entry_->get_local_control_addr ());
     }
   else
     {
@@ -647,7 +643,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
 	  ACE_Addr *addr;
 	  if ((addr = entry->get_peer_addr ()) != 0)
 	    {
-	      local_addr = ACE_dynamic_cast (ACE_INET_Addr*,addr);
+	      local_addr = dynamic_cast<ACE_INET_Addr*>(addr);
 	      char buf [BUFSIZ];
 	      local_addr->addr_to_string (buf, BUFSIZ);
 	    }
@@ -675,8 +671,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                   TAO_AV_Flow_Handler *control_flow_handler = 0;
 
                   if (entry->is_multicast ())
-                    control_inet_addr =  ACE_dynamic_cast (ACE_INET_Addr*,
-                                                           entry->control_address ()) ;
+                    control_inet_addr =  dynamic_cast<ACE_INET_Addr*>(entry->control_address ()) ;
                   else
                     {
 
@@ -698,7 +693,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                         ACE_INET_Addr ("0"),
                                         -1);
                       else
-                        control_inet_address_ = ACE_dynamic_cast (ACE_INET_Addr*,entry->control_address ());
+                        control_inet_address_ = dynamic_cast<ACE_INET_Addr*>(entry->control_address ());
                     }
 
                   TAO_AV_UDP_Connection_Setup::setup (control_flow_handler,

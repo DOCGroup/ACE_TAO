@@ -64,8 +64,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
 {
   // Grab the forwarded list
   TAO_MProfile *prof_list =
-    ACE_const_cast (TAO_MProfile *,
-                    r->stub ()->forward_profiles ());
+    const_cast<TAO_MProfile *>(r->stub ()->forward_profiles ());
 
   TAO_MProfile &basep = r->stub ()->base_profiles ();
 
@@ -118,8 +117,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
 {
   // Grab the forwarded list
   TAO_MProfile *prof_list =
-    ACE_const_cast (TAO_MProfile *,
-                    r->stub ()->forward_profiles ());
+    const_cast<TAO_MProfile *>(r->stub ()->forward_profiles ());
 
   TAO_MProfile &basep =
     r->stub ()->base_profiles ();

@@ -202,7 +202,7 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
                               length
                             );
 
-  char *data = ACE_static_cast (char *, ref);
+  char *data = static_cast<char *>(ref);
   ACE_Auto_Basic_Array_Ptr<char> safety (data);
 
   ACE_Message_Block mb (data,

@@ -54,8 +54,7 @@ SCTP_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
     return -1;
 
   int result = ACE_OS::connect (new_association.get_handle (),
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *>(remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
   return this->shared_connect_finish (new_association,

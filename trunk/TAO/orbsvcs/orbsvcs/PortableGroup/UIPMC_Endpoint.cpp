@@ -113,11 +113,9 @@ TAO_UIPMC_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_UIPMC_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
-                                        other_endpoint);
+  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *>(other_endpoint);
 
-  TAO_UIPMC_Endpoint *endpoint = ACE_dynamic_cast (TAO_UIPMC_Endpoint *,
-                                                   endpt);
+  TAO_UIPMC_Endpoint *endpoint = dynamic_cast<TAO_UIPMC_Endpoint *>(endpt);
   if (endpoint == 0)
     return 0;
 

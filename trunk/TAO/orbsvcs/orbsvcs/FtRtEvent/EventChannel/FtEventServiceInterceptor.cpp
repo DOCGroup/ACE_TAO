@@ -84,8 +84,7 @@ retrieve_ft_request_context(
   ACE_CHECK;
 
   const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *>(service_context->context_data.get_buffer ());
 
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
@@ -95,7 +94,7 @@ retrieve_ft_request_context(
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int>(byte_order));
 
 
   if ((cdr >> ft_request_service_context) == 0)
@@ -122,8 +121,7 @@ get_transaction_depth_context(
   ACE_ENDTRY;
 
   const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *>(service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
@@ -132,7 +130,7 @@ get_transaction_depth_context(
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int>(byte_order));
 
   FTRT::TransactionDepth result;
   if ((cdr >> result) == 0)
@@ -153,8 +151,7 @@ get_sequence_number_context(
   ACE_CHECK_RETURN(0);
 
   const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *>(service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
@@ -163,7 +160,7 @@ get_sequence_number_context(
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int>(byte_order));
 
   if ((cdr >> result) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);

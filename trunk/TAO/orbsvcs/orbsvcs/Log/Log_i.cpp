@@ -601,7 +601,7 @@ TAO_Log_i::query_i (const char *constraint,
   // Create an iterator
   TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter (store);
 
-  CORBA::ULong len = ACE_static_cast (CORBA::ULong, store.current_size ());
+  CORBA::ULong len = static_cast<CORBA::ULong>(store.current_size ());
 
   // How many entries?
 
@@ -756,7 +756,7 @@ TAO_Log_i::match_i (const char *constraint,
   // Create an iterator
   TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
 
-  CORBA::ULong len = ACE_static_cast (CORBA::ULong, store.current_size ());
+  CORBA::ULong len = static_cast<CORBA::ULong>(store.current_size ());
   // How many entries?
 
   // Iterate over and populate the list.
@@ -1250,7 +1250,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   static char out[256] = "";
 
   double temp1 = 
-    ACE_static_cast (double, ACE_UINT64_DBLCAST_ADAPTER (p_time));
+    static_cast<double>(ACE_UINT64_DBLCAST_ADAPTER (p_time));
 
   ACE_OS::sprintf (out, "time > %.0f", temp1);
 
@@ -1266,7 +1266,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   // Create an iterator
   TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
 
-  CORBA::ULong len = ACE_static_cast (CORBA::ULong, store.current_size ());
+  CORBA::ULong len = static_cast<CORBA::ULong>(store.current_size ());
   // How many entries?
 
   // Iterate over and populate the list.

@@ -45,7 +45,7 @@ namespace TAO_Notify
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Reconnect registry: registering %d\n"),
-        ACE_static_cast (int, next_id)
+        static_cast<int>(next_id)
         ));
     }
     TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -72,7 +72,7 @@ namespace TAO_Notify
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Reconnect registry: unregistering %d\n"),
-        ACE_static_cast (int, id)
+        static_cast<int>(id)
         ));
     }
     if ( 0 != reconnection_registry_.unbind (id))
@@ -113,7 +113,7 @@ namespace TAO_Notify
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnect registry: saving %d\n"),
-          ACE_static_cast (int, entry->ext_id_)
+          static_cast<int>(entry->ext_id_)
           ));
       }
       cattrs.push_back(NVP(RECONNECT_ID, entry->ext_id_));
@@ -154,7 +154,7 @@ namespace TAO_Notify
           {
             ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Reconnect registry: reloading %d\n"),
-              ACE_static_cast (int, id)
+              static_cast<int>(id)
               ));
           }
         }
@@ -193,7 +193,7 @@ namespace TAO_Notify
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Reconnection Registry: Sending reconnection to client %d\n"),
-              ACE_static_cast (int, entry->ext_id_)
+              static_cast<int>(entry->ext_id_)
             ));
         }
         ACE_CString & ior = entry->int_id_;
@@ -210,7 +210,7 @@ namespace TAO_Notify
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Reconnection Registry: Can't resolve reconnection client's IOR %d\n"),
-              ACE_static_cast (int, entry->ext_id_)
+              static_cast<int>(entry->ext_id_)
             ));
 
           //throw this entry away but you've got an iterator so be careful

@@ -271,7 +271,7 @@ Routing_Slip_Persistence_Manager::remove()
 Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
   : serial_number (0)
   , next_overflow(0)
-  , header_type (ACE_static_cast (Block_Type, type))
+  , header_type (static_cast<Block_Type>(type))
   , data_size(0)
 {
 }
@@ -665,7 +665,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
         mbptr = mbnew;
         // Deallocate the PSB's data and reallocate it to our wr_ptr()...
         psb->reassign_data(ACE_static_cast(unsigned char*,
-          ACE_static_cast(void*, mbptr->wr_ptr())), true);
+          static_cast<void*>(mbptr->wr_ptr())), true);
         // ...read into the PSB (whose data is inside of the AMB)...
         this->allocator_->read(psb);
         allocated_blocks.push(psb->block_number());

@@ -105,7 +105,7 @@ public:
   {
   public:
     u_long operator() (PortableServer::ServantBase* const & ptr) const {
-      return ACE_reinterpret_cast(u_long, ptr);
+      return reinterpret_cast<u_long>(ptr);
     }
   };
 

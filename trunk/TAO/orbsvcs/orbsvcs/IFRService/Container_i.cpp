@@ -154,7 +154,7 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      "def_kind",
                                                      kind);
           CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
+            static_cast<CORBA::DefinitionKind>(kind);
 
           TAO_Contained_i *impl = this->repo_->select_contained (def_kind);
           impl->section_key (defn_key);
@@ -278,7 +278,7 @@ TAO_Container_i::lookup_i (const char *search_name
                                                          "def_kind",
                                                          kind);
 
-              def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
+              def_kind = static_cast<CORBA::DefinitionKind>(kind);
 
               if (def_kind == CORBA::dk_Interface
                   || def_kind == CORBA::dk_Value)
@@ -477,7 +477,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                                          kind);
 
               CORBA::DefinitionKind def_kind =
-                ACE_static_cast (CORBA::DefinitionKind, kind);
+                static_cast<CORBA::DefinitionKind>(kind);
 
               if (limit_type == CORBA::dk_all
                   || limit_type == def_kind)
@@ -525,7 +525,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(kind_queue.size ());
   retval->length (size);
 
   for (CORBA::ULong j = 0; j < size; ++j)
@@ -593,7 +593,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
                                exclude_inherited
                                ACE_ENV_ARG_PARAMETER);
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(kind_queue.size ());
 
   CORBA::ContainedSeq *holder;
   ACE_NEW_THROW_EX (holder,
@@ -669,7 +669,7 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
     }
   else
     {
-      ret_len = length < ACE_static_cast (CORBA::ULong, max_returned_objs)
+      ret_len = length < static_cast<CORBA::ULong>(max_returned_objs)
                 ? length
                 : max_returned_objs;
     }
@@ -1951,7 +1951,7 @@ TAO_Container_i::lookup_name_recursive (
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
+            static_cast<CORBA::DefinitionKind>(kind);
 
           ACE_TString id;
           this->repo_->config ()->get_string_value (defn_key,
@@ -2260,49 +2260,49 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     {
       CORBA::Char x;
       cdr.read_char (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_wchar:
     {
       CORBA::WChar x;
       cdr.read_wchar (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_boolean:
     {
       CORBA::Boolean x;
       cdr.read_boolean (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_short:
     {
       CORBA::Short x;
       cdr.read_short (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_ushort:
     {
       CORBA::UShort x;
       cdr.read_ushort (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_long:
     {
       CORBA::Long x;
       cdr.read_long (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_ulong:
     {
       CORBA::ULong x;
       cdr.read_ulong (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
 #if !defined (ACE_LACKS_LONGLONG_T)
@@ -2311,7 +2311,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       CORBA::LongLong x;
       cdr.read_longlong (x);
       // We could lose data here.
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
 #endif /* ACE_LACKS_LONGLONG_T */
@@ -2320,14 +2320,14 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       CORBA::ULongLong x;
       cdr.read_ulonglong (x);
       // We could lose data here.
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     case CORBA::tk_enum:
     {
       CORBA::ULong x;
       cdr.read_ulong (x);
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int>(x);
       break;
     }
     default:
@@ -2606,7 +2606,7 @@ TAO_Container_i::create_value_common (
                                       TAO_IFR_Service_Utils::tmp_key_,
                                       "def_kind",
                                       kind);
-          def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
+          def_kind = static_cast<CORBA::DefinitionKind>(kind);
 
           if (def_kind == CORBA::dk_Interface)
             {

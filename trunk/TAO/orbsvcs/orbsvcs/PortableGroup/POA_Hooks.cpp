@@ -100,14 +100,14 @@ TAO_POA_Hooks::find_group_component_in_profile (const TAO_Profile* profile,
   const CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
-  TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+  TAO_InputCDR in_cdr (reinterpret_cast<const char*>(buf),
                        tagged_component.component_data.length ());
 
   // Extract the Byte Order.
   CORBA::Boolean byte_order;
   if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
-  in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+  in_cdr.reset_byte_order (static_cast<int>(byte_order));
 
   if ((in_cdr >> group) == 0)
     return -1;

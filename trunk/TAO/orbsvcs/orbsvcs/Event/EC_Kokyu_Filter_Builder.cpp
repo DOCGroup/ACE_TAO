@@ -164,7 +164,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
                   "can be established\n"));
 #endif
       TAO_EC_Kokyu_Filter* kokyu_filter =
-        ACE_dynamic_cast(TAO_EC_Kokyu_Filter*, filter);
+        dynamic_cast<TAO_EC_Kokyu_Filter*>(filter);
   
       //add the dependency between the root in the filter hierarchy and
       //the final consumer
@@ -316,8 +316,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         
         // Convert the time to the proper units....
         RtecScheduler::Period_t period =
-          ACE_static_cast (RtecScheduler::Period_t,
-                           e.header.creation_time);
+          static_cast<RtecScheduler::Period_t>(e.header.creation_time);
         
 #if 1 //by VS original code replaced with this
         RtecScheduler::RT_Info* consumer_rt_info_ptr;

@@ -97,7 +97,7 @@ TAO_WstringDef_i::bound_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "bound",
                                              retval);
 
-  return ACE_static_cast (CORBA::ULong, retval);
+  return static_cast<CORBA::ULong>(retval);
 }
 
 void

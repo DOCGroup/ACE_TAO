@@ -925,8 +925,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
       // using the same POA.
       const ACE_Time_Value tv = ACE_OS::gettimeofday ();
       const CORBA::Long time =
-        ACE_static_cast (CORBA::Long,
-                         tv.msec ()); // Time in milliseconds.
+        static_cast<CORBA::Long>(tv.msec ()); // Time in milliseconds.
 
       char poa_name[] = "TAO_LB_LoadManager_POA - 0xZZZZZZZZ";
       char * astr =

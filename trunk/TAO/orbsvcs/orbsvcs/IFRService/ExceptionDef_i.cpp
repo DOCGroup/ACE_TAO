@@ -218,13 +218,13 @@ TAO_ExceptionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
+            static_cast<CORBA::DefinitionKind>(kind);
 
           kind_queue.enqueue_tail (def_kind);
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(kind_queue.size ());
 
   CORBA::StructMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,

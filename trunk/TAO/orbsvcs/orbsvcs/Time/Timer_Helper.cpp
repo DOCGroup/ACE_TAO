@@ -119,7 +119,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
       ACE_OS::tzset ();
       long arg = ACE_OS::timezone () / 60;
-      CORBA::Short goodarg = ACE_static_cast (CORBA::Short, arg);
+      CORBA::Short goodarg = static_cast<CORBA::Short>(arg);
       clerk_->time_displacement_factor (goodarg);
 
       // Set the inaccuracy.
@@ -133,8 +133,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       // Record the current time in a timestamp to know when global
       // updation of time was done.
       clerk_->update_timestamp_ =
-        ACE_static_cast (CORBA::ULongLong,
-                         timeofday.sec ()) *
+        static_cast<CORBA::ULongLong>(timeofday.sec ()) *
         ACE_static_cast (ACE_UINT32,
                          10000000) +
         ACE_static_cast (CORBA::ULongLong,

@@ -533,13 +533,13 @@ sequence_does_contain (CORBA::Any* sequence,
     case CORBA::tk_short:
       {
         CORBA::Long value = element;
-        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::Short, value));
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::Short>(value));
       }
     break;
     case CORBA::tk_ushort:
       {
         CORBA::ULong value = element;
-        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::UShort, value));
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::UShort>(value));
       }
       break;
     case CORBA::tk_long:
@@ -557,7 +557,7 @@ sequence_does_contain (CORBA::Any* sequence,
     case CORBA::tk_float:
       {
         CORBA::Double value = element;
-        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::Float, value));
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::Float>(value));
       }
       break;
     case CORBA::tk_double:

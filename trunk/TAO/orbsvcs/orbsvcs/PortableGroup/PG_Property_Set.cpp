@@ -73,13 +73,13 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     // @@ TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
 
-    this->set_property (ACE_static_cast (const char *, nc.id),
+    this->set_property (static_cast<const char *>(nc.id),
                         property.val
                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
 #if 0
-    ACE_CString name = ACE_static_cast (const char *, nc.id);
+    ACE_CString name = static_cast<const char *>(nc.id);
 
     const PortableGroup::Value * value_copy;
     ACE_NEW_THROW_EX (value_copy,
@@ -134,7 +134,7 @@ void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_se
     // note assumption one level name with no kind
     // @@ TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
-    ACE_CString name = ACE_static_cast (const char *, nc.id);
+    ACE_CString name = static_cast<const char *>(nc.id);
 
     const PortableGroup::Value * deleted_value;
     if ( 0 == this->values_.unbind (name, deleted_value))
@@ -219,7 +219,7 @@ void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
     this->defaults_->merge_properties (merged_values);
   }
   // note AFICT ACE_Hash_Map does not support const iterators, hence the const cast.
-  ValueMap & mutable_values = ACE_const_cast (ValueMap &, this->values_);
+  ValueMap & mutable_values = const_cast<ValueMap &>(this->values_);
   for (ValueMapIterator it = mutable_values.begin ();
         it != mutable_values.end ();
         ++it)
