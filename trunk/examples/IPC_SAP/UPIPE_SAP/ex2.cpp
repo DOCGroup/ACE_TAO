@@ -1,14 +1,26 @@
 // $Id$
 
-// Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
-// communication.
+// ============================================================================
 //
-// Author : Gerhard Lenzer and Douglas C. Schmidt
+// = LIBRARY
+//   examples
+//
+// = FILENAME
+//   ex2.cpp
+//
+// = DESCRIPTION
+//    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
+//    intra-process communication.  
+//
+// = AUTHOR
+//    Gerhard Lenzer and Douglas C. Schmidt
+//
+// ============================================================================
 
-#include <fstream.h>
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
-#include "auto_builtin_ptr.h"
+#include "ace/Auto_Ptr.h"
+#include <fstream.h>
 
 ACE_RCSID(UPIPE_SAP, ex2, "$Id$")
 
@@ -18,8 +30,8 @@ ACE_RCSID(UPIPE_SAP, ex2, "$Id$")
 static ACE_Thread_Manager thr_mgr;
 
 // Data for testsuite.
-int size = 0;
-int iterations = 0;
+static int size = 0;
+static int iterations = 0;
 
 static void *
 supplier (void *)
@@ -28,7 +40,7 @@ supplier (void *)
 
   ACE_UPIPE_Addr c_addr ("pattern");
 
-  auto_builtin_ptr <char> mybuf = new char[size];
+  ACE_Auto_Basic_Ptr <char> mybuf = new char[size];
 
   for (int i = 0; i < size; i++)
     mybuf[i] = 'a';
@@ -39,7 +51,7 @@ supplier (void *)
   ACE_UPIPE_Connector con;
 
   if (con.connect (s_stream, c_addr) == -1)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
 		"ACE_UPIPE_Acceptor.connect failed"));
 
@@ -56,7 +68,6 @@ supplier (void *)
                                          (ACE_Message_Block *) 0,
                                          mybuf),
                       0);
-
       if (s_stream.send (mb_p) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
@@ -114,7 +125,7 @@ consumer (void *)
               "(%t) consumer starting accept\n"));
 
   if (acc.accept (c_stream) == -1)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
 		"ACE_UPIPE_Acceptor.accept failed"));
 
@@ -155,25 +166,23 @@ main (int argc, char *argv[])
                        "%p\n",
                        "spawn"),
                       1);
-
   // Wait for producer and consumer threads to exit.
   thr_mgr.wait ();
   return 0;
 }
-
 #else
 int
 main (int, char *[])
 {
-  ACE_ERROR ( (LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "threads not supported on this platform\n"),
+                     0);
 }
 #endif /* ACE_HAS_THREADS */
 
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_builtin_ptr <char>;
+template class ACE_Auto_Basic_Ptr <char>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_builtin_ptr <char>
+#pragma instantiate ACE_Auto_Basic_Ptr <char>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
