@@ -68,15 +68,20 @@ protected:
 				  ACE_Reactor_Mask mask);
   // Register a set of <handlers>.
 
-  virtual int remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask);
+  virtual int remove_handler_i (ACE_HANDLE handle, 
+				ACE_Reactor_Mask mask);
   // Remove the <handler> associated with this <handle>.
 
-  virtual int wait_for_multiple_events (ACE_Reactor_Handle_Set &,
+  virtual int remove_handler_i (const ACE_Handle_Set &handles, 
+                                ACE_Reactor_Mask);
+  // Remove a set of <handles>.
+
+  virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
 					ACE_Time_Value *); 
   // Wait for events to occur.
 
   virtual int XtWaitForMultipleEvents (int, 
-				       ACE_Reactor_Handle_Set &,
+				       ACE_Select_Reactor_Handle_Set &,
 				       ACE_Time_Value *); 
 
   XtAppContext context_;

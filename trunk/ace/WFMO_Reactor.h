@@ -993,10 +993,11 @@ int WSAEnumNetworkEvents (SOCKET s,
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
 public:
-  virtual int handle_events (void) { return -1; }
+  virtual int handle_events (ACE_Time_Value * = 0)  { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
-  int notify (ACE_Event_Handler * = 0,
-	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK)
+  virtual int notify (ACE_Event_Handler * = 0, 
+		      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+		      ACE_Time_Value * = 0)  
   { return 0; }
 };
 
