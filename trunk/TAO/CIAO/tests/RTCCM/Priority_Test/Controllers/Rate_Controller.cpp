@@ -202,7 +202,7 @@ MyImpl::Rate_Controller_Home_i::~Rate_Controller_Home_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::Rate_Controller_Home_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::Rate_Controller_Home_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

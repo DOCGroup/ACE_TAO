@@ -1,5 +1,5 @@
 // $Id$
- 
+
 #include "RoundTrip_exec.h"
 #include "CIAO_common.h"
 
@@ -63,8 +63,9 @@ MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+MyImpl::RoundTrip_exec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -74,7 +75,7 @@ MyImpl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr ct
 
   this->context_ =
     Benchmark::CCM_RoundTrip_Context::_narrow (ctx
-                                             ACE_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
@@ -138,11 +139,11 @@ MyImpl::RoundTripHome_exec_i::~RoundTripHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  return new MyImpl::RoundTrip_exec_i ();
+  return new MyImpl::RoundTrip_exec_i;
 }
 
 
