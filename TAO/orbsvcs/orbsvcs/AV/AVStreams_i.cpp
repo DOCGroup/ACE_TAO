@@ -2500,7 +2500,6 @@ TAO_StreamEndPoint_A::connect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep */
                    AVStreams::notSupported))
 {
   ACE_THROW_RETURN (AVStreams::notSupported (),0);
-  return 0;
 }
 
 // Multicast not supported yet.
