@@ -20,7 +20,7 @@ TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_ex
 IDL_FILES = \
 	CosNamingC \
 	CosNamingS \
-	CosLifeCycleC \ 
+	CosLifeCycleC \
 	CosLifeCycleS \
 	CosConcurrencyControlC\
 	CosConcurrencyControlS\
