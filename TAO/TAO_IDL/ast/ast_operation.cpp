@@ -411,6 +411,15 @@ AST_Operation::fe_add_argument (AST_Argument *t)
       return 0;
     }
 
+  AST_Type *arg_type = t->field_type ();
+
+  // This error is not caught in y.tab.cpp so we check for it here.
+  if (arg_type->node_type () == AST_Decl::NT_array
+      && arg_type->anonymous () == I_TRUE)
+    {
+      idl_global->err ()->syntax_error (idl_global->parse_state ());
+    }
+
   // Add it to scope.
   this->add_to_scope (t);
 
