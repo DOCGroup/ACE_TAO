@@ -1,3 +1,12 @@
+Mon May  3 15:53:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/AST_Expression.h:
+	  Used #if defined (ACE_LACKS_LONGLONG_T) to conditionally
+	  define a longlong and unsigned longlong as a long and
+	  an unsigned long, respectively. This in only to make
+	  GreenHills/Solaris happy. Thanks to David Levine for
+	  reporting the problem.
+
 Mon May 03 15:26:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Object_Adapter.h: added "class" in friend
