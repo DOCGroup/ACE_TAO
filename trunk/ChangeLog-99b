@@ -1,3 +1,8 @@
+Thu Jul 08 12:35:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/test_config.h: Reorganized WinCE's macros and fix some
+	  minor unicode problems.
+
 Thu Jul  8 11:33:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Based_Pointer_Repository.cpp (unbind): Rearranged the
