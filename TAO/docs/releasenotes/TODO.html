@@ -1,4 +1,4 @@
-<HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HEAD>
    <TITLE>TAO TO-DO List</TITLE>
 </HEAD>
@@ -22,10 +22,53 @@
       Last Updated: $Date$ $Revision$
     </P>
 
-<HR><P>    
+    <HR>
+    <P>    
       <H3>Work in progress</H3>
+    </P>
 
     <OL>
+      <LI><P><B>EC:</B> Automate EC multicast group usage. This probably
+	requires some kind of server that mantains the relation
+	between event type/source and the mcast groups.
+	<BR>[STATUS] Carlos is working on this.
+	</P>
+      </LI>
+
+
+      <LI><P>Add compiled marshalling
+	  <BR>[STATUS] Andy is working on this.
+	</P>
+      </LI>
+
+      <LI><P>Implement the new DynAny types.
+	  <BR>[STATUS] Jeff is working on this.
+	</P>
+      </LI>
+      
+      <LI>Implement an Implementation Repository for TAO.
+	<BR>[STATUS] Darrell is working on this.
+      <P></LI>
+
+      <LI><P>Add an option to the IDL-compiler (e.g. -rp) meaning
+	"generate relative include paths".
+	<BR>[STATUS] Alex is working on this.
+	</P>
+      </LI>
+
+    </OL>
+
+    <HR>
+    <P>
+    <H3>Pending Tasks</H3>
+    </P>
+
+    <OL>
+      <LI><B>EC:</B> Improve configuration support in the EC, give an
+	example of a single threaded EC, support different dispatching
+	strategies, etc.
+      <P></LI>
+
       <LI>Support native C++ exceptions.
 	This entails the following subtasks:<P>
 	<OL>
@@ -115,33 +158,7 @@ class Foo {
 
 	</OL>
 	<BR>[STATUS] Carlos is working on this.<P>
-
-      <LI>Add compiled marshalling
-	<BR>[STATUS] Andy is working on this.
-      <P></LI>
-
-      <LI>Implement the new DynAny types.
-	<BR>[STATUS] Jeff is working on this.
-      <P></LI>
-      
-      <LI>Implement an Implementation Repository for TAO.
-	<BR>[STATUS] Darrell is working on this.
-      <P></LI>
-    </OL>
-
-<HR><P>
-<H3>Pending Tasks</H3>
-
-    <OL>
-      <LI><B>EC:</B> Automate EC multicast group usage. This probably
-	requires some kind of server that mantains the relation
-	between event type/source and the mcast groups.
-      <P></LI>
-
-      <LI><B>EC:</B> Improve configuration support in the EC, give an
-	example of a single threaded EC, support different dispatching
-	strategies, etc.
-      <P></LI>
+      </LI>
 
       <LI>Add support for multiple Profiles in the ORB (completing the
 	IIOP 1.0 support)
@@ -208,15 +225,6 @@ class Foo {
 	be created on creation of the first servant of that type.
       <P></LI>
       
-      <LI>Add an option to the IDL-compiler (e.g. -rp) meaning
-	"generate relative include paths".
-      <P></LI>
-
-      <LI>The IDL compiler should generate the code locally (not in
-	the directory where the .idl resides) or at least give an
-	option to do so
-      <P></LI>
-
       <LI>Support for unions with default cases (implicit or explicit)
 	in the IDL compiler is incomplete.
       <P></LI>
@@ -242,14 +250,15 @@ class Foo {
 	types.
       <P></LI>
 
-      <LI>Add the &lt&lt= and &gt&gt= operators for
-	<CODE>CORBA::TypeCode</CODE>
-      <P></LI>
-
       <LI>Several helper structs for <CODE>Any</CODE> have to be
 	added, mainly: <CODE>to_object</CODE>, <CODE>to_wchar</CODE>,
 	<CODE>to_wstring</CODE> and their <CODE>from_</CODE>
       <P></LI>
+
+      <LI><P>The IDL compiler could generate files with empty
+	  implementation classes, just to make the life of implementors
+	  a bit easier.</P>
+      </LI>
 
       <LI>Prepare the 1.0 release:<P>
 	<OL>
@@ -316,10 +325,72 @@ class Foo {
       <LI>Remove the uneeded methods from CORBA::Object
       <P></LI>
 
-      <LI>Study the CORBAlite spec and see how we could implement it
-	with TAO, considering dynamic and static configurations for
-	the full CORBA support
+      <LI>The IDL compiler could generate a static method to access
+	the interface repository ID of a class.
       <P></LI>
+
+      <LI>The IDL compiler should support
+	<CODE>#include "orb.idl"</CODE> properly.
+	IMHO it should not
+	add any <CODE>#include</CODE> to the generated code and the
+	<CODE>orb.idl</CODE> file should contain all the declarations,
+	except for the pseudo objects that are should be hardcoded
+	into the compiler.
+      <P></LI>
+
+      <LI>Cleanup memory managment in some of the servers, for
+	instance: Naming still believes that controlling the memory
+	for a stub will control the servants, this is not true
+	anymore.
+      <P></LI>
+
+      <LI>The current scheme for the orbsvcs leaves the user without
+	control over collocation of servants, we need to move to a scheme
+	similar to the one in $ACE_ROOT/netsvcs.
+	<BR>[STATUS] The user can control collocation, but we need a
+	dynamic way to do it (or an example) that exploits the Service
+	Configurator. We also may need to split the library.
+      <P></LI>
+
+      <LI><B>EC:</B> Use the Service_Configurator to dynamically load
+	the EC Module_Factory thus making it really configurable.
+      <P></LI>
+
+      <LI><B>EC:</B> Cleanup the IDL structures for subscriptions,
+	publications, etc. (in the EC).
+      <P></LI>
+
+      <LI>Resolve the Typecode::equal dilemma: is it structural or
+	type equivalence? Or a mixin?
+	<BR>[STATUS] The correct interpretation seems to be:
+	<UL>
+	  <LI>If the interface repository ID is not present and/or the
+	    optional field name is not present then TypeCode::equal
+	    should just test for structural equivalence.
+	  <P></LI>
+	  <LI>If the interface repository ID is present then type
+	    structural equivalence is not enough
+	  <P></LI>
+	  <LI>The spec (2.2 or 2.3?) will add a
+	    <CODE>equivalent</CODE> method to check for structural
+	    equivalence modulo aliases
+	  <P></LI>
+	</UL>
+      <P></LI>
+
+
+      <LI>The current scheme for Typecode (keeping a CDR buffer with
+	their representation) is broken; we should use classes for
+	each variant of a TypeCode; but initialization would be
+	complicated then.
+      <P></LI>
+
+      <LI><P>The ORB does not have an interface repository</P>
+      </LI>
+
+      <LI><P>Check how does the IDL compiler handles a union with an
+	  octet for a discriminator</P>
+      </LI>
 
       <LI><P>The CORBAlite RFP is very interesting IMHO we just need to
 	remove features from TAO to make it a CORBAlite
@@ -368,11 +439,12 @@ class Foo {
 	</PRE>
 
 	<P>We need to consider how to support even smaller profiles that
-	the CORBAlite RFP, like removing <any> or <fixed> support.
+	    the CORBAlite RFP, like removing <CODE>Any</CODE> or
+	    <CODE>fixed&lt&gt</CODE> support.
 	    We also need to come out with a scheme to support
 	    interpretive marshalling in the CORBAlite framework (where
 	    TypeCodes don't have enough methods as to traverse them).
-	      </P>
+	  </P>
       <P></LI>
 
       <LI>Consider decompositions of the ORB that would allow
@@ -406,54 +478,6 @@ class Foo {
 	decrease performance.
       <P></LI>
 
-      <LI>Cleanup memory managment in some of the servers, for
-	instance: Naming still believes that controlling the memory
-	for a stub will control the servants, this is not true
-	anymore.
-      <P></LI>
-
-      <LI>The current scheme for the orbsvcs leaves the user without
-	control collocation of servants, we need to move to a scheme
-	similar to the one in $ACE_ROOT/netsvcs.
-	<BR>[STATUS] The user can control collocation, but we need a
-	dynamic way to do it (or an example) that exploits the Service
-	Configurator. We also may need to split the library.
-      <P></LI>
-
-      <LI><B>EC:</B> Cleanup the IDL structures for subscriptions,
-	publications, etc. (in the EC).
-      <P></LI>
-
-      <LI>Resolve the Typecode::equal dilemma: is it structural or
-	type equivalence? Or a mixin?
-	<BR>[STATUS] The correct interpretation seems to be:
-	<UL>
-	  <LI>If the interface repository ID is not present and/or the
-	    optional field name is not present then TypeCode::equal
-	    should just test for structural equivalence.
-	  <P></LI>
-	  <LI>If the interface repository ID is present then type
-	    structural equivalence is not enough
-	  <P></LI>
-	  <LI>The spec (2.2 or 2.3?) will add a
-	    <CODE>equivalent</CODE> method to check for structural
-	    equivalence modulo aliases
-	  <P></LI>
-	</UL>
-      <P></LI>
-
-
-      <LI><B>EC:</B> Use the Service_Configurator to dynamically load
-	the EC Module_Factory thus making it really configurable.
-      <P></LI>
-
-      <LI>The current scheme for Typecode (keeping a CDR buffer with
-	their representation) is broken.
-      <P></LI>
-
-      <LI>We must support a IFR.
-      <P></LI>
-
       <LI>Server_Request objects in TAO are magical, the _duplicate()
 	method returns 0 and release() does nothing.
 	The problem starts because Server_Request is allocated from the
@@ -481,24 +505,24 @@ class Foo {
 	could be minimized or avoided.
       <P></LI>
       
-      <LI>The IDL compiler could generate a static method to access
-	the interface repository ID of a class.
-      <P></LI>
-
-      <LI>The IDL compiler should support
-	<CODE>#include "orb.idl"</CODE> properly.
-	IMHO it should not
-	add any <CODE>#include</CODE> to the generated code and the
-	<CODE>orb.idl</CODE> file should contain all the declarations,
-	except for the pseudo objects that are should be hardcoded
-	into the compiler.
-      <P></LI>
     </OL>
 
 <HR><P>
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Add the &lt&lt= and &gt&gt= operators for
+	  <CODE>CORBA::TypeCode</CODE>
+	  <BR>[DONE] Jeff added the operators</P>
+      </LI>
+
+      <LI>The IDL compiler should generate the code locally (not in
+	the directory where the .idl resides) or at least give an
+	option to do so
+	<BR>[DONE] Alex completed this, he even added an option to
+	select the output directory.
+      <P></LI>
+
       <LI>Are nested upcalls in different concurrency models, like
 	thread-per-connection working?
 	<BR>[STATUS] Irfan reports that this works correctly with
@@ -522,10 +546,12 @@ class Foo {
 	virtual inheritance adds the last ingredient to the poison.
 	<BR>[STATUS] A possible solution is to use a T_manager_var that
 	has two fields a Object_ptr and a T_ptr....
-	<BR>[DONE] The solution was to use TAO_Object_Field_T<T>, that
+	<BR>[DONE] The solution was to use
+	  <CODE>TAO_Object_Field_T&lt;T&gt;</CODE>, that
 	  behaves like the _var classes, but extends them to provide
-	  virtual methods to _upcast() and _downcast() to and from
-	  CORBA_Object_ptr.
+	  virtual methods to <CODE>_upcast()</CODE> and
+	  <CODE>_downcast()</CODE> to and from
+	  <CODE>CORBA_Object_ptr</CODE>.
 	  Similar methods were added to sequences of objects.
       <P></LI>
 
@@ -681,7 +707,8 @@ class Foo {
 	[DEPRECATED] The IIOP 1.1 Profiles can handle that.
       <P></LI>
 
-      <LI>Show an example of the sequence<octet> and CDR streams.
+      <LI>Show an example of the
+	  <CODE>sequence&lt;octet&gt;</CODE> and CDR streams.
 	  <BR>[DONE] But the example could also include the marshalling of
 	  plain C++ types.
 	  <BR>[DONE too]
