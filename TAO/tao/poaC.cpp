@@ -1659,7 +1659,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_bind (const 
   	return PortableServer::ServantLocator::_narrow (objref, env);
 }
 
-PortableServer::Servant PortableServer::ServantLocator::preinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, CORBA::Environment &env)
+PortableServer::Servant PortableServer::ServantLocator::preinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie & the_cookie, CORBA::Environment &env)
 {
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
   return 0;

@@ -783,7 +783,11 @@ public:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie,  CORBA::Environment &env) = 0; // pure virtual
+    virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid, 
+                                               PortableServer::POA_ptr adapter, 
+                                               const char *operation, 
+                                               PortableServer::ServantLocator::Cookie & the_cookie,  
+                                               CORBA::Environment &env) = 0; // pure virtual
     static void preinvoke_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant,  CORBA::Environment &env) = 0; // pure virtual
@@ -817,14 +821,14 @@ public:
     virtual PortableServer::Servant preinvoke (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr  adapter,
-        const PortableServer::Identifier operation,
+        const char * operation,
         PortableServer::ServantLocator::Cookie & the_cookie,
         CORBA::Environment &_tao_environment
       );
     virtual void postinvoke (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr  adapter,
-        const PortableServer::Identifier operation,
+        const char * operation,
         PortableServer::ServantLocator::Cookie the_cookie,
         PortableServer::Servant the_servant,
         CORBA::Environment &_tao_environment

@@ -1741,7 +1741,7 @@ class ServantLocator;
     static ServantLocator_ptr _nil (void);
     static ServantLocator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, CORBA::Environment &env);
+    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA::Environment &env);
     virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
