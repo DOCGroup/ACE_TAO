@@ -1,35 +1,42 @@
+Mon Jan 15 09:44:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/Makefile:
+          Fixed Makefile to link the ACE library, otherwise we get
+          undefined symbols under certain platforms (AIX).  Thanks to
+          Scott Bolin <scott.bolin@pgs.com> for pointing this out.
+
 Mon Jan 15 09:11:12 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-win32-common.h: Added support for ACE_HAS_LLSEEK, though
-	  this should probably be changed to be compiled only on some
- 	  Win32 platforms.
-  
-        * ace/OS.{h,i}: Added support for ACE_OS::llseek() on Win32.  Thanks
-	  to Nick Lin <nicklin@vantech.com.tw> for contributing this.
+        * ace/config-win32-common.h: Added support for ACE_HAS_LLSEEK, though
+          this should probably be changed to be compiled only on some
+          Win32 platforms.
 
-	* ace/Log_Priority.h: Clarified the fact that we only use 12 bits
-	  for ACE_Log_Priority.  Thus, the remaining bits are available
- 	  for application use.  Thanks to David Singer
- 	  <David_P_Singer@res.raytheon.com> for motivating this comment.
+        * ace/OS.{h,i}: Added support for ACE_OS::llseek() on Win32.  Thanks
+          to Nick Lin <nicklin@vantech.com.tw> for contributing this.
+
+        * ace/Log_Priority.h: Clarified the fact that we only use 12 bits
+          for ACE_Log_Priority.  Thus, the remaining bits are available
+          for application use.  Thanks to David Singer
+          <David_P_Singer@res.raytheon.com> for motivating this comment.
 
 Sun Jan 14 16:53:11 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Configuration.{h,cpp}: Fixed a memory leak that occurred
-	  with transient heaps.  Also added a list of current limitations
- 	  to import/export routine.  Thanks to Chris Hafey
- 	  <chafey@stentor.com> for contributing this stuff.
+        * ace/Configuration.{h,cpp}: Fixed a memory leak that occurred
+          with transient heaps.  Also added a list of current limitations
+          to import/export routine.  Thanks to Chris Hafey
+          <chafey@stentor.com> for contributing this stuff.
 
 Fri Jan 12 20:46:05 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
-	  Platform macros needed to run ACE on QNX RTP.
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Platform macros needed to run ACE on QNX RTP.
 
-	* ace/config-qnx-rtp.h:
-	  Configuration file needed to run ACE on QNX RTP.
+        * ace/config-qnx-rtp.h:
+          Configuration file needed to run ACE on QNX RTP.
 
-	* ACE-INSTALL.html:
-	  Added documentation on how to install ACE on QNX RTP,
-	  and the issue with the current version of QNX RTP.
+        * ACE-INSTALL.html:
+          Added documentation on how to install ACE on QNX RTP,
+          and the issue with the current version of QNX RTP.
 
 
 Fri Jan 12 14:59:15 2001  Carlos O'Ryan  <coryan@uci.edu>
