@@ -1,3 +1,7 @@
+Sat Jul 31 10:39:42 2004  Ossama  <ossama@dre.vanderbilt.edu>
+
+        * TAO version 1.4.2 released.
+
 Sat Jul 31 07:00:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
