@@ -48,6 +48,9 @@
 #include "../mpeg_shared/sendpt.h"
 #include "proto.h"
 
+
+// %% Move all these functions to the VIDEO_SINGLETON class and remove
+// zombie code like VideoServer ()...
 static int CmdRead(char *buf, int psize)
 {
   int res = wait_read_bytes (VIDEO_SINGLETON::instance ()->serviceSocket, 

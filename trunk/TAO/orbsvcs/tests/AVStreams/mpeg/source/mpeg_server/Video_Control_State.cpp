@@ -19,6 +19,7 @@ Video_Control_State::get_state (void)
 
 Video_Control_Waiting_State::Video_Control_Waiting_State (void)
 {
+  //%%
   this->state_ = VIDEO_WAITING;
 }
 
@@ -30,7 +31,7 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
   fprintf (stderr, "VS: waiting for a new command...\n");
     
   VIDEO_SINGLETON::instance ()->precmd = VIDEO_SINGLETON::instance ()->cmd;
-  result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
+  result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
   if (result != 0)
     {
       cerr << result;
@@ -44,25 +45,25 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
     {
     case CmdPOSITION:
     case CmdPOSITIONrelease:
-      result = Video_Server::position ();
+      result = VIDEO_SINGLETON::instance ()->position ();
       if (result != 0)
         return result;
       break;
     case CmdSTEP:
-      result = Video_Server::step_video ();
+      result = VIDEO_SINGLETON::instance ()->step_video ();
       if (result != 0)
         return result;
       break;
     case CmdFF:
-      Video_Server::init_fast_play ();
+      VIDEO_SINGLETON::instance ()->init_fast_play ();
       this->vch_->change_state (VIDEO_CONTROL_FAST_FORWARD_STATE::instance ());
       break;
     case CmdFB:
-      Video_Server::init_fast_play ();
+      VIDEO_SINGLETON::instance ()->init_fast_play ();
       this->vch_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
       break;
     case CmdPLAY:
-      Video_Server::init_play ();
+      VIDEO_SINGLETON::instance ()->init_play ();
       this->vch_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
       break;
     case CmdCLOSE:
@@ -70,10 +71,10 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
       ACE_Reactor::instance ()->end_event_loop ();
       break;
     case CmdSTATstream:
-      Video_Server::stat_stream ();
+      VIDEO_SINGLETON::instance ()->stat_stream ();
       break;
     case CmdSTATsent:
-      Video_Server::stat_sent ();
+      VIDEO_SINGLETON::instance ()->stat_sent ();
       break;
     default:
       ACE_DEBUG ((LM_DEBUG, 
@@ -98,7 +99,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
   fprintf (stderr,"Video_Control_Play_State::handle_input () \n");
 
   char tmp;
-  int result = Video_Server::CmdRead((char *)&tmp, 1);
+  int result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&tmp, 1);
   if (result != 0)
     return result;
   
@@ -108,7 +109,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
   }
   else if (tmp == CmdSTOP) {
     VIDEO_SINGLETON::instance ()->cmd = tmp;
-    result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
+    result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
     if (result != 0)
       return result;
 #ifdef NeedByteOrderConversion
@@ -119,7 +120,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
     //    VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
     // We need to call the read_cmd of the Video_Server to simulate
     // the control going to a switch..
-    //  Video_Server::read_cmd ();
+    //  VIDEO_SINGLETON::instance ()->read_cmd ();
 
     // Change the state of the video control handler to waiting state
     // to read further commands.
@@ -132,7 +133,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
       /*
         fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSPEED. . .\n");
       */
-      result = Video_Server::CmdRead((char *)&para, sizeof(para));
+      result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&para, sizeof(para));
       if (result != 0)
         return result;
 #ifdef NeedByteOrderConversion
@@ -168,7 +169,7 @@ Video_Control_Fast_Forward_State::Video_Control_Fast_Forward_State (void)
 int
 Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
 {
-  int result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
+  int result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
   if (result != 0)
     return result;
   if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
@@ -183,7 +184,7 @@ Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
     return 1;
     //	exit(1);
   }
-  result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
+  result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
   if (result != 0 )
     return result;
 #ifdef NeedByteOrderConversion
@@ -191,7 +192,7 @@ Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
 #endif
   Video_Timer_Global::StopTimer();
   //  VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
-  //  Video_Server::read_cmd ();
+  //  VIDEO_SINGLETON::instance ()->read_cmd ();
 
   //Change the video control handler's state to read further commands
   this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
@@ -206,7 +207,7 @@ Video_Control_Fast_Backward_State::Video_Control_Fast_Backward_State (void)
 int
 Video_Control_Fast_Backward_State::handle_input (ACE_HANDLE h)
 {
-  int result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
+  int result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
   if (result != 0)
     return result;
   if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
@@ -221,7 +222,7 @@ Video_Control_Fast_Backward_State::handle_input (ACE_HANDLE h)
     return 1;
     //	exit(1);
   }
-  result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
+  result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
   if (result != 0 )
     return result;
 #ifdef NeedByteOrderConversion
@@ -229,7 +230,7 @@ Video_Control_Fast_Backward_State::handle_input (ACE_HANDLE h)
 #endif
   Video_Timer_Global::StopTimer();
   //  VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
-  //  Video_Server::read_cmd ();
+  //  VIDEO_SINGLETON::instance ()->read_cmd ();
 
   //Change the video control handler's state to read further commands
   this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
