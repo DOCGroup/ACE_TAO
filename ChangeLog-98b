@@ -1,3 +1,14 @@
+Wed Jun 24 13:55:15 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/Message_Queue.{cpp,h,i}
+          ace/Message_Block.{cpp,h,i}: Fixed ACE_UNIMPLEMENTED_FUNC
+	  declarations in ACE_Dynamic_Message_Queue, moved the
+	  ACE_Dynamic_Message_Strategy, ACE_Laxity_Message_Strategy,
+	  and ACE_Deadline_Message_Strategy classes from the 
+	  Message_Queue.* files into the respective Message_Block.*
+	  files (fixes link errors on platforms such as NT which
+	  require template source).
+
 Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Message_Block.{cpp,h,i}: Added worst case execution time and

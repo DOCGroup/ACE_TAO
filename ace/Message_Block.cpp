@@ -741,6 +741,231 @@ ACE_Message_Block::operator= (const ACE_Message_Block &)
   return *this;
 }
 
+
+////////////////////////////////////////
+// class ACE_Dynamic_Message_Strategy //
+////////////////////////////////////////
+
+ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
+                                                            u_long static_bit_field_shift,
+                                                            u_long pending_threshold,
+                                                            u_long dynamic_priority_max,
+                                                            u_long dynamic_priority_offset)
+  : static_bit_field_mask_ (static_bit_field_mask)
+  , static_bit_field_shift_ (static_bit_field_shift)
+  , pending_threshold_ (pending_threshold)
+  , dynamic_priority_max_ (dynamic_priority_max)
+  , dynamic_priority_offset_ (dynamic_priority_offset)
+{
+}
+// ctor
+  
+ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy ()
+{
+}
+// dtor
+
+///////////////////////////////////////
+// class ACE_Deadline_Message_Strategy //
+///////////////////////////////////////
+
+ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (u_long static_bit_field_mask,
+                                                               u_long static_bit_field_shift,
+                                                               u_long pending_threshold,
+                                                               u_long dynamic_priority_max,
+                                                               u_long dynamic_priority_offset)
+  : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
+                                  static_bit_field_shift,
+                                  pending_threshold,
+                                  dynamic_priority_max,
+                                  dynamic_priority_offset)
+{
+}
+// ctor
+  
+ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy ()
+{
+}
+// dtor
+
+int 
+ACE_Deadline_Message_Strategy::update_priority (ACE_Message_Block & mb, 
+                                                 const ACE_Time_Value & tv)
+{
+  // The general formula for this deadline based dynamic priority
+  // function is to just subtract the current time and the execution 
+  // time from the from the message deadline to get the time to deadline,
+  // then subtract the time to deadline from a constant C that depends on
+  // whether the time to deadline is negative (C is zero) or non-negative 
+  // (C is the maximum allowed priority).  But, to save operations for
+  // performance we use an optimized (albeit confusing: our apologies ;-) 
+  // formula for the dynamic priority calculation.
+ 
+  // first, compute the *negative* (additive inverse) of the time to deadline
+  ACE_Time_Value priority (tv);
+  priority -= mb.msg_deadline_time ();
+
+  if (priority >= ACE_Time_Value::zero)
+  {
+    // if negative time to deadline is positive then the message is late:
+    // need to make sure the priority stays below the threshold
+    // between pending and late priority values
+    ACE_Time_Value 
+      max_late (0, dynamic_priority_offset_ - 1);
+
+    if (priority > max_late)
+    {
+      priority = max_late;
+    }
+  }
+  else
+  {
+    // if negative time to deadline is negative then the message is pending:
+    // so, we need to shift priority upward by adding the maximum priority 
+    // value and then make sure the value stays above the threshold between
+    // pending and late message priorities.
+    priority += 
+      ACE_Time_Value (0, dynamic_priority_max_);
+
+    ACE_Time_Value 
+      min_pending (0, dynamic_priority_offset_);
+
+    if (priority < min_pending)
+    {
+      priority = min_pending;
+    }
+  }
+ 
+  // use (fast) bitwise operators to isolate and replace
+  // the dynamic portion of the message's priority
+  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) | 
+                  ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) <<
+                   static_bit_field_shift_));
+
+  return 0;
+}
+  // priority evaluation function based on time to deadline
+
+int
+ACE_Deadline_Message_Strategy::is_beyond_late (const ACE_Message_Block & mb, 
+                                               const ACE_Time_Value & tv)
+{
+  // first, compute the *negative* time to deadline
+  ACE_Time_Value priority (tv);
+  priority -= mb.msg_deadline_time ();
+
+  // construct a time value with the maximum late value that
+  // can be represented in the dynamic priority range
+  ACE_Time_Value max_late (0, dynamic_priority_offset_ - 1);
+
+  // if negative time to deadline is greater than the maximum value
+  // that can be represented, it is identified as being beyond late
+  return (priority > max_late) ? 1 : 0;
+}
+  // returns true if the message is later than can can be represented  
+
+///////////////////////////////////////
+// class ACE_Laxity_Message_Strategy //
+///////////////////////////////////////
+
+ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (u_long static_bit_field_mask,
+                                                          u_long static_bit_field_shift,
+                                                          u_long pending_threshold,
+                                                          u_long dynamic_priority_max,
+                                                          u_long dynamic_priority_offset)
+  : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
+                                  static_bit_field_shift,
+                                  pending_threshold,
+                                  dynamic_priority_max,
+                                  dynamic_priority_offset)
+{
+}
+// ctor
+  
+ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy ()
+{
+}
+// dtor
+
+
+int 
+ACE_Laxity_Message_Strategy::update_priority (ACE_Message_Block & mb, 
+                                              const ACE_Time_Value & tv)
+{
+  // The general formula for this laxity based dynamic priority
+  // function is to just subtract the current time and the execution 
+  // time from the from the message deadline to get the laxity,
+  // then subtract the laxity from a constant C that depends on whether
+  // the laxity is negative (C is zero) or non-negative (C is the maximum
+  // allowed priority).  But, to save operations for performance we use
+  // an optimized (albeit confusing: our apologies ;-) formula
+  // for the dynamic priority calculation.
+ 
+  // first, compute the *negative* laxity
+  ACE_Time_Value priority (tv);
+  priority += mb.msg_execution_time ();
+  priority -= mb.msg_deadline_time ();
+
+  if (priority >= ACE_Time_Value::zero)
+  {
+    // if negative laxity is positive then the message is late:
+    // need to make sure the priority stays below the threshold
+    // between pending and late priority values
+    ACE_Time_Value 
+      max_late (0, dynamic_priority_offset_ - 1);
+
+    if (priority > max_late)
+    {
+      priority = max_late;
+    }
+  }
+  else
+  {
+    // if negative laxity is negative then the message is pending: so, we
+    // need to shift priority upward by adding the maximum priority value
+    // and then make sure the value stays above the threshold between
+    // pending and late message priorities.
+    priority += 
+      ACE_Time_Value (0, dynamic_priority_max_);
+
+    ACE_Time_Value 
+      min_pending (0, dynamic_priority_offset_);
+
+    if (priority < min_pending)
+    {
+      priority = min_pending;
+    }
+  }
+
+  // use (fast) bitwise operators to isolate and replace
+  // the dynamic portion of the message's priority
+  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) | 
+                  ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) << 
+                   static_bit_field_shift_));
+
+  return 0;
+}
+  // priority evaluation function based on laxity
+
+int
+ACE_Laxity_Message_Strategy::is_beyond_late (const ACE_Message_Block & mb, 
+                                             const ACE_Time_Value & tv)
+{
+  // first, compute the *negative* laxity
+  ACE_Time_Value priority (tv);
+  priority += mb.msg_execution_time ();
+  priority -= mb.msg_deadline_time ();
+
+  // construct a time value with the maximum late value that
+  // can be represented in the dynamic priority range
+  ACE_Time_Value max_late (0, dynamic_priority_offset_ - 1);
+
+  // if negative laxity is greater than the maximum value that
+  // can be represented, it is identified as being beyond late
+  return (priority > max_late) ? 1 : 0;
+}
+  // returns true if the message is later than can can be represented  
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These specializations aren't needed for the ACE library because
 // Service_Config.cpp has them:
@@ -756,4 +981,5 @@ template class ACE_Guard<ACE_Lock>;
 // #pragma instantiate ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #pragma instantiate ACE_Guard<ACE_Lock>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
