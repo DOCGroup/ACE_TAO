@@ -1,4 +1,61 @@
+Mon Sep 27 21:01:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
+	  Implemented bounded string sequences.  Pretty easy to do
+	  considering all the previous refactoring.
+
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/Bounded_String.cpp:
+	  Add smoke test for bounded string sequences.
+
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+	  New unit test for bounded string sequences.
+
+	* tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+	  Extend the smoke test for unbounded string sequences to test
+	  more functionality.
+
+	* tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Refactored some of the tests into a common class used by bounded
+	  and unbounded string sequences.
+
+	* tests/Sequence_Unit_Tests/range_checking.hpp:
+	  Add new operation to check when bounded sequences are extended
+	  beyond their maximum.  The spec only calls that "undefined
+	  behavior" so we let the application decide what to do.  The
+	  class name is all wrong now, needs to be changed.
+
+	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
+	  Correctly implement default_buffer_allocation() for
+	  reference_allocation_traits. 
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+	  Call range_checking::check_length() before changing the length
+	  of a bounded sequence.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	  Make sure that growing a bounded sequence beyond its maximum
+	  raises an exception.  This is not hard-coded behavior, it is
+	  implemented by the testing_range_checking specialization.
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+	  Reimplement the testing-mode allocation traits for sequences of
+	  references (strings at this point.)
+
+	* tests/Sequence_Unit_Tests/testing_range_checking.hpp:
+	  Raise an exception if the length is incremented beyond the
+	  maximum for bounded sequences.
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  Define all traits using value_type.
+
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  Add new tests to the script.
+
 Mon Sep 27 15:15:11 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
         * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
         * orbsvcs/orbsvcs/IOR_Multicast.h:
           Changed tao/corba.h include to tao/ORB.h

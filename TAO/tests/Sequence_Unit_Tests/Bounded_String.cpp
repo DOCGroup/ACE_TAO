@@ -1,23 +1,24 @@
 /**
  * @file
  *
- * @brief Smoke test (basically just compile) the unbounded sequences
+ * @brief Smoke test (basically just compile) the bounded sequences
  *        for strings.
  *
  * $Id$
  *
  * @author Carlos O'Ryan
  */
-#include "unbounded_string_sequence.hpp"
+#include "bounded_string_sequence.hpp"
 
-typedef TAO::unbounded_string_sequence s_sequence;
+CORBA::ULong const MAXIMUM = 42;
+typedef TAO::bounded_string_sequence<MAXIMUM> s_sequence;
 
 int main(int,char*[])
 {
   s_sequence a;
-  s_sequence b(23);
+  s_sequence b(a);
 
-  s_sequence c(32, 0, s_sequence::allocbuf(32));
+  s_sequence c(0, s_sequence::allocbuf());
   a = b;
 
   a.length(c.maximum());
@@ -31,7 +32,7 @@ int main(int,char*[])
   s_sequence const & d = a;
   c[0] = d[0];
 
-  b.replace(64, 0, s_sequence::allocbuf(64));
+  b.replace(0, s_sequence::allocbuf());
 
   char const * const * x = d.get_buffer();
   if (x != 0)
@@ -42,7 +43,7 @@ int main(int,char*[])
 
   if (d.length())
   {
-    s_sequence::freebuf(s_sequence::allocbuf(64));
+    s_sequence::freebuf(s_sequence::allocbuf());
   }
 
   s_sequence e(c);
