@@ -76,7 +76,7 @@ extern "C"
 
 #if !defined (S_IFLNK)
 #define S_IFLNK S_IFREG
-#end /* S_IFLNK */
+#endif /* S_IFLNK */
 
 #endif /* ACE_LACKS_MODE_MASKS */
 
