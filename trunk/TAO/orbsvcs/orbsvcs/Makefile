@@ -1,3 +1,4 @@
+
 #----------------------------------------------------------------------------
 #
 # $Id$
@@ -95,7 +96,7 @@ ifneq (,$(findstring  Time, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosTime
 endif
 ifneq (,$(findstring  LoadBalancing, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.LoadBalancing
+  MKLIST += Makefile.CosNaming Makefile.PortableGroup Makefile.LoadBalancing
 endif
 ifneq (,$(findstring  Concurrency, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosConcurrency
@@ -183,7 +184,7 @@ ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
   MKLIST += Makefile.FTORB Makefile.FaultTolerance
 endif
 ifneq (,$(findstring  PortableGroup, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.PortableGroup
+  MKLIST += Makefile.CosNaming Makefile.PortableGroup
 endif
 ifneq (,$(findstring  IFRService, $(TAO_ORBSVCS)))
   MKLIST += Makefile.IFRService

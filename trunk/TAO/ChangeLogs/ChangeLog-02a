@@ -1,3 +1,16 @@
+Wed Jun  5 10:59:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile (MKLIST):
+
+	  The new Load Balancing service depends on the PortableGroup
+	  library.
+
+	  The PortableGroup library depends on the CosNaming library.
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup (FILES):
+
+	  Added new PortableGroup files to the list files to build.
+
 Wed Jun 05 10:46:04 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
