@@ -119,6 +119,10 @@ option
 	{
              source type(cpp) "Notify_Performance_Test.cpp"
 	}
+        target "Object_Manager_Test.exe"
+	{
+             source type(cpp) "Object_Manager_Test.cpp"
+	}
         target "OrdMultiSet_Test.exe"
 	{
              source type(cpp) "OrdMultiSet_Test.cpp"

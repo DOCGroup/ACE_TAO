@@ -44,13 +44,14 @@ BIN =   Aio_Platform_Test \
         Message_Queue_Notifications_Test \
         New_Fail_Test \
         Notify_Performance_Test \
+        Object_Manager_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
         Priority_Buffer_Test \
         Dynamic_Priority_Test \
         Priority_Task_Test \
         Priority_Reactor_Test \
-	Process_Manager_Test \
+        Process_Manager_Test \
         Pipe_Test \
         RB_Tree_Test \
         Reactors_Test \

@@ -154,26 +154,6 @@ ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations (void)
 {
 }
 
-class ACE_Cleanup_Info_Node
-{
-  // = TITLE
-  //     For maintaining a list of ACE_Cleanup_Info items.
-  //
-  // = DESCRIPTION
-  //     For internal use by ACE_Object_Manager.
-public:
-  ACE_Cleanup_Info_Node (void);
-  ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
-                         ACE_Cleanup_Info_Node *next);
-  ~ACE_Cleanup_Info_Node (void);
-  ACE_Cleanup_Info_Node *insert (const ACE_Cleanup_Info &);
-private:
-  ACE_Cleanup_Info cleanup_info_;
-  ACE_Cleanup_Info_Node *next_;
-
-  friend class ACE_Object_Manager;
-};
-
 int
 ACE_Object_Manager::starting_up (void)
 {
@@ -240,13 +220,6 @@ ACE_Object_Manager::init (void)
 #     endif /* ACE_MT_SAFE */
         }
 
-      // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It
-      // shouldn't matter, but just in case
-      // ACE_Static_Object_Lock::instance () gets changed . . .
-      ACE_NEW_RETURN (registered_objects_,
-                      ACE_Cleanup_Info_Node,
-                      -1);
-
       if (this == instance_)
         {
           // Hooks for preallocated objects and arrays provided by application.
@@ -282,7 +255,7 @@ ACE_Object_Manager::init (void)
 ACE_Object_Manager::ACE_Object_Manager (void)
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
-  : registered_objects_ (0)
+  : exit_info_ ()
   , preallocations_ (0)
   , default_mask_ (0)
   , ace_service_config_sig_handler_ (0)
@@ -358,28 +331,14 @@ ACE_Object_Manager::at_exit_i (void *object,
       return -1;
     }
 
-  // Check for already in queue, and return 1 if so.
-  for (ACE_Cleanup_Info_Node *iter = registered_objects_;
-       iter  &&  iter->next_ != 0;
-       iter = iter->next_)
+  if (exit_info_.find (object))
     {
-      if (iter->cleanup_info_.object_ == object)
-        {
-          // The object has already been registered.
-          errno = EEXIST;
-          return -1;
-        }
+      // The object has already been registered.
+      errno = EEXIST;
+      return -1;
     }
 
-  ACE_Cleanup_Info new_info;
-  new_info.object_ = object;
-  new_info.cleanup_hook_ = cleanup_hook;
-  new_info.param_ = param;
-
-  // Return -1 and sets errno if unable to allocate storage.  Enqueue
-  // at the head and dequeue from the head to get LIFO ordering.
-  registered_objects_ = registered_objects_->insert (new_info);
-  return registered_objects_ == 0  ?  -1  :  0;
+  return exit_info_.at_exit_i (object, cleanup_hook, param);
 }
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -626,17 +585,7 @@ ACE_Object_Manager::fini (void)
 
   // Call all registered cleanup hooks, in reverse order of
   // registration.
-  for (ACE_Cleanup_Info_Node *iter = registered_objects_;
-       iter  &&  iter->next_ != 0;
-       iter = iter->next_)
-    {
-      ACE_Cleanup_Info &info = iter->cleanup_info_;
-      if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
-        // The object is an ACE_Cleanup.
-        ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
-      else
-        (*info.cleanup_hook_) (info.object_, info.param_);
-    }
+  exit_info_.call_hooks ();
 
   if (this == instance_)
     {
@@ -711,9 +660,6 @@ ACE_Object_Manager::fini (void)
   delete ace_service_config_sig_handler_;
   ace_service_config_sig_handler_ = 0;
 
-  delete registered_objects_;
-  registered_objects_ = 0;
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   delete internal_lock_;
   internal_lock_ = 0;
@@ -741,37 +687,6 @@ ACE_Object_Manager::fini (void)
     instance_ = 0;
 
   return 0;
-}
-
-
-ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void)
-  : cleanup_info_ (),
-    next_ (0)
-{
-}
-
-ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
-                                              ACE_Cleanup_Info_Node *next)
-  : cleanup_info_ (new_info),
-    next_ (next)
-{
-}
-
-ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
-{
-  delete next_;
-}
-
-ACE_Cleanup_Info_Node *
-ACE_Cleanup_Info_Node::insert (const ACE_Cleanup_Info &new_info)
-{
-  ACE_Cleanup_Info_Node *new_node;
-
-  ACE_NEW_RETURN (new_node,
-                  ACE_Cleanup_Info_Node (new_info, this),
-                  0);
-
-  return new_node;
 }
 
 

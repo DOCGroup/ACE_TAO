@@ -294,10 +294,8 @@ public:
   // Accesses a default signal set used in ACE_Sig_Guard methods.
 
 private:
-  ACE_Cleanup_Info_Node *registered_objects_;
-  // Keeps track of all registered objects.  The last node is only
-  // used to terminate the list (it doesn't contain a valid
-  // ACE_Cleanup_Info).
+  ACE_OS_Exit_Info exit_info_;
+  // For at_exit support.
 
   ACE_Object_Manager_Preallocations *preallocations_;
   // Preallocated objects collection.

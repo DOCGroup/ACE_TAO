@@ -60,6 +60,10 @@ ld < Atomic_Op_Test
 write 2, "Atomic_Op_Test ", 15
 ace_main; unld "Atomic_Op_Test"
 
+ld < Object_Manager_Test
+write 2, "Object_Manager_Test ", 20
+ace_main; unld "Object_Manager_Test"
+
 ld < Semaphore_Test
 write 2, "Semaphore_Test ", 15
 ace_main; unld "Semaphore_Test"
