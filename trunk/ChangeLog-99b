@@ -1,7 +1,13 @@
+Mon Oct 18 13:30:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Removed a whole bunch of extra blank in ACE_DES_*FREE*
+	  macro definitions.  Thanks to JM Strauss
+	  <jms97@club-internet.fr> for pointing this out.
+
 Sun Oct 17 19:08:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/QtReactor.cpp: Fixed a bug in remove_handle_i () method. I
-	  found this when I was testing the test for the QtReactor. 
+	  found this when I was testing the test for the QtReactor.
 
 Sun Oct 17 11:00:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -35,7 +41,7 @@ Sat Oct 16 17:10:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/OS.cpp: Removed the '&' in front of thread_args to make
 	  CodeWarrior happier.  Thanks to David Delano <delanod@agcs.com>
  	  for reporting this.
-	
+
 	* ace/OS.cpp: Removed the table_() "initialization" for
 	  ACE_TSS_Cleanup since this breaks the CodeWarrior C++ compiler.
   	  Thanks to David Delano <delanod@agcs.com> for reporting this.
