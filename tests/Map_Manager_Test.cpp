@@ -27,6 +27,11 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 typedef ACE_Null_Mutex MUTEX;
 typedef size_t TYPE;
 

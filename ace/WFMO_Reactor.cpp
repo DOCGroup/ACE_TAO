@@ -93,13 +93,12 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
   size_t original_handle_count = this->handles_to_be_deleted_;
+  int result = 0;
+  size_t i;
 
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
   // appear multiple times. All handles are checked.
-
-  int result = 0;
-  size_t i;
 
   // First check the current entries
   for (i = 0; i < this->max_handlep1_ && error == 0; i++)
@@ -302,7 +301,6 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
   size_t original_handle_count = this->handles_to_be_suspended_;
-  int result = 0;
   size_t i = 0;
 
   // Go through all the handles looking for <handle>.  Even if we find
@@ -356,7 +354,6 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
   // appear multiple times. All handles are checked.
-  int result = 0;
   size_t i = 0;
 
   for (i = 0; i < this->suspended_handles_; i++)

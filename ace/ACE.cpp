@@ -2517,7 +2517,6 @@ ACE::get_ip_interfaces (size_t &count,
   const TCHAR *BIND_NAME_ID =  __TEXT ("Bind");
   const TCHAR *IPADDR_NAME_ID = __TEXT ("IPAddress");
   const TCHAR *INVALID_TCPIP_DEVICE_ADDR = __TEXT ("0.0.0.0");
-  const int MAX_STRING_SZ = 4096;
 
   TCHAR raw_buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
   DWORD raw_buflen = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;

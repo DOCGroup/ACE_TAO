@@ -27,6 +27,11 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;

@@ -25,6 +25,11 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 const int SHMSZ = 27;
 static TCHAR shm_key[] = ACE_TEMP_FILE_NAME __TEXT ("XXXXXX");
 

@@ -360,20 +360,22 @@
 
 // First, we define how to properly export/import objects.
 #if defined (ACE_WIN32)         // Only Win32 needs special treatment.
-# if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
+# if defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+/*  Microsoft, Borland C++ Builder: */
+#   define ACE_Proper_Export_Flag __declspec (dllexport)
+#   define ACE_Proper_Import_Flag __declspec (dllimport)
+#   define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
+#   define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
+#   define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
+# else /* defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+/* Non-Microsoft, other versions of Borland: */
 #   define ACE_Proper_Export_Flag _export
 #   define ACE_Proper_Import_Flag _import
 //   @@ Don't know how to handle this when using Borland's compilers.
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T)
 #   define ACE_IMPORT_SINGLETON_DECLARATION(T)
 #   define ACE_PROPER_SINGLETON_INSTANTIATION(T)
-# else /* Microsoft: */
-#   define ACE_Proper_Export_Flag __declspec (dllexport)
-#   define ACE_Proper_Import_Flag __declspec (dllimport)
-#   define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
-#   define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
-#   define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
-# endif /* !_MSC_VER */
+# endif /* defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
 #else  /* ! ACE_WIN32 */
 # define ACE_Proper_Export_Flag
 # define ACE_Proper_Import_Flag

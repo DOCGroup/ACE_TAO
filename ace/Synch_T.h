@@ -500,8 +500,9 @@ public:
 #define ACE_TSS_Write_GUARD ACE_Write_Guard
 #define ACE_TSS_Read_GUARD ACE_Read_Guard
 
-#else /* ACE platform supports some form of threading and */
-      // thread-specific storage.
+#else
+ /* ACE platform supports some form of threading and
+  thread-specific storage. */
 
 template <class ACE_LOCK>
 class ACE_TSS_Guard

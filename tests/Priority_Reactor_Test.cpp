@@ -36,6 +36,11 @@
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 // The number of children to run, it can be changed using the -c
 // option.
 static int opt_nchildren = 10;

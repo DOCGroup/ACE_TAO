@@ -23,6 +23,11 @@
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static void
 test_duplicates (size_t count)
 {

@@ -23,6 +23,11 @@
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];

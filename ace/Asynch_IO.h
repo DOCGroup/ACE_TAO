@@ -35,7 +35,7 @@ class ACE_Handler;
 class ACE_Message_Block;
 class ACE_INET_Addr;
 
-class ACE_Export ACE_Asynch_Result : protected OVERLAPPED
+class ACE_Export ACE_Asynch_Result : public OVERLAPPED
 {
   // = TITLE
   //     An abstract class which adds information to the OVERLAPPED

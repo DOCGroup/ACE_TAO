@@ -89,10 +89,10 @@ typedef unsigned __int64 ACE_UINT64;
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
 
-#if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 // Platform supports the rusage struct.
 #define ACE_HAS_GETRUSAGE
-#endif /* ! ACE_HAS_WINCE */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
@@ -113,6 +113,7 @@ typedef unsigned __int64 ACE_UINT64;
 //define ACE_HAS_SYS_SIGLIST
 
 #define ACE_WIN32
+
 #if defined (__BORLANDC__)
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_HAS_BROKEN_SAP_ANY
@@ -352,11 +353,11 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* !defined (_INC_WINDOWS) */
 
 // Always use WS2 when available
-#if (ACE_HAS_WINNT4 != 0)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
         #if !defined(ACE_HAS_WINSOCK2)
                 #define ACE_HAS_WINSOCK2 1
-        #endif
-#endif
+        #endif /* !defined(ACE_HAS_WINSOCK2) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
         #if !defined (_WINSOCK2API_)
@@ -387,7 +388,7 @@ typedef unsigned __int64 ACE_UINT64;
         #pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 #endif /* _MSC_VER */
 
-#if (_WIN32_WINNT >= 0x0400) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
         #define ACE_HAS_INTERLOCKED_EXCHANGEADD
         #define ACE_HAS_WIN32_TRYLOCK
         #define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
@@ -395,6 +396,36 @@ typedef unsigned __int64 ACE_UINT64;
         // If CancelIO is undefined get the updated sp2-sdk
         // from MS
         #define ACE_HAS_CANCEL_IO
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION) */
+
+/* Borland C++ Builder definitions. */
+#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+
+#ifdef ACE_HAS_STANDARD_CPP_LIBRARY
+#undef ACE_HAS_STANDARD_CPP_LIBRARY
 #endif
+#define ACE_HAS_STANDARD_CPP_LIBRARY 1
+
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+#undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+#endif
+#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+
+#ifdef ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER
+#undef ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER
+#endif
+#define ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER 1
+
+#ifdef ACE_HAS_USING_KEYWORD
+#undef ACE_HAS_USING_KEYWORD
+#endif
+#define ACE_HAS_USING_KEYWORD 1
+
+#ifdef ACE_SIZEOF_LONG_DOUBLE
+#undef ACE_SIZEOF_LONG_DOUBLE
+#endif
+#define ACE_SIZEOF_LONG_DOUBLE 10
+
+#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
 
 #endif /* ACE_WIN32_COMMON_H */

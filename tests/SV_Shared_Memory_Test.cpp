@@ -20,6 +20,11 @@
 #include "test_config.h"
 #include "ace/Malloc.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_SYSV_IPC)
 
 // Shared memory allocator (note that this chews up the
