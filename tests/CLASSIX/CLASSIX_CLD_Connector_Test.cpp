@@ -26,18 +26,19 @@
 //     
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/OS.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/Svc_Handler.h"
 
-#include "CLASSIX/Reactor.h"
-#include "CLASSIX/Stream.h"
-#include "CLASSIX/Dgram_Mcast.h"
-#include "CLASSIX/Group_Stamp.h"
-#include "CLASSIX/CLD_Connector.h"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.h"
+#include "ace/CLASSIX/CLASSIX_Stream.h"
+#include "ace/CLASSIX/CLASSIX_Dgram_Mcast.h"
+#include "ace/CLASSIX/CLASSIX_Group_Stamp.h"
+#include "ace/CLASSIX/CLASSIX_CLD_Connector.h"
+
+#include "CLASSIX_test_config.h"
 
 #define MAX_TEST_CLIENTS 30
 #define TEST_STAMP 300
@@ -133,7 +134,7 @@ server_handler::handle_input(ACE_HANDLE)
     // Get input as fast as it can to free the reactor to handle other work.
     size_t n = 0;
     if (ACE_Reactor::instance()->
-	get_current_info(this->get_handle(),n) == -1)
+	current_info(this->get_handle(),n) == -1)
 	ACE_ERROR_RETURN((LM_ERROR, "???(%t) failed to get input size\n"), -1);
 
     ACE_Message_Block *msg;

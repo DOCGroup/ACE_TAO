@@ -17,10 +17,11 @@
 // 
 // ============================================================================
 
-#include "tests/test_config.h"
-#include "CLASSIX/Addr.h"
-#include "CLASSIX/SAP.h"
-#include "CLASSIX/Port_Default.h"
+#include "ace/CLASSIX/CLASSIX_Addr.h"
+#include "ace/CLASSIX/CLASSIX_SAP.h"
+#include "ace/CLASSIX/CLASSIX_Port_Default.h"
+
+#include "CLASSIX_test_config.h"
 
 class testSap : public ACE_CLASSIX_SAP
 {
@@ -28,7 +29,7 @@ public:
     testSap(): ACE_CLASSIX_SAP() {}
     testSap(const ACE_Addr& theAddr) : ACE_CLASSIX_SAP(theAddr) {}
 
-    ~testSap() {ACE_DEBUG((LM_DEBUG, "~testSap()\n"));}
+    ~testSap() {}
 };
 
 int

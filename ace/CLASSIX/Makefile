@@ -8,20 +8,21 @@ MAKEFILE = Makefile
 LIB      = libCLASSIX.a
 
 FILES    = \
-        CLASSIX_OS            \
-        CLASSIX_Addr          \
-        CLASSIX_Port_Core     \
-        CLASSIX_Port          \
-        CLASSIX_Port_Default  \
-        CLASSIX_Group         \
-        CLASSIX_Group_Stamp   \
-        CLASSIX_Group_Dynamic \
-        CLASSIX_SAP           \
-        CLASSIX_Peer_SAP      \
-        CLASSIX_Stream        \
-        CLASSIX_Dgram_Mcast   \
-        CLASSIX_CO_Acceptor   \
-        CLASSIX_CO_Connector  \
+        CLASSIX_OS            	\
+        CLASSIX_Select_Reactor	\
+        CLASSIX_Addr          	\
+        CLASSIX_Port_Core     	\
+        CLASSIX_Port          	\
+        CLASSIX_Port_Default  	\
+        CLASSIX_Group         	\
+        CLASSIX_Group_Stamp   	\
+        CLASSIX_Group_Dynamic 	\
+        CLASSIX_SAP           	\
+        CLASSIX_Peer_SAP      	\
+        CLASSIX_Stream        	\
+        CLASSIX_Dgram_Mcast   	\
+        CLASSIX_CO_Acceptor   	\
+        CLASSIX_CO_Connector  	\
         CLASSIX_CLD_Connector
 
 

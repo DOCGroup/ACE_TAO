@@ -13,13 +13,13 @@
 // 
 // ============================================================================
 */
-#include "CLASSIX/Reactor.h"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "CLASSIX/Reactor.i"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "CLASSIX/OS.h"
+#include "ace/CLASSIX/CLASSIX_OS.h"
 /* ------------------------------------------------------------------------- */
 int
 ACE_CLASSIX_Select_Reactor::wait_for_multiple_events 
@@ -113,7 +113,7 @@ ACE_CLASSIX_Select_Reactor::set_current_info_(ACE_HANDLE thePort,
 }
 
 int 
-ACE_CLASSIX_Select_Reactor::get_current_info(ACE_HANDLE thePort, 
+ACE_CLASSIX_Select_Reactor::current_info(ACE_HANDLE thePort, 
 					     size_t& theSize)
 {
     ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, 
@@ -165,7 +165,7 @@ ACE_CLASSIX_Select_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_CLASSIX_Select_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("CLASSIX_select_reactor_ = %x"), 
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_CLASSIX_select_reactor_ = %x"), 
 	      this->select_reactor_));
   this->notification_sap_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -173,12 +173,13 @@ ACE_CLASSIX_Select_Reactor_Notify::dump (void) const
 
 int
 ACE_CLASSIX_Select_Reactor_Notify::open (ACE_Reactor_Impl *theReactor,
-					 ACE_Timer_Queue* 
+					 ACE_Timer_Queue*,
 					 int the_disable_notify_pipe)
 {
     if (the_disable_notify_pipe == 0)
     {
-	this->select_reactor_ = theReactor;
+	this->select_reactor_ =  ACE_dynamic_cast 
+	    (ACE_CLASSIX_Select_Reactor *, theReactor);
 
 	if (this->notification_sap_.open (&this->notification_port_) != 0 ||
 	    this->notification_sap_.selectable() != 0)
@@ -257,9 +258,9 @@ ACE_CLASSIX_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
     int                     number_dispatched = 0;
 
     ACE_Notification_Buffer buffer;
-//    ACE_CLASSIX_Msg rmsg(&buffer, sizeof (buffer));
+    ACE_CLASSIX_Msg rmsg(&buffer, sizeof (buffer));
 
-    if (this->select_reactor_->get_current_info(handle, n1) == -1 ||
+    if (this->select_reactor_->current_info(handle, n1) == -1 ||
 	n1 != sizeof buffer)
     {
 	// I'm not quite sure what to do at this point.  It's
@@ -270,8 +271,7 @@ ACE_CLASSIX_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 	return -1;
     }
 
-//    while ((n = ::ipcGetData(rmsg.get())) > 0)
-    while ((n = ::ipcGetData(&buffer)) > 0)
+    while ((n = ::ipcGetData(rmsg.get())) > 0)
     {
 	if (n != sizeof buffer)
         {

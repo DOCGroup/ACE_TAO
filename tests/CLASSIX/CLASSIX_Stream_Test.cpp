@@ -17,8 +17,9 @@
 // 
 // ============================================================================
 
+#include "ace/CLASSIX/CLASSIX_Stream.h"
+
 #include "tests/test_config.h"
-#include "CLASSIX/Stream.h"
 
 #define RCV_DELAY 1000        /* We should NOT wait in ipcReceive */
 

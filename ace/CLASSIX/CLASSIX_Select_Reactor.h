@@ -25,6 +25,7 @@
 #include "ace/Message_Block.h"
 #include "ace/CLASSIX/CLASSIX_SAP.h"
 
+class ACE_CLASSIX_Select_Reactor;
 
 class ACE_Export ACE_CLASSIX_Select_Reactor_Notify : 
     public ACE_Reactor_Notify
@@ -40,6 +41,8 @@ class ACE_Export ACE_CLASSIX_Select_Reactor_Notify :
 public:
     // = Initialization and termination methods.
     ACE_CLASSIX_Select_Reactor_Notify(void);
+    ~ACE_CLASSIX_Select_Reactor_Notify(void);
+
     virtual int open (ACE_Reactor_Impl *,
 		      ACE_Timer_Queue * = 0,
 		      int  = 0 /* dusable_notify_pip */);
@@ -85,7 +88,7 @@ public:
     // Declare the dynamic allocation hooks.
 
 private:
-    ACE_Select_Reactor *select_reactor_;
+    ACE_CLASSIX_Select_Reactor       *select_reactor_;
     // Keep a back pointer to the <ACE_Select_Reactor>.  If this value
     // if NULL then the <ACE_Select_Reactor> has been initialized with
     // <disable_notify_pipe>.
@@ -135,8 +138,8 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
     // The following message should be called in the handler's
     // handle_input() routine.
     // The handle_input() routine should not hold the reactor for too long.
-    virtual int get_current_info(ACE_HANDLE /* port */,
-				 size_t& /* msg size */);
+    virtual int current_info(ACE_HANDLE /* port */,
+			     size_t& /* msg size */);
     // Retruns the current messageage to the caleer if the supplied
     // handle id is the same as the <current_handle_>
     // Returns 0, if <msg size> constains the size of the message
@@ -193,7 +196,7 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
 /* ------------------------------------------------------------------------- */
 
 #if defined (__ACE_INLINE__)
-#include "ace/CLASSIX/CLASSIX_Reactor.i"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_CLASSIX_REACTOR_H */
