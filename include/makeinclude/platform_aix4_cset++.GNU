@@ -16,7 +16,15 @@
 # ftp://service.boulder.ibm.com/aix/fixes/v4/os/bos.rte.bind_cmds.4.2.0.4.bff
 # or a successor.
 
-debug = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(distrib))
+  distrib = 0
+endif
+ifeq (,$(optimize))
+  optimize = 0
+endif
 
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
