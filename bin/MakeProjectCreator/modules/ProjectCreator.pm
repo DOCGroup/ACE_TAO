@@ -84,10 +84,12 @@ sub new {
   my($addproj)   = shift;
   my($progress)  = shift;
   my($toplevel)  = shift;
+  my($baseprojs) = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
                                 $addtemp, $addproj,
-                                $progress, $toplevel, 'project');
+                                $progress, $toplevel, $baseprojs,
+                                'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'project_info'}          = [];
@@ -222,6 +224,31 @@ sub parse_line {
         ## Project Beginning
         ## Deal with the inheritance hiearchy first
         my($parents) = $values[2];
+
+        ## Add in the base projects from the command line
+        if (!$self->{'reading_global'} &&
+            !defined $self->{'reading_parent'}->[0]) {
+          my($baseprojs) = $self->get_baseprojs();
+
+          if (defined $parents) {
+            foreach my $base (@$baseprojs) {
+              my($found) = 0;
+              foreach my $parent (@$parents) {
+                if ($base eq $parent) {
+                  $found = 1;
+                  last;
+                }
+              }
+              if (!$found) {
+                push(@$parents, $base);
+              }
+            }
+          }
+          else {
+            $parents = $baseprojs;
+          }
+        }
+
         if (defined $parents) {
           foreach my $parent (@$parents) {
             ## Read in the parent onto ourself
