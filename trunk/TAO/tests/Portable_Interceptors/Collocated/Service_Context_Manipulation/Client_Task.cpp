@@ -3,7 +3,7 @@
 //
 
 #include "Client_Task.h"
-#include "TestC.h"
+#include "testC.h"
 
 ACE_RCSID(Muxing, Client_Task, "$Id$")
 
