@@ -70,7 +70,62 @@ namespace CIAO
             }
           else
             {
-              return;
+              break;
+            }
+        }
+
+      this->update_spe_refs (cad);
+      this->update_spr_refs (cad);
+
+      return;
+    }
+
+    void CAD_Handler::update_spe_refs
+      (Deployment::ComponentAssemblyDescription& cad)
+    {
+      CORBA::ULong x;
+      CORBA::ULong y;
+      int ref_value;
+      int value;
+      ACE_TString ref_name;
+
+      for (x = 0; x < cad.connection.length (); ++x)
+        {
+          for (y = 0; y < cad.connection[x].internalEndpoint.length (); ++y)
+            {
+              ref_value = cad.connection[x].internalEndpoint[y].instance;
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, value) == 0)
+                    {
+                      cad.connection[x].internalEndpoint[y].instance= value;
+                    }
+                }
+            }
+        }
+    }
+
+    void CAD_Handler::update_spr_refs
+      (Deployment::ComponentAssemblyDescription& cad)
+    {
+      CORBA::ULong x;
+      CORBA::ULong y;
+      int ref_value;
+      int value;
+      ACE_TString ref_name;
+
+      for (x = 0; x < cad.externalProperty.length (); ++x)
+        {
+          for (y = 0; y < cad.externalProperty[x].delegatesTo.length (); ++y)
+            {
+              ref_value = cad.externalProperty[x].delegatesTo[y].instance;
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, value) == 0)
+                    {
+                      cad.externalProperty[x].delegatesTo[y].instance= value;
+                    }
+                }
             }
         }
     }
@@ -470,7 +525,7 @@ namespace CIAO
     }
 
     void CAD_Handler::process_reference
-      (DOMDocument* doc,
+      (DOMDocument*,
        DOMNodeIterator* iter,
        Deployment::ComponentPackageReference& sid_ref)
     {
@@ -601,7 +656,7 @@ namespace CIAO
     }
 
     void CAD_Handler::process_package
-      (DOMDocument* doc,
+      (DOMDocument*,
        DOMNodeIterator* iter,
        Deployment::ComponentPackageDescription& sid_package)
     {
@@ -690,6 +745,81 @@ namespace CIAO
         DOMNodeIterator* iter,
         Deployment::AssemblyConnectionDescription& acd)
     {
+      for (DOMNode* node = iter->nextNode();
+           node != 0;
+           node = iter->nextNode ())
+        {
+          XStr node_name (node->getNodeName());
+          if (node_name == XStr (ACE_TEXT ("name")))
+            {
+              node = iter->nextNode ();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_acd_name (text->getNodeValue (), acd);
+            }
+          else if (node_name == XStr (ACE_TEXT ("deployRequirement")))
+            {
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong req_length
+                    (acd.deployRequirement.length ());
+                  acd.deployRequirement.length (req_length + 1);
+                  if (length == 1)
+                    {
+                      Requirement_Handler::process_Requirement
+                        (iter,
+                         acd.deployRequirement[req_length]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_req
+                        (named_node_map, doc,
+                         iter, req_length, 
+                         acd.deployRequirement[req_length]);
+                    }
+                }
+            }
+          else if (node_name == XStr (ACE_TEXT ("internalEndpoint")))
+            {
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong spe_length
+                    (acd.internalEndpoint.length ());
+                  acd.internalEndpoint.length (spe_length + 1);
+                  if (length == 1)
+                    {
+                      this->process_spe
+                        (doc, iter,
+                         acd.internalEndpoint[spe_length]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_spe
+                        (named_node_map, doc,
+                         iter, spe_length, 
+                         acd.internalEndpoint[spe_length]);
+                    }
+                }
+            }
+          else
+            {
+              iter->previousNode();
+              return;
+            }
+        }
+    }
+
+    void CAD_Handler::process_acd_name (const XMLCh* name,
+      Deployment::AssemblyConnectionDescription& acd)
+    {
+      if (name)
+        {
+          CORBA::String_var value (XMLString::transcode (name));
+          acd.name = value.in ();
+        }
     }
 
     void CAD_Handler::process_attributes_for_connection
@@ -760,11 +890,318 @@ namespace CIAO
       return;
     }
       
+    void CAD_Handler::process_spe
+       (DOMDocument*,
+        DOMNodeIterator* iter,
+        Deployment::SubcomponentPortEndpoint& spe)
+    {
+      for (DOMNode* node = iter->nextNode();
+           node != 0;
+           node = iter->nextNode ())
+        {
+          XStr node_name (node->getNodeName());
+          if (node_name == XStr (ACE_TEXT ("portName")))
+            {
+              node = iter->nextNode ();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_spe_name (text->getNodeValue (), spe);
+            }
+          else if (node_name == XStr (ACE_TEXT ("instance")))
+            {
+              spe.instance = 0;
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  this->process_refs (named_node_map);
+                }
+            }
+          else
+            {
+              iter->previousNode();
+              return;
+            }
+        }
+    }
+
+    void CAD_Handler::process_spe_name (const XMLCh* name,
+      Deployment::SubcomponentPortEndpoint& spe)
+    {
+      if (name)
+        {
+          CORBA::String_var value (XMLString::transcode (name));
+          spe.portName = value.in ();
+        }
+    }
+
+    void CAD_Handler::process_attributes_for_spe
+       (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::SubcomponentPortEndpoint& spe)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              this->process_spe (doc,
+                                iter,
+                                spe);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              this->process_spe (href_doc,
+                                 href_iter,
+                                 spe);
+            }
+        }
+
+      return;
+    }
+
+    void CAD_Handler::process_spr
+       (DOMDocument*,
+        DOMNodeIterator* iter,
+        Deployment::SubcomponentPropertyReference& spr)
+    {
+      for (DOMNode* node = iter->nextNode();
+           node != 0;
+           node = iter->nextNode ())
+        {
+          XStr node_name (node->getNodeName());
+          if (node_name == XStr (ACE_TEXT ("requiredUUID")))
+            {
+              node = iter->nextNode ();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_spr_name (text->getNodeValue (), spr);
+            }
+          else if (node_name == XStr (ACE_TEXT ("instance")))
+            {
+              spr.instance = 0;
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  this->process_refs (named_node_map);
+                }
+            }
+          else
+            {
+              iter->previousNode();
+              return;
+            }
+        }
+    }
+
+    void CAD_Handler::process_refs (DOMNamedNodeMap* named_node_map)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue = XMLString::transcode
+             (attribute_node->getNodeValue ());
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->index_ = this->index_ + 1;
+              idref_map_.bind (this->index_, aceattrnodevalue);
+            }
+        }
+    }
+
+    void CAD_Handler::process_spr_name (const XMLCh* name,
+      Deployment::SubcomponentPropertyReference& spr)
+    {
+      if (name)
+        {
+          CORBA::String_var value (XMLString::transcode (name));
+          spr.propertyName = value.in ();
+        }
+    }
+
+    void CAD_Handler::process_attributes_for_spr
+       (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::SubcomponentPropertyReference& spr)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              this->process_spr (doc,
+                                iter,
+                                spr);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              this->process_spr (href_doc,
+                                 href_iter,
+                                 spr);
+            }
+        }
+
+      return;
+    }
+
     void CAD_Handler::process_property
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::AssemblyPropertyMapping& apm)
     {
+      for (DOMNode* node = iter->nextNode();
+           node != 0;
+           node = iter->nextNode ())
+        {
+          XStr node_name (node->getNodeName());
+          if (node_name == XStr (ACE_TEXT ("name")))
+            {
+              node = iter->nextNode ();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_apm_name (text->getNodeValue (), apm);
+            }
+          else if (node_name == XStr (ACE_TEXT ("externalName")))
+            {
+              node = iter->nextNode ();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_apm_ext_name (text->getNodeValue (), apm);
+            }
+          else if (node_name == XStr (ACE_TEXT ("delegatesTo")))
+            {
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong spr_length
+                    (apm.delegatesTo.length ());
+                  apm.delegatesTo.length (spr_length + 1);
+                  if (length == 1)
+                    {
+                      this->process_spr
+                        (doc, iter,
+                         apm.delegatesTo[spr_length]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_spr
+                        (named_node_map, doc,
+                         iter, spr_length, 
+                         apm.delegatesTo[spr_length]);
+                    }
+                }
+            }
+          else
+            {
+              iter->previousNode();
+              return;
+            }
+        }
+    }
+
+    void CAD_Handler::process_apm_name (const XMLCh* name,
+      Deployment::AssemblyPropertyMapping& apm)
+    {
+      if (name)
+        {
+          CORBA::String_var value (XMLString::transcode (name));
+          apm.name = value.in ();
+        }
+    }
+
+    void CAD_Handler::process_apm_ext_name (const XMLCh* name,
+      Deployment::AssemblyPropertyMapping& apm)
+    {
+      if (name)
+        {
+          CORBA::String_var value (XMLString::transcode (name));
+          apm.externalName = value.in ();
+        }
     }
 
     void CAD_Handler::process_attributes_for_property
