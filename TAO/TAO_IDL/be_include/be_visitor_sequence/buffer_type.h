@@ -45,8 +45,12 @@ public:
   virtual int visit_predefined_type (be_predefined_type *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_component (be_component *node);
+  virtual int visit_component_fwd (be_component_fwd *node);
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  virtual int visit_eventtype (be_eventtype *node);
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_enum (be_enum *node);
