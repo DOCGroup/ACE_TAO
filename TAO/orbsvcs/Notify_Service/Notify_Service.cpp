@@ -277,12 +277,14 @@ Notify_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
   if (this->use_name_svc_)
   {
     // Unbind from the naming service.
-    CosNaming::Name name (1);
-    name.length (1);
-    name[0].id = CORBA::string_dup (this->notify_factory_name_.c_str ());
+    CosNaming::Name_var name =
+      this->naming_->to_name (this->notify_factory_name_.c_str (),
+                              ACE_TRY_ENV);
+    ACE_CHECK;
 
-    this->naming_->unbind (name,
+    this->naming_->unbind (name.in (),
                            ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   // shutdown the ORB.
@@ -291,7 +293,7 @@ Notify_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-Notify_Service::parse_args(int argc, char *argv[])
+Notify_Service::parse_args (int argc, char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -300,7 +302,7 @@ Notify_Service::parse_args(int argc, char *argv[])
     {
       if ((current_arg = arg_shifter.get_the_parameter ("-Factory")))
         {
-          this->notify_factory_name_.set(current_arg);
+          this->notify_factory_name_.set (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Boot") == 0)
