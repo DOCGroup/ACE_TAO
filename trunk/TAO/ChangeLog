@@ -1,8 +1,17 @@
+Mon Jan 13 20:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/Strategies/Makefile:
+          Set the correct BUILD_DLL define when building a shared lib,
+          this is needed for the Cygwin, MingW and Kylix compiler
+
 Mon Jan 13 10:12:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
 
-	  Removed generation of 
+	  Removed generation of
 	  'friend class <remote/thru-POA/direct proxy class name>' for local
 	  interfaces.
 
