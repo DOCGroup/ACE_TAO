@@ -73,4 +73,6 @@
 
 #include /**/ <pthread.h>
 
+#define ACE_HAS_AIO_CALLS
+
 #endif /* ACE_CONFIG_H */

@@ -462,7 +462,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
                                     ) == FALSE)
     {
       delete result;
-      ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "PostQueuedCompletionStatus failed\n"), -1);
     }
 
   return 0;
