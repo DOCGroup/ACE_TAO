@@ -1,3 +1,8 @@
+Mon Jan 10 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+          Fixed compile error
+
 Sun Jan  9 19:49:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACE-INSTALL.html:
