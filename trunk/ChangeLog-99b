@@ -1,54 +1,58 @@
+Tue Mar 23 16:25:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-subsets.html: added FOR_TAO subset sizes.
+
 Tue Mar 23 15:15:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Map_Manager.{i,cpp} (ACE_Map_Iterator_Base::operator*):
-	  Moved this function to .cpp file to avoid compilation problem on
-	  SunOS 5.6 with SunCC 4.2.  Once we know a patch that will fix
-	  the problem, we should move it back to .i file again.  Thanks to
-	  James Megquier <jmegq@bbn.com> for reporting the problem.
+        * ace/Map_Manager.{i,cpp} (ACE_Map_Iterator_Base::operator*):
+          Moved this function to .cpp file to avoid compilation problem on
+          SunOS 5.6 with SunCC 4.2.  Once we know a patch that will fix
+          the problem, we should move it back to .i file again.  Thanks to
+          James Megquier <jmegq@bbn.com> for reporting the problem.
 
 Tue Mar 23 14:56:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
-	* ace/OS.h:
-	* ace/TLI.cpp:
-	* ace/config-osf1-4.0.h: Removed all references to
-	  ACE_HAS_BROKEN_T_ERRNO and removed the definition of the _terrno()
-	  function from TLI.cpp since it isn't a standard TLI function (at
-	  least not the Steven's books that I've read).  This also fixes a
-	  problem on Solaris that was causing an autoconfigured build of
-	  TLI.cpp to fail.
+        * acconfig.h:
+        * configure.in:
+        * ace/OS.h:
+        * ace/TLI.cpp:
+        * ace/config-osf1-4.0.h: Removed all references to
+          ACE_HAS_BROKEN_T_ERRNO and removed the definition of the _terrno()
+          function from TLI.cpp since it isn't a standard TLI function (at
+          least not the Steven's books that I've read).  This also fixes a
+          problem on Solaris that was causing an autoconfigured build of
+          TLI.cpp to fail.
 
-	* ace/Makefile.am: Make sure template source files get installed for
-	  all cases.  Previously, they only got installed if the template
-	  source is required by the compiler.  However, they are still needed
-	  by compilers that don't explicitly require template sources to
-	  be included in a file that references them.
+        * ace/Makefile.am: Make sure template source files get installed for
+          all cases.  Previously, they only got installed if the template
+          source is required by the compiler.  However, they are still needed
+          by compilers that don't explicitly require template sources to
+          be included in a file that references them.
 
-	* configure.in: Fixed the test for ACE_TEMPLATES_REQUIRE_SOURCE.
-	  Thanks to Carlos for his help on this.  Removed the test for
-	  ACE_HAS_BROKEN_T_ERRNO since it is no longer needed due to the
-	  above change.
+        * configure.in: Fixed the test for ACE_TEMPLATES_REQUIRE_SOURCE.
+          Thanks to Carlos for his help on this.  Removed the test for
+          ACE_HAS_BROKEN_T_ERRNO since it is no longer needed due to the
+          above change.
 
-	* README: Added Konstantinos Margaritis <kmargar@cc.uoa.gr> to the
-	  ACE contributor list.
+        * README: Added Konstantinos Margaritis <kmargar@cc.uoa.gr> to the
+          ACE contributor list.
 
 Tue Mar 23 12:57:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Split off the logging to
- 	  an ostream from the logging for STDERR.  Thanks to Bill Rizzi
+        * netsvcs/lib/Client_Logging_Handler.cpp: Split off the logging to
+          an ostream from the logging for STDERR.  Thanks to Bill Rizzi
           (rizzi@softserv.com) for pointing out this problem.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Changed the default from
- 	  ACE_STDOUT to ACE_STDERR to be consistent.  Thanks to Bill Rizzi
+        * netsvcs/lib/Client_Logging_Handler.cpp: Changed the default from
+          ACE_STDOUT to ACE_STDERR to be consistent.  Thanks to Bill Rizzi
           (rizzi@softserv.com) for pointing out the problem.
 
 Tue Mar 23 12:06:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_THROW_SPEC): Added prgama to disable reporting
-	  warning 4290 on MSVC.  MSVC "supports" the exception
-	  specification but doesn't provide an implementation for it.
-	  Instead, it warns you the specification is ignored.
+        * ace/OS.h (ACE_THROW_SPEC): Added prgama to disable reporting
+          warning 4290 on MSVC.  MSVC "supports" the exception
+          specification but doesn't provide an implementation for it.
+          Instead, it warns you the specification is ignored.
 
 Mon Mar 22 21:34:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
