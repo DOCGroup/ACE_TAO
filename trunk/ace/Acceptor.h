@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -109,7 +108,7 @@ protected:
 
   // = Demultiplexing hooks.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE, 
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities when <this> is removed from the
   // <reactor>.
 
@@ -252,7 +251,7 @@ protected:
   // Returns the listening acceptor's <ACE_HANDLE>.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities when <this> is removed from the
   // <Reactor>.
 
@@ -397,7 +396,7 @@ protected:
   // Returns the listening acceptor's <ACE_HANDLE>.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities when <this> is removed from the
   // <reactor>.
        

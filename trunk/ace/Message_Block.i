@@ -230,3 +230,19 @@ ACE_Message_Block::prev (void) const
   return this->prev_;
 }
 
+ACE_INLINE ACE_Lock *
+ACE_Message_Block::locking_strategy (void) 
+{
+  ACE_TRACE ("ACE_Message_Block::locking_strategy");
+  return this->locking_strategy_;
+}
+
+ACE_INLINE ACE_Lock *
+ACE_Message_Block::locking_strategy (ACE_Lock *nls)
+{
+  ACE_TRACE ("ACE_Message_Block::locking_strategy");
+  ACE_Lock *ols = this->locking_strategy_;
+  this->locking_strategy_ = nls;
+  return ols;
+}
+

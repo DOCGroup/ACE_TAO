@@ -55,20 +55,20 @@ class Supplier_Proxy;
 
 #if defined (ACE_HAS_THREADS) && (defined (USE_OUTPUT_MT) || defined (USE_INPUT_MT))
 #if defined (USE_OUTPUT_MT)
-typedef Thr_Consumer_Proxy CONSUMER_HANDLER;
+typedef Thr_Consumer_Proxy CONSUMER_PROXY;
 #else
-typedef Consumer_Proxy CONSUMER_HANDLER;
+typedef Consumer_Proxy CONSUMER_PROXY;
 #endif /* USE_OUTPUT_MT */
 
 #if defined (USE_INPUT_MT)
-typedef Thr_Supplier_Proxy SUPPLIER_HANDLER;
+typedef Thr_Supplier_Proxy SUPPLIER_PROXY;
 #else
-typedef Supplier_Proxy SUPPLIER_HANDLER;
+typedef Supplier_Proxy SUPPLIER_PROXY;
 #endif /* USE_INPUT_MT */
 #else
 // Instantiate a non-multi-threaded Gateway.
-typedef Supplier_Proxy SUPPLIER_HANDLER;
-typedef Consumer_Proxy CONSUMER_HANDLER;
+typedef Supplier_Proxy SUPPLIER_PROXY;
+typedef Consumer_Proxy CONSUMER_PROXY;
 #endif /* ACE_HAS_THREADS */
 
 #endif /* _CONCURRENCY_STRATEGIES */

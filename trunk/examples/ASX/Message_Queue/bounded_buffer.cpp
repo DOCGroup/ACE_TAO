@@ -88,7 +88,7 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       if (length > 0)
 	ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
 
-      delete mb;
+      mb->release ();
 
       if (length == 0)
 	break;

@@ -136,5 +136,5 @@ int
 Logging_Handler::close (void)
 {
   return this->handle_close (ACE_INVALID_HANDLE, 
-			     ACE_Event_Handler::RWE_MASK);
+			     ACE_Event_Handler::ALL_EVENTS_MASK);
 }

@@ -690,9 +690,11 @@ ACE_Log_Msg::log (const char *format_str,
 
   if (abort_prog)
     {
-      // _always_ print a message to stderr if aborting, not verbose
-      // to help avoid recursive aborts if something is hosed
-      log_record.print (ACE_Log_Msg::local_host_, 0);
+      // *always* print a message to stderr if we're aborting (and
+      // have not already done so).  We don't use verbose, however, to
+      // avoid recursive aborts if something is hosed.
+      if (!ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR))
+	log_record.print (ACE_Log_Msg::local_host_, 0);
       ACE_OS::exit (exit_value);
     }
 

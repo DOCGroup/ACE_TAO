@@ -26,7 +26,7 @@ public:
   // = Demultiplexing hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   virtual ACE_HANDLE get_handle (void) const;
 

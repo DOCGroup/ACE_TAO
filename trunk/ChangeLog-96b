@@ -1,3 +1,60 @@
+Wed Jan  1 00:10:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway: Moved all of the configuration file
+ 	  parsing logic *outside* of the Event_Channel into the Gateway
+ 	  class so that we wouldn't have unnecessary dependencies.
+
+	* apps/Gateway/Gateway: Redesigned the Gateway so that the
+ 	  Proxy_Handlers (i.e., the Consumer_Proxy and Supplier_Proxy)
+ 	  most of their work to the Event_Channel.  This "lightweight
+ 	  proxy" design is an improvement since it is now possible to
+ 	  emulate the COS Event Channel semantics within the Event_Channel
+ 	  "kernel."
+
+	* Happy new year!
+
+Tue Dec 31 18:27:50 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Added a test so that if we're
+	  (1) not printing to stderr and (2) aborting the program we still
+ 	  print a message to stderr.
+
+	* ace/Message_Block: Added synchronization support to
+ 	  ACE_Message_Block.  This is necessary now that we've got
+ 	  reference counting to ensure that we don't have race conditions
+ 	  when incrementing and decrementing the reference count in
+ 	  separate threads.  The approach is very clean and uses the new
+ 	  ACE_Lock mechanism to conditionally acquire()/release() the
+ 	  locking strategy if concurrency control is necessary.
+
+	* ace/Synch_T: Created a new set of ACE_Lock and
+ 	  ACE_Lock_Adapter<> classes which are similar in spirit to the
+ 	  ACE_Allocator and ACE_Allocator_Adapter<> classes.  These make
+ 	  it possible to treat polymorphically synchronization mechanisms
+ 	  in ACE polymorphically, *without* creating an entire new
+ 	  parallel hierarchy of locking mechanisms.
+
+	* ace/Synch: Added the full suite of acquire_{read|write}() and
+ 	  tryacquire_{read|write}() methods to ACE_Semaphore and
+ 	  ACE_Process_Semaphore so they will be consist with the other
+ 	  synchronization APIs.
+
+Tue Dec 31 00:11:56 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Changed all uses of ACE_Event_Handler::RWE_MASK to 
+	  ACE_Event_Handler::ALL_EVENTS_MASK to reflect the fact that
+	  we will soon have more than READ, WRITE, and EXCEPT events.
+	  However, I've kept RWE_MASK around for backwards
+	  compatibility.
+
+	* examples/ASX/Message_Queue: Changed the tests so that they use
+ 	  the new ACE_Message_Block::release() method rather than calling
+ 	  delete explicitly.
+
+	* apps/Gateway: Revised the implementation of the Gateway and Peer
+ 	  applications to take advantage of the new ACE_Message_Block
+ 	  reference counting scheme.
+
 Tue Dec 31 15:06:51 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Task.cpp: added comments that try to explain interaction
@@ -9,6 +66,15 @@ Tue Dec 31 15:06:51 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Hi_Res_Timer.{i,cpp}: inlined the constructor; trimmed output
 	  if count is 1; rounded instead of truncated usecs portion of time
+
+Mon Dec 30 15:24:59 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Message_Block: Added reference counting to ACE_Message_Block
+ 	  so that we no longer have to clone() messages when we want to
+ 	  pass them around "by reference."
+
+	* apps/Gateway/Peer/Peer.cpp (init): The Peer_Acceptor had gotten
+ 	  out of date wrt newer ACE features, so I updated it.
 
 Mon Dec 30 15:24:59 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

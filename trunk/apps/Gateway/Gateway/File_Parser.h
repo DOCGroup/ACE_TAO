@@ -52,7 +52,7 @@ protected:
   FP::Return_Type getword (char buf[]);
   // Read the next ASCII word.
 
-  FP::Return_Type getint (int &value);
+  FP::Return_Type getint (ACE_INT32 &value);
   // Read the next integer.
 
   FP::Return_Type readword (char buf[]);

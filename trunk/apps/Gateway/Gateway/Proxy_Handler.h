@@ -21,11 +21,12 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Svc_Handler.h"
 #include "Event_Forwarding_Discriminator.h"
-#include "Dispatch_Set.h"
+#include "Consumer_Dispatch_Set.h"
 #include "Event.h"
 
 // Forward declaration.
 class Proxy_Handler_Connector;
+class ACE_Event_Channel;
 
 class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, SYNCH_STRATEGY>
   // = TITLE
@@ -36,19 +37,14 @@ class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, SYNCH_STRATEGY>
   //     Channel from Suppliers and forward them to Consumers.
 {
 public:
-  Proxy_Handler (Event_Forwarding_Discriminator *, 
-		 Proxy_Handler_Connector *, 
-		 ACE_Thread_Manager * = 0,
-		 int socket_queue_size = 0);
+  Proxy_Handler (ACE_Event_Channel &, 
+		 const ACE_INET_Addr &remote_addr,
+		 const ACE_INET_Addr &local_addr,
+		 ACE_INT32 conn_id);
 
   virtual int open (void * = 0);
   // Initialize and activate a single-threaded Proxy_Handler (called by
   // ACE_Connector::handle_output()).
-
-  int bind (const ACE_INET_Addr &remote_addr, 
-	    const ACE_INET_Addr &local_addr, 
-	    ACE_INT32);
-  // Set the peer's addressing and routing information.
 
   ACE_INET_Addr &remote_addr (void);
   // Returns the peer's routing address.
@@ -82,12 +78,12 @@ public:
   void max_timeout (int);
   int max_timeout (void);
 
-  // = Set/get direction (i.e., 'S' for Supplier and 'C' for Consumer
+  // = Set/get proxy role (i.e., 'S' for Supplier and 'C' for Consumer
   // (necessary for error checking).
-  void direction (char);
-  char direction (void);
+  void proxy_role (char);
+  char proxy_role (void);
 
-  // = The total number of bytes sent/received on this channel.
+  // = The total number of bytes sent/received on this proxy.
   size_t total_bytes (void);
   void total_bytes (size_t bytes);
   // Increment count by <bytes>.
@@ -101,21 +97,9 @@ protected:
     MAX_RETRY_TIMEOUT = 300 // 5 minutes is the maximum timeout.
   };
 
-  int initialize_connection (void);
-  // Perform the first-time initiation of a connection to the peer.
-
-  int reinitiate_connection (void);
-  // Reinitiate a connection asynchronously when peers fail.
-
-  void socket_queue_size (void);
-  // Set the socket queue size.
-
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform Proxy_Handler termination.
-
-  Event_Forwarding_Discriminator *efd_;
-  // Maps Events to a set of Consumers.
 
   ACE_INET_Addr remote_addr_;
   // Address of peer.
@@ -127,14 +111,10 @@ protected:
   // The assigned routing ID of this entry.
 
   size_t total_bytes_;
-  // The total number of bytes sent/received on this channel.
+  // The total number of bytes sent/received on this proxy.
 
   State state_;
-  // The current state of the channel.
-
-  Proxy_Handler_Connector *connector_;
-  // Back pointer to Proxy_Handler_Connector to reestablish broken
-  // connections.
+  // The current state of the proxy.
 
   int timeout_;
   // Amount of time to wait between reconnection attempts.
@@ -142,12 +122,13 @@ protected:
   int max_timeout_;
   // Maximum amount of time to wait between reconnection attempts.
 
-  char direction_;
-  // Indicates which direction data flows through the channel ('S' ==
-  // Supplier and 'C' == Consumer).
+  char proxy_role_;
+  // Indicates which role the proxy plays ('S' == Supplier and 'C' ==
+  // Consumer).
 
-  int socket_queue_size_;
-  // Size of the socket queue (0 means "use default").
+  ACE_Event_Channel &event_channel_;
+  // Reference to the <ACE_Event_Channel> that we use to forward all
+  // the events from Consumers and Suppliers.
 };
 
 class Supplier_Proxy : public Proxy_Handler
@@ -158,13 +139,15 @@ class Supplier_Proxy : public Proxy_Handler
   //     Performs framing and error checking.
 {
 public:
-  Supplier_Proxy (Event_Forwarding_Discriminator *, 
-		  Proxy_Handler_Connector *, 
-		  ACE_Thread_Manager * = 0,
-		  int socket_queue_size = 0);
-  // Constructor sets the consumer map pointer.
+  // = Initialization method.
+  Supplier_Proxy (ACE_Event_Channel &, 
+		  const ACE_INET_Addr &remote_addr,
+		  const ACE_INET_Addr &local_addr,
+		  ACE_INT32 conn_id);
 
 protected:
+  // = All the following methods are upcalls, so they can be protected.
+
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Receive and process peer events.
 
@@ -172,7 +155,8 @@ protected:
   // Receive an event from a Supplier.
 
   int forward (ACE_Message_Block *event);
-  // Forward the Event to a Consumer.
+  // Forward the <event> to its appropriate Consumer.  This delegates
+  // to the <ACE_Event_Channel> to do the actual forwarding.
 
   ACE_Message_Block *msg_frag_;
   // Keep track of event fragment to handle non-blocking recv's from
@@ -184,19 +168,22 @@ class Consumer_Proxy : public Proxy_Handler
   //     Handles transmission of events to Consumers.
   //
   // = DESCRIPTION
-  //     Uses a single-threaded approach.
+  //     Performs queueing and error checking.  Uses a single-threaded
+  //     Reactive approach to handle flow control.
 {
 public:
-  Consumer_Proxy (Event_Forwarding_Discriminator *, 
-		  Proxy_Handler_Connector *, 
-		  ACE_Thread_Manager * = 0,
-		  int socket_queue_size = 0);
+  // = Initialization method.
+  Consumer_Proxy (ACE_Event_Channel &, 
+		  const ACE_INET_Addr &remote_addr,
+		  const ACE_INET_Addr &local_addr,
+		  ACE_INT32 conn_id);
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  virtual int put (ACE_Message_Block *event, 
+		   ACE_Time_Value * = 0);
   // Send an event to a Consumer (may be queued if necessary).
 
 protected:
-  // = We'll allow up to 16 megabytes to be queued per-output channel.
+  // = We'll allow up to 16 megabytes to be queued per-output proxy.
   enum {MAX_QUEUE_SIZE = 1024 * 1024 * 16};
 
   virtual int handle_output (ACE_HANDLE);

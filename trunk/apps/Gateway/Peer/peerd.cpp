@@ -17,12 +17,9 @@ main (int argc, char *argv[])
 	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
       else // Use static binding.
 	{
-	  static char *l_argv[3] = { "-d", "-p", "10002" };
-
-	  ACE_Service_Object *so = _make_Peer_Acceptor ();
-
+	  ACE_Service_Object *so = ACE_SVC_INVOKE (Peer_Acceptor);
 	  
-	  if (so->init (3, l_argv) == -1)
+	  if (so->init (argc - 1, argv + 1) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "init", 1));
 	}
     }
