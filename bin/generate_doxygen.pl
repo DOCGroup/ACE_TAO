@@ -20,7 +20,8 @@ $dot_path = '/usr/local/bin';
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
-             'ace_ssl');
+             'ace_ssl',
+             'ace_qos');
 @TAO_DOCS = ('tao',
              'tao_portableserver',
              'tao_dynamicany',
