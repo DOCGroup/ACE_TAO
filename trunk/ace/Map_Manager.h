@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MAP_MANAGER_H
 #define ACE_MAP_MANAGER_H
 #include "ace/pre.h"
@@ -421,7 +420,6 @@ protected:
   };
 
 private:
-
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))

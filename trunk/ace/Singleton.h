@@ -8,11 +8,11 @@
  *
  *  @brief
  *
- *  @author Tim Harrison (harrison@cs.wustl.edu)
- *  @author Douglas C. Schmidt
- *  @author Chris Lahey
- *  @author Rich Christy
- *  @author and David Levine.
+ *  @author Tim Harrison <harrison@cs.wustl.edu>,
+ *  Douglas C. Schmidt <schmidt@cs.wustl.edu>,
+ *  Chris Lahey,
+ *  Rich Christy, and
+ *  David Levine <levine@cs.wustl.edu>.
  */
 //=============================================================================
 
