@@ -1,3 +1,15 @@
+Wed Jul 14 10:22:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Singleton.*: added ACE_Unmanaged_Singleton and
+          ACE_Unmanaged_TSS_Singleton template class.  They're
+          identical to ACE_Singleton and ACE_TSS_Singleton,
+          respectively, except that they don't register for
+          cleanup with the ACE_Object_Manager.  Therefore,
+          the application is responsible for explicitly destroying
+          the instance after it is no longer needed (if it wants to
+          avoid memory leaks, at least).  The close () static member
+          function must be used to explicitly destroy the Singleton.
+
 Wed Jul 14 10:01:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h (ACE_{,U_}ONE_SECOND_IN*): made the trailing
