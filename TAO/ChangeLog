@@ -1,3 +1,10 @@
+Sun Apr 27 17:45:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IOP_IORC.h:
+	* tao/IOP_CodeC.h: Generated code to include "ace/post.h". This
+	  should fix warnings in BCB6 builds. Thanks to Johnny for
+	  alerting me on this.
+
 Sun Apr 27 17:34:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/PortableServerC.cpp:
