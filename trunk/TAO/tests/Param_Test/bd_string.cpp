@@ -25,7 +25,7 @@
 // ************************************************************************
 
 Test_Bounded_String::Test_Bounded_String (void)
-  : opname_ (CORBA::string_dup ("test_unbounded_string")),
+  : opname_ (CORBA::string_dup ("test_bounded_string")),
     in_ (0),
     inout_ (0),
     out_ (0),
