@@ -46,11 +46,6 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 
 TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
 {
-  // Explicitly call close() to aid in post-error resource clean up.
-  // close() is called to ensure that the rendezvous point is removed
-  // from the filesystem.
-  this->close ();
-
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
 }
