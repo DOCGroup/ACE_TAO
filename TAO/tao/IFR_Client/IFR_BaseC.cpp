@@ -10903,12 +10903,6 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
   template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::Contained_ptr,
-        CORBA::Contained_var
-      >;
-
-  template class
     TAO::Ret_Var_Size_Argument_T<
         CORBA::ContainedSeq,
         CORBA::ContainedSeq_var
