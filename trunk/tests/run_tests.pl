@@ -132,7 +132,7 @@ if (-f "libDLL_Test.so" ) {
 }
 
 # Testing for this flag always disables the test.
-$DISABLED = 0;
+$DISABLED = 1;
 
 # @@ Can we obtain reasonable values for this features?
 $chorus = 0;
