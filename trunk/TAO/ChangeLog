@@ -1,3 +1,20 @@
+Thu Oct 16 06:18:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Listener.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/FtRtecEventComm.idl:
+          Fixed fuzz errors
+
 Thu Oct 16 00:39:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent.mpc:
