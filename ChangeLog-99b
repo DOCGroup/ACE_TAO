@@ -1,3 +1,8 @@
+Tue Dec 14 08:57:03 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.h: Added a #ifdef for WINSOCK2_GQOS for removing the 
+	  errors on NT due to the previous change in ACE_Flow_Spec class.
+
 Tue Dec 14 07:49:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/OS.i:
