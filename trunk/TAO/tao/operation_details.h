@@ -80,7 +80,6 @@ public:
   CORBA::Octet response_flags (void) const;
 
   /// Accessors for the service context list
-  /// @@ NOTE: When do these go ??
   IOP::ServiceContextList &request_service_info (void);
   const IOP::ServiceContextList &request_service_info (void) const;
   IOP::ServiceContextList &reply_service_info (void);
@@ -91,6 +90,11 @@ public:
   const TAO_Service_Context &request_service_context (void) const;
   TAO_Service_Context &reply_service_context (void);
   const TAO_Service_Context &reply_service_context (void) const;
+
+  /// Reset the contents of the service context lists that we
+  /// hold.
+  void reset_request_service_info (void);
+  void reset_reply_service_info (void);
 
   ///Cache the request id.
   void request_id (CORBA::ULong id);

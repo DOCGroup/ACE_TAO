@@ -56,14 +56,12 @@ TAO_Operation_Details::request_service_context (void) const
 ACE_INLINE IOP::ServiceContextList &
 TAO_Operation_Details::request_service_info (void)
 {
-  // @@ This should go ...
   return this->request_service_context ().service_info ();
 }
 
 ACE_INLINE const IOP::ServiceContextList &
 TAO_Operation_Details::request_service_info (void) const
 {
-  // @@ This should go ...
   return this->request_service_context ().service_info ();
 }
 
@@ -82,15 +80,26 @@ TAO_Operation_Details::reply_service_context (void) const
 ACE_INLINE IOP::ServiceContextList &
 TAO_Operation_Details::reply_service_info (void)
 {
-  // @@ This should go ...
   return this->reply_service_context ().service_info ();
 }
 
 ACE_INLINE const IOP::ServiceContextList &
 TAO_Operation_Details::reply_service_info (void) const
 {
-  // @@ This should go ...
   return this->reply_service_context ().service_info ();
+}
+
+ACE_INLINE void
+TAO_Operation_Details::reset_request_service_info (void)
+{
+  return
+    this->request_service_context ().service_info ()._deallocate_buffer ();
+}
+ACE_INLINE void
+TAO_Operation_Details::reset_reply_service_info (void)
+{
+  return
+    this->reply_service_context ().service_info ()._deallocate_buffer ();
 }
 
 ACE_INLINE void

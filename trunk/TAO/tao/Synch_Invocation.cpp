@@ -160,8 +160,9 @@ namespace TAO
                                 ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        if (s != TAO_INVOKE_SUCCESS)
-          return s;
+        // What happens when the above call returns an error through
+        // the return value? That would be bogus as per the contract
+        // in the interface. The call violated the contract
 
         s = this->check_reply_status (rd
                                       ACE_ENV_ARG_PARAMETER);
@@ -171,9 +172,6 @@ namespace TAO
         // back to  cache after receiving the reply.
         if (this->resolver_.transport ()->idle_after_reply ())
           this->resolver_.transport_released ();
-
-        if (s != TAO_INVOKE_SUCCESS)
-          return s;
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (s == TAO_INVOKE_SUCCESS)
@@ -188,6 +186,10 @@ namespace TAO
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
+        // What about other values of "s"? The method called should
+        // have returned an exception instead of trying to communicate
+        // using return values, since that is the contract in the
+        // interface.
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     ACE_CATCHANY
@@ -237,6 +239,14 @@ namespace TAO
                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    /*
+     * Precondition: The call went to the remote
+     * peer. <ACE_Thread::self> is waiting for the reply.
+     *
+     * Postcondition: Any error during a wait is marked by raising an
+     * exception. Success alone is returned through the return value.
+     */
+
     int reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time,
                                                             rd);
@@ -311,6 +321,15 @@ namespace TAO
   Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher &rd
                                                ACE_ENV_ARG_DECL)
   {
+    /*
+     * Precondition: We probably got a reply. <ACE_Thread::self> is
+     * checking the status of the reply
+     *
+     * Postcondition: Any error while reading the reply is marked by
+     * raising an exception. LOCATION_FORWARDED replies are marked by
+     * returning a restart since that is what needed to be done by the
+     * callee.
+     */
     TAO_InputCDR &cdr =
       rd.reply_cdr ();
 

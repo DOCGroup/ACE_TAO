@@ -597,7 +597,7 @@ public:
   /// Free the storage.
   static void freebuf (CORBA::Octet *);
 
-  /// Implement the methods for all the sequence, please seee
+  /// Implement the methods for all the sequence, please see
   /// TAO_Base_Sequence.
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
