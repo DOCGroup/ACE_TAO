@@ -1,3 +1,9 @@
+Mon Nov 29 12:15:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Auto_IncDec_Test.cpp: Updated this test to use multiple
+	  threads, if available.  Thanks to Edan Ayal <EdanA@cti2.com> for
+ 	  this.
+
 Mon Nov 29 11:47:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.h:
