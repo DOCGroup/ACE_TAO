@@ -607,7 +607,7 @@ public:
                      Synchronizers &synchronizers);
 
   int svc (void);
-  void print_stats (ACE_Sample_History history,
+  void print_stats (ACE_Sample_History &history,
                     ACE_hrtime_t test_end);
   int setup (CORBA::Environment &ACE_TRY_ENV);
   void print_collective_stats (void);
@@ -643,7 +643,7 @@ Continuous_Worker::Continuous_Worker (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Continuous_Worker::print_stats (ACE_Sample_History history,
+Continuous_Worker::print_stats (ACE_Sample_History &history,
                                 ACE_hrtime_t test_end)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX,
