@@ -34,6 +34,10 @@ ACE_RCSID(tests, SOCK_Test, "$Id$")
 static const ACE_TCHAR ACE_ALPHABET[] =
   ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
 
+// This length is used for the "big buffer" send/receive.
+static const size_t big_size = (BUFSIZ * 4);
+
+
 static void *
 client (void *arg)
 {
@@ -53,7 +57,6 @@ client (void *arg)
       // Ok, so far so good. Now try one that will overflow the reader
       // side to be sure it properly tosses the overflow. Then send another
       // to be sure it finds the start of the next message ok.
-      const size_t big_size = 1024*1024;   // About a MB
       char big[big_size];
       for (size_t i = 0; i < big_size; ++i)
         big[i] = (i % 2) ? 0x05 : 0x0A;  // Make nice pattern in blown stack
@@ -124,19 +127,38 @@ server (void *arg)
                 ACE_TEXT ("(%P|%t) Recv 1 expected alphabet; got %s\n"),
                 buf));
 
-  expect = BUFSIZ;
-  recv_count = fifo->recv (buf, sizeof (buf));
   // See documented return values for ACE_FIFO_Recv_Msg...
   // We are being sent a message much longer than BUFSIZ.
+  // If this platform has STREAM pipes, the entire message will come
+  // through and we can grab it all. If not, then ACE_FIFO_Recv_Msg ditches
+  // the part of the message we don't read. This is rather a pain in the
+  // neck, but the API doesn't return info that more data is in the message
+  // (for STREAM pipes). When non-ACE_HAS_STREAM_PIPES discards data, the
+  // returned length will be larger than requested, though only the requested
+  // number of bytes are written to the buffer.
 #if defined (ACE_HAS_STREAM_PIPES)
-  if (recv_count != expect)
-#else
-  if (recv_count <= BUFSIZ)
+  for (size_t remaining = big_size;
+       remaining > 0;
+       remaining -= recv_count)
+    {
 #endif /* ACE_HAS_STREAM_PIPES */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Recv 2 expected %d, got %d. %p\n"),
-                       expect, recv_count, ACE_TEXT ("recv")),
-                      0);
+
+      // recv_count is sizeof(buf) on ACE_HAS_STREAM_PIPES; big_size on others.
+#if defined (ACE_HAS_STREAM_PIPES)
+      expect = ACE_static_cast (ssize_t, sizeof (buf));
+#else
+      expect = ACE_static_cast (ssize_t, big_size);
+#endif /* ACE_HAS_STREAM_PIPES */
+      recv_count = fifo->recv (buf, sizeof (buf));
+      if (recv_count != expect)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) Recv 2 expected %d, ")
+                           ACE_TEXT ("got %d. %p\n"),
+                           expect, recv_count, ACE_TEXT ("recv")),
+                          0);
+#if defined (ACE_HAS_STREAM_PIPES)
+    }
+#endif /* ACE_HAS_STREAM_PIPES */
 
   expect = ACE_static_cast (ssize_t, ACE_OS::strlen (ACE_ALPHABET));
   recv_count = fifo->recv (buf, sizeof (buf));
@@ -150,7 +172,8 @@ server (void *arg)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Recv 3 expected alphabet; got %s\n"),
                 buf));
-
+  else
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All receives ok\n")));
   return 0;
 }
 

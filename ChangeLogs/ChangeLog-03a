@@ -1,3 +1,9 @@
+Wed Nov 13 18:28:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/FIFO_Test.cpp: Changed to both clarify the usage of
+          ACE_FIFO_(Send|Recv)_Msg with and without ACE_HAS_STREAM_PIPES
+          and test that usage.
+
 Wed Nov 13 17:39:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Proactor.{h cpp}:
