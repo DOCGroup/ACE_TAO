@@ -4881,38 +4881,10 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
   QOS qos;
-  FLOWSPEC sending_flowspec;
-  FLOWSPEC receiving_flowspec;
-
-
-  // Construct the sending Flowspec.
-
-  sending_flowspec.TokenRate = qos_params.socket_qos ()->sending_flowspec ().token_rate ();
-  sending_flowspec.TokenBucketSize = qos_params.socket_qos ()->sending_flowspec ().token_bucket_size ();
-  sending_flowspec.PeakBandwidth = qos_params.socket_qos ()->sending_flowspec ().peak_bandwidth ();
-  sending_flowspec.Latency = qos_params.socket_qos ()->sending_flowspec ().latency ();
-  sending_flowspec.DelayVariation = qos_params.socket_qos ()->sending_flowspec ().delay_variation ();
-  sending_flowspec.ServiceType = qos_params.socket_qos ()->sending_flowspec ().service_type ();
-  sending_flowspec.MaxSduSize = qos_params.socket_qos ()->sending_flowspec ().max_sdu_size ();
-  sending_flowspec.MinimumPolicedSize = qos_params.socket_qos ()->sending_flowspec ().minimum_policed_size ();
-
-
-  // Construct the receiving Flowspec.
-
-  receiving_flowspec.TokenRate = qos_params.socket_qos ()->receiving_flowspec ().token_rate ();
-  receiving_flowspec.TokenBucketSize = qos_params.socket_qos ()->receiving_flowspec ().token_bucket_size ();
-  receiving_flowspec.PeakBandwidth = qos_params.socket_qos ()->receiving_flowspec ().peak_bandwidth ();
-  receiving_flowspec.Latency = qos_params.socket_qos ()->receiving_flowspec ().latency ();
-  receiving_flowspec.DelayVariation = qos_params.socket_qos ()->receiving_flowspec ().delay_variation ();
-  receiving_flowspec.ServiceType = qos_params.socket_qos ()->receiving_flowspec ().service_type ();
-  receiving_flowspec.MaxSduSize = qos_params.socket_qos ()->receiving_flowspec ().max_sdu_size ();
-  receiving_flowspec.MinimumPolicedSize = qos_params.socket_qos ()->receiving_flowspec ().minimum_policed_size ();
-
-
   // Construct the WinSock2 QOS structure.
 
-  qos.SendingFlowspec = sending_flowspec;
-  qos.ReceivingFlowspec = receiving_flowspec;
+  qos.SendingFlowspec = qos_params.socket_qos ()->sending_flowspec ();
+  qos.ReceivingFlowspec = qos_params.socket_qos ()->receiving_flowspec ();
   qos.ProviderSpecific = (WSABUF) qos_params.socket_qos ()->provider_specific ();
 
   ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
