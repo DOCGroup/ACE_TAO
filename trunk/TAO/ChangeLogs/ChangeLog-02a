@@ -1,3 +1,15 @@
+Sun Jul 23 22:01:23 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Fixed the following project/make files that still
+	  referenced old files:
+
+	  - Makefile.am
+	  - Makefile.bor
+	  - tao-dll.icc
+	  - tao-lib.icc
+	  - tao.bld
+	  - tao_ce.dsp
+
 Sun Jul 23 18:18:35 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
