@@ -169,7 +169,15 @@ SOURCE=.\FaultTolerance\FT_IOGR_Property.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_Policy_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_PolicyFactory.cpp
 # End Source File
 # Begin Source File
 
@@ -197,7 +205,15 @@ SOURCE=.\FaultTolerance\FT_IOGR_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_PolicyFactory.h
 # End Source File
 # Begin Source File
 
