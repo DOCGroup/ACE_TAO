@@ -637,7 +637,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->database (get_opt.optarg);
         break;
       case 'b':
-        this->base_address ((char *) ACE_OS::atoi (get_opt.optarg));
+        this->base_address (ACE_reinterpret_cast (char *, ACE_OS::atoi (get_opt.optarg)));
         break;
       case 'T':
         if (ACE_OS::strcasecmp (get_opt.optarg, ACE_LIB_TEXT ("ON")) == 0)

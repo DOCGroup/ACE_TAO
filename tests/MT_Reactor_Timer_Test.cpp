@@ -277,7 +277,7 @@ main (int, ACE_TCHAR *[])
   for (int i = ACE_MAX_TIMERS; i > 0; i--)
     // Schedule a timeout to expire immediately.
     if (r->schedule_timer (&callback,
-                           (const void *) i,
+                           ACE_reinterpret_cast (const void *, i),
                            ACE_Time_Value (0)) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

@@ -160,54 +160,54 @@ ACE_Configuration::get_internal_key (const ACE_Configuration_Section_Key& key)
   return key.key_;
 }
 
-int 
-ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TString& path_in, 
-                                ACE_Configuration_Section_Key& key_out, 
-                                int create) 
-{ 
-  // Make a copy of key 
-  ACE_Configuration_Section_Key current_section = key; 
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (path_in.rep ()); 
-  ACE_Tokenizer parser (pData.get ()); 
-  parser.delimiter_replace ('\\', '\0'); 
-  parser.delimiter_replace ('/', '\0'); 
+int
+ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
+                                const ACE_TString& path_in,
+                                ACE_Configuration_Section_Key& key_out,
+                                int create)
+{
+  // Make a copy of key
+  ACE_Configuration_Section_Key current_section = key;
+  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (path_in.rep ());
+  ACE_Tokenizer parser (pData.get ());
+  parser.delimiter_replace ('\\', '\0');
+  parser.delimiter_replace ('/', '\0');
 
-  for (ACE_TCHAR *temp = parser.next (); 
-       temp != 0; 
-       temp = parser.next ()) 
-    { 
-      // Open the section 
-      if (open_section (current_section, 
-                        temp, 
-                        create, 
-                        key_out)) 
-        return -1; 
+  for (ACE_TCHAR *temp = parser.next ();
+       temp != 0;
+       temp = parser.next ())
+    {
+      // Open the section
+      if (open_section (current_section,
+                        temp,
+                        create,
+                        key_out))
+        return -1;
 
-      current_section = key_out; 
-    } 
+      current_section = key_out;
+    }
 
-  return 0; 
+  return 0;
 
-} 
+}
 
 int
 ACE_Configuration::validate_name (const ACE_TCHAR* name)
 {
-  const ACE_TCHAR *pos; 
+  const ACE_TCHAR *pos;
 
-  for (pos = name; 
-       // Make sure it doesn't contain any invalid characters 
-       *pos != '\0'; 
-       pos++) 
-    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos)) 
-      return -1; 
+  for (pos = name;
+       // Make sure it doesn't contain any invalid characters
+       *pos != '\0';
+       pos++)
+    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos))
+      return -1;
 
-  // Make sure its not too long. 
-  if (pos - name > 255) 
-    return -2; 
+  // Make sure its not too long.
+  if (pos - name > 255)
+    return -2;
 
-  return 0; 
+  return 0;
 }
 
 
@@ -404,7 +404,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   // Finally, make sure that there are no sections in rhs that do not
   // exist in this
   sectionIndex = 0;
-  while ((rc) 
+  while ((rc)
          && (!nonconst_rhs.enumerate_sections (rhsRoot,
                                                sectionIndex,
                                                sectionName)))
@@ -451,16 +451,16 @@ ACE_Section_Key_Win32::~ACE_Section_Key_Win32 (void)
 
 //////////////////////////////////////////////////////////////////////////////
 
-int 
+int
 ACE_Configuration_Win32Registry::operator== (const ACE_Configuration_Win32Registry &rhs) const
 {
   ACE_UNUSED_ARG (rhs);
-  return 1; 
+  return 1;
 }
 
-int 
+int
 ACE_Configuration_Win32Registry::operator!=(const ACE_Configuration_Win32Registry &rhs) const
-{ 
+{
   ACE_UNUSED_ARG (rhs);
   return 1;
 }
@@ -832,7 +832,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   return 0;
 }
 
-int 
+int
 ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key& key,
                                              const ACE_TCHAR* name,
                                              VALUETYPE& type_out)
@@ -844,7 +844,7 @@ ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key
   if (load_key (key, base_key))
     return -1;
 
-  DWORD buffer_length=0; 
+  DWORD buffer_length=0;
   DWORD type;
   int result=ACE_TEXT_RegQueryValueEx (base_key,
                                        name,
@@ -904,61 +904,61 @@ ACE_Configuration_Win32Registry::load_key (const ACE_Configuration_Section_Key& 
   return 0;
 }
 
-HKEY 
-ACE_Configuration_Win32Registry::resolve_key (HKEY hKey, 
-                                              const ACE_TCHAR* path, 
-                                              int create) 
-{ 
-  HKEY result = 0; 
-  // Make a copy of hKey 
-  if (::RegOpenKey (hKey, NULL, &result) != ERROR_SUCCESS) 
-    return 0; 
+HKEY
+ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
+                                              const ACE_TCHAR* path,
+                                              int create)
+{
+  HKEY result = 0;
+  // Make a copy of hKey
+  if (::RegOpenKey (hKey, NULL, &result) != ERROR_SUCCESS)
+    return 0;
 
-  // recurse through the path 
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (new ACE_TCHAR[ACE_OS::strlen (path) + 1]); 
-  ACE_OS::strcpy (pData.get (), path); 
-  ACE_Tokenizer parser (pData.get ()); 
-  parser.delimiter_replace ('\\', '\0'); 
-  parser.delimiter_replace ('/', '\0'); 
+  // recurse through the path
+  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (new ACE_TCHAR[ACE_OS::strlen (path) + 1]);
+  ACE_OS::strcpy (pData.get (), path);
+  ACE_Tokenizer parser (pData.get ());
+  parser.delimiter_replace ('\\', '\0');
+  parser.delimiter_replace ('/', '\0');
 
-  for (ACE_TCHAR *temp = parser.next (); 
-       temp != 0; 
-       temp = parser.next ()) 
-    { 
-      // Open the key 
-      HKEY subkey; 
-      if (ACE_TEXT_RegOpenKey (result, 
-                               temp, 
-                               &subkey) != ERROR_SUCCESS) 
-        { 
-          // try creating it 
-          if (!create || ACE_TEXT_RegCreateKeyEx (result, 
-                                                  temp, 
-                                                  0, 
-                                                  NULL, 
-                                                  0, 
-                                                  KEY_ALL_ACCESS, 
-                                                  NULL, 
-                                                  &subkey, 
-#if defined (__MINGW32__) 
-                                                  (PDWORD) 0 
-#else 
-                                                  NULL 
-#endif /* __MINGW32__ */ 
-                                                  ) != ERROR_SUCCESS) 
-            { 
-              // error 
-              ::RegCloseKey (result); 
-              return 0; 
-            } 
-        } 
-      // release our open key handle 
-      ::RegCloseKey (result); 
-      result = subkey; 
-    } 
+  for (ACE_TCHAR *temp = parser.next ();
+       temp != 0;
+       temp = parser.next ())
+    {
+      // Open the key
+      HKEY subkey;
+      if (ACE_TEXT_RegOpenKey (result,
+                               temp,
+                               &subkey) != ERROR_SUCCESS)
+        {
+          // try creating it
+          if (!create || ACE_TEXT_RegCreateKeyEx (result,
+                                                  temp,
+                                                  0,
+                                                  NULL,
+                                                  0,
+                                                  KEY_ALL_ACCESS,
+                                                  NULL,
+                                                  &subkey,
+#if defined (__MINGW32__)
+                                                  (PDWORD) 0
+#else
+                                                  NULL
+#endif /* __MINGW32__ */
+                                                  ) != ERROR_SUCCESS)
+            {
+              // error
+              ::RegCloseKey (result);
+              return 0;
+            }
+        }
+      // release our open key handle
+      ::RegCloseKey (result);
+      result = subkey;
+    }
 
-  return result; 
-} 
+  return result;
+}
 
 #endif /* WIN_32 */
 
@@ -980,7 +980,7 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ACE_TCHAR* string)
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (u_int integer)
   : type_ (ACE_Configuration::INTEGER),
-    data_ ((void*) integer),
+    data_ (ACE_reinterpret_cast (void*, integer)),
     length_ (0)
 {
 }
@@ -1827,7 +1827,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = 
+      ACE_TCHAR* pers_name =
         (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value =

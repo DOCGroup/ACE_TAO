@@ -154,7 +154,11 @@
 #define ACE_LACKS_WCSNICMP
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
+# if defined (__ia64)
+#  define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000000080000000)
+# else /* ! __ia64 */
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
+# endif /* __ia64 */
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
 
 // Compiler/platform supports alloca().
@@ -251,7 +255,23 @@
 
 #define ACE_HAS_DIRENT
 
+#if defined (__ia64)
+# define ACE_UINT64_FORMAT_SPECIFIER "%lu"
+#else /* ! __ia64 */
 # define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
+#endif /* __ia64 */
+
+#if defined (__ia64)
+# define ACE_SSIZE_T_FORMAT_SPECIFIER "%ld"
+#else /* ! __ia64 */
+# define ACE_SSIZE_T_FORMAT_SPECIFIER "%d"
+#endif /* __ia64 */
+
+#if defined (__ia64)
+# define ACE_SIZE_T_FORMAT_SPECIFIER "%lu"
+#else /* ! __ia64 */
+# define ACE_SIZE_T_FORMAT_SPECIFIER "%u"
+#endif /* __ia64 */
 
 #if !defined (ACE_TIMER_SKEW)
 # define ACE_TIMER_SKEW 10 * 1000

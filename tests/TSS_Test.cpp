@@ -282,7 +282,7 @@ main (int, ACE_TCHAR *[])
   if (ACE_Thread_Manager::instance ()->spawn_n
       (threads,
        ACE_THR_FUNC (worker),
-       (void *) ITERATIONS,
+       ACE_reinterpret_cast (void *, ITERATIONS),
        THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);

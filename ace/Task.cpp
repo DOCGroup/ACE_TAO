@@ -200,7 +200,7 @@ ACE_Task_Base::svc_run (void *args)
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   // Call the Task's svc() hook method.
-  void *status = (void *) t->svc ();
+  void * status = ACE_reinterpret_cast(void *, t->svc ());
 
 // If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke
 #if 1
