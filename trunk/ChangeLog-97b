@@ -1,3 +1,13 @@
+Mon Sep  8 14:05:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/ACE.cpp (read_adapter): Removed ACE_Thread_Control object in
+	  this function.  This is now taken care of by ACE_Thread_Manager.
+	  (register_stdin_handler): This function no longer uses
+	  ACE_Stdin_Args to pass in thread manager into read_adapter.  
+
+	* ace/ACE.h (ACE): Removed class ACE_Stdin_Args, because it is no
+	  longer needed.
+
 Mon Sep 08 11:49:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/run_tests.sh: moved log file checks out to separate file,
