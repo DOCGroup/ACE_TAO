@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : acelib {
+project : acelib, dsui {
   after    += Kokyu
   libs     += Kokyu
   includes += $(ACE_ROOT)/Kokyu
