@@ -1678,8 +1678,9 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_destroy");
 #if defined (ACE_HAS_PACE)
+  int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_destroy (m),
-                                       ace_result_), int, -1);
+                                       dummy_retval), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
 #   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
@@ -1726,8 +1727,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 {
   // ACE_OS_TRACE ("ACE_OS::mutex_lock");
 #if defined (ACE_HAS_PACE)
+  int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_lock (m),
-                                       ace_result_), int, -1);;
+                                       dummy_retval), int, -1);;
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
@@ -1826,8 +1828,9 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_trylock");
 #if defined (ACE_HAS_PACE)
+  int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_trylock (m),
-                                       ace_result_), int, -1);
+                                       dummy_retval), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
@@ -1958,8 +1961,9 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_unlock");
 #if defined (ACE_HAS_PACE)
+  int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_unlock (m),
-                                       ace_result_), int, -1);
+                                       dummy_retval), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
@@ -2010,26 +2014,30 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
-  ACE_UNUSED_ARG (type);
-  // Force the use of USYNC_THREAD!
-  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
-# elif defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
-
   ::InitializeCriticalSection (m);
   return 0;
+
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
+  ACE_UNUSED_ARG (type);
+  // Force the use of USYNC_THREAD!
+  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
+
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, type, name, arg);
-# endif /* Threads variety case */
+
+# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
+
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
+
 #endif /* ACE_HAS_THREADS */
 }
 
@@ -2038,17 +2046,22 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::thread_mutex_destroy");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
-  return ACE_OS::mutex_destroy (m);
-# elif defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
   ::DeleteCriticalSection (m);
   return 0;
+
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
+  return ACE_OS::mutex_destroy (m);
+
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_destroy (m);
+
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
+
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
+
 #endif /* ACE_HAS_THREADS */
 }
 
