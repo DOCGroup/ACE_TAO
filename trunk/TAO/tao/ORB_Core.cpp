@@ -184,6 +184,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
+#if (TAO_HAS_RT_CORBA==1)
+
   ACE_NEW (this->endpoint_selector_factory_,
            TAO_Endpoint_Selector_Factory);
 
@@ -205,6 +207,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->client_priority_policy_selector_,
            TAO_Client_Priority_Policy_Selector);
 
+#endif /* TAO_HAS_RT_CORBA == 1 */
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_NEW (this->default_endpoint_selector_,
