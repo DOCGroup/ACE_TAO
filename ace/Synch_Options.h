@@ -101,11 +101,11 @@ public:
   /// Set the "magic cookie" argument.
   void arg (const void *);
 
-  /// Returns a reference to the <Time_Value>.  This value only makes
+  /// Returns a reference to the ACE_Time_Value.  This value only makes
   /// sense if (*this)[USE_TIMEOUT] is true.
   const ACE_Time_Value &timeout (void) const;
 
-  /// Set the <Time_Value>.
+  /// Set the ACE_Time_Value.
   void timeout (const ACE_Time_Value &tv);
 
   /**
