@@ -33,8 +33,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include "Messaging.h"
 #include "tao/PollableS.h"
-#include "tao/Messaging/Messaging.h"
 #include "tao/OctetSeqS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -202,7 +202,7 @@ namespace POA_Messaging
 
 } // module Messaging
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:997
 
 #include "MessagingS_T.h"
