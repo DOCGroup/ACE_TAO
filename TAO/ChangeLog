@@ -1,3 +1,8 @@
+Sat May 31 10:39:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/configurations.html: Added a example for an optimized
+	  single-threaded setting.
+
 Sat May 31 10:26:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile: Added a list of controlled files. With CIAO in picture
