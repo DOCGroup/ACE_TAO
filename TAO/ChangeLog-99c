@@ -1,3 +1,31 @@
+Tue Aug 03 18:40:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/IIOP_Connect.{h,cpp} (TAO_IIOP_Client_Connection_Handler):
+	* tao/UIOP_Connect.{h, cpp} (TAO_UIOP_Client_Connection_Handler):
+	  Added <handle_cleanup> method which abstracts the deregistration
+	  of the handler from the reactor. Added <handle_close_i> which is 
+	  a non-locking version of <handle_close>.
+	  
+	* tao/IIOP_Connector.{h,cpp}: (open):
+	* tao/UIOP_Connector.{h,cpp}: (open):
+	  Added auto_ptr as a safety measurement for the dynamically
+	  allocated variables. Also, the <caching_strategy> now
+	  uses ACE_Refcounted_Recyclable_Caching_Utility.
+
+	* tao/Acceptor_Impl.cpp (out_of_sockets_handler):
+	  Added the iteration over the different ORBs in the system for
+	  purging 'old' connections.
+
+	* tests/Connection_Purging/Connection_Purging.cpp:
+	* tests/Connection_Purging/Makefile:
+	* tests/Connection_Purging/run_test.pl:
+	* tests/Connection_Purging/README:
+	* tests/Connection_Purging/svc.conf:
+	* tests/Connection_Purging/test.idl:
+	  This is a test which stress tests the connection management and
+	  the caching and purging of connections when the process runs out
+	  of handles. 
+
 Tue Aug 03 16:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Collocation/Coll_Test_Skels.dsp:
