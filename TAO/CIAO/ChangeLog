@@ -1,3 +1,16 @@
+Fri May 14 12:17:55 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Requirement_Handler.cpp:
+        * DnC/Config_Handlers/Property_Handler.cpp:
+        * DnC/Config_Handlers/SP_Handler.cpp:
+        * DnC/Config_Handlers/RS_Handler.cpp:
+
+          Among, the common data type handlers, the aforementioned four
+          handlers need to handle elements that can be referenced via
+          <href> tags and <xmi:id> tags. In this commit, I have addressed
+          parsing <href> tags, next, more complicated step will be to
+          handle <xmi:id> tags.
+
 Thu May 13 22:56:22 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
