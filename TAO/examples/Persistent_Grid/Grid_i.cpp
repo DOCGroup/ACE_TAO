@@ -25,24 +25,22 @@ Grid_i::Grid_i (CORBA::Short x,
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
-  if (mem_pool->find("Array",(void*&)array_) == -1) 
+  if (mem_pool->find ("Array", (void *&) array_) == -1) 
     {
       // Allocate memory for the matrix.
-      array_ = (CORBA::Long **)mem_pool->malloc(y * sizeof(CORBA::Long *));
+      array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
   
       if (array_ != 0)
         {
           for (int ctr = 0; ctr < y; ctr++)
             {
-              array_[ctr] = (CORBA::Long *)mem_pool->malloc(x *
-                                                           sizeof(CORBA::Long));
+              array_[ctr] = (CORBA::Long *)mem_pool->malloc (x *
+                                                            sizeof (CORBA::Long));
               if (array_[ctr] == 0)
-                {
-                  ACE_THROW (CORBA::NO_MEMORY ());
-                }
+                ACE_THROW (CORBA::NO_MEMORY ());
             }
           
-          mem_pool->bind("Array",array_);
+          mem_pool->bind ("Array", array_);
         }
       else
         ACE_THROW (CORBA::NO_MEMORY ());
@@ -130,7 +128,7 @@ Grid_i::destroy (CORBA::Environment &)
   delete [] array_;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) %s\n",
+              " (%P|%t) %s\n",
               "Grid has been destroyed"));
 }
 
@@ -171,9 +169,8 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   Grid_i *grid_ptr = 0;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Making a new Grid\n"));
+              " (%P|%t) Making a new Grid\n"));
 
-  
   // Set a default value for width.
   if (width <= 0)
     width = Grid_Factory::DEFAULT_WIDTH;
@@ -212,7 +209,7 @@ void
 Grid_Factory_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) %s\n",
+              " (%P|%t) %s\n",
               "Grid Factory is shutting down"));
 
   // Instruct the ORB to shutdown.
@@ -223,12 +220,10 @@ void
 Grid_Factory_i::cleanup (CORBA::Environment &)
 {
   const char *name = "Array";
+
   if (this->pool_t_->unbind (name) == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n Failed to unbind "));
-    }
-  
+    ACE_DEBUG ((LM_DEBUG,
+                "\n Failed to unbind "));
 }
 
 void

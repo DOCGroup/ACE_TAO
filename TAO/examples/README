@@ -22,6 +22,11 @@ examples:
 
           This example implements a simple logging service using TAO.
 
+        . Persistent_Grid
+
+          This example shows how to store the state of CORBA servants in
+          persistent memory.
+
         . POA
 
           Contains various small examples of POA features based on
