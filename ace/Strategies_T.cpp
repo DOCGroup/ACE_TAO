@@ -274,7 +274,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
     return -1;
 
   // Register with the Reactor with the appropriate <mask>.
-  else if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
+  if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
     return -1;
 
     // Call up to our parent to do the SVC_HANDLER initialization.
