@@ -4,8 +4,13 @@ Tue May 04 12:03:52 1999  David L. Levine  <levine@cs.wustl.edu>
           removed tmplinst-orbsvcs.cpp, because none of its
           explicit instantiations appear to be used.
 
-          Arranged orbsvcs subsets so that the Naming service
+          Arranged orbsvcs subsets so that the Naming Service
           is always built.  Many examples and tests need it.
+
+        * docs/configurations.html: removed note about orbsvcs
+          subsets not considering dependencies between the services.
+          The hard-coded dependencies and Makefile dependencies
+          should take care of that now.
 
 Tue May  4 09:47:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
