@@ -4,7 +4,7 @@
 
 ACE_RCSID(Time, client, "$Id$")
 
-// This function runs the Bank test.
+// This function runs the Bank client test.
 
 int
 main (int argc, char *argv[])
