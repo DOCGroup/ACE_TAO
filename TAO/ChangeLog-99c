@@ -1,3 +1,25 @@
+Sun Jul 11 20:10:13 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  Added code for the FlowEndPoint to make use of the Pluggable
+	  Data Protocols. Also fixed a few bugs in the full profile
+	  TAO_StreamCtrl::bind and other full profile classes like
+	  TAO_FlowConnection. Now the AV application can make use of FDev
+	  in MMDevices for each flow and automagically the appropriate
+	  protocols will be chosen depending on the common protocol
+	  between 2 flow endpoints. 
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.{h,cpp}:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.{h,cpp}:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	  Added a new test similar to the file transfer program under
+	  Pluggable directory. This test make use of the full profile
+	  classes. A FDev create flow consumers and flow producers and is
+	  added to the MMDevice. During streamconnection this fdev creates
+	  the consumer/producer depending on whether its a client or a
+	  server. The flow endpoint is also a base_streamendpoint ensuring
+	  that the pluggable data protocols can set the protocol object.
+
 Wed Jul  7 22:05:22 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}: 
