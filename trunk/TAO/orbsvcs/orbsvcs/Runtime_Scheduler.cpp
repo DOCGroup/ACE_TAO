@@ -5,11 +5,11 @@
 #include "ace/OS_NS_string.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Runtime_Scheduler.i"
+#include "orbsvcs/orbsvcs/Runtime_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (orbsvcs, 
-           Runtime_Scheduler, 
+ACE_RCSID (orbsvcs,
+           Runtime_Scheduler,
            "$Id$")
 
   // Constructor. Initialize the data from the POD_RT_Info array.
@@ -547,8 +547,8 @@ ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*co
     ACE_THROW (RtecScheduler::NOT_SCHEDULED());
   //TODO: fill the Config_Info_Set with the runtime Config_Infos
   //for now, this function is unimplemented
-  // 
-  // @@ If unimplemented we either return a CORBA::NO_IMPL exception 
+  //
+  // @@ If unimplemented we either return a CORBA::NO_IMPL exception
   // or a proprietary ACE_NOTSUP; -- Bala
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
