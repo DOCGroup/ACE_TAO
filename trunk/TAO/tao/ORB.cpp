@@ -243,7 +243,7 @@ CORBA_ORB::resolve_poa_current (void)
   TAO_POA_Current *poa_current = TAO_ORB_Core_instance ()->poa_current ();
   if (poa_current == 0)
     return CORBA_Object::_nil ();
-  
+
   PortableServer::Current_var result = poa_current->_this (env);
   if (env.exception () != 0)
     return CORBA_Object::_nil ();
@@ -257,7 +257,7 @@ CORBA_ORB::resolve_name_service (void)
 {
   CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-  
+
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
     // @@ Someone please double-check this ;-)
@@ -288,32 +288,32 @@ CORBA_ORB::resolve_name_service (void)
     {
       // First, determine if the port was supplied on the command line
       u_short port =
-	TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+        TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
 
       if (port == 0)
         {
-	  // Look for the port among our environment variables.
+          // Look for the port among our environment variables.
           const char *port_number = ACE_OS::getenv ("NameServicePort");
-	  
+
           if (port_number != 0)
             port = ACE_OS::atoi (port_number);
-	  else
-	    port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+          else
+            port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
         }
 
       return_value =
-	this->multicast_to_service (TAO_SERVICEID_NAMESERVICE, port);
+        this->multicast_to_service (TAO_SERVICEID_NAMESERVICE, port);
     }
-  
+
   return CORBA_Object::_duplicate (return_value);
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_trading_service (void)
 {
-  CORBA::Environment env;  
+  CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-  
+
   // First check to see if we've already initialized this.
   if (this->trading_service_ != CORBA_Object::_nil ())
     // @@ Someone please double-check this ;-)
@@ -321,46 +321,46 @@ CORBA_ORB::resolve_trading_service (void)
   else
     {
       char *trading_service_ior =
-	TAO_ORB_Core_instance ()->orb_params ()->trading_service_ior ();
-      
+        TAO_ORB_Core_instance ()->orb_params ()->trading_service_ior ();
+
       // Second, check to see if the user has give us a parameter on
       // the command-line.
       if (trading_service_ior == 0)
-	// Third, check to see if the user has an environment variable.
-	trading_service_ior = ACE_OS::getenv ("TradingService");
-      
+        // Third, check to see if the user has an environment variable.
+        trading_service_ior = ACE_OS::getenv ("TradingService");
+
       if (trading_service_ior != 0)
-	{
-	  this->trading_service_ =
-	    this->string_to_object (trading_service_ior, env);
-	  
-	  // check for errors
-	  if (env.exception () != 0)
-	    this->trading_service_ = CORBA_Object::_nil ();
-	  
-	  // Return ior.
-	  return_value = this->trading_service_;
-	}
+        {
+          this->trading_service_ =
+            this->string_to_object (trading_service_ior, env);
+
+          // check for errors
+          if (env.exception () != 0)
+            this->trading_service_ = CORBA_Object::_nil ();
+
+          // Return ior.
+          return_value = this->trading_service_;
+        }
       else
-	{
-	  // First, determine if the port was supplied on the command line
-	  u_short port =
-	    TAO_ORB_Core_instance ()->orb_params ()->trading_service_port ();
+        {
+          // First, determine if the port was supplied on the command line
+          u_short port =
+            TAO_ORB_Core_instance ()->orb_params ()->trading_service_port ();
 
-	  if (port == 0)
-	    {
-	      // Look for the port among our environment variables.
-	      const char *port_number = ACE_OS::getenv ("TradingServicePort");
-	      
-	      if (port_number != 0)
-		port = ACE_OS::atoi (port_number);
-	      else
-		port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
-	    }
+          if (port == 0)
+            {
+              // Look for the port among our environment variables.
+              const char *port_number = ACE_OS::getenv ("TradingServicePort");
 
-	  return_value =
-	    this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE, port);
-	}
+              if (port_number != 0)
+                port = ACE_OS::atoi (port_number);
+              else
+                port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+            }
+
+          return_value =
+            this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE, port);
+        }
     }
 
   return CORBA_Object::_duplicate (return_value);
@@ -369,28 +369,28 @@ CORBA_ORB::resolve_trading_service (void)
 
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
-				 u_short port)
-{    
+                                 u_short port)
+{
   CORBA::Environment env;
   // Use UDP multicast to locate the  service.
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-  
+
   // This is the code that implements the multicast
   // Naming Service locator.
   ACE_SOCK_Dgram_Mcast multicast;
   ACE_INET_Addr remote_addr;
   // This starts out initialized to all zeros!
-  ACE_INET_Addr multicast_addr (port, 
-				ACE_DEFAULT_MULTICAST_ADDR);
-  
+  ACE_INET_Addr multicast_addr (port,
+                                ACE_DEFAULT_MULTICAST_ADDR);
+
   // Subscribe to multicast address.
   if (multicast.subscribe (multicast_addr) == -1)
     return return_value;
-  
+
   // Prepare connection for the reply.
   ACE_INET_Addr response_addr;
   ACE_SOCK_Dgram response;
-  
+
   // Choose any local port, we don't really care.
   if (response.open (ACE_Addr::sap_any) == -1)
     {
@@ -408,62 +408,62 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   {
     u_short reply_port;
     CORBA::Short service_id;
-  } mcast_info;	  
-  
+  } mcast_info;
+
   // Figure out what port to listen on for server replies,
   // and convert to network byte order.
   mcast_info.reply_port = htons (response_addr.get_port_number ());
   mcast_info.service_id = htons (service_id);
-  
+
   // Send multicast of one byte, enough to wake up server.
   ssize_t n_bytes =
     multicast.send (&mcast_info, sizeof (mcast_info));
 
   ACE_DEBUG ((LM_DEBUG, "sent multicast request."));
-  
+
   // check for errors
   if (n_bytes == -1)
     return return_value;
-  
+
   ACE_DEBUG ((LM_DEBUG,
-	      "%s; Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n",
-	      __FILE__,
-	      response_addr.get_port_number (),
-	      n_bytes));
-  
+              "%s; Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n",
+              __FILE__,
+              response_addr.get_port_number (),
+              n_bytes));
+
 
   // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
   ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
-  
+
   // receive response message
   char buf[ACE_MAX_DGRAM_SIZE];
   n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &timeout);
-  
+
   // Close endpoint for response.
   int retval = response.close ();
-  
+
   // check for errors
   if (n_bytes == -1 || retval == -1)
     return return_value;
-  
+
   // null terminate message
   buf[n_bytes] = 0;
-  
+
   ACE_DEBUG ((LM_DEBUG,
-	      "%s; Service resolved to ior: '%s'\n",
-	      __FILE__,
-	      buf));
-  
+              "%s; Service resolved to ior: '%s'\n",
+              __FILE__,
+              buf));
+
   // convert ior to an object reference
-  CORBA_Object_ptr objectified_ior = 
+  CORBA_Object_ptr objectified_ior =
     this->string_to_object ((CORBA::String) buf, env);
-	  
+
   // check for errors
   if (env.exception () == 0)
     return_value = objectified_ior;
-  
+
   // Return ior.
-  return return_value;   
+  return return_value;
 }
 
 CORBA_Object_ptr
@@ -588,19 +588,6 @@ CORBA::wstring_alloc (CORBA::ULong len)
   return new CORBA::WChar [(size_t) (len + 1)];
 }
 
-static
-inline
-CORBA::WChar *
-wscpy (CORBA::WChar *dest,
-       const CORBA::WChar *src)
-{
-  CORBA::WChar  *retval = dest;
-
-  while ((*dest++ = *src++) != 0)
-    continue;
-  return retval;
-}
-
 CORBA::WString
 CORBA::wstring_copy (const CORBA::WChar *const str)
 {
@@ -684,14 +671,14 @@ CORBA::ORB_init (int &argc,
 
   // Initialize the ORB Core instance.
   int result = TAO_ORB_Core_instance ()->init (argc, (char **)argv);
- 
+
   // check for errors and return 0 if error.
   if (result == -1)
     {
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;
     }
- 
+
   return TAO_ORB_Core_instance()->orb ();
 }
 
