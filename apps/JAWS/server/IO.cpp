@@ -9,25 +9,12 @@
 ACE_RCSID(server, IO, "$Id$")
 
 JAWS_IO::JAWS_IO (void)
-  : handle_ (ACE_INVALID_HANDLE),
-    handler_ (0)
+  : handler_ (0)
 {
 }
 
 JAWS_IO::~JAWS_IO (void)
 {
-}
-
-ACE_HANDLE
-JAWS_IO::handle (void)
-{
-  return this->handle_;
-}
-
-void
-JAWS_IO::handle (ACE_HANDLE handle)
-{
-  this->handle_ = handle;
 }
 
 void
@@ -37,12 +24,25 @@ JAWS_IO::handler (JAWS_IO_Handler *handler)
 }
 
 JAWS_Synch_IO::JAWS_Synch_IO (void)
+  : handle_ (ACE_INVALID_HANDLE)
 {
 }
 
 JAWS_Synch_IO::~JAWS_Synch_IO (void)
 {
   ACE_OS::closesocket (this->handle_);
+}
+
+ACE_HANDLE
+JAWS_Synch_IO::handle (void)
+{
+  return this->handle_;
+}
+
+void
+JAWS_Synch_IO::handle (ACE_HANDLE handle)
+{
+  this->handle_ = handle;
 }
 
 void
