@@ -56,10 +56,17 @@ public:
   // it.
 
   virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventComm::Disconnected
+      ));
   // push the event to the consumer.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
   // disconnect the consumer from the EC.
 
   // = CosEC_Multiple methods.
