@@ -1,3 +1,9 @@
+Mon Jan 26 18:10:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeinclude/build_lib.bor:
+	* include/makeinclude/compiler.bor:
+	  Added support for the CBuilderX Preview ar.
+
 Mon Jan 26 16:14:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeinclude/clean.bor:
