@@ -1,5 +1,8 @@
 Mon Nov 03 13:22:12 1997    <nw1@CHA-CHA>
 
+	* TAO_IDL/tao_idl.dsp:  Moved the output executables to the usual
+	  place.
+
 	* TAO_IDL/be/be.h: Added #ifdef'ed pragma to diable warning 4250
 	  on NT.  This is only temporary and should be fixed later.
 	
