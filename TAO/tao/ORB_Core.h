@@ -62,33 +62,11 @@ public:
   ~TAO_ORB_Core (void);
   // Destructor
 
-  // = Accessors
-  CORBA_ORB_ptr orb (void);
-  // Should this be IIOP_ORB?
-
-  ACE_Reactor *reactor (void);
-  // Accessors for the <ACE_Reactor>.
-
-  ACE_Thread_Manager *thr_mgr (void);
-  // Accessor for the <ACE_Thread_Manager>.
-
-  TAO_POA *root_poa (void);
-  // Acceptor for the POA.
-
   TAO_OA_Parameters *oa_params (void);
   // Accessor for the Object Adapter parameters.
 
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
-
-  ACE_INET_Addr &addr (void);
-  // Accessors for the local address on which we're listening.
-
-  TAO_CONNECTOR *connector (void);
-  // Accessor which returns the connector.
-
-  TAO_ACCEPTOR *acceptor (void);
-  // Accessor which returns the acceptor.
 
   TAO_POA_Current *poa_current (void);
   // Accessor which returns a pointer to a structure containing
@@ -97,6 +75,34 @@ public:
   TAO_POA_Current *poa_current (TAO_POA_Current *new_current);
   // Sets the thread-specific pointer to the new POA Current state,
   // returning a pointer to the existing POA Current state.
+
+  // = Set/get the connector.
+  TAO_CONNECTOR *connector (TAO_CONNECTOR *c);
+  TAO_CONNECTOR *connector (void);
+
+  // = Set/get the acceptor.
+  TAO_ACCEPTOR *acceptor (TAO_ACCEPTOR *a);
+  TAO_ACCEPTOR *acceptor (void);
+  // Accessor which returns the acceptor.
+
+  // = Set/get pointer to the ORB.
+  CORBA::ORB_ptr orb (CORBA::ORB_ptr);
+  CORBA_ORB_ptr orb (void);
+
+  // = Set/get the <ACE_Reactor>.
+  ACE_Reactor *reactor (ACE_Reactor *r);
+  ACE_Reactor *reactor (void);
+
+  // = Set/get the <ACE_Thread_Manager>.
+  ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *tm);
+  ACE_Thread_Manager *thr_mgr (void);
+
+  // = Set/get <Acceptor> for the POA.
+  TAO_POA *root_poa (TAO_POA *np);
+  TAO_POA *root_poa (void);
+
+  ACE_INET_Addr &addr (void);
+  // Accessors for the local address on which we're listening.
 
   // = Access to Factories.
   //
@@ -107,8 +113,10 @@ public:
 
   TAO_Resource_Factory *resource_factory (void);
   // Returns pointer to the resource factory.
+
   TAO_Client_Strategy_Factory *client_factory (void);
   // Returns pointer to the client factory.
+
   TAO_Server_Strategy_Factory *server_factory (void);
   // Returns pointer to the server factory.
 
@@ -125,28 +133,26 @@ private:
   // Returns -1 in case of error, or the number of connections
   // actually established.
 
-  void orb (CORBA::ORB_ptr);
-  // Set pointer to the ORB.
-  CORBA::ORB_ptr orb_;
-
-  void reactor (ACE_Reactor *r);
-  ACE_Reactor* reactor_;
+  // = Data members.
+  ACE_Reactor *reactor_;
   // Used for responding to I/O reactively
 
-  void thr_mgr (ACE_Thread_Manager *tm);
-  ACE_Thread_Manager* thr_mgr_;
+  ACE_Thread_Manager *thr_mgr_;
   // Used to manage threads within the ORB
 
-  void connector (TAO_CONNECTOR *c);
+  void create_and_set_root_poa (void);
+  // Initialize the root POA.
+
   TAO_CONNECTOR *connector_;
   // The connector actively initiating connection requests.
 
-  void root_poa (TAO_POA *np);
-  void create_and_set_root_poa (void);
+  CORBA::ORB_ptr orb_;
+  // Pointer to the ORB.
+
   TAO_POA *root_poa_;
   // Pointer to the root POA.  It will eventually be the pointer
-  // returned by calls to CORBA::ORB::resolve_initial_references
-  // ("RootPOA").
+  // returned by calls to <CORBA::ORB::resolve_initial_references
+  // ("RootPOA")>.
 
   TAO_OA_Parameters *oa_params_;
   // Parameters which should be used by OAs attached to this ORB.
@@ -158,7 +164,6 @@ private:
   // The address of the endpoint on which we're listening for
   // connections and requests.
 
-  void acceptor (TAO_ACCEPTOR *a);
   TAO_ACCEPTOR *acceptor_;
   // The acceptor passively listening for connection requests.
 

@@ -691,22 +691,26 @@ TAO_ORB_Core::server_factory (void)
   return this->server_factory_;
 }
 
-void
+CORBA::ORB_ptr
 TAO_ORB_Core::orb (CORBA::ORB_ptr op)
 {
-  // Shouldn't need to check for ptr validity at this point b/c
-  // we already did in ::init()
+  // Shouldn't need to check for ptr validity at this point b/c we
+  // already did in ::init()
   this->resource_factory ()->set_orb (op);
+  CORBA::ORB_ptr old_orb = this->orb_;
   this->orb_ = op;
+  return old_orb;
 }
 
-void
+TAO_POA *
 TAO_ORB_Core::root_poa (TAO_POA *np)
 {
   // Shouldn't need to check for ptr validity at this point b/c
   // we already did in ::init()
   this->resource_factory ()->set_root_poa (np);
+  TAO_POA *old_poa = this->root_poa_;
   this->root_poa_ = np;
+  return old_poa;
 }
 
 void
