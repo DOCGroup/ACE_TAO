@@ -27,7 +27,9 @@
 /* These platforms are NOT POSIX compliant. */
 #elif defined (PACE_VXWORKS)
 # define PACE_LACKS_POSIX PACE_VXWORKS
-#elif defined (PACE_WIN32)
+/* Doesn't use the makefile! */
+#elif defined (WIN32)
+# define PACE_WIN32 2000
 # define PACE_LACKS_POSIX PACE_WIN32
 #endif
 
