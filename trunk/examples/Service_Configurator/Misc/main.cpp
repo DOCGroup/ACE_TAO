@@ -42,9 +42,12 @@ main (int, ASYS_TCHAR *argv[])
   l_argv[3] = ASYS_TEXT ("static Timer_Service_1 \"timer 1 10 $TRACE\"");
   l_argv[4] = ASYS_TEXT ("-S");
   l_argv[5] = ASYS_TEXT ("dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() \"timer 2 10 $TRACE\"");
-  l_argv[6] = 0;
+  // Use the -f option twice to test this feature!
+  l_argv[6] = ASYS_TEXT ("-fsvc.conf");
+  l_argv[7] = ASYS_TEXT ("-fsvc.conf");
+  l_argv[8] = 0;
 
-  if (ACE_Service_Config::open (6, l_argv) == -1 && errno != ENOENT)
+  if (ACE_Service_Config::open (8, l_argv) == -1 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")),
