@@ -1,3 +1,9 @@
+Sat Feb  2 23:05:54 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/Makefile: 
+	  Changed VLDLIBS to LDLIBS. This would hopefully fix errors
+	  regarding duplicate shared libraries.
+
 Sat Feb  2 20:45:08 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:  Do not use ACE_CHECK or
