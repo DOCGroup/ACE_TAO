@@ -413,11 +413,11 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
   // that addresses are kept in sorted order.
 
   for (;
-       blockp <= currp || blockp >= currp->s_.next_block_;
+       blockp <= currp || blockp >= ACE_reinterpret_cast (ACE_Malloc_Header*, currp->s_.next_block_);
        currp = currp->s_.next_block_)
     {
-      if (currp >= currp->s_.next_block_
-          && (blockp > currp || blockp < currp->s_.next_block_))
+      if (currp >= ACE_reinterpret_cast (ACE_Malloc_Header*, currp->s_.next_block_)
+          && (blockp > currp || blockp < ACE_reinterpret_cast (ACE_Malloc_Header*, currp->s_.next_block_)))
         // Freed block at the start or the end of the memory pool.
         break;
     }
@@ -433,7 +433,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
     blockp->s_.next_block_ = currp->s_.next_block_;
 
   // Join to lower neighbor.
-  if ((currp + currp->s_.size_) == blockp) 
+  if ((currp + currp->s_.size_) == blockp)
     {
       AMS (--this->cb_ptr_->malloc_stats_.nblocks_);
       currp->s_.size_ += blockp->s_.size_;
