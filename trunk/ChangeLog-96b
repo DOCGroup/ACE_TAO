@@ -53,6 +53,27 @@ Sun Dec  8 19:00:45 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 Sun Dec  8 10:27:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Service_Manager.cpp (init): Changed all uses of "int port"
+ 	  to "u_short port" to be consistent with socket types.
+
+	* ace/ACE.cpp (bind_port): Changed all uses of "int port" to
+ 	  "u_short port" to be consistent with socket types.
+
+	* ace/Remote_Name_Space.cpp: Changed all uses of "int port" to
+ 	  "u_short port" to be consistent with socket types.
+
+	* ace/SV_Semaphore_{Simple,Complex}: Changed all uses of "int n"
+ 	  to "u_short n" to be consistent with the SYSV types!
+
+	* ace/OS.h: Moved the location of the ACE_HAS_USING_KEYWORD macros
+ 	  until *after* we #include "ace/Time_Value.h".  Thanks to
+ 	  Matthias for this.
+
+	* ace/Signal.cpp: Finished implementing the
+ 	  ace_signal_handlers_dispatching logic, which wasn't done
+ 	  entirely earlier.  Thanks to Alexandre Karev
+ 	  <Alexandre.Karev@cern.ch> for reporting this.
+
 	* netsvcs/servers/main.cpp (main): Fixed several small bugs in the
  	  netsvcs main test program.  Thanks to Alexandre Karev
  	  <Alexandre.Karev@cern.ch> for finding this.
