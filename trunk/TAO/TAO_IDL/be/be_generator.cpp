@@ -125,6 +125,7 @@ be_generator::create_module (UTL_Scope *s,
                              UTL_StrList *p)
 {
   AST_Decl *d = 0;
+  AST_Module *m = 0;
   UTL_ScopeActiveIterator *iter =
     new UTL_ScopeActiveIterator (s,
                                  UTL_Scope::IK_decls);
@@ -146,46 +147,11 @@ be_generator::create_module (UTL_Scope *s,
           // supposed to create.
           if (d->local_name ()->compare (n->last_component ()))
             {
-              // If the node in our scope and the one being created
-              // are either both #included or both not #included, just
-              // return the node from the scope and continue adding
-              // members to it as they're parsed.
-              if (d->imported () == idl_global->imported ())
-                {
-                  delete iter;
-                  delete retval;
-                  return AST_Module::narrow_from_decl (d);
-                }
-              else
-                {
-                  // The node in our scope is #included (note that
-                  // because of the above case there will be only
-                  // one), but the one being created is not. We add
-                  // the #included module's members to the new node
-                  // and return it.
-                  UTL_ScopeActiveIterator *i =
-                    new UTL_ScopeActiveIterator (DeclAsScope (d),
-                                                 UTL_Scope::IK_decls);
+              m = AST_Module::narrow_from_decl (d);
 
-                  AST_Decl *dd = 0;
-
-                  while (!i->is_done ())
-                    {
-                      dd = i->item ();
-
-                      // Add all the included module's members (except
-                      // for the predefined types) to the scope of the
-                      // one we're creating.
-                      if (dd->node_type () != AST_Decl::NT_pre_defined)
-                        {
-                          retval->add_to_scope (dd);
-                        }
-
-                      i->next ();
-                    }
-
-                  delete i;
-                }
+              // Get m's previous_ member, plus all it's decls,
+              // into the new modules's previous_ member.
+              retval->add_to_previous (m);
             }
         }
 
@@ -193,6 +159,33 @@ be_generator::create_module (UTL_Scope *s,
     }
 
   delete iter;
+
+  // If this scope is itself a module, and has been previously
+  // opened, the previous opening may contain a previous opening
+  // of the module we're creating.
+  d = ScopeAsDecl (s);
+  AST_Decl::NodeType nt = d->node_type ();
+
+  if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
+    {
+      m = AST_Module::narrow_from_decl (d);
+
+      // AST_Module::previous_ is a set, so it contains each
+      // entry only once, but previous_ will contain the decls
+      // from all previous openings. See comment in
+      // AST_Module::add_to_previous() body.
+      d = m->look_in_previous (n->last_component ());
+
+      if (d != 0)
+        {
+          if (d->node_type () == AST_Decl::NT_module)
+            {
+              m = AST_Module::narrow_from_decl (d);
+
+              retval->add_to_previous (m);
+            }
+        }
+    }
 
   // If we are opening module CORBA, we must add the predefined
   // types TypeCode, TCKind and maybe ValueBase.
