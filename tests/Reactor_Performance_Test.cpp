@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "Reactor_Performance_Test.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
@@ -44,23 +45,6 @@ static int opt_wfmo_reactor = 0;
 
 // Use the Select_Reactor
 static int opt_select_reactor = 0;
-
-// Simple class for reading in the data
-class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
-{
-public:
-  static void set_countdown (int nconnections);
-
-  virtual int open (void *);
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  // The Svc_Handler callbacks.
-
-private:
-  static int waiting_;
-  // How many connections are we waiting for.
-};
 
 int Read_Handler::waiting_ = 0;
 
@@ -135,14 +119,6 @@ Read_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-// This Svc_Handler simply connects to a server and sends some output
-// to it.  Its purpose is to feed the test.
-class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
-{
-public:
-  virtual int open (void *);
-  virtual int send_data (void);
-};
 
 int
 Write_Handler::open (void *)
