@@ -361,7 +361,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD>Specify whether each thread uses a global
         (<em>which</em> = <code>global</code>) or a thread-specific
         (<em>which</em> = <code>tss</code>) instance for the resources it
-        returns.
+        returns. The default is <CODE>global </CODE>.
         <B>NOTE:</B> This option controls the default value for
         the ORB option of the same name.</A>.
     </TD>
@@ -462,7 +462,7 @@ The default is <code>select_mt</code></TD>
         concurrency strategy to use.  Range of values is <code>reactive</code>
         for a purely Reactor-driven concurrency strategy or
         <code>thread-per-connection</code> for creating a new thread to
-        service each connection.</TD>
+        service each connection. The default is reactive.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBActiveObjectMapSize</CODE> <EM>active object map
@@ -568,7 +568,7 @@ The default is <code>select_mt</code></TD>
     <TD>Specify the flags used for thread creation. Flags can be any
         logical-OR combination of <CODE>THR_DETACHED</CODE>,
         <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
-        <CODE>THE_SUSPENDED</CODE>.</TD>
+        <CODE>THE_SUSPENDED</CODE>. The default is <CODE>THR_BOUND </CODE>. </TD>
   </TR>
   <TR>
 
