@@ -1,3 +1,16 @@
+Tue Dec  7 18:38:20 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/server.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/run-test.pl
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/run-test.pl
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/server.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/client.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/server.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/run-test.pl:
+	  Improved debugging messages.
+
 Tue Dec  7 13:30:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multipel_Endpoints/Makefile
