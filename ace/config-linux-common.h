@@ -55,14 +55,24 @@
   // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 # if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
+    // These were suggested by Robert Hanzlik <robi@codalan.cz> to get
+    // ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.
 #   undef ACE_HAS_BYTESEX_H
 #   define ACE_HAS_SIGINFO_T
 #   define ACE_LACKS_SIGINFO_H
 #   define ACE_HAS_UCONTEXT_T
 # endif /* __GLIBC__ 2.1+ */
-  // Changes above were suggested by Robert Hanzlik <robi@codalan.cz>
-  // to get ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8
+#else /* ! __GLIB__ */
+  // Fixes a problem with some non-glibc versions of Linux...
+  #ifndef msg_accrights
+  # undef msg_control
+  # define msg_accrights msg_control
+  #endif
 
+  #ifndef msg_accrightslen
+  # undef msg_controllen
+  # define msg_accrightslen msg_controllen
+  #endif
 #endif /* __GLIBC__ */
 
 
@@ -83,24 +93,6 @@
 #define ACE_HAS_SIGWAIT
 
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-
-#if 0
-  // Wed Sep 23 22:29:37 1998  David L. Levine  <levine@cs.wustl.edu>
-  // Disabled this, because it doesn't really look right.  I think
-  // that it was added to work around some problems with very early
-  // versions of glib2.  It no longer seems to be necessary.
-
-  // Fixes a problem with new versions of Linux...
-  #ifndef msg_accrights
-  # undef msg_control
-  # define msg_accrights msg_control
-  #endif
-
-  #ifndef msg_accrightslen
-  # undef msg_controllen
-  # define msg_accrightslen msg_controllen
-  #endif
-#endif /* 0 */
 
 // Compiler/platform supports alloca().
 #define ACE_HAS_ALLOCA
