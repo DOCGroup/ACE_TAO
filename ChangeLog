@@ -6,6 +6,7 @@ Fri Mar 14 11:49:27 2003  Steve Huston  <shuston@riverace.com>
 Thu Mar 13 16:11:48 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Log_Msg.cpp (log_hexdump):
+	* tests/Proactor_Test.cpp:
 
 	  Use the ACE_SIZE_T_FORMAT_SPECIFIER macro to specify the correct
 	  size_t format specifier.  Fixes a warning exhibited on 32-bit
