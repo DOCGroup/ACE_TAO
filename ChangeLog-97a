@@ -7,6 +7,27 @@ Fri Apr 04 12:28:40 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.i (mutex_init): fixed the extra braces once and for all.
 	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting it.
 
+	* ace/OS.i, config-sco-5.0.0*.h: fixed for SCO so that it uses
+	  single-argument gettimeofday () prototype, but calls two-arg
+	  (SVR4) version in ACE_OS::gettimeofday ().  Thanks to Ganesh
+	  Ganesh Pai <gpai@voicetek.com> for solving this problem.
+
+	* ace/Log_Msg.{h,cpp}: added ACE_Log_Msg destructor.  In
+	  instance (), added call to ::atexit () (::taskDeleteHookAdd ()
+	  on VxWorks) to register cleanup handler.  Each new instance
+	  of an ACE_Log_Msg is inserted into an ACE_Unbounded_Set; the
+	  cleanup handler iterates over the Set and deletes the
+	  ACE_Log_Msgs at program exit.  (It works differently on VxWorks:
+	  the Set isn't used.  Instead, the cleanup hook is called for
+	  each task when it exits, passing the task control block (TCB) of
+	  the exiting task.  A pointer to the ACE_Log_Msg instance is
+	  contained in one of the spare fields of the TCB, so the cleanup
+	  handler simply deletes it.)  Also, the two strings that are
+	  allocated get cleaned up after the last ACE_Log_Msg instance
+	  is deleted.  Many thanks to Matthias Kerkhoff
+	  <make@cs.tu-berlin.de> for figuring this out and cranking out
+	  the code.
+
 Thu Apr  3 22:17:53 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Registry.cpp: Changed STRING_SEPARATOR from Istring to
