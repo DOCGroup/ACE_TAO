@@ -1,3 +1,11 @@
+Mon Mar 21 12:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/*A.cpp:
+        * tao/Messaging/*C.{h,cpp,inl}:
+        * tao/Messaging/*S.{h,cpp,inl}:
+        * tao/Messaging/*S_T.{h,cpp,inl}:
+          Regenerated
+
 Mon Mar 21 09:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
