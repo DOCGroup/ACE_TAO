@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
@@ -9,6 +10,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, TP_Reactor, "$Id$")
+
 
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
@@ -431,6 +433,12 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 
   // assert (status >= 0);
   return 0;
+}
+
+int
+ACE_TP_Reactor::resumable_handler (void)
+{
+  return 1;
 }
 
 
