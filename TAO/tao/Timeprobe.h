@@ -3,11 +3,25 @@
 #ifndef TAO_TIMEPROBE_H
 #define TAO_TIMEPROBE_H
 
+#include "ace/inc_user_config.h"
+
 // Please see ace/Timeprobe.h for details on these #defines.
 
-//#define ACE_ENABLE_TIMEPROBES
-//#define ACE_MT_TIMEPROBES
-//#define ACE_TSS_TIMEPROBES
+// #define TAO_ENABLE_TIMEPROBES
+// #define TAO_MT_TIMEPROBES
+// #define TAO_TSS_TIMEPROBES
+
+#if defined (TAO_ENABLE_TIMEPROBES)
+#define ACE_ENABLE_TIMEPROBES
+#endif /* TAO_ENABLE_TIMEPROBES */
+
+#if defined (TAO_MT_TIMEPROBES)
+#define ACE_MT_TIMEPROBES
+#endif /* TAO_MT_TIMEPROBES */
+
+#if defined (TAO_TSS_TIMEPROBES)
+#define ACE_TSS_TIMEPROBES
+#endif /* TAO_TSS_TIMEPROBES */
 
 #include "ace/Timeprobe.h"
 
@@ -56,7 +70,7 @@
 #   define TAO_PP_TIMEPROBE(id)
 #   undef TAO_FUNCTION_PP_TIMEPROBE
 #   define TAO_FUNCTION_PP_TIMEPROBE(X)
-# endif /* TAO_SELECT_MINIMAL_TIMEPROBES */   
+# endif /* TAO_SELECT_MINIMAL_TIMEPROBES */
 
 #else /* ACE_ENABLE_TIMEPROBES */
 
