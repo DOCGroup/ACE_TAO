@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(*Server): taoexe, naming, iortable, portableserver {
+project(*Server): taoserver, naming, iortable {
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp
@@ -16,7 +16,7 @@ project(*Server): taoexe, naming, iortable, portableserver {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp

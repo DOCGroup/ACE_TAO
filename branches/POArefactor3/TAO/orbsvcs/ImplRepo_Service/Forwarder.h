@@ -17,6 +17,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantLocatorC.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
