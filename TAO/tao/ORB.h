@@ -561,6 +561,8 @@ public:
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
+                                  TAO_ServantBase *servant = 0,
+                                  CORBA::Boolean collocated = 1,
                                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
@@ -572,6 +574,10 @@ public:
   // relationships to other OMG-IDL interfaces.  It's OK to provide a
   // null type ID.  Providing a null object key will result in an
   // INV_OBJREF exception.
+  //
+  // <servant> and <collocated> are used to created collocated object
+  // references.  All object references created by this function should
+  // be collocated object.
   //
   // Clients which invoke operations using one of these references
   // when the server is not active (or after the last reference to the

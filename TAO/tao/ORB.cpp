@@ -1004,13 +1004,15 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 CORBA::Object_ptr
 CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
+                          TAO_ServantBase *servant,
+                          CORBA::Boolean collocated,
                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Stub *data = this->create_stub_object (key, type_id, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create the CORBA level proxy
-  CORBA_Object *new_obj = new CORBA_Object (data);
+  CORBA_Object *new_obj = new CORBA_Object (data, servant, collocated);
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj))
@@ -1019,6 +1021,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
       ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
     }
 
+  data->servant_orb (CORBA::ORB::_duplicate (this));
   return new_obj;
 }
 
