@@ -676,7 +676,7 @@ TAO_DynAny_i::get_string (CORBA::Environment &ACE_TRY_ENV)
                         val);
     }
 
-  return val;
+  return CORBA::string_dup (val);
 }
 
 CORBA::Object_ptr
@@ -691,7 +691,7 @@ TAO_DynAny_i::get_reference (CORBA::Environment &ACE_TRY_ENV)
                         val);
     }
 
-  return val;
+  return CORBA::Object::_duplicate (val);
 }
 
 CORBA::TypeCode_ptr
@@ -705,7 +705,7 @@ TAO_DynAny_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
                         val);
     }
 
-  return val;
+  return CORBA::TypeCode::_duplicate (val);
 }
 
 CORBA::LongLong
