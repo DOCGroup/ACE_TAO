@@ -1,3 +1,11 @@
+Tue Apr 22 12:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+	* tao/Messaging/Messaging_No_ImplC.h:
+
+          Moved the #undef of TRANSPARENT after the #include's to ensure
+          that it doesn't get defined again after it's already been
+          #undef'ed.
+
 Tue Apr 22 12:35:44 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tests/Collocation_Tests/Collocation_Test.dsp:
