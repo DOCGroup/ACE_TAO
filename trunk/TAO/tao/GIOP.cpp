@@ -185,7 +185,7 @@ writev_n (ACE_HANDLE h, iovec *iov, int iovcnt)
       else
         {
           writelen += n;
-          while (s < iovcnt && n >= iov[s].iov_len)
+          while (s < iovcnt && n >= ACE_static_cast (ssize_t, iov[s].iov_len))
             {
               n -= iov[s].iov_len;
               s++;
