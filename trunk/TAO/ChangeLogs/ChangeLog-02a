@@ -1,3 +1,21 @@
+Mon Oct 16 16:15:15 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Pluggable.cpp
+	* tao/Endpoint.i
+
+	  Initialize <priority> member to -1.  Since legal CORBA::Priority
+	  values start at 0, -1 is a good indicator that priority hasn't
+	  been set.
+
+	* tao/Pool_Per_Endpoint.cpp (run):
+
+	  Throw DATA_CONVERSION exception if conversion from CORBA to
+	  native priority fails.
+
+	* tests/RTCORBA/RTCORBA_tests.dsw:
+
+	  Added Server_Declared projects.
+
 Mon Oct 16 15:38:06 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Declared/Makefile
