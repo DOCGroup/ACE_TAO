@@ -5,7 +5,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (void)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
   return ++this->value_;
 }
 
@@ -13,7 +13,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+= (const TYPE &i)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+=");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
   return this->value_ += i;
 }
 
@@ -21,7 +21,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (void)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator--");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
   return --this->value_;
 }
 
@@ -29,7 +29,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-= (const TYPE &i)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-=");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
   return this->value_ -= i;
 }
 
@@ -44,7 +44,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (int)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
   return this->value_++;
 }
 
@@ -52,7 +52,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (int)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator--");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
   return this->value_--;
 }
 
@@ -60,7 +60,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator==");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, -1);
   return this->value_ == i;
 }
 
@@ -75,7 +75,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>=");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, -1);
   return this->value_ >= i;
 }
 
@@ -83,7 +83,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, -1);
   return this->value_ > rhs;
 }
 
@@ -91,7 +91,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<=");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, -1);
   return this->value_ <= rhs;
 }
 
@@ -99,7 +99,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, -1);
   return this->value_ < rhs;
 }
 
@@ -109,7 +109,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &r
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator=");
   if (&rhs == this)
     return; // Avoid deadlock...
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_);
   // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
   // of <rhs> is acquired atomically.
 
@@ -120,7 +120,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::value (void) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::value");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, this->value_);
   return this->value_;    
 }
 
@@ -138,7 +138,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE void
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator=");
-  ACE_Guard<ACE_LOCK> m (this->mutex_);
+  ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_);
   this->value_ = i;
 }
 
