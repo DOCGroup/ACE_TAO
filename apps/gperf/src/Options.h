@@ -105,7 +105,7 @@ public:
   int operator[] (Option_Type option);
   int parse_args (int argc, char *argv[]);
   void operator= (enum Option_Type);
-  void operator!= (enum Option_Type);
+  bool operator!= (enum Option_Type);
   static void print_options (void);
   static void asso_max (int r);
   static int asso_max (void);
@@ -157,7 +157,7 @@ private:
 
   static const char *function_name_;
   // Names used for generated lookup function.
-  
+
   static const char  *fill_default_;
   // Expression used to assign default values in keyword table.
 

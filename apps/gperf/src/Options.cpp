@@ -730,10 +730,13 @@ Options::operator = (enum Option_Type opt)
 
 // Disables option OPT.
 
-void
+bool
 Options::operator != (enum Option_Type opt)
 {
+  // @@ Why is this inequality comparison operator clearing bits?
   ACE_CLR_BITS (option_word_, opt);
+
+  return true;
 }
 
 // Initializes the key Iterator.
