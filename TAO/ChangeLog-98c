@@ -1,3 +1,10 @@
+Mon May 11 07:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp (init):
+          dereferenced second arg in init () call.  Thanks to
+          Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for
+          reporting this.
+
 Sat May 09 12:01:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: removed Log from clean target,
