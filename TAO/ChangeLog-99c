@@ -1,6 +1,7 @@
 Fri Feb  5 14:45:25 1999 Fred Kuhns <fredk@cs.wustl.edu>
-  * MProfile.{h,cpp}  Added descriptinve comments and fixed several
-    cases of mixing int's with unsigned int's.
+
+       	* MProfile.{h,cpp} Added descriptive comments and fixed several
+ 	 cases of mixing int's with unsigned int's.
 
 Fri Feb  5 14:21:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
