@@ -1,3 +1,16 @@
+Thu Jan 22 16:16:32 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* CosPropertyService_i.cpp, CosPropertyService_i.h, AVStreams_i.cpp, AVStreams_i.h:
+	Added empty implementation files for AVStreams and propertyservice implementations
+
+	* Makefile:
+	Fixed the Makefile so that it will compile the AV related stuff
+	only when run as `make av=1`.
+
+Thu Jan 22 14:22:46 1998  Nanbor Wang  <nanbor@lindy.cs.wustl.edu>
+
+	* orbsvcs_lib.dsp: Changed to use multithreaded libraries.
+
 Thu Jan 22 14:20:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/{server,client}.dsp:  The project files
