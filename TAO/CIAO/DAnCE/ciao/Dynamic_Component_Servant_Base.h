@@ -36,7 +36,10 @@ namespace CIAO
 
     virtual ~Dynamic_Component_Servant_Base (void);
 
-    virtual PortableServer::Servant create (void) = 0;
+    virtual PortableServer::Servant 
+      create (PortableServer::ObjectId &oid) = 0;
+
+    virtual void destroy (PortableServer::ObjectId &oid) = 0;
 
   protected:
     Session_Container *container_;

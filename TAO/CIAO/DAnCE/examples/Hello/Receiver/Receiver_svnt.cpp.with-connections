@@ -29,7 +29,7 @@ namespace Receiver_Impl
   {
     Receiver_Context::Receiver_Context (
     ::Components::CCMHome_ptr home,
-    ::CIAO::Swapping_Container *c,
+    ::CIAO::Session_Container *c,
     Receiver_Servant *sv)
       : ACE_NESTED_CLASS (CIAO, Context_Impl_Base (home, c)), 
       ctx_svnt_base (home, c, sv)
@@ -108,9 +108,10 @@ namespace Receiver_Impl
     Receiver_Servant::Receiver_Servant (
     ::Hello::CCM_Receiver_ptr exe,
     ::Components::CCMHome_ptr h,
-    ::CIAO::Swapping_Container *c)
-      : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base (c)),
-      comp_svnt_base (exe, c)
+    ::CIAO::Home_Servant_Impl_Base *home_servant,
+    ::CIAO::Session_Container *c)
+      : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base (h, home_servant, c)),
+      comp_svnt_base (exe, h, home_servant, c)
     {
       this->context_ = new Receiver_Context (h, c, this);
 
@@ -534,8 +535,8 @@ namespace Receiver_Impl
   {
     ReceiverHome_Servant::ReceiverHome_Servant (
     ::Hello::CCM_ReceiverHome_ptr exe,
-    ::CIAO::Swapping_Container *c)
-      : ACE_NESTED_CLASS (CIAO, Swapping_Servant_Home_Impl_Base (c)),
+    ::CIAO::Session_Container *c)
+      : ACE_NESTED_CLASS (CIAO, Home_Servant_Impl_Base (c)),
       home_svnt_base (exe, c, "Receiver_Impl_Hello_Receiver",
                       "Receiver_Impl_Hello_Receiver")
     {
@@ -557,7 +558,7 @@ namespace Receiver_Impl
   extern "C" RECEIVER_SVNT_Export ::PortableServer::Servant
   createReceiverHome_Servant (
   ::Components::HomeExecutorBase_ptr p,
-  CIAO::Swapping_Container *c
+  CIAO::Session_Container *c
   ACE_ENV_ARG_DECL)
   {
     if (p == 0)

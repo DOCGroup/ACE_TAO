@@ -34,6 +34,7 @@
 #include "ciao/Servant_Impl_T.h"
 #include "ciao/Context_Impl_T.h"
 #include "ciao/Home_Servant_Impl_T.h"
+#include "ciao/Home_Servant_Impl_Base.h"
 #include "ciao/Swapping_Servant_Home_Impl_T.h"
 #include "ace/Active_Map_Manager_T.h"
 
@@ -105,7 +106,7 @@ namespace Sender_Impl
 
       Sender_Context (
       ::Components::CCMHome_ptr home,
-      ::CIAO::Swapping_Container *c,
+      ::CIAO::Session_Container *c,
       Sender_Servant *sv);
 
       virtual ~Sender_Context (void);
@@ -174,7 +175,8 @@ namespace Sender_Impl
       Sender_Servant (
       ::Hello::CCM_Sender_ptr executor,
       ::Components::CCMHome_ptr home,
-      ::CIAO::Swapping_Container *c);
+      ::CIAO::Home_Servant_Impl_Base *home_servant,
+      ::CIAO::Session_Container *c);
 
       virtual ~Sender_Servant (void);
 
@@ -341,7 +343,7 @@ namespace Sender_Impl
 
       SenderHome_Servant (
       ::Hello::CCM_SenderHome_ptr exe,
-      ::CIAO::Swapping_Container *c);
+      ::CIAO::Session_Container *c);
 
       virtual ~SenderHome_Servant (void);
 
@@ -355,7 +357,7 @@ namespace Sender_Impl
     extern "C" SENDER_SVNT_Export ::PortableServer::Servant
     createSenderHome_Servant (
     ::Components::HomeExecutorBase_ptr p,
-    CIAO::Swapping_Container *c
+    CIAO::Session_Container *c
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   }
 }

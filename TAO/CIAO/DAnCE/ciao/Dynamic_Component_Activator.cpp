@@ -26,10 +26,11 @@ namespace CIAO
                      PortableServer::ForwardRequest))
   {
     Dynamic_Component_Servant_Base* servant = 0;
+    PortableServer::ObjectId new_oid (oid);
 
     if (this->servant_map_.find (oid, servant) == 0)
     {
-      return servant->create ();
+      return servant->create (new_oid);
     }
 
     return 0;
@@ -47,7 +48,15 @@ namespace CIAO
   {
   }
 
-  void Dynamic_Component_Activator::update_servant_map 
+  void Dynamic_Component_Activator::add_servant_map 
+    (PortableServer::ObjectId &oid,
+     Dynamic_Component_Servant_Base* servant
+     ACE_ENV_ARG_DECL)
+  {
+    this->servant_map_.bind (oid, servant);
+  }
+
+  void Dynamic_Component_Activator::delete_servant_map 
     (PortableServer::ObjectId &oid,
      Dynamic_Component_Servant_Base* servant
      ACE_ENV_ARG_DECL)

@@ -47,8 +47,6 @@ namespace CIAO
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-
-    ACE_DEBUG ((LM_DEBUG, "i am being used to start\n"));
     char buffer[MAXPATHLEN];
 
     if (name == 0)
@@ -104,12 +102,21 @@ namespace CIAO
   }
 
   void
-  Swapping_Container::update_servant_map
+  Swapping_Container::add_servant_map
     (PortableServer::ObjectId &oid,
      Dynamic_Component_Servant_Base* servant
      ACE_ENV_ARG_DECL)
   {
-    this->dsa_->update_servant_map (oid, servant);
+    this->dsa_->add_servant_map (oid, servant);
+  }
+
+  void
+  Swapping_Container::delete_servant_map
+    (PortableServer::ObjectId &oid,
+     Dynamic_Component_Servant_Base* servant
+     ACE_ENV_ARG_DECL)
+  {
+    this->dsa_->add_servant_map (oid, servant);
   }
 
   void

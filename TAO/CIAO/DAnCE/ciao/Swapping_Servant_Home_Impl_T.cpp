@@ -48,6 +48,18 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::~Swapping_Servant_Home_Impl (void)
   {
+    const DYNAMIC_SERVANT_MAP_ITERATOR end = 
+      this->dynamic_servant_map_.end ();
+
+    PortableServer::ObjectId_var oid =
+      PortableServer::string_to_ObjectId (this->obj_id_);
+
+    for (DYNAMIC_SERVANT_MAP_ITERATOR iter = 
+           this->dynamic_servant_map_.begin ();
+         iter != end; ++iter)
+      {
+        (*iter).int_id_->destroy (oid);
+      }
   }
 
   // Operations for CCMHome interface.
@@ -75,23 +87,14 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am being called to remove the component\n"));
-    COMP_VAR _ciao_comp = COMP::_narrow (comp
-                                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    PortableServer::ObjectId_var oid =
+      PortableServer::string_to_ObjectId (this->obj_id_);
 
-    if (CORBA::is_nil (_ciao_comp.in ()))
+    Dynamic_Component_Servant_Base *servant;
+    if (this->dynamic_servant_map_.find (oid, servant) == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      servant->destroy (oid);
     }
-
-    _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    ACE_DEBUG ((LM_DEBUG, "i am being called to passivate the components\n"));
-
-    this->_ciao_passivate_component (_ciao_comp.in ()
-                                     ACE_ENV_ARG_PARAMETER);
   }
 
   // Operations for keyless home interface.
@@ -156,12 +159,6 @@ namespace CIAO
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-/*
-    COMP_EXEC_VAR _ciao_comp =
-      COMP_EXEC::_narrow (_ciao_ec.in ()
-                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
-*/
     return this->_ciao_activate_component (_ciao_ec.in ()
                                            ACE_ENV_ARG_PARAMETER);
   }
@@ -210,20 +207,15 @@ namespace CIAO
         Container::Component
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
-/*
-    Dynamic_Component_Servant_Base *svt =
-      new Dynamic_Component_Servant
-       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
-          (this->executor_.in (), home, this->container_);
-*/
 
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
           (ec, home, this, this->container_);
 
-    this->container_->update_servant_map (oid, svt);
+    this->container_->add_servant_map (oid, svt);
 
+    this->dynamic_servant_map_.bind (oid, svt);
 
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);
@@ -249,8 +241,16 @@ namespace CIAO
                     COMP_EXEC,
                     COMP_EXEC_VAR,
                     COMP_SVNT>::update_component_map (
-    PortableServer::ObjectId &)
+    PortableServer::ObjectId &oid)
   {
+    Dynamic_Component_Servant_Base *servant;
+    if (dynamic_servant_map_.unbind (oid, servant) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
+        return;
+      }
+    ACE_DEBUG ((LM_DEBUG, "updated the map\n"));
+    return;
   }
 
   template <typename BASE_SKEL,

@@ -63,9 +63,13 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void update_servant_map (PortableServer::ObjectId &oid,
-                                     Dynamic_Component_Servant_Base* servant
-                                     ACE_ENV_ARG_DECL);
+    virtual void add_servant_map (PortableServer::ObjectId &oid,
+                                  Dynamic_Component_Servant_Base* servant
+                                  ACE_ENV_ARG_DECL);
+
+    virtual void delete_servant_map (PortableServer::ObjectId &oid,
+                                  Dynamic_Component_Servant_Base* servant
+                                  ACE_ENV_ARG_DECL);
 
     PortableServer::POA_ptr the_home_servant_POA (void) const;
 

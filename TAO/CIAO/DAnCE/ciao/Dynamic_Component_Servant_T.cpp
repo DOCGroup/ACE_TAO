@@ -44,9 +44,28 @@ namespace CIAO
             typename EXEC,
             typename EXEC_VAR,
             typename COMP>
+  void Dynamic_Component_Servant
+    <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
+     EXEC, EXEC_VAR, COMP>::destroy (PortableServer::ObjectId &oid)
+  {
+    ACE_DEBUG ((LM_DEBUG, "i am being called to destroy\n"));
+    COMP_SVNT *servant;
+    if (this->servant_map_.find (oid, servant) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "i found the servant\n"));
+        servant->remove ();
+      }
+  }
+
+  template <typename COMP_SVNT,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP>
   PortableServer::Servant Dynamic_Component_Servant
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
-     EXEC, EXEC_VAR, COMP>::create (void)
+     EXEC, EXEC_VAR, COMP>::create (PortableServer::ObjectId &oid)
   {
     CIAO::Swap_Exec_var swap_exec = CIAO::Swap_Exec::_narrow
        (this->executor_.in ()
@@ -59,14 +78,12 @@ namespace CIAO
     COMP_EXEC_VAR ciao_comp = COMP_EXEC::_narrow (ciao_ec.in ()
                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
-
     
     COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
                                    this->home_servant_,
                                    this->container_);
-
-
     PortableServer::ServantBase_var safe (svt);
+    this->servant_map_.bind (oid, svt);
     return safe._retn ();
   }
 }
