@@ -387,7 +387,7 @@ ImplRepo_i::start_server_i (const char *server,
   // Now check to see if it is responding yet.
 
   int ready_error = this->ready_check (server);
-  if (ready_error < 0) 
+  if (ready_error < 0)
     {
       // We got an error in ready_check, so shutdown the server and
       // throw an exception
@@ -399,27 +399,27 @@ ImplRepo_i::start_server_i (const char *server,
           ACE_THROW (ImplementationRepository::Administration::CannotActivate
             (CORBA::string_dup ("Timeout while pinging for readiness")));
         }
-      else 
+      else
         {
           ACE_THROW (ImplementationRepository::Administration::CannotActivate
             (CORBA::string_dup ("Unknown error")));
-          
+
         }
     }
 }
 
 
-// ready_check will continuously ping a server and either return when it 
+// ready_check will continuously ping a server and either return when it
 // responds to the ping or return -1 if it times out.
 
-int 
+int
 ImplRepo_i::ready_check (const char *server)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound))
 {
   ACE_TString ping_object_ior, location;
   ImplementationRepository::ServerObject_var ping_object;
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // <end> is the end of the window where we can get a response before
@@ -499,7 +499,7 @@ ImplRepo_i::ready_check (const char *server)
             ACE_DEBUG ((LM_DEBUG, "Pinged Server OK\n"));
 
           // If we got here, we successfully pinged, therefore we
-          // can exit the function.  
+          // can exit the function.
           return 0;
         }
       ACE_CATCHANY
@@ -512,7 +512,7 @@ ImplRepo_i::ready_check (const char *server)
 
       // Sleep between sending pings.
       ACE_OS::sleep (OPTIONS::instance ()->ping_interval ());
-    } 
+    }
 
   // If we fall out here, that means we didn't get a response before timing
   // out, so return an error.
@@ -760,8 +760,8 @@ ImplRepo_i::server_is_shutting_down (const char *server,
 
 
 int
-ImplRepo_i::init (int argc, 
-                  char **argv, 
+ImplRepo_i::init (int argc,
+                  char **argv,
                   CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
@@ -1391,8 +1391,8 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, 
-                  "IMR_Adapter_Activator::unknown_adapter - %s\n", 
+      ACE_ERROR ((LM_ERROR,
+                  "IMR_Adapter_Activator::unknown_adapter - %s\n",
                   exception_message));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "System Exception");
       return 0;
@@ -1428,7 +1428,7 @@ IMR_Forwarder::IMR_Forwarder (CORBA::ORB_ptr orb_ptr,
   ACE_ENDTRY;
 }
 
-PortableServer::Servant 
+PortableServer::Servant
 IMR_Forwarder::preinvoke (const PortableServer::ObjectId & /*oid*/,
                           PortableServer::POA_ptr poa,
                           const char * /*operation*/,
@@ -1445,14 +1445,14 @@ IMR_Forwarder::preinvoke (const PortableServer::ObjectId & /*oid*/,
   ior = this->imr_impl_->activate_server_i (poa->the_name (),
                                             1,
                                             ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Add the key
 
   char *key_str = 0;
 
   // Unlike POA Current, this implementation cannot be cached.
-  TAO_POA_Current *tao_current = 
+  TAO_POA_Current *tao_current =
     ACE_dynamic_cast(TAO_POA_Current*, this->poa_current_var_.in ());
   TAO_POA_Current_Impl *impl = tao_current->implementation ();
   TAO_ObjectKey::encode_sequence_to_string (key_str,
@@ -1466,7 +1466,7 @@ IMR_Forwarder::preinvoke (const PortableServer::ObjectId & /*oid*/,
 
   CORBA::Object_ptr forward_obj =
     this->orb_var_->string_to_object (ior.c_str (), ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   if (!CORBA::is_nil (forward_obj))
     ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj), 0);
@@ -1477,7 +1477,7 @@ IMR_Forwarder::preinvoke (const PortableServer::ObjectId & /*oid*/,
   ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 }
 
-void 
+void
 IMR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            PortableServer::POA_ptr ,
                            const char * ,
