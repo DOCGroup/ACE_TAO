@@ -8,19 +8,30 @@
 #include "ace/SString.h"
 #include <sstream>
 
-class ACE_Object_Counter
-  {
-  public:
+class Object_ID
+{
+ public:
+  Object_ID ();
 
-    struct object_id {
-      uint32_t id;
-      uint32_t tid;
-      uint32_t queue_id;
-    };
+  uint32_t id;
+  uint64_t tid;
+
+  /* EC Specific */
+  uint32_t queue_id;
+  uint32_t type;
+
+  /* DT Specific */
+  uint32_t task_id;
+  uint32_t guid;
+};
+
+class ACE_Object_Counter
+{
+ public:
 
     ACE_Object_Counter ();
 
-    object_id increment (void);
+    Object_ID increment (void);
 
   private:
     unsigned int m_counter;
