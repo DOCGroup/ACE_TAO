@@ -131,7 +131,7 @@ public:
   /// Wait for one or more threads to exit.
   static int join (ACE_thread_t,
                    ACE_thread_t *,
-                   void **status = 0);
+                   void **status);
 
   /// Wait for one thread to exit.
   static int join (ACE_hthread_t,

@@ -1,3 +1,10 @@
+Tue Dec 19 18:21:52 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/Thread.h (ACE_Thread):
+
+	  Removed the default value on the overriden join (...)
+	  function that took three parameters.
+
 Tue Dec 19 14:50:38 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: If on ACE_WIN32, set ACE_DEFAULT_FILE_PERMS to
