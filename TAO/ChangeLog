@@ -1,3 +1,12 @@
+Wed Oct 30 09:01:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp
+	  (register_poa_current):
+
+	  Removed obsolete/incorrect comment regarding the lack of
+	  reference counting in the TAO_ORBInitInfo object.
+	  TAO_ORBInitInfo is now properly reference counted.
+
 Wed Oct 30 11:38:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* Following are fixes for bug 1344.  Thanks to Ossama for pointing
