@@ -13,6 +13,12 @@ Wed Mar 15 21:18:19 2000  David L. Levine  <levine@cs.wustl.edu>
           ACE_HAS_GNUG_PRE_2_8 to 1 for LynxOS 2.5.0, because
           its g++ doesn't support -fno-exceptions.
 
+Wed Mar 15 20:51:21 2000  Chad Elliott <elliott_c@ociweb.com>
+
+        * ace/OS.h,ace/ACE.cpp,ace/config-chorus.h,
+          include/makeinclude/platform_chorus4.x_g++.GNU:
+          added Chorus 4.0 support.
+
 Wed Mar 15 20:47:12 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.h: moved #include of OS.h inside the #ifndef ACE_ACE_H
