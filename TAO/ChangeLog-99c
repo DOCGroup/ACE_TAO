@@ -1,3 +1,18 @@
+Wed Jun 30 14:03:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/driver.cpp:
+	* TAO/tests/DynAny_Test/test_dynany.cpp:
+	* TAO/tests/DynAny_Test/test_dynarray.cpp:
+	* TAO/tests/DynAny_Test/test_dynenum.cpp:
+	* TAO/tests/DynAny_Test/test_dynsequence.cpp:
+	* TAO/tests/DynAny_Test/test_dynstruct.cpp:
+	* TAO/tests/DynAny_Test/test_dynunion.cpp:
+	  Substituted ACE_PRINT_EXCEPTION macro where 
+	  needed.
+
+	* TAO/tests/Param_Test/ub_struct_seq.cpp:
+	  Subistituted a missed ACE_CHECK_RETURN macro.
+
 Wed Jun 30 13:43:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Quoter/Generic_Factory.cpp:
