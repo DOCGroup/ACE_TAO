@@ -296,9 +296,12 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
     chdir "TAO"  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
     &ex ("$cvs -q export -r$ciao_tag -kv CIAO > /dev/null")  &&
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
+    &ex ("cd CIAO  &&  $make INSTALL")  &&
+      die "$0: failed make INSTALL in " .
+          "$stage_dir/ACE_wrappers/TAO\n";
   }
 
-  chdir "../../";
+  chdir "../../../";
 
   $status = &generate_makefiles ();
 
