@@ -22,10 +22,11 @@ TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy (void)
 
 // *********************************************************************
 
-TAO_Exclusive_TMS::TAO_Exclusive_TMS (void)
+TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_ORB_Core *orb_core)
   : request_id_generator_ (0),
     request_id_ (0),
-    rd_ (0)
+    rd_ (0),
+    message_state_ (orb_core)
 {
 }
 
@@ -49,6 +50,15 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 {
   this->request_id_ = request_id;
   this->rd_ = rd;
+
+  // @@ Carlos: This method marks the <start> of an invocation. This
+  //    should be the correct place to <reset> the message state. Do I
+  //    make sense? (Alex).
+
+  // If there was a previous reply, cleanup its state first.
+  if (this->message_state_.message_size != 0)
+    this->message_state_.reset ();
+
   return 0;
 }
 
@@ -59,6 +69,11 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    TAO_GIOP_ServiceContextList& reply_ctx,
                                    TAO_GIOP_Message_State* message_state)
 {
+  // There can be only one message state possible. Just do a sanity
+  // check here.
+  ACE_ASSERT (message_state == &(this->message_state_));
+
+  // Check the ids.
   if (this->request_id_ != request_id)
     {
       if (TAO_debug_level > 0)
@@ -84,13 +99,18 @@ TAO_Exclusive_TMS::get_message_state (void)
   if (this->rd_ == 0)
     return 0;
 
-  return this->rd_->message_state ();
+  return &(this->message_state_);
 }
 
-// NOOP function.
 void
 TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 {
+  // We dont have to delete the message state. But we can reset it to
+  // receive the next incoming message.
+  // If there was a previous reply, cleanup its state first.
+  // if (this->message_state_.message_size != 0)
+  //   this->message_state_.reset ();
+  // @@ We do this already in the <bind_dispatcher>.
 }
 
 // *********************************************************************

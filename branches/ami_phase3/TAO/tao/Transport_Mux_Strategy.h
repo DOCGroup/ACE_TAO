@@ -90,7 +90,7 @@ class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
   //
 
 public:
-  TAO_Exclusive_TMS (void);
+  TAO_Exclusive_TMS (TAO_ORB_Core *orb_core);
   // Constructor.
 
   virtual ~TAO_Exclusive_TMS (void);
@@ -128,6 +128,9 @@ protected:
 
   TAO_Reply_Dispatcher *rd_;
   // Reply Dispatcher corresponding to the request.
+
+  TAO_GIOP_Message_State message_state_;
+  // Message state to read the incoming message. 
 };
 
 // *********************************************************************

@@ -211,7 +211,7 @@ private:
   // send/reply code and the system exceptions.
 
 private:
-  TAO_GIOP_Message_State message_state_;
+  // TAO_GIOP_Message_State message_state_;
   // Stream into which the reply is placed.
 
   TAO_Synch_Reply_Dispatcher rd_;
@@ -274,7 +274,7 @@ public:
   // return the underlying input stream
 
 private:
-  TAO_GIOP_Message_State message_state_;
+  // TAO_GIOP_Message_State message_state_;
   // Stream into which the request is placed.
 
   TAO_Synch_Reply_Dispatcher rd_;

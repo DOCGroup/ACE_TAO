@@ -162,7 +162,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy ();
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (orb_core);
 }
 
 TAO_Transport::~TAO_Transport (void)
