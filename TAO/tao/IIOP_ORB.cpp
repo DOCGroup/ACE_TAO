@@ -268,8 +268,21 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 
       // Check if the object requested is a collocated object.
       // @@ FRED - can we make this more generic!!
-      TAO_POA *poa = TAO_ORB_Core_instance ()->
-        get_collocated_poa (pfile->object_addr());
+      TAO_POA *poa = 0;
+      if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
+        {
+          ACE_INET_Addr &addr =
+                 ACE_dynamic_cast (ACE_INET_Addr &,
+                                   pfile->object_addr());
+    
+          TAO_POA *poa = TAO_ORB_Core_instance ()->
+            get_collocated_poa (addr);
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+		        "get_collocated_poa NOT Supported for NON-IIOP profile!\n"));
+        }
 
       if (poa != 0)
         {
