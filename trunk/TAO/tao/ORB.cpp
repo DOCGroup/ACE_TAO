@@ -1609,8 +1609,6 @@ CORBA::Object_ptr
 CORBA_ORB::url_ior_string_to_object (const char* str,
                                      CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
   TAO_MProfile mprofile;
   // It is safe to declare this on the stack since the contents of
   // mprofile get copied.  No memory is allocated for profile storage
@@ -1651,6 +1649,8 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   int collocated = 0;
   if (servant_location != TAO_SERVANT_NOT_FOUND)
     collocated = 1;
+
+  CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   // Create the CORBA level proxy.  This will increase the ref_count
   // on data by one
