@@ -58,6 +58,12 @@ public:
   // Returns hash value.
 };
 
+extern TAO_Export int operator== (const PortableServer::ObjectId &l,
+                                  const PortableServer::ObjectId &r);
+
+extern TAO_Export int operator== (const TAO_ObjectKey &l,
+                                  const TAO_ObjectKey &r);
+
 // Active Object Table
 #include "tao/Active_Object_Map.h"
 

@@ -518,6 +518,11 @@ TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::TAO_Reverse_Active_Object_Ma
 {
 }
 
+ACE_INLINE 
+TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::~TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (void)
+{
+}
+
 ACE_INLINE int 
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::bind (PortableServer::Servant servant,
                                                           const PortableServer::ObjectId &id)
@@ -542,6 +547,16 @@ ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::find (PortableServer::Servant servant)
 {
   return this->map_.find (servant);
+}
+
+ACE_INLINE 
+TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void)
+{
+}
+
+ACE_INLINE 
+TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::~TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void)
+{
 }
 
 ACE_INLINE int 

@@ -217,12 +217,6 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 #include "tao/CurrentC.h"
 #include "tao/POA.h"
 
-extern TAO_Export int operator== (const PortableServer::ObjectId &l,
-                                  const PortableServer::ObjectId &r);
-
-extern TAO_Export int operator== (const TAO_ObjectKey &l,
-                                  const TAO_ObjectKey &r);
-
 // TAO specific includes
 #include "tao/params.h"
 

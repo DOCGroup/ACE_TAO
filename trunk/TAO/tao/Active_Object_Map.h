@@ -280,6 +280,9 @@ public:
   TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (size_t size);
   // Constructor
 
+  virtual ~TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (void);
+  // Destructor
+
   virtual int bind (PortableServer::Servant servant,
                     const PortableServer::ObjectId &id);
   // Associate <servant> with <id>.
@@ -315,6 +318,12 @@ class TAO_Export TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy : public T
   //     Table for maintaining a mapping of servant to object ids (for
   //     the MULTIPLE_ID POA_Policy)
 public:
+  TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void);
+  // Constructor
+
+  virtual ~TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void);
+  // Destructor
+
   virtual int bind (PortableServer::Servant servant,
                     const PortableServer::ObjectId &id);
   // Associate <servant> with <id>.
