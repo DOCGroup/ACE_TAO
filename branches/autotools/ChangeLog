@@ -2,7 +2,7 @@ Tue Mar 25 08:33:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:
 
-	  Call the ACE_PROG_EGREP macro to make sure the $EGREP shell
+	  Call the AC_PROG_EGREP macro to make sure the $EGREP shell
 	  variable is set.
 
 Tue Mar 25 08:22:03 2003  Ossama Othman  <ossama@uci.edu>
