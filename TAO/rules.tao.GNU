@@ -102,6 +102,17 @@ else  # ami_callback
   ACE_MAKE_OPTIONS += ami_callback
 endif # ami_callback
 
+ifeq ($(corba_messaging),0)
+  rt_corba = 0
+  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
+else  # corba_messaging
+  override corba_messaging = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
+  # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
+  ACE_MAKE_OPTIONS += corba_messaging
+endif # corba_messaging
+
 ifeq ($(rt_corba),0)
   CPPFLAGS += -DTAO_HAS_RT_CORBA=0
 else  # rt_corba
@@ -111,16 +122,6 @@ else  # rt_corba
   # CPPFLAGS += -DTAO_HAS_RT_CORBA=1
   ACE_MAKE_OPTIONS += rt_corba
 endif # rt_corba
-
-ifeq ($(corba_messaging),0)
-  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
-else  # corba_messaging
-  override corba_messaging = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
-  # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
-  ACE_MAKE_OPTIONS += corba_messaging
-endif # corba_messaging
 
 ifeq ($(interceptors),0)
   CPPFLAGS += -DTAO_HAS_INTERCEPTORS=0

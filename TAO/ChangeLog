@@ -1,3 +1,20 @@
+Sat Nov 22 10:12:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* rules.tao.GNU:
+
+	  If messaging is set to zero, set RTCORBA to zero. 
+	
+	* tests/RTCORBA/Linear_Priority/Makefile:
+	* tests/RTCORBA/Persistent_IOR/Makefile:
+	* tests/RTCORBA/Policy_Combinations/Makefile:
+	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
+	* tests/RTCORBA/Thread_Pool/Makefile:
+
+	  Fixed what I broke before. The makefiles also need to ensure
+	  that RTCORBA is available in addition to minimum_corba being set
+	  to zero. 
+
 Sat Nov 22 08:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
