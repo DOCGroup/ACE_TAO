@@ -224,8 +224,8 @@ main (int argc, ACE_TCHAR *argv[])
       int threads = 5;
       int invocations = 100;
 
-      if (argc > 1) threads = atoi (argv[1]);
-      if (argc > 2) invocations = atoi (argv[2]);
+      if (argc > 1) threads = ACE_OS::atoi (argv[1]);
+      if (argc > 2) invocations = ACE_OS::atoi (argv[2]);
 
       // New test using ACE_Token::queueing_strategy ()
       retval += run_test (ACE_Token::FIFO, threads, invocations);
