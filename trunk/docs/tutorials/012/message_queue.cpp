@@ -4,6 +4,8 @@
 #include "block.h"
 #include "work.h"
 #include "task.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 /*
   I want to be sure that our Task object gets destructed correctly, so
@@ -47,7 +49,7 @@ int run_test (int iterations, int threads)
        As before, put a text message into the block.
      */
     ACE_OS::sprintf (message->wr_ptr (), "This is message %d.", i);
-    message->wr_ptr (strlen (message->rd_ptr ())+1);
+    message->wr_ptr (ACE_OS::strlen (message->rd_ptr ())+1);
 
      /*
        Add the work to our thread pool

@@ -3,6 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_string.h"
 
 /* Once again, we use the default server port.  In a "real" system,
    the server's port (or ports) would be published in some way so that

@@ -1,3 +1,97 @@
+Sun Nov  9 20:53:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * docs/tutorials/002/server.cpp:
+        * docs/tutorials/005/server.cpp:
+        * docs/tutorials/006/server.cpp:
+        * docs/tutorials/007/server.cpp:
+        * docs/tutorials/022/server.cpp:
+          Added #include Signal.h.
+
+        * docs/tutorials/003/client.cpp:
+          Added #include OS_NS_string.h and OS_NS_stdio.h.
+
+        * docs/tutorials/004/client.cpp:
+        * docs/tutorials/019/shmem.cpp:
+        * docs/tutorials/020/mmap.cpp:
+          Added #include OS_NS_stdio.h.
+
+        * docs/tutorials/008/broadcast_client.cpp:
+        * docs/tutorials/008/directed_client.cpp:
+        * docs/tutorials/008/server.cpp:
+        * docs/tutorials/009/server.cpp:
+        * docs/tutorials/015/Protocol_Stream.cpp:
+        * docs/tutorials/015/Xmit.cpp:
+        * docs/tutorials/015/ZlibCompressor.cpp:
+        * docs/tutorials/015/client.cpp:
+          Added #include OS_NS_string, and ACE_OS to some memcpy methods,
+          etc...
+
+        * docs/tutorials/007/thread_pool.h:
+          Added #include Mutex.h.
+
+        * docs/tutorials/009/broadcast_client.cpp:
+        * docs/tutorials/009/directed_client.cpp:
+          Added #include OS_NS_string.h and Time_Value.h.
+
+        * docs/tutorials/010/message_queue.cpp:
+        * docs/tutorials/010/task.cpp:
+        * docs/tutorials/011/task.cpp:
+        * docs/tutorials/016/condition.cpp:
+        * docs/tutorials/019/server.cpp:
+        * docs/tutorials/019/server2.cpp:
+        * docs/tutorials/019/shmem.cpp:
+        * docs/tutorials/020/mmap.cpp:
+        * docs/tutorials/020/server.cpp:
+        * docs/tutorials/020/server2.cpp:
+          Added #include OS_NS_unistd.h.
+
+        * docs/tutorials/010/task.h:
+        * docs/tutorials/011/task.h:
+        * docs/tutorials/012/task.h:
+        * docs/tutorials/013/task.cpp:
+        * docs/tutorials/017/Barrier_i.cpp:
+          Added #include Barrier.h.
+
+        * docs/tutorials/011/message_queue.cpp:
+        * docs/tutorials/012/message_queue.cpp:
+        * docs/tutorials/012/task.cpp
+          Added #include OS_NS_unistd.h and OS_NS_string.h.  Added
+          ACE_OS:: to several strlen methods, etc...
+
+        * docs/tutorials/013/block.h:
+          Removed #include Synch.h and added #include Lock_Adapter_T.h and
+          Mutex.h.
+
+        * docs/tutorials/013/mld.h:
+        * docs/tutorials/017/Barrier_i.h:
+          Removed #include of Synch.h and added Mutex.h.
+
+        * docs/tutorials/013/task.h:
+        * docs/tutorials/017/Barrier_i.h:
+          Added forward declaration of ACE_Barrier.
+
+        * docs/tutorials/013/work.h:
+          Removed #include Synch.h.
+
+        * docs/tutorials/015/Makefile.client:
+        * docs/tutorials/015/Makefile.server:
+          Removed CompressionSocket from FILES and added -lz to LDLIBS.
+
+        * docs/tutorials/016/Condition_i.h:
+          Removed #include Synch.h and added Thread_Mutex.h,
+          Condition_Thread_Mutex.h, and Guard_T.h.
+
+        * docs/tutorials/018/Test_T.h:
+          Added Barrier.h and Mutex.h.
+
+        * docs/tutorials/019/client.cpp:
+        * docs/tutorials/020/client.cpp:
+          Added #include os_ctype.h.
+
+        * docs/tutorials/022/Makefile:
+          Added -I../005 to CPPFLAGS since this tutorial needs to find
+          client_handler from tutorial 005.
+
 Sun Nov  9 16:32:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:

@@ -5,6 +5,8 @@
 
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Barrier.h"
+#include "ace/Mutex.h"
 
 /* We'll create a simple ACE_Task derivative for testing a couple of
    different locking mechanisms.  We've hidden the open() method to

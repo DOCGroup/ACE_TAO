@@ -3,8 +3,10 @@
 #ifndef BARRIER_H
 #define BARRIER_H
 
-#include "ace/Synch.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Mutex.h"
+
+class ACE_Barrier;
 
 /* Barrier is a simple wrapper for the ACE_Barrier synchronization
    class.  The ACE_Barrier is already pretty easy to use but I thought

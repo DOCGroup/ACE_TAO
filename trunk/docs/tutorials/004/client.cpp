@@ -5,6 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_stdio.h"
 
 /* In this tutorial, we extend SOCK_Stream by adding a few wrappers
   around the send_n() method.  */
