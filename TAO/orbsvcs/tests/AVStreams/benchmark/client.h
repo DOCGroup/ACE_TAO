@@ -97,12 +97,15 @@ private:
   // The Acceptor.
 
   Client *client_;
+  
+ 
 };
 class ttcp_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 {
 public:
-  ttcp_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
+  ttcp_Endpoint_Reactive_Strategy_A (CORBA::ORB_ptr orb,
+                                     PortableServer::POA_ptr poa,
                                      Client *client_ptr);
   // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
 
@@ -169,7 +172,7 @@ class Client : public ACE_Task<ACE_SYNCH>
 // one of these per client thread
 {
 public:
-  Client (int argc, char **argv, int task_id);
+  Client (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, int task_id);
 
   virtual int svc (void);
 
@@ -181,6 +184,10 @@ private:
   int establish_stream (void);
 
   TAO_ORB_Manager orb_manager_;
+
+  CORBA::ORB_var orb_;
+
+  PortableServer::POA_var poa_;
 
   TAO_Naming_Client my_name_client_;
 

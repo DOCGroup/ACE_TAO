@@ -5,158 +5,52 @@
 
 ACE_RCSID(benchmark, server, "$Id$")
 
-//  // AV_Server_Sig_Handler routines
-
-//  AV_Server_Sig_Handler::AV_Server_Sig_Handler (void)
-//  {
-//  }
-
-//  int
-//  AV_Server_Sig_Handler::register_handler (void)
-//  {
-//    // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
-//    // though we open this file "Write Only" we still need to use the
-//    // ACE_Event_Handler::NULL_MASK when registering this with the
-//    // ACE_Reactor (see below).
-//    this->handle_ = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
-//    //  ACE_ASSERT (this->handle_ != -1);
-//    //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) sig_handler == %d\n",this->handle_));
-
-//    // Register signal handler object.  Note that NULL_MASK is used to
-//    // keep the ACE_Reactor from calling us back on the "/dev/null"
-//    // descriptor.
-
-//     if (TAO_ORB_Core_instance ()->reactor ()->register_handler
-//         (this, ACE_Event_Handler::NULL_MASK) == -1)
-//       ACE_ERROR_RETURN ((LM_ERROR,
-//                          "%p\n",
-//                          "register_handler"),
-//                         -1);
-
-//    // handles these signals.
-//     //   this->sig_set.fill_set ();
-//  //     this->sig_set.sig_add (SIGCHLD);
-//  //     this->sig_set.sig_add (SIGBUS);
-//  //     this->sig_set.sig_add (SIGINT);
-//  //     this->sig_set.sig_add (SIGTERM);
-
-//    // Register the signal handler object to catch the signals.  if
-//  //    if (TAO_ORB_Core_instance ()->reactor ()->register_handler
-//  //        (this->sig_set, this) == -1)
-//  //      ACE_ERROR_RETURN ((LM_ERROR,
-//  //                         "%p\n",
-//  //                         "register_handler"),
-//  //                      -1);
-//    return 0;
-//  }
-
-//  // Called by the ACE_Reactor to extract the fd.
-//  ACE_HANDLE
-//  AV_Server_Sig_Handler::get_handle (void) const
-//  {
-//    return this->handle_;
-//  }
-
-//  int
-//  AV_Server_Sig_Handler::handle_input (ACE_HANDLE)
-//  {
-//    ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
-//    return 0;
-//  }
-
-//  int
-//  AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
-//  {
-//    ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
-//    return 0;
-//  }
-
-//  // This method handles all the signals that are being caught by this
-//  // object.  In our simple example, we are simply catching SIGALRM,
-//  // SIGINT, and SIGQUIT.  Anything else is logged and ignored.
-//  //
-//  // There are several advantages to using this approach.  First,
-//  // the behavior triggered by the signal is handled in the main event
-//  // loop, rather than in the signal handler.  Second, the ACE_Reactor's
-//  // signal handling mechanism eliminates the need to use global signal
-//  // handler functions and data.
-
-//  //  int
-//  //  AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
-//  //  {
-//  //    ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
-
-//  //    // switch (signum)
-//  //  //     {
-//  //  //     case SIGCHLD:
-//  //  //       // Handle the death of child signal.
-//  //  //       this->clear_child (SIGCHLD);
-//  //  //       break;
-//  //  //     case SIGBUS:
-//  //  //       // Handle the Bus error signal
-//  //  //     case SIGINT:
-//  //  //       // Handle the interrupt signal
-//  //  //     case SIGTERM:
-//  //  //       // Handle the process termination signal.
-//  //  //       this->int_handler (signum);
-//  //  //       break;
-//  //  //     default:
-//  //  //       //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %S: not handled, returning to program\n", signum));
-//  //  //       break;
-//  //  //     }
-//  //    return 0;
-//  //  }
-
-//  AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
-//  {
-//    TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
-//  }
 
 
-//------------------------------------------------------------
-Server::Server (void)
-  :process_strategy_ (&process_options_),
-   reactive_strategy_(&orb_manager_),
-   mmdevice_ (0)
+
+Server::Server (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+  : orb_ (orb),
+    poa_ (poa),
+    process_strategy_ (&SERVER_GLOBALS::instance ()->process_options_),
+    reactive_strategy_(orb, poa),
+    mmdevice_ (0)
 {
 }
 
 
-// Initializes the mpeg server
+CORBA::ORB_ptr
+Server::orb (void)
+{
+  return this->orb_;
+}
+
+// Initializes the server
 int
-Server::init (int argc,
-              char *argv[],
-              CORBA::Environment& ACE_TRY_ENV)
+Server::init (int argc, char** argv, CORBA::Environment& ACE_TRY_ENV)
 {
   ACE_TRY
     {
-      // Initialize the orb_manager
-      this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
-      CORBA::ORB_var orb =
-        this->orb_manager_.orb ();
+      //Activate POA Manager
+      PortableServer::POAManager_var mgr
+        = this->poa_->the_POAManager ();
 
-      PortableServer::POA_var child_poa =
-        this->orb_manager_.child_poa ();
-
-
-      int result = this->parse_args (argc,argv);
+      mgr->activate ();
+      
+      int result = SERVER_GLOBALS::instance ()->parse_args (argc, 
+                                                            argv);
+      
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
-      // Initialize the naming services
 
-      if (my_name_client_.init (orb.in ()) != 0)
+      // Initialize the naming services
+      if (my_name_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
-
-      // Register the video mmdevice object with the ORB
-      switch (this->strategy_)
+      
+      switch (SERVER_GLOBALS::instance ()->strategy_)
         {
         case REACTIVE_STRATEGY:
           ACE_NEW_RETURN (this->mmdevice_,
@@ -169,35 +63,27 @@ Server::init (int argc,
                           -1);
           break;
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,"Invalid strategy\n"),-1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Invalid strategy\n"),
+                            -1);
         }
 
-      // create the video server mmdevice with the naming service pointer.
-      this->orb_manager_.activate_under_child_poa ("Bench_Server_MMDevice",
-                                                   this->mmdevice_,
-                                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-  // Register the mmdevice with the naming service.
+      
+      // Register the mmdevice with the naming service.
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
 
-      // Register the video control object with the naming server.
       this->my_name_client_->rebind (server_mmdevice_name,
                                      this->mmdevice_->_this (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      //   result = this->signal_handler_.register_handler ();
 
-      //   if (result < 0)
-      //     ACE_ERROR_RETURN ((LM_ERROR,
-      //                        "(%P|%t) Error registering signal handler"),
-      //                       -1);
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Server::init");
       return -1;
     }
   ACE_ENDTRY;
@@ -205,37 +91,6 @@ Server::init (int argc,
   return 0;
 }
 
-int
-Server::parse_args (int argc,char **argv)
-{
-  ACE_Get_Opt opts (argc,argv,"pr");
-
-  char child_name [BUFSIZ], buf[BUFSIZ];
-  ACE_OS::strcpy (child_name,"child_process");
-  this->strategy_ = REACTIVE_STRATEGY;
-  int c;
-  while ((c = opts ()) != -1)
-    {
-      switch (c)
-        {
-        case 'p':
-          // process based strategy
-          this->strategy_  = PROCESS_STRATEGY;
-          break;
-        case 'r':
-          this->strategy_  = REACTIVE_STRATEGY;
-          break;
-        case 'c':
-          ACE_OS::strcpy (child_name,opts.optarg);
-          break;
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,"Usage: server [-p/-r]"),-1);
-        }
-    }
-  ACE_OS::sprintf (buf,"%s -ORBobjrefstyle url",child_name);
-  this->process_options_.command_line (buf);
-  return 0;
-}
 
 // Runs the server
 int
@@ -244,7 +99,7 @@ Server::run (CORBA::Environment& ACE_TRY_ENV)
   // Run the ORB event loop
   while (1)
     {
-      this->orb_manager_.run (ACE_TRY_ENV);
+      this->orb_->run (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
       if (errno== EINTR)
         continue;
@@ -274,14 +129,27 @@ Server::~Server (void)
 int
 main (int argc, char **argv)
 {
-  Server server;
+
+  //TAO_debug_level++;
+
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                        argv);
+   
+  CORBA::Object_var obj
+    = orb->resolve_initial_references ("RootPOA");
+  
+  PortableServer::POA_var poa
+    = PortableServer::POA::_narrow (obj);
+  
+  Server server (orb, poa);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+
       if (server.init (argc, argv, ACE_TRY_ENV) == -1)
         return 1;
-      ACE_TRY_CHECK;
-
+      
       server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

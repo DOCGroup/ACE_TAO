@@ -5,7 +5,6 @@
 // NOTE: If you encounter trouble resolving the Naming Service, try
 // running the Naming Service and the server in the same window. [MJB]
 
-
 #ifndef TAO_AV_BENCH_SERVER_H
 #define TAO_AV_BENCH_SERVER_H
 
@@ -63,24 +62,25 @@ private:
 class Server
 {
 public:
-  Server (void);
+  Server (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
   // Default constructor
 
-  int init (int argc,
-            char **argv,
-            CORBA::Environment& env);
+  int init (int argc, char** argv, CORBA::Environment& env);
 
   int run (CORBA::Environment& env);
+  
+  CORBA::ORB_ptr orb (void);
+
 
   ~Server (void);
 private:
 
-  enum strategy {PROCESS_STRATEGY=0,REACTIVE_STRATEGY=1};
-  int parse_args (int argc, char **argv);
-  // parses the arguments.
-
-  TAO_ORB_Manager orb_manager_;
+  //TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
+
+  CORBA::ORB_var orb_;
+
+  PortableServer::POA_var poa_;
 
   TAO_Naming_Client my_name_client_;
   // The TAO Naming server
@@ -90,8 +90,7 @@ private:
 
   //  AV_Server_Sig_Handler signal_handler_;
 
-  ACE_Process_Options process_options_;
-  // The process options for the process to be spawned by the process strategy
+
 
   TAO_AV_Endpoint_Process_Strategy_B process_strategy_;
   // The proces strategy for the video.
@@ -102,8 +101,10 @@ private:
   TAO_MMDevice *mmdevice_;
   // The video server multimedia device
 
-  strategy strategy_;
-  // flag indicating strategy.
+  enum strategy {PROCESS_STRATEGY=0,REACTIVE_STRATEGY=1};
+
 };
+
+
 
 #endif /* TAO_AV_BENCH_SERVER_H */

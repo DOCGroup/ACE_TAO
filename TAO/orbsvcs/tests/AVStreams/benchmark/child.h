@@ -3,6 +3,8 @@
 #ifndef TAO_AV_BENCH_CHILD_H
 #define TAO_AV_BENCH_CHILD_H
 
+
+#include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -19,6 +21,51 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/SOCK_Connector.h"
 #include "client.h"
+
+class Server_Globals
+{
+  // = TITLE
+  //     Globals class to be used as a singleton.
+  //
+  // = DESCRIPTION
+  //     This is used both by the client.
+public:
+  Server_Globals (void);
+  // constructor.
+
+  int parse_args (int argc,char **argv);
+  //parse the arguments.
+
+  ACE_Barrier *barrier_;
+  //  barrier for the client threads.
+
+  int ready_;
+  // ready flag used by the high priority thread to wake up the low
+  // priority threads after it's parsed the arguments.
+
+  ACE_SYNCH_MUTEX ready_mtx_;
+  // mutex for the condition variable.
+
+  ACE_SYNCH_CONDITION ready_cond_;
+  // condition variable for the low priority threads to wait
+  //until the high priority thread is done with the arguments parsing.
+
+  char *hostname_;
+  // hostname to bind to.
+
+  u_short port_;
+  //  port number to bind to.
+  enum strategy {PROCESS_STRATEGY=0,REACTIVE_STRATEGY=1};
+  strategy strategy_;
+  // strategy to be used for MMDevice.
+
+  ACE_INET_Addr* addr_;
+
+  ACE_Process_Options process_options_;
+  // The process options for the process to be spawned by the process strategy
+};
+
+typedef ACE_Singleton <Server_Globals,ACE_SYNCH_MUTEX> SERVER_GLOBALS;
 
 
 class ttcp_Stream_Handler : public virtual ACE_Event_Handler
