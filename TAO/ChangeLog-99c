@@ -1,3 +1,13 @@
+Thu Oct 14 18:31:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Active_Object_Map.cpp: In
+	  TAO_Transient_Strategy::find_servant_using_system_id_and_user_id
+	  and
+	  TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id,
+	  if <result> is -1, reset <entry> to 0.  Thanks to Chris Hafey
+	  <chris@stentorsoft.com> for sending an example illustrating the
+	  bug.
+
 Thu Oct 14 15:42:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Direct_Priority_Mapping.cpp:
