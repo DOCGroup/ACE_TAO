@@ -874,7 +874,7 @@ ACE_Log_Msg::log (const char *format_str,
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
   // Write the <log_record> to the appropriate location.
-  ssize_t result = this->log (log_record, abort_prog == 0);
+  ssize_t result = this->log (log_record, abort_prog);
  
   if (abort_prog)
     {

@@ -1,3 +1,14 @@
+Fri Jan  9 11:35:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Changed abort_prog == 0 to abort_prog so
+ 	  that STDERR would be printed correctly.  
+
+	* ACE-categories: Added all the ACE files into the ACE-categories
+ 	  listing.  Thanks to Andres Kruse for motivating this.
+
+	* include/makeinclude/platform_sunos5_egcs.GNU (CXX): Removed
+ 	  -pipe from CC and CXX.  It was already in CCFLAGS.
+
 Fri Jan 09 11:56:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/config-win32.h (ACE_ORBIX_HAS_NAMESPACES): By default, you
@@ -5,14 +16,6 @@ Fri Jan 09 11:56:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  like this, comment out the #define ACE_ORBIX_HAS_NAMESPACES line
  	  or #undef ACE_ORBIX_HAS_NAMESPACES in your config.h file after
  	  including this config-win32.h.
-
-Fri Jan  9 11:35:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ACE-categories: Added all the ACE files into the ACE-categories
- 	  listing.  Thanks to Andres Kruse for motivating this.
-
-	* include/makeinclude/platform_sunos5_egcs.GNU (CXX): Removed
- 	  -pipe from CC and CXX.  It was already in CCFLAGS.
 
 Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
