@@ -25,6 +25,11 @@ how to run the following tests:
           select_mt reactor, which helps the server to make calls to
           client during the upcall.
 
+        . Blocking_Sync_None
+
+          A regression test for [BUGID:858], verifies that SYNC_NONE
+	  requests never block.
+
         . CDR
 
           This directory contains several tests for the CDR stream
