@@ -1289,6 +1289,7 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #  include /**/ <selectLib.h>
 #  include /**/ <sigLib.h>
 #  include /**/ <sockLib.h>
+#  include /**/ <sysLib.h>
 #  include /**/ <taskLib.h>
 #  include /**/ <taskHookLib.h>
 
