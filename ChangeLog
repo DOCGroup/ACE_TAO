@@ -1,3 +1,8 @@
+Tue May 22 21:57:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst: Added NO_AMI_MESSAGING to the
+	  builds.   
+
 Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/OS.h:
@@ -10,7 +15,7 @@ Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Sun May 20 08:48:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Added FORTE 6.1 to teh list.
+	* bin/nightlybuilds/builds.lst: Added FORTE 6.1 to the list.
 
 Sun May 20 07:37:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
