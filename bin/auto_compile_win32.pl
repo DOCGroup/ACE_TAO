@@ -4,6 +4,10 @@
 
 # use lib "$ENV{ACE_ROOT}/bin";
 
+# **** We no longer use this script in our daily build.  So we
+#      will need to depend on your help to maintain the file
+#      up-to-date if you want to continue using it.
+
 ## TO-DO
 ##   * Added command line options to selective compile library, et.al.
 ##   * Added cvs update.  Also controllable from command line.
