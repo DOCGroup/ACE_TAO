@@ -52,20 +52,20 @@ $(VDIR)%.obj: %.cpp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 else
-$(VDIR)%.o: %.c
+$(VDIR)%.o: %.c $(VDIR).creation_stamp
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp
+$(VDIR)%.o: %.cpp $(VDIR).creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 endif
 
-$(VDIR)%.o: %.C
+$(VDIR)%.o: %.C $(VDIR).creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cc
+$(VDIR)%.o: %.cc $(VDIR).creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
@@ -87,20 +87,33 @@ $(VSHDIR)%.$(SOEXT): %.cpp
 endif
 
 ifeq ($(split), 1)
-$(VSHDIR)%.$(OBJEXT): %.cpp
+$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
 	mv *.$(OBJEXT) $(OBJDIRS)
 else
-$(VSHDIR)%.$(OBJEXT): %.cpp
+$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 endif
 
-$(VSHDIR)%.$(OBJEXT): %.cc
+$(VSHDIR)%.$(OBJEXT): %.cc $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
-$(VSHDIR)%.$(OBJEXT): %.c
+
+$(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR).creation_stamp
 	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
 	$(SOLINK)
+
+endif
+
+$(VDIR).creation_stamp:
+	-@test -d $(VDIR) || mkdir $(VDIR)
+	@touch $@
+
+ifneq ($(VSHDIR),$(VDIR))
+$(VSHDIR).creation_stamp:
+	-@test -d $(VSHDIR) || mkdir $(VSHDIR)
+	@touch $@
 endif
 
 #----------------------------------------------------------------------------

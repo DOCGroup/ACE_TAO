@@ -26,6 +26,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 use File::Basename;
+use File::Copy;
 use FileHandle;
 require POSIX;
 
@@ -39,6 +40,12 @@ $MODULE='ACE_wrappers';
 $CMD = basename($0);
 
 $dont_update = 0;
+# $copy_logs = 1;
+# $LOG_DESTINATION = $ENV{'HOME'}.'/.www-docs/auto_compile';
+
+$copy_logs = 0;
+$LOG_DESTINATION='bugzilla'.'@cs.wustl.edu';
+
 $dont_run = 0;
 $pre_realclean = 0;
 $post_realclean = 0;
@@ -49,61 +56,58 @@ $debug = 0;
 
 @ARGS = ();
 while ($#ARGV >= 0) {
-  if (!($ARGV[0] =~ m/-/)) {
+  if (!($ARGV[0] =~ m/^-/)) {
     push @ARGS, $ARGV[0];
-    shift;
   } elsif ($ARGV[0] eq "-single_threaded") {
     print STDERR "$CMD: obsolete option $ARGV[0], "
       ."please use -config instead\n";
     push @CONFIGURATION_OPTIONS, 'ST';
-    shift;
   } elsif ($ARGV[0] eq "-minimum_corba") {
     print STDERR "$CMD: obsolete option $ARGV[0], "
       ."please use -config instead\n";
     push @CONFIGURATION_OPTIONS, 'MINIMUM';
-    shift;
   } elsif ($ARGV[0] eq "-ami") {
     print STDERR "$CMD: obsolete option $ARGV[0], "
       ."please use -config instead\n";
     push @CONFIGURATION_OPTIONS, 'AMI';
-    shift;
   } elsif ($ARGV[0] eq "-smart_proxies") {
     print STDERR "$CMD: obsolete option $ARGV[0], "
       ."please use -config instead\n";
     push @CONFIGURATION_OPTIONS, 'SMART_PROXIES';
-    shift;
   } elsif ($ARGV[0] eq "-static") {
     print STDERR "$CMD: obsolete option $ARGV[0], "
       ."please use -config instead\n";
     push @CONFIGURATION_OPTIONS, 'STATIC';
-    shift;
   } elsif ($ARGV[0] eq "-config") {
     shift;
     push @CONFIGURATION_OPTIONS, $ARGV[0];
-    shift;
   } elsif ($ARGV[0] eq "-build_list") {
     shift;
     @BUILD_LIST = split (/,/, $ARGV[0]);
-    shift;
   } elsif ($ARGV[0] eq "-dont_update") {
     $dont_update = 1;
+  } elsif ($ARGV[0] eq "-copy_logs") {
     shift;
+    $copy_logs = 1;
+    $LOG_DESTINATION = $ARGV[0];
+  } elsif ($ARGV[0] eq "-mail_logs") {
+    shift;
+    $copy_logs = 0;
+    $LOG_DESTINATION = $ARGV[0];
   } elsif ($ARGV[0] eq "-dont_run") {
     $dont_run = 1;
-    shift;
   } elsif ($ARGV[0] eq "-pre_realclean") {
     $pre_realclean = 1;
-    shift;
   } elsif ($ARGV[0] eq "-post_realclean") {
     $post_realclean = 1;
-    shift;
   } elsif ($ARGV[0] eq "-report_success") {
     $report_success = 1;
-    shift;
   } elsif ($ARGV[0] eq "-debug") {
     $debug = 1;
-    shift;
+  } else {
+    print "Ignoring option $ARGV[0]\n";
   }
+  shift;
 }
 
 # Extract configuration information from command line.
@@ -112,9 +116,13 @@ $CHECKOUT = $ARGS[0];
 $BUILD    = $ARGS[1];
 $LOGDIR   = $ARGS[2];
 $ADMIN    = $ARGS[3];
-$MAIL = "mail";
+$MAIL     = "mail";
 if ($#ARGS >= 4) {
   $MAIL     = $ARGS[4];
+}
+$LOG_URL  = "http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/";
+if ($#ARGS >= 5) {
+  $LOG_URL = $ARGS[5];
 }
 
 $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
@@ -128,11 +136,11 @@ $REVISION='$Revision$ ';
 
 $disable_file = $LOGDIR . '/.disable';
 $histfile = $LOGDIR . '/history';
-$LOGBASE = POSIX::strftime("%b%d_%Y.txt", localtime);
-$LOGFILE = $LOGDIR . '/' . $LOGBASE;
+$LOGBASE = POSIX::strftime("%Y_%m_%d_%H_%M", localtime);
+$LOGFILE = $LOGDIR . '/' . $LOGBASE . '.txt';
 $HOST = `hostname`;
 chop $HOST;
-$LOG_NAME =  $HOST . "_" . $BUILD . "_" . $LOGBASE;
+$LOG_NAME =  $HOST . '_' . $BUILD . '/' . $LOGBASE . '.txt';
 $STATUS = "OK";
 
 if ($debug) {
@@ -193,37 +201,12 @@ if ($debug) {
   }
 }
 
-sub report_errors {
-  # First clear the lock, so the next execution works...
-  unlink $disable_file; # Ignore errors!
-
-  # Now send a summary of the errors to the ADMIN account...
-  local $to = $ADMIN;
-
-  open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$BUILD.'" '.$to)
-    || mydie "Cannot open mail pipe for: $_\n";
-
-  print MAIL 'The following message is brought to you by: ', "\n";
-  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n\n";
-
-  local $m;
-  foreach $m (@_) {
-    print MAIL $m, "\n";
-  }
-
-  print MAIL "\nPlease check the following log for more info:\n\n";
-  print MAIL 'http://www.cs.wustl.edu/~bugzilla/auto_compile_logs/',
-             $LOG_NAME, "\n\n";
-
-  close (MAIL); # Ignore errors....
-
-  # Now send the complete log to bugzilla...
-  local $bugs = 'bugzilla'.'@cs.wustl.edu';
-  open (MAIL, "|".$MAIL.' -s AUTO_COMPILE_LOG='.$LOG_NAME.' '.$bugs)
+sub mail_logs {
+  open (MAIL, "|".$MAIL.' -s AUTO_COMPILE_LOG='.$LOG_NAME.' '.$LOG_DESTINATION)
     || mydie "Cannot open mail pipe for: $LOG_NAME\n";
 
   print MAIL 'This is the log for: ', "\n";
-  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
+  print MAIL $CMD, ' [', $REVISION, "] for $HOST/$BUILD\n";
 
   print MAIL "\n================================================================\n";
 
@@ -235,6 +218,51 @@ sub report_errors {
       close (THELOG);
     }
   close (MAIL); # Ignore errors....
+}
+
+sub copy_logs {
+  local $DEST_DIR = $LOG_DESTINATION.'/'.$HOST.'_'.$BUILD;
+  mkdir $DEST_DIR,0755 if (!-d $DEST_DIR);
+
+  copy($LOGFILE, $DEST_DIR.'/'.$LOGBASE.'.txt');
+
+  local $MAKE_PRETTY="$CHECKOUT/$MODULE/bin/make_pretty.pl";
+  system ("perl $MAKE_PRETTY -b $LOGFILE >$DEST_DIR/$LOGBASE"."_brief.html");
+  system ("perl $MAKE_PRETTY    $LOGFILE >$DEST_DIR/$LOGBASE".".html");
+}
+
+sub report_errors {
+  
+  # First clear the lock, so the next execution works...
+  unlink $disable_file; # Ignore errors!
+
+  # Now send a summary of the errors to the ADMIN account, if there are any.
+
+  if ($#_ >= 0) {
+    local $to = $ADMIN;
+
+    open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$BUILD.'" '.$to)
+      || mydie "Cannot open mail pipe for: $_\n";
+
+    print MAIL 'The following message is brought to you by: ', "\n";
+    print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n\n";
+
+    print MAIL "\nPlease check the following log for more info:\n\n";
+    print MAIL $LOG_URL, $LOG_NAME, "\n\n";
+
+    local $m;
+    foreach $m (@_) {
+      print MAIL $m, "\n";
+    }
+    close (MAIL); # Ignore errors....
+  }
+
+  # Now send the complete log to bugzilla...
+  if ($copy_logs) {
+    copy_logs ();
+  } else {
+    mail_logs ();
+  }
 }
 
 ### MAIN FUNCTION
@@ -483,9 +511,7 @@ if ($post_realclean) {
   }
 }
 
-if ($#failures >= 0) {
-  report_errors @failures;
-}
+report_errors @failures;
 
 print LOG "#################### End\n";
 

@@ -1,3 +1,20 @@
+Sat Nov  4 17:05:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          New revision of the script.  It can copy log files directly to
+          the destination directory, and it also runs the make_pretty
+          script to generate both the HTML and HTML summary of the log.
+
+        * bin/show_log_dir.pl:
+          Corrections to the document and more fixes to make it Apache
+          friendly.
+
+        * include/makeinclude/rules.local.GNU:
+          Add special target to force the creation of the .shobj and .obj
+          directories, even with parallel builds.  The faster our
+          computers get the more often we get failures due to this
+          problem.
+
 Sat Nov  4 14:53:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/make_pretty.pl:
@@ -6,16 +23,16 @@ Sat Nov  4 14:53:39 2000  Carlos O'Ryan  <coryan@uci.edu>
           and is going to be invoked by bin/auto_compile to generate
           summary logs.
 
-        * bin/show_log.pl:
+        * bin/show_log_dir.pl:
           A CGI script to present all the logs for a particular builds in
           a single page.  It is a modified version of Darrell's script,
           but this time it works better on Unix web servers.
 
 Fri Nov  3 17:22:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: Backed of changes given by Russ
-	  Noseworthy through bug id #710. This was breaking SunCC5.0
-	  builds. 
+        * ace/config-sunos5.5.h: Backed of changes given by Russ
+          Noseworthy through bug id #710. This was breaking SunCC5.0
+          builds.
 
 Fri Nov  3 09:41:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
