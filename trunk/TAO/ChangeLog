@@ -5,7 +5,7 @@ Sat Jun  7 14:14:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  synchronization that was missing. This method is called from the
 	  the *IOP_Transport::send_request () method. Multiple threads
 	  could be calling the same method from various handlers and there
-	  could be a race during initialization.
+	  is a race during initialization.
 
 	  Since we now have a lock in the get_protocol_hooks () method and
 	  since the method goes to the ACE_Dynamic_Service singleton,
