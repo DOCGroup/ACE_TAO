@@ -1577,16 +1577,18 @@ be_interface::gen_gperf_lookup_methods (void)
   ACE_HANDLE output =  ACE_OS::open (this->strategy_->get_out_stream_fname (),
                                      O_WRONLY | O_APPEND);
 
-  //ACE_HANDLE output =  ACE_OS::open (idl_global->be_get_server_skeleton_fname (),
-  //                                   O_WRONLY | O_APPEND);
   if (output == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:File open failed on server skeleton file\n",
-                       "open"),
-                      -1);
+    {
+      ACE_OS::close (input);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p:File open failed on server skeleton file\n",
+                         "open"));
+    }
 
   // Set the handles now in the process options.
   process_options.set_handles (input, output);
+
+  int result = 0;
 
   // Set the command line for the gperf program. Give the right
   // arguments for the operation lookup strategy that we are using.
@@ -1660,29 +1662,39 @@ be_interface::gen_gperf_lookup_methods (void)
       break;
 
     default:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
-                        -1);
+      ACE_ERROR ((LM_ERROR,
+                  "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"));
+      result = -1;
     }
 
+  if (result != -1)
+    {
+      // Spawn a process for gperf.
+      if (process.spawn (process_options) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error:%p:Couldnt spawn a process for gperf program\n"));
+          result = -1;
+        }
+      // Wait for gperf to complete.
+      else if (process.wait () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error:%p:Error on wait'ing for completion of gperf program.\n",
+                      "process.wait"));
+          result = -1;
+        }
 
-  // Spawn a process for gperf.
-  if (process.spawn (process_options) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Couldnt spawn a process for gperf program\n"),
-                      -1);
+      // Adjust the file offset to the EOF for the server skeleton file.
+      ACE_OS::fseek (this->strategy_->get_out_stream()->file (),
+                     0,
+                     SEEK_END);
+    }
 
-  // Wait for gperf to complete.
-  if (process.wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Error on wait'ing for completion of gperf program.\n",
-                       "process.wait"),
-                      -1);
+  ACE_OS::close (output);
+  ACE_OS::close (input);
 
-  // Adjust the file offset to the EOF for the server skeleton file.
-  ACE_OS::fseek (this->strategy_->get_out_stream()->file (), 0, SEEK_END);
-
-  return 0;
+  return result;
 }
 
 // Create an instance of this perfect hash table.
