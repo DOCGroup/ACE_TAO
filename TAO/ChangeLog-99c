@@ -1,16 +1,16 @@
 Fri May 14 15:25:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Added new files in the EC implementation
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Added new files in the EC
+ 	  implementation
 
 	* orbsvcs/tests/Event/Event.dsw:
 	* orbsvcs/tests/Event/Basic/Basic.dsw:
-	* orbsvcs/tests/Event/Basic/Schedule.dsp:
-	  Added new project for the Schedule test.
+	* orbsvcs/tests/Event/Basic/Schedule.dsp: Added new project for
+ 	  the Schedule test.
 
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
-	  Fixed type convertions problem.
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp: Fixed type
+ 	  conversions problem.
 
 Fri May 14 15:06:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -35,17 +35,15 @@ Fri May 14 12:20:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ValueBase.h:
 	* tao/ValueBase.i:
-	* tao/ValueBase.cpp:
-	  Added new patches from Torsten Kuepper, this should eliminate
-	  the warnings about enums.
+	* tao/ValueBase.cpp: Added new patches from Torsten Kuepper, this
+ 	  should eliminate the warnings about enums.
 
-	* */Makefile:
-	  Updated all the dependencies
+	* */Makefile: Updated all the dependencies
 
 Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Integrated scheduling back into the EC, this is still
-	  experimental.
+ 	  experimental.
 
 	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
 	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.i:
@@ -55,27 +53,25 @@ Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
 	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.i:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
-	  The scheduling strategy parametrize the aspects of the EC that
-	  relate to the Scheduler.  When using the Null_Scheduling the EC
-	  does not update dependencies in the Scheduler, making that a
-	  suitable choice for run-time execution (once the dependencies
-	  have been computed in configuration runs) and for systems that
-	  do not require scheduling.
-	  The Priority_Scheduling strategy does update the dependencies in
-	  the scheduler.
-	  Notice that many real-time properties of the EC do *not* depend
-	  on this, for example, locks are bounded to minimize priority
-	  inversion in any case.  Thus application that require real-time
-	  behavior but no scheduling can use the EC too.
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp: The scheduling
+ 	  strategy parametrize the aspects of the EC that relate to the
+ 	  Scheduler.  When using the Null_Scheduling the EC does not
+ 	  update dependencies in the Scheduler, making that a suitable
+ 	  choice for run-time execution (once the dependencies have been
+ 	  computed in configuration runs) and for systems that do not
+ 	  require scheduling.  The Priority_Scheduling strategy does
+ 	  update the dependencies in the scheduler.  Notice that many
+ 	  real-time properties of the EC do *not* depend on this, for
+ 	  example, locks are bounded to minimize priority inversion in any
+ 	  case.  Thus application that require real-time behavior but no
+ 	  scheduling can use the EC too.
 
 	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
-	  Add fields to carry RT_Info and Preemption priority
-	  information.
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i: Add fields to carry RT_Info
+ 	  and Preemption priority information.
 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	  Use the scheduling strategy to update the dependencies.
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: Use the
+ 	  scheduling strategy to update the dependencies.
 
 	* orbsvcs/orbsvcs/Event/EC_Factory.h:
 	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
@@ -84,16 +80,15 @@ Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	  Added new methods to the factory to obtain the scheduling
-	  strategy.
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: Added new methods to
+ 	  the factory to obtain the scheduling strategy.
 
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	  The event channel receives an scheduler and an scheduling
-	  strategy from the attributes and the factory respectively.
-	  The scheduler may be a nil object reference in it is not used.
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp: The event channel
+ 	  receives an scheduler and an scheduling strategy from the
+ 	  attributes and the factory respectively.  The scheduler may be a
+ 	  nil object reference in it is not used.
 
 	* orbsvcs/orbsvcs/Event/EC_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
@@ -110,38 +105,38 @@ Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
-	  In some cases the Filter_Builder may need to make CORBA calls
-	  and thus requires an CORBA::Environment.
-	  Added new operation to add dependencies between leaves of the
-	  filter tree and RT_Infos.  This operation is a noop if no
-	  scheduling is enabled, and in fact it is not even invoked.
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp: In some cases the
+ 	  Filter_Builder may need to make CORBA calls and thus requires an
+ 	  CORBA::Environment.  Added new operation to add dependencies
+ 	  between leaves of the filter tree and RT_Infos.  This operation
+ 	  is a noop if no scheduling is enabled, and in fact it is not
+ 	  even invoked.
 
 	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.i:
 	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
 	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.i:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
-	  Added new type of filter, it decorates a regular filter to
-	  inform the scheduling service of the dependencies between the
-	  filter elements and finally between suppliers and consumers.
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp: Added new
+ 	  type of filter, it decorates a regular filter to inform the
+ 	  scheduling service of the dependencies between the filter
+ 	  elements and finally between suppliers and consumers.
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	  Allocates the message blocks from a per-queue thread, also use a
-	  per-thread data block to minimize memory allocations.
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp: Allocates the
+ 	  message blocks from a per-queue thread, also use a per-thread
+ 	  data block to minimize memory allocations.
 
 	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
 	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  Use the TAO_EC_QOS_Info and the scheduling service to determine
-	  on which queue we should dispatch the event.
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp: Use the
+ 	  TAO_EC_QOS_Info and the scheduling service to determine on which
+ 	  queue we should dispatch the event.
 
 	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Update the filtering aspects of this class.
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Update the filtering
+ 	  aspects of this class.
 
 	* orbsvcs/tests/Event/Basic/Makefile:
 	* orbsvcs/tests/Event/Basic/Schedule.h:
@@ -149,25 +144,23 @@ Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Event/Basic/sched.conf:
 	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
 	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	  Added new test that creates an scheduler and uses the scheduling
-	  strategies.
+	* orbsvcs/tests/Event/lib/Driver.cpp: Added new test that creates
+ 	  an scheduler and uses the scheduling strategies.
 
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
-	  Loop over consumers and then over events, not vice-versa. That
-	  improves throughput by reducing the locking overhead.
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp: Loop over
+ 	  consumers and then over events, not vice-versa. That improves
+ 	  throughput by reducing the locking overhead.
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Added the new files, updated dependencies
+	* orbsvcs/orbsvcs/Makefile: Added the new files, updated
+ 	  dependencies
 
-	* orbsvcs/Event_Service/Makefile:
-	  Added depedencies
+	* orbsvcs/Event_Service/Makefile: Added depedencies
 
 Fri May 14 07:18:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/Makefile,lex.CC_command.cpp,
-          lex.CC_command.cpp.diff: hacked scanner a bit to remove
-          unreachable code warning with ace_yy_wrap() #defined to 1.
+ 	  lex.CC_command.cpp.diff: hacked scanner a bit to remove
+ 	  unreachable code warning with ace_yy_wrap() #defined to 1.
 
 Thu May 13 22:58:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -175,33 +168,31 @@ Thu May 13 22:58:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu May 13 22:46:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * examples/OBV/Typed_Events/Event_Types_impl.h:
-          added "class" to a bunch of friend declarations.
+        * examples/OBV/Typed_Events/Event_Types_impl.h: added "class" to a
+ 	  bunch of friend declarations.
 
-        * examples/OBV/Typed_Events/Makefile: updated
-          dependencies.
+        * examples/OBV/Typed_Events/Makefile: updated dependencies.
 
 Thu May 13 19:33:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/examples/CosEC/Factory/Makefile: don't built
-          if either CosEvent or Naming weren't built.
+        * orbsvcs/examples/CosEC/Factory/Makefile: don't built if either
+ 	  CosEvent or Naming weren't built.
 
 Thu May 13 18:18:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * tao/DomainC.cpp:
-          Added instantiation for TAO_Object_Manager<CORBA_DomainManager>
+        * tao/DomainC.cpp: Added instantiation for
+ 	  TAO_Object_Manager<CORBA_DomainManager>
 
 Thu May 13 14:48:22 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/corbafwd.h (CORBA):
-        * tao/corbafwd.cpp :
-        Fixed warnings on Greenhills compiler.
+        * tao/corbafwd.cpp: Fixed warnings on Greenhills compiler.
 
 Thu May 13 11:44:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/ORB.h:
-        * tao/ORB.cpp:
-          Fixed const violation in resolve_initial_references()
+        * tao/ORB.cpp: Fixed const violation in
+ 	  resolve_initial_references()
 
 Thu May 13 09:55:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -215,48 +206,46 @@ Thu May 13 09:55:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
         * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
         * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.h:
-        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
-          Added several @@ comments in the new CosEC/Factory example.
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h: Added several @@
+ 	  comments in the new CosEC/Factory example.
 
 Thu May 13 00:42:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB.h (CORBA_ORB): Rewrote the comments for <perform_work>.
-          Previously, it was somewhat unclear what this function was
-          doing. Thanks to Trey Grubbs <t-grubbs1@raytheon.com> for
-          pointing this out.
+  	  Previously, it was somewhat unclear what this function was
+ 	  doing. Thanks to Trey Grubbs <t-grubbs1@raytheon.com> for
+ 	  pointing this out.
 
 Wed May 12 19:40:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Object.{h,cpp}: Changed the name of the second
-          create_request function to be identical to the name of the
-          first. The spec clearly indicates in some places that it is to
-          be called 'create_request2', but that's wrong.
+ 	  create_request function to be identical to the name of the
+ 	  first. The spec clearly indicates in some places that it is to
+ 	  be called 'create_request2', but that's wrong.
 
 Wed May 12 19:22:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/corba.h:
-          Added some missing #includes which turned up in the
-          branding tests.
+        * tao/corba.h: Added some missing #includes which turned up in the
+ 	  branding tests.
 
 Wed May 12 18:02:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Any.{h,i}:
-          Added a non-copying version of <<= for Any into Any, as
-          required by the CORBA spec (see CORBA 2.3a, section 20.16.2,
-          page 20-58).
+        * tao/Any.{h,i}: Added a non-copying version of <<= for Any into
+ 	  Any, as required by the CORBA spec (see CORBA 2.3a, section
+ 	  20.16.2, page 20-58).
 
 Wed May 12 16:26:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/ORB.cpp (resolve_initial_references):
-        Changed the const CORBA::String to const char * as is expected by the
-        test suite and also by the CORBA v2.2 spec vide page 20-115,
-        section 20-39-20.
+        * tao/ORB.cpp (resolve_initial_references): Changed the const
+ 	  CORBA::String to const char * as is expected by the test suite
+ 	  and also by the CORBA v2.2 spec vide page 20-115, section
+ 	  20-39-20.
 
 Wed May 12 16:04:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp: Added Bala's new files (below) to the MSVC
-          projects.
+ 	  projects.
 
 Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -271,13 +260,13 @@ Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Pluggable.h
         * tao/corbafwd.cpp (New file)
         * tao/corbafwd.i (New file) Added a new method
-          get_service_information in to ORB.h. This added a few circular
-          dependencies which was resolved by Carlos by adding new files
-          viz. corbafwd.cpp & corbafwd.i. Updated the Services.* files
-          with some new headers and removed the "tao/corba.h" file
-          inclusion from them as this would add a high dependency on these
-          files. Managed_Types.h included ORB.h for just a few operations
-          which has now been moved to corbafwd.i
+ 	  get_service_information in to ORB.h. This added a few circular
+ 	  dependencies which was resolved by Carlos by adding new files
+ 	  viz. corbafwd.cpp & corbafwd.i. Updated the Services.* files
+ 	  with some new headers and removed the "tao/corba.h" file
+ 	  inclusion from them as this would add a high dependency on these
+ 	  files. Managed_Types.h included ORB.h for just a few operations
+ 	  which has now been moved to corbafwd.i
 
 Wed May 12 15:41:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
