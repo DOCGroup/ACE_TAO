@@ -3,7 +3,7 @@
 #include "JAWS/Assoc_Array.h"
 
 template <class KEY, class DATA>
-JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (unsigned long maxsize)
+JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)
   : k_array_ (0),
     d_array_ (0),
     maxsize_ (maxsize)
@@ -23,7 +23,7 @@ JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (unsigned long maxsize)
       return;
     }
 
-  for (unsigned long i = 0; i < this->maxsize_; i++)
+  for (int i = 0; i < this->maxsize_; i++)
     {
       this->k_array_[i] = 0;
       this->d_array_[i] = 0;
@@ -42,24 +42,30 @@ JAWS_Assoc_Array<KEY,DATA>::~JAWS_Assoc_Array (void)
   this->d_array_ = 0;
 }
 
-template <class KEY, class DATA> DATA *
-JAWS_Assoc_Array<KEY,DATA>::operator[] (const KEY &k)
+template <class KEY, class DATA> int
+JAWS_Assoc_Array<KEY,DATA>::index (const KEY &k)
 {
-  return this->find (k);
+  return this->find_i (k);
 }
 
 template <class KEY, class DATA> DATA *
 JAWS_Assoc_Array<KEY,DATA>::find (const KEY &k)
 {
-  unsigned long i = this->find_i (k);
+  int i = this->find_i (k);
 
   return (i < this->maxsize_) ? this->d_array_[i] : 0;
 }
 
 template <class KEY, class DATA> DATA *
+JAWS_Assoc_Array<KEY,DATA>::find (int i)
+{
+  return ((0 <= i) && (i < this->maxsize_)) ? this->d_array_[i] : 0;
+}
+
+template <class KEY, class DATA> DATA *
 JAWS_Assoc_Array<KEY,DATA>::insert (const KEY &k, const DATA &d)
 {
-  unsigned long i = this->find_i (k);
+  int i = this->find_i (k);
 
   if (i == this->maxsize_)
     return 0;
@@ -88,7 +94,7 @@ JAWS_Assoc_Array<KEY,DATA>::insert (const KEY &k, const DATA &d)
 template <class KEY, class DATA> int
 JAWS_Assoc_Array<KEY,DATA>::remove (const KEY &k)
 {
-  unsigned long i = this->find_i (k);
+  int i = this->find_i (k);
 
   if (i == this->maxsize_)
     return 0;
@@ -112,7 +118,7 @@ JAWS_Assoc_Array<KEY,DATA>::remove (const KEY &k)
 template <class KEY, class DATA> void
 JAWS_Assoc_Array<KEY,DATA>::clear (void)
 {
-  for (unsigned long i = 0; i < this->maxsize_; i++)
+  for (int i = 0; i < this->maxsize_; i++)
     {
       if (this->k_array_[i] != 0)
         {
@@ -125,12 +131,12 @@ JAWS_Assoc_Array<KEY,DATA>::clear (void)
     }
 }
 
-template <class KEY, class DATA> unsigned long
+template <class KEY, class DATA> int
 JAWS_Assoc_Array<KEY,DATA>::find_i (const KEY &k)
 {
-  unsigned long j = this->maxsize_;
+  int j = this->maxsize_;
 
-  for (unsigned long i = 0; i < this->maxsize_; i++)
+  for (int i = 0; i < this->maxsize_; i++)
     {
       KEY *kk = this->k_array_[i];
       if (kk)
