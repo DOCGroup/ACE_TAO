@@ -1,0 +1,15 @@
+/**
+@defgroup acexml_parser_features Configurable Special Features of ACEXML Parser
+@{
+
+There are special features in ACEXML Parser that can be
+activated/deactivated thru @c setFeature.  Likewise, whether a feature
+has been activated or not can be queried using @c getFeature.
+
+@sa ACEXML_XMLReader::setFeature
+@sa ACEXML_XMLReader::getFeature
+
+Here is a list of supported features:
+
+@}
+*/
