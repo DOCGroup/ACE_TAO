@@ -44,7 +44,6 @@ ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 				*ACE_Static_Object_Lock::instance (), 0));
-
       if (ACE_Service_Repository::svc_rep_ == 0)
 	{
 	  ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_,
@@ -95,15 +94,10 @@ ACE_Service_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
 
-  ACE_Service_Type **temp;
-  
-  ACE_NEW_RETURN (temp,
+  ACE_NEW_RETURN (this->service_vector_,
                   ACE_Service_Type *[size],
                   -1);
-
-  this->service_vector_ = (const ACE_Service_Type **) temp;
   this->total_size_ = size;
-
   return 0;
 }
 
@@ -118,7 +112,7 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
                 ASYS_TEXT ("ACE_Service_Repository")));
 }
 
-// Finalize (call fini() and possibly delete) all the services.
+// Finalize (call <fini> and possibly delete) all the services.
 
 int
 ACE_Service_Repository::fini (void)
@@ -128,17 +122,25 @@ ACE_Service_Repository::fini (void)
 
   if (this->service_vector_ != 0)
     {
-      // Make sure to fini the services in the reverse order in which
-      // they were added.
+      // <fini> the services in reverse order.  Note that if services
+      // were removed from the middle of the repository the order
+      // won't necessarily be maintained since the <remove> method
+      // performs compaction.  However, the common case is not to
+      // remove services, so typically they are deleted in reverse
+      // order.
+
       for (int i = this->current_size_ - 1; i >= 0; i--)
         {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("finalizing %s\n"),
                         this->service_vector_[i]->name ()));
-          ((ACE_Service_Type *) this->service_vector_[i])->fini ();
+          ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
+                                                this->service_vector_[i]);
+          s->fini ();
         }
     }
+
   return 0;
 }
 
@@ -152,18 +154,24 @@ ACE_Service_Repository::close (void)
 
   if (this->service_vector_ != 0)
     {
-      // Make sure to remove the services in the reverse order in
-      // which they were added.
-      while (this->current_size_ > 0)
+      // Delete services in reverse order.  Note that if services were
+      // removed from the middle of the repository the order won't
+      // necessarily be maintained since the <remove> method performs
+      // compaction.  However, the common case is not to remove
+      // services, so typically they are deleted in reverse order.
+
+      for (int i = this->current_size_ - 1; i >= 0; i--)
         {
-          int i = --this->current_size_;
-          delete (ACE_Service_Type *) this->service_vector_[i];
+          s = ACE_const_Cast (ACE_Service_Type *,
+                              this->service_vector_[i]);
+          delete s;
         }
 
       delete [] this->service_vector_;
       this->service_vector_ = 0;
-      this->current_size_  = 0;
+      this->current_size_ = 0;
     }
+
   return 0;
 }
 
@@ -173,12 +181,12 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
   this->close ();
 }
 
-// Locate an entry with NAME in the table.  If IGNORE_SUSPENDED is set
-// then only consider services marked as resumed.  If the caller wants
-// the located entry, pass back a pointer to the located entry via
-// SRP.  If NAME is not found -1 is returned.  If NAME is found, but
-// it is suspended and the caller wants to ignore suspended services a
-// -2 is returned.  Must be called with locks held.
+// Locate an entry with <name> in the table.  If <ignore_suspended> is
+// set then only consider services marked as resumed.  If the caller
+// wants the located entry, pass back a pointer to the located entry
+// via <srp>.  If <name> is not found -1 is returned.  If <name> is
+// found, but it is suspended and the caller wants to ignore suspended
+// services a -2 is returned.  Must be called with locks held.
 
 int 
 ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
@@ -238,7 +246,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       // Check for self-assignment...
       if (sr == this->service_vector_[i]) 
 	return 0;
-      delete (ACE_Service_Type *) this->service_vector_[i];
+      ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
+                                            this->service_vector_[i]);
+      delete s;
       this->service_vector_[i] = sr;
       return 0;
     }
@@ -292,7 +302,7 @@ ACE_Service_Repository::suspend (const ASYS_TCHAR name[],
 // dynamically unlink it if it was originally dynamically linked.
 // Since the order of services in the Respository does not matter, we
 // simply overwrite the entry being deleted with the final entry in
-// the array and decrement the <service_count> by 1.
+// the array and decrement the <current_size> by 1.
 
 int 
 ACE_Service_Repository::remove (const ASYS_TCHAR name[])
@@ -306,9 +316,13 @@ ACE_Service_Repository::remove (const ASYS_TCHAR name[])
     return -1;
   else
     {
-      delete (ACE_Service_Type *) this->service_vector_[i];
+      ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
+                                            this->service_vector_[i]);
+      delete s;
 
-      if (--this->current_size_ >= 1)
+      --this->current_size_;
+
+      if (this->current_size_ >= 1)
 	this->service_vector_[i] 
 	  = this->service_vector_[this->current_size_];
       return 0;
