@@ -107,14 +107,6 @@ SOURCE=.\QuoterS.cpp
 
 SOURCE=.\client.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\QuoterC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\QuoterS.h
-# End Source File
 # End Group
 # Begin Group "Inline Files"
 
