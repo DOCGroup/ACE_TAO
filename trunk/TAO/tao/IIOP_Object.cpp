@@ -625,6 +625,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           // Start the call by constructing the request message header.
           call.start (env);
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+          if (env.exception () != 0) 
             {
               ACE_MT (ACE_GUARD (ACE_Lock, 
                                 guard, 

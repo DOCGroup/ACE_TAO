@@ -89,10 +89,8 @@ static long
 is_global_name(Identifier *i)
 {
   long comp_result = 0;
-  char *s;
 
   if (i == NULL) return comp_result;
-  s = i->get_string();
 
   if (_global_scope_name == NULL)
     _global_scope_name = new Identifier("::", 1, 0, I_FALSE);
