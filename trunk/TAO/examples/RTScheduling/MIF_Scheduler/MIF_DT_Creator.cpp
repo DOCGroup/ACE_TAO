@@ -90,4 +90,4 @@ ACE_STATIC_SVC_DEFINE(MIF_DT_Creator,
                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                       0)
 
-ACE_FACTORY_DEFINE (MIF_DT_Creator, MIF_DT_Creator)
+ACE_FACTORY_DEFINE (ACE_Local_Service, MIF_DT_Creator)
