@@ -33,6 +33,7 @@
 //==========================================================================
 
 #include "ace/OS.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 
