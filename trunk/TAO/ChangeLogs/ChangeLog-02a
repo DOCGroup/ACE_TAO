@@ -3,7 +3,8 @@ Tue May  7 12:27:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Connection_Timeout/client.cpp (main): The bounds beyond
 	  which a error is signalled is increased. This helps to reduce
 	  noise in our daily builds. The bounds should not be increased
-	  too much since we may miss errors doing that.
+	  too much since we may miss errors doing that. Thanks to Ru
+	  Gunatilleke for pointing it out.
 	  
 Mon May  6 09:12:15 2002  Ru Gunatilleke  <ru@ociweb.com>
 
