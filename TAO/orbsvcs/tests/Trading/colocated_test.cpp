@@ -8,6 +8,21 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
+void
+parse_args (int argc, char *argv[],
+            CORBA::Boolean& verbose)
+{
+  int opt;
+  ACE_Get_Opt get_opt (argc, argv, "fq");
+
+  verbose = CORBA::B_TRUE;
+  while ((opt = get_opt ()) != EOF)
+    {
+      if (opt == 'q')
+        verbose = CORBA::B_FALSE;
+    }
+}
+
 int
 main (int argc, char** argv)
 {
@@ -17,6 +32,10 @@ main (int argc, char** argv)
       orb_manager.init (argc, argv, TAO_TRY_ENV);
       TAO_CHECK_ENV
 
+      // Command line argument interpretation.
+      CORBA::Boolean verbose = CORBA::B_FALSE;
+      ::parse_args (argc, argv, verbose);
+        
       // Initialize ORB.
       CORBA::ORB_var orb = orb_manager.orb ();
       
@@ -35,6 +54,7 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
+         verbose,
          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -57,6 +77,7 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
 	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
+         verbose,
 	 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -93,8 +114,7 @@ main (int argc, char** argv)
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Importer offer_importer
-	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()));
-      TAO_CHECK_ENV;
+	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()), verbose);
       
       offer_importer.perform_queries (TAO_TRY_ENV);
       TAO_CHECK_ENV;      

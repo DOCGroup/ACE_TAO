@@ -24,6 +24,7 @@ class TAO_Offer_Exporter
 public:
 
   TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
+                      CORBA::Boolean verbose,
 		      CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
@@ -40,7 +41,8 @@ public:
 		     CosTrading::ReadonlyDynamicProperty, 
 		     CosTrading::MissingMandatoryProperty, 
 		     CosTrading::DuplicatePropertyName));
-
+  // Export a number of offers to the Trading Service. 
+  
   void export_offers_to_all (CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		     CosTrading::Register::InvalidObjectRef, 
@@ -52,19 +54,22 @@ public:
 		     CosTrading::ReadonlyDynamicProperty, 
 		     CosTrading::MissingMandatoryProperty, 
 		     CosTrading::DuplicatePropertyName));
-
+  // Export a number of offers to all traders accessible by the
+  // bootstrapped trader.
   
   void withdraw_offers (CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		     CosTrading::IllegalOfferId, 
 		     CosTrading::UnknownOfferId, 
 		     CosTrading::Register::ProxyOfferId));
+  // Withdraw all exported offers.
 
   void describe_offers (CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		     CosTrading::IllegalOfferId, 
 		     CosTrading::UnknownOfferId, 
 		     CosTrading::Register::ProxyOfferId));
+  // Describe all the offers registered with the bootstrapped trader.
 
   void modify_offers (CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
@@ -79,13 +84,16 @@ public:
 		     CosTrading::Register::MandatoryProperty, 
 		     CosTrading::Register::ReadonlyProperty, 
 		     CosTrading::DuplicatePropertyName));
+  // Remove some properties and change some properties in each offer. 
 
   void withdraw_offers_using_constraints (CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		     CosTrading::IllegalServiceType, 
 		     CosTrading::UnknownServiceType, 
 		     CosTrading::IllegalConstraint, 
-		     CosTrading::Register::NoMatchingOffers));  
+		     CosTrading::Register::NoMatchingOffers));
+  // Withdraw a number of offers based on a constraint string.
+  
 private:
 
   CosTrading::OfferIdSeq* grab_offerids (CORBA::Environment& env)
@@ -93,6 +101,7 @@ private:
 		     CosTrading::NotImplemented));
 
   void create_offers (void);
+  // Fill in each of the offer structures.
 
   void export_to (CosTrading::Register_ptr reg,
                   CORBA::Environment& _env)
@@ -106,8 +115,12 @@ private:
 		     CosTrading::ReadonlyDynamicProperty, 
 		     CosTrading::MissingMandatoryProperty, 
 		     CosTrading::DuplicatePropertyName));
+  // Export the offers to the give Register interface.
 
   typedef ACE_Unbounded_Queue<TAO_Dynamic_Property*> DP_Queue;
+
+  CORBA::Boolean verbose_;
+  // True if the user wants verbose output.
   
   CosTrading::Register_var register_;
   CosTrading::Admin_var admin_;
@@ -115,12 +128,15 @@ private:
   TT_Info::Printer printer_[NUM_OFFERS];
   TT_Info::Plotter plotter_[NUM_OFFERS];
   TT_Info::File_System fs_[NUM_OFFERS];
+  // The objects being exported.
 
   CosTrading::PropertySeq props_plotters_[NUM_OFFERS];
   CosTrading::PropertySeq props_printers_[NUM_OFFERS];
   CosTrading::PropertySeq props_fs_[NUM_OFFERS];
-
+  // Property sequences describing each service.
+  
   DP_Queue clean_up_;
+  // A list of dynamic properties to clean up upon destruction.
 };
 
 #endif /* TAO_OFFER_EXPORTER_H */
