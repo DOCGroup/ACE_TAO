@@ -2948,10 +2948,12 @@ typedef OVERLAPPED ACE_OVERLAPPED;
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
 typedef long pid_t;
-typedef DWORD ACE_thread_key_t;
-#   if !defined (__BORLANDC__)
-typedef DWORD nlink_t;
-#   endif /* __BORLANDC__ */
+#   if defined (ACE_HAS_TSS_EMULATION)
+      typedef DWORD ACE_OS_thread_key_t;
+      typedef u_int ACE_thread_key_t;
+#   else  /* ! ACE_HAS_TSS_EMULATION */
+      typedef DWORD ACE_thread_key_t;
+#   endif /* ! ACE_HAS_TSS_EMULATION */
 
 // 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
@@ -2963,6 +2965,7 @@ inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 // Win32 dummies to help compilation.
 
 #   if !defined (__BORLANDC__)
+typedef DWORD nlink_t;
 typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
