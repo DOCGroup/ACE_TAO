@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    DEV_Addr.h
  *
@@ -8,11 +8,12 @@
  *
  *  @author Gerhard Lenzer and Douglas C. Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_DEV_ADDR_H
 #define ACE_DEV_ADDR_H
+
 #include "ace/pre.h"
 
 #include "ace/Addr.h"
@@ -21,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
+#include "ace/OS.h"
 
 /**
  * @class ACE_DEV_Addr
@@ -81,4 +82,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_DEV_ADDR_H */

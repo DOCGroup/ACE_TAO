@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Thread.h
  *
@@ -8,18 +8,21 @@
  *
  *  @author Douglas Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_THREAD_H
 #define ACE_THREAD_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
-#include "ace/Thread_Adapter.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
+#include "ace/Thread_Adapter.h"
 
 /**
  * @class ACE_Thread
@@ -236,5 +239,7 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/Thread.i"
 #endif /* __ACE_INLINE__ */
+
 #include "ace/post.h"
+
 #endif /* ACE_THREAD_H */

@@ -22,6 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE.h"
+
+
 /**
  * @class ACE_DEV_IO
  *

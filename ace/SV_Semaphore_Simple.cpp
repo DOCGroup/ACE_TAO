@@ -1,15 +1,17 @@
-// $Id$
-
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Simple.i"
 #endif
 
-ACE_RCSID(ace, SV_Semaphore_Simple, "$Id$")
+ACE_RCSID (ace,
+           SV_Semaphore_Simple,
+           "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_SV_Semaphore_Simple)
+ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)
+
 
 void
 ACE_SV_Semaphore_Simple::dump (void) const

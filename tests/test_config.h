@@ -1,21 +1,19 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*- 
+
 
 // ============================================================================
-//
-// = FILENAME
-//    test_config.h
-//
-// = DESCRIPTION
-//
-//   This file factors out common macros and other utilities used by the
-//   ACE automated regression tests.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>,
-//    Tim Harrison <harrison@cs.wustl.edu>, and
-//    David Levine <levine@cs.wustl.edu>
-//
+/**
+ *  @file test_config.h
+ *
+ *  $Id$
+ *
+ *   This file factors out common macros and other utilities used by the
+ *   ACE automated regression tests.
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
+ *  @author David Levine <levine@cs.wustl.edu>
+ */
 // ============================================================================
 
 #ifndef ACE_TEST_CONFIG_H
@@ -39,6 +37,7 @@
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG

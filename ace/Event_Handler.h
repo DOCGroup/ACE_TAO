@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Event_Handler.h
  *
@@ -8,17 +8,19 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_EVENT_HANDLER_H
 #define ACE_EVENT_HANDLER_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 // Forward declaration.
 class ACE_Message_Block;

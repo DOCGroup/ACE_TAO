@@ -1,5 +1,6 @@
-/* -*- C++ -*- */
-//=============================================================================
+// -*- C++ -*-
+
+//==========================================================================
 /**
  *  @file    Get_Opt.h
  *
@@ -8,13 +9,12 @@
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Don Hinton <dhinton@gmx.net> (added long option support)
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Containers.h"
 

@@ -1,27 +1,32 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Read_Buffer.h
  *
  *  $Id$
  *
- *  @author Doug Schmidt and Seth Widoff
+ *  @author Doug Schmidt
+ *  @author Seth Widoff
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_READ_BUFFER_H
 #define ACE_READ_BUFFER_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"
+#include "ace/OS.h"
+
+class ACE_Allocator;
+
 
 /**
  * @class ACE_Read_Buffer
@@ -115,4 +120,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_READ_BUFFER_H */

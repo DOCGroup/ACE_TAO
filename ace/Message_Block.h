@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Message_Block.h
  *
@@ -8,24 +8,27 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
-#include "ace/ACE.h"
+#ifndef ACE_MESSAGE_BLOCK_H
+#define ACE_MESSAGE_BLOCK_H
+
+#include "ace/pre.h"
+
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#ifndef ACE_MESSAGE_BLOCK_H
-#define ACE_MESSAGE_BLOCK_H
-#include "ace/pre.h"
+#include "ace/OS.h"
 
-#include "ace/Malloc.h"
 
 // Forward declaration.
+class ACE_Allocator;
 class ACE_Data_Block;
 class ACE_Lock;
-class ACE_Time_Value;
+
 
 /**
  * @class ACE_Message_Block
@@ -978,4 +981,5 @@ public:
 
 #include "ace/Message_Block_T.h"
 #include "ace/post.h"
+
 #endif /* ACE_MESSAGE_BLOCK_H */

@@ -16,7 +16,7 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
     !defined (ACE_HAS_PHARLAP)
-  ACE_TCHAR expanded_filename[MAXPATHLEN];
+  ACE_TCHAR expanded_filename[MAXPATHLEN + 1] = { 0 };
   if (ACE_TEXT_ExpandEnvironmentStrings (filename,
                                          expanded_filename,
                                          sizeof expanded_filename
@@ -28,14 +28,19 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
   ACE_TCHAR searchpathname[MAXPATHLEN + 1];
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   ACE_TCHAR decorator[] = ACE_LD_DECORATOR_STR;
-  ACE_TCHAR searchfilename[MAXPATHLEN + sizeof(decorator) / sizeof (ACE_TCHAR)];
+  ACE_TCHAR searchfilename[MAXPATHLEN + sizeof(decorator) / sizeof (ACE_TCHAR) + 1];
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("************** <%s>:<%s>\n"),
+              decorator,
+              searchfilename));
+
 #else
   ACE_TCHAR searchfilename[MAXPATHLEN + 1];
 #endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
 
   // Create a copy of filename to work with.
-  if (ACE_OS::strlen (filename) + 1
-      > (sizeof tempcopy / sizeof (ACE_TCHAR)))
+  if (ACE_OS::strlen (filename) + 1 > (sizeof tempcopy / sizeof (ACE_TCHAR)))
     {
       errno = ENOMEM;
       return -1;

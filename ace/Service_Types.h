@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Service_Types.h
  *
@@ -8,10 +8,11 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
+
 #include "ace/pre.h"
 
 #include "ace/Service_Object.h"
@@ -20,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE.h"
 #include "ace/Synch.h"
 
 /**
@@ -195,4 +197,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* _SERVICE_TYPE_H */

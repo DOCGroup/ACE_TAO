@@ -1,19 +1,19 @@
-// SOCK_Dgram.cpp
-// $Id$
-
 #include "ace/SOCK_Dgram.h"
 #include "ace/Handle_Set.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
+#include "ace/ACE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram.i"
 #endif
 
-ACE_RCSID(ace, SOCK_Dgram, "$Id$")
+ACE_RCSID (ace,
+           SOCK_Dgram,
+           "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram)
+ACE_ALLOC_HOOK_DEFINE (ACE_SOCK_Dgram)
 
 void
 ACE_SOCK_Dgram::dump (void) const

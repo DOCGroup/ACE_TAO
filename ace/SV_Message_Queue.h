@@ -1,20 +1,21 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    SV_Message_Queue.h
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
-//=============================================================================
+//===========================================================================
 
 #ifndef ACE_SV_MESSAGE_QUEUE_H
 #define ACE_SV_MESSAGE_QUEUE_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -93,4 +94,5 @@ protected:
 #endif
 
 #include "ace/post.h"
+
 #endif /* ACE_SV_MESSAGE_QUEUE_H */

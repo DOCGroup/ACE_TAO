@@ -27,7 +27,7 @@
  *
  * The class should be used as follows:
  *
- * class My_Object : public ACE_Intrusive_List_Node_Node<My_Object> {<BR>
+ * class My_Object : public ACE_Intrusive_List_Node<My_Object> {<BR>
  * ....<BR>
  * };<BR>
  *
