@@ -285,9 +285,16 @@ public:
                     const char *options = 0) = 0;
   // Method to initialize acceptor for address.
 
-  virtual int open_default (TAO_ORB_Core *orb_core,
+  virtual int open_default (TAO_ORB_Core *,
+                            int version_major,
+                            int version_minor,
                             const char *options = 0) = 0;
-  // Open an acceptor on the default endpoint for this protocol
+  // Open an acceptor with the given protocol version on a default
+  // endpoint
+  // @@ This method should be pure virtual, but in order to maintain
+  //    some form of backward compatibilty, a default implementation
+  //    is provided.  Ideally, that default implementation should be
+  //    removed in the near future.
 
   virtual int close (void) = 0;
   // Closes the acceptor

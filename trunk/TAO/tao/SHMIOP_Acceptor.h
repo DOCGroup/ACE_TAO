@@ -65,6 +65,8 @@ public:
                     const char *port,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            int version_major,
+                            int version_minor,
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
@@ -114,7 +116,7 @@ private:
   off_t mmap_size_;
   // Determine the minimum size of mmap file.  This dictate the
   // maximum size of a CORBA method invocation.
-  
+
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
 };

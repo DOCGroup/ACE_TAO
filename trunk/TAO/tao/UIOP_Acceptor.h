@@ -68,6 +68,8 @@ public:
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            int version_major,
+                            int version_minor,
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
@@ -107,7 +109,7 @@ private:
   // Flag that determines whether or not the rendezvous point should
   // be unlinked on close.  This is really only used when an error
   // occurs.
-  
+
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
 };
