@@ -1,3 +1,11 @@
+Wed Jun 27 15:18:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Explicit_Event_Loop/client.cpp:
+        * tests/Explicit_Event_Loop/server.cpp:
+
+          Replaced cout and cerr with ACE_DEBUG and ACE_ERROR,
+          other cosmetic changes.
+
 Wed Jun 27 14:15:13 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	* tao/skip.cpp:
