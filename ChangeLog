@@ -1,3 +1,10 @@
+Mon Jan 12 01:38:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* apps/soreduce/Library.cpp:
+
+	  Fixed a compile erros with VC 6 which cannot scope variables
+	  within for loops.
+
 Mon Jan 12 01:35:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/msvc_auto_compile.pl:
