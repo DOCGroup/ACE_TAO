@@ -64,13 +64,17 @@ public:
     const char *paritymode;
     int databits;
     int stopbits;
-    // Minimum number of characters for non-canonical read
+    /// Minimum number of characters for non-canonical read
     int readmincharacters;
     int readtimeoutmsec;
-    int ctsenb;  // CTS & RTS are the same under unix
-    int rtsenb;  // enable & set rts mode (win32)
-    int xinenb;  // enable xon/xoff  reception
-    int xoutenb;  // enable xon/xoff transmission
+    /// CTS & RTS are the same under unix
+    int ctsenb;
+    /// enable & set rts mode (win32)
+    int rtsenb;
+    /// enable xon/xoff  reception
+    int xinenb;
+    /// enable xon/xoff transmission
+    int xoutenb;
 
     // Posix - unix variant
     int modem;
@@ -79,10 +83,13 @@ public:
     //Win32
     int dsrenb;  // SadreevAA
 
-    int xonlim;  // min bytes in input buffer before xon
-    int xofflim; // max bytes in input buffer before xoff
+    /// min bytes in input buffer before xon
+    int xonlim;
+    /// max bytes in input buffer before xoff
+    int xofflim;
 
-    int dtrdisable; // Controls whether DTR is disabled or not.
+    /// Controls whether DTR is disabled or not.
+    int dtrdisable;
   };
 
   /// Interface for reading/writing serial device parameters.

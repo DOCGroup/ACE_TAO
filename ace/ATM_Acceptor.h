@@ -33,10 +33,10 @@
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
-#include "SOCK_Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
 typedef ACE_SOCK_Acceptor ATM_Acceptor;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
-#include "TLI_Acceptor.h"
+#include "ace/TLI_Acceptor.h"
 typedef ACE_TLI_Acceptor ATM_Acceptor;
 #endif // ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
 

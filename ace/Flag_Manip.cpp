@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Flag_Manip.h"
+#include "ace/Flag_Manip.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Flag_Manip.i"

@@ -27,10 +27,10 @@
 #include "ace/ATM_Params.h"
 
 #if defined (ACE_WIN32)
-#include "SOCK_Stream.h"
+#include "ace/SOCK_Stream.h"
 typedef ACE_SOCK_Stream ATM_Stream;
 #else
-#include "TLI_Stream.h"
+#include "ace/TLI_Stream.h"
 typedef ACE_TLI_Stream ATM_Stream;
 #endif
 

@@ -127,7 +127,7 @@ protected:
             int protocol,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
-             u_long flags,
+            u_long flags,
             int reuse_addr);
 
   /// Default constructor is protected to prevent instances of this class
