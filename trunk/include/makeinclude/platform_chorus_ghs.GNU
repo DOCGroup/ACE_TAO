@@ -28,6 +28,7 @@ CHORUS = 1
 CROSS-COMPILE = 1
 
 debug = 1
+exceptions =
 optimize = 1
 shared_libs =
 static_libs = 1
@@ -60,6 +61,10 @@ ifeq ($(debug),)
 else
   CRTH = $(MVME_DIR)/lib/crt/crth_d.s.o
 endif # debug
+
+ifdef exceptions
+  CCFLAGS += --exceptions
+endif # exceptions
 
 POSTLINK = ; $(CC) -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR)/gnuch68 -68040 \
            -nostartfiles -nostdlib -e __start -o $@.final \
