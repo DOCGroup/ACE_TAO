@@ -1,3 +1,9 @@
+Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: Changed TAO_TRY
+	  macros to ACE_TRY macros
+
 Fri Jun 25 16:30:41 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/Sequence_T: Removed all uses of CORBA::ULong as parameters
