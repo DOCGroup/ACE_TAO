@@ -1,3 +1,22 @@
+Thu Mar 06 17:23:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/ComponentServer_Impl.cpp:
+	* ciao/ComponentServer_Impl.h:
+	* ciao/ComponentServer_Impl.inl:
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h:
+	* examples/handcrafted/Hello/CIAO_Installation_Data.ini:
+	* examples/handcrafted/Hello/client.cpp:
+	* examples/handcrafted/Hello/hello.ssd:
+	* examples/handcrafted/Hello/run_test.pl:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/DaemonController.dsp:
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/Daemon/Softpkg_Commands.h:
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/XML_Helpers/Cascadable_DocHandler.h:
+
 Wed Mar 05 21:43:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Moved all Daemon controller related classes into CIAO::Daemon_i

@@ -65,7 +65,7 @@ namespace CIAO
      * @sa ACEXML_DefaultHandler
      * @sa DocHandler_Context
      */
-    class Cascadable_DocHandler : public ACEXML_Export ACEXML_DefaultHandler
+    class Cascadable_DocHandler : public ACEXML_DefaultHandler
     {
     public:
       /**

@@ -106,8 +106,8 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           // now install a fake home:
-          Components::ConfigValues com_config (4);
-          com_config.length (4);
+          Components::ConfigValues com_config (2);
+          com_config.length (2);
 
           Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
 

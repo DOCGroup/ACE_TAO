@@ -17,7 +17,8 @@ CIAO::Container_Impl::_default_POA (void)
 }
 
 int
-CIAO::Container_Impl::init (const ::Components::ConfigValues &options
+CIAO::Container_Impl::init (const ::Components::ConfigValues &options,
+                            Components::Deployment::ComponentInstallation_ptr inst
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -27,6 +28,8 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options
   ACE_CHECK_RETURN (-1);
 
   *this->config_ = options;
+  this->installation_ =
+    Components::Deployment::ComponentInstallation::_duplicate (inst);
 
   // @@ Initialize container and create the internal container
   // implementation that actually interacts with installed
@@ -89,7 +92,8 @@ CIAO::Container_Impl::install_home (const char * id,
   // component servants (that matches the container type) for the
   // executor and their entry points before we can install the home.
   struct home_installation_info config_info;
-  this->parse_config_values (config,
+  this->parse_config_values (id,
+                             config,
                              config_info
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -97,7 +101,7 @@ CIAO::Container_Impl::install_home (const char * id,
   Components::CCMHome_var newhome
     = this->container_->ciao_install_home
     (config_info.executor_dll_.in (),
-     config_info.executor_entrypt_.in (),
+     entrypt,
      config_info.servant_dll_.in (),
      config_info.servant_entrypt_.in ()
      ACE_ENV_ARG_PARAMETER);
@@ -177,7 +181,8 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::Container_Impl::parse_config_values (const Components::ConfigValues &options,
+CIAO::Container_Impl::parse_config_values (const char *id,
+                                           const Components::ConfigValues &options,
                                            struct home_installation_info &component_install_info
                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -185,18 +190,16 @@ CIAO::Container_Impl::parse_config_values (const Components::ConfigValues &optio
                    Components::Deployment::ImplEntryPointNotFound,
                    Components::InvalidConfiguration))
 {
+  CORBA::String_var servant_uuid;
+
   for (CORBA::ULong i = 0; i < options.length (); ++i)
     {
       CORBA::String_var *info;
       const char *str_in = 0;
 
       // @@ The following code need cleaning up.
-      if (ACE_OS::strcmp (options[i]->name (), "CIAO-executor-path") == 0)
-        info = &component_install_info.executor_dll_;
-      else if (ACE_OS::strcmp (options[i]->name (), "CIAO-executor-entrypt") == 0)
-        info = &component_install_info.executor_entrypt_;
-      else if (ACE_OS::strcmp (options[i]->name (), "CIAO-servant-path") == 0)
-        info = &component_install_info.servant_dll_;
+      if (ACE_OS::strcmp (options[i]->name (), "CIAO-servant-UUID") == 0)
+        info = &servant_uuid;
       else if (ACE_OS::strcmp (options[i]->name (), "CIAO-servant-entrypt") == 0)
         info = &component_install_info.servant_entrypt_;
       else
@@ -210,9 +213,11 @@ CIAO::Container_Impl::parse_config_values (const Components::ConfigValues &optio
       if (options[i]->value () >>= str_in)
         {
           *info = CORBA::string_dup (str_in);
+#if 0
           ACE_DEBUG ((LM_DEBUG, "*parse_config_values got (%s) = %s\n",
                       options[i]->name (),
                       str_in));
+#endif /* 0 */
         }
       else
         {
@@ -223,13 +228,22 @@ CIAO::Container_Impl::parse_config_values (const Components::ConfigValues &optio
         }
     }
 
+  component_install_info.executor_dll_ =
+    this->installation_->get_implementation (id
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  component_install_info.servant_dll_ =
+    this->installation_->get_implementation (servant_uuid.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   if (component_install_info.executor_dll_.in () == 0 ||
-      component_install_info.executor_entrypt_.in () == 0 ||
       component_install_info.servant_dll_.in () == 0 ||
       component_install_info.servant_entrypt_.in () == 0)
     {
       Components::InvalidConfiguration exc;
-      // The following should really be the exect missing configvalue name:
+      // The following should really be the exact missing configvalue name:
       exc.name = CORBA::string_dup ("home_installation_info");
       exc.reason = Components::ConfigValueRequired;
       ACE_THROW (exc);

@@ -43,8 +43,15 @@ namespace CIAO
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+      void print_usage (const char *name) const;
+
     private:
-      CORBA::String_var component_name_;
+      CORBA::String_var softpkg_filename_;
+
+      CORBA::String_var home_ior_filename_;
+
+      CORBA::String_var com_server_ior_filename_;
     };
 
     /**
@@ -64,8 +71,11 @@ namespace CIAO
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+      void print_usage (const char *name) const;
+
     private:
-      CORBA::String_var component_name_;
+      CORBA::String_var com_server_ior_;
     };
   }
 }
