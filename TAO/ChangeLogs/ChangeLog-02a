@@ -1,3 +1,9 @@
+Tue Aug  1 01:48:52 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.{h,cpp}: 
+	  Juggled header files to fix VxWorks warnings.
+
 Mon Jul 31 22:51:47 2000  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.6 released.
