@@ -1,10 +1,13 @@
 Fri May 15 16:55:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Service_Config.cpp: Removed a duplicate 
+	* ace/config-sunos5*.h: Automatically enable ACE_LACKS_RWLOCK_T if
+ 	  we're NOT using Solaris threads (since pthreads doesn't support
+ 	  readers/writer locks).
 
-	  template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
-
-	  Thanks to Ben Eng <ben@jetpen.com> for reporting this.
+	* ace/Service_Config.cpp: Removed a duplicate template
+ 	  instantiation of template class
+ 	  ACE_Unbounded_Queue_Iterator<ACE_CString>.  Thanks to Ben Eng
+ 	  <ben@jetpen.com> for reporting this.
 
         * ace/OS: Fixed a number of problems that occurred when trying to
  	  use the PTHREAD implementation on Solaris without using
