@@ -1,3 +1,15 @@
+Fri Mar 11 18:15:18 2005  Steve Huston  <shuston@riverace.com>
+
+	* m4/compiler.m4: Remove the hard-coded addition of -library=iostream.
+	  This uses old iostreams. Not sure why this was here, since the
+	  regular GNU build doesn't turn it on.
+
+	* ace/OS_Memory.h: For Sun CC, add settings needed for proper
+	  definition of ACE_nothrow. Thanks to Mark Wilson
+	  <mwil at lle dot rochester dot edu> for reporting this.
+
+	* THANKS: Added Mark Wilson to the Hall of Fame.
+
 Fri Mar 11 18:05:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_arpa_inet.cpp (inet_aton): Windows Server 2003 changed
