@@ -1,3 +1,15 @@
+Mon Sep 22 15:02:39 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* TAO_IDL/be/be_interface.cpp (gen_operation_table):
+
+	  Changed the elements used to seed the random number generator
+	  for creating a temporary file for gperf's output.  There were
+	  strange situations on certain multiprocessor parallel-make
+	  scoreboard builds where skeleton files were completely missing
+	  gperf output in them.  I'm hoping this avoids the problem in the
+	  future, but I can't guarantee.  Thanks to Chad Elliott for
+	  suggesting this as a possible source of the problem.
+
 Mon Sep 22 11:57:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp: 
