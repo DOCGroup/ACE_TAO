@@ -26,6 +26,11 @@ public class PushConsumerFactory {
   private Navigation navigation_;
   private Weapons weapons_;
 
+  private String[] ec_names_ = null;
+  private int ec_names_count_ = 0;
+
+  private String[] ss_names_ = null;
+  private int ss_names_count_ = 0;
 
   public PushConsumerFactory (DataHandler dataHandler, 
 			      String nameServiceIOR, 
@@ -63,7 +68,90 @@ public class PushConsumerFactory {
 	    System.out.println ("Using the following IOR: " + nameServiceIOR);
 	    naming_service_object_ = orb_.string_to_object (nameServiceIOR);
 	  }
-	  
+
+          // Walk through args and count EC and Scheduling Service names.
+          int arg_index = 0;
+          while (args.length > arg_index) 
+            {
+              // Count an event service name
+              if ((args[arg_index].equals ("-ORBeventservicename")) && 
+                  (args.length > arg_index + 1)) 
+                {
+                  System.out.println ("switch [" + args[arg_index] + "]");
+                  System.out.println ("value [" + args[arg_index + 1] + "]");
+                  arg_index += 2;
+                  ++ec_names_count_;
+                }
+              // Count a scheduling service name
+              else if ((args[arg_index].equals ("-ORBscheduleservicename")) && 
+                  (args.length > arg_index + 1)) 
+                {
+                  System.out.println ("switch [" + args[arg_index] + "]");
+                  System.out.println ("value [" + args[arg_index + 1] + "]");
+                  arg_index += 2;
+                  ++ss_names_count_;
+                }
+              // Skip over anything else
+              else
+                {
+                  arg_index ++;
+                }
+            }
+
+          // Allocate arrays for the event and schedule service names (if any)
+          if (ec_names_count_ > 0)
+            {
+              ec_names_ = new String [ec_names_count_];
+            }
+          if (ss_names_count_ > 0)
+            {
+              ss_names_ = new String [ss_names_count_];
+            }
+
+          // Then traverse the args again to allocate and fill in a list 
+          // of EC and Scheduling Service names.
+          arg_index = 0;
+          ec_names_count_ = 0; 
+          ss_names_count_ = 0; 
+          while (args.length > arg_index) 
+            {
+              // Set an event service name.
+              if ((args[arg_index].equals ("-ORBeventservicename")) && 
+                  (args.length > arg_index + 1)) 
+                {
+                  ec_names_[ec_names_count_] = args[arg_index + 1];
+                  ++ec_names_count_;       
+                  arg_index += 2;
+                }
+              // Set a schedule service name.
+              else if ((args[arg_index].equals ("-ORBscheduleservicename")) && 
+                  (args.length > arg_index + 1)) 
+                {
+                  ss_names_[ss_names_count_] = args[arg_index + 1];
+                  ++ss_names_count_;       
+                  arg_index += 2;
+                }
+              // Skip over anything else.
+              else
+                {
+                  arg_index ++;
+                }
+            }
+
+          // If names for event or scheduling services have not been provided
+          // already, provide the default names used by the service executables.
+          if (ec_names_count_ == 0)
+            {
+              ec_names_count_ = 1;
+              ec_names_ = new String [1];
+              ec_names_ [0] = "EventService";
+            }
+          if (ss_names_count_ == 0)
+            {
+              ss_names_count_ = 1;
+              ss_names_ = new String [1];
+              ss_names_ [0] = "ScheduleService";
+            }
       } 
       catch(org.omg.CORBA.SystemException e) {
 	System.err.println ("PushConsumerFactory constructor: ORB and Name Service initialization");
@@ -97,54 +185,83 @@ public class PushConsumerFactory {
 	    }
 	  System.out.println ("Reference to the Naming Service is ok.");
 
-	  // Get a reference for the EventService
+	  // Create Consumers connected to the EventService 
+          int ss_number = 0;
+          RtecScheduler.Scheduler scheduler_ = null;
+          for (int ec_number = 0; ec_number < ec_names_count_; ++ec_number)
+            {
+              // Get a reference for the next Scheduling Service if there is one.
+              // Invariant: we will always execute this code at least once.
+              if (ss_number < ss_names_count_)
+                {
+                  CosNaming.NameComponent[] ss_name_components_ = new CosNaming.NameComponent[1];
+                  ss_name_components_[0] = new CosNaming.NameComponent (ss_names_[ss_number],"");
+                  org.omg.CORBA.Object scheduler_object_ = naming_context_.resolve (ss_name_components_); 
 	  
-	  CosNaming.NameComponent[] ec_name_components_ = new CosNaming.NameComponent[1];
-	  ec_name_components_[0] = new CosNaming.NameComponent ("EventService","");
-	  org.omg.CORBA.Object event_channel_object_ = naming_context_.resolve (ec_name_components_);
+                  if (scheduler_object_ == null)
+                  {
+                    throw new Object_is_null_exception(ss_names_[ss_number] +
+                                                       " Object is null");
+                  }
 	  
-	  if (event_channel_object_ == null)
-	    {
-	      throw new Object_is_null_exception("EventService Object is null");
-	    }
-	  
-       	  RtecEventChannelAdmin.EventChannel event_channel_ = 
-	    RtecEventChannelAdmin.EventChannelHelper.narrow (event_channel_object_);
+                  scheduler_ = RtecScheduler.SchedulerHelper.narrow (scheduler_object_);
 
-	  if (event_channel_ == null)
-	    {
-	      throw new Object_is_null_exception("EventChannel narrowed ref is null");
-	    }
+	          if (scheduler_ == null)
+                    {
+                      throw new Object_is_null_exception(ss_names_[ss_number] + 
+                                                         " narrowed ref is null");
+                    }
+
+                  System.out.println ("Reference to " + 
+                                      ss_names_[ss_number] + " is ok.");	  
+
+                  ++ss_number;
+                }
+
+              // Get a reference for the next Event Service
+
+              CosNaming.NameComponent[] ec_name_components_ = new CosNaming.NameComponent[1];
+              ec_name_components_[0] = new CosNaming.NameComponent (ec_names_[ec_number],"");
+              org.omg.CORBA.Object event_channel_object_ = naming_context_.resolve (ec_name_components_);
+
+              if (event_channel_object_ == null)
+	        {
+	          throw new Object_is_null_exception(ec_names_[ec_number] + 
+                                                     " Object is null");
+	        }
+
+       	      RtecEventChannelAdmin.EventChannel event_channel_ = 
+	        RtecEventChannelAdmin.EventChannelHelper.narrow (event_channel_object_);
+
+	      if (event_channel_ == null)
+	        {
+	          throw new Object_is_null_exception(ec_names_[ec_number] + 
+                                                     " narrowed ref is null");
+	        }
 	  
-	  System.out.println ("Reference to the Event Service is ok.");
+              System.out.println ("Reference to " + 
+                                  ec_names_[ec_number] + " is ok.");	  
 	  
-	  // Get a reference for the ScheduleService
-	  
-	  CosNaming.NameComponent[] s_name_components_ = new CosNaming.NameComponent[1];
-	  s_name_components_[0] = new CosNaming.NameComponent ("ScheduleService","");
-       	  org.omg.CORBA.Object scheduler_object_ = naming_context_.resolve (s_name_components_); 
-	  
-	  if (scheduler_object_ == null)
-	    {
-	      throw new Object_is_null_exception("ScheduleService Object is null");
-	    }
-	  
-	  RtecScheduler.Scheduler scheduler_ = 
-	    RtecScheduler.SchedulerHelper.narrow (scheduler_object_);
-	  
-	  System.out.println ("Reference to the Naming Service is ok.");
-	  
-	  
-	  // Start the consumer
-	  System.out.println ("Instantiating the Push Consumer.");
-	  PushConsumer pushConsumer_ = new PushConsumer (orb_, dataHandler_);
-	  System.out.println ("Initializing the Push Consumer.");
-	  pushConsumer_.open_consumer (event_channel_, scheduler_, "demo_consumer");
-	  
-	  // Tell the CORBA environment that we are ready
-	  
-	  boa_.obj_is_ready (pushConsumer_);
-	  
+              // Start the consumer
+	      System.out.println ("Instantiating the Push Consumer for " +
+                                  ec_names_[ec_number]  + ": demo_consumer_" +
+                                  ec_number + ".");
+
+	      PushConsumer pushConsumer_ = new PushConsumer (orb_, dataHandler_);
+	      System.out.println ("Initializing the Push Consumer for " +
+                                  ec_names_[ec_number] + ": demo_consumer_" +
+                                  ec_number + ".");
+
+	      pushConsumer_.open_consumer (event_channel_, scheduler_, 
+                                           "demo_consumer_" + ec_number);
+	
+              boa_.obj_is_ready (pushConsumer_);
+
+            }
+
+  
+  	  // Tell the CORBA environment that we are ready
+	  	  
 	  System.out.println ("boa.obj_is_ready succeeded"); 
 	  
 	  boa_.impl_is_ready ();

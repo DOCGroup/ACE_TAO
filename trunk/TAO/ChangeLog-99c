@@ -1,3 +1,27 @@
+Fri Feb 05 13:15:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
+    (new) TAO/orbsvcs/tests/Simulator/DOVEBrowser/MTQueue.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/NavWeapDataHandler.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/make.bat : reorganized
+	  DOVE browser to accept events from multiple named event channels,
+	  using a set of named schedulers.  Synchronized the data handler,
+	  added threaded queueing adapter to do early demultiplexing of ORB
+	  upcalls onto data handler threads.
+
+        * TAO/orbsvcs/tests/Simulator/NavWeap.idl
+          TAO/orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.{cpp, h}
+    (new) TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.{cpp, dsp, h}
+          TAO/orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{cpp, dsp, dsw}
+          TAO/orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp}
+          TAO/orbsvcs/tests/Simulator/Event_Supplier/Makefile : reorganized
+	  supplier infrastructure to be able to define an EC and scheduler
+	  per supplier proxy instance.  Added a new supplier, DualEC_Sup,
+	  which creates two event channels and two schedulers, then generates 
+	  events and sends them over two channels.
+
 Fri Feb  5 11:12:04 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:

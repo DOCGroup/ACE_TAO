@@ -95,12 +95,12 @@ public class DemoCore extends Frame {
     visCompFactory_ = new VisCompFactory ();
     
     // in here the factory is needed
-    addConnection ("Navigation");
     addConnection ("Weapons");
-    addConnection ("Latency Jitter (100 ns)");
-    addConnection ("Latency (100 ns)");
-    addConnection ("Missed Deadlines");
-    addConnection ("Missed Critical Deadlines");
+    addConnection ("Weapons Latency (100 ns)");
+    addConnection ("Weapons Latency Jitter (100 ns)");
+    addConnection ("Navigation");
+    addConnection ("Navigation Latency (100 ns)");
+    addConnection ("Navigation Latency Jitter (100 ns)");
   }
   
   public boolean addConnection (String selected) {	

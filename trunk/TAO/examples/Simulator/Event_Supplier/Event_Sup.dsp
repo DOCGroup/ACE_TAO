@@ -98,6 +98,10 @@ SOURCE=.\Event_Sup.cpp
 
 SOURCE=.\NavWeapC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\NavWeapS.cpp
+# End Source File
 # End Group
 # Begin Group "Header files"
 
