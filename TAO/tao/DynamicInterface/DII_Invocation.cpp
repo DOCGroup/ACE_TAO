@@ -221,7 +221,7 @@ namespace TAO
     )
     ACE_THROW_SPEC ((CORBA::Exception))
   {
-    this->rd_->transport (this->resolver_.transport ());
+    this->safe_rd_->transport (this->resolver_.transport ());
 
     return Asynch_Remote_Invocation::remote_invocation (
         max_wait_time

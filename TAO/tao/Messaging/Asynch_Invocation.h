@@ -22,6 +22,8 @@
 
 #include "tao/Synch_Invocation.h"
 #include "ace/Global_Macros.h"
+#include "tao/Auto_Functor.h"
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
 
 class TAO_Operation_Details;
 class TAO_InputCDR;
@@ -52,7 +54,11 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::Exception));
 
   protected:
-    TAO_Asynch_Reply_Dispatcher_Base *rd_;
+    // To prevent leaking memory from the reply dispatcher that we
+    // are given
+    Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
+                         ARDB_Refcount_Functor> safe_rd_;
+
   };
 }
 

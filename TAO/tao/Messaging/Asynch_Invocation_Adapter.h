@@ -24,11 +24,14 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Global_Macros.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/Auto_Functor.h"
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
 
 class TAO_Operation_Details;
 class TAO_Stub;
 class ACE_Time_Value;
 class TAO_Asynch_Reply_Dispatcher;
+class TAO_Asynch_Reply_Dispatcher_Base;
 
 namespace  CORBA
 {
@@ -85,7 +88,9 @@ namespace TAO
         ACE_ENV_ARG_DECL);
 
   private:
-    TAO_Asynch_Reply_Dispatcher *rd_;
+    /// Autofunctor to manage the reply dispatcher
+    Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
+                        ARDB_Refcount_Functor> safe_rd_;
 
   private:
     /// Dont allow default initializations
