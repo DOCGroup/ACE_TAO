@@ -4,10 +4,31 @@ package PerlACE::ConfigList;
 use strict;
 use FileHandle;
 
+@PerlACE::ConfigList::Configs = ();
+
+my @new_argv = ();
+
+for(my $i = 0; $i <= $#ARGV; ++$i) {
+    if ($ARGV[$i] eq '-Config') {  
+        if (defined $ARGV[$i + 1]) {
+            push @PerlACE::ConfigList::Configs, $ARGV[++$i];
+        }
+        else {
+            print STDERR "You must pass a configuration with Config\n";
+            exit(1);
+        }
+    }
+    else {
+        push @new_argv, $ARGV[$i];
+    }
+}
+@ARGV = @new_argv;
+
+
 sub new () 
 {
     my $self = {};
-    @{$self->{MY_CONFIGS}} = @::CONFIGS;
+    @{$self->{MY_CONFIGS}} = @PerlACE::ConfigList::Configs;
     bless $self;
     return $self;
 }

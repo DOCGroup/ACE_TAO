@@ -1,3 +1,32 @@
+Thu Dec 13 18:18:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/PerlACE/ConfigList.pm: (added)
+        * bin/PerlACE/Process.pm: (added)
+        * bin/PerlACE/Process_Unix.pm: (added)
+        * bin/PerlACE/Process_Win32.pm: (added)
+        * bin/PerlACE/Run_Test.pm: (added)
+
+          These are a couple of Perl modules that will be used
+          to simplify current run_test.pl's and the auto_builds
+          and to allow us to run tests on Win32 for configurations
+          that output executables into subdirs (Win32 Release,
+          Win32 Static *, Borland).  The conversion of scripts over 
+          to the new style will occur in separate checkins.
+
+          ConfigList provides a more powerful *.lst format for
+          specifying test lists.  Process is a newer version of
+          the old bin/Process.pm that has a different interface
+          and a couple of extra methods for common tasks for
+          our scripts.  And Run_Test.pm will replace the 
+          bin/ACEutils.pm and be the main module for our 
+          run_test.pl scripts.  It contains some common subroutines
+          and automatically parses some arguments via ARGV.
+
+        * docs/run_test.txt: (added)
+
+          A bit of documentation on how new run_test.pl's will
+          look.
+
 Wed Dec 13 18:15:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/CDR_Stream.h:
