@@ -28,6 +28,8 @@
 
 #include "ace/CDR_Base.h"
 
+// @@ Why is this here?  It should be moved to IOPC.h.
+//       -Ossama
 #if defined (HPUX)
 #  if defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -42,6 +44,8 @@
 
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
+
+#include "ace/OS_Memory.h"
 
 
 #if defined (_MSC_VER) || defined (__BORLANDC__)
