@@ -11,7 +11,7 @@ Wed Jun 14 13:56:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
-	  Updated dependencies.  That last update inadvertently removed
+	  Updated dependencies.  The last update inadvertently removed
 	  them.
 
 Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -22,7 +22,7 @@ Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/ORBCore.cpp:
+	* tao/ORB_Core.cpp:
 
 	  Fixed Memory leaks in <create_stub_object>.
 	
