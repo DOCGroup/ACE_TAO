@@ -100,7 +100,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1);
+  ACE_NOTREACHED (return -1;)
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
@@ -143,7 +143,7 @@ Test_ObjRef::reset_parameters (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1);
+  ACE_NOTREACHED (return -1;)
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
@@ -244,7 +244,7 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1);
+  ACE_NOTREACHED (return -1;)
 }
 
 CORBA::Boolean
