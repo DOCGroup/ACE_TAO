@@ -1,3 +1,11 @@
+Sat May 18 09:32:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
+
+	  Set errno to ENOTCONN if the SSL connection hasn't been
+	  completed yet, and errno to EBADF if the file descriptor hasn't
+	  been set yet.  This emulates the getpeername() errno semantics.
+
 Sat May 18 08:19:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Connector.h:
