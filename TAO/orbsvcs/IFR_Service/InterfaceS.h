@@ -21,8 +21,7 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Request.h"
-#include "tao/NVList.h"
+#include "tao/TAO_Server_Request.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,7 +58,7 @@ TAO_NAMESPACE  POA_IR
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -67,7 +66,7 @@ TAO_NAMESPACE  POA_IR
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -75,7 +74,7 @@ TAO_NAMESPACE  POA_IR
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -97,7 +96,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _get_id_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -114,7 +113,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _set_id_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -130,7 +129,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _get_name_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -147,7 +146,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _set_name_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -163,7 +162,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _get_version_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -180,7 +179,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _set_version_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -196,7 +195,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -212,7 +211,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -228,7 +227,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -244,7 +243,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void describe_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -263,7 +262,7 @@ TAO_NAMESPACE  POA_IR
       )) = 0;
 
     static void move_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -271,7 +270,7 @@ TAO_NAMESPACE  POA_IR
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -279,7 +278,7 @@ TAO_NAMESPACE  POA_IR
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -588,7 +587,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -596,7 +595,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -604,7 +603,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -627,7 +626,7 @@ private:
       )) = 0;
 
     static void lookup_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -645,7 +644,7 @@ private:
       )) = 0;
 
     static void contents_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -665,7 +664,7 @@ private:
       )) = 0;
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -684,7 +683,7 @@ private:
       )) = 0;
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -703,7 +702,7 @@ private:
       )) = 0;
 
     static void create_module_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -724,7 +723,7 @@ private:
       )) = 0;
 
     static void create_constant_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -744,7 +743,7 @@ private:
       )) = 0;
 
     static void create_struct_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -765,7 +764,7 @@ private:
       )) = 0;
 
     static void create_union_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -785,7 +784,7 @@ private:
       )) = 0;
 
     static void create_enum_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -805,7 +804,7 @@ private:
       )) = 0;
 
     static void create_alias_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -827,7 +826,7 @@ private:
       )) = 0;
 
     static void create_interface_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -853,7 +852,7 @@ private:
       )) = 0;
 
     static void create_value_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -873,7 +872,7 @@ private:
       )) = 0;
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -893,7 +892,7 @@ private:
       )) = 0;
 
     static void create_exception_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -912,7 +911,7 @@ private:
       )) = 0;
 
     static void create_native_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -920,7 +919,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -928,7 +927,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1413,7 +1412,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1421,7 +1420,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1429,7 +1428,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -1451,7 +1450,7 @@ private:
       )) = 0;
 
     static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1459,7 +1458,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1467,7 +1466,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1604,7 +1603,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1612,7 +1611,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1620,7 +1619,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -1643,7 +1642,7 @@ private:
       )) = 0;
 
     static void lookup_id_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1660,7 +1659,7 @@ private:
       )) = 0;
 
     static void get_canonical_typecode_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1677,7 +1676,7 @@ private:
       )) = 0;
 
     static void get_primitive_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1694,7 +1693,7 @@ private:
       )) = 0;
 
     static void create_string_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1711,7 +1710,7 @@ private:
       )) = 0;
 
     static void create_wstring_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1729,7 +1728,7 @@ private:
       )) = 0;
 
     static void create_sequence_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1747,7 +1746,7 @@ private:
       )) = 0;
 
     static void create_array_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1765,7 +1764,7 @@ private:
       )) = 0;
 
     static void create_fixed_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -1773,7 +1772,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1781,7 +1780,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1789,7 +1788,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1797,7 +1796,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1805,7 +1804,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1813,7 +1812,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1821,7 +1820,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1829,7 +1828,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1837,7 +1836,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1845,7 +1844,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1853,7 +1852,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1861,7 +1860,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1869,7 +1868,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1877,7 +1876,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1885,7 +1884,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1893,7 +1892,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -1901,7 +1900,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2355,7 +2354,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -2363,7 +2362,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -2371,7 +2370,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -2398,7 +2397,7 @@ private:
       )) = 0;
 
     static void create_component_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -2420,7 +2419,7 @@ private:
       )) = 0;
 
     static void create_home_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -2428,7 +2427,7 @@ private:
       );
 
     static void lookup_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2436,7 +2435,7 @@ private:
       );
 
     static void get_canonical_typecode_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2444,7 +2443,7 @@ private:
       );
 
     static void get_primitive_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2452,7 +2451,7 @@ private:
       );
 
     static void create_string_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2460,7 +2459,7 @@ private:
       );
 
     static void create_wstring_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2468,7 +2467,7 @@ private:
       );
 
     static void create_sequence_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2476,7 +2475,7 @@ private:
       );
 
     static void create_array_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2484,7 +2483,7 @@ private:
       );
 
     static void create_fixed_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2492,7 +2491,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2500,7 +2499,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2508,7 +2507,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2516,7 +2515,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2524,7 +2523,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2532,7 +2531,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2540,7 +2539,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2548,7 +2547,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2556,7 +2555,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2564,7 +2563,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2572,7 +2571,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2580,7 +2579,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2588,7 +2587,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2596,7 +2595,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2604,7 +2603,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2612,7 +2611,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -2620,7 +2619,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3054,7 +3053,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3062,7 +3061,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3070,7 +3069,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -3084,7 +3083,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3092,7 +3091,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3100,7 +3099,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3108,7 +3107,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3116,7 +3115,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3124,7 +3123,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3132,7 +3131,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3140,7 +3139,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3148,7 +3147,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3156,7 +3155,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3164,7 +3163,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3172,7 +3171,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3180,7 +3179,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3188,7 +3187,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3196,7 +3195,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3204,7 +3203,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3212,7 +3211,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3220,7 +3219,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3228,7 +3227,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3236,7 +3235,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3244,7 +3243,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3252,7 +3251,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3260,7 +3259,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3268,7 +3267,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3276,7 +3275,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3284,7 +3283,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3292,7 +3291,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3300,7 +3299,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3698,7 +3697,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3706,7 +3705,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3714,7 +3713,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -3736,7 +3735,7 @@ private:
       )) = 0;
 
     static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3752,7 +3751,7 @@ private:
       )) = 0;
 
     static void _get_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3769,7 +3768,7 @@ private:
       )) = 0;
 
     static void _set_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3785,7 +3784,7 @@ private:
       )) = 0;
 
     static void _get_value_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3802,7 +3801,7 @@ private:
       )) = 0;
 
     static void _set_value_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -3810,7 +3809,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3818,7 +3817,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3826,7 +3825,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3834,7 +3833,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3842,7 +3841,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3850,7 +3849,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3858,7 +3857,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3866,7 +3865,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3874,7 +3873,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3882,7 +3881,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3890,7 +3889,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3898,7 +3897,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -3906,7 +3905,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4205,7 +4204,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -4213,7 +4212,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -4221,7 +4220,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -4235,7 +4234,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4243,7 +4242,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4251,7 +4250,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4259,7 +4258,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4267,7 +4266,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4275,7 +4274,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4283,7 +4282,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4291,7 +4290,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4299,7 +4298,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4307,7 +4306,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4315,7 +4314,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4323,7 +4322,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4331,7 +4330,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4339,7 +4338,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4563,7 +4562,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -4571,7 +4570,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -4579,7 +4578,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -4601,7 +4600,7 @@ private:
       )) = 0;
 
     static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -4618,7 +4617,7 @@ private:
       )) = 0;
 
     static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -4626,7 +4625,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4634,7 +4633,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4642,7 +4641,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4650,7 +4649,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4658,7 +4657,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4666,7 +4665,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4674,7 +4673,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4682,7 +4681,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4690,7 +4689,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4698,7 +4697,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4706,7 +4705,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4714,7 +4713,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4722,7 +4721,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4730,7 +4729,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4738,7 +4737,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4746,7 +4745,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4754,7 +4753,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4762,7 +4761,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4770,7 +4769,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4778,7 +4777,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4786,7 +4785,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4794,7 +4793,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4802,7 +4801,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4810,7 +4809,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4818,7 +4817,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4826,7 +4825,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4834,7 +4833,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4842,7 +4841,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -4850,7 +4849,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5290,7 +5289,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5298,7 +5297,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5306,7 +5305,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -5328,7 +5327,7 @@ private:
       )) = 0;
 
     static void _get_discriminator_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5344,7 +5343,7 @@ private:
       )) = 0;
 
     static void _get_discriminator_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5361,7 +5360,7 @@ private:
       )) = 0;
 
     static void _set_discriminator_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5377,7 +5376,7 @@ private:
       )) = 0;
 
     static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5394,7 +5393,7 @@ private:
       )) = 0;
 
     static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -5402,7 +5401,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5410,7 +5409,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5418,7 +5417,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5426,7 +5425,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5434,7 +5433,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5442,7 +5441,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5450,7 +5449,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5458,7 +5457,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5466,7 +5465,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5474,7 +5473,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5482,7 +5481,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5490,7 +5489,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5498,7 +5497,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5506,7 +5505,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5514,7 +5513,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5522,7 +5521,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5530,7 +5529,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5538,7 +5537,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5546,7 +5545,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5554,7 +5553,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5562,7 +5561,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5570,7 +5569,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5578,7 +5577,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5586,7 +5585,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5594,7 +5593,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5602,7 +5601,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5610,7 +5609,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5618,7 +5617,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -5626,7 +5625,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6116,7 +6115,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6124,7 +6123,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6132,7 +6131,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -6154,7 +6153,7 @@ private:
       )) = 0;
 
     static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6171,7 +6170,7 @@ private:
       )) = 0;
 
     static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6179,7 +6178,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6187,7 +6186,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6195,7 +6194,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6203,7 +6202,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6211,7 +6210,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6219,7 +6218,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6227,7 +6226,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6235,7 +6234,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6243,7 +6242,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6251,7 +6250,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6259,7 +6258,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6267,7 +6266,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6275,7 +6274,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6283,7 +6282,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6540,7 +6539,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6548,7 +6547,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6556,7 +6555,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -6578,7 +6577,7 @@ private:
       )) = 0;
 
     static void _get_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6595,7 +6594,7 @@ private:
       )) = 0;
 
     static void _set_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6603,7 +6602,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6611,7 +6610,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6619,7 +6618,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6627,7 +6626,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6635,7 +6634,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6643,7 +6642,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6651,7 +6650,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6659,7 +6658,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6667,7 +6666,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6675,7 +6674,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6683,7 +6682,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6691,7 +6690,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6699,7 +6698,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6707,7 +6706,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -6964,7 +6963,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6972,7 +6971,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -6980,7 +6979,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -6994,7 +6993,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7002,7 +7001,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7010,7 +7009,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7018,7 +7017,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7026,7 +7025,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7034,7 +7033,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7042,7 +7041,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7050,7 +7049,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7058,7 +7057,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7066,7 +7065,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7074,7 +7073,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7082,7 +7081,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7090,7 +7089,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7098,7 +7097,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7321,7 +7320,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7329,7 +7328,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7337,7 +7336,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -7359,7 +7358,7 @@ private:
       )) = 0;
 
     static void _get_kind_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7367,7 +7366,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7375,7 +7374,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7383,7 +7382,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7528,7 +7527,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7536,7 +7535,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7544,7 +7543,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -7566,7 +7565,7 @@ private:
       )) = 0;
 
     static void _get_bound_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7583,7 +7582,7 @@ private:
       )) = 0;
 
     static void _set_bound_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7591,7 +7590,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7599,7 +7598,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7607,7 +7606,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7770,7 +7769,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7778,7 +7777,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7786,7 +7785,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -7808,7 +7807,7 @@ private:
       )) = 0;
 
     static void _get_bound_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7825,7 +7824,7 @@ private:
       )) = 0;
 
     static void _set_bound_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -7833,7 +7832,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7841,7 +7840,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -7849,7 +7848,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8012,7 +8011,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8020,7 +8019,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8028,7 +8027,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -8050,7 +8049,7 @@ private:
       )) = 0;
 
     static void _get_digits_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8067,7 +8066,7 @@ private:
       )) = 0;
 
     static void _set_digits_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8083,7 +8082,7 @@ private:
       )) = 0;
 
     static void _get_scale_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8100,7 +8099,7 @@ private:
       )) = 0;
 
     static void _set_scale_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8108,7 +8107,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8116,7 +8115,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8124,7 +8123,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8321,7 +8320,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8329,7 +8328,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8337,7 +8336,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -8359,7 +8358,7 @@ private:
       )) = 0;
 
     static void _get_bound_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8376,7 +8375,7 @@ private:
       )) = 0;
 
     static void _set_bound_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8392,7 +8391,7 @@ private:
       )) = 0;
 
     static void _get_element_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8408,7 +8407,7 @@ private:
       )) = 0;
 
     static void _get_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8425,7 +8424,7 @@ private:
       )) = 0;
 
     static void _set_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8433,7 +8432,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8441,7 +8440,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8449,7 +8448,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8662,7 +8661,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8670,7 +8669,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8678,7 +8677,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -8700,7 +8699,7 @@ private:
       )) = 0;
 
     static void _get_length_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8717,7 +8716,7 @@ private:
       )) = 0;
 
     static void _set_length_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8733,7 +8732,7 @@ private:
       )) = 0;
 
     static void _get_element_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8749,7 +8748,7 @@ private:
       )) = 0;
 
     static void _get_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8766,7 +8765,7 @@ private:
       )) = 0;
 
     static void _set_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -8774,7 +8773,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8782,7 +8781,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -8790,7 +8789,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9003,7 +9002,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9011,7 +9010,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9019,7 +9018,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -9041,7 +9040,7 @@ private:
       )) = 0;
 
     static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9057,7 +9056,7 @@ private:
       )) = 0;
 
     static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9074,7 +9073,7 @@ private:
       )) = 0;
 
     static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9082,7 +9081,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9090,7 +9089,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9098,7 +9097,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9106,7 +9105,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9114,7 +9113,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9122,7 +9121,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9130,7 +9129,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9138,7 +9137,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9146,7 +9145,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9154,7 +9153,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9162,7 +9161,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9170,7 +9169,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9178,7 +9177,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9186,7 +9185,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9194,7 +9193,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9202,7 +9201,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9210,7 +9209,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9218,7 +9217,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9226,7 +9225,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9234,7 +9233,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9242,7 +9241,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9250,7 +9249,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9258,7 +9257,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9266,7 +9265,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9274,7 +9273,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9282,7 +9281,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9290,7 +9289,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9298,7 +9297,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9746,7 +9745,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9754,7 +9753,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9762,7 +9761,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -9784,7 +9783,7 @@ private:
       )) = 0;
 
     static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9800,7 +9799,7 @@ private:
       )) = 0;
 
     static void _get_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9817,7 +9816,7 @@ private:
       )) = 0;
 
     static void _set_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9833,7 +9832,7 @@ private:
       )) = 0;
 
     static void _get_mode_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9850,7 +9849,7 @@ private:
       )) = 0;
 
     static void _set_mode_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -9858,7 +9857,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9866,7 +9865,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9874,7 +9873,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9882,7 +9881,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9890,7 +9889,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9898,7 +9897,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9906,7 +9905,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9914,7 +9913,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9922,7 +9921,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9930,7 +9929,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9938,7 +9937,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9946,7 +9945,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -9954,7 +9953,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10253,7 +10252,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10261,7 +10260,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10269,7 +10268,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -10291,7 +10290,7 @@ private:
       )) = 0;
 
     static void _get_result_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10307,7 +10306,7 @@ private:
       )) = 0;
 
     static void _get_result_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10324,7 +10323,7 @@ private:
       )) = 0;
 
     static void _set_result_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10340,7 +10339,7 @@ private:
       )) = 0;
 
     static void _get_params_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10357,7 +10356,7 @@ private:
       )) = 0;
 
     static void _set_params_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10373,7 +10372,7 @@ private:
       )) = 0;
 
     static void _get_mode_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10390,7 +10389,7 @@ private:
       )) = 0;
 
     static void _set_mode_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10406,7 +10405,7 @@ private:
       )) = 0;
 
     static void _get_contexts_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10423,7 +10422,7 @@ private:
       )) = 0;
 
     static void _set_contexts_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10439,7 +10438,7 @@ private:
       )) = 0;
 
     static void _get_exceptions_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10456,7 +10455,7 @@ private:
       )) = 0;
 
     static void _set_exceptions_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10464,7 +10463,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10472,7 +10471,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10480,7 +10479,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10488,7 +10487,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10496,7 +10495,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10504,7 +10503,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10512,7 +10511,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10520,7 +10519,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10528,7 +10527,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10536,7 +10535,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10544,7 +10543,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10552,7 +10551,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10560,7 +10559,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -10961,7 +10960,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10969,7 +10968,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -10977,7 +10976,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -10999,7 +10998,7 @@ private:
       )) = 0;
 
     static void _get_base_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11016,7 +11015,7 @@ private:
       )) = 0;
 
     static void _set_base_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11032,7 +11031,7 @@ private:
       )) = 0;
 
     static void _get_is_abstract_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11049,7 +11048,7 @@ private:
       )) = 0;
 
     static void _set_is_abstract_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11065,7 +11064,7 @@ private:
       )) = 0;
 
     static void _get_is_local_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11082,7 +11081,7 @@ private:
       )) = 0;
 
     static void _set_is_local_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11099,7 +11098,7 @@ private:
       )) = 0;
 
     static void is_a_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11122,7 +11121,7 @@ private:
       )) = 0;
 
     static void create_attribute_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11146,7 +11145,7 @@ private:
       )) = 0;
 
     static void create_operation_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11154,7 +11153,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11162,7 +11161,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11170,7 +11169,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11178,7 +11177,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11186,7 +11185,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11194,7 +11193,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11202,7 +11201,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11210,7 +11209,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11218,7 +11217,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11226,7 +11225,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11234,7 +11233,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11242,7 +11241,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11250,7 +11249,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11258,7 +11257,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11266,7 +11265,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11274,7 +11273,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11282,7 +11281,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11290,7 +11289,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11298,7 +11297,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11306,7 +11305,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11314,7 +11313,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11322,7 +11321,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11330,7 +11329,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11338,7 +11337,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11346,7 +11345,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11354,7 +11353,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11362,7 +11361,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11370,7 +11369,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11378,7 +11377,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -11967,7 +11966,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11975,7 +11974,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -11983,7 +11982,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -12005,7 +12004,7 @@ private:
       )) = 0;
 
     static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12021,7 +12020,7 @@ private:
       )) = 0;
 
     static void _get_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12038,7 +12037,7 @@ private:
       )) = 0;
 
     static void _set_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12054,7 +12053,7 @@ private:
       )) = 0;
 
     static void _get_access_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12071,7 +12070,7 @@ private:
       )) = 0;
 
     static void _set_access_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12079,7 +12078,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12087,7 +12086,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12095,7 +12094,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12103,7 +12102,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12111,7 +12110,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12119,7 +12118,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12127,7 +12126,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12135,7 +12134,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12143,7 +12142,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12151,7 +12150,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12159,7 +12158,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12167,7 +12166,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12175,7 +12174,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12474,7 +12473,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12482,7 +12481,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12490,7 +12489,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -12512,7 +12511,7 @@ private:
       )) = 0;
 
     static void _get_supported_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12529,7 +12528,7 @@ private:
       )) = 0;
 
     static void _set_supported_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12545,7 +12544,7 @@ private:
       )) = 0;
 
     static void _get_initializers_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12562,7 +12561,7 @@ private:
       )) = 0;
 
     static void _set_initializers_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12578,7 +12577,7 @@ private:
       )) = 0;
 
     static void _get_base_value_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12595,7 +12594,7 @@ private:
       )) = 0;
 
     static void _set_base_value_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12611,7 +12610,7 @@ private:
       )) = 0;
 
     static void _get_abstract_base_values_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12628,7 +12627,7 @@ private:
       )) = 0;
 
     static void _set_abstract_base_values_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12644,7 +12643,7 @@ private:
       )) = 0;
 
     static void _get_is_abstract_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12661,7 +12660,7 @@ private:
       )) = 0;
 
     static void _set_is_abstract_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12677,7 +12676,7 @@ private:
       )) = 0;
 
     static void _get_is_custom_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12694,7 +12693,7 @@ private:
       )) = 0;
 
     static void _set_is_custom_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12710,7 +12709,7 @@ private:
       )) = 0;
 
     static void _get_is_truncatable_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12727,7 +12726,7 @@ private:
       )) = 0;
 
     static void _set_is_truncatable_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12744,7 +12743,7 @@ private:
       )) = 0;
 
     static void is_a_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12765,7 +12764,7 @@ private:
       )) = 0;
 
     static void create_value_member_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12788,7 +12787,7 @@ private:
       )) = 0;
 
     static void create_attribute_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12812,7 +12811,7 @@ private:
       )) = 0;
 
     static void create_operation_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -12820,7 +12819,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12828,7 +12827,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12836,7 +12835,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12844,7 +12843,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12852,7 +12851,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12860,7 +12859,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12868,7 +12867,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12876,7 +12875,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12884,7 +12883,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12892,7 +12891,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12900,7 +12899,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12908,7 +12907,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12916,7 +12915,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12924,7 +12923,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12932,7 +12931,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12940,7 +12939,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12948,7 +12947,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12956,7 +12955,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12964,7 +12963,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12972,7 +12971,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12980,7 +12979,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12988,7 +12987,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -12996,7 +12995,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13004,7 +13003,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13012,7 +13011,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13020,7 +13019,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13028,7 +13027,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13036,7 +13035,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13044,7 +13043,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13795,7 +13794,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -13803,7 +13802,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -13811,7 +13810,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -13833,7 +13832,7 @@ private:
       )) = 0;
 
     static void _get_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -13850,7 +13849,7 @@ private:
       )) = 0;
 
     static void _set_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -13858,7 +13857,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13866,7 +13865,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13874,7 +13873,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13882,7 +13881,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13890,7 +13889,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13898,7 +13897,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13906,7 +13905,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13914,7 +13913,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13922,7 +13921,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13930,7 +13929,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13938,7 +13937,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13946,7 +13945,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13954,7 +13953,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -13962,7 +13961,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14219,7 +14218,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14227,7 +14226,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14235,7 +14234,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -14257,7 +14256,7 @@ private:
       )) = 0;
 
     static void _get_interface_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14265,7 +14264,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14273,7 +14272,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14281,7 +14280,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14289,7 +14288,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14297,7 +14296,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14305,7 +14304,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14313,7 +14312,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14321,7 +14320,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14329,7 +14328,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14337,7 +14336,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14345,7 +14344,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14353,7 +14352,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14361,7 +14360,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14592,7 +14591,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14600,7 +14599,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14608,7 +14607,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -14630,7 +14629,7 @@ private:
       )) = 0;
 
     static void _get_interface_type_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14646,7 +14645,7 @@ private:
       )) = 0;
 
     static void _get_is_multiple_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -14654,7 +14653,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14662,7 +14661,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14670,7 +14669,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14678,7 +14677,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14686,7 +14685,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14694,7 +14693,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14702,7 +14701,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14710,7 +14709,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14718,7 +14717,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14726,7 +14725,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14734,7 +14733,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14742,7 +14741,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14750,7 +14749,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -14997,7 +14996,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15005,7 +15004,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15013,7 +15012,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -15036,7 +15035,7 @@ private:
       )) = 0;
 
     static void is_a_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15052,7 +15051,7 @@ private:
       )) = 0;
 
     static void _get_event_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15060,7 +15059,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15068,7 +15067,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15076,7 +15075,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15084,7 +15083,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15092,7 +15091,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15100,7 +15099,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15108,7 +15107,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15116,7 +15115,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15124,7 +15123,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15132,7 +15131,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15140,7 +15139,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15148,7 +15147,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15156,7 +15155,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15405,7 +15404,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15413,7 +15412,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15421,7 +15420,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -15435,7 +15434,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15443,7 +15442,7 @@ private:
       );
 
     static void _get_event_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15451,7 +15450,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15459,7 +15458,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15467,7 +15466,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15475,7 +15474,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15483,7 +15482,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15491,7 +15490,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15499,7 +15498,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15507,7 +15506,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15515,7 +15514,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15523,7 +15522,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15531,7 +15530,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15539,7 +15538,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15547,7 +15546,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15779,7 +15778,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15787,7 +15786,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -15795,7 +15794,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -15809,7 +15808,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15817,7 +15816,7 @@ private:
       );
 
     static void _get_event_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15825,7 +15824,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15833,7 +15832,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15841,7 +15840,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15849,7 +15848,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15857,7 +15856,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15865,7 +15864,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15873,7 +15872,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15881,7 +15880,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15889,7 +15888,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15897,7 +15896,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15905,7 +15904,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15913,7 +15912,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -15921,7 +15920,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16153,7 +16152,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16161,7 +16160,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16169,7 +16168,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -16183,7 +16182,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16191,7 +16190,7 @@ private:
       );
 
     static void _get_event_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16199,7 +16198,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16207,7 +16206,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16215,7 +16214,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16223,7 +16222,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16231,7 +16230,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16239,7 +16238,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16247,7 +16246,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16255,7 +16254,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16263,7 +16262,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16271,7 +16270,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16279,7 +16278,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16287,7 +16286,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16295,7 +16294,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16527,7 +16526,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16535,7 +16534,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16543,7 +16542,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -16565,7 +16564,7 @@ private:
       )) = 0;
 
     static void _get_supported_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16582,7 +16581,7 @@ private:
       )) = 0;
 
     static void _set_supported_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16598,7 +16597,7 @@ private:
       )) = 0;
 
     static void _get_base_component_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16614,7 +16613,7 @@ private:
       )) = 0;
 
     static void _get_provides_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16630,7 +16629,7 @@ private:
       )) = 0;
 
     static void _get_uses_interfaces_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16646,7 +16645,7 @@ private:
       )) = 0;
 
     static void _get_emits_events_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16662,7 +16661,7 @@ private:
       )) = 0;
 
     static void _get_publishes_events_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16678,7 +16677,7 @@ private:
       )) = 0;
 
     static void _get_consumes_events_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16694,7 +16693,7 @@ private:
       )) = 0;
 
     static void _get_is_basic_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16714,7 +16713,7 @@ private:
       )) = 0;
 
     static void create_provides_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16735,7 +16734,7 @@ private:
       )) = 0;
 
     static void create_uses_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16755,7 +16754,7 @@ private:
       )) = 0;
 
     static void create_emits_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16775,7 +16774,7 @@ private:
       )) = 0;
 
     static void create_publishes_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16795,7 +16794,7 @@ private:
       )) = 0;
 
     static void create_consumes_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -16803,7 +16802,7 @@ private:
       );
 
     static void _get_base_interfaces_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16811,7 +16810,7 @@ private:
       );
 
     static void _set_base_interfaces_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16819,7 +16818,7 @@ private:
       );
 
     static void _get_is_abstract_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16827,7 +16826,7 @@ private:
       );
 
     static void _set_is_abstract_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16835,7 +16834,7 @@ private:
       );
 
     static void _get_is_local_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16843,7 +16842,7 @@ private:
       );
 
     static void _set_is_local_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16851,7 +16850,7 @@ private:
       );
 
     static void is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16859,7 +16858,7 @@ private:
       );
 
     static void create_attribute_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16867,7 +16866,7 @@ private:
       );
 
     static void create_operation_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16875,7 +16874,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16883,7 +16882,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16891,7 +16890,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16899,7 +16898,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16907,7 +16906,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16915,7 +16914,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16923,7 +16922,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16931,7 +16930,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16939,7 +16938,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16947,7 +16946,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16955,7 +16954,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16963,7 +16962,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16971,7 +16970,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16979,7 +16978,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16987,7 +16986,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -16995,7 +16994,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17003,7 +17002,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17011,7 +17010,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17019,7 +17018,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17027,7 +17026,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17035,7 +17034,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17043,7 +17042,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17051,7 +17050,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17059,7 +17058,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17067,7 +17066,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17075,7 +17074,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17083,7 +17082,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17091,7 +17090,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17099,7 +17098,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17863,7 +17862,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -17871,7 +17870,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -17879,7 +17878,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -17902,7 +17901,7 @@ private:
       )) = 0;
 
     static void is_a_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -17918,7 +17917,7 @@ private:
       )) = 0;
 
     static void _get_primary_key_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -17926,7 +17925,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17934,7 +17933,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17942,7 +17941,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17950,7 +17949,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17958,7 +17957,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17966,7 +17965,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17974,7 +17973,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17982,7 +17981,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17990,7 +17989,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -17998,7 +17997,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18006,7 +18005,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18014,7 +18013,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18022,7 +18021,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18271,7 +18270,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -18279,7 +18278,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -18287,7 +18286,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -18301,7 +18300,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void _get_result_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18309,7 +18308,7 @@ private:
       );
 
     static void _get_result_def_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18317,7 +18316,7 @@ private:
       );
 
     static void _set_result_def_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18325,7 +18324,7 @@ private:
       );
 
     static void _get_params_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18333,7 +18332,7 @@ private:
       );
 
     static void _set_params_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18341,7 +18340,7 @@ private:
       );
 
     static void _get_mode_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18349,7 +18348,7 @@ private:
       );
 
     static void _set_mode_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18357,7 +18356,7 @@ private:
       );
 
     static void _get_contexts_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18365,7 +18364,7 @@ private:
       );
 
     static void _set_contexts_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18373,7 +18372,7 @@ private:
       );
 
     static void _get_exceptions_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18381,7 +18380,7 @@ private:
       );
 
     static void _set_exceptions_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18389,7 +18388,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18397,7 +18396,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18405,7 +18404,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18413,7 +18412,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18421,7 +18420,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18429,7 +18428,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18437,7 +18436,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18445,7 +18444,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18453,7 +18452,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18461,7 +18460,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18469,7 +18468,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18477,7 +18476,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18485,7 +18484,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18793,7 +18792,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -18801,7 +18800,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -18809,7 +18808,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -18823,7 +18822,7 @@ private:
     virtual const char* _interface_repository_id (void) const;
 
     static void _get_result_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18831,7 +18830,7 @@ private:
       );
 
     static void _get_result_def_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18839,7 +18838,7 @@ private:
       );
 
     static void _set_result_def_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18847,7 +18846,7 @@ private:
       );
 
     static void _get_params_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18855,7 +18854,7 @@ private:
       );
 
     static void _set_params_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18863,7 +18862,7 @@ private:
       );
 
     static void _get_mode_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18871,7 +18870,7 @@ private:
       );
 
     static void _set_mode_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18879,7 +18878,7 @@ private:
       );
 
     static void _get_contexts_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18887,7 +18886,7 @@ private:
       );
 
     static void _set_contexts_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18895,7 +18894,7 @@ private:
       );
 
     static void _get_exceptions_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18903,7 +18902,7 @@ private:
       );
 
     static void _set_exceptions_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18911,7 +18910,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18919,7 +18918,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18927,7 +18926,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18935,7 +18934,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18943,7 +18942,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18951,7 +18950,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18959,7 +18958,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18967,7 +18966,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18975,7 +18974,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18983,7 +18982,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18991,7 +18990,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -18999,7 +18998,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19007,7 +19006,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19315,7 +19314,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19323,7 +19322,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19331,7 +19330,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -19353,7 +19352,7 @@ private:
       )) = 0;
 
     static void _get_base_home_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19369,7 +19368,7 @@ private:
       )) = 0;
 
     static void _get_managed_component_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19385,7 +19384,7 @@ private:
       )) = 0;
 
     static void _get_primary_key_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19401,7 +19400,7 @@ private:
       )) = 0;
 
     static void _get_factories_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19417,7 +19416,7 @@ private:
       )) = 0;
 
     static void _get_finders_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19433,7 +19432,7 @@ private:
       )) = 0;
 
     static void _get_is_basic_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19453,7 +19452,7 @@ private:
       )) = 0;
 
     static void create_primary_key_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19474,7 +19473,7 @@ private:
       )) = 0;
 
     static void create_factory_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19495,7 +19494,7 @@ private:
       )) = 0;
 
     static void create_finder_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -19503,7 +19502,7 @@ private:
       );
 
     static void _get_base_interfaces_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19511,7 +19510,7 @@ private:
       );
 
     static void _set_base_interfaces_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19519,7 +19518,7 @@ private:
       );
 
     static void _get_is_abstract_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19527,7 +19526,7 @@ private:
       );
 
     static void _set_is_abstract_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19535,7 +19534,7 @@ private:
       );
 
     static void _get_is_local_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19543,7 +19542,7 @@ private:
       );
 
     static void _set_is_local_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19551,7 +19550,7 @@ private:
       );
 
     static void is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19559,7 +19558,7 @@ private:
       );
 
     static void create_attribute_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19567,7 +19566,7 @@ private:
       );
 
     static void create_operation_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19575,7 +19574,7 @@ private:
       );
 
     static void lookup_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19583,7 +19582,7 @@ private:
       );
 
     static void contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19591,7 +19590,7 @@ private:
       );
 
     static void lookup_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19599,7 +19598,7 @@ private:
       );
 
     static void describe_contents_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19607,7 +19606,7 @@ private:
       );
 
     static void create_module_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19615,7 +19614,7 @@ private:
       );
 
     static void create_constant_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19623,7 +19622,7 @@ private:
       );
 
     static void create_struct_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19631,7 +19630,7 @@ private:
       );
 
     static void create_union_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19639,7 +19638,7 @@ private:
       );
 
     static void create_enum_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19647,7 +19646,7 @@ private:
       );
 
     static void create_alias_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19655,7 +19654,7 @@ private:
       );
 
     static void create_interface_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19663,7 +19662,7 @@ private:
       );
 
     static void create_value_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19671,7 +19670,7 @@ private:
       );
 
     static void create_value_box_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19679,7 +19678,7 @@ private:
       );
 
     static void create_exception_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19687,7 +19686,7 @@ private:
       );
 
     static void create_native_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19695,7 +19694,7 @@ private:
       );
 
     static void _get_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19703,7 +19702,7 @@ private:
       );
 
     static void _set_id_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19711,7 +19710,7 @@ private:
       );
 
     static void _get_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19719,7 +19718,7 @@ private:
       );
 
     static void _set_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19727,7 +19726,7 @@ private:
       );
 
     static void _get_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19735,7 +19734,7 @@ private:
       );
 
     static void _set_version_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19743,7 +19742,7 @@ private:
       );
 
     static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19751,7 +19750,7 @@ private:
       );
 
     static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19759,7 +19758,7 @@ private:
       );
 
     static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19767,7 +19766,7 @@ private:
       );
 
     static void describe_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19775,7 +19774,7 @@ private:
       );
 
     static void move_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19783,7 +19782,7 @@ private:
       );
 
     static void _get_type_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19791,7 +19790,7 @@ private:
       );
 
     static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =
@@ -19799,7 +19798,7 @@ private:
       );
 
     static void destroy_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &env =

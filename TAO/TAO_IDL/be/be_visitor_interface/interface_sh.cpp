@@ -121,7 +121,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // add a skeleton for our _is_a method
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &req," << be_nl
+      << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *context," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
@@ -131,7 +131,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
       // add a skeleton for our _non_existent method
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &req," << be_nl
+      << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *context," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
@@ -141,7 +141,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
       // add the dispatch method
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &_tao_req," << be_nl
+      << "TAO_ServerRequest &_tao_req," << be_nl
       << "void *_tao_context," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"

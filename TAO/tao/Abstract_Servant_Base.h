@@ -30,6 +30,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_ServerRequest;
+
 class TAO_Export TAO_Abstract_ServantBase
 {
 public:
@@ -63,7 +65,7 @@ protected:
   TAO_Abstract_ServantBase &operator= (const TAO_Abstract_ServantBase &);
   // assignment operator.
 
-  virtual void _dispatch (CORBA::ServerRequest &request,
+  virtual void _dispatch (TAO_ServerRequest &request,
                           void *context,
                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Dispatches a request to the object: find the operation, cast the
@@ -72,7 +74,7 @@ protected:
   // results and out parameters (if any) or the exceptions thrown into
   // <request>.
 
-  virtual void synchronous_upcall_dispatch (CORBA::ServerRequest &req,
+  virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *context,
                                             void *derived_this,
                                             CORBA::Environment &ACE_TRY_ENV) = 0;

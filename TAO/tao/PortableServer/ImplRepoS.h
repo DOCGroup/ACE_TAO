@@ -51,7 +51,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -59,7 +59,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -67,7 +67,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -89,7 +89,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       )) = 0;
 
     static void ping_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -105,7 +105,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       )) = 0;
 
     static void shutdown_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -241,7 +241,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -249,7 +249,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -257,7 +257,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -282,7 +282,7 @@ private:
       )) = 0;
 
     static void activate_server_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -301,7 +301,7 @@ private:
       )) = 0;
 
     static void register_server_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -319,7 +319,7 @@ private:
       )) = 0;
 
     static void reregister_server_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -337,7 +337,7 @@ private:
       )) = 0;
 
     static void remove_server_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -355,7 +355,7 @@ private:
       )) = 0;
 
     static void shutdown_server_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -375,7 +375,7 @@ private:
       )) = 0;
 
     static void server_is_running_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -393,7 +393,7 @@ private:
       )) = 0;
 
     static void server_is_shutting_down_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -412,7 +412,7 @@ private:
       )) = 0;
 
     static void find_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -431,7 +431,7 @@ private:
       )) = 0;
 
     static void list_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -445,7 +445,8 @@ private:
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___THRU_POA_COLLOCATED_SH_
 
-  class TAO_PortableServer_Export _tao_thru_poa_collocated_Administration     : public virtual ::ImplementationRepository::Administration
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_Administration 
+    : public virtual ::ImplementationRepository::Administration
   {
   public:
     _tao_thru_poa_collocated_Administration (
@@ -727,7 +728,7 @@ private:
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -735,7 +736,7 @@ private:
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -743,7 +744,7 @@ private:
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -767,7 +768,7 @@ private:
       )) = 0;
 
     static void next_n_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -783,7 +784,7 @@ private:
       )) = 0;
 
     static void destroy_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -797,7 +798,8 @@ private:
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___THRU_POA_COLLOCATED_SH_
 
-  class TAO_PortableServer_Export _tao_thru_poa_collocated_ServerInformationIterator     : public virtual ::ImplementationRepository::ServerInformationIterator
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_ServerInformationIterator 
+    : public virtual ::ImplementationRepository::ServerInformationIterator
   {
   public:
     _tao_thru_poa_collocated_ServerInformationIterator (

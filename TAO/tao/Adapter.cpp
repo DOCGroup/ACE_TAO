@@ -102,7 +102,7 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter,
 
 void
 TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
-                                CORBA::ServerRequest &request,
+                                TAO_ServerRequest &request,
                                 void *context, /* unused? */
                                 CORBA::Object_out forward_to,
                                 CORBA::Environment &ACE_TRY_ENV)
@@ -118,11 +118,15 @@ TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
       ACE_CHECK;
 
       if (r != TAO_Adapter::DS_MISMATCHED_KEY)
-        return;
+        {
+          return;
+        }
     }
 
   if (CORBA::is_nil (forward_to))
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    {
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    }
 }
 
 CORBA::Object_ptr

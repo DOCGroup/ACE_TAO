@@ -36,6 +36,7 @@
 class TAO_ORB_Core;
 class TAO_Stub;
 class TAO_MProfile;
+class TAO_ServerRequest;
 
 class TAO_Export TAO_Adapter
 {
@@ -61,7 +62,7 @@ public:
   // that matches a key is used to dispatch a request.
 
   virtual int dispatch (TAO_ObjectKey &key,
-                        CORBA::ServerRequest &request,
+                        TAO_ServerRequest &request,
                         void *context, /* unused? */
                         CORBA::Object_out forward_to,
                         CORBA::Environment &ACE_TRY_ENV)
@@ -125,7 +126,7 @@ public:
   // Insert a new adapter into the registry.
 
   void dispatch (TAO_ObjectKey &key,
-                 CORBA::ServerRequest &request,
+                 TAO_ServerRequest &request,
                  void *context, /* unused? */
                  CORBA::Object_out forward_to,
                  CORBA::Environment &ACE_TRY_ENV)

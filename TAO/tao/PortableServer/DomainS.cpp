@@ -12,7 +12,7 @@
 #include "Operation_Table.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/Server_Request.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 
 #if !defined (__ACE_INLINE__)
@@ -194,7 +194,7 @@ POA_CORBA_DomainManager::~POA_CORBA_DomainManager (void)
 }
 
 void POA_CORBA_DomainManager::get_domain_policy_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -273,7 +273,7 @@ if (!(
 }
 
 void POA_CORBA_DomainManager::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -297,7 +297,7 @@ void POA_CORBA_DomainManager::_is_a_skel (
 }
 
 void POA_CORBA_DomainManager::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -338,7 +338,9 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/DomainManager:1.0") == 0)
   return 0;
 }
 
-void POA_CORBA_DomainManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA_DomainManager::_dispatch (TAO_ServerRequest &req, 
+                                         void *context, 
+                                         CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
@@ -752,7 +754,7 @@ POA_CORBA_ConstructionPolicy::~POA_CORBA_ConstructionPolicy (void)
 }
 
 void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -827,7 +829,7 @@ ACE_CHECK;
 }
 
 void POA_CORBA_ConstructionPolicy::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -851,7 +853,7 @@ void POA_CORBA_ConstructionPolicy::_is_a_skel (
 }
 
 void POA_CORBA_ConstructionPolicy::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -895,7 +897,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/ConstructionPolicy:1.0") == 0)
   return 0;
 }
 
-void POA_CORBA_ConstructionPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA_ConstructionPolicy::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }

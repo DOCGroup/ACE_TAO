@@ -1126,25 +1126,6 @@ SOURCE=.\GIOP_Message_State.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Utils.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2874,6 +2855,25 @@ SOURCE=.\TAO_Internal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_Server_Request.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO_Singleton_Manager.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3540,7 +3540,23 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Accept_State.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Acceptors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Headers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Lite.h
 # End Source File
 # Begin Source File
 
@@ -3548,7 +3564,7 @@ SOURCE=.\GIOP_Message_State.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.h
+SOURCE=.\GIOP_Utils.h
 # End Source File
 # Begin Source File
 
@@ -3920,6 +3936,10 @@ SOURCE=.\TAO_Internal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_Server_Request.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO_Singleton.h
 # End Source File
 # Begin Source File
@@ -4160,7 +4180,27 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Accept_State.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Acceptors.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Connectors.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Headers.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Lite.i
 # End Source File
 # Begin Source File
 
@@ -4168,7 +4208,7 @@ SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.i
+SOURCE=.\GIOP_Utils.i
 # End Source File
 # Begin Source File
 
@@ -4437,6 +4477,10 @@ SOURCE=.\Tagged_Profile.i
 # Begin Source File
 
 SOURCE=.\TAO_Internal.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Server_Request.i
 # End Source File
 # Begin Source File
 

@@ -84,7 +84,7 @@ public:
                              );
 
     static void _is_a_skel (
-                            CORBA::ServerRequest &req,
+                            TAO_ServerRequest &req,
                             void *obj,
                             void *context,
                             CORBA::Environment &ACE_TRY_ENV =
@@ -92,7 +92,7 @@ public:
                             );
 
     static void _non_existent_skel (
-                                    CORBA::ServerRequest &req,
+                                    TAO_ServerRequest &req,
                                     void *obj,
                                     void *context,
                                     CORBA::Environment &ACE_TRY_ENV =
@@ -100,7 +100,7 @@ public:
                                     );
 
     virtual void _dispatch (
-                            CORBA::ServerRequest &_tao_req,
+                            TAO_ServerRequest &_tao_req,
                             void *_tao_context,
                             CORBA::Environment &ACE_TRY_ENV =
                             TAO_default_environment ()
@@ -122,7 +122,7 @@ public:
                        )) = 0;
 
     static void _get_policy_type_skel (
-                                       CORBA::ServerRequest &_tao_req,
+                                       TAO_ServerRequest &_tao_req,
                                        void *_tao_obj,
                                        void *_tao_context,
                                        CORBA::Environment &ACE_TRY_ENV =
@@ -138,7 +138,7 @@ public:
                        )) = 0;
 
     static void copy_skel (
-                           CORBA::ServerRequest &_tao_req,
+                           TAO_ServerRequest &_tao_req,
                            void *_tao_obj,
                            void *_tao_context,
                            CORBA::Environment &ACE_TRY_ENV =
@@ -154,7 +154,7 @@ public:
                        )) = 0;
 
     static void destroy_skel (
-                              CORBA::ServerRequest &_tao_req,
+                              TAO_ServerRequest &_tao_req,
                               void *_tao_obj,
                               void *_tao_context,
                               CORBA::Environment &ACE_TRY_ENV =
@@ -237,7 +237,7 @@ public:
                              );
 
     static void _is_a_skel (
-                            CORBA::ServerRequest &req,
+                            TAO_ServerRequest &req,
                             void *obj,
                             void *context,
                             CORBA::Environment &ACE_TRY_ENV =
@@ -245,7 +245,7 @@ public:
                             );
 
     static void _non_existent_skel (
-                                    CORBA::ServerRequest &req,
+                                    TAO_ServerRequest &req,
                                     void *obj,
                                     void *context,
                                     CORBA::Environment &ACE_TRY_ENV =
@@ -253,7 +253,7 @@ public:
                                     );
 
     virtual void _dispatch (
-                            CORBA::ServerRequest &_tao_req,
+                            TAO_ServerRequest &_tao_req,
                             void *_tao_context,
                             CORBA::Environment &ACE_TRY_ENV =
                             TAO_default_environment ()
@@ -275,7 +275,7 @@ public:
                        )) = 0;
 
     static void _get_def_kind_skel (
-                                    CORBA::ServerRequest &_tao_req,
+                                    TAO_ServerRequest &_tao_req,
                                     void *_tao_obj,
                                     void *_tao_context,
                                     CORBA::Environment &ACE_TRY_ENV =
@@ -291,7 +291,7 @@ public:
                        )) = 0;
 
     static void destroy_skel (
-                              CORBA::ServerRequest &_tao_req,
+                              TAO_ServerRequest &_tao_req,
                               void *_tao_obj,
                               void *_tao_context,
                               CORBA::Environment &ACE_TRY_ENV =
@@ -354,7 +354,7 @@ public:
                              );
 
     static void _is_a_skel (
-                            CORBA::ServerRequest &req,
+                            TAO_ServerRequest &req,
                             void *obj,
                             void *context,
                             CORBA::Environment &ACE_TRY_ENV =
@@ -362,7 +362,7 @@ public:
                             );
 
     static void _non_existent_skel (
-                                    CORBA::ServerRequest &req,
+                                    TAO_ServerRequest &req,
                                     void *obj,
                                     void *context,
                                     CORBA::Environment &ACE_TRY_ENV =
@@ -370,7 +370,7 @@ public:
                                     );
 
     virtual void _dispatch (
-                            CORBA::ServerRequest &_tao_req,
+                            TAO_ServerRequest &_tao_req,
                             void *_tao_context,
                             CORBA::Environment &ACE_TRY_ENV =
                             TAO_default_environment ()
@@ -395,7 +395,7 @@ public:
                        )) = 0;
 
     static void create_struct_tc_skel (
-                                       CORBA::ServerRequest &_tao_req,
+                                       TAO_ServerRequest &_tao_req,
                                        void *_tao_obj,
                                        void *_tao_context,
                                        CORBA::Environment &ACE_TRY_ENV =
@@ -415,7 +415,7 @@ public:
                        )) = 0;
 
     static void create_union_tc_skel (
-                                      CORBA::ServerRequest &_tao_req,
+                                      TAO_ServerRequest &_tao_req,
                                       void *_tao_obj,
                                       void *_tao_context,
                                       CORBA::Environment &ACE_TRY_ENV =
@@ -434,7 +434,7 @@ public:
                        )) = 0;
 
     static void create_enum_tc_skel (
-                                     CORBA::ServerRequest &_tao_req,
+                                     TAO_ServerRequest &_tao_req,
                                      void *_tao_obj,
                                      void *_tao_context,
                                      CORBA::Environment &ACE_TRY_ENV =
@@ -453,7 +453,7 @@ public:
                        )) = 0;
 
     static void create_alias_tc_skel (
-                                      CORBA::ServerRequest &_tao_req,
+                                      TAO_ServerRequest &_tao_req,
                                       void *_tao_obj,
                                       void *_tao_context,
                                       CORBA::Environment &ACE_TRY_ENV =
@@ -472,7 +472,7 @@ public:
                        )) = 0;
 
     static void create_exception_tc_skel (
-                                          CORBA::ServerRequest &_tao_req,
+                                          TAO_ServerRequest &_tao_req,
                                           void *_tao_obj,
                                           void *_tao_context,
                                           CORBA::Environment &ACE_TRY_ENV =
@@ -490,7 +490,7 @@ public:
                        )) = 0;
 
     static void create_interface_tc_skel (
-                                          CORBA::ServerRequest &_tao_req,
+                                          TAO_ServerRequest &_tao_req,
                                           void *_tao_obj,
                                           void *_tao_context,
                                           CORBA::Environment &ACE_TRY_ENV =
@@ -507,7 +507,7 @@ public:
                        )) = 0;
 
     static void create_string_tc_skel (
-                                       CORBA::ServerRequest &_tao_req,
+                                       TAO_ServerRequest &_tao_req,
                                        void *_tao_obj,
                                        void *_tao_context,
                                        CORBA::Environment &ACE_TRY_ENV =
@@ -524,7 +524,7 @@ public:
                        )) = 0;
 
     static void create_wstring_tc_skel (
-                                        CORBA::ServerRequest &_tao_req,
+                                        TAO_ServerRequest &_tao_req,
                                         void *_tao_obj,
                                         void *_tao_context,
                                         CORBA::Environment &ACE_TRY_ENV =
@@ -542,7 +542,7 @@ public:
                        )) = 0;
 
     static void create_fixed_tc_skel (
-                                      CORBA::ServerRequest &_tao_req,
+                                      TAO_ServerRequest &_tao_req,
                                       void *_tao_obj,
                                       void *_tao_context,
                                       CORBA::Environment &ACE_TRY_ENV =
@@ -560,7 +560,7 @@ public:
                        )) = 0;
 
     static void create_sequence_tc_skel (
-                                         CORBA::ServerRequest &_tao_req,
+                                         TAO_ServerRequest &_tao_req,
                                          void *_tao_obj,
                                          void *_tao_context,
                                          CORBA::Environment &ACE_TRY_ENV =
@@ -578,7 +578,7 @@ public:
                        )) = 0;
 
     static void create_array_tc_skel (
-                                      CORBA::ServerRequest &_tao_req,
+                                      TAO_ServerRequest &_tao_req,
                                       void *_tao_obj,
                                       void *_tao_context,
                                       CORBA::Environment &ACE_TRY_ENV =
@@ -599,7 +599,7 @@ public:
                        )) = 0;
 
     static void create_value_tc_skel (
-                                      CORBA::ServerRequest &_tao_req,
+                                      TAO_ServerRequest &_tao_req,
                                       void *_tao_obj,
                                       void *_tao_context,
                                       CORBA::Environment &ACE_TRY_ENV =
@@ -618,7 +618,7 @@ public:
                        )) = 0;
 
     static void create_value_box_tc_skel (
-                                          CORBA::ServerRequest &_tao_req,
+                                          TAO_ServerRequest &_tao_req,
                                           void *_tao_obj,
                                           void *_tao_context,
                                           CORBA::Environment &ACE_TRY_ENV =
@@ -636,7 +636,7 @@ public:
                        )) = 0;
 
     static void create_native_tc_skel (
-                                       CORBA::ServerRequest &_tao_req,
+                                       TAO_ServerRequest &_tao_req,
                                        void *_tao_obj,
                                        void *_tao_context,
                                        CORBA::Environment &ACE_TRY_ENV =
@@ -653,7 +653,7 @@ public:
                        )) = 0;
 
     static void create_recursive_tc_skel (
-                                          CORBA::ServerRequest &_tao_req,
+                                          TAO_ServerRequest &_tao_req,
                                           void *_tao_obj,
                                           void *_tao_context,
                                           CORBA::Environment &ACE_TRY_ENV =
@@ -671,7 +671,7 @@ public:
                        )) = 0;
 
     static void create_abstract_interface_tc_skel (
-                                                   CORBA::ServerRequest &_tao_req,
+                                                   TAO_ServerRequest &_tao_req,
                                                    void *_tao_obj,
                                                    void *_tao_context,
                                                    CORBA::Environment &ACE_TRY_ENV =
@@ -689,7 +689,7 @@ public:
                        )) = 0;
 
     static void create_component_tc_skel (
-                                          CORBA::ServerRequest &_tao_req,
+                                          TAO_ServerRequest &_tao_req,
                                           void *_tao_obj,
                                           void *_tao_context,
                                           CORBA::Environment &ACE_TRY_ENV =
@@ -707,7 +707,7 @@ public:
                        )) = 0;
 
     static void create_home_tc_skel (
-                                     CORBA::ServerRequest &_tao_req,
+                                     TAO_ServerRequest &_tao_req,
                                      void *_tao_obj,
                                      void *_tao_context,
                                      CORBA::Environment &ACE_TRY_ENV =

@@ -11,9 +11,8 @@
 #include "Operation_Table.h"
 #include "Object_Adapter.h"
 #include "tao/Stub.h"
-#include "tao/GIOP_Server_Request.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
-#include "tao/NVList.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ImplRepoS.i"
@@ -178,19 +177,19 @@ POA_ImplementationRepository::ServerObject::~ServerObject (void)
 }
 
 void POA_ImplementationRepository::ServerObject::ping_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
-  POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *)_tao_object_reference;
+  POA_ImplementationRepository::ServerObject *_tao_impl = 
+    (POA_ImplementationRepository::ServerObject *)_tao_object_reference;
 
-      _tao_impl->ping (
-        ACE_TRY_ENV
-      );
-
-      ACE_CHECK;
+  _tao_impl->ping (
+      ACE_TRY_ENV
+    );
+  ACE_CHECK;
 
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
@@ -198,7 +197,7 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
   }
 
 void POA_ImplementationRepository::ServerObject::shutdown_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -217,7 +216,7 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
   }
 
 void POA_ImplementationRepository::ServerObject::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -241,7 +240,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
 }
 
 void POA_ImplementationRepository::ServerObject::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -282,7 +281,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:ImplementationRepository/ServerObject:
   return 0;
 }
 
-void POA_ImplementationRepository::ServerObject::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_ImplementationRepository::ServerObject::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
@@ -609,7 +608,7 @@ POA_ImplementationRepository::Administration::~Administration (void)
 }
 
 void POA_ImplementationRepository::Administration::activate_server_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -636,7 +635,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
   }
 
 void POA_ImplementationRepository::Administration::register_server_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -668,7 +667,7 @@ void POA_ImplementationRepository::Administration::register_server_skel (
   }
 
 void POA_ImplementationRepository::Administration::reregister_server_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -698,7 +697,7 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
   }
 
 void POA_ImplementationRepository::Administration::remove_server_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -727,7 +726,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
   }
 
 void POA_ImplementationRepository::Administration::shutdown_server_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -756,7 +755,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
   }
 
 void POA_ImplementationRepository::Administration::server_is_running_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -798,7 +797,7 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 }
 
 void POA_ImplementationRepository::Administration::server_is_shutting_down_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -826,7 +825,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
   }
 
 void POA_ImplementationRepository::Administration::find_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -863,7 +862,7 @@ void POA_ImplementationRepository::Administration::find_skel (
 }
 
 void POA_ImplementationRepository::Administration::list_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -903,7 +902,7 @@ void POA_ImplementationRepository::Administration::list_skel (
 }
 
 void POA_ImplementationRepository::Administration::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -927,7 +926,7 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
 }
 
 void POA_ImplementationRepository::Administration::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -968,7 +967,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:ImplementationRepository/Administratio
   return 0;
 }
 
-void POA_ImplementationRepository::Administration::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_ImplementationRepository::Administration::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
@@ -1510,7 +1509,7 @@ POA_ImplementationRepository::ServerInformationIterator::~ServerInformationItera
 }
 
 void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -1548,7 +1547,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 }
 
 void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -1569,7 +1568,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
   }
 
 void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -1593,7 +1592,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
 }
 
 void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -1634,7 +1633,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:ImplementationRepository/ServerInforma
   return 0;
 }
 
-void POA_ImplementationRepository::ServerInformationIterator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_ImplementationRepository::ServerInformationIterator::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }

@@ -10,7 +10,7 @@
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE void POA_CORBA_ConstructionPolicy::_get_policy_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
@@ -25,7 +25,7 @@ ACE_INLINE void POA_CORBA_ConstructionPolicy::_get_policy_type_skel (
     );
 }
 ACE_INLINE void POA_CORBA_ConstructionPolicy::copy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
@@ -40,7 +40,7 @@ ACE_INLINE void POA_CORBA_ConstructionPolicy::copy_skel (
     );
 }
 ACE_INLINE void POA_CORBA_ConstructionPolicy::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV

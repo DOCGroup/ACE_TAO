@@ -309,7 +309,7 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
         {
           // The list is empty aggresively reduce copies and just send
           // the CDR stream, we assume that
-          // GIOP_Server_Request::init_reply
+          // TAO_Server_Request::init_reply
           // has inserted appropiated padding already to make this
           // operation correct
           cdr.write_octet_array_mb (this->incoming_->start ());
