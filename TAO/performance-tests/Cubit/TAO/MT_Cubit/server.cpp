@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "server.h"
+#include "ace/Sched_Params.h"
 
 // Global options used to configure various parameters.
 static char hostname[BUFSIZ];
@@ -46,6 +47,19 @@ Cubit_Task::Cubit_Task (const char *args,
 int
 Cubit_Task::svc (void)
 {
+  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
+  // ACE way to do that . . .
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  int prio;
+
+  if (ACE_Thread::getprio (thr_handle, prio) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t): Cubit_Task::svc; set my priority to %d\n",
+              prio));
+  ACE_OS::thr_setprio (prio);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s'\n",
               orbargs_));
@@ -66,7 +80,9 @@ Cubit_Task::svc (void)
       this->poa_manager_->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, wait on barrier\n"));
       this->barrier_->wait ();
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, passed barrier\n"));
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
@@ -402,6 +418,19 @@ Cubit_Factory_Task::create_factory (void)
 int
 Cubit_Factory_Task::svc (void)
 {
+  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
+  // ACE way to do that . . .
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  int prio;
+
+  if (ACE_Thread::getprio (thr_handle, prio) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t): Cubit_Factor_Task::svc; set my priority to %d\n",
+              prio));
+  ACE_OS::thr_setprio (prio);
+
   ACE_DEBUG ((LM_DEBUG,
               ">>> (%P|%t) Beginning Cubit Factory task with args = '%s'\n",
               orbargs_));
@@ -748,7 +777,9 @@ start_servants (void)
 
   Cubit_Factory_Task * factory_task;
 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, wait on barrier\n"));
   barrier_.wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, passed barrier\n"));
 
   cubits[0] = high_priority_task->get_servant_ior (0);
 
@@ -798,10 +829,31 @@ start_servants (void)
 
 // main routine.
 
+#if defined (VXWORKS)
+extern "C"
+int
+server (int argc, char *argv[])
+#else
 int
 main (int argc, char *argv[])
+#endif
 {
 #if defined (ACE_HAS_THREADS)
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  if (ACE_OS::sched_params (
+        ACE_Sched_Params (
+          ACE_SCHED_FIFO,
+          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+          ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
+                    "so remain in time-sharing class\n"));
+      else
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: ACE_OS::sched_params failed\n%a"),
+                          -1);
+    }
+
   if (initialize (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
