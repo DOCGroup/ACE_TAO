@@ -1,3 +1,21 @@
+Thu Dec  2 12:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Include PortableServer_include.pidl
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+          Include PortableServer.h instead of PortableServerC.h
+
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.{h,cpp}:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.{h,cpp}:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.{h,cpp}:
+          Renamed create_POA to create_Root_POA, this method is just used to
+          create the RootPOA. Also removed the parent argument, a Root POA has
+          no parent, so no need to pass it.
+
 Thu Dec  2 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategy.h:
