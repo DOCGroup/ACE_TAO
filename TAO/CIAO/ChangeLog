@@ -1,3 +1,10 @@
+Fri Dec 20 23:09:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Makefile.server: Added HomeRegistrar.idl and
+	  HomeRegistrar_i to the makefile.
+
+	* tools/Simple_Component_Server/Makefile: Added a new makefile.  
+
 Fri Dec 20 20:32:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CCM_Component.idl:
