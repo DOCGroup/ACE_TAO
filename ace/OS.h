@@ -1,5 +1,7 @@
 /* -*- C++ -*- */
+
 // $Id$
+
 
 // ============================================================================
 //
@@ -475,6 +477,336 @@ typedef int key_t;
 //                                       //
 ///////////////////////////////////////////
 
+#if defined (ACE_PSOS)
+
+    #include <ace/sys_conf.h> /* system configuration file */
+    #include <psos.h>         /* pSOS+ system calls                */
+    #include <pna.h>          /* pNA+ TCP/IP Network Manager calls */
+
+
+  #if defined (ACE_PSOSIM)
+
+    /* In the *simulator* environment, use unsigned int for size_t */
+    #define size_t  unsigned int
+
+//    #include <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
+
+    /*  #include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */ 
+    /*                         are not supported by pSOSim                 */
+	 /*                                                                     */
+    /*  #include <phile.h>     pHILE+ file system calls are not supported  */ 
+    /*                         by pSOSim *so*, for the time being, we make */ 
+    /*                         use of UNIX file system headers and then    */ 
+    /*                         when we have time, we wrap UNIX file system */ 
+    /*                         calls w/ pHILE+ wrappers, and modify ACE to */ 
+    /*                         use the wrappers under pSOSim               */
+
+    /* put includes for necessary UNIX file system calls here */
+    #include <sys/stat.h>
+    #include <sys/ioctl.h>
+    #include <sys/sockio.h>
+    #include <netinet/tcp.h>
+
+    // remap missing error numbers for system functions
+    #define EPERM        1        /* Not super-user                        */
+    #define ENOENT	    2        /* No such file or directory             */
+    #define ESRCH        3        /* No such process                       */
+    #define EINTR        4        /* interrupted system call               */
+    #define EBADF        9        /* Bad file number                       */
+    #define EAGAIN       11       /* Resource temporarily unavailable      */
+    #define EWOULDBLOCK	 EAGAIN   /* Blocking resource request would block */
+    #define ENOMEM       12		 /* Not enough core			               */
+    #define EACCES       13       /* Permission denied                     */
+    #define EEXIST       17       /* File exists                           */
+    #define ENOSPC       28       /* No space left on device               */
+    #define EPIPE        32       /* Broken pipe                           */
+    #define ETIME        62       /* timer expired                         */
+    #define ENAMETOOLONG 78       /* path name is too long                 */
+    #define ENOSYS       89       /* Unsupported file system operation     */
+    #define EADDRINUSE   125      /* Address already in use                */
+    #define ENETUNREACH  128      /* Network is unreachable                */
+    #define EISCONN      133      /* Socket is already connected           */
+    #define ESHUTDOWN    143      /* Can't send after socket shutdown      */
+    #define ECONNREFUSED 146	    /* Connection refused                    */
+    #define EINPROGRESS  150      /* operation now in progress             */
+    #define ERRMAX		 151      /* Last error number                     */
+
+    #define TCP_
+    #if ! defined (BUFSIZ)
+      #define BUFSIZ 1024
+    #endif  /* ! defined (BUFSIZ) */
+  
+
+  #else
+
+    #include <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */ 
+    #include <phile.h>     /* pHILE+ file system calls                  */ 
+
+
+  #endif /* defined (ACE_PSOSIM) */
+
+
+
+
+// For general purpose portability
+
+// Use pSOS semaphores, wrapped . . .
+typedef struct
+{
+  u_long sema_;
+  // Semaphore handle.  This is allocated by pSOS.
+
+  char name_[4];
+  // Name of the semaphore: really a 32 bit number to pSOS
+} ACE_sema_t;
+
+// Used for ACE_MMAP_Memory_Pool
+#if !defined (ACE_DEFAULT_BACKING_STORE)
+#define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
+#endif /* ACE_DEFAULT_BACKING_STORE */
+
+// Used for logging
+#if !defined (ACE_DEFAULT_LOGFILE)
+#define ACE_DEFAULT_LOGFILE "/tmp/logfile"
+#endif /* ACE_DEFAULT_LOGFILE */
+
+// Used for dynamic linking.
+#if !defined (ACE_DEFAULT_SVC_CONF)
+#define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#endif /* ACE_DEFAULT_SVC_CONF */
+
+#if !defined (ACE_DEFAULT_SEM_KEY)
+#define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#endif /* ACE_DEFAULT_SEM_KEY */
+
+#define ACE_STDIN 0
+#define ACE_STDOUT 1
+#define ACE_STDERR 2
+
+#define ACE_DIRECTORY_SEPARATOR_STR_A "/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+
+#define ACE_DLL_SUFFIX ".so"
+#define ACE_DLL_PREFIX "lib"
+#define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
+#define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+#define ACE_LOGGER_KEY "/tmp/server_daemon"
+
+#define ACE_PLATFORM_A "pSOS"
+#define ACE_PLATFORM_EXE_SUFFIX_A ""
+
+#if defined (ACE_HAS_UNICODE)
+#define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
+#define ACE_PLATFORM_W L"pSOS"
+#define ACE_PLATFORM_EXE_SUFFIX_W L""
+#else
+#define ACE_DIRECTORY_SEPARATOR_STR_W "/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W '/'
+#define ACE_PLATFORM_W "pSOS"
+#define ACE_PLATFORM_EXE_SUFFIX_W ""
+#endif /* ACE_HAS_UNICODE */
+
+
+#define ACE_MAX_DEFAULT_PORT 65535
+
+#if ! defined(MAXPATHLEN)
+#define MAXPATHLEN  1024
+#endif /* MAXPATHLEN */
+
+#if ! defined(MAXNAMLEN)
+#define MAXNAMLEN   255
+#endif /* MAXNAMLEN */
+
+#if ! defined(MAXHOSTNAMELEN)
+#define MAXHOSTNAMELEN  256
+#endif /* MAXHOSTNAMELEN */
+
+#if defined (ACE_LACKS_MMAP)
+#define PROT_READ 0
+#define PROT_WRITE 0
+#define PROT_EXEC 0
+#define PROT_NONE 0
+#define PROT_RDWR 0
+#define MAP_PRIVATE 0
+#define MAP_SHARED 0
+#define MAP_FIXED 0
+#endif /* ACE_LACKS_MMAP */
+
+// The following 3 defines are used by the ACE Name Server...
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
+#define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
+
+#if !defined (ACE_DEFAULT_LOCALNAME_A)
+#define ACE_DEFAULT_LOCALNAME_A "/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_A */
+
+#if !defined (ACE_DEFAULT_GLOBALNAME_A)
+#define ACE_DEFAULT_GLOBALNAME_A "/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_A */
+
+#if defined (ACE_HAS_UNICODE)
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
+#define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
+#define ACE_DEFAULT_LOCALNAME_W L"/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
+#define ACE_DEFAULT_GLOBALNAME_W L"/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
+#else
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
+#define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
+#define ACE_DEFAULT_LOCALNAME_W "/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
+#define ACE_DEFAULT_GLOBALNAME_W "/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
+#endif /* ACE_HAS_UNICODE */
+
+#if !defined (__TEXT)
+#if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
+#define __TEXT(STRING) L##STRING
+#else
+#define __TEXT(STRING) STRING
+#endif /* UNICODE && ACE_HAS_UNICODE */
+#endif /* !defined __TEXT */
+
+typedef int ACE_HANDLE;
+typedef ACE_HANDLE ACE_SOCKET;
+#define ACE_INVALID_HANDLE -1
+
+typedef ACE_HANDLE ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
+
+#define ACE_INVALID_SEM_KEY -1
+
+struct  hostent {
+  char    *h_name;        /* official name of host */
+  char    **h_aliases;    /* alias list */
+  int     h_addrtype;     /* host address type */
+  int     h_length;       /* address length */
+  char    **h_addr_list;  /* (first, only) address from name server */
+#define h_addr h_addr_list[0]   /* the first address */
+};
+
+struct  servent {
+  char     *s_name;    /* official service name */
+  char    **s_aliases; /* alias list */
+  int       s_port;    /* port # */
+  char     *s_proto;   /* protocol to use */
+};
+
+// For Win32 compatibility.
+
+typedef const char *LPCTSTR;
+typedef char *LPTSTR;
+typedef char TCHAR;
+
+#define ACE_SEH_TRY if (1)
+#define ACE_SEH_EXCEPT(X) while (0)
+#define ACE_SEH_FINALLY while (0)
+
+#if !defined (LPSECURITY_ATTRIBUTES)
+#define LPSECURITY_ATTRIBUTES int
+#endif /* !defined LPSECURITY_ATTRIBUTES */
+#if !defined (GENERIC_READ)
+#define GENERIC_READ 0
+#endif /* !defined GENERIC_READ */
+#if !defined (FILE_SHARE_READ)
+#define FILE_SHARE_READ 0
+#endif /* !defined FILE_SHARE_READ */
+#if !defined (OPEN_EXISTING)
+#define OPEN_EXISTING 0
+#endif /* !defined OPEN_EXISTING */
+#if !defined (FILE_ATTRIBUTE_NORMAL)
+#define FILE_ATTRIBUTE_NORMAL 0
+#endif /* !defined FILE_ATTRIBUTE_NORMAL */
+#if !defined (MAXIMUM_WAIT_OBJECTS)
+#define MAXIMUM_WAIT_OBJECTS 0
+#endif /* !defined MAXIMUM_WAIT_OBJECTS */
+#if !defined (FILE_FLAG_OVERLAPPED)
+#define FILE_FLAG_OVERLAPPED 0
+#endif /* !defined FILE_FLAG_OVERLAPPED */
+
+struct ACE_OVERLAPPED
+{
+  u_long Internal;
+  u_long InternalHigh;
+  u_long Offset;
+  u_long OffsetHigh;
+  ACE_HANDLE hEvent;
+};
+
+// Use pSOS time, wrapped . . .
+class ACE_PSOS_Time_t
+{
+public:
+
+  ACE_PSOS_Time_t ();
+    // default ctor: date, time, and ticks all zeroed
+
+  ACE_PSOS_Time_t (const timespec_t& t);
+    // ctor from a timespec_t
+
+  operator timespec_t ();
+    // type cast operator (to a timespec_t)
+
+  static u_long get_system_time (ACE_PSOS_Time_t& t);
+    // static member function to get current system time
+
+  static u_long set_system_time (const ACE_PSOS_Time_t& t);
+    // static member function to set current system time
+
+#if defined (ACE_PSOSIM)
+
+  static u_long init_simulator_time ();
+    // static member function to initialize system time, using UNIX calls
+
+#endif /* ACE_PSOSIM */
+
+  static const u_long max_ticks;
+    // max number of ticks supported in a single system call
+
+private:
+  
+  // constants for prying info out of the pSOS time encoding
+  static const u_long year_mask;
+  static const u_long month_mask;
+  static const u_long day_mask;
+  static const u_long hour_mask;
+  static const u_long minute_mask;
+  static const u_long second_mask;
+  static const int year_shift;
+  static const int month_shift;
+  static const int hour_shift;
+  static const int minute_shift;
+  static const int year_origin;
+  static const int month_origin;
+
+  // error codes
+  static const u_long err_notime;   // system time not set
+  static const u_long err_illdate;  // date out of range
+  static const u_long err_illtime;  // time out of range
+  static const u_long err_illticks; // ticks out of range
+
+   u_long date_;
+  // date : year in bits 31-16, month in bits 15-8, day in bits 7-0
+
+  u_long time_;
+  // time : hour in bits 31-16, minutes in bits 15-8, seconds in bits 7-0
+
+  u_long ticks_;
+  // ticks: number of system clock ticks (KC_TICKS2SEC-1 max)
+} ;
+
+#endif /* defined (ACE_PSOS) */
+
+
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
@@ -586,6 +918,7 @@ extern "C" pthread_t pthread_self (void);
 #endif /* ACE_NTRACE */
 
 #include /**/ <time.h>
+
 #if defined (ACE_NEEDS_SYSTIME_H)
 // Some platforms may need to include this, but I suspect that most
 // will get it from <time.h>
@@ -1186,7 +1519,20 @@ struct cancel_state
   // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
 };
 
-#include /**/ <sys/types.h>
+#if defined (ACE_LACKS_SYS_TYPES_H)
+  typedef unsigned char	u_char;
+  typedef unsigned short	u_short;
+  typedef unsigned int	u_int;
+  typedef unsigned long	u_long;
+
+  typedef unsigned char	uchar_t;
+  typedef unsigned short	ushort_t;
+  typedef unsigned int	uint_t;
+  typedef unsigned long	ulong_t;
+#else
+  #include /**/ <sys/types.h>
+#endif  /* ACE_LACKS_SYS_TYPES_H */
+
 #include /**/ <sys/stat.h>
 
 #if defined (ACE_HAS_THREADS)
@@ -1452,6 +1798,83 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #  define THR_SCHED_FIFO          0
 #  define THR_SCHED_RR            0
 #  define THR_SCHED_DEFAULT       0
+
+#elif defined (ACE_PSOS)
+
+// implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores
+typedef u_long ACE_mutex_t;
+typedef u_long ACE_thread_mutex_t;
+typedef long pid_t;
+
+typedef char *ACE_thread_t;
+typedef int ACE_hthread_t;
+
+ 
+// Key type: the ACE TSS emulation requires the key type be unsigned,
+// for efficiency.  (Current POSIX and Solaris TSS implementations also
+// use unsigned int, so the ACE TSS emulation is compatible with them.)
+typedef u_int ACE_thread_key_t;
+
+/* CDG - TBD - revisit these: compare pthreads and pSOS threads */
+#  define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
+#  define THR_CANCEL_ENABLE       0	 /* thread can be cancelled */
+#  define THR_CANCEL_DEFERRED     0	 /* cancellation deferred to cancellation point */
+#  define THR_CANCEL_ASYNCHRONOUS 0	 /* cancellation occurs immediately */
+
+#  define THR_BOUND               0
+#  define THR_NEW_LWP             0
+#  define THR_DETACHED            0
+#  define THR_SUSPENDED           0
+#  define THR_DAEMON              0
+#  define THR_JOINABLE            0
+
+#  define THR_SCHED_FIFO          0
+#  define THR_SCHED_RR            0
+#  define THR_SCHED_DEFAULT       0
+#  define USYNC_THREAD            T_LOCAL
+#  define USYNC_PROCESS           T_GLOBAL
+
+/* from psos.h */
+/* #define T_NOPREEMPT     0x00000001   Not preemptible bit */
+/* #define T_PREEMPT       0x00000000   Preemptible */
+/* #define T_TSLICE        0x00000002   Time-slicing enabled bit */
+/* #define T_NOTSLICE      0x00000000   No Time-slicing */
+/* #define T_NOASR         0x00000004   ASRs disabled bit */
+/* #define T_ASR           0x00000000   ASRs enabled */
+
+/* #define SM_GLOBAL       0x00000001  1 = Global */
+/* #define SM_LOCAL        0x00000000  0 = Local */
+/* #define SM_PRIOR        0x00000002  Queue by priority */
+/* #define SM_FIFO         0x00000000  Queue by FIFO order */
+
+/* #define T_NOFPU         0x00000000   Not using FPU */
+/* #define T_FPU           0x00000002   Using FPU bit */
+
+// pSOS signals are sent via as_send(u_long tid, u_long signals)
+typedef u_long sigset_t;
+
+// Wrapper for NT events on pSOS.
+class ACE_Export ACE_event_t
+{
+  friend class ACE_OS;
+protected:
+  ACE_mutex_t lock_;
+  // Protect critical section.
+
+  ACE_cond_t condition_;
+  // Keeps track of waiters.
+
+  int manual_reset_;
+  // Specifies if this is an auto- or manual-reset event.
+
+  int is_signaled_;
+  // "True" if signaled.
+
+  u_long waiting_threads_;
+  // Number of waiting threads.
+};
+
+
 #elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
@@ -1580,7 +2003,7 @@ protected:
   ACE_sema_t sema_;
   // Queue up threads waiting for the condition to become signaled.
 
-#if defined (VXWORKS)
+#if (defined (VXWORKS) || defined (ACE_PSOS))
   ACE_sema_t waiters_done_;
   // A semaphore used by the broadcast/signal thread to wait for all
   // the waiting thread(s) to wake up and be released from the
@@ -1591,8 +2014,8 @@ protected:
   // for the waiting thread(s) to wake up and get a chance at the
   // semaphore.
 #else
-#error "SOMEONE FIX ME!"
-#endif /* VXWORKS */
+    #error "SOMEONE FIX ME!"
+#endif /* VXWORKS || ACE_PSOS */
 
   size_t was_broadcast_;
   // Keeps track of whether we were broadcasting or just signaling.
@@ -1663,13 +2086,39 @@ typedef rwlock_t ACE_rwlock_t;
 typedef int ACE_cond_t;
 typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
-#if !defined (ACE_HAS_POSIX_SEM)
+#if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
 typedef int ACE_sema_t;
 #endif /* !ACE_HAS_POSIX_SEM */
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
+
+#if defined (ACE_PSOS)
+
+// Wrapper for NT events on pSOS.
+class ACE_Export ACE_event_t
+{
+  friend class ACE_OS;
+protected:
+  ACE_mutex_t lock_;
+  // Protect critical section.
+
+  ACE_cond_t condition_;
+  // Keeps track of waiters.
+
+  int manual_reset_;
+  // Specifies if this is an auto- or manual-reset event.
+
+  int is_signaled_;
+  // "True" if signaled.
+
+  u_long waiting_threads_;
+  // Number of waiting threads.
+};
+
+#endif /* ACE_PSOS */
+
 #endif /* ACE_HAS_THREADS */
 
 // Standard C Library includes
@@ -1832,6 +2281,7 @@ struct utsname
 #else
 #include /**/ <sys/utsname.h>
 #endif /* ACE_LACKS_UTSNAME_T */
+
 
 #if defined (ACE_WIN32)
 // Turn off warnings for /W4
@@ -2137,7 +2587,12 @@ typedef int ACE_pri_t;
 typedef HINSTANCE ACE_SHLIB_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
 
-#else /* !defined (ACE_WIN32) */
+
+#elif defined (ACE_PSOS)
+
+typedef ACE_UINT64 ACE_hrtime_t;
+
+#else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
 typedef const char *LPCTSTR;
 typedef char *LPTSTR;
@@ -2261,6 +2716,7 @@ typedef char TCHAR;
 
 // The "null" device on UNIX.
 #define ACE_DEV_NULL "/dev/null"
+
 
 // Wrapper for NT events on UNIX.
 class ACE_Export ACE_event_t
@@ -2646,7 +3102,7 @@ typedef short ACE_pri_t;
   typedef ACE_UINT64 ACE_hrtime_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
-#endif /* ACE_WIN32 */
+#endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
 #if defined (ACE_SELECT_USES_INT)
 typedef int ACE_FD_SET_TYPE;
@@ -4539,6 +4995,48 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 // Also, create an ACE_Object_Manager static instance in "main ()".
 #include "ace/Object_Manager.h"
 
+#if defined (ACE_PSOSIM)
+// PSOSIM root lacks the standard argc, argv command line parameters,
+// create dummy argc and argv in the "real" main  and pass to "user" main.
+// NOTE: ACE_MAIN must be defined to give the return type as well as the 
+// name of the entry point.
+#define main \
+ace_main_i (int, char *[]);                /* forward declaration */ \
+ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
+{ \
+  int argc = 1;                            /* dummy arg count */ \
+  char *argv[] = {"psosim"};               /* dummy arg list */ \
+  ACE_Object_Manager ace_object_manager;   /* has program lifetime */ \
+  int ret_val = -1; /* assume the worst */ \
+  if (ACE_PSOS_Time_t::init_simulator_time ()) /* init simulator time */ \
+  { \
+    ACE_ERROR((LM_ERROR, "init_simulator_time failed\n"));  /* report */ \
+  } \
+  else \
+  { \
+    ret_val = ace_main_i (argc, argv);   /* call user main, save result */ \
+  } \
+  ACE_OS::exit (ret_val);                /* pass code to simulator exit */ \
+} \
+int \
+ace_main_i
+#elif defined (ACE_PSOS)
+// PSOS root lacks the standard argc, argv command line parameters,
+// create dummy argc and argv in the "real" main  and pass to "user" main.
+// Ignore return value from user main as well.  NOTE: ACE_MAIN must be 
+// defined to give the return type as well as the name of the entry point
+#define main \
+ace_main_i (int, char *[]);               /* forward declaration */ \
+ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
+{ \
+  int argc = 1;                           /* dummy arg count */ \
+  char *argv[] = {""};                    /* dummy arg list */ \
+  ACE_Object_Manager ace_object_manager;  /* has program lifetime */ \
+  ace_main_i (argc, argv);                /* call user main, ignore result */ \
+} \
+int \
+ace_main_i
+#else
 #define main \
 ace_main_i (int, char *[]);                      /* forward declaration */ \
 int \
@@ -4549,6 +5047,7 @@ ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
 } \
 int \
 ace_main_i
+#endif	 /* ACE_PSOSIM */
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (UNICODE)
