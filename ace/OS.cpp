@@ -1012,7 +1012,21 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::sprintf");
 
-# if defined (ACE_HAS_VSWPRINTF)
+# if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+
+  // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
+  // maxlen argument. Since this method doesn't supply one, pass in
+  // the max possible length. If this isn't ok, use ACE_OS::snprintf().
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vswprintf (buf, ULONG_MAX, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+
+# elif defined (ACE_WIN32)
+  // Windows has vswprintf, but the signature is from the older ISO C
+  // standard. Also see ACE_OS::snprintf() for more info on this.
 
   int result;
   va_list ap;
@@ -1028,6 +1042,77 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   ACE_NOTSUP_RETURN (-1);
 
 # endif /* ACE_HAS_VSWPRINTF */
+}
+#endif /* ACE_HAS_WCHAR */
+
+int
+ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::snprintf");
+#if defined (ACE_HAS_SNPRINTF)
+  int result;
+  va_list ap;
+  va_start (ap, format);
+#  if defined (ACE_WIN32)
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnprintf (buf, maxlen, format, ap)),
+              int, -1, result);
+#  else
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsnprintf (buf, maxlen, format, ap)),
+              int, -1, result);
+#  endif /* ACE_WIN32 */
+  va_end (ap);
+  // In out-of-range conditions, C99 defines vsnprintf to return the number
+  // of characters that would have been written if enough space was available.
+  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
+  // -1. This method follows the C99 standard, but needs to guess at the
+  // value; uses maxlen + 1.
+  if (result == -1)
+    result = ACE_static_cast (int, (maxlen + 1));
+  return result;
+
+#else
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_UNUSED_ARG (format);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_SNPRINTF */
+}
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::snprintf");
+#if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR) || defined (ACE_WIN32)
+  int result;
+  va_list ap;
+  va_start (ap, format);
+#  if defined (ACE_WIN32)
+  // Microsoft's vswprintf() doesn't have the maxlen argument that
+  // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
+  // as a substitute, which does have the same signature as the UNIX98 one.
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnwprintf (buf, maxlen, format, ap)),
+              int, -1, result);
+#  else
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vswprintf (buf, maxlen, format, ap)),
+              int, -1, result);
+#  endif /* ACE_WIN32 */
+  va_end (ap);
+  // In out-of-range conditions, C99 defines vsnprintf to return the number
+  // of characters that would have been written if enough space was available.
+  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
+  // -1. This method follows the C99 standard, but needs to guess at the
+  // value; uses maxlen + 1.
+  if (result == -1)
+    result = ACE_static_cast (int, (maxlen + 1));
+  return result;
+
+#else
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_UNUSED_ARG (format);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_SNPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
 

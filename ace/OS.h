@@ -4787,6 +4787,7 @@ public:
 
   static int fprintf (FILE *fp, const char *format, ...);
   static int sprintf (char *buf, const char *format, ...);
+  static int snprintf (char *buf, size_t maxlen, const char *format, ...);
   static int vsprintf (char *buffer, const char *format, va_list argptr);
   static int printf (const char *format, ...);
 # if defined (ACE_HAS_WCHAR)
