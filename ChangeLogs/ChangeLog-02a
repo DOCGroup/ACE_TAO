@@ -1,3 +1,10 @@
+Fri Jan 19 10:50:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.cpp:
+          Use the Green Hills specific tricks *only* if we are compiling
+          under Green Hills, and only for the platform where they make
+          sense (in this case Win32).
+
 Thu Jan 18 23:21:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
