@@ -1,5 +1,5 @@
 // $Id$
-project(*server): orbsvcsexe, rtcorbaevent, strategies {
+project(*RTEvent_Server): orbsvcsexe, rtcorbaevent, strategies {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   includes += ../lib $(TAO_ROOT)/orbsvcs
@@ -9,7 +9,7 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies {
   }
 }
 
-project(*client): orbsvcsexe, rtcorbaevent, strategies {
+project(*RTEvent_Client): orbsvcsexe, rtcorbaevent, strategies {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   includes += ../lib $(TAO_ROOT)/orbsvcs
