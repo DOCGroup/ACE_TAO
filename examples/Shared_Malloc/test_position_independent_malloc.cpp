@@ -12,13 +12,13 @@
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
 #if 0
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC; 
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
 // Default address for memory-mapped files.
 static void *base_addr = ACE_DEFAULT_BASE_ADDR;
 
 #if 0
-// Some dummy data 
+// Some dummy data
 struct Dummy_Data
 {
   int i1_;
@@ -27,7 +27,7 @@ struct Dummy_Data
   // ACE_Based_Pointer<Dummy_Data> next_;
 };
 
-struct Long_Test 
+struct Long_Test
 {
   ACE_Based_Pointer<long> bpl_;
   long array_[10];
@@ -40,13 +40,13 @@ print (Dummy_Data *data)
 #if 0
   ACE_DEBUG ((LM_DEBUG,
               "<<<<\ni1_ = %d, i2_ = %d, i3_ = %d\n",
-              data->i1_, 
+              data->i1_,
               data->i2_,
               data->i3_));
 
   ACE_DEBUG ((LM_DEBUG,
               "i1_ = %d, i2_ = %d, i3_ = %d\n>>>>\n",
-              data->next_->i1_, 
+              data->next_->i1_,
               data->next_->i2_,
               data->next_->i3_));
 #else
@@ -135,19 +135,19 @@ parse_args (int argc, char *argv[])
        )
     {
       switch (c)
-	{
-	case 'a':
+        {
+        case 'a':
           // Override the default base address.
           base_addr = (void *) ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'T':
+          break;
+        case 'T':
           ACE_Trace::start_tracing ();
-	  break;
-	}
+          break;
+        }
     }
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   parse_args (argc, argv);
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
                           "dummy_lock",
                           &options),
                   1);
-  void *data = 0; 
+  void *data = 0;
 
   // This is the first time in, so we allocate the memory and bind it
   // to the name "foo".
@@ -189,7 +189,7 @@ main (int argc, char *argv[])
     {
       // @@ Add a new print statement...
       // print ((Dummy_Data *) data);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "data = %d\n",
                   *(long *) data));
       allocator->free (data);
@@ -209,8 +209,8 @@ template class ACE_Based_Pointer_Basic<Dummy_Data>;
 #pragma instantiate ACE_Based_Pointer_Basic<Dummy_Data>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #else
-int 
-main (int argc, char *argv[])
+int
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "sorry, example not finished yet\n"),
