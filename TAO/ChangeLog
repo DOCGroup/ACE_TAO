@@ -1,3 +1,8 @@
+Sun Nov  9 14:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/DynamicInterface/Makefile.bor:
+	  Added Messaging library
+
 Sun Nov  9 08:35:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/DynamicInterface.mpc:
@@ -10,7 +15,7 @@ Sun Nov  9 08:18:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
 	  Fixed a unused variable warning in _is_a () for abstract
-	  interfaces.  
+	  interfaces.
 
 Sun Nov  9 08:06:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -30,7 +35,7 @@ Sun Nov  9 07:53:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/Messaging_RT_PolicyC.h:
 	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
 	* tao/Messaging/TAO_ExtC.h:
-	  
+
 	  Fixed post.h inclusions in the above files. Looks like they got
 	  missed during regeneration. Thanks to Johnny for poitning this
 	  out.
