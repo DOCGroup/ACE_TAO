@@ -138,6 +138,11 @@ Echo_Client_Request_Interceptor::receive_reply (
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Return if it is a hard coded invocation
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
+
   CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
