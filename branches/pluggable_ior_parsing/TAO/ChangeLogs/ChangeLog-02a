@@ -1,3 +1,24 @@
+Mon Jul 17 10:41:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/IIOP_Profile.cpp: Updated the default port number to '2809'.
+	
+Fri Jul 14 15:11:19 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
+	  The implementation now supports multiple endpoints correctly.  
+	
+Fri Jul 14 10:57:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/IIOP_Profile.cpp: Made some format changes and added some
+	debug statements.
+
+Thu Jul 13 16:25:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/IIOP_Profile.cpp:
+	  Modified so that the default port is <683> and the default host
+	  is the local host instead of raising an exception when an empty
+	  host or port is passed.	
+
 Tue Jul 11 14:16:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/ior_corbaloc/corbaloc.idl: 
