@@ -637,90 +637,131 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
  ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
  int &found)
 {
+
   REFCOUNTED_HASH_RECYCLABLE_ADDRESS search_addr (remote_addr);
 
   // Try to find the address in the cache.  Only if we don't find it
   // do we create a new <SVC_HANDLER> and connect it with the server.
-  if (this->find (search_addr, entry) == -1)
+  while (this->find (search_addr, entry) != -1)
     {
-      // Set the flag
-      found = 0;
+      // We found a cached svc_handler.
+      // Get the cached <svc_handler>
+      sh = entry->int_id_.first ();
 
-      // Check the limit of handlers...
-      if ((this->max_size_ > 0) &&
-          (this->connection_cache_.current_size () >= this->max_size_))
+      // Is the connection clean?
+      int state_result= ACE::handle_ready (sh->peer ().get_handle (),
+                                           &ACE_Time_Value::zero,
+                                           1, // read ready
+                                           0, // write ready
+                                           1);// exception ready
+
+      if (state_result == 1)
         {
-          // Try to purge idle connections
-          if (this->purge_connections () == -1)
-            return -1;
-
-          // Check limit again.
-          if (this->connection_cache_.current_size () >= this->max_size_)
-            // still too much!
-            return -1;
-
-          // OK, we have room now...
+          // The connection was disconnected during idle.
+          // close the svc_handler down.
+          if (sh->close () == -1)
+            {
+              ACE_ASSERT (0);
+              return -1;
+            }
+          sh = 0;
+          // and rotate once more...
         }
+      else if ((state_result == -1) && (errno == ETIME))
+        {
+          // Found!!!
+          // Set the flag
+          found = 1;
 
-      // We need to use a temporary variable here since we are not
-      // allowed to change <sh> because other threads may use this
-      // when we let go of the lock during the OS level connect.
-      //
-      // Note that making a new svc_handler, connecting remotely,
-      // binding to the map, and assigning of the hint and recycler
-       // should be atomic to the outside world.
-      SVC_HANDLER *potential_handler = 0;
+          // Tell the <svc_handler> that it should prepare itself for
+          // being recycled.
+          if (this->prepare_for_recycling (sh) == -1)
+            {
+              ACE_ASSERT (0);
+              return -1;
+            }
 
-      // Create a new svc_handler
-      if (this->make_svc_handler (potential_handler) == -1)
+          return 0;
+        }
+      else  // some other return value or error...
+        {
+          ACE_ASSERT (0); // just to see it coming
+
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
+                      ACE_TEXT ("find_or_create_svc_handler_i - ")
+                      ACE_TEXT ("error polling server socket state.\n")));
+
+          return -1;
+        }
+    }
+
+  // Not found...
+
+  // Set the flag
+  found = 0;
+
+  // Check the limit of handlers...
+  if ((this->max_size_ > 0) &&
+      (this->connection_cache_.current_size () >= this->max_size_))
+    {
+      // Try to purge idle connections
+      if (this->purge_connections () == -1)
         return -1;
 
-      // Connect using the svc_handler.
-      if (this->cached_connect (potential_handler,
-                                remote_addr,
-                                timeout,
-                                local_addr,
-                                reuse_addr,
-                                flags,
-                                perms) == -1)
+      // Check limit again.
+      if (this->connection_cache_.current_size () >= this->max_size_)
+        // still too much!
+        return -1;
+
+      // OK, we have room now...
+    }
+
+  // We need to use a temporary variable here since we are not
+  // allowed to change <sh> because other threads may use this
+  // when we let go of the lock during the OS level connect.
+  //
+  // Note that making a new svc_handler, connecting remotely,
+  // binding to the map, and assigning of the hint and recycler
+  // should be atomic to the outside world.
+  SVC_HANDLER *potential_handler = 0;
+
+  // Create a new svc_handler
+  if (this->make_svc_handler (potential_handler) == -1)
+    return -1;
+
+  // Connect using the svc_handler.
+  if (this->cached_connect (potential_handler,
+                            remote_addr,
+                            timeout,
+                            local_addr,
+                            reuse_addr,
+                            flags,
+                            perms) == -1)
+    {
+      // Close the svc handler.
+      potential_handler->close (0);
+      return -1;
+    }
+  else
+    {
+      // Insert the new SVC_HANDLER instance into the cache.
+      if (this->connection_cache_.bind (search_addr,
+                                        potential_handler,
+                                        entry) == -1)
         {
-          // Close the svc handler.
+          // Close the svc handler and reset <sh>.
           potential_handler->close (0);
 
           return -1;
         }
-      else
-        {
-          // Insert the new SVC_HANDLER instance into the cache.
-          if (this->connection_cache_.bind (search_addr,
-                                            potential_handler,
-                                            entry) == -1)
-            {
-              // Close the svc handler and reset <sh>.
-              potential_handler->close (0);
 
-              return -1;
-            }
+      // Everything succeeded as planned. Assign <sh> to
+      // <potential_handler>.
+      sh = potential_handler;
 
-          // Everything succeeded as planned. Assign <sh> to
-          // <potential_handler>.
-          sh = potential_handler;
-
-          // Set the recycler and the recycling act
-          this->assign_recycler (sh, this, entry);
-        }
-    }
-  else // We found a cached svc_handler.
-    {
-      // Set the flag
-      found = 1;
-
-      // Get the cached <svc_handler>
-      sh = entry->int_id_.first ();
-
-      // Tell the <svc_handler> that it should prepare itself for
-      // being recycled.
-      this->prepare_for_recycling (sh);
+      // Set the recycler and the recycling act
+      this->assign_recycler (sh, this, entry);
     }
 
   return 0;

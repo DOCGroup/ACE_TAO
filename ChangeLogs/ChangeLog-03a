@@ -1,3 +1,9 @@
+Tue Jan  2 10:25:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.cpp: Added the patch provided by
+	  Edan Ayal <edan@bandwiz.com> for
+	  ACE_Bounded_Cached_Connect_Strategy::find_or_create_svc_handler_i (). 
+
 Mon Jan 01 16:35:00 2000  Michael Kircher  <Micahel.Kircher@mchp.siemens.de>
 
 	* tests/Reader_Writer_Test.cpp: Added a #ifdef to check for native
