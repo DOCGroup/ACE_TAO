@@ -142,6 +142,30 @@ ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
 
 // ****************************************************************
 
+ACE_INLINE 
+ACE_OutputCDR::~ACE_OutputCDR (void)
+{
+  if (this->start_.cont () != 0)
+    {
+      ACE_Message_Block::release (this->start_.cont ());
+      this->start_.cont (0);
+    }
+  this->current_ = 0;
+}
+
+ACE_INLINE void
+ACE_OutputCDR::reset (void)
+{
+  this->current_ = &this->start_;
+  ACE_CDR::mb_align (&this->start_);
+}
+
+ACE_INLINE size_t
+ACE_OutputCDR::total_length (void) const
+{
+  return ACE_CDR::total_length (this->begin (), this->end ());
+}
+
 // Decode the CDR stream.
 
 ACE_INLINE ACE_CDR::Boolean
@@ -441,6 +465,10 @@ ACE_OutputCDR::align_write_ptr (size_t alignment)
 }
 
 // ****************************************************************
+
+ACE_InputCDR::~ACE_InputCDR (void)
+{
+}
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_octet (ACE_CDR::Octet& x)
