@@ -2080,6 +2080,44 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
 }
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
+u_int
+ACE_TSS_Emulation::total_keys ()
+{
+  ACE_OS_Recursive_Thread_Mutex_Guard (
+    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
+                      ACE_OS_Object_Manager::preallocated_object[
+                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
+
+  return total_keys_;
+}
+
+int
+ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
+{
+  ACE_OS_Recursive_Thread_Mutex_Guard (
+    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
+                      ACE_OS_Object_Manager::preallocated_object[
+                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
+
+  if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
+    {
+# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
+      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
+# else
+      key = total_keys_;
+# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+
+      ++total_keys_;
+      return 0;
+    }
+  else
+    {
+      key = ACE_OS::NULL_key;
+      return -1;
+    }
+}
+
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 {
@@ -6287,31 +6325,43 @@ ACE_OS_Object_Manager::init (void)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
-        ACE_thread_mutex_t *,
-        ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
+            ACE_thread_mutex_t *,
+            ACE_OS_Object_Manager::preallocated_object[
+              ACE_OS_MONITOR_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT("%p\n"),
-                        ASYS_TEXT("ACE_OS_Object_Manager::init (1)")));
+              ASYS_TEXT("%p\n"),
+              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_OS_MONITOR_LOCK")));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-        ACE_recursive_thread_mutex_t *,
-        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) !=
-        0)
+            ACE_recursive_thread_mutex_t *,
+            ACE_OS_Object_Manager::preallocated_object[
+              ACE_TSS_CLEANUP_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT("%p\n"),
-                        ASYS_TEXT("ACE_OS_Object_Manager::init (2)")));
-#   if defined (ACE_HAS_TSS_EMULATION) && \
-       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+              ASYS_TEXT("%p\n"),
+              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_CLEANUP_LOCK")));
+#   if defined (ACE_HAS_TSS_EMULATION)
+          ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
+                                     ACE_TSS_KEY_LOCK)
+          if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
+            ACE_recursive_thread_mutex_t *,
+            ACE_OS_Object_Manager::preallocated_object[
+              ACE_TSS_KEY_LOCK])) != 0)
+            ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT("%p\n"),
+              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_KEY_LOCK")));
+#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-          ACE_recursive_thread_mutex_t *,
-          ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
+            ACE_recursive_thread_mutex_t *,
+            ACE_OS_Object_Manager::preallocated_object[
+              ACE_TSS_BASE_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT("%p\n"),
-                        ASYS_TEXT("ACE_OS_Object_Manager::init (3)")));
-#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+              ASYS_TEXT("%p\n"),
+              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_BASE_LOCK")));
+#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
 
           // Open Winsock (no-op on other platforms).
@@ -6375,8 +6425,8 @@ ACE_OS_Object_Manager::fini (void)
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("ACE_OS_Object_Manager::fini (1)")));
+            ASYS_TEXT("%p\n"),
+            ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_OS_MONITOR_LOCK")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -6386,25 +6436,39 @@ ACE_OS_Object_Manager::fini (void)
        ACE_recursive_thread_mutex_t *,
        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("ACE_OS_Object_Manager::fini (2)")));
+            ASYS_TEXT("%p\n"),
+            ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_CLEANUP_LOCK")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
-#   if defined (ACE_HAS_TSS_EMULATION) && \
-       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-#   if !defined (__Lynx__)
-      // LynxOS 3.0.0 has problems with this after fork.
-      if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-        ACE_recursive_thread_mutex_t *,
-        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
+#   if defined (ACE_HAS_TSS_EMULATION)
+#     if !defined (__Lynx__)
+        // LynxOS 3.0.0 has problems with this after fork.
+        if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
+          ACE_recursive_thread_mutex_t *,
+          ACE_OS_Object_Manager::preallocated_object[
+            ACE_TSS_KEY_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("ACE_OS_Object_Manager::fini (3)")));
-#   endif /* ! __Lynx__ */
+              ASYS_TEXT("%p\n"),
+              ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_KEY_LOCK")));
+#     endif /* ! __Lynx__ */
+      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
+                                         ACE_TSS_KEY_LOCK)
+#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#       if !defined (__Lynx__)
+          // LynxOS 3.0.0 has problems with this after fork.
+          if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
+            ACE_recursive_thread_mutex_t *,
+            ACE_OS_Object_Manager::preallocated_object[
+              ACE_TSS_BASE_LOCK])) != 0)
+            ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT("%p\n"),
+              ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_BASE_LOCK")));
+#       endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
-#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }

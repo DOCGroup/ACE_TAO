@@ -6654,10 +6654,12 @@ public:
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_OS_MONITOR_LOCK,
       ACE_TSS_CLEANUP_LOCK,
-#   if defined (ACE_HAS_TSS_EMULATION) && \
-       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   if defined (ACE_HAS_TSS_EMULATION)
+      ACE_TSS_KEY_LOCK,
+#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
       ACE_TSS_BASE_LOCK,
-#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#   endif /* ACE_HAS_TSS_EMULATION */
 # else
       // Without ACE_MT_SAFE, There are no preallocated objects.  Make
       // sure that the preallocated_array size is at least one by
