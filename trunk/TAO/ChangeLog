@@ -1,7 +1,19 @@
+Fri Sep 24 11:25:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+
+          Removed the #if 0'ed main() from these cpp files and added exename
+          settings to the necessary projects in the mpc file.
+
 Fri Sep 24 11:13:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Sequence_Unit_Tests/allocation_traits.hpp:
-        
+
           Changed line with reinterpret_cast<> in
           unbounded_reference_allocation_traits::allocbuf() to be
           more palatable for MSVC 7.1. Thanks to Carlos O'Ryan
@@ -10,7 +22,7 @@ Fri Sep 24 11:13:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Sep 24 10:08:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/RTP.cpp:
-        
+
           Added statc_cast<> to the last argument passed to the
           RTP_Packet constructor, to avoid loss-of-data warnings
           on MSVC 7.1.
@@ -18,7 +30,7 @@ Fri Sep 24 10:08:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Sep 24 09:38:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/CORBALOC_Parser.cpp:
-        
+
           Added #include of ace/os_include/os_netdb.h to pull in define of
           MAXHOSTNAMELEN for Windows platforms.
 
@@ -138,10 +150,10 @@ Fri Sep 24 08:58:40 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
 Fri Sep 24 07:12:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
-	  Add missing return statement to allocbuf() for bounded strings
-	  of reference-like types.  Since this code is not used yet it is
-	  quite cool that gcc-3.2.3 was able to pick the problem.
+        * tests/Sequence_Unit_Tests/allocation_traits.hpp:
+          Add missing return statement to allocbuf() for bounded strings
+          of reference-like types.  Since this code is not used yet it is
+          quite cool that gcc-3.2.3 was able to pick the problem.
 
 Fri Sep 24 10:18:24 2004    <ops@iki.fi>
 
