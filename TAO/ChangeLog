@@ -1,3 +1,27 @@
+Mon Nov 11 22:33:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile (TAO_LB_LIBS):
+
+	  Corrected order of libraries linked to the server binary.
+
+	  (client):
+
+	  Do not link server-side libraries.  They are completely
+	  unnecessary for this client binary.
+
+	* orbsvcs/tests/Makefile.bor (DIRS):
+
+	  Added "LoadBalancing" directory to the list of directories to
+	  recurse into.
+
+	* orbsvcs/tests/LoadBalancing/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+
+	  New Borland C++ Makefiles for this test.
+
 Mon Nov 11 20:31:18 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.cpp (TAO_LB_run_load_manager):
