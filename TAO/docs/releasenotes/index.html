@@ -165,6 +165,9 @@ Definition Language Compiler (CIDLC)</a></li>
 <a href="#localobject">Local Interfaces</a></li>
 
 <li>
+<a href="#sciop">SCIOP Support in TAO</a></li>
+
+<li>
 <a href="TODO.html">Our TODO list</a></li>
 </ul>
 </td>
@@ -357,7 +360,7 @@ Include files are handled properly. So are the definitions used inside
 the include files that are used in the currently parsed files.</li>
 
 <li>
-Generates C++ stubs and skeletons that use TAO's 
+Generates C++ stubs and skeletons that use TAO's
 <a href="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">
 interpretive IIOP protocol engine</a>.</li>
 
@@ -571,7 +574,7 @@ is complete, with the exception of support for the 'import' keyword.</li>
 
 <li>
 Generated code for constants defined in a module is now inlined
-(value is assigned in the header file) by default, enabling such 
+(value is assigned in the header file) by default, enabling such
 constants to be referenced by name as array bounds, etc. either in
 subsequent generated code or in application code. However, this inlining causes
 a problem with some compilers when using pre-compiled headers, so the
@@ -2268,6 +2271,28 @@ For more information on using the local interfaces, please refers to Section
 and our short <a href="../LocalObject.html">guideline</a> on implementing
 local objects.
 <br>
+
+
+<hr>
+<h3>
+<a NAME="sciop"></a>SCIOP Support in TAO</h3>
+Point of contact: <a href="mailto:gthaker@atl.lmco.com">Gautam H. Thaker</a>, Lockheed Martin Advanced Technology Labs, Cherry Hill, NJ.
+
+
+<p>TAO has support for OMG's GIOP SCTP Protocol mapping
+<a href=http://www.omg.org/cgi-bin/doc?ptc/2003-08-20>spec</a>
+except that SCIOP protocol properties are not yet supported. Extensive
+information about SCTP and how it may be used from both ACE as well
+as from TAO is available in several README files
+in $ACE_ROOT/performance-tests/SCTP/ directory. ACE/TAO's SCTP support
+can be used either with Linux's OpenSS7 SCTP implementation or with
+Linux's LKSCTP SCTP implementation.
+<p>
+A paper describing our implementation and measured results in available
+<a href=http://www.atl.external.lmco.com/projects/QoS/documents/DOA2003_97_Thaker.pdf>
+here
+</a>.
+
 <hr>
 <h3>
 <a NAME="CORBA-conformance"></a>CORBA Standards Conformance</h3>
