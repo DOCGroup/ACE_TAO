@@ -197,12 +197,12 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       CORBA::ULong n = this->event_size_;
 
       ECM_IDLData::Info info;
-      info.mobile_name = CORBA::string_copy ("test");
+      info.mobile_name = CORBA::string_dup ("test");
       info.mobile_speed = 1;
       info.trajectory.length (n);
 
       ECM_Data other;
-      other.description = CORBA::string_copy ("some data");
+      other.description = CORBA::string_dup ("some data");
 
       for (CORBA::ULong j = 0; j < n; ++j)
         {

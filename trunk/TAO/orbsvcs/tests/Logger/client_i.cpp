@@ -31,34 +31,34 @@ Logger_Client::init (int argc, char *argv[])
     {
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
-			      argv,
-			      "internet",
-			      TAO_TRY_ENV);
+                              argv,
+                              "internet",
+                              TAO_TRY_ENV);
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "\nTrying to initialize orb\n"));
-      
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nTrying to initialize orb\n"));
+
       TAO_CHECK_ENV;
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "\nOrb initialized successfully\n"));
-    
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nOrb initialized successfully\n"));
+
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
 
       // Initialize the naming service
       if (this->init_naming_service (TAO_TRY_ENV) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize naming"
-			   "services.\n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize naming"
+                           "services.\n"),
+                          -1);
       // Create the logger instances
       if (this->init_loggers (TAO_TRY_ENV) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize logger"
-			   "instances.\n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize logger"
+                           "instances.\n"),
+                          -1);
     }
   TAO_CATCHANY
     {
@@ -66,9 +66,9 @@ Logger_Client::init (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
-  
+
   return 0;
-  
+
 }
 
 int
@@ -77,54 +77,54 @@ Logger_Client::init_naming_service (CORBA::Environment &env)
   // Initialize the naming services
   if (my_name_client_.init (orb_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to initialize "
-		       "the TAO_Naming_Client. \n"),
-		      -1);
-  
+                       " (%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
+                      -1);
+
   // Resolve an instance of the Logger_Factory
   CosNaming::Name factory_name (1);
   factory_name.length (1);
   factory_name[0].id = CORBA::string_dup ("logger_factory");
-  
+
   CORBA::Object_var factory_ref =
     my_name_client_->resolve (factory_name,
-			      env);
+                              env);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"\nFactory_ref resolved\n"));
-      
+                "\nFactory_ref resolved\n"));
+
   if (CORBA::is_nil (factory_ref.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "resolved to nil object"),
-		      -1);
+                       "resolved to nil object"),
+                      -1);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"\nLogger_Factory resolved\n"));
+                "\nLogger_Factory resolved\n"));
 
   // Narrow the factory and check the success
   factory_ =
     Logger_Factory::_narrow (factory_ref.in (),
-			     env);
+                             env);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"\nFactory narrowed\n"));
+                "\nFactory narrowed\n"));
   if (CORBA::is_nil (factory_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "narrow returned nil"),
-		      -1);
+                       "narrow returned nil"),
+                      -1);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"\nLogger_Factory narrowed\n"));
+                "\nLogger_Factory narrowed\n"));
 
-  // If debugging, get the factory's IOR 
+  // If debugging, get the factory's IOR
   CORBA::String_var str =
     orb_->object_to_string (factory_.in (),
-			    env);
+                            env);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"The factory IOR is <%s>\n",
-		str.in ()));   
+                "The factory IOR is <%s>\n",
+                str.in ()));
   return 0;
 }
 
@@ -134,23 +134,23 @@ Logger_Client::init_loggers (CORBA::Environment &env)
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
   this->logger_1_ = factory_->make_logger ("key1",
-					   env);
+                                           env);
   this->logger_2_ = factory_->make_logger ("key2",
-					   env);
-  
+                                           env);
+
   if (CORBA::is_nil (this->logger_1_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "nil logger1"),
-		      -1);
-  
+                       "nil logger1"),
+                      -1);
+
   if (CORBA::is_nil (this->logger_2_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "nil logger2"),
-		      -1);
+                       "nil logger2"),
+                      -1);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Created two loggers\n"));      
+                "Created two loggers\n"));
   return 0;
 }
 
@@ -191,7 +191,7 @@ Logger_Client::run (void)
       // Change the verbosity.
       this->logger_1_->verbosity (Logger::VERBOSE_LITE, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       // Log the first Log_Record
       this->logger_1_->log (rec1, TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -232,7 +232,7 @@ Logger_Client::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-			   "\n"
+                           "\n"
                            "    -d: increase debug level\n",
                            this->argv_ [0]),
                           -1);
@@ -249,7 +249,7 @@ Logger_Client::init_record (Logger::Log_Record &newrec,
                             const char *msg)
 {
   // Copy the message data into newrec.
-  newrec.msg_data = CORBA::string_copy (msg);
+  newrec.msg_data = CORBA::string_dup (msg);
 
   // Assign the log priority.
   newrec.type = lp;

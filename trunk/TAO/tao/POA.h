@@ -488,9 +488,9 @@ public:
   static void decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
                                          const char *str);
 
-  static CORBA::String ObjectId_to_string (const PortableServer::ObjectId &id);
+  static char* ObjectId_to_string (const PortableServer::ObjectId &id);
 
-  static CORBA::WString ObjectId_to_wstring (const PortableServer::ObjectId &id);
+  static CORBA::WChar* ObjectId_to_wstring (const PortableServer::ObjectId &id);
 
   static PortableServer::ObjectId *string_to_ObjectId (const char *id);
 

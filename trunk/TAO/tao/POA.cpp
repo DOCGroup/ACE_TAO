@@ -1913,8 +1913,8 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 #if !defined (TAO_NO_IOR_TABLE)
   // Add the object key prefix.
   ACE_OS::memcpy (&buffer[starting_at],
-		  &objectkey_prefix[0],
-		  TAO_OBJECTKEY_PREFIX_SIZE);
+                  &objectkey_prefix[0],
+                  TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 #endif /* TAO_NO_IOR_TABLE */
@@ -2135,7 +2135,7 @@ CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
   // Create space
-  CORBA::WString string = CORBA::wstring_alloc (id.length ());
+  CORBA::WChar* string = CORBA::wstring_alloc (id.length ());
 
   // Copy the data
   ACE_OS::memcpy (string, id.get_buffer (), id.length () * sizeof (CORBA::WChar));
