@@ -125,6 +125,7 @@ protected:
   // TCP configuration for this connection.
 
 private:
+
   virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
                               ACE_Time_Value *max_wait_time = 0);
   // Will not be called at all. As a matter of fact should not be

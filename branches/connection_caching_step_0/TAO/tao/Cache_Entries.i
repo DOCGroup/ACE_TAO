@@ -3,14 +3,16 @@
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (void)
-  :handle_ ()
+  :handle_ (),
+   handler_ (0)
 {
-
 }
 
 ACE_INLINE
-TAO_Cache_IntId::TAO_Cache_IntId (ACE_HANDLE &handle)
-  :handle_ (handle)
+TAO_Cache_IntId::TAO_Cache_IntId (ACE_HANDLE &handle,
+                                  TAO_Connection_Handler *handler)
+  :handle_ (handle),
+   handler_ (handler)
 {
 }
 

@@ -50,7 +50,8 @@ public:
   TAO_Cache_IntId (void);
   // Constructor.
 
-  TAO_Cache_IntId (ACE_HANDLE &handle);
+  TAO_Cache_IntId (ACE_HANDLE &handle,
+                   TAO_Connection_Handler *handler);
   // Constructor.
 
   TAO_Cache_IntId (const TAO_IntId & rhs);
@@ -59,10 +60,12 @@ public:
   ~TAO_Cache_IntId (void);
   // Destructor.
 
-
 private:
   ACE_HANDLE handle_;
   // <handle> in the cache
+
+  TAO_Connection_Handler *handler_;
+  // The connection handler that needs to be cached.
 
   // @@ Need to add properties that need to be associated with this
   // connection

@@ -91,6 +91,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Profile \
   Endpoint \
   Connector_Registry \
+  Connection_Handler \
   Acceptor_Registry \
   Protocol_Factory \
   Acceptor_Filter \
