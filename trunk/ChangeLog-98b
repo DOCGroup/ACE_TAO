@@ -1,3 +1,12 @@
+Mon Nov 29 13:16:53 EST 1998  James CE Johnson  <jcej@lads.com>
+
+	* docs/tutorials/001/logger.h: 
+	* docs/tutorials/001/page04.html: 
+	* docs/tutorials/003/client.cpp:
+	* docs/tutorials/003/page01.html: 
+	Added a blurb about the additional parameters to the recv(),
+	recv_n(), send() and send_n() method calls of ACE_SOCK_Stream.
+
 Sun Nov 29 22:14:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i,cpp (exit): with ACE_HAS_NON_STATIC_OBJECT_MANAGER,
