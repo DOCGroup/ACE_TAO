@@ -24,10 +24,10 @@ TCF_Loader::TCF_Loader (void)
 }
 
 CORBA::Object_ptr
-TCF_Loader::create_object (CORBA::ORB_ptr orb,
+TCF_Loader::create_object (CORBA::ORB_ptr,
                            int,
                            char * [],
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
   CORBA::Object_ptr obj;
