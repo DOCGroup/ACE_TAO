@@ -9,7 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lTAO
+LDLIBS     =  -lTAO -lm
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = server.cpp \
@@ -35,11 +35,11 @@ VBIN = $(BIN:%=%$(VAR))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 
 # Local modifications to variables imported by includes above.
 #CPPFLAGS += -DACE_NLOGGING
@@ -47,7 +47,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 #CXX := purify $(CXX)
 ##DCFLAGS = -g
 OCFLAGS =
-LDFLAGS += -L$(TAO_ROOT)/tao -lposix4
+LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
 
 .PRECIOUS: $(IDL_SRC)
