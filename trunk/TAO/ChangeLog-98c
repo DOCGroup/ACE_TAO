@@ -5,6 +5,13 @@ Sat Aug  8 21:28:33 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Exception.cpp: 
 	  Removed superflous operator new and operator delete.
 
+	* docs/releasenotes/TODO.html: 
+	  More updates.
+
+	* docs/configurations.html: 
+	  Added a few hints on when to use ORB-per-thread and what the
+	  consequences are.
+
 Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html: 

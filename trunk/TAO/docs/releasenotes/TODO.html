@@ -29,6 +29,14 @@
     </CENTER>
 
     <UL>
+      <LI>Move the EC specific things out of this file to the ec.html
+	file.
+      </LI>
+
+      <LI>The IDL compiler gets confused with paths in NT, this may be
+	due to my changes to report errors correctly.
+      </LI>
+
       <LI>The do_static_call() and do_dynamic_call() methods should
 	use an array of void* (in the first case static and generated
 	by the IDL compiler);
@@ -371,6 +379,20 @@
 	Server_Request does not own it....  In our opinion (Carlos and
 	Irfan) we need not worry about this until we find a use case for
 	it.
+      </LI>
+
+      <LI>
+	The current implementation is optimal for hard-real-time
+	applications, but in some cases it may be desirable to follow
+	the normal execution path yet minize costs for collocated
+	calls.
+	An example would include an application that activates the
+	objects on demand.
+	It would be interesting to have a half-collocated stub
+	implementation, that will marshall the request and then
+	invokes the normal path on the "server" side, but without
+	crossing the kernel boundary. Ideally even the serialization
+	could be minimized or avoided.
       </LI>
     </UL>
 
