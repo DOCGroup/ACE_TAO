@@ -70,6 +70,8 @@
 
 // Compiler supports template specialization.
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
+// ... and uses the template<> syntax
+#  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 
 // Preprocessor needs some help with data types
 #  if defined (__LP64__)

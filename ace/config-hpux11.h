@@ -215,15 +215,28 @@
 #define ACE_HAS_TLI_PROTOTYPES
 // HP-UX 11.00 (at least at initial releases) has some busted macro defs
 #define ACE_HAS_BROKEN_XTI_MACROS
+// HP-UX 11 conforms to the XPG4 spec, which ACE calls broken for the
+// errmsg not being const...
+#define ACE_HAS_BROKEN_T_ERROR
 
 /////////////////////////////////////////////////////////////////////////
 //
 // Threads information.
 //
 // Use of threads is controlled by the 'threads' argument to make.  See
-// include/makeinclude/platform_hpux_aCC.GNU for details.
+// include/makeinclude/platform_hpux_aCC.GNU for details. If it's not set,
+// the default is to enable it, since kernel threads are always available
+// on HP-UX 11, as opposed to 10.x where it was optional software.
 //
 ////////////////////////////////////////////////////////////////////////
+
+#if defined (ACE_HAS_THREADS)
+#  if (ACE_HAS_THREADS == 0)
+#    undef ACE_HAS_THREADS
+#  endif /* ACE_HAS_THREADS == 0 */
+#else
+#  define ACE_HAS_THREADS
+#endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_THREADS)
 
