@@ -9,11 +9,12 @@
 //    test_callback.cpp
 //
 // = DESCRIPTION
-//     This program tests the Log_Msg abstraction wrt writing to user
-//     defined callback objects.
+//     This program tests the <ACE_Log_Msg> class wrt writing to user
+//     defined callback objects.  In particular, it tests to make sure
+//     that nested callbacks don't deadlock.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 // 
 // ============================================================================
 
@@ -24,20 +25,53 @@ ACE_RCSID(Log_Msg, test_callback, "$Id$")
 class Logger : public ACE_Log_Msg_Callback
 {
 public:
+  Logger (int be_recursive = 1);
+  // Constructor sets whether we're testing "recursive" callback
+  // logging!
+
   void log (ACE_Log_Record &log_record);
   // Logging callback
 
+  void verbose (int be_verbose);
+
+private:
   int verbose_logging_;
-  // Flag for verbose logging
+  // Flag for testing verbose logging.
+
+  int recursive_;
+  // Flag for testing recursive callback logging.
 };
+
+void
+Logger::verbose (int be_verbose)
+{
+  this->verbose_logging_ = be_verbose;
+}
+
+Logger::Logger (int be_recursive)
+  : recursive_ (be_recursive)
+{
+}
 
 void
 Logger::log (ACE_Log_Record &log_record)
 {
+  int use_log_msg = 0;
+  if (this->recursive_)
+    {
+      this->recursive_ = 0;
+      use_log_msg = 1;
+    }
+
   if (!this->verbose_logging_)
     {
-      ACE_OS::printf ("Logger::log -> %s\n",  
-                      log_record.msg_data ());
+      if (use_log_msg)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Logger::log->%s\n",
+                    log_record.msg_data ()));
+      else
+        ACE_OS::printf ("Recursive Logger callback = %s\n",  
+                        log_record.msg_data ());
     }
   else
     {
@@ -45,13 +79,21 @@ Logger::log (ACE_Log_Record &log_record)
       int result = log_record.format_msg (ACE_LOG_MSG->local_host (), 
                                           ACE_LOG_MSG->flags (), 
                                           verbose_msg);
-
       if (result == 0)
         {
-          ACE_OS::printf ("Logger::log -> %s\n",  
-                          verbose_msg);
-        }      
+          if (use_log_msg)
+            ACE_DEBUG ((LM_DEBUG, 
+                        "Logger::log->%s\n",  
+                        verbose_msg));
+          else
+            ACE_OS::printf ("Recursive Logger callback = %s\n",
+                            verbose_msg);
+        }
     }
+
+  // Cleanup on the way out.
+  if (use_log_msg)
+    this->recursive_ = 1;
 }
 
 int
@@ -59,56 +101,59 @@ main (int, char *[])
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
-              "first message\n"));
+              "(%t) first message\n"));
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
 
   // This message should not show up anywhere.
   ACE_DEBUG ((LM_DEBUG,
-              "second message\n"));
+              "(%t) second message\n"));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::MSG_CALLBACK);
 
   // This message should not show up anywhere since no callback object
   // has been specified.
   ACE_DEBUG ((LM_DEBUG,
-              "third message\n"));
+              "(%t) third message\n"));
 
-  // Create a callback object.
+  // Create a callback object and make it "verbose".
   Logger logger;
-  logger.verbose_logging_ = 1;
+  logger.verbose (1);
 
   // Set the callback object.
   ACE_LOG_MSG->msg_callback (&logger);
 
-  // This message should show up in the logger.
+  // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
-              "forth message\n"));
+              "(%t) forth message\n"));
   
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 
-  // This message should show up in the logger (somewhat loudly).
+  // This message should show up via the Logger callback (somewhat
+  // verbosely).
   ACE_DEBUG ((LM_DEBUG,
-              "fifth message\n"));
+              "(%t) fifth message\n"));
   
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE);
 
-  // This message should show up in the logger (really loudly).
+  // This message should show up via the Logger callback (really
+  // verbosely).
   ACE_DEBUG ((LM_DEBUG,
-              "sixth message\n"));
+              "(%t) sixth message\n"));
   
-  logger.verbose_logging_ = 0;
+  logger.verbose (0);
 
-  // This message should show up in the logger (not loudly).
+  // This message should show up via the Logger callback (not
+  // verbosely).
   ACE_DEBUG ((LM_DEBUG,
-              "seventh message\n"));
+              "(%t) seventh message\n"));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-  // This message should show up in stderr and the logger. The one
-  // from the logger will not be loud, but the one from stderr should
-  // be loud.
+  // This message should show up in stderr and the Logger callback.
+  // The one from the Logger callback will not be verbose, but the one
+  // from stderr should be verbose.
   ACE_DEBUG ((LM_DEBUG,
-              "eight message\n"));
+              "(%t) eight message\n"));
   return 0;
 }

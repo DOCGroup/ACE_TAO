@@ -99,7 +99,8 @@ typedef unsigned __int64 ACE_UINT64;
 
 // Platform supports POSIX timers via timestruc_t.
 //define ACE_HAS_POSIX_TIME
-#define ACE_LACKS_STRPTIME
+#define ACE_HAS_STRPTIME
+#define ACE_LACKS_NATIVE_STRPTIME
 
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
