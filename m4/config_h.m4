@@ -745,9 +745,6 @@ AH_TEMPLATE([ACE_HAS_SIGNAL_OBJECT_AND_WAIT],
 [Platform supports the Win32 SignalObjectAndWait() function (WinNT
    4.0 and beyond).])
 
-AH_TEMPLATE([ACE_HAS_SIGNAL_SAFE_OS_CALLS],
-[Automatically restart OS system calls when EINTR occurs])
-
 AH_TEMPLATE([ACE_HAS_SIGSUSPEND],[Platform has the sigsuspend() system call])
 
 AH_TEMPLATE([ACE_HAS_SIGTIMEDWAIT],

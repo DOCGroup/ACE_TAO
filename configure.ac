@@ -5916,14 +5916,6 @@ dnl
 dnl SECTION 13: checks for system services
 dnl
 
-dnl Do not run this test if we are using a cross-compiler.
-if test "$cross_compiling" != yes; then
-  AC_SYS_RESTARTABLE_SYSCALLS
-  if test "$ac_cv_sys_restartable_syscalls" = yes; then
-    AC_DEFINE([ACE_HAS_SIGNAL_SAFE_OS_CALLS])
-  fi
-fi
-
 dnl Check if platform defines ctime() as a macro
 ACE_CACHE_CHECK([for ctime() macro],
   [ace_cv_feature_have_ctime_macro],
