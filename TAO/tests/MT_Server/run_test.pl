@@ -15,6 +15,7 @@ $iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
 ACE::checkForTarget($cwd);
 
+unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -ORBsvcconf " . "$cwd$DIR_SEPARATOR" . "server.conf"
                        . " -o $iorfile"
