@@ -1,10 +1,29 @@
+Wed Jun 20 15:36:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Project.dsw:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.conf:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+	* performance-tests/RTCorba/Multiple_Endpoints/Makefile:
+
+	  Removed test. The feature that it was testing (which was deprecated)
+	  has now been removed from TAO as a result of the RTCORBA
+	  subsetting.
+
 Wed Jun 20 14:22:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/pre_invoke_cs.h:
         * TAO_IDL/be/pre_invoke_cs.cpp:
 
-          When allocating memory for an out parameter in an operation, 
-          fixed the generated ACE_NEW_RETURN macro to return something 
+          When allocating memory for an out parameter in an operation,
+          fixed the generated ACE_NEW_RETURN macro to return something
           other than 0 for operation return types of fixed size structs.
           The other case for which this applies is an operation return
           type of enum, which was fixed some time ago. Thanks to
