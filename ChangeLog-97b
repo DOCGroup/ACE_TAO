@@ -1,5 +1,9 @@
 Fri Oct 10 15:21:07 1997    <irfan@TWOSTEP>
 
+	* examples/Connection/non_blocking/CPP-connector.cpp
+ 	  (disconnecting): Remove this method. It was not being used. Also
+ 	  rewrote some parts of handle_close to make the code simple.		  
+
 	* ace/Connector.cpp (create_AST): The register_handler() method
  	  now needs to explicitly be given the handle to wait on. This is
  	  because the get_handle() method of Connector has been

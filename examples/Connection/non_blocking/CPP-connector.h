@@ -26,7 +26,6 @@ protected:
   // = These methods implement the State pattern.
   int idle (void);
   int connected (void);
-  int disconnecting (void);
   int stdio (void);
 
   int (Peer_Handler<ACE_PEER_STREAM_2>::*action_) (void);
