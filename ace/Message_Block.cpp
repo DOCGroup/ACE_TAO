@@ -765,9 +765,23 @@ ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy ()
 }
 // dtor
 
-///////////////////////////////////////
+
+int 
+ACE_Dynamic_Message_Strategy::drop_message (ACE_Message_Block * &mb) 
+{
+  ACE_UNUSED_ARG (mb);
+
+  return 0;
+}
+  // cleanup policy for a message that is later than can be represented,
+  // and is being dropped from a dynamic message queue (this is a default
+  // method definition that does nothing, which derived classes may override
+  // to do things like deleting the message block object, etc).
+
+
+/////////////////////////////////////////
 // class ACE_Deadline_Message_Strategy //
-///////////////////////////////////////
+/////////////////////////////////////////
 
 ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (u_long static_bit_field_mask,
                                                                u_long static_bit_field_shift,
@@ -815,7 +829,9 @@ ACE_Deadline_Message_Strategy::update_priority (ACE_Message_Block & mb,
 
     if (priority > max_late)
     {
-      priority = max_late;
+      // if the message is later than can be represented, its priority is 0.
+      mb.msg_priority (0);
+      return 0;
     }
   }
   else
@@ -863,6 +879,45 @@ ACE_Deadline_Message_Strategy::is_beyond_late (const ACE_Message_Block & mb,
   return (priority > max_late) ? 1 : 0;
 }
   // returns true if the message is later than can can be represented  
+
+/////////////////////////////////////////////////
+// class ACE_Deadline_Cleanup_Message_Strategy //
+/////////////////////////////////////////////////
+
+ACE_Deadline_Cleanup_Message_Strategy:: ACE_Deadline_Cleanup_Message_Strategy (
+   u_long static_bit_field_mask,
+   u_long static_bit_field_shift,
+   u_long pending_threshold,
+   u_long dynamic_priority_max,
+   u_long dynamic_priority_offset)
+
+  : ACE_Deadline_Message_Strategy (static_bit_field_mask,
+                                   static_bit_field_shift,
+                                   pending_threshold,
+                                   dynamic_priority_max,
+                                   dynamic_priority_offset)
+{
+}
+// ctor
+  
+ACE_Deadline_Cleanup_Message_Strategy::~ACE_Deadline_Cleanup_Message_Strategy ()
+{
+}
+// dtor
+
+int 
+ACE_Deadline_Cleanup_Message_Strategy::drop_message (ACE_Message_Block * &mb) 
+{
+  // free the memory
+  delete mb;
+
+  // zero passed pointer to let caller know it's gone
+  mb = 0;
+
+  return 0;
+}
+  // deletion cleanup policy for a message that is later than can be 
+  // represented, and is being dropped from a dynamic message queue
 
 ///////////////////////////////////////
 // class ACE_Laxity_Message_Strategy //
@@ -916,7 +971,9 @@ ACE_Laxity_Message_Strategy::update_priority (ACE_Message_Block & mb,
 
     if (priority > max_late)
     {
-      priority = max_late;
+      // if the message is later than can be represented, its priority is 0.
+      mb.msg_priority (0);
+      return 0;
     }
   }
   else
@@ -965,6 +1022,49 @@ ACE_Laxity_Message_Strategy::is_beyond_late (const ACE_Message_Block & mb,
   return (priority > max_late) ? 1 : 0;
 }
   // returns true if the message is later than can can be represented  
+
+/////////////////////////////////////////////////
+// class ACE_Laxity_Cleanup_Message_Strategy //
+/////////////////////////////////////////////////
+
+ACE_Laxity_Cleanup_Message_Strategy:: ACE_Laxity_Cleanup_Message_Strategy (
+   u_long static_bit_field_mask,
+   u_long static_bit_field_shift,
+   u_long pending_threshold,
+   u_long dynamic_priority_max,
+   u_long dynamic_priority_offset)
+
+  : ACE_Laxity_Message_Strategy (static_bit_field_mask,
+                                 static_bit_field_shift,
+                                 pending_threshold,
+                                 dynamic_priority_max,
+                                 dynamic_priority_offset)
+{
+}
+// ctor
+  
+ACE_Laxity_Cleanup_Message_Strategy::~ACE_Laxity_Cleanup_Message_Strategy ()
+{
+}
+// dtor
+
+int 
+ACE_Laxity_Cleanup_Message_Strategy::drop_message (ACE_Message_Block * &mb) 
+{
+  // free the memory
+  delete mb;
+
+  // zero passed pointer to let caller know it's gone
+  mb = 0;
+
+  return 0;
+}
+  // deletion cleanup policy for a message that is later than can be 
+  // represented, and is being dropped from a dynamic message queue
+
+
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These specializations aren't needed for the ACE library because
