@@ -25,7 +25,7 @@ Context_Test::svc (void)
   while (!this->done ())
     {
       ACE_Thread::yield ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
     }
 
   /* NOTREACHED */

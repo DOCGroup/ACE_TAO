@@ -31,7 +31,7 @@ Mutex_Test::svc (void)
   while (!this->done ())
     {
       mutex.acquire ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
       buffer++;
       mutex.release ();
     }
