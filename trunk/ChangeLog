@@ -1,3 +1,14 @@
+Tue Jul 10 08:26:57 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Log_Msg_UNIX_Syslog.cpp:
+
+          Added a macro, ACE_LACKS_SETLOGMASK, for platforms that have
+          syslog, but don't have setlogmask().
+
+        * ace/config-chorus.h:
+
+          ChorusOS 4.0.1 happens to be one of them.
+
 Tue Jul 10 09:00:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/OS_Dirent.h
