@@ -39,6 +39,9 @@ void
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
+
+
+
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
                                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -78,7 +81,7 @@ void
 
   Client_Interceptor *client_interceptor;
   ACE_NEW_THROW_EX (client_interceptor,
-                    Client_Interceptor (this->current_),
+                    Client_Interceptor,
                     CORBA::NO_MEMORY (
 			CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -86,7 +89,21 @@ void
 			CORBA::COMPLETED_NO));
   ACE_CHECK;
   
-  info->add_client_request_interceptor (client_interceptor
+ info->add_client_request_interceptor (client_interceptor
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  Server_Interceptor *server_interceptor;
+  ACE_NEW_THROW_EX (server_interceptor,
+                    Server_Interceptor (this->current_),
+                    CORBA::NO_MEMORY (
+			CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+			CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  
+ info->add_server_request_interceptor (server_interceptor
 					ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -127,6 +144,8 @@ void
   //TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
 //                                                           ACE_ENV_ARG_PARAMETER);
   //ACE_CHECK;
+
+		printf ("In pre_init\n");
 
   CORBA::Object_ptr rt_current_obj = info->resolve_initial_references ("RTCurrent"
 								      ACE_ENV_ARG_PARAMETER);

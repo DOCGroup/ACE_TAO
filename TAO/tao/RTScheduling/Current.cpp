@@ -797,6 +797,42 @@ TAO_RTScheduler_Current_i::delete_all_currents (void)
     }
 }
 
+void
+TAO_RTScheduler_Current_i::id (RTScheduling::Current::IdType guid)
+{
+  this->guid_ = guid;
+}
+
+void 
+TAO_RTScheduler_Current_i::name (char * name)
+{
+  this->name_ = name;
+}
+
+RTScheduling::DistributableThread_ptr 
+TAO_RTScheduler_Current_i::DT (void)
+{
+  return this->dt_.in ();
+}
+
+void 
+TAO_RTScheduler_Current_i::DT (RTScheduling::DistributableThread_ptr dt)
+{
+  this->dt_ = RTScheduling::DistributableThread::_duplicate (dt);
+}
+
+void 
+TAO_RTScheduler_Current_i::scheduling_parameter (CORBA::Policy_ptr sched_param)
+{
+  this->sched_param_ = sched_param;
+}
+
+void 
+TAO_RTScheduler_Current_i::implicit_scheduling_parameter (CORBA::Policy_ptr implicit_sched_param)
+{
+  this->implicit_sched_param_ = implicit_sched_param;
+}
+  
 
 // *************************************************************
 
@@ -965,25 +1001,72 @@ void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &TAO_RTScheduler_Current::_narrow))
+      (ptr_arith_t,
+       &TAO_RTScheduler_Current::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &::PortableInterceptor::ORBInitInfo::_narrow))
-    retv = ACE_reinterpret_cast
-      (
-        void *,
-        ACE_static_cast
-          (
-            PortableInterceptor::ORBInitInfo_ptr,
-            this
-          )
-      );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
+  else if (type == ACE_reinterpret_cast (
+					 ptr_arith_t,
+					 &ACE_NESTED_CLASS (::RTScheduling, Current)::_tao_class_id)
+	   )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &::RTCORBA::Current::_tao_class_id)
+            )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                RTCORBA::Current_ptr,
+                this
+              )
+          );
+    }
+  else if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &::CORBA::Current::_tao_class_id)
+            )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                CORBA::Current_ptr,
+                this
+              )
+          );
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
 
+//   else if (type == ACE_reinterpret_cast
+//     (ptr_arith_t,
+//       &::RTScheduling::Current::_narrow))
+//     retv = ACE_reinterpret_cast
+//       (
+//         void *,
+//         ACE_static_cast
+//           (
+//             RTScheduling::Current_ptr,
+//             this
+//           )
+//       );
+//   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+//     retv = ACE_reinterpret_cast (void *,
+//       ACE_static_cast (CORBA::Object_ptr, this));
+  
   if (retv)
     this->_add_ref ();
   return retv;

@@ -6,12 +6,16 @@
 #include "rtscheduler_export.h"
 #include "tao/PortableInterceptorC.h"
 #include "RTSchedulerC.h"
+#include "ace/Atomic_Op.h"
+#include "Current.h"
+
+extern ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
 class TAO_RTScheduler_Export Client_Interceptor:
 public  PortableInterceptor::ClientRequestInterceptor
 {
 public:
-  Client_Interceptor (RTScheduling::Current_ptr current);
+  //  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException, 
@@ -41,13 +45,15 @@ public:
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
- private:
-  RTScheduling::Current_var current_;
 };
 
 class TAO_RTScheduler_Export Server_Interceptor:
 public PortableInterceptor::ServerRequestInterceptor
 {
+
+public:
+	Server_Interceptor (TAO_RTScheduler_Current_ptr current);
+
   virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
 						 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException, 
@@ -77,6 +83,9 @@ public PortableInterceptor::ServerRequestInterceptor
   
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+ private:
+  TAO_RTScheduler_Current_var current_;
   
 };
 
