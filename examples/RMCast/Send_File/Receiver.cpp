@@ -4,6 +4,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/FILE_IO.h"
 #include "ace/Message_Block.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID(tests, RMCast_Examples_Receiver, "$Id$")
 

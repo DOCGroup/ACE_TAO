@@ -1,3 +1,8 @@
+Fri Nov 10 11:44:15 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/RMCast/Send_File/Receiver.cpp:
+          Fixed errors in Tru64/DUCXX builds.
+
 Fri Nov 10 10:42:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::gethrtime): Removed the ACE_HAS_PENTIUM check
@@ -41,8 +46,8 @@ Thu Nov  9 17:47:37 2000  Carlos O'Ryan  <coryan@uci.edu>
         * examples/Service_Configurator/IPC-tests/server/Makefile:
         * examples/Service_Configurator/Misc/Makefile:
         * examples/Timer_Queue/Makefile:
-	* apps/Gateway/Gateway/Makefile:
-	* apps/Gateway/Peer/Makefile:
+        * apps/Gateway/Gateway/Makefile:
+        * apps/Gateway/Peer/Makefile:
           Avoid problems where the library is linked twice, once for the
           required dependency in parallel builds an another for the LDLIBS
           flag.
@@ -64,11 +69,11 @@ Thu Nov  9 17:47:37 2000  Carlos O'Ryan  <coryan@uci.edu>
           Update the replacement path to some of the tag files, the
           generated documents did not get the right cross references.
 
-	* bin/make_pretty.pl:
-	  Add yet another linker error.
+        * bin/make_pretty.pl:
+          Add yet another linker error.
 
-	* bin/generate_doxygen.pl:
-	  Parse the man page generation code to create its output path too.
+        * bin/generate_doxygen.pl:
+          Parse the man page generation code to create its output path too.
 
 Thu Nov  9 15:10:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
