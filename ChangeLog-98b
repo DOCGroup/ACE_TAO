@@ -1,3 +1,8 @@
+Mon Aug 10 10:29:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (shm_open): There's no need to mess with the security
+	  attribute here.
+
 Mon Aug 10 01:09:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{h,i}: Added a new function
@@ -12,6 +17,7 @@ Mon Aug 10 01:09:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  this new function to get the appropriate security attributes.
 	  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
 	  suggesting this.
+
 
 Sun Aug 09 23:26:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -66,70 +72,70 @@ Sun Aug  9 09:17:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sat Aug  8 09:37:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp: 
+	* ace/INET_Addr.cpp:
 	  Reverted the operator== optimization, it turns out that the
 	  definition of struct in_addr is not portable after all. Maybe
 	  there is a set of macros to make it portable?
 
-	* ace/ACE.h: 
-	* ace/ACE.cpp: 
+	* ace/ACE.h:
+	* ace/ACE.cpp:
 	  Returning <const char* const> is unnecesary; and gives no more
 	  guarantees that <const char*>, plus it gives warnings in
 	  IRIX/MIPSPro compilers.
 
-	* ace/Synch.cpp: 
+	* ace/Synch.cpp:
 	  Removed explicit instantiations of ACE_Guard<ACE_Null_Mutex>,
 	  the class is specialized so no instantiation is necessary. Same
 	  thing for ACE_Write_Guard and ACE_Read_Guard.
 
 Fri Aug  7 23:18:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: 
+	* ace/config-sunos5.5.h:
 	  Updated the new ACE_CC_NAME macros (and friends) so they work
 	  with egcs (and hopefully g++).
 
-	* tests/MT_SOCK_Test.cpp: 
+	* tests/MT_SOCK_Test.cpp:
 	  Removed double comma in function call.
 
 Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp: 
+	* ace/INET_Addr.cpp:
 	  Compare the fields of in_addr instead of calling memcmp.
 
-	* ace/Message_Block.cpp: 
-	* ace/Message_Block.h: 
-	* ace/Message_Block.i: 
+	* ace/Message_Block.cpp:
+	* ace/Message_Block.h:
+	* ace/Message_Block.i:
 	  The Message_Block can receive an allocator for the data block,
 	  so instead of creating them on the heap they can be allocated
 	  from a TSS allocator or other memory pool. By default we use
 	  ACE_New_Allocator.
 
-	* apps/gperf/Makefile: 
+	* apps/gperf/Makefile:
 	  The Id was wrong.
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	  Added gperf to the default list of directories.
 
 Fri Aug  7 13:58:58 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* bin/envinfo.cpp: 
+	* bin/envinfo.cpp:
 	Added this program, which will print the version information for
 	ACE, the OS and C++ compiler. The idea is to use this when posting
 	to the ACE mailing list.
 
-	* ace/ACE.h: 
-	* ace/ACE.cpp: 
+	* ace/ACE.h:
+	* ace/ACE.cpp:
 	Added static methods to retrieve compiler information (name, major
 	version, minro version, beta version).
-	
-	* ace/config-sunos5.5.h: 
+
+	* ace/config-sunos5.5.h:
 	Defined the compiler information macros for this platform.
 
-	* bin/Makefile: 
+	* bin/Makefile:
 	Modified the Makefile to support multiple binaries in the
 	directory (according to tests/Makefile).
 
-	* bin/clone.cpp: 
+	* bin/clone.cpp:
 	Added RCS Id.
 
 Fri Aug  7 12:46:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -164,7 +170,7 @@ Thu Aug 06 14:59:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * ace/Thread_Manager.cpp: Updated all uses of cancel_thr for the
  	  various apply*() methods so that they pass along the
  	  async_cancel flag.
-	
+
 	* ace/Thread_Manager.cpp: Added a new ARG to the ACE_EXECUTE_OP
  	  macro.  Believe it or not, this change actually reduced the
  	  amount of special-case code because we can now treat kill_thr()
