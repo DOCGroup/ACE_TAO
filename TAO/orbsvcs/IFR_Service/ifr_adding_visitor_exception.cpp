@@ -154,7 +154,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -192,7 +192,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
 
@@ -335,7 +335,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -405,7 +405,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
