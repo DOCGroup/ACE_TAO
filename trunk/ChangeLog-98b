@@ -20,6 +20,8 @@ Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (read): added
           ACE_UNUSED_ARG (len).
 
+        * Makefile: fixed build of .obj/gethrtime.o with ghs/VxWorks/i86.
+
 Fri Jun 19 16:51:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd-pthread.h (ACE_HAS_NONCONST_MSGSND): Macro
