@@ -30,8 +30,6 @@
 
 ACE_RCSID(tests, Refcounted_Auto_Ptr_Test, "Refcounted_Auto_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
 
-#if defined (ACE_HAS_THREADS)
-
 struct Printer
 {
   Printer (const char *message);
@@ -40,19 +38,22 @@ struct Printer
   void print (void);
 
   const char *message_;
+  static size_t instance_count_;
 };
 
-typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
+size_t Printer::instance_count_ = 0;
 
 Printer::Printer (const char *message)
   : message_ (message)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Creating Printer object\n")));
+  ++Printer::instance_count_;
 }
 
 Printer::~Printer (void)
 {
+  --Printer::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Deleting Printer object\n")));
 }
@@ -65,7 +66,11 @@ Printer::print (void)
               this->message_));
 }
 
-class Scheduler : public ACE_Task_Base
+#if defined (ACE_HAS_THREADS)
+
+typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
+
+class Scheduler : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //     The scheduler for the Active Object.
@@ -175,14 +180,19 @@ Method_Request_end::~Method_Request_end (void)
 int
 Method_Request_end::call (void)
 {
-  // Shut down the scheduler.
-  this->scheduler_->close ();
+  // Shut down the scheduler by deactivating the activation queue's
+  // underlying message queue - should pop all worker threads off their
+  // wait and they'll exit.
+  this->scheduler_->msg_queue ()->deactivate ();
   return -1;
 }
 
 // Constructor
+// Associates the activation queue with this task's message queue,
+// allowing easy access to the message queue for shutting it down
+// when it's time to stop this object's service threads.
 Scheduler::Scheduler (Scheduler *new_scheduler)
-  : scheduler_ (new_scheduler)
+  : activation_queue_ (msg_queue ()), scheduler_ (new_scheduler)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
@@ -205,7 +215,7 @@ Scheduler::open (void *)
               ACE_TEXT ("(%t) Scheduler open\n")));
   // Become an Active Object.
   int num_threads = 3;
-  return this->activate (THR_BOUND | THR_DETACHED, num_threads);
+  return this->activate (THR_BOUND | THR_JOINABLE, num_threads);
 }
 
 // close
@@ -213,6 +223,7 @@ Scheduler::open (void *)
 int
 Scheduler::close (u_long)
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) rundown\n")));
   return 0;
 }
 
@@ -225,7 +236,14 @@ Scheduler::svc (void)
     {
       // Dequeue the next method request (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+      ACE_Method_Request *mo_p = this->activation_queue_.dequeue ();
+      if (0 == mo_p)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) activation queue shut down\n")));
+          break;
+        }
+      auto_ptr<ACE_Method_Request> mo (mo_p);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) calling method request\n")));
@@ -282,19 +300,25 @@ template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
 
 #endif /* ACE_HAS_THREADS */
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
 int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Refcounted_Auto_Ptr_Test"));
 
-#if defined (ACE_HAS_THREADS)
 
-  // ============================================================================
+  // =========================================================================
   // The following test uses the ACE_Refcounted_Auto_Ptr in a single
   // thread of control, hence we use the ACE_Null_Mutex
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) performing synchronous test on Printer object\n")));
+              ACE_TEXT ("(%t) performing synchronous test...\n")));
 
   Printer *printer1;
   ACE_NEW_RETURN (printer1,
@@ -309,18 +333,19 @@ main (int, ACE_TCHAR *[])
     ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex> r5 = r2;
     ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
   }
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Printer object should have been deleted\n")));
+  ACE_ASSERT (Printer::instance_count_ == 0);
 
-  // ============================================================================
-  // The following test uses the ACE_Refcounted_Auto_Ptr in a single
-  // thread of control, hence we use the ACE_Null_Mutex
+#if defined (ACE_HAS_THREADS)
+
+  // =========================================================================
+  // The following test uses the ACE_Refcounted_Auto_Ptr in multiple
+  // threads of control.
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) performing asynchronous test on Printer object\n")));
+              ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  // @@ Should make these be <auto_ptr>s...
   Scheduler *scheduler_ptr;
 
   // Create active objects..
@@ -348,18 +373,14 @@ main (int, ACE_TCHAR *[])
   // Close things down.
   scheduler->end ();
 
-  ACE_OS::sleep (5);
+  scheduler->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Printer object should have been deleted\n")));
+  ACE_ASSERT (Printer::instance_count_ == 0);
 
-#else
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
 
-  ACE_OS::exit (0);
-  /* NOTREACHED */
   return 0;
 }
