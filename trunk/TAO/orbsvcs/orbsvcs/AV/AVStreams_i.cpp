@@ -114,18 +114,6 @@ TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (void)
 {
 }
 
-AVStreams::StreamEndPoint_A_ptr
-TAO_Basic_StreamCtrl::related_sep_a (void)
-{
-  return this->sep_a_.in ();
-}
-
-AVStreams::StreamEndPoint_B_ptr
-TAO_Basic_StreamCtrl::related_sep_b (void)
-{
-  return this->sep_b_.in ();
-}
-
 // Stop the transfer of data of the stream
 // Empty the_spec means apply operation to all flows
 void
@@ -278,7 +266,7 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec,
 // Empty the_spec means apply operation to all flows
 CORBA::Boolean
 TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
-                                  const AVStreams::flowSpec &flowspec,
+                                  const AVStreams::flowSpec &the_spec,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
@@ -286,47 +274,10 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
 {
   ACE_TRY
     {
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO_Basic_StreamCtrl::modify_QoS\n"));
-      
-      AVStreams::flowSpec in_flowspec;
-      AVStreams::flowSpec out_flowspec;
-
-      in_flowspec.length (0);
-      out_flowspec.length (0);
-
-      int in_index = 0;
-      int out_index = 0;
-
-      for (u_int i=0;i < flowspec.length ();i++)
-	{
-	  TAO_Forward_FlowSpec_Entry entry;
-	  entry.parse (flowspec [i].in ());
-	  int direction = entry.direction ();
-	  if (direction == 0)
-	    {
-	      in_flowspec.length (in_index + 1);
-	      in_flowspec [in_index++] = CORBA::string_dup (entry.entry_to_string ());
-	    }
-	  else
-	    {
-	      out_flowspec.length (out_index + 1);
-	      out_flowspec [out_index++] = CORBA::string_dup (entry.entry_to_string ());
-	    }
-	}
-
-      if (in_flowspec.length () != 0)
-	{
-	  this->vdev_a_->modify_QoS (new_qos, in_flowspec, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
-
-      if (out_flowspec.length () != 0)
-	{
-	  this->vdev_b_->modify_QoS (new_qos, out_flowspec, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+      this->vdev_a_->modify_QoS (new_qos, the_spec, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      this->vdev_b_->modify_QoS (new_qos, the_spec, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -341,8 +292,8 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
 // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
 // E.g., loss of flow, reestablishment of flow, etc..
 void
-TAO_Basic_StreamCtrl::push_event (const AVStreams::streamEvent &/*the_event*/,
-                                  CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property &/*the_event*/,
+                                  CORBA::Environment & /* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -651,15 +602,6 @@ TAO_StreamCtrl::start (const AVStreams::flowSpec &flow_spec,
   ACE_CHECK;
 }
 
-//  void
-//  TAO_Basic_StreamCtrl::push_event (const AVStreams::streamEvent &the_event,
-//                                    CORBA::Environment &ACE_TRY_ENV)
-//    ACE_THROW_SPEC ((CORBA::SystemException))
-//  {
-//    if (TAO_debug_level > 0)
-//      ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) Recieved event \""));
-//  }
-
 // Tears down the stream. This will close the connection, and delete
 // the streamendpoint and vdev associated with this stream
 // Empty the_spec means apply operation to all flows
@@ -767,17 +709,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               this->sep_a_->define_property ("Related_StreamCtrl",
                                              streamctrl_any,
                                              ACE_TRY_ENV);
-
               ACE_TRY_CHECK;
-
-              CORBA::Any streamendpoint_a_any;
-              streamendpoint_a_any <<= this->sep_a_.in ();
-              this->vdev_a_->define_property ("Related_StreamEndpoint_A",
-					      streamendpoint_a_any,
-					      ACE_TRY_ENV);
-	      
-              ACE_TRY_CHECK;
-	      
               // add the mmdevice, sep and vdev to the map.
               MMDevice_Map_Entry map_entry;
               MMDevice_Map_Hash_Key key (a_party);
@@ -832,14 +764,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                                              ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
-              CORBA::Any streamendpoint_b_any;
-              streamendpoint_b_any <<= this->sep_b_.in ();
-              this->vdev_b_->define_property ("Related_StreamEndpoint_B",
-					      streamendpoint_b_any,
-					      ACE_TRY_ENV);
-	      
-              ACE_TRY_CHECK;
-	      
               // add the mmdevice, sep and vdev to the map.
               MMDevice_Map_Entry map_entry;
               MMDevice_Map_Hash_Key key (b_party);
@@ -1406,10 +1330,6 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &the_qos,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"TAO_StreamCtrl::modify_QoS\n"));
-
   if (this->mcastconfigif_ != 0)
     {
       // call modify_Qos on the root VDev which is the mcast configif.
@@ -2129,10 +2049,7 @@ TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &/* new_qos */,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"TAO_StreamEndPoint::modify_QoS\n"));
-  return 1;
+  return 0;
 }
 
 // Sets the list of protocols this streamendpoint can understand.
@@ -3022,59 +2939,18 @@ TAO_VDev::set_dev_params (const char *flowName,
 // QoS Modification should be handled by the application currently.
 CORBA::Boolean
 TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
-                      const AVStreams::flowSpec &flowspec,
+                      const AVStreams::flowSpec &the_spec,
                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"TAO_VDev::modify_QoS\n"));
-  
-  if (flowspec.length () != 0)
-    {
-      TAO_Forward_FlowSpec_Entry entry;
-      entry.parse (flowspec [0]);
-      int direction = entry.direction ();
-      if (direction == 0)
-	{
-	  AVStreams::StreamEndPoint_A_ptr sep_a;
-	  
-	  CORBA::Any_ptr streamendpoint_a_any =
-	  this->get_property_value ("Related_StreamEndpoint_A",
-				    ACE_TRY_ENV);
-	  ACE_CHECK_RETURN (0);
-	  
-	  *streamendpoint_a_any >>= sep_a;
-	  if (sep_a != 0)
-	    {
-	      sep_a->modify_QoS (the_qos, flowspec, ACE_TRY_ENV);
-	      ACE_CHECK_RETURN (0);
-	    }
-	  else ACE_DEBUG ((LM_DEBUG,
-			   "Stream EndPoint Not Found\n"));
-	}
-      else
-	{
-	  AVStreams::StreamEndPoint_B_ptr sep_b;
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (the_spec);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
-	  CORBA::Any_ptr streamendpoint_b_any =
-	  this->get_property_value ("Related_StreamEndpoint_B",
-				    ACE_TRY_ENV);
-	  ACE_CHECK_RETURN (0);
-	  *streamendpoint_b_any >>= sep_b;
-	  sep_b->modify_QoS (the_qos, flowspec, ACE_TRY_ENV);
-	  ACE_CHECK_RETURN (0);
-	}	
-    }
-  
-  //    ACE_UNUSED_ARG (the_qos);
-  //    ACE_UNUSED_ARG (the_spec);
-  //    ACE_UNUSED_ARG (ACE_TRY_ENV);
-  //    ACE_CHECK_RETURN (0);
-  
-  return 1;
+  return 0;
 }
 
 TAO_VDev::~TAO_VDev (void)
