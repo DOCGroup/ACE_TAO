@@ -1,3 +1,10 @@
+Mon Aug 28 20:00:26 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* PACE/pace/fcntl.h:
+	* PACE/pace/win32/fcntl.inl:
+
+	  Added support of fcntl (...) for win32. No op.
+
 Fri Aug 25 12:11:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* /pace/unistd.h:
