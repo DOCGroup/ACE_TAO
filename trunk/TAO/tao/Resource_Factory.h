@@ -137,10 +137,6 @@ public:
   virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
   // The Message Blocks used for input CDRs must have appropiate
   // locking strategies.
-
-  virtual int reactor_lock (void);
-  // Returns 0 if a reactor without locking was configured.
-
 };
 
 #endif /* TAO_RESOURCE_FACTORY_H */

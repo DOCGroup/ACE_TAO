@@ -1,3 +1,33 @@
+Tue May 18 22:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Resource_Factory.h:
+	* tao/Resource_Factory.cpp:
+	* tao/default_resource.h:
+	* tao/default_resource.i:
+	* tao/default_resource.cpp:
+	* docs/Options.html: 
+	  The default resource factory can select any of the "exotic" ACE
+	  reactors (XtReactor, FlReactor, WFMO_Reactor, Msg_WFMO_Reactor)
+	  as well as the regular Select reactor (with or without locking).
+	  The old option (-ORBreactorlock) is obsolete and should be
+	  removed after a couple of beta kits.
+
+	* tests/Makefile:
+	* tests/FL_Cube/Makefile:
+	* tests/FL_Cube/client.cpp:
+	* tests/FL_Cube/server.cpp:
+	* tests/FL_Cube/svc.conf:
+	* tests/FL_Cube/test.idl:
+	* tests/FL_Cube/test_i.cpp:
+	* tests/FL_Cube/test_i.h:
+	* tests/FL_Cube/test_i.i:
+	  A small example that illustrates how TAO can work with the
+	  FlReactor.  A simple server displays a cube using the FL toolkit 
+	  for the GUI elements and OpenGL for the graphics, its CORBA
+	  interface lets the client control the viewpoint for the cube.
+	  A simple client uses GUI elements to let the user control the
+	  remote cube displayer.
+
 Tue May 18 11:05:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: removed DU cxx and Green Hills gcx warning
