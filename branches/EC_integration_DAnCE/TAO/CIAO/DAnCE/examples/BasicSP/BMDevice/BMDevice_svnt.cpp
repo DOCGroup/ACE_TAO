@@ -20,6 +20,8 @@
 
 #include "BMDevice_svnt.h"
 #include "Cookies.h"
+#include "ciao/Servant_Activator.h"
+#include "ciao/Port_Activator_T.h"
 
 namespace BMDevice_Impl
 {
@@ -382,39 +384,8 @@ namespace BMDevice_Impl
         return ::BasicSP::ReadData::_duplicate (this->provide_data_read_.in ());
       }
 
-      ::BasicSP::CCM_ReadData_var fexe =
-      this->executor_->get_data_read (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
-
-      if (::CORBA::is_nil (fexe.in ()))
-      {
-        ACE_THROW_RETURN (
-        ::CORBA::INTERNAL (),
-        ::BasicSP::ReadData::_nil ());
-      }
-
       ::CORBA::Object_var obj =
       this->provide_data_read_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
-
-      CIAO_GLUE_BasicSP::ReadData_Servant *svt = 0;
-
-      ACE_NEW_RETURN (
-      svt,
-      CIAO_GLUE_BasicSP::ReadData_Servant (
-      fexe.in (),
-      this->context_),
-      ::BasicSP::ReadData::_nil ());
-
-      PortableServer::ServantBase_var safe_servant (svt);
-
-      PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId ("BasicSP_BMDevice_data_read");
-
-      this->container_->_ciao_the_POA ()->activate_object_with_id (
-      oid.in (),
-      svt
-      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
 
       ::BasicSP::ReadData_var fo =
@@ -440,10 +411,42 @@ namespace BMDevice_Impl
         return ret;
       }
 
+      CIAO::Port_Activator_T< CIAO_GLUE_BasicSP::ReadData_Servant,
+      ::BasicSP::CCM_ReadData,
+       ::Components::CCMContext,
+      BMDevice_Servant > *tmp = 0;
+
+      typedef  CIAO::Port_Activator_T<
+      CIAO_GLUE_BasicSP::ReadData_Servant,
+      ::BasicSP::CCM_ReadData,
+       ::Components::CCMContext,
+      BMDevice_Servant >
+       MACRO_MADNESS_TYPEDEF;
+
+
+      ACE_NEW_THROW_EX ( 
+        tmp,
+        MACRO_MADNESS_TYPEDEF (
+      "BasicSP_BMDevice_data_read",
+      "data_read",
+      CIAO::Port_Activator::Facet,
+      0,
+      this->context_,
+      this),
+      CORBA::NO_MEMORY ());
+
+
+      CIAO::Servant_Activator *sa = 
+      this->container_->ports_servant_activator ();
+
+      if (!sa->register_port_activator (tmp))
+      return 0;
+
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
       "BasicSP_BMDevice_data_read",
-      "IDL:BasicSP/ReadData:1.0"
+      "IDL:BasicSP/ReadData:1.0",
+      CIAO::Container::Facet_Consumer
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
 
@@ -607,25 +610,6 @@ namespace BMDevice_Impl
       ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::TimeOutConsumer::_nil ());
 
-      BMDevice_Servant::TimeOutConsumer_timeout_Servant *svt = 0;
-      ACE_NEW_RETURN (
-      svt,
-      BMDevice_Servant::TimeOutConsumer_timeout_Servant (
-      this->executor_.in (),
-      this->context_),
-      ::BasicSP::TimeOutConsumer::_nil ());
-
-      PortableServer::ServantBase_var safe_servant (svt);
-
-      PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId ("BasicSP_BMDevice_timeout");
-
-      this->container_->_ciao_the_POA ()->activate_object_with_id (
-      oid.in (),
-      svt
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::TimeOutConsumer::_nil ());
-
       ::BasicSP::TimeOutConsumer_var eco =
       ::BasicSP::TimeOutConsumer::_narrow (
       obj.in ()
@@ -649,10 +633,43 @@ namespace BMDevice_Impl
         return ret;
       }
 
+      CIAO::Port_Activator_T<
+      BMDevice_Servant::TimeOutConsumer_timeout_Servant,
+      ::BasicSP::CCM_BMDevice,
+      ::BasicSP::CCM_BMDevice_Context,
+      BMDevice_Servant > *tmp = 0;
+
+      typedef  CIAO::Port_Activator_T<
+      BMDevice_Servant::TimeOutConsumer_timeout_Servant,
+      ::BasicSP::CCM_BMDevice,
+      ::BasicSP::CCM_BMDevice_Context, 
+      BMDevice_Servant > 
+       MACRO_MADNESS_TYPEDEF;
+
+
+      ACE_NEW_THROW_EX ( 
+        tmp,
+        MACRO_MADNESS_TYPEDEF (
+      "BasicSP_BMDevice_timeout",
+      "timeout",
+      CIAO::Port_Activator::Sink,
+      this->executor_.in (),
+      this->context_,
+      this),
+      CORBA::NO_MEMORY ());
+
+
+      CIAO::Servant_Activator *sa = 
+      this->container_->ports_servant_activator ();
+
+      if (!sa->register_port_activator (tmp))
+      return 0;
+
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
       "BasicSP_BMDevice_timeout",
-      "IDL:BasicSP/TimeOutConsumer:1.0"
+      "IDL:BasicSP/TimeOutConsumer:1.0",
+      CIAO::Container::Facet_Consumer
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::TimeOutConsumer::_nil ());
 
@@ -954,6 +971,27 @@ namespace BMDevice_Impl
     ::Components::RemoveFailure))
     {
       // CIAO to-do
+    }
+
+    CORBA::Object_ptr
+    BMDevice_Servant::get_facet_executor (const char *name
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException))
+    {
+      if (name == 0)
+      {
+        ACE_THROW_RETURN (
+        ::CORBA::BAD_PARAM (),
+        ::CORBA::Object::_nil ());
+      }
+
+      if (ACE_OS::strcmp (name, "data_read") == 0)
+      {
+        return this->executor_->get_data_read (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
+       return CORBA::Object::_nil ();
     }
 
     // Supported operations.

@@ -65,6 +65,7 @@ namespace BMClosedED_Impl
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+
       protected:
       // Facet executor.
       ::BasicSP::CCM_ReadData_var executor_;
@@ -504,7 +505,6 @@ namespace BMClosedED_Impl
       component_UUID (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
       virtual CORBA::IRObject_ptr
       get_component_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -523,6 +523,13 @@ namespace BMClosedED_Impl
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::RemoveFailure));
+
+      // CIAO specific operations on the servant 
+      CORBA::Object_ptr
+      get_facet_executor (const char *name
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException));
 
       private:
 
