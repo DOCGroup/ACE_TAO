@@ -128,7 +128,8 @@ HTTP_Request::parse_request_line (char * const request_line)
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) request %s %s %s parsed\n",
-              this->method (), this->uri (),
+              (this->method () ? this->method () : "-"),
+              (this->uri () ? this->uri () : "="),
               (this->version () ? this->version () : "HTTP/0.9")));
 
   ACE_OS::memmove (buf, ptr, ACE_OS::strlen (ptr)+1);
