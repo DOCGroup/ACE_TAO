@@ -990,7 +990,6 @@ template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
 
 template class TAO_EC_Proxy_Collection<TAO_EC_ProxyPushConsumer>;
-template class TAO_EC_Worker<TAO_EC_ProxyPushConsumer>;
 template class TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>;
 template class TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>;
 template class ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer *>;
@@ -1003,7 +1002,6 @@ template class ACE_RB_Tree_Iterator_Base<TAO_EC_ProxyPushConsumer *, int, ACE_Le
 template class ACE_RB_Tree_Node<TAO_EC_ProxyPushConsumer *, int>;
 
 template class TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier>;
-template class TAO_EC_Worker<TAO_EC_ProxyPushSupplier>;
 template class TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>;
 template class TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>;
 template class ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier *>;

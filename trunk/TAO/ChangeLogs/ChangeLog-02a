@@ -1,3 +1,29 @@
+Mon Jan 31 08:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
+          Don't use typedefs inside templates with return values, it
+          confuses g++ 2.7.X
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+          Some typedefs were protected, and thus not accessible for some
+          classes.
+
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Move some template instantiations around.
+
+        * orbsvcs/orbsvcs/Event/EC_Worker.h:
+        * orbsvcs/orbsvcs/Event/EC_Worker.cpp:
+          Try to work around old g++ bug.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+          Remove unnecessary header file and updated dependencies.
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.h:
+          Fix typos in the comments.
+
 Sun Jan 30 19:59:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Changed the basic collection classes that keep both the consumer

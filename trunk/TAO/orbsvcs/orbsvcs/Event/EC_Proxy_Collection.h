@@ -91,7 +91,7 @@ class TAO_EC_Proxy_Collection
   //   while some thread is performing an iteration.  The iteration
   //   continues over the original copy, while the changes are
   //   performed in the duplicate.  The new copy of the collection is
-  //   used for any suibsequent operations, the original is discarded
+  //   used for any subsequent operations, the original is discarded
   //   when the last thread using it completes its work.
   //   This approach optimizes for the case where no changes are
   //   is duplicated into a temporary array.  Thus no locks are held

@@ -26,13 +26,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<class TARGET>
+template<class Object>
 class TAO_EC_Worker
 {
 public:
   virtual ~TAO_EC_Worker (void);
 
-  virtual void work (TARGET *target,
+  virtual void work (Object *object,
                      CORBA::Environment &ACE_TRY_ENV) = 0;
 };
 
