@@ -1,3 +1,12 @@
+Sun Sep 13 18:16:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Converted some old
+	  #ifdefed code in server.cpp and client.cpp into macros
+	  for sched_params and new method for fifo scheduling initialization.
+
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp: Replaced magic numbers
+	  with symbolic constants.
+	
 Sun Sep 13 00:44:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp: 	

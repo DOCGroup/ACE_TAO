@@ -82,9 +82,7 @@ Util_Thread::run_computations (void)
     {
       // Bound the number of computations, since we can potentially
       // block the machine if this thread never leaves the loop.
-      if (this->number_of_computations_ > (ts_->loop_count_ * 1000)) 
-      // @@ Naga, can you please remove this magic number and replace
-      // it with a symbolic constant?
+      if (this->number_of_computations_ > (ts_->loop_count_ * UTIL_BOUND_CONSTANT)) 
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      "\t(%t) utilization test breaking loop so machine won't block.\n"));
