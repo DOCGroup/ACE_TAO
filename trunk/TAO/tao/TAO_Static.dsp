@@ -675,6 +675,10 @@ SOURCE=.\RT_Current.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Endpoint_Selector_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -812,6 +816,10 @@ SOURCE=.\TAOS.h
 # Begin Source File
 
 SOURCE=.\target_specification.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Pool.h
 # End Source File
 # Begin Source File
 
@@ -2039,6 +2047,10 @@ SOURCE=.\RT_Current.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Endpoint_Selector_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -2152,6 +2164,10 @@ SOURCE=.\TAOC.cpp
 # Begin Source File
 
 SOURCE=.\target_specification.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Pool.cpp
 # End Source File
 # Begin Source File
 
