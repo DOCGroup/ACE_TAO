@@ -7,6 +7,8 @@ ACE_RCSID (PortableServer,
            POA_ThreadPolicy,
            "$Id$")
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 namespace TAO
 {
   POA_ThreadPolicy::POA_ThreadPolicy () :
@@ -101,3 +103,5 @@ namespace TAO
     return PortableServer::THREAD_POLICY_ID;
   }
 }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */

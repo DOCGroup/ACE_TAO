@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/POA_Policy.h"
+#include "POA_Policy.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
