@@ -1,3 +1,12 @@
+Sat Mar 29 16:30:29 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Leader_Follower.cpp:
+	* tao/Wait_On_Reactor.cpp:
+	* tao/Wait_On_Read.cpp: Account for the time spent in the wait ()
+	  calls by placing the ACE_Countdown_Time at the right
+	  places. These changes were influenced by the bug report sent by
+	  Bertin Colpron <BColpron@interstarinc.com>. 
+
 Fri Mar 28 13:31:41 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport.h (TAO_Transport): 
