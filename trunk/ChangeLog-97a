@@ -1,3 +1,14 @@
+Wed May 07 16:05:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Makefile: added Timer_Wheel to FILES.  Thanks to Thilo
+	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* ace/Map_Manager.h: updated comments to indicate that find functions return a
+	  non-negative integer if the item is found.
+
+	* ace/Map_Manager.cpp (find_i (const EXT_ID &, INT_ID &)): return index instead of 0 if
+	  the item is found, to be consistent with find_i (const EXT_ID &).
+
 Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp (open): Make sure to perform the
