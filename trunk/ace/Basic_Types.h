@@ -142,20 +142,20 @@
 # endif /* ULLONG_MAX */
 #else /* ! ACE_WIN32 && ! ULLONG_MAX && ! __GNUG__ && ! ULONGLONG_MAX */
 # if defined (ACE_HAS_LONGLONG_T)
-  // Assume 8-byte longs.  It would be better to #define
+  // Assume 8-byte long longs.  It would be better to #define
   // ACE_HAS_LONGLONG_T to the number of bytes in a long,
   // but we'd have to do that consistently in all config files.
 #   define ACE_SIZEOF_LONG_LONG 8
 #   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
-#     if defined (__GNUG__) && !defined (__Lynx__) && \
-         (!defined (linux) || defined (__GLIBC__))
-        // So that g++ -pedantic doesn't complain about no ANSI C++ long long.
+#     if defined (sun)
+        // sun #defines u_longlong_t, maybe other platforms do also.
+        // Use it, at least with g++, so that its -pedantic doesn't
+        // complain about no ANSI C++ long long.
         typedef u_longlong_t ACE_UINT64;
 #     else
-        // The g++ that ships with LynxOS 2.5.0 doesn't have u_longlong_t.
-        // Same for Linux prior to glibc 2.0.
+        // LynxOS 2.5.0 and Linux don't have u_longlong_t.
         typedef unsigned long long ACE_UINT64;
-#     endif /* __GNUG__ && !__Lynx__ && (!inux || __GLIBC__) */
+#     endif /* __GNUG__ && sun */
 #   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
 # else /* ! ACE_HAS_LONGLONG_T */
 
@@ -190,9 +190,15 @@
 
       ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
       ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+
+      // Note that the following take ACE_UINT32 arguments.  These are
+      // typical use cases, and easy to implement.  But, they're very
+      // limited in the ranges of values that they can handle.
       ACE_UINT32 operator/ (const ACE_UINT32) const;
+      // ACE_UINT32 operator% (const ACE_UINT32) const;
 
       ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator++ ();
       ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
 
       // = Helper methods.
