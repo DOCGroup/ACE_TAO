@@ -1,3 +1,28 @@
+Tue Nov  4 15:57:09 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp (get_listen_point):
+
+	  Verify that dynamically casted TAO_IIOP_Acceptor pointer is
+	  non-zero before use.  Addresses potential run-time errors.
+
+	  Improved const-correctness.
+
+	* tao/Object_Proxy_Impl.h:
+
+	  Include "tao/orbconf.h" to pull in TAO_HAS_MINIMUM_CORBA macro
+	  definition.  Fixes a g++ warning exhibited when "-Wundef"
+	  compiler flag is set.
+
+	* tao/Typecode_Constants.cpp:
+
+	  Check if TAO_HAS_AMI_POLLER is defined before checking its
+	  value.  Fixes a g++ warning exhibited when "-Wundef" compiler
+	  flag is set.
+
+	* tao/NVList.i:
+
+	  Nuked trailing whitespace.
+
 Tue Nov  4 16:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/corbafwd.h:
