@@ -9,6 +9,8 @@
  *  strategy on it and enteres the nodes into the AST.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+*  @author Mayur Deshpande <mayur@ics.uci.edu>
+*  @author Carlos O'Ryan   <coryan@uci.edu>
 */
 //=============================================================================
 
@@ -99,8 +101,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   excep_holder->original_interface (node);
   module->set_has_nested_valuetype ();
 
-  // Remember from whom we were cloned
-
   // Create the ResponseHandler class
   be_interface *response_handler =
     this->create_response_handler (node,
@@ -123,11 +123,8 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   // Remember from whom we were cloned
   response_handler->original_interface (node);
 
-  // Add the ExceptionHolder after the ResponseHandler, seems to
-  // generate the code in the right order....
-  module->be_add_interface (excep_holder,
-                            node);
-
+  module->be_add_interface (excep_holder, node);
+  
   return 0;
 }
 
@@ -615,67 +612,8 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
 be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 {
-#if 0
-  // Create a virtual module named "Messaging" and a valuetype
-  // "ExceptionHolder" from which we inherit.
-  UTL_ScopedName *inherit_name = 0;
-  ACE_NEW_RETURN (inherit_name,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("ExceptionHolder"),
-                  0);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  inherit_name->nconc (sn);
-
-  be_valuetype *inherit_vt = 0;
-  ACE_NEW_RETURN (inherit_vt,
-                  be_valuetype (inherit_name,
-                                0,
-                                0,
-                                0),
-                  0);
-
-  inherit_vt->set_name (inherit_name);
-  inherit_vt->set_imported (I_TRUE);
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("Messaging"),
-                  0);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  be_module *msg = 0;
-  ACE_NEW_RETURN (msg,
-                  be_module (sn),
-                  0);
-
-  // Notice the valuetype "ExceptionHolder" that it is defined in the
-  // "Messaging" module.
-  inherit_vt->set_defined_in (msg);
-
-  const int inherit_count = 1;
-  AST_Interface **p_intf = 0;
-  ACE_NEW_RETURN (p_intf,
-                  AST_Interface*[1],
-                  0);
-
-  p_intf[0] = ACE_static_cast (AST_Interface *,
-                               inherit_vt);
-#else
   const int inherit_count = 0;
   AST_Interface **p_intf = 0;
-#endif
 
   UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_", "ExceptionHolder");
@@ -685,7 +623,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                   be_valuetype (excep_holder_name,  // name
                                 p_intf,             // list of inherited
                                 inherit_count,      // number of inherited
-                                0),                 // set abstract
+                                1),                 // set not abstract
                   0);
 
   excep_holder->set_name (excep_holder_name);
@@ -742,9 +680,6 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   return excep_holder;
 }
 
-
-
-
 int
 be_visitor_amh_pre_proc::create_raise_operation (
     be_decl *node,
@@ -772,7 +707,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
             }
         }
     }
-
+  
   // Create the return type, which is "void"
 
   ACE_NEW_RETURN (id,
@@ -823,7 +758,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                1,
+                                0,
                                 0),
                   -1);
 

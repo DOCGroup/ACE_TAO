@@ -42,6 +42,7 @@ be_visitor_valuetype_ch::~be_visitor_valuetype_ch (void)
 {
 }
 
+
 int
 be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 {
@@ -175,6 +176,49 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       }
   }
 
+  /**************************************************************************
+  ** This is where we diverge for an ExceptionHolder ValueType.
+  ** This is how we proceed:
+  ** 1) Identify it is an AMH_ExceptionHolder class.
+  ** 2) Inherit from CORBA_DefaultValueBaseRef i.e. provide a CONCRETE
+  **    implementation for this ValueType!  This is because the alternative
+  **    design of deriving a concrete-exception-holder class that the IDL
+  **    compiler again has to generate is superflous, unnecessary, more code
+  **    bloat and unnecessary information for the app-programmer.  The 
+  **    changes required for this (n the *C.h file) are:
+  **      2.1) Generate the raise_method as non-abstract.
+  **      2.2) Generate a new constructor that takes in a CORBA::Exception*
+  **      2.3) Make the destructor public (instead of protected) 
+  **      2.4) Generate a private CORBA::Exception* field.
+  **      2.5) Generate the tao_marshal and tao_unmarshal methods as 
+  **           non-abstarct. 
+  ***************************************************************************/
+
+  /****************************************************************/
+  // 1) Find out if the ValueType is an AMH_*ExceptionHolder, the
+  // conditions are:
+  //  a) The local_name starts with AMH_
+  //  b) The local_name ends with ExceptionHolder
+   int is_an_amh_exception_holder = 0;
+   const char *amh_underbar = "AMH_";
+   const char *node_name = node->local_name ();
+   if( amh_underbar[0] == node_name[0] &&
+       amh_underbar[1] == node_name[1] &&
+       amh_underbar[2] == node_name[2] &&
+       amh_underbar[3] == node_name[3]
+       ) // node name starts with "AMH_"
+     {
+       //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder \n"));
+       const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
+       if (last_E != 0
+           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+         {
+           //ACE_DEBUG ((LM_DEBUG, "Passed second test of amh_excepholder \n"));
+           is_an_amh_exception_holder = 1;
+         }
+     }
+   /*******************************************************************/
+
   if (!valuebase_inherited)
     {
       // We do not inherit from any valuetype, hence we do so from the base
@@ -184,7 +228,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << ", ";
         }
 
-      *os << "public virtual CORBA_ValueBase" << be_uidt_nl;
+      /*********************************************************************/
+      // 2
+      if (is_an_amh_exception_holder)
+        *os << "public virtual CORBA_DefaultValueRefCountBase" << be_uidt_nl;
+      /*********************************************************************/
+      else
+        *os << "public virtual CORBA_ValueBase" << be_uidt_nl;
     }
 
   // Generate the body.
@@ -197,11 +247,23 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << be_nl
       << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
       << "typedef " << node->local_name () << "_var _var_type;\n"
-      << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl
+      << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
 
-    // Generate the static _downcast operation.
-    // (see OMG 20.17.{4,5}).
-      << "static " << node->local_name () << "* "
+  /***********************************************************************/
+  // 2.2, 2.3
+  if (is_an_amh_exception_holder)
+    {
+      // Generate the constructor
+      *os << node->local_name () << " (CORBA::Exception *ex)" << be_nl
+          << "{ this->exception = ex; }" << be_nl << be_nl;
+      // and the destructor
+      *os << "virtual ~" << node->local_name () << " ();\n" << be_nl;
+    }
+  /***********************************************************************/
+
+  // Generate the static _downcast operation.
+  // (see OMG 20.17.{4,5}).
+  *os << "static " << node->local_name () << "* "
       << "_downcast (CORBA::ValueBase* );" << be_nl
       << "// The address of static _downcast is implicit used as type id\n"
       << be_nl
@@ -237,8 +299,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // instantiate us.
   *os << be_uidt_nl << "protected:" << be_idt_nl
       << node->local_name ()
-      << " ();" << be_nl
-      << "virtual ~" << node->local_name () << " ();\n" << be_nl;
+      << " ();" << be_nl;
+
+  if (!is_an_amh_exception_holder)
+    *os  << "virtual ~" << node->local_name () << " ();\n" << be_nl;
 
   *os << "// TAO internals" << be_nl
       << "virtual void *_tao_obv_narrow (ptr_arith_t);" << be_nl;
@@ -253,6 +317,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       // %! optimize _downcast away: extra parameter with type info
       // set (void *) in CDR Stream with the right derived pointer.
     }
+  if (is_an_amh_exception_holder)
+    {
+      *os << "// *** Terrible Hack ? ***" << be_nl;
+      *os << "virtual CORBA::Boolean "
+          << "_tao_marshal_v (TAO_OutputCDR &) { return 1; }" << be_nl;
+      *os << "virtual CORBA::Boolean "
+          << "_tao_unmarshal_v (TAO_InputCDR &) { return 1; }" << be_nl;
+    }
 
 
   // Private member:
@@ -264,8 +336,15 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << be_nl
       << "void operator= (const " << node->local_name () << " &);"
       << be_nl;
+  
+  /*********************************************************/
+  // 2.4
+  *os << "CORBA::Exception *exception;"
+      << be_nl;
+  /*********************************************************/
 
-      // Map fields to private data (if optimizing).
+
+  // Map fields to private data (if optimizing).
   if (node->opt_accessor ())
     {
       *os << be_uidt_nl << "protected:" << be_idt_nl;
@@ -282,12 +361,27 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       if (!node->is_abstract_valuetype ())
         {
           *os << be_uidt_nl << "protected:" << be_idt_nl;
-          *os << "virtual CORBA::Boolean _tao_marshal__"
-              <<    node->flat_name () << " (TAO_OutputCDR &) = 0;"
-              << be_nl;
-          *os << "virtual CORBA::Boolean _tao_unmarshal__"
-              <<    node->flat_name () << " (TAO_InputCDR &) = 0;"
-              << be_nl;
+          /*********************************************************/
+          // 2.5
+          if (is_an_amh_exception_holder)
+            {
+              *os << "virtual CORBA::Boolean _tao_marshal__"
+                  <<    node->flat_name () << " (TAO_OutputCDR &);"
+                  << be_nl;
+              *os << "virtual CORBA::Boolean _tao_unmarshal__"
+                  <<    node->flat_name () << " (TAO_InputCDR &);"
+                  << be_nl;
+            }          
+          /*********************************************************/
+          else
+            {            
+              *os << "virtual CORBA::Boolean _tao_marshal__"
+                  <<    node->flat_name () << " (TAO_OutputCDR &) = 0;"
+                  << be_nl;
+              *os << "virtual CORBA::Boolean _tao_unmarshal__"
+                  <<    node->flat_name () << " (TAO_InputCDR &) = 0;"
+                  << be_nl;
+            }
         }
     }
 
