@@ -2169,6 +2169,21 @@ typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
 typedef u_long ACE_SOCK_GROUP;
 
 #endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+/**
+ * On some platforms clearerr is a macro. Defining ACE_OS::clearerr()
+ * becomes really hard, as there is no way to save the macro
+ * definition using the pre-processor.
+ */
+#if !defined (ACE_LACKS_CLEARERR)
+#if defined (clearerr)
+#define __ace_clearerr_hack
+inline void __ace_clearerr(FILE *stream)
+{
+  clearerr(stream);
+}
+#undef clearerr
+#endif /* defined (clearerr) */
+#endif /* !ACE_LACKS_CLEARERR */
 
 /**
  * @class ACE_OS
@@ -2465,15 +2480,7 @@ public:
   static int fgetc (FILE* fp);
 
 #if !defined (ACE_LACKS_CLEARERR)
-#if defined (clearerr)
-#define __ace_clearerr clearerr
-#undef clearerr
-#endif /* defined (clearerr) */
   static void clearerr (FILE* fp);
-#if defined (__ace_clearerr)
-#define clearerr __ace_clearerr
-#undef __ace_clearerr
-#endif /* defined (__ace_clearerr) */
 #endif /* !ACE_LACKS_CLEARERR */
 
 #if defined (ACE_HAS_WCHAR)
