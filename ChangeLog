@@ -1,3 +1,9 @@
+Mon Aug 30 23:47:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Added check for ACE_LACKS_TOWLOWER and ACE_LACKS_TOWUPPER.
+
 Mon Aug 30 23:39:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
