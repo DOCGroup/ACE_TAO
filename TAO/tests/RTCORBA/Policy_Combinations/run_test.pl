@@ -54,7 +54,7 @@ $SV->Spawn ();
 
 for $file (@iorfiles)
 {
-    if (PerlACE::waitforfile_timed ($file, 5) == -1)
+    if (PerlACE::waitforfile_timed ($file, 10) == -1)
     {
         $server = $SV->TimedWait (1);
         if ($server == 2) 
