@@ -1,8 +1,0 @@
-#
-# Makefile for building the ACE Service_Configurator examples
-#
-
-DIRS = \
-        IPC-tests
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

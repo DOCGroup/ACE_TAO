@@ -18,13 +18,13 @@ ACE_Guard<ACE_LOCK>::tryacquire (void)
 template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::release (void)
 {
-  if (this->owner_ == -1)
-    return -1;
-  else
+  if (this->owner_ != -1)
     {
       this->owner_ = -1;
       return this->lock_->release ();
     }
+  else
+    return 0;
 }
 
 template <class ACE_LOCK> ACE_INLINE

@@ -1,7 +1,0 @@
-#
-# $Id$
-#
-
-MAKEFILES = client.bor collocated.bor server.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

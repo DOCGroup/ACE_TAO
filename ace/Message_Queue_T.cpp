@@ -715,10 +715,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
       result = this->not_full_cond_.acquire (timeout);
 
       if (result == -1 && errno == ETIME)
-        {
-          --this->enqueue_waiters_;
-          errno = EWOULDBLOCK;
-        }
+        errno = EWOULDBLOCK;
 
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
@@ -763,10 +760,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
       result = this->not_empty_cond_.acquire (timeout);
 
       if (result == -1 && errno == ETIME)
-        {
-          --this->dequeue_waiters_;          
-          errno = EWOULDBLOCK;
-        }
+        errno = EWOULDBLOCK;
 
       // Save/restore errno.
       ACE_Errno_Guard error (errno);

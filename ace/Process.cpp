@@ -825,7 +825,7 @@ ACE_Process_Options::pass_handle (ACE_HANDLE h)
 # if defined (ACE_WIN32)
 #  if defined (ACE_HAS_WINCE)
   ACE_NOTSUP_RETURN (-1);
-#  else
+#  endif /* ACE_HAS_WINCE */
 
   // This is oriented towards socket handles... may need some adjustment
   // for non-sockets.
@@ -852,7 +852,6 @@ ACE_Process_Options::pass_handle (ACE_HANDLE h)
         return -1;
       dup_handles_.set_bit (ACE_static_cast (ACE_HANDLE, dup_handle));
     }
-#  endif /* ACE_HAS_WINCE */
 #endif /* ACE_WIN32 */
 
   this->handles_passed_.set_bit (h);
