@@ -33,7 +33,7 @@ fi
 /bin/sync
 sleep 10
 (
-   cd $ACE_ROOT/TAO/performance-tests/Single_Threaded_Latency;
+   cd $ACE_ROOT/TAO/performance-tests/Latency/Single_Threaded;
    ./default_configuration.pl > $DEST/source/Default.log 2>&1
 )
 if grep -q 'Total throughput: ' Default.log; then
@@ -47,7 +47,7 @@ for i in $COMMON_TESTS; do
   /bin/sync
   sleep 10
   (
-     cd $ACE_ROOT/TAO/performance-tests/${i}_Latency;
+     cd $ACE_ROOT/TAO/performance-tests/Latency/${i};
      ./run_test.pl > $DEST/source/${i}.log 2>&1
   )
   if grep -q 'Total throughput: ' ${i}.log; then
