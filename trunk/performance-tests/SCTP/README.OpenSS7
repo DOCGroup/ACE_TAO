@@ -20,6 +20,24 @@ total length in bytes of the array.  Also, when accepting connections from a
 peer, you would pass in a pointer to an array of struct sockaddr* and the 
 length of the array in bytes.
 
+
+Building ACE/TAO with support for OpenSS7 SCTP
+==============================================
+
+        - apply OpenSS7's SCTP patch (see OpenSS7's readme for details) 
+
+        - compile kernel with the following kernel variables (.config file)
+                + CONFIG_SCTP=y
+                + CONFIG_SCTP_TCP_COMPATIBLE=y
+                + CONFIG_SCTP_HMAC_SHA1=y
+                + CONFIG_SCTP_HMAC_MD5=y
+                + CONFIG_SCTP_ADLER_32=y
+                + CONFIG_SCTP_CRC_32C=y
+
+        - install header file (sctp.h) into /usr/local/include/sctp.h
+
+        - make ACE/TAO with "sctp=openss7" -- ie. "make sctp=openss7"
+
 Common Calls
 ============
 
