@@ -25,6 +25,7 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priorit
 
 TAO::PrioritySpecification
 TAO_Client_Priority_Policy::priority_specification (CORBA::Environment &)
+  ACE_THROW_SPEC (())
 {
   return this->priority_spec_;
 }
