@@ -300,7 +300,7 @@ ifeq ($(probe),0)
 endif # probe
 
 ifeq ($(probe),1)
-    CCFLAGS += -DACE_COMPILE_TIMEPROBES -DACE_ENABLE_TIMEPROBES
+    CCFLAGS += -DACE_ENABLE_TIMEPROBES
 endif # probe
 
 ifeq ($(purify),0)
