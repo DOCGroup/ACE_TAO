@@ -1,10 +1,10 @@
-//
 // $Id$
-//
+
+#define ACE_BUILD_DLL
 #include "orbsvcs/Time_Utilities.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Time_Utilities.i"
+# include "orbsvcs/Time_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(orbsvcs, Time_Utilities, "$Id$")
