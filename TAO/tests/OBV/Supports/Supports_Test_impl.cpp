@@ -23,13 +23,15 @@ vt_graph_impl::vt_graph_impl (int num_nodes)
 }
 
 // Get the number of nodes in the vt_graph.
-CORBA::Long vt_graph_impl::size (void)
+CORBA::Long vt_graph_impl::size (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	return nodes_ ().length ();
 }
 
 // Add a node to the graph with no edges.
-void vt_graph_impl::add_node (const char * name)
+void vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	Supports_Test::Node * new_node = 0;
   ACE_NEW (new_node, node_impl (name));
@@ -38,11 +40,12 @@ void vt_graph_impl::add_node (const char * name)
 }
 
 // Print out information about each node.
-void vt_graph_impl::print (void)
+void vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   cout << "Printing graph data..." << endl;
   cout << "Number of nodes: " << nodes_ ().length () << endl;
-  for (int i = 0; i < nodes_ ().length (); i++)
+  for (unsigned int i = 0; i < nodes_ ().length (); i++)
     nodes_ ()[i]->print ();
   cout << endl;
 }
@@ -50,7 +53,8 @@ void vt_graph_impl::print (void)
 
 /* vt_graph_init_impl - factory operations */
 
-Supports_Test::vt_graph * vt_graph_init_impl::create (void)
+Supports_Test::vt_graph * vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
@@ -182,7 +186,7 @@ void node_impl::add_edge (Supports_Test::Node * neighbor)
 // Remove the edge from this node to neighbor.
 void node_impl::remove_edge (Supports_Test::Node * neighbor)
 {
-  for (int i = 0; i < neighbors_ ().length (); i++)
+  for (unsigned int i = 0; i < neighbors_ ().length (); i++)
     if (neighbors_ ()[i] == neighbor)
       {
         neighbors_ ()[i] = neighbors_ ()[neighbors_ ().length () - 1];
@@ -202,20 +206,22 @@ void node_impl::print (void)
   cout << "    Weight: " << weight_ () << endl;
   cout << "    Degree: " << degree_ () << endl;
   cout << "    Neighbors: " << endl;
-  for (int i = 0; i < neighbors_ ().length (); i++)
+  for (unsigned int i = 0; i < neighbors_ ().length (); i++)
     cout << "      " << neighbors_ ()[i]->name_ () << endl;
 }
 
 /* node_init_impl - factory operations */
 
-Supports_Test::Node * node_init_impl::create (void)
+Supports_Test::Node * node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);
   return ret_val;
 }
 
-CORBA::ValueBase * node_init_impl::create_for_unmarshal (void)
+CORBA::ValueBase * node_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);
