@@ -1,3 +1,8 @@
+Mon Jun  2 11:38:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/bootstrap (Usage): Commented out paths on Sun boxes for
+	  aclocal.
+
 Mon Jun  2 11:24:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/generate_rel_manpages: Added some debugging
