@@ -1,3 +1,8 @@
+Tue Oct  6 10:26:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  Assigning an _var to a _ptr is ambiguous, we have to use .in().
+
 Tue Oct  6 08:06:33 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/driver/drv_args.cpp:

@@ -41,12 +41,12 @@ TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 
 void 
 TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-			   RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-			   RtecScheduler::Scheduler_ptr rmt_sched,
-			   RtecScheduler::Scheduler_ptr lcl_sched,
-			   const char* lcl_name,
-			   const char* rmt_name,
-			   CORBA::Environment &_env)
+                           RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+                           RtecScheduler::Scheduler_ptr rmt_sched,
+                           RtecScheduler::Scheduler_ptr lcl_sched,
+                           const char* lcl_name,
+                           const char* rmt_name,
+                           CORBA::Environment &_env)
 {
   this->rmt_ec_ = 
     RtecEventChannelAdmin::EventChannel::_duplicate (rmt_ec);
@@ -65,14 +65,14 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   rmt_sched->set (this->rmt_info_,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  25000 * 10,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  0,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  25000 * 10,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
   if (_env.exception () != 0) return;
 
   this->lcl_info_ =
@@ -80,14 +80,14 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
   if (_env.exception () != 0) return;
 
   lcl_sched->set (this->lcl_info_,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  25000 * 10,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  1,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  25000 * 10,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  _env);
   if (_env.exception () != 0) return;
 
 }
@@ -125,7 +125,7 @@ TAO_EC_Gateway_IIOP::close (CORBA::Environment &env)
 
 void
 TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& c_qos,
-				      CORBA::Environment& env)
+                                      CORBA::Environment& env)
 {
   this->close (env);
   TAO_CHECK_ENV_RETURN_VOID (env);
@@ -273,7 +273,7 @@ TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& 
 
 void
 TAO_EC_Gateway_IIOP::update_supplier (const RtecEventChannelAdmin::SupplierQOS&,
-				      CORBA::Environment&)
+                                      CORBA::Environment&)
 {
   // Do nothing...
 }
@@ -283,7 +283,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_consumer (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ECG (%t): Supplier-consumer received "
-	      "disconnect from channel.\n"));
+              "disconnect from channel.\n"));
 }
 
 void
@@ -291,12 +291,12 @@ TAO_EC_Gateway_IIOP::disconnect_push_supplier (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ECG (%t): Supplier received "
-	      "disconnect from channel.\n"));
+              "disconnect from channel.\n"));
 }
 
 void
 TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
-			   CORBA::Environment & env)
+                           CORBA::Environment & env)
 {
   //ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push - "));
 
@@ -324,7 +324,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
         {
           // If the source is not in our map we have to use the
           // default consumer proxy.
-          proxy = this->default_consumer_proxy_;
+          proxy = this->default_consumer_proxy_.in ();
         }
       out[0] = events[i];
       out[0].header.ttl--;
