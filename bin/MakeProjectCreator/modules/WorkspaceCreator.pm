@@ -1099,8 +1099,7 @@ sub sort_dependencies {
                 ## generating implicit project dependencies.  The
                 ## dependencies in question may have been generated and
                 ## that's not the users fault.
-                if (!$self->generate_implicit_project_dependencies() ||
-                    defined $ENV{MPC_VERBOSE_CIRCULAR}) {
+                if (!$self->generate_implicit_project_dependencies()) {
                   print 'WARNING: Circular dependency between ' .
                         "$list[$j] and $project\n";
                 }

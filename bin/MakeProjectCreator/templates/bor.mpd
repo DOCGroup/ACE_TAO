@@ -1,5 +1,6 @@
 # Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%else%><%if(staticname)%><%staticname%> library<%endif%><%endif%> with Borland C++ Make
 
+<%marker(top)%>
 <%if(exename)%>
 NAME = <%exename%>
 <%else%>
@@ -106,6 +107,7 @@ all: idl_src_files
 #
 # Override defaults in outputdir.bor
 #
+<%marker(macros)%>
 STATIC_DIR=.
 DEBUG_DIR=.
 PASCAL_DIR=.
@@ -122,13 +124,8 @@ BINDIR = <%install%>
 <%else%>
 BASE_BINDIR = .
 <%endif%>
-<%if(core)%>
-
-!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
-<%else%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-<%endif%>
 <%else%>
 <%if(dllout)%>
 BINDIR = <%dllout%>
@@ -137,13 +134,8 @@ BINDIR = <%dllout%>
 BINDIR = <%libout%>
 <%endif%>
 <%endif%>
-<%if(core)%>
-
-!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-<%else%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
-<%endif%>
 <%endif%>
 <%if(header_files || template_files || inline_files || idl_files)%>
 
@@ -212,3 +204,4 @@ clean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
 <%endif%>
 <%endfor%>
 <%endfor%>
+<%marker(bottom)%>

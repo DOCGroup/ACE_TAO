@@ -52,7 +52,7 @@ sub fill_value {
       my($comps) = $$names{$name};
       foreach my $key (keys %$comps) {
         foreach my $item (@{$$comps{$key}}) {
-          my($dname) = dirname($item);
+          my($dname) = $self->relative(dirname($item));
           if ($dname ne '.' && $dname !~ /^\.\.\//) {
             $vpath{$dname} = 1;
           }

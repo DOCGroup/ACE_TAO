@@ -34,6 +34,8 @@ my($TemplateExtension)       = 'mpd';
 my($TemplateInputExtension)  = 'mpt';
 
 ## Valid names for assignments within a project
+## 1 means preserve the order for additions
+## 0 means order is not preserved, it is reversed.
 my(%validNames) = ('exename'         => 1,
                    'sharedname'      => 1,
                    'staticname'      => 1,
@@ -41,11 +43,10 @@ my(%validNames) = ('exename'         => 1,
                    'install'         => 1,
                    'includes'        => 1,
                    'idlflags'        => 1,
-                   'idlpreprocessor' => 1,
-                   'defaultlibs'     => 1,
+                   'defaultlibs'     => 0,
                    'after'           => 1,
-                   'libs'            => 1,
-                   'lit_libs'        => 1,
+                   'libs'            => 0,
+                   'lit_libs'        => 0,
                    'pch_header'      => 1,
                    'pch_source'      => 1,
                    'ssl'             => 1,
@@ -60,7 +61,6 @@ my(%validNames) = ('exename'         => 1,
                    'comps'           => 1,
                    'tagname'         => 1,
                    'tagchecks'       => 1,
-                   'core'            => 1,
                    'idlgendir'       => 1,
                    'macros'          => 1,
                   );
@@ -106,7 +106,7 @@ my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C
           );
 
 ## Exclude these extensions when auto generating the component values
-my(%ec) = ('source_files' => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.C", ],
+my(%ec) = ('source_files' => $vc{'template_files'},
           );
 
 ## Match up assignments with the valid components
@@ -118,7 +118,7 @@ my(%genext) = ('idl_files' => {'automatic'     => 1,
                                'pre_extension' => [ 'C', 'S' ],
                                'source_files'  => [ '\\.cpp', '\\.cxx', '\\.cc', '\\.C', ],
                                'inline_files'  => [ '\\.i', '\\.inl', ],
-                               'header_files'  => [ '\\.h', '\\.hxx', '\\.hh', ],
+                               'header_files'  => [ '\\.h', '\\.hpp', '\\.hxx', '\\.hh', ],
                               },
               );
 
@@ -218,6 +218,36 @@ sub process_assignment {
     $value =~ s/\$\$/\$/g;
   }
   $self->SUPER::process_assignment($name, $value, $assign);
+
+  ## Support keyword mapping here only at the project level scope. The
+  ## scoped keyword mapping is done through the parse_scoped_assignment()
+  ## method.
+  if (!defined $assign) {
+    my($mapped) = $self->{'valid_names'}->{$name};
+    if (defined $mapped && UNIVERSAL::isa($mapped, 'ARRAY')) {
+      $self->parse_scoped_assignment($$mapped[0], 'assignment',
+                                     $$mapped[1], $value,
+                                     $self->{'generated_exts'}->{$$mapped[0]});
+    }
+  }
+}
+
+
+sub get_assignment_for_modification {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($assign) = shift;
+
+  if (!defined $assign) {
+    my($mapped) = $self->{'valid_names'}->{$name};
+
+    if (defined $mapped && UNIVERSAL::isa($mapped, 'ARRAY')) {
+      $name   = $$mapped[1];
+      $assign = $self->{'generated_exts'}->{$$mapped[0]};
+    }
+  }
+
+  return $self->get_assignment($name, $assign);
 }
 
 
@@ -253,7 +283,7 @@ sub parse_line {
           ## or overrides for the project values.
           my($addproj) = $self->get_addproj();
           foreach my $ap (keys %$addproj) {
-            if (defined $validNames{$ap}) {
+            if (defined $self->{'valid_names'}->{$ap}) {
               my($val) = $$addproj{$ap};
               if ($$val[0] > 0) {
                 $self->process_assignment_add($ap, $$val[1]);
@@ -276,12 +306,16 @@ sub parse_line {
             ## End of project; Write out the file.
             ($status, $errorString) = $self->write_project();
 
-            ## Check for unused verbatim markers
-            foreach my $key (keys %{$self->{'verbatim'}}) {
-              if (defined $self->{'verbatim_accessed'}->{$key}) {
-                foreach my $ikey (keys %{$self->{'verbatim'}->{$key}}) {
-                  if (!defined $self->{'verbatim_accessed'}->{$key}->{$ikey}) {
-                    print "WARNING: Marker $ikey does not exist.\n";
+            ## write_project() can return 0 for error, 1 for project
+            ## was written and 2 for project was skipped
+            if ($status == 1) {
+              ## Check for unused verbatim markers
+              foreach my $key (keys %{$self->{'verbatim'}}) {
+                if (defined $self->{'verbatim_accessed'}->{$key}) {
+                  foreach my $ikey (keys %{$self->{'verbatim'}->{$key}}) {
+                    if (!defined $self->{'verbatim_accessed'}->{$key}->{$ikey}) {
+                      print "WARNING: Marker $ikey does not exist.\n";
+                    }
                   }
                 }
               }
@@ -408,7 +442,7 @@ sub parse_line {
     elsif ($values[0] eq 'assignment') {
       my($name)  = $values[1];
       my($value) = $values[2];
-      if (defined $validNames{$name}) {
+      if (defined $self->{'valid_names'}->{$name}) {
         $self->process_assignment($name, $value);
       }
       else {
@@ -419,7 +453,7 @@ sub parse_line {
     elsif ($values[0] eq 'assign_add') {
       my($name)  = $values[1];
       my($value) = $values[2];
-      if (defined $validNames{$name}) {
+      if (defined $self->{'valid_names'}->{$name}) {
         $self->process_assignment_add($name, $value);
       }
       else {
@@ -430,7 +464,7 @@ sub parse_line {
     elsif ($values[0] eq 'assign_sub') {
       my($name)  = $values[1];
       my($value) = $values[2];
-      if (defined $validNames{$name}) {
+      if (defined $self->{'valid_names'}->{$name}) {
         $self->process_assignment_sub($name, $value);
       }
       else {
@@ -467,7 +501,7 @@ sub parse_line {
         elsif ($comp eq 'specific') {
           my(@types) = split(/\s*,\s*/, $name);
           ($status, $errorString) = $self->parse_scope(
-                       $ih, $values[1], \@types, \%validNames);
+                       $ih, $values[1], \@types, $self->{'valid_names'});
         }
         elsif ($comp eq 'define_custom') {
           ($status, $errorString) = $self->parse_define_custom($ih, $name);
@@ -506,9 +540,14 @@ sub parse_scoped_assignment {
   my($name)   = shift;
   my($value)  = shift;
   my($flags)  = shift;
-  my($order)  = shift;
   my($over)   = {};
   my($status) = 0;
+
+  ## Map the assignment name on a scoped assignment
+  my($mapped) = $self->{'valid_names'}->{$name};
+  if (UNIVERSAL::isa($mapped, 'ARRAY')) {
+    $name = $$mapped[1];
+  }
 
   if (defined $self->{'matching_assignments'}->{$tag}) {
     foreach my $possible (@{$self->{'matching_assignments'}->{$tag}}) {
@@ -537,7 +576,7 @@ sub parse_scoped_assignment {
         my($outer) = $self->get_assignment($name);
         $self->process_assignment($name, $outer, $flags);
       }
-      $self->process_assignment_add($name, $value, $flags, $order);
+      $self->process_assignment_add($name, $value, $flags);
     }
     elsif ($type eq 'assign_sub') {
       ## If there is no value in $$flags, then we need to get
@@ -638,8 +677,7 @@ sub parse_components {
       my(@values) = ();
       ## If this returns true, then we've found an assignment
       if ($self->parse_assignment($line, \@values)) {
-        $status = $self->parse_scoped_assignment($tag, @values,
-                                                 \%flags, $custom);
+        $status = $self->parse_scoped_assignment($tag, @values, \%flags);
         if (!$status) {
           last;
         }
@@ -829,6 +867,21 @@ sub parse_define_custom {
       elsif ($line =~ /^}/) {
         $status = 1;
         $errorString = '';
+
+        ## Propagate the custom defined values into the mapped values
+        foreach my $key (keys %{$self->{'valid_names'}}) {
+          my($mapped) = $self->{'valid_names'}->{$key};
+          if (UNIVERSAL::isa($mapped, 'ARRAY')) {
+            my($value) = $self->{'generated_exts'}->{$tag}->{$$mapped[1]};
+            if (defined $value) {
+              ## Bypass the process_assignment() defined in this class
+              ## to avoid unwanted keyword mapping.
+              $self->SUPER::process_assignment($key, $value);
+            }
+          }
+        }
+
+        ## Set some defaults (if they haven't already been set)
         if (!defined $self->{'generated_exts'}->{$tag}->{'pre_filename'}) {
           $self->{'generated_exts'}->{$tag}->{'pre_filename'} = [ '' ];
         }
@@ -908,9 +961,52 @@ sub parse_define_custom {
           }
           else {
             $status = 0;
-            $errorString =  "ERROR: Invalid assignment name: $name";
+            $errorString = "ERROR: Invalid assignment name: $name";
             last;
           }
+        }
+        elsif ($line =~ /^(\w+)\s+(\w+)(\s*=\s*(\w+)?)?/) {
+          ## Check for keyword mapping here
+          my($keyword) = $1;
+          my($newkey)  = $2;
+          my($mapkey)  = $4;
+          if ($keyword eq 'keyword') {
+            if (defined $self->{'valid_names'}->{$newkey}) {
+              $status = 0;
+              $errorString = "ERROR: Cannot map $newkey onto an " .
+                             "existing keyword";
+              last;
+            }
+            elsif (!defined $mapkey) {
+              $self->{'valid_names'}->{$newkey} = 1;
+            }
+            elsif ($newkey ne $mapkey) {
+              if (defined $customDefined{$mapkey}) {
+                $self->{'valid_names'}->{$newkey} = [ $tag, $mapkey ];
+              }
+              else {
+                $status = 0;
+                $errorString = "ERROR: Cannot map $newkey to an " .
+                               "undefined custom keyword: $mapkey";
+                last;
+              }
+            }
+            else {
+              $status = 0;
+              $errorString = "ERROR: Cannot map $newkey to $mapkey";
+              last;
+            }
+          }
+          else {
+            $status = 0;
+            $errorString = "ERROR: Unrecognized line: $line";
+            last;
+          }
+        }
+        else {
+          $status = 0;
+          $errorString = "ERROR: Unrecognized line: $line";
+          last;
         }
       }
     }
@@ -2166,10 +2262,7 @@ sub write_project {
     }
   }
   else {
-    if (defined $ENV{MPC_VERBOSE_FEATURES}) {
-      print "WARNING: Skipping the " . $self->get_assignment('project_name') .
-            " project due to the current features\n";
-    }
+    $status = 2;
   }
 
   return $status, $error;
@@ -2222,6 +2315,7 @@ sub reset_generating_types {
                 'valid_components'     => \%vc,
                 'generated_exts'       => \%genext,
                 'exclude_components'   => \%ec,
+                'valid_names'          => \%validNames,
                );
 
   foreach my $r (keys %reset) {
@@ -2451,6 +2545,23 @@ sub get_modified_project_file_name {
     $name = $nmod;
   }
   return "$name$ext";
+}
+
+
+sub preserve_assignment_order {
+  my($self) = shift;
+  my($name) = shift;
+  my($mapped) = $self->{'valid_names'}->{$name};
+
+  ## Only return the value stored in the valid_names hash map if it's
+  ## defined and it's not an array reference.  The array reference is
+  ## a keyword mapping and all mapped keywords should have preserved
+  ## assignment order.
+  if (defined $mapped && !UNIVERSAL::isa($mapped, 'ARRAY')) {
+    return $mapped;
+  }
+
+  return 1;
 }
 
 # ************************************************************

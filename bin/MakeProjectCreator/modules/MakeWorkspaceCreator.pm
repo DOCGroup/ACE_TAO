@@ -20,6 +20,12 @@ use vars qw(@ISA);
 @ISA = qw(WorkspaceCreator);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my(@targets) = ('clean', 'depend', 'realclean');
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -50,48 +56,51 @@ sub pre_workspace {
 sub write_comps {
   my($self)     = shift;
   my($fh)       = shift;
-  my($projects) = $self->get_projects();
-  my($pjs)      = $self->get_project_info();
-  my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
+  my($projects) = $self->get_projects();
+  my(%targnum)  = ();
+  my($pjs)      = $self->get_project_info();
+  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
 
-  ## Only use the list if there is more than one project
-  if ($#list > 0) {
-    print $fh "MFILES = \\$crlf";
-    for(my $i = 0; $i <= $#list; $i++) {
-      print $fh "         $list[$i]";
-      if ($i != $#list) {
-        print $fh " \\";
+  ## Print out the "all" target
+  print $fh $crlf . "all:";
+  foreach my $project (@list) {
+    print $fh " $$pjs{$project}->[0]";
+  }
+
+  ## Print out all other targets here
+  print $fh "$crlf$crlf@targets:$crlf";
+  foreach my $project (@list) {
+    my($dname) = dirname($project);
+    print $fh "\t\@" .
+              ($dname ne '.' ? "cd $dname; " : '') .
+              "\$(MAKE) PWD=`pwd` -f " .
+              ($dname eq '.' ? $project : basename($project)) .
+              " \$(\@)$crlf";
+  }
+
+  ## Print out each target separately
+  foreach my $project (@list) {
+    my($dname) = dirname($project);
+    print $fh $crlf . $$pjs{$project}->[0] . ":";
+    if (defined $targnum{$project}) {
+      foreach my $number (@{$targnum{$project}}) {
+        print $fh " $$pjs{$list[$number]}->[0]";
       }
-      print $fh $crlf;
     }
+
+    print $fh $crlf .
+              "\t\@" .
+              ($dname ne '.' ? "cd $dname; " : '') .
+              "\$(MAKE) PWD=`pwd` -f " .
+              ($dname eq '.' ? $project : basename($project)) .
+              $crlf;
   }
 
-  ## Print out the projet Makefile
-  print $fh $crlf .
-            "all clean depend realclean:$crlf";
-
-  ## If there is more than one project, use a for loop
-  if ($#list > 0) {
-    print $fh "\t\@for file in \$(MFILES); do \\$crlf" .
-              "\told=`pwd`; \\$crlf" .
-              "\tcd `dirname \$\$file`; \\$crlf" .
-              "\t\$(MAKE) PWD=`pwd` -f `basename \$\$file` \$(\@); \\$crlf" .
-              "\tcd \$\$old; \\$crlf" .
-              "\tdone$crlf";
-  }
-  else {
-    ## Otherwise, just list the call to make without a for loop
-    print $fh "\t\@";
-    my($dname) = dirname($list[0]);
-    my($pwd) = '';
-    if ($dname ne '.') {
-      print $fh "cd $dname && ";
-      $pwd = "PWD=$dname";
-    }
-    print $fh "\$(MAKE) $pwd -f " .
-              ($dname eq '.' ? $list[0] : basename($list[0])) .
-              " \$(\@);$crlf";
+  ## Print out the project_name_list target
+  print $fh $crlf . "project_name_list:$crlf";
+  foreach my $project (@list) {
+    print $fh "\t\@echo $$pjs{$project}->[0]$crlf";
   }
 }
 
