@@ -13,7 +13,8 @@
 //
 // = AUTHORS
 //    Istvan Buki <istvan.buki@euronet.be> and 
-//    Jeff Parsons <parsons@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu> and
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -32,18 +33,18 @@ struct CDR_Test_Types
 {
   CDR_Test_Types (void);
 
-  CDR_Octet o;
-  short s;
-  long l;
-  const char *str;
-  double d;
+  ACE_CDR::Octet o;
+  ACE_CDR::Short s;
+  ACE_CDR::Long l;
+  const ACE_CDR::Char *str;
+  ACE_CDR::Double d;
 
   enum 
   {
     ARRAY_SIZE = 10
   };
 
-  short a[ARRAY_SIZE];
+  ACE_CDR::Short a[ARRAY_SIZE];
 };
 
 CDR_Test_Types::CDR_Test_Types (void)
@@ -105,9 +106,9 @@ test_put (ACE_OutputCDR &cdr,
 static int
 test_get (ACE_InputCDR &cdr, const CDR_Test_Types &test_types)
 {
-  CDR_Octet xo;
-  short xs;
-  long xl;
+  ACE_CDR::Octet xo;
+  ACE_CDR::Short xs;
+  ACE_CDR::Long xl;
 
   for (int i = 0; i < n; ++i)
     {
@@ -161,7 +162,7 @@ test_get (ACE_InputCDR &cdr, const CDR_Test_Types &test_types)
                            i),
                           1);
 
-      char *xstr;
+      ACE_CDR::Char *xstr;
       if (cdr.read_string (xstr) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "read_string2[%d] failed\n",
@@ -186,20 +187,20 @@ short_stream (void)
   ACE_OutputCDR os;
 
   // Basic types for output
-  char ch = 'A';
+  ACE_CDR::Char ch = 'A';
   ACE_CString str ("Test String");
-  short s = -123;
-  u_short us =  123;
-  long l = -65800L;
-  u_long ul =  65800UL;
-  float f =  1.23f;
-  double d =  123.456789;
+  ACE_CDR::Short s = -123;
+  ACE_CDR::UShort us =  123;
+  ACE_CDR::Long l = -65800L;
+  ACE_CDR::ULong ul =  65800UL;
+  ACE_CDR::Float f =  1.23f;
+  ACE_CDR::Double d =  123.456789;
 
   // Arrays for output
-  short s_array[3] = { -1, 0, 1 };
-  long l_array[3] = { -345678, 0, 345678 };
-  float f_array[3] = { -1.23f, 0.0f, 1.23f };
-  double d_array[3] = { -123.456789, 0.0, 123.456789 };
+  ACE_CDR::Short s_array[3] = { -1, 0, 1 };
+  ACE_CDR::Long l_array[3] = { -345678, 0, 345678 };
+  ACE_CDR::Float f_array[3] = { -1.23f, 0.0f, 1.23f };
+  ACE_CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
 
   ACE_OutputCDR::from_char fc (ch);
   os << fc;
@@ -242,20 +243,20 @@ short_stream (void)
     }
 
   // Basic types for input
-  char ch1 = '\0';
+  ACE_CDR::Char ch1 = '\0';
   ACE_CString str1;
-  short s1 = 0;
-  u_short us1 = 0;
-  long l1 = 0L;
-  u_long ul1 = 0UL;
-  float f1 = 0.0f;
-  double d1 = 0.0;
+  ACE_CDR::Short s1 = 0;
+  ACE_CDR::UShort us1 = 0;
+  ACE_CDR::Long l1 = 0L;
+  ACE_CDR::ULong ul1 = 0UL;
+  ACE_CDR::Float f1 = 0.0f;
+  ACE_CDR::Double d1 = 0.0;
   
   // Arrays for input
-  short s_array1[3];
-  long l_array1[3];
-  float f_array1[3];
-  double d_array1[3];
+  ACE_CDR::Short s_array1[3];
+  ACE_CDR::Long l_array1[3];
+  ACE_CDR::Float f_array1[3];
+  ACE_CDR::Double d_array1[3];
 
   ACE_DEBUG ((LM_DEBUG,
               "Checking operators and arrays\n\n"));
