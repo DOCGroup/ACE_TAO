@@ -773,8 +773,8 @@ ACE_Service_Config::close (void)
   if (ACE_Service_Config::is_initialized_ > 0)
     return 0;
 
-  // Delete the service repository. All the objects inside the service
-  // repository have already been finalized .
+  // Delete the service repository.  All the objects inside the
+  // service repository should already have been finalized.
   ACE_Service_Config::close_svcs ();
 
   // Delete the list fo svc.conf files
