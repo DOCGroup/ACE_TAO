@@ -180,4 +180,98 @@
 #endif /* ACE_WIN32 */
 #endif /* ACE_NESTED_CLASS */
 
+//
+// These macros can be used to write "portable" code between platforms
+// supporting CORBA exceptions natively (using the C++ exceptions) or
+// through the Enviroment parameter.
+// Their use requires some discipline, but they certainly help...
+//
+// TODO: Currently the IDL compiler does not support C++ exceptions, so we
+// cannot use them even if the platform has them.
+//
+#if defined (ACE_HAS_EXCEPTIONS) && defined (TAO_IDL_COMPILER_HAS_EXCEPTIONS)
+
+#define ACE_TRY_ENV __env
+// The first "do" scope is for the env.
+// The second "do" scope is for the ACE_CHECK_ENV continues.
+#define ACE_TRY \
+try { CORBA::Environment ACE_TRY_ENV;
+#define ACE_CATCH(TYPE,VAR) \
+} catch (TYPE VAR) {
+#define ACE_CATCHANY \
+} catch (...) {
+#define ACE_ENDTRY }
+
+// No need to do checking, exception handling does it for us.
+#define ACE_CHECK_ENV
+#define ACE_CHECK_ENV_RETURN(X, Y)
+
+#define ACE_THROW(EXCEPTION) throw EXCEPTION;
+#define ACE_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
+#define ACE_RETHROW throw;
+
+#define ACE_THROW_SPEC(X) throw X
+
+#else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
+
+#define ACE_TRY_ENV __env
+// The first "do" scope is for the env.
+// The second "do" scope is for the ACE_CHECK_ENV continues.
+
+#define ACE_TRY \
+do { CORBA::Environment ACE_TRY_ENV; \
+int ACE_TRY_FLAG = 1; \
+ACE_TRY_LABEL: \
+if (ACE_TRY_FLAG) \
+do {
+
+// Each CATCH statement ends the previous scope and starts a new one.
+// Since all CATCH statements can end the ACE_TRY macro, they must all
+// start a new scope for the next potential ACE_CATCH.  The ACE_ENDTRY
+// will finish them all.  Cool, eh?
+#define ACE_CATCH(TYPE,VAR) \
+} while (0); \
+do { \
+if (ACE_TRY_ENV.exception () != 0)
+
+
+#define ACE_CATCHANY \
+} while (0); \
+do { \
+if (ACE_TRY_ENV.exception () != 0)
+
+// The first "while" closes the local scope.  The second "while"
+// closes the ACE_TRY_ENV scope.
+#define ACE_ENDTRY } while (0); } while (0)
+
+// If continue is called, control will skip to the next ACE_CATCHANY
+// statement.
+#define ACE_CHECK_ENV \
+{\
+if (ACE_TRY_ENV.exception () != 0) \
+  { \
+    ACE_TRY_FLAG = 0; \
+    goto ACE_TRY_LABEL; \
+  } \
+}
+
+#define ACE_CHECK_ENV_RETURN(X, Y) \
+if ( X . exception () != 0) return Y
+
+#define ACE_THROW(EXCEPTION) \
+do {\
+ _env.exception (new EXCEPTION); \
+ return; } while (0)
+
+#define ACE_THROW_RETURN(EXCEPTION, RETURN) \
+do {\
+ _env.exception (new EXCEPTION); \
+ return RETURN; } while (0)
+
+#define ACE_RETHROW _env.exception (ACE_TRY_ENV.exception ())
+
+#define ACE_THROW_SPEC(X)
+
+#endif /* ACE_HAS_EXCEPTIONS */
+
 #endif /* TAO_CORBA_H */
