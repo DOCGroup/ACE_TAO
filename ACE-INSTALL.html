@@ -210,7 +210,7 @@ source.  Then, rebuild and install as.<p>
 //+++ ecoff.c	Thu Jan 15 09:21:08 1998
 //@@ -769,7 +769,11 @@
 //    can't be represented (assuming there are strings &gt; 4096 bytes).  */
-// 
+//
 // #ifndef PAGE_SIZE
 //-#define PAGE_SIZE 4096		/* size of varray pages */
 //+// Thu Jan 15 09:21:03 CST 1998  David L. Levine  &lt;levine@cs.wustl.edu&gt;
@@ -219,7 +219,7 @@ source.  Then, rebuild and install as.<p>
 //+// should be OK.
 //+#define PAGE_SIZE 8192		/* size of varray pages */
 // #endif
-// 
+//
 // #define PAGE_USIZE ((unsigned long) PAGE_SIZE)
 </pre><p>
 
@@ -233,7 +233,7 @@ to avoid compilation errors:<p>
 //@@ -41,9 +41,13 @@
 // #undef __FDMASK
 // #define	__FDMASK(d)	(1UL &lt;&lt; ((d) % __NFDBITS))
-// 
+//
 //-typedef struct fd_set {
 //+#include &lt;gnu/types.h&gt;
 //+typedef __fd_set __kernel_fd_set;
@@ -242,7 +242,7 @@ to avoid compilation errors:<p>
 // 	unsigned long fds_bits [__FDSET_LONGS];
 // } __kernel_fd_set;
 //+#endif
-// 
+//
 // /* Type of a signal handler.  */
 // typedef void (*__kernel_sighandler_t)(int);
 </pre><p>
@@ -423,6 +423,15 @@ If you use the GNU GCC g++ compiler please note the following: <P>
 <UL>
         <LI>ACE transparently supports egcs.  Please use the appropriate
         g++ config and platform files for the OS on which you will use egcs.
+
+        <strong><blink>WARNING:</blink></strong> The default behavior of
+        the ACE Makefiles is to add <code>-fno-exceptions</code> to egcs
+        (and g++ starting with version 2.8.0) invocations.  This disables
+        exception handling support.  On Solaris/sparc and Linux/alpha, it
+        results in a 25 percent reduction in the size of libACE.so.  To enable
+        exception handling, add <code>exceptions=1</code> to your
+        <code>make</code> command line invocation, or to your
+        <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.
 
         <LI>With g++ 2.8.0, an internal compiler error is raised when
         trying to compile ACE_Map_Manager instantiations.  One workaround
