@@ -40,6 +40,8 @@
 
 #define ACE_HAS_TERM_IOCTLS
 
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 
