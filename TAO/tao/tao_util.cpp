@@ -124,6 +124,7 @@ TAO_ORB_Manager::orb (void)
   return CORBA_ORB::_duplicate (this->orb_);
 }
 
+// Destructor
 TAO_ORB_Manager::~TAO_ORB_Manager ()
 {
   CORBA::Environment env;
