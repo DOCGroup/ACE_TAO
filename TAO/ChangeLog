@@ -1,3 +1,19 @@
+Tue Dec  3 21:27:52 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Blocked_Connect_Strategy.cpp:
+	* tao/Blocked_Connect_Strategy.h:
+	* tao/Connect_Strategy.cpp:
+	* tao/Connect_Strategy.h:
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/LF_Connect_Strategy.h:
+	* tao/Reactive_Connect_Strategy.cpp:
+	* tao/Reactive_Connect_Strategy.h: Did some refactoring of code,
+	  especially the call to post_failed_connect (). Since all connect
+	  strategies may require some cleaning up, moved the
+	  implementation to the base class. Added an argument to the call
+	  post_failed_connect () to indicate the status of the state
+	  transformations that occurred on the Connection_Handler.
+
 Tue Dec  3 18:16:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/LF_Connect_Strategy.h:
