@@ -1,3 +1,14 @@
+Thu Aug 29 22:01:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Make the build options
+          settable by the command line (and/or platform_macros.GNU), and
+          fix the threads and soname options, as well we remove the
+          -fstrict-prototype option from the compile options - it was needed
+          for an older g++ (nothing prior to g++ 3 works right on HP-UX
+          anyway) and is not valid for g++ 3.2 and later. Thanks to
+          Ville Lehtiniemi <guderian@ees2.oulu.fi> for reporting these
+          issues and sending fixes.
+
 Thu Aug 29 15:03:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/README:
