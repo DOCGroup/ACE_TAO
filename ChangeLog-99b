@@ -1,3 +1,11 @@
+Wed Apr  7 13:36:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/Basic_Types.h:
+	  Added a signed companion to David's
+	  ACE_UINT64_LITERAL, to avoid MSVC warnings. If
+	  the platform has no 8-byte integer, this is 
+	  useless, but we must keep all compilers happy.
+
 Wed Apr  7 11:30:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile: 
