@@ -9,7 +9,11 @@ Generic Servant:
 	MyFooServant.cpp	Servant implementation for the FOO interface
 	client.cpp		A simple Foo client
 
-	Typing Make creates an executable client and server library libserver.a.
+	Typing
+
+	% Make
+	
+	 creates an executable client and server library libserver.a.
 
 	To run the client , type 
 
