@@ -64,7 +64,7 @@ check_bounds(
   // even remove this. 
 #if defined (ACE_HAS_EXCEPTIONS)
   ACE_THROW (CORBA::BAD_PARAM ());
-#elif
+#else
   ACE_OS::abort ();
 #endif /*ACE_HAS_EXCEPTIONS*/
 }
