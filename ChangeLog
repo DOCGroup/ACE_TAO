@@ -29,6 +29,8 @@ Fri Aug 25 16:15:50 2000  Carlos O'Ryan  <coryan@uci.edu>
         * ace/Makefile.am:
         * ace/Makefile.bor:
         * ace/ace.icc:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
           Add all the new files to the system.
 
         * tests/Task_Test.cpp:
