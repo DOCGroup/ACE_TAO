@@ -928,7 +928,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
           // Work around MSVC++ bug, it does not not how to convert an
           // unsigned 64 bit int into a long....
           CORBA::ULong tmp = ACE_static_cast(CORBA::ULong,(s - now));
-          this->stats_[ID].laxity_[count] = 1 + tmp/1000.0/interval;
+          this->stats_[ID].laxity_[count] = 1 + tmp/1000.0F/interval;
           count++;
         }
       else
