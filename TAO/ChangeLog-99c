@@ -1,3 +1,27 @@
+Tue Nov 23 18:30:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (create_reference_with_id_i and create_reference_i):
+	  Bug 180: POA's active object map consumes memory even with
+	  NON_RETAIN policy.  In create_reference_i() and
+	  create_reference_with_id_i(), we were always creating an entry
+	  in the Active Object Map.  This is not necessary with the
+	  NON_RETAIN policy.  Therefore, changes were made such that in
+	  create_reference_with_id_i() the user provided id is used as the
+	  system id and in create_reference_i an empty object id is used.
+	  In both cases, no entries are added to the Active Object Map.
+
+	  Two other changes were required: (a) in reference_to_id() no
+	  transformations were required from system id to user id since
+	  user id and system id are the same. (b) in locate_servant_i() no
+	  transformations were required from system id to user id since
+	  user id and system id are the same and
+	  <poa_current_impl.object_id_> simply gets a (smart) copy of
+	  system id.
+
+	  This fixes Bug 180.  Thanks to Stefan Ullrich
+	  <SULLRICH@t-online.de> for originally reporting this and to
+	  Lothar Werzinger <werzinger.lothar@krones.de> for the reminder.
+
 Tue Nov 23 19:48:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
@@ -16,7 +40,7 @@ Tue Nov 23 17:44:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/PolicyC.cpp:
 	* tao/PollableC.cpp:
 	* tao/Object.cpp:
-	  Changed code around calls to 
+	  Changed code around calls to
 	  TAO_GIOP_Invoccation::prepare_header(). It is part
 	  of the changes relating to the request header required
 	  by reliable oneways. I had overlooked these calls.
@@ -41,7 +65,6 @@ Tue Nov 23 11:04:20 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
 	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
 	  Fixed the tests to run with the pluggable protocols framework
-
 
 Tue Nov 23 00:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
