@@ -1,3 +1,11 @@
+Thu Sep 11 17:54:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Collocation_Strategy.h:
+
+          Added include of TAO_Export.h to the first file and removed one
+          from the second.
+
 Thu Sep 11 15:25:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Abstract_Servant_Base.cpp:

@@ -15,8 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
-
 /// Define symbolic names for the ORB collocation strategies.
 namespace TAO
 {
