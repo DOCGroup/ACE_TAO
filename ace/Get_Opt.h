@@ -243,7 +243,6 @@ public:
 
   /// Holds the <argv> pointer.
   ACE_TCHAR **argv_;
-
   /// Index in argv_ of the next element to be scanned.
   int optind;
 
@@ -260,20 +259,17 @@ private:
   {
   public:
     /// ctor
-    ACE_Get_Opt_Long_Option (const ACE_TString name,
+    ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
                              int has_arg,
-                             int val = 0)
-      :  name_ (name),
-         has_arg_ (has_arg),
-         val_ (val) {};
+                             int val = 0);
 
     /// Default dtor.
-    ~ACE_Get_Opt_Long_Option (void) {};
+    ~ACE_Get_Opt_Long_Option (void);
 
     int operator < (const ACE_Get_Opt_Long_Option &rhs);
 
     /// Long option name.
-    const ACE_TString name_;
+    const ACE_TCHAR *name_;
 
     /// Contains value for <OPTION_ARG_MODE>.
     int has_arg_;
@@ -318,8 +314,7 @@ private:
   /**
    * The next char to be scanned in the option-element in which the
    * last option character we returned was found.  This allows us to
-   * pick up the scan where we left off.
-   *
+   * pick up the scan where we left off   *
    * If this is zero, or a null string, it means resume the scan
    * by advancing to the next <argv>-element.
    */
