@@ -64,8 +64,7 @@ an enhancement, then use our
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0, 6.0), Chorus,
-     PharLap TNT Embedded ToolSuite 9.1
+   <td>Windows 95, MVS, Chorus, PharLap TNT Embedded ToolSuite 9.1
    </td>
   </tr>
   <tr valign=top>
@@ -94,7 +93,7 @@ try to help you fix the problems.
 <H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
 
 <UL>
-  <LI><B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><P>
+  <LI><B>Win32 (Windows NT/i386 and Windows '95) </B><P>
 
       All of ACE has been ported to the Win32 API (which includes
       Windows NT, Windows 2000, and Windows '95/98).  The entire
@@ -1173,7 +1172,7 @@ these compilers but probably not without a bit of effort. <P>
       <BR>
   <LI>Each project will contain several different configurations.  These
       are a mixture of Debug/Release, MFC/Non-MFC, and Static/Dynamic 
-      library versions for both i386 and sometimes Alpha machines.
+      library versions.
       Make sure you are building the one you'll use (for example, the 
       debug tests need the debug version of ACE, and so on).  All these
       different configurations are provided for your convenience.  You
@@ -1299,18 +1298,15 @@ card.  This is one method:<P>
       MS Loopback Adapter<P>
 </OL>
 
-<B>NT ALPHA CONFIGURATIONS</B>
+<B>WIN32 ALPHA CONFIGURATIONS</B>
 
-<P>CUrrently some of the project files in ACE support Alpha configurations, 
-but they are somewhat out of date.  Since the file list is global between i386
-and Alpha, they have a good chance of working.  If not, they might need to
-be created as below.</P>
-
-<P>Here are the steps we use to add an Alpha Configuration.</P>
+<P>The project files for Visual C++ no longer contain any configurations 
+targetted to Windows NT on the DEC Alpha.  Below are the steps needed to
+recreate the Alpha configurations:</P>
 
 <OL>
   <LI>Load the project on the Alpha machine.
-  <LI>Go to the Build menu and then Configurations.
+  <LI>Go to the Build menu and then select Configurations.
   <LI>Select the project that you want to convert.
   <LI>Click on Add.
   <LI>Select the x86 configuration to &quot;Copy settings from&quot;
@@ -1321,7 +1317,7 @@ be created as below.</P>
   <LI>Close the &quot;Configurations&quot; window.
   <LI>Now go to the Project settings.
   <LI>For the General Settings, change the output directories to standard ACE
-      output directores. Intermediate Directories are &quot;Debug&quot; and
+      output directories. Intermediate Directories are &quot;Debug&quot; and
           &quot;Release&quot; in most cases.  The Output Directories are blank,
           except for Release versions of executables, in which it is also
           &quot;Release&quot;.

@@ -150,7 +150,6 @@ CONTROLLED_FILES = \
         THANKS \
         TODO \
         VERSION \
-        WindozeCE \
         acconfig.h \
         aclocal.m4 \
         ace \

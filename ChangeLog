@@ -1,3 +1,195 @@
+Mon Feb 26 00:19:28 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        Time to do some spring cleaning...
+
+        * tests/version_tests/Config_Test.dsp: (added)
+        * tests/version_tests/DLL_Test_Impl.dsp: (added)
+        * tests/version_tests/Log_Msg_Test.dsp: (added)
+        * tests/version_tests/Message_Queue_Test_Ex.dsp: (added)
+        * tests/version_tests/version_tests.dsw:
+
+          Updated the version_tests dir with create_vt_dsps.pl.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        * netsvcs/lib/netsvcs.dsp:
+        * netsvcs/servers/servers.dsp:
+        * tests/ACE_Init_Test.dsp:
+        * tests/Atomic_Op_Test.dsp:
+        * tests/Auto_IncDec_Test.dsp:
+        * tests/Barrier_Test.dsp:
+        * tests/Basic_Types_Test.dsp:
+        * tests/Buffer_Stream_Test.dsp:
+        * tests/CDR_Array_Test.dsp:
+        * tests/CDR_File_Test.dsp:
+        * tests/CDR_Test.dsp:
+        * tests/Cache_Map_Manager_Test.dsp:
+        * tests/Cached_Accept_Conn_Test.dsp:
+        * tests/Cached_Conn_Test.dsp:
+        * tests/Capabilities_Test.dsp:
+        * tests/Collection_Test.dsp:
+        * tests/Config_Test.dsp:
+        * tests/Conn_Test.dsp:
+        * tests/DLL_Test.dsp:
+        * tests/DLList_Test.dsp:
+        * tests/Dirent_Test.dsp:
+        * tests/Dynamic_Priority_Test.dsp:
+        * tests/Enum_Interfaces_Test.dsp:
+        * tests/Env_Value_Test.dsp:
+        * tests/Future_Set_Test.dsp:
+        * tests/Future_Test.dsp:
+        * tests/Handle_Set_Test.dsp:
+        * tests/Hash_Map_Bucket_Iterator_Test.dsp:
+        * tests/Hash_Map_Manager_Test.dsp:
+        * tests/High_Res_Timer_Test.dsp:
+        * tests/IOStream_Test.dsp:
+        * tests/Lazy_Map_Manager_Test.dsp:
+        * tests/Log_Msg_Test.dsp:
+        * tests/MEM_Stream_Test.dsp:
+        * tests/MM_Shared_Memory_Test.dsp:
+        * tests/MT_Reactor_Timer_Test.dsp:
+        * tests/MT_SOCK_Test.dsp:
+        * tests/Malloc_Test.dsp:
+        * tests/Map_Manager_Test.dsp:
+        * tests/Map_Test.dsp:
+        * tests/Mem_Map_Test.dsp:
+        * tests/Message_Block_Test.dsp:
+        * tests/Message_Queue_Notifications_Test.dsp:
+        * tests/Message_Queue_Test.dsp:
+        * tests/Message_Queue_Test_Ex.dsp:
+        * tests/Naming_Test.dsp:
+        * tests/New_Fail_Test.dsp:
+        * tests/Notify_Performance_Test.dsp:
+        * tests/OS_Test.dsp:
+        * tests/Object_Manager_Test.dsp:
+        * tests/OrdMultiSet_Test.dsp:
+        * tests/Pipe_Test.dsp:
+        * tests/Priority_Buffer_Test.dsp:
+        * tests/Priority_Reactor_Test.dsp:
+        * tests/Priority_Task_Test.dsp:
+        * tests/Process_Manager_Test.dsp:
+        * tests/Process_Mutex_Test.dsp:
+        * tests/Process_Strategy_Test.dsp:
+        * tests/RB_Tree_Test.dsp:
+        * tests/Reactor_Exceptions_Test.dsp:
+        * tests/Reactor_Notify_Test.dsp:
+        * tests/Reactor_Performance_Test.dsp:
+        * tests/Reactor_Timer_Test.dsp:
+        * tests/Reactors_Test.dsp:
+        * tests/Reader_Writer_Test.dsp:
+        * tests/Recursive_Mutex_Test.dsp:
+        * tests/Refcounted_Auto_Ptr_Test.dsp:
+        * tests/Reverse_Lock_Test.dsp:
+        * tests/SOCK_Connector_Test.dsp:
+        * tests/SOCK_Send_Recv_Test.dsp:
+        * tests/SOCK_Test.dsp:
+        * tests/SPIPE_Test.dsp:
+        * tests/SString_Test.dsp:
+        * tests/SV_Shared_Memory_Test.dsp:
+        * tests/Semaphore_Test.dsp:
+        * tests/Service_Config_Test.dsp:
+        * tests/Sigset_Ops_Test.dsp:
+        * tests/Simple_Message_Block_Test.dsp:
+        * tests/Svc_Handler_Test.dsp:
+        * tests/TSS_Test.dsp:
+        * tests/Task_Test.dsp:
+        * tests/Thread_Manager_Test.dsp:
+        * tests/Thread_Mutex_Test.dsp:
+        * tests/Thread_Pool_Reactor_Test.dsp:
+        * tests/Thread_Pool_Test.dsp:
+        * tests/Time_Service_Test.dsp:
+        * tests/Time_Value_Test.dsp:
+        * tests/Timeprobe_Test.dsp:
+        * tests/Timer_Queue_Test.dsp:
+        * tests/Tokens_Test.dsp:
+        * tests/UPIPE_SAP_Test.dsp:
+        * tests/Upgradable_RW_Test.dsp:
+
+          Removed the Alpha configurations.  I don't think we've
+          actually looked at these for over a year, and they are 
+          missing from a lot of projects.  Thankfully, they are easy
+          to recreate if they are needed.
+
+        * ACE-INSTALL.html:
+
+          Changed the Windows NT Alpha section to mention that we
+          no longer have configurations out of the box for Win32/Alpha,
+          they must be recreated if needed.
+
+        * WindozeCE/ACEApp.cpp: (removed)
+        * WindozeCE/ACEApp.h: (removed)
+        * WindozeCE/README: (removed)
+        * WindozeCE/StdAfx.cpp: (removed)
+        * WindozeCE/StdAfx.h: (removed)
+        * WindozeCE/WindozeCE.aps: (removed)
+        * WindozeCE/WindozeCE.clw: (removed)
+        * WindozeCE/WindozeCE.cpp: (removed)
+        * WindozeCE/WindozeCE.dsp: (removed)
+        * WindozeCE/WindozeCE.h: (removed)
+        * WindozeCE/WindozeCE.rc: (removed)
+        * WindozeCE/WindozeCEDlg.cpp: (removed)
+        * WindozeCE/WindozeCEDlg.h: (removed)
+        * WindozeCE/resource.h: (removed)
+        * WindozeCE/res/WindozeCE.ico: (removed)
+        * WindozeCE/res/WindozeCE.rc2: (removed)
+
+          No longer used.
+
+        * Makefile:
+
+          Removed WindozeCE from CONTROLLED_FILES.
+
+        * tests/WinCE/Atomic_Op_Test.dsp: (removed)
+        * tests/WinCE/Barrier_Test.dsp: (removed)
+        * tests/WinCE/Basic_Types_Test.dsp: (removed)
+        * tests/WinCE/Buffer_Stream_Test.dsp: (removed)
+        * tests/WinCE/Conn_Test.dsp: (removed)
+        * tests/WinCE/DLL_Test.dsp: (removed)
+        * tests/WinCE/Enum_Interfaces_Test.dsp: (removed)
+        * tests/WinCE/Future_Test.dsp: (removed)
+        * tests/WinCE/Handle_Set_Test.dsp: (removed)
+        * tests/WinCE/Hash_Map_Manager_Test.dsp: (removed)
+        * tests/WinCE/MT_Reactor_Timer_Test.dsp: (removed)
+        * tests/WinCE/MT_SOCK_Test.dsp: (removed)
+        * tests/WinCE/Map_Manager_Test.dsp: (removed)
+        * tests/WinCE/Mem_Map_Test.dsp: (removed)
+        * tests/WinCE/Message_Block_Test.dsp: (removed)
+        * tests/WinCE/Message_Queue_Notifications_Test.dsp: (removed)
+        * tests/WinCE/Message_Queue_Test.dsp: (removed)
+        * tests/WinCE/Notify_Performance_Test.dsp: (removed)
+        * tests/WinCE/OrdMultiSet_Test.dsp: (removed)
+        * tests/WinCE/Priority_Buffer_Test.dsp: (removed)
+        * tests/WinCE/Priority_Task_Test.dsp: (removed)
+        * tests/WinCE/Reactor_Exceptions_Test.dsp: (removed)
+        * tests/WinCE/Reactor_Notify_Test.dsp: (removed)
+        * tests/WinCE/Reactor_Performance_Test.dsp: (removed)
+        * tests/WinCE/Reactor_Timer_Test.dsp: (removed)
+        * tests/WinCE/Reactors_Test.dsp: (removed)
+        * tests/WinCE/Reader_Writer_Test.dsp: (removed)
+        * tests/WinCE/Recursive_Mutex_Test.dsp: (removed)
+        * tests/WinCE/SOCK_Connector_Test.dsp: (removed)
+        * tests/WinCE/SOCK_Test.dsp: (removed)
+        * tests/WinCE/SString_Test.dsp: (removed)
+        * tests/WinCE/Semaphore_Test.dsp: (removed)
+        * tests/WinCE/Sigset_Ops_Test.dsp: (removed)
+        * tests/WinCE/Simple_Message_Block_Test.dsp: (removed)
+        * tests/WinCE/TSS_Test.dsp: (removed)
+        * tests/WinCE/Task_Test.dsp: (removed)
+        * tests/WinCE/Thread_Manager_Test.dsp: (removed)
+        * tests/WinCE/Thread_Mutex_Test.dsp: (removed)
+        * tests/WinCE/Thread_Pool_Test.dsp: (removed)
+        * tests/WinCE/Time_Value_Test.dsp: (removed)
+        * tests/WinCE/Timer_Queue_Test.dsp: (removed)
+        * tests/WinCE/ce_tests.dsw: (removed)
+
+          Removed these Windows CE Toolkit for Visual C++ files.
+
+Mon Feb 26 00:15:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/DLL_Test_Impl.dsp:
+
+          Made sure the Code Generation settings were correct.
+
 Sun Feb 25 19:40:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/ACEutils.pm (CheckForConfig):
