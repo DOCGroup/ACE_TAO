@@ -21,6 +21,7 @@ public:
 
   const char * path (void) const;
   void path (const char *);
+  void set_status (int);
 
 private:
 

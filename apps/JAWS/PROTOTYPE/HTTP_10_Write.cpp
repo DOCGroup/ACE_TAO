@@ -26,8 +26,6 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put");
 
-  int status;
-
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = this->policy ();
   if (policy == 0) policy = data->policy ();
@@ -37,23 +35,27 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_HTTP_10_Request *info = ACE_static_cast (JAWS_HTTP_10_Request *,
                                                 data->payload ());
 
+  if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
+    {
+      delete info;
+      return -1;
+    }
+
   ACE_DEBUG ((LM_DEBUG, " (%t) request %s::%s::%s parsed\n",
               (info->method () ? info->method () : "-"),
               (info->uri () ? info->uri () : "="),
               (info->version () ? info->version () : "HTTP/0.9")));
 
-  status = info->status ();
-
   if (info->type () != (int) JAWS_HTTP_10_Request::GET)
-    status = JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED;
+    info->set_status (JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED);
 
   if (info->type () == (int) JAWS_HTTP_10_Request::QUIT)
-    status = JAWS_HTTP_10_Request::STATUS_QUIT;
+    info->set_status (JAWS_HTTP_10_Request::STATUS_QUIT);
 
-  if (status != (int) JAWS_HTTP_10_Request::STATUS_OK)
+  if (info->status () != (int) JAWS_HTTP_10_Request::STATUS_OK)
     {
       JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ! STATUS OK");
-      cerr << "status: " << status << endl;
+      cerr << "status: " << info->status () << endl;
 
       char msg[] =
         "<html><head><title>HTTP/1.0 500 Internal Server Error</title>"
@@ -61,19 +63,24 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         "</body></html>";
 
       io->send_error_message (handler, msg, sizeof (msg));
-      if (handler->status () == JAWS_IO_Handler::WRITE_OK)
+      switch (handler->status ())
         {
-          JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, QUIT");
-          int result = (status
-                        == (int) JAWS_HTTP_10_Request::STATUS_QUIT);
+        case JAWS_IO_Handler::WRITE_OK:
           delete info;
-          return -result;
+
+          if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
+            return -1;
+
+          return 0;
+
+        case JAWS_IO_Handler::WRITE_ERROR:
+          return -1;
+
+        default:
+          return 2;
         }
-      else
-        {
-          delete info;
-          return 1;
-        }
+
+      return 2;
     }
   else
     {
