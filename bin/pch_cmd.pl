@@ -140,7 +140,8 @@ else {
   $status /= 256;
 
   ## Only process the file if the status is zero
-  if ($status == 0) {
+  ## and if we have a precompiled header file
+  if ($status == 0 && defined $pch) {
     $status = 1;
 
     ## Set up the signal handlers

@@ -1,4 +1,4 @@
-project : acelib, core {
+project : acelib, core, qt_moc, qt_reactor {
   sharedname  = ACE
   install     =
   defaultlibs =

@@ -1,4 +1,4 @@
-project {
+project: qt {
   defaultlibs = ACE
   dllout      = $(ACE_ROOT)/bin
   libout      = .

@@ -1,3 +1,39 @@
+Fri Jun 20 09:52:44 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Added inheritance from qt_moc and qt_reactor.  These will only be
+          processed if the 'qt' feature is enabled.
+
+        * ace/qt_reactor.mpb:
+
+          Added QtReactor_moc.cpp to the list of files.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Added inheritance from the qt base project.
+
+        * bin/MakeProjectCreator/config/qt.mpb:
+
+          Contains the basic feature definition for qt libs and apps.
+
+        * bin/MakeProjectCreator/config/qt_moc.mpb:
+
+          Contains the custom definition for MOC files.
+
+        * bin/MakeProjectCreator/modules/ArrayHandle.pm:
+
+          Removed this file.  It isn't necessary anymore.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Changed the way feature files are read.  This new way is better
+          and less hacky.
+
+        * bin/pch_cmd.pl:
+
+          Don't modify the file if no precompiled header is found.
+
 Fri Jun 20 14:28:12 UTC 2003  Johnny WIllemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
