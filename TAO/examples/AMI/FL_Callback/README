@@ -17,5 +17,4 @@ Notes:
 - Compile TAO with TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK
   defined.
 
-- The IDL compiler needs to be compiled with IDL_HAS_VALUETYPE switched
-  on. Use the switch -GC to generate AMI stubs.
+- Use the switch -GC on the TAO IDL compiler to generate AMI stubs.
