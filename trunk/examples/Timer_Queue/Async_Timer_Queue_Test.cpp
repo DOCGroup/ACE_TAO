@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    tests
+//    examples
 // 
 // = FILENAME
 //    Async_Timer_Queue_Test.cpp
