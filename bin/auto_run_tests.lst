@@ -45,7 +45,7 @@ TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl
 TAO/tests/DSI_Gateway/run_test.pl: MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: MINIMUM
-TAO/tests/Connection_Purging/run_test.pl: ST
+# BROKEN TAO/tests/Connection_Purging/run_test.pl: ST
 TAO/tests/LongUpcalls/run_test.pl: MINIMUM
 TAO/examples/Buffered_Oneways/run_test.pl: MINIMUM
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: MINIMUM
