@@ -36,10 +36,19 @@ ACE_Process::~ACE_Process (void)
 #endif /* ACE_WIN32 */
 }
 
+int
+ACE_Process::prepare (ACE_Process_Options &)
+{
+  return 0;
+}
+
 pid_t
 ACE_Process::spawn (ACE_Process_Options &options)
 {
 #if defined (ACE_WIN32)
+  if (prepare (options) < 0)
+    return ACE_INVALID_PID;
+  
   BOOL fork_result =
     ::CreateProcess (0,
                      options.command_line_buf (), // command-line options
@@ -52,9 +61,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
                      options.startup_info (),
                      &this->process_info_);
 
-  if (fork_result)
+  if (fork_result) {
+    parent (this->getpid ());
     return this->getpid ();
-  else
+  } else
     return ACE_INVALID_PID;
 #elif defined (CHORUS)
   // This only works if we exec.  Chorus does not really support
@@ -95,6 +105,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   return this->child_id_;
 #else /* ACE_WIN32 */
+  if (prepare (options) < 0)
+    return ACE_INVALID_PID;
+  
   // Fork the new process.
   this->child_id_ = ACE::fork (options.command_line_argv ()[0],
                                options.avoid_zombies ());
@@ -106,6 +119,13 @@ ACE_Process::spawn (ACE_Process_Options &options)
       && this->child_id_ == 0)
     ACE_OS::setpgid (0,
                      options.getgroup ());
+
+  if (this->child_id_ == 0) {
+      child ( ACE_OS::getppid () );
+  } else
+  if (this->child_id_ != -1) {
+      parent (this->child_id_);
+  }
   
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),
@@ -188,6 +208,24 @@ ACE_Process::spawn (ACE_Process_Options &options)
       return this->child_id_;
     }
 #endif /* ACE_WIN32 */
+}
+
+void
+ACE_Process::parent (pid_t)
+{
+  // nothing to do
+}
+
+void
+ACE_Process::child (pid_t)
+{
+  // nothing to do
+}
+
+void
+ACE_Process::unmanage (void)
+{
+  // nothing to do
 }
 
 int
@@ -302,7 +340,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
     command_line_buf_ (0),
-	process_group_ (ACE_INVALID_PID)
+    process_group_ (ACE_INVALID_PID)
 {
   ACE_NEW (command_line_buf_,
            TCHAR[cobl]);

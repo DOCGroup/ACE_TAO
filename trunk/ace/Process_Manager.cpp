@@ -14,6 +14,37 @@
 
 ACE_RCSID(ace, Process_Manager, "$Id$")
 
+/*
+ * ACE_Managed_Process_ is just an ACE_Process with an "unmanage()" routine
+ * that deletes the instance.  It should be private to this file, which is
+ * why I put an underscore after the class name.  (It'd be better to put it
+ * in a private namespace or something, but who knows how well supported that
+ * stuff is?)
+ */
+class ACE_Managed_Process_ : public ACE_Process {
+  public:
+    ACE_Managed_Process_ (void);
+  private:
+    virtual ~ACE_Managed_Process_ (void);
+  public:
+    virtual void unmanage (void);
+} ;
+
+ACE_Managed_Process_::ACE_Managed_Process_ (void)
+  : ACE_Process ()
+{
+}
+    
+ACE_Managed_Process_::~ACE_Managed_Process_ (void)
+{
+}
+
+void
+ACE_Managed_Process_::unmanage (void)
+{
+  delete this;
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
@@ -57,8 +88,7 @@ ACE_Process_Manager::dump (void) const
 }
 
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)
-  : delete_process_ (0),
-    process_ (0),
+  : process_ (0),
     exit_notify_ (0)
 {
   ACE_TRACE ("ACE_Process_Descriptor::ACE_Process_Descriptor");
@@ -220,13 +250,8 @@ ACE_Process_Manager::close (void)
 
   if (this->process_table_ != 0)
     {
-      for (size_t i = 0; i < this->current_count_; ++i)
-        {
-          if (this->process_table_[i].exit_notify_ != 0)
-            this->process_table_[i].exit_notify_->handle_close
-              (this->process_table_[i].process_->gethandle (),
-               0);
-        }
+      while (this->current_count_ > 0)
+        this->remove_proc (0);
 
       delete [] this->process_table_;
       this->process_table_ = 0;
@@ -306,8 +331,8 @@ ACE_Process_Manager::handle_signal (int,
             pid_t pid = i != -1
               ? process_table_[i].process_->getpid ()
               : ACE_INVALID_PID;
-            this->notify_proc_handler (proc, pid, status);
-            this->remove_proc (pid);
+            this->notify_proc_handler (i, status);
+            this->remove_proc (i);
           }
           return -1; // remove this HANDLE/Event_Handler combination
         }
@@ -387,24 +412,14 @@ ACE_Process_Manager::handle_close (ACE_HANDLE handle,
 pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options)
 {
-  ACE_Process *process = new ACE_Process;
+  ACE_Process *process;
+  ACE_NEW_RETURN (process,
+                  ACE_Process,
+                  ACE_INVALID_PID);
 
   options.setgroup (ACE_OS::getpid ());
 
-  pid_t pid = spawn (process, options);
-
-  if (pid != ACE_INVALID_PID)
-    {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-                                this->lock_, ACE_INVALID_PID));
-      ssize_t i = this->find_proc (pid);
-
-      ACE_ASSERT (i != -1);
-
-      this->process_table_[i].delete_process_ = 1;
-    }
-
-  return pid;
+  return spawn (process, options);
 }
 
 // Create a new process.
@@ -482,8 +497,6 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
       ACE_Process_Descriptor &proc_desc =
         this->process_table_[this->current_count_];
 
-      // pending better info from caller
-      proc_desc.delete_process_ = 0;
       proc_desc.process_ = proc;
       proc_desc.exit_notify_ = 0;
 
@@ -527,20 +540,22 @@ ACE_Process_Manager::remove (pid_t pid)
   ACE_TRACE ("ACE_Process_Manager::remove");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-  return this->remove_proc (pid);
+
+  ssize_t i = this->find_proc (pid);
+
+  if (i != -1)
+    return this->remove_proc (i);
+  else
+    // set "process not found" error
+    return -1;
 }
 
 // Remove a process from the pool.  Must be called with locks held.
 
 int
-ACE_Process_Manager::remove_proc (pid_t pid)
+ACE_Process_Manager::remove_proc (size_t i)
 {
   ACE_TRACE ("ACE_Process_Manager::remove");
-
-  ssize_t i = this->find_proc (pid);
-
-  if (i == -1)
-    return -1;
 
   // If there's an exit_notify_ <Event_Handler> for this pid, call its
   // <handle_close> method.
@@ -553,8 +568,7 @@ ACE_Process_Manager::remove_proc (pid_t pid)
       this->process_table_[i].exit_notify_ = 0;
     }
 
-  if (this->process_table_[i].delete_process_)
-    delete this->process_table_[i].process_;
+  this->process_table_[i].process_->unmanage ();
 
   this->process_table_[i].process_ = 0;
 
@@ -588,7 +602,7 @@ ACE_Process_Manager::terminate (pid_t pid)
     {
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
-      this->remove (pid);
+      this->remove (i);
       return 0;
     }
   else
@@ -712,17 +726,18 @@ ACE_Process_Manager::wait (pid_t pid,
   if (status == 0)
     status = &local_stat;
 
+  ssize_t idx = -1;
   ACE_Process *proc = 0;
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (pid != 0)
     {
-      ssize_t i = this->find_proc (pid);
-      if (i == -1)
+      idx = this->find_proc (pid);
+      if (idx == -1)
         return ACE_INVALID_PID;
       else
-        proc = process_table_[i].process_;
+        proc = process_table_[idx].process_;
     }
 
   if (proc != 0)
@@ -758,9 +773,9 @@ ACE_Process_Manager::wait (pid_t pid,
           ACE_ASSERT (result >= WAIT_OBJECT_0
                       && result < WAIT_OBJECT_0 + current_count_);
 
-          ssize_t i = this->find_proc (handles[result - WAIT_OBJECT_0]);
+          idx = this->find_proc (handles[result - WAIT_OBJECT_0]);
 
-          if (i != -1)
+          if (idx != -1)
             {
               pid = process_table_[i].process_->getpid ();
               result = ::GetExitCodeProcess (handles[result - WAIT_OBJECT_0],
@@ -768,14 +783,20 @@ ACE_Process_Manager::wait (pid_t pid,
               if (result == 0)
                 {
                   // <GetExitCodeProcess> failed!
-                  this->remove_proc (pid);
+                  this->remove_proc (idx);
                   pid = ACE_INVALID_PID;
                 }
             }
           else
-            // uh oh...handle removed from process_table_, even though
-            // we're holding a lock!
-            ;
+            {
+              // uh oh...handle removed from process_table_, even though
+              // we're holding a lock!
+              delete [] handles;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("Process removed")
+                                 ASYS_TEXT (" -- somebody's ignoring the lock!\n")),
+                                -1);
+            }
         }
 
       delete [] handles;
@@ -829,22 +850,19 @@ ACE_Process_Manager::wait (pid_t pid,
     {
       if (proc == 0)
         {
-          ssize_t i = this->find_proc (pid);
-          if (i == -1)
-            {
-              // oops, reaped an unmanaged process!
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
-                          pid));
-              return pid;
-            }
+          idx = this->find_proc (pid);
+          if (idx == -1)
+            // oops, reaped an unmanaged process!
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
+                        pid));
           else
-            proc = process_table_[i].process_;
+            {
+              this->notify_proc_handler (idx, 
+                                         *status);
+              this->remove_proc (idx);
+            }
         }
-      notify_proc_handler (proc->gethandle (),
-                           pid,
-                           *status);
-      this->remove_proc (pid);
     }
 
   return pid;
@@ -871,13 +889,10 @@ ACE_Process_Manager::reap (pid_t pid,
 // if process found, 0 if not.  Must be called with locks held.
 
 int
-ACE_Process_Manager::notify_proc_handler (ACE_HANDLE,
-                                          pid_t pid,
+ACE_Process_Manager::notify_proc_handler (size_t i,
                                           ACE_exitcode exit_code)
 {
-  ssize_t i = this->find_proc (pid);
-
-  if (i != -1)
+  if (i < current_count_)
     {
       ACE_Process_Descriptor &proc_desc =
         this->process_table_[i];
@@ -894,12 +909,13 @@ ACE_Process_Manager::notify_proc_handler (ACE_HANDLE,
              0);
           this->default_exit_handler_ = 0;
         }
+      return 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
-                ASYS_TEXT (" unknown process %d reaped\n"),
-                pid));
-
-  return i != -1;
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
+                  ASYS_TEXT (" unknown/unmanaged process reaped\n")));
+      return 0;
+    }
 }
