@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    MT_Reactor_Timer_Test.cpp
 //
@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Steve Huston <shuston@riverace.com>
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -43,10 +43,10 @@ Time_Handler::Time_Handler (void)
 
 // Set up initial timer conditions.
 
-void 
+void
 Time_Handler::setup (void)
 {
-  this->timer_id_[1] = the_reactor->schedule_timer 
+  this->timer_id_[1] = the_reactor->schedule_timer
     (this,
      (const void *) 1,
      ACE_Time_Value (5));
@@ -58,12 +58,12 @@ Time_Handler::setup (void)
 // second.  The heartbeat checks the status of things to be sure
 // they're being set and expired correctly.
 
-int 
+int
 Time_Handler::svc (void)
 {
   ACE_Time_Value backstop (10);
 
-  this->timer_id_[2] = the_reactor->schedule_timer 
+  this->timer_id_[2] = the_reactor->schedule_timer
     (this,
      (const void *) 2,
      ACE_Time_Value (3));
@@ -72,13 +72,13 @@ Time_Handler::svc (void)
 
   this->my_reactor_.owner (ACE_OS::thr_self ());
 
-  long result = this->my_reactor_.schedule_timer 
+  long result = this->my_reactor_.schedule_timer
     (this,
      (const void *) 0,
      ACE_Time_Value (1),
      ACE_Time_Value (1)) != -1;
   ACE_ASSERT (result != -1);
-  
+
   for (;;)
     {
       result = this->my_reactor_.handle_events (backstop);
@@ -90,11 +90,11 @@ Time_Handler::svc (void)
   ACE_ASSERT (result != -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): leaving svc thread\n")));              
+              ASYS_TEXT ("%T (%t): leaving svc thread\n")));
   return 0;
 }
 
-int 
+int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
@@ -107,8 +107,8 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                   ASYS_TEXT ("%T (%t): heartbeat from main thread\n")));
       return 0;
     }
-  if (time_tag == 0) 
-    {	// Heartbeat.
+  if (time_tag == 0)
+    {   // Heartbeat.
       int i;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -118,13 +118,13 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
       // thread's reactor loop, which will exit the thread and end the
       // test.
 
-      for (i = 0; i < Time_Handler::TIMER_SLOTS; i++) 
+      for (i = 0; i < Time_Handler::TIMER_SLOTS; i++)
         if (this->timer_id_[i] != -1)
           break;
 
       // All timers should be gone.
       if (i == Time_Handler::TIMER_SLOTS)
-        {	
+        {
           // Cancel heartbeat.
           i = this->my_reactor_.cancel_timer (this);
           ACE_ASSERT (i == 1);
@@ -189,9 +189,9 @@ Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
 
   ACE_ASSERT (h == this->pipe_.read_handle ()
               && m == ACE_Event_Handler::READ_MASK);
-  
+
   if (the_reactor->remove_handler (this->pipe_.read_handle (),
-                                   ACE_Event_Handler::READ_MASK 
+                                   ACE_Event_Handler::READ_MASK
                                    | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
@@ -200,7 +200,7 @@ Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
   return 0;
 }
 
-int 
+int
 Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 {
   char c;
@@ -218,20 +218,24 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
   return -1;
 }
 
-int 
+int
 Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
 {
+  ACE_UNUSED_ARG (h);
+
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("%T (%t): handle_exception\n")));
   return 0;
 }
 
-int 
+int
 Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
                                         const void *arg)
 {
+  ACE_UNUSED_ARG (tv);
+
   long value = ACE_reinterpret_cast (long, arg);
-  
+
   // This case just tests to make sure the Reactor is counting timer
   // expiration correctly.
   ACE_DEBUG ((LM_DEBUG,
@@ -258,7 +262,7 @@ main (int, ASYS_TCHAR *[])
                          ASYS_TEXT ("%p\n"),
                          ASYS_TEXT ("schedule_timer")),
                         1);
-  
+
   int result = the_reactor->handle_events ();
   // All <ACE_MAX_TIMERS> should be counted in the return value + 2
   // I/O dispatches (one for <handle_input> and the other for
