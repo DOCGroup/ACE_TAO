@@ -20,6 +20,7 @@
 
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
+#include "ace/Thread_Manager.h"
 #include "test_config.h"
 
 static void
@@ -57,6 +58,7 @@ spawn (void)
       test ();
     }
 #elif defined (ACE_HAS_THREADS)
+  ACE_Thread_Manager thr_mgr;
   if (thr_mgr.spawn (ACE_THR_FUNC (test),
 		     (void *) 0,
 		     THR_NEW_LWP | THR_DETACHED) == -1)

@@ -138,7 +138,7 @@ produce (Thread_Pool &thread_pool)
 		  "(%t) press chars and enter to put a new message into task queue..."));
       n = ACE_OS::read (ACE_STDIN, mb->rd_ptr (), mb->size ());
 #else // Automatically generate messages.
-      static int count = 0;
+      static size_t count = 0;
 
       ACE_OS::sprintf (mb->rd_ptr (), "%d\n", count);
 
