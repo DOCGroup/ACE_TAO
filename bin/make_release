@@ -170,7 +170,7 @@ if ($kit eq 'ace') {
 } else {
     #### Creating combined ACE+TAO kit.  Don't use $KIT.
 };
-  
+
 
 my $chmod = 'chmod';
 # All of them had gnu suffixes. Removed them..
@@ -206,7 +206,7 @@ unless ("$release_tag_files") {
   chomp ($release_tag_files = `$make show_release_tag_files`);
 }
 
-##### 
+#####
 ##### Preparation for the release
 #####
 &ex ("$touch  $export_dir/DON")  &&
@@ -287,6 +287,12 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
 
   if ($status != 0) {
     die "$0: failed to generate makefiles\n";
+  }
+
+  $status = &bootstrap_autotools ();
+
+  if ($status != 0) {
+    die "$0: failed to bootstrap autotools\n";
   }
 
   $status = &create_kit ();
@@ -440,7 +446,7 @@ sub get_versions () {
     $version = "$major_version.$minor_version.$beta_version";
   } elsif ($release_type eq 'minor' ) {
     $version = "$major_version.$minor_version";
-  }	
+  }
 
   print "new $KIT version: $version\n";
 
@@ -472,11 +478,11 @@ sub get_versions () {
               last;
         }
       }
-    
+
     close ACE_VERSION;
 
     if ($release_type eq 'beta') {
-        $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";   
+        $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";
        } elsif ($release_type eq 'minor' ) {
         $ace_version = "$ace_major_version.$ace_minor_version";
      }
@@ -503,12 +509,12 @@ sub get_versions () {
               last;
         }
       }
-    
+
       close TAO_VERSION;
 
     if ($release_type eq 'beta') {
-        $tao_version = 
-            "$tao_major_version.$tao_minor_version.$tao_beta_version";   
+        $tao_version =
+            "$tao_major_version.$tao_minor_version.$tao_beta_version";
        } elsif ($release_type eq 'minor' ) {
         $tao_version = "$tao_major_version.$tao_minor_version";
      }
@@ -532,7 +538,7 @@ sub update_version_files () {
 
   if ($kit =~ /^ciao/) {
 
-    # For CIAO we need to add ACE + TAO versions..  
+    # For CIAO we need to add ACE + TAO versions..
     &ex ("perl -pi -e 's/TAO VERSION :.*/TAO VERSION : $tao_version/' " .
          "PROBLEM-REPORT-FORM");
     return 1 if $? >> 8;
@@ -684,7 +690,7 @@ sub update_changelog () {
        "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&" .
        "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
        "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
-  }  
+  }
 
   return 1 if $? >> 8;
 
@@ -778,6 +784,20 @@ sub generate_makefiles () {
   }
 }
 
+########
+######## Bootstrap autotool support
+########
+sub bootstrap_autotools () {
+  # Autotool (i.e. GNU autoconf, automake and libtool) support is
+  # currently only available in ACE.  As such, only bootstrap autotool
+  # support into the ACE-only distribution to avoid potential
+  # confusion for TAO and CIAO users.  For example, they may wonder
+  # why TAO and CIAO are not configured when ACE's configure script is
+  # run.
+  if ($kit =~ /^ace/) {
+    &ex ("cd ACE_wrappers && bin/bootstrap");
+  }
+}
 
 ########
 ######## Create the tar file(s) and move to their proper location.
@@ -805,10 +825,6 @@ sub create_kit () {
 
   my $build_command;
   my $archives;
-
-  ## Temporary ACE+autoconf hack to bootstrap autoconf support into
-  ## ACE distribution.
-  &ex("cd ACE_wrappers && bin/bootstrap");
 
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
 
@@ -840,7 +856,7 @@ sub create_kit () {
         "$cp $dest/ACE-lib.zip $old_versions_dir/$local_ace_tag-lib.zip &&".
         "$cp $dest/ACE.tar.gz $old_versions_dir/$local_ace_tag.tar.gz &&".
         "$cp $dest/ACE-lib.tar.gz $old_versions_dir/$local_ace_tag-lib.tar.gz &&".
-        "$cp $dest/ACE.tar.bz2 $old_versions_dir/$local_ace_tag.tar.bz2 &&".             
+        "$cp $dest/ACE.tar.bz2 $old_versions_dir/$local_ace_tag.tar.bz2 &&".
         "$cp $dest/ACE-lib.tar.bz2 $old_versions_dir/$local_ace_tag-lib.tar.bz2;";
       $archives = " ACE.tar.gz ACE-lib.tar.gz ".
 	          "ACE.zip ACE-lib.zip ACE.tar.bz2 ACE-lib.tar.bz2 ";
@@ -946,3 +962,6 @@ sub can_run {
 }
 
 
+# Local Variables:
+# mode:Perl
+# End:
