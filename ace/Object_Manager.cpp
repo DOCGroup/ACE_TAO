@@ -19,13 +19,12 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
   void *p;
-  int i;
 
   // Delete all registered objects and arrays.
-  while ((i = registered_objects_.dequeue_head (p)) != -1)
+  while (registered_objects_.dequeue_head (p) != -1)
     delete p;
 
-  while ((i = registered_arrays_.dequeue_head (p)) != -1)
+  while (registered_arrays_.dequeue_head (p) != -1)
     delete [] p;
 
   // This call closes and deletes all ACE library services and
