@@ -100,15 +100,12 @@ TAO_Notify_FilterAdmin_i::get_filter (
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_Notify_FilterAdmin_i::get_all_filters (
-                                           CORBA::Environment & /*ACE_TRY_ENV*/
-  )
+TAO_Notify_FilterAdmin_i::get_all_filters (CORBA::Environment & ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
-  //Add your implementation here
-  return 0;
+  return this->filter_ids_.get_sequence(ACE_TRY_ENV);
 }
 
 void
