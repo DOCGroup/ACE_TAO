@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 # TARGTYPE "Win32 (ALPHA) Dynamic-Link Library" 0x0602
 
-CFG=ACE dynamic library - Win32 Alpha Unicode Debug
+CFG=ACE dynamic library - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -161,8 +161,8 @@ LINK32=link.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_dyna"
-# PROP BASE Intermediate_Dir "ACE_dyna"
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "DLL\Debug"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
@@ -172,9 +172,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd /c
 # SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd /c
 # SUBTRACT CPP /YX /Yc /Yu
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /o /win32 "NUL"
@@ -195,8 +195,8 @@ LINK32=link.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "ACE_dyn0"
-# PROP BASE Intermediate_Dir "ACE_dyn0"
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "DLL\Release"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
@@ -206,9 +206,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /o /win32 "NUL"
@@ -229,8 +229,8 @@ LINK32=link.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_dyn1"
-# PROP BASE Intermediate_Dir "ACE_dyn1"
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "DLL\Unicode_Debug"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
@@ -240,9 +240,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /o /win32 "NUL"
@@ -263,8 +263,8 @@ LINK32=link.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "ACE_dyn2"
-# PROP BASE Intermediate_Dir "ACE_dyn2"
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "DLL\Unicode_Release"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
@@ -274,9 +274,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /o /win32 "NUL"
