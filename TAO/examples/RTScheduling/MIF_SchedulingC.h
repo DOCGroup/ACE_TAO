@@ -299,14 +299,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct  Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>
   {
-    static MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr tao_duplicate (
+    static MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr duplicate (
         MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
       );
-    static MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -376,4 +376,3 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #endif /* ifndef */
-

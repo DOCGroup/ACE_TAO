@@ -1,3 +1,12 @@
+Sun Sep  5 01:21:45 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/RTScheduling/MIF_SchedulingC.h:
+	* examples/RTScheduling/MIF_SchedulingC.cpp:
+
+          Removed "tao_" prefix from methods in the TAO traits templates
+          used in these sources, as was done to the other traits templates
+	  used throughout TAO.
+
 Sun Sep  5 01:13:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB.h:
