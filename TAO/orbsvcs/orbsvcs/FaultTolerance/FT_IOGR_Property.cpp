@@ -345,7 +345,7 @@ TAO_FT_IOGR_Property::remove_primary_tag (
       TAO_Tagged_Components &pfile_tagged =
         profile->tagged_components ();
 
-      if (pfile_tagged.remove_component (IOP::TAG_FT_PRIMARY));
+      if (pfile_tagged.remove_component (IOP::TAG_FT_PRIMARY))
         {
           return 1;
         }
