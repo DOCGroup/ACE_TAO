@@ -1,3 +1,11 @@
+Mon Oct  7 17:35:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+
+	  Added missing TAO_ETCL{d}.lib to the library link/input list.
+	  Addresses "unresolved symbol" link-time errors in MSVC++ 6.0
+	  builds.
+
 Mon Oct  7 17:16:42 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
