@@ -1,0 +1,475 @@
+<!-- $Id$ -->
+
+<html>
+  <head>
+    <title>Minimum TAO</title>
+    <link rev=made href="mailto:tao-users@cs.wustl.edu">
+  </head>
+
+<body text = "#000000"
+      link="#000fff"
+      vlink="#ff0f0f"
+      bgcolor="#ffffff">
+
+<hr>
+<p>
+
+<strong>Minimum TAO</strong>
+<p>
+
+In addition to our work on <A HREF="ACE-subsets.html">ACE
+subsetting</A>, we have also been reducing the footprint of TAO.  We
+are pursuing two complementary strategies to reduce TAO's footprint:
+
+<OL>
+
+<LI> <B><EM>Implicit subsetting</EM></B>, e.g., by reducing
+    dependencies in the TAO library so that programs need not link
+    unused TAO components. <P>
+    
+<LI> <B><EM>Explicit subsetting</EM></B>, e.g., by supporting the <a
+href="http://www.omg.org/cgi-bin/doc?orbos/98-08-04.pdf"><em>minimumCORBA
+</em></a> specification to <a href =
+"http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>.  The <em>
+minimumCORBA </em> specification removes the following features from
+the <a href
+="http://www.omg.org/technology/documents/formal/">CORBA</a>
+specification. <P>
+<ul>
+<li>Dynamic Skeleton Interface<br>
+<li>Dynamic Invocation Interface<br>
+<li>Dynamic Any<br>
+<li>Interceptors<br>
+<li>Interface Repository<br>
+<li>Advanced POA features<br>
+<li>CORBA/COM interworking<br>
+</ul>
+</OL>
+
+The implicit subsetting of TAO requires no explicit application
+programmer intervention.  In contrast, to minimize the footprint of
+TAO explicitly, you must
+<OL>
+<LI> <a
+href="../ACE-INSTALL.html">Configure</a> ACE to support only those
+components that are required by TAO and <P>
+<LI> <a href =
+"../TAO/TAO-INSTALL.html">Configure</a> TAO to only support the
+components specified by the <em>minimumCORBA</em> specification.  
+</OL>
+
+The following two tables show the footprint reduction achievable via
+explicit subsetting.  Note that the IDL Compiler column refers to the
+code required to collaborate between the IDL compiler and the ORB, and
+not to the code for the IDL compiler itself.
+
+<p><hr width=50% align=left> <p>
+
+Note: All measurement are for ACE 5.0 and TAO 1.0 using egcs-2.91.60
+on SunOS5.7<P>
+
+The <a
+href="../ACE-INSTALL.html#flags">make
+flags</a> options used were: <P>
+
+<code> debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0 </code> <P>
+
+These options translate into:<P>
+<UL>
+<LI> No debugging
+<LI> Optimization is set to -O2
+<LI> Static ACE and TAO libraries
+<LI> Use of RCS Ids is turned off
+</UL>
+<p>
+
+To build a TAO static library, if shared libraries are the default,
+use <code>make static_libs_only=1</code> (make sure to do this for
+ACE, as well).  If you're using recent versions of GNU GCC, you can
+use the <A HREF="../ACE-INSTALL.html#repo">-frepo</A> option, which
+typically reduces the footprint by another 25 percent. <P>
+
+<p><hr width=50% align=left> <p>
+
+<center><table cellpadding=4 border=4>
+  <tr>
+    <th>Configuration
+    <th>Component
+    <th>Total
+    <th>OS
+    <th>Utils
+    <th>Logging
+    <th>Threads
+    <th>Demux
+    <th>Connection
+    <th>Sockets
+    <th>IPC
+    <th>Svcconf
+    <th>Streams
+    <th>Memory
+    <th>Token
+    <th>Other
+  <tr>
+    <th rowspan=2>ACE (all components)
+    <th>Size, bytes
+    <td align=center>709.5
+    <td align=center>11.9
+    <td align=center>115.3
+    <td align=center>13.7
+    <td align=center>63.0
+    <td align=center>88.0
+    <td align=center>68.6
+    <td align=center>16.9
+    <td align=center>43.0
+    <td align=center>99.8
+    <td align=center>21.4
+    <td align=center>29.2
+    <td align=center>76.0
+    <td align=center>62.9
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>1.7
+    <td align=center>16.2
+    <td align=center>1.9
+    <td align=center>8.9
+    <td align=center>12.4
+    <td align=center>9.7
+    <td align=center>2.4
+    <td align=center>6.0
+    <td align=center>14.1
+    <td align=center>3.0
+    <td align=center>4.1
+    <td align=center>10.7
+    <td align=center>8.9
+  <tr>
+    <th rowspan=2>ACE (TAO components)
+    <th>Size, bytes
+    <td align=center>570.7
+    <td align=center>11.9
+    <td align=center>115.3
+    <td align=center>13.7
+    <td align=center>63.0
+    <td align=center>88.0
+    <td align=center>68.6
+    <td align=center>16.9
+    <td align=center>43.0
+    <td align=center>99.8
+    <td align=center>21.4
+    <td align=center>29.2
+    <td align=center>0
+    <td align=center>0
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>2.1
+    <td align=center>20.2
+    <td align=center>2.4
+    <td align=center>11.0
+    <td align=center>15.4
+    <td align=center>12.0
+    <td align=center>3.0
+    <td align=center>7.5
+    <td align=center>17.5
+    <td align=center>3.7
+    <td align=center>5.1
+    <td align=center>0
+    <td align=center>0
+  <tr>
+    <th>Reduction
+    <th>%
+    <td align=center>19.6
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>100
+    <td align=center>100
+</table></center>
+
+<p><hr width=50% align=left> <p>
+
+<center><table cellpadding=4 border=4>
+  <tr>
+    <th>Configuration
+    <th>Component
+    <th>Total
+    <th>POA
+    <th>Pluggable Protocols
+    <th>Default Resources
+    <th>Interpretive Marshaling
+    <th>IDL Compiler
+    <th>ORB Core
+    <th>Dynamic Any
+  <tr>
+    <th rowspan=2>Complete TAO
+    <th>Size, Kbytes
+    <td align=center>1617.2
+    <td align=center>412.5
+    <td align=center>281.0
+    <td align=center>32.1
+    <td align=center>73.4
+    <td align=center>10.7
+    <td align=center>595.2
+    <td align=center>212.3
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>25.5
+    <td align=center>17.4
+    <td align=center>2.0
+    <td align=center>4.5
+    <td align=center>0.7
+    <td align=center>36.8
+    <td align=center>13.1
+  <tr>
+    <th rowspan=2>Minimum TAO
+    <th>Size, Kbytes
+    <td align=center>1359.2
+    <td align=center>376.2
+    <td align=center>281.0
+    <td align=center>32.1
+    <td align=center>73.4
+    <td align=center>10.7
+    <td align=center>585.5
+    <td align=center>0.0
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>27.7
+    <td align=center>20.7
+    <td align=center>2.4
+    <td align=center>5.4
+    <td align=center>0.8
+    <td align=center>43.1
+    <td align=center>0.0
+  <tr>
+    <th>Reduction
+    <th>%
+    <td align=center>16.0
+    <td align=center>8.8
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>1.6
+    <td align=center>100
+</table></center><p>
+
+<HR>
+
+<h3><a name="Status">ACE+TAO Subsetting Work in Progress</a></h3>
+
+We've been tracking the footprint reduction of ACE+TAO periodically
+since April, 2000.  All the statistics are available <A
+HREF="http://doc.ece.uci.edu/Stats/">online</A>.  As the result of
+this prior work, we've identified various areas for improvement that
+we're now addressing.  For example, the following are the remaining
+areas for ACE subsetting:
+
+  <ul>
+    <li><EM><B>Log_Msg decoupling</EM></B> --  We have a good start on this, but it needs work
+      to finish.  It might be easiest to make an abstract
+      base class, then have ACE_Log_Msg derive from it.  That way
+      we could remove the exposure of all the #includes in Log_Msg.cpp
+      to applications that don't need it.  Another alternative would
+      be to disable compilation of Log_Msg.cpp when ACE_NLOGGING is
+      enabled.<p>
+
+    <li><EM><B>Higher layer interdependencies</EM></B> -- We haven't
+    exhaustively tested all possible combinations of subsets.  It's possible
+      that there are interdependencies between some layers that
+      we haven't yet identified and removed.<p>
+
+    <li><EM><B>Remove reliance on multiple inheritance</EM></B> -- Multiple
+        inheriance is only used in a few
+      places in ACE.  This
+      isn't really a subsetting problem, but is necessary to
+      fully take advantage of optimizations available on C++ compilers for
+      embedded systems.<p>
+  </ul>
+
+We anticipate that these changes should reduce the default size of ACE
+by around 100-200 kbytes.<P>
+
+As the effort to reduce TAO's footprint continues, we are planning
+several modifications for TAO that should reduce the footprint for
+both the full CORBA and minimum CORBA configurations by around 300-400
+Kbytes.  The list below contains an estimate of the impact of each one
+of these changes, along with the estimated effort to implement them.
+</P>
+
+<P>
+  <TABLE CELLPADDING=4 BORDER=4>
+    <TR>
+      <TD>Component</TD><TD>Impact</TD><TD>Effort</TD>
+      <TD>Description</TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>~95 Kb</TD><TD>2 weeks</TD>
+        <TD>
+	Make RT CORBA 1.0 support optional, thereby allowing  CORBA-compliant
+	applications to link without incurring the overhead of TAO's
+        RT CORBA features.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>~50 kB</TD><TD>3 weeks</TD>
+        <TD>
+	Make the CORBA Messaging components optional.
+	This change requires making RT-CORBA optional first.
+        </TD>
+    </TR>
+    <TR>
+      <TD>ACE</TD><TD>14 Kb</TD><TD>4 weeks</TD>
+        <TD>
+	Implement a TAO-specific Reactor.
+	ACE's reactor supports a number of features that TAO does not
+	require.  Thus, a TAO-specific implementation is an important way to
+	reduce the footprint.
+        </TD>
+    </TR>
+    <TR>
+      <TD>ACE</TD><TD>20 Kb</TD><TD>4 weeks</TD>
+        <TD>
+	Implement a TAO-specific Service Configurator.
+	TAO uses the ACE Service Configurator to dynamically configure
+	its strategies.  In many embedded applications the set of
+	strategies are selected at design-time, on those platforms it
+	would be appropriate to disable all the features to
+	dynamically load components into the ORB.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>10-15 Kb</TD><TD>1-2 weeks</TD>
+        <TD>
+	Eliminate duplicate code due to instantiations of string ->
+	pointer maps.  TAO uses several such maps, they could be replaced by a
+	generic version, wrapped with a fully inlined (i.e. zero
+	footprint) adapter for type-safety.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>3-10 Kb</TD><TD>1-2 weeks</TD>
+        <TD>
+	Make message buffering strategies optional.
+	TAO supports policy extensions to control the outgoing oneway and AMI
+	request buffers.  Those policies are not used by all
+	applications.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>10 Kb</TD><TD>2 weeks</TD>
+        <TD>
+	Make support for multiple ORBs optional.
+	TAO can support multiple ORBs in the same process, but most
+	applications only require one.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>&lt;20 Kb</TD><TD>1 weeks</TD>
+        <TD>
+	Use lower footprint alternatives to the
+	<CODE>ACE_Strategy_Acceptor</CODE> and
+	<CODE>ACE_Strategy_Connector</CODE> classes.
+	TAO is using the most flexible classes in ACE to implement
+	acceptors and connector, but does not take advantage of this
+	flexibility.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>5 Kb</TD><TD>1 week</TD>
+        <TD>
+	Move the less common transport muxing and reply waiting
+	strategies to an optional library.
+        </TD>
+    </TR>
+    <TR>
+      <TD>ACE+TAO</TD><TD>30 Kb</TD><TD>8 weeks</TD>
+        <TD>
+	Decouple ACE (and then TAO) from the
+	<CODE>ACE_Thread_Manager</CODE> component.
+	This component is only used in the thread-per-connection
+	model, if we could decouple it in ACE then TAO could be
+	modified to only link this component when that concurrency
+	model is enabled.
+        </TD>
+    </TR>
+    <TR>
+      <TD>TAO</TD><TD>&gt;50 Kb</TD><TD>6 weeks</TD>
+        <TD>
+	Move <CODE>&lt;&lt;=</CODE> and <CODE>&gt;&gt;=</CODE>
+	operators to separate files.
+	Currently TAO includes nearly 500 such operators, moving them
+	to separate files (grouped by component?) would eliminate them
+	from most applications.
+        </TD>
+    </TR>
+  </TABLE>
+</P>
+
+<P>In parallel with the activities described above we are pursuing
+other avenues of research to find sources of rarely used or unused
+code in ACE+TAO, and to modify the software to eliminate such code.
+These activities include the following:</P>
+
+<UL>
+  <LI><P>
+  Using profiling tools, such as gprof, Quantify and True Coverage
+  to find unreachable code, or code only reachable in certain
+  applications.
+  </P></LI>
+  <LI><P>
+  The code TAO's IDL compiler generates for <CODE>CORBA::Any</CODE>
+  operators is large, so we are evaluating designs that reduce the impact of the <CODE>CORBA::Any</CODE>
+  type support.  TAO's IDL compiler already makes that support optional.
+  However, for applications that require <CODE>Anys</CODE> it may be useful to separate that code
+  in another file to reduce the size of generated stubs and skeletons,
+  without losing the opportunity to use more dynamic CORBA invocation
+  modes.
+  </P></LI>
+  <LI><P>
+  The Notification Service currently depends on the Trading service to
+  implement the Trader Constraint Language.  We are planning to break that
+  dependency and factor the TCL parser into a smaller library shared
+  by both services.
+  </P></LI>
+  <LI><P>
+  TAO still contains features that are rarely or never used.
+  Examples include the interfaces to query the well-known services and
+  to dynamically discover the level of security support.  Those
+  components should only be linked (dynamically) in applications that require them.
+  </P></LI>
+  <LI><P>
+  The support for interceptors currently generated by the IDL compiler
+  can be partially refactored into common ORB code.
+  Moreover, we evaluating a new implementation of interceptors
+  that can be configured dynamically, thereby eliminating the need for
+  compile-time configuration flags.
+  </P></LI>
+  <LI><P>
+  We are planning to provide compile-time flags to eliminate certain mandatory features
+  in CORBA that are not used in all applications, such as IOR
+  parsers (corbaloc, corbaname, etc.).
+  </P></LI>
+  <LI><P>
+  Finally, we will perfom more code inspections to determine if template code can be
+  refactored into base classes and thereby shared by many objects in
+  the ACE+TAO implementations.
+  </P></LI>
+</UL>
+
+Although we do not yet have sufficient insights to know how much
+footprint reduction these activities will afford, we anticipate these
+enhancements could reduce the default footprint of TAO by another
+100-200 Kbytes.
+
+</body>
+</html>

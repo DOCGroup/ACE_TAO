@@ -1,0 +1,12 @@
+#
+# Makefile for building the TAO Notify Ordering test
+# $Id$
+#
+
+MAKEFILES = \
+        Sequence_Consumer.bor \
+        Sequence_Supplier.bor \
+        Structured_Consumer.bor \
+        Structured_Supplier.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
