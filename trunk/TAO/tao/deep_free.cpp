@@ -71,6 +71,10 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
       break;
     case CORBA::tk_struct:
       retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
+
+      // @@ It's likely that other types will need their top-level
+      // memory freed as well. --- Carlos (and Seth). 
+      delete source;
       break;
     case CORBA::tk_union:
       retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
@@ -96,6 +100,7 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
     default:
       retval = CORBA::TypeCode::TRAVERSE_STOP;
     } // end of switch
+
   return retval;
 }
 
