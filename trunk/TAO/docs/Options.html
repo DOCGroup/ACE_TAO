@@ -553,7 +553,8 @@ directive of the form (all on one line):
    <LI>Link the TAO_Strategies library into the executable
    <LI>Specify a service configurator directive of the form: <code>static Advanced_Resource_Factory "-ORBReactorType select_st"</code>
 </UL>
-<p>Once you have loaded the Advanced_Resource_Factory, then directives for the Resource_Factory have no effect.
+<p>You can omit the <code>#include</code> if you always use dynamic libraries.
+<p>Once you have loaded the Advanced_Resource_Factory, then directives for the Resource_Factory have no effect (and generate warnings telling you so).
 <p><em>Note:</em> <code>-ORBReactorLock</code> flag has been
 superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 
@@ -565,8 +566,8 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   </TR>
   <TR>
     <TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
-    <TD><a name="-ORBReactorType"></a>Specify what kind of reactor does the
-        ORB use, the default option is the ACE_TP_Reactor.
+    <TD><a name="-ORBReactorType"></a>Specify what kind of reactor the
+        ORB uses. The default reactor is the ACE_TP_Reactor.
         <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
           <TR><TH><em>which</em></TH><TH>Reactor</TH>
         </TR>
@@ -614,8 +615,8 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       optimal performance;
       we made the default <CODE>thread</CODE>.
       TAO optimizations for octet sequences will not work in all cases when
-      if the allocator does not have locks (for example if the
-      octet sequences are part of a return value.
+      the allocator does not have locks (for example if the
+      octet sequences are part of a return value).
       Using locked allocators also allows the users to
       take advantage of the TAO octet sequence
       extensions to preserve the buffer after the upcall.
