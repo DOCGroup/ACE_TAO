@@ -14,7 +14,11 @@
 #define ACE_LACKS_POSIX_PROTOTYPES
 // #define ACE_HAS_UNION_WAIT
 
-// Optimize ACE_Handle_Set for select().
+// Maximum compensation (10 ms) for early return from timed ::select ().
+#if !defined (ACE_TIMER_SKEW)
+# define ACE_TIMER_SKEW 10 * 1000
+#endif /* ACE_TIMER_SKEW */
+
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
