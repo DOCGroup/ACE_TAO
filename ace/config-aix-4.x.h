@@ -29,6 +29,7 @@
 # define ACE_HAS_STRING_CLASS
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
+# define ACE_HAS_SSIZE_T
 # define ACE_MALLOC_ALIGN 8
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
