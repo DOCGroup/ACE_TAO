@@ -1,13 +1,13 @@
-Sun Dec 14 15:00:14 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Sun Dec 14 21:37:08 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (cond_wait,cond_timedwait): Fixed a missing return to
  	  handle the case where we're using USYNC_PROCESS for the external
  	  mutexes.
 
-	* ace/OS: Removed the waiters_lock_ mutex from the ACE_cond_t
- 	  implementation.  This is unnecessary (and broken) since we've
- 	  got to use the external_mutex to serialize access to the
- 	  waiters_ count consistently.  Thanks to Patrick J. McNerthney
+	* ace/OS: Made the use of the waiters_lock_ mutex consistent in
+ 	  the ACE_cond_t implementation.  This was broken since we used
+ 	  the external_mutex to serialize access to the waiters_ count
+ 	  inconsistently.  Thanks to Patrick J. McNerthney
  	  <pat@thememedia.com> for reporting this very subtle bug.
 
 Sun Dec 14 12:29:26 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>

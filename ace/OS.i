@@ -2328,6 +2328,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #elif defined (VXWORKS)
   ACE_OS::sema_destroy (&cv->waiters_done_);
 #endif /* VXWORKS */
+  ACE_OS::thread_mutex_destroy (&cv->waiters_lock_);
   return ACE_OS::sema_destroy (&cv->sema_);
 #else
   ACE_UNUSED_ARG (cv);
@@ -2345,6 +2346,8 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 
   int result = 0;
   if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
+    result = -1;
+  else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
 #if defined (VXWORKS)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
@@ -2426,9 +2429,10 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_wait");
 #if defined (ACE_HAS_THREADS)
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
+  // Prevent race conditions on the <waiters_> count.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
 
@@ -2455,8 +2459,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
     }
 
   // Reacquire lock to avoid race conditions on the <waiters_> count.
-  if (ACE_OS::mutex_lock (external_mutex) != 0)
-    return -1; 
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
   // We're ready to return, so there's one less waiter.
   cv->waiters_--;
@@ -2465,7 +2468,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // Release the lock so that other collaborating threads can make
   // progress.
-  ACE_OS::mutex_unlock (external_mutex);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (result == -1)
     // Bad things happened, so let's just return below.
@@ -2526,9 +2529,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return ACE_OS::cond_wait (cv, external_mutex);
 #if defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
 
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
+  // Prevent race conditions on the <waiters_> count.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   int error = 0;
@@ -2583,14 +2587,12 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     }
 
   // Reacquire lock to avoid race conditions.
-  if (ACE_OS::mutex_lock (external_mutex) != 0)
-    return -1;
-
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_--;
 
   int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
-  ACE_OS::mutex_unlock (external_mutex);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
 #if defined (ACE_WIN32)
   if (result != WAIT_OBJECT_0)
@@ -2678,9 +2680,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
 
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
+  // Prevent race conditions on the <waiters_> count.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   int error = 0;
@@ -2714,14 +2717,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 
   // Reacquire lock to avoid race conditions.
-  if (ACE_OS::thread_mutex_lock (external_mutex) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
   cv->waiters_--;
 
   int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
-  ACE_OS::thread_mutex_unlock (external_mutex);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (result != WAIT_OBJECT_0)
     {
@@ -2756,9 +2758,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_wait");
 #if defined (ACE_HAS_THREADS)
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   int error = 0;
@@ -2775,13 +2777,13 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
 
   // Reacquire lock to avoid race conditions.
-  if (ACE_OS::thread_mutex_lock (external_mutex) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+
   cv->waiters_--;
 
   int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
-  ACE_OS::thread_mutex_unlock (external_mutex);
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (result != WAIT_OBJECT_0)
     {
