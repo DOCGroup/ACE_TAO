@@ -70,10 +70,7 @@ namespace CIAO
 
     PortableServer::POA_var poa_;
 
-    // This servant only lives as long as a call to the
-    // create_node_application method in NodeApplicationManager, so there's
-    // no need to duplicate the object reference here.
-    Deployment::NodeApplicationManager_ptr nam_;
+    Deployment::NodeApplicationManager_var nam_;
 
     Deployment::NodeApplication_var nodeapp_;
 
