@@ -1,3 +1,11 @@
+Fri May  9 000:27:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+
+          Fixed code generation formatting for TAO_ServerRequestInfo_*
+          return value member.
+
 Thu May  8 14:19:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/ORT/Makefile:

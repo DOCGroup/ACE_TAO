@@ -400,6 +400,8 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
   // void since we cant have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
+      *os << be_nl;
+
       ctx = *this->ctx_;
       be_visitor_operation_rettype tor_visitor (&ctx);
 
