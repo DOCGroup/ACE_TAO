@@ -124,14 +124,6 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
-  int clear_cache (CONTAINER &container,
-                   unsigned int &total_container_entries);
-  // This is the method which looks at each ITEM's attributes  and
-  // then decides on the one to remove. The <total_container_entries>
-  // can be specified explicitly and facilitates use of the caching
-  // strategy even when the <entries_> is not maintained by the
-  // strategy itself.
-
   void dump (void) const;
   // Dumps the state of the object.
 
@@ -265,15 +257,7 @@ public:
   int clear_cache (CONTAINER &container);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
-
-  int clear_cache (CONTAINER &container,
-                   unsigned int &total_container_entries);
-  // This is the method which looks at each ITEM's attributes  and
-  // then decides on the one to remove. The <total_container_entries>
-  // can be specified explicitly and facilitates use of the caching
-  // strategy even when the <entries_> is not maintained by the
-  // strategy itself.
-
+  
   void dump (void) const;
   // Dumps the state of the object.
 
@@ -397,15 +381,7 @@ public:
   int clear_cache (CONTAINER &container);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
-
-  int clear_cache (CONTAINER &container,
-                   unsigned int &total_container_entries);
-  // This is the method which looks at each ITEM's attributes  and
-  // then decides on the one to remove. The <total_container_entries>
-  // can be specified explicitly and facilitates use of the caching
-  // strategy even when the <entries_> is not maintained by the
-  // strategy itself.
-
+  
   void dump (void) const;
   // Dumps the state of the object.
 
@@ -513,14 +489,6 @@ public:
   int clear_cache (CONTAINER &container);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
-
-  int clear_cache (CONTAINER &container,
-                   unsigned int &total_container_entries);
-  // This is the method which looks at each ITEM's attributes  and
-  // then decides on the one to remove. The <total_container_entries>
-  // can be specified explicitly and facilitates use of the caching
-  // strategy even when the <entries_> is not maintained by the
-  // strategy itself.
 
   void dump (void) const;
   // Dumps the state of the object.
