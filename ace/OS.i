@@ -6306,7 +6306,7 @@ ACE_OS::kill (pid_t pid, int signum)
 		   FALSE, // New handle is not inheritable.
 		   pid);
 
-  if (process_handle == ACE_INVALID_HANDLE)
+  if (process_handle == ACE_INVALID_HANDLE || process_handle == NULL)
     return -1;
   else
     {
