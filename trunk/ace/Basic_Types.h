@@ -184,9 +184,9 @@ typedef ACE_UINT16 ACE_USHORT16;
 # if ACE_SIZEOF_INT == 4
   typedef int ACE_INT32;
   typedef unsigned int ACE_UINT32;
-#   if defined (__KCC)
+#   if defined (__KCC) && !defined (ACE_LACKS_LONGLONG_T)
   typedef unsigned long long ACE_UINT64;
-#   endif /* ! ACE_LACKS_LONGLONG_T */
+#   endif /* __KCC */
 # elif ACE_SIZEOF_LONG == 4
   typedef long ACE_INT32;
   typedef unsigned long ACE_UINT32;
