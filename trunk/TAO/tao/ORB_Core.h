@@ -438,6 +438,13 @@ public:
   // Condition variable used in the Leader Follower Wait Strategy, on
   // which the follower thread blocks.
 
+  TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
+                                const char *type_id,
+                                CORBA_Environment &ACE_TRY_ENV =
+                                    TAO_default_environment ());
+  // Makes sure that the ORB is open and then creates a TAO_Stub
+  // based on the endpoint.
+
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
                          CORBA::UShort port,
@@ -466,6 +473,11 @@ protected:
   // Implement the input_cdr_dbblock_allocator() routines using
   // pre-fetched TSS resources, this minimizes the number of calls to
   // them.
+
+  int open (void);
+  // Set up the ORB Core's acceptor to listen on the
+  // previously-specified port for requests.  Returns -1 on failure,
+  // else 0.
 
 protected:
   ACE_SYNCH_MUTEX lock_;
@@ -595,6 +607,13 @@ protected:
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
   // The value of the timeout if the flag above is not zero
+
+  ACE_SYNCH_MUTEX open_lock_;
+  // Mutual exclusion for calling open.
+
+  int open_called_;
+  // Flag which denotes that the open method was called.
+
 };
 
 // ****************************************************************

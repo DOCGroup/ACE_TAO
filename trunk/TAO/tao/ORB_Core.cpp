@@ -12,10 +12,8 @@
 #include "tao/default_resource.h"
 #include "tao/debug.h"
 #include "tao/IOR_LookupTable.h"
-
-#if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
-#endif /* ! __ACE_INLINE__ */
+#include "tao/MProfile.h"
+#include "tao/Stub.h"
 
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
@@ -31,6 +29,10 @@
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
+
+#if !defined (__ACE_INLINE__)
+# include "tao/ORB_Core.i"
+#endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
@@ -76,7 +78,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     use_tss_resources_ (0),
     leader_follower_ (this),
     has_shutdown_ (0),
-    thread_per_connection_use_timeout_ (1)
+    thread_per_connection_use_timeout_ (1),
+    open_called_ (0)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -1365,6 +1368,38 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
   return tss->leader_follower_condition_variable_;
 }
 
+TAO_Stub *
+TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
+                                  const char *type_id,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->open () == -1)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  CORBA::String id = 0;
+
+  if (type_id)
+    id = CORBA::string_dup (type_id);
+
+  TAO_Stub *stub = 0;
+
+  size_t pfile_count =
+    this->acceptor_registry ()->endpoint_count ();
+
+  // First we create a profile list, well actually the empty container
+  TAO_MProfile mp (pfile_count);
+
+  this->acceptor_registry ()->make_mprofile (key, mp);
+
+  ACE_NEW_THROW_EX (stub,
+                    TAO_Stub (id, mp, this),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_MAYBE));
+  ACE_CHECK_RETURN (stub);
+
+  return stub;
+}
+
 int
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
@@ -1413,7 +1448,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 
   // This method should only be called by servers, so now we set up
   // for listening!
-  if (this->orb ()->open () == -1)
+  if (this->open () == -1)
     return -1;
 
   int result = 1;
@@ -1527,6 +1562,32 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
   // If <wait_for_completion> is set, wait for all threads to exit.
   if (wait_for_completion != 0)
     tm->wait ();
+}
+
+// Set up listening endpoints.
+
+int
+TAO_ORB_Core::open (void)
+{
+  // Double check pattern
+  if (this->open_called_ == 1)
+    return 1;
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
+
+  if (this->open_called_ == 1)
+    return 1;
+
+  TAO_Acceptor_Registry *ar = this->acceptor_registry ();
+  // get a reference to the acceptor_registry!
+
+  if (ar->open (this) == -1)
+    // Need to return an error somehow!!  Maybe set do_exit?
+    return -1;
+
+  this->open_called_ = 1;
+
+  return 0;
 }
 
 // ****************************************************************
