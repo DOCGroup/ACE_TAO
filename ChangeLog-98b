@@ -7,6 +7,13 @@ Mon Jul 20 19:35:21 1998  Steve Huston  <shuston@riverace.com>
 	  so that $ACE_ROOT doesn't have to be added to MSVC's global options.
 	  Allows working on more than one ACE version.
 
+	* netsvcs/lib/netsvcs4.{mdp mak}: Made paths to ACE components relative
+	  and made Debug build netsvcsd.dll - this will work with Nanbor's new
+	  DLL search method (from 19-July).
+
+	* netsvcs/servers/servers4.{mdp mak}: Made paths to ACE components
+	  relative.
+
 Mon Jul 20 11:12:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.{h,cpp}: added ACE_TSS_BASE_LOCK, to
