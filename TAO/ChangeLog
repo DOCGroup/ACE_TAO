@@ -1,3 +1,8 @@
+Fri Oct 18 15:56:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/AMH/Sink_Server/Base_Server.h: Included the inline
+	  file in the header file. 
+
 Fri Oct 18 15:46:29 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing: Removed the check for
@@ -8,9 +13,9 @@ Fri Oct 18 15:46:29 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/orbsvcs/Makefile: Moved the check here. The main reason
 	  for having the check here is that, once the list of Makefiles
 	  that needs to be run is built, it writes out the
-	  ORBSVCS_COMPONENTS.list file, event though the actual Makefile
-	  was not executed. This creates problmes for the tests and
-	  examples that depends on the contents within the
+	  ORBSVCS_COMPONENTS.list file,  even if the actual Makefile for the
+	  said service is not executed. This creates problems for the
+	  tests and examples that depends on the contents within the
 	  ORBSVCS_COMPONENTS.list file.
 	
 Fri Oct 18 15:40:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
