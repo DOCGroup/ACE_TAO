@@ -59,6 +59,13 @@ Thu Sep 30 10:07:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           symbol names.  Thanks to Fritz Bosch <FBosch@acatel.de>
           for this suggestion.
 
+Wed Sep 29 20:58:45 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+	* ace/config-win32.h:
+        * ace/config-win32-common.h:
+          Winsock2.h wasn't being included before my checks of the
+          winsock version, so I moved it to -common.h instead.
+
 Wed Sep 29 16:40:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
           The following changes fix the Service_Configurator on Windows
