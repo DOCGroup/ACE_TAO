@@ -222,6 +222,20 @@ TAO_ORB_Manager::orb (void)
   return CORBA_ORB::_duplicate (this->orb_.in ());
 }
 
+// Return the root POA reference
+PortableServer::POA_ptr
+TAO_ORB_Manager::root_poa (void)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+// Return the child POA reference
+PortableServer::POA_ptr
+TAO_ORB_Manager::child_poa (void)
+{
+  return PortableServer::POA::_duplicate (this->child_poa_.in ());
+}
+
 // Destructor.
 
 TAO_ORB_Manager::~TAO_ORB_Manager (void)
