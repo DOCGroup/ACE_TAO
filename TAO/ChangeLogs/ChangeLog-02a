@@ -1,3 +1,9 @@
+Wed May  3 16:28:11 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * tests/Param_Test/client.dsp:  
+
+          Updated to include the small_union files.
+
 Wed May  3 15:30:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/skip.cpp:
