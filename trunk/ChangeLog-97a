@@ -1,3 +1,14 @@
+Thu May  8 11:52:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/{Task,Thread}.h: Added documentation describing
+	  thread priority determination to methods where priority
+	  is an [optional] argument.  Note that if you want to inspect
+	  the REAL documentation, you should look at the code for
+	  ACE_OS::thr_create().  But that's convoluted and touchy.
+
+	* ace/Strategies_T.h (ACE_Cached_Connection_Strategy): Added
+	  documentation for this class.
+
 Thu May 08 01:12:59 1997    <irfan@TWOSTEP>
 
 	* Containers: Added size methods to stack containers and
