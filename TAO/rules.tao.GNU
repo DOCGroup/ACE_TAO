@@ -17,6 +17,13 @@ ifndef TAO_IDL
   TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
 endif
 
+ifndef COMSPEC
+  ifdef ComSpec
+    #### ACE+TAO use COMSPEC, but ComSpec is defined.
+    COMPSPEC = $(ComSpec)
+  endif # ComSpec
+endif # ! COMPSPEC
+
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
   ifndef TAO_IDL_PREPROCESSOR

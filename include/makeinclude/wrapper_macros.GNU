@@ -168,12 +168,21 @@ ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
 LEX             = flex
+
+ifndef COMSPEC
+  ifdef ComSpec
+    #### ACE+TAO use COMSPEC, but ComSpec is defined.
+    COMPSPEC = $(ComSpec)
+  endif # ComSpec
+endif # ! COMPSPEC
+
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
   ACE_NUL = nul
 else  # ! WIN32
   ACE_NUL = /dev/null
 endif # ! WIN32
+
 #### Redirect stderr to nul device, and mask exit status.
 ACE_NUL_STDERR = 2>$(ACE_NUL) || true
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
