@@ -89,7 +89,13 @@ ACE_Convert (const char *s, int &i)
 ACE_INLINE void
 ACE_Convert (const char *s, u_long &ul)
 {
+#if defined (linux) && defined (__alpha)
+  // ::strtoul () appears to be broken on Linux 2.0.30/Alpha:
+  // it returns 0 for a negative number.
+  ul = (unsigned long) ACE_OS::strtol (s, 0, 10);
+#else  /* ! linux || ! __alpha */
   ul = ACE_OS::strtoul (s, 0, 10);
+#endif /* ! linux || ! __alpha */
 }
 
 ACE_INLINE void
