@@ -1,4 +1,45 @@
-﻿Fri Dec  5 13:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+﻿Fri Dec  5 14:10:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+	* orbsvcs/orbsvcs/RTSched.dsp:
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	* orbsvcs/orbsvcs/RTOLDEvent.dsp:
+	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+	* orbsvcs/ImplRepo_Service/implrepo.dsp:
+	* orbsvcs/LoadBalancer/LoadManager.dsp:
+	* orbsvcs/LoadBalancer/LoadMonitor.dsp:
+	* orbsvcs/orbsvcs/Metrics.dsp:
+	* orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+	* orbsvcs/Notify_Service/Notify_Service.dsp:
+	* orbsvcs/orbsvcs/RTCORBAEvent.dsp:
+	* orbsvcs/orbsvcs/RTEventLog.dsp:
+	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp:
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	* examples/Simple/time-date/Time_Date.dsp:
+	* examples/POA/Generic_Servant/server.dsp:
+	* tests/UNKNOWN_Exception/server.dsp:
+	* tests/Stack_Recursion/server.dsp:
+	* tests/RTCORBA/Client_Propagated/client.dsp:
+	* tests/RTCORBA/Client_Propagated/server.dsp:
+	* tests/Oneways_Invoking_Twoways/client.dsp:
+	* tests/Nested_Upcall_Crash/client.dsp:
+	* tests/Nested_Upcall_Crash/scavenger.dsp:
+	* tests/Nested_Upcall_Crash/server.dsp:
+	* tests/Muxing/server.dsp:
+	* tests/Crashed_Callback/client.dsp:
+	* tests/Bug_1627_Regression/Bug_1627_Client.dsp:
+	* tests/Bug_1627_Regression/Bug_1627_Server.dsp:
+	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+	* tests/Bug_1330_Regression/Bug_1330_Server.dsp:
+          Fixed release configuration of these project files. Not
+          completely finished yet, but this is a step in the right
+          direction. When somebody resets also these I will help
+          Bala :-).
+
+Fri Dec  5 13:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/CosConcurrency.dsp:
 	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
