@@ -1,3 +1,14 @@
+Thu Jul 29 14:47:10 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (dispatch_notification_handlers):
+
+	  This code is used for picking up updates from non-owner threads.
+  	  However, it is also useful for picking up notifications from the 
+	  notify pipe (even though the notify is part of the I/O handle
+	  set in the Select_Reactor).  Therefore, we have enabled this
+	  code for the single-threaded case also.  Thanks to Irfan for
+	  this fix.
+
 Thu Jul 29 14:32:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/ACE.cpp:
