@@ -1,3 +1,8 @@
+Mon Jan 12 15:54:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/JAWS/server/jaws.dsp:
+	  Fixed incorrect macro name.
+
 Mon Jan 12 08:06:07 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
