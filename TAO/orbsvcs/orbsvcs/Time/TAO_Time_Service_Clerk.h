@@ -18,7 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_TIME_SERVICE_CLERK_H
-#define	TAO_TIME_SERVICE_CLERK_H
+#define TAO_TIME_SERVICE_CLERK_H
 
 #include "ace/Reactor.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
@@ -48,35 +48,42 @@ public:
 
   // = Initialization and termination methods.
   TAO_Time_Service_Clerk (int timer_value,
-			  const IORS& server);
+                          const IORS& server);
   // Constructor.
 
   ~TAO_Time_Service_Clerk (void);
   // Destructor.
 
-  virtual CosTime::UTO_ptr universal_time (CORBA::Environment &env);
+  virtual CosTime::UTO_ptr universal_time (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable));
   // This operation returns the global time and an estimate of
   // inaccuracy in a UTO.
 
-  virtual CosTime::UTO_ptr secure_universal_time (CORBA::Environment &env);
+  virtual CosTime::UTO_ptr secure_universal_time (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable));
   // This operation returns the global time in a UTO only if the time
   // can be guaranteed to have been obtained securely. Currently this
   // operation is not implemented and throws a CORBA::NO_IMPLEMENT
   // exception, if called.
 
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
-					       TimeBase::InaccuracyT inaccuracy,
-					       TimeBase::TdfT tdf,
-					       CORBA::Environment &env);
+                                               TimeBase::InaccuracyT inaccuracy,
+                                               TimeBase::TdfT tdf,
+                                               CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This creates a new UTO based on the given parameters.
 
   virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc,
-					 CORBA::Environment &env);
+                                         CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This creates a new UTO given a time in the UtcT form.
 
   virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
-					 TimeBase::TimeT upper,
-					 CORBA::Environment &env);
+                                         TimeBase::TimeT upper,
+                                         CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This creates a new TIO with the given parameters.
 
   virtual CORBA::ULongLong get_time (void);
@@ -85,19 +92,19 @@ public:
   void name_server (TAO_Naming_Server &server);
   // This method is called by the driver program to set the Naming
   // Server instance.
-  
+
   CORBA::Short time_displacement_factor (void);
   // Returns the time displacement factor.
-  
+
   void time_displacement_factor (CORBA::Short);
   // Set the TDF.
-  
+
   TimeBase::InaccuracyT inaccuracy (void);
-  // GET method for inaccuracy.   
-  
+  // GET method for inaccuracy.
+
   void inaccuracy (TimeBase::InaccuracyT inaccuracy);
-  // SET method for inaccuracy.    
-  
+  // SET method for inaccuracy.
+
   CORBA::ULongLong time_;
   // Clerk's notion of time.
 

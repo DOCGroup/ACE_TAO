@@ -7,7 +7,7 @@
 
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
-						const IORS& servers)
+                                                const IORS& servers)
   : server_ (servers),
     helper_ (this)
 {
@@ -20,8 +20,8 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
        ACE_Time_Value::zero,
        ACE_Time_Value (timer_value)) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
-		"schedule_timer ()"));
+                "%p\n",
+                "schedule_timer ()"));
 }
 
 // Destructor.
@@ -35,6 +35,8 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable))
 {
   TAO_UTO *uto = 0;
 
@@ -55,6 +57,8 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable))
 {
   env.exception (new CORBA::NO_IMPLEMENT ());
   return 0;
@@ -64,9 +68,10 @@ TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &env)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
-					    TimeBase::InaccuracyT inaccuracy,
-					    TimeBase::TdfT tdf,
-					    CORBA::Environment &ACE_TRY_ENV)
+                                            TimeBase::InaccuracyT inaccuracy,
+                                            TimeBase::TdfT tdf,
+                                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -83,7 +88,8 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc,
-				      CORBA::Environment &ACE_TRY_ENV)
+                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -107,8 +113,9 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc,
 
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
-				      TimeBase::TimeT upper,
-				      CORBA::Environment &ACE_TRY_ENV)
+                                      TimeBase::TimeT upper,
+                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
@@ -128,12 +135,12 @@ TAO_Time_Service_Clerk::get_time (void)
   CORBA::ULongLong time;
 
   time = (CORBA::ULongLong) (ACE_static_cast (CORBA::ULongLong,
-                                              ACE_OS::gettimeofday ().sec ()) * 
+                                              ACE_OS::gettimeofday ().sec ()) *
                              ACE_static_cast (ACE_UINT32,
                                               10000000) +
-                             ACE_static_cast (CORBA::ULongLong, 
+                             ACE_static_cast (CORBA::ULongLong,
                                               ACE_OS::gettimeofday ().usec () * 10))
-    - this->update_timestamp_ 
+    - this->update_timestamp_
     + this->time_;
 
   return time;

@@ -21,13 +21,15 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable))
 {
   TAO_UTO *uto = 0;
 
   // Return the local time of the system as a UTO.
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (ACE_static_cast(CORBA::ULongLong,
-                                             ACE_OS::gettimeofday ().sec ()) * 
+                                             ACE_OS::gettimeofday ().sec ()) *
                              ACE_static_cast(ACE_UINT32,
                                              10000000) +
                              ACE_static_cast(CORBA::ULongLong,
@@ -39,17 +41,17 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Returning a UTO\n"));
+              "Returning a UTO\n"));
 
   return uto->_this ();
 
   // In case we are using the IR.
   //   if (this->shutdown_ != 0)
   //       {
-  // 	TAO_ORB_Core_instance ()->orb ()->shutdown ();
+  //    TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
-  // 	ACE_DEBUG ((LM_DEBUG,
-  // 		    "Shutting down the ORB\n"));
+  //    ACE_DEBUG ((LM_DEBUG,
+  //                "Shutting down the ORB\n"));
   //       }
 
 }
@@ -60,6 +62,8 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable))
 {
   env.exception (new CORBA::NO_IMPLEMENT ());
   return 0;
@@ -69,9 +73,10 @@ TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &env)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
-					     TimeBase::InaccuracyT inaccuracy,
-					     TimeBase::TdfT tdf,
-					     CORBA::Environment &ACE_TRY_ENV)
+                                             TimeBase::InaccuracyT inaccuracy,
+                                             TimeBase::TdfT tdf,
+                                             CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -90,7 +95,8 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
-				       CORBA::Environment &ACE_TRY_ENV)
+                                       CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -107,8 +113,9 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
 
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
-				       TimeBase::TimeT upper,
-				       CORBA::Environment &ACE_TRY_ENV)
+                                       TimeBase::TimeT upper,
+                                       CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
