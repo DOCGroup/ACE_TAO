@@ -286,7 +286,8 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &result,
+ACE_Asynch_Acceptor<HANDLER>::parse_address (const
+                                             ACE_Asynch_Accept::Result &result,
 					     ACE_INET_Addr &remote_address,
 					     ACE_INET_Addr &local_address)
 {
@@ -324,16 +325,26 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
   // @@ Just debugging.
   char local_address_buf  [BUFSIZ];
   char remote_address_buf [BUFSIZ];
-  if (local_address.addr_to_string (local_address_buf, sizeof local_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR,  "Error:%p:can't obtain local_address's address string"));
+  if (local_address.addr_to_string (local_address_buf,
+                                    sizeof local_address_buf) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "Error:%p:can't obtain local_address's address string"));
+
   ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Acceptor<HANDLER>::parse_address : Local address %s\n",
+              "ACE_Asynch_Acceptor<HANDLER>::parse_address : "\
+              "Local address %s\n",
               local_address_buf));
-  if (remote_address.addr_to_string (remote_address_buf, sizeof remote_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR,  "Error:%p:can't obtain remote_address's address string"));
+
+  if (remote_address.addr_to_string (remote_address_buf,
+                                     sizeof remote_address_buf) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "Error:%p:can't obtain remote_address's address string"));
+
   ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Acceptor<HANDLER>::parse_address : Remote address %s\n",
+              "ACE_Asynch_Acceptor<HANDLER>::parse_address : "\
+              "Remote address %s\n",
               remote_address_buf));
+
 #elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   ACE_Message_Block &message_block = result.message_block ();
