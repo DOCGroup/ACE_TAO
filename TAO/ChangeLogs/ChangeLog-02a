@@ -1,3 +1,16 @@
+Fri Jan  5 14:19:03 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+
+          Thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for 
+          noticing a silly mistake on my part.  The ping_interval
+          accessor in Options was returning the startup_timeout
+          value instead.  Fixed.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Updated to use PerlACE::RunTest.
+
 Fri Jan  5 18:36:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Generator_Parser.h: Included
