@@ -2,17 +2,35 @@
 
 #include "HTTP_Handler.h"
 
-HTTP_Handler::HTTP_Handler(void)
+HTTP_Handler::HTTP_Handler(int strategy)
 {
-  sockbufp_ = sockbuf_;
-  sockbufn_ = 0;
+  this->sockbufp_ = this->sockbuf_;
+  this->sockbufn_ = 0;
+  this->strategy_ = strategy;
 }
 
 int
 HTTP_Handler::open (void *)
 {
-  this->svc();
-  this->close();
+  if (this->strategy_ == 1) {
+    // Thread-per-request
+
+    switch (this->activate()) {
+    case -1: /* failed to make object active */
+      ACE_ERROR_RETURN((LM_ERROR, "%p\n", "HTTP_Handler::open"), -1);
+      break;
+    case 1: /* already active */
+      ACE_ERROR_RETURN((LM_ERROR, "%p\n", "HTTP_Handler::open"), 1);
+      break;
+    default: /* ok */
+      ;
+    }
+  }
+  else {
+    this->svc();
+    this->close();
+  }
+
   return 0;
 }
 

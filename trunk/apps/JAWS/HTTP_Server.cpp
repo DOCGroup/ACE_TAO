@@ -25,7 +25,7 @@ HTTP_Server::init (int argc, char *argv[])
   this->port_ = 0;
   this->threads_ = 0;
 
-  ACE_Get_Opt get_opt(argc, argv, "p:n:");
+  ACE_Get_Opt get_opt(argc, argv, "p:n:s:");
   while ((c = get_opt()) != -1)
     switch (c) {
     case 'p':
@@ -33,6 +33,12 @@ HTTP_Server::init (int argc, char *argv[])
       break;
     case 'n':
       this->threads_ = ACE_OS::atoi(get_opt.optarg);
+      break;
+    case 's':
+      this->strategy_ = ACE_OS::atoi(get_opt.optarg);
+      // 0 -> single threaded concurrent synchronous (not implemented)
+      // 1 -> thread per request
+      // 2 -> thread pool
       break;
     default:
       break;
@@ -47,14 +53,27 @@ HTTP_Server::init (int argc, char *argv[])
 
   this->acceptor_.open(ACE_INET_Addr(this->port_));
 
-  for (int i = 0; i < this->threads_; i++) {
-    HTTP_Task *t = new HTTP_Task(this->acceptor_, this->tm_);
-    if (t->open() != 0) {
-      ACE_DEBUG ((LM_DEBUG, "in HTTP_Server::init, open failed\n"));
+  switch(this->strategy_) {
+  case 1: // thread per request
+    for (;;) {
+      this->acceptor_.accept(new HTTP_Handler(1));
     }
+    
+    break;
+
+  case 0: // single threaded concurrent (not implemented)
+  default:
+
+    for (int i = 0; i < this->threads_; i++) {
+      HTTP_Task *t = new HTTP_Task(this->acceptor_, this->tm_);
+      if (t->open(0) != 0) {
+        ACE_DEBUG ((LM_DEBUG, "in HTTP_Server::init, open failed\n"));
+      }
+    }
+
+    this->tm_.wait();
   }
 
-  this->tm_.wait();
 
   return 0;
 }
@@ -99,7 +118,6 @@ HTTP_Task::svc (void)
     //                ACE_Thread::self()));
   }
 
-  // NOT REACHED
   return 0;
 }
 

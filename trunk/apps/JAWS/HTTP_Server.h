@@ -47,6 +47,7 @@ public:
 private:
   int port_;
   int threads_;
+  int strategy_;
   ACE_Thread_Manager tm_;
   HTTP_Acceptor acceptor_;
 };

@@ -13,7 +13,7 @@ class HTTP_Handler
 {
 
 public:
-  HTTP_Handler(void);
+  HTTP_Handler(int strategy = 2);
 
   virtual int open (void *);
   virtual int svc (void);
@@ -36,6 +36,9 @@ private:
   char *sockgets(char *s, int n);
   int sockputc(char const c);
   int sockputs(char const *s);
+
+private:
+  int strategy_;
 
 private:
   // New HTTP parsing stuff.
