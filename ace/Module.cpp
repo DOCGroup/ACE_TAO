@@ -202,12 +202,15 @@ ACE_Module<ACE_SYNCH_USE>::close (int flags /* = M_DELETE_NONE */)
 
   int result = 0;
 
-  ACE_SET_BITS (flags_, flags);
+  // Only pay attention to the flags parameter if we haven't already
+  // set the task delete policies.
+  if (this->flags_ == 0)
+    ACE_SET_BITS (flags_, flags);
 
-  if (this->close_i (0, flags) == -1)
+  if (this->close_i (0, flags_) == -1)
     result = -1;
 
-  if (this->close_i (1, flags) == -1)
+  if (this->close_i (1, flags_) == -1)
     result = -1;
 
   return result;

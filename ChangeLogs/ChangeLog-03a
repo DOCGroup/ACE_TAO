@@ -1,3 +1,16 @@
+Thu May 23 20:35:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/RB_Tree.h: Clarified that iterator is valid after changes to
+          container only if the iterated-over element is not removed. Thanks
+          to Craig Ching <cching@mqsoftware.com> for noticing this.
+
+        * ace/Module.cpp (close): Fixed to only use the passed-in flags if
+          the task delete policy was not set explicitly. Thanks to Doug
+          Schmidt for this fix!
+
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp: Use new technique
+          for detecting "quit" command. Unified with book content.
+
 Thu May 23 20:36:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuilds/builds.lst: Move Lynx_PPC build to new scoreboard.
