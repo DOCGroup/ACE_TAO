@@ -33,7 +33,7 @@ typedef int DATA;
 typedef ACE_Unbounded_Set<DATA> COLLECTION;
 typedef ACE_Unbounded_Set_Iterator<DATA> ITERATOR;
 
-int main (int argc, char **argv)
+int main (int, char *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Collection_Test"));
 
@@ -75,4 +75,3 @@ template class ACE_Node<DATA>;
 #pragma instantiate ACE_Unbounded_Set<DATA>
 #pragma instantiate ACE_Node<DATA>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
