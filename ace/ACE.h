@@ -701,9 +701,9 @@ private:
   // non-blocking status of <handle>).
 
   static u_int init_fini_count_;
-  // Counter to match init ()/fini () calls.  init () must increment
-  // it; fini () must decrement it.  fini () then does nothing until
-  // it reaches 0.
+  // Counter to match <init>/<fini> calls.  <init> must increment it;
+  // <fini> must decrement it.  <fini> then does nothing until it
+  // reaches 0.
 
   static size_t pagesize_;
   // Size of a VM page.

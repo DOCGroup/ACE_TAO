@@ -125,7 +125,7 @@ public:
 #if !defined (ACE_HAS_WINCE)
   static void *read_adapter (void *event_handler);
   // Used to read from non-socket ACE_HANDLEs in our own thread to
-  // work around Win32 limitations that don't allow us to select() on
+  // work around Win32 limitations that don't allow us to <select> on
   // non-sockets (such as ACE_STDIN).  This is commonly used in
   // situations where the Reactor is used to demultiplex read events
   // on ACE_STDIN on UNIX.  Note that <event_handler> must be a
@@ -138,7 +138,7 @@ public:
                                      ACE_Thread_Manager *thr_mgr,
                                      int flags = THR_DETACHED);
   // Abstracts away from the differences between Win32 and ACE with
-  // respect to reading from ACE_STDIN (which is non-select()'able on
+  // respect to reading from ACE_STDIN (which is non-<select>'able on
   // Win32.
 
   static int remove_stdin_handler (ACE_Reactor *reactor,

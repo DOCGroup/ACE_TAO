@@ -109,7 +109,7 @@ public:
   // thing to do (since it makes it possible for shared data to be
   // changed unexpectedly) so use with caution...
   // This method maintians the original token priority.
-  // As in acquire(), the <timeout> value is an absolute time.
+  // As in <acquire>, the <timeout> value is an absolute time.
 
   int tryacquire (void);
   // Become interface-compliant with other lock mechanisms (implements
@@ -154,7 +154,7 @@ public:
   ACE_thread_t current_owner (void);
   // Return the id of the current thread that owns the token.
 
-  int signal_all_threads ();
+  int signal_all_threads (void);
   // Force all threads waiting to acquire the token to return one by
   // one.  The method sets the <signal_all_thread_> to non-zero if
   // there're threads waiting, and returns the number of threads

@@ -117,10 +117,10 @@ public:
 
   // = Dynamic linking hooks.
   virtual int suspend (void);
-  // Atomically suspend all the threads associated with the <thr_mgr ()>.
+  // Atomically suspend all the threads associated with the <thr_mgr>.
 
   virtual int resume (void);
-  // Atomically resume all the threads associated with the <thr_mgr ()_>.
+  // Atomically resume all the threads associated with the <thr_mgr>.
 
   // = Iterations dictate # of <processNextEvent> calls per-callback.
   size_t iterations (void);
@@ -138,7 +138,7 @@ public:
 protected:
   void get_orbix_descriptors (void);
   // Preinitialize any descriptors that Orbix is using.  This is
-  // called in instance ().
+  // called in <instance>.
 
   ACE_ST_CORBA_Handler (void);
   // Constructors (ensure Singleton...).
@@ -156,7 +156,7 @@ protected:
   // ACE_ST_CORBA_Handler is a singleton object.
 
   size_t iterations_;
-  // Number of iterations to process per processNextEvent() call.
+  // Number of iterations to process per <processNextEvent> call.
 };
 
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
@@ -193,10 +193,10 @@ public:
 
   // = Dynamic linking hooks.
   virtual int suspend (void);
-  // Atomically suspend all the threads associated with the <thr_mgr ()>.
+  // Atomically suspend all the threads associated with the <thr_mgr>.
 
   virtual int resume (void);
-  // Atomically resume all the threads associated with the <thr_mgr ()>.
+  // Atomically resume all the threads associated with the <thr_mgr>.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -216,8 +216,8 @@ protected:
 
   virtual int inRequestPreMarshal (ACE_CORBA_1 (Request) &r,
                                    ACE_CORBA_1 (Environment) &IT_env = ACE_CORBA_1 (default_environment));
-  // Take the incoming request and pass it to this->handle_input() but
-  // through the Reactor.
+  // Take the incoming request and pass it to <handle_input> through
+  // the Reactor.
 
   static ACE_MT_CORBA_Handler *instance_;
   // ACE_MT_CORBA_Handler is a singleton object.

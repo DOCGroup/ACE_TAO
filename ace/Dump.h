@@ -135,7 +135,8 @@ private:
     // subobject corresponding to the base class is destroyed (hence
     // on destruction of the subobject its handle won't exist anymore
     // and we'll have to check for that).
-    Tuple() : dumper_(0) {}
+
+    Tuple (void) : dumper_(0) {}
   };
 
   static ACE_ODB *instance_;

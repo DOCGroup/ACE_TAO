@@ -84,7 +84,7 @@ public:
 
 protected:
   int internal_id_;
-  // Returned from the underlying msgget() system call.
+  // Returned from the underlying <msgget> system call.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

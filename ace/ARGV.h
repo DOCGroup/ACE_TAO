@@ -38,26 +38,25 @@ public:
   // Converts <buf> into an <argv>-style vector of strings.  If
   // <substitute_env_args> is enabled then we'll substitute the
   // environment variables for each $ENV encountered in the string.
-  // The subscript and argv() operations are not allowed on an
+  // The subscript and <argv> operations are not allowed on an
   // ACE_ARGV created this way.
 
   ACE_ARGV (ASYS_TCHAR *argv[],
             int substitute_env_args = 1);
   // Converts <argv> into a linear string.  If <substitute_env_args>
   // is enabled then we'll substitute the environment variables for
-  // each $ENV encountered in the string.
-  // The buf() operation is not allowed on an ACE_ARGV created
-  // this way.
+  // each $ENV encountered in the string.  The <buf> operation is not
+  // allowed on an ACE_ARGV created this way.
 
   ACE_ARGV (ASYS_TCHAR *first_argv[], ASYS_TCHAR *second_argv[], int substitute_env_args =1);
   // Creates an ACE_ARGV which is the concatenation of the first_argv
   // and the second argv. The argv arguments should be null pointer terminated.
 
   ACE_ARGV (int substitute_env_args = 1);
-  // Entry point for creating an ASYS_TCHAR *[] command line iteratively
-  // via the add() method.  The argv() and buf() method calls are
-  // allowed, and the result is recreated when called multiple times.
-  // The subscript operator is not allowed.
+  // Entry point for creating an ASYS_TCHAR *[] command line
+  // iteratively via the <add> method.  The <argv> and <buf> methods
+  // are allowed, and the result is recreated when called multiple
+  // times.  The subscript operator is not allowed.
 
   ~ACE_ARGV (void);
   // Destructor.
@@ -99,7 +98,7 @@ public:
     TO_PTR_ARRAY = 2,
     // ACE_ARGV converts ASYS_TCHAR *argv[] to buf[]
     ITERATIVE = 3
-    // Builds buf[] or ASYS_TCHAR *argv[] iteratively with add()
+    // Builds buf[] or ASYS_TCHAR *argv[] iteratively with <add>.
   };
 
 private:

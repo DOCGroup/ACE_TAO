@@ -1,3 +1,14 @@
+Sat Jul 31 14:39:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service: Added a program that enables the TAO
+ 	  Naming Service to run as a Windows NT service.  Thanks to John
+ 	  Tucker <jtucker@infoglide.com> and Mike Vitalo
+ 	  <mvitalo@infoglide.com> for contributing this.
+
+	* tao/IIOP_Connect.cpp (open): Replaced the hard-coded
+	  IPPROTO_TCP with ACE_IPPROTO_TCP to deal with differences
+ 	  between PHARLAP and other platforms.
+
 Sat Jul 31 16:02:49 1999  coryan  <coryan@cs.wustl.edu>
 
         * TAO version 1.0 released.
@@ -45,7 +56,7 @@ Fri Jul 30 18:47:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * tao/IIOP_Connector.cpp:
         * tao/UIOP_Connector.cpp:
           If the connection fails then we have to reset the hint. We need
-          to re-examine the current solution, but after 1.0
+          to re-examine the current solution, but after 1.0.
 
 Fri Jul 30 14:52:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -56,12 +67,12 @@ Fri Jul 30 14:52:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Jul 30 12:40:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/tests/IDL_Test/typedef.idl:
-          Commented out some code for now where an array contains
-          a typedef'd array. HP/UX-aCC had a problem with the
-          generated code, and the IDL compiler (as Carlos informs
-          me) does not include any of the config-* files, so we
-          have to comment this out for everybody.
+	* TAO/tests/IDL_Test/typedef.idl:
+	  Commented out some code for now where an array contains
+	  a typedef'd array. HP/UX-aCC had a problem with the
+	  generated code, and the IDL compiler (as Carlos informs
+	  me) does not include any of the config-* files, so we
+	  have to comment this out for everybody.
 
 Fri Jul 30 11:08:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

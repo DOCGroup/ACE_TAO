@@ -221,7 +221,7 @@ public:
   // means the types must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
-  void dump ();
+  void dump (void);
   // Dump the state of the object.
 
 private:

@@ -54,7 +54,7 @@ Todd Hoff <thm@ictv.com>
 George <george@truffula.fp.trw.com>
 Brad Needham <bneedham@ix.netcom.com>
 Leslee Xu <lxu@ics.uci.edu>
-Detlef Becker <detlef.becker@med.siemens.de>
+Detlef Becker <Detlef.Becker@med.siemens.de>
 Bruce Worden <bruce@betsy.gps.caltech.edu>
 Chris Tarr <ctarr@objectspace.co>
 Bill Sears <wsears@world.std.com>
@@ -73,7 +73,7 @@ Giang Hoang Nguyen <yang@titan.com>
 Carlos Garcia Braschi <cgarcia@caramba.tid.es>
 Jam Hamidi <jh1@osi.com>
 Eric Vaughan <evaughan@arinc.com>
-Karl-Heinz Dorn <karlheinz.dorn@med.siemens.de>
+Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>,
 Steve Ritter <ritter@titan.com>
 Chandra Venkatapathy <cvenkat@develop.bsis.com>
 Matt Stevens <mstevens@kirk.softeng.infonautics.com>
@@ -709,6 +709,7 @@ David McCann <david.mccann@alcatel.at>
 Ruediger Franke <Ruediger.Franke@decrc.abb.de>
 Brian Jones <bjones@edgemail.com>
 Michael Garvin <mgarvin@nortelnetworks.com>
+Mike Vitalo <mvitalo@infoglide.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

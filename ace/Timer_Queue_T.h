@@ -278,7 +278,7 @@ public:
 
   virtual void return_node (ACE_Timer_Node_T<TYPE> *);
   // Method used to return a timer node to the queue's ownership
-  // after it is returned by a method like remove_first ()
+  // after it is returned by a method like <remove_first>.
 
 protected:
   /* virtual */ void upcall (TYPE &type,

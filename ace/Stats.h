@@ -146,7 +146,7 @@ public:
   // scale factor, it successively tries to reduce it.  Returns -1 if
   // there is overflow even with a 0 scale factor.
 
-  void reset ();
+  void reset (void);
   // Initialize internal state.
 
   static void quotient (const ACE_UINT64 dividend,

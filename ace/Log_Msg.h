@@ -113,16 +113,16 @@ class ACE_Export ACE_Log_Msg_Callback
   //     Log_Msg class and make sure that they turn on the
   //     ACE_Log_Msg::MSG_CALLBACK flag.
   //
-  //     Your log() routine is called with an instance of
+  //     Your <log> routine is called with an instance of
   //     ACE_Log_Record.  From this class, you can get the log
   //     message, the verbose log message, message type, message
   //     priority, and so on.
   //
   //     Remember that there is one Log_Msg object per thread.
   //     Therefore, you may need to register your callback object with
-  //     many Log_Msg objects (and have the correct synchronization in
-  //     the log() method) or have a separate callback object per
-  //     Log_Msg object.
+  //     many <ACE_Log_Msg> objects (and have the correct
+  //     synchronization in the <log> method) or have a separate
+  //     callback object per Log_Msg object.
 public:
   virtual ~ACE_Log_Msg_Callback (void);
   // No-op virtual destructor.

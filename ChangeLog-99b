@@ -1,3 +1,54 @@
+Sat Jul 31 12:07:48 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+        * ace: Updated comments in all the header files so that references
+	  to method names like ACE_Event_Handler::handle_input() were
+ 	  changed to <ACE_Event_Handler::handle_input>.  This change
+ 	  enables the class2man scripts to use the appropriate "code" font
+ 	  for these names in the auto-generated documentation.	
+  
+	* ace/Asynch_IO_Impl: Moved the
+	  virtual destructors for all the ACE_Asynch_*_Impl classes into
+ 	  the *.cpp file, which is where they belong.
+
+	* ace/Functor_T.h: Moved the destructor of ACE_Command_Callback
+	  out of the header file and into the *.cpp file.
+
+	* ace/Sched_Params.h: Updated the documentation a bit to mention
+	  the ACE_SCHED_{FIFO,RR,OTHER} policies explicitly.  Thanks to
+ 	  Peter Mueller <pmueller@decrc.abb.de> for motivating this.
+
+	* ace/Synch_T: Moved the implementations of ACE_Read_Guard and 
+	  ACE_Write_Guard out of the class header and into the *.i file,
+ 	  which is where they belong.
+  
+	* ace/Based_Pointer_T.i (operator *): In order to distinquish a
+	  "NULL" pointer we keep a value of -1 in target.
+
+	* ace/Based_Pointer_T.i: I was forgetting to check if
+	  rhs == 0 for the ACE_Based_Pointer<> class.  This leads to weird
+ 	  behavior when assigning a "NULL" pointer.
+
+	* examples/Reactor/Misc/notification.cpp: Cleaned up the program so
+	  that it looks better and doesn't crash and burn when signals occur.
+
+	* ace/Pipe.cpp (open): We now set the default size of the
+ 	  ACE_Pipes that are implemented as Internet or UNIX-domain
+ 	  sockets to ACE_DEFAULT_MAX_SOCKET_BUFSIZ.  This will speed up
+ 	  the Reactor's notify() method and prevent it from deadlocking as
+ 	  quickly.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+	  for testing this out.
+
+	* ace/OS.h: Added a new macro called ACE_IPPROTO_TCP that factors
+	  out the differences between PHARLAPs and "normal" systems.
+
+	* ace/Strategies_T.{i,cpp}: Added some additional ACE_ERROR printouts
+	  if open() methods fail in constructors.
+
+	* ace/Strategies_T: The logic for creating a new Singleton wasn't
+	  dynamic enough.  It's now intelligent enough to create a new
+ 	  SVC_HANDLER if it's not given one.  Thanks to Hao Ruan
+ 	  <hruan@lucent.com> for reporting this.
+
 Sat Jul 31 15:57:16 1999  coryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.0 released.
@@ -27,8 +78,9 @@ Sat Jul 31 00:22:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Fri Jul 30 10:27:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-10.x.h: Allow building w/o threads - set _REENTRANT
-          if not set, to pick up _r functions; move ACE_HAS_NONCONST_SELECT_
-          TIMEVAL out of the threads-only section.
+          if not set, to pick up _r functions; move
+ 	  ACE_HAS_NONCONST_SELECT_ TIMEVAL out of the threads-only
+ 	  section.
 
 Fri Jul 30 08:36:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

@@ -24,17 +24,22 @@ ACE_Recycling_Strategy<SVC_HANDLER>::prepare_for_recycling (SVC_HANDLER *svc_han
 template <class SVC_HANDLER> ASYS_INLINE
 ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy (SVC_HANDLER *sh,
                                                              ACE_Thread_Manager *tm)
-  : svc_handler_ (0)
+  : svc_handler_ (0),
+    delete_svc_handler_ (1)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy");
-  this->open (sh, tm);
+  if (this->open (sh, tm) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Singleton_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
 ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy (void)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy");
-  delete this->svc_handler_;
+  if (this->delete_svc_handler_ != 0)
+    delete this->svc_handler_;
 }
 
 // Create a Singleton SVC_HANDLER by always returning the same
@@ -61,7 +66,10 @@ template <class SVC_HANDLER> ASYS_INLINE
 ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *thr_mgr)
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy");
-  this->open (thr_mgr);
+  if (this->open (thr_mgr) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Creation_Strategy")));
 }
 
 // Default behavior is to make a new SVC_HANDLER, passing in the
@@ -94,8 +102,11 @@ ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
   if (this->open (dll_name,
                   factory_function,
                   svc_name,
-                  svc_rep, thr_mgr) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("open")));
+                  svc_rep,
+                  thr_mgr) == -1)
+    ACE_ERROR ((LM_ERROR,  
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("open")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -124,8 +135,11 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 
-  if (this->open (reactor, mask, flags) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+  if (this->open (reactor,
+                  mask,
+                  flags) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
 }
 
@@ -152,7 +166,10 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
 
-  if (this->open (thr_mgr, thr_flags, n_threads, flags) == -1)
+  if (this->open (thr_mgr,
+                  thr_flags,
+                  n_threads,
+                  flags) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
@@ -237,10 +254,13 @@ ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
                                                          int avoid_zombies)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
-  this->open (n_processes,
-              acceptor,
-              reactor,
-              avoid_zombies);
+  if (this->open (n_processes,
+                  acceptor,
+                  reactor,
+                  avoid_zombies) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Process_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE

@@ -121,8 +121,9 @@ class ACE_Export ACE_Name_Node
 public:
   // = Initialization methods.
   ACE_Name_Node (const char *name,
-                 char *,
-                 ACE_Name_Node *);
+                 char *name_ptr,
+                 char *pointer,
+                 ACE_Name_Node *head);
   // Constructor.
 
   ACE_Name_Node (const ACE_Name_Node &);
@@ -200,7 +201,7 @@ public:
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
-// Notice the casting to int for sizeof() otherwise unsigned int
+// Notice the casting to int for <sizeof> otherwise unsigned int
 // arithmetic is used and some awful things may happen.
 #define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_PADDING != 0 \
                                         ? ACE_MALLOC_PADDING - (ACE_CONTROL_BLOCK_SIZE) \
@@ -210,7 +211,7 @@ public:
   // Force alignment.
 
   ACE_Malloc_Header base_;
-  // Dummy node used to anchor the freelist.
+  // Dummy node used to anchor the freelist.  This needs to come last...
 
   void dump (void) const;
   // Dump the state of the object.
@@ -251,8 +252,8 @@ public:
   virtual void dump (void) const;
 
 private:
-  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!
-  // See the ACE_Allocator::instance () implementation for explanation.
+  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
+  // <ACE_Allocator::instance> implementation for explanation.
 };
 
 class ACE_Export ACE_Static_Allocator_Base : public ACE_Allocator

@@ -467,11 +467,11 @@ public:
   virtual int acquire (ACE_TPQ_Entry *caller,
                        int ignore_deadlock,
                        int notify);
-  // Returns 0 on success, -1 on failure with ACE_LOG_MSG->errnum() as
+  // Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
   // the reason.  If errnum == EWOULDBLOCK, and notify == 1,
-  // ACE_Token_Proxy::sleep_hook() has been called on the current owner
-  // of the token.  If ignore_deadlock is passed as 1 and errnum ==
-  // EDEADLK, then deadlock was detected via ace_token_manager.
+  // <ACE_Token_Proxy::sleep_hook> has been called on the current
+  // owner of the token.  If ignore_deadlock is passed as 1 and errnum
+  // == EDEADLK, then deadlock was detected via ace_token_manager.
 
   virtual int tryacquire (ACE_TPQ_Entry *caller);
   // same as acquire, but fails if would block
@@ -491,11 +491,11 @@ public:
   // waiting threads it will give up the token even if the
   // nesting_level_ > 1.  I'm not sure if this is really the right
   // thing to do (since it makes it possible for shared data to be
-  // changed unexpectedly) so use with caution...
-  // Returns 0 on success, -1 on failure with ACE_LOG_MSG->errnum() as
-  // the reason.  If errnum == EWOULDBLOCK, and notify == 1,
-  // ACE_Token_Proxy::sleep_hook() has been called on the current owner
-  // of the token.
+  // changed unexpectedly) so use with caution...  Returns 0 on
+  // success, -1 on failure with <ACE_Log_Msg::errnum> as the reason.
+  // If errnum == EWOULDBLOCK, and notify == 1,
+  // <ACE_Token_Proxy::sleep_hook> has been called on the current
+  // owner of the token.
 
   virtual int release (ACE_TPQ_Entry *caller);
   // Relinquish the token.  If there are any waiters then the next one
@@ -555,11 +555,11 @@ public:
   virtual int acquire (ACE_TPQ_Entry *caller,
                        int ignore_deadlock,
                        int notify);
-  // Returns 0 on success, -1 on failure with ACE_LOG_MSG->errnum() as
+  // Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
   // the reason.  If errnum == EWOULDBLOCK, and notify == 1,
-  // ACE_Token_Proxy::sleep_hook() has been called on the current owner
-  // of the token.  If ignore_deadlock is passed as 1 and errnum ==
-  // EDEADLK, then deadlock was detected via ace_token_manager.
+  // <ACE_Token_Proxy::sleep_hook> has been called on the current
+  // owner of the token.  If ignore_deadlock is passed as 1 and errnum
+  // == EDEADLK, then deadlock was detected via ace_token_manager.
 
   virtual int tryacquire (ACE_TPQ_Entry *caller);
   // same as acquire except fails on would block
@@ -579,11 +579,11 @@ public:
   // waiting threads it will give up the token even if the
   // nesting_level_ > 1.  I'm not sure if this is really the right
   // thing to do (since it makes it possible for shared data to be
-  // changed unexpectedly) so use with caution...
-  // Returns 0 on success, -1 on failure with ACE_LOG_MSG->errnum() as
-  // the reason.  If errnum == EWOULDBLOCK, and notify == 1,
-  // ACE_Token_Proxy::sleep_hook() has been called on the current owner
-  // of the token.
+  // changed unexpectedly) so use with caution...  Returns 0 on
+  // success, -1 on failure with <ACE_Log_Msg::errnum> as the reason.
+  // If errnum == EWOULDBLOCK, and notify == 1,
+  // <ACE_Token_Proxy::sleep_hook> has been called on the current
+  // owner of the token.
 
   virtual int release (ACE_TPQ_Entry *caller);
   // Relinquish the token.  If there are any waiters then the next one
@@ -683,7 +683,7 @@ class ACE_Export ACE_Token_Proxy
   //   changed.  See ACE_Token_Manager for details.
   //
   //   Tokens (e.g. ACE_Mutex_Token) assume that it can always call
-  //   ACE_Token_Proxy::token_acquired () on a new token owner.  This
+  //   <ACE_Token_Proxy::token_acquired> on a new token owner.  This
   //   is not a problem for synchronous use of token proxies (that is,
   //   when acquires block until successful.)  However, for
   //   implementations of the Token Server, which may use asynch
@@ -781,9 +781,9 @@ public:
   // called "Reactor Token."
 
   virtual void sleep_hook (void);
-  // This should really be called someone_waiting ().
-  // This is called by ACE_Token_xx's when another proxy enters the
-  // waiting list and requests that the current token holder be notified.
+  // This should really be called <someone_waiting>.  This is called
+  // by ACE_Token_xx's when another proxy enters the waiting list and
+  // requests that the current token holder be notified.
 
   virtual void token_acquired (ACE_TPQ_Entry *);
   // This is called when a queued (waiting) proxy is removed from the

@@ -116,7 +116,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 
 #if defined (TCP_NODELAY)
   int nodelay = 1;
-  if (this->peer ().set_option (IPPROTO_TCP,
+  if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
@@ -354,13 +354,13 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
-                                (void *) &sndbufsize,
+                                ACE_reinterpret_cast (void *, &sndbufsize),
                                 sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
     return -1;
   else if (this->peer ().set_option (SOL_SOCKET,
                                      SO_RCVBUF,
-                                     (void *) &rcvbufsize,
+                                     ACE_reinterpret_cast (void *, &rcvbufsize),
                                      sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
     return -1;
@@ -369,7 +369,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
   int nodelay = 1;
 
 #if defined (TCP_NODELAY)
-  if (this->peer ().set_option (IPPROTO_TCP,
+  if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)

@@ -1,27 +1,27 @@
-# Microsoft Developer Studio Project File - Name="Naming_Service" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="NT_Naming_Service" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=Naming_Service - Win32 Alpha Debug
+CFG=NT_Naming_Service - Win32 Alpha Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Naming_Service.mak".
+!MESSAGE NMAKE /f "NT_Naming_Service.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Naming_Service.mak" CFG="Naming_Service - Win32 Alpha Debug"
+!MESSAGE NMAKE /f "NT_Naming_Service.mak" CFG="NT_Naming_Service - Win32 Alpha Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Naming_Service - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Naming_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Naming_Service - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "Naming_Service - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "NT_Naming_Service - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "NT_Naming_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "NT_Naming_Service - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "NT_Naming_Service - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CFG=Naming_Service - Win32 Alpha Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "Naming_Service - Win32 Release"
+!IF  "$(CFG)" == "NT_Naming_Service - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,9 +54,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 orbsvcs.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 orbsvcs.lib TAO.lib ace.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Debug"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -81,9 +81,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -112,7 +112,7 @@ LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib orbsvcsd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -145,39 +145,54 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Naming_Service - Win32 Release"
-# Name "Naming_Service - Win32 Debug"
-# Name "Naming_Service - Win32 Alpha Debug"
-# Name "Naming_Service - Win32 Alpha Release"
+# Name "NT_Naming_Service - Win32 Release"
+# Name "NT_Naming_Service - Win32 Debug"
+# Name "NT_Naming_Service - Win32 Alpha Debug"
+# Name "NT_Naming_Service - Win32 Alpha Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Naming_Server.cpp
+SOURCE=.\Naming_Service.cpp
 
-!IF  "$(CFG)" == "Naming_Service - Win32 Release"
+!IF  "$(CFG)" == "NT_Naming_Service - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Debug"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Release"
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\Naming_Service.cpp
+SOURCE=.\NT_Naming_Server.cpp
 
-!IF  "$(CFG)" == "Naming_Service - Win32 Release"
+!IF  "$(CFG)" == "NT_Naming_Service - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Debug"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Debug"
 
-DEP_CPP_NAMIN=\
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Naming_Service.cpp
+
+!IF  "$(CFG)" == "NT_Naming_Service - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Debug"
+
+DEP_CPP_NT_NA=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
@@ -416,9 +431,9 @@ DEP_CPP_NAMIN=\
 	"..\orbsvcs\Naming\Entries.h"\
 	"..\orbsvcs\Naming\Naming_Utils.h"\
 	"..\orbsvcs\orbsvcs_export.h"\
-	".\Naming_Service.h"\
+	".\NT_Naming_Service.h"\
 	
-NODEP_CPP_NAMIN=\
+NODEP_CPP_NT_NA=\
 	"..\..\..\ace\sys_conf.h"\
 	"..\..\tao\align.h"\
 	"..\..\tao\connect.h"\
@@ -434,7 +449,7 @@ NODEP_CPP_NAMIN=\
 	"..\orbsvcs\Naming\CosNaming_i.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "NT_Naming_Service - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -445,15 +460,11 @@ NODEP_CPP_NAMIN=\
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\CosNaming_i.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Naming_Service.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\NS_CosNaming.h
+SOURCE=.\NT_Naming_Service.h
 # End Source File
 # End Group
 # End Target

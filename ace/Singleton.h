@@ -116,7 +116,7 @@ class ACE_Unmanaged_Singleton : public ACE_Singleton <TYPE, ACE_LOCK>
   //     destroys the instance.  Unlike with <ACE_Singleton>, the
   //     application is responsible for explicitly destroying the
   //     instance after it is no longer needed (if it wants to avoid
-  //     memory leaks, at least).  The close () static member function
+  //     memory leaks, at least).  The <close> static member function
   //     must be used to explicitly destroy the Singleton.
   //
 public:
@@ -202,7 +202,7 @@ class ACE_Unmanaged_TSS_Singleton : public ACE_TSS_Singleton <TYPE, ACE_LOCK>
   //     <ACE_Singleton>, the application is responsible for
   //     explicitly destroying the instance after it is no longer
   //     needed (if it wants to avoid memory leaks, at least).  The
-  //     close () static member function must be used to explicitly
+  //     <close> static member function must be used to explicitly
   //     destroy the Singleton.
   //
 public:

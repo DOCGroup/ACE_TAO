@@ -104,15 +104,15 @@ class ACE_Reverse_Lock : public ACE_Lock
   //
   // = DESCRIPTION
   //     This is an interesting adapter class that changes a lock into
-  //     a reverse lock, i.e., acquire() on this class calls release()
-  //     on the lock, and release() on this class calls acquire() on
+  //     a reverse lock, i.e., <acquire> on this class calls <release>
+  //     on the lock, and <release> on this class calls <acquire> on
   //     the lock.
   //
   //     One motivation for this class is when we temporarily want to
   //     release a lock (which we have already acquired) but then
   //     reaquire it soon after.  An alternative design would be to
-  //     add a Anti_Guard or Reverse_Guard class which would release()
-  //     on construction and acquire() destruction.  However, there
+  //     add a Anti_Guard or Reverse_Guard class which would <release>
+  //     on construction and <acquire> destruction.  However, there
   //     are *many* varieties of the Guard class and this design
   //     choice would lead to at least 6 new classes.  One new
   //     ACE_Reverse_Lock class seemed more reasonable.
@@ -302,14 +302,14 @@ class ACE_TSS
   //
   // = DESCRIPTION
   //     This class is a wrapper around the OS thread library
-  //     thread-specific functions.  It uses the C++ operator->() to
+  //     thread-specific functions.  It uses the <C++ operator->> to
   //     shield applications from the details of accessing
   //     thread-specific storage.
   //
   //     NOTE:  TYPE cannot be a built-in type, but instead must be a
   //     user-defined class.  (Some compilers will allow a built-in
   //     type, but shouldn't.  Sun C++ won't, properly detecting the
-  //     improper return type from operator-> ().)  See template class
+  //     improper return type from <operator->>.)  See template class
   //     ACE_TSS_Type_Adapter, below, for adapting built-in types to
   //     work with ACE_TSS.
 public:
@@ -318,7 +318,7 @@ public:
   ACE_TSS (TYPE *ts_obj = 0);
   // If caller has passed us a non-NULL ts_obj *, then we'll just use
   // this to initialize the thread-specific value (but only for the
-  // calling thread).  Thus, subsequent calls to operator->() in this
+  // calling thread).  Thus, subsequent calls to <operator->> in this
   // thread will return this value.  This is useful since it enables
   // us to assign objects to thread-specific data that have
   // arbitrarily complex constructors.
@@ -497,37 +497,28 @@ class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
 public:
   // = Initialization method.
 
-  ACE_Write_Guard (ACE_LOCK &m): ACE_Guard<ACE_LOCK> (&m)
-    {
-      this->acquire_write ();
-    }
+  ACE_Write_Guard (ACE_LOCK &m);
   // Implicitly and automatically acquire a write lock.
 
-  ACE_Write_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m)
-    {
-      if (block)
-        this->acquire_write ();
-      else
-        this->tryacquire_write ();
-    }
+  ACE_Write_Guard (ACE_LOCK &m, int block);
   // Implicitly and automatically acquire (or try to acquire) a write
   // lock.
 
   // = Lock accessors.
 
-  int acquire_write (void) { return this->owner_ = this->lock_->acquire_write (); }
+  int acquire_write (void);
   // Explicitly acquire the write lock.
 
-  int acquire (void) { return this->owner_ = this->lock_->acquire_write (); }
+  int acquire (void);
   // Explicitly acquire the write lock.
 
-  int tryacquire_write (void) { return this->owner_ = this->lock_->tryacquire_write (); }
+  int tryacquire_write (void);
   // Conditionally acquire the write lock (i.e., won't block).
 
-  int tryacquire (void) { return this->owner_ = this->lock_->tryacquire_write (); }
+  int tryacquire (void);
   // Conditionally acquire the write lock (i.e., won't block).
 
-  // Utility methods.
+  // = Utility methods.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -547,33 +538,25 @@ class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 public:
   // = Initialization methods.
 
-  ACE_Read_Guard (ACE_LOCK& m): ACE_Guard<ACE_LOCK> (&m)
-    {
-      this->acquire_read ();
-    }
+  ACE_Read_Guard (ACE_LOCK& m);
+  // Implicitly and automatically acquire a read lock.
 
-  ACE_Read_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m)
-    {
-      if (block)
-        this->acquire_read ();
-      else
-        this->tryacquire_read ();
-    }
+  ACE_Read_Guard (ACE_LOCK &m, int block);
   // Implicitly and automatically acquire (or try to acquire) a read
   // lock.
 
   // = Lock accessors.
 
-  int acquire_read (void) { return this->owner_ = this->lock_->acquire_read (); }
+  int acquire_read (void);
   // Explicitly acquire the read lock.
 
-  int acquire (void) { return this->owner_ = this->lock_->acquire_read (); }
+  int acquire (void);
   // Explicitly acquire the read lock.
 
-  int tryacquire_read (void) { return this->owner_ = this->lock_->tryacquire_read (); }
+  int tryacquire_read (void);
   // Conditionally acquire the read lock (i.e., won't block).
 
-  int tryacquire (void) { return this->owner_ = this->lock_->tryacquire_read (); }
+  int tryacquire (void);
   // Conditionally acquire the read lock (i.e., won't block).
 
   // = Utility methods.
@@ -602,7 +585,7 @@ class ACE_TSS_Guard
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
   //     a synchronization object.  Moreover, it ensures that the lock
-  //     is released even if a thread exits via "thr_exit()"!
+  //     is released even if a thread exits via <thr_exit>!
 public:
   // = Initialization and termination methods.
 

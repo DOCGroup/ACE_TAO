@@ -60,9 +60,10 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
   //      Implements a free list.
   //
   // = DESCRIPTION
-  //      This class maintains a free list of nodes of type T.  It depends on
-  //      the type T having a get_next () and set_next () method.  It maintains
-  //      a mutex so the freelist can be used in a multithreaded program .
+  //      This class maintains a free list of nodes of type T.  It
+  //      depends on the type T having a <get_next> and <set_next>
+  //      method.  It maintains a mutex so the freelist can be used in
+  //      a multithreaded program .
 public:
   // = Initialization and termination.
   ACE_Locked_Free_List (int mode = ACE_FREE_LIST_WITH_POOL,

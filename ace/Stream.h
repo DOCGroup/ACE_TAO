@@ -63,7 +63,7 @@ public:
   // Create a Stream consisting of <head> and <tail> as the Stream
   // head and Stream tail, respectively.  If these are 0 then the
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
-  // <arg> is the value past in to the open() methods of the tasks.
+  // <arg> is the value past in to the <open> methods of the tasks.
 
   virtual int open (void *arg,
                     ACE_Module<ACE_SYNCH_USE> *head = 0,
@@ -71,7 +71,7 @@ public:
   // Create a Stream consisting of <head> and <tail> as the Stream
   // head and Stream tail, respectively.  If these are 0 then the
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
-  // <arg> is the value past in to the open() methods of the tasks.
+  // <arg> is the value past in to the <open> methods of the tasks.
 
   virtual int close (int flags = M_DELETE);
   // Close down the stream and release all the resources.
@@ -94,7 +94,7 @@ public:
   virtual int remove (const ASYS_TCHAR *mod,
                       int flags = M_DELETE);
   // Remove the named module <mod> from the stream.  This bypasses the
-  // strict LIFO ordering of push() and pop().
+  // strict LIFO ordering of <push> and <pop>.
 
   virtual ACE_Module<ACE_SYNCH_USE> *head (void);
   // Return current stream head.

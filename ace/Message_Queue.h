@@ -48,9 +48,9 @@ public:
     DEFAULT_LWM = 16 * 1024,
     // Default low watermark (same as high water mark).
     WAS_ACTIVE = 1,
-    // Message queue was active before activate() or deactivate().
+    // Message queue was active before <activate> or <deactivate>.
     WAS_INACTIVE = 2
-    // Message queue was inactive before activate() or deactivate().
+    // Message queue was inactive before <activate> or <deactivate>.
   };
 
   ACE_Message_Queue_Base (void);
@@ -233,7 +233,10 @@ protected:
   virtual int is_empty_i (void);
   // True if queue is empty, else false.
 
-  // = Implementation of the public activate() and deactivate() methods above (assumes locks are held).
+  // = Implementation of public <activate>/<deactivate> methods above.
+
+  // These methods assume locks are held.
+
   virtual int deactivate_i (void);
   // Deactivate the queue.
   virtual int activate_i (void);
@@ -289,12 +292,12 @@ class ACE_Export ACE_Message_Queue_NT : public ACE_Message_Queue_Base
   //
   //     NOTE: *Many* ACE_Message_Queue features are not supported with
   //     this implementation, including:
-  //     * open method have different signatures.
-  //     * dequeue_head () *requires* that the ACE_Message_Block
-  //       pointer argument point to an ACE_Message_Block that was
+  //     * <open> method have different signatures.
+  //     * <dequeue_head> *requires* that the <ACE_Message_Block>
+  //       pointer argument point to an <ACE_Message_Block> that was
   //       allocated by the caller.
-  //     * peek_dequeue_head ().
-  //     * ACE_Message_Queue_Iterators.
+  //     * <peek_dequeue_head>.
+  //     * <ACE_Message_Queue_Iterators>.
   //     * No flow control.
 public:
   // = Initialization and termination methods.
