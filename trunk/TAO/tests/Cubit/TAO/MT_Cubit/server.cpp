@@ -16,7 +16,7 @@
 #include "server.h"
 
 // Global options used to configure various parameters.
-static char *hostname = ACE_OS::strdup ("localhost");
+static char *hostname;
 static char *ior_file = 0;
 static int base_port = ACE_DEFAULT_SERVER_PORT;
 static int num_of_objs = 1;
@@ -50,12 +50,15 @@ Cubit_Task::svc (void)
               orbargs_));
   int rc = this->initialize_orb ();
   if (rc == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "ORB initialization failed.\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ORB initialization failed.\n"),
+                      -1);
 
   rc = this->create_servants ();
   if (rc == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Create Servants failed.\n"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Create Servants failed.\n"),
+                      -1);
 
   TAO_TRY
     {
@@ -64,11 +67,13 @@ Cubit_Task::svc (void)
 
       this->barrier_->wait ();
 
-      // Handle requests for this object until we're killed, or one of the
-      // methods asks us to exit.
+      // Handle requests for this object until we're killed, or one of
+      // the methods asks us to exit.
       if (this->orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
-
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "run"),
+                          -1);
 
       // Shut down the OA.
       this->poa_->destroy (CORBA::B_TRUE,
@@ -84,6 +89,7 @@ Cubit_Task::svc (void)
 
   // Need to clean up and do a CORBA::release on everything we've
   // created!
+
   for (u_int i = 0; i < num_of_objs_; i++)
     delete servants_ [i];
 
@@ -107,7 +113,7 @@ Cubit_Task::initialize_orb (void)
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Initialize the Object Adapter
+      // Initialize the Object Adapter.
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
@@ -116,7 +122,8 @@ Cubit_Task::initialize_orb (void)
                           1);
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in(),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->poa_manager_ =
@@ -175,21 +182,22 @@ Cubit_Task::initialize_orb (void)
       // Check the environment and return 1 if exception occurred or nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
           CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
-        {
-          return 1;
-        }
-
+        return 1;
+    
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
-      cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
+      cubit_context_name[0].id =
+        CORBA::string_dup ("MT_Cubit");
 
       TAO_TRY_ENV.clear ();
       CORBA::Object_var objref =
-        this->naming_context_->bind_new_context (cubit_context_name, TAO_TRY_ENV);
+        this->naming_context_->bind_new_context (cubit_context_name,
+                                                 TAO_TRY_ENV);
 
       if (TAO_TRY_ENV.exception() != 0)
         {
+          // @@ Has this bug been fixed yet?!
 #if 0  // un comment when Andy fixes exception marshalling bug.
           CosNaming::NamingContext::AlreadyBound_ptr ex =
             CosNaming::NamingContext::AlreadyBound::_narrow (TAO_TRY_ENV.exception());
@@ -210,7 +218,8 @@ Cubit_Task::initialize_orb (void)
       TAO_CHECK_ENV;
 
       this->mt_cubit_context_ =
-        CosNaming::NamingContext::_narrow (objref.in (), TAO_TRY_ENV);
+        CosNaming::NamingContext::_narrow (objref.in (),
+                                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -237,38 +246,47 @@ Cubit_Task::create_servants ()
 {
   TAO_TRY
     {
-      // create the array of cubit implementations
+      // Create the array of cubit implementations.
       ACE_NEW_RETURN (servants_,
                       Cubit_i *[num_of_objs_],
                       -1);
 
-      // create the array of strings.
+      // Create the array of strings.
       ACE_NEW_RETURN (servants_iors_,
                       CORBA::String [num_of_objs_],
                       -1);
 
-      char* buffer;
+      char *buffer;
       int l = ACE_OS::strlen (key) + 3;
-      ACE_NEW_RETURN (buffer, char[l], -1);
 
-      // This loop creates multiple servants, and prints out their IORs
+      ACE_NEW_RETURN (buffer,
+                      char[l],
+                      -1);
+
+      // This loop creates multiple servants, and prints out their
+      // IORs.
       for (u_int i = 0;
            i < num_of_objs_;
            i++)
         {
-          ACE_OS::sprintf (buffer, "%s%02d",
-                           (char *) key, task_id_);
+          ACE_OS::sprintf (buffer,
+                           "%s%02d",
+                           (char *) key,
+                           task_id_);
 
           PortableServer::ObjectId_var id =
             PortableServer::string_to_ObjectId (buffer);
 
-          ACE_NEW_RETURN (this->servants_[i], Cubit_i, -1);
+          ACE_NEW_RETURN (this->servants_[i],
+                          Cubit_i,
+                          -1);
 
           if (this->servants_[i] == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                " (%P|%t) Unable to create "
                                "implementation object #%d\n",
-                               i), 2);
+                               i),
+                              2);
 
           this->poa_->activate_object_with_id (id.in (),
                                                this->servants_[i],
@@ -284,7 +302,8 @@ Cubit_Task::create_servants ()
           TAO_CHECK_ENV;
 
           CORBA::String_var str =
-            this->orb_->object_to_string (cubit.in (), TAO_TRY_ENV);
+            this->orb_->object_to_string (cubit.in (),
+                                          TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           this->servants_iors_[i] = ACE_OS::strdup (str.in ());
@@ -292,7 +311,8 @@ Cubit_Task::create_servants ()
           // Register the servant with the Naming Context....
           CosNaming::Name cubit_name (1);
           cubit_name.length (1);
-          cubit_name[0].id = CORBA::string_dup (buffer);
+          cubit_name[0].id =
+            CORBA::string_dup (buffer);
 
           if (!CORBA::is_nil (this->mt_cubit_context_.in ()))
             {
@@ -302,16 +322,16 @@ Cubit_Task::create_servants ()
               if (TAO_TRY_ENV.exception () != 0)
                 TAO_TRY_ENV.print_exception ("Attempt to bind() a cubit object to the name service Failed!\n");
               else
-                ACE_DEBUG ((LM_DEBUG, " (%t) Cubit object bound to the name \"%s\".\n", buffer));
+                ACE_DEBUG ((LM_DEBUG,
+                            " (%t) Cubit object bound to the name \"%s\".\n",
+                            buffer));
             }
 
           ACE_DEBUG ((LM_DEBUG,
                       " (%t) Object <%s> created\n",
                       this->servants_iors_[i]));
         }
-
-      delete[] buffer;
-
+      delete [] buffer;
     }
   TAO_CATCHANY
     {
@@ -366,7 +386,8 @@ Cubit_Factory_Task::create_factory (void)
       TAO_CHECK_ENV;
 
       CORBA::String_var str =
-        this->orb_->object_to_string (cubit_factory.in (), TAO_TRY_ENV);
+        this->orb_->object_to_string (cubit_factory.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -397,11 +418,13 @@ Cubit_Factory_Task::svc (void)
       this->poa_manager_->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Handle requests for this object until we're killed, or one of the
-      // methods asks us to exit.
+      // Handle requests for this object until we're killed, or one of
+      // the methods asks us to exit.
       if (this->orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
-
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "run"),
+                          -1);
 
       // Shut down the OA.
       this->poa_->destroy (CORBA::B_TRUE,
@@ -444,7 +467,8 @@ Cubit_Factory_Task::initialize_orb (void)
                           1);
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in(),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->poa_manager_ =
@@ -504,6 +528,8 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "sh:p:t:f:");
   int c;
+
+  hostname = ACE_OS::strdup ("localhost");
 
   while ((c = opts ()) != -1)
     switch (c)
@@ -588,9 +614,15 @@ initialize (int argc, char **argv)
 
 // Starts up the servants
 int
-start_servants ()
+start_servants (void)
 {
-  char *args1 = new char [4096];
+  char *args1;
+
+  // @@ Please change this so it doesn't use a magic number like
+  // 4096...
+  ACE_NEW_RETURN (args1,
+                  char[4096],
+                  -1);
   int i;
 
   ACE_Barrier barrier_ (num_of_objs + 1);
@@ -610,6 +642,7 @@ start_servants ()
                    hostname);
 
   Cubit_Task *high_priority_task;
+
   ACE_NEW_RETURN (high_priority_task,
                   Cubit_Task (args1,
                               "internet",
@@ -639,11 +672,9 @@ start_servants ()
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
   for (i = 0; i < num_of_objs; i++)
-    {
-      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                      priority,
-                                                      ACE_SCOPE_THREAD);
-    }
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants with low priority\n",
@@ -652,7 +683,13 @@ start_servants ()
   // Create the low priority servants.
   for (i = 0; i < num_of_objs - 1; i++)
     {
-      char * args = new char [4096];
+      char *args;
+      
+      // @@ Please change this so it doesn't use a magic number like
+      // 4096...
+      ACE_NEW_RETURN (args,
+                      char [4096],
+                      -1);
 
       ACE_OS::sprintf (args,
                        "rate10 -ORBport %d -ORBhost %s -ORBobjrefstyle URL ",
@@ -674,7 +711,13 @@ start_servants ()
                                                   ACE_SCOPE_THREAD);
     }
 
-  char * args = new char [4096];
+  char *args;
+  
+  // @@ Please change this so it doesn't use a magic number like
+  // 4096...
+  ACE_NEW_RETURN (args,
+                  char [4096],
+                  -1);
 
   ACE_OS::sprintf (args,
                    "rate10 -ORBport %d -ORBhost %s -ORBobjrefstyle URL ",
@@ -688,11 +731,12 @@ start_servants ()
   cubits[0] = high_priority_task->get_servant_ior (0);
 
   for (i = 0; i < num_of_objs-1; ++i)
-    cubits[i+1] = low_priority_task[i]->get_servant_ior (0);
+    cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
 
   FILE *iorFile = 0;
+
   if (ior_file != 0)
-      iorFile = fopen (ior_file, "w");
+    iorFile = fopen (ior_file, "w");
 
   for (i = 0; i < num_of_objs; ++i)
     {
@@ -701,11 +745,13 @@ start_servants ()
           fputs (cubits[i], iorFile);
           fputs ("\n", iorFile);
         }
-      printf ("cubits[%d] ior = %s\n", i, cubits[i]);
+      ACE_OS::printf ("cubits[%d] ior = %s\n",
+                      i,
+                      cubits[i]);
     }
 
   if (ior_file != 0)
-    fclose (iorFile);
+    ACE_OS::fclose (iorFile);
 
   ACE_NEW_RETURN (factory_task,
                   Cubit_Factory_Task (args, "internet", cubits, num_of_objs),
@@ -730,16 +776,22 @@ main (int argc, char *argv[])
 {
 #if defined (ACE_HAS_THREADS)
   if (initialize (argc, argv) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error in Initialization\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in Initialization\n"),
+                      1);
   if(start_servants () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error creating the servants\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error creating the servants\n"),
+                      1);
 
-  ACE_DEBUG ((LM_DEBUG, "Wait for all the threads to exit\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Wait for all the threads to exit\n"));
 
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_DEBUG ((LM_DEBUG, "Test not run.  This platform doesn't seem to have threads.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Test not run.  This platform doesn't seem to have threads.\n"));
 #endif /* ACE_HAS_THREADS */
   return 0;
 }

@@ -52,9 +52,9 @@ public:
 #endif /* ACE_HAS_THREADS */
 
 class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
+{
   // = TITLE
   //    Encapsulates an ORB for the Cubit application.
-{
  public:
   Cubit_Task (const char *args,
               const char* orbname,
@@ -107,7 +107,7 @@ private:
   // Barrier for the multiple servants to synchronize after
   // binding to the orb.
 
-  CORBA::String * servants_iors_;
+  CORBA::String *servants_iors_;
   // ior strings of the servants
 
   CosNaming::NamingContext_var naming_context_;
@@ -121,9 +121,9 @@ private:
 };
 
 class Cubit_Factory_Task : public ACE_Task<ACE_NULL_SYNCH>
+{
   // = TITLE
   //    Encapsulates an ORB for the Cubit Factory application.
-{
 public:
   Cubit_Factory_Task (const char *args,
 		      const char* orbname,
@@ -163,10 +163,10 @@ private:
   PortableServer::POAManager_var poa_manager_;
   // The POA Manager for both the root POA and the child POA.
 
-  CORBA::String * cubits_;
+  CORBA::String *cubits_;
   // Array of cubit ior strings
   
-  Cubit_Factory_i * cubit_factory_;
+  Cubit_Factory_i *cubit_factory_;
   // cubit factory object
 
   u_int num_of_objs_;

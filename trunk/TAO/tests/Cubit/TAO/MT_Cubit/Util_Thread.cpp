@@ -4,10 +4,7 @@
 
 Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
-  : 
-#if defined (ACE_HAS_THREADS)
-  ACE_Task<ACE_MT_SYNCH> (thr_mgr),
-#endif /* ACE_HAS_THREADS */
+  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thr_mgr)),
     done_ (0),
     number_of_computations_ (0),
     ts_ (ts)
@@ -21,7 +18,7 @@ Util_Thread::svc (void)
               "(%t) Utilization Thread created, "
               "waiting for threads to finish binding\n"));
 
-  // Sumedh, please add comments here.
+  // @@ Sumedh, please add comments here.
   this->ts_->barrier_->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -44,19 +41,20 @@ Util_Thread::get_number_of_computations (void)
 int
 Util_Thread::run_computations (void)
 {
-  // Sumedh, isn't there a "ACE::is_prime()" method that we can reuse
-  // here?  If this doesn't work right, can you please add a new
-  // method in class ACE so that we can leverage existing effort and
-  // prepare for the future?
+  // @@ Isn't there a "ACE::is_prime()" method that we can reuse here?
+  // If this doesn't work right, can you please add a new method in
+  // class ACE so that we can leverage existing effort and prepare for
+  // the future?
 
   while (this->done_ == 0)
     {
       u_long original = CUBIT_ARBIT_NUMBER;
       u_long n = original;
       u_long test_done = 1;
-// @@ This is a *hack*, we need to implement sqrt and ceil without double's.
+      // @@ This is a *hack*, we need to implement sqrt and ceil without double's.
+      // Can we please ask James to do this?
 #if defined (ACE_LACKS_FLOATING_POINT)
-      u_long sqrt_n = n/10;
+      u_long sqrt_n = n / 10;
 #else  /* ! ACE_LACKS_FLOATING_POINT */
       u_long sqrt_n = (u_long) ceil (sqrt (n));
 #endif /* ! ACE_LACKS_FLOATING_POINT */

@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -13,18 +14,22 @@
 //
 // ============================================================================
 
-#include "Task_Client.h"
+#if !defined (UTIL_THREAD_H)
+#define UTIL_THREAD_H
 
+#include "UTIL_THREAD.h"
+
+// @@ Please comment me.
 const int CUBIT_ARBIT_NUMBER = 2064885;
 
 class Util_Thread : public ACE_Task<ACE_SYNCH>
+{
   // = TITLE
   //     The thread that computes utilization.
-{
 public:
   Util_Thread (Task_State *,
                ACE_Thread_Manager *thr_mgr);
-  // constructor.
+  // Constructor.
 
   virtual int svc (void);
   // The thread entry point function.
@@ -39,7 +44,9 @@ private:
   int run_computations (void);
   // Run the computations.
 
-  // Sumedh, please add comments here.
+  // @@ Sumedh, please add comments here.
   double number_of_computations_;
   Task_State *ts_;
 };
+
+#endif /* !defined (UTIL_THREAD_H) */
