@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -5265,6 +5266,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
+
+
 ACE_INLINE int
 ACE_OS::ioctl (ACE_HANDLE socket,
                u_long io_control_code,
@@ -5278,7 +5281,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
   QOS qos;
-  DWORD qos_len = sizeof (QOS);
+  u_long qos_len = sizeof (QOS);
 
   if (io_control_code == SIO_SET_QOS)
     {
@@ -5302,49 +5305,67 @@ ACE_OS::ioctl (ACE_HANDLE socket,
     }
   else
     {
-      qos.ProviderSpecific.len = 0xFFFFFFFF;
-      qos.ProviderSpecific.buf = NULL;
+      u_long dwBufferLen = 0;
 
       // Query for the buffer size.
       int result = ::WSAIoctl ((ACE_SOCKET) socket,
-                               io_control_code,
-                               buffer_p,
-                               buffer,
-                               &qos,
-                               qos_len,
-                               bytes_returned,
-                               (WSAOVERLAPPED *) overlapped,
-                               func);
-
-      if (result == SOCKET_ERROR)
-        errno = ::WSAGetLastError ();
+                                io_control_code,
+                                NULL,
+                                0,
+                                &dwBufferLen,
+                                sizeof (dwBufferLen),
+                                bytes_returned,
+                                NULL,
+                                NULL);
+      
+            
+      if (::WSAGetLastError () != WSAENOBUFS)
+              errno = ::WSAGetLastError ();
       else
-        {
-          // Allocate a buffer if the Provider Specific info is present.
-          if (qos.ProviderSpecific.len > 0)
-            ACE_NEW_RETURN (qos.ProviderSpecific.buf,
-                            char [qos.ProviderSpecific.len],
-                            -1);
+      {
+           
+        QOS *qos = (QOS *) malloc (dwBufferLen);  
 
-          result = ::WSAIoctl ((ACE_SOCKET) socket,
-                               io_control_code,
-                               buffer_p,
-                               buffer,
-                               &qos,
-                               qos_len,
-                               bytes_returned,
-                               (WSAOVERLAPPED *) overlapped,
-                               func);
+        result = ::WSAIoctl ((ACE_SOCKET) socket,
+                       io_control_code,
+                       NULL,
+                       0,
+                       qos,
+                       dwBufferLen,
+                       bytes_returned,
+                       NULL,
+                       NULL);
 
-          ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
-                                          qos.SendingFlowspec.TokenBucketSize,
-                                          qos.SendingFlowspec.PeakBandwidth,
-                                          qos.SendingFlowspec.Latency,
-                                          qos.SendingFlowspec.DelayVariation,
+        if (result == SOCKET_ERROR)
+                ACE_DEBUG ((LM_DEBUG, "SOCKET ERROR\n"));
+
+      
+        ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
+                                        qos->SendingFlowspec.TokenBucketSize,
+                                        qos->SendingFlowspec.PeakBandwidth,
+                                        qos->SendingFlowspec.Latency,
+                                        qos->SendingFlowspec.DelayVariation,
 #if defined(ACE_HAS_WINSOCK2_GQOS)
-                                          qos.SendingFlowspec.ServiceType,
-                                          qos.SendingFlowspec.MaxSduSize,
-                                          qos.SendingFlowspec.MinimumPolicedSize,
+                                        qos->SendingFlowspec.ServiceType,
+                                        qos->SendingFlowspec.MaxSduSize,
+                                        qos->SendingFlowspec.MinimumPolicedSize,
+#else /* ACE_HAS_WINSOCK2_GQOS */
+                                        0,
+                                        0,
+                                        0,
+#endif /* ACE_HAS_WINSOCK2_GQOS */
+                                        0,
+                                        0);
+
+              ACE_Flow_Spec receiving_flowspec (qos->ReceivingFlowspec.TokenRate,
+                                          qos->ReceivingFlowspec.TokenBucketSize,
+                                          qos->ReceivingFlowspec.PeakBandwidth,
+                                          qos->ReceivingFlowspec.Latency,
+                                          qos->ReceivingFlowspec.DelayVariation,
+#if defined(ACE_HAS_WINSOCK2_GQOS)
+                                          qos->ReceivingFlowspec.ServiceType,
+                                          qos->ReceivingFlowspec.MaxSduSize,
+                                          qos->ReceivingFlowspec.MinimumPolicedSize,
 #else /* ACE_HAS_WINSOCK2_GQOS */
                                           0,
                                           0,
@@ -5353,27 +5374,10 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                           0,
                                           0);
 
-          ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
-                                            qos.ReceivingFlowspec.TokenBucketSize,
-                                            qos.ReceivingFlowspec.PeakBandwidth,
-                                            qos.ReceivingFlowspec.Latency,
-                                            qos.ReceivingFlowspec.DelayVariation,
-#if defined(ACE_HAS_WINSOCK2_GQOS)
-                                            qos.ReceivingFlowspec.ServiceType,
-                                            qos.ReceivingFlowspec.MaxSduSize,
-                                            qos.ReceivingFlowspec.MinimumPolicedSize,
-#else /* ACE_HAS_WINSOCK2_GQOS */
-                                            0,
-                                            0,
-                                            0,
-#endif /* ACE_HAS_WINSOCK2_GQOS */
-                                            0,
-                                            0);
-
-          ace_qos.sending_flowspec (sending_flowspec);
-          ace_qos.receiving_flowspec (receiving_flowspec);
-          ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
-        }
+              ace_qos.sending_flowspec (sending_flowspec);
+              ace_qos.receiving_flowspec (receiving_flowspec);
+              ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
+      }
 
       return result;
     }
