@@ -1,5 +1,9 @@
 Mon Aug 30 12:53:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Local_Tokens.h: Added a comment explaining that these locking
+	  classes aren't intended as general-purpose synchronization
+ 	  mechanisms.  Thanks to Brian Wright <bwright@paladyne.com>
+
 	* examples/Misc/test_trace.cpp (main): Added a call to
 	  ACE_OS::atexit() to make sure we test this someplace.
 
