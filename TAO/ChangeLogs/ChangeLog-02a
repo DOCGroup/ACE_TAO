@@ -1,3 +1,18 @@
+Wed May 16 20:59:15 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.cpp (instance):
+
+	  Fixed this method so that it actually returns a valid pointer to
+	  the TAO_Singleton_Manager.  This should fix a memory leak
+	  reported by Mogens Hansen <mogens_h@dk-online.dk> that was
+	  caused by the inability of a TAO_TSS_Singleton to register
+	  itself with the incorrectly initialized TAO_Singleton_Manager.
+	  The TAO_Singleton_Manager should now be fully initialized before
+	  any TAO singleton is instantiated.
+
+	  This fix may also address issues described in bug 908.  However,
+	  that still needs to be confirmed.
+
 Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
