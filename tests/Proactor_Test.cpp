@@ -47,6 +47,7 @@ ACE_RCSID (tests,
 #elif defined (ACE_HAS_AIO_CALLS)
 
 #  include "ace/POSIX_Proactor.h"
+#  include "ace/POSIX_CB_Proactor.h"
 #  include "ace/SUN_Proactor.h"
 
 #endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
@@ -55,8 +56,9 @@ ACE_RCSID (tests,
 static int disable_signal (int sigmin, int sigmax);
 
 // Proactor Type (UNIX only, Win32 ignored) 0-default, 1 -AIOCB,
-// 2-SIG, 3-SUN
-static int proactor_type = 0;
+// 2-SIG, 3-SUN, 4-CALLBACK
+typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CALLBACK } ProactorType;
+static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
 static size_t max_aio_operations = 0;
@@ -100,6 +102,15 @@ static ACE_TCHAR data[] =
   "Connection: Keep-Alive\r\n"
   "\r\n";
 
+class LogLocker 
+{
+public:
+
+  LogLocker () { ACE_LOG_MSG->acquire (); }
+  virtual ~LogLocker () { ACE_LOG_MSG->release (); }
+};
+
+
 // *************************************************************
 //  MyTask is ACE_Task resposible for :
 //  1. creation and deletion of
@@ -126,12 +137,12 @@ public:
   virtual int svc (void);
 
   int start (size_t num_threads,
-             int    type_proactor,
+             ProactorType type_proactor,
              size_t max_op );
   int stop  (void);
 
 private:
-  int  create_proactor (int type_proactor,
+  int  create_proactor (ProactorType type_proactor,
                         size_t max_op);
   int  delete_proactor (void);
 
@@ -142,7 +153,7 @@ private:
 };
 
 int
-MyTask::create_proactor (int type_proactor, size_t max_op)
+MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -171,7 +182,7 @@ MyTask::create_proactor (int type_proactor, size_t max_op)
 
   switch (type_proactor)
     {
-    case 1:
+    case AIOCB:
       ACE_NEW_RETURN (proactor,
                       ACE_POSIX_AIOCB_Proactor (max_op),
                       -1);
@@ -179,7 +190,7 @@ MyTask::create_proactor (int type_proactor, size_t max_op)
                   ACE_TEXT ("(%t) Create Proactor Type = AIOCB\n")));
       break;
 
-    case 2:
+    case SIG:
       ACE_NEW_RETURN (proactor,
                       ACE_POSIX_SIG_Proactor (max_op),
                       -1);
@@ -188,16 +199,24 @@ MyTask::create_proactor (int type_proactor, size_t max_op)
       break;
 
 #  if defined (sun)
-
-    case 3:
+    case SUN:
       ACE_NEW_RETURN (proactor,
                       ACE_SUN_Proactor (max_op),
                       -1);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("(%t) Create Proactor Type = SUN\n")));
       break;
-
 #  endif /* sun */
+
+#  if defined (__sgi)
+    case 4:
+      ACE_NEW_RETURN (proactor,
+                      ACE_POSIX_CB_Proactor (max_op),
+                      -1);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Create Proactor Type = CALLBACK\n")));
+      break;
+#  endif
 
     default:
       ACE_NEW_RETURN (proactor,
@@ -238,7 +257,7 @@ MyTask::delete_proactor (void)
 
 int
 MyTask::start (size_t num_threads,
-               int    type_proactor,
+               ProactorType type_proactor,
                size_t max_op)
 {
   if (this->create_proactor (type_proactor, max_op) == -1)
@@ -337,6 +356,7 @@ private:
   int initiate_read_stream (void);
   int initiate_write_stream (ACE_Message_Block &mb, int nbytes);
   int check_destroy (void);
+  void cancel ();
 
   Acceptor *acceptor_;
   int index_;
@@ -347,6 +367,7 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
 
   long io_count_;
+  int flg_cancel_;
 };
 
 class Acceptor : public ACE_Asynch_Acceptor<Receiver>
@@ -359,6 +380,7 @@ public:
   virtual ~Acceptor (void);
 
   void stop (void);
+  void cancel_all (void);
 
   // Virtual from ACE_Asynch_Acceptor
   Receiver *make_handler (void);
@@ -386,6 +408,26 @@ Acceptor::~Acceptor (void)
 {
   this->stop ();
 }
+
+
+void
+Acceptor::cancel_all (void)
+{
+  // This method can be called only after proactor event loop is done
+  // in all threads.
+
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  this->cancel ();
+
+  for (int i = 0; i < MAX_RECEIVERS; ++i)
+    {
+      if (this->list_receivers_[i] != 0)
+        this->list_receivers_[i]->cancel ();
+    }
+  return;
+}
+
 
 void
 Acceptor::stop (void)
@@ -455,7 +497,8 @@ Receiver::Receiver (Acceptor * acceptor, int index)
   : acceptor_ (acceptor),
     index_    (index),
     handle_   (ACE_INVALID_HANDLE),
-    io_count_ (0)
+    io_count_ (0),
+    flg_cancel_ (0)
 {
   if (this->acceptor_ != 0)
     this->acceptor_->on_new_receiver (*this);
@@ -488,6 +531,19 @@ Receiver::check_destroy (void)
   return 0;
 }
 
+
+void
+Receiver::cancel ()
+{
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  this->flg_cancel_ = 1;
+  this->ws_.cancel ();
+  this->rs_.cancel ();
+  return;
+}
+
+
 void
 Receiver::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
@@ -512,6 +568,9 @@ Receiver::initiate_read_stream (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, -1);
 
+  if (this->flg_cancel_ != 0)
+    return 0;
+
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (1024), //BUFSIZ + 1),
@@ -535,6 +594,13 @@ int
 Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, -1);
+
+  if (this->flg_cancel_ != 0)
+   {
+      mb.release ();
+      return -1;
+   }
+
   if (nbytes <= 0)
     {
       mb.release ();
@@ -568,6 +634,8 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       || result.bytes_transferred () == 0
       || result.error () != 0)
     {
+      LogLocker log_lock;
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("**** Receiver::handle_read_stream() SessionId = %d ****\n"),
                   this->index_));
@@ -639,6 +707,8 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       result.bytes_transferred () == 0 ||
       result.error () != 0)
     {
+      LogLocker log_lock;
+
       //mb.rd_ptr () [0] = '\0';
       mb.rd_ptr (mb.rd_ptr () - result.bytes_transferred ());
 
@@ -725,6 +795,7 @@ private:
   int check_destroy (void);
   int initiate_read_stream (void);
   int initiate_write_stream (void);
+  void cancel ();
 
   int  index_;
   Connector * connector_;
@@ -738,7 +809,7 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
 
   long io_count_;
-
+  int flg_cancel_;
 };
 
 class Connector : public ACE_Asynch_Connector<Sender>
@@ -752,6 +823,7 @@ public:
 
   int  start (const ACE_INET_Addr &addr, int num);
   void stop (void);
+  void cancel_all (void);
 
   // Virtual from ACE_Asynch_Connector
   Sender *make_handler (void);
@@ -779,6 +851,24 @@ Connector::Connector (void)
 Connector::~Connector (void)
 {
   this->stop ();
+}
+
+
+void
+Connector::cancel_all(void)
+{
+  // This method can be called only after proactor event loop is done
+  // in all threads.
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  this->cancel ();
+
+  for (int i = 0; i < MAX_SENDERS; ++i)
+    {
+      if (this->list_senders_[i] != 0)
+        this->list_senders_[i]->cancel ();
+    }
+  return;
 }
 
 void
@@ -890,7 +980,8 @@ Sender::Sender (Connector * connector, int index)
   : index_     (index),
     connector_ (connector),
     handle_    (ACE_INVALID_HANDLE),
-    io_count_  (0)
+    io_count_  (0),
+    flg_cancel_ (0)
 {
   if (this->connector_ != 0)
     this->connector_->on_new_sender (*this);
@@ -928,6 +1019,18 @@ Sender::check_destroy (void)
 }
 
 void
+Sender::cancel ()
+{
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  this->flg_cancel_ = 1;
+  this->ws_.cancel ();
+  this->rs_.cancel ();
+  return;
+}
+
+
+void
 Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
   this->handle_ = handle;
@@ -959,6 +1062,9 @@ Sender::initiate_write_stream (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, -1);
 
+  if (this->flg_cancel_ != 0)
+    return -1;
+
   size_t nbytes = ACE_OS::strlen (this->send_buf_);
 
   ACE_Message_Block *mb = 0;
@@ -983,6 +1089,9 @@ int
 Sender::initiate_read_stream (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, -1);
+
+  if (this->flg_cancel_ != 0)
+    return -1;
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb, ACE_Message_Block (1024 + 1), -1);
@@ -1010,6 +1119,8 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       || result.bytes_transferred () == 0
       || result.error () != 0)
     {
+      LogLocker log_lock;
+
       // Reset pointers.
       //mb.rd_ptr()[0] ='\0';
       mb.rd_ptr (mb.rd_ptr () - result.bytes_transferred ());
@@ -1080,6 +1191,8 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       || result.bytes_transferred () == 0
       || result.error () != 0)
     {
+      LogLocker log_lock;
+
       // Reset pointers.
       mb.rd_ptr ()[result.bytes_transferred ()] = '\0';
 
@@ -1153,6 +1266,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n-t <Proactor type> UNIX-only, Win32-default always:")
       ACE_TEXT ("\n    a AIOCB")
       ACE_TEXT ("\n    i SIG")
+      ACE_TEXT ("\n    c CALLBACK")
       ACE_TEXT ("\n    s SUN")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
@@ -1183,19 +1297,22 @@ set_proactor_type (const ACE_TCHAR *ptype)
   switch (toupper (*ptype))
     {
     case 'D':
-      proactor_type = 0;
+      proactor_type = DEFAULT;
       return 1;
     case 'A':
-      proactor_type = 1;
+      proactor_type = AIOCB;
       return 1;
     case 'I':
-      proactor_type = 2;
+      proactor_type = SIG;
       return 1;
 #if defined (sun)
     case 'S':
-      proactor_type = 3;
+      proactor_type = SUN;
       return 1;
 #endif /* sun */
+    case 'C':
+      proactor_type = CALLBACK;
+      return 1;
     default:
       break;
     }
@@ -1208,14 +1325,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
   if (argc == 1) // no arguments , so one button test
     {
       both = 1;               // client and server simultaneosly
+#if defined(ACE_WIN32) || defined(sun)
       duplex = 1;             // full duplex is on
+#else   // Linux,IRIX - weak AIO implementation
+      duplex = 0;             // full duplex is off
+#endif
       host = ACE_TEXT ("localhost");      // server to connect
       port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
       max_aio_operations = 512;      // POSIX Proactor params
 #if defined (sun)
-      proactor_type = 3;             // Proactor type for SunOS
+      proactor_type = SUN;             // Proactor type for SunOS
 #else
-      proactor_type = 1;             // Proactor type = default
+      proactor_type = AIOCB;           // Proactor type = default
 #endif
       threads = 3;            // size of Proactor thread pool
       senders = 20;            // number of senders

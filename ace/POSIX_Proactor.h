@@ -55,11 +55,13 @@ class ACE_Export ACE_POSIX_Proactor : public ACE_Proactor_Impl
 public:
   enum Proactor_Type
   {
-    PROACTOR_POSIX = 0,  // base class type
-    PROACTOR_AIOCB = 1,
-    PROACTOR_SIG   = 2,
-    PROACTOR_SUN   = 3
+    PROACTOR_POSIX  = 0,  // base class type
+    PROACTOR_AIOCB  = 1,  // aio_suspend() based
+    PROACTOR_SIG    = 2,  // signals notifications
+    PROACTOR_SUN    = 3,  // SUN specific aiowait()
+    PROACTOR_CB     = 4   // callback notifications
   };
+
 
   enum SystemType  // open for future extention
   {
@@ -281,6 +283,9 @@ public:
   /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Proactor (void);
 
+  /// Close down the Proactor.
+  virtual int close (void);
+
   /**
    * Dispatch a single set of events.  If <wait_time> elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
@@ -342,9 +347,22 @@ protected:
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop, 
                             ACE_POSIX_Proactor::Proactor_Type ptype);
 
+  /// Check AIO for completion, error and result status
+  /// Return: 1 - AIO completed , 0 - not completed yet
+  virtual int get_result_status ( ACE_POSIX_Asynch_Result* asynch_result,
+                                   int & error_status,
+                                   int & return_status );
 
   /// Task to process pseudo-asynchronous operations
   ACE_Asynch_Pseudo_Task & get_asynch_pseudo_task();
+
+  /// Create aiocb list
+  int create_result_aiocb_list (void);
+
+  /// Call this method from derived class when virtual table is
+  /// built.
+  int delete_result_aiocb_list (void);
+
 
   /// Call these methods from derived class when virtual table is
   /// built.

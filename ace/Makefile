@@ -94,6 +94,7 @@ DEMUX_FILES = \
   FlReactor \
   Msg_WFMO_Reactor \
   POSIX_Proactor \
+  POSIX_CB_Proactor \
   WIN32_Proactor \
   Priority_Reactor \
   Proactor \
