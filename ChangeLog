@@ -1,3 +1,11 @@
+Fri Jul 26 06:40:12 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_String.inl: Added casts of the input parameter to
+	  (unsigned char) for the ace_isprint() and ace_isspace() methods
+ 	  on ACE_OS_String to prevent problems with MSVC++ 7.0.  Thanks to
+ 	  Colin Weaver <colin.weaver@invensys.com> for suggesting this
+ 	  fix.
+
 Fri Jul 26 10:37:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_pss.doxygen:
