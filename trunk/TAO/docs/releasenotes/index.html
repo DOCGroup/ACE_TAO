@@ -1618,9 +1618,52 @@ create test cases. The framemork and its options are described <a href="notify.h
 <a NAME="security"></a>CORBA Security Service</h3>
 Point of contact: <a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a>
 <p>Additional information is available
-<a href="http://doc.ece.uci.edu/TAO/Security/">here</a>.
-<p>Implemented Features:
-<ul>IIOP over SSL integration via TAO's <a href="http://doc.ece.uci.edu/TAO/Security/SSLIOP.html">SSLIOP
+<a href="../Security/index.html">here</a>.
+
+<h4>Security Service Overview</h4>
+
+TAO's current Security Service support implements the core
+functionality of the <a href="http://www.omg.org/cgi-bin/apps/doc?formal/02-03-11.pdf">CORBA Security Service v1.8</a>.
+<p>
+In particular, it implements the most of the CORBA <a href="../../orbsvcs/orbsvcs/SecurityLevel1.idl">SecurityLevel1 API</a>,
+in addition to some of <a
+	href="../../orbsvcs/orbsvcs/SecurityLevel2.idl">SecurityLevel2</a>.
+Of the transport protocols described in the above specification, only
+      SSLIOP is supported.Documentation for TAO's SSLIOP pluggable
+      protocol is available <a href="../Security/index.html">here</a>.
+
+<p>
+The 1.8 specification defines the Common Secure Interoperability version
+1 (CSIv1) protocol that is currently implemented in TAO.
+
+<p>
+There are basically two ways to use security in TAO:
+<ol>
+<li>
+Use TAO's SSLIOP pluggable protocol in TAO alone.  This allows one
+to secure application requests without modifying the application code.
+This is the easiest approach but is also the least flexible.
+</li>
+<li>
+Use the Security Service API implemented by TAO in conjunction with
+TAO's SSLIOP pluggable protocol.  This provides the benefits of
+secured application requests with the flexibility of disabling
+security in some requests, if so desired.  This approach also allows
+one to choose at run-time which X.509 certificates will be associated
+with application requests, as opposed to setting configuring only one
+SSL certificate at application start-up-time.  These things are
+basically configured using the SecurityLevel2 defined policies:
+
+<blockquote><code>
+        QOPPolicy<br>
+        InvocationCredentialsPolicy<br>
+        EstablishTrustPolicy<br>
+</blockquote></code>
+</li>
+</ol>
+
+<h4>Implemented Features</h4>
+IIOP over SSL integration via TAO's <a href="../Security/SSLIOP.html">SSLIOP
 pluggable protocol</a>.
 <ul>
 <li>
@@ -1672,7 +1715,7 @@ implementation is now available.</li>
 Initial SSLIOP-specific <tt>Credentials</tt> implementation is complete.</li>
 </ul>
 </ul>
-Current Status:
+<h4>Current Status</h4>
 <ul>
 <li>
 Core <tt>SecurityLevel2</tt> interfaces such as <tt>Credentials</tt>, <tt>SecurityManager</tt>,
@@ -1684,15 +1727,30 @@ IDL module. They provide the ability to replace key security components
 in the ORB with another implementation with ease. Thus, the security components
 in the ORB become highly extensible.</li>
 </ul>
-Schedule:
+<h4>Schedule</h4>
 <ul>
 <li>
-<font color="#0000FF">October 2002</font></li>
+<font color="#0000FF">April 2004</font></li>
 
 <ul>
 <li>
-Begin implementation of the Common Secure Interoperability version 2 (CSIv2)
-protocol/specification. Needed for more advanced features, such as delegation.</li>
+	Complete integration of the Common Secure Interoperability
+	version 2 (CSIv2) protocol defined in the <a
+	  href="http://www.omg.org/cgi-bin/doc?formal/04-03-12">CORBA
+	  3.0.x</a> core specification, and the <a
+	  href="http://www.omg.org/technology/documents/formal/atlas.htm">Authorization Token Layer Acquisition Service (ATLAS)</a>.
+	<p>
+	  CSIv2 and ATLAS address many of the shortcomings of the
+	  current CSIv1-based Security Service.  Overviews of each are
+	  available on the <a href="http://www.omg.org/technology/documents/formal/omg_security.htm">OMG Security</a> web page.
+	<blockquote><em>
+	  Note that CSIv2 as defined by the CORBA 3.0.x specification
+	  has no API so TAO's implementation will use a slightly
+	  <a
+	    href="http://adiron.com/ORBAsec/3.5.0/docs/SL3/#SecurityLevel3API">modified API</a> currently used by several ORBs defined by Adiron LLC.
+	</em></blockquote>
+
+</li>
 </ul>
 <!--
   <LI>
@@ -1723,16 +1781,6 @@ protocol/specification. Needed for more advanced features, such as delegation.</
       </LI>
     </UL
   </LI>
--->
-<li>
-<font color="#0000FF">November 2002</font></li>
-
-<ul>
-<li>
-Begin implementation of the <i>Authentication Token Layer Attribute Service
-(ATLAS)</i> specification for TAO.</li>
-</ul>
-
 <li>
 <font color="#0000FF">December 2002</font></li>
 
@@ -1758,8 +1806,11 @@ specification for TAO. It is needed to support security domains.</li>
 <li>
 SSLIOP and SECIOP performance enhancements.</li>
 </ul>
+-->
 </ul>
-<!-- END: CORBA Security Service Release Notes --><!--#include virtual="ec.html" -->
+<!-- END: CORBA Security Service Release Notes -->
+
+<!--#include virtual="ec.html" -->
 <p>
 <hr>
 <h3>

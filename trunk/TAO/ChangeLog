@@ -1,3 +1,9 @@
+Mon Apr 26 00:09:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated Security Service release notes.
+
 Sun Apr 25 17:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/LoadBalancing/server.cpp:
