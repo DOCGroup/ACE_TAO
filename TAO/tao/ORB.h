@@ -643,7 +643,7 @@ public:
 
   void _optimize_collocation_objects (CORBA::Boolean opt);
   // Set collocation optimization status.
-  CORBA::Boolean _optimize_collocation_objects (void);
+  CORBA::Boolean _optimize_collocation_objects (void) const;
   // Get collocation optimization status.
 
   TAO_ORB_Core *orb_core (void) const;
@@ -702,18 +702,8 @@ private:
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
-  CORBA::Object_ptr iiop_string_to_object (const char* url,
-                                           CORBA::Environment& env);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
-
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment& env);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
-
-  CORBA::Object_ptr iioploc_string_to_object (const char* string,
-                                              CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
@@ -776,9 +766,6 @@ private:
   // Table of ObjectID->IOR mappings.
 
   CORBA::Boolean use_omg_ior_format_;
-  // Decides whether to use the URL notation or to use IOR notation.
-
-  CORBA::Boolean optimize_collocation_objects_;
   // Decides whether to use the URL notation or to use IOR notation.
 
   // = NON-PROVIDED METHODS

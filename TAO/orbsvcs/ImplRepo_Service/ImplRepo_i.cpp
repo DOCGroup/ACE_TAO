@@ -3,9 +3,11 @@
 
 #include "ImplRepo_i.h"
 #include "Options.h"
+#include "tao/ORB.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/IIOP_Acceptor.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
-#include "tao/IIOP_Profile.h"
 
 // Constructor
 
@@ -374,7 +376,29 @@ ImplRepo_i::server_is_running (const char *server,
                 rec.host,
                 rec.port));
 
-  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
+  // @@ Don't use the ORB_Core_instance() keep a pointer to the ORB
+  //    and use the orb_core() accessor
+  TAO_Acceptor_Registry* registry =
+    this->orb_manager_.orb ()->orb_core ()->acceptor_registry ();
+
+  TAO_Acceptor *acceptor = 0;
+  TAO_AcceptorSetItor end = registry->end ();
+  for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
+    {
+      if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
+        {
+          acceptor = (*i);
+          break;
+        }
+    }
+  if (acceptor == 0)
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+
+  TAO_IIOP_Acceptor* iiop_acceptor =
+    ACE_dynamic_cast (TAO_IIOP_Acceptor*,acceptor);
+
+  // Get our host and port and convert it to something we can use.
+  const ACE_INET_Addr& my_addr  = iiop_acceptor->address ();
 
   // @@ We are assuming that we are on the same machine right now
   new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());

@@ -21,6 +21,7 @@
 #define TAO_PLUGGABLE_H
 
 #include "tao/corbafwd.h"
+#include "tao/Sequence.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -42,7 +43,10 @@ class TAO_Export TAO_Transport
   //   constructor and deleted in the service handlers destructor!!
 
 public:
-  virtual CORBA::ULong tag (void) = 0;
+  TAO_Transport (CORBA::ULong tag);
+  // default creator, requres the tag value be supplied.
+
+  CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
   virtual void close_connection() = 0;
@@ -52,89 +56,73 @@ public:
   virtual void resume_connection (ACE_Reactor *reactor) = 0;
   // Calls the Reactor's <resume_handler> on behalf of the
   // corresponding connection handler.
-  // @@ Fred: who does the suspend_handler thing? The transport object
-  //    itself? Can we clarify the relantionship between PP and the
-  //    leader-follower protocol on the client side.
 
   virtual int idle (void) = 0;
   // Idles the corresponding connection handler.
 
-  virtual int is_nil (TAO_Transport *obj) = 0;
-  // returns 0 if the obj is 0.
-  // @@ Fred: what are this two methods? Are they related to the
-  //    IDL-generated methods of similar names? You may want to know
-  //    that they added those methods for ORBs that map Foo_ptr to a
-  //    class instead of Foo*, but we are not required to do that for
-  //    PP, right?
-
-  virtual TAO_Transport *_nil (void) = 0;
-  // Return a NULL pointer of type TAO_Transport *.
-
   virtual ACE_HANDLE handle (void) = 0;
-  // This is primarily used for error and debugging messages!
-  // @@ Fred: what about connecting to the reactor?
+  // This method provides a way to gain access to the underlying
+  // file handle used by the reactor.
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) = 0;
-  // Write the contents of the Message_Block to the connection.
-  // @@ Fred: I assume this writes the complete message block chain?
-  //    Can you document that? Can this be written in the base class
-  //    in terms of send(iovec)? Ditto for the next method?
-  // @@ Fred: why do we have time values here?  Isn't the time out
-  //    going to be obtained from the policies in the ORB? Or did I
-  //    said that we expected to always have timeouts so it should be
-  //    part of the interface, I don't remember....
-  // @@ Fred: how do we report a timeout back to the higher levels? A
-  //    special return code? An exception? Use (yuk!) errno?
+  // Write the complete Message_Block chain to the connection.
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual ssize_t send (const u_char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0) = 0;
   // Write the contents of the buffer of length len to the connection.
-  // @@ Fred: how do we report a timeout back to the higher levels? A
-  //    special return code? An exception? Use (yuk!) errno?
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual ssize_t send (const iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0) = 0;
   // Write the contents of iovcnt iovec's to the connection.
-  // @@ Fred: how do we report a timeout back to the higher levels? A
-  //    special return code? An exception? Use (yuk!) errno?
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual ssize_t recv (char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0) = 0;
   // Read len bytes from into buf.
-  // @@ Fred: how do we report a timeout back to the higher levels? A
-  //    special return code? An exception? Use (yuk!) errno?
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual ssize_t recv (char *buf,
                         size_t len,
                         int flags,
                         ACE_Time_Value *s = 0) = 0;
   // Read len bytes from into buf using flags.
-  // @@ Fred: how do we report a timeout back to the higher levels? A
-  //    special return code? An exception? Use (yuk!) errno?
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0) = 0;
   //  Read received data into the iovec buffers.
-  // @@ Fred: how do we report a timeout back to the higher levels? A
-  //    special return code? An exception? Use (yuk!) errno?
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway) = 0;
   // Default action to be taken for send request.
 
-  //  virtual int send_response (TAO_OutputCDR &response) = 0;
-  // @@ Fred: I guess that send_reponse is not much different from
-  //    send_request()? If the thing is obsolete please remove it, it
-  //    only makes the code harder to read.
-
   virtual ~TAO_Transport (void);
   // destructor
+
+private:
+  CORBA::ULong tag_;
+  // IOP protocol tag.
 };
 
 class TAO_Export TAO_IOP_Version
@@ -171,41 +159,54 @@ public:
   // Equality operator
 };
 
-// @@ Fred: we must implement the TAO_Generic_Profile class too!
+// @@ Fred&Ossama: We need a *concrete* class (something that can be
+//    instantiated) that can be used to represent profiles for
+//    protocols we don't know.  This is required in the spec because
+//    we are supposed to preserve foreign profiles when communicating
+//    with other ORBs.
+//    A simple class with noops for most methods and just the basics
+//    required for marshaling and demarshaling is what we need.
+//
 class TAO_Export TAO_Profile
 {
   // = TITLE
-  //   Generic Profile definitions.
+  //   Defines the Profile interface
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   An abstract base class for representing object address or location
+  //   information.  This is based on the CORBA IOR definitions.
   //
 public:
-  TAO_Profile (void);
+  TAO_Profile (CORBA::ULong tag);
   // Constructor
 
-  virtual CORBA::ULong tag (void) const = 0;
-  // The tag, each concrete class will have a specific tag value.
-  // @@ Fred, any reason this cannot be implemented in the base class?
-  //    Do you want to save the memory required to store the tag_ for
-  //    the time required to call the virtual function?
+  virtual ~TAO_Profile (void);
+  // If you have a virtual method you need a virtual dtor.
 
-  virtual int parse (TAO_InputCDR& cdr,
-                     CORBA::Boolean& continue_decoding,
-                     CORBA::Environment &env) = 0;
-  // Initialize this object using the given CDR octet string.
+  CORBA::ULong tag (void) const;
+  // The tag, each concrete class will have a specific tag value.
+
+  CORBA::ULong _incr_refcnt (void);
+  // Increase the reference count by one on this object.
+
+  CORBA::ULong _decr_refcnt (void);
+  // Decrement the object's reference count.  When this count goes to
+  // 0 this object will be deleted.
+  // @@ Fred&Ossama: guys, reference counting *should* be implemented
+  //    in the base class, otherwise you are just going to end up
+  //    repeating code and forcing the user to implement things not
+  //    directly related to protocols.
+
+  void forward_to (TAO_MProfile *mprofiles);
+  // Keep a pointer to the forwarded profile
+
+  TAO_MProfile* forward_to (void);
+  // MProfile accessor
 
   virtual int parse_string (const char *string,
                             CORBA::Environment &env) = 0;
   // Initialize this object using the given input string.
-  // @@ Fred: is this function (and the next) to support URL style
-  //    object references? I'm not sure we want to support them for
-  //    all protocols, it was just a convinience for IIOP, mostly for
-  //    ease of debugging.  The utils/catior program should help with
-  //    that though.
-  //    Having said that: this sounds like an interesting way to
-  //    support an extensible framework for the interoperable naming
-  //    service bootstrapping procotol.
+  // Supports URL stylr of object references
 
   virtual CORBA::String to_string (CORBA::Environment &env) = 0;
   // Return a string representation for this profile.  client must
@@ -224,29 +225,21 @@ public:
   //
   //          will work better.
 
+  virtual int decode (TAO_InputCDR& cdr) = 0;
+  // Initialize this object using the given CDR octet string.
+
   virtual int encode (TAO_OutputCDR &stream) const = 0;
   // Encode this profile in a stream, i.e. marshal it.
-  // @@ Fred: notice the correct use of const and references in this
-  //    method ;-)
 
   virtual const TAO_ObjectKey &object_key (void) const = 0;
   // @@ deprecated. return a reference to the Object Key.
-  // @@ Fred: if it is deprecated why don't we just remove it?
 
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
-  // @@ Fred: does it make sense to have a method to modify the object
-  //    key?
 
-  virtual TAO_ObjectKey *_key (CORBA::Environment &env) = 0;
+  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
-  // The memory is owned by this object (not given to the caller).
-
-  void forward_to (TAO_MProfile *mprofiles);
-  // Keep a pointer to the forwarded profile
-
-  TAO_MProfile* forward_to (void);
-  // MProfile accessor
+  // The memory is owned by the caller!
 
   virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
                                         CORBA::Environment &env) = 0;
@@ -266,29 +259,64 @@ public:
   // This method is used with a connection has been reset requiring
   // the hint to be cleaned up and reset to NULL.
 
-  virtual TAO_Profile *_nil (void) = 0;
-  // Return a null object pointer.
-  // @@ Fred: what is this method used for? Is this similar to the
-  //    *static* methods generated for IDL objects?
-
-  virtual CORBA::ULong _incr_refcnt (void) = 0;
-  // Increase the reference count by one on this object.
-
-  virtual CORBA::ULong _decr_refcnt (void) = 0;
-  // Decrement the object's reference count.  When this count goes to
-  // 0 this object will be deleted.
-  // @@ Fred: reference counting can be implemented in the base class!
-
-protected:
+private:
   TAO_MProfile *forward_to_i (void);
   // this object keeps ownership of this object
 
-  virtual ~TAO_Profile (void);
-  // If you have a virtual method you need a virtual dtor.
+private:
+  CORBA::ULong tag_;
+  // IOP protocol tag.
+
+  TAO_MProfile* forward_to_;
+  // the TAO_MProfile which contains the profiles for the forwarded
+  // object.
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Mutex to protect reference count.
+
+  CORBA::ULong refcount_;
+  // Number of outstanding references to this object.
+};
+
+class TAO_Export TAO_Unknown_Profile : public TAO_Profile
+{
+  // = TITLE
+  //   A TAO_Profile class to handle foreign profiles.
+  //
+  // = DESCRIPTION
+  //   The CORBA spec implies that ORBs must be prepared to save and
+  //   pass around profiles for protocols it does not recognize. It is
+  //   not mandatory to *use* those profiles but they shouldn't be
+  //   dropped.
+  //   This class stores the information required to marshal and
+  //   demarshal an unknown profile, but simply returns an error if
+  //   any of the TAO internal methods are invoked.
+  //
+public:
+  TAO_Unknown_Profile (CORBA::ULong tag);
+  // Create the profile
+
+  // = The TAO_Profile methods look above
+  virtual int parse_string (const char *string,
+                            CORBA::Environment &env);
+  virtual CORBA::String to_string (CORBA::Environment &env);
+  virtual const TAO_opaque &body (void) const;
+  virtual int decode (TAO_InputCDR& cdr);
+  virtual int encode (TAO_OutputCDR &stream) const;
+  virtual const TAO_ObjectKey &object_key (void) const;
+  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const;
+  virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
+                                        CORBA::Environment &env);
+  virtual CORBA::ULong hash (CORBA::ULong max,
+                             CORBA::Environment &env);
+  virtual ASYS_TCHAR *addr_to_string(void);
+  virtual void reset_hint (void);
 
 private:
-  TAO_MProfile* forward_to_;
+  TAO_opaque body_;
 };
+
+// ****************************************************************
 
 class TAO_Export TAO_Acceptor
 {
@@ -296,149 +324,109 @@ class TAO_Export TAO_Acceptor
   //   Abstract Acceptor class used for pluggable protocols.
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Base class for the Acceptor bridge calss.
 public:
 
-  virtual TAO_Profile *create_profile (TAO_ObjectKey &object_key) = 0;
+  TAO_Acceptor (CORBA::ULong tag);
+
+  virtual int create_mprofile (const TAO_ObjectKey &object_key,
+                               TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
-  // @@ Fred: that <object_key> should be const.
-  // @@ Fred: we haven't thought about acceptors that service more
-  //    than one endpoint (for example: listening on sap_any). Maybe a
-  //    better interface is:
-  //    virtual int add_profiles (const TAO_ObjectKey& key,
-  //                              TAO_MProfile& mprofile) const = 0;
-  //    // Add the profiles serviced by this acceptor to the
-  //    // <mprofile> list. Use <key> to fill in the profiles.
+
+  virtual int open (TAO_ORB_Core *orb_core, ACE_CString &address) = 0;
+  // method to initialize acceptor for address.
+
+  virtual int open_default (TAO_ORB_Core *orb_core) = 0;
+  // Open an acceptor on the default endpoint for this protocol
 
   virtual ACE_Event_Handler *acceptor (void) = 0;
   // Return the ACE acceptor...
-  // @@ Fred: could this method be const?
 
-  virtual CORBA::ULong tag (void) = 0;
+  virtual int is_collocated (const TAO_Profile* profile) = 0;
+  // Return 1 if the <profile> has the same endpoint as the acceptor.
+
+  CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
   virtual int close (void) = 0;
   // Closes the acceptor
 
+  virtual CORBA::ULong endpoint_count (void) = 0;
+  // returns the number of endpoints this acceptor is listening on.  This
+  // is used for determining how many profiles will be generated
+  // for this acceptor.
+
   virtual ~TAO_Acceptor (void);
   // Destructor
+
+private:
+  CORBA::ULong tag_;
+  // IOP protocol tag.
 };
 
 class TAO_Export TAO_Connector
 {
   // = TITLE
-  //   Connector Registry and Generic Connector interface definitions.
+  //   Generic Connector interface definitions.
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Base class for connector bridge object.
 public:
 
-  // @@ Fred: the more I think about it the more the Connectors seem
-  //    to be the entry point to a complete protocol, for example:
-  //    this looks like the correct spot to add a method like:
-  //    virtual TAO_Acceptor* acceptor (const char* endpoint) = 0;
-  //    // Create a new acceptor from an endpoint specification, if
-  //    // the specification is not recognized then we return 0.
-  //    // Each protocol will be characterized by a prefix, so
-  //    // endpoints will be specified as:
-  //    // "iiop:macarena:0" - IIOP on macarena, port <any>
-  //    // "uiop:/foo/bar"   - GIOP over unix domain, file /foo/bar
-  //    // "iiop:localhost:0" - IIOP, sap_any [any better idea?]
-  //    // "aal5giop:......"   - GIOP over AAL5, how to specify the
-  //    //                       end point?
-  //    //
-  //    // this format is extensible, for example:
-  //    // "rtiiop:macarena:0,15" - real-time IIOP, host, port, prio.
-  //
-  //    Anyway, maybe the method does not belong here, but it belongs
-  //    somewhere.
-  //    Note: On second thought: Connectors should be per-ORB objects,
-  //          but the set of PP is more like a per-process thing.
-  //          Maybe there should be a ProtocolRegistry as you
-  //          suggested, that acts as a factory of both connectors and
-  //          acceptors.
-  //
+  TAO_Connector (CORBA::ULong tag);
+  // default constructor.
 
-  virtual int preconnect (char *preconnections) = 0;
-  // Initial set of connections to be established.
-  // @@ Fred: Any better way to express the connections? Should they
-  //          include the protocol prefix shown above?
+  virtual ~TAO_Connector (void);
+  // the destructor.
 
-  virtual int open (TAO_Resource_Factory *trf,
-                    ACE_Reactor *reactor) = 0;
-  //  Initialize object and register with reactor.
-
-  virtual int close (void) = 0;
-  // Shutdown Connector bridge and concreate Connector.
-
-  virtual CORBA::ULong tag (void) = 0;
+  CORBA::ULong tag (void) const;
   // The tag identifying the specific ORB transport layer protocol.
   // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
   // IOR to identify the type of profile included. IOR -> {{tag0,
   // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
   // CORBA::ULong TAO_IOP_Profile_ID;
 
+  int make_mprofile (const char *ior,
+                     TAO_MProfile &mprofile,
+                     CORBA::Environment &ACE_TRY_ENV);
+  // Parse a string containing a URL style IOR and return an
+  // MProfile.
+
+  virtual int open (TAO_ORB_Core *orb_core) = 0;
+  //  Initialize object and register with reactor.
+
+  virtual int close (void) = 0;
+  // Shutdown Connector bridge and concreate Connector.
+
   virtual int connect (TAO_Profile *profile,
                        TAO_Transport *&) = 0;
   // To support pluggable we need to abstract away the connect()
   // method so it can be called from the GIOP code independant of the
   // actual transport protocol in use.
-  // @@ Fred: notice the change in interface: it takes a profile,
-  //    stores the hint on it but returns the transport, that makes
-  //    this method thread safe. We don't care if other threads change
-  //    the hint, we will receive the right transport anyway.
 
-  virtual ~TAO_Connector (void);
-  // the destructor.
-};
+  virtual int preconnect (const char *preconnections) = 0;
+  // Initial set of connections to be established.
 
-class TAO_Export TAO_Connector_Registry
-{
-  // = TITLE
-  //   All loaded ESIOP or GIOP connector bridges must register with
-  //   this object.
-  //
-  // = DESCRIPTION
-  //   @@ Fred, please fill in here.
-  //   @@ Fred: this class should be able to dynamically load a set of
-  //            connectors using the service configurator.
-  //   @@ Fred: We have to start working on the acceptor registry.
-public:
-  TAO_Connector_Registry (void);
-  //  Default constructor.
+  virtual TAO_Profile *create_profile (TAO_InputCDR& cdr) = 0;
+  // Create a profile for this protocol and initialize it based on the
+  // encapsulation in <cdr>
 
-  ~TAO_Connector_Registry (void);
-  //  Default destructor.
+protected:
+  virtual int make_profile (const char *endpoint,
+                            TAO_Profile *&,
+                            CORBA::Environment &ACE_TRY_ENV) = 0;
+  // Create a profile with a given endpoint.
 
-  TAO_Connector *get_connector (CORBA::ULong tag);
-  // Return the connector bridge corresponding to tag (IOP).
+  virtual int check_prefix (const char *endpoint) = 0;
+  // Check that the prefix of the provided endpoint is valid for use
+  // with a given pluggable protocol.
 
-  CORBA::Boolean add_connector (TAO_Connector *connector);
-  // All TAO_Connectors will have a tag() member which will be used
-  // for registering object, as well as type checking.
-
-  int open (TAO_Resource_Factory *trf,
-            ACE_Reactor *reactor);
-  // Initialize all registered connectors.
-
-  int close_all (void);
-  // Close all open connectors.
-
-  int preconnect (const char *the_preconnections);
-  // For this list of preconnections call the connector specific
-  // preconnect method for each preconnection.
-
-  int connect (TAO_Stub *&obj, TAO_Transport *&);
-  // This is where the transport protocol is selected based on some
-  // policy.  This member will call the connect member of the
-  // TAO_Connector class which in turn will call the concrete
-  // connector.
+  virtual const char object_key_delimiter (void) const = 0;
+  // Return the object key delimiter to be used.
 
 private:
-  TAO_Connector *iiop_connector_;
-  // @@ for now this is all we support!  This next iteration will be a
-  // bit more generic.  Something like a key, value pair with key
-  // equil to the IOP_TYPE and value a pointer to the Connector.
+  CORBA::ULong tag_;
+  // IOP protocol tag.
 };
 
 #if defined (__ACE_INLINE__)

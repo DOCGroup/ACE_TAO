@@ -11,14 +11,16 @@
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Arg_Shifter.h"
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
-#include "tao/IIOP_Profile.h"
 #include "tao/DynAny_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -29,10 +31,10 @@
 #include "tao/Marshal.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/GIOP.h"
-#include "tao/IIOP_Acceptor.h"
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"
+#include "tao/MProfile.h"
 
 #if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
@@ -52,7 +54,6 @@
 ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
-static const char iioploc_prefix [] = "iioploc:";
 static const char file_prefix[] = "file://";
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -126,8 +127,7 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 # ifdef TAO_HAS_VALUETYPE
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
-    use_omg_ior_format_ (1),
-    optimize_collocation_objects_ (1)
+    use_omg_ior_format_ (1)
 {
   leader_follower_info_.leaders_ = 0;
   leader_follower_info_.leader_thread_ID_ =
@@ -196,44 +196,15 @@ CORBA_ORB::open (void)
 
   this->open_called_ = 1;
 
-  TAO_Server_Strategy_Factory *f =
-    this->orb_core_->server_factory ();
+  TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
+  // get a reference to the acceptor_registry!
 
-  // @@ For now we simple assume an IIOP handler, in the future
-  // @@ this has to be more general
-  // @@ Fred: right, this is my idea for this stuff:
-  //    Using the Connector Registry try every endpoint listed in the
-  //    orb_params(), for each one create a TAO_Acceptor [check the
-  //    Pluggable.h file for a description on how to do that],
-  //    activate the acceptor with the reactor and insert it in the
-  //    Acceptor Registry.
-  TAO_IIOP_BASE_ACCEPTOR *iiop_acceptor =
-    ACE_dynamic_cast (TAO_IIOP_BASE_ACCEPTOR *,
-                      this->orb_core_->acceptor ()->acceptor ());
+  // Initialize all the endpoints ... the registry will use the
+  // orb_core_ to obtain a list of endpoints and strategies!
 
-  // Initialize the endpoint ... or try!
-
-  if (iiop_acceptor->open (this->orb_core_->orb_params ()->addr (),
-                           this->orb_core_->reactor(),
-                           f->creation_strategy (),
-                           f->accept_strategy (),
-                           f->concurrency_strategy (),
-                           f->scheduling_strategy ()) == -1)
+  if (ar->open (this->orb_core_) == -1)
     // Need to return an error somehow!!  Maybe set do_exit?
     return -1;
-
-  // The following step is necessary since the user may have specified
-  // a 0 for a port number.  Once we open the acceptor, we can recheck
-  // the address and get the accurate port number.
-  ACE_INET_Addr new_address;
-  if (iiop_acceptor->acceptor ().get_local_addr (new_address) == -1)
-    return -1;
-
-  // Reset the address
-  this->orb_core_->orb_params ()->addr (new_address);
-
-  iiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
-  this->orb_core_->add_to_collocation_table ();
 
   return 0;
 }
@@ -987,32 +958,20 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   TAO_Stub *stub = 0;
 
-  // First we create a profile list, well actually a list of one!
-  // @@ should go to the acceptor for this, the orb delegates to the acceptor
-  // to create Profiles!
+  size_t pfile_count =
+         this->orb_core_->acceptor_registry ()->endpoint_count ();
 
-  // @@ Fred, please change this code to use auto_ptr<> and
-  //    automatically deallocate the temporary objects. Alternatively
-  //    consider about using references ;-)
-  TAO_MProfile mp (1);
+  // First we create a profile list, well actually the empty container
+  TAO_MProfile mp (pfile_count);
 
-  TAO_ORB_Parameters *orb_params =
-    this->orb_core_->orb_params ();
+  this->orb_core_->acceptor_registry ()->make_mprofile (key, mp);
 
-  TAO_IIOP_Profile *pfile;
-  ACE_NEW_THROW_EX (pfile,
-                    TAO_IIOP_Profile (orb_params->host (),
-                                      orb_params->addr ().get_port_number (),
-                                      key,
-                                      orb_params->addr ()),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
-
-  mp.give_profile (pfile);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
   return stub;
@@ -1305,7 +1264,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
-                 char *const *argv,
+                 char *argv[],
                  const char * orb_name)
 {
   return CORBA::ORB_init (argc, argv, orb_name,
@@ -1314,8 +1273,8 @@ CORBA::ORB_init (int &argc,
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
-                 char *const *argv,
-                 const char * /* orb_name */,
+                 char *argv[],
+                 const char * orbid,
                  CORBA::Environment &ACE_TRY_ENV)
 {
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
@@ -1327,16 +1286,55 @@ CORBA::ORB_init (int &argc,
   CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
+  if (orbid == 0 || ACE_OS::strcmp (orbid, "") == 0)
+    {
+      orbid = "";
+      ACE_Arg_Shifter arg_shifter (argc, argv);
+      while (arg_shifter.is_anything_left ())
+        {
+          char *current_arg = arg_shifter.get_current ();
+
+          const char orbid_opt[] = "-ORBid";
+          const int orbid_len = sizeof (orbid_opt) - 1;
+          if (ACE_OS::strcmp (current_arg, orbid_opt) == 0)
+            {
+              arg_shifter.consume_arg ();
+              if (arg_shifter.is_parameter_next ())
+                {
+                  orbid = arg_shifter.get_current ();
+                  arg_shifter.consume_arg ();
+                }
+            }
+          else if (ACE_OS::strncmp (current_arg, orbid_opt,
+                                    orbid_len) == 0)
+            {
+              arg_shifter.consume_arg ();
+              // The rest of the argument is the ORB id...
+              orbid = orbid_opt + orbid_len;
+              // but we should skip an optional space...
+              if (orbid[0] == ' ')
+                orbid++;
+            }
+          else
+            arg_shifter.ignore_arg ();
+        }
+    }
+
   // Get ORB Core
+  TAO_ORB_Core *oc =
+    TAO_ORB_Table::instance ()->find (orbid);
+
+  // The ORB was initialized already, just return that one!
+  if (oc != 0)
+    return oc->orb ();
+
   // @@ As part of the ORB re-architecture this will the point where
   //    we locate the right ORB (from a table) and use that one
   //    instead of just creating a new one every time.
-  TAO_ORB_Core *oc;
-
-  ACE_NEW_RETURN (oc, TAO_ORB_Core, CORBA::ORB::_nil ());
+  ACE_NEW_RETURN (oc, TAO_ORB_Core (orbid), CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
-  int result = oc->init (argc, (char **) argv);
+  int result = oc->init (argc, argv);
 
   // Check for errors and return 0 if error.
   if (result == -1)
@@ -1348,6 +1346,11 @@ CORBA::ORB_init (int &argc,
   // parameters.
   if (CORBA::instance_ == 0)
     CORBA::instance_ = oc->orb ();
+
+  // Before returning remember to store the ORB into the table...
+  if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                       CORBA::COMPLETED_NO), 0);
 
   return oc->orb ();
 }
@@ -1421,9 +1424,10 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
       // ORB that's configured differently.  @@ Is this true? FRED
+      // @@ Need to fix!!
 
       if (obj->_stubobj () == 0)
-        return CORBA::string_copy ((CORBA::String) TAO_IIOP_Profile::prefix ());
+        return CORBA::string_copy ("iiop:");
         // @@ This should be some sort of default prefix, not
         // hardcoded to IIOP!! FRED
 
@@ -1442,32 +1446,53 @@ CORBA_ORB::string_to_object (const char *str,
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  // Use the prefix code to choose which destringify algorithm to use.
-  const size_t iiop_prefix_len =
-    ACE_OS::strlen (TAO_IIOP_Profile::prefix ());
   if (ACE_OS::strncmp (str,
-                       TAO_IIOP_Profile::prefix (),
-                       iiop_prefix_len) == 0)
-    obj = this->iiop_string_to_object (str + iiop_prefix_len,
+                       file_prefix,
+                       sizeof file_prefix - 1) == 0)
+    obj = this->file_string_to_object (str + sizeof file_prefix - 1,
                                        ACE_TRY_ENV);
-
-  else if (ACE_OS::strncmp (str,
-                            file_prefix,
-                            sizeof file_prefix - 1) == 0)
-    obj = this->file_string_to_object (str + sizeof file_prefix -1,
-                                       ACE_TRY_ENV);
-
   else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     obj = this->ior_string_to_object (str + sizeof ior_prefix - 1,
                                       ACE_TRY_ENV);
+  else
+    {
+      // @@ Fred&Ossama: Is there anyway to initialize the mprofile in
+      //    such a way that it does not allocate memory?
+      //    The connector registry could count how many profiles are
+      //    there (if any) and then allocate all the memory in one
+      //    call, saving precious microseconds in an area of the code
+      //    that is invoked only once ;-)
 
-  else if (ACE_OS::strncmp (str,
-                            iioploc_prefix,
-                            sizeof iioploc_prefix - 1) == 0)
-    obj = this->iioploc_string_to_object (str + sizeof iioploc_prefix - 1,
-                                          ACE_TRY_ENV);
+      TAO_MProfile mprofile (0);
+      // It is safe to declare this on the stack since the contents of
+      // mprofile get copied.
+
+      if (this->orb_core_->connector_registry ()->make_mprofile (str,
+                                                                 mprofile,
+                                                                 ACE_TRY_ENV)
+          != 0)
+        {
+          ACE_THROW_RETURN (CORBA::INITIALIZE (), CORBA::Object::_nil ());
+        }
+
+      // Now make the TAO_Stub.
+      TAO_Stub *data;
+      ACE_NEW_RETURN (data,
+                      TAO_Stub ((char *) 0, mprofile, this->orb_core_),
+                      CORBA::Object::_nil ());
+
+      // Create the CORBA level proxy.
+      TAO_ServantBase *servant = this->_get_collocated_servant (data);
+
+      // This will increase the ref_count on data by one
+      ACE_NEW_RETURN (obj,
+                      CORBA_Object (data,
+                                    servant,
+                                    servant != 0),
+                      CORBA::Object::_nil ());
+    }
 
   return obj;
 }
@@ -1516,7 +1541,6 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
 
 // ****************************************************************
 
@@ -1575,135 +1599,6 @@ CORBA_ORB::ior_string_to_object (const char *str,
   return objref;
 }
 
-// Destringify URL style IIOP objref.
-CORBA::Object_ptr
-CORBA_ORB::iiop_string_to_object (const char *string,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  // NIL objref encodes as just "iiop:" ... which has already been
-  // removed, so we see it as an empty string.
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  if (!string || !*string)
-    return obj;
-
-  // type ID not encoded in this string ... makes narrowing rather
-  // expensive, though it does ensure that type-safe narrowing code
-  // gets thoroughly excercised/debugged!  Without a typeID, the
-  // _narrow will be required to make an expensive remote "is_a" call.
-
-  // Allocate a Multiple Profile with the given no. of profiles.
-  TAO_MProfile mp (1);
-
-  TAO_Profile* pfile;
-  ACE_NEW_RETURN (pfile,
-                  TAO_IIOP_Profile (string, ACE_TRY_ENV),
-                  obj);
-  ACE_CHECK_RETURN (obj);
-  // pfile refcount == 1
-
-  mp.give_profile (pfile);
-
-  // Now make the TAO_Stub ...
-  TAO_Stub *data;
-  ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp, this->orb_core_),
-                  obj);
-  // pfile refcount == 2
-
-  // Create the CORBA level proxy.
-  TAO_ServantBase *servant =
-    this->_get_collocated_servant (data);
-
-  ACE_NEW_RETURN (obj,
-                  CORBA_Object (data,
-                                servant,
-                                servant != 0),
-                  obj);
-
-  // Set the ref_count on data to 1, which is correct, because only
-  // obj has now a reference to it.
-  // data->_decr_refcnt ();
-
-  return obj;
-}
-
-// DeStringifies the iioploc style IORs. This function creates a Stub
-// object with multiple profiles and then the object reference.
-CORBA::Object_ptr
-CORBA_ORB::iioploc_string_to_object (const char *string,
-                                     CORBA::Environment &env)
-{
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - iioploc_string_to_object <%s>\n",
-                string));
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  // NIL objref encodes as just "iioploc:" ... which has already been
-  // removed, so we see it as an empty string.
-
-  if (!string || !*string)
-    return CORBA::Object::_nil ();
-
-  // We want to modify list_of_profiles.
-  char *list_of_profiles = ACE_OS::strdup (string);
-
-  // Count the No. of profiles in the given list.
-  int profile_count = 1;
-
-  for (size_t i = 0;
-       i < ACE_OS::strlen (list_of_profiles);
-       i++)
-    {
-      if (*(list_of_profiles + i) == ',')
-        profile_count++;
-    }
-
-  TAO_MProfile mp (profile_count);
-
-  // Extract the comma separated profiles in the list and
-  // populate the Multiple Profile.
-  TAO_IIOP_Profile *pfile;
-  char *lasts = 0;
-
-  for (char *str = ACE_OS::strtok_r (list_of_profiles, ",", &lasts);
-       str != 0 ;
-       str = ACE_OS::strtok_r (0, ",",&lasts))
-
-    {
-      ACE_NEW_RETURN (pfile,
-                      TAO_IIOP_Profile (str,
-                                        env),
-                      CORBA::Object::_nil ());
-
-      // Give up ownership of the profile.
-      mp.give_profile (pfile);
-    }
-
-  // Dont need the list of profiles any more.
-  ACE_OS::free (list_of_profiles);
-
-  // Now make the TAO_Stub ...
-  TAO_Stub *data;
-  ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp, this->orb_core_),
-                  CORBA::Object::_nil ());
-
-  // Create the CORBA level proxy.
-  TAO_ServantBase *servant =
-    this->_get_collocated_servant (data);
-
-  // This will increase the ref_count on data by one
-  ACE_NEW_RETURN (obj,
-                  CORBA_Object (data,
-                                servant,
-                                servant != 0),
-                  CORBA::Object::_nil ());
-
-  return obj;
-}
-
 CORBA::Object_ptr
 CORBA_ORB::file_string_to_object (const char* filename,
                                   CORBA::Environment& ACE_TRY_ENV)
@@ -1740,114 +1635,122 @@ CORBA_ORB::file_string_to_object (const char* filename,
 
 // ****************************************************************
 
+void
+CORBA_ORB::_optimize_collocation_objects (CORBA::Boolean opt)
+{
+  this->orb_core_->optimize_collocation_objects (opt);
+}
+
+CORBA::Boolean
+CORBA_ORB::_optimize_collocation_objects (void) const
+{
+  return this->orb_core_->optimize_collocation_objects ();
+}
+
 TAO_ServantBase *
 CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 {
   // ACE_DEBUG ((LM_DEBUG, "CORBA_ORB: get_collocated_servant\n"));
 
-  if (this->optimize_collocation_objects_ && sobj != 0)
+  if (sobj == 0 || !this->_optimize_collocation_objects ())
+    return 0;
+
+  // @@EXC@@ We should receive the <env> from the command line.
+  // @@ Fred: why do we need an environment for the
+  //    Profile::_key() method?
+
+  CORBA::Environment ACE_TRY_ENV;
+
+  if (this->orb_core_->use_global_collocation ())
     {
-      TAO_Profile *pfile = sobj->profile_in_use ();
+      // @@ Ossama: maybe we need another lock for the table, to
+      //    reduce contention on the Static_Object_Lock below, if so
+      //    then we need to use that lock in the ORB_init() function.
 
-      // Make sure users passed in a valid TAO_Stub otherwise, we
-      // don't know what to do next.
-      if (pfile == 0)
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      TAO_ORB_Table* table = TAO_ORB_Table::instance ();
+      TAO_ORB_Table::Iterator end =
+        table->end ();
+      for (TAO_ORB_Table::Iterator i = table->begin ();
+           i != end;
+           ++i)
         {
-          // @@ Fred, can you please either keep these debugging
-          // statements in or remove them, but please don't leave the
-          // #if 0's around!
-#if 0
-          ACE_ERROR ((LM_ERROR,
-                      "%p: Passing IIOP ORB and non-IIOP object\n",
-                      "_get_collocated_object"));
-#endif
-          // Something must be wrong!
-          return 0;
-        }
-#if 0
-      ACE_DEBUG ((LM_DEBUG,
-                  "CORBA_ORB: checking collocation for <%s>\n",
-                  pfile->addr_to_string ()));
-#endif
+          // @@ Fred&Ossama: how do we handle forwarding in this case?
+          //    What happens if we are forwarded back to this ORB, or if a
+          //    local stub is (or should) be forwarded to a remote one?
 
-      // @@EXC@@ We should receive the <env> from the command line.
-      // @@ Fred: why do we need an environment for the
-      // Profile::_key() method?
+          const TAO_MProfile& mprofile = sobj->get_base_profiles ();
+          if ((*i).int_id_->is_collocated (mprofile) == 0)
+            continue;
 
-      CORBA::Environment env;
-      TAO_ObjectKey_var objkey = pfile->_key (env);
+          TAO_Object_Adapter *oa = (*i).int_id_->object_adapter ();
 
-      if (env.exception ())
-        {
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                      "CORBA_ORB: cannot find key for <%s>\n",
-                      pfile->addr_to_string ()));
-#endif
-          return 0;
-        }
-
-      // Check if the object requested is a collocated object.
-      // @@ FRED - can we make this more generic!!
-      // @@ Fred: this is a question that the Acceptor registry must
-      //    answer, in other words: we should go to the connector
-      //    registry with the Stub object and ask if that object is
-      //    collocated or not.  Then we simply lookup in the POA to
-      //    find the servant.
-      //    How does the Acceptor Registry answer the question:
-      //    - For each profile in the Stub it iterates over the
-      //      acceptors, if the profile and the acceptor have the same
-      //      protocol then we pass the profile to the acceptor.
-      //    - The acceptor downcast the profile, the derived class
-      //      contains a method that returns the address in the
-      //      favourite format for that protocol (i.e. this is not a
-      //      method of the base class); it uses that address to match
-      //      with the addresses it is accepting on.
-      //    - A policy question: do we return when the first acceptor
-      //      matches or if they all match?
-      //      Before answering: "only when they all match" think about
-      //      a server that is restarted with more endpoints (or
-      //      less), shouldn't old, persistent IORs, still be treated
-      //      as collocated?
-      TAO_Object_Adapter *object_adapter = 0;
-      if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
-        {
-          const ACE_INET_Addr &addr =
-            ACE_dynamic_cast (TAO_IIOP_Profile *, pfile)->object_addr ();
-
-          object_adapter = this->orb_core_->get_collocated_object_adapter (addr);
-        }
-      else
-        ACE_ERROR ((LM_ERROR,
-                    "get_collocated_poa NOT Supported for NON-IIOP profile!\n"));
-
-      if (object_adapter != 0)
-        {
-          PortableServer::Servant servant =
-            object_adapter->find_servant (objkey.in (), env);
-          if (env.exception ())
+          for (TAO_PHandle j = 0;
+               j != mprofile.profile_count ();
+               ++j)
             {
-#if 0
-              ACE_DEBUG ((LM_DEBUG,
-                          "CORBA_ORB: cannot find servant for <%s>\n",
-                          pfile->addr_to_string ()));
-#endif
-              return 0;
-            }
+              const TAO_Profile* profile = mprofile.get_profile (j);
+              TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (0);
 
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                      "CORBA_ORB: object at <%s> is collocated\n",
-                      pfile->addr_to_string ()));
-#endif
-          return servant;
+              ACE_TRY
+                {
+                  PortableServer::Servant servant =
+                    oa->find_servant (objkey.in (), ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+
+                  return servant;
+                }
+              ACE_CATCHANY
+                {
+                  // Ignore the exception and continue with the
+                  // next one.
+                }
+              ACE_ENDTRY;
+            }
         }
     }
+  else
+    {
+      // @@ Fred&Ossama: how do we handle forwarding in this case?
+      //    What happens if we are forwarded back to this ORB, or if a
+      //    local stub is (or should) be forwarded to a remote one?
 
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "CORBA_ORB: collocation failed for \n"));
-#endif
+      const TAO_MProfile& mprofile = sobj->get_base_profiles ();
+      if (!this->orb_core_->is_collocated (mprofile))
+        return 0;
+
+      // @@ Ossama: there is repeated code here, could you please
+      // move it to a routine....
+
+      TAO_Object_Adapter *oa = this->orb_core_->object_adapter ();
+
+      for (TAO_PHandle j = 0;
+           j != mprofile.profile_count ();
+           ++j)
+        {
+          const TAO_Profile* profile = mprofile.get_profile (j);
+          TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          ACE_TRY_EX(LOCAL_ORB)
+            {
+              PortableServer::Servant servant =
+                oa->find_servant (objkey.in (), ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX(LOCAL_ORB);
+
+              return servant;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore the exception and continue with the
+              // next one.
+            }
+          ACE_ENDTRY;
+        }
+    }
 
   return 0;
 }
@@ -1913,12 +1816,12 @@ CORBA::instance (void)
       if (CORBA::instance_ == 0)
         {
           int argc = 0;
-          char *const *argv = 0;
+          char **argv = 0;
 
           // Note that CORBA::ORB_init() will also acquire the static
           // lock, but that's ok since it's a recursive lock.
           CORBA::Environment ACE_TRY_ENV;
-          CORBA::instance_ = CORBA::ORB_init (argc, argv, "",
+          CORBA::instance_ = CORBA::ORB_init (argc, argv, "default_orb",
                                               ACE_TRY_ENV);
         }
     }
@@ -2038,6 +1941,9 @@ CORBA_ORB::lookup_value_factory (const char *repository_id,
 
 // ****************************************************************
 
+// @@ Fred&Ossama: I'm convinced that you ended up moving template
+//    instantiations from here to the Connect.cpp file.
+
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
@@ -2049,28 +1955,7 @@ template class TAO_Unbounded_Sequence<CORBA::Octet>;
 
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
-template class CACHED_CONNECT_STRATEGY;
 template class ACE_Guard<TAO_Cached_Connector_Lock>;
-template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>;
-template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-
-template class ACE_Unbounded_Set<ACE_INET_Addr>;
-template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -2080,27 +1965,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
-#pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>
-#pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-#pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-
-#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

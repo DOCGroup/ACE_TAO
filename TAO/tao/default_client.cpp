@@ -79,16 +79,19 @@ TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
 
   if (this->iiop_profile_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-		    0);
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                    0);
   else
     ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
-		    0);
+                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                    0);
 
   return the_lock;
 }
 
+  // @@ This routine should not be here, otherwise the protocols are
+  //    not pluggable, but we need to integrate the changes from
+  //    asynchronous messaging to eliminate this method....
 ACE_Creation_Strategy<TAO_Client_Connection_Handler> *
 TAO_Default_Client_Strategy_Factory::create_client_creation_strategy (void)
 {
@@ -168,9 +171,9 @@ TAO_RW_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handle
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
-		       ASYS_TEXT ("Client_Strategy_Factory"),
+                       ASYS_TEXT ("Client_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Client_Strategy_Factory),
-		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Client_Strategy_Factory)

@@ -39,18 +39,26 @@ TAO_UIOP_Handler_Base::resume_handler (ACE_Reactor *)
 //    the corresponding transport obj.
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
-    orb_core_ (TAO_ORB_Core_instance ())
+    orb_core_ (TAO_ORB_Core_instance ()),
+    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  uiop_transport_ = new TAO_UIOP_Server_Transport(this);
+  uiop_transport_ = new TAO_UIOP_Server_Transport (this);
 }
 
 // @@ For pluggable protocols, added a reference to the
 //    corresponding transport obj.
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_UIOP_Handler_Base (orb_core),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  uiop_transport_ = new TAO_UIOP_Server_Transport(this);
+  uiop_transport_ = new TAO_UIOP_Server_Transport (this);
+}
+
+TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
+{
+  delete uiop_transport_;
+  uiop_transport_ = 0;
 }
 
 TAO_Transport *
@@ -97,8 +105,7 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
 
   char client[MAXPATHLEN + 1];
 
-  if (addr.get_path_name (client, MAXPATHLEN) == -1)
-    addr.addr_to_string (client, sizeof (client));
+  addr.addr_to_string (client, sizeof (client));
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
@@ -161,19 +168,8 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
   // thread with this method as the "worker function".
   int result = 0;
 
-  // Inheriting the ORB_Core stuff from the parent thread.  WARNING:
-  // this->orb_core_ is *not* the same as TAO_ORB_Core_instance(),
-  // this thread was just created and we are in fact *initializing*
-  // the ORB_Core based on the resources of the ORB that created
-  // us....
-
-  TAO_ORB_Core *tss_orb_core = TAO_ORB_Core_instance ();
-  tss_orb_core->inherit_from_parent_thread (this->orb_core_);
-
-  // We need to change this->orb_core_ so it points to the TSS ORB
-  // Core, but we must preserve the old value
-  TAO_ORB_Core* old_orb_core = this->orb_core_;
-  this->orb_core_ = tss_orb_core;
+  // Inheriting the ORB_Core tss stuff from the parent thread.
+  this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
@@ -189,8 +185,6 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "(%P|%t) TAO_UIOP_Server_Connection_Handler::svc end\n"));
-
-  this->orb_core_ = old_orb_core;
 
   return result;
 }
@@ -228,30 +222,30 @@ TAO_UIOP_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 
 #if !defined (TAO_NO_IOR_TABLE)
   if (ACE_OS::memcmp (object_key,
-		      &TAO_POA::objectkey_prefix[0],
-		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+                      &TAO_POA::objectkey_prefix[0],
+                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
-			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
-			     0,
-			     0);
+                             TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
+                             0,
+                             0);
 
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Simple Object key %s. Doing the Table Lookup ...\n",
-		    object_id.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Simple Object key %s. Doing the Table Lookup ...\n",
+                    object_id.c_str ()));
 
       CORBA::Object_ptr object_reference;
 
       // Do the Table Lookup.
       int status =
-	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
-							 object_reference);
+        this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
+                                                         object_reference);
 
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
-	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
+        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
 
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
@@ -293,7 +287,7 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                                    CORBA::ULong &request_id,
                                                    CORBA::Environment &env)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
 
   // This will extract the request header, set <response_required> as
   // appropriate.
@@ -326,11 +320,11 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
 // #if !defined (TAO_NO_IOR_TABLE)
 //   if (ACE_OS::memcmp (tmp_key.get_buffer (),
-// 		      &TAO_POA::objectkey_prefix[0],
-// 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
+//                    &TAO_POA::objectkey_prefix[0],
+//                    TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
 //     {
 //       ACE_DEBUG ((LM_DEBUG,
-// 		  "TAO Object Key Prefix found in the object key.\n"));
+//                "TAO Object Key Prefix found in the object key.\n"));
 
 
 //       // Do the Table Lookup. Raise a location forward exception or
@@ -465,7 +459,7 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 void
 TAO_UIOP_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
   TAO_GIOP::send_request (this->uiop_transport_,
                           output,
@@ -478,7 +472,7 @@ void
 TAO_UIOP_Server_Connection_Handler::send_error (CORBA::ULong request_id,
                                            CORBA::Exception *x)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
   // The request_id is going to be not 0, if it was sucessfully read
   if (request_id != 0)
@@ -532,7 +526,7 @@ TAO_UIOP_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               // Write the exception
               CORBA::TypeCode_ptr except_tc = x->_type ();
 
-              CORBA::ExceptionType extype = CORBA::USER_EXCEPTION;
+              CORBA::exception_type extype = CORBA::USER_EXCEPTION;
               if (CORBA::SystemException::_narrow (x) != 0)
                 extype = CORBA::SYSTEM_EXCEPTION;
 
@@ -573,13 +567,14 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // 2. construct a complete request
   // 3. dispatch that request and return any required reply and errors
 
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
   TAO_InputCDR input (this->orb_core_->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-                      TAO_ENCAP_BYTE_ORDER);
+                      TAO_ENCAP_BYTE_ORDER,
+                      this->orb_core_);
 
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
@@ -601,7 +596,7 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
       TAO_GIOP::Message_Type type =
         TAO_GIOP::recv_request (this->uiop_transport_, input, this->orb_core_);
 
-      TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
+      //      TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
 
       // Check to see if we've been cancelled cooperatively.
       if (this->orb_core_->orb ()->should_shutdown () != 0)
@@ -738,7 +733,7 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
 
-  TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
+  //  TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
 
   return result;
 }
@@ -904,21 +899,21 @@ TAO_UIOP_Client_Connection_Handler::close (u_long)
 
 // ****************************************************************
 
-TAO_RW_Client_Connection_Handler::TAO_RW_Client_Connection_Handler (ACE_Thread_Manager *t)
+TAO_RW_UIOP_Client_Connection_Handler::TAO_RW_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_Client_Connection_Handler (t)
 {
 }
 
-TAO_RW_Client_Connection_Handler::~TAO_RW_Client_Connection_Handler (void)
+TAO_RW_UIOP_Client_Connection_Handler::~TAO_RW_UIOP_Client_Connection_Handler (void)
 {
 }
 
 int
-TAO_RW_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+TAO_RW_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  // TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -937,7 +932,7 @@ TAO_RW_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                   stream,
                                                   orb_core));
 
-  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+  //  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
   if (!success)
     return -1;
@@ -946,7 +941,7 @@ TAO_RW_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
 }
 
 int
-TAO_RW_Client_Connection_Handler::resume_handler (ACE_Reactor *)
+TAO_RW_UIOP_Client_Connection_Handler::resume_handler (ACE_Reactor *)
 {
   // Since we don't suspend, we don't have to resume.
   return 0;
@@ -954,17 +949,17 @@ TAO_RW_Client_Connection_Handler::resume_handler (ACE_Reactor *)
 
 // ****************************************************************
 
-TAO_ST_Client_Connection_Handler::TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t)
+TAO_ST_UIOP_Client_Connection_Handler::TAO_ST_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_Client_Connection_Handler (t)
 {
 }
 
-TAO_ST_Client_Connection_Handler::~TAO_ST_Client_Connection_Handler (void)
+TAO_ST_UIOP_Client_Connection_Handler::~TAO_ST_UIOP_Client_Connection_Handler (void)
 {
 }
 
 int
-TAO_ST_Client_Connection_Handler::open (void *something)
+TAO_ST_UIOP_Client_Connection_Handler::open (void *something)
 {
   int result = TAO_UIOP_Client_Connection_Handler::open (something);
 
@@ -982,11 +977,11 @@ TAO_ST_Client_Connection_Handler::open (void *something)
 //    GIOP object.  Some of this mothod's functionality should be moved
 //    to GIOP. fredk
 int
-TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+TAO_ST_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -1003,7 +998,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
   int success  = (int) TAO_GIOP::send_request (this->uiop_transport_,
                                                stream,
                                                orb_core);
-  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+  //  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
   if (!success)
     return -1;
@@ -1039,7 +1034,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
 }
 
 int
-TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_ST_UIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   int retval = 0;
 
@@ -1058,7 +1053,7 @@ TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_ST_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
+TAO_ST_UIOP_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 {
   return reactor->resume_handler (this);
 }
@@ -1113,7 +1108,7 @@ TAO_MT_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                      TAO_OutputCDR &stream,
                                                      int is_twoway)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // Save the ORB_Core for the handle_input callback...
   this->orb_core_ = orb_core;
@@ -1136,7 +1131,7 @@ TAO_MT_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                    stream,
                                                    this->orb_core_);
 
-      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+      //      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
       if (!success)
         return -1;
@@ -1171,7 +1166,7 @@ TAO_MT_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                   stream,
                                                   orb_core);
 
-      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+      //      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
       if (!success)
         {
@@ -1356,28 +1351,12 @@ TAO_MT_UIOP_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 
 // ****************************************************************
 
-#define TAO_UIOP_SVC_TUPLE ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>
-#define UIOP_CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
-template class UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR;
-template class TAO_UIOP_SVC_TUPLE;
-template class ACE_Map_Manager<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>;
+
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR
-#pragma instantiate TAO_UIOP_SVC_TUPLE
-#pragma instantiate ACE_Map_Manager<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>
+
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

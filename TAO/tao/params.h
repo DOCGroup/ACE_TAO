@@ -17,7 +17,6 @@
 #ifndef TAO_PARAMS_H
 #define TAO_PARAMS_H
 
-#include "ace/INET_Addr.h"
 #include "tao/corbafwd.h"
 
 // Forward decls.
@@ -34,6 +33,9 @@ class TAO_IOR_LookupTable;
 #else
 #define TAO_LOCAL_INLINE ACE_INLINE
 #endif /* ! __ACE_INLINE__ */
+
+typedef ACE_Unbounded_Set<ACE_CString> TAO_EndpointSet;
+typedef ACE_Unbounded_Set_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 class TAO_Export TAO_ORB_Parameters
   // = TITLE
@@ -54,13 +56,16 @@ public:
   ~TAO_ORB_Parameters (void);
   // Destructor.
 
-  const ACE_INET_Addr &addr (void) const;
-  void addr (const ACE_INET_Addr &addr);
-  // Set/Get the address on which we're listening.
+  int preconnects (ACE_CString &preconnects);
+  TAO_EndpointSet &preconnects (void);
+  void add_preconnect (ACE_CString &preconnect);
+  // Specifies the endpoints to pre-establish connections on.
 
-  const char *host (void) const;
-  void host (const ACE_CString &host);
-  // Set/Get the hostname.
+  int endpoints (ACE_CString &endpoints);
+  TAO_EndpointSet &endpoints (void);
+  void add_endpoint (ACE_CString &endpoint);
+  // Specifies the endpoints on which this server is willing to
+  // listen for requests.
 
   const char *init_ref (void) const;
   void init_ref (const ACE_CString &init_ref);
@@ -133,11 +138,32 @@ public:
   // Set/Get the Init Reference of an arbitrary ObjectID.
 
 private:
-  ACE_INET_Addr addr_;
-  // host + port number we are listening on
+  // Each "endpoint" is of the form:
+  //
+  //   protocol:V.v//addr1,addr2,...,addrN/
+  //
+  // or:
+  //
+  //   protocol://addr1,addr2,...,addrN/
+  //
+  // where "V.v" is an optional version.
+  //
+  // Multiple sets of endpoint may be seperated by a semi-colon `;'.
+  // For example:
+  //
+  //   iiop://space:2001,odyssey:2010/;uiop://foo,bar/
+  //
+  // All preconnect or endpoint strings should be of the above form(s).
 
-  ACE_CString host_;
-  // host name
+  int parse_endpoints (ACE_CString &endpoints,
+                       TAO_EndpointSet &endpoints_list);
+
+  TAO_EndpointSet preconnects_list_;
+  // List of endpoints used to pre-establish connections.
+
+  TAO_EndpointSet endpoints_list_;
+  // List of endpoints this server is willing to accept requests
+  // on.
 
   ACE_CString name_service_ior_;
   // The IOR of our configured Naming Service.

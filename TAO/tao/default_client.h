@@ -81,6 +81,9 @@ public:
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
+  // @@ This routine should not be here, otherwise the protocols are
+  //    not pluggable, but we need to integrate the changes from
+  //    asynchronous messaging to eliminate this method....
   ACE_Creation_Strategy<TAO_Client_Connection_Handler> *create_client_creation_strategy (void);
   // Create the correct client connection creation strategy
 

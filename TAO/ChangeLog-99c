@@ -1,3 +1,72 @@
+Wed May 26 18:51:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/*:
+	  Merged the pluggable_testing branch. From the tag
+	  <pluggable_testing> to <pluggable_testing_merge1>
+	  The main trunk was tagged before
+	  (pluggable_testing_pre_merge1) and after the merge
+	  (pluggable_testing_pos_merge1).
+
+	  Now for the interesting stuff: this branch adds support for:
+
+	* Multiple endpoints in the ORB, a list of TAO_Acceptors is kept
+ 	  in the acceptor registry, when the ORB needs to create an IOR it
+ 	  iterates over all the acceptors to do so.  Using either multiple
+ 	  -ORBendpoint options or several endpoints separated by ';' the
+ 	  user can specify what addresses the ORB should use.  Each
+	  endpoint is specified in URL format
+	    (ex: iiop://foo.bar.com:0), this format can be extended to
+ 	  support different protocols.
+
+	* If the user does not specify a list of endpoints then the ORB
+	  creates a default endpoint for each protocol configured.
+
+	* Support for multiple Connectors in the ORB, the ORB finds the
+	  correct connector based on the tag for the profile.
+
+	* Support for multiple profiles in the IORs, when the ORB
+	  demarshals an IOR it queries the Connector Registry to create
+	  the right kind of profile for the known protocols.  If one of
+	  the protocols is unknown we create a special profile class
+	  that can only be used for marshaling and demarshaling, not
+	  communication.
+
+	* Protocol can be dynamically loaded into the ORB: the default
+	  resource factory reads the protocol "names" from its list of
+	  arguments.  These protocol names are used to load an abstract
+	  factory via the service configurator, this factory can create
+	  acceptors or connectors on demand.
+	  By default only IIOP and UIOP are loaded.
+
+	* Added a correct implementation of CORBA::ORB_init(), if the
+ 	  same ORBid is passed (either in the orbid argument or via an
+ 	  -ORBid option) the same ORB is returned.  WARNING: this changes
+ 	  the current behavior in TAO, which returns a different ORB on
+ 	  each thread!
+
+	* The -ORBhost and -ORBport options are deprecated, the new
+ 	  -ORBendpoint option supercedes them, the ORB issues a warning if
+ 	  they are used.
+
+	* The -ORBpreconnect option supports multiple protocols using the
+ 	  same URL formats that -ORBendpoint does. Notice that the old
+ 	  host:port format is supported for backwards compatibility.
+
+	* Enabled the UIOP protocol, this protocol uses local IPC (aka
+	  UNIX domain) sockets as the transport mechanism.  The protocol
+	  is loaded by default but no endpoints are created unless an
+	  explicit -ORBendpoint option is used.
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/Time_Service/IR_Helper.h:
+	* orbsvcs/Time_Service/IR_Helper.cpp:
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+	  Adapted to work with the pluggable protocols framework, but
+	  needs a major redesign to be fully integrated.
+
+	* */Makefile:
+	  Updated dependencies
+
 Wed May 26 17:37:40 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/ORB.cpp : Used delete [] in resolve_initial_references ()
