@@ -56,25 +56,20 @@ namespace TAO
 
     void
     Non_Retain_Servant_Retention_Strategy::deactivate_object (
-      const PortableServer::ObjectId &id
+      const PortableServer::ObjectId &/*id*/
       ACE_ENV_ARG_DECL)
     {
       // When using Non_Retain we don't have an active object map and we just
       // can't deactivate any object
-      ACE_UNUSED_ARG (id);
-
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
     PortableServer::Servant
     Non_Retain_Servant_Retention_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference,
-      PortableServer::ObjectId system_id
+      CORBA::Object_ptr /*reference*/,
+      PortableServer::ObjectId /*system_id*/
       ACE_ENV_ARG_DECL)
     {
-      ACE_UNUSED_ARG (reference);
-      ACE_UNUSED_ARG (system_id);
-
       // Always try the request processing strategy
       PortableServer::Servant servant =
         this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -116,15 +111,13 @@ namespace TAO
 
     PortableServer::ObjectId *
     Non_Retain_Servant_Retention_Strategy::reference_to_id (
-      CORBA::Object_ptr reference,
+      CORBA::Object_ptr /*reference*/,
       PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongAdapter,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (reference);
-
       // The system id is the id (and no conversion/transformation is
       // needed).
       CORBA::OctetSeq *id = 0;
@@ -138,14 +131,12 @@ namespace TAO
 
     PortableServer::Servant
     Non_Retain_Servant_Retention_Strategy::id_to_servant (
-      const PortableServer::ObjectId &id
+      const PortableServer::ObjectId &/*id*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (id);
-
       // Get the default servant, in case we have a not correct request_processing
       // strategy we will get an exception
       PortableServer::Servant servant = 0;
@@ -192,14 +183,12 @@ namespace TAO
 
     CORBA::Object_ptr
     Non_Retain_Servant_Retention_Strategy::id_to_reference (
-      const PortableServer::ObjectId &id
+      const PortableServer::ObjectId &/*id*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (id);
-
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         CORBA::Object::_nil ());
     }
@@ -254,12 +243,9 @@ namespace TAO
 
     int
     Non_Retain_Servant_Retention_Strategy::is_servant_in_map (
-      PortableServer::Servant servant,
-      int &wait_occurred_restart_call)
+      PortableServer::Servant /*servant*/,
+      int &/*wait_occurred_restart_call*/)
     {
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-
       return 0;
     }
 
@@ -271,20 +257,18 @@ namespace TAO
 
     void
     Non_Retain_Servant_Retention_Strategy::deactivate_all_objects (
-      CORBA::Boolean etherealize_objects
+      CORBA::Boolean /*etherealize_objects*/
       ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (etherealize_objects);
     }
 
     void
     Non_Retain_Servant_Retention_Strategy::cleanup_servant (
-      TAO_Active_Object_Map_Entry *active_object_map_entry
+      TAO_Active_Object_Map_Entry */*active_object_map_entry*/
       ACE_ENV_ARG_DECL_NOT_USED)
     {
-      ACE_UNUSED_ARG (active_object_map_entry);
     }
 
     PortableServer::ObjectId *
@@ -336,53 +320,42 @@ namespace TAO
 
     CORBA::Object_ptr
     Non_Retain_Servant_Retention_Strategy::servant_to_reference (
-      PortableServer::Servant servant
+      PortableServer::Servant /*servant*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                       PortableServer::POA::ServantNotActive,
                       PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (servant);
-
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         CORBA::Object::_nil ());
     }
 
     PortableServer::ObjectId *
     Non_Retain_Servant_Retention_Strategy::activate_object (
-      PortableServer::Servant servant,
-      CORBA::Short priority,
-      int &wait_occurred_restart_call
+      PortableServer::Servant /*servant*/,
+      CORBA::Short /*priority*/,
+      int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (priority);
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
     }
 
     void
     Non_Retain_Servant_Retention_Strategy::activate_object_with_id (
-      const PortableServer::ObjectId &id,
-      PortableServer::Servant servant,
-      CORBA::Short priority,
-      int &wait_occurred_restart_call
+      const PortableServer::ObjectId &/*id*/,
+      PortableServer::Servant /*servant*/,
+      CORBA::Short /*priority*/,
+      int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::ObjectAlreadyActive,
                    PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (id);
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (priority);
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
@@ -475,24 +448,18 @@ namespace TAO
 
     int
     Non_Retain_Servant_Retention_Strategy::rebind_using_user_id_and_system_id (
-      PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id,
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall)
+      PortableServer::Servant /*servant*/,
+      const PortableServer::ObjectId &/*user_id*/,
+      const PortableServer::ObjectId &/*system_id*/,
+      TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (user_id);
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant_upcall);
-
       return -1;
     }
 
     CORBA::Boolean
     Non_Retain_Servant_Retention_Strategy::servant_has_remaining_activations (
-      PortableServer::Servant servant)
+      PortableServer::Servant /*servant*/)
     {
-      ACE_UNUSED_ARG (servant);
       return false;
     }
 

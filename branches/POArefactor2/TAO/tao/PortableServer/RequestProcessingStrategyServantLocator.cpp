@@ -42,18 +42,20 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    Servant_Locator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Servant_Locator_Request_Processing_Strategy::get_servant_manager (
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
     }
 
     void
-    Servant_Locator_Request_Processing_Strategy::set_servant_manager (PortableServer::ServantManager_ptr imgr
-                         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    Servant_Locator_Request_Processing_Strategy::set_servant_manager (
+      PortableServer::ServantManager_ptr imgr
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been
@@ -76,12 +78,9 @@ namespace TAO
 
     TAO_SERVANT_LOCATION
     Servant_Locator_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant)
+      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::Servant &/*servant*/)
     {
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant);
-
       if (CORBA::is_nil (this->servant_locator_.in ()))
         {
           return TAO_SERVANT_NOT_FOUND;
@@ -96,15 +95,12 @@ namespace TAO
     PortableServer::Servant
     Servant_Locator_Request_Processing_Strategy::locate_servant (
       const char *operation,
-      const PortableServer::ObjectId &system_id,
+      const PortableServer::ObjectId &/*system_id*/,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      int &wait_occurred_restart_call
+      int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
     {
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-      ACE_UNUSED_ARG (system_id);
-
       // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
       // has been associated with the POA so the POA will invoke incarnate
       // or preinvoke on it to find a servant that may handle the
@@ -178,15 +174,11 @@ namespace TAO
 
     void
     Servant_Locator_Request_Processing_Strategy::cleanup_servant (
-      const PortableServer::ObjectId& object_id,
-      PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress
-      ACE_ENV_ARG_DECL)
+      const PortableServer::ObjectId& /*object_id*/,
+      PortableServer::Servant /*servant*/,
+      CORBA::Boolean /*cleanup_in_progress*/
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
-      ACE_UNUSED_ARG (object_id);
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (cleanup_in_progress);
-
       // Just do nothing
     }
   }

@@ -31,9 +31,8 @@ namespace TAO
     }
 
     void
-    AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
+    AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA * /*poa*/)
     {
-      ACE_UNUSED_ARG (poa);
     }
 
     PortableServer::ServantManager_ptr
@@ -46,13 +45,12 @@ namespace TAO
     }
 
     void
-    AOM_Only_Request_Processing_Strategy::set_servant_manager (PortableServer::ServantManager_ptr imgr
+    AOM_Only_Request_Processing_Strategy::set_servant_manager (
+      PortableServer::ServantManager_ptr /*imgr*/
                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (imgr);
-
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
@@ -66,42 +64,32 @@ namespace TAO
     }
 
     void
-    AOM_Only_Request_Processing_Strategy::set_servant (PortableServer::Servant servant
-                 ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+    AOM_Only_Request_Processing_Strategy::set_servant (
+      PortableServer::Servant /*servant*/
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (servant);
-
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
     TAO_SERVANT_LOCATION
     AOM_Only_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant)
+      const PortableServer::ObjectId & /*system_id*/,
+      PortableServer::Servant & /*servant*/)
     {
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant);
-
       return TAO_SERVANT_NOT_FOUND;
     }
 
     PortableServer::Servant
     AOM_Only_Request_Processing_Strategy::locate_servant (
-      const char *operation,
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      int &wait_occurred_restart_call
+      const char * /*operation*/,
+      const PortableServer::ObjectId & /*system_id*/,
+      TAO::Portable_Server::Servant_Upcall & /*servant_upcall*/,
+      TAO::Portable_Server::POA_Current_Impl & /*poa_current_impl*/,
+      int & /*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
     {
-      ACE_UNUSED_ARG (operation);
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant_upcall);
-      ACE_UNUSED_ARG (poa_current_impl);
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-
       // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
       // the OBJECT_NOT_EXIST system exception.
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
@@ -110,15 +98,11 @@ namespace TAO
 
     void
     AOM_Only_Request_Processing_Strategy::cleanup_servant (
-      const PortableServer::ObjectId& object_id,
-      PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress
-      ACE_ENV_ARG_DECL)
+      const PortableServer::ObjectId& /*object_id*/,
+      PortableServer::Servant /*servant*/,
+      CORBA::Boolean /*cleanup_in_progress*/
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
-      ACE_UNUSED_ARG (object_id);
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (cleanup_in_progress);
-
       // Just do nothing
     }
 

@@ -53,13 +53,11 @@ namespace TAO
 
     void
     Default_Servant_Request_Processing_Strategy::set_servant_manager (
-      PortableServer::ServantManager_ptr imgr
+      PortableServer::ServantManager_ptr /*imgr*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_UNUSED_ARG (imgr);
-
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
@@ -110,12 +108,9 @@ namespace TAO
 
     TAO_SERVANT_LOCATION
     Default_Servant_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant)
+      const PortableServer::ObjectId & /*system_id*/,
+      PortableServer::Servant & /*servant*/)
     {
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant);
-
       if (this->default_servant_.in () == 0)
         {
           return TAO_SERVANT_NOT_FOUND;
@@ -128,19 +123,13 @@ namespace TAO
 
     PortableServer::Servant
     Default_Servant_Request_Processing_Strategy::locate_servant (
-      const char *operation,
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      int &wait_occurred_restart_call
+      const char * /*operation*/,
+      const PortableServer::ObjectId & /*system_id*/,
+      TAO::Portable_Server::Servant_Upcall & /*servant_upcall*/,
+      TAO::Portable_Server::POA_Current_Impl & /*poa_current_impl*/,
+      int & /*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
     {
-      ACE_UNUSED_ARG (operation);
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant_upcall);
-      ACE_UNUSED_ARG (poa_current_impl);
-      ACE_UNUSED_ARG (wait_occurred_restart_call);
-
       // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
       // has been associated with the POA so the POA will invoke the
       // appropriate method on that servant. If no servant has been
@@ -161,15 +150,11 @@ namespace TAO
 
     void
     Default_Servant_Request_Processing_Strategy::cleanup_servant (
-      const PortableServer::ObjectId& object_id,
-      PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress
-      ACE_ENV_ARG_DECL)
+      const PortableServer::ObjectId& /*object_id*/,
+      PortableServer::Servant /*servant*/,
+      CORBA::Boolean /*cleanup_in_progress*/
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
-      ACE_UNUSED_ARG (object_id);
-      ACE_UNUSED_ARG (servant);
-      ACE_UNUSED_ARG (cleanup_in_progress);
-
       // Just do nothing
     }
 

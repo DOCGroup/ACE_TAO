@@ -79,12 +79,9 @@ namespace TAO
 
     TAO_SERVANT_LOCATION
     Servant_Activator_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant)
+      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::Servant &/*servant*/)
     {
-      ACE_UNUSED_ARG (system_id);
-      ACE_UNUSED_ARG (servant);
-
       if (CORBA::is_nil (this->servant_activator_.in ()))
         {
           return TAO_SERVANT_NOT_FOUND;
@@ -98,15 +95,13 @@ namespace TAO
 
     PortableServer::Servant
     Servant_Activator_Request_Processing_Strategy::locate_servant (
-      const char *operation,
+      const char */*operation*/,
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
     {
-      ACE_UNUSED_ARG (operation);
-
       // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
       // has been associated with the POA so the POA will invoke incarnate
       // or preinvoke on it to find a servant that may handle the

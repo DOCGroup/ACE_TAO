@@ -28,9 +28,8 @@ namespace TAO
     bool
     Persistent_Lifespan_Strategy::validate (
       CORBA::Boolean is_persistent,
-      const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const
+      const TAO::Portable_Server::Temporary_Creation_Time& /*creation_time*/) const
     {
-      ACE_UNUSED_ARG (creation_time);
       return is_persistent;
     }
 
