@@ -1,13 +1,25 @@
+Thu Jul 08 22:05:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-common.h: added #define of
+          ACE_DEFAULT_BASE_ADDR to 0x40000000 on __powerpc__
+          only.
+
+        * ace/config-linuxppcr5.h: removed.  Linux/PPC can
+          now use config-linux-lxpthreads.h.
+
+          Thanks to Andreas Tobler <a.tobler@schweiz.ch> for helping
+          to factor out the code from config-linuxppcr5.h.
+
 Thu Jul  8 21:57:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Malloc_T.h:
-	* ace/Malloc_T.cpp:
-	  Changed the Cached_Allocator class to use a char* as the memory
-	  source.
-	  It was allocated as char* and deallocated as a char*, but casted
-	  to T* to use placement new; this was actually unneeded and
-	  actually an error: the memory does not become a T* until
-	  placement new is invoked on it. [BUGID:40]
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.cpp:
+          Changed the Cached_Allocator class to use a char* as the memory
+          source.
+          It was allocated as char* and deallocated as a char*, but casted
+          to T* to use placement new; this was actually unneeded and
+          actually an error: the memory does not become a T* until
+          placement new is invoked on it. [BUGID:40]
 
 Thu Jul 08 21:34:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
