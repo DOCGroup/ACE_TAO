@@ -25,6 +25,7 @@ module CORBA
     SYSTEM_EXCEPTION
   };
 
+  interface Object;
   interface Request;
   interface NVList;
 
