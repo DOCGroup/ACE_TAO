@@ -51,11 +51,11 @@ public:
   /// Default constructor.
   ACE_NS_WString (ACE_Allocator *alloc = 0);
 
-  /// Constructor that copies <s> into dynamically allocated memory.
+  /// Constructor that copies @a s into dynamically allocated memory.
   ACE_NS_WString (const char *s,
                   ACE_Allocator *alloc = 0);
 
-  /// Constructor that copies <s> into dynamically allocated memory.
+  /// Constructor that copies @a s into dynamically allocated memory.
   ACE_NS_WString (const ACE_WSTRING_TYPE *s,
                   ACE_Allocator *alloc = 0);
 
@@ -67,20 +67,20 @@ public:
                   ACE_Allocator *alloc = 0);
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
-  /// Constructor that copies <len> ACE_WSTRING_TYPE's of <s> into dynamically
+  /// Constructor that copies @a len ACE_WSTRING_TYPE's of @a s into dynamically
   /// allocated memory (will NUL terminate the result).
   ACE_NS_WString (const ACE_WSTRING_TYPE *s,
                   size_t len,
                   ACE_Allocator *alloc = 0);
 
-  /// Constructor that dynamically allocates memory for <len> + 1
+  /// Constructor that dynamically allocates memory for @a len + 1
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
   ACE_NS_WString (size_t len, ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   ACE_NS_WString (const ACE_NS_WString &s);
 
-  /// Constructor that copies <c> into dynamically allocated memory.
+  /// Constructor that copies @a c into dynamically allocated memory.
   ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = 0);
 
   /// Transform into a copy of the ASCII character representation.
@@ -98,9 +98,9 @@ ACE_NS_WString operator + (const ACE_NS_WString &,
 /**
  * @class ACE_SString
  *
- * @brief A very Simple String <ACE_SString> class.  This is not a
+ * @brief A very Simple String ACE_SString class.  This is not a
  * general-purpose string class, and you should probably consider
- * using <ACE_CString> is you don't understand why this class
+ * using ACE_CString is you don't understand why this class
  * exists...
  *
  * This class is optimized for efficiency, so it doesn't provide
@@ -108,10 +108,10 @@ ACE_NS_WString operator + (const ACE_NS_WString &,
  * CAUTION: This class is only intended for use with applications
  * that understand how it works.  In particular, its destructor
  * does not deallocate its memory when it is destroyed...  We need
- * this class since the <ACE_Map_Manager> requires an object that
+ * this class since the ACE_Map_Manager requires an object that
  * supports the operator == and operator !=.  This class uses an
- * <ACE_Allocator> to allocate memory.  The user can make this a
- * persistant class by providing an <ACE_Allocator> with a
+ * ACE_Allocator to allocate memory.  The user can make this a
+ * persistant class by providing an ACE_Allocator with a
  * persistable memory pool.
  */
 class ACE_Export ACE_SString
@@ -123,20 +123,20 @@ public:
   /// Default constructor.
   ACE_SString (ACE_Allocator *alloc = 0);
 
-  /// Constructor that copies <s> into dynamically allocated memory.
+  /// Constructor that copies @a s into dynamically allocated memory.
   ACE_SString (const char *s, ACE_Allocator *alloc = 0);
 
-  /// Constructor that copies <len> chars of <s> into dynamically
+  /// Constructor that copies @a len chars of  @s  into dynamically
   /// allocated memory (will NUL terminate the result).
   ACE_SString (const char *s, size_t len, ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   ACE_SString (const ACE_SString &);
 
-  /// Constructor that copies <c> into dynamically allocated memory.
+  /// Constructor that copies @a c into dynamically allocated memory.
   ACE_SString (char c, ACE_Allocator *alloc = 0);
 
-  /// Default dtor.
+  /// Default destructor.
   ~ACE_SString (void);
 
   /// Return the <slot'th> character in the string (doesn't perform

@@ -27,7 +27,7 @@ CASE_SENSE_NAMES      = YES
 HIDE_SCOPE_NAMES      = NO
 VERBATIM_HEADERS      = YES
 SHOW_INCLUDE_FILES    = YES
-JAVADOC_AUTOBRIEF     = YES
+JAVADOC_AUTOBRIEF     = NO
 INHERIT_DOCS          = YES
 INLINE_INFO           = YES
 SORT_MEMBER_DOCS      = YES
@@ -148,7 +148,7 @@ INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
-DOT_PATH              = 
+DOT_PATH              =
 MAX_DOT_GRAPH_WIDTH   = 1024
 MAX_DOT_GRAPH_HEIGHT  = 1024
 
