@@ -20,6 +20,17 @@
 //     iterative server).  This server queries and increments a
 //     "counting value" in a file.
 //
+//     This test program can be run in the following ways:
+//
+//     # Run the server "reactively" (i.e., iteratively)
+//     % Process_Strategy_Test -c REACTIVE
+//
+//     # Run the server in multi-threads.
+//     % Process_Strategy_Test -c THREAD
+//
+//     # Run the server in multi-processes
+//     % Process_Strategy_Test -c PROCESS
+//
 // = AUTHOR
 //    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
 // 
@@ -543,7 +554,7 @@ server (void *)
 int
 main (int argc, char *argv[])
 {
-  // ACE_START_TEST ("Process_Stratey_Test");
+  ACE_START_TEST ("Process_Stratey_Test");
 
   ACE_Service_Config svc_conf;
 
@@ -609,7 +620,7 @@ main (int argc, char *argv[])
 #endif /* ACE_HAS_THREADS */	
     }
 
-  // ACE_END_TEST;
+  ACE_END_TEST;
   return 0;
 }
 

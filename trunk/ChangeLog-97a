@@ -1,15 +1,27 @@
-Wed Apr 23 03:15:11 1997  James C Hu  <jxh@polka.cs.wustl.edu>
-
-	* apps/JAWS/server/README: Updated to add some clarity and more
-	  useful information.
-
-Wed Apr 23 00:02:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Wed Apr 23 09:06:52 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Process_Strategy_Test.cpp: Finished updating this program
 	  so that it is an automated test.
 
 	* ace/Acceptor.h: Moved get_handle() into the public portion of
  	  the Acceptor.
+
+	* include/makeinclude/platform_irix6.2_sgic++.GNU (SOBUILD): There
+ 	  was an extra @ in $@@.  Thanks to Amos Shapira <amos@dsi.co.il>
+ 	  for reporting this.
+
+	* apps/JAWS/client/Blob[_Handler].cpp: Added casts for free ((void
+ 	  *) filename_);.  Thanks to Amos Shapira <amos@dsi.co.il> for
+ 	  reporting this.
+
+	* apps/JAWS/server/HTTP_Helpers.h (class HTTP_Status_Code):
+ 	  Removed an extraneous const * from the definition of instance().
+  	  Thanks to Amos Shapira <amos@dsi.co.il> for reporting this.
+
+Wed Apr 23 03:15:11 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* apps/JAWS/server/README: Updated to add some clarity and more
+	  useful information.
 
 Tue Apr 22 20:17:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
