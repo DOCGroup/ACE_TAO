@@ -225,3 +225,76 @@ ACE_Bounded_Set<T>::is_full (void) const
   ACE_TRACE ("ACE_Bounded_Set<T>::is_full");
   return this->cur_size_ == this->max_size_;
 }
+
+// --
+
+template <class T> ACE_INLINE int 
+ACE_Ordered_MultiSet_Iterator<T>::first (void)
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::first");
+  current_ = set_.head_;
+
+  return (current_ ? 1 : 0);
+}
+
+template <class T> ACE_INLINE int 
+ACE_Ordered_MultiSet_Iterator<T>::last (void)
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::last");
+  current_ = set_.tail_;
+
+  return (current_ ? 1 : 0);
+}
+
+template <class T> ACE_INLINE int 
+ACE_Ordered_MultiSet_Iterator<T>::advance (void)
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::advance");
+
+  current_ = current_ ? current_->next_ : 0;
+
+  return (current_ ? 1 : 0);
+}
+
+template <class T> ACE_INLINE int 
+ACE_Ordered_MultiSet_Iterator<T>::retreat (void)
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::retreat");
+
+  current_ = current_ ? current_->prev_ : 0;
+
+  return (current_ ? 1 : 0);
+}
+
+template <class T> ACE_INLINE int
+ACE_Ordered_MultiSet_Iterator<T>::done (void) const
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::done");
+
+  return (current_ ? 0 : 1);
+}
+
+template <class T> ACE_INLINE void
+ACE_Ordered_MultiSet_Iterator<T>::dump (void) const
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::dump");
+}
+
+
+
+// --
+
+template <class T> ACE_INLINE int 
+ACE_Ordered_MultiSet<T>::is_empty (void) const
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet<T>::is_empty");
+  return this->head_ == this->head_->next_;
+}
+
+template <class T> ACE_INLINE size_t
+ACE_Ordered_MultiSet<T>::size (void) const
+{
+// ACE_TRACE ("ACE_Unbounded_Set<T>::size");
+  return this->cur_size_;
+}
+
