@@ -1,6 +1,6 @@
 #
 # Makefile for building the ImplRepo_Service executable
-# 
+#
 
 NAME = ImplRepo_Service
 
@@ -12,7 +12,7 @@ OBJFILES = \
 	$(OBJDIR)\Iterator.obj \
 	$(OBJDIR)\Locator.obj \
 	$(OBJDIR)\NT_Service.obj \
-	$(OBJDIR)\Options.obj
+        $(OBJDIR)\Options.obj \
 	$(OBJDIR)\Repository.obj
 
 CFLAGS = \
@@ -21,7 +21,7 @@ CFLAGS = \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_IORTABLE_CFLAGS) \
 	$(TAO_SVC_UTILS_CFLAGS)
-        
+
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
