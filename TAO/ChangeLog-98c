@@ -1,3 +1,43 @@
+Mon Jun  1 15:48:28 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/orbconf.h: Modified the TAO_NAMESPACE related macros. Added
+	some more to deal with the nested namespaces that can occur due to
+	nested modules.
+
+	* TAO_IDL/be_include/be_visitor_typecode.h
+	  TAO_IDL/be/be_visitor_typecode.cpp:
+
+	  Added two new files that define a new visitor which will
+	  generate code for different types. The TypeCode generation now
+	  uses the different NAMESPACE related macros described above.
+
+	* TAO_IDL/be_include/be_codegen.h: Added two new enumerations for
+	the TypeCode generating visitors.
+
+	* TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+	be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+	be_visitor_typedef, be_visitor_union}.cpp: Used the new TypeCode
+	visitors. One advantage of using these is that all code gets
+	factored into a visitor. At the same time, we can conditionally
+	opt not to generate the TypeCodes. This may be desired for
+	compiled marshaling.
+
+	In be_visitor_sequence.cpp, we do not generate the typecode if the
+	sequences was typedefed.
+
+	* TAO_IDL/be_include/be_visitor_constant.h
+	  TAO_IDL/be/be_visitor_constant.cpp: Added similar logic to the
+	  TypeCode generation when constants are defined insided modules
+	  that get mapped to namespaces.
+
+	* TAO_IDL/be/be_interpretive.cpp: Added cases to deal with the two
+	new TypeCode generating visitors.
+
+	* TAO_IDL/fe/{idl.yy, y.tab.cpp}: Removed some incorrect code in
+	the action part of the idl.yy file.
+
+	* TAO_IDL/Makefile: Reran make depend.
+
 Mo Jun 1  14:37:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RtecScheduler.idl
@@ -27,13 +67,13 @@ Mo Jun 1  14:37:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 	  #define TAO_USES_STRATEGY_SCHEDULER
 	  #define TAO_USES_RMS_SCHEDULING
           #define TAO_MIN_CRITICAL_PRIORITY 3
-	
+
 Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* docs/orbsvcs.html: Added the LifeCycle Service to the list
 	  of services.
 
-	* docs/releasenotes/index.html: Added new information about 
+	* docs/releasenotes/index.html: Added new information about
 	  DOVE to the file.
 
 Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
@@ -56,7 +96,7 @@ Fri May 29 16:03:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: Removed the
 	terminate calls by adding -x option to the client so that it shuts
-	down the server. 
+	down the server.
 
 Fri May 29 13:00:35 1998   Michael Kircher <mk1@cs.wustl.edu>
 

@@ -124,7 +124,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                          "failed creating name\n"), -1);
     }
 
-  // generate the ifdefined macro for the sequence type
+   // generate the ifdefined macro for the sequence type
   os->gen_ifdef_macro (node->flatname ());
 
   os->indent (); // start with the current indentation level
@@ -210,24 +210,23 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   *os << "typedef " << node->local_name () << " *"
       << node->local_name () << "_ptr;\n";
 
-  // Generate the typecode decl
-  if (node->is_nested ())
+  if (!this->ctx_->tdef ())
     {
-      // we have a scoped name
-      os->indent ();
-      *os << "static CORBA::TypeCode_ptr "
-          << node->tc_name ()->last_component () << "_seq;\n\n";
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ch::"
+                             "visit_sequence - "
+                             "TypeCode declaration failed\n"
+                             ), -1);
+        }
     }
-  else
-    {
-      // we are in the ROOT scope
-      os->indent ();
-      *os << "extern "
-         << idl_global->export_macro ()
-         << " CORBA::TypeCode_ptr "
-         << node->tc_name ()->last_component () << ";\n\n";
-    }
-
 
   os->gen_endif (); // endif macro
 
@@ -1144,12 +1143,24 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   os->decr_indent ();
   *os << "};" << be_nl;
 
-  *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
-      << "_seq (CORBA::tk_sequence, sizeof (_oc_" <<  node->flatname ()
-      << "_seq), (char *) &_oc_" << node->flatname ()
-      << "_seq, CORBA::B_FALSE);" << be_nl;
-  *os << "CORBA::TypeCode_ptr " << node->tc_name () << "_seq = &_tc__tc_"
-      << node->flatname () << "_seq;\n\n";
+  if (!this->ctx_->tdef ())
+    {
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cs::"
+                             "visit_sequence - "
+                             "TypeCode definition failed\n"
+                             ), -1);
+        }
+    }
+
   os->gen_endif ();
 
   return 0;
