@@ -1,0 +1,223 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 006</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 006</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Creating a thread-per-connection server</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P><A HREF="client_handler.h">client_handler.h</A>
+shows a few more changes than the previous sources.&nbsp; The important
+change is the addition of a svc() method where our connection thread will
+exist.
+
+<P>
+<HR WIDTH="100%">
+
+<P><FONT FACE="Arial,Helvetica">// $Id: client_handler.h,v 1.1 1998/08/30
+23:47:13 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">#ifndef CLIENT_HANDLER_H</FONT>
+<BR><FONT FACE="Arial,Helvetica">#define CLIENT_HANDLER_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our client handler must exist
+somewhere in the ACE_Event_Handler object</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; hierarchy.&nbsp; This is
+a requirement of the ACE_Reactor because it maintains</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ACE_Event_Handler pointers
+for each registered event handler.&nbsp; You could</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derive our Client_Handler
+directly from ACE_Event_Handler but you still have</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to have an ACE_SOCK_Stream
+for the actually connection.&nbsp; With a direct</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derivative of ACE_Event_Handler,
+you'll have to contain and maintain an</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ACE_SOCK_Stream instance
+yourself.&nbsp; With ACE_Svc_Handler (which is a</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derivative of ACE_Event_Handler)
+some of those details are handled for you.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">#include "ace/Svc_Handler.h"</FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Stream.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Another feature of ACE_Svc_Handler
+is it's ability to present the ACE_Task&lt;></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; interface as well.&nbsp;
+That's what the ACE_NULL_SYNCH parameter below is all</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; about.&nbsp; If our Client_Acceptor
+has chosen thread-per-connection then our</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; open() method will activate
+us into a thread.&nbsp; At that point, our svc()</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; method will execute.&nbsp;
+We still don't take advantage of the thiings</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ACE_NULL_SYNCH exists for
+but stick around for Tutorial 7 and pay special</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; attention to the Thread_Pool
+object there for an explanation.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">class Client_Handler : public ACE_Svc_Handler
+&lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH ></FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">public:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; // Constructor...</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Handler (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; The destroy()
+method is our preferred method of destruction.&nbsp; We could</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; have overloaded
+the delete operator but that is neither easy nor</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; intuitive (at
+least to me).&nbsp; Instead, we provide a new method of</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; destruction and
+we make our destructor protected so that only ourselves,</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; our derivatives
+and our friends can delete us. It's a nice</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; compromise.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; void destroy (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Most ACE objects
+have an open() method.&nbsp; That's how you make them ready</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to do work.&nbsp;
+ACE_Event_Handler has a virtual open() method which allows us</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to create this
+overrride.&nbsp; ACE_Acceptor&lt;> will invoke this method after</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; creating a new
+Client_Handler when a client connects. Notice that the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; parameter to
+open() is a void*.&nbsp; It just so happens that the pointer</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; points to the
+acceptor which created us.&nbsp; You would like for the parameter</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to be an ACE_Acceptor&lt;>*
+but since ACE_Event_Handler is generic, that</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; would tie it
+too closely to the ACE_Acceptor&lt;> set of objects.&nbsp; In our</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; definition of
+open() you'll see how we get around that.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int open (void *_acceptor);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When an ACE_Task&lt;>
+object falls out of the svc() method, the framework</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; will call the
+close() method.&nbsp; That's where we want to cleanup ourselves</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; if we're running
+in either thread-per-connection or thread-pool mode.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int close(u_long flags = 0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When there is
+activity on a registered handler, the handle_input() method</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; of the handler
+will be invoked.&nbsp; If that method returns an error code (eg</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; -- -1) then the
+reactor will invoke handle_close() to allow the object to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; clean itself
+up. Since an event handler can be registered for more than</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; one type of callback,
+the callback mask is provided to inform</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; handle_close()
+exactly which method failed.&nbsp; That way, you don't have to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; maintain state
+information between your handle_* method calls. The _handle</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; parameter is
+explained below...</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_close (ACE_HANDLE _handle,
+ACE_Reactor_Mask _mask);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">protected:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; If the Client_Acceptor
+which created us has chosen a thread-per-connection</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; strategy then
+our open() method will activate us into a dedicate thread.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; The svc() method
+will then execute in that thread performing some of the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; functions we
+used to leave up to the reactor.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int svc(void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When we register
+with the reactor, we're going to tell it that we want to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; be notified of
+READ events.&nbsp; When the reactor sees that there is read</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; activity for
+us, our handle_input() will be invoked. The _handleg</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; provided is the
+handle (file descriptor in Unix) of the actual connection</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; causing the activity.&nbsp;
+Since we're derived from ACE_Svc_Handler&lt;> and it</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; maintains it's
+own peer (ACE_SOCK_Stream) object, this is redundant for</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; us.&nbsp; However,
+if we had been derived directly from ACE_Event_Handler, we</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; may have chosen
+not to contain the peer.&nbsp; In that case, the _handleg</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; would be important
+to us for reading the client's data.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_input (ACE_HANDLE _handle);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This has nothing
+at all to do with ACE.&nbsp; I've added this here as a worker</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; function which
+I will call from handle_input().&nbsp; As promised in Tutorial 5</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; I will use this
+now to make it easier to switch between our two possible</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; concurrency strategies.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int process (char *_rdbuf, int
+_rdbuf_len);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; We don't really
+do anything in our destructor but we've declared it to be</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; protected to
+prevent casual deletion of this object.&nbsp; As I said above, I</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; really would
+prefer that everyone goes through the destroy() method to get</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; rid of us.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ~Client_Handler (void);</FONT>
+<BR><FONT FACE="Arial,Helvetica">};</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_HANDLER_H</FONT>
+
+<P>
+<HR WIDTH="100%">
+
+<P>So... we've added a svc() method and alluded to changes in open().&nbsp;
+Let's move on to the object definition and see what all the fuss is about.
+
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page05.html">Continue
+This Tutorial</A>]</CENTER>
+
+</BODY>
+</HTML>
