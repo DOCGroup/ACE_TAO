@@ -1,3 +1,7 @@
+Mon Jan 11 21:20:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/GIOP.cpp (send_request): Fixed typos.
+
 Mon Jan 11 19:40:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent:
