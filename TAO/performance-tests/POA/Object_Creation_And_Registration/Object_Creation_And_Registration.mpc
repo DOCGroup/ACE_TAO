@@ -1,3 +1,0 @@
-project(registration): server {
-  exename = registration
-}

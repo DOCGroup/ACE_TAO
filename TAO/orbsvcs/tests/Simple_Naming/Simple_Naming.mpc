@@ -1,8 +1,0 @@
-project(Simple Naming Client) : namingexe {
-  exename  = client
-
-  Source_Files {
-    client.cpp
-  }
-}
-
