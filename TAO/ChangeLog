@@ -1,3 +1,13 @@
+Wed Jan  7 10:50:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+
+          Fixed internal handling of an AST node's version string, to avoid
+          string compare errors with a null string, and to correctly
+          diagnose errors resulting from an attempt to reset the version
+          after it has been set by '#pragma version' or by 'typeid'.
+
 Wed Jan  7 15:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/Policy/Smart_Proxies_Policy.mpc:
