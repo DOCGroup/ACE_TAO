@@ -73,7 +73,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 d:\vishal\ACE_wrappers\ace\aced.lib ws2_32.lib /nologo /subsystem:console /debug /machine:I386 /out:"client.exe" /pdbtype:sept /libpath:"d:\vishal\ACE_wrappers\ace"
+# ADD LINK32 d:\vishal\ACE_wrappers\ace\aced.lib ws2_32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"d:\vishal\ACE_wrappers\ace"
 
 !ENDIF 
 
@@ -88,6 +88,10 @@ LINK32=link.exe
 
 SOURCE=.\client.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Sender_QOS_Event_Handler.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -95,6 +99,10 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\QosEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sender_QOS_Event_Handler.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
