@@ -101,7 +101,7 @@ public:
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
   virtual IR_InterfaceDef *_get_interface (CORBA_Environment &ACE_TRY_ENV =
-                                                 TAO_default_environment ());
+                                             TAO_default_environment ());
 
 #endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
