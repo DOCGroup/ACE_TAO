@@ -270,11 +270,11 @@ ACE_Object_Manager::init (void)
 #     endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
-#if defined (_DEBUG)
+#if defined (_DEBUG) && defined (_MSC_VER)
           // This will keep the ACE_Assert window
            _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
-#endif /* _DEBUG */
+#endif /* _DEBUG && _MSC_VER */
 
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
