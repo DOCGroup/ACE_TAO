@@ -1,3 +1,27 @@
+Thu Nov 20 18:22:24 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/README
+	  ace/TLI.h
+	  ace/TLI_Acceptor.h
+	  ace/TLI_Connector.h
+	  Changed from using hardcoded "/dev/tcp" as the XTI device name to
+	  a new config-related define, ACE_TLI_TCP_DEVICE.  If the config
+	  doesn't set one, it defaults to "/dev/tcp".  Thanks to Steve Coy
+	  <stevec@magna.com.au> for zeroing in on this problem in HP-UX.
+
+	  ace/config-hpux-10.x.h:  ACE_TLI_TCP_DEVICE is "/dev/inet_cots".
+	  Note that XTI won't work 100% well on HP still - this is Riverace
+	  problem ID P27.
+
+	* netsvcs/lib/Server_Logging_Handler_T.h: Hardcoded to always use
+	  ACE_SOCK_Stream (and friends) rather than ACE_TLI_Stream and friends.
+	  XTI doesn't work real well on some platforms (particularly HP-UX
+	  and AIX).  When they're fixed, this can be undone (Riverace problem
+	  ID P28).
+
+	* examples/IPC_SAP/TLI_SAP/CPP-client.cpp: Changed 'char *host' to
+	  'const char *host' so it can be initialized from a const char string.
+
 Thu Nov 20 17:53:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Added a new version of config-osf1-3.2.h.  Thanks to Dani
