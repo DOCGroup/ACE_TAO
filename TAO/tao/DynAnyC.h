@@ -35,7 +35,6 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Any.h"
-#include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
 

@@ -6,8 +6,7 @@
 // = LIBRARY
 //     TAO
 //
-// = FILENAME
-//     orb_core.h
+//     ORB_Core.h
 //
 // = AUTHOR
 //     Chris Cleeland
@@ -23,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
@@ -167,20 +167,24 @@ public:
   ACE_Thread_Manager *thr_mgr (void);
 
   // = Get the rootPOA
-  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
+  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV =
+                           TAO_default_environment (),
                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
-  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
-                                              const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
-                                              TAO_POA_Manager *poa_manager = 0,
-                                              const TAO_POA_Policies *policies = 0);
+  PortableServer::POA_ptr root_poa_reference (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
+      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+      TAO_POA_Manager *poa_manager = 0,
+      const TAO_POA_Policies *policies = 0);
 
   // = Collocation strategies.
-  enum {
-    ORB_CONTROL,                // Indicate object should refer to ORB for either one of the following strategies.
-    THRU_POA,                   // Collocated calls will go thru POA.
-    DIRECT                      // Collocated calls invoke operation on Servant directly.
+  enum 
+  {
+    ORB_CONTROL,  // Indicate object should refer to ORB for either
+                  // one of the following strategies.
+    THRU_POA,     // Collocated calls will go thru POA.
+    DIRECT        // Collocated calls invoke operation on Servant directly.
   };
 
   // = Get the default codeset translators.
