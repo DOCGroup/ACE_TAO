@@ -1,3 +1,8 @@
+Wed Oct  8 00:00:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Client_Task.cpp: Revrted the change
+	  since it was not needed and was covering up a bug.
+
 Tue Oct  7 23:53:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Domain/DomainS.cpp:
