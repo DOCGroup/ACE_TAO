@@ -127,7 +127,10 @@ private:
 
   // @@ Quite possibly everything btw ORB_CORE_STUFF should go into
   // the TAO_ORB_Core class...
-  // ORB_CORE_STUFF
+
+  // @@ Please document all these fields.
+
+  // = ORB_CORE_STUFF
   TAO_Client_Strategy_Factory *client_factory_;
 
   CORBA::Boolean client_factory_from_service_config_;
@@ -142,7 +145,7 @@ private:
   // The address of the endpoint on which we're listening for
   // connections and requests.
 
-  TAO_Acceptor client_acceptor_;
+  TAO_ACCEPTOR client_acceptor_;
   // The acceptor listening for requests.
   // ORB_CORE_STUFF
 

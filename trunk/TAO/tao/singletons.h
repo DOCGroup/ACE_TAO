@@ -37,5 +37,4 @@ typedef ACE_Singleton<TAO_Marshal_Alias, ACE_SYNCH_MUTEX> TAO_MARSHAL_ALIAS;
 typedef ACE_Singleton<TAO_Marshal_Except, ACE_SYNCH_MUTEX> TAO_MARSHAL_EXCEPT;
 typedef ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX> TAO_MARSHAL_WSTRING;
 
-
 #endif /* TAO_SINGLETONS_H */

@@ -59,16 +59,16 @@ public:
                               CDR &response, CORBA::Environment &env);
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
-  // non-zero if for a two-way and <response> to any necessary response
-  // (including errors).  In case of errors, -1 is returned and
-  // additional information carried in <env>.
+  // non-zero if for a two-way and <response> to any necessary
+  // response (including errors).  In case of errors, -1 is returned
+  // and additional information carried in <env>.
 
   virtual void send_response (CDR &response);
+  // @@ Please document me...
 
 protected:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-
 
 private:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SUPERCLASS;
@@ -76,6 +76,7 @@ private:
   TAO_OA_Parameters *params_;
 };
 
-typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_Acceptor;
+typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> 
+	TAO_ACCEPTOR;
 
 #endif /* TAO_CONNECT_H */
