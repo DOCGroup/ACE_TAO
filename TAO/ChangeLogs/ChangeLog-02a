@@ -1,3 +1,10 @@
+Fri Apr 13 2:15:04 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp: 	
+
+	  Fixed compile errors on solaris.
+
 Thu Apr 12 23:46:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Thread_Pool: Added classes to handle the creation of thread
