@@ -123,9 +123,5 @@ namespace CIAO
 
 }
 
-#if defined (__ACE_INLINE__)
-# include "Deployment_Configuration.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* CIAO_DEPLOYMENT_CONFIGURATION_H */
