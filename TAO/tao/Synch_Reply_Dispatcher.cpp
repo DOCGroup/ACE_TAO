@@ -5,6 +5,7 @@
 #include "Pluggable_Messaging_Utils.h"
 #include "debug.h"
 
+
 ACE_RCSID (tao,
            Synch_Reply_Dispatcher,
            "$Id$")
@@ -52,10 +53,6 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   if (params.input_cdr_ == 0)
     return -1;
 
-  if (TAO_debug_level > 2)
-    ACE_ERROR ((LM_ERROR,
-                "TAO (%P|%t) - Synch_Reply_Dispatcher::dispatch_reply ",
-                "going on \n"));
   this->reply_status_ = params.reply_status_;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
