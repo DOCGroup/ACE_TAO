@@ -1,3 +1,11 @@
+Thu Apr 15 07:20:35 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * bin/MakeProjectCreator/README:
+
+          Added information on how to obtain MPC and the location of
+          documentation.
+
 Thu Apr 15 10:52:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_mingw32.GNU:
@@ -60,155 +68,155 @@ Thu Apr 15 07:04:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 14 22:18:58 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp (svc):
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp (svc):
 
-	  Wrapped ACE_Guard instantiation within an ACE_GUARD_RETURN
-	  macro.  Addresses an unused variable warning.
+          Wrapped ACE_Guard instantiation within an ACE_GUARD_RETURN
+          macro.  Addresses an unused variable warning.
 
 Wed Apr 14 20:29:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.cpp (thr_create):
+        * ace/OS_NS_Thread.cpp (thr_create):
 
           Explicitly cast the unused returned values of two
-	  ACE_ADAPT_RETVAL macro calls to "void" to address a "right-hand
-	  operand of comma has no effect" warning exhibited by GNU g++ 3.4
-	  (pre-release).
+          ACE_ADAPT_RETVAL macro calls to "void" to address a "right-hand
+          operand of comma has no effect" warning exhibited by GNU g++ 3.4
+          (pre-release).
 
 Wed Apr 14 19:27:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/os_include/os_unistd.h (_POSIX_TIMER_MAX):
-	  (ACE_DEFAULT_TIMERS):
+        * ace/os_include/os_unistd.h (_POSIX_TIMER_MAX):
+          (ACE_DEFAULT_TIMERS):
 
-	  Moved definitions of these macros to other more appropriate
-	  files described below.
+          Moved definitions of these macros to other more appropriate
+          files described below.
 
-	* ace/os_include/os_limits.h (_POSIX_TIMER_MAX):
+        * ace/os_include/os_limits.h (_POSIX_TIMER_MAX):
 
-	  Moved conditional definition of this macro to this file to avoid
-	  potential definition before the one in <limits.h>.  Fixes macro
-	  redefinition warnings.
+          Moved conditional definition of this macro to this file to avoid
+          potential definition before the one in <limits.h>.  Fixes macro
+          redefinition warnings.
 
-	* ace/Default_Constants.h (ACE_DEFAULT_TIMERS):
+        * ace/Default_Constants.h (ACE_DEFAULT_TIMERS):
 
-	  Moved conditional definition of this macro to this file.  It
-	  didn't make much sense to define it in the os_unistd.h
-	  portability header.
+          Moved conditional definition of this macro to this file.  It
+          didn't make much sense to define it in the os_unistd.h
+          portability header.
 
 Wed Apr 14 17:28:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
 
-	  Corrected "fuzz" error regarding missing RCS ID.
+          Corrected "fuzz" error regarding missing RCS ID.
 
 Wed Apr 14 23:03:20 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/DLL_Manager.cpp:
+        * ace/DLL_Manager.cpp:
 
-	  Additional validation in DLL_Handle::symbol.
+          Additional validation in DLL_Handle::symbol.
 
-	* ace/Mem_Map.cpp:
+        * ace/Mem_Map.cpp:
 
-	  QNX NTO cannot mmap regular files, but can map shared
-	  memory.  Mem_Map was modified for QNX NTO the same it was done
-	  for CHORUS, namely ::open and ::unlink was replaced by
-	  resp. ::shm_open and ::shm_unlink in QNX NTO section. This is
-	  only a partial bugfix, as one it prevents mapping ordinary
-	  files.
+          QNX NTO cannot mmap regular files, but can map shared
+          memory.  Mem_Map was modified for QNX NTO the same it was done
+          for CHORUS, namely ::open and ::unlink was replaced by
+          resp. ::shm_open and ::shm_unlink in QNX NTO section. This is
+          only a partial bugfix, as one it prevents mapping ordinary
+          files.
 
-	* tests/Mem_Map_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
 
-	  ::open in QNX NTO  sections was replaced by Mem_Map::open to
-	  ensure ::shm_open is invoked.
+          ::open in QNX NTO  sections was replaced by Mem_Map::open to
+          ensure ::shm_open is invoked.
 
 Wed Apr 14 17:17:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-11.00.h: Fixed missing end-of-comment mark that
-	  no-oped much of this file. Thanks to the compiler for all the
-	  help finding this one.... NOT!
+        * ace/config-hpux-11.00.h: Fixed missing end-of-comment mark that
+          no-oped much of this file. Thanks to the compiler for all the
+          help finding this one.... NOT!
 
 Wed Apr 14 14:09:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/os_include/os_unistd.h (ACE_DEFAULT_TIMERS, _SC_TIMER_MAX):
+        * ace/os_include/os_unistd.h (ACE_DEFAULT_TIMERS, _SC_TIMER_MAX):
 
-	  #define ACE_DEFAULT_TIMERS to _POSIX_TIMER_MAX, not
-	  _SC_TIMER_MAX.  The latter is a parameter meant to be passed to
-	  the sysconf() C library function.  It does not represent the
-	  maximum number of concurrent timers per process.  The fact that
-	  its value is close to the value for _POSIX_TIMER_MAX is a
-	  coincidence  (e.g. _SC_TIMER_MAX on Linux/glibc is 35 and
-	  _POSIX_TIMER_MAX is 32).  This addresses potential problems
-	  where the default number of timers is more than the platform
-	  allows.
+          #define ACE_DEFAULT_TIMERS to _POSIX_TIMER_MAX, not
+          _SC_TIMER_MAX.  The latter is a parameter meant to be passed to
+          the sysconf() C library function.  It does not represent the
+          maximum number of concurrent timers per process.  The fact that
+          its value is close to the value for _POSIX_TIMER_MAX is a
+          coincidence  (e.g. _SC_TIMER_MAX on Linux/glibc is 35 and
+          _POSIX_TIMER_MAX is 32).  This addresses potential problems
+          where the default number of timers is more than the platform
+          allows.
 
-	  In addition to addressing the above issue, this change also
-	  fixes a warning regarding an undefined "_SC_TIMER_MAX" macro on
-	  Linux/glibc.  On that platform "_SC_TIMER_MAX" is actually
-	  defined in an enumeration.
+          In addition to addressing the above issue, this change also
+          fixes a warning regarding an undefined "_SC_TIMER_MAX" macro on
+          Linux/glibc.  On that platform "_SC_TIMER_MAX" is actually
+          defined in an enumeration.
 
-	  (_SC_AIO_MAX):
+          (_SC_AIO_MAX):
 
-	  Removed this macro definition.  It served no useful purpose.
+          Removed this macro definition.  It served no useful purpose.
 
 Wed Apr 14 16:18:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
 
-	  In ACE_Cached_Connect_Strategy_Ex::connect_svc_handler_i(), the
-	  reference counter of the entry in the hashtable
-	  (ACE_Refcounted_Hash_Recyclable) was being incremented in all
-	  cases.  It should only incremented if the hint passed to
-	  connect_svc_handler_i() is not used.
+          In ACE_Cached_Connect_Strategy_Ex::connect_svc_handler_i(), the
+          reference counter of the entry in the hashtable
+          (ACE_Refcounted_Hash_Recyclable) was being incremented in all
+          cases.  It should only incremented if the hint passed to
+          connect_svc_handler_i() is not used.
 
-	  Thanks to Torsten Kuepper <torsten.kuepper@nokia.com> for
-	  reporting this bug.  This closes bug 1781.
+          Thanks to Torsten Kuepper <torsten.kuepper@nokia.com> for
+          reporting this bug.  This closes bug 1781.
 
 Wed Apr 14 16:14:59 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: Add _M_AMD64 (Opteron) as a known little-endian
-	  architecture. Thanks to Ivan Murphy <ivan.murphy@siemens.com> for
-	  this fix.
+        * ace/Basic_Types.h: Add _M_AMD64 (Opteron) as a known little-endian
+          architecture. Thanks to Ivan Murphy <ivan.murphy@siemens.com> for
+          this fix.
 
 Wed Apr 14 21:07:35 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ACE-INSTALL.html: updated documentation in QNX section.
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU: several changes
-	  related to compilation under QNX RTP v.6.2.0.
-	* ace/Mutex.inl: Fixed bugs for pthread::process_mutex placed in
-	  shared memory
-	* ace/Process_Mutex.h: Explained in doxygen documentation the
-	  difference between SYSV semaphores and pthreads based process
-	  mutexes.
-	* ace/RW_Process_Mutex.h: Added \todo section in doxygen doc.
-	* ace/Dev_Addr.h:
-	* ace/Dev_Addr.i:
-	* ace/File_Addr.h:
-	* ace/Module.h:
-	* ace/Module.i:
-	* ace/SPIPE_Addr.h: MAXNAMLEN replaced by MAXPATHLEN to prevent
-	  filename truncation
-	* ace/Time_Value.cpp: Removed warning for QNX RTP related with
-	  unsigned tv_sec
-	* ace/config-qnx-rtp-62x.h:
-	* ace/config-qnx-rtp-pre62x.h:
-	* ace/config-qnx-rtp.h:
-	* ace/config-qnx-neutrino.h: New configuration macros for QNX RTP.
-	* ace/OS.h: Removed unnecessary semicolon in QNX (4.x) section.
-	* tests/Process_Mutex_Test.cpp: Ensured correct order of
-	  pthreads-based Process_Mutex destruction.
+        * ACE-INSTALL.html: updated documentation in QNX section.
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU: several changes
+          related to compilation under QNX RTP v.6.2.0.
+        * ace/Mutex.inl: Fixed bugs for pthread::process_mutex placed in
+          shared memory
+        * ace/Process_Mutex.h: Explained in doxygen documentation the
+          difference between SYSV semaphores and pthreads based process
+          mutexes.
+        * ace/RW_Process_Mutex.h: Added \todo section in doxygen doc.
+        * ace/Dev_Addr.h:
+        * ace/Dev_Addr.i:
+        * ace/File_Addr.h:
+        * ace/Module.h:
+        * ace/Module.i:
+        * ace/SPIPE_Addr.h: MAXNAMLEN replaced by MAXPATHLEN to prevent
+          filename truncation
+        * ace/Time_Value.cpp: Removed warning for QNX RTP related with
+          unsigned tv_sec
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-qnx-rtp.h:
+        * ace/config-qnx-neutrino.h: New configuration macros for QNX RTP.
+        * ace/OS.h: Removed unnecessary semicolon in QNX (4.x) section.
+        * tests/Process_Mutex_Test.cpp: Ensured correct order of
+          pthreads-based Process_Mutex destruction.
 
 Wed Apr 14 12:34:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Makefile.libs:
+        * tests/Makefile.libs:
 
-	  Reverted a change (Makefile.libs,v 4.3 2004/04/13 23:15:45
-	  mbrudka) that incorrectly replaced a dependency on test_config.h
-	  with test_$(ACE_PLATFORM_CONFIG).  Thanks to Johnny Willemsen
-	  for pointing me in the right direction.
+          Reverted a change (Makefile.libs,v 4.3 2004/04/13 23:15:45
+          mbrudka) that incorrectly replaced a dependency on test_config.h
+          with test_$(ACE_PLATFORM_CONFIG).  Thanks to Johnny Willemsen
+          for pointing me in the right direction.
 
 Wed Apr 14 11:26:20 2004  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_aix_g++.GNU: If rtti=0, add
-	  -fno-rtti to CFLAGS. Previously, the rtti setting had no affect.
+        * include/makeinclude/platform_aix_g++.GNU: If rtti=0, add
+          -fno-rtti to CFLAGS. Previously, the rtti setting had no affect.
 
 Wed Apr 14 10:04:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -392,8 +400,8 @@ Thu Apr  8 11:57:29 2004  Steve Huston  <shuston@riverace.com>
           handler from the asynch task before posting the completion. The
           completion handler may do anything, including delete the handler,
           before this method has a chance to remove it from the asynch task.
-	  Matches an earlier fix for Windows:
-	  Thu Mar 11 17:00:14 2004  Steve Huston  <shuston@riverace.com>
+          Matches an earlier fix for Windows:
+          Thu Mar 11 17:00:14 2004  Steve Huston  <shuston@riverace.com>
 
 Thu Apr  8 08:03:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
