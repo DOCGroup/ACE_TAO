@@ -1049,13 +1049,13 @@ void CORBA_ORB::_tao_unexpected_exception (void)
 #endif /* ACE_HAS_EXCEPTIONS */
 }
 
-ACE_INLINE const ACE_CString &
+const ACE_CString &
 CORBA_ORB::_tao_ft_client_id (void)
 {
   return this->orb_core ()->fault_tolerance_service ().client_id ();
 }
 
-ACE_INLINE void
+void
 CORBA_ORB::_tao_ft_client_id (const char *id)
 {
   this->orb_core ()->fault_tolerance_service ().client_id (id);
