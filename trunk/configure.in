@@ -1167,7 +1167,7 @@ ACE_CHECK_TYPE(ssize_t, sys/types.h, AC_DEFINE(ACE_HAS_SSIZE_T),)
 ACE_CHECK_TYPE(u_longlong_t, sys/types.h, , AC_DEFINE(ACE_LACKS_U_LONGLONG_T))
 ACE_CHECK_TYPE(pri_t, sys/types.h, ,AC_DEFINE(ACE_LACKS_PRI_T))
 ACE_CHECK_TYPE(ucontext_t, ucontext.h, AC_DEFINE(ACE_HAS_UCONTEXT_T),)
-ACE_CHECK_TYPE(wchar_t, wchar.h, AC_DEFINE(ACE_HAS_XPG4_MULTIBYTE_CHAR),
+ACE_CHECK_TYPE(wchar_t, wchar.h,,
   [
    ACE_CHECK_TYPE(wchar_t, sys/types.h,,AC_DEFINE(ACE_LACKS_WCHAR_T))
   ])
@@ -3731,6 +3731,11 @@ AC_CHECK_FUNC(strptime, dnl
 
 AC_CHECK_FUNC(memchr, dnl
   AC_DEFINE(ACE_HAS_MEMCHR),)
+
+if test "$ace_cv_type_wchar_t" = yes; then
+  AC_CHECK_FUNC(wcslen, dnl
+    AC_DEFINE(ACE_HAS_XPG4_MULTIBYTE_CHAR),)
+fi
 
 AC_CHECK_FUNC(syscall, dnl
   ,
