@@ -1,3 +1,9 @@
+Wed Jan  6 15:29:10 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Commented out some IR related code for the build to go through.
+	* orbsvcs/Time_Service/Server_i.h (class Server_i):
+	* orbsvcs/Time_Service/Server_i.h:
+
 Wed Jan 06 15:03:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/echo/Client_i.cpp (echo_list): added .in ()
