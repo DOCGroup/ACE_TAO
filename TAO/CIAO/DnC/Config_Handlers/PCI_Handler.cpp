@@ -6,6 +6,7 @@
 
 #include "CompImplDesc_Handler.h"
 #include "PCI_Handler.h"
+#include "Process_Basic_Type.h"
 
 #include <iostream>
 

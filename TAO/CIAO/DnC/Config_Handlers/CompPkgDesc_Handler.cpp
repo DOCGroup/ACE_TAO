@@ -6,11 +6,13 @@
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
+#include "Process_Basic_Type.h"
 
 #include "CompPkgDesc_Handler.h"
 #include "Property_Handler.h"
 #include "PCI_Handler.h"
 #include "CompIntrDesc_Handler.h"
+#include "Process_Element.h"
 
 #include <iostream>
 
@@ -50,6 +52,7 @@ void CompPkgDesc_Handler::process_ComponentPackageDescription
         (process_sequence_remote<Deployment::PackagedComponentImplementation, PCI_Handler>
          (this->doc_, this->iter_, node,
           node_name, "implementation", comppkgdesc.implementation,
+          &PCI_Handler::process_PackagedComponentImplementation,
           this->id_map_));
       else if
         (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
@@ -61,27 +64,6 @@ void CompPkgDesc_Handler::process_ComponentPackageDescription
           // ??? How did we get here ???
           ACE_THROW (CORBA::INTERNAL());
         }
-    }
-  return;
-}
-
-/// handle label attribute
-void CompPkgDesc_Handler::process_label
-(const XMLCh* label, ::Deployment::ComponentPackageDescription &comppkgdesc)
-{
-  if (label)
-    {
-      comppkgdesc.label = XMLString::transcode (label);
-    }
-}
-
-/// handle UUID attribute
-void CompPkgDesc_Handler::process_UUID
-(const XMLCh* UUID, ::Deployment::ComponentPackageDescription &comppkgdesc)
-{
-  if (UUID)
-    {
-      comppkgdesc.UUID = XMLString::transcode (UUID);
     }
 }
 

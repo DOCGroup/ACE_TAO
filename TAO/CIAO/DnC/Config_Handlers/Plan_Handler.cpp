@@ -13,6 +13,7 @@
 #include "RUK_Handler.h"
 #include "CEPE_Handler.h"
 #include "ERE_Handler.h"
+#include "CPK_Handler.h"
 
 #include "Process_Basic_Type.h"
 #include "Process_Element.h"

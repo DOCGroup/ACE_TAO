@@ -33,9 +33,9 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
         (process_string(this->iter_, node_name, "label", pc.label));
       else if
         (process_string(this->iter_, node_name, "UUID", pc.UUID));
+        /*
       else if
         // TODO: process_PackageConfiguration does not accept a node_iterator
-        /*
         (process_sequence_local<Deployment::PackageConfiguration>
          (this->doc_, this->iter_, node,
           node_name, "specializedConfig", pc.specializedConfig,
