@@ -4070,8 +4070,7 @@ realclean: clean
 
 .obj/Notify_FilterAdmin_i.o .obj/Notify_FilterAdmin_i.so .shobj/Notify_FilterAdmin_i.o .shobj/Notify_FilterAdmin_i.so: Notify/Notify_FilterAdmin_i.cpp \
  Notify/Notify_FilterAdmin_i.h \
- $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_ID_Pool_T.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_ID_Pool_T.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -8190,8 +8189,7 @@ realclean: clean
 .obj/Notify_Source_Filter_Eval_Command.o .obj/Notify_Source_Filter_Eval_Command.so .shobj/Notify_Source_Filter_Eval_Command.o .shobj/Notify_Source_Filter_Eval_Command.so: \
  Notify/Notify_Source_Filter_Eval_Command.cpp \
  Notify/Notify_Source_Filter_Eval_Command.h \
- $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_Command.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_Command.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9234,8 +9232,7 @@ realclean: clean
 .obj/Notify_Event_Dispatch_Command.o .obj/Notify_Event_Dispatch_Command.so .shobj/Notify_Event_Dispatch_Command.o .shobj/Notify_Event_Dispatch_Command.so: \
  Notify/Notify_Event_Dispatch_Command.cpp \
  Notify/Notify_Event_Dispatch_Command.h \
- $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_Command.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_Command.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9564,8 +9561,7 @@ realclean: clean
 .obj/Notify_Update_Dispatch_Command.o .obj/Notify_Update_Dispatch_Command.so .shobj/Notify_Update_Dispatch_Command.o .shobj/Notify_Update_Dispatch_Command.so: \
  Notify/Notify_Update_Dispatch_Command.cpp \
  Notify/Notify_Update_Dispatch_Command.h \
- $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_Command.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_Command.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -11655,8 +11651,8 @@ realclean: clean
  Notify/Notify_Factory.h
 
 .obj/Interpreter.o .obj/Interpreter.so .shobj/Interpreter.o .shobj/Interpreter.so: Trader/Interpreter.cpp Trader/Interpreter.h \
- $(ACE_ROOT)/ace/pre.h \
- Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
+ $(ACE_ROOT)/ace/pre.h Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -12301,8 +12297,7 @@ realclean: clean
  Trader/Constraint_Visitors.h
 
 .obj/Constraint_Nodes.o .obj/Constraint_Nodes.so .shobj/Constraint_Nodes.o .shobj/Constraint_Nodes.so: Trader/Constraint_Nodes.cpp \
- Trader/Constraint_Nodes.h \
- $(ACE_ROOT)/ace/pre.h \
+ Trader/Constraint_Nodes.h $(ACE_ROOT)/ace/pre.h \
  Trader/Constraint_Tokens.h \
  $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -13937,8 +13932,7 @@ realclean: clean
  Trader/trading_export.h
 
 .obj/CosNotificationS.o .obj/CosNotificationS.so .shobj/CosNotificationS.o .shobj/CosNotificationS.so: CosNotificationS.cpp CosNotificationS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosNotificationC.h \
+ $(ACE_ROOT)/ace/pre.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -14255,8 +14249,7 @@ realclean: clean
  CosNotificationS_T.i CosNotificationS_T.cpp CosNotificationS.i
 
 .obj/CosNotifyChannelAdminS.o .obj/CosNotifyChannelAdminS.so .shobj/CosNotifyChannelAdminS.o .shobj/CosNotifyChannelAdminS.so: CosNotifyChannelAdminS.cpp \
- CosNotifyChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
+ CosNotifyChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
  CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -14588,9 +14581,8 @@ realclean: clean
  CosNotifyChannelAdminS.i
 
 .obj/CosNotifyCommS.o .obj/CosNotifyCommS.so .shobj/CosNotifyCommS.o .shobj/CosNotifyCommS.so: CosNotifyCommS.cpp CosNotifyCommS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosNotificationS.h CosNotificationC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h CosNotificationS.h \
+ CosNotificationC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -15553,9 +15545,8 @@ realclean: clean
  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i
 
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
- CosEventChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h CosEventCommS.h \
- CosEventCommC.h \
+ CosEventChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+ CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -16193,8 +16184,7 @@ realclean: clean
 
 .obj/CosTradingReposS.o .obj/CosTradingReposS.so .shobj/CosTradingReposS.o .shobj/CosTradingReposS.so: CosTradingReposS.cpp CosTradingReposS.h \
  $(ACE_ROOT)/ace/pre.h CosTradingS.h \
- CosTradingC.h \
- $(TAO_ROOT)/tao/corba.h \
+ CosTradingC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -16828,8 +16818,7 @@ realclean: clean
  Notify/notify_export.h CosNotificationC.i
 
 .obj/CosNotifyChannelAdminC.o .obj/CosNotifyChannelAdminC.so .shobj/CosNotifyChannelAdminC.o .shobj/CosNotifyChannelAdminC.so: CosNotifyChannelAdminC.cpp \
- CosNotifyChannelAdminC.h \
- $(ACE_ROOT)/ace/pre.h \
+ CosNotifyChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -18101,8 +18090,7 @@ realclean: clean
  CosEvent/event_export.h CosEventCommC.i
 
 .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
- CosEventChannelAdminC.h \
- $(ACE_ROOT)/ace/pre.h \
+ CosEventChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \

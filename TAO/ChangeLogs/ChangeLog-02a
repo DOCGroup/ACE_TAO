@@ -1,10 +1,14 @@
+Mon Aug 21 11:21:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Makefile's in orbsvcs. Updated the dependancies.
+
 Sun Aug 20 18:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
-	  
+
 	  Rectified the broken exception support and ACE_THROW_SPEC
 	  generation.
 
@@ -12,42 +16,42 @@ Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
 	  Resolved some generation errors.
-	
+
 	* tests/Makefile:
 	* tests/AMI/Makefile:
         * tests/Leader_Followers/Makefile:
 	* tests/Policies/Makefile:
 	* tests/CDR/Makefile:
-        * tests/LongUpcalls/Makefile:           
+        * tests/LongUpcalls/Makefile:
 	* tests/Portable_Interceptors/Makefile:
-        * tests/MProfile/Makefile:              
+        * tests/MProfile/Makefile:
 	* tests/QtTests/Makefile:
-        * tests/MProfile_Forwarding/Makefile: 
-	* tests/Connection_Purging/Makefile:     
-	* tests/MT_Client/Makefile: 
-        * tests/MT_Server/Makefile: 
-	* tests/DSI_Gateway/Makefile:                          
+        * tests/MProfile_Forwarding/Makefile:
+	* tests/Connection_Purging/Makefile:
+	* tests/MT_Client/Makefile:
+        * tests/MT_Server/Makefile:
+	* tests/DSI_Gateway/Makefile:
 	* tests/Smart_Proxies/Makefile:
-	* tests/DynAny_Test/Makefile:            
-	* tests/Multiple_Inheritance/Makefile:  
-	* tests/Endpoint_Per_Priority/Makefile:  
-	* tests/Explicit_Event_Loop/Makefile:    
-	* tests/Native_Exceptions/Makefile:     
+	* tests/DynAny_Test/Makefile:
+	* tests/Multiple_Inheritance/Makefile:
+	* tests/Endpoint_Per_Priority/Makefile:
+	* tests/Explicit_Event_Loop/Makefile:
+	* tests/Native_Exceptions/Makefile:
 	* tests/Timed_Buffered_Oneways/Makefile:
         * tests/Timeout/Makefile:
-	* tests/Exposed_Policies/Makefile:       
-	* tests/Nested_Event_Loop/Makefile:     
+	* tests/Exposed_Policies/Makefile:
+	* tests/Nested_Event_Loop/Makefile:
 	* tests/Xt_Stopwatch/Makefile:
-	* tests/FL_Cube/Makefile:                
-	* tests/ORB_destroy/Makefile:           
-	* tests/Faults/Makefile:                 
-	* tests/ORB_init/Makefile:              
-	* tests/IDL_Test/Makefile:               
-	* tests/Object_Loader/Makefile:         
-	* tests/IORManipulation/Makefile:        
-	* tests/OctetSeq/Makefile:              
-	* tests/InterOp-Naming/Makefile:         
-	* tests/Portable_Interceptors/Makefile:           
+	* tests/FL_Cube/Makefile:
+	* tests/ORB_destroy/Makefile:
+	* tests/Faults/Makefile:
+	* tests/ORB_init/Makefile:
+	* tests/IDL_Test/Makefile:
+	* tests/Object_Loader/Makefile:
+	* tests/IORManipulation/Makefile:
+	* tests/OctetSeq/Makefile:
+	* tests/InterOp-Naming/Makefile:
+	* tests/Portable_Interceptors/Makefile:
 	* tests/Param_Test/Makefile:
 	* examples/Buffered_AMI/Makefile:
 	* examples/AMI/FL_Callback/Makefile:
@@ -63,8 +67,8 @@ Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* examples/POA/RootPOA/Makefile:
 	* examples/POA/Default_Servant/Makefile:
 	* examples/POA/Explicit_Activation/Makefile:
-	* examples/POA/FindPOA/Makefile:  
-	* examples/POA/NewPOA/Makefile: 
+	* examples/POA/FindPOA/Makefile:
+	* examples/POA/NewPOA/Makefile:
 	* examples/POA/On_Demand_Activation/Makefile:
 	* examples/POA/TIE/Makefile:
 	* examples/POA/Forwarding/Makefile:
@@ -90,7 +94,7 @@ Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* performance-tests/Thruput/TAO/Makefile:
 
 	  Updated dependencies.
-	
+
 Sun Aug 20 14:27:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
@@ -103,31 +107,31 @@ Sun Aug 20 11:18:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
 	* orbsvcs/orbsvcs/Makefile.CosTrading:
-	* orbsvcs/orbsvcs/Makefile.RTSchedEvent:	
+	* orbsvcs/orbsvcs/Makefile.RTSchedEvent:
 	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
 	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
 	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/Makefile.CosEvent:	  
-	* orbsvcs/orbsvcs/Makefile.ESF:		  
+	* orbsvcs/orbsvcs/Makefile.CosEvent:
+	* orbsvcs/orbsvcs/Makefile.ESF:
 	* orbsvcs/orbsvcs/Makefile.Security:
-	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:	  
-	* orbsvcs/orbsvcs/Makefile.ETCL:		  
+	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+	* orbsvcs/orbsvcs/Makefile.ETCL:
 	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
-	* orbsvcs/orbsvcs/Makefile.CosNaming:	  
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:  
+	* orbsvcs/orbsvcs/Makefile.CosNaming:
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
 	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.CosNotification:  
-	* orbsvcs/orbsvcs/Makefile.RTEvent:	  
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
 	* orbsvcs/orbsvcs/Makefile.av:
-	* orbsvcs/orbsvcs/Makefile.CosProperty:	  
-	* orbsvcs/orbsvcs/Makefile.RTOLDEvent:	  
+	* orbsvcs/orbsvcs/Makefile.CosProperty:
+	* orbsvcs/orbsvcs/Makefile.RTOLDEvent:
 	* orbsvcs/orbsvcs/Makefile.bor:
-	* orbsvcs/orbsvcs/Makefile.CosTime:	  
+	* orbsvcs/orbsvcs/Makefile.CosTime:
 	* orbsvcs/orbsvcs/Makefile.RTSched:
- 	  
+
 	  Updated the Makefile dependencies to remove the obsolete
 	  dependencies on the old Interceptor files.
-	
+
 Sat Aug 19 21:03:48 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Policy_i.h
