@@ -1,44 +1,57 @@
+Tue Mar 03 21:11:22 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/RtecScheduler.idl: updated a comment: the units
+          of Period are 100 ns.
+
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp (initialize_queues),
+          Task_Manager.cpp (initialize): maintain period in units of 100 ns
+          when converting period from a 64 bit to a 32 bit int.
+
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp (open_queue),
+          ReactorTask.cpp (open_reactor): assign name to thread using units
+          of us.
+
 Mon Mar  2 19:01:44 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/main.cpp (class
-	TAO_PropertySet_Tester): Added this wrapper class to organise my
-	test code, testing the methods in the PropertyService interfaces.
+        * orbsvcs/tests/CosPropertyService/main.cpp (class
+        TAO_PropertySet_Tester): Added this wrapper class to organise my
+        test code, testing the methods in the PropertyService interfaces.
 
 Mon Mar  2 16:48:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/fe/idl.ll: 
-	* TAO_IDL/fe/lex.yy.cpp: 
-	* TAO_IDL/util/utl_global.cpp: 
-	  More changes attempting to remove the \ problem for NT.
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+          More changes attempting to remove the \ problem for NT.
 
-	* tao/orbobj.h: 
-	  Added a missing TAO_Export macro.
+        * tao/orbobj.h:
+          Added a missing TAO_Export macro.
 
-	* tao/typecode.h: 
-	* tao/typecode.i: 
-	  Added the _var and _out classes for CORBA_TypeCode.
+        * tao/typecode.h:
+        * tao/typecode.i:
+          Added the _var and _out classes for CORBA_TypeCode.
 
-	* tao/corbacom.h: 
-	  Added the TypeCode_var and TypeCode_out classes to the CORBA
-	  class.
+        * tao/corbacom.h:
+          Added the TypeCode_var and TypeCode_out classes to the CORBA
+          class.
 
 Mon Mar  2 15:39:57 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
-	* tao/sequence_T.h: Added a ptr() accessor to both the
- 	  TAO_Bounded_Sequence and TAO_Unbounded_Sequence classes.  Thanks
- 	  to Carol Sanders <csanders@mdc.com> for suggesting this.
+        * tao/sequence_T.h: Added a ptr() accessor to both the
+          TAO_Bounded_Sequence and TAO_Unbounded_Sequence classes.  Thanks
+          to Carol Sanders <csanders@mdc.com> for suggesting this.
 
-	* tao/sequence[_T].{i,cpp}: Cleaned up a bunch of
- 	  ACE_reinterpret_cast() operations.  Thanks to Russ Noseworthy
- 	  <rnosewor@objectsciences.com> for reporting this.
+        * tao/sequence[_T].{i,cpp}: Cleaned up a bunch of
+          ACE_reinterpret_cast() operations.  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for reporting this.
 
 Mon Mar  2 13:13:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	  Fixed pathname canonization for NT, we convert a double
-	  backslash into a single slash.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Fixed pathname canonization for NT, we convert a double
+          backslash into a single slash.
 
 Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -62,67 +75,67 @@ Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Mar  1 13:42:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* release.pl: This script will now move the 'Current' tag to
-	  point to the latest beta release.
+        * release.pl: This script will now move the 'Current' tag to
+          point to the latest beta release.
 
 Sun Mar  1 10:40:31 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/{poa, objtable}.cpp: Removed the "Anachronism" warning
-	associated with the _out parameters passed to the find () method.
+        * tao/{poa, objtable}.cpp: Removed the "Anachronism" warning
+        associated with the _out parameters passed to the find () method.
 
 Sat Feb 28 18:37:54 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp:
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
-	* orbsvcs/tests/CosPropertyService/main.cpp:
-	Added some more code to test the functions defined in CosPropertyService_i.cpp.
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	* orbsvcs/orbsvcs/CosPropertyService.idl:
-	* orbsvcs/tests/Makefile (DIRS): Added the directory
-	CosPropertyService under DIRS  here. It is compiled when av=1.
+        * orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp:
+        * orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
+        * orbsvcs/tests/CosPropertyService/main.cpp:
+        Added some more code to test the functions defined in CosPropertyService_i.cpp.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/CosPropertyService.idl:
+        * orbsvcs/tests/Makefile (DIRS): Added the directory
+        CosPropertyService under DIRS  here. It is compiled when av=1.
 
 Fri Feb 27 19:55:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp (main): Added this
-	file which spawns the server and client and terminates them after
-	some time.
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp (main): Added this
+        file which spawns the server and client and terminates them after
+        some time.
 
 Fri Feb 27 17:57:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tests/NestedUpcall/server.cpp: Started integrating the
- 	TAO_ORB_Manager, but it's untested thus far so it's
- 	conditionally-compiled out.
+        * tests/NestedUpcall/server.cpp: Started integrating the
+        TAO_ORB_Manager, but it's untested thus far so it's
+        conditionally-compiled out.
 
-	* tao/{any,connect,default_server,except,
- 	orb_core,orbobj,principa,request}.cpp: Whacked out a bunch of @@
- 	comments.
+        * tao/{any,connect,default_server,except,
+        orb_core,orbobj,principa,request}.cpp: Whacked out a bunch of @@
+        comments.
 
 Fri Feb 27 16:11:53 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.h: Changes to make it compile on
- 	sigle-threaded platforms.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.h: Changes to make it compile on
+        sigle-threaded platforms.
 
-	* docs/releasenotes/index.html: update to naming service
- 	entry.
+        * docs/releasenotes/index.html: update to naming service
+        entry.
 
 Fri Feb 27 15:03:58 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* docs/Options.html (TAO_Default_Server_Strategy_Factory): Added
- 	documentation for POA-related lock strategies.
+        * docs/Options.html (TAO_Default_Server_Strategy_Factory): Added
+        documentation for POA-related lock strategies.
 
-	* tao/connect.cpp (handle_input): Added call to
- 	Reactor::suspend_handler() in here so that, in the bizarre corner
- 	case where sub-event loop "A" eventually leads to sub-sub-event
- 	loop "B" being called, but input becomes available for "A"'s
- 	descriptor prior to "B"'s descriptor, B's loop won't spin wildly,
- 	gobbling up CPU.
+        * tao/connect.cpp (handle_input): Added call to
+        Reactor::suspend_handler() in here so that, in the bizarre corner
+        case where sub-event loop "A" eventually leads to sub-sub-event
+        loop "B" being called, but input becomes available for "A"'s
+        descriptor prior to "B"'s descriptor, B's loop won't spin wildly,
+        gobbling up CPU.
 
 Fri Feb 27 15:00:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -136,17 +149,17 @@ Fri Feb 27 15:00:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Feb 27 12:08:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orb_core.h (TAO_Resource_Factory): Changed to use
- 	  TAO_Default_Reactor class in TAO_Resource_Factory.
+        * tao/orb_core.h (TAO_Resource_Factory): Changed to use
+          TAO_Default_Reactor class in TAO_Resource_Factory.
 
 Fri Feb 27 11:10:24 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
-	* test/NestedUpcall/{eh_i,reactor_i}.cpp: Changed debug statements
- 	to utilize the new ACE_Log_Msg conversions to indent scopes, etc.
+        * test/NestedUpcall/{eh_i,reactor_i}.cpp: Changed debug statements
+        to utilize the new ACE_Log_Msg conversions to indent scopes, etc.
 
 Fri Feb 27 00:40:36 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO version 0.1.6, released Fri Feb 27 00:40:36 1998.
+        * TAO version 0.1.6, released Fri Feb 27 00:40:36 1998.
 
 Thu Feb 26 19:29:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
@@ -215,243 +228,243 @@ Thu Feb 26 19:29:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Trader_Base.h:
         * orbsvcs/orbsvcs/Trader/constraint.l:
         * orbsvcs/orbsvcs/Trader/constraint.y:
-	* orbsvcs/orbsvcs/CosTrading.idl:
- 	* orbsvcs/Trading_Service/Makefile:
- 	* orbsvcs/Trading_Service/trader.cpp:
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/Trading_Service/trader.cpp:
 
-	The Trading Service has a new home and a new orb. I've migrated
-	the VisiBroker implementation of the Trading Service to TAO by
-	having the interfaces inherit from the POA_CosTrading skeletons,
-	replacing the the C++ exception handling with the TAO_* macro
-	exception handling and CORBA::Environment passing, and prefixing
-	all top level classes with 'TAO_'. Because the tao_idl generated
-	code from CosTrading.idl was having some trouble, nothing here has
-	been compiled since the port. The README file contains additions
-	to the Makefile necessary to accommodate the Trading Service's
-	reliance on STL.
+        The Trading Service has a new home and a new orb. I've migrated
+        the VisiBroker implementation of the Trading Service to TAO by
+        having the interfaces inherit from the POA_CosTrading skeletons,
+        replacing the the C++ exception handling with the TAO_* macro
+        exception handling and CORBA::Environment passing, and prefixing
+        all top level classes with 'TAO_'. Because the tao_idl generated
+        code from CosTrading.idl was having some trouble, nothing here has
+        been compiled since the port. The README file contains additions
+        to the Makefile necessary to accommodate the Trading Service's
+        reliance on STL.
 
-	The orbsvcs/Trading_Service/trader.cpp is a server that activates
-	the supported interfaces of our Trading Service. At this point our
-	Trader adheres to the Stand Alone Trader designation of
-	conformance as described in the specification.
+        The orbsvcs/Trading_Service/trader.cpp is a server that activates
+        the supported interfaces of our Trading Service. At this point our
+        Trader adheres to the Stand Alone Trader designation of
+        conformance as described in the specification.
 
 Thu Feb 26 18:38:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
- 	  Fixed a syntax error.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
+          Fixed a syntax error.
 
 Thu Feb 26 18:07:16 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Added an entry for the Property Service.
+        * docs/releasenotes/index.html: Added an entry for the Property Service.
 
 Thu Feb 26 17:36:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orb_core.{h,cpp} (TAO_Default_Reactor): I added the new class
- 	  tring to strategize the type of reactor used.  It is not used at
- 	  the moment.
+        * tao/orb_core.{h,cpp} (TAO_Default_Reactor): I added the new class
+          tring to strategize the type of reactor used.  It is not used at
+          the moment.
 
 Thu Feb 26 16:18:47 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_client_stubs): Split out some
- 	  code to use a couple temporary variables to work around what
- 	  might be a Heisenbug with GCC.  Thanks to Carlos O'Ryan and
- 	  Keith Nicewarner <knicewar@sanders.com> for reporting this.
+        * TAO_IDL/be/be_interface.cpp (gen_client_stubs): Split out some
+          code to use a couple temporary variables to work around what
+          might be a Heisenbug with GCC.  Thanks to Carlos O'Ryan and
+          Keith Nicewarner <knicewar@sanders.com> for reporting this.
 
 Thu Feb 26 14:52:20 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tests/NestedUpcall/{eh_i,reactor_i}.{h,cpp}: Added
- 	implementation for the new decrement operation.
+        * tests/NestedUpcall/{eh_i,reactor_i}.{h,cpp}: Added
+        implementation for the new decrement operation.
 
-	* tests/NestedUpcall/client.cpp: Added calls to invoke the new
- 	decrement operation.
+        * tests/NestedUpcall/client.cpp: Added calls to invoke the new
+        decrement operation.
 
-	* tests/NestedUpcall/Reactor.idl: Added a new operation,
- 	decrement, to test multi-nested upcalls.
+        * tests/NestedUpcall/Reactor.idl: Added a new operation,
+        decrement, to test multi-nested upcalls.
 
-	* tao/connect.cpp (send_request): Fixed to return appropriate
- 	return values, especially in case of errors.
+        * tao/connect.cpp (send_request): Fixed to return appropriate
+        return values, especially in case of errors.
 
 Thu Feb 26 14:02:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/tao_util.cpp (activate_under_child_poa): Instead of
- 	  returning a String_var, return String_var._retn ().
-	  (activate_under_child_poa): Actually, it seems better just
-  	  use String than String_var.
+        * tao/tao_util.cpp (activate_under_child_poa): Instead of
+          returning a String_var, return String_var._retn ().
+          (activate_under_child_poa): Actually, it seems better just
+          use String than String_var.
 
 Thu Feb 26 13:31:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
-	* TAO_IDL/Makefile: added "all" target for CROSS-COMPILE platforms.
+        * TAO_IDL/Makefile: added "all" target for CROSS-COMPILE platforms.
 
 Thu Feb 26 05:39:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/NestedUpcall/client.cpp: Cast (char *) to 0 which is used
-	  to initialize remote_reactor_key.
-	  (main): Added ACE_const_cast in string_to_object call.
+        * tests/NestedUpcall/client.cpp: Cast (char *) to 0 which is used
+          to initialize remote_reactor_key.
+          (main): Added ACE_const_cast in string_to_object call.
 
-	* tests/NestedUpcall/NestedUpcall.dsw:
-	* tests/NestedUpcall/client.dsp:
-	* tests/Nestedupcall/server.dsp: New project files for NT.
+        * tests/NestedUpcall/NestedUpcall.dsw:
+        * tests/NestedUpcall/client.dsp:
+        * tests/Nestedupcall/server.dsp: New project files for NT.
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (init_naming_service,main):
-	  Appended a return at the end.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (init_naming_service,main):
+          Appended a return at the end.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/server.dsp: Updated project file
-	  lists.
+        * tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/server.dsp: Updated project file
+          lists.
 
-	* tao/TAO.dsp: Added tao_util.cpp into this project.
+        * tao/TAO.dsp: Added tao_util.cpp into this project.
 
-	* tao/tao_util.h (TAO_ORB_Manager): Added TAO_Export flag.
+        * tao/tao_util.h (TAO_ORB_Manager): Added TAO_Export flag.
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Added Ior_Multicast.cpp and
-	  Naming_Utils.cpp into this project.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added Ior_Multicast.cpp and
+          Naming_Utils.cpp into this project.
 
-	* orbsvcs/orbsvcs/Naming/Ior_Multicast.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Added
-	  TAO_ORBSVCS_Export flag.
+        * orbsvcs/orbsvcs/Naming/Ior_Multicast.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h: Added
+          TAO_ORBSVCS_Export flag.
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: Added a return
-	  statement to muffle MSVC.
+        * orbsvcs/Naming_Service/Naming_Service.cpp: Added a return
+          statement to muffle MSVC.
 
 Wed Feb 25 22:53:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/orbobj: Changed the signature of the run(ACE_Time_Value &)
- 	  method to run(const ACE_Time_Value &) so we can pass the const
- 	  ACE_Time_Value::zero to it.  Thanks to Chris Cleeland for
- 	  suggesting this.
+        * tao/orbobj: Changed the signature of the run(ACE_Time_Value &)
+          method to run(const ACE_Time_Value &) so we can pass the const
+          ACE_Time_Value::zero to it.  Thanks to Chris Cleeland for
+          suggesting this.
 
-	* orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
- 	  to ACE_SYNCH so that we can at least build the Event Channel on
- 	  a single-threaded platform.
+        * orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
+          to ACE_SYNCH so that we can at least build the Event Channel on
+          a single-threaded platform.
 
-	* orbsvcs/orbsvcs/Event_Service_Constants.h: Changed the use of
- 	  ACE_Thread_Mutex and ACE_RT_Thread_Mutex to ACE_THREAD_MUTEX and
- 	  ACE_RW_THREAD_MUTEX, respectively, so that TAO will build on
- 	  non-threaded platforms.
+        * orbsvcs/orbsvcs/Event_Service_Constants.h: Changed the use of
+          ACE_Thread_Mutex and ACE_RT_Thread_Mutex to ACE_THREAD_MUTEX and
+          ACE_RW_THREAD_MUTEX, respectively, so that TAO will build on
+          non-threaded platforms.
 
-	* tao/poa.cpp,
+        * tao/poa.cpp,
           tao/default_server.cpp: Fixed TAO by conditionally
-	  compiling the code that relies on the recursive mutexes
-	  and mutexes.  Thanks to Jim Penny <jpenny@universal-fasteners.com>
-	  for reporting this.
+          compiling the code that relies on the recursive mutexes
+          and mutexes.  Thanks to Jim Penny <jpenny@universal-fasteners.com>
+          for reporting this.
 
 Wed Feb 25 22:47:48 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/README::
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.h: Made changes to have the
- 	option to specify oneway calls instead of the usual two-way
- 	cube_X() call.  Now, you can specify the "-o" argument on the
- 	client side.
+        * tests/Cubit/TAO/MT_Cubit/README::
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/cubit.idl:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.h: Made changes to have the
+        option to specify oneway calls instead of the usual two-way
+        cube_X() call.  Now, you can specify the "-o" argument on the
+        client side.
 
 Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp (parse_args): Similar to
-	server.cpp changed the meaning of -s option to not to use the
-	naming service and naming service is used by default.
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp (parse_args): Similar to
+        server.cpp changed the meaning of -s option to not to use the
+        naming service and naming service is used by default.
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Changed the
-	meaning of the -s option to "don't use the naming service" and made
-	using the naming service the default.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Changed the
+        meaning of the -s option to "don't use the naming service" and made
+        using the naming service the default.
 
 Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Changed the
-	meaning of the -s flag to "don't use the naming service" and made
-	using the naming service the default.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Changed the
+        meaning of the -s flag to "don't use the naming service" and made
+        using the naming service the default.
 
 Wed Feb 25 18:03:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/tests/AVStreams/Makefile:
-	* tests/Cubit/TAO/IDL_Cubit/Makefile:
-	  Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/AVStreams/Makefile:
+        * tests/Cubit/TAO/IDL_Cubit/Makefile:
+          Updated dependencies.
 
 Wed Feb 25 17:13:05 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (Naming_Service):
-	Changed the main to just create an instance of Naming_Service and
-	call init and run on it.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (Naming_Service):
+        Changed the main to just create an instance of Naming_Service and
+        call init and run on it.
 
-	* orbsvcs/Naming_Service/Naming_Service.h: Added this file which
-	defines a Naming_Service class to simplify the Naming_Service.cpp
-	file.
+        * orbsvcs/Naming_Service/Naming_Service.h: Added this file which
+        defines a Naming_Service class to simplify the Naming_Service.cpp
+        file.
 
 Wed Feb 25 16:52:13 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tao/servant_base.cpp: Updated to reflect change of poa_current_
- 	from structure to pointer.
+        * tao/servant_base.cpp: Updated to reflect change of poa_current_
+        from structure to pointer.
 
-	* tao/poa.*: Changed signature of pre_invoke() and post_invoke()
- 	to deal with poa current storage coming from the stack.
+        * tao/poa.*: Changed signature of pre_invoke() and post_invoke()
+        to deal with poa current storage coming from the stack.
 
-	* tao/poa.cpp (dispatch_servant_i): Changed to create POA Current
- 	information record on the stack during the upcall, thus clearing
- 	the way for proper operation in the face of nested upcalls.
+        * tao/poa.cpp (dispatch_servant_i): Changed to create POA Current
+        information record on the stack during the upcall, thus clearing
+        the way for proper operation in the face of nested upcalls.
 
-	* tao/orbobj.cpp: Updated to reflect change of poa_current_ from
- 	structure to pointer.
+        * tao/orbobj.cpp: Updated to reflect change of poa_current_ from
+        structure to pointer.
 
-	* tao/orb_core.*: Changed poa_current_ to a pointer rather than
- 	ownership.  This allows the structure holding the POA Current
- 	information to be created in the activation record for the upcall,
- 	thus opening the door for proper operation in the face of nested
- 	upcalls.
+        * tao/orb_core.*: Changed poa_current_ to a pointer rather than
+        ownership.  This allows the structure holding the POA Current
+        information to be created in the activation record for the upcall,
+        thus opening the door for proper operation in the face of nested
+        upcalls.
 
-	* tao/giop.h: Removed cruft/unused code.
+        * tao/giop.h: Removed cruft/unused code.
 
-	* tao/giop.cpp: Addressed some '@@' comments.
+        * tao/giop.cpp: Addressed some '@@' comments.
 
-	* tao/connect.*: Fixed a problem where nested upcalls would only
- 	work every other time.  This was caused by the fact that the
- 	servant-turned-client cached the connection to the
- 	client-turned-servant.  However, when the client-turned-servant
- 	terminated, the servant-turned-client was ignoring input events on
- 	this cached connection handle.  Then, when the next instance of
- 	the client-turned-servant came along and tried to connect, when
- 	the servant-turned-client made the invocation back to the
- 	client-turned-servant, the cached handle was returned.  However,
- 	when its input was read, rather than getting the expected
- 	response, an EOF was received and the servant-turned-client
- 	aborted the entire original invocation.
+        * tao/connect.*: Fixed a problem where nested upcalls would only
+        work every other time.  This was caused by the fact that the
+        servant-turned-client cached the connection to the
+        client-turned-servant.  However, when the client-turned-servant
+        terminated, the servant-turned-client was ignoring input events on
+        this cached connection handle.  Then, when the next instance of
+        the client-turned-servant came along and tried to connect, when
+        the servant-turned-client made the invocation back to the
+        client-turned-servant, the cached handle was returned.  However,
+        when its input was read, rather than getting the expected
+        response, an EOF was received and the servant-turned-client
+        aborted the entire original invocation.
 
-	This was fixed by having the TAO_Client_Connection_Handler always
- 	registered to receive input events and to maintain record of its
- 	state so that it can tell whether or not it's expecting input.  If
- 	it receives an unexpected input event, then it will simply close
- 	down the connection, possibly logging a warning message as well.
+        This was fixed by having the TAO_Client_Connection_Handler always
+        registered to receive input events and to maintain record of its
+        state so that it can tell whether or not it's expecting input.  If
+        it receives an unexpected input event, then it will simply close
+        down the connection, possibly logging a warning message as well.
 
 Wed Feb 25 16:06:59 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/{client,server}.{h,cpp}: Added callback
-	support
+        * orbsvcs/tests/AVStreams/{client,server}.{h,cpp}: Added callback
+        support
 
 Wed Feb 25 16:04:49 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp,h: Added support for making
-	upcalls into the application when connection is established,
-	requested etc..
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp,h: Added support for making
+        upcalls into the application when connection is established,
+        requested etc..
 
 Wed Feb 25 12:58:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tao/tao_util.cpp: Added the implementation for the 2 new methods
-	to use a child_poa.
+        * tao/tao_util.cpp: Added the implementation for the 2 new methods
+        to use a child_poa.
 
-	* tao/tao_util.h (class TAO_ORB_Manager): Added 2 new methods
-	init_child_poa and activate_under_child_poa to create a child_poa
-	with policies PERSISTENT and USER_ID.
+        * tao/tao_util.h (class TAO_ORB_Manager): Added 2 new methods
+        init_child_poa and activate_under_child_poa to create a child_poa
+        with policies PERSISTENT and USER_ID.
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (bind): Added checks for
-	null pointers in ACE_DEBUG.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (bind): Added checks for
+        null pointers in ACE_DEBUG.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved this file from
-	orbsvcs/Naming_Service/ to this dir.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved this file from
+        orbsvcs/Naming_Service/ to this dir.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Moved this file from
-	orbsvcs/Naming_Service/ to this directory.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h: Moved this file from
+        orbsvcs/Naming_Service/ to this directory.
 
 Wed Feb 25 12:20:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -465,56 +478,56 @@ Wed Feb 25 12:20:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Feb 24 21:05:08 1998  Nagarajan Surendran  <naga@mambo.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Main.cpp: This now contains the main
-	which was previously in Naming_Service.cpp to facilitate
-	integrating the IOR_Multicast class defined in Naming_Service.cpp
-	into the orbsvcs library.
+        * orbsvcs/Naming_Service/Main.cpp: This now contains the main
+        which was previously in Naming_Service.cpp to facilitate
+        integrating the IOR_Multicast class defined in Naming_Service.cpp
+        into the orbsvcs library.
 
-	* orbsvcs/Naming_Service/Naming_Utils.h: Defines a new
-	TAO_Naming_Server wrapper class which can be used as a
-	Naming_Server component if one wants a separate Naming_Server.
+        * orbsvcs/Naming_Service/Naming_Utils.h: Defines a new
+        TAO_Naming_Server wrapper class which can be used as a
+        Naming_Server component if one wants a separate Naming_Server.
 
-	* orbsvcs/Naming_Service/Naming_Utils.cpp: Added this new file
-	which implements the TAO_Naming_Server class.
+        * orbsvcs/Naming_Service/Naming_Utils.cpp: Added this new file
+        which implements the TAO_Naming_Server class.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp (read_ior): Added 2 new
-	methods read_ior and init_naming_service.
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp (read_ior): Added 2 new
+        methods read_ior and init_naming_service.
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp: Now contains the
-	implementation of Cubit_Server class with a really simple main.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp: Now contains the
+        implementation of Cubit_Server class with a really simple main.
 
-	* tests/Cubit/TAO/IDL_Cubit/server.h (class Cubit_Server): Defined
-	a new Cubit_Server class akin to Cubit_Client.
+        * tests/Cubit/TAO/IDL_Cubit/server.h (class Cubit_Server): Defined
+        a new Cubit_Server class akin to Cubit_Client.
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: Moved the main () to
-	a separate file Main.cpp
+        * orbsvcs/Naming_Service/Naming_Service.cpp: Moved the main () to
+        a separate file Main.cpp
 
 Tue Feb 24 17:45:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/orbobj.h: Removed the unnecessary = 0 on the new run method.
+        * tao/orbobj.h: Removed the unnecessary = 0 on the new run method.
 
-	* tao/orbobj.cpp (run): Added a new run() method that takes an
- 	ACE_Time_Value & rather than an ACE_Time_Value * so that we don't
- 	need to pass the address!
+        * tao/orbobj.cpp (run): Added a new run() method that takes an
+        ACE_Time_Value & rather than an ACE_Time_Value * so that we don't
+        need to pass the address!
 
 Tue Feb 24 14:31:37 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tests/NestedUpcall/client.cpp (main): Replaced orb->open() with
- 	orb->run(&ACE_Time_Value::zero), which though still non-standard,
- 	is less non-standard than open().
+        * tests/NestedUpcall/client.cpp (main): Replaced orb->open() with
+        orb->run(&ACE_Time_Value::zero), which though still non-standard,
+        is less non-standard than open().
 
-	* tests/NestedUpcall/README: Added one for the good of all
- 	mankind.
+        * tests/NestedUpcall/README: Added one for the good of all
+        mankind.
 
 Tue Feb 24 13:23:48 1998 Michael Kircher   <mk1@cec.wustl.edu>
 
-	* orbsvcs/tests/Simulator/NavWeap.idl: Added new fields
+        * orbsvcs/tests/Simulator/NavWeap.idl: Added new fields
 
-       	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
- 	adopted to new IDL file
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+        adopted to new IDL file
 
-	* orbsvcs/tests/Simulator/Sim_Display/Display_Push_Consumer.java:
-	adopted to new IDL file
+        * orbsvcs/tests/Simulator/Sim_Display/Display_Push_Consumer.java:
+        adopted to new IDL file
 
 
 Tue Feb 24 00:41:48 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
