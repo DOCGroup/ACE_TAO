@@ -1,3 +1,8 @@
+Thu May  3 07:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/IPC_SAP/FILE_SAP/client.cpp: Fixed a warning with Linux
+	  builds. 
+
 Wed May  2 22:55:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server/Options.cpp:
