@@ -218,12 +218,14 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
 
       if (manual)
         {
+#if !defined (ACE_HAS_WINCE)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enter a new message for ")
                       ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
                             mb->wr_ptr (),
                             mb->size ());
+#endif  // ACE_HAS_WINCE
         }
       else
         {
@@ -308,12 +310,14 @@ Thread_Pool::test_empty_message_shutdown (void)
 
       if (manual)
         {
+#if !defined (ACE_HAS_WINCE)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enter a new message for ")
                       ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
                             mb->wr_ptr (),
                             mb->size ());
+#endif  // ACE_HAS_WINCE
         }
       else
         {

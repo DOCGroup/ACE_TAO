@@ -26,7 +26,11 @@
 
 ACE_RCSID(tests, CDR_File_Test, "$Id$")
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) | defined (ACE_HAS_WINCE)
+
+#if defined (ACE_HAS_WINCE)
+#include "CE_fostream.h"
+#endif  // ACE_HAS_WINCE
 
 class CDR_Test
 {
@@ -185,7 +189,14 @@ run_test (int write_file,
       output_cdr << cdr_test;
 
       // Output the data to cout.
+#if defined (ACE_HAS_WINCE)
+      // Since CE does not have ostream, ace_file_stream and output_file() cannot
+      // be used.  Just use 'hard-coded' file name here.
+      (*ACE_CE_OSTREAM::instance()).open(ACE_TEXT("\\Log\\CDR_File_Test.txt"));
+      (*ACE_CE_OSTREAM::instance()) << cdr_test;
+#else
       *ace_file_stream::instance ()->output_file () << cdr_test;
+#endif  // ACE_HAS_WINCE
 
       // Save the data.
       const ACE_Message_Block *output_mb =
@@ -194,7 +205,7 @@ run_test (int write_file,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Writing file %s in %s endian format...\n"),
                   filename,
-                  ACE_CDR_BYTE_ORDER ? "little" : "big"));
+                  ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big")));
 
       n = file.send (output_mb->rd_ptr (),
                      output_mb->length ());
@@ -265,7 +276,7 @@ run_test (int write_file,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Reading file %s in %s endian format...\n"),
                   filename,
-                  ACE_CDR_BYTE_ORDER ? "little" : "big"));
+                  ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big")));
 
       CDR_Test temp;
 
@@ -273,7 +284,12 @@ run_test (int write_file,
       // <CDR_Test> object.
       input_cdr >> temp;
 
+#ifdef ACE_HAS_WINCE
+      (*ACE_CE_OSTREAM::instance()) << temp;
+#else
       *ace_file_stream::instance ()->output_file () << temp;
+#endif  // ACE_HAS_WINCE
+
       ACE_ASSERT (temp == cdr_test);
     }
 

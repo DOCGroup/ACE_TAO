@@ -194,7 +194,7 @@ Printer::print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) %s\n"),
-              this->message_));
+              ACE_TEXT_CHAR_TO_TCHAR(this->message_)));
 }
 
 #if defined (ACE_HAS_THREADS)

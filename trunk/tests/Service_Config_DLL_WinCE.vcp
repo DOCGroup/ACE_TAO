@@ -62,7 +62,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
 CPP=clmips.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /D "MIPS" /D "_MIPS_" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -94,7 +94,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
 CPP=clmips.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "MIPS" /D "_MIPS_" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -126,7 +126,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "NDEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /D "SHx" /D "SH4" /D "_SH4_" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -158,7 +158,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "DEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Qsh4 /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Qsh4 /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH4" /D "_SH4_" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Qsh4 /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -191,7 +191,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /D "SHx" /D "SH3" /D "_SH3_" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -224,7 +224,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -256,7 +256,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
 CPP=clarm.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D "ARM" /D "_ARM_" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -288,7 +288,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
 CPP=clarm.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "ARM" /D "_ARM_" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -321,7 +321,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Gz /Oxs /c
-# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Gz /Oxs /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "i486" /D "_X86_" /D "x86" /D "NDEBUG" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Gz /Oxs /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -355,7 +355,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /YX /Gz /c
-# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /Gz /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "i486" /D "_X86_" /D "x86" /D "_USRDLL" /D "SERVICE_CONFIG_DLL_WINCE_EXPORTS" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /Gz /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -382,13 +382,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "X86Dbg"
 # PROP CPU_ID "{D6518FF3-710F-11D3-99F2-00105A0DF099}"
 # PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "_i386_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gs8192 /GF /c
-# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "_i386_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gs8192 /GF /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "_i386_" /D "_X86_" /D "x86" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "SERVICE_CONFIG_DLL_BUILD_DLL" /YX /Gs8192 /GF /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -938,206 +939,196 @@ NODEP_CPP_SERVI=\
 !ELSEIF  "$(CFG)" == "Service_Config_DLL_WinCE - Win32 (WCE x86) Debug"
 
 DEP_CPP_SERVI=\
+	"..\ace\ACE.h"\
+	"..\ace\ACE.i"\
+	"..\ace\ACE_export.h"\
+	"..\ace\ace_wchar.h"\
+	"..\ace\ace_wchar.inl"\
+	"..\ace\Argv_Type_Converter.h"\
+	"..\ace\Argv_Type_Converter.inl"\
+	"..\ace\Array_Base.cpp"\
+	"..\ace\Array_Base.h"\
+	"..\ace\Array_Base.inl"\
+	"..\ace\Auto_Ptr.cpp"\
+	"..\ace\Auto_Ptr.h"\
+	"..\ace\Auto_Ptr.i"\
+	"..\ace\Base_Thread_Adapter.h"\
+	"..\ace\Base_Thread_Adapter.inl"\
+	"..\ace\Basic_Types.h"\
+	"..\ace\Basic_Types.i"\
+	"..\ace\config-all.h"\
+	"..\ace\config-cygwin32-common.h"\
+	"..\ace\config-cygwin32.h"\
+	"..\ace\config-g++-common.h"\
+	"..\ace\config-ghs-common.h"\
+	"..\ace\config-win32-borland.h"\
+	"..\ace\config-win32-common.h"\
+	"..\ace\config-win32-ghs.h"\
+	"..\ace\config-win32-mingw.h"\
+	"..\ace\config-win32-msvc-5.h"\
+	"..\ace\config-win32-msvc-6.h"\
+	"..\ace\config-win32-msvc-7.h"\
+	"..\ace\config-win32-msvc.h"\
+	"..\ace\config-win32-visualage.h"\
+	"..\ace\config-win32.h"\
+	"..\ace\config-WinCE.h"\
+	"..\ace\config.h"\
+	"..\ace\Containers.h"\
+	"..\ace\Containers.i"\
+	"..\ace\Containers_T.cpp"\
+	"..\ace\Containers_T.h"\
+	"..\ace\Containers_T.i"\
+	"..\ace\Default_Constants.h"\
+	"..\ace\Event_Handler.h"\
+	"..\ace\Event_Handler.i"\
+	"..\ace\File_Lock.h"\
+	"..\ace\File_Lock.inl"\
+	"..\ace\Flag_Manip.h"\
+	"..\ace\Flag_Manip.i"\
+	"..\ace\Free_List.cpp"\
+	"..\ace\Free_List.h"\
+	"..\ace\Free_List.i"\
+	"..\ace\Global_Macros.h"\
+	"..\ace\Handle_Ops.h"\
+	"..\ace\Handle_Ops.i"\
+	"..\ace\Handle_Set.h"\
+	"..\ace\Handle_Set.i"\
+	"..\ace\Init_ACE.h"\
+	"..\ace\Init_ACE.i"\
+	"..\ace\IO_Cntl_Msg.h"\
+	"..\ace\iosfwd.h"\
+	"..\ace\Lib_Find.h"\
+	"..\ace\Lib_Find.i"\
+	"..\ace\Log_Msg.h"\
+	"..\ace\Log_Msg_Callback.h"\
+	"..\ace\Log_Priority.h"\
+	"..\ace\Log_Record.h"\
+	"..\ace\Log_Record.i"\
+	"..\ace\Malloc.h"\
+	"..\ace\Malloc.i"\
+	"..\ace\Malloc_Allocator.h"\
+	"..\ace\Malloc_Allocator.i"\
+	"..\ace\Malloc_Base.h"\
+	"..\ace\Malloc_T.cpp"\
+	"..\ace\Malloc_T.h"\
+	"..\ace\Malloc_T.i"\
+	"..\ace\Managed_Object.cpp"\
+	"..\ace\Managed_Object.h"\
+	"..\ace\Managed_Object.i"\
+	"..\ace\Mem_Map.h"\
+	"..\ace\Mem_Map.i"\
+	"..\ace\Memory_Pool.h"\
+	"..\ace\Memory_Pool.i"\
+	"..\ace\Message_Block.h"\
+	"..\ace\Message_Block.i"\
+	"..\ace\Message_Block_T.cpp"\
+	"..\ace\Message_Block_T.h"\
+	"..\ace\Message_Block_T.i"\
+	"..\ace\Message_Queue.h"\
+	"..\ace\Message_Queue.i"\
+	"..\ace\Message_Queue_T.cpp"\
+	"..\ace\Message_Queue_T.h"\
+	"..\ace\Message_Queue_T.i"\
+	"..\ace\Min_Max.h"\
+	"..\ace\Module.cpp"\
+	"..\ace\Module.h"\
+	"..\ace\Module.i"\
+	"..\ace\Node.cpp"\
+	"..\ace\Node.h"\
+	"..\ace\Notification_Strategy.h"\
+	"..\ace\Notification_Strategy.inl"\
+	"..\ace\Object_Manager.h"\
+	"..\ace\Object_Manager.i"\
+	"..\ace\OS.h"\
+	"..\ace\OS.i"\
+	"..\ace\OS_Dirent.h"\
+	"..\ace\OS_Dirent.inl"\
+	"..\ace\OS_Errno.h"\
+	"..\ace\OS_Errno.inl"\
+	"..\ace\OS_Export.h"\
+	"..\ace\OS_Log_Msg_Attributes.h"\
+	"..\ace\OS_Log_Msg_Attributes.inl"\
+	"..\ace\OS_Memory.h"\
+	"..\ace\OS_Memory.inl"\
+	"..\ace\OS_String.h"\
+	"..\ace\OS_String.inl"\
+	"..\ace\OS_TLI.h"\
+	"..\ace\OS_TLI.inl"\
+	"..\ace\post.h"\
+	"..\ace\pre.h"\
+	"..\ace\Process_Mutex.h"\
+	"..\ace\Process_Mutex.inl"\
+	"..\ace\Process_Semaphore.h"\
+	"..\ace\Process_Semaphore.inl"\
+	"..\ace\Reactor.h"\
+	"..\ace\Reactor.i"\
+	"..\ace\Reactor_Impl.h"\
+	"..\ace\RW_Process_Mutex.h"\
+	"..\ace\RW_Process_Mutex.inl"\
+	"..\ace\Service_Config.h"\
+	"..\ace\Service_Config.i"\
+	"..\ace\Service_Object.h"\
+	"..\ace\Service_Object.i"\
+	"..\ace\Shared_Object.h"\
+	"..\ace\Shared_Object.i"\
+	"..\ace\Signal.h"\
+	"..\ace\Signal.i"\
+	"..\ace\Singleton.cpp"\
+	"..\ace\Singleton.h"\
+	"..\ace\Singleton.i"\
+	"..\ace\Sock_Connect.h"\
+	"..\ace\Sock_Connect.i"\
+	"..\ace\SString.h"\
+	"..\ace\SString.i"\
+	"..\ace\Stream_Modules.cpp"\
+	"..\ace\Stream_Modules.h"\
+	"..\ace\streams.h"\
+	"..\ace\String_Base.cpp"\
+	"..\ace\String_Base.h"\
+	"..\ace\String_Base.i"\
+	"..\ace\String_Base_Const.h"\
+	"..\ace\SV_Semaphore_Complex.h"\
+	"..\ace\SV_Semaphore_Complex.i"\
+	"..\ace\SV_Semaphore_Simple.h"\
+	"..\ace\SV_Semaphore_Simple.i"\
+	"..\ace\Svc_Conf_Tokens.h"\
+	"..\ace\svc_export.h"\
+	"..\ace\Synch.h"\
+	"..\ace\Synch.i"\
+	"..\ace\Synch_T.cpp"\
+	"..\ace\Synch_T.h"\
+	"..\ace\Synch_T.i"\
+	"..\ace\Task.h"\
+	"..\ace\Task.i"\
+	"..\ace\Task_T.cpp"\
+	"..\ace\Task_T.h"\
+	"..\ace\Task_T.i"\
+	"..\ace\Test_and_Set.cpp"\
+	"..\ace\Test_and_Set.h"\
+	"..\ace\Test_and_Set.i"\
+	"..\ace\Thread.h"\
+	"..\ace\Thread.i"\
+	"..\ace\Thread_Adapter.h"\
+	"..\ace\Thread_Adapter.inl"\
+	"..\ace\Thread_Control.h"\
+	"..\ace\Thread_Control.inl"\
+	"..\ace\Thread_Exit.h"\
+	"..\ace\Thread_Hook.h"\
+	"..\ace\Thread_Manager.h"\
+	"..\ace\Thread_Manager.i"\
+	"..\ace\Timer_Queue.h"\
+	"..\ace\Timer_Queue_T.cpp"\
+	"..\ace\Timer_Queue_T.h"\
+	"..\ace\Timer_Queue_T.i"\
+	"..\ace\Trace.h"\
+	"..\ace\Unbounded_Queue.cpp"\
+	"..\ace\Unbounded_Queue.h"\
+	"..\ace\Unbounded_Queue.inl"\
+	"..\ace\Unbounded_Set.cpp"\
+	"..\ace\Unbounded_Set.h"\
+	"..\ace\Unbounded_Set.inl"\
 	".\Service_Config_DLL.h"\
 	".\Service_Config_DLL_Export.h"\
-	
-NODEP_CPP_SERVI=\
-	".\ce\ACE.h"\
-	".\ce\ACE.i"\
-	".\ce\ACE_export.h"\
-	".\ce\ace_wchar.h"\
-	".\ce\ace_wchar.inl"\
-	".\ce\Array_Base.cpp"\
-	".\ce\Array_Base.h"\
-	".\ce\Array_Base.inl"\
-	".\ce\Atomic_Op.i"\
-	".\ce\Base_Thread_Adapter.h"\
-	".\ce\Base_Thread_Adapter.inl"\
-	".\ce\Basic_Types.h"\
-	".\ce\Basic_Types.i"\
-	".\ce\config-all.h"\
-	".\ce\config-g++-common.h"\
-	".\ce\config-ghs-common.h"\
-	".\ce\config-win32-borland.h"\
-	".\ce\config-win32-common.h"\
-	".\ce\config-win32-ghs.h"\
-	".\ce\config-win32-mingw.h"\
-	".\ce\config-win32-msvc-5.h"\
-	".\ce\config-win32-msvc-6.h"\
-	".\ce\config-win32-msvc-7.h"\
-	".\ce\config-win32-msvc.h"\
-	".\ce\config-win32-visualage.h"\
-	".\ce\config-win32.h"\
-	".\ce\config-WinCE.h"\
-	".\ce\config.h"\
-	".\ce\Containers.h"\
-	".\ce\Containers.i"\
-	".\ce\Containers_T.cpp"\
-	".\ce\Containers_T.h"\
-	".\ce\Containers_T.i"\
-	".\ce\Event_Handler.h"\
-	".\ce\Event_Handler.i"\
-	".\ce\File_Lock.h"\
-	".\ce\File_Lock.inl"\
-	".\ce\Flag_Manip.h"\
-	".\ce\Flag_Manip.i"\
-	".\ce\Free_List.cpp"\
-	".\ce\Free_List.h"\
-	".\ce\Free_List.i"\
-	".\ce\Functor.h"\
-	".\ce\Functor.i"\
-	".\ce\Functor_T.cpp"\
-	".\ce\Functor_T.h"\
-	".\ce\Functor_T.i"\
-	".\ce\Handle_Ops.h"\
-	".\ce\Handle_Ops.i"\
-	".\ce\Handle_Set.h"\
-	".\ce\Handle_Set.i"\
-	".\ce\Hash_Map_Manager.h"\
-	".\ce\Hash_Map_Manager_T.cpp"\
-	".\ce\Hash_Map_Manager_T.h"\
-	".\ce\Hash_Map_Manager_T.i"\
-	".\ce\Init_ACE.h"\
-	".\ce\Init_ACE.i"\
-	".\ce\IO_Cntl_Msg.h"\
-	".\ce\iosfwd.h"\
-	".\ce\Lib_Find.h"\
-	".\ce\Lib_Find.i"\
-	".\ce\Log_Msg.h"\
-	".\ce\Log_Msg_Callback.h"\
-	".\ce\Log_Priority.h"\
-	".\ce\Log_Record.h"\
-	".\ce\Log_Record.i"\
-	".\ce\Malloc.h"\
-	".\ce\Malloc.i"\
-	".\ce\Malloc_Allocator.h"\
-	".\ce\Malloc_Allocator.i"\
-	".\ce\Malloc_Base.h"\
-	".\ce\Malloc_T.cpp"\
-	".\ce\Malloc_T.h"\
-	".\ce\Malloc_T.i"\
-	".\ce\Managed_Object.cpp"\
-	".\ce\Managed_Object.h"\
-	".\ce\Managed_Object.i"\
-	".\ce\Mem_Map.h"\
-	".\ce\Mem_Map.i"\
-	".\ce\Memory_Pool.h"\
-	".\ce\Memory_Pool.i"\
-	".\ce\Message_Block.h"\
-	".\ce\Message_Block.i"\
-	".\ce\Message_Block_T.cpp"\
-	".\ce\Message_Block_T.h"\
-	".\ce\Message_Block_T.i"\
-	".\ce\Message_Queue.h"\
-	".\ce\Message_Queue.i"\
-	".\ce\Message_Queue_T.cpp"\
-	".\ce\Message_Queue_T.h"\
-	".\ce\Message_Queue_T.i"\
-	".\ce\Min_Max.h"\
-	".\ce\Module.cpp"\
-	".\ce\Module.h"\
-	".\ce\Module.i"\
-	".\ce\Node.cpp"\
-	".\ce\Node.h"\
-	".\ce\Object_Manager.h"\
-	".\ce\Object_Manager.i"\
-	".\ce\OS.h"\
-	".\ce\OS.i"\
-	".\ce\OS_Dirent.h"\
-	".\ce\OS_Dirent.inl"\
-	".\ce\OS_Errno.h"\
-	".\ce\OS_Errno.inl"\
-	".\ce\OS_Export.h"\
-	".\ce\OS_Log_Msg_Attributes.h"\
-	".\ce\OS_Log_Msg_Attributes.inl"\
-	".\ce\OS_Memory.h"\
-	".\ce\OS_Memory.inl"\
-	".\ce\OS_String.h"\
-	".\ce\OS_String.inl"\
-	".\ce\OS_TLI.h"\
-	".\ce\OS_TLI.inl"\
-	".\ce\post.h"\
-	".\ce\pre.h"\
-	".\ce\Process_Mutex.h"\
-	".\ce\Process_Mutex.inl"\
-	".\ce\Process_Semaphore.h"\
-	".\ce\Process_Semaphore.inl"\
-	".\ce\Reactor.h"\
-	".\ce\Reactor.i"\
-	".\ce\Reactor_Impl.h"\
-	".\ce\RW_Process_Mutex.h"\
-	".\ce\RW_Process_Mutex.inl"\
-	".\ce\Service_Config.h"\
-	".\ce\Service_Config.i"\
-	".\ce\Service_Object.h"\
-	".\ce\Service_Object.i"\
-	".\ce\Service_Repository.h"\
-	".\ce\Service_Repository.i"\
-	".\ce\Service_Types.h"\
-	".\ce\Service_Types.i"\
-	".\ce\Shared_Object.h"\
-	".\ce\Shared_Object.i"\
-	".\ce\Signal.h"\
-	".\ce\Signal.i"\
-	".\ce\Singleton.cpp"\
-	".\ce\Singleton.h"\
-	".\ce\Singleton.i"\
-	".\ce\Sock_Connect.h"\
-	".\ce\Sock_Connect.i"\
-	".\ce\SString.h"\
-	".\ce\SString.i"\
-	".\ce\Strategies.h"\
-	".\ce\Strategies.i"\
-	".\ce\Strategies_T.cpp"\
-	".\ce\Strategies_T.h"\
-	".\ce\Strategies_T.i"\
-	".\ce\Stream_Modules.cpp"\
-	".\ce\Stream_Modules.h"\
-	".\ce\streams.h"\
-	".\ce\SV_Semaphore_Complex.h"\
-	".\ce\SV_Semaphore_Complex.i"\
-	".\ce\SV_Semaphore_Simple.h"\
-	".\ce\SV_Semaphore_Simple.i"\
-	".\ce\Svc_Conf_Tokens.h"\
-	".\ce\svc_export.h"\
-	".\ce\Synch.h"\
-	".\ce\Synch.i"\
-	".\ce\Synch_Options.h"\
-	".\ce\Synch_Options.i"\
-	".\ce\Synch_T.cpp"\
-	".\ce\Synch_T.h"\
-	".\ce\Synch_T.i"\
-	".\ce\Task.h"\
-	".\ce\Task.i"\
-	".\ce\Task_T.cpp"\
-	".\ce\Task_T.h"\
-	".\ce\Task_T.i"\
-	".\ce\Test_and_Set.cpp"\
-	".\ce\Test_and_Set.h"\
-	".\ce\Test_and_Set.i"\
-	".\ce\Thread.h"\
-	".\ce\Thread.i"\
-	".\ce\Thread_Adapter.h"\
-	".\ce\Thread_Adapter.inl"\
-	".\ce\Thread_Control.h"\
-	".\ce\Thread_Control.inl"\
-	".\ce\Thread_Exit.h"\
-	".\ce\Thread_Hook.h"\
-	".\ce\Thread_Manager.h"\
-	".\ce\Thread_Manager.i"\
-	".\ce\Timer_Queue.h"\
-	".\ce\Timer_Queue_T.cpp"\
-	".\ce\Timer_Queue_T.h"\
-	".\ce\Timer_Queue_T.i"\
-	".\ce\Trace.h"\
-	".\ce\Unbounded_Queue.cpp"\
-	".\ce\Unbounded_Queue.h"\
-	".\ce\Unbounded_Queue.inl"\
-	".\ce\Unbounded_Set.cpp"\
-	".\ce\Unbounded_Set.h"\
-	".\ce\Unbounded_Set.inl"\
-	".\ce\WFMO_Reactor.h"\
-	".\ce\WFMO_Reactor.i"\
 	
 
 !ENDIF 

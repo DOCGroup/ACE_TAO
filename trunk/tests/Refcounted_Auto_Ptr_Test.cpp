@@ -37,7 +37,7 @@ Printer::Printer (const char *message)
   : message_ (message)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Creating Printer object\n")));
+              ACE_LIB_TEXT ("(%t) Creating Printer object\n")));
   ++Printer::instance_count_;
 }
 
@@ -45,15 +45,15 @@ Printer::~Printer (void)
 {
   --Printer::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Deleting Printer object\n")));
+              ACE_LIB_TEXT ("(%t) Deleting Printer object\n")));
 }
 
 void
 Printer::print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) %s\n"),
-              this->message_));
+              ACE_LIB_TEXT ("(%t) %s\n"),
+              ACE_TEXT_CHAR_TO_TCHAR(this->message_)));
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -129,18 +129,18 @@ Method_Request_print::Method_Request_print (Scheduler *new_scheduler,
     printer_ (printer)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Method_Request_print created\n")));
+              ACE_LIB_TEXT ("(%t) Method_Request_print created\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer reference count: %d\n"),
+              ACE_LIB_TEXT ("(%t) Printer reference count: %d\n"),
               printer_.count ()));
 }
 
 Method_Request_print::~Method_Request_print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Method_Request_print will be deleted.\n")));
+              ACE_LIB_TEXT ("(%t) Method_Request_print will be deleted.\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer reference count: %d\n"),
+              ACE_LIB_TEXT ("(%t) Printer reference count: %d\n"),
               printer_.count ()));
 }
 
@@ -199,7 +199,7 @@ Scheduler::Scheduler (Scheduler *new_scheduler)
   : activation_queue_ (msg_queue ()), scheduler_ (new_scheduler)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Scheduler created\n")));
+              ACE_LIB_TEXT ("(%t) Scheduler created\n")));
 }
 
 // Destructor
@@ -207,7 +207,7 @@ Scheduler::Scheduler (Scheduler *new_scheduler)
 Scheduler::~Scheduler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Scheduler will be destroyed\n")));
+              ACE_LIB_TEXT ("(%t) Scheduler will be destroyed\n")));
 }
 
 // open
@@ -216,7 +216,7 @@ int
 Scheduler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Scheduler open\n")));
+              ACE_LIB_TEXT ("(%t) Scheduler open\n")));
   // Become an Active Object.
   int num_threads = 3;
   return this->activate (THR_BOUND | THR_JOINABLE, num_threads);
@@ -227,7 +227,7 @@ Scheduler::open (void *)
 int
 Scheduler::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) rundown\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%t) rundown\n")));
   return 0;
 }
 
@@ -244,13 +244,13 @@ Scheduler::svc (void)
       if (0 == mo_p)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) activation queue shut down\n")));
+                      ACE_LIB_TEXT ("(%t) activation queue shut down\n")));
           break;
         }
       auto_ptr<ACE_Method_Request> mo (mo_p);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) calling method request\n")));
+                  ACE_LIB_TEXT ("(%t) calling method request\n")));
       // Call it.
       if(mo->call () == -1)
         break;
@@ -312,7 +312,7 @@ template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Refcounted_Auto_Ptr_Test"));
+  ACE_START_TEST (ACE_LIB_TEXT ("Refcounted_Auto_Ptr_Test"));
 
 
   // =========================================================================
@@ -320,7 +320,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // thread of control, hence we use the ACE_Null_Mutex
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) performing synchronous test...\n")));
+              ACE_LIB_TEXT ("(%t) performing synchronous test...\n")));
 
   Printer *printer1;
   ACE_NEW_RETURN (printer1,
@@ -336,7 +336,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_LIB_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
               Printer::instance_count_));
   ACE_ASSERT (Printer::instance_count_ == 0);
 
@@ -347,7 +347,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // threads of control.
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) performing asynchronous test...\n")));
+              ACE_LIB_TEXT ("(%t) performing asynchronous test...\n")));
 
   Scheduler *scheduler_ptr;
 
@@ -379,7 +379,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_LIB_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
               Printer::instance_count_));
   ACE_ASSERT (Printer::instance_count_ == 0);
 

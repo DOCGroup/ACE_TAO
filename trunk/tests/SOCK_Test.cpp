@@ -60,7 +60,7 @@ client (void *arg)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
       else
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %s\n"),
-                    server_addr.get_host_name ()));
+                    ACE_TEXT_CHAR_TO_TCHAR(server_addr.get_host_name ())));
     }
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
@@ -130,7 +130,7 @@ server (void *arg)
   while ((result = peer_acceptor->accept (new_stream, &cli_addr)) != -1)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client %s connected from %d\n"),
-                  cli_addr.get_host_name (), cli_addr.get_port_number ()));
+                  ACE_TEXT_CHAR_TO_TCHAR(cli_addr.get_host_name ()), cli_addr.get_port_number ()));
 
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)

@@ -415,7 +415,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_MEM_Addr server_addr (port);
 
       reset_handler (NUMBER_OF_REACTIVE_CONNECTIONS);
+
+#if defined (ACE_HAS_WINCE)
+      test_reactive (ACE_LIB_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
+#else
       test_reactive (argv[0], server_addr);
+#endif  // ACE_HAS_WINCE
+
       ACE_Reactor::instance ()->reset_event_loop ();
 
 #if !defined (ACE_WIN32) && defined (_ACE_USE_SV_SEM)
@@ -423,7 +429,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("\n *** Platform only supports non-scalable SysV semaphores ***\n\n")));
 #endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
       reset_handler (NUMBER_OF_MT_CONNECTIONS);
+
+#if defined (ACE_HAS_WINCE)
+      test_concurrent (ACE_LIB_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
+#else
       test_concurrent (argv[0], server_addr);
+#endif  // ACE_HAS_WINCE
 
       ACE_END_TEST;
       return 0;

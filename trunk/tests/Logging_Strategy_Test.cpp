@@ -216,11 +216,25 @@ get_statistics (ACE_TCHAR *f_name)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      File size (B): %d\n"),
                   buf.st_size));
+
+#if defined (ACE_HAS_WINCE)
+      time_t tm = buf.st_mtime.sec();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("      Time modified : %s\n"),
+                  ACE_OS::ctime (&tm)));
+#else
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      Time modified : %s\n"),
                   ACE_OS::ctime (&buf.st_mtime)));
+#endif  // ACE_HAS_WINCE
     }
+
+#if defined (ACE_HAS_WINCE)
+  return buf.st_mtime.sec();
+#else
   return buf.st_mtime;
+#endif  // ACE_HAS_WINCE
 }
 
 // analyse the file order
