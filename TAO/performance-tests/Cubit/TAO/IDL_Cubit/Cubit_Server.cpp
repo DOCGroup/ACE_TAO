@@ -71,7 +71,7 @@ Cubit_Server::init (int argc,
   this->parse_args ();
   // @@ Check for the return value here.
 
-  // Get the orb 
+  // Get the orb
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Now create the implementations
@@ -125,7 +125,7 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
   this->cubit_context_ =
     this->my_name_server_->bind_new_context (cubit_context_name,
                                              env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   //Register the cubit_factory name with the IDL_Cubit Naming
   //Context...
@@ -135,7 +135,7 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
   this->cubit_context_->bind (factory_name,
                               factory.in (),
                               env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   return 0;
 }
