@@ -3710,6 +3710,8 @@ ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
 
 ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
+ACE_CHECK_LACKS_FUNCS(umask)
+
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
 AC_MSG_CHECKING([for 2- or 3-param wcstok])

@@ -1,3 +1,9 @@
+Mon Dec 20 08:33:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Added test for ACE_LACKS_UMASK.
+
 Mon Dec 20 08:10:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
