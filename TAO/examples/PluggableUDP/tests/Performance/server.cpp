@@ -62,7 +62,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-static void *svc (void *arg)
+static ACE_THR_FUNC_RETURN svc (void *arg)
 {
   CORBA::ORB_ptr orb = (CORBA::ORB_ptr)arg;
 
