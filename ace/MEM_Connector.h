@@ -95,10 +95,11 @@ public:
 
 private:
   ACE_MEM_Addr address_;
-  // @@ Nanbor, can you please add a comment here?
+  // The acceptor address this connector is connecting to.
 
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
-  // @@ Nanbor, can you please add a comment here?
+  // A cached MALLOC_OPTIONS that the MEM_Connector used to initialize
+  // the shared memory malloc update connection establishment.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

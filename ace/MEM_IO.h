@@ -59,9 +59,6 @@ public:
                 size_t n) ;
   // Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
 
-  ssize_t fetch_recv_buf (int flags, const ACE_Time_Value *timeout = 0);
-  // @@ Nanbor, please fill in here.
-
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,
@@ -116,15 +113,22 @@ public:
   // Return the port number of the remotely connected peer (if there
   // is one). Returns 0 if successful, else -1.
   */
+
+protected:
+  ssize_t fetch_recv_buf (int flags, const ACE_Time_Value *timeout = 0);
+  // Fetch location of next available data into <recv_buffer_>.
+  // As this operation read the address of the data off the socket
+  // using ACE::recv, <timeout> only applies to ACE::recv.
+
 private:
   void *recv_buffer_;
   // Internal pointer for support recv/send.
 
   ssize_t buf_size_;
-  // Total buffer size.
+  // Record the current total buffer size of <recv_buffer_>.
 
   ssize_t cur_offset_;
-  // Current read pointer location.
+  // Record the current read pointer location in <recv_buffer_>.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
