@@ -1,3 +1,9 @@
+Wed Feb 28 14:16:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Stub.h:
+	* tao/Stub.cpp (TAO_Stub): Changed the signature of the method
+	  create_ior_info ().
+
 Wed Feb 28 13:55:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
