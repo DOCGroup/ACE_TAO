@@ -219,7 +219,7 @@ be_visitor_interface::visit_constant (be_constant *node)
         break;
       }
     default:
-		  return 0; // nothing to be done
+                  return 0; // nothing to be done
     }
 
   if (status == -1)
@@ -352,7 +352,7 @@ be_visitor_interface::visit_exception (be_exception *node)
         break;
       }
     default:
-		  return 0; // nothing to be done
+                  return 0; // nothing to be done
     }
 
   if (status == -1)
@@ -722,7 +722,7 @@ be_visitor_interface::visit_union (be_union *node)
         break;
       }
     default:
-		  return 0; // nothing to be done
+                  return 0; // nothing to be done
     }
 
   if (status == -1)
@@ -824,7 +824,7 @@ be_visitor_interface::visit_typedef (be_typedef *node)
         break;
       }
     default:
-		  return 0; // nothing to be done
+                  return 0; // nothing to be done
     }
 
   if (status == -1)
