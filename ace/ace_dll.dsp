@@ -3272,6 +3272,52 @@ DEP_CPP_HANDL=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_Manager.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\High_Res_Timer.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -14723,6 +14769,10 @@ SOURCE=.\Hash_Map_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_Manager_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\High_Res_Timer.h
 # End Source File
 # Begin Source File
@@ -15451,6 +15501,14 @@ SOURCE=.\Handle_Set.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_Manager_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\High_Res_Timer.i
 # End Source File
 # Begin Source File
@@ -16000,9 +16058,28 @@ SOURCE=.\Functor_T.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_Map_Manager.cpp
-# PROP BASE Exclude_From_Build 1
+SOURCE=.\Hash_Map_Manager_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

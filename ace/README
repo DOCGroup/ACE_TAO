@@ -404,7 +404,8 @@ ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
 ACE_HAS_REENTRANT_FUNCTIONS             Platform supports reentrant
                                         functions (i.e., all the POSIX
                                         *_r functions).
-ACE_HAS_WCHAR_TYPEDEFS_CHAR             Compiler typedefs wchar with
+ACE_HAS_WCHAR_TYPEDEFS_CHAR             Compiler typedefs wchar with char.
+ACE_HAS_WCHAR_TYPEDEFS_USHORT           Compiler typedefs wchar with ushort.
                                         char.
 ACE_HAS_XPG4_MULTIBYTE_CHAR             Platform has support for
                                         multi-byte character support

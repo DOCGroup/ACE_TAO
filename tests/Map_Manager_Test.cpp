@@ -19,9 +19,6 @@
 // ============================================================================
 
 #include "test_config.h"
-
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-
 #include "ace/Map_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Profile_Timer.h"
@@ -35,32 +32,17 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 typedef ACE_Null_Mutex MUTEX;
-typedef size_t TYPE;
-
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-
-// We need this template specialization since TYPE is defined as a
-// size_t, which doesn't have a hash() method defined on it.  Template
-// specialization is a powerful C++ feature that makes it possible to
-// customize the implementation of designated template methods to
-// either (1) improve performance or (2) support built-in types that
-// lack "methods" (as in this case, where size_t lacks hash()).
-
-u_long
-ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>::hash (const TYPE& ext_id)
-{
-  return ext_id;
-}
-
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+typedef unsigned long TYPE;
+typedef ACE_Hash<TYPE> HASH_KEY;
+typedef ACE_Equal_To<TYPE> COMPARE_KEYS;
 
 typedef ACE_Map_Manager <TYPE, TYPE, MUTEX> MAP_MANAGER;
 typedef ACE_Map_Iterator <TYPE, TYPE, MUTEX> ITERATOR;
 typedef ACE_Map_Reverse_Iterator <TYPE, TYPE, MUTEX> REVERSE_ITERATOR;
 typedef ACE_Map_Entry <TYPE, TYPE> ENTRY;
-typedef ACE_Hash_Map_Manager <TYPE, TYPE, MUTEX> HASH_MAP_MANAGER;
-typedef ACE_Hash_Map_Iterator <TYPE, TYPE, MUTEX> HASH_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator <TYPE, TYPE, MUTEX> HASH_REVERSE_ITERATOR;
+typedef ACE_Hash_Map_Manager_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_MAP_MANAGER;
+typedef ACE_Hash_Map_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_ITERATOR;
+typedef ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_REVERSE_ITERATOR;
 typedef ACE_Hash_Map_Entry <TYPE, TYPE> HASH_ENTRY;
 
 static void
@@ -510,22 +492,24 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>;
-template class ACE_Hash_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
-template class ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Entry<TYPE, TYPE>;
+template class ACE_Equal_To<TYPE>;
 template class ACE_Map_Manager<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Entry<TYPE, TYPE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<TYPE, TYPE>
+#pragma instantiate ACE_Equal_To<TYPE>
 #pragma instantiate ACE_Map_Manager<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Iterator<TYPE, TYPE, MUTEX>
@@ -533,20 +517,3 @@ template class ACE_Map_Entry<TYPE, TYPE>;
 #pragma instantiate ACE_Map_Entry<TYPE, TYPE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#else  /* ACE_HAS_TEMPLATE_SPECIALIZATION */
-
-int
-main (int argc, ASYS_TCHAR *argv[])
-{
-  ACE_START_TEST (ASYS_TEXT ("Map_Manager_Test"));
-
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("Template specializations not supported on this platform\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */

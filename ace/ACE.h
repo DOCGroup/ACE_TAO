@@ -565,13 +565,21 @@ public:
   static u_long hash_pjw (const char *str, size_t len);
   // Computes the hash value of <str> using the ``Hash PJW'' routine.
 
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  static u_long hash_pjw (const wchar_t *str);
+  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+
+  static u_long hash_pjw (const wchar_t *str, size_t len);
+  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
   static u_long hash_pjw (const ACE_USHORT16 *str);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine
-  // (works for UNICODE strings).
+  // Computes the hash value of <str> using the ``Hash PJW'' routine.
 
   static u_long hash_pjw (const ACE_USHORT16 *str, size_t len);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine
-  // (works for UNICODE strings).
+  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
   static u_long crc32 (const char *str);
   // Computes the ISO 8802-3 standard 32 bits CRC for the string
