@@ -1281,6 +1281,8 @@ Oren Zeev-Ben-Mordehai <oren@phonedo.com>
 Holger P. Krekel <krekel@merlinux.de>
 Glenn Popelka <gpp@gpopelka.com>
 Marco Kranawetter <Marco.Kranawetter@icn.siemens.de>
+Tibor Kiss <tkiss@mindmaker.hu>
+Robert Davidson <robert@rdavidson.freeserve.co.uk>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

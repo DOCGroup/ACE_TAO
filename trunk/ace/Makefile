@@ -55,6 +55,7 @@ LOGGING_FILES = \
   Log_Msg_Backend \
   Log_Msg_IPC \
   Log_Msg_NT_Event_Log \
+  Log_Msg_UNIX_Syslog \
   Log_Record \
   Logging_Strategy \
   Trace

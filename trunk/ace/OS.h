@@ -271,6 +271,11 @@ typedef long      id_t;
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
+// Used for the UNIX syslog logging interface to ACE_Log_Msg.
+# ifndef ACE_DEFAULT_SYSLOG_FACILITY
+# define ACE_DEFAULT_SYSLOG_FACILITY LOG_USER
+# endif /* ACE_DEFAULT_SYSLOG_FACILITY */
+
 # if !defined (ACE_DEFAULT_LOGGER_KEY)
 
 #     if defined (ACE_HAS_STREAM_PIPES)
@@ -4805,6 +4810,10 @@ typedef double ACE_timer_t;
 # else
     typedef int ACE_Rusage;
 # endif /* ACE_HAS_PRUSAGE_T */
+
+# if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
+# include /**/ <syslog.h>
+# endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
 #if defined (ACE_HAS_SYS_FILIO_H)
 # include /**/ <sys/filio.h>
