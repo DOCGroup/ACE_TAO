@@ -121,6 +121,10 @@ public:
   void optimize_collocation_objects (CORBA::Boolean opt);
   CORBA::Boolean optimize_collocation_objects (void) const;
 
+  // just an alias for the previous two methods, should be removed.
+  void using_collocation (CORBA::Boolean opt);
+  CORBA::Boolean using_collocation (void) const;
+
   void use_global_collocation (CORBA::Boolean opt);
   CORBA::Boolean use_global_collocation (void) const;
 
