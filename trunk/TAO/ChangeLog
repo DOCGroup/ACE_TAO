@@ -1,3 +1,8 @@
+Sun Oct 12 20:53:35 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FTORB.mpc
+          Fixed incorrect component name for FTORB_Utils
+
 Sun Oct 12 17:33:43 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * tao/Utils/Implicit_Deactivator.h

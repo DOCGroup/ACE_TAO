@@ -12,7 +12,7 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
-    FTORB {
+    FTORB_Utils {
       FT_CORBA_ORBC.cpp
       FT_CORBA_ORBS.cpp
       FaultTolerance/FT_IOGR_Property.cpp
