@@ -1,3 +1,10 @@
+Wed Dec 10  9:31:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task_Ex_T.h:
+          Removed the ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT directive.
+          It is meaningless to define it with ACE_MESSAGE_TYPE. Thanks to
+          Kobi Cohen-Arazi <kobi-co@barak-online.net> for reporting this.
+
 Wed Dec 10  9:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/TTCP/ACE-C++/TTCP_ACE_C++.mpc:
