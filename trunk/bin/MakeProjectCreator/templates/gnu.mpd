@@ -347,6 +347,11 @@ LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
 PATH              := $(PATH):<%custom_type->libpath%>
 
 <%endif%>
+## The PATH is added to the VPATH in case the custom command does not
+## have the path in the executable name.  This will allow GNU Make to
+## find the command and process the rule.
+VPATH += $(PATH)
+
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>

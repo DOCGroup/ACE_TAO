@@ -1957,6 +1957,11 @@ sub check_custom_output {
           push(@outputs, $built);
           last;
         }
+        elsif (defined $specialComponents{$type} &&
+               !$self->{'special_supplied'}->{$type}) {
+          push(@outputs, $built);
+          last;
+        }
         else {
           my($base) = $built;
           if ($self->{'convert_slashes'}) {
