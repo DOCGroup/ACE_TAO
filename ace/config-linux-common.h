@@ -360,8 +360,8 @@
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) 
 // Detect if getsockname() and getpeername() returns random values in
-// the sin_zero field by evaluation of the kernel version. Since
-// version 2.5.47 this problem is fixed.
+// the sockaddr_in::sin_zero field by evaluation of the kernel
+// version. Since version 2.5.47 this problem is fixed.
 #include <linux/version.h>
 #  if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,47))
 #    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 0
