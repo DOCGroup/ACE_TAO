@@ -1,3 +1,8 @@
+Tue Sep 15 13:33:26 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-{WinCE,g++-common}.h:
+	* ace/OS.{h,i,cpp}: Deprecated ACE_LACKS_GETS and ACE_OS::gets (void).
+
 Tue Sep 15 11:22:53 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* ace/OS.{h, i}:
