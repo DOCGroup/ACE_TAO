@@ -505,17 +505,17 @@ ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out confi
   return;
 }
 
-virtual void reset (RtecScheduler::handle_t handle,
-                    RtecScheduler::Criticality_t criticality,
-                    RtecScheduler::Time time,
-                    RtecScheduler::Time typical_time,
-                    RtecScheduler::Time cached_time,
-                    RtecScheduler::Period_t period,
-                    RtecScheduler::Importance_t importance,
-                    RtecScheduler::Quantum_t quantum,
-                    CORBA::Long threads,
-                    RtecScheduler::Info_Type_t info_type
-                    ACE_ENV_ARG_DECL)
+void ACE_Config_Scheduler::reset (RtecScheduler::handle_t,
+            RtecScheduler::Criticality_t,
+            RtecScheduler::Time,
+            RtecScheduler::Time,
+            RtecScheduler::Time,
+            RtecScheduler::Period_t,
+            RtecScheduler::Importance_t,
+            RtecScheduler::Quantum_t,
+            CORBA::Long,
+            RtecScheduler::Info_Type_t
+            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::UNKNOWN_TASK,
                    RtecScheduler::INTERNAL,
@@ -524,7 +524,7 @@ virtual void reset (RtecScheduler::handle_t handle,
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void set_seq (const RtecScheduler::RT_Info_Set& infos
+void ACE_Config_Scheduler::set_seq (const RtecScheduler::RT_Info_Set&
                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::UNKNOWN_TASK,
@@ -536,7 +536,7 @@ virtual void set_seq (const RtecScheduler::RT_Info_Set& infos
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos
+void ACE_Config_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set&
                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::UNKNOWN_TASK,
@@ -548,7 +548,7 @@ virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos
+void ACE_Config_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set&
                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::UNKNOWN_TASK,
@@ -562,10 +562,10 @@ virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void remove_dependency (RtecScheduler::handle_t handle,
-                                RtecScheduler::handle_t dependency,
-                                CORBA::Long number_of_calls,
-                                RtecScheduler::Dependency_Type_t dependency_type
+void ACE_Config_Scheduler::remove_dependency (RtecScheduler::handle_t,
+                                RtecScheduler::handle_t,
+                                CORBA::Long,
+                                RtecScheduler::Dependency_Type_t
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -575,12 +575,12 @@ virtual void remove_dependency (RtecScheduler::handle_t handle,
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void set_dependency_enable_state (RtecScheduler::handle_t handle,
-                                          RtecScheduler::handle_t dependency,
-                                          CORBA::Long number_of_calls,
-                                          RtecScheduler::Dependency_Type_t dependency_type,
-                                          RtecScheduler::Dependency_Enabled_Type_t enabled
-                                          ACE_ENV_ARG_DECL)
+void ACE_Config_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t,
+                                  RtecScheduler::handle_t,
+                                  CORBA::Long,
+                                  RtecScheduler::Dependency_Type_t,
+                                  RtecScheduler::Dependency_Enabled_Type_t
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
                    RtecScheduler::UNKNOWN_TASK))
@@ -589,8 +589,8 @@ virtual void set_dependency_enable_state (RtecScheduler::handle_t handle,
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies
-                                              ACE_ENV_ARG_DECL)
+void ACE_Config_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set &
+                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
                    RtecScheduler::UNKNOWN_TASK))
@@ -599,8 +599,8 @@ virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Se
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void set_rt_info_enable_state (RtecScheduler::handle_t handle,
-                                       RtecScheduler::RT_Info_Enabled_Type_t enabled
+void ACE_Config_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t,
+                               RtecScheduler::RT_Info_Enabled_Type_t
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -610,8 +610,9 @@ virtual void set_rt_info_enable_state (RtecScheduler::handle_t handle,
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set
-                                           ACE_ENV_ARG_DECL)
+void ACE_Config_Scheduler::set_rt_info_enable_state_seq (
+                  const RtecScheduler::RT_Info_Enable_State_Pair_Set &
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
                    RtecScheduler::UNKNOWN_TASK))
@@ -620,10 +621,10 @@ virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_S
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void recompute_scheduling (CORBA::Long minimum_priority,
-                                   CORBA::Long maximum_priority,
-                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                                   ACE_ENV_ARG_DECL)
+void ACE_Config_Scheduler::recompute_scheduling (CORBA::Long,
+                           CORBA::Long,
+                           RtecScheduler::Scheduling_Anomaly_Set_out
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -636,7 +637,7 @@ virtual void recompute_scheduling (CORBA::Long minimum_priority,
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
+void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -647,7 +648,7 @@ virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
+void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -658,7 +659,7 @@ virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
   ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
 
-virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs
+void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,

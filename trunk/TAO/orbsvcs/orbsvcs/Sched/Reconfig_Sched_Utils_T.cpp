@@ -1056,9 +1056,14 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
   if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED)
     {
+      RtecScheduler::Criticality_t entry_crit = 
+        entry.actual_rt_info ()->criticality;
+      RtecScheduler::Criticality_t succ_crit = 
+        successor.actual_rt_info ()->criticality;
+
       successor.actual_rt_info ()->criticality =
-                 ace_max (entry.actual_rt_info ()->criticality,
-                          successor.actual_rt_info ()->criticality);
+        ace_max (entry_crit, succ_crit);
+
       ACE_DEBUG ((LM_DEBUG, 
                   "Successor's new criticality is %d\n",
                   successor.actual_rt_info ()->criticality));

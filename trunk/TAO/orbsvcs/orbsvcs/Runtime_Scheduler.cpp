@@ -360,20 +360,23 @@ ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
 }
 
 
-virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies
+void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies
                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
                    RtecScheduler::UNKNOWN_TASK))
   // This method sets the enable state of a sequence of dependencies.
 {
+  ACE_UNUSED_ARG (dependencies);
+
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set
+void ACE_Runtime_Scheduler::set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set &
                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::UNKNOWN_TASK));
+                   RtecScheduler::UNKNOWN_TASK))
 // This method enables or disables a sequence of RT_Infos.
 {
 }
@@ -543,5 +546,5 @@ ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*co
   // 
   // @@ If unimplemented we either return a CORBA::NO_IMPL exception 
   // or a proprietary ACE_NOTSUP; -- Bala
-  return;
+  ACE_THROW (CORBA::NO_IMPLEMENT ());  
 }
