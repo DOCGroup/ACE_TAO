@@ -31,6 +31,8 @@ IorHandler::hexChar2int (char thisChar)
     case 'e': return (14);
     case 'f': return (15);
     }
+
+  return 0;
 }
 
 u_long
