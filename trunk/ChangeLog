@@ -1,3 +1,10 @@
+Wed Mar 10 18:54:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/configs/ciao_servant.mpb:
+
+	  Added cidlflags as a keyword. Thanks to Ed Mulholland for
+	  motivating  this.
+
 Wed Mar 10 12:33:04 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl:
