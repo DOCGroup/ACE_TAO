@@ -871,10 +871,10 @@ namespace
         os << "conn._retn ();" << endl;
 
         os << "Components::Cookie_var retv;"
-           << "ACE_NEW_RETURN (" << endl
+           << "ACE_NEW_THROW_EX (" << endl
            << "retv.out ()," << endl
            << "CIAO::Map_Key_Cookie (key)," << endl
-           << "0);" << endl;
+           << "CORBA::NO_MEMORY ());" << endl;
 
         os << "return retv._retn ();" << endl
            << "}";
