@@ -6,6 +6,8 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(client, local_stream_client_test, "$Id$")
 
