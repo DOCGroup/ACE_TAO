@@ -25,6 +25,7 @@
 
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;
+class TAO_Endpoint;
 class TAO_GIOP_Invocation;
 class TAO_Profile;
 class TAO_MProfile;
@@ -100,6 +101,10 @@ protected:
 
   /// Create a profile with a given endpoint.
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+  /// Set and validate endpoint. We need to do this to initialize our
+  /// remote *_Addr's which have not been done during IOR decode.
+  virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
 
   /// Do an actual connect using the underlying transport to make a
   /// connection

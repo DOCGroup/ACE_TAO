@@ -116,18 +116,8 @@ TAO_IIOP_SSL_Connector::close (void)
 }
 
 int
-TAO_IIOP_SSL_Connector::make_connection (
-  TAO_GIOP_Invocation *invocation,
-  TAO_Transport_Descriptor_Interface *desc)
+TAO_IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
-                  ACE_TEXT ("looking for IIOP connection.\n")));
-
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
-  TAO_Endpoint *endpoint = desc->endpoint ();
-
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
     return -1;
 
@@ -157,6 +147,28 @@ TAO_IIOP_SSL_Connector::make_connection (
 
       return -1;
     }
+
+  return 0;
+}
+
+int
+TAO_IIOP_SSL_Connector::make_connection (
+  TAO_GIOP_Invocation *invocation,
+  TAO_Transport_Descriptor_Interface *desc)
+{
+  if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("looking for IIOP connection.\n")));
+
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
+
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                      desc->endpoint ());
+
+  if (iiop_endpoint == 0)
+    return -1;
 
   int result = 0;
   TAO_IIOP_SSL_Connection_Handler *svc_handler = 0;

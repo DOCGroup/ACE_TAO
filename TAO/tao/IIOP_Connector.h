@@ -62,20 +62,6 @@ public:
 
   virtual char object_key_delimiter (void) const;
 
-protected:
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
-  int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc);
-
-  /// More TAO_Connector methods, please check the documentation on
-  /// Transport_Connector.h
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Obtain tcp properties that must be used by this connector, i.e.,
-  /// initialize <tcp_properties_>.
-  int init_tcp_properties (void);
-
 public:
 
   typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
@@ -91,6 +77,24 @@ public:
   typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
           TAO_IIOP_BASE_CONNECTOR;
+
+protected:
+  // = The TAO_Connector methods, please check the documentation on
+  // Transport_Connector.h
+  int set_validate_endpoint (TAO_Endpoint *ep);
+
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
+
+  /// More TAO_Connector methods, please check the documentation on
+  /// Transport_Connector.h
+  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Obtain tcp properties that must be used by this connector, i.e.,
+  /// initialize <tcp_properties_>.
+  int init_tcp_properties (void);
+
+
 
 protected:
 

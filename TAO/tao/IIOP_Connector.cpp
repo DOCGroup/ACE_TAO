@@ -100,20 +100,16 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc)
+TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
-  TAO_Endpoint *endpoint = desc->endpoint ();
-
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
-   TAO_IIOP_Endpoint *iiop_endpoint =
-     ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                       endpoint );
-   if (iiop_endpoint == 0)
-     return -1;
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                      endpoint );
+  if (iiop_endpoint == 0)
+    return -1;
 
    const ACE_INET_Addr &remote_address =
      iiop_endpoint->object_addr ();
@@ -135,9 +131,27 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
        return -1;
      }
 
+   return 0;
+}
+
+int
+TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc)
+{
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
+
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                      desc->endpoint ());
+
+   if (iiop_endpoint == 0)
+     return -1;
+
+   const ACE_INET_Addr &remote_address =
+     iiop_endpoint->object_addr ();
+
    int result = 0;
    TAO_IIOP_Connection_Handler *svc_handler = 0;
-
 
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
