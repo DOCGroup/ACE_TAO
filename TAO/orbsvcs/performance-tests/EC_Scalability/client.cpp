@@ -197,7 +197,7 @@ main (int argc, char *argv [])
               ACE_Sample_History &consumer_history =
                 consumer_impl[i]->sample_history ();
 
-              ACE_UINT32 consumer_sample =
+              ACE_UINT64 consumer_sample =
                 consumer_history.get_sample (j);
               if (consumer_sample > value)
                 value = consumer_sample;
