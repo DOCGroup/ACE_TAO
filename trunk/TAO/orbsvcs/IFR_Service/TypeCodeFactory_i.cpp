@@ -44,9 +44,9 @@ TAO_TypeCodeFactory_i::create_struct_tc (
       cdr << struct_member.type.in ();
     }
 
-  CORBA::TypeCode_ptr interface_typecode = 
+  CORBA::TypeCode_ptr struct_typecode = 
     CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
+  ACE_NEW_THROW_EX (struct_typecode,
                     CORBA_TypeCode (CORBA::tk_struct,
                                     cdr.total_length (),
                                     cdr.buffer (),
@@ -55,7 +55,7 @@ TAO_TypeCodeFactory_i::create_struct_tc (
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  return interface_typecode;
+  return struct_typecode;
 }
 
 CORBA::TypeCode_ptr 
@@ -100,9 +100,9 @@ TAO_TypeCodeFactory_i::create_enum_tc (
       cdr << members[index].in ();
     }
 
-  CORBA::TypeCode_ptr interface_typecode = 
+  CORBA::TypeCode_ptr enum_typecode = 
     CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
+  ACE_NEW_THROW_EX (enum_typecode,
                     CORBA_TypeCode (CORBA::tk_enum,
                                     cdr.total_length (),
                                     cdr.buffer (),
@@ -111,7 +111,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  return interface_typecode;
+  return enum_typecode;
 }
 
 CORBA::TypeCode_ptr
@@ -133,10 +133,10 @@ TAO_TypeCodeFactory_i::create_alias_tc (
 
   cdr << original_type;
 
-  CORBA::TypeCode_ptr interface_typecode = 
+  CORBA::TypeCode_ptr alias_typecode = 
     CORBA::TypeCode::_nil ();
 
-  ACE_NEW_THROW_EX (interface_typecode,
+  ACE_NEW_THROW_EX (alias_typecode,
                     CORBA_TypeCode (CORBA::tk_alias,
                                     cdr.total_length (),
                                     cdr.buffer (),
@@ -145,7 +145,7 @@ TAO_TypeCodeFactory_i::create_alias_tc (
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  return interface_typecode;
+  return alias_typecode;
 }
 
 CORBA::TypeCode_ptr
@@ -181,9 +181,9 @@ TAO_TypeCodeFactory_i::create_exception_tc (
       cdr << struct_member.type.in ();
     }
 
-  CORBA::TypeCode_ptr interface_typecode = 
+  CORBA::TypeCode_ptr exception_typecode = 
     CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (interface_typecode,
+  ACE_NEW_THROW_EX (exception_typecode,
                     CORBA_TypeCode (CORBA::tk_except,
                                     cdr.total_length (),
                                     cdr.buffer (),
@@ -192,7 +192,7 @@ TAO_TypeCodeFactory_i::create_exception_tc (
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  return interface_typecode;
+  return exception_typecode;
 }
 
 CORBA::TypeCode_ptr
@@ -236,8 +236,24 @@ TAO_TypeCodeFactory_i::create_string_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0; 
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << bound;
+
+  CORBA::TypeCode_ptr string_typecode = 
+    CORBA::TypeCode::_nil ();
+  ACE_NEW_THROW_EX (string_typecode,
+                    CORBA_TypeCode (CORBA::tk_string,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return string_typecode;
 }
 
 CORBA::TypeCode_ptr 
@@ -247,8 +263,24 @@ TAO_TypeCodeFactory_i::create_wstring_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0; 
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << bound;
+
+  CORBA::TypeCode_ptr wstring_typecode = 
+    CORBA::TypeCode::_nil ();
+  ACE_NEW_THROW_EX (wstring_typecode,
+                    CORBA_TypeCode (CORBA::tk_wstring,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return wstring_typecode;
 }
 
 CORBA::TypeCode_ptr 
@@ -271,8 +303,26 @@ TAO_TypeCodeFactory_i::create_sequence_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0; 
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << element_type;
+
+  cdr << bound;
+
+  CORBA::TypeCode_ptr sequence_typecode = 
+    CORBA::TypeCode::_nil ();
+  ACE_NEW_THROW_EX (sequence_typecode,
+                    CORBA_TypeCode (CORBA::tk_sequence,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return sequence_typecode;
 }
 
 CORBA::TypeCode_ptr 
@@ -283,8 +333,26 @@ TAO_TypeCodeFactory_i::create_array_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0; 
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << element_type;
+
+  cdr << length;
+
+  CORBA::TypeCode_ptr array_typecode = 
+    CORBA::TypeCode::_nil ();
+  ACE_NEW_THROW_EX (array_typecode,
+                    CORBA_TypeCode (CORBA::tk_array,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return array_typecode;
 }
 
 CORBA::TypeCode_ptr 
