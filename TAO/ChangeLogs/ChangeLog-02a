@@ -1,3 +1,8 @@
+Sun Jul 09 08:12:54 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing,Makefile.av:
+          updated dependencies.
+
 Sun Jul 09 08:05:39 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Native_Exceptions/Makefile: put all the dependencies
