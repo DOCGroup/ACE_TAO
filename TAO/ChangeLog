@@ -1732,7 +1732,7 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.i
 
           Added support for typed events to CosEvent. This was submitted
-          by Jonathan Astle <JNASTLE@qinetiq.com>. I modified the code to
+          by Jonathan Astle <jon@astle45.fsnet.co.uk>. I modified the code to
           use mpc, and added a new feature. Set ec_typed_event=0 to
           disable use of typed events. This works by setting a macro which
           Jon used throughout the new code. There are actually now two
