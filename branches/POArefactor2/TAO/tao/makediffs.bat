@@ -29,3 +29,6 @@ unix2dos diffs\TimeBase.diff
 diff -wub orig/CONV_FRAMES.cpp CONV_FRAMES.cpp > diffs/CONV_FRAME.diff
 diff -wub orig/CONV_FRAMES.h CONV_FRAMES.h >> diffs/CONV_FRAME.diff
 unix2dos diffs\CONV_FRAME.diff
+
+diff -wub orig/IOPS.h IOPS.h > diffs/IOP.diff
+unix2dos diffs\IOP.diff

@@ -9,6 +9,9 @@ tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_inc
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ULongSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ULongLongSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao UShortSeq.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao LongLongSeq.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao LongSeq.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao LongDoubleSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ShortSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao BooleanSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao DoubleSeq.pidl
@@ -28,6 +31,8 @@ tao_idl.exe -o orig -Ge 1 -GT -GA -Sa -Wb,export_macro=TAO_Export -Wb,export_inc
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao Domain.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao TimeBase.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao CONV_FRAME.pidl
+tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao IIOP.pidl
+tao_idl.exe -o orig -Ge 1 -St -Sp -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao IOP.pidl
 
 copy orig\*A.cpp .
 copy orig\*C.cpp .
@@ -45,3 +50,4 @@ patch < diffs/GIOP.diff
 patch < diffs/TimeBase.diff
 patch < diffs/OctetSeq.diff
 patch < diffs/CONV_FRAME.diff
+patch < diffs/IOP.diff

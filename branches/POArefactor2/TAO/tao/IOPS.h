@@ -15,16 +15,23 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:443
+// be\be_codegen.cpp:389
 
-#ifndef _TAO_IDL_IOPS_H_
-#define _TAO_IDL_IOPS_H_
+#ifndef _TAO_IDL_ORIG_IOPS_H_
+#define _TAO_IDL_ORIG_IOPS_H_
 
+#include /**/ "ace/pre.h"
 
 #include "IOPC.h"
 
@@ -32,14 +39,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 
-
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -47,29 +52,16 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
-
-namespace  POA_IOP
-{
-
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
-
-}
-// end module IOP
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:994
 
 #include "IOPS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IOPS.i"
+#include "IOPS.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -77,4 +69,6 @@ namespace  POA_IOP
 #pragma option pop
 #endif /* __BORLANDC__ */
 
+#include /**/ "ace/post.h"
 #endif /* ifndef */
+

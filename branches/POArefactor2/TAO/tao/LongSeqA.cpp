@@ -30,7 +30,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_LongSeq[] =
 {
@@ -61,7 +61,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_LongSeq (
     sizeof (_oc_CORBA_LongSeq),
     (char *) &_oc_CORBA_LongSeq,
     0,
-    sizeof (CORBA::LongSeq)
+    0
   );
 
 namespace CORBA
@@ -71,7 +71,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from 
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -128,8 +128,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -144,5 +142,4 @@ CORBA::Boolean operator>>= (
         CORBA::LongSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
