@@ -1582,6 +1582,7 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   template class ACE_TSS<ACE_Dynamic>;
   template class ACE_TSS<ACE_Thread_Exit>;
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
+  template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>;
   template class ACE_Node<ACE_Thread_Descriptor>;
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1590,6 +1591,7 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   #pragma instantiate ACE_TSS<ACE_Dynamic>
   #pragma instantiate ACE_TSS<ACE_Thread_Exit>
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor>
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
