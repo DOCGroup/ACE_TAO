@@ -85,7 +85,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   // the ACE Connector strategies are not designed for protocols
   // that require additional handshakes after the initial connect.
   ACE_SSL_Connect_Handler eh (new_stream);
-  ACE_Reactor_Mask reactor_mask =
+
+  const ACE_Reactor_Mask reactor_mask =
     ACE_Event_Handler::READ_MASK |
     ACE_Event_Handler::WRITE_MASK;
 
@@ -289,19 +290,19 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
   if (this->connect (new_stream,
-		     remote_sap,
-		     timeout,
-		     local_sap,
-		     reuse_addr,
-		     flags,
-		     perms,
-		     protocol_family,
-		     protocol) == -1
+                     remote_sap,
+                     timeout,
+                     local_sap,
+                     reuse_addr,
+                     flags,
+                     perms,
+                     protocol_family,
+                     protocol) == -1
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("%p\n"),
-		ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
@@ -324,20 +325,20 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 
   if (this->connect (new_stream,
-		     remote_sap,
-		     qos_params,
-		     timeout,
-		     local_sap,
+                     remote_sap,
+                     qos_params,
+                     timeout,
+                     local_sap,
                      protocolinfo,
                      g,
-		     flags,
+                     flags,
                      reuse_addr,
-		     perms,
-		     protocol_family,
-		     protocol) == -1
+                     perms,
+                     protocol_family,
+                     protocol) == -1
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("%p\n"),
+                ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }
