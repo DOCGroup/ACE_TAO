@@ -68,7 +68,6 @@ private:
   // reset by the client to a new value at any point.
 };
 
-
 class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
 {
   // = TITLE
