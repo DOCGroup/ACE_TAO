@@ -1,3 +1,5 @@
+#include "StdAfx.h"
+
 // $Id$
 
 #include "w32_test_impl.h"

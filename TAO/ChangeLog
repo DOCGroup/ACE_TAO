@@ -1,7 +1,18 @@
+Fri Apr 30 07:32:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/mfc/StdAfx.h:
+        * examples/mfc/client.mpc:
+        * examples/mfc/server.mpc:
+        * examples/mfc/server.cpp:
+        * examples/mfc/w32_test_impl.cpp:
+
+          Modified the client and server to build and run properly on
+          Windows.
+
 Fri Apr 30 000:35:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-        
+
           Added generation of 'public:' before generation of pure virtual
           _add_ref() and _remove_ref() methods necessary for valuetypes
           that support an abstract interface. They must be public so
@@ -11,20 +22,20 @@ Fri Apr 30 000:35:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr 29 14:25:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Sequence.cpp (check_bounds):
+        * tao/Sequence.cpp (check_bounds):
 
-	  Removed ACE_OS::abort() call that was never reached.  Fixes an
-	  "unreachable code" warning exhibited by Compaq C++.
+          Removed ACE_OS::abort() call that was never reached.  Fixes an
+          "unreachable code" warning exhibited by Compaq C++.
 
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp (list):
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp (list):
 
-	  Commented out code that is never reached due to an exception
-	  being thrown.  Fixes an "unreachable code" warning.
+          Commented out code that is never reached due to an exception
+          being thrown.  Fixes an "unreachable code" warning.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (init):
-	* performance-tests/Anyop/anyop.cpp (main):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (init):
+        * performance-tests/Anyop/anyop.cpp (main):
 
-	  Fixed "set but never used" variable Compaq C++ warning.
+          Fixed "set but never used" variable Compaq C++ warning.
 
 Thu Apr 29 13:32:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -56,19 +67,19 @@ Thu Apr 29 07:26:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 28 22:17:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
 
-	  Do not call ACE_OS::clearerr() if ACE_LACKS_CLEARERR is
-	  defined.  Addresses build problems on OpenBSD.
+          Do not call ACE_OS::clearerr() if ACE_LACKS_CLEARERR is
+          defined.  Addresses build problems on OpenBSD.
 
 Wed Apr 28 06:32:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* tao/Exception.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * tao/Exception.cpp:
 
-	  Removed the comment that _type () is decremented. Infact its
-	  not.
+          Removed the comment that _type () is decremented. Infact its
+          not.
 
 Wed Apr 28 10:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -86,118 +97,118 @@ Wed Apr 28 08:25:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 27 17:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
 
-	  Fixed a ACE_NEW macros usage.
+          Fixed a ACE_NEW macros usage.
 
 Tue Apr 27 16:39:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterceptor.pidl:
-	* tao/Bounds.pidl:
-	* tao/Policy.pidl:
-	* tao/IOP_Codec.pidl:
+        * tao/PortableInterceptor.pidl:
+        * tao/Bounds.pidl:
+        * tao/Policy.pidl:
+        * tao/IOP_Codec.pidl:
 
-	  Added documentation about the need to make this change.
+          Added documentation about the need to make this change.
 
-	* tao/BoundsA.cpp:
-	* tao/BoundsC.cpp:
-	* tao/IOP_CodecA.cpp:
-	* tao/IOP_CodecC.cpp:
-	* tao/PolicyA.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PortableInterceptorA.cpp:
-	* tao/PortableInterceptorC.cpp:
+        * tao/BoundsA.cpp:
+        * tao/BoundsC.cpp:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_CodecC.cpp:
+        * tao/PolicyA.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.cpp:
 
-	  Moved typecodes for exceptions *C.cpp. This will ensure that
-	  *A.o are not linked in while making a binary. The *A.o can
-	  increase the footprint drastically. The last regeneration just
-	  increased simple client footprint by just 25K.
+          Moved typecodes for exceptions *C.cpp. This will ensure that
+          *A.o are not linked in while making a binary. The *A.o can
+          increase the footprint drastically. The last regeneration just
+          increased simple client footprint by just 25K.
 
-	* tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/ValueFactory.h:
 
-	  Added additional includes to fix compile errors in builds where
-	  native exceptions are disabled.
+          Added additional includes to fix compile errors in builds where
+          native exceptions are disabled.
 
 Tue Apr 27 13:37:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Reordered generated includes so that the Valuetype headers are
-	  included prior to the ORB core headers.  This forces names that
-	  are potentially used as non-dependent names
-	  (e.g. CORBA::add_ref()) in templates
-	  (e.g. TAO_Pseudo_{Var,Out}_T) to be parsed prior to those
-	  templates.  Fixes GNU g++ 3.4 errors.  GNU g++ 3.4 requires that
-	  all required non-dependent names be parsed prior to the
-	  template.
+          Reordered generated includes so that the Valuetype headers are
+          included prior to the ORB core headers.  This forces names that
+          are potentially used as non-dependent names
+          (e.g. CORBA::add_ref()) in templates
+          (e.g. TAO_Pseudo_{Var,Out}_T) to be parsed prior to those
+          templates.  Fixes GNU g++ 3.4 errors.  GNU g++ 3.4 requires that
+          all required non-dependent names be parsed prior to the
+          template.
 
-	* tao/DynamicInterface/DII_CORBA_methods.h:
-	* tao/DynamicInterface/Request.h:
-	* tao/Valuetype/AbstractBase.h:
-	* tao/Valuetype/Value_CORBA_methods.h:
+        * tao/DynamicInterface/DII_CORBA_methods.h:
+        * tao/DynamicInterface/Request.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/Value_CORBA_methods.h:
 
-	  Moved prototypes in the CORBA namespace used as non-dependent
-	  names in the TAO_Pseudo_{Var,Out}_T template to the
-	  "*_CORBA_methods.h" forward declaration header so that they may
-	  be parsed before the templates.  Fixes some GNU g++ 3.4
-	  compile-time errors.
+          Moved prototypes in the CORBA namespace used as non-dependent
+          names in the TAO_Pseudo_{Var,Out}_T template to the
+          "*_CORBA_methods.h" forward declaration header so that they may
+          be parsed before the templates.  Fixes some GNU g++ 3.4
+          compile-time errors.
 
-	* tests/DSI_Gateway/test_dsi.h:
-	* tests/Param_Test/client.cpp:
-	* tests/Param_Test/client.h:
-	* tests/Param_Test/driver.cpp:
-	* orbsvcs/examples/ORT/Gateway_i.h:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
-	* performance-tests/Latency/DII/client.cpp:
-	* performance-tests/Latency/Deferred/client.cpp:
-	* performance-tests/Sequence_Latency/DII/client.cpp:
-	* performance-tests/Sequence_Latency/Deferred/client.cpp:
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/client.h:
+        * tests/Param_Test/driver.cpp:
+        * orbsvcs/examples/ORT/Gateway_i.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+        * performance-tests/Latency/DII/client.cpp:
+        * performance-tests/Latency/Deferred/client.cpp:
+        * performance-tests/Sequence_Latency/DII/client.cpp:
+        * performance-tests/Sequence_Latency/Deferred/client.cpp:
 
-	  Reordered includes so that all non-dependent names are parsed
-	  before the templates that use them.  Fixes some GNU g++ 3.4
-	  compile-time errors.
+          Reordered includes so that all non-dependent names are parsed
+          before the templates that use them.  Fixes some GNU g++ 3.4
+          compile-time errors.
 
 Tue Apr 27 12:07:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp (main):
-	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp (main):
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp
-	  (main):
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp (main):
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp (main):
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp
+          (main):
 
-	  Fixed "comparison is always true due to limited range of data
-	  type" warning.  A boolean value is always going to be less than
-	  or equal to one (i.e. false (0) or true (1)).
+          Fixed "comparison is always true due to limited range of data
+          type" warning.  A boolean value is always going to be less than
+          or equal to one (i.e. false (0) or true (1)).
 
-	* examples/mfc/client.cpp:
+        * examples/mfc/client.cpp:
 
-	  Removed unnecessary TAO header #includes.
+          Removed unnecessary TAO header #includes.
 
 Tue Apr 27 13:57:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/Makefile.BE:
-	* TAO_IDL/Makefile.EXE:
-	* TAO_IDL/Makefile.FE:
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.EXE:
+        * TAO_IDL/Makefile.FE:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
 
-	  Added environment variables for create_for_unmarshal ().
+          Added environment variables for create_for_unmarshal ().
 
-	* tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/ValueFactory.h:
 
-	  Added an environment for create_for_unmarshal ();
+          Added an environment for create_for_unmarshal ();
 
 Tue Apr 27 08:59:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp
-	  (compute_default_label):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+          (compute_default_label):
 
-	  Do not increment a boolean value.  It doesn't make much sense to
-	  do so.  Logically negate the boolean value instead.  Fixes a
-	  "incrementing a bool value is deprecated" warning exhibited by
-	  MSVC++ 7.1.
+          Do not increment a boolean value.  It doesn't make much sense to
+          do so.  Logically negate the boolean value instead.  Fixes a
+          "incrementing a bool value is deprecated" warning exhibited by
+          MSVC++ 7.1.
 
 Tue Apr 27 13:20:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
