@@ -296,6 +296,69 @@ ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result (void)
 {
 }
 
+// = Base class operations. These operations are here to kill
+//   dominance warnings. These methods call the base class methods. 
+
+u_long
+ACE_POSIX_Asynch_Read_Stream_Result::bytes_transferred (void) const
+{
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_POSIX_Asynch_Read_Stream_Result::act (void) const
+{
+  return ACE_POSIX_Asynch_Result::act ();
+}
+
+int
+ACE_POSIX_Asynch_Read_Stream_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Read_Stream_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Read_Stream_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Read_Stream_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Read_Stream_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Read_Stream_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Read_Stream_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+int
+ACE_POSIX_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
+}
+
 // ************************************************************
 
 ACE_POSIX_AIOCB_Asynch_Read_Stream::ACE_POSIX_AIOCB_Asynch_Read_Stream (ACE_POSIX_AIOCB_Proactor  *posix_aiocb_proactor)
@@ -381,6 +444,34 @@ ACE_POSIX_AIOCB_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Re
   return 0;
 }
 
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route the
+// call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_AIOCB_Asynch_Read_Stream::open (ACE_Handler &handler,
+                                          ACE_HANDLE handle,
+                                          const void *completion_key,
+                                          ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_AIOCB_Asynch_Read_Stream::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_AIOCB_Asynch_Read_Stream::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
 // *********************************************************************
 
 ACE_POSIX_SIG_Asynch_Read_Stream::ACE_POSIX_SIG_Asynch_Read_Stream (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
@@ -437,6 +528,34 @@ ACE_POSIX_SIG_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Resu
                        "Asynch_Read_Stream: aio_read queueing failed"),
                       -1);
   return 0;
+}
+
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route the
+// call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_SIG_Asynch_Read_Stream::open (ACE_Handler &handler,
+                                        ACE_HANDLE handle,
+                                        const void *completion_key,
+                                        ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_SIG_Asynch_Read_Stream::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_SIG_Asynch_Read_Stream::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 // ****************************************************************
@@ -506,6 +625,69 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
 
 ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result (void)
 {
+}
+
+// Base class operations. These operations are here to kill dominance
+// warnings. These methods call the base class methods.
+
+u_long
+ACE_POSIX_Asynch_Write_Stream_Result::bytes_transferred (void) const
+{
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_POSIX_Asynch_Write_Stream_Result::act (void) const
+{
+  return ACE_POSIX_Asynch_Result::act ();
+}
+
+int
+ACE_POSIX_Asynch_Write_Stream_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Write_Stream_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Write_Stream_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Write_Stream_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Write_Stream_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Write_Stream_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Write_Stream_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+int
+ACE_POSIX_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
 }
 
 // *********************************************************************
@@ -583,6 +765,34 @@ ACE_POSIX_AIOCB_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream
   return 0;
 }
 
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_AIOCB_Asynch_Write_Stream::open (ACE_Handler &handler,
+                                     ACE_HANDLE handle,
+                                     const void *completion_key,
+                                     ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_AIOCB_Asynch_Write_Stream::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_AIOCB_Asynch_Write_Stream::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
 // *********************************************************************
 
 ACE_POSIX_SIG_Asynch_Write_Stream::ACE_POSIX_SIG_Asynch_Write_Stream (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
@@ -637,6 +847,34 @@ ACE_POSIX_SIG_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream_R
                        "Asynch_Write_Stream: aio_write queueing failed"),
                       -1);
   return 0;
+}
+
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_SIG_Asynch_Write_Stream::open (ACE_Handler &handler,
+                                     ACE_HANDLE handle,
+                                     const void *completion_key,
+                                     ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_SIG_Asynch_Write_Stream::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_SIG_Asynch_Write_Stream::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 // *************************************************************
@@ -699,6 +937,92 @@ ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result (void)
 {
 }
 
+// Base class operations. These operations are here to kill dominance
+// warnings. These methods call the base class methods.
+
+u_long
+ACE_POSIX_Asynch_Read_File_Result::bytes_transferred (void) const
+{
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_POSIX_Asynch_Read_File_Result::act (void) const
+{
+  return ACE_POSIX_Asynch_Result::act ();
+}
+
+int
+ACE_POSIX_Asynch_Read_File_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Read_File_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Read_File_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Read_File_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Read_File_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Read_File_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Read_File_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+// The following methods belong to
+// ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid
+// dominace warnings. These methods route their call to the 
+// ACE_POSIX_Asynch_Read_Stream_Result base class.
+
+u_long
+ACE_POSIX_Asynch_Read_File_Result::bytes_to_read (void) const
+{
+  return ACE_POSIX_Asynch_Read_Stream_Result::bytes_to_read ();
+}
+
+ACE_Message_Block &
+ACE_POSIX_Asynch_Read_File_Result::message_block (void) const
+{
+  return ACE_POSIX_Asynch_Read_Stream_Result::message_block ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Read_File_Result::handle (void) const
+{
+  return ACE_POSIX_Asynch_Read_Stream_Result::handle ();
+}
+
+int
+ACE_POSIX_Asynch_Read_File_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
+}
+
 // *********************************************************************
 
 ACE_POSIX_AIOCB_Asynch_Read_File::ACE_POSIX_AIOCB_Asynch_Read_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
@@ -749,6 +1073,34 @@ ACE_POSIX_AIOCB_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                    priority);
 }
 
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_AIOCB_Asynch_Read_File::open (ACE_Handler &handler,
+                                        ACE_HANDLE handle,
+                                        const void *completion_key,
+                                        ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_AIOCB_Asynch_Read_File::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_AIOCB_Asynch_Read_File::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
 // ************************************************************
 
 ACE_POSIX_SIG_Asynch_Read_File::ACE_POSIX_SIG_Asynch_Read_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
@@ -797,6 +1149,34 @@ ACE_POSIX_SIG_Asynch_Read_File::read (ACE_Message_Block &message_block,
 
 ACE_POSIX_SIG_Asynch_Read_File::~ACE_POSIX_SIG_Asynch_Read_File (void)
 {
+}
+
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_SIG_Asynch_Read_File::open (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      const void *completion_key,
+                                      ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_SIG_Asynch_Read_File::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_SIG_Asynch_Read_File::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 // ************************************************************
@@ -859,6 +1239,92 @@ ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  (void)
 {
 }
 
+// Base class operations. These operations are here to kill dominance
+// warnings. These methods call the base class methods.
+
+u_long
+ACE_POSIX_Asynch_Write_File_Result::bytes_transferred (void) const
+{
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_POSIX_Asynch_Write_File_Result::act (void) const
+{
+  return ACE_POSIX_Asynch_Result::act ();
+}
+
+int
+ACE_POSIX_Asynch_Write_File_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Write_File_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Write_File_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Write_File_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Write_File_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Write_File_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Write_File_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+// The following methods belong to
+// ACE_POSIX_Asynch_Write_Stream_Result. They are here to avoid
+// dominance warnings. These methods route their call to the 
+// ACE_POSIX_Asynch_Write_Stream_Result base class.
+
+u_long
+ACE_POSIX_Asynch_Write_File_Result::bytes_to_write (void) const
+{
+  return ACE_POSIX_Asynch_Write_Stream_Result::bytes_to_write ();
+}
+
+ACE_Message_Block &
+ACE_POSIX_Asynch_Write_File_Result::message_block (void) const
+{
+  return ACE_POSIX_Asynch_Write_Stream_Result::message_block ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Write_File_Result::handle (void) const
+{
+  return ACE_POSIX_Asynch_Write_Stream_Result::handle ();
+}
+
+int
+ACE_POSIX_Asynch_Write_File_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
+}
+
 // *********************************************************************
 
 ACE_POSIX_AIOCB_Asynch_Write_File::ACE_POSIX_AIOCB_Asynch_Write_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
@@ -909,6 +1375,34 @@ ACE_POSIX_AIOCB_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                      priority);
 }
 
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_AIOCB_Asynch_Write_File::open (ACE_Handler &handler,
+                                   ACE_HANDLE handle,
+                                   const void *completion_key,
+                                   ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_AIOCB_Asynch_Write_File::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_AIOCB_Asynch_Write_File::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
 // *********************************************************************
 
 ACE_POSIX_SIG_Asynch_Write_File::ACE_POSIX_SIG_Asynch_Write_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
@@ -957,6 +1451,34 @@ ACE_POSIX_SIG_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                    bytes_to_write,
                                                    act,
                                                    priority);
+}
+
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_SIG_Asynch_Write_File::open (ACE_Handler &handler,
+                                   ACE_HANDLE handle,
+                                   const void *completion_key,
+                                   ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_SIG_Asynch_Write_File::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_SIG_Asynch_Write_File::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 // *********************************************************************
@@ -1028,6 +1550,69 @@ ACE_POSIX_Asynch_Accept_Result::complete (u_long bytes_transferred,
 
 ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result (void)
 {
+}
+
+// Base class operations. These operations are here to kill dominance
+// warnings. These methods call the base class methods.
+
+u_long
+ACE_POSIX_Asynch_Accept_Result::bytes_transferred (void) const
+{
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_POSIX_Asynch_Accept_Result::act (void) const
+{
+  return ACE_POSIX_Asynch_Result::act ();
+}
+
+int
+ACE_POSIX_Asynch_Accept_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Accept_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Accept_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Accept_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Accept_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Accept_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Accept_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+int
+ACE_POSIX_Asynch_Accept_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
 }
 
 // *********************************************************************
@@ -1448,6 +2033,22 @@ ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
   return 0;
 }
 
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_AIOCB_Asynch_Accept::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_AIOCB_Asynch_Accept::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
 // *********************************************************************
 
 ACE_POSIX_SIG_Asynch_Accept::ACE_POSIX_SIG_Asynch_Accept (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
@@ -1576,6 +2177,22 @@ ACE_POSIX_SIG_Asynch_Accept::thread_function (void* arg_reactor)
   return 0;
 }
 
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route
+// the call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_SIG_Asynch_Accept::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_SIG_Asynch_Accept::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
 // *********************************************************************
 
 ACE_HANDLE
@@ -1675,6 +2292,69 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (u_long bytes_transferred,
 
 ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result (void)
 {
+}
+
+// Base class operations. These operations are here to kill dominance
+// warnings. These methods call the base class methods.
+
+u_long
+ACE_POSIX_Asynch_Transmit_File_Result::bytes_transferred (void) const
+{
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_POSIX_Asynch_Transmit_File_Result::act (void) const
+{
+  return ACE_POSIX_Asynch_Result::act ();
+}
+
+int
+ACE_POSIX_Asynch_Transmit_File_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Transmit_File_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Transmit_File_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Transmit_File_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Transmit_File_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Transmit_File_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Transmit_File_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+int
+ACE_POSIX_Asynch_Transmit_File_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
 }
 
 // *********************************************************************
@@ -2395,6 +3075,35 @@ ACE_POSIX_AIOCB_Asynch_Transmit_File::~ACE_POSIX_AIOCB_Asynch_Transmit_File (voi
 {
 }
 
+
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route the
+// call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_AIOCB_Asynch_Transmit_File::open (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      const void *completion_key,
+                                      ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_AIOCB_Asynch_Transmit_File::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_AIOCB_Asynch_Transmit_File::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+} 
+
 // *********************************************************************
 
 ACE_POSIX_SIG_Asynch_Transmit_File::ACE_POSIX_SIG_Asynch_Transmit_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
@@ -2476,6 +3185,35 @@ ACE_POSIX_SIG_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 ACE_POSIX_SIG_Asynch_Transmit_File::~ACE_POSIX_SIG_Asynch_Transmit_File  (void)
 {
 }
+
+
+// Methods belong to ACE_POSIX_Asynch_Operation base class. These
+// methods are defined here to avoid dominance warnings. They route the
+// call to the ACE_POSIX_Asynch_Operation base class.
+
+int
+ACE_POSIX_SIG_Asynch_Transmit_File::open (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      const void *completion_key,
+                                      ACE_Proactor *proactor)
+{
+  return ACE_POSIX_Asynch_Operation::open (handler,
+					   handle,
+					   completion_key,
+					   proactor);
+}
+
+int
+ACE_POSIX_SIG_Asynch_Transmit_File::cancel (void)
+{
+  return ACE_POSIX_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_POSIX_SIG_Asynch_Transmit_File::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+} 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result *>;
