@@ -27,8 +27,8 @@
 
 # if TAO_HAS_UIOP == 1
 
-#include "ace/Connector.h"
 #include "ace/LSOCK_Connector.h"
+#include "ace/Connector.h"
 #include "UIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"

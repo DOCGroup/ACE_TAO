@@ -26,8 +26,8 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "ace/Connector.h"
 #include "ace/MEM_Connector.h"
+#include "ace/Connector.h"
 #include "tao/Pluggable.h"
 #include "SHMIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"

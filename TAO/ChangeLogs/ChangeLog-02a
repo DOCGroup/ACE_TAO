@@ -1,3 +1,26 @@
+Thu Jun 21 07:49:15 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/OBV/Simple_util.h:                       
+        * examples/Persistent_Grid/Simple_util.h:           
+        * examples/Simple/Simple_util.h:                    
+                                                            
+          Added ()'s around file name in the pragma implemenation directive.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+
+          Add AIX Visual Age C++ to the workaround for math.h.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/Transport.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.h:
+
+          Moved #include "ace/Connector.h" to be after #include of the
+          specific connector type to fix compile error on AIX, Visual Age
+          C++ 5.
+
 Thu Jun 21 06:52:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
