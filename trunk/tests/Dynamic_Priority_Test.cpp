@@ -9,11 +9,11 @@
 //    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
 //
 // = DESCRIPTION
-//    This is a test to verify and illustrate the static and dynamic 
-//    priority mechanisms of the ACE_Message_Queue class and the 
-//    ACE_Dynamic_Message_Queue class. As in the Priority_Buffer_Test, 
-//    a producer generates messages and enqueues them, and a consumer 
-//    dequeues them and checks their ordering.  
+//    This is a test to verify and illustrate the static and dynamic
+//    priority mechanisms of the ACE_Message_Queue class and the
+//    ACE_Dynamic_Message_Queue class. As in the Priority_Buffer_Test,
+//    a producer generates messages and enqueues them, and a consumer
+//    dequeues them and checks their ordering.
 //
 //    In these tests, every effort is made to ensure that there is plenty
 //    of time for the messages to be enqueued and dequeued, with messages
@@ -21,13 +21,13 @@
 //    while messages that should miss their deadlines are delayed
 //    so that they actually miss them.  It is, however, remotely
 //    possible that this test could yield a false negative:
-//    the dynamic queues could work correctly but due to timing 
+//    the dynamic queues could work correctly but due to timing
 //    variations the test could indicate failure.
 //
 //    Three message queues are obtained from the message queue factory,
 //    one static, two dynamic (one deadline based, and one laxity based)
 //    and the same supplier behavior is used each time: the messages
-//    are preallocated and their static information valued, the current    
+//    are preallocated and their static information valued, the current
 //    time is obtained and deadlines are set, with half of the messages
 //    given late deadlines, and the other half of the messages given
 //    reachable deadlines.  The producer then immediately enqueues all
@@ -52,7 +52,7 @@ USELIB("..\ace\aced.lib");
 
 // structure used to pass arguments to test functions
 
-struct ArgStruct 
+struct ArgStruct
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *queue_;
   const char *order_string_;
@@ -63,7 +63,7 @@ struct ArgStruct
 static const char send_order [] = "abcdefghijklmnop";
 
 // order in which messages are received with static prioritization
-static const char static_receipt_order [] = "ponmlkjihgfedcba"; 
+static const char static_receipt_order [] = "ponmlkjihgfedcba";
 
 // order in which messages are received with deadline prioritization
 static const char deadline_receipt_order [] = "hgfedcbaponmlkji";
@@ -113,14 +113,14 @@ consumer (void * args)
 
     local_count++;
 
-	ACE_ASSERT (*expected == *mb->rd_ptr ());
+        ACE_ASSERT (*expected == *mb->rd_ptr ());
   }
 
   ACE_ASSERT (local_count == ACE_OS::strlen (receipt_order));
   return 0;
 }
 
-// The producer runs through the passed send string,  setting the read 
+// The producer runs through the passed send string,  setting the read
 // pointer of the current message to the current character position in
 // the string, and then queueing the message in the message list, where
 // it is removed by the consumer thread.
@@ -139,7 +139,7 @@ producer (void *args)
 
   // iterate through the send order string and the message block array,
   // setting the current message block's read pointer to the current
-  // position in the send order string. 
+  // position in the send order string.
   int local_count;
   const char *c;
   for (local_count = 0, c = send_order; *c != '\0'; ++local_count, ++c)
@@ -210,7 +210,7 @@ int  run_test (ACE_Message_Queue<ACE_MT_SYNCH>* msg_queue, const char *send_orde
   recent_deadline += current_time;
   past_deadline += current_time;
 
-  // Set absolute time of deadline associated with the message.  
+  // Set absolute time of deadline associated with the message.
   for (i = 0; i < array_size; ++i)
   {
     switch ((4*i)/array_size)
@@ -232,10 +232,10 @@ int  run_test (ACE_Message_Queue<ACE_MT_SYNCH>* msg_queue, const char *send_orde
         break;
 
       // should never reach here, but its better to make sure
-	  default:
-        ACE_ASSERT ((4*i)/array_size < 4);  
+          default:
+        ACE_ASSERT ((4*i)/array_size < 4);
         break;
-	}
+        }
   }
 
   // run the producer
@@ -244,7 +244,7 @@ int  run_test (ACE_Message_Queue<ACE_MT_SYNCH>* msg_queue, const char *send_orde
   // run the consumer
   consumer (&consumer_args);
 
-  // free all the allocated message blocks 
+  // free all the allocated message blocks
   for (i = 0; i < array_size; ++i)
   {
     delete supplier_args.array_[i];
@@ -261,7 +261,7 @@ int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Dynamic_Priority_Test"));
- 
+
   ACE_Message_Queue<ACE_MT_SYNCH> *test_queue = 0;
 
   // test factory, static message queue
@@ -297,5 +297,10 @@ main (int, ASYS_TCHAR *[])
 }
 
 
-
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Message_Queue_Factory<ACE_MT_SYNCH>;
+template class ACE_Dynamic_Message_Queue<ACE_MT_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Message_Queue_Factory<ACE_MT_SYNCH>
+#pragma instantiate ACE_Dynamic_Message_Queue<ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
