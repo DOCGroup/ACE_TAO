@@ -1,6 +1,6 @@
 Tue Mar 28 19:22:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Updated definition of TAO_HAS_MINIMUM_CORBA.
+	* rules.tao.GNU: Updated the definition of TAO_HAS_MINIMUM_CORBA.
 
 Tue Mar 28 19:15:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
