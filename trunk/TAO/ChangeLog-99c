@@ -1,3 +1,19 @@
+Thu Jun 10 14:13:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+	  be_visitor_typedef_ch::visit_array() had numerous
+	  problems, such as the generation of "static" where
+	  "ACE_INLINE" should have been in a couple of places,
+	  and multiple calls from the same be_typedef object to
+	  nested_type_name() in the same stream output statement.
+	  This generates incorrect code because nested_type_name()
+	  contains static buffers, and the order of evaluations 
+	  within a chained stream output statement is not guaranteed, 
+	  only the order of output. Thanks to Carlos for explaining
+	  why my fix to this last worked, and to
+	  Schuderer Christian <Christian.Schuderer@erl9.siemens.de>
+	  for supplying the IDL file that caused the problem.
+
 Thu Jun 10 13:53:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp: Fixed improper use of return
