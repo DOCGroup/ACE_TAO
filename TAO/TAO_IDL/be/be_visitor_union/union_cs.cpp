@@ -1,0 +1,179 @@
+//
+// $Id$
+//
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Unions in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
+
+#include "be_visitor_union.h"
+
+
+// ******************************************************
+// for client stubs
+// ******************************************************
+
+be_visitor_union_cs::be_visitor_union_cs (be_visitor_context *ctx)
+  : be_visitor_union (ctx)
+{
+}
+
+be_visitor_union_cs::~be_visitor_union_cs (void)
+{
+}
+
+// visit the Union_cs node and its scope
+int be_visitor_union_cs::visit_union (be_union *node)
+{
+  TAO_OutStream *os; // output stream
+  be_type *bt; // for discriminant type
+
+  if (!node->cli_stub_gen () && !node->imported ())
+    {
+      os = this->ctx_->stream ();
+
+      be_visitor_context ctx (*this->ctx_);
+      // the discriminant type may have to be defined here if it was an enum
+      // declaration inside of the union statement. We need to generate its
+      // typecode
+
+      bt = be_type::narrow_from_decl (node->disc_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit_union - "
+                             "bad discriminant type\n"), -1);
+        }
+
+      ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CS); // set current code
+                                                          // gen state
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit_union - "
+                             "bad visitor\n"), -1);
+        }
+      // generate code for the discriminant
+      if (bt->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit union - "
+                             "codegen for discrminant failed\n"), -1);
+        }
+
+      // first generate code for any of the members (if required, e.g.,
+      // anonymous sequences, structs, unions, arrays)
+      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_CS); // set current code
+                                                            // gen state
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs"
+                             "visit_union - "
+                             "codegen for scope failed\n"), -1);
+        }
+
+      // now generate the operations on the union such as the copy constructor
+      // and the assignment operator
+
+      *os << "// *************************************************************"
+          << be_nl;
+      *os << "// Operations for union " << node->name () << be_nl;
+      *os << "// *************************************************************\n\n";
+
+      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
+
+      // generate the copy constructor and the assignment operator here
+      os->indent ();
+      *os << "// copy constructor" << be_nl;
+      *os << node->name () << "::" << node->local_name () << " (const " <<
+        node->name () << " &u)" << be_nl;
+      *os << "{\n";
+      os->incr_indent ();
+      // first set the discriminant
+      *os << "this->disc_ = u.disc_;" << be_nl;
+      // now switch based on the disc value
+      *os << "switch (this->disc_)" << be_nl;
+      *os << "{\n";
+      os->incr_indent (0);
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs"
+                             "visit_union - "
+                             "codegen for copy ctor failed\n"), -1);
+        }
+
+      os->decr_indent ();
+      *os << "}\n";
+      os->decr_indent ();
+      *os << "}\n\n";
+
+      // assignment operator
+      os->indent ();
+      *os << "// assignment operator" << be_nl;
+      *os << node->name () << " &" << be_nl; // return type
+      *os << node->name () << "::operator= (const " <<
+        node->name () << " &u)" << be_nl;
+      *os << "{\n";
+      os->incr_indent ();
+      // first set the discriminant
+      *os << "this->disc_ = u.disc_;" << be_nl;
+      // now switch based on the disc value
+      *os << "switch (this->disc_)" << be_nl;
+      *os << "{\n";
+      os->incr_indent (0);
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs"
+                             "visit_union - "
+                             "codegen for assign op failed\n"), -1);
+        }
+
+      os->decr_indent ();
+      *os << "}" << be_nl;
+      *os << "return *this;\n";
+      os->decr_indent ();
+      *os << "}\n\n";
+
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit_union - "
+                             "TypeCode definition failed\n"
+                             ), -1);
+        }
+
+
+      node->cli_stub_gen (I_TRUE);
+    }
+  return 0;
+}
