@@ -52,8 +52,11 @@ public:
   FILE *output_file (void) const;
   // Returns the file where the IOR should be stored.
 
-  ACE_Configuration* config();
+  ACE_Configuration* config (void) const;
   // Returns the configuration implementation object
+
+  const ACE_Time_Value &startup_timeout (void) const;
+  // Returns the timeout value for program starting.
 
 private:
   unsigned int debug_;
@@ -63,7 +66,10 @@ private:
   // File where the IOR of the server object is stored.
 
   ACE_Configuration* config_;
-  // the persistent configuration object
+  // The persistent configuration object.
+
+  ACE_Time_Value startup_timeout_;
+  // The amount of time to wait for a program to respons after starting it up.
 };
 
 // Typedef an Options Singleton. 

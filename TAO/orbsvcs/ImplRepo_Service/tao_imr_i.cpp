@@ -574,6 +574,14 @@ TAO_IMR_Op_Activate::run (void)
 
       ACE_DEBUG ((LM_DEBUG, "Successfully Activated server <%s>\n", this->server_name_.c_str ()));
     }
+  ACE_CATCH (ImplementationRepository::Administration::CannotActivate, ex)
+    {
+      ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n", 
+                            this->server_name_.c_str (), 
+                            ex.reason.in ()));
+      return -1;
+
+    }
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
