@@ -57,7 +57,6 @@ ACE_High_Res_Timer::get_cpuinfo (void)
   // the BogoMips, as described in the BogoMips mini-HOWTO.  Note that
   // this code assumes an order to the /proc/cpuinfo contents.  The
   // BogoMips rating had better come after CPU type and model info.
-  FILE *cpuinfo;
 #if !defined (__alpha__)
   int supported = 0;
 #endif /* __alpha__ */
