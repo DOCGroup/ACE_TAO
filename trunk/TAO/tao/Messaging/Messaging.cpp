@@ -21,21 +21,36 @@ TAO_Messaging_Initializer::init (void)
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
-  /// Register the Messaging ORBInitializer.
-  ACE_NEW_THROW_EX (temp_orb_initializer,
-                    TAO_Messaging_ORBInitializer,
-                    CORBA::NO_MEMORY (
-		       CORBA_SystemException::_tao_minor_code (
-			 TAO_DEFAULT_MINOR_CODE,
-			 ENOMEM),
-		       CORBA::COMPLETED_NO));
-  ACE_CHECK;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      /// Register the Messaging ORBInitializer.
 
-  orb_initializer = temp_orb_initializer;
+      ACE_NEW_THROW_EX (temp_orb_initializer,
+                        TAO_Messaging_ORBInitializer,
+                        CORBA::NO_MEMORY (
+		          CORBA_SystemException::_tao_minor_code (
+			    TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_TRY_CHECK;
 
-  PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      orb_initializer = temp_orb_initializer;
+
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "(%P | %t) Caught exception:");
+        }
+      return -1;
+    }
+  ACE_ENDTRY;
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   return 0;
