@@ -247,6 +247,20 @@ Driver::run (void)
       }
       break;
 
+    case Options::TEST_RECURSIVE_STRUCT:
+      {
+        Param_Test_Client<Test_Recursive_Struct> *client = new
+          Param_Test_Client<Test_Recursive_Struct> (this->orb_.in (),
+                                                    this->objref_.in(),
+                                                    new Test_Recursive_Struct);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+
     case Options::TEST_OBJREF_STRUCT:
       {
         Param_Test_Client<Test_Objref_Struct> *client = new
@@ -532,6 +546,7 @@ template class Param_Test_Client<Test_String_Sequence>;
 template class Param_Test_Client<Test_Bounded_String_Sequence>;
 template class Param_Test_Client<Test_Var_Struct>;
 template class Param_Test_Client<Test_Nested_Struct>;
+template class Param_Test_Client<Test_Recursive_Struct>;
 template class Param_Test_Client<Test_Objref_Struct>;
 template class Param_Test_Client<Test_Struct_Sequence>;
 template class Param_Test_Client<Test_Unbounded_Struct_Sequence>;
@@ -565,6 +580,7 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_Bounded_String_Sequence>
 #pragma instantiate Param_Test_Client<Test_Var_Struct>
 #pragma instantiate Param_Test_Client<Test_Nested_Struct>
+#pragma instantiate Param_Test_Client<Test_Recursive_Struct>
 #pragma instantiate Param_Test_Client<Test_Objref_Struct>
 #pragma instantiate Param_Test_Client<Test_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_Unbounded_Struct_Sequence>
