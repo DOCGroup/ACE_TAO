@@ -6,30 +6,38 @@
 
 module Callback_Quoter
 {
-
   // = TITLE
   // The Consumer interface is implemented by the consumer-client.
   // The interface functions are called by the Supplier.
 
-  // Requested stock does not exist
-  exception Invalid_Stock {};
+  exception Invalid_Stock 
+  {
+    // = TITLE
+    //   Requested stock does not exist
+  };
 
   struct Info
   {
+    // = TITLE
+    // @@ Please fill in here.
+
     string stock_name;
     long value;
   };
 
-
   interface Consumer
     {
+      // = TITLE
+      // @@ Please fill in here.
+
       // supplier sends data to the consumer.
       void push (in Callback_Quoter::Info data);
+      // @@ Make sure to put the comments "underneath"
+      // the operation/method names...
 
       // Called by the chat server before it goes away.
       oneway void shutdown ();
     };
 };
 
-
-#endif // _CONSUMER_IDL
+#endif /* _CONSUMER_IDL */

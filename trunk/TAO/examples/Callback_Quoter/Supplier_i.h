@@ -21,9 +21,7 @@
 #define SUPPLIER_I_H
 
 #include "SupplierS.h"
-
 #include "ConsumerC.h"
-
 
 #include "tao/TAO.h"
 #include "ace/Containers.h"
@@ -82,9 +80,10 @@ private:
     // Stores the stock threshold value.
   };
 
-  typedef ACE_Unbounded_Set<Consumer_Data> CONSUMERS;
-  typedef ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex> CONSUMER_MAP;
-
+  typedef ACE_Unbounded_Set<Consumer_Data> 
+          CONSUMERS;
+  typedef ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex> 
+          CONSUMER_MAP;
   CONSUMER_MAP consumer_map_;
 };
 
