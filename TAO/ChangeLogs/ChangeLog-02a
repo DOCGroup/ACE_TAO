@@ -1,56 +1,70 @@
+Tue Apr 18 13:34:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+          Fixed a few broken throw specs
+
+        * orbsvcs/tests/Event/Basic/exhaustive_test.pl:
+          This script will invoke the Random test with several different
+          configurations.  The test is rather slow, so it cannot be
+          executed on the daily builds, but it really tests every feature
+          of the event service.
+
+        * orbsvcs/tests/Event/Basic/svc.conf:
+          Use copy_on_write as the default strategy.
+
 Tue Apr 18 14:37:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* docs/releasenotes/orbcore.html:
-	  Update to item about the Typecode factory.
+        * docs/releasenotes/orbcore.html:
+          Update to item about the Typecode factory.
 
 Tue Apr 18 09:42:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/Options.html:
-	* docs/releasenotes/index.html:
+        * docs/Options.html:
+        * docs/releasenotes/index.html:
 
-	  Removed descriptions of the deprecated "-ORBHost" and "-ORBPort"
-	  options, and updated the pluggable protocol release notes to
-	  reflect the changes.
+          Removed descriptions of the deprecated "-ORBHost" and "-ORBPort"
+          options, and updated the pluggable protocol release notes to
+          reflect the changes.
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Removed inclusion of "ace/INET_Addr.h."  It was only needed to
-	  support "-ORBHost" and "-ORBPort."  Those options have been
-	  removed, as detailed below.
+          Removed inclusion of "ace/INET_Addr.h."  It was only needed to
+          support "-ORBHost" and "-ORBPort."  Those options have been
+          removed, as detailed below.
 
-	  (init):
+          (init):
 
-	  Removed support for the deprecated "-ORBHost" and "-ORBPort"
-	  options.  These options were superseded by "-ORBEndpoint" long
-	  ago.
+          Removed support for the deprecated "-ORBHost" and "-ORBPort"
+          options.  These options were superseded by "-ORBEndpoint" long
+          ago.
 
-	  Removed support for the old style "-ORBPreconnect" syntax
-	  (i.e. "-ORBPreconnect hostname:port").  It too was deprecated
-	  long ago.
+          Removed support for the old style "-ORBPreconnect" syntax
+          (i.e. "-ORBPreconnect hostname:port").  It too was deprecated
+          long ago.
 
-	* tao/ORB_Core.h (TAO_ORB_Core):
-	* tao/ORB_Core.cpp (set_iiop_endpoint):
+        * tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.cpp (set_iiop_endpoint):
 
-	  Removed this method since it was only needed to support the
-	  deprecated "-ORBHost" and "-ORBPort" options.
+          Removed this method since it was only needed to support the
+          deprecated "-ORBHost" and "-ORBPort" options.
 
-	* tao/Connector_Registry (make_mprofile):
-	* tao/Exception.cpp (_info):
-	* tao/ORB.cpp (url_ior_string_to_object):
-	* tao/IIOP_Profile.cpp (parse_string):
-	* tao/SHMIOP_Profile.cpp (parse_string):
-	* tao/UIOP_Profile.cpp (parse_string):
-	* tao/corbafwd.h (TAO_NULL_POINTER_MINOR_CODE):
+        * tao/Connector_Registry (make_mprofile):
+        * tao/Exception.cpp (_info):
+        * tao/ORB.cpp (url_ior_string_to_object):
+        * tao/IIOP_Profile.cpp (parse_string):
+        * tao/SHMIOP_Profile.cpp (parse_string):
+        * tao/UIOP_Profile.cpp (parse_string):
+        * tao/corbafwd.h (TAO_NULL_POINTER_MINOR_CODE):
 
-	  Removed all uses of TAO_NULL_POINTER_MINOR_CODE.  It was
-	  misused as an exception location code.  An EINVAL error code
-	  should instead be set in the exception being thrown.
+          Removed all uses of TAO_NULL_POINTER_MINOR_CODE.  It was
+          misused as an exception location code.  An EINVAL error code
+          should instead be set in the exception being thrown.
 
-	  This also frees up a location minor code.
+          This also frees up a location minor code.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Apr 18 08:52:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
