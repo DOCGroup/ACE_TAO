@@ -14,11 +14,11 @@
 #endif /* !defined INLINE */
 
 // Default constructor.
-CORBA::TypeCodeFactory::TypeCodeFactory (void)
+CORBA_TypeCodeFactory::CORBA_TypeCodeFactory (void)
 {}
 
 // Destructor.
-CORBA::TypeCodeFactory::~TypeCodeFactory (void)
+CORBA_TypeCodeFactory::~CORBA_TypeCodeFactory (void)
 {}
 
 CORBA::TypeCodeFactory_ptr CORBA::TypeCodeFactory::_narrow (
