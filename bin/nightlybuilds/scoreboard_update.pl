@@ -651,7 +651,7 @@ sub update_html ($$)
 our ($opt_c, $opt_h, $opt_o, $opt_m);
 
 if (!getopts ('c:hm:ro:') || defined $opt_h) {
-    print "bugzilla_make_pretty.pl [-c file] [-h] [-o dir] [-m script]\n";
+    print "scoreboard_update.pl [-c file] [-h] [-o dir] [-m script]\n";
     print "\n";
     print "  input        input directory\n";
     print "  output       output directory\n";
