@@ -33,7 +33,7 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
 
 ACE_INLINE void
 TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (1, TAO_GIOP::Request, ACE_TRY_ENV);
 }

@@ -644,12 +644,17 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   int error_encountered = 0;
   CORBA::Boolean response_required = 0;
   CORBA::ULong request_id = 0;
+  TAO_GIOP_Version version;
 
   ACE_TRY_NEW_ENV
     {
       // Try to recv a new request.
       TAO_GIOP::Message_Type type =
-        TAO_GIOP::recv_request (this->iiop_transport_, input, this->orb_core_);
+        TAO_GIOP::recv_message (this->iiop_transport_,
+                                input,
+                                this->orb_core_,
+                                version,
+                                1);
 
       TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
 
@@ -875,7 +880,8 @@ TAO_Client_Connection_Handler::send_request (TAO_ORB_Core *,
 int
 TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  return this->transport_->handle_client_input ();
+  // @@ Blocking or non-blocking???
+  return this->iiop_transport_->handle_client_input (1);
 }
 
 int

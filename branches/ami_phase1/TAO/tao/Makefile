@@ -28,7 +28,10 @@ PUB_HDRS = \
   Default_Server \
   Server_Strategy_Factory \
   Client_Strategy_Factory \
-  ORB_Core
+  ORB_Core \
+  IIOP_Wait_Strategy \
+  IIOP_RMS \
+  IIOP_Reply_Dispatcher
 
 POA_FILES = \
   Object_Adapter \
@@ -103,7 +106,10 @@ ORB_CORE_FILES = \
   TAO_Internal \
   Typecode_Constants \
   IOR_LookupTable \
-  TAO
+  TAO \
+  IIOP_Wait_Strategy \
+  IIOP_RMS \
+  IIOP_Reply_Dispatcher	
 
 DYNAMIC_ANY_FILES =
 

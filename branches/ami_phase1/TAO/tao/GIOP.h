@@ -304,16 +304,16 @@ public:
     //   really a message type, but needed to bring that information
     //   back somehow.
     
-    ShortRead = -3,             // Short read.
     CommunicationError = -2,    // Invalid request.
     EndOfFile = -1,             // "discovered" by either.
-    Request = 0,                // sent by client.
-    Reply = 1,                  // by server.
-    CancelRequest = 2,          // by client.
-    LocateRequest = 3,          // by client.
-    LocateReply = 4,            // by server.
-    CloseConnection = 5,        // by server.
-    MessageError = 6            // by both.
+    ShortRead = 0,              // "discovered" by either.
+    Request = 1,                // sent by client.
+    Reply = 2,                  // by server.
+    CancelRequest = 3,          // by client.
+    LocateRequest = 4,          // by client.
+    LocateReply = 5,            // by server.
+    CloseConnection = 6,        // by server.
+    MessageError = 7            // by both.
   };
 
   static void close_connection (TAO_Transport *transport,
@@ -333,9 +333,14 @@ public:
   static TAO_GIOP::Message_Type recv_message (TAO_Transport *transport,
                                               TAO_InputCDR &msg,
                                               TAO_ORB_Core *orb_core,
-                                              TAO_GIOP_Version &version);
-  // Reads message returns message type from header.  
-
+                                              TAO_GIOP_Version &version,
+                                              int block);
+  // Reads message and returns message type from header. 
+  // For reading the header, this call is *not* non-blocking. But for
+  // reading the rest of the message, it is non-blocking. Flag <block>
+  // is to force blocking for the full reply. This is useful when we
+  // want to do nothing other than wait for the reply. 
+  
   static void dump_msg (const char *label,
                         const u_char *ptr,
                         size_t len);
