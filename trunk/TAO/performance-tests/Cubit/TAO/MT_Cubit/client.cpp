@@ -28,10 +28,11 @@ initialize (void)
 #endif /* defined (VME_DRIVER) */
 #endif   /* defined (VXWORKS) */
 
-  // Make sure we've got plenty of socket handles.  This call will use
-  // the default maximum.
-  ACE::set_handle_limit ();
-  return 0;
+    // Make sure we've got plenty of socket handles.  This call will use
+    // the default maximum.
+    ACE::set_handle_limit ();
+
+    return 0;
 }
 
 int
@@ -215,10 +216,12 @@ main (int argc, char *argv [])
                     "mv2604d"};  // Host name
 #endif   /* defined (FORCE_ARGS) */
 
-  Task_State ts (argc, argv);
-  if (ts.thread_per_rate_ == 0)
-    do_priority_inversion_test (ts);
-  else
-    do_thread_per_rate_test (ts);
-  return 0;
+    initialize ();
+
+    Task_State ts (argc, argv);
+    if (ts.thread_per_rate_ == 0)
+      do_priority_inversion_test (ts);
+    else
+      do_thread_per_rate_test (ts);
+    return 0;
 }

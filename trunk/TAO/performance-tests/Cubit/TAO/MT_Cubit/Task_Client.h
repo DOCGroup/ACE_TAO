@@ -14,13 +14,20 @@
 #if !defined (TASK_CLIENT_H)
 #define TASK_CLIENT_H
 
+#include <math.h>
+
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
-#include "cubitC.h"
 #include "ace/Profile_Timer.h"
-#include <math.h>
+#include "ace/ARGV.h"
+
+#include "orbsvcs/CosNamingC.h"
+#include "cubitC.h"
+
+
+static CORBA::String key = CORBA::String ("Cubit");
 
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
@@ -111,6 +118,8 @@ public:
   // this array stores the latency seen by each client for each
   // request, to be used later to compute jitter
 
+  char * factory_ior_;
+  // Object reference string for the cubit factory.
 };
 
 class Client : public ACE_Task<ACE_MT_SYNCH>
@@ -155,6 +164,11 @@ private:
   Task_State *ts_;
   // pointer to shared state
   
+  CosNaming::NamingContext_var naming_context_;
+  // Object reference to the naming service
+
+  CosNaming::NamingContext_var mt_cubit_context_;
+  // Object reference to the cubit context "MT_Cubit"
 };
 
 #endif /* !defined (TASK_CLIENT_H) */

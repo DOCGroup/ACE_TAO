@@ -46,15 +46,19 @@ Task_State::Task_State (int argc, char **argv)
     argc_ (argc),
     argv_ (argv),
     thread_per_rate_ (0),
-    global_jitter_array_ (0)
+    global_jitter_array_ (0),
+    factory_ior_ (0)
 {
   ACE_OS::strcpy (server_host_, "localhost");
-  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:r");
+  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:rk:");
   int c;
   int datatype;
 
   while ((c = opts ()) != -1)
     switch (c) {
+    case 'k':
+      factory_ior_ = ACE_OS::strdup (opts.optarg);
+      break;
     case 'r':
       thread_per_rate_ = 1;
       break;
@@ -101,6 +105,7 @@ Task_State::Task_State (int argc, char **argv)
                   " [-h server_hostname]"
                   " [-p server_port_num]"
                   " [-t num_threads]"
+		  " [-k factory_ior_key]"
                   "\n", argv [0]));
     }
   // thread_count_ + 1 because there is one utilization thread also
@@ -187,9 +192,51 @@ Client::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread created\n"));
   u_int thread_id;
+  Cubit_ptr cb = 0;
+  CORBA::ORB_var orb;
+  CORBA::Object_var objref (0);
+  CORBA::Object_var naming_obj (0);
+  CORBA::Environment env;
   char ior [1024];
   double frequency;
 
+  /// Add "-ORBobjrefstyle url" argument to the argv vector for the orb to 
+  ///   use a URL style to represent the ior.
+
+  // convert the argv vector into a string.
+  ACE_ARGV tmp_args (ts_->argv_);
+  char tmp_buf[BUFSIZ];
+  strcpy (tmp_buf, tmp_args.buf ());
+  // Add the argument
+  strcat (tmp_buf, " -ORBobjrefstyle url ");
+  // convert back to argv vector style.
+  ACE_ARGV tmp_args2(tmp_buf);
+  int argc = tmp_args2.argc ();
+  char* const *argv = tmp_args2.argv ();
+
+  u_int naming_success = CORBA::B_FALSE;
+    
+  orb = CORBA::ORB_init (argc, argv, 
+			 "internet", env);
+    
+  if (env.exception () != 0)
+    {
+      env.print_exception ("ORB_init()\n");
+      return -1;
+    }
+    
+  naming_obj =
+    orb->resolve_initial_references ("NameService");
+
+  if (CORBA::is_nil (naming_obj.in ()))
+    ACE_ERROR ((LM_ERROR,
+		       " (%P|%t) Unable to resolve the Name Service.\n"));
+  else
+    {
+      this->naming_context_ = 
+	CosNaming::NamingContext::_narrow (naming_obj.in (), env);
+    }
+      
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1);
 
@@ -198,125 +245,178 @@ Client::svc (void)
 
     if (ts_->thread_per_rate_ == 0)
       {
-        if (thread_id == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) Im the high priority client, my id is %d.\n",
-                        thread_id));
-            ACE_OS::sprintf (ior,
-                             "iiop:1.0//%s:%d/Cubit00",
-                             ts_->server_host_,
-                             ts_->base_port_);
-            frequency = CB_HIGH_PRIORITY_RATE;
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) Im a low priority client, my id is %d\n",
-                        thread_id));
-            ACE_OS::sprintf (ior,
-                             "iiop:1.0//%s:%d/Cubit00",
-                             ts_->server_host_,
-                             ts_->base_port_ + thread_id);
-            frequency = CB_LOW_PRIORITY_RATE;
-          }
+	if (thread_id == 0)
+	  {
+	    ACE_DEBUG ((LM_DEBUG,
+			"(%t) Im the high priority client, my id is %d.\n",
+			thread_id));
+	    frequency = CB_HIGH_PRIORITY_RATE;
+	  }
+	else
+	  {
+	    ACE_DEBUG ((LM_DEBUG,
+			"(%t) Im a low priority client, my id is %d\n",
+			thread_id));
+	    frequency = CB_LOW_PRIORITY_RATE;
+	  }
       }
     else
       {
-        switch (thread_id)
-          {
-          case CB_40HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
-                             ts_->server_host_, ts_->base_port_);
-            frequency = CB_40HZ_CONSUMER_RATE;
-            break;
-          case CB_20HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
-                       ts_->server_host_, ts_->base_port_+1);
-            frequency = CB_20HZ_CONSUMER_RATE;
-            break;
-          case CB_10HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
-                             ts_->server_host_, ts_->base_port_+2);
-            frequency = CB_10HZ_CONSUMER_RATE;
-            break;
-          case CB_5HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
-                             ts_->server_host_, ts_->base_port_+3);
-            frequency = CB_5HZ_CONSUMER_RATE;
-            break;
-          case CB_1HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
-                             ts_->server_host_, ts_->base_port_+4);
-            frequency = CB_1HZ_CONSUMER_RATE;
-            break;
-          default:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
-          }
+	switch (thread_id)
+	  {
+	  case CB_40HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG,
+			"(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    frequency = CB_40HZ_CONSUMER_RATE;
+	    break;
+	  case CB_20HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    frequency = CB_20HZ_CONSUMER_RATE;
+	    break;
+	  case CB_10HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    frequency = CB_10HZ_CONSUMER_RATE;
+	    break;
+	  case CB_5HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    frequency = CB_5HZ_CONSUMER_RATE;
+	    break;
+	  case CB_1HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    frequency = CB_1HZ_CONSUMER_RATE;
+	    break;
+	  default:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
+	  }
       }
-
-
-    ACE_DEBUG ((LM_DEBUG, "Using ior = %s\n", ior));
 
     TAO_TRY
       {
-        CORBA::ORB_var orb =
-          CORBA::ORB_init (ts_->argc_, ts_->argv_,
-                           "internet", TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+	// if the naming service was resolved successsfully ...
+	if (!CORBA::is_nil (this->naming_context_.in ()))
+	  {
+	    ACE_DEBUG ((LM_DEBUG, " (%t) ----- Using the NameService resolve() method to get cubit objects -----\n"));
 
-        CORBA::Object_var objref =
-          orb->string_to_object (ior, TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+	    // Construct the key for the name service lookup.
+	    CosNaming::Name mt_cubit_context_name (1);
+	    mt_cubit_context_name.length (1);
+	    mt_cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
+	    
+	    objref =
+	      this->naming_context_->resolve (mt_cubit_context_name,
+					      TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
 
-        if (CORBA::is_nil (objref.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%s:  must identify non-null target objref\n",
-                             ts_->argv_ [0]),
-                            1);
+	    this->mt_cubit_context_ = 
+	      CosNaming::NamingContext::_narrow (objref.in (), TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
 
-        // Narrow the CORBA::Object reference to the stub object, checking
-        // the type along the way using _is_a.
-        Cubit_var cb = Cubit::_narrow (objref.in (), TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+	    char* buffer;
+	    int l = ACE_OS::strlen (key) + 3;
+	    ACE_NEW_RETURN (buffer, char[l], -1);
 
-        if (CORBA::is_nil (cb.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Create cubit failed\n"), 1);
+	    ACE_OS::sprintf (buffer, "%s%02d",
+			     (char *) key, thread_id);
 
-        ACE_DEBUG ((LM_DEBUG, "(%t) Binding succeeded\n"));
+	    // Construct the key for the name service lookup.
+	    CosNaming::Name cubit_name (1);
+	    cubit_name.length (1);
+	    cubit_name[0].id = CORBA::string_dup (buffer);
 
-        CORBA::String_var str =
-          orb->object_to_string (cb.in (), TAO_TRY_ENV);
+	    objref = this->mt_cubit_context_->resolve (cubit_name, TAO_TRY_ENV);
 
-        ACE_DEBUG ((LM_DEBUG,
-                    "Object connected <%s>\n", str.in ()));
+	    if ( (TAO_TRY_ENV.exception () != 0) || CORBA::is_nil (objref) )
+	      {
+		ACE_DEBUG ((LM_DEBUG, " (%t) resolve() returned nil\n"));
+		TAO_TRY_ENV.print_exception ("Attempt to resolve() a cubit object using the name service Failed!\n");
+	      }
+	    else
+	      {
+		naming_success = CORBA::B_TRUE;
+		ACE_DEBUG ((LM_DEBUG, " (%t) Cubit object resolved to the name \"%s\".\n", buffer));
+	      }
+	  }
 
-        ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for other threads to "
-                    "finish binding..\n"));
-        ts_->barrier_->wait ();
-        ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
+	if (naming_success == CORBA::B_FALSE)
+	  {
+	    ACE_DEBUG ((LM_DEBUG, " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
 
-        this->run_tests (cb.in (), ts_->loop_count_, thread_id,
-                         ts_->datatype_, frequency);
+	    if (ts_->factory_ior_ == 0)
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "Must specify valid factory ior key with -k option\n"), -1);
+	      
+	    objref =
+	      orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
+
+	    if (CORBA::is_nil (objref.in ()))
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "%s:  must identify non-null target objref\n",
+				 ts_->argv_ [0]),
+				1);
+
+	    // Narrow the CORBA::Object reference to the stub object, checking
+	    // the type along the way using _is_a.
+	    Cubit_Factory_ptr cb_factory = Cubit_Factory::_narrow (objref, TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
+
+	    if (CORBA::is_nil (cb_factory))
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "Create cubit factory failed\n"), 1);
+
+	    ACE_DEBUG ((LM_DEBUG, "(%t) >>> Factory binding succeeded\n"));
+
+	    char * my_ior = ACE_OS::strdup (cb_factory->create_cubit (thread_id, TAO_TRY_ENV));
+	    TAO_CHECK_ENV;
+
+	    objref = orb->string_to_object (my_ior, 
+					    TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
+	  }
+
+	if (CORBA::is_nil (objref.in ()))
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     " (%t) string_to_object or NameService->resolve() Failed!\n"),
+			    -1);
+
+	// Narrow the CORBA::Object reference to the stub object, checking
+	// the type along the way using _is_a.
+	cb = Cubit::_narrow (objref, TAO_TRY_ENV);
+	TAO_CHECK_ENV;
+
+	if (CORBA::is_nil (cb))
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "Create cubit failed\n"), 1);
+
+	ACE_DEBUG ((LM_DEBUG, "(%t) Binding succeeded\n"));
+
+	CORBA::String_var str = orb->object_to_string (cb, TAO_TRY_ENV);
+	TAO_CHECK_ENV;
+
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%t) CUBIT OBJECT connected <%s>\n", str.in ()));
+
+	ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for other threads to "
+		    "finish binding..\n"));
       }
     TAO_CATCHANY
       {
-        TAO_TRY_ENV.print_exception ("get_object");
+	TAO_TRY_ENV.print_exception ("get_object");
+	return 1;
       }
     TAO_ENDTRY;
   }
+
+  ts_->barrier_->wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
+  
+  this->run_tests (cb, ts_->loop_count_, thread_id,
+		   ts_->datatype_, frequency);  
 
   return 0;
 }
@@ -358,7 +458,10 @@ Client::run_tests (Cubit_ptr cb,
 
             ret_octet = cb->cube_octet (arg_octet, env);
             if (env.exception () != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+	      {
+		env.print_exception ("call to cube_octet()\n");
+		ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+	      }
 
             arg_octet = arg_octet * arg_octet * arg_octet;
 
@@ -381,11 +484,14 @@ Client::run_tests (Cubit_ptr cb,
             ret_short = cb->cube_short (arg_short, env);
 
             if (env.exception () != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%s:Call failed\n",
-                                 env.exception ()),
-                                2);
-
+	      {
+		env.print_exception ("call to cube_short()\n");
+		ACE_ERROR_RETURN ((LM_ERROR,
+				   "%s:Call failed\n",
+				   env.exception ()),
+				  2);
+	      }
+	    
             arg_short = arg_short * arg_short * arg_short;
 
             if (arg_short != ret_short)
@@ -406,7 +512,10 @@ Client::run_tests (Cubit_ptr cb,
             ret_long = cb->cube_long (arg_long, env);
 
             if (env.exception () != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+	      {
+		env.print_exception ("call to cube_long()\n");
+		ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+	      }
 
             arg_long = arg_long * arg_long * arg_long;
 
@@ -432,7 +541,10 @@ Client::run_tests (Cubit_ptr cb,
             ret_struct = cb->cube_struct (arg_struct, env);
 
             if (env.exception () != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+	      {
+		env.print_exception ("call to cube_struct()\n");
+		ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+	      }
 
             arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
             arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;

@@ -1,3 +1,20 @@
+Tue Feb 17 15:39:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h::
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/server.h: Made a bunch of changes to
+ 	correctly support the POA.  In addition, MT_Cubit now uses the
+ 	Name Service to bind the Cubit objects.  In case the Name Service
+ 	doesn't exist, there is still the "cut&paste" ior method that uses
+ 	a cubit factory to give the client a reference to the cubit
+ 	objects.
+
 Tue Feb 17 13:25:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added instructions on using the CPP_LOCATION
