@@ -321,7 +321,7 @@ AV_Server::on_exit_routine (void)
 // Parses the command line arguments
 int
 AV_Server::parse_args (int argc,
-                         char **argv)
+		       char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "rd:s:vamh");
   int c;

@@ -200,7 +200,10 @@ private:
   // to their respective handlers.
 
   CosTrading::Lookup_var trader_;
+  // Reference to the Lookup interface of the trading service.
+  
   CosTrading::OfferId_var offer_id_;
+  // Server offer id.
   
   CosNaming::NamingContext_var naming_context_;
   // The root naming context of the naming service
