@@ -69,7 +69,12 @@ TAO_IOR_Manipulation_impl::merge_iors (
   for (i = 1; i < iors.length () ; i++)
     {
       // this gets a copy of the MProfile, hense ther auto_ptr;
-      tmp_pfiles.reset (iors[i]->_stubobj ()->get_profiles ());
+
+      // @@ This is ugly, it is a work around MS C++ auto_ptr which
+      // does not implement reset ()!!
+      auto_ptr<TAO_MProfile> XXtemp (iors[i]->_stubobj ()->get_profiles ());
+      // tmp_pfiles.reset (iors[i]->_stubobj ()->get_profiles ());
+      tmp_pfiles = XXtemp;
 
       // check to see if any of the profile in tmp_pfiles are already
       // in Merged_Profiles.  If so raise exception.
@@ -90,7 +95,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
     }
 
-  tmp_pfiles.reset (0); // get rid of last MProfile
+  // MS C++ knows nothing abouyt reset!
+  // tmp_pfiles.reset (0); // get rid of last MProfile
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   // @@ need some sort of auto_ptr here
@@ -167,13 +173,18 @@ TAO_IOR_Manipulation_impl::remove_profiles (
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
-  tmp_pfiles.reset (ior2->_stubobj ()->get_profiles ());
+  // @@ This is ugly, it is a work around MS C++ auto_ptr which
+  // does not implement reset ()!!
+  auto_ptr<TAO_MProfile> XXtemp (ior2->_stubobj ()->get_profiles ());
+  tmp_pfiles = XXtemp;
+  // tmp_pfiles.reset (ior2->_stubobj ()->get_profiles ());
+
   if (Diff_Profiles.remove_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::NotFound (),
                       CORBA::Object::_nil ());
 
-
-  tmp_pfiles.reset (0); // get rid of last MProfile
+  // MS C++ knows nothing abouyt reset!
+  // tmp_pfiles.reset (0); // get rid of last MProfile
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_Stub *stub;
@@ -248,15 +259,3 @@ TAO_IOR_Manipulation_impl::get_profile_count (
 
   return count;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr<TAO_MProfile>;
-template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<TAO_MProfile>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
