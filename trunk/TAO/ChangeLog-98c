@@ -21,7 +21,7 @@ Fri Feb 27 16:11:53 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
 	* tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
 	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
 	* tests/Cubit/TAO/MT_Cubit/server.h: Changes to make it compile on
  	sigle-threaded platforms.
 
@@ -46,6 +46,9 @@ Fri Feb 27 15:00:42 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_LACKS_LONGLONG_T, set the high word directly.  The
           ACE_U_LongLong operator >> returns an ACE_U_LongLong,
           so the assignment won't work otherwise.
+
+        * tao/orb_core.cpp: added ACE_Convert (const char *, u_int &)
+          instantiation.
 
 Fri Feb 27 12:08:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -138,15 +141,15 @@ Thu Feb 26 19:29:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	replacing the the C++ exception handling with the TAO_* macro
 	exception handling and CORBA::Environment passing, and prefixing
 	all top level classes with 'TAO_'. Because the tao_idl generated
-	code from CosTrading.idl was having some trouble, nothing here has 
+	code from CosTrading.idl was having some trouble, nothing here has
 	been compiled since the port. The README file contains additions
 	to the Makefile necessary to accommodate the Trading Service's
 	reliance on STL.
 
 	The orbsvcs/Trading_Service/trader.cpp is a server that activates
-	the supported interfaces of our Trading Service. At this point our 
+	the supported interfaces of our Trading Service. At this point our
 	Trader adheres to the Stand Alone Trader designation of
-	conformance as described in the specification. 
+	conformance as described in the specification.
 
 Thu Feb 26 18:38:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
