@@ -145,7 +145,7 @@ Task_State::parse_args (int argc,char *argv[])
                   "[-c]                   // run the number of context switches test.                                 \n\t\t\t"
                   "[-l]                   // use direct function calls, as opposed to CORBA requests.  ONLY to be used with -u option.\n\t\t\t"
                   "[-m]                   // use multiple priorities for the low priority clients.                    \n"
-		  ,argv [0]));
+                  ,argv [0]));
       return -1;
     }
 
@@ -1038,9 +1038,9 @@ Client::calc_delta (ACE_timer_t real_time,
 {
   ACE_timer_t new_delta;
 #if defined (ACE_LACKS_FLOATING_POINT)
-  new_delta = (40 * fabs (real_time) / 100) + (60 * delta / 100);
+  new_delta = 40 * real_time / 100  +  60 * delta / 100;
 #else /* !ACE_LACKS_FLOATING_POINT */
-  new_delta = (0.4 * fabs (real_time)) + (0.6 * delta);
+  new_delta = 0.4 * fabs (real_time)  +  0.6 * delta;
 #endif /* ACE_LACKS_FLOATING_POINT */
   return new_delta;
 }
@@ -1074,7 +1074,7 @@ Client::do_test (void)
           // Delay a sufficient amount of time to be able to enforce
           // the calling frequency, e.g., 20Hz, 10Hz, 5Hz, 1Hz.
           ACE_Time_Value tv (0,
-                             (u_long) (sleep_time - delta < 0
+                             (u_long) (sleep_time < delta
                                        ? 0
                                        : sleep_time - delta));
           ACE_OS::sleep (tv);
