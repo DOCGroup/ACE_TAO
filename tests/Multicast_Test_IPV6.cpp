@@ -1002,9 +1002,10 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("This test must be run on a platform ")
-              ACE_TEXT ("that support IP multicast.\n")));
+              ACE_TEXT ("that support IP multicast and threads.\n")));
 
   ACE_END_TEST;
-  return 1;
+
+  return 0;
 }
 #endif /* ACE_HAS_IP_MULTICAST && ACE_HAS_THREADS */
