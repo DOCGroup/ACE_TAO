@@ -1,3 +1,8 @@
+Thu Mar 29 20:14:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * ace/SOCK.h:
+           Remove include of QoS_Session.h, since it is not used here.
+
 Thu Mar 29 19:48:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * ace/QoS_Session.h:
