@@ -321,7 +321,7 @@ private:
   Cubit_ptr cubit_;
   // pointer to the cubit object.
 
-  Cubit_i *cubit_impl_;
+  Cubit_i cubit_impl_;
   // cubit implementation object.
 
   Task_State *ts_;

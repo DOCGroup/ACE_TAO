@@ -133,18 +133,19 @@ Task_State::parse_args (int argc,char *argv[])
     case '?':
     default:
       ACE_DEBUG ((LM_DEBUG, "usage:  %s\t"
-                  "[<ORB OPTIONS>]        // ORB options, e.g., \"-ORBobjrefstyle url\"                               \n\t\t"
-                  "[-d <datatype>]        // what datatype to use for calls:  Octet=0, Short=1, Long=2, Struct=3      \n\t\t"
-                  "[-n <num_calls>]       // number of CORBA calls to make.                                           \n\t\t"
-                  "[-t <num_of_clients>]  // number of client threads to create                                       \n\t\t"
-                  "[-f <ior_file>]        // specify the file from which we read the object references (iors), if any.\n\t\t"
-                  "[-r]                   // run thread-per-rate test.                                                \n\t\t"
-                  "[-o]                   // makes client use oneway calls.  By default, twoway calls are used.       \n\t\t"
-                  "[-x]                   // makes a call to servant to shutdown                                      \n\t\t"
-                  "[-u <seconds> ]        // run the client utilization test for a number of <seconds>.               \n\t\t"
-                  "[-1]                   // run the one-to-n test.                                                   \n\t\t"
-                  "[-g <granularity>]     // choose the granularity of the timing of CORBA calls                      \n\t\t"
-                  "[-c]                   // run the number of context switches test.                                 \n\t\t"
+                  "[<ORB OPTIONS>]        // ORB options, e.g., \"-ORBobjrefstyle url\"                               \n\t\t\t"
+                  "[-d <datatype>]        // what datatype to use for calls:  Octet=0, Short=1, Long=2, Struct=3      \n\t\t\t"
+                  "[-n <num_calls>]       // number of CORBA calls to make.                                           \n\t\t\t"
+                  "[-t <num_of_clients>]  // number of client threads to create                                       \n\t\t\t"
+                  "[-f <ior_file>]        // specify the file from which we read the object references (iors), if any.\n\t\t\t"
+                  "[-r]                   // run thread-per-rate test.                                                \n\t\t\t"
+                  "[-o]                   // makes client use oneway calls.  By default, twoway calls are used.       \n\t\t\t"
+                  "[-x]                   // makes a call to servant to shutdown                                      \n\t\t\t"
+                  "[-u <requests> ]       // run the client utilization test for a number of <requests>               \n\t\t\t"
+                  "[-1]                   // run the one-to-n test.                                                   \n\t\t\t"
+                  "[-g <granularity>]     // choose the granularity of the timing of CORBA calls                      \n\t\t\t"
+                  "[-c]                   // run the number of context switches test.                                 \n\t\t\t"
+                  "[-l]                   // use direct function calls, as opposed to CORBA requests.  ONLY to be used with -u option.\n\t\t\t"
                   "[-m]                   // use multiple priorities for the low priority clients.                    \n"
 		  ,argv [0]));
       return -1;
@@ -157,6 +158,7 @@ Task_State::parse_args (int argc,char *argv[])
     {
       thread_count_ = 1;
       shutdown_ = 1;
+      datatype_ = CB_OCTET;
     }
 
   // Allocate the array of character pointers.
@@ -280,7 +282,6 @@ Client::Client (ACE_Thread_Manager *thread_manager,
 
 Client::~Client (void)
 {
-  delete this->cubit_impl_;
   delete this->my_jitter_array_;
   delete this->timer_;
 }
@@ -775,12 +776,12 @@ Client::cube_octet (void)
 
       START_QUANTIFY;
 
-      if (this->ts_->remote_invocations_ == 1)
+      if (this->ts_->use_utilization_test_ == 1 && this->ts_->remote_invocations_ == 0)
+        ret_octet = this->cubit_impl_.cube_octet (arg_octet,
+                                                  TAO_TRY_ENV);
+      else
         ret_octet = this->cubit_->cube_octet (arg_octet,
                                               TAO_TRY_ENV);
-      else
-        ret_octet = this->cubit_impl_->cube_octet (arg_octet,
-                                                   TAO_TRY_ENV);
 
       STOP_QUANTIFY;
       TAO_CHECK_ENV;

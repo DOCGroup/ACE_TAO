@@ -346,7 +346,7 @@ Server::start_servants (void)
 }
 
 // The main() function.
-
+#include "ace/streams.h"
 #if defined (VXWORKS)
   // Rename main to server to make it easier to run both client and
   // server on one target.
@@ -361,6 +361,13 @@ main (int argc, char *argv[])
 {
 #endif /* VXWORKS */
   int result;
+  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::OSTREAM);
+  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR);
+  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
+  //  ofstream log ("server.log");
+  //  log.setf (ios::unitbuf);
+  //  ACE_Log_Msg::instance()->msg_ostream (&log);
+
   Server server;
 
   result = server.init (argc, argv);
