@@ -458,16 +458,11 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
                             -1);
         }
 
-      // Generate the anonymous sequence member typedef
-      // but we must protect against certain versions of g++.
+      // Generate the anonymous sequence member typedef.
       // This provides a consistent name to use instead of the
       // implementation-specific name.
-      *os << "\n#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-          << be_nl
-          << "typedef " << bt->nested_type_name (bu)
-          << " _" << ub->local_name () << "_seq;\n";
-      *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */"
-          << be_nl << be_nl;
+      *os << "typedef " << bt->nested_type_name (bu)
+          << " _" << ub->local_name () << "_seq;" << be_nl << be_nl;
     }
 
   *os << "void " << ub->local_name () << " (const "

@@ -153,15 +153,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "{" << be_nl
           << "public:" << be_nl
 
-          // Generate the _ptr_type and _var_type typedefs
-          // but we must protect against certain versions of g++.
-          << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-          << be_idt_nl
+          // Generate the _ptr_type and _var_type typedefs.
           << "typedef " << node->local_name () << "_ptr _ptr_type;"
           << be_nl
           << "typedef " << node->local_name () << "_var _var_type;"
-          << be_uidt_nl
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl;
+          << be_nl;
 
       // Generate the static variable that we use for narrowing.
       *os << "static int _tao_class_id;" << be_nl << be_nl;

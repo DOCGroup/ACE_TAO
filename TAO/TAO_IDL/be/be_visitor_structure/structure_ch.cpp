@@ -50,12 +50,9 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
           << node->local_name () << be_nl
           << "{" << be_idt << be_nl;
 
-      // Generate the _ptr_type and _var_type typedefs
-      // but we must protect against certain versions of g++
-      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
+      // Generate the _ptr_type and _var_type typedefs.
+      *os << "typedef " << node->local_name () << "_var _var_type;"
           << be_nl;
-      *os << "typedef " << node->local_name () << "_var _var_type;\n"
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_nl;
 
       if (!node->is_local ())
         {
