@@ -24,14 +24,6 @@
 
 
 #include "ImR_ActivatorC.h"
-#include "tao/Stub.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 
 #if defined (__BORLANDC__)
