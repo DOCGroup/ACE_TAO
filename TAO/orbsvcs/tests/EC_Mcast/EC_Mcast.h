@@ -56,6 +56,7 @@
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event/EC_UDP_Admin.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
 
 class ECM_Driver;
 
