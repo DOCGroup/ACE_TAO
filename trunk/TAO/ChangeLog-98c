@@ -1,3 +1,18 @@
+Wed Nov 19 08:44:12 1997  Brian Mendel <brian.r.mendel@boeing.com>
+
+        * tests/Cubit/TAO/DII_Cubit/default.bld:
+        * tests/Cubit/TAO/DII_Cubit/clnt.bld:
+        * tests/Cubit/TAO/DII_Cubit/svr.bld:
+        * tests/Cubit/TAO/IDL_Cubit/default.bld:
+        * tests/Cubit/TAO/IDL_Cubit/clnt.bld:
+        * tests/Cubit/TAO/IDL_Cubit/svr.bld:
+        * tests/Cubit/TAO/MT_Cubit/default.bld:
+        * tests/Cubit/TAO/MT_Cubit/clnt.bld:
+        * tests/Cubit/TAO/MT_Cubit/svr.bld:  Added build files in the new
+          test structure for VxWorks using the GHS compiler.
+
+        * tests/Cubit/Build: Removed the obsolete build directory for vxWorks.
+
 Wed Nov 19 07:47:13 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.35, released Wed Nov 19 07:47:13 1997.
