@@ -1,3 +1,11 @@
+Fri Oct 29 21:09:49 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* man/html/Makefile.am:
+
+	  For some reason Automake couldn't automatically copy the HTML
+	  man pages to the distribution directory when doing a `make dist'
+	  so do it manually.
+
 Fri Oct 29 19:53:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile.am (EXTRA_DIST):
