@@ -134,9 +134,9 @@ TAO_SSLIOP_Client_Transport::~TAO_SSLIOP_Client_Transport (void)
 
 void
 TAO_SSLIOP_Client_Transport::start_request (TAO_ORB_Core * /* orb_core */,
-					    TAO_Target_Specification & /* spec */,
-					    TAO_OutputCDR &output,
-					    CORBA::Environment &ACE_TRY_ENV)
+                                            TAO_Target_Specification & /* spec */,
+                                            TAO_OutputCDR &output,
+                                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_CLIENT_TRANSPORT_START_REQUEST_START);
@@ -158,10 +158,10 @@ TAO_SSLIOP_Client_Transport::start_request (TAO_ORB_Core * /* orb_core */,
 
 void
 TAO_SSLIOP_Client_Transport::start_locate (TAO_ORB_Core * /* orb_core */,
-					   TAO_Target_Specification & spec,
-					   TAO_Operation_Details & opdetails,
-					   TAO_OutputCDR &output,
-					   CORBA::Environment &ACE_TRY_ENV)
+                                           TAO_Target_Specification & spec,
+                                           TAO_Operation_Details & opdetails,
+                                           TAO_OutputCDR &output,
+                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // See this is GIOP way of doing this..But anyway IIOP will be tied
@@ -181,10 +181,10 @@ TAO_SSLIOP_Client_Transport::start_locate (TAO_ORB_Core * /* orb_core */,
 
 int
 TAO_SSLIOP_Client_Transport::send_request (TAO_Stub *stub,
-					   TAO_ORB_Core *orb_core,
-					   TAO_OutputCDR &stream,
-					   int two_way,
-					   ACE_Time_Value *max_wait_time)
+                                           TAO_ORB_Core *orb_core,
+                                           TAO_OutputCDR &stream,
+                                           int two_way,
+                                           ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   two_way) == -1)
@@ -205,7 +205,7 @@ TAO_SSLIOP_Client_Transport::send_request (TAO_Stub *stub,
 //    each transport!!
 int
 TAO_SSLIOP_Client_Transport::handle_client_input (int /* block */,
-						  ACE_Time_Value *max_wait_time)
+                                                  ACE_Time_Value *max_wait_time)
 {
 
   // Notice that the message_state is only modified in one thread at a
@@ -384,9 +384,9 @@ TAO_SSLIOP_Client_Transport::send_request_header (
 
 ssize_t
 TAO_SSLIOP_Transport::send (TAO_Stub *stub,
-			    int two_way,
-			    const ACE_Message_Block *message_block,
-			    const ACE_Time_Value *max_wait_time)
+                            int two_way,
+                            const ACE_Message_Block *message_block,
+                            const ACE_Time_Value *max_wait_time)
 {
   if (stub == 0 || two_way)
     {
@@ -406,7 +406,8 @@ TAO_SSLIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
-			    const ACE_Time_Value *max_wait_time)
+                            const ACE_Time_Value *max_wait_time,
+                            size_t *bt)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
@@ -416,10 +417,12 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
   // For the most part this was copied from GIOP::send_request and
   // friends.
 
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+
   iovec iov[IOV_MAX];
   int iovcnt = 0;
   ssize_t n = 0;
-  ssize_t nbytes = 0;
 
   for (const ACE_Message_Block *i = message_block;
        i != 0;
@@ -449,10 +452,11 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
                                                      iovcnt /*,
                                                      max_wait_time */);
 
-              if (n <= 0)
+              if (n == 0 ||
+                  n == -1)
                 return n;
 
-              nbytes += n;
+              bytes_transferred += n;
               iovcnt = 0;
             }
         }
@@ -463,19 +467,20 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
     {
       n = this->handler_->peer ().sendv_n (iov,
                                            iovcnt);
-      if (n < 1)
+      if (n == 0 ||
+          n == -1)
         return n;
 
-      nbytes += n;
+      bytes_transferred += n;
     }
 
-  return nbytes;
+  return bytes_transferred;
 }
 
 ssize_t
 TAO_SSLIOP_Transport::send (const u_char *buf,
-			    size_t len,
-			    const ACE_Time_Value * /* max_wait_time */)
+                            size_t len,
+                            const ACE_Time_Value * /* max_wait_time */)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
@@ -486,8 +491,8 @@ TAO_SSLIOP_Transport::send (const u_char *buf,
 
 ssize_t
 TAO_SSLIOP_Transport::recv (char *buf,
-			    size_t len,
-			    const ACE_Time_Value * /* max_wait_time */)
+                            size_t len,
+                            const ACE_Time_Value * /* max_wait_time */)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
 
@@ -499,10 +504,10 @@ TAO_SSLIOP_Transport::recv (char *buf,
 // Default action to be taken for send request.
 int
 TAO_SSLIOP_Transport::send_request (TAO_Stub *,
-				    TAO_ORB_Core *  /* orb_core */,
-				    TAO_OutputCDR & /* stream   */,
-				    int             /* twoway   */,
-				    ACE_Time_Value * /* max_wait_time */)
+                                    TAO_ORB_Core *  /* orb_core */,
+                                    TAO_OutputCDR & /* stream   */,
+                                    int             /* twoway   */,
+                                    ACE_Time_Value * /* max_wait_time */)
 {
   return -1;
 }

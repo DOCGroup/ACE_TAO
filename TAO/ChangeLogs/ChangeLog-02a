@@ -1,8 +1,18 @@
+Fri Jun 23 21:17:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send): The
+	  following change:
+
+	  Fri Jun 02 02:23:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	  did not get propogated to the SSL code.  Thanks to Ossama for
+	  pointing this out.
+
 Fri Jun 23 14:32:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Connectors.cpp: Initialised the reserved field
 	  to zero. Thanks to James Megquier <jmegq@bbn.com> for pointing
-	  this out. 
+	  this out.
 
 Fri Jun 23 12:08:51 2000  Ossama Othman  <ossama@uci.edu>
 
@@ -49,7 +59,7 @@ Wed Jun 21 17:15:44 2000  Ossama Othman  <ossama@uci.edu>
 
 Wed Jun 21 18:35:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Clerk_i.cpp (Clerk_i): Set the 
+	* orbsvcs/Time_Service/Clerk_i.cpp (Clerk_i): Set the
 	  timer_value_usecs_ field to 0.  Thanks to Sandro Doro
  	  <doro.s@flashnet.it> for reporting this.
 
@@ -102,8 +112,8 @@ Wed Jun 21 13:19:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/fe/idl.ll:
 	* TAO_IDL/fe/lex.yy.cpp:
 	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  Added a regular expression to the lexer. Phil Mesnier 
-	  <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1 
+	  Added a regular expression to the lexer. Phil Mesnier
+	  <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1
 	  using the UDK (unixware dev kit) CC compiler, and its
 	  preprocessor is outputting a #file "...." directive
 	  that the IDL compiler lexer doesn't recognize. We now
@@ -113,20 +123,20 @@ Wed Jun 21 04:54:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
 	  like the whole file in $TAO_ROOT/tao may not be the right
-	  place. 
+	  place.
 
 Tue Jun 20 18:08:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Interoperable_Naming/Makefile : 
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp: 
+	* orbsvcs/tests/Interoperable_Naming/Makefile :
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
 	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
 	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
 	* orbsvcs/tests/Interoperable_Naming/server.cpp:
-	  
+
 	  The test doesnot need server implementation. So, removed
 	server.cpp, Iterator_Factory_i.{h,cpp}. Made changes in Makefile
 	and ncontext_client_i.cpp to reflect this.
-	
+
 Mon Jun 19 17:14:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/CosNaming.idl:
@@ -142,18 +152,18 @@ Mon Jun 19 17:14:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
       	Joint Submission by BEA Systems, DSTC, IONA, and Inprise
 
-	* orbsvcs/tests/Makefile: 
-	* orbsvcs/tests/Interoperable_Naming/Makefile: 
-	* orbsvcs/tests/Interoperable_Naming/Web_Server.idl: 
-	* orbsvcs/tests/Interoperable_Naming/README: 
-	* orbsvcs/tests/Interoperable_Naming/run_test.pl: 
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h: 
-	* orbsvcs/tests/Interoperable_Naming/server.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/client.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h: 
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp: 
-		
+	* orbsvcs/tests/Makefile:
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
+	* orbsvcs/tests/Interoperable_Naming/Web_Server.idl:
+	* orbsvcs/tests/Interoperable_Naming/README:
+	* orbsvcs/tests/Interoperable_Naming/run_test.pl:
+	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
+	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
+	* orbsvcs/tests/Interoperable_Naming/server.cpp:
+	* orbsvcs/tests/Interoperable_Naming/client.cpp:
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h:
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+
 	  Added a test to show the functionality of the
 	  CosNaming::NamingContextExt interface in the Interoperable
 	  Naming Service. This test converts a name into its stringified
