@@ -144,19 +144,19 @@ TAO_AV_Source::stats (char* cp) const
 int
 sdes_atoi (const char* s)
 {
-  if  (strcasecmp (s, "cname") == 0)
+  if  (ACE_OS::strcasecmp (s, "cname") == 0)
     return  (RTCP_SDES_CNAME);
-  if  (strcasecmp (s, "name") == 0)
+  if  (ACE_OS::strcasecmp (s, "name") == 0)
     return  (RTCP_SDES_NAME);
-  if  (strcasecmp (s, "email") == 0)
+  if  (ACE_OS::strcasecmp (s, "email") == 0)
     return  (RTCP_SDES_EMAIL);
-  if  (strcasecmp (s, "phone") == 0)
+  if  (ACE_OS::strcasecmp (s, "phone") == 0)
     return  (RTCP_SDES_PHONE);
-  if  (strcasecmp (s, "loc") == 0 || strcasecmp (s, "location") == 0)
+  if  (ACE_OS::strcasecmp (s, "loc") == 0 || strcasecmp (s, "location") == 0)
     return  (RTCP_SDES_LOC);
-  if  (strcasecmp (s, "tool") == 0)
+  if  (ACE_OS::strcasecmp (s, "tool") == 0)
     return  (RTCP_SDES_TOOL);
-  if  (strcasecmp (s, "note") == 0)
+  if  (ACE_OS::strcasecmp (s, "note") == 0)
     return  (RTCP_SDES_NOTE);
   return  (-1);
 }

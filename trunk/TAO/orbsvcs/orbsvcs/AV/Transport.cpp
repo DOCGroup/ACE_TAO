@@ -1114,7 +1114,7 @@ TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
 }
 
 int
-TAO_AV_Flow_Handler::set_remote_address (ACE_Addr */* address */)
+TAO_AV_Flow_Handler::set_remote_address (ACE_Addr * /* address */)
 {
   return 0;
 }
