@@ -1,3 +1,19 @@
+Sun Nov  7 12:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/run_tests.lst: Added Auto_IncDec_Test to the tests.
+
+	* ace/Makefile,
+	  tests/Makefile: Added the new Auto_IncDec* stuff to the
+ 	  makefiles.
+	
+	* ace: Added Auto_IncDec_T.{h,i,cpp} to the ACE release.  This class
+	  automatically increments and decrements a parameterized counter.
+	  Thanks to Edan Ayal <EdanA@cti2.com> for contributing this.
+
+	* tests/Auto_IncDec_Test.cpp: Added a test for the ACE_Auto_IncDec
+	  class.  Thanks to Edan Ayal <EdanA@cti2.com> for contributing
+ 	  this.
+
 Fri Nov 05 14:26:38 1999  Jim Buck  <jim@nowsol.com>
 
         * ace/OS.cpp (ACE_Time_Value::set): fixed calculation of

@@ -11,6 +11,7 @@
 
 BIN =   Aio_Platform_Test \
         Atomic_Op_Test \
+	Auto_IncDec_Test \
         Barrier_Test \
         Basic_Types_Test \
         Buffer_Stream_Test \
