@@ -75,8 +75,8 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 // Init function.
 
 int
-Notifier_Handler::init (int argc, 
-			char *argv[], 
+Notifier_Handler::init (int argc,
+			char *argv[],
 			ShutdownCallback* _shutdowncallback)
 {
   // set the callback
@@ -126,5 +126,5 @@ Notifier_Handler::init (int argc,
    }
  ACE_ENDTRY;
 
- return 0;
+ ACE_NOTREACHED (return 0;)
 }
