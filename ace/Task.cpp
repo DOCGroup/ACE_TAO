@@ -118,7 +118,7 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
 }
 
 // Get the current group id.
-ACE_INLINE int
+int
 ACE_Task_Base::grp_id (void)
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
@@ -127,7 +127,7 @@ ACE_Task_Base::grp_id (void)
 }
 
 // Set the current group id.
-ACE_INLINE void
+void
 ACE_Task_Base::grp_id (int id)
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
@@ -184,7 +184,7 @@ ACE_Task_Base::activate (long flags,
     this->thr_mgr_ = ACE_Service_Config::thr_mgr ();
 
   this->grp_id_ = this->thr_mgr_->spawn_n (n_threads, 
-					   &ACE_Task_Base::svc_run,
+					   ACE_THR_FUNC (&ACE_Task_Base::svc_run),
 					   (void *) this, 
 					   flags,
 					   priority,

@@ -113,7 +113,6 @@ ACE_SPIPE_Acceptor::close (void)
   return result;
 }
 
-ACE_INLINE
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap, 
 					int reuse_addr,
 					int perms)

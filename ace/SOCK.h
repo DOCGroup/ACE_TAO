@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -28,11 +27,6 @@ class ACE_Export ACE_SOCK : public ACE_IPC_SAP
   //     ACE_SOCK abstraction. 
 {
 public:
-  int open (int type, 
-	    int protocol_family, 
-	    int protocol);
-  // Wrapper around the socket() system call.
-
   int set_option (int level, 
 		  int option, 
 		  void *optval, 
@@ -65,6 +59,11 @@ protected:
   // = Make this an abstract class.
   ACE_SOCK (void);
   // Default constructor.
+
+  int open (int type, 
+	    int protocol_family, 
+	    int protocol);
+  // Wrapper around the socket() system call.
 
   ACE_SOCK (int type, int protocol_family, int protocol = 0);
   // Wrapper around the socket() system call.

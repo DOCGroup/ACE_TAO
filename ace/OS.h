@@ -106,6 +106,12 @@
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
+#if defined (ACE_HAS_USING_KEYWORD)
+#define	ACE_USING using
+#else
+#define ACE_USING
+#endif /* ACE_HAS_USING_KEYWORD */
+
 // Helpful dump macros.
 #define ACE_BEGIN_DUMP "\n====\n(%P|%t|%x)"
 #define ACE_END_DUMP "====\n"
@@ -952,7 +958,9 @@ typedef void (*ACE_SignalHandlerV)(...);
 // mistakenly passing an HPEN to a routine expecting an HBITMAP.
 // Note that we only use this if we 
 #if defined (ACE_HAS_STRICT)
+#if !defined (STRICT)	// may already be defined
 #define STRICT
+#endif /* !STRICT */
 #endif /* ACE_HAS_STRICT */
 
 #include /**/ <sys/timeb.h>
@@ -982,11 +990,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
 #define ACE_INVALID_SEM_KEY 0
 #define ACE_DEFAULT_MUTEX __TEXT ("ACE_MUTEX")
-
-// This flag speeds up the inclusion of Win32 header files.
-#if !defined (WIN32_LEAN_AND_MEAN)
-#define WIN32_LEAN_AND_MEAN 1
-#endif /* !defined (WIN32_LEAN_AND_MEAN) */
 
 #define ACE_SEH_TRY __try
 #define ACE_SEH_EXCEPT(X) __except(X)
@@ -1041,17 +1044,8 @@ PAGE_GUARD
 PAGE_NOACCESS
 PAGE_NOCACHE  */
 
-// This is necessary since MFC users apparently can't #include
-// <windows.h> directly.
-#if !defined (__AFX_H__)
-#include /**/ <windows.h>
-#endif /* __AFX_H__ */
-
 #if defined (ACE_HAS_WINSOCK2)
-#include /**/ <winsock2.h>
 #include "ace/ws2tcpip.h"
-#else
-#include /**/ <winsock.h>
 #endif /* ACE_HAS_WINSOCK2 */
 
 #define MAXHOSTNAMELEN  256

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -127,8 +126,8 @@ public:
   int control (int cmd, int value = 0, int n = 0) const;
 
   // = Upgrade access control...
-  ACE_SV_Semaphore_Simple::get_id;
-  ACE_SV_Semaphore_Simple::remove;
+  ACE_USING ACE_SV_Semaphore_Simple::get_id;
+  ACE_USING ACE_SV_Semaphore_Simple::remove;
 
   void dump (void) const;
   // Dump the state of an object.

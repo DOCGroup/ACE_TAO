@@ -236,8 +236,9 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::open");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-  ACE_Task<ACE_SYNCH_2> *h1, *h2;
-  ACE_Task<ACE_SYNCH_2> *t1, *t2;
+
+  ACE_Task<ACE_SYNCH_2> *h1 = 0, *h2 = 0;
+  ACE_Task<ACE_SYNCH_2> *t1 = 0, *t2 = 0;
 
   if (head == 0)
     {
@@ -255,8 +256,8 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
     }
 
   // Make sure *all* the allocation succeeded!
-  if (h1 == 0 || h2 == 0 || head == 0
-      || t1 == 0 || t2 == 0 || tail == 0)
+  if (head == 0 && (h1 == 0 || h2 == 0) 
+      || tail == 0 && (t1 == 0 || t2 == 0))
     {
       delete h1;
       delete h2;

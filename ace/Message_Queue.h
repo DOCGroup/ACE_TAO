@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -33,11 +32,11 @@ class ACE_Message_Queue_Reverse_Iterator;
 template <ACE_SYNCH_1>
 class ACE_Message_Queue
   // = TITLE
-  //     A thread-safe message queueing facility, modeled after the
-  //     queueing facilities in System V StreamS.
+  //     A threaded message queueing facility, modeled after the
+  //     queueing facilities in System V STREAMs.
   //
   // = DESCRIPTION
-  //     A ACE_Message_Queue is the central queueing facility for
+  //     An <ACE_Message_Queue> is the central queueing facility for
   //     messages in the ASX framework.  If <ACE_SYNCH_1> is
   //     ACE_MT_SYNCH then all operations are thread-safe.  Otherwise,
   //     if it's <ACE_NULL_SYNCH> then there's no locking overhead.
@@ -46,9 +45,9 @@ friend class ACE_Message_Queue_Iterator<ACE_SYNCH_2>;
 friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>;
 public:
 
+  // = Traits
   typedef ACE_Message_Queue_Iterator<ACE_SYNCH_2> ITERATOR;
   typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2> REVERSE_ITERATOR;
-  // Traits 
 
   // = Default high and low water marks.
   enum 
@@ -82,11 +81,7 @@ public:
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  // = For all the following three routines if tv == 0, the caller
-  // will block until action is possible, else will wait for amount of
-  // time in *tv).  Calls will return, however, when queue is closed,
-  // deactivated, when a signal occurs, or if the time specified in tv
-  // elapses, (in which case errno = EWOULDBLOCK).
+  // = For all the following three routines if tv == 0, the caller will block until action is possible, else will wait until the absolute time specified in *tv elapses).  Calls will return, however, when queue is closed, deactivated, when a signal occurs, or if the time specified in tv elapses, (in which case errno = EWOULDBLOCK).
 
   int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
@@ -156,8 +151,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  // = Routines that actually do the enqueueing and dequeueing (these
-  // assume that locks are held by the corresponding public methods).
+  // = Routines that actually do the enqueueing and dequeueing (these assume that locks are held by the corresponding public methods).
 
   int enqueue_i (ACE_Message_Block *new_item);
   // Enqueue an <ACE_Message_Block *> in accordance with its priority.
@@ -178,8 +172,7 @@ protected:
   int is_empty_i (void);
   // True if queue is empty, else false.
 
-  // = Implementation of the public activate() and deactivate() 
-  // methods above (assumes locks are held).
+  // = Implementation of the public activate() and deactivate() methods above (assumes locks are held).
   int deactivate_i (void);
   // Deactivate the queue.
   int activate_i (void);
@@ -220,9 +213,7 @@ protected:
 template <ACE_SYNCH_1>
 class ACE_Message_Queue_Iterator
   // = TITLE
-  //     Iterator for the ACE_Message_Queue.
-  //
-  // = DESCRIPTION
+  //     Iterator for the <ACE_Message_Queue>.
 {
 public:
   // = Initialization method.
@@ -253,9 +244,7 @@ private:
 template <ACE_SYNCH_1>
 class ACE_Message_Queue_Reverse_Iterator
   // = TITLE
-  //     Reverse Iterator for the ACE_Message_Queue.
-  //
-  // = DESCRIPTION
+  //     Reverse Iterator for the <ACE_Message_Queue>.
 {
 public:
   // = Initialization method.

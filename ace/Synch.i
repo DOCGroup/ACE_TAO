@@ -289,8 +289,13 @@ ACE_INLINE int
 ACE_Thread_Mutex_Guard::release (void) 
 { 
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::release");
-  this->owner_ = -1;
-  return this->lock_.release (); 
+  if (this->owner_ != -1)
+    {
+      this->owner_ = -1;
+      return this->lock_.release (); 
+    }
+  else
+    return 0;
 }
 
 // Explicitly release the lock.

@@ -435,13 +435,17 @@ ACE_Thread_Manager::kill_thr (int i, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
-  int result = ACE_Thread::kill ((ACE_thread_t) this->thr_table_[i].thr_handle_,
+  int result = ACE_Thread::kill ((ACE_thread_t) this->thr_table_[i].thr_id_,
 				 signum);
 
-  if (result != 0) 
+  if (result != 0)
     { 
+      // We need to save this across calls to remove_thr() since that
+      // call may reset errno.
+      int error = errno;
+
       this->remove_thr (i); 
-      errno = result; 
+      errno = error; 
       return -1; 
     } 
   else 

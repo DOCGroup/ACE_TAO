@@ -1,4 +1,130 @@
+Thu Nov 28 00:53:16 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* tests/CPP_Test.cpp: Completely reworked this test so that it
+ 	  should run correctly on Win32 and UNIX.
+
+Wed Nov 27 16:50:17 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* Put out a new beta of ACE 4.0.33.
+
+	* tests/Mutex_Test.cpp (test): Fixed the test() function so that
+ 	  it doesn't use the ACE_Thread_Control unless we explicitly want
+ 	  to use threads.
+
+	* tests/test_config.h: Added addition information about the
+ 	  process id and thread id of the main thread.
+
+	* ace/Synch.h: Speed things up a bit by conditionally #including
+ 	  "ace/SV_Semaphore_Complex.h" only if we are compiling on a
+ 	  non-Win32 platform or a POSIX platform.  Thanks to Matthias
+ 	  Kerkhoff <make@cs.tu-berlin.de> for this.
+
+	* ace/SV_Semaphore_Complex.h: Incorporated the new ACE_USING
+ 	  macro, which is useful if you have
+ 
+          class b {
+	    a()
+	  };
+ 
+          class d : private b {
+	    b::a()			// still works, but depriciated
+	    using b::a()		// should be used instead
+	  };
+
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for this.
+
+	* ace/OS.h: Added a new macro called ACE_USING, which is used to
+ 	  distinguish between platforms that support namespace "using"
+ 	  semantics and those that don't.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for this.
+
+        * examples/Misc/test_XtReactor[12].cpp: Had to add the infamous
+ 	  #define String XtString before including Xm/PushB.h. Also, there
+ 	  were some references to XtReactor when the class is now
+ 	  ACE_XtReactor.  Thanks to Gonzalo Diethelm <gonzo@ing.puc.cl>
+ 	  for reporting this.
+
+	* ace/XtReactor.cpp (ACE_XtReactor): timeout_ was not being
+ 	  initialized on the constructor, and that caused a core dump.
+  	  Thanks to Gonzalo Diethelm <gonzo@ing.puc.cl> for reporting
+ 	  this.
+
+	* ace/SOCK.h: Put the open() call in the protected part of the
+ 	  class since we generally don't want clients to call this
+ 	  directly.  Thanks to Eric Newton <ecn@clark.net> for pointing
+ 	  this out.
+
+	* ace/ACE.cpp: Fixed a bug where sin.sin_family was being set
+ 	  rather than sin.sin_len.  Thanks to Chuck Gehr
+ 	  <gehr@sweng.stortek.com> for reporting this.
+
+	* ace/ACE.cpp: Enhanced the ACE::{send_n,recv_n} methods so that
+ 	  they check to see if errno == EWOULDBLOCK when ACE_OS::send() or
+ 	  ACE_OS::recv() returns -1.  If that's the case, then they keep
+ 	  iterating.
+
+	  Thanks to Mehdi TABATABAI <Mehdi.TABATABAI@ed.gva.sita.int> for
+ 	  this suggestion.
+
+	* ace/Log_Msg.h: Fixed ACE_RETURN so that it only has 1 parameter
+ 	  if ACE_NLOGGING is enabled.  Thanks to Antonio Tortorici
+ 	  <antonio@rh0011.roma.tlsoft.it> for reporting this.
+
+	* ace/config-vxworks*.h: Added ACE_NTRACE macros so that 
+	  tracing doesn't magically turn on!
+
+	* ace/Task.cpp (activate): the &ACE_Task_Base::svc_run() argument
+ 	  needs a cast to ACE_THR_FUNC, because that's what
+ 	  ACE_Thread_Manager::spawn_n() requires.  On VxWorks,
+ 	  ACE_THR_FUNC functions return an int, while svc_run() returns
+ 	  void *.  Thanks to David Levine for this.
+
+	* ace/Thread_Manager.cpp (kill_thr): I was mistakenly passing in
+ 	  the thr_handle_ where I should have been passing in the thr_id_.
+  	  In addition, made sure we don't set errno to the wrong value...
+  	  Thanks to Ross Dargahi <rossd@acm.org> for reporting this.
+
+	* ace/{Synch_T,Synch}.h: If we don't actually own the lock
+ 	  anymore, don't try to do a release.  Thanks to Jonathan Biggar
+ 	  <jon@sems.com> for reporting this bug.
+
+	* ace/ACE.cpp (handle_timed_complete): Added an ex_handles mask so
+ 	  that non-blocking connects will work correctly on Win32.  Thanks
+ 	  to Antonio Tortorici <antonio@rh0011.roma.tlsoft.it> for
+ 	  reporting this fix.
+
+	* ace/Message_Queue.h: Updated the documentation to stress the
+ 	  fact that the timeouts are specified in *absolute* time, rather
+ 	  than in relative time.  Thanks to Bob Dunmire <bobd@titan.com>
+ 	  for reporting this.
+
+	* tests/test_config.h: Modified the ACE_END_TEST macro so that the
+ 	  log file is closed.  This works around a problem on VxWorks
+ 	  where destructors of static objects don't get closed
+ 	  automatically.  Thanks to David Levine for this fix.
+
+	* ace/OS.i (rand_r): Added a fix for Digital UNIX so that rand_r
+ 	  works correctly in MT settings.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for this.
+
+Wed Nov 27 16:12:00 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Stream.cpp: Fixed a bug in ACE_Stream::open to
+	  allow applications to specify a tail or a head without
+	  having to specify both.  This was needed by the ACE_Pipeline
+	  application since it only needs a Pipeline-specific tail
+	  (not a head). 
+
 Tue Nov 26 18:00:25 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace: Functions should not be declared with ACE_INLINE in a
+	  .cpp file.  Fixed this problem in the following files:
+
+	  SPIPE_Acceptor.cpp:116:ACE_INLINE
+	  TLI_Acceptor.cpp:145:ACE_INLINE int
+	  TLI_Acceptor.cpp:192:ACE_INLINE
+	  Task.cpp:121:ACE_INLINE int
+	  Task.cpp:130:ACE_INLINE void
 
 	* ace/{OS,Thread}: Added Chuck Gehr's suggested change for the
  	  pthread_keycreate() routine, which must take extern "C"
@@ -4087,5 +4213,3 @@ Mon Jul  1 02:15:34 1996  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
 	  ACE_Reactor.  This is so Reactor, ReactorEx, and Proactor can
 	  all reuse the calculations required by the Timer_Queue without
 	  duplicating code.
-
-

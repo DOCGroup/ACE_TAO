@@ -26,7 +26,8 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
   : ACE_Reactor (size, restart, h),
     context_ (context),
     id_len_ (0),
-    ids_ (0)
+    ids_ (0),
+    timeout_ (0)
 {
   // When the ACE_Reactor is constructed it creates the notify pipe
   // and registers it with the attach() method. The XtReactor

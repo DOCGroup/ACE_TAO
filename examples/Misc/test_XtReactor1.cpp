@@ -8,6 +8,7 @@
 #include "ace/Message_Block.h"
 
 #if defined (ACE_HAS_XT)
+#define String XtString
 #include <Xm/PushB.h>
 
 class Stdout : public ACE_Event_Handler
