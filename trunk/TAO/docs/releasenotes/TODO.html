@@ -468,6 +468,24 @@ class Foo {
 	</P>
       </LI>
 
+      <LI><P>Improve the connection recycling strategies, for
+	  instance,
+	  several strategies are possible: limit the maximum number of
+	  open sockets, probably with both HWM and LWM bounds,
+	  with different policies to choose the socket to close (LFU,
+	  MRU?);
+	  or maybe be more aggresive and recycle a socket once
+	  all the object references pointing to a server are closed.
+	  The later approach could be easily implemented if each
+	  IIOP_Object held a reference to the set of sockets opened to
+	  a certain TCP/IP address.
+	</P>
+      </LI>
+
+      <!-- Things below this point are "big" tasks" that -->
+      <!-- could require major work -->
+
+
       <LI><P>The ORB should support server side and client side
 	  interceptors</P>
       </LI>
