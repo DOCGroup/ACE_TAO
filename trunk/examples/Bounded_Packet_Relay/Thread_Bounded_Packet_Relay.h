@@ -30,7 +30,7 @@
 
 #define ACE_HAS_DEFERRED_TIMER_COMMANDS
 
-#include "ace/Functor.h"
+#include "ace/Functor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
