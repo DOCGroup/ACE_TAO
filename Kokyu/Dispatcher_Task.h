@@ -65,7 +65,7 @@ public:
   Dispatcher_Task (const ConfigInfo& config_info,
                    ACE_Thread_Manager* thr_manager = 0);
 
-  int init();
+  int initialize();
 
   int enqueue (const Dispatch_Command* cmd,
            const QoSDescriptor& qos_info);

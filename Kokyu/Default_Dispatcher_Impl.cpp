@@ -16,7 +16,7 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
 {
   //create and init the dispatcher tasks here
 
-  ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
+  //ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
   int size;
   size = config_info_set.size ();
 
@@ -28,10 +28,10 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
   Dispatcher_Task_Auto_Ptr * tasks_array=0;
   ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
-  ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
+  //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
   tasks_.reset(tasks_array);
 
-  ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
+  //ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
 
   ConfigInfoSet& config_set = const_cast<ConfigInfoSet&> (config_info_set);
   ConfigInfoSet::ITERATOR iter(config_set);
@@ -40,7 +40,7 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
   ConfigInfo* config;
   for (;i<size && iter.next (config);iter.advance ())
     {
-      ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
+      //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
       Dispatcher_Task* task=0;
       ACE_NEW_RETURN (task, Dispatcher_Task (*config), -1);
       auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
