@@ -42,7 +42,7 @@ Test_DynEnum::test_name (void) const
 int
 Test_DynEnum::run_test (void)
 {
-  DynAnyTests::test_enum te = DynAnyTests::ZEROTH;
+  DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
 
   ACE_TRY_NEW_ENV
     {
@@ -91,14 +91,14 @@ Test_DynEnum::run_test (void)
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any in_any2;
-      in_any2 <<= DynAnyTests::THIRD;
+      in_any2 <<= DynAnyTests::TE_THIRD;
       de2->from_any (in_any2,
                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any* out_any1 = de2->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *out_any1 >>= te;
-      if (te == DynAnyTests::THIRD)
+      if (te == DynAnyTests::TE_THIRD)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 

@@ -55,7 +55,7 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
-      tu._d(DynAnyTests::FIRST);
+      tu._d(DynAnyTests::TE_FIRST);
       tu.s (data.m_short2);
       CORBA_Any in_any1;
       in_any1 <<= tu;
