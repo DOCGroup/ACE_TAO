@@ -22,6 +22,49 @@ Mon Jun 24 18:47:41 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  using the explicit specialization syntax."  Fixes build problems on
 	  Solaris and Borland compilers.
 
+Thu Jun 20 17:57:23 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Persistent_ID: Added a new test that checks the
+	  combination of PERSISTENT & SYSTEM_ID POA policies.
+
+	  A servant is registered on the RootPOA. The client tells the
+	  server to create a POA with PERSISTENT & SYSTEM_ID policies.
+	  The server does so and returns a object created and registered
+	  in the child POA using a system generated id. Before returning
+	  the object, the server saves the system generated id. The client
+	  make a call on this new object to make sure that the new object
+	  is valid.
+
+	  After this the client instructs the server to destroy the child POA.
+
+	  Then the client instructs the server to recreate the child POA.
+	  The server does so and returns a object created and registered
+	  in the child POA, but this time uses the previous generated id
+	  instead of using a newly generated one. Before returning the
+	  object, the server saves the system generated id. The client
+	  make a call on this new object and on the previous object to
+	  make sure that the objects are valid.
+
+	  The following file were added/updated:
+
+	   - tests/POA/Makefile
+	   - tests/POA/Makefile.bor
+	   - tests/POA/README
+	   - tests/POA/Persistent_ID/Makefile
+	   - tests/POA/Persistent_ID/Makefile.bor
+	   - tests/POA/Persistent_ID/Persistent_ID.dsw
+	   - tests/POA/Persistent_ID/README
+	   - tests/POA/Persistent_ID/client.bor
+	   - tests/POA/Persistent_ID/client.cpp
+	   - tests/POA/Persistent_ID/client.dsp
+	   - tests/POA/Persistent_ID/run_test.pl
+	   - tests/POA/Persistent_ID/server.bor
+	   - tests/POA/Persistent_ID/server.cpp
+	   - tests/POA/Persistent_ID/server.dsp
+	   - tests/POA/Persistent_ID/test.idl
+	   - tests/TAO_Tests.dsw
+	   - ACE_wrappers/bin/auto_run_tests.lst
+
 Wed Jun 19 14:34:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Removed the #define,
