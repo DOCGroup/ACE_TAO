@@ -1,3 +1,9 @@
+Sun Jan 17 15:51:39 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Time_Service_Server.dsp: Added the generated
+	files of ImplRepo to the project .dsp. This is required till the
+	ImplRepo idl files are moved to the orbsvcs/orbsvcs directory.
+
 Sun Jan 17 15:41:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO/TAOACE_Static.dsw: Removed outdated project files.
@@ -63,7 +69,6 @@ Fri Jan 15 18:43:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/Simple_Util.cpp:
 	New files that have the template definitions and
 	implementation of those methods.
-
 
 Fri Jan 15 17:24:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
