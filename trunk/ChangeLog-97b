@@ -1,3 +1,8 @@
+Fri Oct 24 09:24:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp (open): cast return value of
+	  ACE_::max_handles () to size_t to avoid signed/unsigned comparison.
+
 Fri Oct 24 01:53:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.26, released Fri Oct 24 01:53:58 1997.
@@ -6,18 +11,18 @@ Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * netsvcs/clients/Naming/Client/Makefile
 	  netsvcs/clients/Naming/Dump_Restore/Makefile
- 
+
           The lines:
- 
+
           SHLIB   = libClient_Test.so
 	  SHLIB   = libDump_Restore.so
- 
+
           need to be
- 
+
           SHLIB   = libClient_Test.$(SOEXT)
           SHLIB   = libDump_Restore.$(SOEXT)
 
-          Thanks to Stephen Coy <stevec@magna.com.au> for reporting this. 
+          Thanks to Stephen Coy <stevec@magna.com.au> for reporting this.
 
 	* ace/Thread_Manager.cpp (find_hthread): Replaced the call
 
@@ -83,7 +88,7 @@ Thu Oct 23 23:19:24 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 Thu Oct 23 22:52:17 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (shutdown_timer): 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (shutdown_timer):
 	  Added a line to call the cancel method on the timer queue task
 	  when we are shutting down; this is wrapped around #if's to only
 	  include this only when the platformm supports pthread_cancel().
