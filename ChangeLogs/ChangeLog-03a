@@ -1,3 +1,18 @@
+Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+	  This class allow application to subscribe a single socket to
+	  many multicast groups.  However, the unsubscribe operation
+	  failed to work with more than one group.  For some strange
+	  reason it was storing the first multicast group subscription in
+	  a class member and using that member in all the paths for the
+	  unsubscribe methods.
+	  We have changed the unsubscribe(const ACE_INET_Addr&,...) method
+	  to work as adversited, i.e. unsubscribe the *given* multicast
+	  address, not the stored one, as an added benefit the method is
+	  now re-entrant.  The unsubscribe(void) method works as before.
+	  The code has been re-factored to minimize duplication.
+
 Mon Nov 19 11:03:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ACE-INSTALL.html:
