@@ -1,3 +1,13 @@
+Fri Mar  9 10:30:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          To a conditional checking for Linux in the handling of
+          the gperf input stream, added a check for QNX, which
+          seems to have similar behavior at that point. Thanks
+          to Andy Olson <andrew.olson@lmco.com> for reporting the
+          bug and for tracking down the problem.
+
 Fri Mar  9 16:07:55 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
