@@ -1,3 +1,15 @@
+Fri Jul 21 20:35:38 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/wait.h:
+	* pace/win32/wait.inl:
+	 
+	  ACE implements waitpid with an additional argument (HANDLE).
+	  Eliminated POSIX support here.
+
+	* pace/docs/PACE_POSIX_support.txt
+
+	  Updated.
+
 Fri Jul 21 20:23:55 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/utsname.inl (pace_uname):
