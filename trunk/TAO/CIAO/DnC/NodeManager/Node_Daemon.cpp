@@ -34,14 +34,17 @@
 const char *ior_file_name_ = "nodedaemon.ior";
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
+char *nodeapp_location_ = 0;
 
 int write_to_ior_ = 0;
 int register_with_ns_ = 0;
+int nodeapp_loc_ = 0;
+int spawn_delay = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:m:n");
+  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:n");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -60,6 +63,15 @@ parse_args (int argc, char *argv[])
         svcconf_config_ = get_opts.opt_arg ();
       break;
 
+      case 's': //get the location to spawn the NodeApplication
+        nodeapp_location_ = get_opts.opt_arg ();
+        nodeapp_loc_ = 1;
+      break;
+
+      case 'd': //get the spawn delay argument
+        spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
+      break;
+
       case 'n':
         register_with_ns_ = 1;
       break;
@@ -72,6 +84,7 @@ parse_args (int argc, char *argv[])
                            "-c <svc.conf file>\n"
                            "-i <installation data filename>\n"
                            "-n <use naming service>\n"
+                           "-s <NodeApplication executable path>\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -138,6 +151,15 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
+      // Check if NodeApplication executable location has been
+      // specified
+      if (! nodeapp_loc_)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Use -s <NodeApplicationPath> to specify \
+                                 executable path\n"));
+          exit (1);
+        }
+
       // Get reference to Root POA.
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
@@ -166,7 +188,9 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (daemon_servant,
                       CIAO::NodeDaemon_Impl("NodeDaemon",
 					    orb.in (),
-					    poa.in ()),
+					    poa.in (),
+                                            nodeapp_location_,
+                                            spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
       // Implicit activation

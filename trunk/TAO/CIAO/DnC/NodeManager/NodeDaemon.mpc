@@ -3,8 +3,10 @@
 
 project(Node_Daemon): ciao_deployment_svnt, iortable, naming {
   requires += dnc
-  includes += $(CIAO_ROOT)/DnC/DomainApplicationManager
-  idlflags += -I ../Core
+  includes += $(CIAO_ROOT)/DnC/NodeApplicationManager
+  idlflags += -I ../Core 
+  after += NodeApplicationManager
+  libs += NodeApplicationManager
   exename = Node_Daemon
 
   IDL_Files {
@@ -15,7 +17,6 @@ project(Node_Daemon): ciao_deployment_svnt, iortable, naming {
     NodeDaemonC.cpp
     NodeDaemonS.cpp
     NodeDaemon_Impl.cpp
-    NodeApplicationManager_Impl.cpp
     Node_Daemon.cpp
   }
 }

@@ -46,8 +46,10 @@ namespace CIAO
 
     /// Constructor
     NodeDaemon_Impl (const char *name,
-		     CORBA::ORB_ptr o,
-		     PortableServer::POA_ptr p);
+		     CORBA::ORB_ptr orb,
+		     PortableServer::POA_ptr p,
+                     const char * nodeapp_loc,
+                     int spawn_delay);
 
     /// Destructor
     virtual ~NodeDaemon_Impl (void);
@@ -109,6 +111,15 @@ namespace CIAO
 
     /// My Canonical name.
     CORBA::String_var name_;
+
+    /// NodeApplication location
+    CORBA::String_var nodeapp_location_;
+
+    /// Cache reference of last NodeAppManager
+    Deployment::NodeApplicationManager_var manager_;
+
+    /// Spawn delay for the NodeAppMgr
+    int spawn_delay_;
 
     /// Internal object hash table.
     Table table_;

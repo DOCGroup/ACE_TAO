@@ -1,3 +1,26 @@
+Tue Jun  1 15:08:23 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/NodeManager/NodeApplicationManager_Impl.h:
+        * DnC/NodeManager/NodeApplicationManager_Impl.cpp:
+
+          Removed these files; New implementation present in
+          DnC/NodeApplicationManager directory
+
+        * DnC/NodeManager/Node_Daemon.cpp:
+        * DnC/NodeManager/NodeDaemon_Impl.h:
+        * DnC/NodeManager/NodeDaemon_Impl.cpp:
+        * DnC/NodeManager/NodeDaemon.mpc:
+
+          Changed the Node Manager to interact with the new
+          NodeApplication Manager implementation.
+
+Tue Jun  1 15:08:13 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/tests/NodeApplicationTest/run_test.pl:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+
+          Added run_test.pl to run this test via scripts
+
 Tue Jun  1 14:48:01 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
@@ -101,6 +124,7 @@ Tue Jun  1 10:01:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	  Included BasicSP.idl to fix problems during static linking.
 
+>>>>>>> 1.583
 Tue Jun  1 00:42:56 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
