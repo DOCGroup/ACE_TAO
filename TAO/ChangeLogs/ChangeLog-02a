@@ -1,3 +1,8 @@
+Sat Jul 14 20:18:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
+	  dependencies. 
+
 Sat Jul 14 18:59:48 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
