@@ -21,15 +21,4 @@ JAWS_Pipeline::close (u_long = 0)
   return 0;
 }
 
-template <class TYPE>
-JAWS_Pipeline_Handler<TYPE>::JAWS_Pipeline_Handler (void)
-{
-}
-
-template <class TYPE> int
-JAWS_Pipeline_Handler<TYPE>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{
-  TYPE *data = ACE_dynamic_cast(TYPE *, mb->data_block ());
-  status = this->handle_input (data, tv);
-  return (status != -1) ? this->put_next (mb, tv) : -1;
-}
+#include "JAWS_Pipeline_Handler.cpp"
