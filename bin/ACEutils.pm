@@ -39,6 +39,19 @@ sub waitforfile
   sleep 1 while (!(-e $file));
 }
 
+sub waitforfile_timed
+{
+  my $file = shift;
+  my $maxtime = shift;
+  while ($maxtime-- != 0) {
+    if (-e $file) {
+      return 0;
+    }
+    sleep 1;
+  }
+  return -1;
+}
+
 $sleeptime = 5;
 
 1;
