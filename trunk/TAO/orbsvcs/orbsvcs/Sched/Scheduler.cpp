@@ -207,12 +207,12 @@ int ACE_Scheduler::add_dependency(RT_Info* rt_info,
   return 0;
 }
 
-void ACE_Scheduler::export(RT_Info* info, FILE* file)
+void ACE_Scheduler::export_to_file (RT_Info* info, FILE* file)
 {
-  export(*info, file);
+  ACE_Scheduler::export_to_file (*info, file);
 }
 
-void ACE_Scheduler::export(RT_Info& info, FILE* file)
+void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
   // The divide-by-1 is for ACE_U_LongLong support.
   (void) ACE_OS::fprintf (file,
