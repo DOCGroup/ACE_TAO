@@ -96,7 +96,7 @@ sub optionError {
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
                "Usage: $base [-global <file>] [-include <directory>] [-recurse[=dir1,...]]\n" .
-               $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
+               $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
@@ -126,6 +126,7 @@ sub optionError {
 "                       config directory.\n" .
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
+"       -hierarchy      Generate a workspace in a hierarchical fashion.\n" .
 "       -include        Specifies a directory to search when looking for base\n" .
 "                       projects, template input files and templates.  This\n" .
 "                       option can be used multiple times to add directories.\n" .
@@ -330,6 +331,7 @@ sub run {
                                   $options->{'baseprojs'},
                                   $global_feature_file,
                                   $options->{'feature_file'},
+                                  $options->{'hierarchy'},
                                   $options->{'coexistence'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));

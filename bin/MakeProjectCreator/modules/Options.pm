@@ -29,7 +29,8 @@ sub completion_command {
   my($str)   = "complete $name " .
                "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
-               "value_template value_project make_coexistence)/' " .
+               "value_template value_project make_coexistence " .
+               "hierarchy)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -63,6 +64,7 @@ sub options {
   my($template)   = undef;
   my($feature_f)  = undef;
   my($recurse)    = undef;
+  my($hierarchy)  = 0;
   my($dynamic)    = ($defaults ? 1 : undef);
   my($reldefs)    = ($defaults ? 1 : undef);
   my($toplevel)   = ($defaults ? 1 : undef);
@@ -123,6 +125,9 @@ sub options {
       if (!defined $global) {
         $self->optionError('-global requires a file name argument');
       }
+    }
+    elsif ($arg eq '-hierarchy') {
+      $hierarchy = 1;
     }
     elsif ($arg eq '-include') {
       $i++;
@@ -286,6 +291,7 @@ sub options {
                   'addtemp'      => \%addtemp,
                   'addproj'      => \%addproj,
                   'coexistence'  => $makeco,
+                  'hierarchy'    => $hierarchy,
                  );
 
   return \%options;
