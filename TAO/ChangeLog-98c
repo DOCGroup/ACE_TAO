@@ -1,3 +1,10 @@
+Tue Jun 16 14:44:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	*orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
+	Added acceptor code to accept connection from the java GUI.
+	Added code to read the MMDevice ior and movie name from the
+	socket to java GUI.
+	
 1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/CC_command.h, CC_client.cpp
