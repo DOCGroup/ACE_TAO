@@ -39,6 +39,7 @@ Wed Apr 16 01:41:20 2003  Ossama Othman  <ossama@uci.edu>
 Wed Apr 16 00:47:50 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.h:
+	* tao/Protocol_Factory.h:
 
 	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
 	  declarations of ACE_CString are enough.

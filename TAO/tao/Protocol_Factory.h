@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-#include "ace/SString.h"
+#include "ace/SStringfwd.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -62,7 +62,7 @@ public:
    * Some protocols should not create a default endpoint unless the
    * user specifies a -ORBEndpoint option. For example, local IPC
    * (aka UNIX domain sockets) is unable to remove the rendesvouz
-   * point if the server crashes.  For those protocols is better to
+   * point if the server crashes.  For those protocols it is better to
    * create the endpoint only if the user requests one.
    */
   virtual int requires_explicit_endpoint (void) const = 0;
