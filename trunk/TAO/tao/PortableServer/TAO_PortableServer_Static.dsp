@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\PortableServer"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\PortableServer"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -165,6 +165,10 @@ SOURCE=.\Servant_Base.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerInterceptorAdapter.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServerRequestInfo.inl
 # End Source File
 # End Group
@@ -190,6 +194,10 @@ SOURCE=.\Default_Servant_Dispatcher.h
 # Begin Source File
 
 SOURCE=.\Direct_Object_Proxy_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepo_i.h
 # End Source File
 # Begin Source File
 
@@ -222,10 +230,6 @@ SOURCE=.\Object_Adapter.h
 # Begin Source File
 
 SOURCE=.\Operation_Table.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepo_i.h
 # End Source File
 # Begin Source File
 
@@ -281,6 +285,10 @@ SOURCE=.\Servant_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerInterceptorAdapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServerRequestInfo.h
 # End Source File
 # Begin Source File
@@ -317,6 +325,10 @@ SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepo_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepoC.cpp
 # End Source File
 # Begin Source File
@@ -338,10 +350,6 @@ SOURCE=.\Object_Adapter.cpp
 # Begin Source File
 
 SOURCE=.\Operation_Table.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepo_i.cpp
 # End Source File
 # Begin Source File
 
@@ -386,6 +394,10 @@ SOURCE=.\Servant_Base.cpp
 # Begin Source File
 
 SOURCE=.\Servant_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerInterceptorAdapter.cpp
 # End Source File
 # Begin Source File
 

@@ -179,6 +179,10 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientInterceptorAdapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ClientRequestInfo.h
 # End Source File
 # Begin Source File
@@ -995,6 +999,10 @@ SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientInterceptorAdapter.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
@@ -1632,6 +1640,10 @@ SOURCE=.\Client_Priority_Policy.cpp
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientInterceptorAdapter.cpp
 # End Source File
 # Begin Source File
 
