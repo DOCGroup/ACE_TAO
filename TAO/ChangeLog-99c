@@ -1,8 +1,21 @@
+Sun May 02 14:02:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: added dependency of Event on
+          Sched, and Event2 on Event's IDL_SRC's.  Thanks to
+          Carlos for letting me know that they're necessary.
+          Reordered subset support to be top-to-bottom, so that
+          lower level services can be easily included if needed
+          only by higher level services.
+
+        * orbsvcs/Event_Service/Makefile,orbsvcs/tests/EC_Throughput/Makefile:
+          added dependency on TAO_ORBSVCS Naming.  Thanks to Carlos for
+          pointing out that these modules use Naming.
+
 Sun May 02 11:55:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h, i} (new)
           orbsvcs\orbsvcs\Scheduler_Factory.h: Very early draft
-	  of the reconfigurable scheduler implementation.
+          of the reconfigurable scheduler implementation.
 
 Sun May 02 08:15:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
