@@ -43,8 +43,8 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 
 Bank::Account_ptr
 AccountManager_i::open (const char *name,
-			CORBA::Float initial_balance,
-			CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Float initial_balance,
+                        CORBA::Environment &ACE_TRY_ENV)
 {
   Account_i *result = 0;
 
@@ -53,35 +53,35 @@ AccountManager_i::open (const char *name,
 
 
       if (hash_map_.find (name, result) != 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "[SERVER] Process/Thread Id : (%P/%t) Opening Account (%s,%8.2f)\n",
-		      name,
-		      initial_balance));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "[SERVER] Process/Thread Id : (%P/%t) Opening Account (%s,%8.2f)\n",
+                      name,
+                      initial_balance));
 
-	  ACE_NEW_THROW_RETURN (result,
-				Account_i (name,
-					   initial_balance),
-				CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-				Bank::Account::_nil ());
+          ACE_NEW_THROW_RETURN (result,
+                                Account_i (name,
+                                           initial_balance),
+                                CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                                Bank::Account::_nil ());
 
-	  // Enter the new Account in the hash map. If the <bind>
-	  // fails throw an UNKNOWN exception. <result> may be valid
-	  // but since it is not properly bound, it's behaviour may be
-	  // off, so delete it to be safe.
+          // Enter the new Account in the hash map. If the <bind>
+          // fails throw an UNKNOWN exception. <result> may be valid
+          // but since it is not properly bound, it's behaviour may be
+          // off, so delete it to be safe.
 
-	  if (hash_map_.bind (name, result) == -1)
-	    {
-	      delete result;
-	      TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
-				Bank::Account::_nil ());
-	    }
-	}
+          if (hash_map_.bind (name, result) == -1)
+            {
+              delete result;
+              TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
+                                Bank::Account::_nil ());
+            }
+        }
       else
-	if (TAO_debug_level > 0)
-	  ACE_DEBUG ((LM_DEBUG,
-		      "[SERVER] Process/Thread Id : (%P/%t) Account already exists for %s\n",
-		      name));
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      "[SERVER] Process/Thread Id : (%P/%t) Account already exists for %s\n",
+                      name));
       // Generate an IOR for the result object and register it with
       // the POA.  In case the object already exists then the
       // previously generated IOR is returned.
@@ -93,25 +93,25 @@ AccountManager_i::open (const char *name,
 
 void
 AccountManager_i::close (Bank::Account_ptr account,
-			 CORBA::Environment &ACE_TRY_ENV)
+                         CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
       CORBA::String_var name =
-	CORBA::string_dup (account->name (ACE_TRY_ENV));
+        CORBA::string_dup (account->name (ACE_TRY_ENV));
 
       ACE_TRY_CHECK;
 
       if (hash_map_.unbind ((const char *) name) == -1)
-	{
-	  if (TAO_debug_level > 0)
-	    ACE_DEBUG((LM_DEBUG,
-		       "Unable to close account\n"));
-	}
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG((LM_DEBUG,
+                       "Unable to close account\n"));
+        }
       else if (TAO_debug_level > 0)
-	ACE_DEBUG((LM_DEBUG,
-		   "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
-		   (char *) name));
+        ACE_DEBUG((LM_DEBUG,
+                   "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
+                   (char *) name));
     }
   ACE_CATCHANY
     {
@@ -138,8 +138,6 @@ template class ACE_Hash_Map_Manager_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CS
 template class ACE_Hash_Map_Iterator<ACE_CString,Account_i *,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_CString, Account_i *>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, Account_i *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
@@ -149,8 +147,6 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Account_i *, ACE_Hash<
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,Account_i *,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Account_i *>
-#pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Equal_To<ACE_CString>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, Account_i *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
