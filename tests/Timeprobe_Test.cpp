@@ -70,7 +70,7 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Timeprobe_Test"));
 
-  ACE_TIMEPROBE ("Staring Test");
+  ACE_TIMEPROBE ("Starting Test");
 
   for (int i = 1; i < 3; i++)
     {
@@ -80,8 +80,10 @@ main (int, ASYS_TCHAR *[])
 
   ACE_TIMEPROBE ("Ending Test");
 
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_1, 100);
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_0, 0);
+  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_1, 100)
+  ACE_UNUSED_ARG (ace_timeprobe_events_descriptions_1_return);
+  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_0, 0)
+  ACE_UNUSED_ARG (ace_timeprobe_events_descriptions_0_return);
 
   ACE_TIMEPROBE_PRINT;
 
