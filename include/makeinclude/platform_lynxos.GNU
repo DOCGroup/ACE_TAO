@@ -1,10 +1,13 @@
 # $Id$
 # LynxOS with g++
 
-CROSS-COMPILE = 1
 debug = 1
 shared_libs =
 static_libs = 1
+
+ifneq ($(shell uname -s),LynxOS)
+  CROSS-COMPILE = 1
+endif # uname -s
 
 CC              = gcc
 CXX             = g++
