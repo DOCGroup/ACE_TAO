@@ -46,6 +46,31 @@ ACE_MEM_Stream::close_writer (void)
     return 0;
 }
 
+ASYS_INLINE ssize_t
+ACE_MEM_Stream::send_n (const void *buf, int n)
+{
+  return this->send (buf, n);
+}
+
+
+ASYS_INLINE ssize_t
+ACE_MEM_Stream::recv_n (void *buf, int n)
+{
+  return this->recv (buf, n);
+}
+
+ASYS_INLINE ssize_t
+ACE_MEM_Stream::send_n (const void *buf, int n, int flags)
+{
+  return this->send (buf, n, flags);
+}
+
+ASYS_INLINE ssize_t
+ACE_MEM_Stream::recv_n (void *buf, int n, int flags)
+{
+  return this->recv (buf, n, flags);
+}
+
 #if 0
 ASYS_INLINE ssize_t
 ACE_MEM_Stream::recv_n (void *buf,

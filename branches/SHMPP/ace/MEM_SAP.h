@@ -58,6 +58,9 @@ public:
   // Return the size of valid information containing in the <buf>,
   // -1 if <shm_malloc_> is not initialized.
 
+  int remove (void);
+  // Remove the shared resouce (mmap file) used by us.
+
   void dump (void) const;
   // Dump the state of an object.
 

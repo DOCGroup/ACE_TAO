@@ -69,3 +69,11 @@ ACE_MEM_SAP::get_buf_len (const off_t off, void *&buf)
 
   return *lptr;
 }
+
+ASYS_INLINE int
+ACE_MEM_SAP::remove (void)
+{
+  ACE_TRACE ("ACE_MEM_SAP::remove");
+
+  return close_shm_malloc ();
+}

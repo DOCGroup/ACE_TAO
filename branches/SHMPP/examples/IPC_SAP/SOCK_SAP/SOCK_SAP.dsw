@@ -27,6 +27,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CPP_memclient"=.\CPP_memclient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CPP_memserver"=.\CPP_memserver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "C_inclient"=.\SOCK_SAP.dsp - Package Owner=<4>
 
 Package=<5>

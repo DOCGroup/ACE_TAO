@@ -51,19 +51,19 @@ public:
   ~ACE_MEM_Stream (void);
   // Destructor.
 
-/*
   //= The following two methods use write and read system calls.
-  ssize_t send_n (const void *buf, int n) const;
+  ssize_t send_n (const void *buf, int n);
   // Send n bytes, keep trying until n are sent.
-  ssize_t recv_n (void *buf, int n) const;
+  ssize_t recv_n (void *buf, int n);
   // Recv n bytes, keep trying until n are received.
 
   // = The following two methods use the send and recv system calls.
-  ssize_t send_n (const void *buf, int n, int flags) const;
+  ssize_t send_n (const void *buf, int n, int flags);
   // Send n bytes, keep trying until n are sent.
-  ssize_t recv_n (void *buf, int n, int flags) const;
+  ssize_t recv_n (void *buf, int n, int flags);
   // Recv n bytes, keep trying until n are received.
 
+/*
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
