@@ -85,7 +85,9 @@ test_cache_map_manager (size_t table_size,
                         size_t iterations,
                         int test_iterators)
 {
-  CACHE_MAP_MANAGER map (table_size);
+  NULL_CACHING_STRATEGY null_caching_strategy;
+  CACHE_MAP_MANAGER map (null_caching_strategy,
+                         table_size);
   TYPE i;
   TYPE j;
   ssize_t k;
@@ -210,7 +212,9 @@ test_hash_cache_map_manager (size_t table_size,
                              size_t iterations,
                              int test_iterators)
 {
-  HASH_CACHE_MAP_MANAGER map (table_size);
+  NULL_CACHING_STRATEGY null_caching_strategy;
+  HASH_CACHE_MAP_MANAGER map (null_caching_strategy,
+                              table_size);
   TYPE i;
   TYPE j;
   ssize_t k;
