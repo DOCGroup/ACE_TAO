@@ -176,7 +176,7 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
       *os << be_uidt;
     }
 
-  *os << be_uidt_nl << ");" << be_uidt_nl << be_nl;
+  *os << ");\n" << be_uidt_nl;
 
   // Here I still need to generate the other methods + private args.
   *os << "virtual Dynamic::ParameterList * arguments "

@@ -11,8 +11,9 @@ ACE_RCSID (tao,
 
 TAO_Synch_Queued_Message::
     TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
-                              ACE_Allocator *alloc)
-  : TAO_Queued_Message (alloc)
+                              ACE_Allocator *alloc,
+                              int is_heap_allocated)
+  : TAO_Queued_Message (alloc, is_heap_allocated)
   , contents_ (ACE_const_cast (ACE_Message_Block*,contents))
   , current_block_ (contents_)
 {

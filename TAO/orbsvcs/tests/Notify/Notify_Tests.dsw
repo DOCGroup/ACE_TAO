@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AdminProperties_Test"=.\Basic\AdminProperties_Test.dsp - Package Owner=<4>
+Project: "Basic AdminProperties"=.\Basic\AdminProperties.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -12,13 +12,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
+    Project_Dep_Name TAO_NotifyTests DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ConnectDisconnect"=.\Basic\ConnectDisconnect.dsp - Package Owner=<4>
+Project: "Basic ConnectDisconnect"=.\Basic\ConnectDisconnect.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,13 +27,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
+    Project_Dep_Name TAO_NotifyTests DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Events_Test"=.\BASIC\Events_Test.dsp - Package Owner=<4>
+Project: "Basic Events"=.\BASIC\Events.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -42,13 +42,25 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
+    Project_Dep_Name TAO_NotifyTests DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "IdAssignment"=.\BASIC\IdAssignment.dsp - Package Owner=<4>
+Project: "Basic Filter"=.\Basic\Filter.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Basic IdAssignment"=.\BASIC\IdAssignment.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -57,13 +69,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
+    Project_Dep_Name TAO_NotifyTests DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "LifeCycleTest"=.\BASIC\LifeCycleTest.dsp - Package Owner=<4>
+Project: "Basic LifeCycle"=.\BASIC\LifeCycle.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -72,7 +84,49 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Basic MultiTypes"=.\Basic\MultiTypes.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Basic Simple"=.\BASIC\Simple.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Basic Updates"=.\Basic\Updates.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
     End Project Dependency
 }}}
 
@@ -90,7 +144,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple"=.\BASIC\Simple.dsp - Package Owner=<4>
+Project: "Sequence_Consumer"=.\Sequence_Multi_ETCL_Filter\Sequence_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -98,9 +152,174 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Sequence_Consumer"=.\Sequence_Multi_Filter\Sequence_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Consumer"=".\performance-tests\Filter\Sequence_Consumer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Consumer"=.\Ordering\Sequence_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Consumer"=.\Discarding\Sequence_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Supplier"=.\Sequence_Multi_ETCL_Filter\Sequence_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Supplier"=.\Sequence_Multi_Filter\Sequence_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Supplier"=".\performance-tests\Filter\Sequence_Supplier.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Supplier"=.\Ordering\Sequence_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sequence_Supplier"=.\Discarding\Sequence_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Consumer"=".\performance-tests\Filter\Structured_Consumer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Consumer"=.\Ordering\Structured_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Consumer"=.\MT_Dispatching\Structured_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Consumer"=.\Discarding\Structured_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Consumer"=.\Blocking\Structured_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -113,6 +332,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -125,6 +347,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -137,11 +362,77 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
 Project: "Structured_Multi_Filter_Supplier"=.\Structured_Multi_Filter\Structured_Multi_Filter_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Structured_Supplier"=".\performance-tests\Filter\Structured_Supplier.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Supplier"=.\Ordering\Structured_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Supplier"=.\MT_Dispatching\Structured_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Supplier"=.\Discarding\Structured_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Supplier"=.\Blocking\Structured_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -166,21 +457,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Throughput"=".\PERFORMANCE-TESTS\THROUGHPUT\Throughput.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Updates"=.\Basic\Updates.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

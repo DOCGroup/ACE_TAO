@@ -55,7 +55,8 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -79,7 +80,8 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -152,7 +154,8 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i Event_Logging_Service.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Event_Logging_Service.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -268,7 +271,7 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -377,7 +380,6 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h \
  $(ACE_ROOT)/ace/Message_Queue.h \

@@ -157,16 +157,16 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl;
 
   // The _tao_obv_narrow method
-  *os << "\n#if defined (_MSC_VER)" << be_nl
+
+  *os << be_nl
       << "void *" << be_nl
+      << "#if defined (_MSC_VER)" << be_nl
       << node->name () << "::" << node->flat_name ()
       << "_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
-      << "{" << be_idt_nl
-      << "return this->_tao_obv_narrow (type_id);" << be_uidt_nl
-      << "}"
-      << "\n#endif /* _MSC_VER */" << be_uidt_nl << be_nl
-      << "void *" << be_nl << node->name ()
-      << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+      << "#else" << be_nl
+      << node->name () << "::"
+      << "_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+      << "#endif /* _MSC_VER */" << be_nl
       << "{" << be_idt_nl
       << "if (type_id == (ptr_arith_t) &_downcast)" << be_idt_nl
       << "{" << be_idt_nl
@@ -227,6 +227,16 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   *os << be_nl << "return rval;" << be_uidt_nl
       << "}" << be_nl << be_nl;
+
+  *os << "#if defined (_MSC_VER)" << be_nl
+
+      << "void *" << be_nl << node->name ()
+      << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+      << "{" << be_idt_nl
+      << "return this->" << node->flat_name ()
+      << "_tao_obv_narrow (type_id);" << be_uidt_nl
+      << "}" << be_nl
+      << "#endif /* _MSC_VER */" << be_uidt_nl << be_nl;
 
   if (be_global->any_support ())
     {

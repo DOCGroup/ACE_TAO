@@ -16,8 +16,12 @@ ACE_RCSID (IFR_Service,
            ifr_adding_visitor_exception, 
            "$Id$")
 
-ifr_adding_visitor_exception::ifr_adding_visitor_exception (AST_Decl *scope)
-  : ifr_adding_visitor (scope)
+ifr_adding_visitor_exception::ifr_adding_visitor_exception (
+    AST_Decl *scope,
+    CORBA::Boolean in_reopened
+  )
+  : ifr_adding_visitor (scope,
+                        in_reopened)
 {
 }
 
@@ -193,7 +197,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
 
 int
 ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
-{
+{ 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -204,6 +208,15 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
+          // If we and our enclosing module are both already in the
+          // repository, we are probably processing the same IDL file
+          // a second time. If it is just a name clash, there is no
+          // way to detect it.
+          if (this->in_reopened_ == 1)
+            {
+              return 0;
+            }
+
           // If the line below is true, we are clobbering a previous
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
@@ -213,7 +226,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              // This call will create a new EnumDef entry.
+              // This call will create a new ExceptionDef entry.
               return this->visit_exception (node);
             }
           else
@@ -273,10 +286,12 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
             {
               this->move_queue_.dequeue_head (traveller);
 
-              CORBA::String_var name = traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
+              CORBA::String_var name = 
+                traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              CORBA::String_var version = traveller->version (ACE_ENV_SINGLE_ARG_PARAMETER);
+              CORBA::String_var version = 
+                traveller->version (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               traveller->move (new_container.in (),

@@ -1,4 +1,18 @@
-// $Id$
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file   ORT_test.idl
+ *
+ * $Id$
+ *
+ * @author Priyanka Gontla <gontla_p@ociweb.com>
+ */
+//=============================================================================
+
+
+#ifndef ORT_TEST_IDL
+#define ORT_TEST_IDL
 
 module ObjectReferenceTemplate
 {
@@ -9,3 +23,5 @@ module ObjectReferenceTemplate
     oneway void shutdown ();
   };
 };
+
+#endif  /* ORT_TEST_IDL */

@@ -81,8 +81,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
 
           CosTrading::OfferId_var offer_id =
             reg->_cxx_export (offer_obj,
-                              ACE_const_cast (const CosTrading::ServiceTypeName,
-                                              TT_Info::INTERFACE_NAMES[1]),
+                              TT_Info::INTERFACE_NAMES[1],
                               this->props_plotters_[i]
                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -96,8 +95,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
           ACE_TRY_CHECK;
 
           offer_id = reg->_cxx_export (offer_obj,
-                                       ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                       TT_Info::INTERFACE_NAMES[2]),
+                                       TT_Info::INTERFACE_NAMES[2],
                                        this->props_printers_[i]
                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -111,8 +109,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
           ACE_TRY_CHECK;
 
           offer_id = reg->_cxx_export (offer_obj,
-                                       ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                       TT_Info::INTERFACE_NAMES[3]),
+                                       TT_Info::INTERFACE_NAMES[3],
                                        this->props_fs_[i]
                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK
@@ -181,9 +178,7 @@ TAO_Offer_Exporter::export_offers_to_all (ACE_ENV_SINGLE_ARG_DECL)
             }
 
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (ACE_const_cast (const CosTrading::LinkName,
-                                                    link_name_seq[i].in ())
-                                    ACE_ENV_ARG_PARAMETER);
+            link_if->describe_link (link_name_seq[i] ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           for (int j = 0; j < NUM_OFFERS; j++)
@@ -232,9 +227,7 @@ TAO_Offer_Exporter::withdraw_offers (ACE_ENV_SINGLE_ARG_DECL)
           length = offer_id_seq->length ();
           for (CORBA::ULong i = 0; i < length; i++)
             {
-              this->register_->withdraw (ACE_const_cast (const CosTrading::OfferId,
-                                                         offer_id_seq[i].in ())
-                                         ACE_ENV_ARG_PARAMETER);
+              this->register_->withdraw (offer_id_seq[i] ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -272,9 +265,7 @@ TAO_Offer_Exporter::describe_offers (ACE_ENV_SINGLE_ARG_DECL)
           for (CORBA::ULong i = 0; i < length; i++)
             {
               CosTrading::Register::OfferInfo_var offer_info =
-                this->register_->describe (ACE_const_cast (const CosTrading::OfferId,
-                                                           offer_id_seq[i].in ())
-                                           ACE_ENV_ARG_PARAMETER);
+                this->register_->describe (offer_id_seq[i] ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (this->verbose_)
@@ -334,8 +325,7 @@ TAO_Offer_Exporter::modify_offers (ACE_ENV_SINGLE_ARG_DECL)
 
           for (CORBA::ULong i = 0; i < length; i++)
             {
-              this->register_->modify (ACE_const_cast (const CosTrading::OfferId,
-                                                       offer_id_seq[i].in ()),
+              this->register_->modify (offer_id_seq[i],
                                        del_list,
                                        modify_list
                                        ACE_ENV_ARG_PARAMETER);
@@ -371,26 +361,20 @@ withdraw_offers_using_constraints (ACE_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
       this->register_->
-        withdraw_using_constraint (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                   TT_Info::INTERFACE_NAMES[TT_Info::PLOTTER]),
-                                   ACE_const_cast (const CosTrading::Constraint,
-                                                   constraint)
+        withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::PLOTTER],
+                                   constraint
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->register_->
-        withdraw_using_constraint (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                   TT_Info::INTERFACE_NAMES[TT_Info::PRINTER]),
-                                   ACE_const_cast (const CosTrading::Constraint,
-                                                   constraint)
+        withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::PRINTER],
+                                   constraint
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->register_->
-        withdraw_using_constraint (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                   TT_Info::INTERFACE_NAMES[TT_Info::FILESYSTEM]),
-                                   ACE_const_cast (const CosTrading::Constraint,
-                                                   constraint)
+        withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::FILESYSTEM],
+                                   constraint
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

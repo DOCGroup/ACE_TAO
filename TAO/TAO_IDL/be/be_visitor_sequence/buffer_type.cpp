@@ -140,13 +140,8 @@ int
 be_visitor_sequence_buffer_type::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = this->ctx_->alias ();
 
-  if (bt != 0)
-    {
-      *os << bt->name ();
-    }
-  else if (node->width () == (long) sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "char *";
     }

@@ -32,7 +32,7 @@ public:
 
   TAO_Simple_Dynamic_Property (const T& dp);
 
-  virtual CORBA::Any* evalDP (const CosTrading::PropertyName /* name */,
+  virtual CORBA::Any* evalDP (const char* /* name */,
                               CORBA::TypeCode_ptr /* returned_type */,
                               const CORBA::Any& /* extra_info */
                               ACE_ENV_ARG_DECL_NOT_USED)

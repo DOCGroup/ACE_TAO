@@ -160,7 +160,8 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                       TAO_Transport_Descriptor_Interface *desc)
+                                       TAO_Transport_Descriptor_Interface *desc,
+                                       ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -184,10 +185,6 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                 ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
 
-  ACE_Time_Value *max_wait_time =
-    invocation->max_wait_time ();
-
-
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
@@ -202,7 +199,10 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   // increment to the handler is done in make_svc_handler (). Now
   // that we dont need the reference to it anymore we can decrement
   // the refcount whether the connection is successful ot not.
-  svc_handler->decr_refcount ();
+  long refcount = svc_handler->decr_refcount ();
+
+  ACE_ASSERT (refcount >= 0);
+  ACE_UNUSED_ARG (refcount);
 
   // = We dont do a wait since we know that we are doing a blocking
   // connect

@@ -720,15 +720,15 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     {
       TAO_POA *child_poa = (*iterator).int_id_;
 
-      /// Get the adapter template related to the ChildPOA
+      // Get the adapter template related to the ChildPOA
       PortableInterceptor::ObjectReferenceTemplate *child_at =
         child_poa->get_adapter_template ();
 
       CORBA::add_ref (child_at);
 
-      /// Add it to the sequence of object reference templates that
-      /// will be destroyed.
-      seq_obj_ref_template.length (i+1);
+      // Add it to the sequence of object reference templates that
+      // will be destroyed.
+      seq_obj_ref_template.length (i + 1);
 
       seq_obj_ref_template[i] = child_at;
 
@@ -878,38 +878,29 @@ PortableInterceptor::AdapterName *
 TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// The adapter name is the sequence of names starting from the
-  /// RootPOA to the one whose name is requested. But, the sequence
-  /// shouldnt include the name of the RootPOA.
+  // The adapter name is the sequence of names starting from the
+  // RootPOA to the one whose name is requested.  The name of the
+  // RootPOA is "RootPOA".
 
-  CORBA::String_var current_poa_name =
-    this->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
 
-  PortableServer::POA_ptr current_poa = this;
+  CORBA::ULong len = 0;
 
-  PortableServer::POA_var current_poa_name_parent;
-
-  CORBA::ULong name_seq_length = 0;
-
-  // Find the length of the final sequence.
-  while (current_poa_name_parent.in () != PortableServer::POA::_nil ())
+  // Find the length of the adapter name sequence by traversing the
+  // POA hierarchy until the RootPOA is reached.  The RootPOA has no
+  // parent.
+  while (!CORBA::is_nil (poa.in ()))
     {
-      ++name_seq_length;
-
-      // Make the parent name as the current_poa_name
-      // Go up the ladder by one parent ;-)
-      current_poa_name_parent =
-        current_poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa = poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      current_poa = current_poa_name_parent.in ();
+      ++len;
     }
 
-  /// Empty adapter name sequence.
-  PortableInterceptor::AdapterName *name_seq = 0;
-  ACE_NEW_THROW_EX (name_seq,
-                    PortableInterceptor::AdapterName,
+  // Empty adapter name sequence.
+  PortableInterceptor::AdapterName *names = 0;
+  ACE_NEW_THROW_EX (names,
+                    PortableInterceptor::AdapterName (len),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -917,31 +908,28 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  PortableInterceptor::AdapterName_var safe_names (name_seq);
-  name_seq->length (name_seq_length);
+  PortableInterceptor::AdapterName_var safe_names (names);
 
-  // Should do it kind of a while loop .. get the poa_current and
-  // attach the name to the sequence and go further till the final
-  // name is the name of RootPOA and stop there.
-  current_poa = this;
+  names->length (len);
 
-  while (current_poa_name_parent.in () != PortableServer::POA::_nil ())
+  poa = PortableServer::POA::_duplicate (this);
+
+  (*names)[0] = CORBA::string_dup ("RootPOA");
+
+  // Fill in the AdapterName sequence as the POA hierarchy is
+  // traversed.
+  CORBA::ULong ilen = len;
+  for (CORBA::ULong i = 1; i < len; ++i)
     {
-      (*name_seq) [name_seq_length-1] = current_poa_name.in ();
-
-      /// Make the parent name as the current_poa_name
-      /// Go up the ladder by one parent ;-)
-      PortableServer::POA_var current_poa_name_parent =
-        current_poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
+      (*names)[--ilen] = poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      current_poa_name =
-        current_poa_name_parent->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa = poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      current_poa = current_poa_name_parent.in ();
-
-      --name_seq_length;
+      // If this condition asserts, the POA hierarchy was modified
+      // (i.e. reduced in size) by another thread!
+      ACE_ASSERT ((ilen > 0 ? !CORBA::is_nil (poa.in ()) : 1));
     }
 
   return safe_names._retn ();
@@ -2743,17 +2731,6 @@ TAO_POA::locate_servant_i (const char *operation,
         // Don't retain servant
         //
         {
-          // A recursive thread lock without using a recursive thread
-          // lock.  Non_Servant_Upcall has a magic constructor and
-          // destructor.  We unlock the Object_Adapter lock for the
-          // duration of the servant activator upcalls; reacquiring
-          // once the upcalls complete.  Even though we are releasing
-          // the lock, other threads will not be able to make progress
-          // since <Object_Adapter::non_servant_upcall_in_progress_>
-          // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-          ACE_UNUSED_ARG (non_servant_upcall);
-
           // No serialization of invocations of preinvoke or
           // postinvoke may be assumed; there may be multiple
           // concurrent invocations of preinvoke for the same
@@ -2761,13 +2738,26 @@ TAO_POA::locate_servant_i (const char *operation,
           //
           // The same thread will be used to preinvoke the object,
           // process the request, and postinvoke the object.
-          //
+
+          // @@ Note that it is possible for some other thread to
+          // reset the servant locator once the lock is released.
+          // However, this possiblility also exists for postinvoke()
+          // which is also called outside the lock.
+
+          // Release the object adapter lock.
+          this->object_adapter_->lock ().release ();
+
+          // We have release the object adapater lock.  Record this
+          // for later use.
+          servant_upcall.state (TAO_Object_Adapter::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
+
           PortableServer::ServantLocator::Cookie cookie;
-          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current_impl.object_id (),
-                                                                               this,
-                                                                               operation,
-                                                                               cookie
-                                                                               ACE_ENV_ARG_PARAMETER);
+          PortableServer::Servant servant =
+            this->servant_locator_->preinvoke (poa_current_impl.object_id (),
+                                               this,
+                                               operation,
+                                               cookie
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (servant == 0)
@@ -3483,7 +3473,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        "Could not parse IMR IOR, skipping IMRification\n"));
+                        "Could not parse ImR IOR, skipping ImRification\n"));
           goto orbkey;
         }
 
@@ -3498,7 +3488,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "IMR-ified IOR = \n%s\n",
+                    "ImR-ified IOR = \n%s\n",
                     ior.c_str ()));
 
       obj =
@@ -3524,7 +3514,7 @@ orbkey:
 
   if (this->orb_core_.optimize_collocation_objects ())
     {
-      ACE_NEW_THROW_EX (tmp, CORBA::Object (safe_data.get (),
+      ACE_NEW_THROW_EX (tmp, CORBA::Object (data,
                                             collocated,
                                             servant),
                         CORBA::INTERNAL ());
@@ -3534,13 +3524,13 @@ orbkey:
   else
     {
       ACE_NEW_THROW_EX (tmp,
-                        CORBA_Object (safe_data.get (),
+                        CORBA_Object (data,
                                       collocated),
                         CORBA::INTERNAL ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 
-  safe_data.get ()->servant_orb (this->orb_core_.orb ());
+  data->servant_orb (this->orb_core_.orb ());
 
   // Transfer ownership to the Object.
   (void) safe_data.release ();

@@ -14,7 +14,7 @@ TAO_Simple_Dynamic_Property<T>::TAO_Simple_Dynamic_Property (const T& dp)
 }
 
 template <class T> CORBA::Any*
-TAO_Simple_Dynamic_Property<T>::evalDP (const CosTrading::PropertyName,
+TAO_Simple_Dynamic_Property<T>::evalDP (const char*,
                                         CORBA::TypeCode_ptr,
                                         const CORBA::Any&
                                         ACE_ENV_ARG_DECL_NOT_USED)

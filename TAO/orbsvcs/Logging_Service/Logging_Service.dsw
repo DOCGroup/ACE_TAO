@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Logging_Service"=.\Basic_Logging_Service\Basic_Logging_Service.dsp - Package Owner=<4>
+Project: "Logging_Service"=.\Basic_Logging_Service\Logging_Service.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -62,4 +62,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-

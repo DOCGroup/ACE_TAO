@@ -15,6 +15,8 @@ DIRS  = CDR \
 	Codec \
         BiDirectional \
 	BiDirectional_NestedUpcall \
+	Bug_1269_Regression \
+	Bug_1270_Regression \
 	Collocation \
 	Connection_Timeout \
         IDL_Test \
@@ -41,6 +43,7 @@ DIRS  = CDR \
 	Object_Loader \
 	MProfile \
 	MProfile_Forwarding \
+	MProfile_Connection_Timeout \
 	Native_Exceptions \
 	Faults \
 	Param_Test \

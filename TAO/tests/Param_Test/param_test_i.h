@@ -81,9 +81,9 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // test for unbounded strings
 
-  virtual char *test_bounded_string (const Param_Test::short_string s1,
-                                     Param_Test::short_string &s2,
-                                     Param_Test::short_string_out s3
+  virtual char *test_bounded_string (const char *s1,
+                                     char *&s2,
+                                     CORBA::String_out s3
                                      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // test for bounded strings
@@ -95,9 +95,9 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // test for unbounded wstrings
 
-  virtual CORBA::WChar *test_bounded_wstring (const Param_Test::short_wstring ws1,
-                                              Param_Test::short_wstring &ws2,
-                                              Param_Test::short_wstring_out ws3
+  virtual CORBA::WChar *test_bounded_wstring (const CORBA::WChar *ws1,
+                                              CORBA::WChar *&ws2,
+                                              CORBA::WString_out ws3
                                               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // test for bounded wstrings

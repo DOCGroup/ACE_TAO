@@ -81,12 +81,13 @@ public:
                        TAO_Transport_Descriptor_Interface *desc
                        ACE_ENV_ARG_DECL);
 
-  /// Initial set of connections to be established.
-  /*
-    @@ TODO: Need to be removed from the ORB. People who need this
-    could use  _validate_connections () instead.
-  virtual int preconnect (const char *preconnections) = 0;
-  */
+  /**
+   * Call is very similar to the previous one but with a timeout.
+   */
+  virtual int connect (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc,
+                       ACE_Time_Value *timeout
+                       ACE_ENV_ARG_DECL);
 
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in <cdr>
@@ -111,7 +112,8 @@ protected:
   /// Do an actual connect using the underlying transport to make a
   /// connection
   virtual int make_connection (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc) = 0;
+                               TAO_Transport_Descriptor_Interface *desc,
+                               ACE_Time_Value *timeout) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

@@ -7,13 +7,11 @@
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
                                             const char* name,
                                             CORBA::Short policy,
-                                            unsigned int low,
-                                            unsigned int high,
+                                            unsigned int expected,
                                             CORBA::Boolean& done)
  : name_ (name),
    order_policy_ (policy),
-   low_ (low),
-   high_ (high),
+   expected_ (expected),
    count_ (0),
    done_ (done)
 {
@@ -69,126 +67,123 @@ Notify_Sequence_Push_Consumer::push_structured_events (
 {
   static long previous = 0;
   static CORBA::Boolean first = 1;
-  // Since the Notification Service begins to dispatch before all the
-  // events are queued, the first 2 events are not in the "expected"
-  // order.
-  static const unsigned int expected_out_of_order = 2 * 4;
 
-  if (this->count_ >= expected_out_of_order)
+  CORBA::ULong length = events.length ();
+
+  ACE_DEBUG ((LM_DEBUG, "Received %u events:\n", length));
+
+  for (CORBA::ULong e = 0; e < length; e++)
     {
-      CORBA::ULong length = events.length ();
-
-      ACE_DEBUG ((LM_DEBUG, "Received %u events:\n", length));
-
-      for (CORBA::ULong e = 0; e < length; e++)
+      CORBA::ULong hlength = events[e].header.variable_header.length ();
+      for (CORBA::ULong hi = 0; hi < hlength; hi++)
         {
-          CORBA::ULong hlength = events[e].header.variable_header.length ();
-          for (CORBA::ULong hi = 0; hi < hlength; hi++)
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s = %s\n",
+                      (const char*)events[e].header.variable_header[hi].name,
+                      Any_String (events[e].header.variable_header[hi].value)));
+          if (this->order_policy_ == CosNotification::PriorityOrder)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%s = %s\n",
-                          (const char*)events[e].header.variable_header[hi].name,
-                          Any_String (events[e].header.variable_header[hi].value)));
-              if (this->order_policy_ == CosNotification::PriorityOrder)
+              if (ACE_OS::strcmp (
+                                  events[e].header.variable_header[hi].name, "Priority") == 0)
                 {
-                  if (ACE_OS::strcmp (
-                          events[e].header.variable_header[hi].name, "Priority") == 0)
+                  CORBA::Short current;
+                  events[e].header.variable_header[hi].value >>= current;
+                  if (first)
                     {
-                      CORBA::Short current;
-                      events[e].header.variable_header[hi].value >>= current;
-                      if (first)
-                        {
-                          first = 0;
-                        }
-                      else
-                        {
-                          if (current >
-                              ACE_static_cast (CORBA::Short, previous))
-                            {
-                              this->done_ = 1;
-                              ACE_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("ERROR: Priority Ordering failed\n")));
-                            }
-                        }
-                      previous = ACE_static_cast (long, current);
+                      first = 0;
                     }
-                }
-              else if (this->order_policy_ == CosNotification::DeadlineOrder)
-                {
-                  if (ACE_OS::strcmp (
-                          events[e].header.variable_header[hi].name, "Timeout") == 0)
+                  else
                     {
-                      TimeBase::TimeT current;
-                      events[e].header.variable_header[hi].value >>= current;
-                      if (first)
+                      if (current >
+                          ACE_static_cast (CORBA::Short, previous))
                         {
-                          first = 0;
+                          this->done_ = 1;
+                          ACE_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("ERROR: Priority Ordering failed\n")));
                         }
-                      else
-                        {
-                          if (current <
-                              ACE_static_cast (TimeBase::TimeT, previous))
-                            {
-                              this->done_ = 1;
-                              ACE_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("ERROR: Deadline Ordering failed\n")));
-                            }
-                        }
-# if defined (ACE_CONFIG_WIN32_H)
-                      previous = ACE_static_cast (long, current);
-# else
-                      // Convert ACE_ULong_Long to 32-bit integer
-                      previous = (current / 1);
-# endif /* ACE_CONFIG_WIN32_H */
                     }
+                  previous = ACE_static_cast (long, current);
                 }
             }
-
-          CORBA::ULong flength = events[e].filterable_data.length ();
-          for (CORBA::ULong i = 0; i < flength; i++)
+          else if (this->order_policy_ == CosNotification::DeadlineOrder)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%s = %s\n",
-                          (const char*)events[e].filterable_data[i].name,
-                          Any_String (events[e].filterable_data[i].value)));
-              if (this->order_policy_ == CosNotification::FifoOrder)
+              if (ACE_OS::strcmp (
+                                  events[e].header.variable_header[hi].name, "Timeout") == 0)
                 {
-                  if (ACE_OS::strcmp (events[e].filterable_data[i].name, "enum") == 0)
+                  TimeBase::TimeT current;
+                  events[e].header.variable_header[hi].value >>= current;
+                  if (first)
                     {
-                      CORBA::ULong current;
-                      events[e].filterable_data[i].value >>= current;
-                      if (first)
-                        {
-                          first = 0;
-                        }
-                      else
-                        {
-                          if (current <
-                              ACE_static_cast (CORBA::ULong, previous))
-                            {
-                              this->done_ = 1;
-                              ACE_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("ERROR: FIFO Ordering failed.\n")));
-                            }
-                        }
-                      previous = ACE_static_cast (long, current);
+                      first = 0;
                     }
+                  else
+                    {
+                      if (current <
+                          ACE_static_cast (TimeBase::TimeT, previous))
+                        {
+                          this->done_ = 1;
+                          ACE_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("ERROR: Deadline Ordering failed\n")));
+                        }
+                    }
+# if defined (ACE_CONFIG_WIN32_H)
+                  previous = ACE_static_cast (long, current);
+# else
+                  // Convert ACE_ULong_Long to 32-bit integer
+                  previous = (current / 1);
+# endif /* ACE_CONFIG_WIN32_H */
                 }
             }
         }
-      ACE_DEBUG ((LM_DEBUG,
-                  "-------------------------\n"));
+
+      CORBA::ULong flength = events[e].filterable_data.length ();
+      for (CORBA::ULong i = 0; i < flength; i++)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s = %s\n",
+                      (const char*)events[e].filterable_data[i].name,
+                      Any_String (events[e].filterable_data[i].value)));
+          if (this->order_policy_ == CosNotification::FifoOrder)
+            {
+              if (ACE_OS::strcmp (events[e].filterable_data[i].name, "enum") == 0)
+                {
+                  CORBA::ULong current;
+                  events[e].filterable_data[i].value >>= current;
+                  if (first)
+                    {
+                      first = 0;
+                    }
+                  else
+                    {
+                      if (current <
+                          ACE_static_cast (CORBA::ULong, previous))
+                        {
+                          this->done_ = 1;
+                          ACE_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("ERROR: FIFO Ordering failed.\n")));
+                        }
+                    }
+                  previous = ACE_static_cast (long, current);
+                }
+            }
+        }
     }
 
-  this->count_++;
-  if (this->count_ > this->high_)
+  ACE_DEBUG ((LM_DEBUG,
+              "-------------------------\n"));
+
+  this->count_+= events.length ();
+
+  if (this->count_ > this->expected_)
     {
-      this->done_ = 2;
+      this->done_ = 1;
+
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too "
                             "many events received.\n")));
+
     }
-  else if (this->count_ == this->low_)
+  else if (this->count_ == this->expected_)
     {
       this->done_ = 1;
     }
@@ -197,5 +192,3 @@ Notify_Sequence_Push_Consumer::push_structured_events (
       ACE_OS::sleep (1);
     }
 }
-
-

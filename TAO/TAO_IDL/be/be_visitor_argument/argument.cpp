@@ -61,24 +61,9 @@ be_visitor_args::type_name (be_type *node,
       bt = node;
     }
 
-  AST_Decl::NodeType nt = bt->node_type ();
-
-  if (nt == AST_Decl::NT_string)
-    {
-      ACE_OS::sprintf (namebuf,
-                       "char *");
-    }
-  else if (nt == AST_Decl::NT_wstring)
-    {
-      ACE_OS::sprintf (namebuf,
-                       "CORBA::WChar *");
-    }
-  else
-    {
-      ACE_OS::sprintf (namebuf,
-                       "%s",
-                       bt->full_name ());
-    }
+  ACE_OS::sprintf (namebuf,
+                   "%s",
+                   bt->full_name ());
 
   if (suffix)
     {

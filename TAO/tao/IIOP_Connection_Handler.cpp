@@ -301,9 +301,9 @@ TAO_IIOP_Connection_Handler::update_protocol_properties (
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_IIOP_Connection_Handler::update_protocol_properties\n"
+                "TAO_IIOP_Connection_Handler::update_protocol_properties\n"
                 "enable_network_priority = %d\n",
-		enable_network_priority));
+                enable_network_priority));
 
   if (this->tcp_properties_.send_buffer_size != send_buffer_size)
     this->tcp_properties_.send_buffer_size = send_buffer_size;
@@ -371,13 +371,17 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
                                           (int) sizeof (tos));
 
       if(TAO_debug_level)
-	{
+        {
           ACE_DEBUG ((LM_DEBUG,
-                      "Failed to set Diffserv codepoint - "
-                      "try running as superuser\n"));
+                      "TAO (%P|%t) - IIOP_Connection_Handler::"
+                      "set_dscp_codepoint, failed to set Diffserv"
+                      " codepoint - try running as superuser\n"));
 
-	  ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d %x\n", ret, tos));
-	}
+          ACE_DEBUG((LM_DEBUG,
+                     "TAO (%P|%t) - IIOP_Connection_Handler::"
+                     "set_dscp_codepoint, set tos: ret: %d %x\n",
+                     ret, tos));
+        }
 
       this->dscp_codepoint_ = tos;
     }

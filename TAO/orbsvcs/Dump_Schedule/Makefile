@@ -48,7 +48,8 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
 
 .obj/Dump_Schedule.o .obj/Dump_Schedule.so .shobj/Dump_Schedule.o .shobj/Dump_Schedule.so: Dump_Schedule.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -72,7 +73,8 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Sched_Params.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -163,6 +165,7 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \

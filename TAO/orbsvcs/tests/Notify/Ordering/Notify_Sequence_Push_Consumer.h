@@ -26,8 +26,7 @@ class Notify_Sequence_Push_Consumer: public TAO_Notify_SequencePushConsumer
 public:
   Notify_Sequence_Push_Consumer (const char* name,
                                  CORBA::Short policy,
-                                 unsigned int low,
-                                 unsigned int high,
+                                 unsigned int expected_count,
                                  CORBA::Boolean& done);
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
@@ -41,8 +40,8 @@ protected:
 
   ACE_CString name_;
   CORBA::Short order_policy_;
-  unsigned int low_;
-  unsigned int high_;
+  unsigned int expected_;
+
   unsigned int count_;
   CORBA::Boolean& done_;
 };

@@ -196,7 +196,7 @@ SOURCE=.\AV\md5c.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\AV\media-timer.cpp"
+SOURCE=".\AV\media_timer.cpp"
 # End Source File
 # Begin Source File
 
@@ -328,7 +328,7 @@ SOURCE=.\AV\md5.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\AV\media-timer.h"
+SOURCE=".\AV\media_timer.h"
 # End Source File
 # Begin Source File
 

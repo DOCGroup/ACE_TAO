@@ -138,14 +138,12 @@ TAO_Connection_Handler::svc_i (void)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler::svc_i - "
-                    "loop <%d>\n", current_timeout.msec ()
-		    ));
+                    "loop <%d>\n", current_timeout.msec ()));
     }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - Connection_Handler::svc_i end\n"
-		 ));
+                 "TAO (%P|%t) - Connection_Handler::svc_i end\n"));
 
   return result;
 }
@@ -190,6 +188,17 @@ TAO_Connection_Handler::decr_refcount (void)
   }
 
   ACE_ASSERT(this->reference_count_ == 0);
+
+
+  int r = this->release_os_resources ();
+
+  if (r == -1 && TAO_debug_level)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "TAO (%P|%t) - Connection_Handler::"
+                  "decr_refcount, release_os_resources() failed %p\n"));
+    }
+
   delete this;
 
   return 0;
@@ -213,7 +222,7 @@ TAO_Connection_Handler::handle_close_eh (
     {
       if (TAO_debug_level)
         ACE_DEBUG  ((LM_DEBUG,
-                     "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
+                     "TAO (%P|%t) - Connection_Handler[%d]::"
                      "handle_close, connection closing or already closed\n",
                      my_handle));
       return 0;
@@ -221,7 +230,7 @@ TAO_Connection_Handler::handle_close_eh (
 
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
+                 "TAO (%P|%t) - Connection_Handler[%d]::"
                  "handle_close, connection fully closed\n",
                  my_handle));
 
@@ -261,7 +270,7 @@ TAO_Connection_Handler::handle_input_eh (
     ACE_HANDLE h, ACE_Event_Handler * eh)
 {
   // Increase the reference count on the upcall that have passed us.
-  // 
+  //
   // REFCNT: Matches decr_refcount() in this function...
   long refcount = this->incr_refcount ();
   ACE_ASSERT (refcount > 0);
@@ -270,7 +279,7 @@ TAO_Connection_Handler::handle_input_eh (
     {
       ACE_HANDLE handle = eh->get_handle();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d\n",
                   this->transport()->id(), handle, h, refcount));
     }
@@ -298,9 +307,9 @@ TAO_Connection_Handler::handle_input_eh (
 
   if (TAO_debug_level > 6)
     {
-      ACE_HANDLE handle = eh->get_handle();
+      ACE_HANDLE handle = eh->get_handle ();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d, retval = %d\n",
                   this->transport()->id(), handle, h, refcount, return_value));
     }
@@ -335,7 +344,7 @@ int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
 {
   // Perform a double checked locking on the underlying ACE_HANDLE
-  ACE_HANDLE handle = eh->get_handle();
+  ACE_HANDLE handle = eh->get_handle ();
 
   // If the handle is ACE_INVALID_HANDLE then there is no work to be
   // done in this function, and we return immediately.  Returning 0
@@ -348,9 +357,11 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
 
   int id = -1;
   {
-    ACE_GUARD_RETURN(ACE_Lock, ace_mon, *this->lock_, 0);
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-    handle = eh->get_handle();
+    handle = eh->get_handle ();
+
+    // Double-checked locking.
     if(handle == ACE_INVALID_HANDLE)
       {
         return 0;
@@ -379,16 +390,16 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
     // something valid to ACE_INVALID_HANDLE, and the transport() field
     // will not be changed before that state transition.
     //
-    ACE_ASSERT(this->transport () != 0);
+    ACE_ASSERT (this->transport () != 0);
 
     // Save the ID for debugging messages
-    id = this->transport()->id();
+    id = this->transport()->id ();
     if (TAO_debug_level)
       {
         ACE_DEBUG  ((LM_DEBUG,
                      "TAO (%P|%t) - Connection_Handler[%d]::"
                      "close_connection, purging entry from cache\n",
-                     id));
+                     handle));
       }
     this->transport ()->purge_entry ();
 
@@ -413,7 +424,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
         ACE_DEBUG  ((LM_DEBUG,
                      "TAO (%P|%t) - Connection_Handler[%d]::"
                      "close_connection, removing from the reactor\n",
-                     id));
+                     handle));
       }
     int r =
       reactor->remove_handler (handle,
@@ -424,7 +435,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - Connection_Handler[%d]::"
                     "close_connection, error in remove_handler (%d)\n",
-                    id, r));
+                    handle, r));
       }
 
     // Also cancel any timers, we may create those for time-limited
@@ -433,8 +444,8 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
       {
         ACE_DEBUG  ((LM_DEBUG,
                      "TAO (%P|%t) - Connection_Handler[%d]::"
-                     "close_connection, cancel all timers\n",
-                     id));
+                     "close_connection, cancel all timers and refcount [%d]\n",
+                     handle, reference_count_));
       }
     r = reactor->cancel_timer (eh);
     if (r == -1 && TAO_debug_level)
@@ -442,30 +453,18 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - Connection_Handler[%d]::"
                     "close_connection, error cancelling timers\n",
-                    id));
+                    handle));
       }
 
     // @@ This seems silly, the reactor is a much better authority to
     //    find out if a handle is registered...
     this->transport ()->wait_strategy ()->is_registered (0);
 
-    // Close the socket, implicitly this makes:
-    //   get_handle() == ACE_INVALID_HANDLE
-    // At this point any further calls to handle_close() or
-    // close_connection() become no-ops
-    r = this->release_os_resources ();
-    if (r == -1 && TAO_debug_level)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                    "close_connection, release_os_resources() failed %p\n",
-                    id, ""));
-      }
 
-    ACE_ASSERT(eh->get_handle() == ACE_INVALID_HANDLE);
+
   }
 
-  ACE_ASSERT(this->transport () != 0);
+  ACE_ASSERT (this->transport () != 0);
 
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 

@@ -32,8 +32,10 @@ ACE_RCSID (IFR_Service,
            ifr_adding_visitor, 
            "$Id$")
 
-ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope)
-  : scope_ (scope)
+ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope,
+                                        CORBA::Boolean in_reopened)
+  : scope_ (scope),
+    in_reopened_ (in_reopened)
 {
 }
 
@@ -185,6 +187,13 @@ ifr_adding_visitor::visit_module (AST_Module *node)
             }
           else
             {
+              // We are either in a reopened module, are processing an IDL
+              // IDL file for the second time, or are in a module whose
+              // name already exists by coincidence - there is no way to
+              // tell the difference. So any members whose repository ID
+              // already exists in this case will be skipped.
+              this->in_reopened_ = 1;
+
               new_def =
                 CORBA_Container::_narrow (prev_def.in ()
                                           ACE_ENV_ARG_PARAMETER);
@@ -214,6 +223,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
           );
         }
 
+      this->in_reopened_ = 0;
       CORBA_Container_ptr tmp = CORBA_Container::_nil ();
 
       if (be_global->ifr_scopes ().pop (tmp) != 0)
@@ -272,13 +282,16 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
           // now. If it is not yet defined or the full definition has already
           // been added to the repository, we just update the current IR object
           // holder.
-          if (node->is_defined () && node->ifr_added () == 0)
+          if (node->is_defined () 
+              && node->ifr_added () == 0 
+              && this->in_reopened_ == 0)
             {
               // If we are here and the line below is true, then either
               // 1. We are defining an undefined forward declared interface
               //    from a previously processed IDL file, or
               // 2. We are clobbering a previous definition, either of an
               //    interface or of some other type.
+              // 3. We are inside a module that has a previous entry.
               // If prev_def would narrow successfully to an InterfaceDef, we
               // have NO WAY of knowing if we are defining or clobbering. So
               // we destroy the contents of the previous entry (we don't want
@@ -288,6 +301,9 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // On the other hand, if prev_def is NOT an interface, we can
               // safely destroy it, since we know we are not redefining a
               // previous entry, forward declared or not.
+              // If we are inside a module that was seen before, we could be
+              // jujst processing an IDL file a second time, in which case we
+              // again just update ir_current_.
               if (node->ifr_fwd_added () == 0)
                 {
                   CORBA::DefinitionKind kind =
@@ -599,7 +615,10 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          // Unless we are in a module that has been seen before, in
+          // which case we might be just processing and IDL file a 
+          // second time and we want to just update ir_current_.
+          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -633,7 +652,8 @@ ifr_adding_visitor::visit_exception (AST_Exception *node)
       return 0;
     }
 
-  ifr_adding_visitor_exception visitor (node);
+  ifr_adding_visitor_exception visitor (node,
+                                        this->in_reopened_);
 
   // No point in updating ir_current_ here because
   // ExceptionDef is not an IDLType.
@@ -714,7 +734,10 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          // Unless we are in a module that has been seen before, in
+          // which case we might be just processing and IDL file a 
+          // second time and we want to just update ir_current_.
+          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -876,7 +899,10 @@ ifr_adding_visitor::visit_union (AST_Union *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          // Unless we are in a module that has been seen before, in
+          // which case we might be just processing and IDL file a 
+          // second time and we want to just update ir_current_.
+          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -931,7 +957,10 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          // Unless we are in a module that has been seen before, in
+          // which case we might be just processing and IDL file a 
+          // second time and we want to just update ir_current_.
+          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -1157,7 +1186,10 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          // Unless we are in a module that has been seen before, in
+          // which case we might be just processing and IDL file a 
+          // second time and we want to just update ir_current_.
+          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -1292,7 +1324,10 @@ ifr_adding_visitor::visit_native (AST_Native *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          // Unless we are in a module that has been seen before, in
+          // which case we might be just processing and IDL file a 
+          // second time and we want to just update ir_current_.
+          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
               prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;

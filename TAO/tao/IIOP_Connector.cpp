@@ -143,7 +143,8 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc)
+                                     TAO_Transport_Descriptor_Interface *desc,
+                                     ACE_Time_Value *max_wait_time)
 {
   TAO_IIOP_Endpoint *iiop_endpoint =
     this->remote_endpoint (desc->endpoint ());
@@ -159,23 +160,6 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
                  "to <%s:%d>\n",
                  iiop_endpoint->host(), iiop_endpoint->port()));
-
-
-   // Get the max_wait_time
-   ACE_Time_Value *max_wait_time = 0;
-
-   ACE_Time_Value connection_timeout;
-   int timeout = 0;
-
-   this->orb_core ()->connection_timeout (invocation->stub (),
-                                          timeout,
-                                          connection_timeout);
-   if (!timeout)
-     max_wait_time =
-       invocation->max_wait_time ();
-   else
-     max_wait_time = &connection_timeout;
-
 
    // Get the right synch options
    ACE_Synch_Options synch_options;
@@ -193,6 +177,12 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
    if (result == -1 && errno == EWOULDBLOCK)
      {
+       if (TAO_debug_level)
+         ACE_DEBUG ((LM_DEBUG,
+                     "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                     "going to wait for connection completion on local"
+                     "handle [%d]\n",
+                     svc_handler->get_handle ()));
        result =
          this->active_connect_strategy_->wait (svc_handler,
                                                max_wait_time);
@@ -204,7 +194,11 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    // the refcount whether the connection is successful ot not.
 
    // REFCNT: Matches with TAO_Connect_Strategy<>::make_svc_handler()
-   svc_handler->decr_refcount ();
+   long refcount = svc_handler->decr_refcount ();
+
+   ACE_ASSERT (refcount >= 0);
+
+   ACE_UNUSED_ARG (refcount);
 
    if (result == -1)
      {
@@ -369,7 +363,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
         tph->call_client_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
-					 enable_network_priority,
+                                         enable_network_priority,
                                          protocol_type);
 
       if(hook_result == -1)

@@ -1,3 +1,2894 @@
+Mon Nov 18 20:45:12 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Blocking/notify.conf:
+	  As per Bala's suggestion, applied "-ORBClientConnectionHandler
+	  RW" hoping to make the blocking work.  Alas, the buffering
+	  design needs a facelift. 
+	
+ 	* orbsvcs/tests/Notify/Ordering/run_test.pl
+	  - Increased allowable period for consumers to run so that test
+	    doesn't timeout before hand.
+	  - Commented out priority policy temporarily till the sequences
+	    implementation of priority ordering is completed.
+	
+ 	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+	  Removed the MaxEventsPerConsumer policy applied to the
+	  proxy. That isn't what the test was supposed to excercise.
+	
+ 	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp
+	  Changed OR_OP to AND_OP otherwise the Consumer Admin filter will
+	  always be true and no events would be rejected.	
+
+Mon Nov 18 17:54:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.cpp: Cosmetic changes.
+
+Mon Nov 18 14:50:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_global.cpp:
+
+          Added storage and accessors for the AST node
+          Components::CCMObject, which is looked up and stored
+          if there is at least one component in the IDL file.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          Added the operations of Components::CCMObject to the operation
+          table and *_skel method generation for component equivalent 
+          interfaces. Thanks to Nanbor <nanbor@cse.wustl.edu> for uncovering
+          this bug.
+
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_sh.h:
+
+          Added conditional generation of AMH classes for component 
+          equivalent interfaces.
+
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+
+          Added base component equivalent interface (if any) to the generated
+          inheritance list for component equivalent interfaces.
+
+Mon Nov 18 12:11:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+         
+          Fixed settings for the IDL files in this project.
+
+Mon Nov 18 13:01:42 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+	Commented decrement of <queue_length_> in the svc method.
+	This needs to be corrected but at this point all the tests crash
+	because of this, so its being taken out temporarily.
+	
+Mon Nov 18 11:04:35 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+	Appended Structured_ suffix to executable name. 
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+	Reverted thread creation flags.
+	
+Mon Nov 18 07:32:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Event.h: Work around for a weird BCB6
+	  compiler bug. Thanks to Chris Kohlhoff for helping me with this.
+
+Mon Nov 18 07:28:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/AMI/Makefile: Prevent the contents
+	  from being compiled when AMI is disabled.
+
+Sun Nov 17 17:32:47 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp: Updated dsp file.
+
+Sun Nov 17 12:57:10 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	  Updated.
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_*:
+	  Removed extraneous files.
+
+Sun Nov 17 12:05:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Makefile.bor: Added AMI test to the
+	  list of tests that needs compilation. Thanks to Johnny for
+	  pointing this out.
+
+Sun Nov 17 09:37:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile*: Updated dependencies again.
+
+Sat Nov 16 21:09:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Makefile: Added AMI test to the list
+	  of tests that needs compilation.
+
+Sat Nov 16 20:43:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* */Makefile: Updated dependency.
+
+Sat Nov 16 20:11:13 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+	  - Modified threadpool creation flags to ACE_Task::activate. 
+	  - Corrected decrement of <queue_length_>. 
+
+Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  Modified to run the basic tests with a reactive and
+	  multithreaded Notification.
+	
+	* orbsvcs/tests/Notify/Basic/notify.mt.conf:
+	  Added MT conf for the Basic test.
+	
+	* orbsvcs/tests/Notify/Basic/notify.reactive.conf:	
+	  Added reactive conf for the Basic test.
+
+	* orbsvcs/tests/Notify/Blocking/notify.conf:
+	* orbsvcs/tests/Notify/Discarding/notify.conf:
+	* orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
+	* orbsvcs/tests/Notify/Ordering/notify.conf:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/notify.conf:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/notify.conf
+	* orbsvcs/tests/Notify/performance-tests/Filter/notify.conf
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf
+	* orbsvcs/logging_service/notify_logging_service/svc.conf:
+	* orbsvcs/Notify_Service/svc.conf: Reverted factory back to
+	  Notify_Default_Event_Manager_Objects_Factory. I have decided not
+	  to introduce any changes for Notify Options in TAO 1.3. Better
+	  replacements will be introduced gradually in subsequent
+	  releases.
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
+ 	  Not handling signals. The shutdown code and event handler is
+	  maintained in case we want to address this in the future. 
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+	  - Modified to run all 3 test cases described in the README.   	    
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	  Changed hardcoded "10" to the expected number of events that can 
+	  be specified on the command line.
+	
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:	  
+	  - Changed low=2 and high=20. Here is the explanation:
+	  The Supplier sends 96 events as 6 batches of 16 events.
+	  The Notification is run with 1 dispatching thread. The Discarding
+	  Policy is set and the MaxEventsPerConsumer is set to 2 (Event
+	  Batches).The Batch size is 5 so the maximum batches that can be
+	  received is 20 (19 batches with 5 events each and 1 batch with 1
+	  event).if we receive 20 batches then the channel
+	  hasn't discarded anything. so high = 20. In the worst case the
+	  consumer starts *after* the supplier has send all the events to
+	  the Notification. This means that only 2 batches are queued and
+	  all others are discarded. Hence low = 2.
+	
+	  - Changed the sleep time that the consumer was polling fior
+	  excess events, from 3 to 1 sec. otherwise the perl script was
+	  timing out.
+
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:	    
+	  Removed high-low logic. There is *no* discarding policy set so
+	  the Sequence Consumer should received the expected number of 96 events.
+
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+	  - Changed ConsumerAdmin interfilter operator to AND_OP. With an
+	  OR_OP, all the filters would return true! this is because the
+	  filters of the Admin and Proxy, both are combined to determine event
+	  eligibility. Note that this test success/failure has to be
+	  determined visually.
+
+	* orbsvcs/tests/Notify/listener.conf:
+ 	* orbsvcs/tests/Notify/lookup.conf:
+ 	* orbsvcs/tests/Notify/reactive.conf:
+	  Reverted to Notify_Default_Event_Manager_Objects_Factory for
+	  backward compatibility.
+	
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Multi_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Multi_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+	  Reverted executable name to Structured_* prefix.
+
+	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+	  Discarding condition should be executed when buffering limit has
+	  reached. Current logic was enqueing 1 extra event.
+	
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	  Added call to set default startup QoS options on the Proxys and Admins.  
+	
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
+	  - Added support for configuring startup threads at the proxy and
+	    Admin level while maintaining backward compatibility.
+	  - Modified updates logic - Updates are send synchronously by
+	  default. If the -AsynchUpdates option is set, updates are queued along
+	  with the regular events in the Proxy objects worker task.
+	
+	* orbsvcs/orbsvcs/Notify/Properties.h:
+	* orbsvcs/orbsvcs/Notify/Properties.inl:
+	  Added get/set methods for Proxy and Admin level default QoS.
+	  Changed <updates> to <asynch_updates> flag.		
+	
+	* orbsvcs/orbsvcs/Notify/Property_T.h:
+	* orbsvcs/orbsvcs/Notify/Property_T.inl:
+	- Added assignment operator to TAO_NS_Property_T.
+	- Added an <invalidate> method to TAO_NS_PropertyBase_T
+	
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	- Send updates synchronously unless default properties mandate
+	  asynchrony. In that case the event is executed in the current
+	  thread context. 
+	
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+	  Added dummy methods and ACE_ASSERT in them if called.
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.inl:
+	  Added an accessor for the current size of the EventBatch.
+	  Note that this size can be greater than the batchsize.		 
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+	  Overloaded ProxyPushSupplier::push method.
+	  The overloaded implementation executes the filtering and
+	  dispatch in the current thread context. Now, this dispatch
+	  doesn't immediately go remote but is stored in an event batch
+	  waiting for the pacing interval to expire after which the
+	  batchsize events are queued in the SequenceProxy's worker thread
+	  to be finally dispatched to the remote consumer.
+
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+	  Removed <dispatch_immediate> and <cancel_timer> methods.
+	  There was no need for these seperate methods.
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+	  Modified the implementation so that the Pacing Timer is deployed
+	  only if there is atleast 1 event queued to send, otherwise the
+	  existing timer is removed. This will avoid needless timeouts. 
+
+Sat Nov 16 08:22:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h: Fixed typos that
+	  lead to link errors.
+
+	* tao/Asynch_Queued_Message.cpp: Fixed a warning in the daily
+	  builds.  
+	
+Sat Nov 16 12:43:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+          Fixes error in this BCB makefile.
+
+Fri Nov 15 18:29:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp (next_member):
+	  (_tao_next_member):
+
+	  Refactored random member selection code into a TAO-specific
+	  static method.  This is possible since this random load
+	  balancing strategy implementation is stateless.  This allows
+	  other strategies to reuse the random member selection code
+	  without instantiating the TAO_LB_Random class.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (next_member):
+
+          No loads have been reported for any of the locations the object
+	  group members reside at.  If no loads have been reported to the
+	  LoadManager, adaptive load balancing decisions cannot be made.
+	  Fall back on a non-adaptive strategy, such as the Random load
+	  balancing strategy, instead.  The Random load balancing strategy
+	  is used since it is very lightweight and stateless.
+
+Fri Nov 15 15:26:29 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
+
+	  Corrected ACE_RCSID macros.  They listed the wrong directory.
+
+Fri Nov 15 15:13:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Signal_Handler.cpp (activate):
+
+	  sigwait() is not supported on MS Windows, meaning that signals
+	  cannot be handled synchronously with the current implementation
+	  of this signal handler.  Handle signals asynchronously through
+	  the ORB's reactor instead.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp (init):
+
+	  Fixed buffer overrun problem that was causing an unhandled
+	  exception to be thrown on MS Windows.  The hexidecimal
+	  representation of the time in milliseconds was supposed to be
+	  embedded in a string buffer of 8 characters.  The decimal
+	  representation, which is greater than 8 characters long, was
+	  being embedded into the string instead.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp:
+
+	  Cosmetic and spelling fixes/updates.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+
+	  CORBA::SystemException, not CORBA_SystemException.
+
+Fri Nov 15 16:59:49 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h: Fixed warnings
+	  in Borland build.
+
+Fri Nov 15 15:22:54 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+
+          Added check to skip implied IDL generation for imported nodes.
+          Thanks once again to Nanbor <nanbor@cse.wustl.edu> for his
+          testing of the new CCM-related IDL features.
+
+Fri Nov 15 14:51:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Asynch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Synch_Queued_Message.h:
+	* tao/Queued_Message.cpp:
+	* tao/Queued_Message.h: Added an extra default argument to the
+	  constructor that indicates whether the class is heap allocated
+	  or not.
+
+	* tao/Transport.cpp: Changed the places where the
+	  Asynch_Queued_Message was allocated on the heap to pass the
+	  right value for the flag that indicates the status of creation
+	  of the class.
+
+	  Thanks to Chad Elliott for pinting out that if the
+	  Asynch_Queued_Message was allocated on the heap, it may not get
+	  destroyed if TAO_Asynch_Queued_Message::destroy () was
+	  called.
+
+Fri Nov 15 20:52:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+          Added missing include to fix BCB compile error.
+
+        * tests/Bug_1020_Basic_Regression/*.bor:
+        * tests/Bug_1020_Regression/*.bor:
+        * tests/Bug_1269_Regression/*.bor:
+        * tests/Bug_1270_Regression/*.bor:
+          Added new BCB makefiles to build these tests
+
+        * tests/Makefile.bor:
+          Added new tests for which there are now BCB makefiles.
+
+Fri Nov 15 11:06:07 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+
+	  Added LB_Client_{Component,ORBInitalizer}.{h,cpp} files to these
+	  project files.
+
+Fri Nov 15 10:51:04 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+
+          Changed the signature of the global <flat name>_upcast() method for
+          components, used by sequences containing forward declared
+          components. Thanks again to Nanbor <nanbor@cse.wustl.edu> for
+          confirming my suspicion.
+
+Fri Nov 15 09:29:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+
+          Fixed up some omissions and signatures in generated code. Thanks to
+          Nanbor <nanbor@cse.wustl.edu> for uncovering them.
+
+Thu Nov 14 19:45:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Added required paths to the
+	  libraries.
+
+Thu Nov 14 16:40:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp (usage):
+	* orbsvcs/LoadBalancer/LoadManager.cpp (usage):
+
+	  Clarified usage message.
+
+	  (parse_args):
+
+	  If the "-h" command line option was supplied, print the usage
+	  message and exit immediately.  Previously, the usage message was
+	  printed but the executable never exited.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientComponent.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientComponent.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.cpp:
+
+	  New sources that transparently add adaptive load balancing
+	  support to a client.  They are used to transparently register
+	  the existing LB_ClientRequestInterceptor.  This part of a set of
+	  changes that enable the adaptive load balancing support in
+	  Cygnus, i.e. TAO's new load balancer.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+
+	  Fixed problem where CosLoadBalancing::LocationNotFound exception
+	  was propagated to the client, and interpreted as a
+	  CORBA::UNKNOWN exception.  If loads at the supplied location
+	  are not available continue the loop and attempt to retrieve
+	  loads from the next location.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp
+	  (built_in_strategy):
+
+	  Corrected debugging statement.
+
+Thu Nov 14 16:35:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Makefile: Added new tests to the daily builds.
+
+Thu Nov 14 16:28:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1269_Regression/run_test.pl:
+	* tests/Bug_1270_Regression/run_test.pl: Reduced the runtime
+	  further to 4 minutes. 7 minutes is too high to blow away the
+	  stack on machines like charanga!
+
+Thu Nov 14 16:21:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1270_Regression/run_test.pl: Reduced the runtime from
+	  70 minutes to 7 minutes. This will make them usable in the daily
+	  builds.
+
+Thu Nov 14 13:47:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	  (gen_marshal_and_invoke):
+
+	  Fixed "empty controlled statment" warning that occurred due to
+	  an ACE_ASSERT disappearing when NDEBUG is defined.  That
+	  ACE_ASSERT is to be executed when a oneway operation check
+	  evaluates to true.  When NDEBUG is defined, there is nothing to
+	  execute if that condition is true.  Moved the condition check
+	  inside the ACE_ASSERT.  This is safe since no other code is
+	  meant to be run if the oneway operation check/condition is
+	  true, i.e. there are no side-effects.
+
+Thu Nov 14 14:33:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Changed the semantics of one of the arguments
+	  in the call close_connection_shared (). The argument was called
+	  "disable_purge" and was used in exactly the opposite manner. The
+	  condition that was used to purge the entry from the cache was
+	  also topsy-turvy.
+
+	  This was fixed the following way
+
+	    - the argument is now called "purge".
+	    - a value of 1 will purge the entry from the cache manager and
+	      a value of 0 otherwise.
+
+	  This should fix the failure of the Crash_On_Write test in our
+	  daily builds.
+
+Thu Nov 14 14:04:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+
+          Added missing dependency to project.
+
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+
+          Added missing link paths to release version.
+
+Thu Nov 14 10:55:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/Server_Interceptor.cpp
+	  (send_reply, send_exception):
+
+	  Fixed unused argument warning in emulated exceptions case.
+
+Thu Nov 14 10:04:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/client.cpp (test_ami):
+	  (test_ami_errors):
+
+	  Use a PortableServer::ServantBase_var instead of a
+	  TAO::Utils::Servant_var.  MSVC++ 6 can't handle the member
+	  templates in the latter.
+
+Thu Nov 14 11:48:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosNotification.bor: Added a wild card character
+	  to the list of files to be compiled.
+
+Thu Nov 14 09:43:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/server.dsp:
+
+	  Corrected library path for the TAO_Messaging library.
+
+Wed Nov 13 17:18:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp: Release the OS resources only when
+	  the reference count reaches zero. There may be lot of
+	  furore over this decision. But doing this would help to
+	  circumvent BUG 1294 and BUG 1361. The solution in BUG 1294, is
+	  not scalable to situations explained in BUG 1361 which leads to
+	  crashes. The only way to circumvent that is to release the OS
+	  resources at the end of the lifetime of the handler.
+
+	  Not exactly sure how I missed this yesterday.
+
+Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp:
+
+	  New TAO_SSLIOP-specific TAO_Accept_Strategy implementation.
+	  This accept strategy builds on on the TAO_Accept_Strategy
+	  implementation.  It sub-classes that class, and overrides the
+	  accept_svc_handler() method so that a timeout value may be
+	  passed to the underlying peer acceptor.  This is necessary to
+	  defend against a simple Denial-of-Service attack.  See the
+	  comments in the header for details.  [Bug 1348]
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  Added new "-SSLAcceptTimeout" option.  This option allows
+	  applications to override the default 10 second TAO_SSLIOP
+	  accept() timeout.
+
+	  (make_acceptor):
+
+	  Pass the timeout value to the SSLIOP_Acceptor's constructor.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+
+	  Updated use the new TAO_SSLIOP_Accept_Strategy implementation
+	  instead of the generic one supplied by TAO.  [Bug 1348]
+
+	  Cache the accept timeout value in a member variable.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+	  (TAO_SSLIOP_Acceptor):
+
+	  Initialize the accept timeout member from the value passed to
+	  this constructor from the SSLIOP_Factory.
+
+	  (ssliop_open_i):
+
+	  Pass the accept timeout value to the
+	  TAO_SSLIOP_Accept_Strategy's constructor.  [Bug 1348]
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  Only register the connection handler with the reactor when
+	  creating a new connection.  Previously, the connection handler
+	  was registered each time an invocation was made even if a
+	  connection was previously established.
+
+	* orbsvcs/tests/Security/Secure_Invocation/client.bor (TAO_IDL):
+	* orbsvcs/tests/Security/Secure_Invocation/server.bor (TAO_IDL):
+
+	  Removed "-GC" option from the TAO_IDL flags.  This test does not
+	  require AMI callbacks.
+
+Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* Repeated ChangeLogTag: Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	  Updated.
+	* Repeated only the removal of files as per ChangeLogTag: Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Object.h:
+	* orbsvcs/orbsvcs/Notify/Object.cpp:
+	  Added missing call to update_qos_properties
+	* orbsvcs/orbsvcs/Notify/Proxy.h:
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h
+	  Changed signature of <qos_changed> method to accept
+	  QoSProperties.
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+ 	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+	  Rearranged code to avoid deadlock in <connect> methods.
+
+Wed Nov 13 10:41:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+
+	  Checked in these files again after yesterday's update loss.
+
+Wed Nov 13 06:27:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Fixed a compile
+	  error.
+
+Tue Nov 12 14:34:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed unused
+	  variable warnings in builds compiled with ACE_NDEBUG option
+	  turned on. This makes the ACE_ASSERT dissappear.
+
+Tue Nov 12 13:25:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/LF_CH_Event.cpp: Fixed compile error in no inline builds.
+
+Tue Nov 12 13:13:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added the new files.
+
+Tue Nov 12 12:54:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/LF_Invocation_Event.inl: Fixed a typo.
+
+Tue Nov 12 12:47:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	Fix for [BUG 1020]. Please see details of the bug at
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1020
+
+        Please see the discussions in the above URL for details on
+        the motivations for these changes. A very brief summary of the
+        changes alone are mentioned.
+
+	* tao/Transport.cpp(close_connection_shared): Wait on the
+          leader follower if the handle is registered with the
+          reactor.
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.cpp:
+        * tao/LF_Event.inl: Made the class TAO_LF_Event as an abstract
+          base class. This helps us to strategize the type of
+          behaviour required in different concrete classes which can
+          in turn be used by other portions of the ORB to wait on LF.
+
+	* tao/LF_Invocation_Event.h:
+	* tao/LF_Invocation_Event.cpp:
+	* tao/LF_Invocation_Event.inl: Concrete implementation of a
+	  LF_Event class, where the state transitions along the invocation
+	  path are consolidated.
+
+	* tao/LF_CH_Event.h:
+	* tao/LF_CH_Event.cpp: Concrete implementation of a LF_Event
+	  class, where the state transitions of the connection handler are
+	  consolidated.
+
+	* tao/Queued_Message.h:
+	* tao/Synch_Reply_Dispatcher.h: They now inherit from
+	  TAO_LF_Invocation_Event class.
+
+	* tao/Connection_Handler.h: This class inherits now from the
+	  TAO_LF_CH_Event class.
+
+	* tao/Makefile.bor:
+	* tao/Makefile.tao: Added the new files to the list of compilable
+	  files.
+
+Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+	* orbsvcs/examples/Log/Notify/Makefile:
+	  Updated dependencies.
+
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.h:
+	  Removed the include of
+	  orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h, which no longer exists.
+
+Tue Nov 12 11:15:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Added an assert
+	  statement after decrementing the reference count. Point taken
+	  from "Pragmatic Programmer".
+
+Tue Nov 12 11:08:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.h: Commented out the following calls
+	  incr_pending_upcalls (), decr_pending_upcalls () and
+	  pending_upcalls (), since there was no implementation and they
+	  were not at all used.
+
+	* tao/Connection_Handler.cpp: Cosmetic changes.
+
+Tue Nov 12 10:17:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+
+	  Removed the include of
+	  orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h, which no longer exists.
+
+Tue Nov 12 13:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Made the argument of addressing_mode() same as in header file so that
+          doxygen documentation is generated for this method.
+
+Mon Nov 11 23:04:34 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.dsw:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.dsp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.dsp:
+
+	  New MSVC++ 6 project files for this test.
+
+Mon Nov 11 22:33:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile (TAO_LB_LIBS):
+
+	  Corrected order of libraries linked to the server binary.
+
+	  (client):
+
+	  Do not link server-side libraries.  They are completely
+	  unnecessary for this client binary.
+
+	* orbsvcs/tests/Makefile.bor (DIRS):
+
+	  Added "LoadBalancing" directory to the list of directories to
+	  recurse into.
+
+	* orbsvcs/tests/LoadBalancing/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+
+	  New Borland C++ Makefiles for this test.
+
+Mon Nov 11 20:31:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp (TAO_LB_run_load_manager):
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp (TAO_LB_run_load_monitor):
+
+	  New global function that is run when the Load{Manager,Monitor}'s
+	  ORB thread is run.  It is only used on Linux when multi-thread
+	  support is enabled.  This is part of a work-around for the
+	  problem where signals can only be handled in the main() thread
+	  on Linux.
+
+	  (ACE_TMAIN):
+
+	  Spawn a new thread to run the LoadManager's ORB, and handle
+	  signals in this (main()) thread.  This is the second part of a
+	  work-around for the problem where signals can only be handled in
+	  the main() thread on Linux.
+
+	  Moved signal handler activation to just before the point where
+	  the ORB is run.  There is no need to activate the signal handler
+	  earlier than there.
+
+Mon Nov 11 19:22:05 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+
+	  Explicitly include "ace/Hash_Map_Manager_T.h" to pull in
+	  ACE_Hash_Map_Manager_Ex template.
+
+Mon Nov 11 19:15:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/AMI.dsw:
+	* tests/Portable_Interceptors/AMI/client.dsp:
+	* tests/Portable_Interceptors/AMI/server.dsp:
+
+	  New MSVC++ project files for this test.
+
+Mon Nov 11 18:03:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  Updated release notes about AMI interceptor support.
+
+	  Updated CORBA spec URL to the 3.0.1 spec's URL.
+
+	* tao/Messaging/Makefile.bor:
+	* tao/Messaging/TAO_Messaging.dsp:
+	* tao/Messaging/TAO_Messaging_Static.dsp:
+
+	  Added AMI_ClientRequestInfo_i.{h,cpp} to these Make/project
+	  files.
+
+Mon Nov 11 17:27:22 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Messaging/AMI_ClientRequestInfo_i.h:
+	* tao/Messaging/AMI_ClientRequestInfo_i.cpp:
+	* tao/Messaging/Makefile:
+	  Add implementation class for AMI ClientRequestInfos.  [Bug 286]
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Move some #includes to the .cpp file, include
+	  AMI_ClientRequestInfo_i.h when compiling with interceptors and
+	  AMI.    [Bug 286]
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	  Generate interceptor code for sendc_*** operations.  [Bug 286]
+
+	* tests/Portable_Interceptors/Makefile:
+	* tests/Portable_Interceptors/AMI/Makefile:
+	* tests/Portable_Interceptors/AMI/run_test.pl:
+	* tests/Portable_Interceptors/AMI/.cvsignore:
+	* tests/Portable_Interceptors/AMI/Client_Interceptor.h:
+	* tests/Portable_Interceptors/AMI/Client_Interceptor.cpp:
+	* tests/Portable_Interceptors/AMI/Client_ORBInitializer.h:
+	* tests/Portable_Interceptors/AMI/Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/AMI/Echo.h:
+	* tests/Portable_Interceptors/AMI/Echo.cpp:
+	* tests/Portable_Interceptors/AMI/Echo_Handler.h:
+	* tests/Portable_Interceptors/AMI/Echo_Handler.cpp:
+	* tests/Portable_Interceptors/AMI/Server_Interceptor.h:
+	* tests/Portable_Interceptors/AMI/Server_Interceptor.cpp:
+	* tests/Portable_Interceptors/AMI/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/AMI/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/AMI/Shared_Interceptor.h:
+	* tests/Portable_Interceptors/AMI/Test.idl:
+	* tests/Portable_Interceptors/AMI/client.cpp:
+	* tests/Portable_Interceptors/AMI/server.cpp:
+	  New regression test for the AMI interceptors.
+
+Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	Removed these files as they are no longer needed. All features and
+	bug fixes have been absorbed in the new implementation as per
+	ChangeLogTag: Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
+	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Channel_Objects_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Collection_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Command.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Command.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Command.i:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event.i:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.i:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Factory.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i:
+	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Listeners.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.h:
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
+	* orbsvcs/orbsvcs/Notify/Notify_POA_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h:
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.inl:
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.h:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.h:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
+	  Removed.
+
+	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.h:
+ 	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
+	  Removed Dispatch Observer as error handling has moved to TAO_NS_Peer.
+
+	* orbsvcs/orbsvcs/Notify/Event_Map_Observer.h:
+ 	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.h:
+ 	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.inl:
+	  Removed Event_Map_Observer as Map changes are conveyed via
+	  return values in Event_Map_T <insert> and <remove> methods.
+
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
+ 	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.inl:
+	  Removed Pending_Worker as we have decided not to implement
+	  retries for now.
+
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	  Removed code depending on Dispatch_Observer.
+
+	* orbsvcs/orbsvcs/Notify/Consumer.h:
+ 	* orbsvcs/orbsvcs/Notify/Consumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Consumer.inl:
+	  Added <dispatch_updates_i> method that invokes offer_change.
+	  Modified <push> implementation to catch exceptions and inform
+	  the base Peer class to handle exceptions while dispatching.
+	  Removed code that depended the Dispatch_Observer.
+
+	* orbsvcs/orbsvcs/Notify/EventType.h:
+	* orbsvcs/orbsvcs/Notify/EventType.cpp:
+	  Added a <dump> debugging helper method that prints the contents of the event type.
+
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+	  - Added a <dump> debugging helper method that prints the contents
+	  of the event sequence.
+	  - Added a <populate_no_special> method that populates a
+	  CosNotification::EventTypeSeq but excludes the special event
+	  type.
+	  - Added an <intersection> method that calculates the common
+	  elements of two sequences.
+	  - Modified the <init> method to correctly handle cases with
+	  duplicates in the added and/or removed list.
+
+	* orbsvcs/orbsvcs/Notify/Event_Manager.h:
+	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Manager.inl:
+	  - Removed code related to : Event_Map_Observer,
+	  Dispatch_Observer, Pending_Worker, Update_Removed_Worker and
+	  Update_Added_Worker.
+	  - Modified the <un_/publish>, <un_/subscribe> methods to return
+	  the list of eventypes that are being seen for the first or last
+	  time.
+	  - Added <offer_change> and <subscription_change> methods to
+	  handle update changes.
+	  - Added <offered_types> and <subscription_types> that return the
+	  current available types from the Consumer and Supplier Maps.
+	  - Added worker classes TAO_NS_ProxyConsumer_Update_Worker and
+	  TAO_NS_ProxySupplier_Update_Worker classes that inform proxys
+	  regarding update changes.
+	- Added <connect> and <disconnect> methods that we delegate to the
+	  appropriate Event_Map and inform the newly connected Proxy of
+	  types that are avialable in the channel.
+
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+	  - Added <connect> and <disconnect> methods that add  the proxy
+	  to an updates list. This list is used to disseminate the
+	  subscription/offer update changes.
+	  - Added accessor method for the updates list and count of proxys
+	  connected to this map.
+	 - Removed code relating to Event_Map_Observer.
+	 - The <insert> and <remove> methods now return 1 if the type
+	  being inserted or removed is the first time/ last time.
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+	  - Added checks for nil pointers and modified exception handling
+	  code to be simpler.
+
+	* orbsvcs/orbsvcs/Notify/Peer.cpp:
+	* orbsvcs/orbsvcs/Notify/Peer.h:
+	* orbsvcs/orbsvcs/Notify/Peer.inl:
+	  - Added a <dispatch_updates> method that formats the event types
+	  for final dispatch.
+	  - Added a <handle_dispatch_exception> method that simply
+	  destroys the offending Peer.
+	  - Modified <dispatch_updates_i> to accept
+	  CosNotification::EventTypeSeq's.
+	- Removed <updates_dispatch_observer_> data member and code
+	  related to it.
+	- Removed <retry_count_> data member and retry related code.
+
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	* orbsvcs/orbsvcs/Notify/Proxy.h:
+	  - Removed added_, removed_ data members, <type_added> and <type_removed> code because
+	  subscription/offer_change handling logic has been
+	  simplified.
+	  - Added <types_changed> method that enqueues a
+	  TAO_NS_Method_Request_Updates object in the Proxys worker task queue.
+	  - Renamed the <admin_subscription> to
+	  <admin_types_changed>. This seems more appropriate.
+
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+	   - Added calls to <connect>, <disconnect> and <offer_change>
+	  instead of calling <publish> and <un_publish>
+
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.ProxyConsumer_T.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.ProxyConsumer_T.h:
+	  - Renaming to <admin_types_changed>
+	  - Call <offer_change> instead of calling <publish> and <un_publish>
+
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+	  - Calling <subscription_change> instead of <subscribe> and
+	  <un_subscribe>.
+	  - Added calls to <connect> and <disconnect>
+
+	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.h:
+	- Calling <subscription_change> instead of <subscribe> and
+	  <un_subscribe>.
+	- Renamed <admin_subscription> to <admin_types_changed>
+
+	* orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+	- Print messages at debug level 1.
+
+	* orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
+	- Renamed <admin_subscription> to <admin_types_changed>
+
+ 	* orbsvcs/orbsvcs/Notify/Supplier.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Supplier.h:
+	- Modified <dispatch_updates_i> signature.
+
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+	  Moved shutdown code fix from Notify_MT_Worker.cpp.
+
+	* orbsvcs/orbsvcs/Notify/Types.h:
+	  - Removed forward declaration for Event_Map_Observer,
+	  Dispatch_Observer, Pending_Worker types that are no longer used.
+
+ 	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+	  - Added missing virtual keyword to <push>
+
+ 	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp
+	  - Changed the exception handling code to delegate to the Peer's
+	  <handle_dispatch_exception> method.
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
+ 	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.inl:
+	  Added a Method Request type that sends dispatch_updates to Peer
+	  objects. Updates are also treated as events and
+	  enqueued/dequeued in a queue(if any) of the Worker Task.
+	  This replaces the earlier logic of using Pending_Worker.
+
+	* orbsvcs/tests/Notify/Events.cpp:
+	* orbsvcs/tests/Notify/Events.h:
+	  - Added a -use_default_admin option that results in the test
+	  obtaining a Consumer/SupplierAdmin interface via the
+	  default_consumer/supplier_admin method.
+
+	* orbsvcs/tests/Notify/Filter.cpp:
+	* orbsvcs/tests/Notify/Filter.h:
+	  - Added this test for Filter operations.
+	  This test excercises the FilterAdmin code for a Consumer Admin.
+
+	* orbsvcs/tests/Notify/MultiTypes.cpp:
+	* orbsvcs/tests/Notify/MultiTypes.h:
+	- Added this test to check the following -
+	  + Consumers of different types should receive events
+	  that are send by any kind of supplier.
+	  + A nested upcall to the Notification Service via a
+	  disconnect_XXX from within a push should succeed.
+
+	* orbsvcs/tests/Notify/Updates.cpp:
+	* orbsvcs/tests/Notify/Updates.h:
+	  Completely revamped this test. This test tests subscription and
+	  offer change calls and makes sure that the expected updates are
+	  indeed received.
+
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  Added the new Filter and MultiTypes tests.
+
+	* orbsvcs/tests/Notify/Basic/Makefile
+	* orbsvcs/tests/Notify/Basic/Makefile.bor
+	* orbsvcs/tests/Notify/Notify_Tests.dsw
+	* orbsvcs/tests/Notify/Basic/Basic.dsw
+	  Modified to include the new Filter and MultiTypes tests and
+	  updated dependencies.
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Removed old Notify files, added Method_Request_Updates file and
+	  updated dependencies.
+
+	* orbsvcs/Notify_Service/Makefile:
+	  Updated dependencies.
+
+Mon Nov 11 14:28:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/GIOP_Message_Base.cpp (consolidate_fragments): When growing
+	  the message block to increase the allocated memory, we now use
+	  the length () of the available message block as the basis for
+	  growing instead of the size (). Simon McQueen of PrismTech ran
+	  several experiments while investigating problems related to
+	  [BUGID 1356] and is convinced this is the right way to go, since
+	  this uses less memory. Since I dont foresee problems, his patch
+	  is being accepted for the release. Thanks to Simon for putting
+	  in lot of effort to narrow down the problem to this area.
+
+Mon Nov 11 10:43:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp:
+	  Added TAO_CosEvent.lib to the list of libraries for Release
+	  build only to fix a link problem on MSVC.
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp
+	  (write_records): Initialize the local variable <l> to 0 to fix a
+	  build warning.
+
+Mon Nov 11 09:28:43 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	  Get the whole hostname name including the domain instead
+	  of just the hostname.
+	  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for pointing
+	  out a exception thats raised.
+
+	* orbsvcs/tests/ImplRepo/run_test.pl:
+	  cosmetic changes.
+
+Sun Nov 10 20:24:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+
+	  Changed handling of reopened modules. In the case where a
+	  module and its member have both been seen before, tao_ifr
+	  now assumes that it is re-processing the IDL file in which
+	  the module and member were first seen, and ignores the member.
+	  It is possible that there is actually an illegal name clash, but
+	  it is not possible to tell the difference in every case, so we
+	  choose the behavior assuming that the common case will be the
+	  re-processing of an already-loaded IDL file. Thanks to Nick
+	  Cross <nick.cross@prismtechnologies.com> for reporting the
+	  problem when loading CosNaming.idl twice and then trying to
+	  look at the IFR contents.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+
+	  Cosmetic changes.
+
+Sun Nov 10 18:02:51 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp: Fixed a problem
+	  with previous patch, Wed Oct 16 17:16:38 2002  Jeff Parsons
+	  <parsons@isis-server.isis.vanderbilt.edu>, where the logic was
+	  reversed.  Thanks to Jon Franklin for noticing the problem and
+	  providing the patch.
+
+Sun Nov 10 08:19:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.cpp: Some debugging statements were
+	  either out of format or totally useless for any debugging
+	  purposes. Fixed some of them that I saw in the path that
+	  actually hinders my debugging.
+
+Sat Nov 09 09:47:37 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RTEventLog.dsp: The release build was not
+	  generating a different name from the debug build without
+	  following our naming convention.
+
+Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs/tests/Notify/Basic:
+
+	  - Renamed the following file to make consistent:
+
+	    - AdminProperties_Test.* to AdminProperties.*
+	    - Events_Test.* to Events.*
+	    - LifeCycleTest.* to LifeCycle.*
+
+	  - Updated the following files to reflect the above described
+	    name changes:
+
+	    - Basic/Basic.dsw
+	    - Basic/Basic.mpc
+	    - Makefile
+	    - Makefile.bor
+	    - README
+
+	  - Added run_test.pl so that these tests can be run in the
+	    nightly built.
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen: Added
+	  run_test.pl so that these tests can be run in the nightly built.
+
+	* orbsvcs/tests/Notify:
+
+	  Updated the following project files so that they can be included
+	  in the mega Notify test workspace:
+
+	  orbsvcs/tests/Notify/Notify_Tests.dsw
+
+	  - Basic/ConnectDisconnect.dsp
+	  - Basic/IdAssignment.dsp
+	  - Basic/Simple.dsp
+	  - Basic/Updates.dsp
+	  - Blocking/Structured_Consumer.dsp
+	  - Blocking/Structured_Supplier.dsp
+	  - Discarding/Sequence_Consumer.dsp
+	  - Discarding/Sequence_Supplier.dsp
+	  - Discarding/Structured_Consumer.dsp
+	  - Discarding/Structured_Supplier.dsp
+	  - MT_Dispatching/Structured_Consumer.dsp
+	  - MT_Dispatching/Structured_Supplier.dsp
+	  - Ordering/Sequence_Consumer.dsp
+	  - Ordering/Sequence_Supplier.dsp
+	  - Ordering/Structured_Consumer.dsp
+	  - Ordering/Structured_Supplier.dsp
+	  - Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp
+	  - Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp
+	  - Sequence_Multi_Filter/Sequence_Consumer.dsp
+          - Sequence_Multi_Filter/Sequence_Supplier.dsp
+	  - Structured_Filter/Structured_Filter_Consumer.dsp
+	  - Structured_Filter/Structured_Filter_Supplier.dsp
+	  - Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp
+	  - Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp
+	  - performance-tests/Filter/Sequence_Consumer.dsp
+	  - performance-tests/Filter/Sequence_Supplier.dsp
+	  - performance-tests/Filter/Structured_Consumer.dsp
+	  - performance-tests/Filter/Structured_Supplier.dsp
+	  - performance-tests/RedGreen/RedGreen.dsp
+	  - performance-tests/Throughput/Throughput.dsp
+
+	* orbsvcs/tests/Notify/Notify_Tests.dsw: Add projects, updated
+	  names, and updated dependencies.
+
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter: Renamed file to
+	  fix missing "e":
+
+	  Added   Sequence_Multi_ETCL_Filter.mpc
+	  Removed Sequenc_Multi_ETCL_Filter.mpc
+
+	* orbsvcs/tests/Notify/Basic/IdAssignment.h: Fixed filename in
+	  comments.
+
+	* orbsvcs/tests/Notify/Basic/Simple.cpp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+
+	  Reduce debugging statements.
+
+	* $ACE_ROOT/bin/auto_run_tests.lst: Updated to run Notify test
+	  nightly.
+
+Fri Nov  8 13:19:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (svc_i): Cosmetic fixes.
+
+Fri Nov 08 10:47:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Abstract_Interface/Abstract_Interface_Server.dsp: Fixed
+	  the broken release configuration.
+
+Fri Nov 08 10:03:22 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RTEventLog.dsp: Fixed the broken release build
+	  configuration.
+
+Thu Nov 07 12:21:21 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAOACE.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Logging_Service.dsp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsp:
+	* orbsvcs/examples/Log/Basic/Client.dsp:
+	* orbsvcs/examples/Log/Event/Log_CEC_Simple_Consumer.dsp:
+	* orbsvcs/examples/Log/Event/Log_CEC_Simple_Supplier.dsp:
+	* orbsvcs/examples/Log/Notify/Log_Notify_Simple_Consumer.dsp:
+	* orbsvcs/examples/Log/Notify/Log_Notify_Simple_Supplier.dsp:
+	* orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Consumer.dsp:
+	* orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Supplier.dsp:
+	* orbsvcs/orbsvcs/RTEventLog.dsp:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsp:
+	* tests/IDL_Test/idl_test.dsp: Fixed broken workspaces and projects.
+
+Thu Nov  7 12:03:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Incoming_Mesage_Queue.cpp (duplicate): In duplicate () the
+	  copy constructor should be called instead of the plain
+	  constructor. Thanks to Simon McQueen <sm@prismtechnologies.com>
+	  for pointing this out.
+
+Thu Nov  7 09:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* utils/nslist/nsadd.cpp: Fixed a compile error caused undeclared
+	  variables.
+
+Wed Nov  6 20:09:14 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* utils/nslist/nsadd.cpp: Enhanced the utilty so that it can add
+	  arbitrary paths to Naming Service entries.  Thanks to Paul
+	  Caffrey <denginere@hotmail.com> for this fix.
+
+Thu Nov  7 06:44:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Makefile.bor:
+          Added Security directory
+
+        * orbsvcs/tests/Security/Makefile.bor:
+          Added new BCB makefle to build subdirectories
+
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile.bor:
+        * orbsvcs/tests/Security/Secure_Invocation/client.bor:
+        * orbsvcs/tests/Security/Secure_Invocation/server.bor:
+          Added these new BCB makefiles. Thanks to Oleg Kraynov <mustafa@gema.ru>
+          for creating these.
+
+Wed Nov  6 11:43:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: Fixed an error
+	  which occurs when the right libraries havent been built. Thanks
+	  to Gautam Thaker for pointing this out.
+
+Wed Nov  6 11:35:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression/Server_Task.h: Fixed fuzz
+	  errors.
+
+Wed Nov  6 11:32:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/Bug_1020_Regression/Echo.cpp:
+	* tests/Bug_1020_Regression/Echo.h:
+	* tests/Bug_1020_Regression/Echo_Callback.cpp:
+	* tests/Bug_1020_Regression/Echo_Callback.h:
+	* tests/Bug_1020_Regression/ORB_Task.cpp:
+	* tests/Bug_1020_Regression/ORB_Task.h:
+	* tests/Bug_1020_Regression/Server_Task.cpp:
+	* tests/Bug_1020_Regression/Test.idl: Fixed fuzz errors.
+
+Tue Nov 05 17:32:22 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+	* orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/Proxy_T.cpp:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+
+	  Corrected the way IDSequences are populated. Thanks to Yamuna
+	  for helping to debug this.
+
+Tue Nov 05 12:01:25 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+	  ENV variable was being used in <init>, changed it back to ACE_ENV_ARG_DECL.
+
+Tue Nov  5 08:28:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp (visit_enum): Changed
+	  "val)/" to "val)" to avoid a bug.  Thanks to Jian Chen for
+ 	  reporting the fix and to Marc Alter
+ 	  <marc.alter@fr.thalesgroup.com> for the original bug report.
+
+Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
+
+	* (Removed previous bogus ChangeLog entry).
+	* orbsvcs/orbsvcs/CosNotification.bor:
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com>, Johnny
+          Willemsen <jwillemsen@remedy.nl>, Irfan, Nanbor and Bala for help in
+          correcting the .bor file.
+
+        * tao/Messaging/Makefile.bor:
+          Applied change in INCLUDE provided by Christopher Kohlhoff
+          <chris@kohlhoff.com>.
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+          In method <build_filter_factory> create a filter factory if we
+          could not obtain one as a dynamic service.
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp:
+          TAO_NS_Update_Added_Worker<PROXY>::work, moved call to
+          type_added inside the "if" statement.
+
+          Following files were modified for backward compatibility as some
+          application might be calling their <init_svc> method.
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h:
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+          static <create> method maintained for backward compatibility.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+          In method TAO_NS_Notify_Service::init - added old options for
+          backward compatibility.
+          Revived Service Object
+          Notify_Default_Event_Manager_Objects_Factory.
+
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+          Defined TAO_NS_DEFAULT_UPDATES_PERIOD instead of using a magic
+          number for the subscription/publication change update
+          notification interval.
+
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+          Added missing initialization of updates_off_ data member.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          Defined the string name for the Notify_Default_Event_Manager_Objects_Factory.
+
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+          Check if narrow fails because CosEventComm client was connecting
+          and does not support NotifySubscribe.
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+          Replaced unnecessary calls to _narrow with _duplicate. Thanks to
+          Irfan for pointing this out.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+          Remove explicit instantiation of Dynamic_Service<TAO_NS_Service>
+          as its now defined in Notify_EventChannelFactory_i.cpp.
+
+Mon Nov  4 14:21:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Regression: Another test that has the capability
+	  of stressing things a bit more for this bug to show up. This
+	  test is structured in such a manner that multipel Multi-threaded
+	  clients can connect to a server. The clients crash at periodic
+	  intervals. This is a slightly improvised form of the basic
+	  test. Thanks to Carlos O'Ryan for donating this test.
+
+	* tests/Bug_1020_Regression/client.cpp:
+	* tests/Bug_1020_Regression/Echo_Callback.cpp:
+	* tests/Bug_1020_Regression/Echo_Callback.h:
+	* tests/Bug_1020_Regression/Echo.cpp:
+	* tests/Bug_1020_Regression/Echo.h:
+	* tests/Bug_1020_Regression/Makefile:
+	* tests/Bug_1020_Regression/ORB_Task.cpp:
+	* tests/Bug_1020_Regression/ORB_Task.h:
+	* tests/Bug_1020_Regression/run_test.pl:
+	* tests/Bug_1020_Regression/server.cpp:
+	* tests/Bug_1020_Regression/Server.cpp:
+	* tests/Bug_1020_Regression/Server.h:
+	* tests/Bug_1020_Regression/Server_Task.cpp:
+	* tests/Bug_1020_Regression/Server_Task.h:
+	* tests/Bug_1020_Regression/Test.idl: Files for this test.
+
+
+Mon Nov  4 14:18:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression/README: Added information about
+	  the motivation and purpose of this test.
+
+Mon Nov  4 13:44:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression: A new regression test for BUG
+	  1020. This is a simple test which was failing with 1.2.1. The
+	  test has Multi-threaded client communicating with a
+	  Multi-threaded server. The client is crashed to see whether the
+	  server crashes.
+
+	* tests/Bug_1020_Basic_Regression/client.cpp:
+	* tests/Bug_1020_Basic_Regression/Client_Task.cpp:
+	* tests/Bug_1020_Basic_Regression/Client_Task.h:
+	* tests/Bug_1020_Basic_Regression/Echo_Caller.cpp:
+	* tests/Bug_1020_Basic_Regression/Echo_Caller.h:
+	* tests/Bug_1020_Basic_Regression/Echo.cpp:
+	* tests/Bug_1020_Basic_Regression/Echo.h:
+	* tests/Bug_1020_Basic_Regression/Makefile:
+        * tests/Bug_1020_Basic_Regression/server.cpp:
+	* tests/Bug_1020_Basic_Regression/Server_Task.cpp:
+	* tests/Bug_1020_Basic_Regression/Server_Task.h:
+	* tests/Bug_1020_Basic_Regression/Test.idl: New files added for
+	  this test.
+
+Mon Nov  4 12:24:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h: Added a
+	  missing exception specification from the definition to the
+	  declaration of create_member (). This should fix  compile errors
+	  on Linux builds.
+
+Mon Nov 04 11:10:14 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+	  in method <init_main_thread> change argument to
+	  ACE_ENV_ARG_DECL_NOT_USED.
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	  Added code for explicit template instantiation.
+
+Mon Nov 04 10:47:41 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+	  In <create_filter> method : Added check to include EXTENDED_TCL
+	  string as a valid constraint grammar.
+
+Sun Nov  3 19:13:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
+	  (member_count):
+
+	  Corrected exception specification so that it matches the method
+	  definition's exception specification.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (member_count):
+
+	  Removed extra line (cosmetic change).
+
+Sun Nov  3 16:02:55 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+
+	  Removed PG_Group_Guard.{h,cpp} from these Makefiles and project
+	  files.  Those files no longer exist.
+
+Sun Nov  3 15:59:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LB_ORT.idl:
+
+	  Updated to CORBA 3.0 conventions.  Use the CORBA 3.0
+	  "typeprefix" keyword instead of "#pragma prefix".
+
+Sun Nov  3 15:59:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	The following fix some problems with the infrastructure-controlled
+	membership support in TAO's PortableGroup library:
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h
+	  (TAO_PG_Factory_Node):
+
+	  Replaced GenericFactory object reference attribute with a
+	  FactoryInfo attribute.  The latter is necessary to correctly
+	  implement infrastructure-controlled membership
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (delete_member):
+
+	  New method used to implement the
+	  ObjectGroupManager::remove_member() method when the object group
+	  in question is under infrastructure control.  The
+	  ObjectGroupManager will call back on the GenericFactory.
+
+	  (check_minimum_number_members):
+
+	  New method that creates new members if the object group in
+	  question is under infrastructure control.  Enough new members
+	  will be created to satisfy the MinimumNumberMembers property of
+	  the object group (assuming there are enough unused
+	  application-supplied GenericFactorys).
+
+	  (create_member):
+
+	  New method used to create a single member via the
+	  infrastructure.  This method is only used internally by the
+	  infrastructure.  It should not be confused with the
+	  ObjectGroupManager::create_member() method.
+
+	  (populate_object_group):
+
+	  Removed FactoryCreationId and ObjectId parameters.  They are no
+	  longer used by this method.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+
+	  No need to include `PG_Group_Guard.h'.  That file has been
+	  removed.
+
+	  (TAO_PG_GenericFactory):
+
+	  Pass the "this" pointer to the ObjectGroupManager
+	  implementation.  The ObjectGroupManager will potentially call
+	  back on the GenericFactory in the infrastructure-controlled
+	  membership case.
+
+	  (create_object):
+
+	  Reorganized this method so that the TAO_PG_Group_Guard class is
+	  no longer needed.  In particular, the FactoryCreationId is
+
+	  The object group's factory set is now bound to the factory map
+	  in this method instead of the populate_object_group() method.
+	  This allowed the latter method to be cleaned up.
+
+	  (delete_object_i):
+
+	  Updated to access FactoryInfo field in the TAO_PG_Factory_Node
+	  structure that replaced the old GenericFactory object reference
+	  field.
+
+	  (populate_object_group):
+
+	  Fixed problem where only the number of factories equal to the
+	  initial number of members were bound to the factory map.  All
+	  factories should be bound to the map, but only
+	  InitialNumberMembers factories should be invoked.
+
+	  Refactored member creation code to the new create_member()
+	  method since the same code is also used by the new
+	  check_minimum_number_members() method.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp:
+
+	  Remove these files.  The "guard" implementation contained in
+	  these files is no longer necessary due to improvements in the
+	  TAO_PG_GenericFactory::create_object() method.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (_tao_add_member):
+
+	  TAO-specific object group member addition method intended for
+	  use by TAO's GenericFactory implementation.  It merely calls the
+	  new protected add_member_i() method in a way that prevents that
+	  method from performing remote member type checking via the
+	  CORBA::Object::_is_a() call.  TAO's GenericFactory
+	  implementation already performs member type checking in the
+	  infrastructure-controlled case.  This is an optimization to
+	  prevent redundant remote type checks.
+
+	  (add_member):
+
+	  Refactored object group member addition code to the new
+	  protected add_member_i() method.  It calls the add_member_i()
+	  method in a way that allows member type checking to occur.
+
+	  (add_member_i):
+
+	  New protected underlying and non-locking implementation of the
+	  add_member() and _tao_add_member() methods.
+
+	  (member_count):
+
+	  New accessor method that returns the number of members currently
+	  in a given object group.  Used by the new
+	  TAO_PG_GenericFactory::check_minimum_number_members() method.
+
+	  (generic_factory):
+
+	  Mutator method used to set the cached pointer to the
+	  TAO_PG_GenericFactory object which the TAO_PG_ObjectGroupManager
+	  will call back on.
+
+Sun Nov  3 11:04:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: Fixed a compile errors
+	  in single threaded builds.
+
+Sun Nov  3 10:18:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp: Fixed a compile error
+	  with minimum builds. Rearranged includes to have local includes
+	  first.
+
+Sun Nov 03 11:00:27 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Added missing .obj extension to targets. Thanks to Johnny
+	  Willemsen <jwillemsen@remedy.nl> for pointing this out.
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+	  Removed calls to initalize old Notification factories. This is
+	  not needed now.
+
+Sat Nov  2 19:58:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1269_Regression/ORB_Task.cpp:
+	* tests/Bug_1269_Regression/Server_Timer.cpp:
+	* tests/Bug_1269_Regression/client.cpp:
+	* tests/Bug_1269_Regression/shutdown.cpp:
+	* tests/Bug_1270_Regression/ORB_Task.cpp:
+	* tests/Bug_1270_Regression/Server_Timer.cpp:
+	* tests/Bug_1270_Regression/client.cpp:
+	* tests/Bug_1270_Regression/shutdown.cpp: Fixed compile errors on
+	  platforms where exceptions have been disabled.
+
+	* tests/Bug_1270_Regression/run_test.pl:
+	* tests/Bug_1269_Regression/run_test.pl: Changed the cutoff times
+	  so that the tests would run without displaying errors on my
+	  box. I would love these tests to run in our daily builds. But we
+	  cannot run these, since they run for more than 75 mins on my two
+	  processor box!
+
+Sat Nov 02 20:46:08 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Modified to add new Notification files.
+
+Sat Nov  2 19:56:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Synch_Refcountable.cpp: Cosmetic fix.
+
+Sat Nov 02 18:10:44 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+	  Inserted missing , in constructor.
+
+	* orbscvs/orbsvcs/Notify/Notify_Service.cpp:
+	  Removed ACE_DEFAULT_THREAD_PRIORITY to threadpool task. Thanks
+	  to Bala for suggesting a fix.
+
+	* orbscvs/orbsvcs/Notify/Thread_Pool_Task.cpp:
+	  Modified call to <activate> to use ACE_DEFAULT_THREAD_PRIORITY.
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	  Changed code to obtain the notify service.
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
+          Modified the .conf file to use the revised Notify Service
+	  directive.
+
+Sat Nov  2 10:48:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Utils/Servant_Var.h:
+	* tao/Utils/Servant_Var.inl: Fixed errors in non-native exceptions
+	  build.
+
+Fri Nov  1 20:12:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Added the overloaded
+	  connect () method without the timeout. The implementation just
+	  calls the method with timeout value. It shouldnt be necessary,
+	  but one build in the borland compiler warns about one of the
+	  connect () methods hiding the other one. Hopefully, this should
+	  resolve the warning.
+
+Fri Nov 01 20:09:44 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+
+          Modified project files to correct .pdb target.
+
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+
+          In method <run_test> removed duplicate call to Sequence Consumer.
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+          Changed code to obtain the notify service for colocation.
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+	  Changed the default values used when the test is run without any
+	  parameters.
+
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+        * orbsvcs/tests/Notify/Discarding/notify.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
+        * orbsvcs/tests/Notify/Ordering/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/Filter/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf:
+
+          Modified the .conf files to use the revised Notify Service directive.
+
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+
+          Added missing definition for $notify_conf
+
+        * orbsvcs/tests/Notify/Structured_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/notify.conf:
+
+          Added missing notify.conf file.
+
+Fri Nov  1 19:12:49 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Makefile.dirs: Added tao/Utils directory to the list of
+	  directories. Need to add this directory for Win32 and
+	  Borland. Need to make sure that they are fine on one before
+	  propagating things to others.
+
+Fri Nov  1 19:06:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Utils/Auto_Functor.cpp:
+	* tao/Utils/Auto_Functor.h:
+	* tao/Utils/Auto_Functor.inl:
+	* tao/Utils/Implicit_Deactivator.cpp:
+	* tao/Utils/Implicit_Deactivator.h:
+	* tao/Utils/ORB_Destroyer.cpp:
+	* tao/Utils/ORB_Destroyer.h:
+	* tao/Utils/PolicyList_Destroyer.cpp:
+	* tao/Utils/PolicyList_Destroyer.h:
+	* tao/Utils/PolicyList_Destroyer.inl:
+	* tao/Utils/RIR_Narrow.cpp:
+	* tao/Utils/RIR_Narrow.h:
+	* tao/Utils/Servant_Var.cpp:
+	* tao/Utils/Servant_Var.h: ACE'ified code. Made them exception
+	  safe even if native exceptions have been turned off.
+
+Fri Nov 01 14:38:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Logging_Service/Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Logging_Service.dsp:
+	  Renamed Basic_Logging_Service.dsp to Logging_Service.dsp.  This
+	  may fix the unknown project error in the nightly build.
+
+Fri Nov 01 11:09:29 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp:
+	  Changed <execute> method parameter to
+	  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          Corrected the comment above the <init> method.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          Added a #define to define the string used to load the Cos
+          Notification Service.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+          Added class TAO_NS_CosNotification_Service_Initializer.
+          This is a helper to load the Cos Notification service into the service conf. for static links.
+
+        * orbsvcs/Notify_Service/svc.conf:
+          Changed the conf file to load the Cos Notification wih the static command.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Changed the string to obtain the Cos Notification Service via
+	  the Service Configurator.
+
+Fri Nov  1 09:44:43 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+
+          Fixed a project setting I overlooked in
+
+          Thu Oct 31 16:46:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+Fri Nov  1 07:25:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/MProfile_Connection_Timeout/README:
+	* tests/MProfile_Connection_Timeout/run_test.pl: Added these files
+	  to the test.
+
+	* tests/MProfile_Connection_Timeout/client.cpp:
+	* tests/MProfile_Connection_Timeout/server.cpp:
+	* tests/MProfile_Connection_Timeout/test.idl:
+	* tests/MProfile_Connection_Timeout/test_i.cpp:
+	* tests/MProfile_Connection_Timeout/test_i.h: Improved error
+	  checking so that any problems will be signalled as errors in our
+	  daily builds.
+
+Fri Nov  1 00:44:22 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+
+	  Fixed compile errors in debian build.
+
+Thu Oct 31 22:33:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAOACE.dsw: Added ProtableServer library as a dependency for
+	  Messaging library.
+
+	* tests/MProfile_Connection_Timeout/client.bor:
+	* tests/MProfile_Connection_Timeout/server.bor:
+	* tests/MProfile_Connection_Timeout/Makefile.bor: Added the
+	  borland Makefiles.
+
+	* tests/MProfile_Connection_Timeout/client.dsp:
+	* tests/MProfile_Connection_Timeout/server.dsp:
+	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.dsw:
+          Workspace and project files for Win32 builds
+
+	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+	  MakefileProject creator.
+
+Thu Oct 31 17:56:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/MProfile_Connection_Timeout/client.cpp (run_test):
+	  Cosmetic fixes.
+
+	* tests/MProfile_Connection_Timeout/Makefile: Added the Makefile
+	  for the test.
+
+Thu Oct 31 17:33:55 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
+	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+	* orbsvcs/orbsvcs/Notify/Container_T.inl:
+
+	  Added ACE_TYPENAME for type names qualified by template
+	  parameters.
+
+Thu Oct 31 17:09:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/MProfile_Connection_Timeout:
+	* tests/MProfile_Connection_Timeout/client.cpp:
+	* tests/MProfile_Connection_Timeout/server.cpp:
+	* tests/MProfile_Connection_Timeout/test.idl:
+	* tests/MProfile_Connection_Timeout/test_i.cpp:
+	* tests/MProfile_Connection_Timeout/test_i.h: New test for BUG ID
+	  1284. This is just a preliminary checkin. Other parts of the
+	  test are coming in shortly.
+
+Thu Oct 31 16:46:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Added link path to ETCL library.
+
+        * orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+
+          Added setting for release version, and fixed export settings for debug
+          and release versions.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+
+          Added missing 'virtual' to a pure virtual function declaration.
+
+Thu Oct 31 15:42:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Replicated the
+	  changes from "Thu Oct 31 14:48:39 2002  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>" for the remaining
+	  protocols.
+
+Thu Oct 31 15:40:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (handle_timeout): Fixed
+	  a stupid typo :(
+
+Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	This is a fix for BUGID 1284. Please see
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1284 for more
+	details. This fix does the following
+
+	- The invation class selects a timeout from the two options that
+	  it has access to, viz. a user defined timeouts for connection
+	  establishment or the roundtrip timeout defined by the user.
+
+	- If the user defined connection timeout policy is used and if the
+	  call to TAO_Transport::connect () returns an errno of ETIME, the
+	  invocation class tries the next endpoint in the profile.
+
+	- If the roundtrip timeout is used, we raise a CORBA::TIMEOUT
+	  exception.
+
+	The connection timeout policy if set, overrides the roundtrip
+	timeout policy value. To get the semantics right, the following
+	changes were performed:
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Added another connect () method with
+	  a timeout value. Made the connect () methods non-pure-virtual,
+	  such that we could share some code and maintain backward
+	  compatibility. Further, the pure-virtual method make_connection
+	  () passes a timeout value. This shouldnt break backward
+	  compatibility either.
+
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Added a timeout argument to the
+	  make_connection () method. This method gets called from
+	  TAO_Connector::connect () method which has a timeout. The
+	  implementation of the make_connection () method is now changed
+	  to just use the timeout value that is passed instead of
+	  selecting a timeout value.
+
+	* tao/Invocation.cpp: Selects a timeout from the two possible
+	  alternatives and passes one of the values to the connect ()
+	  call. Based on the timeout value used and the return value
+	  handles errors as explained above.
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Changes to the protocols within
+	  TAO. Changes to other protocols will follow.
+
+Thu Oct 31 13:59:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/GIOP_Message_Base.cpp: Fixed a typo in the comments.
+
+Thu Oct 31 13:08:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (handle_timeout): Fixed
+	  compile errors in single threaded builds.
+
+Thu Oct 31 12:07:51 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp:
+
+	  Fixed debian build compile warnings.
+
+Thu Oct 31 11:58:24 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp: Fixed compile error in
+	  builds where exceptions have been turned off.
+
+Thu Oct 31 10:51:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* docs/Smart_Proxies.html: Fixed a few typos.
+
+Thu Oct 31 10:52:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+
+          Added checks for successful opening of an ACE_Configuration
+          section so that subsequent iteration of values or subsections
+          (which will fail) can be skipped. Thanks to Nick Cross
+          <nick.cross@prismtechnologies.com> for reporting the bug.
+
+Thu Oct 31 10:50:16 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+
+          Restored const version of ValueBase_var operator that casts to
+          ValueBase*.
+
+Thu Oct 31 00:46:22 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/Notify/Makefile:
+
+	  Removed the old Throughput test.
+
+Wed Oct 30 19:06:59 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Event.cpp:
+	* orbsvcs/orbsvcs/Notify/Types.cpp:
+	* orbsvcs/orbsvcs/Notify/Factory.cpp:
+
+	  Added template instantiations to fix link errors.
+
+
+Wed Oct 30 19:38:20 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp (TAO_AV_UDP_Object::handle_input):
+	  Improve debugging message.
+
+Wed Oct 30 12:49:32 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp
+	  (register_poa_current): Moved registration of POA Current from
+	  post_init() to pre_init().  Thanks to Ossama for pointing this
+	  out.
+
+Wed Oct 30 09:01:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp
+	  (register_poa_current):
+
+	  Removed obsolete/incorrect comment regarding the lack of
+	  reference counting in the TAO_ORBInitInfo object.
+	  TAO_ORBInitInfo is now properly reference counted.
+
+Wed Oct 30 11:38:36 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Following are fixes for bug 1344.  Thanks to Ossama for pointing
+	  this out.
+
+	* tao/PortableServer/Object_Adapter.cpp (create): Moved the
+	  registration of the POA Current to the
+	  PortableServer_ORBInitializer.  If POA Current is resolved
+	  before RootPOA, this code executes does not execute in time.
+
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp
+	  (register_poa_current): POA Current is now registered in
+	  TAO_PortableServer_ORBInitializer::post_init().
+
+	* tao/ORB_Core.i (poa_current): Simply return <poa_current>.  It
+	  should have been correctly initialized.
+
+	* tests/POA/Current: Added new test to ensure that accessing the
+	  POA current before the RootPOA does not cause any problems.
+
+	  The following files were added:
+
+	  - tests/POA/Current/Current.cpp
+	  - tests/POA/Current/Current.dsp
+	  - tests/POA/Current/Current.dsw
+	  - tests/POA/Current/Current.mpc
+	  - tests/POA/Current/Makefile
+	  - tests/POA/Current/makefile.bor
+	  - tests/POA/Current/run_test.pl
+
+	  The following files were modified:
+
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README
+
+Wed Oct 30 13:15:01 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp (run_orb_within_thread):
+
+	  Added missing ACE_DECLARE_NEW_CORBA_ENV.
+
+Tue Oct 29 17:50:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.cpp (fini, _set_unexpected):
+
+	  Call set_unexpected() in the global namespace when using
+	  MSVC++.  MSVC++ doesn't place set_unexpected() in the "std"
+	  namespace.  Thanks to Irfan for pointing the build problem.
+
+Tue Oct 29 19:20:29 2002  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Service.h:
+
+	  Make the init (int,char**) method abstract.
+
+Tue Oct 29 11:37:37 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+
+	  Generated dependencies. Added the cleanup of the tao_idl
+	  generated files for Notify/Event_Forwarder.idl.
+
+Tue Oct 29 09:34:59 CET 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp: Use ACE_OS::sleep() instead
+	  of sleep(). Thanks to Johnny.
+
+Tue Oct 29 00:33:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification (realclean):
+
+	  Fixed typo where the command to be executed for this target was
+	  placed in the target's dependency list.  Addresses several build
+	  errors.
+
+Tue Oct 29 07:38:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_MT_Mcast/Makefile.bor:
+          Added new BCB makefile for this test.
+
+Mon Oct 28 22:11:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.cpp:
+
+	  Do not pull the std::unexpected() function into the global
+	  namespace through a "using" clause to avoid a conflict with some
+	  STL implementations (e.g. STLPort) that already do that.
+
+	  (init, _set_unexpected):
+
+	  If the compiler's C++ library defines the "std" namespace,
+	  explicitly call std::set_unexpected.  This fix was motivated by
+	  Kobi Cohen Arazi <kobi@mivzak.com>.
+
+Mon Oct 28 19:18:25 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+
+	* orbsvcs/orbsvcs/Notify/Service.h:
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp:
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+
+	  Added init methods with base class signatures to avoid compile
+	  warnings
+
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+	* orbsvcs/orbsvcs/Notify/Admin.h:
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+
+	  Made the TAO_NS_Object_Id_Seq definition public so it can be
+	  accessed from other classes.
+
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+
+	  Put the pacing_interval_.value () into an ACE_Time_Value before
+	  checking with ACE_Time_Value::zero.
+
+	* orbsvcs/orbsvcs/Notify/Factory.cpp:
+
+	  Removed duplicate template instantitaion of TAO_NS_EventType.
+
+Mon Oct 28 17:19:58 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp: Fixed
+	  ACE_ENV warnings.
+
+Mon Oct 28 16:55:11 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/POA/MT_Servant_Locator/Makefile: Fixed and updated
+	  dependencies.
+
+Mon Oct 28 16:48:23 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp: <Task::event_>
+	  was being used in both preinvoke() and postinvoke().  This led
+	  to a deadlock if the second signal() was missed since the event
+	  was already signaled. Solution was to give both preinvoke() and
+	  postinvoke() their own event variables.
+
+Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao/PortableServer/POA.cpp (locate_servant_i): We no longer
+	  need to use the non-servant upcall idiom for calling
+	  ServantLocator::preinvoke() since we are now let of the lock
+	  altogether before calling the servant locator.
+	  ServantLocator::postinvoke() is also handled in a similar
+	  manner.
+
+          Note that it is possible for some other thread to reset the
+	  servant locator once the lock is released.  However, this
+	  possiblility also exists for postinvoke() which is also called
+	  outside the lock.
+
+	  Thanks to Ashok Sadasivan <ashok_sadasivan@hotmail.com> for
+	  pointing this out.
+
+	* tao/PortableServer/Object_Adapter.cpp (prepare_for_upcall):
+	  Check the state before releasing the lock since it may already
+	  have been released for Servant Locators.
+
+	* tao/PortableServer/Object_Adapter: Moved State enumeration from
+	  protected to public section.  Also added accessor and set method
+	  of the state.
+
+	* tests/POA/MT_Servant_Locator: Added new test to ensure that the
+	  POA allows multiple simultaneous calls to Servant Locators.
+
+	  The following files were added:
+
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.dsp
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.dsw
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc
+	  - tests/POA/MT_Servant_Locator/Makefile
+	  - tests/POA/MT_Servant_Locator/makefile.bor
+	  - tests/POA/MT_Servant_Locator/run_test.pl
+	  - tests/POA/MT_Servant_Locator/test.idl
+
+	  The following files were modified:
+
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README
+
+Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Following are fixes for bug 1317.  Thanks to Ossama for pointing
+	  this out.
+
+	* tao/TAO_Internal.cpp (open_services_i): If available, allow the
+	  Adapter Factory to setup by calling init().  This is similar to
+	  what we do for RT-CORBA.
+
+	* tao/ORB_Core.cpp (poa_factory_name): Added accessor.
+
+	* tao/RTPortableServer/RT_Object_Adapter_Factory.h: Changed
+	  inheritance from TAO_Adapter_Factory to
+	  TAO_Object_Adapter_Factory to get the base class' init()
+	  functionality.
+
+Mon Oct 28 18:38:35 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/Makefile:
+	* orbsvcs/tests/Makefile.am:
+	* orbsvcs/tests/Makefile.bor:
+	* orbsvcs/tests/EC_MT_Mcast/AddrServer.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/AddrServer.h:
+	* orbsvcs/tests/EC_MT_Mcast/Consumer.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/Consumer.h:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.dsp:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.dsw:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile:
+	* orbsvcs/tests/EC_MT_Mcast/README:
+	* orbsvcs/tests/EC_MT_Mcast/Supplier.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/Supplier.h:
+	* orbsvcs/tests/EC_MT_Mcast/svc.conf:
+	* orbsvcs/tests/EC_MT_Mcast/run_test.pl:
+	  Added a regression test for the multithreading problem in class
+	  TAO_ECG_UDP_Receiver.
+
+Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}:
+	  TAO_ECG_UDP_Receiver member request_map_ may be accessed
+	  concurrently. Added a mutex, request_map_protector_.
+	  Thanks to Andreas Koehler <andreas.koehler@sysde.eads.net>
+	  for tracking down the bug and providing the fix.
+
+Sun Oct 27 09:04:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Event_Forwarder.idl:
+          Fixed fuzz build errors.
+
+Sun Oct 27 09:04:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
+          Fixed fuzz build errors.
+
+Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+        Updated framework for TAO's Notification Service:
+        - Fixes bugs related to Notification Object Lifecycle,
+        - Fixes bugs related to incorrect ID assignments,
+        - Fixes implementation of SequenceProxys and Event Batch.
+        - Contains base framwork for adding RT-CORBA extensions.
+
+        Added Files:
+        * orbsvcs/orbsvcs/NotifyExt.idl:
+	* orbsvcs/orbsvcs/Notify_Forwarder.idl:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp :
+        * orbsvcs/orbsvcs/Notify/Admin.h :
+        * orbsvcs/orbsvcs/Notify/Admin.inl:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h :
+        * orbsvcs/orbsvcs/Notify/AdminProperties.inl:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.inl :
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Builder.inl :
+        * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.cpp :
+        * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Constraint_Visitors.cpp :
+        * orbsvcs/orbsvcs/Notify/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp :
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.inl :
+        * orbsvcs/orbsvcs/Notify/Container.cpp:
+        * orbsvcs/orbsvcs/Notify/Container.h:
+        * orbsvcs/orbsvcs/Notify/Container.inl :
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Container_T.h :
+        * orbsvcs/orbsvcs/Notify/Container_T.inl:
+        * orbsvcs/orbsvcs/Notify/Destroy_Callback.h :
+        * orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.h :
+        * orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp :
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.inl :
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h :
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h :
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h :
+        * orbsvcs/orbsvcs/Notify/EventChannel.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp :
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.inl :
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventType.inl :
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h :
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp :
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.inl :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer.h :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.h :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.cpp :
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+        * orbsvcs/orbsvcs/Notify/Factory.cpp :
+        * orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/Notify/Factory.inl:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp :
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h :
+        * orbsvcs/orbsvcs/Notify/ID_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h :
+        * orbsvcs/orbsvcs/Notify/ID_Factory.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.inl:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp :
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.inl :
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.inl :
+        * orbsvcs/orbsvcs/Notify/Object_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Object_T.h:
+        * orbsvcs/orbsvcs/Notify/Object_T.inl :
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h :
+        * orbsvcs/orbsvcs/Notify/POA_Helper.inl:
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+        * orbsvcs/orbsvcs/Notify/Peer.h :
+        * orbsvcs/orbsvcs/Notify/Peer.inl:
+        * orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp :
+        * orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Pending_Worker_T.inl :
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h :
+        * orbsvcs/orbsvcs/Notify/Properties.inl:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.cpp :
+        * orbsvcs/orbsvcs/Notify/PropertySeq.h:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.inl :
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h :
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
+        * orbsvcs/orbsvcs/Notify/Property_T.cpp :
+        * orbsvcs/orbsvcs/Notify/Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Property_T.inl:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp :
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h :
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.inl:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.inl :
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h :
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.inl:
+        * orbsvcs/orbsvcs/Notify/Proxy_T.cpp
+        * orbsvcs/orbsvcs/Notify/Proxy_T.h :
+        * orbsvcs/orbsvcs/Notify/Proxy_T.inl:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.cpp :
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.inl :
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h :
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.inl:
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp :
+        * orbsvcs/orbsvcs/Notify/Refcountable.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable.inl:
+        * orbsvcs/orbsvcs/Notify/Service.h :
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp :
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h :
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
+        * orbsvcs/orbsvcs/Notify/Supplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Supplier.h:
+        * orbsvcs/orbsvcs/Notify/Supplier.inl:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp :
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.inl :
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h :
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
+        * orbsvcs/orbsvcs/Notify/Types.cpp
+        * orbsvcs/orbsvcs/Notify/Types.h :
+        * orbsvcs/orbsvcs/Notify/Types.inl:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h :
+        * orbsvcs/orbsvcs/Notify/Worker_Task.inl:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.inl :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl :
+
+        Revised implementation files for the Notification Service.
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/svc.conf:
+
+        Changes to obtain the Notification Factory via Service Object.
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+
+        New source and idl files added.
+
+Sat Oct 26 14:44:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ORT/server.bor:
+          Fixed this BCB makefile.
+
+Sat Oct 26 14:03:59 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/pluggable_av_log:
+          Removed this file from the repo.
+
+Sat Oct 26 13:59:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/media_timer.cpp:
+          Fixed incorrect include because of file rename.
+
+Sat Oct 26 12:28:12  UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/media-timer.{h,cpp}:
+        * orbsvcs/orbsvcs/AV/media_timer.{h,cpp}:
+          Renamed media-timer to media_timer because the BCB5 Static linker
+          has problems with the - in the filename.
+
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV.bor:
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/Makefile.av:
+          Updated these files because of the file rename
+
+        * tests/ORT/ServerRequestInterceptor.h:
+          Fixed fuzz error
+
+Fri Oct 25 21:48:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/POA.cpp (adapter_name_i):
+
+	  Fixed problem where the RootPOA's adapter name was not included
+	  in the returned adapter name sequence.  CORBA 3.0 requires it to
+	  be included.
+
+	  Fixed incorrect nil POA reference check.  Use
+	  "CORBA::is_nil(poa)" instead of
+	  "poa == PortableServer::POA::_nil()".
+
+	  Slightly optimized and cleaned up this method.
+
+	* tests/ORT/ObjectReferenceFactory.idl:
+	* tests/ORT/ObjectReferenceFactory.h:
+	* tests/ORT/ObjectReferenceFactory.cpp:
+
+	  New PortableInterceptor::ObjectReferenceFactory implementation
+	  designed to excerise the
+	  PortableInterceptor::IORInfo::current_factory() attributed, the
+	  POA's ObjectReferenceFactory support.
+
+	* tests/ORT/ServerORBInitializer.h:
+	* tests/ORT/ServerORBInitializer.cpp:
+
+	  New server side ORBInitializer that registers the new server
+	  request interceptor and the existing IOR interceptor.
+
+	* tests/ORT/ServerRequestInterceptor.h:
+	* tests/ORT/ServerRequestInterceptor.cpp:
+
+	  New server request interceptor thats tests some of the
+	  ORT-specific methods in the ServerRequestInfo object passed to
+	  the server request interception points.
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp (components_established):
+
+	  Swap out the current ObjectReferenceFactory with the customized
+	  ObjectReferenceFactory implemented by this test.  The goal is
+	  test the PortableInterceptor::IORInfo::current_factory attribute
+	  internals, in addition to the POA's
+	  PortableInterceptor::ObjectReferenceFactory support.
+
+	* tests/ORT/server.cpp (main):
+
+	  Use a child POA when activating the servant and obtaining an
+	  object reference for it.  This forces a POA hierarchy to be
+	  reflected in the AdapterName sequence returned from
+	  PortableInterceptor::ServerRequestInfo::adapter_name() instead
+	  of a single (root) POA.
+
+	  Removed TAO-specific calls on the TAO_ORB_Core.  The
+	  equivalent portable calls in the
+	  PortableInterceptor::ServerRequestInfo object will be invoked
+	  via the new ServerRequestInterceptor instead.
+
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.h:
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.cpp:
+
+	  Removed this ORBInitializer in favor of the new one described
+	  above.
+
+	* tests/ORT/ORT_test_IORInterceptor.h:
+	* tests/ORT/ORT_test.idl:
+	* tests/ORT/ORT_test_i.h:
+	* tests/ORT/ORT_test_i.cpp:
+
+	  Cosmetic updates.
+
+	* tests/ORT/Makefile:
+	* tests/ORT/server.bor:
+	* tests/ORT/server.dsp:
+
+	  Added new files and removed deprecated ones.
+
+Fri Oct 25 09:56:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * TAO_IDL/be/be_valuetype.cpp:
+
+          Restored the const cast to pointer operator for valuetype _var
+	  classes.
+
+Fri Oct 25 09:49:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+
+          Added missing .in() in an assignment of _var class contents to a pointer,
+          and 'this->' in several places where a member variable is referenced.
+
+Thu Oct 24 19:48:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Re-did this after the great reversion "Wed Oct 23 16:32:36 2002
+	  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>"
+
+Thu Oct 24 19:44:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp: Fixed Release
+	  configurations.  Include paths, library paths, and library lists
+	  have been added.
+
+Thu Oct 24 19:32:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Reverted the changes made in the following entries:
+	Thu Oct 24 10:59:20 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Thu Oct 24 10:39:10 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Thu Oct 24 09:29:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Thu Oct 24 000:33:17 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 23:51:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 22:48:09 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 16:32:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+	Wed Oct 23 13:38:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+	Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>.
+	  Basically the changes made were not right. Hence the need for
+	  reversion to yesterday mornings status.
+
+Thu Oct 24 10:59:20 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * examples/Load_Balancing/Identity_Server.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/POA/DSI/client.cpp:
+          More replacement of char* with typedef name.
+
+Thu Oct 24 10:39:10 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/Flows_T.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/server.cpp:
+
+          More replacement of char* with typedef name.
+
+Thu Oct 24 09:29:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+          String literal conversions to typedef name that were overlooked in
+
+          Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>.
+
+Thu Oct 24 000:33:17 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/POA/DSI/Database_i.h:
+        * examples/RTCORBA/Activity/Activity.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+
+	  Replaced char * arguments with corresponding typedefs in cases where
+	  the IDL compiler now generates the typedef name.
+
+Wed Oct 23 23:51:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tests/Makefile:
+	* tests/Makefile.bor:
+	* tests/TAO_Tests.dsw:
+
+	  Added the new abstract interface test to the suite.
+
+Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+	  Converted many occurrences of a string literal arg to the typedef name
+	  'const cosPropertyService::PropertyName' since this is now what the
+	  IDL compiler generates in the method signature.
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+
+	  Same as above for two overlooked occurrences of a string literal where
+	  'const CosTrading::LinkName' is generated.
+
+Wed Oct 23 22:48:09 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/examples/Log/Basic/Client.dsp:
+        * orbsvcs/examples/Log/Event/Log_CEC_Simple_Consumer.dsp:
+        * orbsvcs/examples/Log/Event/Log_CEC_Simple_Supplier.dsp:
+        * orbsvcs/examples/Log/Notify/Log_Notify_Simple_Consumer.dsp:
+        * orbsvcs/examples/Log/Notify/Log_Notify_Simple_Supplier.dsp:
+        * orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Consumer.dsp:
+        * orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Supplier.dsp:
+
+	  Added all include and link paths - they somehow got wiped out.
+
+Wed Oct 23 16:32:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: Added a check to
+	  ensure that the contents are not compiled if the dependant
+	  libraries are not available. Thanks to Sandeep Neema
+	  <neemask@corvette.vuse.vanderbilt.edu> for reporting this.
+
 Wed Oct 23 13:38:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
@@ -168,8 +3059,8 @@ Mon Oct 21 23:17:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	Bug fix for [BUGID 1269]. Thanks to Carlos O'Ryan for donating
-	this patch.
+	Bug fix for [BUGID 1269,1270]. Thanks to Carlos O'Ryan for
+        donating this patch.
 
 	* tao/Connection_Handler.cpp:
 	* tao/Connection_Handler.h:
@@ -3173,7 +6064,7 @@ Sun Sep 15 13:04:49 2002  Ossama Othman  <ossama@uci.edu>
 	  Removed these members.  The memory they pointed to was not
 	  managed correctly.  This change is part of a number changes that
 	  address many memory management issues.  They were introduced
-	  when the TAO's ORT support was added.
+	  when TAO's ORT support was added.
 
 	* tao/PortableServer/POA.cpp (client_exposed_policies):
 
@@ -3837,7 +6728,7 @@ Wed Sep  4 10:44:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Cache a pointer to the default TAO ObjectReferenceTemplate
 	  implementation.  The POA now needs to call a TAO-specific method
-	  in that implementation during upon destruction.
+	  in that implementation upon destruction.
 
 	* tao/PortableServer/POA.cpp (destroy_i):
 

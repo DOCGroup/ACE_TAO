@@ -255,20 +255,56 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
                         1);
     }
 
+  // Get the max_wait_time
+  ACE_Time_Value *max_wait_time = 0;
+
+  ACE_Time_Value connection_timeout;
+  int is_conn_timeout = 0;
+
+  // Check for the connection timout policy in the ORB
+  this->orb_core ()->connection_timeout (this->stub (),
+                                         is_conn_timeout,
+                                         connection_timeout);
+
+  // If a connection timeout policy is set, use that as the timeout
+  // value.
+   if (!is_conn_timeout)
+     max_wait_time =
+       this->max_wait_time ();
+   else
+     max_wait_time = &connection_timeout;
+
   // Obtain a connection.
   int result =
     conn_reg->get_connector (desc.endpoint ())->connect (this,
-                                                         &desc
+                                                         &desc,
+                                                         max_wait_time
                                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (result == 0)
+  // A timeout error occurred
+  if (result == -1 && errno == ETIME)
+    {
+      // If the user has set a roundtrip timeout policy, then throw a
+      // timeout exception, else just fall through and return 0 to
+      // look at the next endpoint
+      if (!is_conn_timeout)
+        {
+          ACE_THROW_RETURN (CORBA::TIMEOUT (
+              CORBA_SystemException::_tao_minor_code (
+                TAO_TIMEOUT_CONNECT_MINOR_CODE,
+                errno),
+              CORBA::COMPLETED_NO),
+              1);
+        }
+    }
+  else if (result == 0)
     {
       // Now that we have the client connection handler object we need to
       // set the right messaging protocol for in the client side transport.
       const TAO_GIOP_Message_Version& version = this->profile_->version ();
       result = this->transport_->messaging_init (version.major,
-                                                     version.minor);
+                                                 version.minor);
 
       // Set the giop version of the out stream
       this->out_stream_.set_version (version.major, version.minor);
@@ -284,16 +320,6 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
         }
       else
         return 1;
-    }
-
-  if (errno == ETIME)
-    {
-      ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
-                  TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                  errno),
-              CORBA::COMPLETED_NO),
-              1);
     }
 
   // Update the remaining time for this call.

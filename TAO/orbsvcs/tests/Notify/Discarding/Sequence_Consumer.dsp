@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Sequence_Consumer" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Discarding Sequence Consumer" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Sequence_Consumer - Win32 Debug
+CFG=Discarding Sequence Consumer - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Sequence_Consumer - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Sequence_Consumer.mak" CFG="Sequence_Consumer - Win32 Debug"
+!MESSAGE NMAKE /f "Sequence_Consumer.mak" CFG="Discarding Sequence Consumer - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Sequence_Consumer - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Sequence_Consumer - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Discarding Sequence Consumer - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Discarding Sequence Consumer - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Sequence_Consumer - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Sequence_Consumer - Win32 Release"
+!IF  "$(CFG)" == "Discarding Sequence Consumer - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -50,9 +50,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_NotifyTests.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"Release/Sequence_Consumer.exe" /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_NotifyTests.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Sequence_Consumer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Discarding Sequence Consumer - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -65,8 +65,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\lib" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\lib" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -74,21 +74,17 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_NotifyTestsd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"Sequence_Consumer.exe" /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_NotifyTestsd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Sequence_Consumer - Win32 Release"
-# Name "Sequence_Consumer - Win32 Debug"
+# Name "Discarding Sequence Consumer - Win32 Release"
+# Name "Discarding Sequence Consumer - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-# Begin Source File
-
-SOURCE=.\Sequence_Consumer.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\common.cpp
@@ -104,6 +100,10 @@ SOURCE=.\goS.cpp
 # Begin Source File
 
 SOURCE=.\Notify_Sequence_Push_Consumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sequence_Consumer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -145,24 +145,24 @@ SOURCE=.\goS.i
 
 SOURCE=.\go.idl
 
-!IF  "$(CFG)" == "Sequence_Consumer - Win32 Release"
+!IF  "$(CFG)" == "Discarding Sequence Consumer - Win32 Release"
 
 # Begin Custom Build
 InputPath=.\go.idl
 InputName=go
 
-"$(InputName)C.h": $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	..\..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Sequence_Consumer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Discarding Sequence Consumer - Win32 Debug"
 
 # Begin Custom Build
 InputPath=.\go.idl
 InputName=go
 
-"$(InputName)C.h": $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build

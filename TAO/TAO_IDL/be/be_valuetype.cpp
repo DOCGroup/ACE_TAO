@@ -216,7 +216,9 @@ be_valuetype::gen_var_defn (char *local_name)
 
   *ch << be_nl;
 
-  // Other extra types (cast operator and others).
+  // Other extra types (cast operators and others).
+  *ch << "operator const " << local_name
+      << "* () const;" << be_nl;
   *ch << "operator " << local_name << "*& ();" << be_nl;
 
   *ch << "// in, inout, out, _retn " << be_nl;
@@ -381,7 +383,15 @@ be_valuetype::gen_var_impl (char *local_name,
 
   *cs << "}" << be_nl << be_nl;
 
-  // Other extra methods - cast operator ().
+  // Other extra methods - cast operators.
+  *cs << fname << "::operator const " << full_name
+      << "* () const // cast" << be_nl;
+  *cs << "{" << be_idt_nl;
+
+  *cs << "return this->ptr_;" << be_uidt_nl;
+
+  *cs << "}" << be_nl << be_nl;
+
   *cs << fname << "::operator " << full_name
       << "*& () // cast " << be_nl;
   *cs << "{" << be_idt_nl;

@@ -24,13 +24,13 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior
-                              ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Echo_Caller_var server =
-        Test::Echo_Caller::_narrow(tmp.in ()
-                              ACE_ENV_ARG_PARAMETER);
+        Test::Echo_Caller::_narrow (tmp.in ()
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -41,7 +41,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->shutdown(ACE_ENV_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

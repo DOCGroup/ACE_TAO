@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $ior = PerlACE::LocalFile ("supplier.ior");
 $notifyior = PerlACE::LocalFile ("notify.ior");
+$notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 
 $status = 0;
 

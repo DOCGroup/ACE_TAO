@@ -1335,6 +1335,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "POA Current"=".\POA\Current\Current.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "POA Excessive_Object_Deactivations"=".\POA\Excessive_Object_Deactivations\Excessive_Object_Deactivations.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1360,6 +1372,18 @@ Package=<4>
 ###############################################################################
 
 Project: "POA Non_Servant_Upcalls"=".\POA\Non_Servant_Upcalls\Non_Servant_Upcalls.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "POA MT_Servant_Locator"=".\POA\MT_Servant_Locator\MT_Servant_Locator.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
