@@ -13,8 +13,8 @@ ACE_RCSID(tao, Synch_Reply_Dispatcher, "$Id$")
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
                                                         IOP::ServiceContextList &sc)
-  : reply_status_ (100), //Just a invalid reply status
-    reply_service_info_ (sc),
+  : reply_service_info_ (sc),
+    reply_status_ (100), //Just a invalid reply status
     message_state_ (orb_core),
     reply_received_ (0),
     orb_core_ (orb_core),
