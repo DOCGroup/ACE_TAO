@@ -1,3 +1,9 @@
+Wed Aug 19 08:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/debug: Fixed a couple of uses of TAO_Export to make MSVC 6.0
+ 	  happy.  Thanks to Goran Lowkrantz
+ 	  <Goran.Lowkrantz@infologigruppen.se> for reporting this.
+
 Tue Aug 18 23:58:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.h (TAO_Resource_Factory): Changed this class so

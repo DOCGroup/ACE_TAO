@@ -28,13 +28,13 @@
 // such as process initialization.  They're treated as immutable.
 
 // 0 to ??; higher == more
-extern u_int TAO_Export TAO_debug_level;	
+extern TAO_Export u_int TAO_debug_level;	
 
 // debug messages on (1) or off (0)
-extern u_int TAO_Export TAO_orbdebug;
+extern TAO_Export u_int TAO_orbdebug;
 
 // set by getopt
-extern char * TAO_Export TAO_debug_filter;
+extern TAO_Export char *TAO_debug_filter;
 
 // These are just simple 0, 1, and 2 argument messages that will
 // appear when debugging's enabled, regardless of category.  They also
