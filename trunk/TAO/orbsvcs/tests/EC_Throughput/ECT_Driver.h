@@ -15,6 +15,10 @@
 #include "ace/Stats.h"
 #include "ace/CORBA_macros.h"
 
+namespace CORBA
+{
+  class Environment;
+}
 class ECT_Driver
 {
   //
