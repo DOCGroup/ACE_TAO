@@ -1,3 +1,9 @@
+Thu Jul 20 14:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Advanced/ch_21/{server,client}.cpp: Removed the need
+	  for the ostream extraction operator, which TAO doesn't need.
+  	  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting this.	  
+
 Thu Jul 20 13:37:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
