@@ -4,8 +4,9 @@ Thu Apr 15 23:13:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Reverted change "Wed Apr 14 06:42:12 UTC 2004  Johnny Willemsen
 	  <jwillemsen@remedy.nl>" that added a #include
-	  "tao/Exception.h".  Including "ace/CORBA_macros.h" instead is
-	  enough and much lighterweight.
+	  "tao/Exception.h" to address emulated exception compile-time
+	  problems.  Including "ace/CORBA_macros.h" instead is enough and
+	  much lighterweight.
 
 	* tao/PolicyC.h:
 
