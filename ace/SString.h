@@ -90,7 +90,7 @@ public:
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
-  ACE_CString substring (const size_t offset, const size_t length = -1);
+  ACE_CString substring (size_t offset, ssize_t length = -1);
   // Return a substring given an offset and length, if length == -1
   // use rest of str return empty substring if offset or offset/length
   // are invalid
@@ -257,7 +257,7 @@ public:
   void operator= (const ACE_WString &);
   // Assignment operator (does copy memory).
 
-  ACE_WString substring (const size_t offset, const size_t length = -1);
+  ACE_WString substring (size_t offset, ssize_t length = -1);
   // return a substring given an offset and length, if length == -1
   // use rest of str return empty substring if offset or offset/length
   // are invalid.
