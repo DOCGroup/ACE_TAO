@@ -1093,12 +1093,18 @@ typedef int clockid_t;
 #   endif /* CLOCK_REALTIME */
 # endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
+// -------------------------------------------------------------------
+// These forward declarations are only used to circumvent a bug in
+// MSVC 6.0 compiler.  They shouldn't cause any problem for other
+// compilers and they can be removed once MS release a SP that contains
+// the fix.
 class ACE_Time_Value;
 ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                       const ACE_Time_Value &tv2);
 
 ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                       const ACE_Time_Value &tv2);
+// -------------------------------------------------------------------
 
 class ACE_Export ACE_Time_Value
 {
