@@ -189,7 +189,10 @@ sub parse_line {
       }
     }
     elsif ($values[0] eq 'component') {
-      ($status, $errorString) = $self->parse_scope($ih, $values[1]);
+      ($status, $errorString) = $self->parse_scope($ih,
+                                                   $values[1],
+                                                   $values[2],
+                                                   \%validNames);
     }
     else {
       $errorString = "ERROR: Unrecognized line: $line";
@@ -205,68 +208,34 @@ sub parse_line {
 }
 
 
-sub parse_scope {
-  my($self)        = shift;
-  my($fh)          = shift;
-  my($name)        = shift;
-  my($status)      = 0;
-  my($errorString) = "ERROR: Unable to process $name";
-  my(%flags)       = ();
+sub handle_scoped_unknown {
+  my($self)  = shift;
+  my($fh)    = shift;
+  my($type)  = shift;
+  my($flags) = shift;
+  my($line)  = shift;
 
-  while(<$fh>) {
-    my($line) = $self->strip_line($_);
-
-    if ($line eq '') {
-    }
-    elsif ($line =~ /^}/) {
-      $status = 1;
-      $errorString = '';
-      last;
+  if (-e $line) {
+    if (-d $line) {
+      ## This would be too hard to track which files
+      ## got the scoped assignments, so we ignore these.
+      print "WARNING: Scoped directory " .
+            "assignments will be ignored: $line\n";
     }
     else {
-      my(@values) = ();
-      if ($self->parse_assignment($line, \@values)) {
-        if (defined $validNames{$values[1]}) {
-          if ($values[0] eq 'assignment') {
-            $self->process_assignment($values[1], $values[2], \%flags);
-          }
-          elsif ($values[0] eq 'assign_add') {
-            $self->process_assignment_add($values[1], $values[2], \%flags);
-          }
-          elsif ($values[0] eq 'assign_sub') {
-            $self->process_assignment_sub($values[1], $values[2], \%flags);
-          }
-        }
-        else {
-          $status = 0;
-          $errorString = "ERROR: Invalid assignment name: $values[1]";
-          last;
-        }
-      }
-      else {
-        if (-e $line) {
-          if (-d $line) {
-            ## This would be too hard to track which files
-            ## got the scoped assignments, so we ignore these.
-            print "WARNING: Scoped directory " .
-                  "assignments will be ignored: $line\n";
-          }
-          else {
-            ## Assignment store
-            $self->{'scoped_assign'}->{$line} = \%flags;
-          }
-        }
-        else {
-          ## We couldn't determine if it was an mpc file or
-          ## a directory, so we ignore these.
-          print "WARNING: Scoped file does not " .
-                "exist, so assignments will be ignored: $line\n";
-        }
-        push(@{$self->{'project_files'}}, $line);
-      }
+      ## Assignment store
+      $self->{'scoped_assign'}->{$line} = $flags;
     }
   }
-  return $status, $errorString;
+  else {
+    ## We couldn't determine if it was an mpc file or
+    ## a directory, so we ignore these.
+    print "WARNING: Scoped file does not " .
+          "exist, so assignments will be ignored: $line\n";
+  }
+  push(@{$self->{'project_files'}}, $line);
+
+  return 1, '';
 }
 
 
