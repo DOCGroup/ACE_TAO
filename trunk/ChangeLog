@@ -1,3 +1,8 @@
+Thu Jul 17 12:49:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/NT_Service/main.cpp:
+          Added #include "ace/streams.h".
+
 Thu Jul 17 06:21:30 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
