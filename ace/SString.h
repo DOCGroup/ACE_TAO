@@ -50,12 +50,21 @@ public:
   ACE_CString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
-  ACE_CString (const char *s, ACE_Allocator *alloc = 0, int release = 1);
+  ACE_CString (const char *s,
+               ACE_Allocator *alloc = 0,
+               int release = 1);
   // Constructor that copies <s> into dynamically allocated memory.
+  // If <release> is non-0 then the <ACE_allocator> is responsible for
+  // freeing this memory.
 
-  ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0, int release = 1);
+  ACE_CString (const char *s,
+               size_t len,
+               ACE_Allocator *alloc = 0,
+               int release = 1);
   // Constructor that copies <len> chars of <s> into dynamically
-  // allocated memory (will NUL terminate the result).
+  // allocated memory (will NUL terminate the result).  If <release>
+  // is non-0 then the <ACE_allocator> is responsible for freeing this
+  // memory.
 
   ACE_CString (const ACE_CString &);
   // Copy constructor.

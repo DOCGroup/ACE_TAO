@@ -10,8 +10,9 @@
 //    Auto_Ptr.h
 //
 // = AUTHOR
-//    Doug Schmidt, based on code from Jack Reeves (jack@fx.com) and
-//    Dr. Harald M. Mueller (mueller@garwein.hai.siemens.co.at)
+//    Doug Schmidt and Irfan Pyarali, based on code from Jack Reeves
+//    (jack@fx.com) and Dr. Harald M. Mueller
+//    (mueller@garwein.hai.siemens.co.at)
 //
 // ============================================================================
 
