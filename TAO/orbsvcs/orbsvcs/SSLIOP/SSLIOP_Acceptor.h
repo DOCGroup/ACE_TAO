@@ -82,6 +82,10 @@ private:
   int parse_options (const char *options);
   // Parse protocol specific options.
 
+  int init_tcp_properties (void);
+  // Obtain TCP properties that must be used by this acceptor, i.e.,
+  // initialize <tcp_properties_>.
+
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;
   // The concrete acceptor, as a pointer to it's base class.
@@ -93,6 +97,10 @@ private:
 
   SSLIOP::SSL ssl_component_;
   // The SSL component.
+
+  TAO_SSLIOP_Handler_Base::TCP_Properties tcp_properties_;
+  // TCP configuration properties to be used for all connections
+  // opened by this acceptor.
 };
 
 #if defined(__ACE_INLINE__)
