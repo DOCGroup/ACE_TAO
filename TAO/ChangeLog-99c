@@ -1,3 +1,10 @@
+Sun Mar 28 17:55:10 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Replaced the TAO exception macros with ACE exception macros.
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): 
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp
+	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp
+	
 Sun Mar 28 14:58:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Param_Test/any.cpp 
