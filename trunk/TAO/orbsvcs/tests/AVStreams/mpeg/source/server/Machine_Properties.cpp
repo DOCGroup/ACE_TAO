@@ -2,6 +2,10 @@
 
 #include "Machine_Properties.h"
 
+#define RSTAT_CPUSTATES 4
+#define RSTAT_DK_NDRIVE 4
+
+
 ACE_RCSID(server, Machine_Properties, "$Id$")
 
 const int TAO_Machine_Properties::NUM_PROPERTIES = 10;
@@ -89,7 +93,7 @@ TAO_Machine_Properties::retrieve_stats (void)
   u_int result;
   if ((result =clnt_call (this->rstat_client_,
                  RSTATPROC_STATS,
-                 xdr_void,
+                 (xdrproc_t) xdr_void (0,0),
                  0,
                  (xdrproc_t) xdr_statstime,
                  (caddr_t) &this->stats_,
@@ -195,7 +199,7 @@ TAO_Machine_Properties::compute_cpu (CORBA::Any& value, int elapsed_seconds)
 {
 
   // The first three cpu stats are for user, kernal, iowait
-  CORBA::ULong used = 0.0;
+  CORBA::Float used = 0.0;
   for (int i = 0; i < RSTAT_CPUSTATES - 1; i++)
     used += (this->stats_.cp_time[i] - this->old_stats_.cp_time[i]);
 
@@ -205,7 +209,7 @@ TAO_Machine_Properties::compute_cpu (CORBA::Any& value, int elapsed_seconds)
     this->old_stats_.cp_time[RSTAT_CPUSTATES - 1];
 
   // The CPU usage is the amount used over the total available.
-  value <<= (CORBA::Float) ((((CORBA::Float) used) / (used + idle)) * 100.0);
+  value <<= (CORBA::Float) (((used) / (used + idle)) * 100.0);
 }
 
 void
