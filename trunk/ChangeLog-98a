@@ -1,3 +1,11 @@
+Tue Dec 23 21:06:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/TLI_Stream.cpp (get_remote_addr): added ACE_UNUSED_ARG
+          for the arg if ! ACE_HAS_SVR4_TLI.
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): declare
+          local "i" outside the for loop because it is used after the loop.
+
 Tue Dec 23 19:34:10 1997    <nw1@JIG>
 
 	* ace/OS.i: Added comments for semaphore simulation.
@@ -9,7 +17,7 @@ Tue Dec 23 19:33:59 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Tue Dec 23 19:05:32 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/IOStream_Test.cpp (server): Changed sleep(30) to
-	  sleep(5).  This seems more reasonable.  Thanks to 
+	  sleep(5).  This seems more reasonable.  Thanks to
 	  James Johnson for this suggestion.
 
 Tue Dec 23 16:43:14 1997  Steve Huston  <shuston@riverace.com>
