@@ -707,7 +707,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << " ri.result (";
       // get the return val
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_PRE_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
