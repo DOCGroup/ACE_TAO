@@ -1,3 +1,70 @@
+Wed Jun 23 13:52:06 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/tests/Config_Handlers/RobotAssembly/ACE.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/CIAO.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/DefaultConfiguration.pcd:
+        * DnC/tests/Config_Handlers/RobotAssembly/Deployment.xsd:
+        * DnC/tests/Config_Handlers/RobotAssembly/DeploymentPlan.cdp:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/HumanMachineInterface.ccd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/HumanMachineInterface.cid:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/HumanMachineInterface.cpd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/HumanMachineInterface_exec.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/HumanMachineInterface_stub.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/HumanMachineInterface_svnt.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/ManagementWorkInstructions.ccd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/ManagementWorkInstructions.cid:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/ManagementWorkInstructions.cpd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/ManagementWorkInstructions_exec.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/ManagementWorkInstructions_stub.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/ManagementWorkInstructions_svnt.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/PalletConveyorManager.ccd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/PalletConveyorManager.cid:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/PalletConveyorManager.cpd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/PalletConveyorManager_exec.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/PalletConveyorManager_stub.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/PalletConveyorManager_svnt.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotAssembly.cid:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotAssembly.cpd:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotManager.ccd:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotManager.cid:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotManager.cpd:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotManager_exec.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotManager_stub.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/RobotManager_svnt.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/TAO.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/WatchSettingManager.ccd:
+        * DnC/tests/Config_Handlers/RobotAssembly/WatchSettingManager.cid:
+        * DnC/tests/Config_Handlers/RobotAssembly/WatchSettingManager.cpd:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/WatchSettingManager_exec.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/WatchSettingManager_stub.iad:
+        *
+          DnC/tests/Config_Handlers/RobotAssembly/WatchSettingManager_svnt.iad:
+        * DnC/tests/Config_Handlers/RobotAssembly/XMI.xsd:
+        * DnC/tests/Config_Handlers/RobotAssembly/package.tpd:
+
+          Added the robot assembly example descriptors.
+
 Wed Jun 23 13:44:37 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/ExecutionManager/ExecutionManager_Impl.cpp:

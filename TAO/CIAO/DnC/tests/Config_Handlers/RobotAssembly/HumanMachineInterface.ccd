@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentInterfaceDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>12BEDDC8-1E80-4D98-892D-A74701F1ED81</UUID>
+
+  <port>
+    <name>WorkDisplayUpdate</name>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <provider>false</provider>
+    <kind>EventConsumer</kind>
+  </port>
+
+  <port>
+    <name>Controller</name>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <provider>true</provider>
+    <kind>Facet</kind>
+  </port>
+
+  <port>
+    <name>HumanResponse</name>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <provider>false</provider>
+    <kind>SimplexReceptacle</kind>
+  </port>
+
+</Deployment:ComponentInterfaceDescription>

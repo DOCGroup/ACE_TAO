@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>PalletConveyorManager Servant Library</label>
+
+  <UUID>51B0774B-8C94-45A1-B771-995B531D0E55</UUID>
+
+  <location>PalletConveyorManager_svnt</location>
+
+  <dependsOn>
+    <name>PalletConveyorManager_stub</name>
+    <referencedArtifact href="PalletConveyorManager_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createPalletConveyorManagerHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>

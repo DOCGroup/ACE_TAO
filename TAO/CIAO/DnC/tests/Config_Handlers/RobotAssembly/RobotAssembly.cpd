@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentPackageDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>80420C83-2B55-40C5-8BBD-F0DAD6C7DA86</UUID>
+
+  <implementation>
+    <name>RobotAssembly</name>
+    <referencedImplementation href="RobotAssembly.cid"/>
+  </implementation>
+
+</Deployment:ComponentPackageDescription>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>HumanMachineInterface Servant Library</label>
+
+  <UUID>F5C8EDFC-6C08-464B-8931-0278C4648817</UUID>
+
+  <location>HumanMachineInterface_svnt</location>
+
+  <dependsOn>
+    <name>HumanMachineInterface_stub</name>
+    <referencedArtifact href="HumanMachineInterface_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createHumanMachineInterfaceHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>
