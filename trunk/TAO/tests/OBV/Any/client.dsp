@@ -88,6 +88,15 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\AnyC.cpp
+
+!IF  "$(CFG)" == "OBV Any Client - Win32 Release"
+
+# ADD CPP /GR
+
+!ELSEIF  "$(CFG)" == "OBV Any Client - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
