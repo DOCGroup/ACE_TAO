@@ -1,3 +1,10 @@
+Fri Nov 26 18:24:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_Thread.inl (thr_getprio): WinCE doesn't support
+	  GetPriorityClass, so this method will do ENOTSUP on WinCE.
+
+	Also fixed the Friday ChangeLog entries that said it was Nov 25.
+
 Fri Nov 26 17:46:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp: Corrected
@@ -7,22 +14,22 @@ Fri Nov 26 17:46:29 2004  Steve Huston  <shuston@riverace.com>
 	  class that offers close(). So just delete the object when it's
 	  not needed any longer. Also, remove the reference from ACE_Log_Msg.
 
-Fri Nov 25 19:12:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+Fri Nov 26 19:12:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/Threads/task_three.cpp:
 	  Fixed another compile problem.
 
-Fri Nov 25 16:16:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+Fri Nov 26 16:16:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
 	  Fixed compile problems.
 
-Fri Nov 25 12:00:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+Fri Nov 26 12:00:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/config-vxworks5.x.h:
 	  Added ACE_HAS_STANDARD_CPP_LIBRARY for DIAB builds.
 
-Fri Nov 25 11:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+Fri Nov 26 11:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/Threads/task_three.cpp:
         * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
@@ -31,12 +38,12 @@ Fri Nov 25 11:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 	  Fixed problems with iostreams for ACE_LACKS_IOSTREAM_TOTALLY builds
           (VxWorks DIAB).
 
-Fri Nov 25 10:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Nov 26 10:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Don't run bug_1535_regression when minimum_corba is enabled.
 
-Fri Nov 25 10:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Nov 26 10:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
           Removed some old info about os-patches, these are gone already for
@@ -50,7 +57,7 @@ Fri Nov 25 10:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           current version, which can be something completely different in
           a few years.
 
-Fri Nov 25 08:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Nov 26 08:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
           Minor updates about Borland and VxWorks versions that are supported
