@@ -1169,7 +1169,11 @@ public:
   // Constant "0".
 
   static const ACE_Time_Value max_time;
-  // Constant for maximum time representable.
+  // Constant for maximum time representable.  Note that this time
+  // is not intended for use with select () or other calls that may
+  // have *their own* implementation-specific maximum time representations.
+  // Its primary use is in time computations such as those used by the
+  // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 
   // = Initialization methods.
 
@@ -4842,11 +4846,11 @@ public:
 # if !defined (ACE_HAS_WINCE)
   static time_t mktime (struct tm *timeptr);
 # endif /* !ACE_HAS_WINCE */
-  
+
   // wrapper for time zone information.
   static void tzset (void);
-  static long timezone (void); 
-    
+  static long timezone (void);
+
   static double difftime (time_t t1,
                           time_t t0);
   static time_t time (time_t *tloc = 0);
