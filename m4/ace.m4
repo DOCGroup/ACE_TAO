@@ -487,6 +487,7 @@ dnl line, then "no_x" is set to "yes."
  ACE_WITH_RMCAST
  ACE_WITH_QOS
  ACE_WITH_SSL
+ ACE_WITH_USES_WCHAR
 
  AC_ARG_WITH([tao],
   AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
@@ -888,4 +889,25 @@ AC_DEFUN([ACE_WITH_SSL],
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
                [ace_user_with_ssl], [ace_user_with_ssl=yes])
 AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
+])
+
+AC_DEFUN([ACE_WITH_USES_WCHAR],
+[AC_ARG_WITH([uses-wchar],
+             AS_HELP_STRING([--with-uses-wchar],
+                            [select use of wide characters [[no]]]),
+             [case "${withval}" in
+               yes) 
+                AC_DEFINE([ACE_USES_WCHAR])
+                ace_user_with_wide_char=yes
+                ;;
+               no)
+                ace_user_with_wide_char=no
+                ;;
+               *)
+                AC_MSG_ERROR(bad value ${withval} for --with-uses-wchar)
+                ;;
+              esac])
+AC_CACHE_CHECK([whether to use wide characters internally],
+               [ace_user_with_wide_char], [ace_user_with_wide_char=no])
+AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_with_wide_char = Xyes])
 ])

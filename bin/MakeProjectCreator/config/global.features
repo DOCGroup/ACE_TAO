@@ -1,3 +1,4 @@
+// $Id$
 // The global features file contains the default feature settings.
 // By default, if a feature isn't listed here then it is enabled.
 // If it is listed, then the value assigned to the feature is interpreted
@@ -33,3 +34,4 @@ dummy_label   = 0
 cidl          = 0
 boost         = 0
 wince         = 0
+uses_wchar    = 0
