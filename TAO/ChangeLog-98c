@@ -1,10 +1,86 @@
+Wed Dec 30 17:25:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	The following files have been added to the newly created
+	Time directory under orbsvcs/orbsvcs
+
+	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp: This is the Time Interval
+	  Object. It represents a time interval and has operations to
+	  compare itself with a UTO or another TIO. It can also create
+	  a UTO from the value of it's time interval.
+
+	* orbsvcs/orbsvcs/Time/TAO_TIO.h: This is the Time Interval
+	  Object. It represents a time interval and has operations to
+	  compare itself with a UTO or another TIO. It can also create
+	  a UTO from the value of it's time interval.
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Universal Time Object
+	  Implementation. This is an encapsulation of time. It provides
+	  the following operations on basic time.
+
+      		- Construction of a UTO from piece parts, and extraction
+		of the parts from a UTO. The piece parts are the readonly
+	        attributes :
+        	              time
+                	      inaccuracy
+                      	      time displacement factor
+                              structure with all the above.
+
+	     	 - Comparison of time.
+
+      		 - Conversion from relative to absolute time, and conversion
+		   to an interval (TIO).
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.h: Class definition for TAO_UTO.cpp
+
+	* orbsvcs/orbsvcs/Time//TAO_Time_Service_Server.cpp:The server Object
+	implementation implements methods to retrieve current time as well
+	as secure current time. The times are retrieved as UTOs. The object
+	also allows creation of a TIO for a given time interval. The notion
+	of time returned here is the local time of the system.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h: Class definition
+	for TAO_Time_Service_Server.cpp
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp: The clerk Object
+	implementation implements methods to retrieve GLOBAL time as well as
+	secure GLOBAL time. The times are retrieved as UTOs. The object also
+	allows creation of a TIO for a given time interval. The notion of time
+	returned here is the globally synchronized time.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h: Class definition
+	for TAO_Time_Service_Clerk.cpp
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp: This is the helper class used
+	by clerk to get globally syncronized time. This class is registered with
+	the reactor that calls the handle_timeout () on this preiodically. The
+	handle_timeout, in turn, gets time from the various servers in the network.
+	It then updates the clerks notion of time.
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.h: Class definition for the
+	Timer_Helper.cpp
+
+
+Wed Dec 30 17:03:16 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/TimeService.idl (CosTime): This is the IDL
+	  for the Time Service. It includes CosTimeBase.idl that
+	  defines the module TimeBase. This module has the IDL definition
+	  for the various data structures used in the time service.
+	  The separation of the two modules is required because the
+	  TimeBase module is being used in other TAO services.
+
+	* orbsvcs/orbsvcs/Makefile : Updated the makefile to now make
+	  the newly added Time Service to TAO. This includes generating
+	  the IDL stubs in orbsvcs/orbsvcs and adding all the implementation
+	  objects in /orbsvcs/orbsvcs/Time to liborbsvcs.
+
 Wed Dec 30 17:37:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
 	  Detecting if a fragment comes from the current process is harder
 	  than I thought: just using the local address of the seding
 	  socket is not enough, because in some platform this address has
@@ -13,11 +89,11 @@ Wed Dec 30 17:37:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  We use the ACE facilities to find the list of local ipaddresses
 	  to work around this problem.
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
 	  Adjusted the timeout value for the UDP fragments, it was too
 	  low.
 
-	* orbsvcs/tests/EC_Mcast/README: 
+	* orbsvcs/tests/EC_Mcast/README:
 	  Updated the documentation.
 
 Wed Dec 30 16:43:35 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
