@@ -1,3 +1,14 @@
+Wed Oct 01 16:31:45 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * ciao/CCM_Core.mpc:
+
+          Updated Source_Files and IDL_Files.
+
+        * ciao/CIAO_Events.cpp:
+
+          Added PushConsumer and PushSupplier implementations for CosNotify
+          service.
+
 Tue Sep 30 11:51:17 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * ciao/CIAO_Events.h:
