@@ -58,13 +58,14 @@ typedef u_long TAO_HRESULT;
 //
 typedef char TAO_IID [16];          // XXX actually a struct
 typedef const TAO_IID &TAO_REFIID;
-#if !defined(INITGUID)
-#  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
-                      extern "C" const TAO_IID name
-#else
+
+// #if !defined(INITGUID)
+// #  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+//                       extern "C" const TAO_IID name
+// #else
 #  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
                       extern "C" const TAO_IID name = { 0 }
-#endif
+// #endif
 
 
 //
