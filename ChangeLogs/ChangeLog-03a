@@ -1,3 +1,9 @@
+Wed Apr  4 16:21:13 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_run_tests.lst:
+
+          Added the ImplRepo tests.
+
 Wed Apr  4 12:13:52 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.h: Declared ACE_INLINE_FOR_GNUC for
