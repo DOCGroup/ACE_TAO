@@ -1,3 +1,11 @@
+Sat Jul 31 12:20:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/version_tests/version_tests.dsw:
+	* tests/version_tests/Hash_Map_Bucket_Iterator_Test.dsp:
+	* tests/version_tests/Cached_Conn_Test.dsp:
+	* tests/version_tests/Cached_Accept_Conn_Test.dsp: Added three
+	  missing version_tests project files.
+
 Sat Jul 31 00:22:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Basic_Types_Test.dsp:
