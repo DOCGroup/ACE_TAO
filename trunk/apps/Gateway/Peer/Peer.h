@@ -138,7 +138,10 @@ class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_
   //     gatewayd.
 public:
   // = Initialization and termination methods.
-  int open (void);
+  Peer_Acceptor (void);
+  // Default initialization.
+
+  int open (u_short);
   //  the <Peer_Acceptor>.
   
   int close (void);
@@ -148,6 +151,9 @@ public:
   // Factory method that creates a <Peer_Handler> just once.
 
 private:
+  int open_acceptor (u_short port);
+  // Factor out common code for initializing the <Peer_Acceptor>.
+
   Peer_Handler *peer_handler_;
   // Pointer to <Peer_Handler> allocated just once.
 
@@ -169,11 +175,14 @@ public:
   // Initialize the <Peer_Connector>.
 
 private:
-  Peer_Handler *peer_handler_;
-  // <Peer_Handler> that is connected to the client.
+  int open_connector (Peer_Handler *&ph, u_short port);
+  // Factor out common code for initializing the <Peer_Connector>.
 
-  ACE_INET_Addr addr_;
-  // Our connector addr.
+  Peer_Handler *consumer_peer_handler_;
+  // Consumer <Peer_Handler> that is connected to a gatewayd.
+
+  Peer_Handler *supplier_peer_handler_;
+  // Supplier <Peer_Handler> that is connected to a gatewayd.
 };
 
 class ACE_Svc_Export Peer_Factory : public ACE_Service_Object
@@ -197,11 +206,18 @@ public:
   // Handle various signals (e.g., SIGPIPE, SIGINT, and SIGQUIT).
 
 private:
-  Peer_Acceptor acceptor_;
-  // Pointer to an instance of our <Peer_Acceptor>.
+  Peer_Acceptor consumer_acceptor_;
+  // Pointer to an instance of our <Peer_Acceptor> that's used to
+  // accept connections and create Consumers.
+
+  Peer_Acceptor supplier_acceptor_;
+  // Pointer to an instance of our <Peer_Acceptor> that's used to
+  // accept connections and create Suppliers.
 
   Peer_Connector connector_;
-  // An instance of our <Peer_Connector>.
+  // An instance of our <Peer_Connector>.  Note that one
+  // <Peer_Connector> is used to establish <Peer_Handler>s for both
+  // Consumers and Suppliers.
 };
 
 #endif /* PEER_H */

@@ -80,6 +80,42 @@ Options::threading_strategy (void) const
   return this->threading_strategy_;
 }
 
+const char *
+Options::proxy_config_file (void) const
+{
+  return this->proxy_config_file_;
+}
+
+const char *
+Options::consumer_config_file (void) const
+{
+  return this->consumer_config_file_;
+}
+
+u_short
+Options::consumer_acceptor_port (void) const
+{
+  return this->consumer_acceptor_port_;
+}
+
+u_short
+Options::supplier_acceptor_port (void) const
+{
+  return this->supplier_acceptor_port_;
+}
+
+u_short
+Options::consumer_connector_port (void) const
+{
+  return this->consumer_connector_port_;
+}
+
+u_short
+Options::supplier_connector_port (void) const
+{
+  return this->supplier_connector_port_;
+}
+
 // Parse the "command-line" arguments and set the corresponding flags.
 
 int

@@ -1,7 +1,22 @@
 // $Id$
 
-// Driver for the peer daemon (peerd).  Note that this is completely
-// generic code due to the Service Configurator framework!
+// ============================================================================
+//
+// = LIBRARY
+//    gateway
+//
+// = FILENAME
+//    peerd.h
+//
+// = DESCRIPTION
+//    Driver for the peer daemon (peerd).  Note that this is
+//    completely generic code due to the Service Configurator
+//    framework!
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
 #include "Peer.h"
 
