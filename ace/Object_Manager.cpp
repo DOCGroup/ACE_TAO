@@ -804,9 +804,11 @@ ACE_Static_Object_Lock::cleanup_lock (void)
     template class ACE_Array<ACE_Mutex *>;
     template class ACE_Array<ACE_RW_Thread_Mutex *>;
     template class ACE_Cleanup_Adapter<ACE_Null_Mutex>;
+    template class ACE_Cleanup_Adapter<ACE_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Thread_Mutex>;
     template class ACE_Managed_Object<ACE_Null_Mutex>;
+    template class ACE_Managed_Object<ACE_Mutex>;
     template class ACE_Managed_Object<ACE_Recursive_Thread_Mutex>;
     template class ACE_Managed_Object<ACE_Thread_Mutex>;
 # endif /* ACE_MT_SAFE */
@@ -821,9 +823,11 @@ template class ACE_Node<ACE_Cleanup_Info>;
 #   pragma instantiate ACE_Array<ACE_Mutex *>
 #   pragma instantiate ACE_Array<ACE_RW_Thread_Mutex *>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
+#   pragma instantiate ACE_Cleanup_Adapter<ACE_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Thread_Mutex>
 #   pragma instantiate ACE_Managed_Object<ACE_Null_Mutex>
+#   pragma instantiate ACE_Managed_Object<ACE_Mutex>
 #   pragma instantiate ACE_Managed_Object<ACE_Recursive_Thread_Mutex>
 #   pragma instantiate ACE_Managed_Object<ACE_Thread_Mutex>
 # endif /* ACE_MT_SAFE */
