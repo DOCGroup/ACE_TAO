@@ -1650,6 +1650,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
       }
     case CORBA::tk_fixed:
     case CORBA::tk_value:
+    case CORBA::tk_value_box:
       ACE_THROW (CORBA::NO_IMPLEMENT ());
       break;
     default:
