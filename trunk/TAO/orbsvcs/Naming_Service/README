@@ -19,14 +19,15 @@ The following describes how to run the TAO Naming Service.
                          [-t time]
                          [-f persitence_file_name]
                          [-b base_address]
-			 [-m (1=enable multicast(default),0=disable]
+			 [-m (1=enable multicast responses,0=disable(default)]
 
 2. Optional Command-line Arguments
 
         -ORBNameServicePort nsport
                 Multicast port for listening for requests from clients
                 trying to bootstrap to a Naming Service through the
-                use of multicast.
+                use of multicast.  This is only used when multicast
+                responding is enabled via '-m 1'.
 
         -o ior_output_file
                 The name of the file, in which to store the IOR of the
@@ -59,21 +60,22 @@ The following describes how to run the TAO Naming Service.
                 in persistent mode, i.e., "-f" option is present.
 
 	-m <0|1>
-		By default the Naming Service will respond to
-		multicast queries.  This is a non-standard but very
-		simple way to discover the Naming Service in TAO.
-		In real applications the multicast lookup mechanism
-		can be innadequate, for example, if there are multiple
-		naming services running on the network.
-		In such cases the Interoperable Naming Service
-		bootstrap options are a better choice.
+                TAO offers a simple, very non-standard method for
+                clients to discover the initial reference for the
+                Naming Service.  However, since it can be innadequate and cause
+		unexpected results if, for example, there are multiple
+		naming services running on the network, the DEFAULT
+		behavior is for the Naming Service to NOT RESPOND to
+		such multicast queries (use the Interoperable Naming
+		Service bootstrap options instead).
 
 3. Environment Variables
 
         NameServicePort
                 Multicast port for listening for requests from clients
                 trying to bootstrap to a Naming Service through the
-                use of multicast.
+                use of multicast.  This is only used when multicast
+                responding is enabled via '-m 1'.
 
 4. Persistence
 
@@ -141,22 +143,52 @@ The following describes how to run the TAO Naming Service.
         There are several methods for a client to bootstrap to a
         Naming Service, i.e., there are several mechanisms
         <resolve_initial_references> can use when asked for
-        "NameService".
+        "NameService".  In order of predictable behavior, they are:
 
-        1. Multicast
+        1. Command-line options
 
-                By default (unless other options are specified - see
-                items 2 and 3 below), ip multicast is used to locate a
-                Naming Service. TAO Naming Server is listening for
-                client multicast requests on a specified port.  On the
-                client side, <resolve_initial_references> sends out a
-                multicast request on the network, trying to locate a
-                Naming Service.  When a Naming Server receives a
-                multicast request from a client, it replies to the
-                sender with the ior of its root Naming Context.  Note,
-                the port used for this bootstrapping process, i.e.,
-                'multicast port', has nothing to do with the ORB port
-                used for CORBA communication.  Other points worth
+                The "-ORBInitRef NameService=IOR:..." or environment
+                variable NameServiceIOR can be used on the client side
+                to specify the object that the call to
+                <resolve_initial_references> should return to the
+                client.  (On the server side, -o option can be used to
+                get the ior).
+
+                Example (Unix, same host):
+
+                        % TAO_ROOT/orbsvcs/Naming_Service -o ior_file
+                        % my_client -ORBInitRef NameService=file://ior_file
+
+                        On the first line, we start the Naming
+                        Service, and output its ior to <ior_file>.  On
+                        the second line, we start some client, and
+                        specify the ior <resolve_initial_references>
+                        should return for the Naming Service in a file
+                        format.
+
+        2. Interoperable Naming Service.
+
+                TAO implements the standard CORBA Interoperable Naming
+                Service (ING).  Therefore, most initialization options
+                provided by INS can be used to bootstrap to the Naming
+                Service (see TAO's releasenotes for the status of INS
+                implementation).
+
+        3. Multicast
+
+                When started with the "respond to multicast queries"
+                option turned on ('-m 1'), clients can use IP
+                multicast to query for a Naming Service, and this
+                instance will respond. TAO Naming Server is listening
+                for client multicast requests on a specified port.  On
+                the client side, <resolve_initial_references> sends
+                out a multicast request on the network, trying to
+                locate a Naming Service.  When a Naming Server
+                receives a multicast request from a client, it replies
+                to the sender with the ior of its root Naming Context.
+                Note, the port used for this bootstrapping process,
+                i.e., 'multicast port', has nothing to do with the ORB
+                port used for CORBA communication.  Other points worth
                 mentioning:
 
                 - A client and a server will only click through this
@@ -181,43 +213,16 @@ The following describes how to run the TAO Naming Service.
                 Since this mechanism is proprietary to TAO (i.e.,
                 non-standard), it only works when both client and
                 server are written using TAO.  There is no way to turn
-                multicasting off, but it is used only as a last
-                resort, i.e., any of the options below will override
-                it.
+                multicasting off on the client side, but it is used
+                only as a last resort, i.e., any of the other options
+                will override it.
 
                 When OS platform doesn't support multicast, or client
-                or server isn't written using TAO, or a more reliable
-                location method is desired, etc., one of the options
-                below can be used to bootstrap to the Naming Service.
+                or server isn't written using TAO, or a more
+                reliable/predictable location method is desired, etc.,
+                one of the other options can be used to bootstrap to
+                the Naming Service.
 
-        2. Command-line options
-
-                The "-ORBInitRef NameService=IOR:..." or environment
-                variable NameServiceIOR can be used on the client side
-                to specify the object that the call to
-                <resolve_initial_references> should return to the
-                client.  (On the server side, -o option can be used to
-                get the ior).
-
-                Example (Unix, same host):
-
-                        % TAO_ROOT/orbsvcs/Naming_Service -o ior_file
-                        % my_client -ORBInitRef NameService=file://ior_file
-
-                        On the first line, we start the Naming
-                        Service, and output its ior to <ior_file>.  On
-                        the second line, we start some client, and
-                        specify the ior <resolve_initial_references>
-                        should return for the Naming Service in a file
-                        format.
-
-        3. Interoperable Naming Service.
-
-                TAO implements the standard CORBA Interoperable Naming
-                Service (ING).  Therefore, most initialization options
-                provided by INS can be used to bootstrap to the Naming
-                Service (see TAO's releasenotes for the status of INS
-                implementation).
 
 How to use the NT_Naming_Service
 ================================
