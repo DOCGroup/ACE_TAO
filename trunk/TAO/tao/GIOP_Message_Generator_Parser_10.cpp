@@ -13,10 +13,6 @@
 
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACE_INLINE__)
-# include "GIOP_Message_Generator_Parser_10.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            GIOP_Message_Gen_Parser_10,
            "$Id$")

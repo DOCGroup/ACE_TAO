@@ -13,11 +13,6 @@ ACE_RCSID (tao,
            IIOP_Profile,
            "$Id$")
 
-
-#if !defined (__ACE_INLINE__)
-# include "IIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "iiop";

@@ -37,7 +37,7 @@ class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
   /**
-   * Constructor. 
+   * Constructor.
    */
   TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
                          CORBA::Boolean flag = 0);
@@ -104,10 +104,6 @@ protected:
   /// Pointer to the ORB Core.
   TAO_ORB_Core *orb_core_;
 };
-
-#if defined(__ACE_INLINE__)
-#include "tao/Acceptor_Impl.i"
-#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Acceptor_Impl.cpp"

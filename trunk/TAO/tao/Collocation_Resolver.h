@@ -52,10 +52,6 @@ public:
                                         ACE_ENV_ARG_DECL) const = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/Collocation_Resolver.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_COLLOCATION_RESOLVER_H */

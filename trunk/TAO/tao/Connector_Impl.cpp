@@ -7,13 +7,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#if !defined(__ACE_INLINE__)
-#include "tao/Connector_Impl.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(tao, Connector_Impl, "$Id$")
-
 
 template <class SVC_HANDLER>
 TAO_Connect_Creation_Strategy<SVC_HANDLER>::

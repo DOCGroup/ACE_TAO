@@ -241,9 +241,5 @@ protected:
   TAO_OutputCDR out_stream_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Base.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_BASE_H*/

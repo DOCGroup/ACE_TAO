@@ -88,10 +88,5 @@ public:
 
 };
 
-
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser_10.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_10_H*/

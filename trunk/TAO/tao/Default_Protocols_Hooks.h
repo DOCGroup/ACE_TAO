@@ -113,10 +113,6 @@ public:
                                   ACE_ENV_ARG_DECL);
 };
 
-#if defined (__ACE_INLINE__)
-#include "tao/Default_Protocols_Hooks.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Protocols_Hooks)
 

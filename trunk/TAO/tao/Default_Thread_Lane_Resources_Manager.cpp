@@ -12,11 +12,6 @@ ACE_RCSID (tao,
            Default_Thread_Lane_Resources_Manager,
            "$Id$")
 
-
-#if !defined (__ACE_INLINE__)
-# include "tao/Default_Thread_Lane_Resources_Manager.i"
-#endif /* ! __ACE_INLINE__ */
-
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
     lane_resources_ (0)

@@ -132,9 +132,5 @@ protected:
   CORBA::ULong count_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/IIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif  /* TAO_IIOP_PROFILE_H */

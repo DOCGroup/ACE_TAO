@@ -129,9 +129,5 @@ private:
   int dscp_codepoint_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "tao/IIOP_Connection_Handler.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_IIOP_CONNECTION_HANDLER_H */
