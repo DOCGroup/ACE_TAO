@@ -1,3 +1,10 @@
+Thu Oct 28 14:24:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.TAO.GNU: don't use the IDL_EXT and IDL_EXT2 macros
+          on NT host for VxWorks.  Tornado II can't handle them,
+          and disabling them doesn't seem to have any ill effects.
+          Thanks to Tom Venturella and Dennis Noll for reporting this.
+
 Thu Oct 28 14:17:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (cube_long):
