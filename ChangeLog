@@ -1,6 +1,14 @@
+Fri Oct 10 08:14:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Added some support for the new CBuilderX preview compiler. This has
+          a different name and different options to be used. When defining CBX
+          as environment variable this new compiler is used, else we just use
+          the normal compiler.
+
 Thu Oct 09 12:43:51 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* bin\MakeProjectCreator\config\rtscheduling.mpb (after): The
+        * bin/MakeProjectCreator/config/rtscheduling.mpb (after): The
 	  after directive should have the name of the project and not the
 	  name of the directory.  This should solve the problem of
 	  RTScheduling tests making before the RTScheduler library has
