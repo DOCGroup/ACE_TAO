@@ -8,13 +8,14 @@ DIRS = \
 	PortableServer \
 	DynamicAny \
 	DynamicInterface \
+	BiDir_GIOP \
 	IORTable \
 	IORManipulation \
 	Strategies \
-        IFR_Client \
-        Domain \
-        TypeCodeFactory \
-        SmartProxies
+	IFR_Client \
+	Domain \
+	TypeCodeFactory \
+	SmartProxies
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
@@ -26,10 +27,7 @@ OBJFILES = \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
 	$(OBJDIR)\Asynch_Timeout_Handler.obj \
-	$(OBJDIR)\BiDir_ORBInitializer.obj \
-	$(OBJDIR)\BiDir_Policy_i.obj \
-	$(OBJDIR)\BiDir_PolicyFactory.obj \
-	$(OBJDIR)\BiDirPolicyC.obj \
+	$(OBJDIR)\BiDir_Adapter.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
 	$(OBJDIR)\BoundsC.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
@@ -82,8 +80,8 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_State.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
-        $(OBJDIR)\IFR_TypeCodes.obj \
-        $(OBJDIR)\IFR_Client_Adapter.obj \
+	$(OBJDIR)\IFR_TypeCodes.obj \
+	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
@@ -170,7 +168,7 @@ OBJFILES = \
 	$(OBJDIR)\Services.obj \
 	$(OBJDIR)\Services_Activate.obj \
 	$(OBJDIR)\Service_Callbacks.obj \
-        $(OBJDIR)\Service_Context.obj \
+	$(OBJDIR)\Service_Context.obj \
 	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\skip.obj \
 	$(OBJDIR)\Stub.obj \
@@ -188,6 +186,7 @@ OBJFILES = \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
+	$(OBJDIR)\TypeCodeFactory_Adapter.obj \
 	$(OBJDIR)\Base_Transport_Property.obj \
 	$(OBJDIR)\ValueBase.obj \
 	$(OBJDIR)\ValueFactory.obj \
