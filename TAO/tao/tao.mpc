@@ -16,7 +16,6 @@ project : acelib, taoversion, core {
       Transport_Connector.cpp
       Transport.cpp
       Incoming_Message_Queue.cpp
-      Notify_Handler.cpp
       Resume_Handle.cpp
       Profile.cpp
       Endpoint.cpp

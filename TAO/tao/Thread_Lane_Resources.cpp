@@ -8,7 +8,9 @@ ACE_RCSID(tao, Thread_Lane_Resources, "$Id$")
 #include "tao/Acceptor_Registry.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Leader_Follower.h"
-#include "Connector_Registry.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Transport.h"
+#include "tao/Connector_Registry.h"
 #include "ace/Reactor.h"
 
 
@@ -260,37 +262,28 @@ TAO_Thread_Lane_Resources::finalize (void)
       delete this->acceptor_registry_;
     }
 
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
-  ACE_Handle_Set handle_set;
-  TAO_EventHandlerSet unregistered;
+  // Set of handlers still in the connection cache.
+  TAO_Connection_Handler_Set handlers;
 
-  // Close the transport cache and return the handle set that needs
-  // to be de-registered from the reactor.
-  this->transport_cache_->close (handle_set, unregistered);
+  // Close the transport cache and return the handlers that were still
+  // registered.  The cache will decrease the #REFCOUNT# on the
+  // handler when it removes the handler from cache.  However,
+  // #REFCOUNT# is increased when the handler is placed in the handler
+  // set.
+  this->transport_cache_->close (handlers);
 
-  // Shutdown all open connections that are registered with the ORB
-  // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
-  // used here since the reactor should invoke each handle's
-  // corresponding ACE_Event_Handler::handle_close() method to ensure
-  // that the connection is shutdown gracefully prior to destroying
-  // the ORB Core.
-  if (handle_set.num_set () > 0)
-    (void) this->leader_follower ().reactor ()->remove_handler (handle_set,
-                                                                ACE_Event_Handler::ALL_EVENTS_MASK);
-  if (!unregistered.is_empty ())
+  // Go through the handler set, closing the connections and removing
+  // the references.
+  TAO_Connection_Handler **handler = 0;
+  for (TAO_Connection_Handler_Set::iterator iter (handlers);
+       iter.next (handler);
+       iter.advance ())
     {
-      ACE_Event_Handler** eh;
-      for (TAO_EventHandlerSetIterator iter(unregistered);
-           iter.next (eh);
-           iter.advance())
-        {
-          (*eh)->handle_close (ACE_INVALID_HANDLE,
-                               ACE_Event_Handler::ALL_EVENTS_MASK);
-        }
+      // Connection is closed.  Potential removal from the Reactor.
+      (*handler)->close_connection ();
+
+      // #REFCOUNT# related to the handler set decreases.
+      (*handler)->transport ()->remove_reference ();
     }
 
   delete this->transport_cache_;

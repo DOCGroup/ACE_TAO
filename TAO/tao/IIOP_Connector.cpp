@@ -15,11 +15,9 @@
 
 #include "ace/Strategies_T.h"
 
-
 ACE_RCSID (TAO,
            IIOP_Connector,
            "$Id$")
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
@@ -39,7 +37,6 @@ template class ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>;
 #pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (IOP::TAG_INTERNET_IOP),
@@ -162,14 +159,28 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
    TAO_IIOP_Connection_Handler *svc_handler = 0;
 
-   // Active connect
-   int result = this->base_connector_.connect (svc_handler,
-                                               remote_address,
-                                               synch_options);
+   // Connect.
+   int result =
+     this->base_connector_.connect (svc_handler,
+                                    remote_address,
+                                    synch_options);
 
+   // This call creates the service handler.  There are three
+   // possibilities: (a) connection succeeds immediately - in this
+   // case, the #REFCOUNT# on the handler is one; (b) connection
+   // completion is pending - in this case, the #REFCOUNT# on the
+   // handler is also one; (c) connection fails immediately - in this
+   // case, the #REFCOUNT# on the handler is zero since close() gets
+   // called on the handler;
 
+   // No immediate result.  Wait for completion.
    if (result == -1 && errno == EWOULDBLOCK)
      {
+       // We add to the #REFCOUNT# since we are going to wait on a
+       // variable in the handler to changes, signifying success or
+       // failure.
+       svc_handler->add_reference ();
+
        if (TAO_debug_level > 2)
          ACE_DEBUG ((LM_DEBUG,
                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
@@ -177,6 +188,7 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                      "handle [%d]\n",
                      svc_handler->get_handle ()));
 
+       // Wait for connection completion.
        result =
          this->active_connect_strategy_->wait (svc_handler,
                                                max_wait_time);
@@ -189,23 +201,28 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                        svc_handler->get_handle (), result));
          }
 
+       // Check if the handler has been closed.
+       int closed =
+         svc_handler->is_finalized ();
+
+       // Irrespective of success or failure, remove the #REFCOUNT#
+       // added for waiting.
+       svc_handler->remove_reference ();
+
+       // In case of failure, check if the connection has been closed.
+       if (result == -1)
+         {
+           if (!closed)
+             {
+               // Handler has not been closed - close it now.  This
+               // happens when there is a problem while waiting other
+               // than the connection failure.
+               svc_handler->close ();
+             }
+         }
      }
 
-   int status =
-     svc_handler->is_finalized ();
-
-   // Reduce the refcount to the svc_handler that we have. The
-   // increment to the handler is done in make_svc_handler (). Now
-   // that we dont need the reference to it anymore we can decrement
-   // the refcount whether the connection is successful ot not.
-
-   // REFCNT: Matches with TAO_Connect_Strategy<>::make_svc_handler()
-   long refcount = svc_handler->decr_refcount ();
-
-   ACE_ASSERT (refcount >= 0);
-
-   ACE_UNUSED_ARG (refcount);
-
+   // In case of errors.
    if (result == -1)
      {
        // Give users a clue to the problem.
@@ -218,12 +235,11 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                        "errno"));
          }
 
-       (void) this->active_connect_strategy_->post_failed_connect (svc_handler,
-                                                                   status);
-
        return -1;
      }
 
+   // At this point, the connection has be successfully connected.
+   // #REFCOUNT# is one.
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
@@ -231,40 +247,61 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                  iiop_endpoint->host (), iiop_endpoint->port (),
                  svc_handler->peer ().get_handle ()));
 
-   TAO_Transport *base_transport =
-     TAO_Transport::_duplicate (svc_handler->transport ());
+   TAO_Transport *transport =
+     svc_handler->transport ();
 
    // Add the handler to Cache
    int retval =
      this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                              base_transport);
+                                                                              transport);
 
-   if (retval != 0 && TAO_debug_level > 0)
+   // Failure in adding to cache.
+   if (retval != 0)
      {
-       ACE_DEBUG ((LM_DEBUG,
-                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                   "could not add the new connection to cache\n"));
+       // Close the handler.
+       svc_handler->close ();
+
+       if (TAO_debug_level > 0)
+         {
+           ACE_ERROR ((LM_ERROR,
+                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                       "could not add the new connection to cache\n"));
+         }
+
+       return -1;
      }
 
    // If the wait strategy wants us to be registered with the reactor
-   // then we do so.
-   retval =  base_transport->wait_strategy ()->register_handler ();
+   // then we do so. If registeration is required and it succeeds,
+   // #REFCOUNT# becomes two.
+   retval =  transport->wait_strategy ()->register_handler ();
 
-   if (retval != 0 && TAO_debug_level > 0)
+   // Registration failures.
+   if (retval != 0)
      {
-       ACE_DEBUG ((LM_DEBUG,
-                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                   "could not register the new connection in the reactor\n"));
+       // Purge from the connection cache.
+       transport->purge_entry ();
+
+       // Close the handler.
+       svc_handler->close ();
+
+       if (TAO_debug_level > 0)
+         {
+           ACE_ERROR ((LM_ERROR,
+                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                       "could not register the new connection in the reactor\n"));
+         }
+
+       return -1;
      }
 
    // Handover the transport pointer to the Invocation class.
-   TAO_Transport *&transport = invocation->transport ();
-   transport = base_transport;
+   TAO_Transport *&invocation_transport =
+     invocation->transport ();
+   invocation_transport = transport;
 
    return 0;
 }
-
-
 
 TAO_Profile *
 TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)

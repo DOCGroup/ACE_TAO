@@ -17,20 +17,14 @@
 
 #include "tao/Cache_Entries.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Synch_T.h"
 
-// #include "tao/TAO_Export.h"
-// #include "tao/Cache_Entries.h"
-// #include "tao/Connection_Purging_Strategy.h"
-
-
 class ACE_Handle_Set;
-class ACE_Event_Handler;
+class TAO_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Resource_Factory;
 class TAO_Connection_Purging_Strategy;
@@ -39,9 +33,7 @@ template <class ACE_COND_MUTEX> class TAO_Condition;
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
 
-typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
-typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
-        TAO_EventHandlerSetIterator;
+typedef ACE_Unbounded_Set<TAO_Connection_Handler*> TAO_Connection_Handler_Set;
 
 /**
  * @class TAO_Transport_Cache_Manager
@@ -119,10 +111,9 @@ public:
   /// strategy policy information.
   int update_entry (HASH_MAP_ENTRY *&entry);
 
-  /// Close the underlying hash map manager and return the handle set
-  /// that have been registered with the reactor
-  int close (ACE_Handle_Set &reactor_registered,
-             TAO_EventHandlerSet &unregistered);
+  /// Close the underlying hash map manager and return any handlers
+  /// still registered
+  int close (TAO_Connection_Handler_Set &handlers);
 
   /// Return the current size of the cache.
   size_t current_size (void) const;
@@ -169,8 +160,7 @@ private:
   int make_idle_i (HASH_MAP_ENTRY *&entry);
 
   /// Non-locking version and actual implementation of close ()
-  int close_i (ACE_Handle_Set &reactor_registered,
-               TAO_EventHandlerSet &unregistered);
+  int close_i (TAO_Connection_Handler_Set &handlers);
 
   /// Purge the entry from the Cache Map
   int purge_entry_i (HASH_MAP_ENTRY *&entry);

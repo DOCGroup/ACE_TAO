@@ -13,29 +13,29 @@ TAO_Notify_Handler::TAO_Notify_Handler (TAO_Transport *t,
                                         ACE_HANDLE h,
                                         ACE_Allocator *alloc)
   : ACE_Event_Handler (t->orb_core ()->reactor ()),
-    // REFCNT: Matches with Notify_Handler::~Notify_Handler()
-    t_ (TAO_Transport::_duplicate (t)),
+    t_ (t),
     h_ (h),
     allocator_ (alloc)
 {
+  this->t_->add_reference ();
 }
 
 TAO_Notify_Handler::TAO_Notify_Handler (TAO_Connection_Handler *ch,
                                         ACE_Allocator *alloc)
  : ACE_Event_Handler (ch->transport ()->orb_core ()->reactor ()),
-   // REFCNT: Matches with Notify_Handler::~Notify_Handler()
    t_ (ch->transport ()),
    h_ (ACE_INVALID_HANDLE),
    allocator_ (alloc)
 {
+  this->t_->add_reference ();
   // This constructor should *never* get called, it is just here to
   // for backward comptibility.
-  ACE_ASSERT (ch == 0);
+  ACE_ASSERT (0);
 }
 
 TAO_Notify_Handler::~TAO_Notify_Handler (void)
 {
-  TAO_Transport::release (this->t_);
+  this->t_->remove_reference ();;
 }
 
 
@@ -99,7 +99,7 @@ TAO_Notify_Handler::handle_input (ACE_HANDLE)
                                    this->h_);
 
   // Does return value matter? Not is my opinion.
-  (void) this->t_->handle_input_i (resume_handle);
+  (void) this->t_->handle_input (resume_handle);
 
   // Yes, we are wantedly returning this so that handle_close () would
   // be called

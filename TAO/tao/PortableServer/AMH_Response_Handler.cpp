@@ -16,12 +16,13 @@ TAO_AMH_Response_Handler (TAO_ServerRequest &server_request)
   : mesg_base_ (server_request.mesg_base_)
   , request_id_ (server_request.request_id_)
   , response_expected_ (server_request.response_expected_)
-  , transport_ (TAO_Transport::_duplicate (server_request.transport ()))
+  , transport_ (server_request.transport ())
   , orb_core_ (server_request.orb_core ())
   , argument_flag_ (1)
   , exception_type_ (TAO_GIOP_NO_EXCEPTION)
   , reply_status_ (TAO_RS_UNINITIALIZED)
 {
+  this->transport_->add_reference ();
 }
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
@@ -34,10 +35,10 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
     if (this->response_expected_ == 0) //oneway ?
       {
         // if client is not expecting anything, don't send anything
-        TAO_Transport::release (this->transport_);
+        this->transport_->remove_reference ();
         return;
       }
-    
+
     // If the ResponseHandler is being destroyed before a reply has
     // been sent to the client, we send a system exception
     // CORBA::NO_RESPONSE, with minor code to indicate the problem.
@@ -55,17 +56,17 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
             this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            TAO_Transport::release (this->transport_);
+            this->transport_->remove_reference ();
           }
         ACE_CATCHALL
           {
-            TAO_Transport::release (this->transport_);
+            this->transport_->remove_reference ();
           }
         ACE_ENDTRY;
       }
     else
       {
-        TAO_Transport::release (this->transport_);
+        this->transport_->remove_reference ();
       }
   }
 }
@@ -140,7 +141,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   // Send the message.
-  int result = this->transport_->send_message (this->_tao_out, 
+  int result = this->transport_->send_message (this->_tao_out,
                                                0,
                                                TAO_Transport::TAO_REPLY);
 
@@ -180,7 +181,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
       }
     this->reply_status_ = TAO_RS_SENDING;
   }
-  
+
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
   reply_params.svc_ctx_.length (0);
@@ -192,14 +193,14 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
   //    ExceptionHolder information.
   if (CORBA::SystemException::_downcast (&ex))
     reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
-  
+
   if (this->mesg_base_->generate_exception_reply (this->_tao_out,
                                                   reply_params,
                                                   ex) == -1)
     {
       ACE_THROW (CORBA::INTERNAL ());
     }
-  
+
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
                                       0,
@@ -209,7 +210,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
                   ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                   ACE_TEXT ("TAO_AMH_Response_Handler: could not send exception reply\n")));
     }
-  
+
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->reply_status_ = TAO_RS_SENT;

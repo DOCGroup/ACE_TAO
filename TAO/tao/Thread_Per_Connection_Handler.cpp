@@ -13,14 +13,12 @@ TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
     TAO_Connection_Handler *ch)
   : ch_ (ch)
 {
-  // REFCNT: Matches decr_refcount() in the destructor.
-  (void) this->ch_->incr_refcount ();
+  this->ch_->transport ()->add_reference ();
 }
 
 TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler (void)
 {
-  // REFCNT: Matches incr_refcount() in the constructor.
-  (void) this->ch_->decr_refcount ();
+  this->ch_->transport ()->remove_reference ();
 }
 
 int
