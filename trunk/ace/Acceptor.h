@@ -52,14 +52,24 @@ public:
   // "Do-nothing" constructor.
 
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-		ACE_Reactor * = ACE_Service_Config::reactor ());
+		ACE_Reactor * = ACE_Service_Config::reactor (),
+		int flags = 0);
   // Initialize and register <this> with the Reactor and listen for
-  // connection requests at the designated <local_addr>.
+  // connection requests at the designated <local_addr>.  <flags>
+  // indicates how <SVC_HANDLER>'s should be initialized prior to
+  // being activated.  Right now, the only flag that is processed is
+  // <ACE_NONBLOCK>, which enabled non-blocking I/O on the
+  // <SVC_HANDLER> when it is opened.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
-	    ACE_Reactor * = ACE_Service_Config::reactor ());
+	    ACE_Reactor * = ACE_Service_Config::reactor (),
+	    int flags = 0);
   // Initialize and register <this> with the Reactor and listen for
-  // connection requests at the designated <local_addr>.
+  // connection requests at the designated <local_addr>.  <flags>
+  // indicates how <SVC_HANDLER>'s should be initialized prior to
+  // being activated.  Right now, the only flag that is processed is
+  // <ACE_NONBLOCK>, which enabled non-blocking I/O on the
+  // <SVC_HANDLER> when it is opened.
 
   virtual ~ACE_Acceptor (void);
   // Close down the Acceptor's resources.
@@ -138,6 +148,12 @@ protected:
 private:
   ACE_PEER_ACCEPTOR peer_acceptor_;
   // Concrete factory for accepting connections from clients...
+
+  int flags_;
+  // Flags that indicate how <SVC_HANDLER>'s should be initialized
+  // prior to being activated.  Right now, the only flag that is
+  // processed is <ACE_NONBLOCK>, which enabled non-blocking I/O on
+  // the <SVC_HANDLER> when it is opened.
 };
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>

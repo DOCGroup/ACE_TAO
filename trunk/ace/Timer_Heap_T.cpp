@@ -442,7 +442,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::schedule (const TYPE &type,
 {
   ACE_TRACE ("ACE_Timer_Heap::schedule");
 
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   if (this->cur_size_ < this->max_size_)
     {
@@ -479,7 +479,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::cancel (long timer_id,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Heap::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   // Locate the ACE_Timer_Node that corresponds to the timer_id.
 
@@ -513,7 +513,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Heap::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_cancellations = 0;
 

@@ -109,11 +109,20 @@ public:
   typedef ACE_PEER_CONNECTOR_ADDR ACE_PEER_ADDR_TYPEDEF;
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
 
-  ACE_Connector (ACE_Reactor *r = ACE_Service_Config::reactor ());
-  // Initialize a connector.
+  ACE_Connector (ACE_Reactor *r = ACE_Service_Config::reactor (),
+		 int flags = 0);
+  // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+  // should be initialized prior to being activated.  Right now, the
+  // only flag that is processed is <ACE_NONBLOCK>, which enabled
+  // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
-  virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor ());
-  // Initialize a connector.
+
+  virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor (),
+		    int flags = 0);
+  // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+  // should be initialized prior to being activated.  Right now, the
+  // only flag that is processed is <ACE_NONBLOCK>, which enabled
+  // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
   virtual ~ACE_Connector (void);
   // Shutdown a connector and release resources.
@@ -252,6 +261,12 @@ private:
   char closing_;
   // Keeps track of whether we are in the process of closing (required
   // to avoid circular calls to <handle_close>).
+
+  int flags_;
+  // Flags that indicate how <SVC_HANDLER>'s should be initialized
+  // prior to being activated.  Right now, the only flag that is
+  // processed is <ACE_NONBLOCK>, which enabled non-blocking I/O on
+  // the <SVC_HANDLER> when it is opened.
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
@@ -273,14 +288,22 @@ public:
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Service_Config::reactor (),
 			  ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 			  ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
-			  ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
-  // Initialize a connector.
+			  ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+			  int flags = 0);
+  // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+  // should be initialized prior to being activated.  Right now, the
+  // only flag that is processed is <ACE_NONBLOCK>, which enabled
+  // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
   virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor (),
 		    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 		    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
-		    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
-  // Initialize a connector.
+		    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+		    int flags = 0);
+  // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+  // should be initialized prior to being activated.  Right now, the
+  // only flag that is processed is <ACE_NONBLOCK>, which enabled
+  // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
   virtual ~ACE_Strategy_Connector (void);
   // Shutdown a connector and release resources.
@@ -349,7 +372,6 @@ protected:
   int delete_concurrency_strategy_;
   // 1 if <Connector> created the concurrency strategy and thus should
   // delete it, else 0.
-
 };
 
 #include "ace/Connector.i"
