@@ -692,9 +692,7 @@ static CORBA::TypeCode_ptr _tc_Marshal_Recursive;
 
 virtual void test_short (
     CORBA::Short s1,
-    CORBA::Short_out s2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    CORBA::Short_out s2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -702,9 +700,7 @@ virtual void test_short (
 
 virtual void test_long (
     CORBA::Long l1,
-    CORBA::Long_out l2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    CORBA::Long_out l2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -712,9 +708,7 @@ virtual void test_long (
 
 virtual void test_octet (
     CORBA::Octet o1,
-    CORBA::Octet_out o2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    CORBA::Octet_out o2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -722,9 +716,7 @@ virtual void test_octet (
 
 virtual void test_char (
     CORBA::Char c1,
-    CORBA::Char_out c2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    CORBA::Char_out c2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -732,9 +724,7 @@ virtual void test_char (
 
 virtual void test_double (
     CORBA::Double d1,
-    CORBA::Double_out d2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    CORBA::Double_out d2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -742,9 +732,7 @@ virtual void test_double (
 
 virtual void test_struct (
     const Marshal::Marshal_Struct & ms1,
-    Marshal::Marshal_Struct_out ms2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    Marshal::Marshal_Struct_out ms2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -752,9 +740,7 @@ virtual void test_struct (
 
 virtual void test_union (
     const Marshal::Marshal_Union & u1,
-    Marshal::Marshal_Union_out u2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    Marshal::Marshal_Union_out u2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -762,9 +748,7 @@ virtual void test_union (
 
 virtual void test_any (
     const CORBA::Any & a1,
-    CORBA::Any_out a2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    CORBA::Any_out a2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -772,9 +756,7 @@ virtual void test_any (
 
 virtual void test_sequence (
     const Marshal::AnySeq & as1,
-    Marshal::AnySeq_out as2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    Marshal::AnySeq_out as2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -782,9 +764,7 @@ virtual void test_sequence (
 
 virtual void test_recursive (
     const Marshal::Marshal_Recursive & mr1,
-    Marshal::Marshal_Recursive_out mr2,
-    CORBA::Environment &ACE_TRY_ENV = 
-      TAO_default_environment ()
+    Marshal::Marshal_Recursive_out mr2
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -807,165 +787,6 @@ protected:
 private:
   Marshal (const Marshal &);
   void operator= (const Marshal &);
-};
-
-class TAO_Marshal_Default_Proxy_Factory
-{
-public:
-  
-  TAO_Marshal_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
-  virtual ~TAO_Marshal_Default_Proxy_Factory (void);
-  
-  virtual Marshal_ptr create_proxy (
-      Marshal_ptr proxy,
-      CORBA::Environment &env = 
-        TAO_default_environment ()
-    );
-};
-
-class TAO_Marshal_Proxy_Factory_Adapter
-{
-public:
-  
-  friend class ACE_Singleton<TAO_Marshal_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
-  int register_proxy_factory (
-      TAO_Marshal_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
-        TAO_default_environment ()
-    );
-  
-  int unregister_proxy_factory (
-      CORBA::Environment &env = 
-        TAO_default_environment ()
-    );
-  
-  Marshal_ptr create_proxy (
-      Marshal_ptr proxy,
-      CORBA::Environment &env = 
-        TAO_default_environment ()
-    );
-
-protected:
-  TAO_Marshal_Proxy_Factory_Adapter (void);
-  ~TAO_Marshal_Proxy_Factory_Adapter (void);
-  TAO_Marshal_Proxy_Factory_Adapter &operator= (
-      const TAO_Marshal_Proxy_Factory_Adapter &
-    );
-  TAO_Marshal_Default_Proxy_Factory *proxy_factory_;
-  int delete_proxy_factory_;
-  ACE_SYNCH_RECURSIVE_MUTEX lock_;
-  };
-
-  typedef ACE_Singleton<TAO_Marshal_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Marshal_PROXY_FACTORY_ADAPTER;
-  class TAO_Marshal_Smart_Proxy_Base : public virtual Marshal
-  {
-  public:
-    TAO_Marshal_Smart_Proxy_Base (::Marshal_ptr proxy);
-    ~TAO_Marshal_Smart_Proxy_Base (void);
-      virtual void test_short (
-      CORBA::Short s1,
-      CORBA::Short_out s2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_long (
-      CORBA::Long l1,
-      CORBA::Long_out l2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_octet (
-      CORBA::Octet o1,
-      CORBA::Octet_out o2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_char (
-      CORBA::Char c1,
-      CORBA::Char_out c2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_double (
-      CORBA::Double d1,
-      CORBA::Double_out d2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_struct (
-      const Marshal::Marshal_Struct & ms1,
-      Marshal::Marshal_Struct_out ms2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_union (
-      const Marshal::Marshal_Union & u1,
-      Marshal::Marshal_Union_out u2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_any (
-      const CORBA::Any & a1,
-      CORBA::Any_out a2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_sequence (
-      const Marshal::AnySeq & as1,
-      Marshal::AnySeq_out as2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual void test_recursive (
-      const Marshal::Marshal_Recursive & mr1,
-      Marshal::Marshal_Recursive_out mr2,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-private:
-  ::Marshal_var base_proxy_;
 };
 
 
