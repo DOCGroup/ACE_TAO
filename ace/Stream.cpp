@@ -327,22 +327,34 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
 
   if (head == 0)
     {
-      h1 = new ACE_Stream_Head<ACE_SYNCH_USE>;
-      h2 = new ACE_Stream_Head<ACE_SYNCH_USE>;
-      head = new ACE_Module<ACE_SYNCH_USE> (ACE_LIB_TEXT ("ACE_Stream_Head"),
-                                            h1, h2,
-                                            a,
-                                            M_DELETE);
+      ACE_NEW_RETURN (h1,
+                      ACE_Stream_Head<ACE_SYNCH_USE>,
+                      -1);
+      ACE_NEW_RETURN (h2,
+                      ACE_Stream_Head<ACE_SYNCH_USE>,
+                      -1);
+      ACE_NEW_RETURN (head,
+                      ACE_Module<ACE_SYNCH_USE> (ACE_LIB_TEXT ("ACE_Stream_Head"),
+                                                 h1, h2,
+                                                 a,
+                                                 M_DELETE),
+                      -1);
     }
 
   if (tail == 0)
     {
-      t1 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
-      t2 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
-      tail = new ACE_Module<ACE_SYNCH_USE> (ACE_LIB_TEXT ("ACE_Stream_Tail"),
-                                            t1, t2,
-                                            a,
-                                            M_DELETE);
+      ACE_NEW_RETURN (t1,
+                      ACE_Stream_Tail<ACE_SYNCH_USE>,
+                      -1);
+      ACE_NEW_RETURN (t2,
+                      ACE_Stream_Tail<ACE_SYNCH_USE>,
+                      -1);
+      ACE_NEW_RETURN (tail,
+                      ACE_Module<ACE_SYNCH_USE> (ACE_LIB_TEXT ("ACE_Stream_Tail"),
+                                                 t1, t2,
+                                                 a,
+                                                 M_DELETE),
+                      -1);
     }
 
   // Make sure *all* the allocation succeeded!
@@ -431,11 +443,17 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   // Try to create a control block <cb> that contains the control
   // field and a pointer to the data block <db> in <cb>'s continuation
   // field.
-  ACE_Message_Block *cb =
-    new ACE_Message_Block (sizeof ioc,
-                           ACE_Message_Block::MB_IOCTL,
-                           db,
-                           (char *) &ioc);
+  ACE_Message_Block *cb = 0;
+
+  ACE_NEW_RETURN (cb,
+                  ACE_Message_Block (sizeof ioc,
+                                     ACE_Message_Block::MB_IOCTL,
+                                     db,
+                                     (char *) &ioc),
+                  -1);
+  // @@ Michael: The old semantic assumed that cb returns == 0
+  //             if no memory was available. We will now return immediately
+  //             without release (errno is set to ENOMEM by the macro).
 
   // If we can't allocate <cb> then we need to delete db and return
   // -1.

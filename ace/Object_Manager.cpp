@@ -273,11 +273,14 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   , ace_service_config_sig_handler_ (0)
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  , internal_lock_ (new ACE_Recursive_Thread_Mutex)
   , singleton_null_lock_ (0)
   , singleton_recursive_lock_ (0)
 # endif /* ACE_MT_SAFE */
 {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_NEW (internal_lock_, ACE_Recursive_Thread_Mutex);
+# endif /* ACE_MT_SAFE */
+
   // If instance_ was not 0, then another ACE_Object_Manager has
   // already been instantiated (it is likely to be one initialized by way
   // of library/DLL loading).  Let this one go through construction in
