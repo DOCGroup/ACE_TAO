@@ -1,3 +1,22 @@
+Thu Sep 18 20:12:45 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
+
+	  Modified to include support for SCTP transport protocol.
+	
+	* orbsvcs/orbsvcs/AV/AV_Core.h: 	
+
+	  Added TAO_AV_SCTP_SEQ flag to the Protocol enum to specify SCTP
+	  protocol.
+	
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 	
+
+	  Added the loading of SCTP SEQ transport and protocol factories
+	  to create transport and protocol objects.
+	
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h: 		
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp: 			
+	
 Mon Sep 15 12:06:47 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/Valuetype/ValueBase.cpp:
