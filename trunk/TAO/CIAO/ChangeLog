@@ -1,3 +1,18 @@
+Tue Jun 29 01:40:25 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/ExecutionManager/ExecutionManager_Impl.cpp:
+	* DnC/ExecutionManager/ExecutionManager_Impl.h:
+	* DnC/NodeApplicationManager/ImplementationInfo.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+	* DnC/ciao/Container_Base.cpp:
+	* DnC/ciao/NodeApplication_Impl.cpp:
+	* DnC/ciao/NodeApplication_Impl.h:
+	* DnC/ciao/NodeApplication_Impl.inl:
+
+	Fixed some of Ossama's comments, added exception catching clauses
+	in NodeApplication.
+
 Tue Jun 29 06:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Protocols/Controller/Controller.mpc:

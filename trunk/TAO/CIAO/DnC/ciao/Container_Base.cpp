@@ -162,68 +162,32 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
                    Deployment::ImplEntryPointNotFound,
                    Deployment::InstallationFailure))
 {
-  // @@ (OO) Please move these ACE_DLL declarations within the
-  //         "if (this->static_config_flag_ == 0)" block.  The
-  //         instantiated ACE_DLL objects are only used within that
-  //         block.
-  ACE_DLL executor_dll, servant_dll;
 
   HomeFactory hcreator = 0;
   ServantFactory screator = 0;
 
   if (this->static_config_flag_ == 0)
     {
-      // @@ (OO) Even though the return value of zero works,
-      //         Components::CCMHome::_nil () should technically be
-      //         returned instead since "_ptr" need not be C++ pointer
-      //         typedefs.  They could conceivably be classes, for
-      //         example.
+      ACE_DLL executor_dll, servant_dll;
+
       if (exe_dll_name == 0 || sv_dll_name == 0)
-        ACE_THROW_RETURN (Deployment::UnknownImplId (), 0);
+        ACE_THROW_RETURN (Deployment::UnknownImplId (),
+			  Components::CCMHome::_nil ());
 
-      // @@ (OO) Please combine the following two "if" blocks.  The
-      //         code will be less verbose and easier to read. For
-      //         example:
-      //
-      //       if (executor_dll.open (exe_dll_name,
-      //                              ACE_DEFAULT_SHLIB_MODE,
-      //                              0) != 0
-      //           || servant_dll.open (sv_dll_name,
-      //                                ACE_DEFAULT_SHLIB_MODE,
-      //                                0) != 0)
-      //         {
-      //           ACE_THROW_RETURN (Deployment::UnknownImplId (),
-      //                             Components::CCMHome::_nil ());
-      //         }
-
-
-      // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-      //         instead of zero.
       if (executor_dll.open (exe_dll_name,
-                             ACE_DEFAULT_SHLIB_MODE,
-                             0) != 0)
-        ACE_THROW_RETURN (Deployment::UnknownImplId (), 0);
+			     ACE_DEFAULT_SHLIB_MODE,
+			     0) != 0
+	  || servant_dll.open (sv_dll_name,
+			       ACE_DEFAULT_SHLIB_MODE,
+			       0) != 0)
+	{
+	  ACE_THROW_RETURN (Deployment::UnknownImplId (),
+			    Components::CCMHome::_nil ());
+	}
 
-      // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-      //         instead of zero.
-      if (servant_dll.open (sv_dll_name,
-                            ACE_DEFAULT_SHLIB_MODE,
-                            0) != 0)
-        {
-          // @@ (OO) There is no need to explicitly call close()
-          //         here.  The ~ACE_DLL() destructor already calls
-          //         close.
-          executor_dll.close ();
-
-          // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-          //         instead of ze
-          ACE_THROW_RETURN (Deployment::UnknownImplId (), 0);
-        }
-
-      // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-      //         instead of zero.
       if (exe_entrypt == 0 || sv_entrypt == 0)
-        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (), 0);
+        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+			  Components::CCMHome::_nil ());
 
       // @@ (OO) Please use a static_cast<> here instead of a C-style
       //         cast.  ANSI C++ casts are the preferred (and modern)
@@ -233,12 +197,11 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
     }
   else
     {
-      // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-      //         instead of zero.
       if (static_entrypts_maps_ == 0 ||
           static_entrypts_maps_->home_creator_funcptr_map_ == 0 ||
           static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
-        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (), 0);
+        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+			  Components::CCMHome::_nil ());
 
       ACE_CString exe_entrypt_str (exe_entrypt);
       static_entrypts_maps_->home_creator_funcptr_map_->
@@ -249,44 +212,30 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
         find (sv_entrypt_str, screator);
     }
 
-  // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-  //         instead of zero.
   if (hcreator == 0 || screator == 0)
-    ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (), 0);
+    ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+		      Components::CCMHome::_nil ());
 
-  // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-  //         instead of zero.
   Components::HomeExecutorBase_var home_executor = hcreator ();
   if (CORBA::is_nil (home_executor.in ()))
-    ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+    ACE_THROW_RETURN (Deployment::InstallationFailure (),
+		      Components::CCMHome::_nil ());
 
-  // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-  //         instead of zero.
   PortableServer::Servant home_servant = screator (home_executor.in (),
                                                    this
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
   if (home_servant == 0)
-    ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+    ACE_THROW_RETURN (Deployment::InstallationFailure (),
+		      Components::CCMHome::_nil ());
 
   PortableServer::ServantBase_var safe (home_servant);
 
   CORBA::Object_var objref = this->install_servant (home_servant
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
-  // @@ (OO) Same here.  Return "Components::CCMHome::_nil ()"
-  //         instead of zero.
-  //
-  //         You really don't need to use the homeref temporary
-  //         variable here.  You could, for example, just do:
-  //
-  //            return Components::CCMHome::_narrow (objref.in ()
-  //                                                 ACE_ENV_ARG_PARAMETER);
-  //
-  //         since you don't do anything between the _narrow() call
-  //         and the return statement.  Either way is fine, however.
   Components::CCMHome_var homeref =
     Components::CCMHome::_narrow (objref.in ()
                                   ACE_ENV_ARG_PARAMETER);

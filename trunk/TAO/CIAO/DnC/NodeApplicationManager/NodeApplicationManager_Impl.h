@@ -43,14 +43,6 @@ namespace CIAO
     NodeApplicationManager_Impl (CORBA::ORB_ptr o,
                                  PortableServer::POA_ptr p);
 
-      // @@ (OO) Since this class is reference counted, please make this
-      //         destructor protected to enforce proper memory managment
-      //         through the reference counting mechanism (i.e. to
-      //         disallow calling operator delete() on an instance of
-      //         this class.
-    /// Destructor
-    virtual ~NodeApplicationManager_Impl (void);
-
     /*===========================================================
      * Below are operations from the NodeApplicationManager
      *
@@ -109,6 +101,9 @@ namespace CIAO
     Deployment::NodeApplicationManager_ptr get_nadeapp_manager (void);
 
   protected:
+    /// Destructor
+    virtual ~NodeApplicationManager_Impl (void);
+
     // Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options

@@ -25,6 +25,7 @@
 #include "Container_Base.h"
 #include "Deployment_CoreS.h"
 #include "Server_init.h"
+#include "CIAO_common.h"
 
 using CIAO::Utility::write_IOR;
 
