@@ -13,7 +13,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
 
 IDL_FILES = Control
 IDL_SRC = ControlC.cpp ControlS.cpp
-BIN = client server
+BIN_UNCHECKED = client server
 
 server_OBJS=$(addsuffix .o,server Coordinator ControlC ControlS)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Loopback_Consumer Loopback_Supplier Loopback Peer ControlC ControlS)
@@ -27,6 +27,11 @@ TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+BIN=$(BIN_UNCHECKED)
+endif
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

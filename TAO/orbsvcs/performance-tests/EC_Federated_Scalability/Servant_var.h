@@ -34,11 +34,11 @@ public:
   //@{
   /** @name Smart pointer operations
    */
-  SERVANT * const operator->() const;
+  const SERVANT *operator->() const;
   SERVANT *operator->();
 
   operator SERVANT *();
-  operator SERVANT * const() const;
+  operator const SERVANT *() const;
   //@}
 
   //@{

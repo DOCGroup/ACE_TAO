@@ -1,3 +1,24 @@
+Tue Dec 04 08:16:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Scalability/Makefile:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+	  Disable build on platforms that lack corba messaging.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.inl:
+	  Fixed compilation problems, a default argument value was used in
+	  the inline constructor definition.
+	  Also fixed a number of warnings about conversion operators that
+	  returned 'const pointers' instead of the intended 'pointer to
+	  const', the former has little meaning on a return value.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Peer.cpp:
+	  Use ._retn() instead of allocating a new sequence, avoid a
+	  warning along the way.
+
+	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
+	  Fixed signed/unsigned comparison warning.
+
 Mon Dec  3 16:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/Makefile:
