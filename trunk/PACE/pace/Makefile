@@ -14,6 +14,12 @@ ifndef static_libs_only
   endif # shared_libs_only
 endif # static_libs_only
 
+# If we are inlining the PACE functions then we need to define
+# PACE_HAS_INLINE
+ifeq (1,$(inline))
+  CFLAGS += -DPACE_HAS_INLINE
+endif # ! inline
+
 MAKEFILE = Makefile
 LIB      = libPACE.a
 SHLIB    = libPACE.$(SOEXT)
