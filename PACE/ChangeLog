@@ -1,3 +1,13 @@
+Wed Dec 12 12:30:32 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * VERSION:
+          Updated the version to 1.2. (Thanks to Garth Watney 
+          <Garth.J.Watney@jpl.nasa.gov> for pointing out this
+          oversight.)
+
+        * THANKS:
+          Added Garth Watney <Garth.J.Watney@jpl.nasa.gov>.
+
 Thu Oct  4 10:03:27 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/vxworks/pthread.c:
