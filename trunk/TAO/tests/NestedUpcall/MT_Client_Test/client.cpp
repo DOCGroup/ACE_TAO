@@ -195,10 +195,17 @@ MT_Client::init (int argc, char **argv,
 
   this->client_number_ = client_number;
 
-  TAO_TRY
-  {
-      this->orb_var_ = CORBA::ORB::_duplicate (TAO_ORB_Core_instance()->orb());
-      TAO_CHECK_ENV;
+  ACE_TRY_NEW_ENV
+    {
+      char buf[64];
+      ACE_OS::sprintf (buf, "thread_%x", this);
+
+      this->orb_var_ =
+        CORBA::ORB_init (this->argc_,
+                         this->argv_,
+                         buf,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -210,9 +217,10 @@ MT_Client::init (int argc, char **argv,
                             -1);
 
 
-      CORBA::Object_var object_var = this->orb_var_->string_to_object (this->object_key_,
-                                                                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Object_var object_var =
+        this->orb_var_->string_to_object (this->object_key_,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object_var.in()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -220,15 +228,15 @@ MT_Client::init (int argc, char **argv,
                             -1);
 
       this->mT_Object_var_ = MT_Object::_narrow (object_var.in(),
-                                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
-      {
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "We have no proper reference to the Object.\n"),
                             -1);
-      }
+        }
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
@@ -252,12 +260,13 @@ MT_Client::init (int argc, char **argv,
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  }
-  TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("MT_Client::init");
-    return -1;
-  }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "MT_Client::init");
+      return -1;
+    }
   TAO_ENDTRY;
 
   return 0;
@@ -269,62 +278,65 @@ MT_Client::init (int argc, char **argv,
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
+  ACE_TRY_NEW_ENV
+    {
+      TAO_ORB_Manager orb_manager;
 
-  TAO_ORB_Manager orb_manager;
+      orb_manager.init (argc,
+                        argv,
+                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  orb_manager.init (argc,
-                    argv,
-                    env);
+      ACE_DEBUG ((LM_DEBUG,"\n\tMT_Client: client\n\n"));
 
-  if (env.exception() != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "main: Failure while initializing the ORB."),
-                       -1);
+      int i;
+      int threads = 1;
 
+      for (i = 0; i < argc; i++)
+        if (ACE_OS::strcmp (argv[i], "-n") == 0)
+          threads = ACE_OS::atoi(argv[i + 1]);
 
-  ACE_DEBUG ((LM_DEBUG,"\n\tMT_Client: client\n\n"));
+      // create a separate server thread
+      ACE_Thread_Manager server_thr_mgr;
+      // starting the server thread
+      MT_Server_Task *server = new MT_Server_Task (&server_thr_mgr,
+                                                   argc,
+                                                   argv,
+                                                   &orb_manager);
+      server->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
+                        ACE_DEFAULT_THREAD_PRIORITY);
 
-  int i;
-  int threads = 1;
+      // starting the client threads
+      MT_Client_Task **clients = new MT_Client_Task*[threads];
 
-  for (i = 0; i < argc; i++)
-    if (ACE_OS::strcmp (argv[i], "-n") == 0)
-      threads = ACE_OS::atoi(argv[i + 1]);
+      for (i = 0; i < threads; i++)
+        clients[i] = new MT_Client_Task (argc, argv, i);
 
-  // create a separate server thread
-  ACE_Thread_Manager server_thr_mgr;
-  // starting the server thread
-  MT_Server_Task *server = new MT_Server_Task (&server_thr_mgr,
-                                               argc,
-                                               argv,
-                                               &orb_manager);
-  server->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
-                    ACE_DEFAULT_THREAD_PRIORITY);
+      for (i = 0; i < threads; i++)
+        clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
+                              ACE_DEFAULT_THREAD_PRIORITY);
 
-  // starting the client threads
-  MT_Client_Task **clients = new MT_Client_Task*[threads];
+      int result = ACE_Thread_Manager::instance ()->wait ();
 
-  for (i = 0; i < threads; i++)
-    clients[i] = new MT_Client_Task (argc, argv, i);
+      for (i = 0; i < threads; i++)
+        delete clients[i];
 
-  for (i = 0; i < threads; i++)
-    clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
-                          ACE_DEFAULT_THREAD_PRIORITY);
+      delete [] clients;
 
-  int result = ACE_Thread_Manager::instance ()->wait ();
+      //orb_manager.orb ()->shutdown ();
 
-  for (i = 0; i < threads; i++)
-    delete clients[i];
+      // wait for the server thread to end
+      result |= server_thr_mgr.wait ();
 
-  delete [] clients;
+      delete server;
 
-  //orb_manager.orb ()->shutdown ();
+      return result;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "main");
+    }
+  ACE_ENDTRY;
 
-  // wait for the server thread to end
-  result |= server_thr_mgr.wait ();
-
-  delete server;
-
-  return result;
+  return 1;
 }
