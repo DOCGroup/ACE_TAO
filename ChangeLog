@@ -1,3 +1,21 @@
+Sun May 18 20:00:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/ACE_Init_Test.cpp:
+          Added include of ACE.h.
+
+        * tests/test_config.h:
+          Added Test_Output_Export to randomize() declaration.
+
+        * tests/tests.dws:
+        * tests/Test_Output.dsp:
+		  Added new project file, Test_Output.dsp, and added it to tests.dsw.
+
+        * tests/*.dsp:
+          Added Test_Output[*].lib and Main.cpp source to all projects (except dlls).
+
+        * tests/RMCast/*.dsp:
+          Added Test_Output[d].lib to all project files.
+
 Sun May 18 19:18:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Merged up tests changes.

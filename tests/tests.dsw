@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE_Init_Test"=".\ACE_Init_Test.dsp" - Package Owner=<4>
+Project: "ACE_Init_Test"=.\ACE_Init_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -11,11 +11,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ACE_Test"=".\ACE_Test.dsp" - Package Owner=<4>
+Project: "ACE_Test"=.\ACE_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -23,11 +26,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ARGV_Test"=".\ARGV_Test.dsp" - Package Owner=<4>
+Project: "ARGV_Test"=.\ARGV_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -35,11 +41,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Arg_Shifter_Test"=".\Arg_Shifter_Test.dsp" - Package Owner=<4>
+Project: "Arg_Shifter_Test"=.\Arg_Shifter_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -47,11 +56,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Atomic_Op_Test"=".\Atomic_Op_Test.dsp" - Package Owner=<4>
+Project: "Atomic_Op_Test"=.\Atomic_Op_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -59,11 +71,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Auto_IncDec_Test"=".\Auto_IncDec_Test.dsp" - Package Owner=<4>
+Project: "Auto_IncDec_Test"=.\Auto_IncDec_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -71,11 +86,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Barrier_Test"=".\Barrier_Test.dsp" - Package Owner=<4>
+Project: "Barrier_Test"=.\Barrier_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -83,11 +101,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Basic_Types_Test"=".\Basic_Types_Test.dsp" - Package Owner=<4>
+Project: "Basic_Types_Test"=.\Basic_Types_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -95,11 +116,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Bound_Ptr_Test"=".\Bound_Ptr_Test.dsp" - Package Owner=<4>
+Project: "Bound_Ptr_Test"=.\Bound_Ptr_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -107,11 +131,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Buffer_Stream_Test"=".\Buffer_Stream_Test.dsp" - Package Owner=<4>
+Project: "Buffer_Stream_Test"=.\Buffer_Stream_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -119,11 +146,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "CDR_Array_Test"=".\CDR_Array_Test.dsp" - Package Owner=<4>
+Project: "CDR_Array_Test"=.\CDR_Array_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -131,11 +161,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "CDR_File_Test"=".\CDR_File_Test.dsp" - Package Owner=<4>
+Project: "CDR_File_Test"=.\CDR_File_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -143,11 +176,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "CDR_Test"=".\CDR_Test.dsp" - Package Owner=<4>
+Project: "CDR_Test"=.\CDR_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -155,11 +191,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Cache_Map_Manager_Test"=".\Cache_Map_Manager_Test.dsp" - Package Owner=<4>
+Project: "Cache_Map_Manager_Test"=.\Cache_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -167,11 +206,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Cached_Accept_Conn_Test"=".\Cached_Accept_Conn_Test.dsp" - Package Owner=<4>
+Project: "Cached_Accept_Conn_Test"=.\Cached_Accept_Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -179,11 +221,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Cached_Allocator_Test"=".\Cached_Allocator_Test.dsp" - Package Owner=<4>
+Project: "Cached_Allocator_Test"=.\Cached_Allocator_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -191,11 +236,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Cached_Conn_Test"=".\Cached_Conn_Test.dsp" - Package Owner=<4>
+Project: "Cached_Conn_Test"=.\Cached_Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -203,11 +251,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Capabilities_Test"=".\Capabilities_Test.dsp" - Package Owner=<4>
+Project: "Capabilities_Test"=.\Capabilities_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -215,11 +266,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Codecs_Test"=".\Codecs_Test.dsp" - Package Owner=<4>
+Project: "Codecs_Test"=.\Codecs_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -227,11 +281,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Collection_Test"=".\Collection_Test.dsp" - Package Owner=<4>
+Project: "Collection_Test"=.\Collection_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -239,11 +296,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Config_Test"=".\Config_Test.dsp" - Package Owner=<4>
+Project: "Config_Test"=.\Config_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -251,11 +311,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Conn_Test"=".\Conn_Test.dsp" - Package Owner=<4>
+Project: "Conn_Test"=.\Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -263,11 +326,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DLL_Test"=".\DLL_Test.dsp" - Package Owner=<4>
+Project: "DLL_Test"=.\DLL_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -278,11 +344,14 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name DLL_Test DLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DLL_Test DLL"=".\DLL_Test_Impl.dsp" - Package Owner=<4>
+Project: "DLL_Test DLL"=.\DLL_Test_Impl.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -294,7 +363,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DLList_Test"=".\DLList_Test.dsp" - Package Owner=<4>
+Project: "DLList_Test"=.\DLList_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -302,11 +371,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Date_Time_Test"=".\Date_Time_Test.dsp" - Package Owner=<4>
+Project: "Date_Time_Test"=.\Date_Time_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -314,11 +386,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Dirent_Test"=".\Dirent_Test.dsp" - Package Owner=<4>
+Project: "Dirent_Test"=.\Dirent_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -326,11 +401,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Dynamic_Priority_Test"=".\Dynamic_Priority_Test.dsp" - Package Owner=<4>
+Project: "Dynamic_Priority_Test"=.\Dynamic_Priority_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -338,11 +416,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Enum_Interfaces_Test"=".\Enum_Interfaces_Test.dsp" - Package Owner=<4>
+Project: "Enum_Interfaces_Test"=.\Enum_Interfaces_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -350,11 +431,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Env_Value_Test"=".\Env_Value_Test.dsp" - Package Owner=<4>
+Project: "Env_Value_Test"=.\Env_Value_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -362,11 +446,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Framework_Component_Test"=".\Framework_Component_Test.dsp" - Package Owner=<4>
+Project: "Framework_Component_Test"=.\Framework_Component_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -377,11 +464,14 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Framework_Component_Test DLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Framework_Component_Test DLL"=".\Framework_Component_DLL.dsp" - Package Owner=<4>
+Project: "Framework_Component_Test DLL"=.\Framework_Component_DLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -393,7 +483,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Future_Set_Test"=".\Future_Set_Test.dsp" - Package Owner=<4>
+Project: "Future_Set_Test"=.\Future_Set_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -401,11 +491,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Future_Test"=".\Future_Test.dsp" - Package Owner=<4>
+Project: "Future_Test"=.\Future_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -413,11 +506,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Get_Opt_Test"=".\Get_Opt_Test.dsp" - Package Owner=<4>
+Project: "Get_Opt_Test"=.\Get_Opt_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -425,11 +521,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Handle_Set_Test"=".\Handle_Set_Test.dsp" - Package Owner=<4>
+Project: "Handle_Set_Test"=.\Handle_Set_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -437,11 +536,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Hash_Map_Bucket_Iterator_Test"=".\Hash_Map_Bucket_Iterator_Test.dsp" - Package Owner=<4>
+Project: "Hash_Map_Bucket_Iterator_Test"=.\Hash_Map_Bucket_Iterator_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -449,11 +551,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Hash_Map_Manager_Test"=".\Hash_Map_Manager_Test.dsp" - Package Owner=<4>
+Project: "Hash_Map_Manager_Test"=.\Hash_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -461,11 +566,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "High_Res_Timer_Test"=".\High_Res_Timer_Test.dsp" - Package Owner=<4>
+Project: "High_Res_Timer_Test"=.\High_Res_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -473,11 +581,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "INET_Addr_Test"=".\INET_Addr_Test.dsp" - Package Owner=<4>
+Project: "INET_Addr_Test"=.\INET_Addr_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -485,11 +596,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "IOStream_Test"=".\IOStream_Test.dsp" - Package Owner=<4>
+Project: "IOStream_Test"=.\IOStream_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -497,11 +611,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Lazy_Map_Manager_Test"=".\Lazy_Map_Manager_Test.dsp" - Package Owner=<4>
+Project: "Lazy_Map_Manager_Test"=.\Lazy_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -509,11 +626,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Log_Msg_Test"=".\Log_Msg_Test.dsp" - Package Owner=<4>
+Project: "Log_Msg_Test"=.\Log_Msg_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -521,11 +641,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Logging_Strategy_Test"=".\Logging_Strategy_Test.dsp" - Package Owner=<4>
+Project: "Logging_Strategy_Test"=.\Logging_Strategy_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -533,11 +656,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "MEM_Stream_Test"=".\MEM_Stream_Test.dsp" - Package Owner=<4>
+Project: "MEM_Stream_Test"=.\MEM_Stream_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -545,11 +671,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "MM_Shared_Memory_Test"=".\MM_Shared_Memory_Test.dsp" - Package Owner=<4>
+Project: "MM_Shared_Memory_Test"=.\MM_Shared_Memory_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -557,11 +686,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "MT_Reactor_Timer_Test"=".\MT_Reactor_Timer_Test.dsp" - Package Owner=<4>
+Project: "MT_Reactor_Timer_Test"=.\MT_Reactor_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -569,11 +701,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "MT_Reactor_Upcall_Test"=".\MT_Reactor_Upcall_Test.dsp" - Package Owner=<4>
+Project: "MT_Reactor_Upcall_Test"=.\MT_Reactor_Upcall_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -581,11 +716,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "MT_SOCK_Test"=".\MT_SOCK_Test.dsp" - Package Owner=<4>
+Project: "MT_SOCK_Test"=.\MT_SOCK_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -593,11 +731,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Malloc_Test"=".\Malloc_Test.dsp" - Package Owner=<4>
+Project: "Malloc_Test"=.\Malloc_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -605,11 +746,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Map_Manager_Test"=".\Map_Manager_Test.dsp" - Package Owner=<4>
+Project: "Map_Manager_Test"=.\Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -617,11 +761,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Map_Test"=".\Map_Test.dsp" - Package Owner=<4>
+Project: "Map_Test"=.\Map_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -629,11 +776,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Max_Default_Port_Test"=".\Max_Default_Port_Test.dsp" - Package Owner=<4>
+Project: "Max_Default_Port_Test"=.\Max_Default_Port_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -641,11 +791,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Mem_Map_Test"=".\Mem_Map_Test.dsp" - Package Owner=<4>
+Project: "Mem_Map_Test"=.\Mem_Map_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -653,11 +806,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Message_Block_Test"=".\Message_Block_Test.dsp" - Package Owner=<4>
+Project: "Message_Block_Test"=.\Message_Block_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -665,11 +821,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Message_Queue_Notifications_Test"=".\Message_Queue_Notifications_Test.dsp" - Package Owner=<4>
+Project: "Message_Queue_Notifications_Test"=.\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -677,11 +836,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Message_Queue_Test"=".\Message_Queue_Test.dsp" - Package Owner=<4>
+Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -689,11 +851,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Multicast_Test"=".\Multicast_Test.dsp" - Package Owner=<4>
+Project: "Message_Queue_Test_Ex"=.\Message_Queue_Test_Ex.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -701,11 +866,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Multihomed_INET_Addr_Test"=".\Multihomed_INET_Addr_Test.dsp" - Package Owner=<4>
+Project: "Multicast_Test"=.\Multicast_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -713,11 +881,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Message_Queue_Test_Ex"=".\Message_Queue_Test_Ex.dsp" - Package Owner=<4>
+Project: "Multihomed_INET_Addr_Test"=.\Multihomed_INET_Addr_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -725,11 +896,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Naming_Test"=".\Naming_Test.dsp" - Package Owner=<4>
+Project: "Naming_Test"=.\Naming_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -737,11 +911,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "New_Fail_Test"=".\New_Fail_Test.dsp" - Package Owner=<4>
+Project: "New_Fail_Test"=.\New_Fail_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -749,11 +926,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Notify_Performance_Test"=".\Notify_Performance_Test.dsp" - Package Owner=<4>
+Project: "Notify_Performance_Test"=.\Notify_Performance_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -761,11 +941,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "OS_Test"=".\OS_Test.dsp" - Package Owner=<4>
+Project: "OS_Test"=.\OS_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -773,11 +956,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Object_Manager_Test"=".\Object_Manager_Test.dsp" - Package Owner=<4>
+Project: "Object_Manager_Test"=.\Object_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -785,11 +971,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Obstack_Test"=".\Obstack_Test.dsp" - Package Owner=<4>
+Project: "Obstack_Test"=.\Obstack_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -797,11 +986,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "OrdMultiSet_Test"=".\OrdMultiSet_Test.dsp" - Package Owner=<4>
+Project: "OrdMultiSet_Test"=.\OrdMultiSet_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -809,11 +1001,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Pipe_Test"=".\Pipe_Test.dsp" - Package Owner=<4>
+Project: "Pipe_Test"=.\Pipe_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -821,11 +1016,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Priority_Buffer_Test"=".\Priority_Buffer_Test.dsp" - Package Owner=<4>
+Project: "Priority_Buffer_Test"=.\Priority_Buffer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -833,11 +1031,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Priority_Reactor_Test"=".\Priority_Reactor_Test.dsp" - Package Owner=<4>
+Project: "Priority_Reactor_Test"=.\Priority_Reactor_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -845,11 +1046,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Priority_Task_Test"=".\Priority_Task_Test.dsp" - Package Owner=<4>
+Project: "Priority_Task_Test"=.\Priority_Task_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -857,11 +1061,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Proactor_Scatter_Gather_Test"=".\Proactor_Scatter_Gather_Test.dsp" - Package Owner=<4>
+Project: "Proactor_Scatter_Gather_Test"=.\Proactor_Scatter_Gather_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -869,11 +1076,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Proactor_Test"=".\Proactor_Test.dsp" - Package Owner=<4>
+Project: "Proactor_Test"=.\Proactor_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -881,11 +1091,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Proactor_Timer_Test"=".\Proactor_Timer_Test.dsp" - Package Owner=<4>
+Project: "Proactor_Timer_Test"=.\Proactor_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -897,7 +1110,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Process_Manager_Test"=".\Process_Manager_Test.dsp" - Package Owner=<4>
+Project: "Process_Manager_Test"=.\Process_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -905,11 +1118,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Process_Mutex_Test"=".\Process_Mutex_Test.dsp" - Package Owner=<4>
+Project: "Process_Mutex_Test"=.\Process_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -917,11 +1133,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Process_Strategy_Test"=".\Process_Strategy_Test.dsp" - Package Owner=<4>
+Project: "Process_Strategy_Test"=.\Process_Strategy_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -929,11 +1148,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "RB_Tree_Test"=".\RB_Tree_Test.dsp" - Package Owner=<4>
+Project: "RB_Tree_Test"=.\RB_Tree_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -941,11 +1163,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reactor_Dispatch_Order_Test"=".\Reactor_Dispatch_Order_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Dispatch_Order_Test"=.\Reactor_Dispatch_Order_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -953,11 +1178,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reactor_Exceptions_Test"=".\Reactor_Exceptions_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Exceptions_Test"=.\Reactor_Exceptions_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -965,11 +1193,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reactor_Notify_Test"=".\Reactor_Notify_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Notify_Test"=.\Reactor_Notify_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -977,11 +1208,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reactor_Performance_Test"=".\Reactor_Performance_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Performance_Test"=.\Reactor_Performance_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -989,11 +1223,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reactor_Timer_Test"=".\Reactor_Timer_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Timer_Test"=.\Reactor_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1001,11 +1238,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reactors_Test"=".\Reactors_Test.dsp" - Package Owner=<4>
+Project: "Reactors_Test"=.\Reactors_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1013,11 +1253,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reader_Writer_Test"=".\Reader_Writer_Test.dsp" - Package Owner=<4>
+Project: "Reader_Writer_Test"=.\Reader_Writer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1025,11 +1268,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Recursive_Condition_Test"=".\Recursive_Condition_Test.dsp" - Package Owner=<4>
+Project: "Recursive_Condition_Bug_Test"=.\Recursive_Condition_Bug_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1037,11 +1283,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Recursive_Condition_Bug_Test"=".\Recursive_Condition_Bug_Test.dsp" - Package Owner=<4>
+Project: "Recursive_Condition_Test"=.\Recursive_Condition_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1049,11 +1298,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Recursive_Mutex_Test"=".\Recursive_Mutex_Test.dsp" - Package Owner=<4>
+Project: "Recursive_Mutex_Test"=.\Recursive_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1061,11 +1313,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Refcounted_Auto_Ptr_Test"=".\Refcounted_Auto_Ptr_Test.dsp" - Package Owner=<4>
+Project: "Refcounted_Auto_Ptr_Test"=.\Refcounted_Auto_Ptr_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1073,11 +1328,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Reverse_Lock_Test"=".\Reverse_Lock_Test.dsp" - Package Owner=<4>
+Project: "Reverse_Lock_Test"=.\Reverse_Lock_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1085,11 +1343,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "SOCK_Connector_Test"=".\SOCK_Connector_Test.dsp" - Package Owner=<4>
+Project: "SOCK_Connector_Test"=.\SOCK_Connector_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1097,11 +1358,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "SOCK_Send_Recv_Test"=".\SOCK_Send_Recv_Test.dsp" - Package Owner=<4>
+Project: "SOCK_Send_Recv_Test"=.\SOCK_Send_Recv_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1109,11 +1373,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "SOCK_Test"=".\SOCK_Test.dsp" - Package Owner=<4>
+Project: "SOCK_Test"=.\SOCK_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1121,11 +1388,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "SPIPE_Test"=".\SPIPE_Test.dsp" - Package Owner=<4>
+Project: "SPIPE_Test"=.\SPIPE_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1133,11 +1403,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "SString_Test"=".\SString_Test.dsp" - Package Owner=<4>
+Project: "SString_Test"=.\SString_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1145,11 +1418,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "SV_Shared_Memory_Test"=".\SV_Shared_Memory_Test.dsp" - Package Owner=<4>
+Project: "SV_Shared_Memory_Test"=.\SV_Shared_Memory_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1157,11 +1433,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Semaphore_Test"=".\Semaphore_Test.dsp" - Package Owner=<4>
+Project: "Semaphore_Test"=.\Semaphore_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1169,11 +1448,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Service_Config_DLL"=".\Service_Config_DLL.dsp" - Package Owner=<4>
+Project: "Service_Config_DLL"=.\Service_Config_DLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1185,7 +1467,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Service_Config_Test"=".\Service_Config_Test.dsp" - Package Owner=<4>
+Project: "Service_Config_Test"=.\Service_Config_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1196,11 +1478,104 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Service_Config_DLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Sigset_Ops_Test"=".\Sigset_Ops_Test.dsp" - Package Owner=<4>
+Project: "Sigset_Ops_Test"=.\Sigset_Ops_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Simple_Message_Block_Test"=.\Simple_Message_Block_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Svc_Handler_Test"=.\Svc_Handler_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TP_Reactor_Test"=.\TP_Reactor_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TSS_Test"=.\TSS_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Task_Test"=.\Task_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Test_Output DLL"=.\Test_Output.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1212,7 +1587,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple_Message_Block_Test"=".\Simple_Message_Block_Test.dsp" - Package Owner=<4>
+Project: "Thread_Manager_Test"=.\Thread_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1220,11 +1595,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Svc_Handler_Test"=".\Svc_Handler_Test.dsp" - Package Owner=<4>
+Project: "Thread_Mutex_Test"=.\Thread_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1232,11 +1610,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TP_Reactor_Test"=".\TP_Reactor_Test.dsp" - Package Owner=<4>
+Project: "Thread_Pool_Reactor_Resume_Test"=.\Thread_Pool_Reactor_Resume_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1244,11 +1625,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TSS_Test"=".\TSS_Test.dsp" - Package Owner=<4>
+Project: "Thread_Pool_Reactor_Test"=.\Thread_Pool_Reactor_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1256,11 +1640,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Task_Test"=".\Task_Test.dsp" - Package Owner=<4>
+Project: "Thread_Pool_Test"=.\Thread_Pool_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1268,11 +1655,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Thread_Mutex_Test"=".\Thread_Mutex_Test.dsp" - Package Owner=<4>
+Project: "Time_Service_Test"=.\Time_Service_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1280,11 +1670,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Thread_Manager_Test"=".\Thread_Manager_Test.dsp" - Package Owner=<4>
+Project: "Time_Value_Test"=.\Time_Value_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1292,11 +1685,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Thread_Pool_Reactor_Resume_Test"=".\Thread_Pool_Reactor_Resume_Test.dsp" - Package Owner=<4>
+Project: "Timeprobe_Test"=.\Timeprobe_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1304,11 +1700,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Thread_Pool_Reactor_Test"=".\Thread_Pool_Reactor_Test.dsp" - Package Owner=<4>
+Project: "Timer_Queue_Test"=.\Timer_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1316,11 +1715,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Thread_Pool_Test"=".\Thread_Pool_Test.dsp" - Package Owner=<4>
+Project: "Token_Strategy_Test"=.\Token_Strategy_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1328,11 +1730,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Time_Service_Test"=".\Time_Service_Test.dsp" - Package Owner=<4>
+Project: "Tokens_Test"=.\Tokens_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1340,11 +1745,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Time_Value_Test"=".\Time_Value_Test.dsp" - Package Owner=<4>
+Project: "UPIPE_SAP_Test"=.\UPIPE_SAP_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1352,11 +1760,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Timeprobe_Test"=".\Timeprobe_Test.dsp" - Package Owner=<4>
+Project: "Unbounded_Set_Test_Ex"=.\Unbounded_Set_Test_Ex.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1364,11 +1775,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Timer_Queue_Test"=".\Timer_Queue_Test.dsp" - Package Owner=<4>
+Project: "Upgradable_RW_Test"=.\Upgradable_RW_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1376,11 +1790,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Token_Strategy_Test"=".\Token_Strategy_Test.dsp" - Package Owner=<4>
+Project: "Vector_Test"=.\Vector_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1388,66 +1805,9 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "Tokens_Test"=".\Tokens_Test.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "UPIPE_SAP_Test"=".\UPIPE_SAP_Test.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Unbounded_Set_Test_Ex"=".\Unbounded_Set_Test_Ex.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Upgradable_RW_Test"=".\Upgradable_RW_Test.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Vector_Test"=".\Vector_Test.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1463,3 +1823,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
