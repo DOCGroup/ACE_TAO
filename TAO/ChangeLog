@@ -1,3 +1,12 @@
+Wed Oct 29 12:09:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+
+          Added list of source files, since the CVS respository
+          contains source files which are not to be built but not
+          yet removed.
+
 Wed Oct 29 11:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
