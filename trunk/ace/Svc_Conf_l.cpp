@@ -686,7 +686,7 @@ ACE_YY_DECL
 	register ACE_TCHAR *ace_yy_cp = 0, *ace_yy_bp = 0;
 	register int ace_yy_act;
 
-#line 40 "Svc_Conf.l"
+#line 35 "Svc_Conf.l"
 
 
 
@@ -777,98 +777,99 @@ case 1:
 ace_yy_c_buf_p = ace_yy_cp -= 1;
 ACE_YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
 ACE_YY_RULE_SETUP
-#line 42 "Svc_Conf.l"
+#line 37 "Svc_Conf.l"
 ; /* EMPTY */
 	ACE_YY_BREAK
 case 2:
 ACE_YY_RULE_SETUP
-#line 43 "Svc_Conf.l"
+#line 38 "Svc_Conf.l"
 { return token (ACE_DYNAMIC); }
         //	ACE_YY_BREAK
 case 3:
 ACE_YY_RULE_SETUP
-#line 44 "Svc_Conf.l"
+#line 39 "Svc_Conf.l"
 { return token (ACE_STATIC); }
 //	ACE_YY_BREAK
 case 4:
 ACE_YY_RULE_SETUP
-#line 45 "Svc_Conf.l"
+#line 40 "Svc_Conf.l"
 { return token (ACE_SUSPEND); }
 //	ACE_YY_BREAK
 case 5:
 ACE_YY_RULE_SETUP
-#line 46 "Svc_Conf.l"
+#line 41 "Svc_Conf.l"
 { return token (ACE_RESUME); }
 //	ACE_YY_BREAK
 case 6:
 ACE_YY_RULE_SETUP
-#line 47 "Svc_Conf.l"
+#line 42 "Svc_Conf.l"
 { return token (ACE_REMOVE); }
 //	ACE_YY_BREAK
 case 7:
 ACE_YY_RULE_SETUP
-#line 48 "Svc_Conf.l"
+#line 43 "Svc_Conf.l"
 { return token (ACE_USTREAM); }
 //	ACE_YY_BREAK
 case 8:
 ACE_YY_RULE_SETUP
-#line 49 "Svc_Conf.l"
+#line 44 "Svc_Conf.l"
 { return token (ACE_MODULE_T); }
 //	ACE_YY_BREAK
 case 9:
 ACE_YY_RULE_SETUP
-#line 50 "Svc_Conf.l"
+#line 45 "Svc_Conf.l"
 { return token (ACE_SVC_OBJ_T); }
 //	ACE_YY_BREAK
 case 10:
 ACE_YY_RULE_SETUP
-#line 51 "Svc_Conf.l"
+#line 46 "Svc_Conf.l"
 { return token (ACE_STREAM_T); }
 //	ACE_YY_BREAK
 case 11:
 ACE_YY_RULE_SETUP
-#line 52 "Svc_Conf.l"
+#line 47 "Svc_Conf.l"
 { return token (ACE_ACTIVE); }
 //	ACE_YY_BREAK
 case 12:
 ACE_YY_RULE_SETUP
-#line 53 "Svc_Conf.l"
+#line 48 "Svc_Conf.l"
 { return token (ACE_INACTIVE); }
 //	ACE_YY_BREAK
 case 13:
 ACE_YY_RULE_SETUP
-#line 54 "Svc_Conf.l"
+#line 49 "Svc_Conf.l"
 { return token (':'); }
 //	ACE_YY_BREAK
 case 14:
 ACE_YY_RULE_SETUP
-#line 55 "Svc_Conf.l"
+#line 50 "Svc_Conf.l"
 { return token ('*'); }
 //	ACE_YY_BREAK
 case 15:
 ACE_YY_RULE_SETUP
-#line 56 "Svc_Conf.l"
+#line 51 "Svc_Conf.l"
 { return token ('('); }
 //	ACE_YY_BREAK
 case 16:
 ACE_YY_RULE_SETUP
-#line 57 "Svc_Conf.l"
+#line 52 "Svc_Conf.l"
 { return token (')'); }
 //	ACE_YY_BREAK
 case 17:
 ACE_YY_RULE_SETUP
-#line 58 "Svc_Conf.l"
+#line 53 "Svc_Conf.l"
 { return token ('{'); }
 //	ACE_YY_BREAK
 case 18:
 ACE_YY_RULE_SETUP
-#line 59 "Svc_Conf.l"
+#line 54 "Svc_Conf.l"
 { return token ('}'); }
 //	ACE_YY_BREAK
 case 19:
 ACE_YY_RULE_SETUP
-#line 60 "Svc_Conf.l"
-{ // Check for first type of string, i.e.,
+#line 55 "Svc_Conf.l"
+{
+                        // Check for first type of string, i.e.,
                         // "double quotes" delimited.
                         ACE_TCHAR *s = ACE_OS::strrchr (ace_yytext, '"');
                         if (s == 0)
@@ -886,7 +887,7 @@ ACE_YY_RULE_SETUP
 //	ACE_YY_BREAK
 case 20:
 ACE_YY_RULE_SETUP
-#line 75 "Svc_Conf.l"
+#line 71 "Svc_Conf.l"
 {
 		        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext, ace_yyleng);
 			return token (ACE_IDENT);
@@ -894,7 +895,7 @@ ACE_YY_RULE_SETUP
 //	ACE_YY_BREAK
 case 21:
 ACE_YY_RULE_SETUP
-#line 79 "Svc_Conf.l"
+#line 75 "Svc_Conf.l"
 {
 		        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext, ace_yyleng);
 			return token (ACE_PATHNAME);
@@ -902,18 +903,19 @@ ACE_YY_RULE_SETUP
 //	ACE_YY_BREAK
 case 22:
 ACE_YY_RULE_SETUP
-#line 83 "Svc_Conf.l"
+#line 79 "Svc_Conf.l"
 ; /* EMPTY */
 	ACE_YY_BREAK
 case 23:
 ACE_YY_RULE_SETUP
-#line 84 "Svc_Conf.l"
+#line 80 "Svc_Conf.l"
 { ACE_SVC_CONF_PARAM->yylineno++; ace_yylineno++; }
 	ACE_YY_BREAK
 case 24:
 ACE_YY_RULE_SETUP
-#line 85 "Svc_Conf.l"
-{ ACE_ERROR ((LM_ERROR,
+#line 81 "Svc_Conf.l"
+{
+                    ACE_ERROR ((LM_ERROR,
                                 ACE_LIB_TEXT ("unknown character = (%d"),
                                           *ace_yytext));
                         if (ACE_OS::ace_isprint (*ace_yytext))
@@ -924,12 +926,12 @@ ACE_YY_RULE_SETUP
 case ACE_YY_STATE_EOF(INITIAL):
 case ACE_YY_STATE_EOF(PARAMETERS):
 case ACE_YY_STATE_EOF(NORMAL):
-#line 92 "Svc_Conf.l"
-{ /* ACE_YY_NEW_FILE; */ ace_yyterminate(); }
+#line 89 "Svc_Conf.l"
+{ ace_yyterminate(); }
 //	ACE_YY_BREAK
 case 25:
 ACE_YY_RULE_SETUP
-#line 93 "Svc_Conf.l"
+#line 90 "Svc_Conf.l"
 ACE_SVC_CONF_ECHO;
 	ACE_YY_BREAK
 
@@ -1818,7 +1820,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 93 "Svc_Conf.l"
+#line 90 "Svc_Conf.l"
 
 int
 ace_yywrap (void)
@@ -1866,7 +1868,6 @@ ace_yy_push_buffer (const ACE_TCHAR *directive, ace_yy_buffer_state *&buffer)
 void
 ace_yy_pop_buffer (ace_yy_buffer_state *buffer)
 {
-
   // External synchronization is required.
 
   ace_yy_switch_to_buffer (buffer);
