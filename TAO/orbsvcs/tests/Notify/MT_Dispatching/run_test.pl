@@ -12,10 +12,10 @@ $ior = PerlACE::LocalFile ("supplier.ior");
 $notify_ior = PerlACE::LocalFile ("notify.ior");
 $notify_out = PerlACE::LocalFile ("notify.out");
 
-$notify_nothreads_conf = PerlACE::LocalFile ("notify_nothreads.conf");
-$notify_mtdispatching_conf = PerlACE::LocalFile ("notify_mtdispatching.conf");
-$notify_mtsource_conf = PerlACE::LocalFile ("notify_mtsource.conf");
-$notify_mtlistener_conf = PerlACE::LocalFile ("notify_mtlistener.conf");
+$notify_nothreads_conf = PerlACE::LocalFile ("notify_nothreads$PerlACE::svcconf_ext");
+$notify_mtdispatching_conf = PerlACE::LocalFile ("notify_mtdispatching$PerlACE::svcconf_ext");
+$notify_mtsource_conf = PerlACE::LocalFile ("notify_mtsource$PerlACE::svcconf_ext");
+$notify_mtlistener_conf = PerlACE::LocalFile ("notify_mtlistener$PerlACE::svcconf_ext");
 
 $status = 0;
 

@@ -13,9 +13,9 @@ $iorfile = PerlACE::LocalFile ("test2.ior");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-ORBSvcConf svc2.conf -o $iorfile");
-$CL = new PerlACE::Process ("client", "-ORBSvcConf svc2.conf -i 5000 -k file://$iorfile");
-$T = new PerlACE::Process ("OctetSeq", "-ORBSvcConf svc2.conf -n 32 -l 8192 -h 8192 -s 1 -q");
+$SV = new PerlACE::Process ("server", "-ORBSvcConf svc2$PerlACE::svcconf_ext -o $iorfile");
+$CL = new PerlACE::Process ("client", "-ORBSvcConf svc2$PerlACE::svcconf_ext -i 5000 -k file://$iorfile");
+$T = new PerlACE::Process ("OctetSeq", "-ORBSvcConf svc2$PerlACE::svcconf_ext -n 32 -l 8192 -h 8192 -s 1 -q");
 
 print STDERR "\n\n==== Octet sequence passing test\n";
 

@@ -8,8 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
 
-$client_conf = PerlACE::LocalFile ("client.conf");
-$server_conf = PerlACE::LocalFile ("server.conf");
+$client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
+$server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 $iorfile = PerlACE::LocalFile ("ior");
 
 $SV = new PerlACE::Process ("server",

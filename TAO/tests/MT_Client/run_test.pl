@@ -8,8 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
-$client_conf = PerlACE::LocalFile ("client.global.conf");
-$server_conf = PerlACE::LocalFile ("server.conf");
+$client_conf = PerlACE::LocalFile ("client.global$PerlACE::svcconf_ext");
+$server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 $client_process = "client";
 $debug_level = '0';
 $threads = '4';
@@ -17,7 +17,7 @@ $status = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-tss') {
-        $client_conf = PerlACE::LocalFile ("client.tss.conf");
+        $client_conf = PerlACE::LocalFile ("client.tss$PerlACE::svcconf_ext");
     } elsif ($i eq '-debug') {
         $debug_level = '1';
     } elsif ($i eq '-creation') {

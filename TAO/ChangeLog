@@ -1,3 +1,59 @@
+Mon Oct 21 14:29:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/AMH/Sink_Server/run_test.pl:
+	* examples/Simple/time-date/run_test.pl:
+	* orbsvcs/examples/RtEC/Simple/run_test.pl:
+	* orbsvcs/examples/Security/Send_File/run_test.pl:
+	* orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+	* orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+	* orbsvcs/tests/CosEvent/Basic/run_test.pl:
+	* orbsvcs/tests/EC_Mcast/run_test.pl:
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	* orbsvcs/tests/Event/Basic/exhaustive_test.pl:
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Performance/run_test.pl:
+	* orbsvcs/tests/Miop/McastHello/run_test.pl:
+	* orbsvcs/tests/Notify/Blocking/run_test.pl:
+	* orbsvcs/tests/Notify/Discarding/run_test.pl:
+	* orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+	* orbsvcs/tests/Notify/Ordering/run_test.pl:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+	* orbsvcs/tests/Security/Big_Request/run_test.pl:
+	* orbsvcs/tests/Security/Callback/run_test.pl:
+	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl:
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl:
+	* performance-tests/Latency/Single_Threaded/default_configuration.pl:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl:
+	* performance-tests/RTCorba/Thread_Pool/native-svc.conf:
+	* performance-tests/RTCorba/Thread_Pool/native-svc.conf.xml:
+	* performance-tests/RTCorba/Thread_Pool/run_test.pl:
+	* performance-tests/RTCorba/Thread_Pool/svc.conf-native:
+	* performance-tests/Throughput/run_test.pl:
+	* tests/AMI/run_test.pl:
+	* tests/Connect_Strategy_Test/run_test.pl:
+	* tests/Connection_Purging/run_test.pl:
+	* tests/LongUpcalls/run_test.pl:
+	* tests/MT_BiDir/run_test.pl:
+	* tests/MT_Client/run_test.pl:
+	* tests/MT_Server/run_test.pl:
+	* tests/No_Server_MT_Connect_Test/run_test.pl:
+	* tests/OctetSeq/run_test1.pl:
+	* tests/OctetSeq/run_test2.pl:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+	* tests/RTCORBA/Server_Protocol/run_test.pl:
+	* tests/Strategies/run_test.pl: Changed to use the svcconf file
+	  extension ($PerlACE::svcconf_ext) defined in PerlACE::Run_Test
+	  to switch between conventional svc.conf files and XML-based
+	  svc.conf files.  The default file extension is ".conf".  To use
+	  XML-based format, you need to define an environment variable
+	  ACE_RUNTEST_SVCCONF_EXT as ".conf.xml".  
+
 Mon Oct 21 14:27:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/DLL_ORB/Makefile.Test_Client_Module:

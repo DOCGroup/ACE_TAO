@@ -19,9 +19,9 @@ $status = 0;
 $ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 
 $SV = new PerlACE::Process ("server",
-			    "-o $file -ORBSvcConf server.conf");
+			    "-o $file -ORBSvcConf server$PerlACE::svcconf_ext");
 $CL = new PerlACE::Process ("client",
-			    "-ORBSvcConf client.conf");
+			    "-ORBSvcConf client$PerlACE::svcconf_ext");
 
 print STDERR "\n\n==== Running SSLIOP Callback test\n";
 

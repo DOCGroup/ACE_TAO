@@ -8,20 +8,20 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
-$client_conf = PerlACE::LocalFile ("muxed.conf");
+$client_conf = PerlACE::LocalFile ("muxed$PerlACE::svcconf_ext");
 
 $debug_level = '0';
 $iterations = '1';
 
 foreach $i (@ARGV) {
     if ($i eq '-mux') {
-        $client_conf = PerlACE::LocalFile ("muxed.conf");
+        $client_conf = PerlACE::LocalFile ("muxed$PerlACE::svcconf_ext");
     } 
     elsif ($i eq '-debug') {
         $debug_level = '1';
     } 
     elsif ($i eq '-exclusive') {
-        $client_conf = PerlACE::LocalFile ('exclusive.conf');
+        $client_conf = PerlACE::LocalFile ('exclusive$PerlACE::svcconf_ext');
     }
 }
 

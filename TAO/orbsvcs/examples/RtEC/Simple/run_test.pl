@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 
 $iorfile  = PerlACE::LocalFile ("ec.ior");
-$conffile = PerlACE::LocalFile ("ec.conf");
+$conffile = PerlACE::LocalFile ("ec" . "$PerlACE::svcconf_ext");
 
 unlink $iorfile;
 

@@ -14,8 +14,8 @@ $status = 0;
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", "-ORBSvcConf reactor.conf -k file://$iorfile");
-$CL3 = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -k file://$iorfile -x 1");
+$CL2 = new PerlACE::Process ("client", "-ORBSvcConf reactor$PerlACE::svcconf_ext -k file://$iorfile");
+$CL3 = new PerlACE::Process ("client", "-ORBSvcConf blocked$PerlACE::svcconf_ext -k file://$iorfile -x 1");
 
 
 $SV->Spawn ();
