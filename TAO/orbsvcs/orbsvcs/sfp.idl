@@ -3,6 +3,8 @@
 
 module SFP
 {
+  typedef sequence<char> my_seq_char;
+  typedef sequence <unsigned long> my_seq_ulong;
   enum message_type
   {
     // Messages in the forward direction 
@@ -32,7 +34,7 @@ module SFP
   
   struct fragment
   { 
-    sequence <char> magic_number; 
+    my_seq_char magic_number; 
     // 'F', 'R', 'A', 'G' 
     octet flags; 
     // bit 1 = more fragments 
@@ -79,6 +81,6 @@ module SFP
   { 
     unsigned long timestamp; 
     unsigned long synch_source; 
-    sequence<unsigned long> source_ids;
+    my_seq_ulong source_ids;
   };
 };
