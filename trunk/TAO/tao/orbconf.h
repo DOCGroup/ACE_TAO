@@ -393,15 +393,20 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 // it creates 1.1 endpoints (and profiles).  If you need to talk to
 // old clients that only understand 1.0 (and do not attempt to use 1.0
 // with 1.1 servers), then change the values below.
-#if !defined(TAO_DEF_GIOP_MAJOR)
+#if !defined (TAO_DEF_GIOP_MAJOR)
 #define TAO_DEF_GIOP_MAJOR 1
 #endif /* TAO_DEF_GIOP_MAJOR */
-#if !defined(TAO_DEF_GIOP_MINOR)
+#if !defined (TAO_DEF_GIOP_MINOR)
 #define TAO_DEF_GIOP_MINOR 1
 #endif /* TAO_DEF_GIOP_MINOR */
 
 // By default TAO generate the OMG standard profile components
 // (ORB_TYPE and CODE_SETS)
 #define TAO_STD_PROFILE_COMPONENTS
+
+#if !defined (TAO_DEFAULT_IOR_SIZE)
+// This is the default size of the buffer used for processing IORs.
+#define TAO_DEFAULT_IOR_SIZE 1024
+#endif /* TAO_DEFAULT_IOR_SIZE */
 
 #endif  /* TAO_ORB_CONFIG_H */
