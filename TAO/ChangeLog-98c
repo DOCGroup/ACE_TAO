@@ -1,6 +1,3 @@
-Sun Oct 26 02:40:18 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
-
-
 Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
 
 	* tao/corba.h: Changed from using Strategies_T.h to Strategies.h.
