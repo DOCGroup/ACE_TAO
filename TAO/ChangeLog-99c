@@ -1,3 +1,9 @@
+Tue Jul 27 17:45:26 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/ORB.{i, h} (CORBA_ORB_out): Added the "const" to the formal
+	  argument of the copy constructor. This would otherwise result in 
+	  warnings on using CORBA_ORB_out when compiling with SunCC5.0.
+
 Tue Jul 27 17:41:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/MT_Client/run_test.pl:
