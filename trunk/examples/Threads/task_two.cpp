@@ -60,7 +60,6 @@ Task_Test::close (u_long)
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying Task_Test, task count = %d\n", 
 	      (int) task_count));
   wait_count--;
-// delete this;
   return 0;
 }
 
@@ -117,7 +116,8 @@ main (int argc, char *argv[])
       while (max_count != n_threads && wait_count != 0)
 	ACE_Thread::yield ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
+      ACE_DEBUG ((LM_DEBUG, 
+		  "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
 		  i, (int) max_count, (int) wait_count));
 
       // Wait for all the tasks to exit.

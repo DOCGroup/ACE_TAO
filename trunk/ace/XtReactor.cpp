@@ -218,12 +218,14 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 
   int condition = 0;
 
-  if (mask & ACE_Event_Handler::READ_MASK)
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, XtInputReadMask);
-  if (mask & ACE_Event_Handler::WRITE_MASK)
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (condition, XtInputWriteMask);
-  if (mask & ACE_Event_Handler::EXCEPT_MASK)
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
     ACE_SET_BITS (condition, XtInputExceptMask);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+    ACE_SET_BITS (condition, XtInputReadMask);
 
   if (condition != 0)
     {

@@ -17,13 +17,12 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 static ofstream *out_stream = 0;
 
-static const int NUM_INVOCATIONS = 100;
-static const int TASK_COUNT = 130;
+static const size_t NUM_INVOCATIONS = 100;
+static const size_t TASK_COUNT = 130;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -38,13 +37,13 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
 
   ACE_Reactor *r_;
-  int handled_;
-  static int current_count_;
-  static int done_cnt_;
+  size_t handled_;
+  static size_t current_count_;
+  static size_t done_cnt_;
 };
 
-int Test_Task::current_count_ = 0;
-int Test_Task::done_cnt_ = 0;
+size_t Test_Task::current_count_ = 0;
+size_t Test_Task::done_cnt_ = 0;
 
 static ACE_Thread_Mutex lock_;
 
@@ -95,7 +94,7 @@ Test_Task::svc (void)
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
 
-  for (int index = 0; index < NUM_INVOCATIONS; index++)
+  for (size_t index = 0; index < NUM_INVOCATIONS; index++)
     {
       ACE_OS::thr_yield ();
 
@@ -169,7 +168,7 @@ main (int argc, char **)
   if (argc > 1)
     {
       // Send output to file.
-      out_stream = new ofstream ("test_task_three.out", ios::trunc|ios::out);
+      ACE_NEW_RETURN (out_stream, ofstream ("test_task_three.out", ios::trunc|ios::out), -1);
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
@@ -188,7 +187,7 @@ main (int argc, char **)
 
   reactor1->owner (ACE_OS::thr_self ());
 
-  for (int index = 0; index < TASK_COUNT; index++)
+  for (size_t index = 0; index < TASK_COUNT; index++)
     {
       t1[index].open (reactor1);
       t2[index].open (reactor2);
