@@ -1,99 +1,111 @@
+Sat Jun 20 14:22:22 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp: wrapped
+          RtecScheduler::Preemption_Priority (int) with a struct
+          when used with ACE_TSS, to please Sun C++ 4.2.  For unknown
+          reasons, Sunc C++ 4.2 refuses to compile ACE_TSS<TYPE> if
+          TYPE is a built-in type:
+          "ace/Synch_T.h", line 267: Error: Cannot have a return type
+            of int* for ACE_TSS<int>::operator->() const.
+              Where: While specializing "ACE_TSS<int>".
+              Where: Specialized in non-template code.
+
 Sat Jun 20 03:31:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA: 
+        * tao/POA:
 
-	  - Added TAO_POA_locking as a new policy to the POA.  This policy
- 	    is used to control the kind of lock created for POA state
- 	    synchronization.  Previously, the user could only specific the
- 	    synchronization choice at an application level in the svc.conf
- 	    file.  This approach did not allow a scheme where some POAs
- 	    had thread safe synchronization, while others had no
-	    (null) synchronization.
+          - Added TAO_POA_locking as a new policy to the POA.  This policy
+            is used to control the kind of lock created for POA state
+            synchronization.  Previously, the user could only specific the
+            synchronization choice at an application level in the svc.conf
+            file.  This approach did not allow a scheme where some POAs
+            had thread safe synchronization, while others had no
+            (null) synchronization.
 
-	    The new policy has three options:
-	    
-	    - USE_DEFAULT_LOCK: This option is the default value for this
- 	      policy.  This option indicates that the application level
- 	      choice for POA synchronization specified in the svc.conf
- 	      file be used.  Currently, this defaults to thread safe
- 	      synchronization. 
+            The new policy has three options:
 
-	      This option allows the programmer to make application level
- 	      decisions about the synchronization in the POA. Hence,
- 	      unless specified otherwise in create_POA, all POAs in the
- 	      application will have thread safe synchronization or null
- 	      (no) synchronization depending on the chioce made in
- 	      svc.conf.
+            - USE_DEFAULT_LOCK: This option is the default value for this
+              policy.  This option indicates that the application level
+              choice for POA synchronization specified in the svc.conf
+              file be used.  Currently, this defaults to thread safe
+              synchronization.
 
-	    - USE_NULL_LOCK: Use null (no) synchronization to protect the
-	      state of this POA.
- 	
-	    - USE_THREAD_LOCK: Use thread synchronization to protect the
- 	      state of this POA.
+              This option allows the programmer to make application level
+              decisions about the synchronization in the POA. Hence,
+              unless specified otherwise in create_POA, all POAs in the
+              application will have thread safe synchronization or null
+              (no) synchronization depending on the chioce made in
+              svc.conf.
 
-	  - Changed POAC.{h,i,cpp}, POAS.{h,i,cpp} and POA{h,i,cpp} to
- 	    support this new policy.
+            - USE_NULL_LOCK: Use null (no) synchronization to protect the
+              state of this POA.
 
-	  - Removed Strategy_POA and Strategy_POA_Manager.  Both were
- 	    rather unnecessary in view of the above changes.
-	
-	* tests/POA/locking/locking.cpp: New test for showing off new POA
- 	  locking policy.
+            - USE_THREAD_LOCK: Use thread synchronization to protect the
+              state of this POA.
 
-	* tao/Sequence.h (Octet>): Removed extra operator<< and operator>>
- 	  declarations, and changed the implementation to use non-private
- 	  members.
+          - Changed POAC.{h,i,cpp}, POAS.{h,i,cpp} and POA{h,i,cpp} to
+            support this new policy.
 
-	* tao/Principal.i: Added new file (empty).
+          - Removed Strategy_POA and Strategy_POA_Manager.  Both were
+            rather unnecessary in view of the above changes.
+
+        * tests/POA/locking/locking.cpp: New test for showing off new POA
+          locking policy.
+
+        * tao/Sequence.h (Octet>): Removed extra operator<< and operator>>
+          declarations, and changed the implementation to use non-private
+          members.
+
+        * tao/Principal.i: Added new file (empty).
 
 Sat Jun 20 01:39:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO4.{mdp,mak}: Defined TAO_BUILD_DLL, undefined
-	  TAO_NO_COPY_OCTET_SEQUENCES.  Added Current{C,S}.cpp and
-	  Forward_Servant.cpp into project.  Removed timeprobe.cpp from
-	  project. 
+        * tao/TAO4.{mdp,mak}: Defined TAO_BUILD_DLL, undefined
+          TAO_NO_COPY_OCTET_SEQUENCES.  Added Current{C,S}.cpp and
+          Forward_Servant.cpp into project.  Removed timeprobe.cpp from
+          project.
 
-	* tao/Forwarding_Servant.h:
-	* tao/POA{C,S,_CORBA}.h: Changed to use the underbar class names
-	  for better portability.  Thanks to Ernesto Guisado
-	  <eguisado@saincotrafico.com> for providing the perl script to
-	  automate the process.
+        * tao/Forwarding_Servant.h:
+        * tao/POA{C,S,_CORBA}.h: Changed to use the underbar class names
+          for better portability.  Thanks to Ernesto Guisado
+          <eguisado@saincotrafico.com> for providing the perl script to
+          automate the process.
 
 Sat Jun 20 00:00:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	* tao/Server_Request.cpp:
-	  Used compiled encoding and decoding for the GIOP and Request
-	  headers, thus reducing the time on the critical path.
-	  Removed a memory allocation on the server side by using ad-hoc
-	  marshalling for the object key: it does not need to increase the
-	  reference count on the CDR message block because its lifetime is
-	  shorter that the CDR stream.
-	  Added compiled marshalling methods for the ServiceContextList,
-	  this is mostly a waste because the context list is always
-	  empty.
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao/Server_Request.cpp:
+          Used compiled encoding and decoding for the GIOP and Request
+          headers, thus reducing the time on the critical path.
+          Removed a memory allocation on the server side by using ad-hoc
+          marshalling for the object key: it does not need to increase the
+          reference count on the CDR message block because its lifetime is
+          shorter that the CDR stream.
+          Added compiled marshalling methods for the ServiceContextList,
+          this is mostly a waste because the context list is always
+          empty.
 
-	* tao/CDR.h:
-	* tao/CDR.i:
-	  Enabled >> and << operators for CDR and basic types, added new
-	  operators for strings.
+        * tao/CDR.h:
+        * tao/CDR.i:
+          Enabled >> and << operators for CDR and basic types, added new
+          operators for strings.
 
-	* tao/corba.h:
-	* tao/ORB.cpp:
-	  Added operators to marshal octet sequences.
+        * tao/corba.h:
+        * tao/ORB.cpp:
+          Added operators to marshal octet sequences.
 
-	* tao/decode.cpp:
-	  Use the new replace() method to set the message block on octet
-	  sequences.
+        * tao/decode.cpp:
+          Use the new replace() method to set the message block on octet
+          sequences.
 
-	* tao/Sequence.h:
-	* tao/Sequence.i:
-	  Added new replace() method that set the internal message block
-	  in an octet sequence.
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+          Added new replace() method that set the internal message block
+          in an octet sequence.
 
-	* orbsvcs/tests/start_services:
-	  Recommend the $USER instead of the $login macro for bash.
+        * orbsvcs/tests/start_services:
+          Recommend the $USER instead of the $login macro for bash.
 
 Fri Jun 19 21:30:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
