@@ -7,8 +7,7 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 BIN = server
-SRC = $(addsuffix .cpp, $(BIN) Reference_Counted_Foo)
-SERVER_OBJS = server.o Reference_Counted_Foo.o
+SERVER_OBJS = server.o
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -58,8 +57,6 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
- Reference_Counted_Foo.h ../Generic_Servant/FooS.h \
- ../Generic_Servant/FooC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -310,9 +307,6 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
  ../Generic_Servant/generic_servant_export.h ../Generic_Servant/FooC.i \
  ../Generic_Servant/FooS_T.h ../Generic_Servant/FooS_T.i \
  ../Generic_Servant/FooS_T.cpp ../Generic_Servant/FooS.i
-.obj/Reference_Counted_Foo.o .obj/Reference_Counted_Foo.so .shobj/Reference_Counted_Foo.o .shobj/Reference_Counted_Foo.so: Reference_Counted_Foo.cpp \
- Reference_Counted_Foo.h ../Generic_Servant/FooS.h \
- ../Generic_Servant/FooC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
