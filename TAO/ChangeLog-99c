@@ -1,3 +1,22 @@
+Mon Jun 14 21:04:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+	* orbsvcs/orbsvcs/CosEvent_Utilities.h:
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+	  More ACE_THROW_SPEC stuff
+
+	* tao/Object.h:
+	  Fixed warning in method declaration, it included the class name!
+
 Mon Jun 14 20:53:44 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Fixed a few more
