@@ -316,6 +316,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           orb_core);
 
 
+
   // Send the message state for the service layer like FT to log the
   // messages
   // @@@ Needed for DOORS
@@ -490,7 +491,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
     {
       parse_error =
         this->generator_parser_->parse_request_header (request);
-
 
       // Throw an exception if the
       if (parse_error != 0)
@@ -1064,21 +1064,22 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
                                  size_t len)
 {
-  static const char digits [] = "0123456789ABCD";
-  static const char *names [] =
-  {
-    "Request",
-    "Reply",
-    "CancelRequest",
-    "LocateRequest",
-    "LocateReply",
-    "CloseConnection",
-    "MessageError"
-    "Fragment"
-  };
 
   if (TAO_debug_level >= 5)
     {
+      static const char digits [] = "0123456789ABCD";
+      static const char *names [] =
+      {
+        "Request",
+        "Reply",
+        "CancelRequest",
+        "LocateRequest",
+        "LocateReply",
+        "CloseConnection",
+        "MessageError"
+        "Fragment"
+      };
+
       // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
       u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
