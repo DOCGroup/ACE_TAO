@@ -212,11 +212,6 @@ typedef class CORBA_Principal *CORBA_Principal_ptr;
 
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 
-class CORBA_InterfaceDef;
-class CORBA_InterfaceDef_var;
-class CORBA_InterfaceDef_out;
-typedef class CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
-
 #ifdef TAO_HAS_VALUETYPE
 class CORBA_ValueBase;
 class CORBA_ValueFactoryBase;
@@ -298,12 +293,32 @@ class CORBA_ORB_ObjectIdList_var;
 class CORBA_ORB_ObjectIdList_out;
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 
-// Forward declarations for INTERFACE REPO..Bala
-
+// =================== Interface Repository =====================
 class CORBA_IRObject;
 class CORBA_IRObject_var;
 class CORBA_IRObject_out;
 typedef CORBA_IRObject *CORBA_IRObject_ptr;
+
+class IR_StructMemberSeq;
+class IR_StructMemberSeq_var;
+class IR_StructMemberSeq_out;
+
+class IR_UnionMemberSeq;
+class IR_UnionMemberSeq_var;
+class IR_UnionMemberSeq_out;
+
+class IR_EnumMemberSeq;
+class IR_EnumMemberSeq_var;
+class IR_EnumMemberSeq_out;
+
+class IR_ValueMemberSeq;
+class IR_ValueMemberSeq_var;
+class IR_ValueMemberSeq_out;
+
+class IR_InterfaceDef;
+class IR_InterfaceDef_var;
+class IR_InterfaceDef_out;
+typedef class IR_InterfaceDef *IR_InterfaceDef_ptr;
 
 enum IR_DefinitionKind
   {
@@ -392,6 +407,7 @@ class CORBA_TypeCodeFactory;
 class CORBA_TypeCodeFactory_var;
 class CORBA_TypeCodeFactory_out;
 typedef CORBA_TypeCodeFactory *CORBA_TypeCodeFactory_ptr;
+// =================== Interface Repository =====================
 
 class CORBA_StringSeq;
 class CORBA_StringSeq_var;
@@ -457,16 +473,19 @@ TAO_NAMESPACE CORBA
 
   typedef ACE_CDR::Short Short;
   typedef Short &Short_out;
+
   typedef ACE_CDR::UShort UShort;
   typedef UShort &UShort_out;
 
   typedef ACE_CDR::Long Long;
   typedef Long &Long_out;
+
   typedef ACE_CDR::ULong ULong;
   typedef ULong &ULong_out;
 
   typedef ACE_CDR::LongLong LongLong;
   typedef LongLong &LongLong_out;
+
   typedef ACE_CDR::ULongLong ULongLong;
   typedef ULongLong &ULongLong_out;
 
@@ -604,11 +623,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Current_var Current_var;
   typedef CORBA_Current_out Current_out;
 
-  typedef CORBA_IRObject IRObject;
-  typedef CORBA_IRObject *IRObject_ptr;
-  typedef CORBA_IRObject_out IRObject_out;
-  typedef CORBA_IRObject_var IRObject_var;
-
   typedef CORBA_TypeCodeFactory TypeCodeFactory;
   typedef CORBA_TypeCodeFactory *TypeCodeFactory_ptr;
   typedef CORBA_TypeCodeFactory_out TypeCodeFactory_out;
@@ -729,8 +743,9 @@ TAO_NAMESPACE CORBA
     tk_value_box          = 30,
     tk_native             = 31,
     tk_abstract_interface = 32,
-    tk_component          = 33,
-    tk_home               = 34,
+    tk_local_interface    = 33,
+    tk_component          = 34,
+    tk_home               = 35,
 
     // This symbol is not defined by CORBA 2.0.  It's used to speed up
     // dispatch based on TCKind values, and lets many important ones
@@ -964,7 +979,6 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Visibility;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PRIVATE_MEMBER;
-
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PUBLIC_MEMBER;
 
   typedef CORBA::Short ValueModifier;
@@ -975,6 +989,32 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_CUSTOM;
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_ABSTRACT;
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_TRUNCATABLE;
+
+  typedef IR_StructMemberSeq StructMemberSeq;
+  typedef IR_StructMemberSeq_var StructMemberSeq_var;
+  typedef IR_StructMemberSeq_out StructMemberSeq_out;
+
+  typedef IR_UnionMemberSeq UnionMemberSeq;
+  typedef IR_UnionMemberSeq_var UnionMemberSeq_var;
+  typedef IR_UnionMemberSeq_out UnionMemberSeq_out;
+
+  typedef IR_EnumMemberSeq EnumMemberSeq;
+  typedef IR_EnumMemberSeq_var EnumMemberSeq_var;
+  typedef IR_EnumMemberSeq_out EnumMemberSeq_out;
+
+  typedef IR_ValueMemberSeq ValueMemberSeq;
+  typedef IR_ValueMemberSeq_var ValueMemberSeq_var;
+  typedef IR_ValueMemberSeq_out ValueMemberSeq_out;
+
+  typedef CORBA_IRObject IRObject;
+  typedef CORBA_IRObject *IRObject_ptr;
+  typedef CORBA_IRObject_out IRObject_out;
+  typedef CORBA_IRObject_var IRObject_var;
+
+  typedef IR_InterfaceDef InterfaceDef;
+  typedef IR_InterfaceDef_var InterfaceDef_var;
+  typedef IR_InterfaceDef_out InterfaceDef_out;
+  typedef IR_InterfaceDef *InterfaceDef_ptr;
   // ================== Interface Repository =====================
 
   // There could be a single version of these methods, but g++ 2.7.2
