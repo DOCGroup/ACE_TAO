@@ -1,3 +1,9 @@
+Fri Nov  5 10:30:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* ace/OS_NS_stdlib.cpp:
+	  Fixed ACE_OS::mkstemp_emulation() for VxWorks because of 'max'
+          macro clash with 'std::numeric_limits<char>::max ()'.
+
 Fri Nov  5 07:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Output.cpp:
