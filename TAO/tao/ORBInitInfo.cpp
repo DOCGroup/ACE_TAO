@@ -42,13 +42,15 @@ TAO_ORBInitInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
+  CORBA::StringSeq_var safe_args (args);
+
   // Copy the argument vector to the string sequence.
 
   args->length (this->argc_);   // Not a problem if argc is zero.
   for (int i = 0; i < this->argc_; ++i)
     (*args)[i] = CORBA::string_dup (this->argv_[i]);
 
-  return args;
+  return safe_args._retn ();
 }
 
 char *
