@@ -8,8 +8,9 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
           John Neystadt <john_neystadt@icomverse.com> for suggesting this.
 
         * ace/Future.cpp: removed ACE_Atomic_Op<ACE_Thread_Mutex, int>
-          instantiation because it no longer appears to be necessary,
-          and caused link collisions on g++/VxWorks.
+          instantiation, when __ACE_INLINE__ is enabled, because it no
+          longer appears to be necessary, and caused link collisions on
+          g++/VxWorks.
 
         * examples/Shared_Malloc/test_persistence.cpp: removed
           ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
