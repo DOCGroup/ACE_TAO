@@ -9,6 +9,7 @@ endif # TAO_ROOT
 TAO_IDLFLAGS=-I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 BIN = client server Factory_Finder Generic_Factory
+VBIN = $(BIN:%=%$(VAR))
 
 # The following lines tell the souce code that the trading
 # service is available.
