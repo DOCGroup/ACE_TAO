@@ -1,4 +1,23 @@
-Tue Apr 18 11:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Apr 18 15:58:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_Connector.{h cpp}: Removed static member inet_addr_any_.
+          It doesn't work for all compilers (static in a template). Replaced
+          default arg for ACE_Asynch_Connector::connect with
+          ACE_INET_Addr ((u_short)0) to get the equivalent effect, i.e., let
+          the OS pick an unused port.
+
+        * ace/Asynch_Acceptor.cpp (parse_address): Use the ACE_SOCK support
+          for dealing with addresses, else the ability to deal with both
+          IPv4 and IPv6 is lost.
+          Also get rid of a lot of debugging output; use ACE_TRACE instead.
+
+        * tests/Proactor_Test.cpp: Fixed log file name. Corrected formatting
+          per ACE guidelines.
+
+        * tests/run_test.lst: Enabled Proactor_Test and Proactor_Timer_Test
+          everywhere except Chorus, VxWorks, LynxOS.
+
+Thu Apr 18 11:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_IO.h:
         * ace/ATM_Params.h:
