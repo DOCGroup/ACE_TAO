@@ -1,10 +1,15 @@
+Fri May 17 11:30:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/tests/ORT/client.dsp:
+	* TAO/tests/ORT/server.dsp: Fixed and forced custom IDL build rules.
+
 Thu May 16 16:39:01 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* TAo/tests/TAO_tests.dsw
-	* TAO/tests/ORT/client.dsp
-	* TAO/tests/ORT/server.dsp
+	* TAo/tests/TAO_tests.dsw:
+	* TAO/tests/ORT/client.dsp:
+	* TAO/tests/ORT/server.dsp:
 	  Created new dsp files and inserted them in the TAO_tests workspace.
- 
+
 Thu May 16 15:29:33 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (open):
@@ -34,13 +39,13 @@ Thu May 16 15:29:33 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed May 15 17:38:06 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile: 
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile:
 	  Shouldnt compile when AMI is disabled. Put in the fix. This will
 	  fix the errors in RedHat_7.1_No_AMI_(beguine)
 
 Wed May 15 16:04:37 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/File_IO/run_test.pl: 
+	* tests/File_IO/run_test.pl:
 	  Increased the wait time for the ior file. It was raising an
 	  exception because of insufficient time.
 
@@ -79,12 +84,12 @@ Wed May 15 15:20:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added a missing release from an ACE_Auto_Basic_Array_Ptr,
           which was causing the value of the constant to be trashed
-          before it was returned. Thanks to Craig Rodrigues 
+          before it was returned. Thanks to Craig Rodrigues
           <crodrigu@bbn.com> for reporting the bug.
 
 Wed May 15 11:26:15 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/Big_Request/Makefile: 
+	* orbsvcs/tests/Security/Big_Request/Makefile:
 	  Updated dependencies.
 
 Wed May 15 16:39:36 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -145,10 +150,10 @@ Thu May  9 14:26:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
 	  A pretty ugly for bug mentioned in bug id 1204. The change sets
 	  a pointer to null after deletion. This would mask the actual
-	  problem. The bug report should remind us of the problem anyway. 
+	  problem. The bug report should remind us of the problem anyway.
 
 	  This should fix the LongUpcall test failure in our daily
-	  builds. 
+	  builds.
 
 Thu May  9 11:38:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -159,31 +164,31 @@ Thu May  9 11:38:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	connector object. The reactor is usually the one created by the
 	thread that created the maion thread and all hell breaks
 	loose. This showed up only in the Collocation tests and thanks to
-	Irfan for helping me understand what the Collocation test does. 
+	Irfan for helping me understand what the Collocation test does.
 
 	* tao/ORB_Core.cpp:
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.i: Removed the pointer to the connector registry
-	  maintained by the ORB_Core. 
+	  maintained by the ORB_Core.
 
 	  The accessor method to the connector registry now takes in an
 	  ACE_ENV_ARG_DECL to propagate exceptions, since the connector
-	  registry is created on demand. 
+	  registry is created on demand.
 
 	  Removed the code that initialized the connector_registry in
-	  ORB_Core::init (), since it has to be created on demand. 
+	  ORB_Core::init (), since it has to be created on demand.
 
 	  The accessor to the connector registry gets the information from
-	  the lane resources. 
-	
+	  the lane resources.
+
 	* tao/CORBALOC_Parser.cpp:
 	* tao/Invocation.cpp:
 	* tao/ORB.cpp:
 	* tao/Object.cpp: All accesses to the connector registry passes
 	  the environment object and performs exception checking after the
-	  call. 
-	  
-	* tao/Thread_Lane_Resources.cpp: 
+	  call.
+
+	* tao/Thread_Lane_Resources.cpp:
 	* tao/Thread_Lane_Resources.h: Creates, manages and allows access
 	  to the connector registry object.
 
@@ -192,8 +197,8 @@ Thu May  9 11:38:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 
 	  The above checkins should fix collocation test problems in our
-	  builds.  
-	
+	  builds.
+
 Thu May  9 08:16:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Simple_Naming/run_test.pl:
@@ -235,7 +240,7 @@ Tue May 07 15:37:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  getting introduced when multiple threads went in to the
 	  reactor. Added a command line option for the number of threads
 	  to be spawned.
-	
+
 	* tests/No_Server_MT_Connect_Test/run_test.pl: Use a single thread
 	  for the test with reactive connect strategy. Thanks to Ru for
 	  pointing out the problem on some platforms.
