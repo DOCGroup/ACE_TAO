@@ -1,3 +1,9 @@
+Mon Jan 24 16:59:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Fix thinko in pkgsrc *.pc file generation.
+
 Mon Jan 24 16:15:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
