@@ -293,6 +293,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_create_collocated_objref (const char* repository_id, "
       << "CORBA::ULong type, TAO_Stub *stub)" << be_nl
       << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG (type);" << be_nl
       << "if (!ACE_OS::strcmp (\"" << node->repoID ()
       << "\", repository_id))" << be_idt_nl
       << "return ACE_static_cast (" << be_idt << be_idt_nl
