@@ -1,3 +1,10 @@
+Wed Dec 22 12:47:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Revised the platforms and support section to
+	  reflect the need for actively maintained platforms to be represented
+	  on the build scoreboard. Old, unmaintained platforms are subject to
+	  deprecation and removal.
+
 Wed Dec 22 11:35:07 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
