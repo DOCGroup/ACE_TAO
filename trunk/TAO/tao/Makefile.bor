@@ -91,6 +91,9 @@ OBJFILES = \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\params.obj \
 	$(OBJDIR)\Parser_Registry.obj \
+        $(OBJDIR)\Services_Activate.obj \
+        $(OBJDIR)\Service_Callbacks.obj \
+        $(OBJDIR)\Fault_Tolerance_Service.obj \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
