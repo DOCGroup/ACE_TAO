@@ -21,7 +21,7 @@ LDLIBS = \
   -lTAO_Messaging \
   $(TAO_SRVR_LIBS)
 
-BIN = LoadManager
+BIN_UNCHECKED = LoadManager
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -30,6 +30,21 @@ BIN = LoadManager
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+
+ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
+
+# The Load Balancer requires AMI.
+  ifeq ($(ami),1)
+    ifneq ($(interceptors),1)
+      BIN = $(BIN_UNCHECKED)
+    endif  # interceptors
+  endif # ami
+endif  # CosLoadBalancing
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

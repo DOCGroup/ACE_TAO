@@ -1,3 +1,33 @@
+Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.local.GNU:
+          Added CLEAN_BIN, CLEAN_LIB, CLEAN_SHLIB, and CLEAN_SHLIBA
+          variables that are assigned the values of BIN or BIN_UNCHECKED,
+          etc values.  Changed the realclean target to use the CLEAN_*
+          variables instead of the BIN/BIN2, etc., variables.  This will
+          insure that realclean removes these files even if the
+          ace_components files have already been removed.  The *2 variety
+          were add by David Levine,  Mon Apr 12 14:24:28 1999  David
+          L. Levine  <levine@cs.wustl.edu>, but newer projects, especially
+          in TAO, have begun using the *_UNCHECKED naming scheme.  Since
+          these files where often dependent on the ace_components files,
+          they never got cleaned up. This should also obviates the need
+          for the reverseclean target.
+
+        * netsvcs/Makefile:
+          Removed ace_components test from around the DIRS variable.  You
+          should always decend into the directories and give them the
+          opportunity to clean themselves up.
+
+        * netsvcs/clients/Naming/Client/Makefile:
+          Added use of *_UNCHECKED variables so that these files will get
+          cleanup during a realclean.
+
+        * tests/Makefile.tests:
+          Added Service_Config_Test and Framework_Component_Test to the
+          BIN2 variable if not being built so that they will always get
+          deleted during a realclean.
+
 Tue Nov 11 18:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Map_Manager_Test.cpp:

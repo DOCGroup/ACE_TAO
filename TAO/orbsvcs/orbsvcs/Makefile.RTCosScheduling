@@ -10,8 +10,8 @@
 #
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.RTCosScheduling
-LIB             = libTAO_RTCosScheduling.a
-SHLIB           = libTAO_RTCosScheduling.$(SOEXT)
+LIB_UNCHECKED   = libTAO_RTCosScheduling.a
+SHLIB_UNCHECKED = libTAO_RTCosScheduling.$(SOEXT)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -63,6 +63,10 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
+
+# go ahead and set these here, it's less typing than fixing the mess below.
+LIB = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
 
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq ($(interceptors),1)
@@ -174,9 +178,6 @@ require_warning:
 ORBSVCS_COMPONENTS:
 	@sh ../../../bin/ace_components --orbsvcs --append '$(ORBSVCS_COMPONENTS)'
 
-compclean:
-	@sh ../../../bin/ace_components --orbsvcs --remove
-
 ADDITIONAL_IDL_TARGETS =
 # IDL File Directory: .
 
@@ -186,7 +187,7 @@ endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
-realclean: clean compclean
+realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)

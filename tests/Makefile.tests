@@ -197,6 +197,12 @@ ifeq ($(shared_libs),1)
 # a shared library.
   BIN += Service_Config_Test
   BIN += Framework_Component_Test
+else
+  #### Ensure that these tests get cleaned up, even if the ace
+  #### directory was realcleaned first (and ACE_BUILD_COMPONENTS
+  #### is empty).
+  BIN2 += Service_Config_Test
+  BIN2 += Framework_Component_Test
 endif  # shared_libs
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
