@@ -472,7 +472,7 @@ namespace ACE
    * is a user-supplied array of size @a time_len> @c ACE_TCHARs.
    * Returns 0 if unsuccessful, else returns pointer to beginning of the
    * "time" portion of @a date_and_time.  If @a
-   * return_pointer_to_first_digit is 0 then return a pointer to the 
+   * return_pointer_to_first_digit is 0 then return a pointer to the
    * space before the time, else return a pointer to the beginning of
    * the time portion.
    */
