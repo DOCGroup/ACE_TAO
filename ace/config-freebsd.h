@@ -139,6 +139,11 @@ extern "C" { char * cuserid (char *s); }
 // platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
+// Lacks perfect filtering, must bind group address.
+#if !defined ACE_LACKS_PERFECT_MULTICAST_FILTERING
+# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
+#endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
+
 // Compiler/platform has <alloca.h>
 //#define ACE_HAS_ALLOCA_H
 

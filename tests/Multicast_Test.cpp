@@ -24,8 +24,9 @@
 //    particular platform. 
 //
 //    The list of destination groups start at 239.255.0.1 (default) and 
-//    increment by 1 up to 5 (default) groups.  Both of these values can be
-//    overridden via command-line options.
+//    increment by 1 up to 5 (default) groups.  Both of these values, as well
+//    as others, can be overridden via command-line options.  Use the -? 
+//    option to display the usage message...
 //
 // = AUTHOR
 //    Don Hinton <dhinton@ieee.org>
@@ -89,9 +90,11 @@ public:
     : group_start_ (MCT_START_PORT, MCT_START_GROUP),
       groups_ (0),
       debug_ (0),
-      type_ (BOTH),
+      role_ (BOTH),
       sdm_opts_ (ACE_SOCK_Dgram_Mcast::DEFOPTS),
-      iterations_ (MCT_ITERATIONS)
+      iterations_ (MCT_ITERATIONS),
+      ttl_ (1),
+      wait_ (2)
     {
       if (IP_MAX_MEMBERSHIPS == 0)
         this->groups_ = MCT_GROUPS;
@@ -106,8 +109,10 @@ public:
   void dump (void) const;
   int groups (void) const { return this->groups_;}
   const ACE_INET_Addr group_start (void) const { return this->group_start_;}
-  u_long type (void) const { return this->type_;}
+  u_long role (void) const { return this->role_;}
   int iterations (void) const { return this->iterations_;}
+  int ttl (void) const { return this->ttl_;}
+  int wait (void) const { return this->wait_;}
   ACE_SOCK_Dgram_Mcast::options options (void) const 
   { 
     return ACE_static_cast (ACE_SOCK_Dgram_Mcast::options, this->sdm_opts_);
@@ -123,14 +128,20 @@ private:
   // Debug flag.
   int debug_;
 
-  // Type, i.e., PRODUCER, CONSUMER, BOTH: defaults to BOTH
-  u_long type_;
+  // Role, i.e., PRODUCER, CONSUMER, BOTH: defaults to BOTH
+  u_long role_;
 
   // ACE_SOCK_Dgram_Mcast ctor options
   u_long sdm_opts_;
 
   // Producer iterations
   int iterations_;
+
+  // TTL, time to live, for use over routers.
+  int ttl_;
+
+  // Time to wait on CONSUMER threads to end before killing test.
+  int wait_;
 };
 
 int
@@ -145,7 +156,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                           'g',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT (" Unable to add MCastGroupStart option.\n")),
+                       ACE_TEXT (" Unable to add GroupStart option.\n")),
                       1);
 
   if (getopt.long_option (ACE_TEXT ("Groups"),
@@ -160,11 +171,11 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, 
                        ACE_TEXT (" Unable to add Debug option.\n")), 1);
 
-  if (getopt.long_option (ACE_TEXT ("Type"),
-                          't',
+  if (getopt.long_option (ACE_TEXT ("Role"),
+                          'r',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT (" Unable to add Type option.\n")), 1);
+                       ACE_TEXT (" Unable to add Role option.\n")), 1);
 
   if (getopt.long_option (ACE_TEXT ("SDM_options"),
                           'm',
@@ -180,9 +191,23 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT (" Unable to add iterations option.\n")), 
                       1);
 
+  if (getopt.long_option (ACE_TEXT ("TTL"),
+                          't',
+                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT (" Unable to add TTL option.\n")), 
+                      1);
+
+  if (getopt.long_option (ACE_TEXT ("Wait"),
+                          'w',
+                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT (" Unable to add wait option.\n")), 
+                      1);
+
   if (getopt.long_option (ACE_TEXT ("help"),
                           'h',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Opt::NO_ARG) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        ACE_TEXT (" Unable to add help option.\n")), 
                       1);
@@ -212,10 +237,8 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           }
           break;
         case 'i':
-          {
-            this->iterations_ = ACE_OS::atoi (getopt.opt_arg ());
-            break;
-          }
+          this->iterations_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
         case 'n':
           {
             int n = ACE_OS::atoi (getopt.opt_arg ());
@@ -231,13 +254,13 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
         case 'd':
           this->debug_ = 1;
           break;
-        case 't':
+        case 'r':
           {
             ACE_TCHAR *c = getopt.opt_arg ();
             if (ACE_OS::strcasecmp (c, ACE_TEXT ("CONSUMER")) == 0)
-              this->type_ = CONSUMER;
+              this->role_ = CONSUMER;
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("PRODUCER")) == 0)
-              this->type_ = PRODUCER;
+              this->role_ = PRODUCER;
             else
               {
                 help = 1;
@@ -247,11 +270,12 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           break;
         case 'm':
           {
+            //@todo add back OPT_BINDADDR_NO...
             ACE_TCHAR *c = getopt.opt_arg ();
             if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_BINDADDR_YES")) == 0)
               ACE_SET_BITS (this->sdm_opts_, 
                             ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_YES);
-            else if (ACE_OS::strcasecmp (c, ACE_TEXT ("~OPT_BINDADDR_YES")) == 0)
+            else if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_BINDADDR_NO")) == 0)
               ACE_CLR_BITS (this->sdm_opts_, 
                             ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_YES);
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("DEFOPT_BINDADDR")) == 0)
@@ -264,7 +288,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_NULLIFACE_ALL")) == 0)
               ACE_SET_BITS (this->sdm_opts_,
                             ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL);
-            else if (ACE_OS::strcasecmp (c, ACE_TEXT ("~OPT_NULLIFACE_ALL")) == 0)
+            else if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_NULLIFACE_ONE")) == 0)
               ACE_CLR_BITS (this->sdm_opts_,
                             ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL);
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("DEFOPT_NULLIFACE")) == 0)
@@ -283,6 +307,12 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
               }
           }
           break;
+        case 't':
+          this->ttl_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'w':
+          this->wait_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
         case ':':
           // This means an option requiring an argument didn't have one.
           ACE_ERROR ((LM_ERROR,
@@ -296,8 +326,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
         case 'h':
         default:
           if (ACE_OS::strcmp (argv[getopt.opt_ind () - 1], ACE_TEXT ("-?")) != 0
-              && ACE_OS::strcmp (argv[getopt.opt_ind () - 1], 
-                                 ACE_TEXT ("-h")) != 0)
+              && getopt.opt_opt () != 'h')
             // Don't allow unknown options.
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT (" Found an unknown option (%c) ")
@@ -319,19 +348,29 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("usage: %s [options]\n")
                     ACE_TEXT ("Options:\n")
                     ACE_TEXT ("  -g {STRING}  --GroupStart={STRING}  ")
-                    ACE_TEXT ("starting multicast group address ")
-                    ACE_TEXT ("(default=239.255.0.1)\n")
+                    ACE_TEXT ("starting multicast group address\n")
+                    ACE_TEXT ("                                      ")
+                    ACE_TEXT ("(default=239.255.0.1:16000)\n")
                     ACE_TEXT ("  -n {#}       --Groups={#}           ")
                     ACE_TEXT ("number of groups (default=5)\n")
-                    ACE_TEXT ("  -d           --debug                ")
+                    ACE_TEXT ("  -d           --Debug                ")
                     ACE_TEXT ("debug flag (default=off)\n")
-                    ACE_TEXT ("  -t {STRING}  --Type={STRING}        ")
-                    ACE_TEXT ("type {PRODUCER|CONSUMER|BOTH} (default=BOTH)\n")
+                    ACE_TEXT ("  -r {STRING}  --Role={STRING}        ")
+                    ACE_TEXT ("role {PRODUCER|CONSUMER|BOTH}\n")
+                    ACE_TEXT ("                                      ")
+                    ACE_TEXT ("(default=BOTH)\n")
                     ACE_TEXT ("  -m {STRING}  --SDM_options={STRING} ")
-                    ACE_TEXT ("ACE_SOCK_Dgram_Mcast ctor options ")
+                    ACE_TEXT ("ACE_SOCK_Dgram_Mcast ctor options\n")
+                    ACE_TEXT ("                                      ")
                     ACE_TEXT ("(default=DEFOPTS)\n")
                     ACE_TEXT ("  -i {#}       --Iterations={#}       ")
                     ACE_TEXT ("number of iterations (default=100)\n")
+                    ACE_TEXT ("  -t {#}       --TTL={#}              ")
+                    ACE_TEXT ("time to live (default=1)\n")
+                    ACE_TEXT ("  -w {#}       --Wait={#}             ")
+                    ACE_TEXT ("number of seconds to wait on CONSUMER\n")
+                    ACE_TEXT ("                                      ")
+                    ACE_TEXT ("(default=2)\n")
                     ACE_TEXT ("  -h/?         --help                 ")
                     ACE_TEXT ("show this message\n"),
                     argv[0]));
@@ -346,7 +385,7 @@ void
 MCT_Config::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Dumping MCast_Config\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Dumping MCT_Config\n")));
   ACE_DEBUG ((LM_DEBUG, 
               ACE_TEXT ("\tIP_MAX_MEMBERSHIPS = %d\n"),
               IP_MAX_MEMBERSHIPS));
@@ -354,11 +393,11 @@ MCT_Config::dump (void) const
               ACE_TEXT ("\tgroups_ = %d\n"),
               this->groups_));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\ttype_ = %s\n"),
-              (ACE_BIT_ENABLED (this->type_, PRODUCER)
-               && ACE_BIT_ENABLED (this->type_, CONSUMER)) 
+              ACE_TEXT ("\trole_ = %s\n"),
+              (ACE_BIT_ENABLED (this->role_, PRODUCER)
+               && ACE_BIT_ENABLED (this->role_, CONSUMER)) 
                  ? ACE_TEXT ("PRODUCER/CONSUMER")
-                 : ACE_BIT_ENABLED (this->type_, PRODUCER) 
+                 : ACE_BIT_ENABLED (this->role_, PRODUCER) 
                      ? ACE_TEXT ("PRODUCER")
                      : ACE_TEXT ("CONSUMER")));
   ACE_DEBUG ((LM_DEBUG,
@@ -367,11 +406,18 @@ MCT_Config::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\titerations_ = %d\n"),
               this->iterations_));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("\tttl_ = %d\n"),
+              this->ttl_));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("\twait_ = %d\n"),
+              this->wait_));
   // Note that this call to get_host_addr is the non-reentrant
   // version, but it's okay for us.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tgroups_start_ = %s\n"),
-              this->group_start_.get_host_addr ()));
+              ACE_TEXT ("\tgroups_start_ = %s:%d\n"),
+              this->group_start_.get_host_addr (),
+              this->group_start_.get_port_number ()));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -700,6 +746,51 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
   return 0;
 }
 
+int producer (MCT_Config &config)
+{
+  int retval = 0;
+
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
+  ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &));
+
+  // Note that is is IPv4 specific and needs to be changed once 
+  // 
+  if (config.ttl () > 1)
+    {
+      int ttl = config.ttl ();
+      if (socket.set_option (IPPROTO_IP,
+                             IP_MULTICAST_TTL, 
+                             (void*) &ttl,
+                             sizeof ttl) != 0)
+        ACE_DEBUG ((LM_ERROR, 
+                    ACE_TEXT ("could net set socket option IP_MULTICAST_TTL ")
+                    ACE_TEXT ("= %d\n"),
+                    ttl));
+      else
+        ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IP_MULTICAST_TTL = %d\n"), ttl));
+    }
+
+  int iterations = config.iterations ();
+  // we add an extra 5 groups for noise.
+  int groups = config.groups () + 5;
+  for (int i = 0; (i < iterations || iterations == 0) && !finished; ++i)
+    {
+      ACE_INET_Addr addr = config.group_start ();
+      for (int j = 0; j < groups && !finished; ++j)
+        {
+          if ((retval += send_dgram (socket, addr, 
+                                     ((i + 1) == iterations))) == -1)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Calling send_dgram.\n")));
+          if ((retval += advance_addr (addr)) == -1)
+            ACE_ERROR ((LM_ERROR, 
+                        ACE_TEXT ("Calling advance_addr.\n")));
+        }
+      // Give the task thread a chance to run.
+      ACE_Thread::yield ();
+    }
+  return retval;
+}
+
 /*
  * Advance the address by 1, e.g., 239.255.0.1 => 239.255.0.2
  * Note that the algorithm is somewhat simplistic, but sufficient for our
@@ -755,10 +846,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test");
   ACE_TString test = temp;
 
-  if (ACE_BIT_DISABLED (config.type (), MCT_Config::PRODUCER)
-      || ACE_BIT_DISABLED (config.type (), MCT_Config::CONSUMER))
+  u_long role = config.role ();
+  if (ACE_BIT_DISABLED (role, MCT_Config::PRODUCER)
+      || ACE_BIT_DISABLED (role, MCT_Config::CONSUMER))
     {
-      if (ACE_BIT_ENABLED (config.type (), MCT_Config::PRODUCER))
+      if (ACE_BIT_ENABLED (role, MCT_Config::PRODUCER))
         test += ACE_TEXT ("-PRODUCER");
       else
         test += ACE_TEXT ("-CONSUMER");
@@ -774,12 +866,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (config.debug ())
     config.dump ();
   
-  // not sure if this should be here are 
   ACE_Reactor *reactor = ACE_Reactor::instance ();
 
   MCT_Task *task = new MCT_Task (config, reactor);
 
-  if (ACE_BIT_ENABLED (config.type (), MCT_Config::CONSUMER))
+  if (ACE_BIT_ENABLED (role, MCT_Config::CONSUMER))
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting consumer...\n")));
       // Open makes it an active object.
@@ -787,31 +878,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   // now produce the datagrams...
-  if (ACE_BIT_ENABLED (config.type (), MCT_Config::PRODUCER))
-    {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
-      ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &));
-      int iterations = config.iterations ();
-      // we add an extra 5 groups for noise.
-      int groups = config.groups () + 5;
-      for (int i = 0; i < iterations && !finished; ++i)
-        {
-          ACE_INET_Addr addr = config.group_start ();
-          for (int j = 0; j < groups && !finished; ++j)
-            {
-              if ((retval += send_dgram (socket, addr, 
-                                         ((i + 1) == iterations))) == -1)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Calling send_dgram.\n")));
-              if ((retval += advance_addr (addr)) == -1)
-                ACE_ERROR ((LM_ERROR, 
-                            ACE_TEXT ("Calling advance_addr.\n")));
-            }
-          // Give the task thread a chance to run.
-          ACE_Thread::yield ();
-        }
-    }
+  if (ACE_BIT_ENABLED (role, MCT_Config::PRODUCER))
+    retval += producer (config);
 
-  if (ACE_BIT_ENABLED (config.type (), MCT_Config::CONSUMER))
+  if (ACE_BIT_ENABLED (role, MCT_Config::CONSUMER))
     {
       // and wait for everything to finish
       ACE_DEBUG ((LM_INFO, 
@@ -819,9 +889,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Wait for the threads to exit.
       // But, wait for a limited time since we could hang if the last udp 
       // message isn't received.
-      const ACE_Time_Value max_wait ( 2/* seconds */);
-      const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
-      if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
+      ACE_Time_Value max_wait ( config.wait ()/* seconds */);
+      ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
+      ACE_Time_Value *ptime = ACE_BIT_ENABLED (role, MCT_Config::PRODUCER)
+                                ? &wait_time : 0;
+      if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
           if (errno == ETIME)
             ACE_ERROR ((LM_ERROR,

@@ -1,3 +1,28 @@
+Fri Nov 15 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/config-all.h: Added new macro for platforms that don't yet
+	  implement the new IGMPv3, perfect multicast filtering, and
+	  replaced the #ifdef linux in the ACE_SOCK_Dgram_Mcast::ctor
+	  with the new macro, since this isn't just a linux thing.
+	
+	* ace/config-aix-4.x.h:
+	* ace/config-freebsd.h:
+	* ace/config-linux-common.h:
+	* ace/config-netbsd.h:
+	* ace/config-openbsd.h: 
+	  Defined ACE_LACKS_PERFECT_MULTICAST_FILTERING for these platforms.
+
+	* ace/SOCK_Dgram_Mcast.cpp (open_i): Removed redundant call to 
+	  ACE_SOCK::set_option() to set SO_REUSEADDR, since it's set in 
+	  the call to ACE_SOCK::open().  This fixes [bug 1111].
+
+	* tests/Multicast_Test.cpp: Enhanced test by adding new options 
+	  control the wait time when running test as a CONSUMER only, 
+	  and contol the TTL so the test could be used over routers.  
+	  Also cleaned up the code a bit to make it more readable.  Thanks
+	  to Bill Fulton for motivating these enhancements.	
+
 Fri Nov 15 14:16:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Exit.h:
