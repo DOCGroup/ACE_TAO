@@ -1,3 +1,12 @@
+Mon Oct 20 13:12:23 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.av: 
+
+	Modified the Makefile to compile SCTP related files when sctp flag
+	is set both to openss7 and lksctp. Initially it was including the
+	SCTP related files only when sctp=openss7. This should fix build
+	errors on the Red Hat LKSCTP build.
+
 Mon Oct 20 11:03:37 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp:
