@@ -1,3 +1,8 @@
+Wed Apr 10 15:07:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_BiDir/client.dsp (BuildCmds): 
+	* tests/MT_BiDir/server.dsp: Fixed the path for release builds.
+
 Tue Apr  9 12:50:32 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
