@@ -77,7 +77,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       if (mb == 0)
         {
           TAO::Any_Array_Impl_T<T_slice, T_forany> *narrow_impl =
-            ACE_dynamic_cast ((TAO::Any_Array_Impl_T<T_slice, T_forany> *), impl);
+            ACE_dynamic_cast_2_ptr (TAO::Any_Array_Impl_T, T_slice, T_forany, impl);
 
           if (narrow_impl == 0)
             {
