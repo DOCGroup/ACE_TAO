@@ -1764,3 +1764,9 @@ extract_string(const char* total)
   str[ctr - 1] = '\0';
   return new TAO_Literal_Constraint(str);
 }
+
+int
+yywrap (void)
+{
+  return 1;
+}
