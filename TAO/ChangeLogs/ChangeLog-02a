@@ -1,11 +1,15 @@
 Mon Feb 21 10:59:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/include.utl_scope.h:
+	* TAO_IDL/util/utl_scope.cpp:
 	  In create_module(), the check for a reopened module
 	  now includes a check for whether a previous module
 	  found with the scope iterator is from an included file or
 	  not. Previously, the node from the included file would be
-	  returned, and therefore no code would be generated for it.
+	  returned, and therefore no code would be generated for it. Also
+	  added code to add the included module's members to the reopened
+	  module, and removed an unused member from class UTL_Scope.	
 	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
 	  for reporting this bug.
 
