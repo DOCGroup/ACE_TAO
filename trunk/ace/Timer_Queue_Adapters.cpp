@@ -3,10 +3,10 @@
 #define ACE_BUILD_DLL
 #include "ace/Timer_Queue_Adapters.h"
 
-ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
-
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
 #define ACE_TIMER_QUEUE_ADAPTERS_C
+
+ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_Adapters.i"
@@ -81,7 +81,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
 
   if (this->schedule_ualarm () == -1)
     return 0;
-  else 
+  else
     return tid;
 }
 
