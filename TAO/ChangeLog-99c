@@ -1,3 +1,11 @@
+Thu Aug 19 17:25:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler_T.cpp: changed default
+          value to which RT_Info period is initialized to 1 instead of 0,
+	  to avoid divide-by-zero errors when creates are used to lay out
+          all operations and utilization is assessed by an adaptive
+	  algorithm before all operations are valued via the set method.
+
 Thu Aug 19 16:34:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/BoundsC.i: 

@@ -1416,7 +1416,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
   rt_info.worst_case_execution_time = 0;
   rt_info.typical_execution_time = 0;
   rt_info.cached_execution_time = 0;
-  rt_info.period = 0;
+  rt_info.period = 1;
   rt_info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
   rt_info.quantum = 0;
   rt_info.threads = 0;
