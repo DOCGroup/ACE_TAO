@@ -1,3 +1,15 @@
+Fri Jan 18 16:44:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.icc: Added Reactor_Notification_Strategy.(h cpp) sources.
+
+        * ace/Reactor_Notification_Strategy.cpp: Fixed ACE_RCSID to refer to
+          Reactor_Notification_Strategy, not Strategies.
+
+        * tests/Get_Opt_Test.icc:
+        * tests/INET_Addr_Test.icc: New Visual Age C++ configs for these tests.
+
+        * tests/tests.icp: Added Get_Opt_Test.icc and INET_Addr_Test.icc
+
 Fri Jan 18 12:56:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (init_backend): Added support for SysLog on platforms

@@ -122,6 +122,10 @@ subproject Future_Test icc "Future_Test.icc", ics "Future_Test.ics"
 {
 }
 
+subproject Get_Opt_Test icc "Get_Opt_Test.icc", ics "Get_Opt_Test.ics"
+{
+}
+
 subproject Handle_Set_Test icc "Handle_Set_Test.icc", ics "Handle_Set_Test.ics"
 {
 }
@@ -135,6 +139,10 @@ subproject Hash_Map_Manager_Test icc "Hash_Map_Manager_Test.icc", ics "Hash_Map_
 }
 
 subproject High_Res_Timer_Test icc "High_Res_Timer_Test.icc", ics "High_Res_Timer_Test.ics"
+{
+}
+
+subproject INET_Addr_Test icc "INET_Addr_Test.icc", ics "INET_Addr_Test.ics"
 {
 }
 
