@@ -1,9 +1,14 @@
+Thu Jan 17 09:25:11 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+	  Fixed KCC warning.
+
 Thu Jan 17 00:54:41 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	  Made code generation logic for AMH-skeletons and AMH-RH
 	  consistent (and symmetric) in the amh_rh and amh_ss files.
