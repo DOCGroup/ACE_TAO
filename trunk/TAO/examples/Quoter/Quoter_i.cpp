@@ -122,7 +122,7 @@ Quoter_i::get_quote (char const *stock_name,
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
-                   CORBA::Environment &_env_there)
+                   CORBA::Environment &TAO_IN_ENV_there)
 {
   TAO_TRY
     {
@@ -145,13 +145,13 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
       // Find an appropriate factory over there.
       CosLifeCycle::Factories_ptr factories_ptr =
-        there->find_factories (factoryKey, _env_there);
+        there->find_factories (factoryKey, TAO_IN_ENV_there);
 
       // Only a NoFactory exception might have occured, so if it
       // occured, then go immediately back.
-      if (_env_there.exception() != 0)
+      if (TAO_IN_ENV_there.exception() != 0)
         {
-              // _env_there contains already the exception.
+              // TAO_IN_ENV_there contains already the exception.
               ACE_ERROR ((LM_ERROR,
                                 "Quoter::copy: Exception occured while trying to find a factory.\n"));
 
@@ -202,7 +202,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
           // If we had already our last chance, then give up.
           if (i == factories_ptr->length ())
           {
-            _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
+            TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factoryKey));
             ACE_ERROR ((LM_ERROR,
                         "Quoter::copy: Last factory did not work. \n"
                         "No more factories are available. I give up.\n"));
@@ -232,7 +232,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
     {
       TAO_TRY_ENV.print_exception ("SYS_EX");
       // Report a NoFactory exception back to the caller
-      _env_there.exception (new CosLifeCycle::NoFactory ());
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory ());
       return CosLifeCycle::LifeCycleObject::_nil();
     }
   TAO_ENDTRY_RETURN (CosLifeCycle::LifeCycleObject::_nil());
@@ -244,7 +244,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
-                   CORBA::Environment &_env_there)
+                   CORBA::Environment &TAO_IN_ENV_there)
 {
   ACE_DEBUG ((LM_DEBUG,"Quoter_i::move: being called\n"));
 
@@ -255,7 +255,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
         {
           ACE_ERROR ((LM_ERROR,
                       "Quoter_i::move: No Factory Finder, don't know how to go on.\n"));
-          _env_there.exception (new CosLifeCycle::NoFactory ());
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory ());
           return;
         }
 
@@ -264,15 +264,15 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
         {
           ACE_ERROR ((LM_ERROR,
                       "Quoter_i::move: No access to the POA. Cannot move.\n"));
-          _env_there.exception (new CosLifeCycle::NotMovable ());
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NotMovable ());
           return;
         }
 
       // Create a new Quoter over there
       CosLifeCycle::LifeCycleObject_var lifeCycleObject_var =
-        this->copy (there, the_criteria, _env_there);
+        this->copy (there, the_criteria, TAO_IN_ENV_there);
 
-      if (_env_there.exception () != 0)
+      if (TAO_IN_ENV_there.exception () != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "Quoter_i::move: Exception while creating new Quoter.\n"));
@@ -284,7 +284,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
         {
           ACE_ERROR ((LM_ERROR,
                       "Quoter_i::move: Created Quoter is not valid.\n"));
-          _env_there.exception (new CosLifeCycle::NoFactory ());
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory ());
           return;
         }
 
@@ -303,7 +303,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
           if (servant == 0)
             {
               ACE_ERROR ((LM_ERROR,"Quoter_i::move: Could not find servant.\n"));
-              _env_there.exception (new CosLifeCycle::NotMovable());
+              TAO_IN_ENV_there.exception (new CosLifeCycle::NotMovable());
               return;
             }
 
@@ -319,7 +319,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
       else
         {
           ACE_ERROR ((LM_ERROR,"Quoter_i::move: forward_to refenence is nil.\n"));
-          _env_there.exception (new CosLifeCycle::NotMovable());
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NotMovable());
           return;
         }
 

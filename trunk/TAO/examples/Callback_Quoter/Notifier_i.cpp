@@ -41,7 +41,7 @@ void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
                                Callback_Quoter::Consumer_ptr consumer_handler,
-                               CORBA::Environment &_env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   // Store the client information.
   Consumer_Data consumer_data;
@@ -65,7 +65,7 @@ Notifier_i::register_callback (const char *stock_name,
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
      if ( consumers->insert (consumer_data) == -1)
-       _env.exception (new Callback_Quoter::Invalid_Stock
+       TAO_IN_ENV.exception (new Callback_Quoter::Invalid_Stock
                               ("Insertion failed! Invalid Stock!\n"));
      else
       ACE_DEBUG ((LM_DEBUG,
@@ -81,13 +81,13 @@ Notifier_i::register_callback (const char *stock_name,
       
       // the unbounded set entry is created.
       // NOTE:: its pathetic, but to make this macro call its necessary to name 
-      // your environment variable _env
+      // your environment variable TAO_IN_ENV
       ACE_NEW_THROW (consumers, CONSUMERS, CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
       // When a new entry is tried to be inserted into the unbounded set and it 
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-        _env.exception (new Callback_Quoter::Invalid_Stock 
+        TAO_IN_ENV.exception (new Callback_Quoter::Invalid_Stock 
                        ("Insertion failed! Invalid Stock!\n"));
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>

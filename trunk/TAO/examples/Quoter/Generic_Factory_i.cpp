@@ -32,10 +32,10 @@ Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
 
 CORBA::Boolean 
 Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &factory_key,
-                                       CORBA::Environment &_env_there)
+                                       CORBA::Environment &TAO_IN_ENV_there)
 {
   ACE_UNUSED_ARG (factory_key);
-  ACE_UNUSED_ARG (_env_there);
+  ACE_UNUSED_ARG (TAO_IN_ENV_there);
 
   return 0;
 }
@@ -45,7 +45,7 @@ Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &factory_key,
 CosNaming::NamingContext_ptr
 Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_key,
                                                  CORBA::Environment &env_here,
-                                                 CORBA::Environment &_env_there)
+                                                 CORBA::Environment &TAO_IN_ENV_there)
 {
   // Get a reference to the ORB.
   CORBA::ORB_ptr orb_ptr =
@@ -68,7 +68,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
@@ -84,7 +84,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
@@ -95,7 +95,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
@@ -108,7 +108,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
 CORBA::Object_ptr
 Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key, 
                                             const CosLifeCycle::Criteria &the_criteria,
-                                            CORBA::Environment &_env_there)
+                                            CORBA::Environment &TAO_IN_ENV_there)
 {
   ACE_UNUSED_ARG (the_criteria);
 
@@ -117,7 +117,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
   CosNaming::NamingContext_var quoterNamingContext_var = 
     this->get_naming_context (factory_key,
                               env_here, 
-                              _env_there);
+                              TAO_IN_ENV_there);
 
   // ** now a proper reference to the quoter naming context is
   // available
@@ -134,7 +134,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
   // exception.
   if (env_here.exception () != 0) // throw a NoFactory exception  
     { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
@@ -143,7 +143,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
   // Check if it is a valid Quoter Factory reference
   if (CORBA::is_nil (quoterFactoryObject_var.in())) 
     { // throw a NoFactory exception  
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
   else 
@@ -151,7 +151,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
       // Check if it is a valid Quoter Factory reference.
       if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
         {      
-          _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
           return 0;
         }
 
@@ -163,7 +163,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
       // exception.
       if (env_here.exception () != 0) // throw a NoFactory exception  
         { 
-          _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+          TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
           return 0;
         }
     
@@ -178,7 +178,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
       // Now retrieve the Quoter obj ref corresponding to the key.
       Stock::Quoter_var quoter_var =
         factory_var->create_quoter ("test",
-                                    _env_there);
+                                    TAO_IN_ENV_there);
       ACE_DEBUG ((LM_DEBUG,
                   "Quoter Created\n"));
     
