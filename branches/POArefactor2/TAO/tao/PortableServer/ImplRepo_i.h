@@ -12,14 +12,14 @@
 #define TAO_IMPLREPO_I_H
 
 #include /**/ "ace/pre.h"
-#include "tao/orbconf.h"
+
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ImplRepoS.h"
-#include "tao/ORB.h"
+#include "tao/PortableServer/ServerObjectS.h"
 
 /**
  * @class ServerObject_i
@@ -41,7 +41,7 @@ public:
                   PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void ping (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the server.
@@ -49,7 +49,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the default POA for this servant.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   /// Our ORB.  We need this member in case we need to shutdown the

@@ -34,46 +34,6 @@
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:295
 
-static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x656d656e), 
-  ACE_NTOHL (0x74617469), 
-  ACE_NTOHL (0x6f6e5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x2f536572), 
-  ACE_NTOHL (0x7665724f), 
-  ACE_NTOHL (0x626a6563), 
-  ACE_NTOHL (0x743a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:ImplementationRepository/ServerObject:1.0
-    13,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65724f62), 
-  ACE_NTOHL (0x6a656374), 
-  ACE_NTOHL (0x0),  // name = ServerObject
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerObject (
-    CORBA::tk_objref,
-    sizeof (_oc_ImplementationRepository_ServerObject),
-    (char *) &_oc_ImplementationRepository_ServerObject,
-    0,
-    0
-  );
-
-namespace ImplementationRepository
-{
-  ::CORBA::TypeCode_ptr _tc_ServerObject =
-    &_tc_TAO_tc_ImplementationRepository_ServerObject;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
@@ -988,61 +948,6 @@ namespace ImplementationRepository
     &_tc_TAO_tc_ImplementationRepository_Administration;
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<ImplementationRepository::ServerObject>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    ImplementationRepository::ServerObject_ptr _tao_elem
-  )
-{
-  ImplementationRepository::ServerObject_ptr _tao_objptr =
-    ImplementationRepository::ServerObject::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    ImplementationRepository::ServerObject_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<ImplementationRepository::ServerObject>::insert (
-      _tao_any,
-      ImplementationRepository::ServerObject::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerObject,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    ImplementationRepository::ServerObject_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<ImplementationRepository::ServerObject>::extract (
-        _tao_any,
-        ImplementationRepository::ServerObject::_tao_any_destructor,
-        ImplementationRepository::_tc_ServerObject,
-        _tao_elem
-      );
-}
-
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
@@ -1729,11 +1634,6 @@ operator>>= (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
-    TAO::Any_Impl_T<
-        ImplementationRepository::ServerObject
-      >;
-
-  template class
     TAO::Any_Dual_Impl_T<
         ImplementationRepository::AlreadyRegistered
       >;
@@ -1789,11 +1689,6 @@ operator>>= (
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        ImplementationRepository::ServerObject \
-      >
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
