@@ -3,12 +3,6 @@
 
 // High_Res_Timer.i
 
-ACE_INLINE int
-ACE_High_Res_Timer::supported ()
-{
-  return ACE_OS::gethrtime () != -1;
-}
-
 ACE_INLINE
 ACE_High_Res_Timer::ACE_High_Res_Timer (void)
 {

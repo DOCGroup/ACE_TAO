@@ -28,9 +28,8 @@ class ACE_Export ACE_High_Res_Timer
   //     Most of the member functions don't return values.  The only
   //     reason that one would fail is if high-resolution time isn't
   //     supported on the platform.  To avoid impacting performance and
-  //     complicating the interface, the "supported ()" member function was
-  //     added.  It returns 1 if high-resolution time (ACE_OS::gethrtime ())
-  //     is supported on the platform, and 0 if not.
+  //     complicating the interface, in that case, ACE_OS::gettimeofday ()
+  //     is used instead.
   //
   //     The global scale factor is required for platforms that have
   //     high-resolution timers that return units other than
@@ -55,9 +54,6 @@ class ACE_Export ACE_High_Res_Timer
 {
 public:
   // = Initialization method.
-
-  static int supported ();
-  // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
   static void global_scale_factor (u_long gsf);
   // global_scale_factor_ is set to <gsf>.  All High_Res_Timers use
