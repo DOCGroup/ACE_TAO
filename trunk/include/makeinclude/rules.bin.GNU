@@ -25,7 +25,7 @@ $(BIN): %: %.icc $(SRC)
 else
 ifdef kylix_build
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-        $(LINK.cc) $(LDFLAGS) $(VLDLIBS) $(POSTLINK) $^, $@,,
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(POSTLINK) $^, $@,,
 else
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
