@@ -31,4 +31,5 @@
 # include /**/ <stdlib.h>
 #endif /* !ACE_LACKS_STDLIB_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDLIB_H */

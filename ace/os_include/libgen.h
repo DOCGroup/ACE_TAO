@@ -28,4 +28,5 @@
 # include /**/ <libgen.h>
 #endif /* !ACE_LACKS_LIBGEN_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_LIBGEN_H */

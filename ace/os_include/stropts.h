@@ -30,4 +30,5 @@
 # include /**/ <stropts.h>
 #endif /* !ACE_LACKS_STROPTS_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STROPTS_H */

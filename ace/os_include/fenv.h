@@ -28,4 +28,5 @@
 # include /**/ <fenv.h>
 #endif /* !ACE_LACKS_FENV_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_FENV_H */

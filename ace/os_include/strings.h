@@ -30,4 +30,5 @@
 # include /**/ <strings.h>
 #endif /* !ACE_LACKS_STRINGS_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STRINGS_H */

@@ -28,4 +28,5 @@
 # include /**/ <dlfcn.h>
 #endif /* !ACE_LACKS_DLFCN_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_DLFCN_H */

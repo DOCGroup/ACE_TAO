@@ -28,4 +28,5 @@
 # include /**/ <termios.h>
 #endif /* !ACE_LACKS_TERMIOS_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TERMIOS_H */

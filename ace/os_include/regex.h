@@ -30,4 +30,5 @@
 # include /**/ <regex.h>
 #endif /* !ACE_LACKS_REGEX_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_REGEX_H */

@@ -30,4 +30,5 @@
 
 // @todo define assert macro if needed..
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_ASSERT_H */

@@ -31,4 +31,5 @@
 # include /**/ <time.h>
 #endif /* !ACE_LACKS_TIME_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TIME_H */

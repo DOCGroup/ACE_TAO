@@ -30,4 +30,5 @@
 # include /**/ <langinfo.h>
 #endif /* !ACE_LACKS_LANGINFO_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_LANGINFO_H */

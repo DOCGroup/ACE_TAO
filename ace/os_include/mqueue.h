@@ -30,4 +30,5 @@
 # include /**/ <mqueue.h>
 #endif /* !ACE_LACKS_MQUEUE_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_MQUEUE_H */

@@ -28,4 +28,5 @@
 # include /**/ <syslog.h>
 #endif /* !ACE_LACKS_SYSLOG_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYSLOG_H */

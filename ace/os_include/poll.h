@@ -28,4 +28,5 @@
 # include /**/ <poll.h>
 #endif /* !ACE_LACKS_POLL_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_POLL_H */

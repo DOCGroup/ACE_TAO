@@ -33,4 +33,5 @@
 
 // @todo move the O_xxx definitions here...
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_FCNTL_H */
