@@ -1,6 +1,6 @@
 //$Id$
 
-project (Config_Handlers) : taoexe, portableserver, typecodefactory {
+project (Config_Handlers_Tests) : taoexe, portableserver, typecodefactory {
 
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
