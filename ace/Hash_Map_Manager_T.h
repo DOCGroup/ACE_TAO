@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
-#include "ace/Functor.h"
+#include "ace/Functor_T.h"
 #include "ace/Log_Msg.h"
 
 /**
