@@ -18,7 +18,6 @@
 
 #include "DynSched.h"
 #include "ace/Sched_Params.h"
-#include "math.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "DynSched.i"
@@ -1222,8 +1221,9 @@ ACE_DynScheduler::propagate_dispatches (
     if (ordered_task_entries_ [i]->effective_period () > 0)
     {
       frame_size_ =
-        minimum_frame_size (frame_size_,
-                            ordered_task_entries_ [i]->effective_period ());
+        ACE::minimum_frame_size (frame_size_,
+                                 ordered_task_entries_ [i]->
+                                   effective_period ());
     }
   }
 

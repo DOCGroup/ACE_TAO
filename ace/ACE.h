@@ -607,6 +607,12 @@ public:
   // Computes the ISO 8802-3 standard 32 bits CRC for the string
   // (not for a file).
 
+  static u_long gcd (u_long x, u_long y);
+  // Euclid's greatest common divisor algorithm.
+
+  static u_long minimum_frame_size (u_long period1, u_long period2);
+  // Calculates the minimum enclosing frame size for the given values.
+
   static u_long is_prime (const u_long n,
                           const u_long min_factor,
                           const u_long max_factor);
