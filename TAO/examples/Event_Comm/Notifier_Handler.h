@@ -49,7 +49,7 @@ public:
   Event_Comm::Notifier *notifier (void);
   void notifier (Event_Comm::Notifier *);
 
-  virtual int handle_close (void);
+  int close (void);
   // Close down the handler.
 
 private:

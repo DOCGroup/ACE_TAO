@@ -13,11 +13,11 @@ Notifier_Handler::Notifier_Handler (void)
 
 Notifier_Handler::~Notifier_Handler (void)
 {
-  this->handle_close ();
+  this->close ();
 }
 
 int
-Notifier_Handler::handle_close (void)
+Notifier_Handler::close (void)
 {
   if (this->notifier_ != 0)
     {

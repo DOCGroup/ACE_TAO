@@ -53,8 +53,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
   // Frame input events and notify <Consumers>.
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  int close (void);
   // Close down the handler.
 
 protected:
