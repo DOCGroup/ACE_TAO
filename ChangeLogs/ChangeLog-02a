@@ -1,3 +1,9 @@
+Thu Dec 27 09:52:56 2001  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* tests/Get_Opt_Test.cpp: Added ACE_TEXT macros to the various
+	  strings so they will compile on Unicode builds.  Thanks to
+ 	  Venkita for noticing this!
+
 Thu Dec 27 14:53:49 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.(h cpp):

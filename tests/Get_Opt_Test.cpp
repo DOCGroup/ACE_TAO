@@ -42,14 +42,14 @@ parse_args (int test_number,
   // Test the skip_argv0 for the first test only.
   if (skip_argv0 > 0)
     {
-      test = "Test_";
+      test = ACE_TEXT ("Test_");
       ACE_TCHAR s[20];
       test += ACE_OS::itoa (test_number, s, 10);
-      test += " ";
+      test += ACE_TEXT (" ");
     }
 
   test += test_args;
-  optstring += "fr:o::sW;";
+  optstring += ACE_TEXT ("fr:o::sW;");
 
   ACE_DEBUG ((LM_INFO, 
               " TEST %d   ************************************************************\n", 
@@ -120,8 +120,8 @@ parse_args (int test_number,
             
           ACE_DEBUG ((LM_INFO, "   Found long option \"%s\" %s %s\n", 
                       get_opt.long_option (),
-                      get_opt.opt_arg () ? "with argument:" : "",
-                      get_opt.opt_arg () ? get_opt.opt_arg () : ""));
+                      get_opt.opt_arg () ? ACE_TEXT ("with argument:") : ACE_TEXT (""),
+                      get_opt.opt_arg () ? get_opt.opt_arg () : ACE_TEXT ("")));
           break;
         case 'f':
           // This flag was added in both the optstring in the ctor and with
