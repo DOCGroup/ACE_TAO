@@ -98,6 +98,7 @@ bgcolor="#ffffff">
         when other interfaces need to be added later.  (See the
         <a href="#ACE_Time_Value example">ACE_Time_Value example</a>
         below.<p>
+
   </ul>
 
   <li><strong>Code Documentation</strong><p>
@@ -741,7 +742,7 @@ Foo::bar ()
      <li>For TAO, don't use ACE_TCHAR or ACE_TEXT.  The CORBA specification
          defines APIs as using char.  So most of the time there is no need
          to use wide characters.
-  </ul>
+  </ul><P>
 
   <li><strong>Exceptions</strong><p>
 
@@ -923,8 +924,9 @@ Foo::bar ()
       This allows statics suchs as locks to be safely created.  We do not
       want to violate this assumption.<p>
 
-  <li>Do not use run-time type identification (RTTI).  Some platforms
-      do not support it.<p>
+  <li>Do not use run-time type identification (RTTI) directly since some platforms
+      do not support it.  Instead, use the ACE macros, e.g.,
+      <CODE>ACE_static_cast()</CODE>, <CODE>ACE_dynamic_cast()</CODE>, etc.<p>
 
   <li>Do not use C++ exception handling directly.  Some platforms do
       not support it.  And, it can impose an execution speed penalty.
@@ -944,10 +946,17 @@ Foo::bar ()
       This snip of code is from
       <a href="../ace/Naming_Context.cpp"><code>ACE_Naming_Context</code></a>.
       All failed constructors in ACE (should) call ACE_ERROR.  This sets
-      the thread specific <strong>op_status</strong>, which can be checked
+      the thread-specific <strong>op_status</strong>, which can be checked
       by the caller.  This mechanism allows the caller to check for a failed
       constructor without the requiring the constructor to throw
       exceptions.<p>
+
+  <LI>Another consequence of ACE's avoidance of exception handling is
+      that you should use <CODE>open()</CODE> methods on classes that
+      perform initializations that can fail.  This is because <CODE>open()</CODE>
+      returns an error code that's easily checked by the caller,
+      rather than relying on constructor and thread-specific status
+      values. <P>
 
   <li>Avoid using the C++ Standard Template Library (STL) in our
       applications.  Some platforms do not support it yet.<p>
