@@ -1,8 +1,26 @@
+Tue Feb 17 10:29:34 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+
+          Added an environment variable,
+          MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY, to control the creation of
+          inter-project dependencies of static libraries for the em3, vc6,
+          vc7 and vc71 project types.  If the environment variable is set,
+          MPC will generate inter-project dependencies for static libraries.
+          Whereas, normally it would not.
+
+        * bin/MakeProjectCreator/modules/VA4ProjectCreator.pm:
+
+          Removed a redundent version of the translate_value() method.
+
 Mon Feb 16 08:06:23 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/os_include/sys/os_stat.h: Changed the value of S_IFLNK so
-	  that it's different than S_IFREG.  Thanks to Zvika Ashani
- 	  <zvika@aspectusvi.com> for reporting this.
+        * ace/os_include/sys/os_stat.h: Changed the value of S_IFLNK so
+          that it's different than S_IFREG.  Thanks to Zvika Ashani
+          <zvika@aspectusvi.com> for reporting this.
 
 Mon Feb 16 13:40:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
