@@ -7,10 +7,7 @@ server.
 
 The collocation_test demonstrates how the performance improves when
 objects are collocated.  The test runs both server and client in
-different threads.  To run it, simply run collocation_test.  It
-accepts any command line arguments for the client side, but there is
-currently no way to specify command line arguments for the server
-side.
+different threads.
 
 NOTES: The IDL_Cubit server used to run a Naming Service so the client
         could easily locate it.  This proved too problematic, the test
@@ -96,12 +93,25 @@ collocation_test:
 -----------------
 
         This test demonstrates how collocation optimization improve
-performance of collocated objects.  Run the test without any arguments
-to see results with collocation optimization.  Run it with
-<-ORBCollocation no> to perform the same test without the
-optimization.  Please note that the executable of collocation_test is
-generated in the subdirectory ./collocation/.
+performance of collocated objects.  Run the test as:
 
+  collocation_test -c "client side argv list" -s "server side argv list"
+
+You can specify any command line options understood by server and
+client in server-side and client-side options string.  The easiest way
+to run the test is:
+
+  collocation_test -c "client -f ior" -s "server -f ior"
+
+This will start testing the "thru_poa" collocation strategy.  Notice
+that the ior filenames passed to both server side and client side must
+match.  To test the "direct" collocation strategy, run the test as:
+
+  collocation_test -c "client -f ior" -s "server -f ior -ORBCollocationStrategy direct"
+
+To disable collocation optimization run the test as:
+
+  collocation_test -c "client -f ior" -s "server -f ior -ORBCollocation no"
 
 run_test.pl:
 ------------

@@ -37,7 +37,7 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "collocation/Release"
+# PROP Output_Dir "Collocation/Release"
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -62,8 +62,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "collocation"
-# PROP Intermediate_Dir ".\Debug"
+# PROP Output_Dir "Collocation"
+# PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
@@ -156,7 +156,7 @@ InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\release\tao_idl -Ge 1 -Gd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -188,13 +188,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "IDL_Cubit Collocation Test - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\tao_idl -Ge 1 -Gd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

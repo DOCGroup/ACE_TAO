@@ -44,15 +44,14 @@ class Cubit_Client
   //    server is hidden in the class.  Just the run() interface is needed.
 public:
   // = Constructor and destructor.
-  Cubit_Client (int testing_collocation = 0, int shutdown = 0);
-  // Use <testing_collocation> to control some client's behaviors.
+  Cubit_Client (int shutdown = 0);
 
   ~Cubit_Client (void);
 
   int run ();
   // Execute client example code.
 
-  int init (int argc, char **argv, const char *collocation_test_ior = 0);
+  int init (int argc, char **argv);
   // Initialize the client communication endpoint with server.
   // <collocation_test_ior> is used to pass in the ior file name.
 
@@ -129,8 +128,6 @@ private:
   int shutdown_server (int do_shutdown,
                        CORBA::Environment &ACE_TRY_ENV);
   // Invoke the method with <do_shutdown> != 0 to shutdown the server.
-  // When testing collocation, <do_shutdown> has no effect (it always
-  // shuts the server down.
 
   int argc_;
   // # of arguments on the command line.
@@ -177,9 +174,6 @@ private:
 
   unsigned int test_disable_bitset_;
   // Bitset that determines which tests do not get run.
-
-  int testing_collocation_;
-  // We are running the collocation test.
 };
 
 #endif /* _CUBIT_CLIENT_H */
