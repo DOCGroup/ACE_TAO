@@ -1,3 +1,23 @@
+Mon Mar 12 23:40:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/EC_Basic/Makefile.bor:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.bor:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.bor:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile.bor:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Mcast/Makefile.bor:
+        * orbsvcs/tests/EC_Multiple/Makefile.bor:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.bor:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.bor:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.bor:
+        * orbsvcs/tests/EC_Throughput/Makefile.bor:
+        * orbsvcs/tests/Event_Latency/Makefile.bor:
+          Add more Borland Makefiles for the RT Event Service tests
+
+        * orbsvcs/tests/Simple_Naming/makefile.bor:
+          Add missing IORTable library
+
 Mon Mar 12 17:54:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Client_Leaks/client.cpp:
