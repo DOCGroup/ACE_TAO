@@ -2,6 +2,9 @@
 //
 // Config file for AIX 5.1 and 5.2.
 
+#ifndef ACE_CONFIG_AIX_5_X_H
+#define ACE_CONFIG_AIX_5_X_H
+
 // This define is needed for building with Visual Age C++ 5 in incremental
 // mode. In the batch mode build, platform_aix_ibm.GNU sets it. The incremental
 // mode compiler won't be supported after ACE 5.3, so this will also go away
@@ -40,3 +43,7 @@
 #if (defined (_AIX) && defined (__GNUC__))
 #define ACE_HAS_POSIX_GETPWNAM_R
 #endif /* (defined (_AIX) && defined (__GNUC__)) */
+
+#define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
+
+#endif /* ACE_CONFIG_AIX_5_X_H */
