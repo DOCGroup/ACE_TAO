@@ -20,23 +20,24 @@ class ACE_Managed_Process : public ACE_Process
   //   <ACE_Managed_Process> is just an <ACE_Process> with an
   //   <unmanage> method that deletes the instance.
 public:
+  ACE_Managed_Process (void);
+  // Constructor.
+
   virtual void unmanage (void);
+  // Cleanup by deleting <this>.
 
 private:
   virtual ~ACE_Managed_Process (void);
+  // Make sure that we're allocated dynamically!
 
-  ACE_CLASS_IS_NAMESPACE (ACE_Managed_Process);
+  friend class ace_dewarn_gplusplus;
+  // Keep G++ happy...
 };
 
 ACE_Managed_Process::ACE_Managed_Process (void)
 {
 }
 
-ACE_Managed_Process::ACE_Managed_Process (const ACE_Managed_Process &pm)
-  : ACE_Process (pm)
-{
-}
-    
 ACE_Managed_Process::~ACE_Managed_Process (void)
 {
 }
@@ -416,7 +417,7 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
 {
   ACE_Process *process;
   ACE_NEW_RETURN (process,
-                  ACE_Process,
+                  ACE_Managed_Process,
                   ACE_INVALID_PID);
 
   options.setgroup (ACE_OS::getpid ());

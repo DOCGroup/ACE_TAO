@@ -1,10 +1,16 @@
 Sat Sep 11 12:18:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process_Manager.cpp: Reverted the following change so that we
+	  just add a fake "friend" to keep G++ happy...  Also, fixed a
+ 	  typo where we should have allocated an ACE_Managed_Process
+ 	  rather than an ACE_Process.  Thanks to Dave Madden for reporting
+ 	  this.
+	
 	* ace/Process_Manager.cpp: Added the ACE_CLASS_IS_NAMESPACE method
 	  to ACE_Managed_Process to make G++ happy.  Also, removed the
  	  trailing '_' since we don't need this because we've prefixed
  	  "ACE_" already.
-
+  
 Fri Sep 10 16:58:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (open,shared_malloc): Added several placement
