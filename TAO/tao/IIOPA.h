@@ -33,6 +33,15 @@
 
 #include /**/ "ace/pre.h"
 
+// ==== Hancrafted
+namespace IIOP
+{
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ListenPoint;
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ListenPointList;
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BiDirIIOPServiceContext;
+}
 // TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:52
 
@@ -60,4 +69,3 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IIOP::BiDirIIOP
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

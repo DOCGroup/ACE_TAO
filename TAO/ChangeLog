@@ -1,3 +1,35 @@
+Wed Dec 24 12:54:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CONV_FRAME.pidl:
+	* tao/IIOP.pidl:
+	* tao/Current.pidl:
+	 
+	  Improved  documentation
+	
+	* tao/CONV_FRAMEA.cpp:
+	* tao/CONV_FRAMEA.h:
+	* tao/CONV_FRAMEC.cpp:
+	* tao/CONV_FRAMEC.h:
+	* tao/CurrentA.cpp:
+	* tao/CurrentA.h:
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/IIOPA.cpp:
+	* tao/IIOPA.h:
+	* tao/IIOPC.cpp:
+	* tao/IIOPC.h:
+
+	  Painful code movements. Moved all the typecode declarations
+	  from *C.* files to *A.* files. This is maintenance hard, but no
+	  gains without pains. Sorry we have to do this to get the
+	  footprint reductions. 
+	
+	* tao/diffs/Current.diff:
+	* tao/diffs/CONV_FRAME.diff:
+	* tao/diffs/IIOP.diff:
+
+	  Regenerated diffs with the above changes.
+
 Wed Dec 24 11:58:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Buffered_AMI/client.cpp:
