@@ -1,3 +1,9 @@
+Mon Dec 18 19:37:40 2000  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+
+	  Aesthetic formatting updates to the generated code.
+
 Mon Dec 18 19:14:25 2000  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
