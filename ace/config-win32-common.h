@@ -490,6 +490,7 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 
 #define ACE_SIZEOF_WCHAR 2
+#define ACE_HAS_MUTEX_TIMEOUTS
 
 #include "ace/post.h"
 #endif /* ACE_WIN32_COMMON_H */

@@ -1,3 +1,11 @@
+Fri Jan 26 17:50:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-win32-common.h:
+	  ace/config-vxworks-5.x.h: Added ACE_HAS_MUTEX_TIMEOUTS macro.
+
+	* ace/OS.i: Added timed mutex operations for Win32, VxWorks, and
+ 	  pSoS.
+
 Fri Jan 26 16:31:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h (mutex_lock):
