@@ -1,7 +1,6 @@
 // $Id$
 
 #include "IORInterceptor_Adapter_Impl.h"
-#include "tao/ORB_Core.h"
 
 ACE_RCSID (IORInterceptor,
            IORInterceptor_Adapter_Impl,
@@ -25,12 +24,12 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
 
 void
 TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
-  TAO_IORInterceptor_List::TYPE &inter =
+  TAO_IORInterceptor_List::TYPE & i =
     this->ior_interceptor_list_.interceptors ();
 
-  size_t len = inter.size ();
+  const size_t len = i.size ();
   size_t ilen = len;
 
   for (size_t k = 0; k < len; ++k)
@@ -40,7 +39,7 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       // occurs afterwards.
       --ilen;
 
-      inter[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      i[k].in()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Since Interceptor::destroy() can throw an exception, decrease
@@ -48,12 +47,13 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       // interceptors may not have been destroyed yet.  Note that this
       // size reduction is fast since no memory is actually
       // deallocated.
-      inter.size (ilen);
+      i.size (ilen);
     }
+
   delete this;
 }
 
-TAO_IORInterceptor_List*
+TAO_IORInterceptor_List *
 TAO_IORInterceptor_Adapter_Impl::interceptor_list (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
