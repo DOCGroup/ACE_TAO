@@ -1,11 +1,16 @@
+Tue Sep 08 07:28:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (readdir_r): don't use the POSIX.1c ::readdir_r on
+          suns without _POSIX_PTHREAD_SEMANTICS.
+
 Mon Sep  7 22:12:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd.h: Added ACE_HAS_SIGINFO_T,
-	  ACE_LACKS_SIGINFO_H, ACE_LACKS_UCONTEXT_H, ACE_LACKS_SI_ADDR and
-	  ACE_HAS_DIRENT.
+        * ace/config-freebsd.h: Added ACE_HAS_SIGINFO_T,
+          ACE_LACKS_SIGINFO_H, ACE_LACKS_UCONTEXT_H, ACE_LACKS_SI_ADDR and
+          ACE_HAS_DIRENT.
 
-	* ace/config-freebsd-pthread.h:
-	* ace/config-linux-common.h: Added ACE_HAS_DIRENT.
+        * ace/config-freebsd-pthread.h:
+        * ace/config-linux-common.h: Added ACE_HAS_DIRENT.
 
 Mon Sep  7 12:39:10 EDT 1998  James CE Johnson <jcej@lads.com>
 
