@@ -678,7 +678,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       completion_key = result->completion_key();
     }
 #if defined (ACE_WIN64)
-  ULONG_PTR comp_key (ACE_static_cast (ULONG_PTR, completion_key));
+  ULONG_PTR comp_key (ACE_reinterpret_cast (ULONG_PTR, completion_key));
 #else
   ULONG comp_key (ACE_reinterpret_cast (ULONG, completion_key));
 #endif /* ACE_WIN64 */
