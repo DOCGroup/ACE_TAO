@@ -192,7 +192,7 @@ TAO_SHMIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
       if (retval != 0 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                      ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
                       ACE_TEXT ("could not add the new  connection to Cache \n")));
         }
     }
@@ -248,6 +248,10 @@ TAO_SHMIOP_Connector::preconnect (const char *preconnects)
           char *thost = where + version_offset;
           char *sep = ACE_OS::strchr (where, ':');
 
+          // @@ Notice we reuqire the host name in preconnect
+          // so the MEM_Connector can identify if we are trying
+          // to a local host or not.
+
           if (sep)
             {
               *sep = '\0';
@@ -256,26 +260,7 @@ TAO_SHMIOP_Connector::preconnect (const char *preconnects)
               dest.set ((u_short) ACE_OS::atoi (tport), thost);
               dests.push (dest);
             }
-          else
-            {
-              // No port was specified so assume that the port will be the
-              // IANA assigned port for IIOP.
-              //
-              //    IIOP:           683
-              //    IIOP over SSL:  684
-
-              dest.set (683, thost);
-              dests.push (dest);
-
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
-                              ACE_TEXT ("Using <%d> as default port.\n"),
-                              where,
-                              dest.get_port_number ()));
-                }
-            }
+          // @@ Skip the entry if we don't have a host:port pair available.
         }
 
       // Create an array of addresses from the stack, as well as an
@@ -358,7 +343,7 @@ TAO_SHMIOP_Connector::preconnect (const char *preconnects)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) IIOP preconnections: %d successes and ")
+                    ACE_TEXT ("TAO (%P|%t) SHMIOP preconnections: %d successes and ")
                     ACE_TEXT ("%d failures.\n"),
                     successes,
                     num_connections - successes));
@@ -431,7 +416,7 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
     return 0;
 
   return -1;
-  // Failure: not an IIOP IOR
+  // Failure: not an SHMIOP IOR
   // DO NOT throw an exception here.
 }
 

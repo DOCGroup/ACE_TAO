@@ -1,3 +1,9 @@
+Mon Jan 22 17:04:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Connector.cpp: Corrected several
+	  references to IIOP.  Thanks to Johnny Willemsen
+	  <jwillemsen@meco.nl> for pointing this out.
+
 Mon Jan 22 12:49:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/MessagingC.h:
