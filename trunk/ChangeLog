@@ -1,3 +1,8 @@
+Sat Jun 19 13:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/High_Res_Timer.h:
+          Improved doxygen tags
+
 Sat Jun 19 12:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_String.h:
