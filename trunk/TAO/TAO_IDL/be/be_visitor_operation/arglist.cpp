@@ -79,10 +79,10 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     {
       // if the operation node has parameters, then we need to insert a comma
       if (node->argument_count () > 0)
-//        *os << ",\n";
-        *os << "," << be_nl;
+        {
+          *os << "," << be_nl;
+        }
 
-//      os->indent ();
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
