@@ -1,3 +1,11 @@
+Tue May 27 17:44:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Components.idl:
+
+          New file that matches the name of the #included IDL file generated
+          by the CIDL compiler executor mapping. For now, this file just
+          includes CCM_Container.idl.
+
 Tue May 27 09:57:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp:
