@@ -37,10 +37,15 @@ TAO_Stub::reset_base (void)
   this->reset_first_locate_request ();
   this->profile_success_ = 0;
 
-  // Bala, add a #ifdef for TAO_HAS_FT_CORBA to look for the
-  // FT_TAG_PRIMARY stuff.
-  // Get the tagged components, check for FT_TAG_PRIMARY
+#if (TAO_HAS_FT_CORBA == 0)
   this->set_profile_in_use_i (base_profiles_.get_next ());
+#else
+
+  // In the FT_CORBA mode we need to get the profile with the TAG
+  // FT_TAG_PRIMARY. So let us go through the list of MProfiles doing
+  // a search for it.
+
+#endif /*TAO_HAS_FT_CORBA */
 }
 
 ACE_INLINE void
@@ -234,7 +239,7 @@ TAO_Stub::base_profiles (void) const
 }
 
 ACE_INLINE TAO_MProfile&
-TAO_Stub::base_profiles (void) 
+TAO_Stub::base_profiles (void)
 {
   return this->base_profiles_;
 }

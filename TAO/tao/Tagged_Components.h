@@ -104,7 +104,7 @@ public:
   IOP::MultipleComponentProfile &components (void);
   // Read/Write access to the underlying
   // MutipleComponentProfile. Added by request from Chris Hafey
-  // <chris@stentorsoft.com> 
+  // <chris@stentorsoft.com>
 
 private:
   void set_code_sets_i (CONV_FRAME::CodeSetComponent &lhs,
@@ -112,6 +112,7 @@ private:
   // Helper method to implement set_code_sets()
 
   void set_known_component_i (const IOP::TaggedComponent& component);
+  void set_unique_component_i (const IOP::TaggedComponent& component);
   void set_component_i (const IOP::TaggedComponent& component);
   void set_component_i (IOP::TaggedComponent& component);
   void add_component_i (const IOP::TaggedComponent& component);
@@ -143,6 +144,17 @@ private:
   // The rest of the components, to be compliant we cannot drop a
   // bunch of them.
 
+# if (TAO_HAS_FT_CORBA == 1)
+  CORBA::Boolean ft_tag_primary_;
+  // Flag that indicates whether the profile is from a PRIMARY
+
+  struct FT_Tagged_Component
+  {
+    IOP::FTDomainID  ft_domain_id_;
+    IOP::ObjectGroupID object_group_id_;
+    IOP::ObjectGroupRefVersion object_group_ref_version_;
+  };
+#endif /*TAO_HAS_FT_CORBA */
   // A flag for each component...
   CORBA::Octet orb_type_set_;
   CORBA::Octet code_sets_set_;

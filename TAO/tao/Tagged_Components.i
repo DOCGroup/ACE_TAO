@@ -70,10 +70,11 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_SSL_SEC_TRANS
           || tag == IOP::TAG_CSI_ECMA_Public_SEC_MECH
           || tag == IOP::TAG_GENERIC_SEC_MECH
-
           || tag == IOP::TAG_COMPLETE_OBJECT_KEY
           || tag == IOP::TAG_ENDPOINT_ID_POSITION
           || tag == IOP::TAG_LOCATION_POLICY
+          || tag == IOP::TAG_FT_PRIMARY
+          || tag == IOP::TAG_FT_GROUP
           || tag == IOP::TAG_DCE_STRING_BINDING
           || tag == IOP::TAG_DCE_BINDING_NAME
           || tag == IOP::TAG_DCE_NO_PIPES
