@@ -277,9 +277,9 @@ main (int argc, char *argv[])
 
       //client.ami_test_var_->shutdown ();
 
-      root_poa->destroy (true,  // ethernalize objects
- 					               false, // wait for completion
-						             ACE_TRY_ENV);
+      root_poa->destroy (1,  // ethernalize objects
+                         0, // wait for completion
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);

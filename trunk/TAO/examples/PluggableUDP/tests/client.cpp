@@ -142,15 +142,15 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
-	  root_poa->destroy (true,  // ethernalize objects
- 					     false, // wait for completion
-						 ACE_TRY_ENV);
-	  orb->destroy (ACE_TRY_ENV);
+      root_poa->destroy (1,  // ethernalize objects
+                         0, // wait for completion
+                         ACE_TRY_ENV);
+      orb->destroy (ACE_TRY_ENV);
 
-	  // it is save to delete the client, because the client was actually
-	  // the one calling orb->shutdown () triggering the end of the ORB
-	  // event loop.
-	  delete client;
+      // it is save to delete the client, because the client was actually
+      // the one calling orb->shutdown () triggering the end of the ORB
+      // event loop.
+      delete client;
 
     }
   ACE_CATCHANY
