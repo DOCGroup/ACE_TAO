@@ -1,3 +1,31 @@
+Wed Mar 30 08:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Domain/*S*.{h,cpp,inl}:
+          Regenerated
+
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * tests/CDR/tc.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
+          Fixed include of Typecode.h to TypeCode.h
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.{h,cpp}:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.{h,cpp}:
+          Added copy/destroy operations for the Policies
+
+        * examples/RTScheduling/FP_SchedulingC.{h,cpp,i,inl}:
+        * examples/RTScheduling/MIF_SchedulingC.{h,cpp,i,inl}:
+          Regenerated and replace .i with .inl version
+
+        * examples/RTScheduling/FP_Scheduling.pidl:
+        * examples/RTScheduling/MIF_Scheduling.pidl:
+          Updated includes so that regeneration is easier
+
 Wed Mar 30 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TypeCodeFactory_Adapter.h:
