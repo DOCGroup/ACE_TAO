@@ -59,45 +59,50 @@ sub run_clients
 $SV = new PerlACE::Process ("server");
 
 $SV->Spawn ();
-
-for $test (@configurations)
-{
-    if (PerlACE::waitforfile_timed ($test->{file}, 5) == -1)
+$server = $SV->TimedWait(10);
+if ($server == 2) {
+  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
+  # Mark as no longer running to avoid errors on exit.
+  $SV->{RUNNING} = 0;
+} else {
+  for $test (@configurations)
     {
-        print STDERR "ERROR: cannot find ior file: $test->{file}\n";
-        $status = 1;
-        goto kill_server;
+      if (PerlACE::waitforfile_timed ($test->{file}, 5) == -1)
+	{
+	  print STDERR "ERROR: cannot find ior file: $test->{file}\n";
+	  $status = 1;
+	  goto kill_server;
+	}
     }
-}
-
-for $test (@configurations)
-{
-    print STDERR "\n*************************************************************\n";
-    print STDERR "$test->{description}\n";
-    print STDERR "*************************************************************\n\n";
-
-    run_clients ("-k file://$test->{file}", $number_of_clients);
-}
-
-print STDERR "\n************************\n";
-print STDERR "Shutting down the server\n";
-print STDERR "************************\n\n";
-
-run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
-
-kill_server:
-
-$server = $SV->WaitKill (5);
-
-if ($server != 0) {
+  
+  for $test (@configurations)
+    {
+      print STDERR "\n*************************************************************\n";
+      print STDERR "$test->{description}\n";
+      print STDERR "*************************************************************\n\n";
+      
+      run_clients ("-k file://$test->{file}", $number_of_clients);
+    }
+  
+  print STDERR "\n************************\n";
+  print STDERR "Shutting down the server\n";
+  print STDERR "************************\n\n";
+  
+  run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
+  
+ kill_server:
+  
+  $server = $SV->WaitKill (5);
+  
+  if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1
+  }
+  
+  for $test (@configurations)
+    {
+      unlink $test->{file};
+    }
 }
-
-for $test (@configurations)
-{
-    unlink $test->{file};
-}
-
 exit $status
 

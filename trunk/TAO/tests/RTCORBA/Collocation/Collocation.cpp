@@ -6,6 +6,7 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "../check_supported_priorities.cpp"
 
 ACE_RCSID(Collocations, Collocations, "$Id$")
 
@@ -595,6 +596,10 @@ Server::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
       Server server (argc,

@@ -12,11 +12,17 @@ print STDERR "\n********** RTCORBA Collocation Unit Test **********\n\n";
 
 $T = new PerlACE::Process ("Collocation");
 
-$test = $T->SpawnWaitKill (60);
+$test = $T->SpawnWaitKill(60);
+if ($test == 2) {
+  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
+  # Mark as no longer running to avoid errors on exit.
+  $T->{RUNNING} = 0;
+} else {
 
-if ($test != 0) {
+  if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
     exit 1;
+  }
 }
 
 exit 0;

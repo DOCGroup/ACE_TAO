@@ -70,59 +70,73 @@ $fh = \*OLDERR;
 
 # Run server and client.
 $SV->Spawn ();
+$server = $SV->TimedWait(10);
+if ($server == 2) {
+  # Could not change priority levels so exit.
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+  # redirect STDOUT away from $data_file and set back to normal
+  close (STDERR);
+  close (STDOUT);
+  open (STDOUT, ">&OLDOUT");
+  open (STDERR, ">&OLDERR");
+
+  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
+  # Mark as no longer running to avoid errors on exit.
+  $SV->{RUNNING} = 0;
+} else {
+  
+  if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
-}
-
-$client = $CL->SpawnWaitKill (60);
-
-if ($client != 0) {
+  }
+  
+  $client = $CL->SpawnWaitKill (60);
+  
+  if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
-}
-
-$server = $SV->WaitKill (60);
-
-if ($server != 0) {
+  }
+  
+  $server = $SV->WaitKill (60);
+  
+  if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
-}
-
-close (STDERR);
-close (STDOUT);
-open (STDOUT, ">&OLDOUT");
-open (STDERR, ">&OLDERR");
-
-unlink $iorfile;
-
-# Run a processing script on the test output.
-print STDERR "\n********** Processing test output\n\n";
-
-$errors = system ("perl process-output.pl $data_file $iterations $priority1 $priority2") >> 8;
-
-if ($errors > 0) {
+  }
+  
+  close (STDERR);
+  close (STDOUT);
+  open (STDOUT, ">&OLDOUT");
+  open (STDERR, ">&OLDERR");
+  
+  unlink $iorfile;
+  
+  # Run a processing script on the test output.
+  print STDERR "\n********** Processing test output\n\n";
+  
+  $errors = system ("perl process-output.pl $data_file $iterations $priority1 $priority2") >> 8;
+  
+  if ($errors > 0) {
     $status = 1;
-
+    
     if (!$quiet) {
-        print STDERR "Errors Detected, printing output\n";
-        if (open (DATA, "<$data_file")) {
-            print STDERR "================================= Begin\n";
-            print STDERR <DATA>;
-            print STDERR "================================= End\n";
-            close (DATA);
-        }
-        else {
-            print STDERR "ERROR: Could not open $data_file\n";
-        }
+      print STDERR "Errors Detected, printing output\n";
+      if (open (DATA, "<$data_file")) {
+        print STDERR "================================= Begin\n";
+        print STDERR <DATA>;
+        print STDERR "================================= End\n";
+        close (DATA);
+      }
+      else {
+        print STDERR "ERROR: Could not open $data_file\n";
+      }
     }
+  }
+  
+  unlink $iorfile;
+  unlink $data_file;
 }
-
-unlink $iorfile;
-unlink $data_file;
-
 # Clean up shmiop files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");
 
