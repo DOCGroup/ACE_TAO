@@ -47,7 +47,6 @@
 #define ACE_ONE_SECOND_IN_USECS 1000000L
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
-
 // -------------------------------------------------------------------
 // These forward declarations are only used to circumvent a bug in
 // MSVC 6.0 compiler.  They shouldn't cause any problem for other
@@ -209,35 +208,35 @@ public:
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
+                                                  const ACE_Time_Value &tv2);
 
   /// Subtracts two ACE_Time_Value objects, returns the difference.
   friend ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
+                                                  const ACE_Time_Value &tv2);
 
   /// True if tv1 < tv2.
   friend ACE_OS_Export int operator < (const ACE_Time_Value &tv1,
-                                    const ACE_Time_Value &tv2);
+                                       const ACE_Time_Value &tv2);
 
   /// True if tv1 > tv2.
   friend ACE_OS_Export int operator > (const ACE_Time_Value &tv1,
-                                    const ACE_Time_Value &tv2);
+                                       const ACE_Time_Value &tv2);
 
   /// True if tv1 <= tv2.
   friend ACE_OS_Export int operator <= (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
+                                        const ACE_Time_Value &tv2);
 
   /// True if tv1 >= tv2.
   friend ACE_OS_Export int operator >= (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
+                                        const ACE_Time_Value &tv2);
 
   /// True if tv1 == tv2.
   friend ACE_OS_Export int operator == (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
+                                        const ACE_Time_Value &tv2);
 
   /// True if tv1 != tv2.
   friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
+                                        const ACE_Time_Value &tv2);
 
   /// Dump is a no-op.
   /**

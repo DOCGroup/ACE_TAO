@@ -1,3 +1,9 @@
+Sun May 26 13:20:15 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-macosx.h: Added #define ACE_LACKS_SYSTIME_H.
+	  Thanks to Dennis C. De Mars <demars@mminternet.com> for
+	  recommending this.
+
 Sat May 25 17:45:21 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Proactor_Scatter_Gather_Test.dsp:
