@@ -66,12 +66,13 @@ public:
   // Constructor that copies <len> chars of <s> into dynamically
   // allocated memory (will NUL terminate the result).  If <release>
   // is non-0 then the <ACE_allocator> is responsible for freeing this
-  // memory. Memory is _not_ allocated/freed if <release> is 0.
+  // memory.  Memory is _not_ allocated/freed if <release> is 0.
 
   ACE_CString (const ACE_CString &);
   // Copy constructor.
 
-  ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc = 0);
+  ACE_CString (const ACE_USHORT16 *s,
+               ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
   // Probable loss of data. Please use with care.
 
@@ -92,11 +93,15 @@ public:
   ACE_CString &operator = (const ACE_CString &);
   // Assignment operator (does copy memory).
 
-  void set (const char *s, int release);
-  // Copy <s> into this <ACE_CString>.
+  void set (const char *s, int release = 1);
+  // Copy <s> into this <ACE_CString>.  Memory is _not_
+  // allocated/freed if <release> is 0.
 
-  void set (const char *s, size_t len, int release);
+  void set (const char *s,
+            size_t len,
+            int release);
   // Copy <len> bytes of <s> (will NUL terminate the result).
+  // Memory is _not_ allocated/freed if <release> is 0.
 
   ACE_CString substring (size_t offset, ssize_t length = -1) const;
   // Return a substring given an offset and length, if length == -1
@@ -252,7 +257,8 @@ public:
   void set (const ACE_USHORT16 *s);
   // Copy <s>
 
-  void set (const ACE_USHORT16 *s, size_t len);
+  void set (const ACE_USHORT16 *s,
+            size_t len);
   // Copy <len> bytes of <s> (will NUL terminate the result)
 
   ACE_WString substring (size_t offset, ssize_t length = -1) const;

@@ -1,3 +1,14 @@
+Mon Sep 27 13:11:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SString.h: Added the default value for the ACE_CString
+ 	  method set (const char *, int = 1).  We had removed the default
+ 	  values from both the set() methods in order to remove an
+ 	  ambiguity.  However, it appears that it's ok to give just this
+ 	  method a default value.  Moreover, this prevents existing code
+ 	  from breaking.  Thanks to Giga Giguashvili
+ 	  <gregoryg@ParadigmGeo.com> and Ivan Murthy
+ 	  <Ivan.Murphy@med.siemens.de> for reporting this.
+
 Sat Sep 25 17:09:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.0.5 released.
