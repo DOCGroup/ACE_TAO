@@ -30,7 +30,7 @@ else {
                   "$ACE_ROOT\\TAO\\TAO_IDL",
                   "$ACE_ROOT\\TAO\\tests");
 
-@ciao_core_dirs = ("$ACE_ROOT\\TAO\\orbsvcs\\orbsvcs", # CIAO dependancy 
+@ciao_core_dirs = ("$ACE_ROOT\\TAO\\orbsvcs\\orbsvcs", # CIAO dependancy
                    "$ACE_ROOT\\TAO\\CIAO");
 
 $debug = 0;
@@ -97,12 +97,12 @@ sub Find_Dsw (@)
     @array = ();
 
     sub wanted_dsw {
-        $array[++$#array] = 
+        $array[++$#array] =
             $File::Find::name if ($File::Find::name =~ /\.dsw$/i);
     }
-    
+
     find (\&wanted_dsw, @dir);
-    
+
     print "List of dsw's \n" if ($verbose == 1);
     return @array;
 }
@@ -113,12 +113,12 @@ sub Find_Sln (@)
     @array = ();
 
     sub wanted_sln {
-        $array[++$#array] = 
+        $array[++$#array] =
             $File::Find::name if ($File::Find::name =~ /\.sln$/i);
     }
-    
+
     find (\&wanted_sln, @dir);
-    
+
     print "List of sln's \n" if ($verbose == 1);
     return @array;
 }
@@ -135,7 +135,7 @@ sub Build_Custom ()
     print "\n" if ($verbose);
 
     my @custom_list = Find_Dsw (@directories);
-    
+
     print "List now is @custom_list \n";
     foreach $c (@custom_list) {
         print "List now is $c \n";
@@ -156,10 +156,10 @@ sub Build_All ()
     push @directories, @ace_core_dirs;
     push @directories, @tao_core_dirs;
     push @directories, @ciao_core_dirs;
-    
+
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
     print "\nmsvc_auto_compile: First Pass CORE (libraries)\n";
-    
+
     Build_Custom ();
 
     my @new_directory_search = "$ACE_ROOT";
@@ -195,7 +195,7 @@ sub Build_Custom_VC7 ()
     print "\n" if ($verbose);
 
     my @custom_list = Find_Sln (@directories);
-    
+
     print "List now is @custom_list \n";
     foreach $c (@custom_list) {
         print "List now is $c \n";
@@ -216,10 +216,10 @@ sub Build_All_VC7 ()
     push @directories, @ace_core_dirs;
     push @directories, @tao_core_dirs;
     push @directories, @ciao_core_dirs;
-    
+
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
     print "\nmsvc_auto_compile: First Pass CORE (libraries)\n";
-    
+
     Build_Custom_VC7 ();
 
     my @new_directory_search = "$ACE_ROOT";
@@ -258,7 +258,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     }
     elsif ($ARGV[0] =~ '-vc8') {    # Use VC8 project and solution files.
         print "Using VC8 files\n" if ( $verbose );
-        $vc7 = 1; // vc8 is like vc7
+        $vc7 = 1; # vc8 is like vc7
     }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
@@ -278,22 +278,22 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ '-TAO') {# Build TAO and its tests
         print "Building TAO\n" if ( $verbose );
         $use_custom_dir = 1;
-	push @directories, @ace_core_dirs;        
+	push @directories, @ace_core_dirs;
 	push @directories, @tao_core_dirs;
     }
     elsif ($ARGV[0] =~ '-CIAO') {# Build the CIAO and related
-                                 # libraries 
+                                 # libraries
         print "Building only CIAO\n" if ( $verbose );
         $use_custom_dir = 1;
-        push @directories, @ace_core_dirs;        
+        push @directories, @ace_core_dirs;
 	push @directories, @tao_core_dirs;
         push @directories, @ciao_core_dirs;
-    } 
+    }
     elsif ($ARGV[0] =~ '-ALL') {# Build the CIAO and related
-                                 # libraries 
+                                 # libraries
         print "Building ALL \n" if ( $verbose );
         $build_all = 1;
-    }    
+    }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
         shift;
         print "Adding directory $ARGV[0]\n" if ( $verbose );
