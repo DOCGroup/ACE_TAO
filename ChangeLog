@@ -1,3 +1,12 @@
+Sat Apr 29 19:09:00 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/QoS_Manager.h:
+
+	  Moved inclusion of one of the ACE headers prior to the check for
+	  ACE_LACKS_PRAGMA_ONCE.  The definition of ACE_LACKS_PRAGMA_ONCE
+	  wasn't pulled before the check, so it ended up being defined
+	  twice.
+
 Sat Apr 29 16:15:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/autoconf_compile:
