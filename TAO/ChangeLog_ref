@@ -1,3 +1,16 @@
+Fri Oct 17 04:32:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Base.inl: Cached a pointer to the
+	  ORB_Core. Further the accessor is now inlined so that it can be
+	  optimized. 
+
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: 
+	* tao/Synch_Invocation.inl: Moved the TAO::Reply_Guard
+	  implementations to the newly created inlined file. 
+
 Thu Oct 16 13:50:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU: Added a definition for TAO_DYNAMIC_LIBS

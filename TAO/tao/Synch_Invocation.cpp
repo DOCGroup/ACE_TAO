@@ -15,6 +15,10 @@
 #include "Messaging_SyncScopeC.h"
 #include "ace/Auto_Ptr.h"
 
+#if !defined (__ACE_INLINE__)
+# include "Synch_Invocation.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Synch_Invocation,
            "$Id$")
@@ -662,25 +666,5 @@ namespace TAO
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     return s;
-  }
-
-  /*================================================================================*/
-
-  Reply_Guard::Reply_Guard (Invocation_Base *b,
-                            Invocation_Status s)
-    : invocation_ (b)
-    , status_ (s)
-  {
-  }
-
-  Reply_Guard::~Reply_Guard (void)
-  {
-    this->invocation_->reply_received (this->status_);
-  }
-
-  void
-  Reply_Guard::set_status (Invocation_Status s)
-  {
-    this->status_ = s;
   }
 }
