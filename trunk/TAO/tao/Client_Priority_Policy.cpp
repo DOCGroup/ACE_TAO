@@ -23,6 +23,20 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priorit
 {
 }
 
+void
+TAO_Client_Priority_Policy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_Client_Priority_Policy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
 TAO::PrioritySpecification
 TAO_Client_Priority_Policy::priority_specification (CORBA::Environment &)
   ACE_THROW_SPEC (())
