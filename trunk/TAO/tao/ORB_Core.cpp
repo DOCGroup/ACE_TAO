@@ -835,7 +835,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                 ("-ORBLogFile")))
         {
           //
-          // redirect all ACE_DEUBG and ACE_ERROR output to a file
+          // redirect all ACE_DEBUG and ACE_ERROR output to a file
           // USAGE: -ORBLogFile <file>
           // default: if <file> is present     = append
           //          if <file> is not present = create
@@ -890,6 +890,45 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           this->use_implrepo_ = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSetUID")))
+        {
+          // Set the effective user ID of the current ORB process.
+          uid_t orb_uid =
+            ACE_static_cast (uid_t, ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+
+          if (ACE_OS::setuid (orb_uid) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("Error setting effective user ")
+                                 ASYS_TEXT ("ID for ORB <%s>%p\n"),
+                                 this->orbid_,
+                                 ASYS_TEXT("")),
+                                -1);
+            }
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSetGID")))
+        {
+          // Set the effective group ID of the current ORB process.
+
+          uid_t orb_gid =
+            ACE_static_cast (gid_t, ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+
+          if (ACE_OS::setgid (orb_gid) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("Error setting effective group ")
+                                 ASYS_TEXT ("ID for ORB <%s>%p\n"),
+                                 this->orbid_,
+                                 ASYS_TEXT("")),
+                                -1);
+            }
         }
 
       ////////////////////////////////////////////////////////////////

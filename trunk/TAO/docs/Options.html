@@ -402,6 +402,41 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     </TD>
   </TR>
 
+  <TR>
+    <TD><CODE>-ORBSetUID</CODE> <EM>UID</EM></TD>
+    <TD><A name=-ORBSetUID></A>
+	      <P>
+		Set the ORB's effective user ID to <EM>UID</EM>.  This
+		option is only implemented for systems that support the
+		POSIX <CODE>setuid()</CODE> system call, such as most
+		UNIX systems.
+	      <P>
+		This option is typically used to set the user ID the
+		ORB runs under when starting the ORB with the
+		super-user.  A typical use would be starting the ORB
+		under the <CODE><EM>nobody</EM></CODE> user by
+		providing this option with the
+		<CODE><EM>nobody</EM></CODE> user's user ID.
+    </TD>
+  </TR>
+
+  <TR>
+    <TD><CODE>-ORBSetGID</CODE> <EM>GID</EM></TD>
+    <TD><A name=-ORBSetGID></A>
+	      <P>
+		Set the ORB's effective group ID to <EM>GID</EM>.  This
+		option is only implemented for systems that support the
+		POSIX <CODE>setgid()</CODE> system call, such as most
+		UNIX systems.
+	      <P>
+		This option is typically used to set the group ID the
+		ORB runs under when starting the ORB with the
+		super-user.  A typical use would be starting the ORB
+		under the <CODE><EM>daemon</EM></CODE> group by
+		providing this option with the
+		<CODE><EM>daemon</EM></CODE> group's group ID.
+    </TD>
+  </TR>
 
 </TABLE>
 </P>
