@@ -1,25 +1,56 @@
-# VxWorks 5.2 with GNU g++ 2.7.2
-# *not* using Orbix
+# VxWorks 5.2-5.3.1 with GNU g++ 2.7.2
 
-TOOL_DIR	= /opt/wind
-TARGET_DIR	= $(TOOL_DIR)/target
-HOST_DIR	= $(TOOL_DIR)/host/sun4-solaris2
+#### This file assumes that the WIND_BASE environment variable is set.
+
+#### BEGIN CPU-specific settings
+
+#### This is kind of messy so that it can support multiple
+#### targets.  You'll need to set CPU to a supported CPU
+#### using one of these methods (unless your CPU is a PowerPC 604):
+#### 1) create a $WRAPPER_ROOT/include/makeinclude/platform_macros.GNU
+####    that contains something like:
+####  CPU = I80486
+####  include $(WRAPPER_ROOT)/include/makeinclude/platform_vxworks5.2_g++.GNU
+#### 2) modify the code below to set CPU, or
+#### 3) set CPU on the command line, e.g., "make CPU=I80486"
+ifeq ($(CPU),)
+  CPU = PPC604
+endif # default CPU
+
+ifeq ($(CPU),PPC604)
+  CCFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  LIB_DIR = $(HOST_DIR)/powerpc-wrs-vxworks/lib
+  TOOLENV = ppc
+else
+ifeq ($(CPU),I80486)
+  CCFLAGS += -B$(GCCLIB_DIR)/ -DCPU=I80486 -m486
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/i386-wrs-vxworks/cygnus-2.7.2-960126
+  LIB_DIR = $(HOST_DIR)/i386-wrs-vxworks/lib
+  TOOLENV = 386
+endif # I80486
+endif # PPC604
+
+#### END CPU-specific settings
+
+
+TARGET_DIR	= $(WIND_BASE)/target
+HOST_DIR	= $(WIND_BASE)/host/sun4-solaris2
 BIN_DIR		= $(HOST_DIR)/bin
-LIB_DIR		= $(HOST_DIR)/powerpc-wrs-vxworks/lib
-GCCLIB_DIR	= $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
 
-CC		= $(BIN_DIR)/g++ppc
+
+CC		= $(BIN_DIR)/g++$(TOOLENV)
 CXX		= $(CC)
-CFLAGS		+= $(DCFLAGS) -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS -O2
-CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
+CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -nostdinc -O -fvolatile -nostdlib -fno-builtin -fno-defer-pop #### -Wall
+CCFLAGS		+= $(DCFLAGS) $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
-INCLDIRS	+= -I$(TARGET_DIR)/h
-LD		= $(BIN_DIR)/ldppc
+INCLDIRS	+=
+LD		= $(CXX)
 LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR)
 PIC		=
-AR		= arppc
+AR		= ar$(TOOLENV)
 ARFLAGS		= rv
-RANLIB		= /bin/true 
+RANLIB		= /bin/true
 PRELIB	= (echo "main() { }" > gcctemp.c && \
 	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
 	  $(LD) $^ $(LDFLAGS) $(LIBS); \
@@ -27,3 +58,6 @@ PRELIB	= (echo "main() { }" > gcctemp.c && \
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
+
+COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+LINK.cc		=$(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
