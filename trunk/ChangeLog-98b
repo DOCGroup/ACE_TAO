@@ -1,3 +1,9 @@
+Mon Aug 24 00:11:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Reactor/Misc/pingpong.cpp (run_svc): Fixed a subtle
+	  potential "order of destruction" bug with this test.  Thanks to
+	  Hans Rohnert for reporting this.
+
 Sun Aug 23 21:09:55 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
         * ace/OS.i (thr_testcancel): with ACE_HAS_PTHREAD_DRAFT6,
