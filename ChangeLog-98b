@@ -191,9 +191,6 @@ Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
           reentrance if fini () is called before the Object_Manager
           is (explicitly) destroyed.  Thanks to Gonzo for reporting it.
 
-        * tests/run_tests.sh: commented out Thread_Pool_Reactor_Test.
-          It doesn't run properly on some platforms.
-
 Tue Oct 27 05:47:21 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.65 released.
@@ -2052,7 +2049,7 @@ Mon Sep 28 16:06:05 1998  David L. Levine  <levine@cs.wustl.edu>
           is used and ACE_HAS_THREAD_SPECIFIC_STORAGE is #defined, then
           the ACE TSS emulation will use one native TSS key.
 
-          ACE_TSS_EMULATION may be useful on even on platforms that
+          ACE_TSS_EMULATION may be useful even on platforms that
           have native thread specific storage.  It offers these
           advantages:
 
