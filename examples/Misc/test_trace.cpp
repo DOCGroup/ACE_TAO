@@ -13,8 +13,8 @@
 //    also illustrates how to redirect the output to a file.
 //
 // = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
-//    Irfan Pyarali <irfan@cs.wustl.edu> 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -39,7 +39,7 @@ public:
     ACE_Trace _ ("int recursive (size_t depth)",
                  __LINE__,
                  __FILE__);
-    
+
     if (depth > 0)
       return recursive (depth - 1);
     else
@@ -58,14 +58,14 @@ private:
 };
 
 extern "C"
-void 
+void
 exithook (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "we're outta here!\n"));
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   const size_t MAX_DEPTH = argc == 1 ? 10 : atoi (argv[1]);
@@ -103,11 +103,10 @@ main (int argc, char *argv[])
 #else
   const int MAX_ITERATIONS = argc > 3 ? ACE_OS::atoi (argv[3]) : 10;
 
-  for (size_t i = 0; i < MAX_ITERATIONS; i++)
+  for (int i = 0; i < MAX_ITERATIONS; i++)
     task.svc ();
 #endif /* ACE_MT_SAFE */
 
   // Destructor automatically called.
   return 0;
 }
-

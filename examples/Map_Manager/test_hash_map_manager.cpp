@@ -9,7 +9,7 @@ ACE_RCSID(Map_Manager, test_hash_map_manager, "$Id$")
 
 const int MAX_KEY_LEN = 1000;
 
-typedef ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_RW_Mutex> MAP_MANAGER;
+typedef ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX> MAP_MANAGER;
 
 int
 main (int argc, char *argv[])
@@ -76,27 +76,35 @@ main (int argc, char *argv[])
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Guard<ACE_RW_Mutex>;
-template class ACE_Read_Guard<ACE_RW_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Mutex>;
+
+#if defined(ACE_HAS_THREADS)
+template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#endif /* ACE_HAS_THREADS */
+
 template class ACE_Hash_Map_Entry<ACE_CString, ACE_CString>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString, ACE_CString, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
+
+#if defined(ACE_HAS_THREADS)
+#pragma instantiate ACE_Guard<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>
+#endif /* ACE_HAS_THREADS */
+
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_CString>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, ACE_CString, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_RW_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

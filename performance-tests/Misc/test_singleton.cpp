@@ -48,11 +48,11 @@ public:
   static Mutex_Singleton *instance (void);
 
 private:
-  static ACE_Thread_Mutex lock_;
+  static ACE_SYNCH_MUTEX lock_;
   static Mutex_Singleton *instance_;
 };
 
-ACE_Thread_Mutex Mutex_Singleton::lock_;
+ACE_SYNCH_MUTEX Mutex_Singleton::lock_;
 
 Mutex_Singleton *Mutex_Singleton::instance_;
 
@@ -60,7 +60,7 @@ Mutex_Singleton *
 Mutex_Singleton::instance (void)
 {
   // Acquire the lock every time in.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Mutex_Singleton::lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, Mutex_Singleton::lock_, 0);
 
   if (Mutex_Singleton::instance_ == 0)
     ACE_NEW_RETURN (Mutex_Singleton::instance_, Mutex_Singleton, 0);
@@ -68,7 +68,7 @@ Mutex_Singleton::instance (void)
   return Mutex_Singleton::instance_;
 }
 
-ACE_Thread_Mutex DC_Singleton::lock_;
+ACE_SYNCH_MUTEX DC_Singleton::lock_;
 
 DC_Singleton *DC_Singleton::instance_;
 
@@ -78,7 +78,7 @@ DC_Singleton::instance (void)
   if (DC_Singleton::instance_ == 0)
     {
       // Only lock if instance_ isn't 0.
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, DC_Singleton::lock_, 0);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, DC_Singleton::lock_, 0);
 
       // Perform the Double-Check.
       if (DC_Singleton::instance_ == 0)
@@ -88,7 +88,7 @@ DC_Singleton::instance (void)
   return DC_Singleton::instance_;
 }
 
-typedef ACE_Singleton <DC_Singleton, ACE_Thread_Mutex> My_Singleton;
+typedef ACE_Singleton <DC_Singleton, ACE_SYNCH_MUTEX> My_Singleton;
 
 int
 main (int argc, char *argv[])
@@ -162,9 +162,9 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<DC_Singleton, ACE_Thread_Mutex>;
+template class ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<DC_Singleton, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
