@@ -20,7 +20,7 @@
 
 namespace Deployment
 {
-  struct ComponentExternalPortEndpoints;
+  class ComponentExternalPortEndpoints;
   struct ComponentExternalPortEndpoint;
 }
 

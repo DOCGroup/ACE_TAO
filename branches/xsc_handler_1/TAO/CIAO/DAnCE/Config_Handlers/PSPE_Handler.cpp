@@ -62,7 +62,7 @@ namespace CIAO
       if (src.kind () == CCMComponentPortKind::EventConsumer)
         dest.kind = Deployment::EventConsumer;
     }
-
+/*
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
       const Deployment::PlanSubcomponentPortEndpoint &src)
@@ -90,7 +90,7 @@ namespace CIAO
       if (src.kind == ::Deployment::EventConsumer)
         pspe.kind (CCMComponentPortKind::EventConsumer);
 
-      return pspe;*/
-    } 
+      return pspe;
+    } */
   }
 }

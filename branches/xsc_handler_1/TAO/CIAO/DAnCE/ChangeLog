@@ -1,3 +1,21 @@
+Wed Jan 19 21:41:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp
+ 	* DAnCE/Config_Handlers/ADD_Handler.h
+ 	* DAnCE/Config_Handlers/Any_Handler.cpp
+ 	* DAnCE/Config_Handlers/CEPE_Handler.h
+ 	* DAnCE/Config_Handlers/CRDD_Handler.h
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc
+ 	* DAnCE/Config_Handlers/IDD_Handler.h
+ 	* DAnCE/Config_Handlers/ID_Handler.h
+ 	* DAnCE/Config_Handlers/MDD_Handler.h
+ 	* DAnCE/Config_Handlers/PSPE_Handler.cpp
+ 	* DAnCE/Config_Handlers/Property_Handler.h
+ 	* DAnCE/Config_Handlers/RDD_Handler.h
+ 	* DAnCE/Config_Handlers/Singleton_IDREF_Map.h
+
+          Fixed compilation warnings or errors.
+
 Tue Jan 18 21:41:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* Config_Handlers/Basic_Deployment_Data.cpp:

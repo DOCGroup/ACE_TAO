@@ -72,18 +72,20 @@ namespace CIAO
       static bool
       unbind_refs (void);
 
+      typedef ACE_Hash_Map_Manager<ACE_CString,
+                                   size_t,
+                                   ACE_Null_Mutex> IDREF_MAP;
+
+          
+      typedef ACE_Hash_Map_Manager<size_t,
+                                   ACE_CString,
+                                   ACE_Null_Mutex> POS_MAP;
+
     private:
       static bool artifact_deployment_descr (
           const ArtifactDeploymentDescription& desc,
           ::Deployment::ArtifactDeploymentDescription &dest,
           CORBA::ULong l = 0);
-          
-      typedef ACE_Hash_Map_Manager<ACE_CString,
-                                   size_t,
-                                   ACE_Null_Mutex> IDREF_MAP;
-      typedef ACE_Hash_Map_Manager<size_t,
-                                   ACE_CString,
-                                   ACE_Null_Mutex> POS_MAP;
 
       /// The map used to store and look up the indexes of elements
       /// referenced by their IDREF.
