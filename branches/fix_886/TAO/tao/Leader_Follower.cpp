@@ -4,6 +4,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Follower.h"
 #include "tao/Follower_Auto_Ptr.h"
+#include "tao/LF_Follower_Auto_Adder.h"
 #include "tao/LF_Event.h"
 #include "tao/LF_Event_Binder.h"
 
@@ -48,7 +49,7 @@ int
 TAO_Leader_Follower::elect_new_leader_i (void)
 {
   TAO_Follower* follower =
-    this->follower_set_.pop_front ();
+    this->follower_set_.head ();
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
@@ -236,7 +237,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
             // lost.
             //
 
-            (void) this->add_follower (follower);
+            TAO_LF_Follower_Auto_Adder auto_adder (*this, follower);
 
             if (max_wait_time == 0)
               {
@@ -269,7 +270,6 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                                   " [has timer, follower failed]\n",
                                   transport->id ()));
 
-                    this->remove_follower (follower);
                     if (!event->successful ())
                       {
                         // Remove follower can fail because either
