@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 #if !defined (TAO_CONNECT_H)
 #  define TAO_CONNECT_H
@@ -30,10 +31,10 @@ typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
 
 class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
+{
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
-{
 public:
   // = Intialization method.
   TAO_Client_Connection_Handler (ACE_Thread_Manager * = 0);
@@ -76,9 +77,10 @@ private:
 };
 
 class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
+{
   // = TITLE
   //   Handles requests on a single connection in a server.
-{
+
 public:
   TAO_Server_Connection_Handler (ACE_Thread_Manager *t = ACE_Thread_Manager::instance ());
   // Constructor.
@@ -99,8 +101,8 @@ public:
   enum RequestStatus
   {
     Error = -1,
-    Request,                    // A CORBA Request was received
-    LocateRequest               // A CORBA LocateRequest was received
+    Request,      // A CORBA Request was received
+    LocateRequest // A CORBA LocateRequest was received
   };
 
   virtual RequestStatus recv_request (CDR &msg, CORBA::Environment &env);
@@ -143,13 +145,16 @@ protected:
   // Reads a message from the <peer()>, dispatching and servicing it
   // appropriately.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask);
   // Perform appropriate closing of the connection.
 
   TAO_OA_Parameters *params_;
+  // Pointer to the object adapter parameters.
 };
 
-typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
+                              ACE_SOCK_ACCEPTOR>
 	TAO_ACCEPTOR;
 
 #endif /* TAO_CONNECT_H */

@@ -106,8 +106,8 @@ Arg_Shifter::is_option_next (void) const
 int
 Arg_Shifter::is_parameter_next (void) const
 {
-  return this->is_anything_left () &&
-    this->temp_[this->current_index_][0] != '-';
+  return this->is_anything_left () 
+    && this->temp_[this->current_index_][0] != '-';
 }
 
 int

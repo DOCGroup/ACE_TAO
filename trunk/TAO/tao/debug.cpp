@@ -1,5 +1,6 @@
 // $Id$
 // @ (#)debug.cpp       1.3 95/10/02
+
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -10,7 +11,7 @@
 // part of process initialization.  They are treated as immutable
 // values through all of this debuging package.
 //
-// XXX on Windows, make it always use OutputDebugString () instead of stdio
+// XXX on Windows, make it always use OutputDebugString () instead of stdio. 
 
 #include "tao/corba.h"
 
@@ -20,12 +21,14 @@
 # define funlockfile(f)
 #endif /* ! ACE_HAS_PTHREADS && ! ACE_HAS_DCE_DRAFT4_THREADS */
 
-u_int TAO_Export TAO_debug_level        = 0;
-char * TAO_Export TAO_debug_filter      = "l";
+u_int TAO_Export TAO_debug_level = 0;
+char *TAO_Export TAO_debug_filter = "l";
 
 static FILE *debug_stream = stderr;
 
-// Dummy function to get rid of "'debug_stream' defined but not used" warning
+// Dummy function to get rid of "'debug_stream' defined but not used"
+// warning.
+
 FILE *
 use_debug_stream_to_get_rid_of_warning (void)
 {
@@ -39,7 +42,7 @@ use_debug_stream_to_get_rid_of_warning (void)
 // same functionality ... this could be modified to use that routine
 // where it's available.
 
-#if     defined (DEBUG) && defined (HAVE_VPRINTF)
+#if defined (DEBUG) && defined (HAVE_VPRINTF)
 
 // Support for prefixing debug messages with process ID and, if
 // threaded, the thread ID.  This lets messages from different sources
@@ -81,16 +84,15 @@ static void
 setup (void)
 {
   if (my_pid == 0)
-    {
-      my_pid = ACE_OS::getpid ();
-      // other setup goes here
-    }
+    my_pid = ACE_OS::getpid ();
+  
+// Any other setup goes here.
 }
 
 #define emit_prefix(stream) fprintf (stream, "p%ld:  ", (long) my_pid)
 #endif  /* !ACE_HAS_PTHREADS */
 
-#elif   defined (_WIN32)
+#elif defined (_WIN32)
 
 // Not all implementations of Win32 have threads, but in any case this
 // code doesn't yet support Win32 threads.
@@ -100,13 +102,12 @@ setup (void)
 {
   if (my_pid == 0)
     my_pid = GetCurrentProcessId ();
-  // other setup goes here
+  // Any other setup goes here.
 }
 
 #define emit_prefix(stream) fprintf (stream, "p%ld:  ", my_pid)
 
 #else
-
 #       error "unknown OS platform"
 #endif /* OS-specific initialization */
 
@@ -137,14 +138,18 @@ dmsg_filter (const char *_FAR categories,
 
   switch (*cp)
     {                   // standard categories
-    case 'l':           ACE_OS::fprintf (debug_stream, " (LEAK) "); break;
+    case 'l':
+      ACE_OS::fprintf (debug_stream, " (LEAK) "); 
+      break;
     }
 
   va_start (ap, fmt);
   vfprintf (debug_stream, fmt, ap);
   va_end (ap);
+
   if (strchr (fmt, '\n') == 0)
     ACE_OS::fprintf (debug_stream, "\n");
+
   funlockfile (debug_stream);
 
 #if defined (_WIN32)
@@ -199,22 +204,28 @@ dmsg_v (const char *_FAR fmt,
 }
 
 void TAO_Export
-_dmsg_x (CORBA::Environment _FAR        &env,
+_dmsg_x (CORBA::Environment _FAR &env,
          const char *_FAR info)
 {
-  const CORBA::Exception        *ex = env.exception ();
+  const CORBA::Exception *ex = env.exception ();
 
   setup ();
   flockfile (debug_stream);
   emit_prefix (debug_stream);
-  ACE_OS::fprintf (debug_stream, "exception '%s' at '%s'\n", ex->_id (), info);
+  ACE_OS::fprintf (debug_stream,
+                   "exception '%s' at '%s'\n",
+                   ex->_id (),
+                   info);
+
   if (env.exception_type () == CORBA::SYSTEM_EXCEPTION)
     {
       CORBA::SystemException *sysex = (CORBA::SystemException *) ex;
 
       emit_prefix (debug_stream);
-      ACE_OS::fprintf (debug_stream, "minor %#lx, completion %#lx\n",
-                       sysex->minor (), (long) sysex->completion ());
+      ACE_OS::fprintf (debug_stream,
+                       "minor %#lx, completion %#lx\n",
+                       sysex->minor (),
+                       (long) sysex->completion ());
     }
   funlockfile (debug_stream);
 
@@ -231,12 +242,17 @@ dmsg_opaque (char *_FAR label,
   setup ();
   flockfile (debug_stream);
   emit_prefix (debug_stream);
-  ACE_OS::fprintf (debug_stream, "%s ", label);
+  ACE_OS::fprintf (debug_stream,
+                   "%s ",
+                   label);
 
   if (len == 0 || !buffer)
-    ACE_OS::fprintf (debug_stream, " (empty)");
+    ACE_OS::fprintf (debug_stream,
+                     " (empty)");
   else if (len > UINT_MAX)
-    ACE_OS::fprintf (debug_stream, "Oversized opaque data:  %ld bytes", len);
+    ACE_OS::fprintf (debug_stream,
+                     "Oversized opaque data:  %ld bytes",
+                     len);
   else
     {
       u_int i;
@@ -248,25 +264,36 @@ dmsg_opaque (char *_FAR label,
       if (i < len)
         {
           if (len >= 20)
-            ACE_OS::fprintf (debug_stream, "%ld bytes binary data", len);
+            ACE_OS::fprintf (debug_stream,
+                             "%ld bytes binary data",
+                             len);
           else
             {
-              ACE_OS::fprintf (debug_stream, "binary data {%2X", buffer [0]);
+              ACE_OS::fprintf (debug_stream,
+                               "binary data {%2X", buffer [0]);
               for (i = 1; i < len; i++)
-                ACE_OS::fprintf (debug_stream, ", %2x", buffer [i]);
-              ACE_OS::fprintf (debug_stream, "}");
+                ACE_OS::fprintf (debug_stream,
+                                 ", %2x",
+                                 buffer [i]);
+              ACE_OS::fprintf (debug_stream,
+                               "}");
             }
         }
       else
         {
           if (len >= 50)
-            ACE_OS::fprintf (debug_stream, "%ld bytes string data", len);
+            ACE_OS::fprintf (debug_stream,
+                             "%ld bytes string data",
+                             len);
           else
-            ACE_OS::fprintf (debug_stream, "string data { \"%.*s\" }",
- (int) len, buffer);
+            ACE_OS::fprintf (debug_stream,
+                             "string data { \"%.*s\" }",
+                             (int) len,
+                             buffer);
         }
     }
-  ACE_OS::fprintf (debug_stream, "\n");
+  ACE_OS::fprintf (debug_stream,
+                   "\n");
   funlockfile (debug_stream);
 
 #if defined (_WIN32)
@@ -283,10 +310,13 @@ dmsg_opaque_full (char *_FAR label,
   flockfile (debug_stream);
 
   emit_prefix (debug_stream);
-  ACE_OS::fprintf (debug_stream, "%s ", label);
+  ACE_OS::fprintf (debug_stream,
+                   "%s ",
+                   label);
 
   if (len == 0 || !buffer)
-    ACE_OS::fprintf (debug_stream, " (empty)");
+    ACE_OS::fprintf (debug_stream,
+                     " (empty)");
   else
     {
       u_int i;
@@ -294,30 +324,40 @@ dmsg_opaque_full (char *_FAR label,
       for (i = 0; i < len; i++)
         {
           if (i == 0)
-            ACE_OS::fprintf (debug_stream, "\nhex:   ");
+            ACE_OS::fprintf (debug_stream,
+                             "\nhex:   ");
           else if ((i % 32) == 0)
-            ACE_OS::fprintf (debug_stream, "\n       ");
+            ACE_OS::fprintf (debug_stream,
+                             "\n       ");
           else if ((i % 4) == 0)
-            ACE_OS::fprintf (debug_stream, " ");
-          ACE_OS::fprintf (debug_stream, "%02x", buffer[i]);
+            ACE_OS::fprintf (debug_stream,
+                             " ");
+          ACE_OS::fprintf (debug_stream,
+                           "%02x",
+                           buffer[i]);
         }
 
       for (i = 0; i < len; i++)
         {
           if (i == 0)
-            ACE_OS::fprintf (debug_stream, "\nchars: ");
+            ACE_OS::fprintf (debug_stream,
+                             "\nchars: ");
           else if ((i % 32) == 0)
-            ACE_OS::fprintf (debug_stream, "\n       ");
+            ACE_OS::fprintf (debug_stream,
+                             "\n       ");
           else if ((i % 4) == 0)
-            ACE_OS::fprintf (debug_stream, " ");
+            ACE_OS::fprintf (debug_stream,
+                             " ");
           ACE_OS::fprintf (debug_stream, "%c ",
                            (isprint (buffer[i]) ? buffer[i] : '?'));
 
         }
 
-      ACE_OS::fprintf (debug_stream, "\n");
+      ACE_OS::fprintf (debug_stream,
+                       "\n");
     }
-  ACE_OS::fprintf (debug_stream, "\n");
+  ACE_OS::fprintf (debug_stream,
+                   "\n");
   funlockfile (debug_stream);
 
 #if defined (_WIN32)
