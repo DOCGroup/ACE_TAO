@@ -1,3 +1,7 @@
+Sat Oct 25 10:13:56 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Singleton.h: added comment about best ACE_LOCK types to use.
+
 Sat Oct 25 01:02:34 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.27, released Sat Oct 25 01:02:34 1997.
@@ -32,13 +36,13 @@ Fri Oct 24 17:39:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Task.cpp (ACE_Task_Base_cleanup):  Changed
 	  ACE_Task_Base::cleanup (object);
- 
+
           to:
- 
+
           ACE_Task_Base::cleanup (object, 0);
 
 	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
-	  this. 
+	  this.
 
 	* ace/Thread_Manager.cpp (find_thread): Fixed another problem with
  	  == being used to compare threads rather than
@@ -78,7 +82,7 @@ Fri Oct 24 17:11:14 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
         * Timer_Queue_Adapters.i (activate): Call
  	  ACE_Task_Base::activate() with n_threads = 1 to ensure that a
  	  single thread is spawned.
-        
+
 Fri Oct 24 10:00:02 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
         * ace/Thread_Manager.cpp (wait_grp):  Fixed a bug.  Should wait on
@@ -315,26 +319,18 @@ Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
           instantiations use one of those locks to guard their allocation of
           a new instance, via double-checked locking.
 
-          This change has two impacts:
-          1) ACE_{TSS_}Singleton users are limited to the following types
-             for their ACE_LOCK instantiation parameters:  ACE_Null_Mutex,
-             ACE_Thread_Mutex, ACE_Recursive_Thread_Mutex, and
-             ACE_RW_Thread_Mutex.  If another type is needed, it can be
-             easily added to the ACE_Object_Manager:  another overloaded
-             get_singleton_lock () function and preallocated lock would
-             have to be added.
+          This change has one impact, then:
+          ACE_{TSS_}Singleton users are limited to the following types
+          for their ACE_LOCK instantiation parameters:  ACE_Null_Mutex,
+          ACE_Thread_Mutex, ACE_Recursive_Thread_Mutex, and
+          ACE_RW_Thread_Mutex.  If another type is needed, it can be
+          easily added to the ACE_Object_Manager:  another overloaded
+          get_singleton_lock () function and preallocated lock would
+          have to be added.
 
-          2) A single lock of each of the types mentioned above is used
-             for all ACE_{TSS_}Singleton instantiations.  Previously,
-             there was one lock per instantiation.  This change could
-             have an impacted in threaded programs (ACE_MT_SAFE) with
-             recursively constructed ACE_{TSS_}Singletons.  In that case,
-             either ACE_Null_Mutex or ACE_Recursive_Thread_Mutex should
-             be used for the ACE_LOCK instantiation parameter.  Use of
-             ACE_Thread_Mutex would lead to deadlock.  Beyond that, I
-             don't expect the smaller number of locks to have any
-             negative impact because they're just used when initially
-             allocating the singleton instances.
+	  As noted in Singleton.h, the best types of ACE_LOCKs to use
+	  for instantiating ACE_Singleton are ACE_Recursive_Thread_Mutex
+	  and ACE_Null_Mutex.
 
           In addition to the above change, I made these two other
           changes:
