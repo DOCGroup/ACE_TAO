@@ -30,6 +30,7 @@ CORBA::Boolean
 Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
                              Audio_Control::INITaudioReply_out reply,
                              CORBA::Environment &env)
+                          ACE_THROW_SPEC(( CORBA::SystemException )) 
 {
   int result;
   int failureType; /* 0 - can't open file, 1 - can't open live source */
@@ -124,6 +125,7 @@ CORBA::Boolean
 Audio_Control_i::play (const Audio_Control::PLAYPara & para,
                        CORBA::Long_out ats,
                        CORBA::Environment &env)
+               ACE_THROW_SPEC (( CORBA::SystemException ))
 
 {
   return this->state_->play (para,ats);
@@ -132,6 +134,7 @@ Audio_Control_i::play (const Audio_Control::PLAYPara & para,
 CORBA::Boolean 
 Audio_Control_i::speed (const Audio_Control::SPEEDPara & para,
                         CORBA::Environment &env)
+              ACE_THROW_SPEC (( CORBA::SystemException ))
 
 {
   return this->state_->speed (para);
@@ -140,6 +143,7 @@ Audio_Control_i::speed (const Audio_Control::SPEEDPara & para,
 CORBA::Boolean 
 Audio_Control_i::stop (CORBA::Long cmdsn,
                        CORBA::Environment &env)
+              ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->stop (cmdsn);
 }
@@ -147,6 +151,7 @@ Audio_Control_i::stop (CORBA::Long cmdsn,
 CORBA::Boolean
 Audio_Control_i::set_peer (char *&peer,
                            CORBA::Environment &env)
+                 ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   char* peer_addr_str = new char [BUFSIZ];
   ACE_OS::strcpy (peer_addr_str,peer);
@@ -217,6 +222,7 @@ Audio_Control_i::set_peer (char *&peer,
 
 void
 Audio_Control_i::close (CORBA::Environment &env)
+        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   this->state_->close ();
   return;
