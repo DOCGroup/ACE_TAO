@@ -1,3 +1,20 @@
+Wed Jan 30 12:49:43 2002  Rob Ruff  <rruff@scires.com>
+                          Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Change ACE_ENV_ARG_DECL to
+	  ACE_ENV_ARG_DECL_NOT_USED.
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:  Clean up debugging statements.
+	  Change value of RTCP_SDES_NOTE to "An important note..."
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp (update_seq): 
+	  Only show debug statement if TAO_debug_level is > 0.
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Default initialize timer_id_ to
+	  -1.  Only call cancel_timer() and handle_timeout() if timer_id_ is
+	  not -1. 
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	 (TAO_AV_UDP_Connector::connect) Set the control address.
+	 (TAO_AV_UDP_Connection_Setup::setup) Treat the setup of sockets
+	 which are used as acceptors or connectors differently.
+
 Wed Jan 30 16:07:33 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Makefile.bor:

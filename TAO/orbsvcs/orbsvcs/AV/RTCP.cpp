@@ -385,9 +385,17 @@ TAO_AV_RTCP_Object::handle_input (void)
 
   int n = this->transport_->recv (data.rd_ptr (),bufsiz);
   if (n == 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_ERROR, "TAO_AV_RTCP::handle_input:connection closed\n"));
+      return -1;
+    }
   if (n < 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_ERROR,"TAO_AV_RTCP::handle_input:recv error\n"));
+      return -1;
+    }
   data.wr_ptr (n);
   ACE_Addr *peer_addr = this->transport_->get_peer_addr ();
   this->callback_->receive_control_frame (&data,*peer_addr);
@@ -630,7 +638,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
         }
       else
         {
-          value = note;
+          value = "An important note...";
           sdes_type = RTCP_SDES_NOTE;
         }
       break;
