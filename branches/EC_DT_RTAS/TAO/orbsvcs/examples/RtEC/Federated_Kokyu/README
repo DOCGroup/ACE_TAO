@@ -1,1 +1,9 @@
 This directory contains the Release Guard test!
+
+How: By default, all these tests run RMS; if you want to run EDF, give
+them "-s edf" as command line arguments.
+
+First, run `Consumer_EC -s edf`, then `Supplier_EC -s edf`. There should
+be three tasks, as in Yuanfang's basic test: T1, T2_1, T2_2, and T3.
+Note that T2 has two subtasks. T1 and T2_1 run in Supplier_EC; T2_2 and
+T3 run in Consumer_EC.
