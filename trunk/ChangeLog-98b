@@ -4,6 +4,8 @@ Sat Jul 11 14:25:58 1998  David L. Levine  <levine@cs.wustl.edu>
           ifndef ACE_TIMER_QUEUE_ADAPTERS_C protection, because this
           file gets multiply included with g++.
 
+        * ace/config-lynxos.h: added #define ACE_USE_RCS_ID 0.
+
 Sat Jul 11 03:44:00 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
         * ace/inc_user_config.h:
