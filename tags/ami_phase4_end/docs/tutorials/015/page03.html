@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+The Client object is designed to hide all of the messy connection
+      logic from it's users.  It also provides put/get methods for
+      sending data to the server and receiving the server's response.
+      Note the Protocol_Stream member that will take care of
+      converting and sending/receiving the data.
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>CLIENT_H</font>
+<font color=blue>#define</font> <font color=purple>CLIENT_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Stream.h">ace/SOCK_Stream.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=blue>#include</font> "<font color=green>Protocol_Stream.h</font>"
+
+class ACE_Message_Block;
+
+<font color=red>/* Hide the details of connection and protocol-conformance from the
+   application-level logic.
+*/</font>
+class Client
+{
+public:
+  <font color=red>// Provide the server information when constructing the</font>
+  <font color=red>// object.  This could (and probably should) be moved to the</font>
+  <font color=red>// open() method.</font>
+  Client (u_short port,
+          const char *server);
+
+  <font color=red>// Cleanup...</font>
+  ~Client (void);
+
+  <font color=red>// Open the connection to the server.</font>
+  int open (void);
+
+  <font color=red>// Close the connection to the server.  Be sure to do this</font>
+  <font color=red>// before you let the Client go out of scope.</font>
+  int close (void);
+
+  <font color=red>// Put a message to the server.  The Client assumes ownership of</font>
+  <font color=red>// &lt;message> at that point and will release() it when done.  Do not</font>
+  <font color=red>// use &lt;message> after passing it to put().</font>
+  int put (ACE_Message_Block *message);
+
+  <font color=red>// Get a response from the server.  The caller becomes the owner of</font>
+  <font color=red>// &lt;response> after this call and is responsible for invoking</font>
+  <font color=red>// release() when done.</font>
+  int get (ACE_Message_Block *&response);
+
+private:
+  <font color=red>// Protocol_Stream hides the protocol conformance details from us.</font>
+  Protocol_Stream stream_;
+
+  <font color=red>// We create a connection on the peer_ and then pass ownership of it</font>
+  <font color=red>// to the protocol stream.</font>
+  ACE_SOCK_Stream peer_;
+
+  <font color=red>// Endpoing information saved by the constructor for use by open().</font>
+  u_short port_;
+  const char *server_;
+
+  <font color=red>// Accessors for the complex member variables.</font>
+
+  Protocol_Stream &stream (void)
+  {
+    return this->stream_;
+  }
+
+  ACE_SOCK_Stream &peer (void)
+  {
+    return this->peer_;
+  }
+};
+
+<font color=blue>#endif</font> <font color=red>/* CLIENT_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>

@@ -1,0 +1,4 @@
+rmit SII_ttcp
+putit SII_ttcp "/project/mambo/gokhale/TTCP-testbed/SII/1way/Orbix/server -f m -b 65536 -l 131072"
+#putit SII_ttcp -persistent
+#truss -f server -f m -b 65536 -l 131072

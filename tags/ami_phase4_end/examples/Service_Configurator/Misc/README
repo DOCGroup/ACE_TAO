@@ -1,0 +1,6 @@
+This directory contains an example that illustrates how the ACE
+Service Configurator can configure static and dynamic services, both
+from the command-line and from a svc.config file.  We define several
+instances, i.e., Timer_Service_1 and Timer_Service_2 of the SAME
+service just to exercise different configuration options.  A "real"
+application would usually define different services.

@@ -1,0 +1,123 @@
+#
+# Defines specific to a particular version of the compiler
+# 
+# Inputs:
+# ~~~~~~~
+# STATIC - if defined means creating a static library or executable
+# PASCAL - if defined means link dll against pascal run-time library
+# DEBUG - if defined means building with debug information
+#
+# Outputs:
+# ~~~~~~~~
+# CC - name of compiler
+# LD - name of linker
+# COMMON_CFLAGS - compiler flags for all targets
+# COMMON_LFLAGS - linker flags for all targets
+# COMMON_LIBS - linker library files for all targets
+# DLL_CFLAGS - compiler flags specific to DLL targets
+# DLL_LFLAGS - linker flags specific to DLL targets
+# DLL_STARTUP_OBJ - start-up object files for DLL targets
+# EXE_CFLAGS - compiler flags specific to EXE targets
+# EXE_LFLAGS - linker flags specific to EXE targets
+# EXE_STARTUP_OBJ - start-up object files for EXE targets
+# LIB_CFLAGS - compiler flags specific to static lib targets
+# LIB_LFLAGS - flags specific to static lib targets (passed to
+#              librarian)
+#
+
+
+!include <$(ACE_ROOT)\include\makeinclude\ace_flags.bor>
+
+#
+# BCB4 Settings (all we have for now)
+#
+
+CC = bcc32
+LD = ilink32
+AR = tlib
+
+#
+# Common flags
+#
+
+!ifdef DEBUG
+DEBUG_CFLAGS = -v -y -Od -r- -vi- -k
+DEBUG_LFLAGS = -v
+!else
+DEBUG_CFLAGS = -O2 -DNDEBUG
+DEBUG_LFLAGS =
+!endif
+
+!ifdef STATIC
+STATIC_CFLAGS =
+STATIC_LFLAGS =
+!else
+STATIC_CFLAGS = -tWR
+STATIC_LFLAGS =
+!endif
+
+THREAD_CFLAGS = -D_MT -tWM
+WARNINGS_CFLAGS = -w-rvl -w-rch -w-par -w-ccc -w-obs -w-aus -w-pia
+DEFINES_CFLAGS = -DWIN32;_NO_VCL
+QUIET_CFLAGS = -q
+MISC_CFLAGS = -a8
+
+COMMON_CFLAGS = $(QUIET_CFLAGS) $(DEBUG_CFLAGS) $(THREAD_CFLAGS) \
+	$(STATIC_CFLAGS) $(WARNINGS_CFLAGS) $(DEFINES_CFLAGS) \
+	$(MISC_CFLAGS)
+
+COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn
+
+#
+# DLL specific flags
+#
+
+DLL_CFLAGS = -tWD
+DLL_LFLAGS = -Tpd -Gi
+!ifdef PASCAL
+DLL_STARTUP_OBJ = c0d32.obj sysinit.obj
+!else
+DLL_STARTUP_OBJ = c0d32.obj
+!endif
+
+#
+# EXE specific flags
+#
+
+EXE_CFLAGS =
+EXE_LFLAGS = -Tpe
+!ifdef PASCAL
+EXE_STARTUP_OBJ = c0x32.obj sysinit.obj
+!else
+EXE_STARTUP_OBJ = c0x32.obj
+!endif
+
+#
+# Static lib specific flags
+#
+
+LIB_CFLAGS =
+!ifdef DEBUG
+LIB_LFLAGS = /C /P2048
+!else
+LIB_LFLAGS = /C /P512
+!endif
+
+#
+# Libraries to be linked
+#
+
+!ifdef STATIC
+!ifdef PASCAL
+COMMON_LIBS = import32.lib vcl.lib vcl40.lib cp32mt.lib ws2_32.lib
+!else
+COMMON_LIBS = import32.lib cw32mt.lib ws2_32.lib
+!endif
+!else
+!ifdef PASCAL
+COMMON_LIBS = import32.lib vcl.lib vcl40.bpi cp32mti.lib ws2_32.lib
+!else
+COMMON_LIBS = import32.lib cw32mti.lib ws2_32.lib
+!endif
+!endif
+
