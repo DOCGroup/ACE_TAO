@@ -80,7 +80,7 @@ public:
   int max_write_delay;
   // Flags for the Consumer Admin
 
-  RtecScheduler::Scheduler_ptr scheduler;
+  CORBA::Object_ptr scheduler;
   // The scheduling service that we will use with this event channel.
   // Notice that this is optional and will only take effect if the EC
   // is configured with the right filtering strategies.
@@ -217,7 +217,7 @@ public:
   // Should we send callback disconnect messages when a proxy is
   // disconnected by the client
 
-  RtecScheduler::Scheduler_ptr scheduler (void);
+  CORBA::Object_ptr scheduler (void);
   // Obtain the scheduler, the user must release
 
   int busy_hwm (void) const;
@@ -292,7 +292,7 @@ private:
   TAO_EC_ObserverStrategy *observer_strategy_;
   // The observer strategy
 
-  RtecScheduler::Scheduler_var scheduler_;
+  CORBA::Object_var scheduler_;
   // The scheduler (may be nil)
 
   TAO_EC_Scheduling_Strategy *scheduling_strategy_;

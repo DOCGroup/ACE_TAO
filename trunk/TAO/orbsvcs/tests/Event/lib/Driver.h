@@ -318,12 +318,6 @@ protected:
   // The module factory for the OLD ec
 #endif
 
-  POA_RtecScheduler::Scheduler *scheduler_impl_;
-  // The scheduler implementation
-
-  RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler object reference
-
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
   // The event channel implementation
 

@@ -80,10 +80,10 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       // interpretation of disjunction for two-way calls is that the
       // caller calls one OR the other, but this is problematic: how
       // do we map the dispatches for this ?
-      if (prohibit_dispatches (RtecScheduler::TWO_WAY_CALL) < 0)
+      if (prohibit_dispatches (RtecBase::TWO_WAY_CALL) < 0)
         result = TWO_WAY_DISJUNCTION;
 
-      if (disjunctive_merge (RtecScheduler::ONE_WAY_CALL,
+      if (disjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
@@ -100,9 +100,9 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       //       (prohibit for now, as the additional complexity of allowing
       //       conjunctions of two-ways, but not disjunctions does not
       //       buy us anything, anyway).
-      if (prohibit_dispatches (RtecScheduler::TWO_WAY_CALL) < 0)
+      if (prohibit_dispatches (RtecBase::TWO_WAY_CALL) < 0)
         result = TWO_WAY_CONJUNCTION;
-      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL,
+      if (conjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
@@ -114,12 +114,12 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
       // Disjunctively merge the operation's two-way dispatches, and
       // conjunctively merge its one-way dispatches.
-      if (disjunctive_merge (RtecScheduler::TWO_WAY_CALL,
+      if (disjunctive_merge (RtecBase::TWO_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
         result = INTERNAL_ERROR;
-      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL,
+      if (conjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
@@ -195,7 +195,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
               && (*link)->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
@@ -219,7 +219,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
               && (*link)->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
@@ -293,7 +293,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
               && (*link)->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
@@ -316,7 +316,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
               && (*link)->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {

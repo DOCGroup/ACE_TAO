@@ -36,7 +36,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/Channel_Clients.h"
 #include "orbsvcs/Event/event_export.h"
 
 class TAO_RTEvent_Export TAO_EC_Gateway : public POA_RtecEventChannelAdmin::Observer
@@ -111,16 +111,9 @@ public:
 
   void init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
              RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-             RtecScheduler::Scheduler_ptr rmt_sched,
-             RtecScheduler::Scheduler_ptr lcl_sched,
-             const char* lcl_name,
-             const char* rmt_name,
-             CORBA::Environment &env = TAO_default_environment ());
+             CORBA::Environment &ACE_TRY_ENV);
   // To do its job this class requires to know the local and remote
-  // ECs it will connect to; furthermore it also requires to build
-  // RT_Infos for the local and remote schedulers.
-  // @@ TODO part of the RT_Info is hardcoded, we need to make it
-  // parametric.
+  // ECs it will connect to,
 
   void disconnect_push_supplier (CORBA::Environment & = TAO_default_environment ());
   // The channel is disconnecting.
@@ -151,7 +144,13 @@ private:
   void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub,
                           CORBA::Environment& env);
 
-private:
+protected:
+  void init_i (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
+               RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+               CORBA::Environment &ACE_TRY_ENV);
+  // Do the real work in init()
+
+protected:
   ACE_SYNCH_MUTEX lock_;
   // Lock to synchronize internal changes
 
@@ -169,8 +168,8 @@ private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the list changes.
 
-  RtecScheduler::handle_t rmt_info_;
-  RtecScheduler::handle_t lcl_info_;
+  RtecBase::handle_t rmt_info_;
+  RtecBase::handle_t lcl_info_;
   // Our local and remote RT_Infos.
 
   ACE_PushConsumer_Adapter<TAO_EC_Gateway_IIOP> consumer_;

@@ -163,7 +163,7 @@ TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   if (matches != 0)
     {
       this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
-                                        RtecScheduler::TWO_WAY_CALL,
+                                        RtecBase::TWO_WAY_CALL,
                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
@@ -227,7 +227,7 @@ TAO_EC_Sched_Filter::init_rt_info (CORBA::Environment &ACE_TRY_ENV)
 
       this->scheduler_->add_dependency (this->rt_info_,
                                         child.rt_info, 1,
-                                        RtecScheduler::TWO_WAY_CALL,
+                                        RtecBase::TWO_WAY_CALL,
                                         ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -247,7 +247,7 @@ TAO_EC_Sched_Filter::init_rt_info (CORBA::Environment &ACE_TRY_ENV)
       this->scheduler_->add_dependency (this->rt_info_,
                                         this->body_info_,
                                         1,
-                                        RtecScheduler::TWO_WAY_CALL,
+                                        RtecBase::TWO_WAY_CALL,
                                         ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -264,7 +264,7 @@ TAO_EC_Sched_Filter::init_rt_info (CORBA::Environment &ACE_TRY_ENV)
   this->scheduler_->add_dependency (this->parent_info_,
                                     this->rt_info_,
                                     1,
-                                    RtecScheduler::TWO_WAY_CALL,
+                                    RtecBase::TWO_WAY_CALL,
                                     ACE_TRY_ENV);
   ACE_CHECK;
 

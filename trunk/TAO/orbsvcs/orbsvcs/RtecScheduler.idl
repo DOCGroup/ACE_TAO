@@ -4,6 +4,7 @@
 #define TAO_RTEC_SCHEDULER_IDL
 
 #include "TimeBase.idl"
+#include "RtecBase.idl"
 #pragma prefix ""
 
 module RtecScheduler
@@ -47,31 +48,15 @@ module RtecScheduler
     REMOTE_DEPENDANT
   };
 
-  enum Dependency_Type_t
-  // Specify one-way or two-way call.
-  {
-    ONE_WAY_CALL,
-    TWO_WAY_CALL
-  };
-
-  typedef long handle_t;
-  // RT_Info's are assigned per-application
-  // unique identifiers.
-
-  struct Dependency_Info
-  {
-    Dependency_Type_t dependency_type;
-    long number_of_calls;
-    handle_t rt_info;
-    // Notice the reference to the RT_Info we
-    // depend on.
-  };
+  typedef RtecBase::Dependency_Type_t Dependency_Type_t;
+  typedef RtecBase::handle_t handle_t;
+  typedef RtecBase::Dependency_Info Dependency_Info;
 
   typedef sequence<Dependency_Info> Dependency_Set;
 
-  typedef long OS_Priority;
-  typedef long Preemption_Subpriority_t;
-  typedef long Preemption_Priority_t;
+  typedef RtecBase::OS_Priority OS_Priority;
+  typedef RtecBase::Preemption_Subpriority_t Preemption_Subpriority_t;
+  typedef RtecBase::Preemption_Priority_t Preemption_Priority_t;
 
   struct RT_Info
     // = TITLE

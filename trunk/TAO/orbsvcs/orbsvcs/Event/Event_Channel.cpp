@@ -197,7 +197,7 @@ IntervalToPriority (RtecScheduler::Time interval)
   return ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
 }
 
-class TAO_RTEvent_Export Shutdown_Consumer : public ACE_ES_Dispatch_Request
+class TAO_RTOLDEvent_Export Shutdown_Consumer : public ACE_ES_Dispatch_Request
 {
   // = TITLE
   //    Shutdown Consumer command
@@ -280,7 +280,7 @@ public:
   ACE_ES_Consumer_Module *consumer_module_;
 };
 
-class TAO_RTEvent_Export Shutdown_Channel : public ACE_ES_Dispatch_Request
+class TAO_RTOLDEvent_Export Shutdown_Channel : public ACE_ES_Dispatch_Request
 {
 public:
   Shutdown_Channel (ACE_EventChannel *channel) :
@@ -308,7 +308,7 @@ public:
   ACE_EventChannel *channel_;
 };
 
-class TAO_RTEvent_Export Flush_Queue_ACT : public ACE_Command_Base
+class TAO_RTOLDEvent_Export Flush_Queue_ACT : public ACE_Command_Base
 {
   // = TITLE
   //    Flush Queue Asynchronous Completion Token
@@ -937,14 +937,14 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
           this->scheduler_->add_dependency (rt_info,
                                             timer_rtinfo,
                                             1,
-                                            RtecScheduler::ONE_WAY_CALL,
+                                            RtecBase::ONE_WAY_CALL,
                                             ACE_TRY_ENV);
 #else
           ACE_Scheduler_Factory::server()->add_dependency
             (rt_info,
              timer_rtinfo,
              1,
-             RtecScheduler::ONE_WAY_CALL,
+             RtecBase::ONE_WAY_CALL,
              ACE_TRY_ENV);
 #endif
           ACE_TRY_CHECK;
@@ -2460,14 +2460,14 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
                   ((*proxy)->dependency()->rt_info,
                    new_subscribers->dependency_info_->rt_info,
                    new_subscribers->dependency_info_->number_of_calls,
-                   RtecScheduler::ONE_WAY_CALL,
+                   RtecBase::ONE_WAY_CALL,
                    ACE_TRY_ENV);
 #else
                 ACE_Scheduler_Factory::server()->add_dependency
                   ((*proxy)->dependency()->rt_info,
                    new_subscribers->dependency_info_->rt_info,
                    new_subscribers->dependency_info_->number_of_calls,
-                   RtecScheduler::ONE_WAY_CALL,
+                   RtecBase::ONE_WAY_CALL,
                    ACE_TRY_ENV);
 #endif
                 ACE_CHECK;
@@ -2843,14 +2843,14 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
                       (consumer->dependency()->rt_info,
                        temp->int_id_->dependency_info_->rt_info,
                        temp->int_id_->dependency_info_->number_of_calls,
-                       RtecScheduler::ONE_WAY_CALL,
+                       RtecBase::ONE_WAY_CALL,
                        ACE_TRY_ENV);
 #else
                     ACE_Scheduler_Factory::server()->add_dependency
                       (consumer->dependency()->rt_info,
                        temp->int_id_->dependency_info_->rt_info,
                        temp->int_id_->dependency_info_->number_of_calls,
-                       RtecScheduler::ONE_WAY_CALL,
+                       RtecBase::ONE_WAY_CALL,
                        ACE_TRY_ENV);
 #endif
                     ACE_TRY_CHECK;
@@ -2922,14 +2922,14 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
                 (consumer->dependency ()->rt_info,
                  dependency_info->rt_info,
                  dependency_info->number_of_calls,
-                 RtecScheduler::ONE_WAY_CALL,
+                 RtecBase::ONE_WAY_CALL,
                  ACE_TRY_ENV);
 #else
               ACE_Scheduler_Factory::server()->add_dependency
                 (consumer->dependency ()->rt_info,
                  dependency_info->rt_info,
                  dependency_info->number_of_calls,
-                 RtecScheduler::ONE_WAY_CALL,
+                 RtecBase::ONE_WAY_CALL,
                  ACE_TRY_ENV);
 #endif
               ACE_TRY_CHECK;
@@ -2995,14 +2995,14 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
                       (consumer->dependency ()->rt_info,
                        dependency_info->rt_info,
                        dependency_info->number_of_calls,
-                       RtecScheduler::ONE_WAY_CALL,
+                       RtecBase::ONE_WAY_CALL,
                        ACE_TRY_ENV);
 #else
                     ACE_Scheduler_Factory::server()->add_dependency
                       (consumer->dependency ()->rt_info,
                        dependency_info->rt_info,
                        dependency_info->number_of_calls,
-                       RtecScheduler::ONE_WAY_CALL,
+                       RtecBase::ONE_WAY_CALL,
                        ACE_TRY_ENV);
 #endif
                     ACE_TRY_CHECK;
@@ -3517,7 +3517,7 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
               pub[sc].event.header.source = event.header.source;
               pub[sc].event.header.creation_time = ORBSVCS_Time::zero ();
               pub[sc].dependency_info.dependency_type =
-                RtecScheduler::TWO_WAY_CALL;
+                RtecBase::TWO_WAY_CALL;
               pub[sc].dependency_info.number_of_calls = 1;
               pub[sc].dependency_info.rt_info = 0;
               sc++;

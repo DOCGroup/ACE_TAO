@@ -16,9 +16,10 @@ ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
 
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel *ec)
   :  ntasks_ (0),
-     tasks_ (0),
-     scheduler_ (ec->scheduler ())
+     tasks_ (0)
 {
+  CORBA::Object_var tmp = ec->scheduler ();
+  this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
 }
 
 void

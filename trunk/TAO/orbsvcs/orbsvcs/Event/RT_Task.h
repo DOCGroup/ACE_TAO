@@ -29,9 +29,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "event_export.h"
+#include "old_event_export.h"
 
-class TAO_RTEvent_Export ACE_RT_Thread_Manager : public ACE_Thread_Manager
+class TAO_RTOLDEvent_Export ACE_RT_Thread_Manager : public ACE_Thread_Manager
   // = TITLE
   //
   // = DESCRIPTION
@@ -64,7 +64,7 @@ protected:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_RT_Task_Command : public ACE_Message_Block
+class TAO_RTOLDEvent_Export ACE_RT_Task_Command : public ACE_Message_Block
 // = TITLE
 //
 // = DESCRIPTION
@@ -88,7 +88,7 @@ public:
 typedef ACE_Task<ACE_SYNCH> ACE_ES_TASK;
 typedef ACE_Message_Queue<ACE_SYNCH> ACE_ES_QUEUE;
 
-class TAO_RTEvent_Export ACE_RT_Task : public ACE_ES_TASK
+class TAO_RTOLDEvent_Export ACE_RT_Task : public ACE_ES_TASK
 {
   // = TITLE
   //   ACE Real-Time Task

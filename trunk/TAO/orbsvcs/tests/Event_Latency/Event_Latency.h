@@ -77,7 +77,7 @@ protected:
   RtecEventChannelAdmin::ProxyPushSupplier_var suppliers_;
 
 private:
-  RtecScheduler::handle_t rt_info_;
+  RtecBase::handle_t rt_info_;
 
   int measure_jitter_;
 
@@ -207,7 +207,7 @@ protected:
   RtecEventChannelAdmin::ProxyPushSupplier_var suppliers_;
 
 private:
-  RtecScheduler::handle_t rt_info_;
+  RtecBase::handle_t rt_info_;
 
   u_int total_messages_;
   // How many events to push before ending the test.

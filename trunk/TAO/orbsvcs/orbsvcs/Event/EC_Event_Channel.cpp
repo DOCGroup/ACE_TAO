@@ -46,7 +46,7 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     }
 
   this->scheduler_ =
-    RtecScheduler::Scheduler::_duplicate (attr.scheduler);
+    CORBA::Object::_duplicate (attr.scheduler);
 
   this->dispatching_ =
     this->factory_->create_dispatching (this);

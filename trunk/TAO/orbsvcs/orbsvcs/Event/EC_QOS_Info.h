@@ -25,7 +25,7 @@
 #define TAO_EC_QOS_INFO_H
 #include "ace/pre.h"
 
-#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecBaseC.h"
 #include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -49,10 +49,10 @@ public:
 
   TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs);
   // copy constructor, it does the obvious thing, but if it is not
-  // here the HP/aCC compiler breaks. 
+  // here the HP/aCC compiler breaks.
 
-  RtecScheduler::handle_t rt_info;
-  RtecScheduler::Preemption_Priority_t preemption_priority;
+  RtecBase::handle_t rt_info;
+  RtecBase::Preemption_Priority_t preemption_priority;
 
   long timer_id_;
   // Timer ids propagate their identity using this field, notice that

@@ -421,12 +421,12 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
 
   switch (d.dependency_type)
   {
-    case RtecScheduler::TWO_WAY_CALL:
+    case RtecBase::TWO_WAY_CALL:
 
       temp_info = rt_info;
       break;
 
-    case RtecScheduler::ONE_WAY_CALL:
+    case RtecBase::ONE_WAY_CALL:
 
       // swap the handles and point to the caller instead of the called operation
       if (lookup_rt_info (d.rt_info, temp_info) != SUCCEEDED)
@@ -446,7 +446,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
   }
 
   ACE_DEBUG ((LM_DEBUG, "Sched (%t) adding %s dependency to caller: %s\n",
-              (const char *) ((d.dependency_type == RtecScheduler::TWO_WAY_CALL)
+              (const char *) ((d.dependency_type == RtecBase::TWO_WAY_CALL)
                               ? "TWO_WAY" : "ONE_WAY"),
               (const char*)temp_info->entry_point.in ()));
 

@@ -171,7 +171,7 @@ main (int argc, char *argv[])
                     0,                  // Preemption priority
                     RtecScheduler::OPERATION           // info type
                   },
-                  // another consumer with unresolved 
+                  // another consumer with unresolved
                   // local and remote dependencies
                   { "both_unresolved_consumer_2",    // entry point
                     7,                  // handle
@@ -211,7 +211,7 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
       if (my_name_client.init (orb.in ()) != 0)
@@ -219,7 +219,7 @@ main (int argc, char *argv[])
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),
 			  -1);
-      
+
       CosNaming::NamingContext_var context =
         my_name_client.get_context ();
 
@@ -252,7 +252,7 @@ main (int argc, char *argv[])
                                   config_infos[i].importance),
                  config_infos[i].quantum,
                  config_infos[i].threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t, 
+                 ACE_static_cast (RtecScheduler::Info_Type_t,
                                   config_infos[i].info_type),
                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -264,17 +264,17 @@ main (int argc, char *argv[])
         add_dependency (config_infos[1].handle,
                         config_infos[0].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // register dependency of consumer that will have unresolved remote 
+      // register dependency of consumer that will have unresolved remote
       // dependencies on supplier with unresolved remote dependencies
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[3].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -285,18 +285,18 @@ main (int argc, char *argv[])
         add_dependency (config_infos[5].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
 
-      // register dependencies on each supplier of first consumer that will 
+      // register dependencies on each supplier of first consumer that will
       // have both unresolved local and unresolved remote dependencies.
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[0].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -304,7 +304,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[6].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -312,18 +312,18 @@ main (int argc, char *argv[])
         add_dependency (config_infos[6].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Register dependencies on each of the other consumers by second 
-      // consumer that will have both unresolved local and unresolved remote 
+      // Register dependencies on each of the other consumers by second
+      // consumer that will have both unresolved local and unresolved remote
       // dependencies.
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[1].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -331,7 +331,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[3].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -339,7 +339,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[5].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -347,7 +347,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[6].handle,
                         1,                            // number of calls
-                        RtecScheduler::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -400,5 +400,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-

@@ -26,8 +26,12 @@ TAO_EC_Sched_Filter_Builder::build (
     CORBA::Environment &ACE_TRY_ENV) const
 {
   CORBA::ULong pos = 0;
-  RtecScheduler::Scheduler_var scheduler =
+  CORBA::Object_var tmp =
     this->event_channel_->scheduler ();
+
+  RtecScheduler::Scheduler_var scheduler =
+    RtecScheduler::Scheduler::_narrow (tmp.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   // @@ How do we figure out which parent???
   RtecScheduler::handle_t parent_info =
@@ -181,7 +185,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       scheduler->add_dependency (qos_info.rt_info,
                                  parent_info,
                                  1,
-                                 RtecScheduler::TWO_WAY_CALL,
+                                 RtecBase::TWO_WAY_CALL,
                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 

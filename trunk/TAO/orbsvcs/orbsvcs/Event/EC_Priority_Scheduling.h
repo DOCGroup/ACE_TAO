@@ -32,7 +32,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_RTEvent_Export TAO_EC_Priority_Scheduling : public TAO_EC_Scheduling_Strategy
+#include "sched_event_export.h"
+
+class TAO_RTSchedEvent_Export TAO_EC_Priority_Scheduling : public TAO_EC_Scheduling_Strategy
 {
   // = TITLE
   //   A scheduling strategy that uses TAO's real-time scheduler
