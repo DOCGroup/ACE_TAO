@@ -438,10 +438,6 @@ TAO_NAMESPACE FT
   typedef ObjectGroupManager *ObjectGroupManager_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroupManager;
 
-  typedef FT_GenericFactory GenericFactory;
-  typedef FT_GenericFactory_var GenericFactory_var;
-  typedef FT_GenericFactory_out GenericFactory_out;
-  typedef GenericFactory *GenericFactory_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_GenericFactory;
 
   typedef FT_ReplicationManager ReplicationManager;
@@ -456,10 +452,6 @@ TAO_NAMESPACE FT
   typedef PullMonitorable *PullMonitorable_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PullMonitorable;
 
-  typedef FT_FaultNotifier FaultNotifier;
-  typedef FT_FaultNotifier_var FaultNotifier_var;
-  typedef FT_FaultNotifier_out FaultNotifier_out;
-  typedef FaultNotifier *FaultNotifier_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FaultNotifier;
 
   typedef FT_State State;
