@@ -1,3 +1,8 @@
+Tue Nov 18 15:59:37 1997  Steve Huston  <shuston@riverace.com>
+
+	* tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
+	  the proceses can be forked.
+
 Tue Nov 18 15:27:37 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Timer_Queue_Adapters.cpp: Reordered include files.  Thanks
