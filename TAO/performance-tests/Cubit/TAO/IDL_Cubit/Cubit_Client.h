@@ -169,6 +169,9 @@ private:
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
 
+  unsigned int bytes_in_octet_sequence_;
+  // The number of bytes to send in the octet sequence test.
+
   unsigned int test_enable_bitset_;
   // Bitset that determines which tests get run.
 

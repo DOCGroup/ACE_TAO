@@ -137,6 +137,7 @@ Cubit_Client::Cubit_Client (int testing_collocation, int shutdown)
     error_count_ (0),
     cubit_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
+    bytes_in_octet_sequence_ (0),
     test_enable_bitset_ (0),
     test_disable_bitset_ (0),
     testing_collocation_ (testing_collocation)
@@ -191,7 +192,7 @@ Cubit_Client::read_ior (const char *filename)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "t:z:ovdn:f:k:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "b:t:z:ovdn:f:k:xs");
   int c = 0;
   int result = 0;
   unsigned int test_mask = 0;
@@ -199,6 +200,18 @@ Cubit_Client::parse_args (void)
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'b':
+        // bytes in octet sequence
+        result = ACE_OS::atoi (get_opts.optarg);
+
+        if (result <= 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Invalid number of bytes entered: <%s>\n",
+                             get_opts.optarg),
+                            -1);
+        else
+          this->bytes_in_octet_sequence_ = (u_int) result;
+        break;
       case 't':
         test_mask = this->opt_to_mask (get_opts.optarg);
         if (test_mask == 0)
@@ -260,6 +273,7 @@ Cubit_Client::parse_args (void)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
+                           " [-b bytes-in-sequence]"
                            " [-d]"
                            " [-n loopcount]"
                            " [-f cubit_factory-obj-ref-key-file]"
@@ -762,8 +776,9 @@ Cubit_Client::cube_octet_sequence (int,
     {
       this->call_count_++;
 
-      Cubit::octet_seq input (l);
-      input.length (l);
+      ACE_Message_Block mb (l);
+      mb.wr_ptr (l);
+      Cubit::octet_seq input (l, &mb);
 
       // Just set the first item, otherwise it is hard to compare the
       // results for longer sequences, i.e. more than just marshalling
@@ -1174,7 +1189,7 @@ Cubit_Client::run ()
       this->error_count_ = 0;
       timer.start ();
 
-      for (i = 0; i < this->loop_count_; i++)
+      for (i = 0; i < this->loop_count_; ++i)
         {
           this->cube_long_sequence (this->loop_count_, 
                                     4, 
@@ -1216,11 +1231,26 @@ Cubit_Client::run ()
       this->error_count_ = 0;
       timer.start ();
 
-      for (i = 0; i < this->loop_count_; ++i)
+      if (bytes_in_octet_sequence_ > 0)
         {
-          this->cube_octet_sequence (this->loop_count_, 
-                                     16, 
-                                     ACE_TRY_ENV);
+          ACE_DEBUG ((LM_DEBUG,
+                      "Running sequence<octet> test with %u bytes "
+                      "in the sequence.\n", bytes_in_octet_sequence_));
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_octet_sequence (this->loop_count_, 
+                                         bytes_in_octet_sequence_, 
+                                         ACE_TRY_ENV);
+            }
+        }
+      else
+        {
+          for (i = 0; i < this->loop_count_; ++i)
+            {
+              this->cube_octet_sequence (this->loop_count_, 
+                                         16, 
+                                         ACE_TRY_ENV);
+            }
         }
 
       timer.stop ();
