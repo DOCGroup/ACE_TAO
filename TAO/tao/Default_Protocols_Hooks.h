@@ -71,6 +71,10 @@ public:
 
   virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV);
 
+  /// Sets the default ServerProtocolPolicy.
+  virtual int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
+                                                  CORBA::Environment &ACE_TRY_ENV);
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -509,10 +509,19 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                                "option name.\n"),
                               -1);
 
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) Invalid UIOP option: <%s>\n",
-                             name.c_str ()),
-                            -1);
+          if (name == "priority")
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                                 value.c_str ()),
+                                -1);
+            }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) Invalid UIOP option: <%s>\n",
+                               name.c_str ()),
+                              -1);
         }
     }
   return 0;

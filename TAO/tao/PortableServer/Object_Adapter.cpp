@@ -22,6 +22,7 @@
 #include "tao/PortableInterceptor.h"
 #include "tao/POA_Extension_Initializer.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -598,6 +599,20 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // This makes sure that the default resources are open when the Root
   // POA is created.
   this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  TAO_Thread_Lane_Resources &default_lane_resources =
+    this->orb_core_.thread_lane_resources_manager ().default_lane_resources ();
+
+  TAO_Acceptor_Registry &acceptor_registry =
+    default_lane_resources.acceptor_registry ();
+
+  TAO_Protocols_Hooks *protocols_hooks =
+    this->orb_core_.get_protocols_hooks (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  protocols_hooks->set_default_server_protocol_policy (acceptor_registry,
+                                                       ACE_TRY_ENV);
   ACE_CHECK;
 
   // Construct a new POA
