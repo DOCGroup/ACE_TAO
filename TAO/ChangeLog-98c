@@ -1,4 +1,8 @@
-Sat Nov 15 17:45:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Sat Nov 15 18:03:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (make_cubit): We don't
+ 	  need to free up the object key since it's no longer allocated
+ 	  dynamically.
 
 	* tao/object: Changed the _get_name() method to return const char
  	  * to be consistent with the iiopobj change below.
