@@ -6,8 +6,8 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 #include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
-#include <iostream>
-#include <fstream>
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
 
 ReplicationManagerFaultConsumerAdapter::ReplicationManagerFaultConsumerAdapter()
   : orb_(CORBA::ORB::_nil())
@@ -334,8 +334,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // Signal that we are ready to go.
     if (result == 0 && this->readyFile_ != 0)
     {
-      std::ofstream ready (this->readyFile_, ios::out);
-      ready << "ready" << std::endl;
+      ofstream ready (this->readyFile_, ios::out);
+      ready << "ready" << endl;
       ready.close();
     }
   }
