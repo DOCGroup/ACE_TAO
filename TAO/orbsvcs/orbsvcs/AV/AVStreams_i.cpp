@@ -1389,16 +1389,16 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
     {
       ACE_TRY
         {
-        
+
           AVStreams::flowSpec in_flowspec;
           AVStreams::flowSpec out_flowspec;
-        
+
           in_flowspec.length (0);
           out_flowspec.length (0);
-        
+
           int in_index = 0;
           int out_index = 0;
-        
+
           AVStreams::flowSpec flowspec;
           if (the_spec.length () == 0)
             {
@@ -1415,11 +1415,11 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
             {
               flowspec = the_spec;
             }
-        
+
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,       
+            ACE_DEBUG ((LM_DEBUG,
                         "TAO_StreamCtrl::modify_QoS\n"));
-        
+
 
           for (u_int i=0;i < flowspec.length ();i++)
             {
