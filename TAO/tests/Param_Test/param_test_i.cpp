@@ -429,13 +429,13 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
   Param_Test::PathSpec_var rPathSpec = new Param_Test::PathSpec;
   rPathSpec->length(2);
 
-  rPathSpec[(unsigned long)0].name.id = CORBA::string_dup("staff");
-  rPathSpec[(unsigned long)0].name.kind = CORBA::string_dup("staff");
-  rPathSpec[(unsigned long)0].process = 1;
+  rPathSpec[0u].name.id = CORBA::string_dup("staff");
+  rPathSpec[0u].name.kind = CORBA::string_dup("staff");
+  rPathSpec[0u].process = 1;
 
-  rPathSpec[(unsigned long)1].name.id = CORBA::string_dup("john");
-  rPathSpec[(unsigned long)1].name.kind = CORBA::string_dup("john");
-  rPathSpec[(unsigned long)1].process = 1;
+  rPathSpec[1u].name.id = CORBA::string_dup("john");
+  rPathSpec[1u].name.kind = CORBA::string_dup("john");
+  rPathSpec[1u].process = 1;
 
   s2 = s1;
   *out = s1;

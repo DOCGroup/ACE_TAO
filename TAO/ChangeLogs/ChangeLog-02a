@@ -1,3 +1,10 @@
+Thu Jan 06 21:26:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Param_Test/param_test_i.cpp
+	  (test_unbounded_struct_sequence): Changed the explicit cast to
+	  [(unsigned int) 0] to unsigned literal [0u] to avoid MSVC fro
+	  whining.
+
 Wed Jan  5 15:54:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
@@ -23,7 +30,7 @@ Tue Jan  4 11:46:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Any.h:
 	*tao/Any.cpp:
 	  Added >>= operators to extract to const CORBA::Any *&,
-	  as well as to const char *& and const wchar *&, as outlined in 
+	  as well as to const char *& and const wchar *&, as outlined in
 	  the CORBA 2.3.1 C++ mapping.
 
 	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
