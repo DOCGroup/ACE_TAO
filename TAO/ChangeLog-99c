@@ -1,3 +1,11 @@
+Thu Apr  8 12:59:21 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/orbconf.h (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT): 
+	  Changed the value from 1 to 4.
+
+	  Also removed the #ifdef for TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS
+	  since this is obsolete now.
+	
 Thu Apr  8 11:40:59 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* orbsvcs/orbsvcs/Naming_Service/Persistent_Context_Index.cpp:
