@@ -309,71 +309,94 @@ extra pass over the internal representation of the IDL file has to be done.&nbsp
 <a NAME="pp"></a>Pluggable Protocols</h3>
 Point of contact: <a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a> <P>
 
-A primary goal of the pluggable protocol effort is to identify logical
-communication oriented layers, abstract out common features, define
-general interfaces and provide necessary mechanisms for implementing
-different concrete messaging and transport protocols.  This way
-disparate networking technologies or environments may transparently be
-supported, each with it's own set of requirements and strategies.  For
-example, if the ORB is communicating over a system bus such as PCI or
-VME then the full weight of GIOP is not needed.  A simpler, optimized
-messaging and transport protocol can be defined and implemented.
-Similarly, it would be relatively straight forward to add support for a
-new transport protocol which uses native ATM as the underlying network
-terchnology.  In all these cases the ORB core's interface to the messaging 
-layer will remain the same.
-<P>
-There will be several stages of the development proccess: basic pluggable transport
-protocols framework, support multiple profiles, add example transport protocols and
-refine framework, add support for pluggable messaging protocols.
-<P>
+The goal of the pluggable protocol effort is to (1) identify logical
+communication layers in the ORB, (2) abstract out common features, (3)
+define general interfaces, and (4) provide necessary mechanisms for
+implementing different concrete ORB and transport protocols.  TAO's
+pluggable protocol framework will allow disparate communication
+mechanisms to be supported transparently, each with its own set of
+requirements and strategies. <P>
+
+For example, if the ORB is communicating over a system bus, such as
+PCI or VME, and not all the features of GIOP/IIOP are necessary and a
+simpler, optimized ORB and transport protocol can be defined and
+implemented.  Similarly, it should be straightforward to add support
+for new transport protocols that use native ATM or shared memory as
+the underlying communication mechanism.  In all cases the ORB's
+interface to the application will remain compliant with the OMG CORBA
+standard.  <P>
+
+There will be several stages of the development proccess: (1) basic
+pluggable transport protocols framework, (2) support for multiple
+profiles, (4) add example transport protocols, such as ATM and VME,
+and refine/optimize the transport protocols framework, and (4) add
+support for pluggable ORB protocols, e.g., replacements for GIOP.
+Each of these steps is outlined below:
+
 <ul>
-<li> Basic  pluggable transport protocols framework:
-Addition of several bridge classes which decouple the transport specific
-details from the rest of the ORB.  This way, the details of how messages
-are communicated at the transport layer are isolated in a few classes.
-In some ways this has led to the restructuring of the ORB core in
-terms of how it sends and receives requests.  There is now the concept
-of communication layers: Object (references, method invications etc), 
-Messaging, Transport and Network.  The Object layer is just the usual 
-stubs and skeletons.  
-<P>
-The common interfaces have been defined in the new
-abstract classes TAO_Connector, TAO_Acceptor, TAO_Profile and
-TAO_Transport.  Two new mechanisms for keeping track of supported
-transport protocols is the TAO_Connector_Registry and
-TAO_Acceptor_Registry.
-<P>
-<li> Multiple Profile - Required plus will provide a coll means to implement
-unique bridging strategies.
+<li> <B>Basic pluggable transport protocols framework</B>:
+
+We're currently adding several Bridge classes that decouple the
+transport-specific details from the rest of TAO's ORB Core.  This
+allows us to isolate the details of how messages are communicated at
+the transport layer in a few classes.  This design has led us to
+restructure how TAO's ORB Core sends and receives requests.  For
+instance, there is now the concept of communication layers: Objects
+(e.g., references, method invocations, etc.), ORB Messaging,
+Transport, and Network.  The Object layer is just the usual stubs and
+skeletons.  <P>
+
+The common interfaces have been defined in the new abstract classes
+that form the core of TAO's pluggable protocol framework, e.g.,
+<CODE>TAO_Connector</CODE>, <CODE>TAO_Acceptor</CODE>,
+<CODE>TAO_Profile</CODE> and <CODE>TAO_Transport</CODE>.  Two new
+mechanisms for keeping track of supported transport protocols are the
+<CODE>TAO_Connector_Registry</CODE> and
+<CODE>TAO_Acceptor_Registry</CODE>, which are essentially Abstract
+Factories that produce the right types of connector, acceptors, and
+transports.  <P>
+
+<li> <B>Multiple Profile</b> - This provides a means to implement
+    unique bridging strategies.  
+<!-- Fred, I don't understand this -- can you please explain what -->
+<!-- multiple profiles are in more detail? -->
 <p>
-<li>Example Transport protocols- The first planned example will be using UNIX domain
-sockets.  Other interesting transport protocols would be for ATM, Buses (VME or PCI),
-shared memory, and UDP/IP.
+
+<li><B>Example Transport protocols</B>- The first planned example
+    aside from IIOP will use UNIX domain sockets.  Other interesting
+    transport protocols would be for ATM, Buses (VME or PCI), shared
+    memory, TP4, GSMP, and UDP/IP.
 <p>
-<li>Pluggable messaging protocols - Add support for alternate protocols to GIOP.  In
-particular it would be interesting to explore lightweight protocols using shared memory
-and system busses like PCI or VME.
+
+<li><B>Pluggable ORB protocols</B> - This step will add support for
+ORB protocols besides GIOP.  In
+particular, we will explore lightweight protocols using shared memory
+and system buses like PCI or VME.
 </ul>
+
 <P>
 <P>
 <p>Current Status: <p>
 <ul>
-<li>
-initial prototype of the basic framework to support pluggable
-transport protocols has been compiled, linked and tested against an
-older version of TAO (1 week old :).  The tests MT_Cubit,
-Multiple_Inheritance, CDR and EC_Throughput were run successfully.
-<li>
-The basic framework does not include support for multiple profiles and 
-the Acceptor registry.  What it does do is separate the transport specific 
-processing from the rest of the ORB.  
-<P>
+
+<li> The initial prototype of the basic framework to support pluggable
+transport protocols has been compiled, linked and, tested against an
+older version of TAO.  The standard TAO regression tests
+<CODE>MT_Cubit</CODE>, <CODE>Multiple_Inheritance</CODE>,
+<CODE>CDR</CODE> and <CODE>EC_Throughput</CODE> were run
+successfully.<P>
+
+<li> The basic framework does not include support for multiple
+profiles and the Acceptor registry.  What it does do is separate the
+transport specific processing from the rest of the ORB.  <P>
+
 </ul>
 <p>Known Issues:<p>
 <ul>
-<li>The ORB Core's resource factory needs to be enhanced to support the dynamic
-allocation of resources for different transport protocols.
+
+<li>The ORB Core's resource factory needs to be enhanced to support
+the dynamic allocation of resources for different transport protocols.
+
 </ul>
 <p>Critical Work:<p>
 <ul>
@@ -382,20 +405,22 @@ allocation of resources for different transport protocols.
 </ul>
 <p>Future Work: <p>
 <ul>
-<li> Immediate plans are to bring my workspace up to date with the repository
-and verify all still works.  This will be followed by performing a suite 
-of tests to compare performance of with the unmodified TAO distribution. 
-Also extensicve testing using purify and quantify.
-<p>
-<li>In parallel I will work on adding support for multiple profiles and an
+
+<li> Immediate plans are to bring my workspace up to date with the
+repository and verify all of TAO's regression tests still work.  This
+will be followed by performing a suite of tests to compare performance
+of with the unmodified TAO distribution.  Also, we'll extensively
+retest TAO using purify and quantify.  <p>
+
+<li>In parallel, we will add support for multiple profiles and an
 acceptor registry class.  The acceptor registry will both keep track
-of all acceptors and be responsible for creating a list of profiles for
-new object references (essentially the IOR).
-<p>
-<li>Long term work will include adding support for pluggable messaging protocols as well as
-transport protocols.  This way we can develop optimal messaging and transport protocols
-for a given platform.  
-<p>
+of all acceptors and be responsible for creating a list of profiles
+for new object references (essentially the IOR).  <p>
+
+<li>Long term work will include adding support for pluggable ORB
+protocols, as well as transport protocols.  This way we can develop
+optimal messaging and transport protocols for a given platform.  <p>
+
 </ul>
 <hr>
 <h3>
@@ -420,16 +445,16 @@ held across the invocation on the servant. The locks are also held
 across the invocation on the AdapterActivator.  This forces the use of
 recursive locks inside the POA.  However, the problem with recursive
 locks is that multiple threads cannot dispatch requests on the same
-POA simultaneous.  
+POA simultaneous.<P>
 
 </li>
 <li>
 
 Add the new RefCountServantBase class to TAO. This reference counted
 base class was added to the CORBA specification to avoid race
-conditions for servant deletion in threaded servers.
-ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf contains the relevant
-text.
+conditions for servant deletion in threaded servers.  <A
+HREF="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</A>
+contains the relevant text.<P>
 
 </li>
 <li>
@@ -440,62 +465,63 @@ name can be significantly large in size, and therefore, ineffient to
 pass with every method call from the client to the server; (b) it is
 varible in size, and therefore, does not lend itself to smart and
 effective parsing; (c) the searching based on the complete POA name is
-very ineffient. <br>
+very ineffient. <P>
 
 The correct solution here is to use an active demux table, and flatten
 the POA hierarchy.  This will help in the searching since active
 demuxing is fast and predictable.  This will also help in the parsing
-since the demux key will be fixed size.  <br>
+since the demux key will be fixed size.  <P>
 
 Note that for persistent ids, we have to pass the complete POA name in
-addition to the demux key in order to handle POA creation on demand.
+addition to the demux key in order to handle POA creation on demand. <P>
 
 </li>
 <li>
 
-Timestamps in persistent IORs are note required.  They should be removed.
+Timestamps in persistent IORs are note required.  They should be
+    removed. <P>
 
 </li>
 <li>
 
-POA exceptions should be removed from the list of system exceptions.
+POA exceptions should be removed from the list of system exceptions. <P>
 
 </li>
 <li>
 
 We need to separate out the POA functionality required to support the
 full CORBA spec from the POA functionality required to support the
-Minimal CORBA spec.
+Minimal CORBA spec. <P>
 
 </li>
 <li>
 
 We need to investigate whether it feasible for us to provide active
 demuxing for the USER_ID policy.  Currently, the best we do with the
-USER_ID policy is a hash table based demuxing.
+USER_ID policy is a hash table based demuxing. <P>
 
 Note that we have to pass the user id in addition to the demux key in
-order to handle servant creation on demand.
+order to handle servant creation on demand. <P>
 
 </li>
 <li>
 
 We can potentially add active demuxing for method name lookup.  The
 benefit of this optimization is questionable since the current perfect
-hashing scheme provide very good and predictable behavior.  <br>
+hashing scheme provide very good and predictable behavior.  <P>
 
 Also, note that this optimization will require many changes.  We would
 have to use the help of the IDL compiler to modify the object key that
 is passed for every method call differently.  Note that this scheme
 doesn't work in the case of multiple inheritance or when the client
-stubs are not TAO.
+stubs are not TAO. <P>
 
 </li>
 <li>
 
 There are some POA objects in a typical server that are not freed up
 properly, resulting in a memory leak.  This is not very significant
-since the leak does not grow.  However, it still needs a fix.
+since the leak does not grow.  However, it still needs a fix. <P>
 
 </li>
 
@@ -507,23 +533,24 @@ Determine the degree to which we will support the full semantics of remote
 objects on a collocated object. The spec mandates that collocated object
 should behave <i>exactly</i> like remote objects, but that means that request
 will have to be queued rather than calling a method directly, and this
-could be hazardous to our quest for real-time ORB status.</li>
+could be hazardous to our quest for real-time ORB status.</li> <P>
 
 <li>
 Provide extensions of the specification to ensure real-time delivery of
-messages.</li>
+messages.</li><P>
 </ul>
-Recently completed work:
+<P>
+Recently completed work:<P>
 <ul>
 <li>
 Support for collocation should be much better now because the POA can tell
-if we created the object reference.</li>
+if we created the object reference.</li><P>
 
 <li>
 The POA now supports active demultiplexing of servants in the SYSTEM_ID
 policy. This should make the POA faster and more predictable since there
 is no hashing involved and the index of the slot where the servant is registered
-is in the Object Key.</li>
+is in the Object Key.</li><P>
 </ul>
 
 <hr>
