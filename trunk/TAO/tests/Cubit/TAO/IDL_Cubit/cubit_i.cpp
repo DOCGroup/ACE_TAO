@@ -258,3 +258,28 @@ void Cubit_i::shutdown (CORBA::Environment &env)
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
+
+// Constructor
+
+Cubit_Shutdown_i::Cubit_Shutdown_i (const char *)
+{
+}
+
+// Destructor
+
+Cubit_Shutdown_i::~Cubit_Shutdown_i (void)
+{
+}
+
+void
+Cubit_Shutdown_i::shutdown (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s\n",
+              "Cubit_i is shutting down"));
+
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+}
+

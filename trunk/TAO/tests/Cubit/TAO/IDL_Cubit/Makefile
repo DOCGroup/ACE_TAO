@@ -17,15 +17,40 @@ endif # ! TAO_ROOT
 LDLIBS = -lorbsvcs -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS = $(IDL_SRC) server.cpp client.cpp tmplinst.cpp
+PROG_SRCS = server_i.cpp \
+	    server.cpp \
+            client_i.cpp \
+            collocation_test.cpp \
+	    client.cpp \
+	    cubit_i.cpp \
+	    tmplinst.cpp
 
-LSRC = $(PROG_SRCS)
+LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o  server.o cubit_i.o tmplinst.o
-CUBIT_CLT_OBJS = cubitC.o cubitS.o client.o tmplinst.o
+CUBIT_SVR_OBJS = cubitC.o \
+		 cubitS.o \
+		 server_i.o \
+		 cubit_i.o \
+		 server.o \
+		 tmplinst.o
+CUBIT_CLT_OBJS = cubitC.o \
+		 cubitS.o \
+		 client_i.o \
+		 client.o \
+		 tmplinst.o
+COLLOCATION_OBJS = cubitC.o \
+		   cubitS.o \
+		   server_i.o \
+		   cubit_i.o \
+		   client_i.o \
+		   collocation_test.o \
+		   tmplinst.o
 TEST_OBJS      = IDL_Cubit_Test.o
 
-BIN = server client IDL_Cubit_Test
+BIN = server \
+      client \
+      IDL_Cubit_Test \
+      collocation_test
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -57,6 +82,9 @@ server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+collocation_test: $(addprefix $(VDIR),$(COLLOCATION_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 IDL_Cubit_Test: $(addprefix $(VDIR),$(TEST_OBJS))
