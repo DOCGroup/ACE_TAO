@@ -30,6 +30,7 @@
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
 #include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/Union_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
