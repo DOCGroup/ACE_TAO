@@ -39,6 +39,24 @@ my(%addon) = ('ACE_ROOT'     => {'TAO_ROOT'     => '/..',
 # Subroutine Section
 # ************************************************************
 
+sub modify_value {
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = shift;
+
+  if ($name eq 'includedir') {
+    ## TAO/orbsvcs and TAO are like separate projects, so first
+    ## remove the TAO/orbsvcs part and if that doesn't work try
+    ## removing the TAO part.  The ACE related values don't need
+    ## any modification.
+    if (!($value =~ s/^\/TAO\/orbsvcs//)) {
+      $value =~ s/^\/TAO//;
+    }
+  }
+
+  return $value;
+}
+
 sub write_settings {
   my($self)   = shift;
   my($wsc)    = shift;
