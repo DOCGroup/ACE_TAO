@@ -1,3 +1,9 @@
+Wed Apr 17 10:29:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (ACE_HAS_DEV_POLL):
+
+	  Added missing "#endif" for this configuration.
+
 Wed Apr 17 12:47:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Asynch_IO.cpp (set_handle, handle_close): Fixed
