@@ -1,3 +1,7 @@
+Tue Apr  9 12:44:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_BiDir/Makefile: Made a cosmetic change.
+
 Tue Apr 09 07:36:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/POA_BiDir/Makefile.bor:
