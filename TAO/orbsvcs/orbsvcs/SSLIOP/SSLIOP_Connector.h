@@ -13,23 +13,23 @@
 //    IIOP specific connector processing
 //
 // = AUTHOR
-//    Fred Kuhns <fredk@cs.wustl.edu>
+//   Carlos O'Ryan <coryan@cs.wustl.edu> &
+//   Ossama Othman <othman@cs.wustl.edu>
 //
 // ============================================================================
 
 #ifndef TAO_SSLIOP_CONNECTOR_H
 #define TAO_SSLIOP_CONNECTOR_H
 
-#include "ace/Connector.h"
+#include "tao/IIOP_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Connector.h"
-#include "tao/Pluggable.h"
-#include "tao/SSLIOP_Connect.h"
+#include "ace/SSL_SOCK_Connector.h"
 #include "tao/Resource_Factory.h"
+#include "SSLIOP_Connect.h"
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
@@ -40,7 +40,7 @@
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 typedef ACE_Strategy_Connector<TAO_SSLIOP_Client_Connection_Handler,
-                               ACE_SOCK_CONNECTOR>
+                               ACE_SSL_SOCK_CONNECTOR>
         TAO_SSLIOP_BASE_CONNECTOR;
 
 // ****************************************************************
@@ -69,7 +69,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_SSLIOP_Connector : public TAO_Connector
+class TAO_Export TAO_SSLIOP_Connector : public TAO_IIOP_Connector
 {
   // = TITLE
   //   IIOP-specific Connector bridge for pluggable protocols.
@@ -86,17 +86,12 @@ public:
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
-  int open (TAO_ORB_Core *orb_core);
-  int close (void);
-  int connect (TAO_Profile *profile,
-               TAO_Transport *&transport,
-               ACE_Time_Value *max_wait_time);
-  int preconnect (const char *preconnections);
-  TAO_Profile *create_profile (TAO_InputCDR& cdr);
-
-  virtual int check_prefix (const char *endpoint);
-
-  virtual char object_key_delimiter (void) const;
+  virtual int open (TAO_ORB_Core *orb_core);
+  virtual int close (void);
+  virtual int connect (TAO_Profile *profile,
+		       TAO_Transport *&transport,
+		       ACE_Time_Value *max_wait_time);
+  virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int purge_connections (void);
@@ -108,7 +103,8 @@ protected:
   //   Pluggable.h
   virtual void make_profile (const char *endpoint,
                              TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                             CORBA::Environment &ACE_TRY_ENV =
+			         TAO_default_environment ());
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int make_caching_strategy (void);
@@ -167,7 +163,7 @@ public:
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   typedef ACE_Cached_Connect_Strategy_Ex<TAO_SSLIOP_Client_Connection_Handler,
-                                         ACE_SOCK_CONNECTOR,
+                                         ACE_SSL_SOCK_CONNECTOR,
                                          TAO_CACHING_STRATEGY,
                                          TAO_ATTRIBUTES,
                                          TAO_Cached_Connector_Lock>
@@ -186,9 +182,6 @@ private:
 
   TAO_SSLIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for IIOP.
-
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;

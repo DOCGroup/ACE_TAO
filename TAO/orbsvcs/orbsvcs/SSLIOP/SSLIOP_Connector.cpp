@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/SSLIOP_Connector.h"
-#include "tao/SSLIOP_Profile.h"
+#include "SSLIOP_Connector.h"
+#include "SSLIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -338,9 +338,8 @@ typedef ACE_Cached_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler,
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
 TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (void)
-  : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP),
-    base_connector_ (),
-    orb_core_ (0)
+  : TAO_IIOP_Connector (),
+    base_connector_ ()
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
     ,
     cached_connect_strategy_ (0),
@@ -441,21 +440,27 @@ TAO_SSLIOP_Connector::close (void)
 }
 
 int
-TAO_SSLIOP_Connector::connect (TAO_Profile *profile,
+TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
                              TAO_Transport *&transport,
                              ACE_Time_Value *max_wait_time)
 {
+  if (!using_ssl) {
+    return this->TAO_IIOP_Connector::connect (pfile,
+					      transport,
+					      max_wait_time);
+
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     return -1;
 
-  TAO_SSLIOP_Profile *iiop_profile =
+  TAO_SSLIOP_Profile *profile =
     ACE_dynamic_cast (TAO_SSLIOP_Profile *,
-                      profile);
-  if (iiop_profile == 0)
+                      pfile);
+  if (profile == 0)
     return -1;
 
-  const ACE_INET_Addr &oa =
-    iiop_profile->object_addr ();
+  ACE_INET_Addr oa =
+    profile->object_addr ();
+  oa->set_port_number (profile->ssl_port ());
 
   ACE_Synch_Options synch_options;
   if (max_wait_time != 0)
@@ -468,16 +473,16 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *profile,
   // object; but we obtain the transport in the <result>
   // variable. Other threads may modify the hint, but we are not
   // affected.
-  if (this->base_connector_.connect (iiop_profile->hint (),
+  if (this->base_connector_.connect (profile->hint (),
                                      result,
                                      oa,
                                      synch_options) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
-          char buffer [MAXNAMELEN * 2];
+          char buffer [MAXHOSTNAMELEN + 6 + 1];
           profile->addr_to_string (buffer,
-                                   (MAXNAMELEN * 2) - 1);
+                                   sizeof(buffer) - 1);
           ACE_DEBUG ((LM_ERROR,
                       "(%P|%t) %s:%u, connection to "
                       "%s failed (%p)\n",
@@ -498,163 +503,12 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *profile,
       // to change ACE, and this fix passes all the TAO tests
       // (including the new ping/pong test in the tests/Faults
       // directory).
-      iiop_profile->reset_hint ();
+      profile->reset_hint ();
       return -1;
     }
 
   transport = result->transport ();
   return 0;
-}
-
-int
-TAO_SSLIOP_Connector::preconnect (const char *preconnects)
-{
-  // Check for the proper protocol prefix.
-  if (this->check_prefix (preconnects) != 0)
-    return 0; // Failure: zero successful preconnections
-
-  const char *protocol_removed =
-    ACE_OS::strstr (preconnects,
-                    "://") + 3;
-  // "+ 3" since strlen of "://" is 3.
-
-  char *preconnections =
-    ACE_OS::strdup (protocol_removed);
-
-  int successes = 0;
-  if (preconnections)
-    {
-      ACE_INET_Addr dest;
-      ACE_Unbounded_Stack<ACE_INET_Addr> dests;
-
-      size_t num_connections;
-
-      char *nextptr = 0;
-      char *where = 0;
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          int version_offset = 0;
-          // Additional offset to remove version from preconnect, if it exists.
-
-          if (isdigit (where[0]) &&
-              where[1] == '.' &&
-              isdigit (where[2]) &&
-              where[3] == '@')
-            version_offset = 4;
-
-          // @@ For now, we just drop the version prefix.  However, at
-          //    some point in the future the version may become useful.
-
-          char *tport = 0;
-          char *thost = where + version_offset;
-          char *sep = ACE_OS::strchr (where, ':');
-
-          if (sep)
-            {
-              *sep = '\0';
-              tport = sep + 1;
-
-              dest.set ((u_short) ACE_OS::atoi (tport), thost);
-              dests.push (dest);
-            }
-          else
-            {
-              // No port was specified so assume that the port will be the
-              // IANA assigned port for IIOP.
-              //
-              //    IIOP:           683
-              //    IIOP over SSL:  684
-
-              dest.set (683, thost);
-              dests.push (dest);
-
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) No port specified for <%s>.  "
-                              "Using <%d> as default port.\n",
-                              where,
-                              dest.get_port_number ()));
-                }
-            }
-        }
-
-      // Create an array of addresses from the stack, as well as an
-      // array of eventual handlers.
-      num_connections = dests.size ();
-      ACE_INET_Addr *remote_addrs = 0;
-      TAO_SSLIOP_Client_Connection_Handler **handlers = 0;
-      char *failures = 0;
-
-      ACE_NEW_RETURN (remote_addrs,
-                      ACE_INET_Addr[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
-
-      ACE_NEW_RETURN (handlers,
-                      TAO_SSLIOP_Client_Connection_Handler *[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Client_Connection_Handler*>
-        safe_handlers (handlers);
-
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);
-
-      // No longer need to worry about exception safety at this point.
-      remote_addrs = safe_remote_addrs.release ();
-      handlers = safe_handlers.release ();
-
-      size_t slot = 0;
-
-      // Fill in the remote address array
-      while (dests.pop (remote_addrs[slot]) == 0)
-        handlers[slot++] = 0;
-
-      // Finally, try to connect.
-      this->base_connector_.connect_n (num_connections,
-                                       handlers,
-                                       remote_addrs,
-                                       failures);
-      // Loop over all the failures and set the handlers that
-      // succeeded to idle state.
-      for (slot = 0;
-           slot < num_connections;
-           slot++)
-        {
-          if (!failures[slot])
-            {
-              handlers[slot]->idle ();
-              successes++;
-
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "TAO (%P|%t) Preconnection <%s:%d> "
-                            "succeeded.\n",
-                            remote_addrs[slot].get_host_name (),
-                            remote_addrs[slot].get_port_number ()));
-            }
-          else if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) Preconnection <%s:%d> failed.\n",
-                        remote_addrs[slot].get_host_name (),
-                        remote_addrs[slot].get_port_number ()));
-        }
-
-      ACE_OS::free (preconnections);
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP preconnections: %d successes and "
-                    "%d failures.\n",
-                    successes,
-                    num_connections - successes));
-    }
-  return successes;
 }
 
 TAO_Profile *
@@ -687,43 +541,9 @@ TAO_SSLIOP_Connector::make_profile (const char *endpoint,
 
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (endpoint,
-                                      this->orb_core_,
-                                      ACE_TRY_ENV),
+					this->orb_core_,
+					ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK;
-}
-
-int
-TAO_SSLIOP_Connector::check_prefix (const char *endpoint)
-{
-  // Check for a valid string
-  if (!endpoint || !*endpoint)
-    return -1;  // Failure
-
-  const char *protocol[] = { "iiop", "iioploc" };
-
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
-
-  // Check for the proper prefix in the IOR.  If the proper prefix
-  // isn't in the IOR then it is not an IOR we can use.
-  if (slot == len0
-      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
-  else if (slot == len1
-           && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
-
-  return -1;
-  // Failure: not an IIOP IOR
-  // DO NOT throw an exception here.
-}
-
-char
-TAO_SSLIOP_Connector::object_key_delimiter (void) const
-{
-  return TAO_SSLIOP_Profile::object_key_delimiter;
 }

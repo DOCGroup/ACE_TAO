@@ -31,7 +31,7 @@
 
 // TAO SSLIOP_Acceptor concrete call definition
 
-class TAO_Export TAO_SSLIOP_Acceptor : public TAO_Acceptor
+class TAO_Export TAO_SSLIOP_Acceptor : public TAO_IIOP_Acceptor
 {
   // = TITLE
   //   TAO_SSLIOP_Acceptor
@@ -45,10 +45,6 @@ public:
 
   ~TAO_SSLIOP_Acceptor (void);
   // Destructor.
-
-  const ACE_INET_Addr& address (void) const;
-  // @@ Helper method for the implementation repository, should go
-  //    away
 
   typedef ACE_Strategy_Acceptor<TAO_SSLIIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler> TAO_SSLIOP_CREATION_STRATEGY;
@@ -105,7 +101,7 @@ private:
 };
 
 #if defined(__ACE_INLINE__)
-#include "tao/SSLIOP_Acceptor.i"
+#include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_SSLIOP_ACCEPTOR_H */
