@@ -5,26 +5,11 @@
 //     test_aiosig.cpp
 //
 // = DESCRITPTION
-//     This program helps you to test the <aio_*> calls on a
-//     platform. 
-//     Before running this test, make sure the platform can
-//     support POSIX <aio_> calls. use $ACE_ROOT/tests for this.
-//     This is for testing the Signal based completion approach which 
-//     uses <sigtimedwait> for completion querying. 
-//     If this test is successful, ACE_POSIX_SIG_PROACTOR
-//     can be used on this platform.
-//     This program is a C-language version of the 
-//     $ACE_ROOT/examples/Reactor/Proactor/test_aiosig_ace.cpp, with 
-//     all the ACE calls removed.
-//     This test does the following:
-//     Issue two <aio_read>s.
-//     Assign SIGRTMIN as the notification signal.
-//     Mask these signals from delivery.
-//     Receive this signal by doing <sigtimedwait>.
-//     Wait for two completions (two signals)
+//     Check out test_aiosig_ace.cpp, the ACE'ified version of this
+//     program. This program may not be uptodate.
 //
 // = COMPILATION
-//     CC -g -o test_aiosig -lposix4 test_aiosig.cpp   
+//     CC -g -o test_aiosig -lrt test_aiosig.cpp   
 //
 // = RUN
 //     ./test_aiosig
@@ -60,6 +45,8 @@ int setup_signal_delivery (void);
 int issue_aio_calls (void);
 int query_aio_completions (void);
 int test_aio_calls (void);
+int setup_signal_handler (void);
+int setup_signal_handler (int signal_number);
 
 int 
 setup_signal_delivery (void)
@@ -78,31 +65,13 @@ setup_signal_delivery (void)
     }
   
   // Mask them.
-  if (sigprocmask (SIG_BLOCK, &completion_signal, 0) == -1)
+  if (pthread_sigmask (SIG_BLOCK, &completion_signal, 0) == -1)
     {
       perror ("Error:Couldnt maks the RT completion signals\n");
       return -1;
     }
   
-  // Setting up the handler(!) for these signals.
-  struct sigaction reaction;
-  sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
-  reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
-#if defined (SA_SIGACTION)
-  // Lynx says, it is better to set this bit to be portable.
-  reaction.sa_flags &= SA_SIGACTION;
-#endif /* SA_SIGACTION */      
-  reaction.sa_sigaction = 0;         // No handler.
-  int sigaction_return = sigaction (SIGRTMIN,
-                                    &reaction,
-                                    0);
-  if (sigaction_return == -1)
-    {
-      perror ("Error:Proactor couldnt do sigaction for the RT SIGNAL");
-      return -1;
-    }
-  
-  return 0;
+  return setup_signal_handler (SIGRTMIN);
 }
 
 int
@@ -279,6 +248,37 @@ test_aio_calls (void)
     return -1;
   
   return 0;
+}
+
+int
+setup_signal_handler (int signal_number)
+{
+   // Setting up the handler(!) for these signals.
+  struct sigaction reaction;
+  sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
+  reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
+#if defined (SA_SIGACTION)
+  // Lynx says, it is better to set this bit to be portable.
+  reaction.sa_flags &= SA_SIGACTION;
+#endif /* SA_SIGACTION */      
+  reaction.sa_sigaction = null_handler;     // Null handler.
+  int sigaction_return = sigaction (SIGRTMIN,
+                                    &reaction,
+                                    0);
+  if (sigaction_return == -1)
+    {
+      perror ("Error:Proactor couldnt do sigaction for the RT SIGNAL");
+      return -1;
+    }
+  
+  return 0;
+}
+
+void
+null_handler (int         /* signal_number */,
+              siginfo_t * /* info */,
+              void *      /* context */)
+{
 }
 
 int
