@@ -66,8 +66,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-orblite")
     {
-      $clflags .= " -ORBgioplite";
-      $svflags .= " -ORBgioplite";
+      $clflags .= " -ORBGIOPlite";
+      $svflags .= " -ORBGIOPlite";
       last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
@@ -81,6 +81,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
 unlink $iorfile;
 
 sleep 2;
+
+print "Running IDL_Cubit with the default ORB protocol.\n\n";
 
 $SV = Process::Create ($exepref."server".$EXE_EXT,
                        $svflags.
@@ -112,5 +114,57 @@ unlink $iorfile;
 if ($server != 0 || $client != 0) {
   exit 1;
 }
+
+if ($OSNAME ne "MSWin32")
+{
+  # Only run the UIOP test on Unix platforms.
+
+  # No need to unlink the iorfile again.
+  # unlink $iorfile;
+
+  sleep 2;
+
+  print "Running IDL_Cubit with the UIOP protocol.\n\n";
+
+  # Save the original server flags.
+  $save_svflags = $svflags;
+
+  $svflags .= " -ORBEndpoint uiop://";
+
+  $SV = Process::Create ($exepref."server".$EXE_EXT,
+                         $svflags.
+                         $svnsflags);
+
+  if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+  }
+
+  $CL = Process::Create ($exepref . "client".$EXE_EXT,
+                         " $clflags $clnsflags -x");
+
+  $client = $CL->TimedWait (60);
+  if ($client == -1) {
+    print STDERR "ERROR: client timedout\n";
+    $CL->Kill (); $CL->TimedWait (1);
+  }
+
+  $server = $SV->TimedWait (10);
+  if ($server == -1) {
+    print STDERR "ERROR: server timedout\n";
+    $SV->Kill (); $SV->TimedWait (1);
+  }
+
+  # Restore the original server flags
+  $svflags = $save_svflags;
+
+  unlink $iorfile;
+
+  if ($server != 0 || $client != 0) {
+    exit 1;
+  }
+}
+
 
 exit 0;
