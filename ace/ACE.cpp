@@ -11,6 +11,9 @@
 #include "ace/SString.h"
 #include "ace/Process.h"
 
+// Hex characters.
+const char ACE::hex_chars_[] = "0123456789abcdef";
+
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
 
@@ -240,7 +243,7 @@ ACE::hash_pjw (const ACE_USHORT16 *str)
  * SUCH DAMAGE.
  */
 
-u_long ACE::crctab[] =
+u_long ACE::crc_table_[] =
 {
   0x0,
   0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b,
@@ -302,7 +305,7 @@ u_long ACE::crctab[] =
 u_long
 ACE::crc32 (const char *string)
 {
-#define COMPUTE(var, ch) (var) = (var) << 8 ^ crctab[(var) >> 24 ^ (ch)]
+#define COMPUTE(var, ch) (var) = (var) << 8 ^ ACE::crc_table_[(var) >> 24 ^ (ch)]
 
   register u_long crc = 0;
 
