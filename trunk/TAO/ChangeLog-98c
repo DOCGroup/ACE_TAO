@@ -1,3 +1,16 @@
+Sat Jan 24 21:01:00 1998    <coryan@MILONGA>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Fixed several minor error and sources of non-complaince.
+
+	* TAO_IDL/tao_idl.dsp: 
+	* tao/TAO.dsp: 
+	  CVS does not merge binary files properly.
+
 Sat Jan 24 15:51:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/objtable.cpp: 

@@ -180,6 +180,10 @@ SOURCE=.\object.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objkeyC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objtable.cpp
 # End Source File
 # Begin Source File
@@ -204,6 +208,14 @@ SOURCE=.\poa.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\poaC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\principa.cpp
 # End Source File
 # Begin Source File
@@ -213,6 +225,10 @@ SOURCE=.\request.cpp
 # Begin Source File
 
 SOURCE=.\sequence.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\servant_base.cpp
 # End Source File
 # Begin Source File
 
@@ -316,6 +332,10 @@ SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\objkeyC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objtable.h
 # End Source File
 # Begin Source File
@@ -348,6 +368,18 @@ SOURCE=.\poa.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\poa_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\principa.h
 # End Source File
 # Begin Source File
@@ -357,6 +389,10 @@ SOURCE=.\request.h
 # Begin Source File
 
 SOURCE=.\sequence.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\servant_base.h
 # End Source File
 # Begin Source File
 
@@ -444,6 +480,10 @@ SOURCE=.\object.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\objkeyC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\orb_core.i
 # End Source File
 # Begin Source File
@@ -457,6 +497,14 @@ SOURCE=.\params.i
 # Begin Source File
 
 SOURCE=.\poa.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.i
 # End Source File
 # Begin Source File
 

@@ -392,6 +392,14 @@ SOURCE=.\be\be_visitor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_args.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_interface.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_root.cpp
 # End Source File
 # Begin Source File
@@ -781,6 +789,14 @@ SOURCE=.\be_include\be_union_label.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_args.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_interface.h
 # End Source File
 # Begin Source File
 
