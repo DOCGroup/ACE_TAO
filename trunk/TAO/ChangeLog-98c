@@ -19,7 +19,7 @@ Wed Mar 25 11:11:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Logger/{clnt.cpp,logger_i.*,svr.cpp},
           orbsvcs/orbsvcs/Naming/{Ior_Multicast.cpp,Naming_Utils.cpp},
-          tests/Thruput/TAO:
+          tests/Thruput/TAO/server.cpp:
           removed unnecessary #include of ace/streams.h.
 
 Wed Mar 25 09:08:44 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
