@@ -1,3 +1,10 @@
+Fri Aug  6 09:50:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * bin/make_release:
+          For generating the project files for borland, vc6 & vc71 set
+          qos=1 in the default.features file, these environments support
+          qos.
+
 Fri Aug  6 09:41:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
