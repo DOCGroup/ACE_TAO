@@ -51,6 +51,7 @@ public:
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
 
+
 class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
 {
   // = TITLE
@@ -128,3 +129,26 @@ private:
   // state for the utilization thread to synchronize with the servants.
 };
 
+
+class Server
+{
+public:
+  Server (Task_State *ts);
+  // default constructor
+  int parse_args (int argc, char *argv[]);
+  int initialize (int argc, char **argv);
+  int start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts);
+  Util_Thread * start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts);
+public:
+  char hostname[BUFSIZ];
+  char *ior_file;
+  int base_port;
+  u_int num_of_objs;
+  u_int use_name_service;
+  u_int thread_per_rate;
+  u_int use_multiple_priority;
+  u_int run_utilization_test;
+private:
+  Task_State *ts_;
+  //pointer to task state
+};
