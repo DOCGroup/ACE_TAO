@@ -1,12 +1,22 @@
+Tue Jul  8 10:21:27 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/typecode.cpp: Changed a few loop counters from int to 
+	  CORBA_ULong to get rid of unsigned/signed comparison warnings
+
+	* tao/orbobj.cpp: Got rid of a "*" before a comment.  Looked like 
+	  a typo
+
+	* tao/PC_Install.bat: Replaced "#...." with "rem ...."
+
 Mon Jul  7 20:59:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/test1_{svr,clnt}.cpp (main): Added template
- 	specialization code and updated the formatting.  Thanks to Arturo
- 	Montes <mitosys@colomsat.net.co> for reporting this.
+	  specialization code and updated the formatting.  Thanks to Arturo
+	  Montes <mitosys@colomsat.net.co> for reporting this.
 
 	* tests/Cubit/TAO/test1_svr.cpp (main): Added the -i options to
- 	  getopt().  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
- 	  reporting this.
+	  getopt().  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
+	  reporting this.
 
 	* TAO/tao/orbconf.h (SIZEOF_LONG_DOUBLE): Added a 
 	  #define for M_UNIX.  Thanks to Arturo Montes
@@ -19,26 +29,26 @@ Sun Jul 06 02:37:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Sun Jul  6 00:10:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao: Fixed all the code so that we put ACE_MT around all the
- 	ACE_GUARD_RETURN macros.
+	  ACE_GUARD_RETURN macros.
 
 	* tao: Updated all of TAO to make sure we use [] when deleting
- 	arrays in order to avoid memory leaks.  This looks like lots of
- 	sloppiness left over from the original SunSoft IIOP code.
+	  arrays in order to avoid memory leaks.  This looks like lots of
+	  sloppiness left over from the original SunSoft IIOP code.
 
 Sat Jul  5 16:12:31 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/{any,iiopobj,nvlist,principa,request,roa,svrrqst,typecode}.cpp:
- 	Fixed a double-deletion of a lock.
+	  Fixed a double-deletion of a lock.
 
 	* tao/typecode.i: Cleaned up lots of minor warnings with the code
- 	that are only revealed when running GCC.  The code should now
- 	compile almost completely cleanly with -wall.
+	  that are only revealed when running GCC.  The code should now
+	  compile almost completely cleanly with -wall. 
 
 	* tao/typecode.{i,h}: Changed the name of TC_PRV_State to
- 	TC_Private_State.
+	  TC_Private_State.
 
 	* tao: Replaced ACE_Thread_Mutex with ACE_SYNCH_MUTEX so that the
- 	code will compile on non-threaded and threaded platforms alike.
+	  code will compile on non-threaded and threaded platforms alike.
 
 	* tao/marshal.cpp: Added template specializations for the Marshal
  	primitives.  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
