@@ -22,7 +22,6 @@ LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ	= $(addsuffix .so,$(FILES))
 
 LDLIBS 	= -lClient_Test
-LIBS	= -lACE
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

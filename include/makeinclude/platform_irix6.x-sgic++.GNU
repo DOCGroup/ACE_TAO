@@ -17,16 +17,12 @@ CCFLAGS		+= -O
 # Enable exceptions even in the o32 bit ABI.
 CCFLAGS		+= -exceptions
 
-# This suppresses common compiler warnings which appear in the 
-# ACE code but should not matter.  The warnings can be turned on
-# again by removing the -woff clause in the CPPFLAGS definition.
-# CCFLAGS		+= -woff 1188,1682,1171,1681,1110
-
 # Instantiate no templates automatically, do not run prelinker. There
-# are other choices available, but you should check for those.
+# are other choices available, but those have not been used in a while.
 CCFLAGS		+= -ptnone -no_prelink
 # Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
-# not build due to missing template instantiations.
+# not build due to missing template instantiations. NOTE: it seems
+# this setting no longer works for ACE.
 #CCFLAGS		+= -ptall
 # Instantiate used templates, plus prelinking instantiation
 #CCFLAGS	+= -ptused -prelink
@@ -38,9 +34,11 @@ LDFLAGS		+= -Wl,-woff,15
 LDFLAGS		+= -Wl,-woff,84
 LDFLAGS		+= -Wl,-woff,85
 LDFLAGS		+= -Wl,-woff,133
+
 # You may need to remove this if you are using 6.2 without the Pthread
 # patches.
 LIBS		+= -lpthread
+
 PIC		= -KPIC
 AR		= ar
 ARFLAGS		= r

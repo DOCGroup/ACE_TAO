@@ -179,7 +179,7 @@ Worker_Task<BARRIER>::Producer (void)
 	return -1;
     }
 
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 template <class BARRIER>int

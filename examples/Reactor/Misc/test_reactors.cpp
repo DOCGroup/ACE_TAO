@@ -151,7 +151,7 @@ worker (void *args)
 
     }
 
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 int

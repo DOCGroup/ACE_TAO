@@ -48,5 +48,5 @@ main (int /* argc */, char * /* argv */ [])
 	  new_stream.close ();
 	}
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }

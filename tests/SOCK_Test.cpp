@@ -199,7 +199,7 @@ server (void *arg)
 	    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "accept"));
 	}
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 static void

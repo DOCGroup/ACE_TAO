@@ -330,7 +330,7 @@ ACE_Blob_Writer::receive_reply (void)
       char *description = ACE_OS::strtok_r (NULL, "\n\r", &lasts);
       ACE_ERROR_RETURN((LM_ERROR, "%p\n", description), -1);
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

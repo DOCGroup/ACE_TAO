@@ -44,6 +44,5 @@ main (int argc, char *argv[])
 int main (void)
 {
   ACE_ERROR_RETURN ((LM_ERROR, "this feature is not supported"), -1);
-  return 0;
 }
 #endif /* ACE_HAS_STREAM_PIPES */
