@@ -1,17 +1,23 @@
+Fri Jan  9 15:45:33 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+
+	  Added some clarifications suggested by Tao Lu.
+
 Fri Jan  9 14:46:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CIDL/CIDL.vcproj:
         * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
         * CCF/CCF/IDL2/IDL2.vcproj:
-        
-          Added new files for union support and updated other project 
+
+          Added new files for union support and updated other project
           settings.
-          
+
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/izeTypeCalculator.cpp:
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
-        
+
           Added support for unions to the back end, and fixed a bug in
           generating the servant name when the component is declared at
           file scope.
