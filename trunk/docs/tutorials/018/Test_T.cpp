@@ -104,7 +104,7 @@ Test_T<MUTEX>::send (ACE_Message_Block *message)
 template <class MUTEX> int 
 Test_T<MUTEX>::open (void *arg)
 {
-  ACE_UNUSED_ARG(_arg);
+  ACE_UNUSED_ARG(arg);
   return this->activate (THR_NEW_LWP,
                          TEST_THREAD_COUNT);
 }
