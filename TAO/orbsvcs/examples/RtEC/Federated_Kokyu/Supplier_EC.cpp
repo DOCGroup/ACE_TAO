@@ -421,7 +421,7 @@ main (int argc, char* argv[])
 #else
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (20);
+      ACE_Time_Value ticker (300);
       orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
 
 

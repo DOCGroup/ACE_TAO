@@ -19,53 +19,53 @@ else
 endif
 
 
-all: all.Supplier_EC all.Consumer_EC
+all: all.Consumer_EC all.Supplier_EC
 
-debug: debug.Supplier_EC debug.Consumer_EC
+debug: debug.Consumer_EC debug.Supplier_EC
 
-profile: profile.Supplier_EC profile.Consumer_EC
+profile: profile.Consumer_EC profile.Supplier_EC
 
-optimize: optimize.Supplier_EC optimize.Consumer_EC
+optimize: optimize.Consumer_EC optimize.Supplier_EC
 
-install: install.Supplier_EC install.Consumer_EC
+install: install.Consumer_EC install.Supplier_EC
 
-deinstall: deinstall.Supplier_EC deinstall.Consumer_EC
+deinstall: deinstall.Consumer_EC deinstall.Supplier_EC
 
-clean: clean.Supplier_EC clean.Consumer_EC
+clean: clean.Consumer_EC clean.Supplier_EC
 
-realclean: realclean.Supplier_EC realclean.Consumer_EC
+realclean: realclean.Consumer_EC realclean.Supplier_EC
 
-clobber: clobber.Supplier_EC clobber.Consumer_EC
+clobber: clobber.Consumer_EC clobber.Supplier_EC
 
-depend: depend.Supplier_EC depend.Consumer_EC
+depend: depend.Consumer_EC depend.Supplier_EC
 
-rcs_info: rcs_info.Supplier_EC rcs_info.Consumer_EC
+rcs_info: rcs_info.Consumer_EC rcs_info.Supplier_EC
 
-idl_stubs: idl_stubs.Supplier_EC idl_stubs.Consumer_EC
-
-Supplier_EC: all.Supplier_EC
-.PHONY: Supplier_EC
-
-%.Supplier_EC:
-ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.Supplier_EC -C . $(*);
-else
-	@$(MAKE) -f Makefile.Supplier_EC -C . $(*);
-endif
+idl_stubs: idl_stubs.Consumer_EC idl_stubs.Supplier_EC
 
 Consumer_EC: all.Consumer_EC
 .PHONY: Consumer_EC
 
-%.Consumer_EC: %.Supplier_EC
+%.Consumer_EC:
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Consumer_EC -C . $(*);
 else
 	@$(MAKE) -f Makefile.Consumer_EC -C . $(*);
 endif
 
+Supplier_EC: all.Supplier_EC
+.PHONY: Supplier_EC
 
-reverseclean: realclean.Consumer_EC realclean.Supplier_EC
+%.Supplier_EC: %.Consumer_EC
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.Supplier_EC -C . $(*);
+else
+	@$(MAKE) -f Makefile.Supplier_EC -C . $(*);
+endif
+
+
+reverseclean: realclean.Supplier_EC realclean.Consumer_EC
 
 project_name_list:
-	@echo Supplier_EC
 	@echo Consumer_EC
+	@echo Supplier_EC

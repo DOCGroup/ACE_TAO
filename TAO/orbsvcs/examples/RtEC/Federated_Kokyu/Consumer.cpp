@@ -53,6 +53,8 @@ Consumer::push (const RtecEventComm::EventSet& events
   ACE_Object_Counter::object_id oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
+  oid.queue_id = events[0].header.eid.queue_id;
+
   DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
 
   //TODO: do work on push()
