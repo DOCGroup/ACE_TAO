@@ -1,3 +1,30 @@
+Sat Mar 26 02:34:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Exception.h (global_allocator_, initialized_):
+	  (make_standard_typecode, make_unknown_user_typecode):
+
+	  Removed these attributes and methods.  Standard CORBA exception
+	  TypeCodes are no longer instantiated dynamically, and are now
+	  available prior to calling CORBA::ORB_init().
+	  
+	* tao/ORB.cpp (init_orb_globals):
+
+	  Removed function calls that initialized standard CORBA exception
+	  TypeCodes.  Those TypeCodes are now initialized during process
+	  start-up, before CORBA::ORB_init() is ever called.
+
+	* tao/SystemException.cpp:
+	* tao/SystemException.h:
+
+	  Updated CORBA SystemException TypeCode instantations to use new
+	  TypeCode implementation.
+
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+	* tao/DynamicInterface/Unknown_User_Exception.h:
+
+	  Moved CORBA::_tc_UnknownUserException TypeCode to these files,
+	  and updated to use new TypeCode implementation.
+
 Fri Mar 25 21:06:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:

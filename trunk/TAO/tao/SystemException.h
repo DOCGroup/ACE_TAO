@@ -195,7 +195,8 @@ namespace CORBA
   TAO_Export void operator<<= (CORBA::Any &, const CORBA::name &); \
   TAO_Export void operator<<= (CORBA::Any &, CORBA::name *); \
   TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
-                                         const CORBA::name *&)
+                                         const CORBA::name *&); \
+  extern TAO_Export TypeCode_ptr const _tc_ ## name
 
   TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
   TAO_SYSTEM_EXCEPTION(BAD_PARAM);        // an invalid parameter was passed

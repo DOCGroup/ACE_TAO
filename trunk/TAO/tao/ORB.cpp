@@ -1302,13 +1302,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       ++orb_init_count;
     }
 
-  // initialize the system TypeCodes
-//   TAO::TypeCode_Constants::init ();
-
-  // initialize the system exceptions
-  TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
 #if defined (ACE_HAS_EXCEPTIONS)
   // This must be done after the system TypeCodes and Exceptions have
   // been initialized.  An unexpected exception will cause TAO's
