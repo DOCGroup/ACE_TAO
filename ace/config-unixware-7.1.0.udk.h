@@ -41,7 +41,6 @@
 
 #define ACE_HAS_NEW_NO_H 1
 #define ACE_HAS_STDEXCEPT_NO_H 1
-#define ACE_HAS_IOMANIP_NO_H 1
 
 /* Platform provides <sys/ioctl.h> header */
 #define ACE_HAS_SYS_IOCTL_H 1
