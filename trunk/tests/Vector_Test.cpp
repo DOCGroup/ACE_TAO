@@ -116,6 +116,21 @@ main (int, char*[])
     ACE_DEBUG ((LM_INFO, "ACE_Vector::max_size (): %d\n", sv.max_size ()));
 
   // ********************************************
+  // Test that the empty () method is working
+  // ********************************************
+  if (sv.empty ())
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::empty() not functioning properly.\n"),
+                        -1);
+
+    }
+  else
+    ACE_DEBUG ((LM_INFO,
+                "ACE_Vector::empty () correctly returned 0 (false).\n",
+                sv.max_size ()));
+
+  // ********************************************
   // Test the copy constructor
   // ********************************************
   ACE_Vector<ACE_CString> sv2 (sv);
@@ -133,6 +148,36 @@ main (int, char*[])
     }
 
   // ********************************************
+  // Test initialization from a range of elements
+  // ********************************************
+
+  ACE_CString string[5];
+
+  string[0].set ("0", 0);
+  string[1].set ("1", 0);
+  string[2].set ("2", 0);
+  string[3].set ("3", 0);
+  string[4].set ("4", 0);
+
+  ACE_Vector<ACE_CString>::iterator f = string;
+  ACE_Vector<ACE_CString>::iterator l = string + 5;
+
+  ACE_Vector<ACE_CString> sv3 (f, l);
+
+  for (size_t y = 0; y < sv3.size (); ++y)
+    if (sv3[y] != string[y] || sv3.capacity () != 5)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ACE_Vector initialization from range of "
+                           "iterators failed.\n"),
+                          -1);
+      }
+
+  ACE_DEBUG ((LM_INFO,
+              "ACE_Vector initialization from range of "
+              "iterators succeeded.\n"));
+
+  // ********************************************
   // Test the iterators
   // ********************************************
   ACE_Vector<ACE_CString>::iterator first = sv.begin ();
@@ -142,7 +187,6 @@ main (int, char*[])
       ACE_ERROR_RETURN ((LM_ERROR,
                          "ACE_Vector iterators failed.\n"),
                         -1);
-
     }
   else
     ACE_DEBUG ((LM_INFO, "ACE_Vector iterators are working properly.\n"));
@@ -366,6 +410,121 @@ main (int, char*[])
                         -1);
     }
 
+
+  // ********************************************
+  // Test the insertion/removal methods
+  // ********************************************
+  // ** Test ACE_Vector::insert() methods.
+  ACE_DEBUG ((LM_INFO, 
+              "ACE_Vector size before insertions     = %d\n",
+              moo.size ()));
+  ACE_DEBUG ((LM_INFO,
+              "ACE_Vector capacity before insertions = %d\n",
+              moo.capacity ()));
+
+  moo_old_size = moo.size ();
+
+  ACE_CString bar ("bar");
+
+  ACE_CString temp = *(moo.end () - 1);
+
+  if (moo.insert (moo.begin () + 3, bar) == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::insert() returned an "
+                         "invalid iterator.\n"),
+                        -1);
+    }
+
+  if (*(moo.end () - 1) != temp)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::insert() did not expand the ACE_Vector "
+                         "the prov.\n"),
+                        -1);
+    }
+
+  if (moo[3] != bar || moo.size () != moo_old_size + 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::insert() did not properly insert "
+                         "the provided element.\n"),
+                        -1);
+    }
+
+  moo.insert (moo.begin () + 8, f, l);
+
+  if (*(moo.begin () + 8)  != string[0] ||
+      *(moo.begin () + 9)  != string[1] ||
+      *(moo.begin () + 10) != string[2] ||
+      *(moo.begin () + 11) != string[3] ||
+      *(moo.begin () + 12) != string[4])
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::insert() did not properly insert range "
+                         "of iterators.\n"),
+                        -1);
+    }
+
+  moo.insert (moo.begin () + 5, 3, foo);
+
+  if (*(moo.begin () + 5) != foo ||
+      *(moo.begin () + 6) != foo ||
+      *(moo.begin () + 7) != foo)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::insert() did not properly insert and "
+                         "copy the provided elements.\n"),
+                        -1);
+    }
+
+  ACE_DEBUG ((LM_INFO, 
+              "ACE_Vector size after insertions     = %d\n",
+              moo.size ()));
+  ACE_DEBUG ((LM_INFO,
+              "ACE_Vector capacity after insertions = %d\n",
+              moo.capacity ()));
+
+  ACE_DEBUG ((LM_INFO, "All ACE_Vector::insert() methods worked.\n"));
+
+  // ** Test ACE_Vector::erase() methods.
+  ACE_DEBUG ((LM_INFO, 
+              "ACE_Vector size before erasures     = %d\n",
+              moo.size ()));
+  ACE_DEBUG ((LM_INFO,
+              "ACE_Vector capacity before erasures = %d\n",
+              moo.capacity ()));
+
+  foo = *(moo.begin () + 21);
+  moo_old_size = moo.size ();
+
+  if (*(moo.erase (moo.begin () + 20)) != foo ||
+      moo_old_size != moo.size () + 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::erase() did not erase "
+                         "the provided element correctly.\n"),
+                        -1);
+    }
+
+  foo = *(moo.begin () + 10);
+  moo_old_size = moo.size ();
+
+  if (*(moo.erase (moo.begin () + 7, moo.begin () + 10)) != foo ||
+      moo_old_size != moo.size () + 3)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Vector::erase() did not erase "
+                         "the range of iterators correctly.\n"),
+                        -1);
+    }
+
+  ACE_DEBUG ((LM_INFO, 
+              "ACE_Vector size after erasures     = %d\n",
+              moo.size ()));
+  ACE_DEBUG ((LM_INFO,
+              "ACE_Vector capacity after erasures = %d\n",
+              moo.capacity ()));
 
   // ********************************************
   // Test assignment operator
