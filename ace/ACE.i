@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ACE.i
 // Miscellaneous static methods used throughout ACE.
 
 inline u_int
@@ -26,7 +25,7 @@ inline ssize_t
 ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
 {
   ACE_TRACE ("ACE::send");
-  
+
 #if defined (ACE_WIN32)
   return ACE_OS::send (handle, (const char *) buf, len);
 #else
@@ -80,7 +79,14 @@ ACE::get_flags (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE::get_flags");
 
+#if defined (ACE_LACKS_FCNTL)
+  // ACE_OS::fcntl is not supported, e.g., on VxWorks.  It
+  // would be better to store ACE's notion of the flags
+  // associated with the handle, but this works for now.
+  return 0;
+#else
   return ACE_OS::fcntl (handle, F_GETFL, 0);
+#endif /* ACE_LACKS_FCNTL */
 }
 
 inline u_long
