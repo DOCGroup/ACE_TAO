@@ -18,7 +18,7 @@ being updated.</font></h3>
 <h3>Implementation Repository User's Guide</h3>
 
 <p>Since the POA/ORB integration is not yet completed, the functionality still
-exists in separately in IR_Helper, which is included in orbsvcs.&nbsp; When the
+exists in separately in IR_Helper, which is included in orbsvcs. When the
 integration is done, this dependency to orbsvcs will be removed.</p>
 
 <hr>
@@ -52,7 +52,7 @@ just refering to any server that has used the structure of the
 IDL_Cubit test (a lot of TAO's examples are like this).</p>
 
 <dir>
-    <li>Make yourself an IR_Helper object.&nbsp; (If you follow
+    <li>Make yourself an IR_Helper object. (If you follow
         the Cubit-style architecture, this will be a pointer in
         the Server_i class). </li>
     <li>After you create the POA, construct the IR_Helper and
@@ -60,11 +60,11 @@ IDL_Cubit test (a lot of TAO's examples are like this).</p>
         new object within Server_i::init) </li>
     <li>If you need to register, call register_server ()
         (Cubit-style: add another option &quot;-r&quot; and have
-        it set a flag.&nbsp; Within Server_i::init call
+        it set a flag. Within Server_i::init call
         register_server ()) </li>
     <li>After you create and register your objects, call
-        change_object to redo the references. &nbsp; Then you can
-        output the new IOR.&nbsp; (Cubit-style: still within
+        change_object to redo the references.  Then you can
+        output the new IOR. (Cubit-style: still within
         Server_i::init) </li>
     <li>Right before ORB::run call notify_startup and afterwards,
         call notify shutdown (Cubit-style: within Server_i::run) </li>
