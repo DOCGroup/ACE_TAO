@@ -48,7 +48,12 @@ svr_worker (void *arg)
 int
 main (int argc, char **argv)
 {
-  Cubit_Client cubit_client (1);
+  int test_collocation = 0;
+
+  if (ACE_OS::strcasecmp (argv[0], "collocation_test") == 0)
+    test_collocation = 1;
+
+  Cubit_Client cubit_client (test_collocation);
   // We want to test collocation, so create
   // cubit_client with parameter 1 set.
 
@@ -66,7 +71,7 @@ main (int argc, char **argv)
   ACE_OS::sleep (1);
 
   if (cubit_client.init (argc, argv, THE_IOR_FILE) == -1)
-    return 1;  
+    return 1;
   else
     retv = cubit_client.run ();
 
