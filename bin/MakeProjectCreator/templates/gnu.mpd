@@ -31,13 +31,12 @@ static_libs_only = 1
 SHLIB_UNCHECKED  = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
-<%if(tao)%>
+<%if(tao || ciao)%>
 
-TAO_ROOT ?= $(ACE_ROOT)/TAO
-<%endif%>
+TAO_ROOT  ?= $(ACE_ROOT)/TAO
 <%if(ciao)%>
-
 CIAO_ROOT ?= $(TAO_ROOT)/CIAO
+<%endif%>
 <%endif%>
 
 <%if(grouped_source_files)%>
