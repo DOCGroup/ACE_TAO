@@ -47,7 +47,7 @@ public:
   /**
    * Initialize this object
    */
-  int init (CORBA::ORB_ptr orb);
+  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
