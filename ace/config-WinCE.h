@@ -44,6 +44,11 @@
 // Non-static object manager does not quite work with CE (yet.)
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0
 
+// We need to rename program entry name "main" with ace_ce_main here
+// so that we can call it from CE's bridge class.
+define ACE_MAIN ace_ce_main
+define ACE_MAIN_OBJECT_MANAGER
+
 // SH3 cross-compiler can't handle inline functions correctly (along with other bugs.)
 #if defined (SH3) && defined (DEBUG)
 #define ACE_LACKS_INLINE_FUNCTIONS
