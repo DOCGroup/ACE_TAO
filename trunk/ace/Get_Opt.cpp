@@ -52,9 +52,9 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   : optarg (0), 
     optind (skip),
     opterr (report_errors), 
-    nextchar_ (0),
-    argv_ (argv),
     argc_ (argc),
+    argv_ (argv),
+    nextchar_ (0),
     optstring_ (optstring)
 {
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
