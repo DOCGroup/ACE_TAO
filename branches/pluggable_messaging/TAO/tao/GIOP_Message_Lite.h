@@ -19,7 +19,6 @@
 #ifndef _TAO_GIOP_MESSAGE_LITE_H_
 #define _TAO_GIOP_MESSAGE_LITE_H_
 
-#include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Assorted_Headers.h"
 
@@ -51,7 +50,7 @@ public:
   // Reads input from the transport layer to the cdr stream in <mesg_state>
   
   virtual CORBA::Boolean 
-  write_message_header (const TAO_Pluggable_Connector_Params &params,
+  write_message_header (const TAO_Operation_Details &opdetails,
                         TAO_Pluggable_Header_Type header_type,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg);
@@ -77,11 +76,8 @@ public:
   // passed on to the appropriate states.
 private:
   CORBA::Boolean 
-  write_request_header (const IOP::ServiceContextList& svc_ctx,
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &details,
                         TAO_Target_Specification &spec,
-                        const char* opname,
                         TAO_OutputCDR &msg);
   // Write the GIOP lite request header in to <msg>
   

@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -1702,7 +1703,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // @@ The values below are suggestions for some of the protocols
 //    we have thought of, subject to change at any point
 // #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
-// #define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
+#define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
 // #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
 // #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
 // #define TAO_TAG_MCAST_PROFILE  0x54414f05U /* IP/Multicast */

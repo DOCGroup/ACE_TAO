@@ -1,6 +1,14 @@
 //$Id$
 
 
+ACE_INLINE
+TAO_Target_Specification::TAO_Target_Specification (void)
+  :specifier_ (TAO_Target_Specification::Key_Addr),
+   profile_index_ (0)
+{
+  //no-op
+}
+
 ACE_INLINE void 
 TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
 {

@@ -1,18 +1,16 @@
 // This may look like C, but it's really -*- C++ -*-
 //
 // $Id$
-//
-
 ACE_INLINE IOP::ServiceContextList &
 TAO_GIOP_Invocation::service_info (void)
 {
-  return this->service_info_;
+  return this->op_details_.service_info ();
 }
 
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Invocation::request_id (void)
 {
-  return this->request_id_;
+  return this->op_details_.request_id ();
 }
 
 ACE_INLINE TAO_OutputCDR &
@@ -27,9 +25,10 @@ ACE_INLINE
 TAO_GIOP_Twoway_Invocation::
 TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
                             const char *operation,
+			    CORBA::ULong opname_len,
                             TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, orb_core),
-    rd_ (orb_core, this->service_info_)
+  : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
+    rd_ (orb_core, this->op_details_.service_info ())
 {
 }
 
@@ -53,8 +52,8 @@ ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, 0, orb_core),
-    rd_ (orb_core, this->service_info_)
+  : TAO_GIOP_Invocation (stub, 0, 0, orb_core),
+    rd_ (orb_core, this->op_details_.service_info ())
 {
 }
 

@@ -34,10 +34,8 @@ class TAO_Export TAO_GIOP_Message_Acceptors:
   
 public:
 
-  TAO_GIOP_Message_Acceptors (void)
-    {
-      cout << "Thaye parameshi "<<endl;
-    }
+  TAO_GIOP_Message_Acceptors (void);
+
   int process_connector_messages (TAO_Transport *transport,
                                   TAO_ORB_Core *orb_core,
                                   TAO_InputCDR &input,
@@ -112,11 +110,8 @@ private:
   // Inherited methods. Should not be here in the first place? 
   ////////////////////////////////////////////////////
   CORBA::Boolean 
-  write_request_header (const IOP::ServiceContextList& svc_ctx,
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
-                        const char* opname,
                         TAO_OutputCDR &msg);
 
   CORBA::Boolean

@@ -54,7 +54,7 @@ public:
   // the CDR through the transport layer
   
   virtual CORBA::Boolean 
-  write_message_header (const TAO_Pluggable_Connector_Params &params,
+  write_message_header (const TAO_Operation_Details &opdetails,
                         TAO_Pluggable_Header_Type header_type,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg) = 0;

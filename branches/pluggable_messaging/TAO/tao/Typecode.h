@@ -30,6 +30,7 @@
 
 // Forward decl.
 class TAO_InputCDR;
+class TAO_OutputCDR;
 
 // A TypeCode describes data.  This one's as thin a wrapper around CDR
 // octet sequences as is practical.  There are guesses here about how
@@ -283,7 +284,7 @@ private:
                              CORBA::Boolean equiv_only,
                              CORBA_Environment &ACE_TRY_ENV =
                                 TAO_default_environment ()) const;
-  // equal() and equivalent() must both recurse, but their 
+  // equal() and equivalent() must both recurse, but their
   // behavior is somewhat different (as defined in CORBA 2.3).
   // This function allows us to reuse the same code by acting
   // as the point of recursion and by adding the equiv_only
@@ -580,6 +581,12 @@ public:
   // Runtime finalization of all standard typecodes.
 
 };
+
+// These operators are too complex to be inline....
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
+                                      const CORBA::TypeCode *x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
+                                      CORBA::TypeCode *&x);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Typecode.i"

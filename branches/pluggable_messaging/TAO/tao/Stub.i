@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 ACE_INLINE TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {

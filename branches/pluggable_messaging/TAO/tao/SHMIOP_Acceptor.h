@@ -45,7 +45,7 @@ class TAO_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
   //   The IIOP-specific bridge class for the concrete acceptor.
   //
 public:
-  TAO_SHMIOP_Acceptor (void);
+  TAO_SHMIOP_Acceptor (CORBA::Boolean flag = 0);
   // Constructor.
 
   ~TAO_SHMIOP_Acceptor (void);
@@ -111,6 +111,9 @@ private:
   off_t mmap_size_;
   // Determine the minimum size of mmap file.  This dictate the
   // maximum size of a CORBA method invocation.
+  
+  CORBA::Boolean lite_flag_;
+  // Should we use GIOP lite??
 };
 
 #if defined(__ACE_INLINE__)

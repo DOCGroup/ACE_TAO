@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -47,8 +48,9 @@ class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
-class TAO_Pluggable_Message_Factory;
+class TAO_Pluggable_Messaging_Interface;
 class TAO_Target_Specification;
+class TAO_Operation_Details;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
@@ -126,7 +128,7 @@ public:
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
                              TAO_Target_Specification &spec,
-                             CORBA::ULong request_id,
+                             TAO_Operation_Details &opdetails,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV =
                              TAO_default_environment ())
@@ -145,11 +147,8 @@ public:
   // wait strategy) to take appropiate action.
 
   virtual CORBA::Boolean 
-  send_request_header (const IOP::ServiceContextList &svc_ctx,  
-                       CORBA::ULong request_id,
-                       CORBA::Octet response_flags,
+  send_request_header (TAO_Operation_Details &op_details,
                        TAO_Target_Specification &spec,
-                       const char* opname,
                        TAO_OutputCDR &msg) = 0;
   // This is a request for the transport object to write a request
   // header before it sends out a request
@@ -221,6 +220,9 @@ protected:
   void reset_message (ACE_Message_Block *message_block,
                       size_t bytes_delivered,
                       int queued_message);
+
+  virtual void messaging_init (TAO_Pluggable_Messaging_Interface *mesg) = 0;
+  // Initialising the messaging object
 
   CORBA::ULong tag_;
   // IOP protocol tag.

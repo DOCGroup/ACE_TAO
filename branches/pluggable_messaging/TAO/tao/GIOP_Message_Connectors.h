@@ -40,11 +40,8 @@ class TAO_Export TAO_GIOP_Message_Connectors:
 
 protected:
   virtual CORBA::Boolean 
-  write_request_header (const IOP::ServiceContextList& svc_ctx, 
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
-                        const char* opname,
                         TAO_OutputCDR &msg);
   // Write the GIOP request header.
   
@@ -86,11 +83,8 @@ public:
 
 private:
   virtual CORBA::Boolean 
-  write_request_header (const IOP::ServiceContextList& svc_ctx, 
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
-                        const char* opname,
                         TAO_OutputCDR &msg);
   // Write the request header in to <msg>
 

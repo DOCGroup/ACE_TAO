@@ -46,9 +46,6 @@ public:
                    PortableServer::POAManager_ptr poa_manager = 0);
   // Constructor.
 
-  ~TAO_ORB_Manager (void);
-  // Destructor.
-
   int init (int &argc,
             char *argv[],
             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -81,6 +78,14 @@ public:
   // USER_ID policies.  Call this if you want a <child_poa> with the
   // above policies, otherwise call init.  Returns -1 on failure.
 
+  int fini (CORBA_Environment &ACE_TRY_ENV);
+  // Shut down the <ORB_Manager>.
+
+  ~TAO_ORB_Manager (void);
+  // Destructor.
+
+  // = Accessor methods.
+
   int activate_poa_manager (CORBA_Environment &ACE_TRY_ENV =
                                 TAO_default_environment ());
   //  Put POA manager into the <Active> state, so that incoming corba
@@ -89,7 +94,7 @@ public:
   //  service incoming requests while waiting for a result of CORBA
   //  call on a server.  Returns -1 on failure.
 
-  char* activate (PortableServer::Servant servant,
+  char *activate (PortableServer::Servant servant,
                   CORBA_Environment &ACE_TRY_ENV =
                       TAO_default_environment ());
   // Activate <servant>, using the POA <activate_object> call.  Users
@@ -101,10 +106,10 @@ public:
                        TAO_default_environment ());
   // Deactivate object in RootPOA.
 
-  char * activate_under_child_poa (const char *servant_name,
-                                   PortableServer::Servant servant,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
+  char *activate_under_child_poa (const char *servant_name,
+                                  PortableServer::Servant servant,
+                                  CORBA_Environment &ACE_TRY_ENV =
+                                     TAO_default_environment ());
   // Precondition: init_child_poa has been called.  Activate <servant>
   // using the POA <activate_object_with_id> created from the string
   // servant_name. Users should call this to activate objects under
