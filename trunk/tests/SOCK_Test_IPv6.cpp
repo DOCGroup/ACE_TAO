@@ -21,6 +21,7 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Time_Value.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
