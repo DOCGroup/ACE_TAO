@@ -1,3 +1,10 @@
+Fri Feb 16 20:12:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tests/Smart_Proxies/Makefile:
+
+	Added -I$(TAO_ROOT)/tao to CPPFLAGS to comfort cxx on Tru64 so
+	that it could get the template instantiations.
+
 Fri Feb 16 18:42:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
 
     * orbsvcs/examples/Notify/Filter/Filter.dsp
@@ -13,10 +20,10 @@ Fri Feb 16 18:42:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
     * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp
     * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp
       Updated include paths, exported class Notify_Test_Client
-       
+
 Fri Feb 16 15:26:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Simulator/DOVEBrowser/NS_Resolve.java: 
+	* examples/Simulator/DOVEBrowser/NS_Resolve.java:
 	  Cleaned up the code a bit.  Thanks to Kevin Regan
  	  <kregan@infoglide.com> for contributing this.
 
@@ -47,7 +54,7 @@ Fri Feb 16 10:53:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Feb 16 09:41:54 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/IDL_Test: Added a new Makefile.bor.  Thanks to 
+	* tests/IDL_Test: Added a new Makefile.bor.  Thanks to
 	  Johnny Willemsen for this.
 
 Fri Feb 16 02:28:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
