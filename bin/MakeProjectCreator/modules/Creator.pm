@@ -34,14 +34,15 @@ sub new {
   my($type)     = shift;
   my($self)     = Parser::new($class);
 
-  $self->{'relative'}     = $relative;
-  $self->{'template'}     = $template;
-  $self->{'ti'}           = $ti;
-  $self->{'global_cfg'}   = $global;
-  $self->{'grammar_type'} = $type;
-  $self->{'type_check'}   = $type . '_defined';
-  $self->{'global_read'}  = 0;
-  $self->{'include_path'} = $inc;
+  $self->{'relative'}      = $relative;
+  $self->{'template'}      = $template;
+  $self->{'ti'}            = $ti;
+  $self->{'global_cfg'}    = $global;
+  $self->{'grammar_type'}  = $type;
+  $self->{'type_check'}    = $type . '_defined';
+  $self->{'global_read'}   = 0;
+  $self->{'include_path'}  = $inc;
+  $self->{'current_input'} = "";
 
   return $self;
 }
@@ -97,6 +98,8 @@ sub generate {
   }
 
   if ($status) {
+    $self->{'current_input'} = $input;
+
     ## An empty input file name says that we
     ## should generate a default input file and use that
     if ($input eq "") {
@@ -300,6 +303,13 @@ sub transform_file_name {
   $name =~ s/\s/_/g;
   return $name;
 }
+
+
+sub get_current_input {
+  my($self) = shift;
+  return $self->{'current_input'};
+}
+
 
 # ************************************************************
 # Virtual Methods To Be Overridden
