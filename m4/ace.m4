@@ -563,6 +563,7 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
       ;;
     no)
       AC_DEFINE([ACE_NDEBUG])
+      AC_DEFINE([ACE_USE_RCSID],[0])
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-debug])
@@ -889,6 +890,29 @@ AC_DEFUN([ACE_WITH_SSL],
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
                [ace_user_with_ssl], [ace_user_with_ssl=yes])
 AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
+])
+
+AC_DEFUN([ACE_WITH_ACEXML],
+[AC_ARG_WITH([acexml],
+             AS_HELP_STRING([--with-acexml],
+                            [compile/use the ACEXML library [[yes]]]),
+             [case "${withval}" in
+               yes) 
+                ace_user_with_acexml=yes
+                ;;
+               no)
+                ace_user_with_acexml=no
+                ;;
+               *)
+                AC_MSG_ERROR(bad value ${withval} for --with-acexml)
+                ;;
+              esac],
+              [
+               ace_user_with_acexml=yes
+              ])
+AC_CACHE_CHECK([whether to compile/use the ACEXML library],
+               [ace_user_with_acexml], [ace_user_with_acexml=yes])
+AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_with_acexml = Xyes])
 ])
 
 AC_DEFUN([ACE_WITH_USES_WCHAR],
