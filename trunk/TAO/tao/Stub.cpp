@@ -73,8 +73,10 @@ TAO_Stub::TAO_Stub (char *repository_id,
     refcount_ (1),
     use_locate_request_ (0),
     first_locate_request_ (0),
-    orb_core_ (orb_core),
-    policies_ (0)
+    orb_core_ (orb_core)
+#if defined (TAO_HAS_CORBA_MESSAGING)
+    , policies_ (0)
+#endif /* TAO_HAS_CORBA_MESSAGING */
 {
   if (this->orb_core_ == 0)
     {
@@ -845,7 +847,7 @@ TAO_Stub::get_policy (
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                     this->refcount_lock_,
                     CORBA::Policy::_nil ());
-  
+
   if (this->policies_ == 0)
     return CORBA::Policy::_nil ();
 
@@ -860,7 +862,7 @@ TAO_Stub::get_client_policy (
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                     this->refcount_lock_,
                     CORBA::Policy::_nil ());
-  
+
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
@@ -975,5 +977,3 @@ template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
-
