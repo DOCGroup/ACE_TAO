@@ -127,7 +127,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::dispatch_event (TAO_Notify_Event &event,
 {
   if (this->is_connected_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,"%t, %p",
+      ACE_DEBUG ((LM_DEBUG,"%t, %P",
                   "dispatch_event to disconnected proxy supplier from EC\n"));
       return;
     }

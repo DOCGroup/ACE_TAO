@@ -317,8 +317,8 @@ TAO_Notify_Default_EMO_Factory::print_values (void)
                 " dispatching_threads %d "
                 " source_threads %d "
                 " lookup_threads %d "
-                " listener_threads_ %d ",
-                " AsynchUpdates %d",
+                " listener_threads_ %d "
+                " AsynchUpdates %d"
                 " AllocateTaskperProxy %d",
                 EMO_OPTIONS::instance ()->mt_dispatching_,
                 EMO_OPTIONS::instance ()->mt_source_eval_,

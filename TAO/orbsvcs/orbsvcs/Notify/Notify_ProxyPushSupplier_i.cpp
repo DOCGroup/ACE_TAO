@@ -30,7 +30,8 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event, CORBA
   ACE_CATCHALL
     {
       ACE_DEBUG ((LM_DEBUG, "Exception dispatching any event\n"));
-      // misbehaving client, ignore for now.
+      // misbehaving client,
+      this->shutdown (ACE_TRY_ENV);
     }
   ACE_ENDTRY;
 }
