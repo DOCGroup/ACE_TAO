@@ -31,7 +31,4 @@
 // Solaris 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
 
-#undef ACE_HAS_AIO_CALLS
-// Proactor code does not work on 5.7 yet.
-
 #endif /* ACE_CONFIG_H */
