@@ -201,7 +201,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // timeout
       if (!r->connected())
         {
-          // Poll for connection completion.
+          // Poll for connection completion. When the connection is complete
+          // in the connection handler the connected will be set.
           ACE_Time_Value zero(ACE_Time_Value::zero);
           result =
             this->active_connect_strategy_->wait (svc_handler,
@@ -249,7 +250,9 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 // move this to a separate method??, something like check_connection_closure()
 // can this then not be in the base, generic for all different connector types?
 // that can also be called then from tranport_connector::connect()
-      // Check if the handler has been closed.
+// we need the connection handler and the connector
+      this->check_connection_closure (svc_handler, result);
+/*      // Check if the handler has been closed.
       int closed =
         svc_handler->is_closed ();
 
@@ -289,7 +292,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                   svc_handler->close ();
                 }
             }
-        }
+        }*/
     }
 
   // Irrespective of success or failure, remove the extra #REFCOUNT#.
@@ -311,19 +314,20 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  TAO_Transport *transport = svc_handler->transport ();
+
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                  "new connection to <%s:%d> on Transport[%d]\n",
+                  "new %s connection to <%s:%d> on Transport[%d]\n",
+                  transport->is_connected() ? ACE_TEXT("connected") : ACE_TEXT("not connected"),
                   ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()),
                   iiop_endpoint->port (),
                   svc_handler->peer ().get_handle ()));
     }
-
-  TAO_Transport *transport = svc_handler->transport ();
 
   // Add the handler to Cache
   int retval =
@@ -518,4 +522,54 @@ TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   return iiop_endpoint;
+}
+
+void
+TAO_IIOP_Connector::check_connection_closure (
+  TAO_IIOP_Connection_Handler *svc_handler,
+  int& result)
+{
+  // Check if the handler has been closed.
+  int closed =
+    svc_handler->is_closed ();
+
+  // In case of failures and close() has not be called.
+  if (result == -1 && !closed)
+    {
+      // First, cancel from connector.
+      this->base_connector_.cancel (svc_handler);
+
+      // Double check to make sure the handler has not been closed
+      // yet.  This double check is required to ensure that the
+      // connection handler was not closed yet by some other
+      // thread since it was still registered with the connector.
+      // Once connector.cancel() has been processed, we are
+      // assured that the connector will no longer open/close this
+      // handler.
+      closed = svc_handler->is_closed ();
+
+      // If closed, there is nothing to do here.  If not closed,
+      // it was either opened or is still pending.
+      if (!closed)
+        {
+          // Check if the handler has been opened.
+          const int open = svc_handler->is_open ();
+
+          // Some other thread was able to open the handler even
+          // though wait failed for this thread.
+          if (open)
+            {
+              // Overwrite <result>.
+              result = 0;
+            }
+          else
+            {
+              // Assert that it is still connecting.
+              ACE_ASSERT (svc_handler->is_connecting ());
+
+              // Force close the handler now.
+              svc_handler->close ();
+            }
+        }
+    }
 }

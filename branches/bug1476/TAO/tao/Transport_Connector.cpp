@@ -253,7 +253,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         }
       else
         {
-// todo block
           // We have a transport that is not connected, just do a wait of zero
           // time to see if it is maybe now connected
           // here
@@ -261,15 +260,14 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           int result = this->active_connect_strategy_->wait(base_transport->connection_handler(),
                                                             &zero);
 
-// this is not correct
           if (base_transport->is_connected())
             {
-			  // We now have a connection
+              // We now have a connection
 
               // If the wait strategy wants us to be registered with the reactor
               // then we do so. If registeration is required and it succeeds,
               // #REFCOUNT# becomes two.
-// ok??
+// ok??, the question is whether this shouldn't be in the iiop_connection_handler->open
               result = base_transport->wait_strategy ()->register_handler ();
 
               // Registration failures.
@@ -292,7 +290,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
             }
           else
           {
-			  // connection not ready yet, just use this base_transport
+            // Connection not ready yet, just use this base_transport, if
+            // we need a connected one we will block later one to make sure
+            // it is connected
          		return base_transport;
 // check for closure?
 
@@ -300,7 +300,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
 // todo
 // what now then thsi is closed, then we should close it, zap it from the cache and make
-		  // a new connection
+      // a new connection, this is protocol dependent, so should we define a virtual
+            // method that is overruled for each protocol?
       }
     }
 
@@ -331,3 +332,4 @@ TAO_Connector::create_connect_strategy (void)
 
   return 0;
 }
+

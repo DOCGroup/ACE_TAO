@@ -1,9 +1,20 @@
+
+        * tao/Transport_Connector.cpp:
+          Changed some remarks, some are not valid, some need some more
+          clarification
+
+        * tao/IIOP_Connector.{h,cpp}:
+          Moved the handling of connection closure to a new separate method
+          check_connection_closure(). This contains code original in
+          make_connection(). This code is dependent on the type of tranport
+          used, so it can't move into the base class.
+
 Thu Jul  8 14:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp (open):
           Set the transport to connected here. We should refactor the last
           lines of this method, these lines are copied in each different type
-          of connection_handler
+          of connection_handler.
 
         * tao/IIOP_Connector.cpp:
           Removed not needed code, just us is_connected() on the transport.

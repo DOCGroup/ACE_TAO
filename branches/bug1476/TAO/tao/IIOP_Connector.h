@@ -99,6 +99,10 @@ protected:
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
 
+  /// Check whether the connection is not closed
+  void check_connection_closure (TAO_IIOP_Connection_Handler *svc_handler,
+                                 int& result);
+
 protected:
 
   /// TCP configuration properties to be used for all
