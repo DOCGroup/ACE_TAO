@@ -1,3 +1,17 @@
+Sun Feb 14 18:29:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/arglist.h:
+          Added post_invoke string_free() for INOUT and OUT strings, and
+          release() for OUT objects, to plug a leak found with Purify.
+          Added the compiled marshaling version classes for this as well.
+          Changed the spot where post_invoke lines are generated, plus 
+          some other cosmetic fixes.
+
 Sun Feb 14 12:41:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Invocation.cpp: 
