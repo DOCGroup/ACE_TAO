@@ -611,7 +611,8 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
               objdata->Release ();
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
-          profile->set_object_addr ();
+
+          profile->object_addr ();
 
           // ... and object key
 

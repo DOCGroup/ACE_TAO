@@ -40,7 +40,8 @@ public:
     CORBA::Octet major;
     CORBA::Octet minor;
 
-    Version (CORBA::Octet maj = MY_MAJOR, CORBA::Octet min = MY_MINOR);
+    Version (CORBA::Octet maj = MY_MAJOR,
+             CORBA::Octet min = MY_MINOR);
   };
 
   struct Profile
@@ -57,23 +58,67 @@ public:
     CORBA::UShort port;
 
     Profile (void);
+    // Default constructor.
 
     Profile (const Profile &src);
-    Profile (const Version &v,
-             const char *h,
-             const CORBA::UShort p,
+    // Copy constructor.
+
+    Profile (const char *host,
+             const CORBA::UShort port,
+             const char *object_key);
+    // Called by client <_bind>.
+
+    Profile (const char *host,
+             const CORBA::UShort port,
+             const char *object_key,
+             const ACE_INET_Addr &addr);
+    // Called by server.
+
+    Profile (const ACE_INET_Addr &addr,
+             const char *object_key);
+    // Called by client or server.
+
+    Profile (const ACE_INET_Addr &addr,
              const TAO_opaque &object_key);
+    // Called by client or server.
 
     ~Profile (void);
+    // Destructor.
 
-    void set_object_addr (void);
+    void object_addr (const ACE_INET_Addr *);
     // Sets <object_addr_> cache from <host> and <port>
 
-    ACE_INET_Addr& get_object_addr (void);
+    ACE_INET_Addr &object_addr (void);
     // Returns the <ACE_INET_Addr> for this profile.
 
   private:
+    int set (const char *host,
+             const CORBA::UShort port,
+             const ACE_INET_Addr *addr);
+    // Internal helper method (called by the next two methods).
+
+    int set (const char *host,
+             const CORBA::UShort port,
+             const char *object_key,
+             const ACE_INET_Addr *addr = 0);
+    // Called by server.
+
+    int set (const char *host,
+             const CORBA::UShort port,
+             const TAO_opaque &object_key,
+             const ACE_INET_Addr *addr = 0);
+    // Called by server.
+
+    int set (const ACE_INET_Addr &addr,
+             const char *object_key);
+    // Called by client or server.
+
+    int set (const ACE_INET_Addr &addr,
+             const TAO_opaque &object_key);
+    // Called by client or server.
+
     Profile &operator = (const Profile &src);
+    // Disallow copy constructor.
     
     ACE_INET_Addr object_addr_;
     // Cached instance of <ACE_INET_Addr> for use in making
@@ -114,7 +159,7 @@ public:
   // = Support for tables keyed by objrefs.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-		    CORBA::Environment &env);
+                     CORBA::Environment &env);
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
                                 CORBA::Environment &env);
   // XXX All objref representations should know how to marshal
@@ -163,8 +208,8 @@ public:
   // client side.
 
   IIOP_Object (char *repository_id,
-               const ACE_INET_Addr &addr, const
-               char *objkey = "0");
+               const ACE_INET_Addr &addr, 
+               const char *objkey = "0");
   // Constructor used typically by the server side.
 
   // = COM stuff
@@ -177,9 +222,11 @@ public:
   // Get the underlying object key.
 
   IIOP::Profile profile;
+  // @@ Please document me (this should be private).
 
 private:
   CORBA::Object base;
+  // @@ Please document me.
 
   ACE_SYNCH_MUTEX IUnknown_lock_;
   // Mutex to protect <IUnknown>-related stuff.

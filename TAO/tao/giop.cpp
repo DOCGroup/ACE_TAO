@@ -638,12 +638,12 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     if (data_->fwd_profile_i () != 0)
       {
         key = &data_->fwd_profile_i ()->object_key;
-        server_addr_p = &data_->fwd_profile_i ()->get_object_addr ();
+        server_addr_p = &data_->fwd_profile_i ()->object_addr ();
       }
     else
       {
         key = &data_->profile.object_key;
-        server_addr_p = &data_->profile.get_object_addr ();
+        server_addr_p = &data_->profile.object_addr ();
       }
   }
 
