@@ -950,7 +950,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
                           CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *data = this->create_stub_object (key, type_id, env);
+  TAO_Stub *data = this->create_stub_object (key, type_id, ACE_TRY_ENV);
   ACE_CHECK_REUTNR (CORBA::Object::_nil ());
 
   // Create the CORBA level proxy
