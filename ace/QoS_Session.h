@@ -49,7 +49,8 @@ public:
     ACE_QOS_RECEIVER,
     ACE_QOS_BOTH
   };
-  // A flag to indicate if this endpoint is a sender or a receiver or both.
+  // A flag to indicate if this endpoint is a sender or a receiver or
+  // both.
 
   virtual ~ACE_QoS_Session (void) {};
   // to shutup g++.
@@ -67,21 +68,23 @@ public:
   virtual int qos (ACE_SOCK *socket,
                    ACE_QoS_Manager *qos_manager,
                    const ACE_QoS &ace_qos) = 0;
-  // Set QoS for the current session. The socket parameter is used to confirm if
-  // this QoS session was subscribed to by the socket.
-
+  // Set QoS for the current session. The qos manager is used to
+  // confirm if this QoS session was subscribed to by the socket.
+  
   virtual void qos (const ACE_QoS &ace_qos) = 0;
-  // Sets the QoS for this session object to ace_qos. Does not interfere with the 
-  // QoS in the underlying socket. This call is useful to update the QoS object 
-  // when the underlying socket QoS is being set through a mechanism other than
-  // the previous qos () method e.g. inside the dgram_mcast.subscribe () where the 
-  // QoS for the socket is set through ACE_OS::join_leaf ().
+  // Sets the QoS for this session object to ace_qos. Does not
+  // interfere with the QoS in the underlying socket. This call is
+  // useful to update the QoS object when the underlying socket QoS is
+  // being set through a mechanism other than the previous qos ()
+  // method e.g. inside the dgram_mcast.subscribe () where the QoS for
+  // the socket is set through ACE_OS::join_leaf ().
 
   virtual int update_qos (void) = 0;
-  // This is called from handle_qos () method of the the QoS Event Handler.
-  // Invoking this method is an indication of a QoS event occurring, that may have 
-  // resulted in a change of QoS for the underlying session. This method updates 
-  // the QoS object associated with this session.
+  // This is called from handle_qos () method of the the QoS Event
+  // Handler.  Invoking this method is an indication of a QoS event
+  // occurring, that may have resulted in a change of QoS for the
+  // underlying session. This method updates the QoS object associated
+  // with this session.
 
   virtual ACE_End_Point_Type flags (void) const = 0;
   virtual void flags (const ACE_End_Point_Type flags) = 0;
@@ -93,24 +96,37 @@ public:
   virtual void session_id (const int session_id) = 0;
   // Set the session id.
 
+  virtual ACE_HANDLE rsvp_events_handle (void) = 0;
+  // Get the file descriptor on which RSVP events will occur.
+
   virtual ACE_INET_Addr dest_addr (void) const = 0;
   // Get the destination address for this session.
 
   virtual void dest_addr (const ACE_INET_Addr &dest_addr) = 0;
   // Set the destination address for this session.
 
+  virtual u_short source_port (void) const = 0;
+  // Get the source port for this session.
+  
+  virtual void source_port (const u_short &source_port) = 0;
+  // Set the source port for this session.
+  
   virtual int version (void) = 0;
   // Returns the version of the underlying RSVP implementation. Is
-  // meaningful only when the underlying implementation has versioning.
+  // meaningful only when the underlying implementation has
+  // versioning.
    
 protected:
+
+  u_short source_port_;
+  // Source port if this is a Sender session. Used for rapi_sender ().
 
   int session_id_;
   // session id for the session.
   
   ACE_INET_Addr dest_addr_;
   // Destination address for this session.
-  
+
   ACE_Protocol_ID protocol_id_;
   // Is this a TCP or a UDP session.
 
