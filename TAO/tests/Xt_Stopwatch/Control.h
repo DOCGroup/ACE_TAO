@@ -52,10 +52,5 @@ class Control
   Widget stopwidget_;
   // Pushbutton widget that is used to stop the timer..
 
- protected:
-    
-  //  virtual void timerStarted();   // Subclass hooks called when
-  //virtual void timerStopped();   // timer starts and stops
-  //float elapsedTime() { return _timer->elapsedTime(); }
 };
 #endif

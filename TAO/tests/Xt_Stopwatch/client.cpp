@@ -114,15 +114,15 @@ Client::add_callback (Control &ctrl)
   XtPointer client_data = ACE_static_cast (XtPointer, this);
   // Register callbacks, specifying the object's instance
   // pointer as client data.
-  XtAddCallback ( ctrl.startwidget (),
-                  XmNactivateCallback,
-                  &Client::start_callback,
-                  client_data);
+  XtAddCallback (ctrl.startwidget (),
+                 XmNactivateCallback,
+                 &Client::start_callback,
+                 client_data);
 
-  XtAddCallback ( ctrl.stopwidget (),
-                  XmNactivateCallback,
-                  &Client::stop_callback,
-                  client_data);
+  XtAddCallback (ctrl.stopwidget (),
+                 XmNactivateCallback,
+                 &Client::stop_callback,
+                 client_data);
 }
 
 
@@ -131,7 +131,7 @@ Client::start_callback (Widget widget,
                         XtPointer client_data,
                         XtPointer )
 {
-  Client *self = ACE_static_cast(Client*,client_data);
+  Client *self = ACE_static_cast (Client*,client_data);
   self->start_hook ();
 }
 
@@ -140,7 +140,7 @@ Client::stop_callback (Widget widget,
                        XtPointer client_data,
                        XtPointer )
 {
-  Client *self = ACE_static_cast(Client*,client_data);
+  Client *self = ACE_static_cast (Client*,client_data);
   self->stop_hook ();
 }
 
