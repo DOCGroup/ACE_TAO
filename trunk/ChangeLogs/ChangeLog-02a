@@ -1,5 +1,10 @@
 Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+	* examples/C++NPv2/Client_Logging_Daemon.cpp: Changed "blocks"
+	  parameter to "chunk" to be consistent with the terminology in
+ 	  the book.
+
 	* examples/C++NPv2/TP_Logging_Server.h: 
 	* examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Added some
 	  new code to safely allocate an array.
