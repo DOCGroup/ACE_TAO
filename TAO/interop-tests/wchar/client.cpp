@@ -255,7 +255,7 @@ main( int argc, char *argv[] )
 #if (!defined ACE_HAS_WCHAR) && (!defined ACE_HAS_XPG4_MULTIBYTE_CHAR)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,"This test requires wchar support\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,"This test requires wchar support\n"),0);
 #else
   ACE_TRY_NEW_ENV
     {
