@@ -59,7 +59,7 @@ public:
     int i;
     float f;
 
-#if defined (__GNUC__) 
+#if defined (ACE_HAS_STRING_CLASS)
     String s;
 		
     if (!(this -> peer () >> i >> f >> s))
@@ -89,7 +89,8 @@ public:
 	cerr << __LINE__ << "Error sending data" << endl ;
 	return - 1 ;
       }
-#endif /* __GNUC__ */
+#endif /* ACE_HAS_STRING_CLASS */
+
     // In order to flush the output to the peer, we have to use the
     // sync () function.  Some iostreams implementations let us use a
     // 'flush' function much like the 'endl' function.
