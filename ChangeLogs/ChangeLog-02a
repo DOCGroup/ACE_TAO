@@ -1,3 +1,13 @@
+Fri Sep 29 16:17:34 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.cpp (register_handle_i): If a event handle
+          is created for association with a socket handle, the
+          auto_ptr which caused the ACE_Auto_Event destruction at function
+          return usually smashed errno (since it was closing an invalid
+          handle - see comments in code). Added a ACE_Errno_Guard and
+          removed the ACE_Auto_Event's handle while in the guard to prevent
+          errno smashing upon function return.
+
 Thu Sep 28 22:06:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Connector.h:
