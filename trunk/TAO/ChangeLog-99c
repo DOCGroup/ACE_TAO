@@ -1,3 +1,10 @@
+Wed Dec  1 13:52:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Added missing parameter to match %p in an ACE_ERROR
+	  message. Thanks to Chad Elliott chad@wugate.wustl.edu
+	  for pointing this out.
+
 Wed Dec  1 12:38:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.h:
