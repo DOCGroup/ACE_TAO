@@ -239,12 +239,6 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &env,  // exception reporting
                                const TAO_Call_Data_Skel *info, // call description
                                ...)                       // ... any parameters
 {
-  // First find out the size of the list to be created. info->count
-  // keeps track of the table size. If "roundtrip" is true => one
-  // entry is for RETURN type which does not go into the NVList
-  CORBA::ULong list_size =
-    info->is_roundtrip ? (info->param_count - 1) : info->param_count;
-
   CORBA::NVList_ptr nvlist;
 
   // Create an NVList

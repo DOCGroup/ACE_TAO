@@ -39,6 +39,7 @@ Concurrency_Service::Concurrency_Service (int argc,
   this->init (argc, argv, _env);
 }
 
+int
 Concurrency_Service::parse_args (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -90,10 +91,10 @@ Concurrency_Service::init (int argc,
                                         "child_poa",
                                         _env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "%p\n",
-                      "init_child_poa"),
-                     -1);
-  TAO_CHECK_ENV_RETURN (env,-1);
+		       "%p\n",
+		       "init_child_poa"),
+		      -1);
+  TAO_CHECK_ENV_RETURN (_env,-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -137,7 +138,7 @@ Concurrency_Service::init_naming_service (CORBA::Environment &_env)
     return result;
   lockset_factory_ =
     this->my_concurrency_server_.GetLockSetFactory ()->_this (_env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  TAO_CHECK_ENV_RETURN (_env, -1);
 
   CosNaming::Name concurrency_context_name (1);
   concurrency_context_name.length (1);
@@ -146,7 +147,7 @@ Concurrency_Service::init_naming_service (CORBA::Environment &_env)
   this->concurrency_context_ =
     this->my_name_server_->bind_new_context (concurrency_context_name,
                                              _env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  TAO_CHECK_ENV_RETURN (_env, -1);
   
   CosNaming::Name lockset_name (1);
   lockset_name.length (1);
@@ -154,7 +155,7 @@ Concurrency_Service::init_naming_service (CORBA::Environment &_env)
   this->concurrency_context_->bind (lockset_name,
                                    lockset_factory_.in (),
                                    _env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  TAO_CHECK_ENV_RETURN (_env, -1);
   return 0;
 }
 

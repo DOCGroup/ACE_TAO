@@ -1,3 +1,19 @@
+Thu May  7 11:34:13 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  Fixed template instantiation pragmas.
+
+	* tests/CDR/basic_types.cpp: 
+	* orbsvcs/tests/Concurrency/NS_client.cpp: 
+	* orbsvcs/tests/Concurrency/CC_client.cpp: 
+	* orbsvcs/tests/Concurrency/CC_tests.cpp: 
+	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp: 
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: 
+	* tao/skip.cpp: 
+	* tao/encode.cpp: 
+	* tao/Server_Request.cpp: 
+	  Fixed several warnings, mostly unused variables.
+
 Thu May 07 11:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: added

@@ -97,6 +97,7 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
       TAO_RETHROW_RETURN (CORBA::B_FALSE);
     }
   TAO_ENDTRY;
+  return CORBA::B_TRUE;
 }
 
 // Drops the specified lock. In this simple case we have only one lock
