@@ -75,12 +75,12 @@ private:
   // SupplierAdmin servant object.
 
   CosEventChannelAdmin::ConsumerAdmin_ptr consumeradmin_;
-  // The reference to the ConsumerAdmin interface returned after activating
-  // the servant in the ORB.
+  // The reference to the ConsumerAdmin interface returned after
+  // activating the servant in the ORB.
 
   CosEventChannelAdmin::SupplierAdmin_ptr supplieradmin_;
-  // The reference to the SupplierAdmin interface returned after activating
-  // the servant in the ORB.
+  // The reference to the SupplierAdmin interface returned after
+  // activating the servant in the ORB.
 };
 
 #endif /* _EVENTCHANNEL_I_H */

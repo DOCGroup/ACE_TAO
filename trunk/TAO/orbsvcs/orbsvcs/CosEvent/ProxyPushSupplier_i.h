@@ -48,7 +48,7 @@ public:
 
   virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer,
                                      CORBA::Environment &TAO_TRY_ENV);
-// Connects the <push_consumer> to the Event Channel.
+  // Connects the <push_consumer> to the Event Channel.
 
 private:
   int connected (void);
@@ -63,7 +63,6 @@ private:
 
   PushConsumerWrapper *wrapper_;
   // The Rtec PushConsumer wrapper used by the Rtec ProxyPushSupplier.
-
 };
 
 #endif /* _PROXYPUSHSUPPLIER_H */

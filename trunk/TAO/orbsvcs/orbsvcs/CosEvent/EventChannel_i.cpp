@@ -37,7 +37,7 @@ EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
   if (this->supplier_admin_.init (supplierqos,
-                              rtec_supplieradmin) == -1)
+                                  rtec_supplieradmin) == -1)
     return -1;
 
   this->supplieradmin_ = supplier_admin_._this (TAO_TRY_ENV);
@@ -68,7 +68,6 @@ EventChannel_i::destroy (CORBA::Environment &TAO_TRY_ENV)
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this,
                                                         TAO_TRY_ENV);
-
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   poa->deactivate_object (id.in (),

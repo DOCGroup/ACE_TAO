@@ -144,9 +144,8 @@ ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_
   if (this->connected ())
     TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
                    TAO_TRY_ENV);
-
-  ACE_NEW (this->wrapper_, PushSupplierWrapper (push_supplier));
-
+  ACE_NEW (this->wrapper_,
+           PushSupplierWrapper (push_supplier));
   this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_TRY_ENV),
                                      this->qos_,
                                      TAO_TRY_ENV);

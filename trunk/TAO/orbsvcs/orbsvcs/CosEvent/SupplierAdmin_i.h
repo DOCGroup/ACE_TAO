@@ -43,8 +43,8 @@ public:
 
   int init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
             RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
-  // Initializes the SupplierAdmin.
-  // Returns 0 on success, -1 on error.
+  // Initializes the SupplierAdmin.  Returns 0 on success, -1 on
+  // error.
 
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
   obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV);
