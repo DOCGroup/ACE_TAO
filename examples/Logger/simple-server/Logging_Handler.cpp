@@ -18,7 +18,8 @@ Logging_Handler::~Logging_Handler (void)
 // Extract the underlying ACE_SOCK_Stream (e.g., for purposes of
 // accept()).
 
-Logging_Handler::operator ACE_SOCK_Stream &()
+ACE_SOCK_Stream &
+Logging_Handler::peer (void)
 {
   return this->cli_stream_;
 }

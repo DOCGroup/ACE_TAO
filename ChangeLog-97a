@@ -1,11 +1,25 @@
-Wed Apr 09 16:46:16 1997  David L. Levine  <levine@cs.wustl.edu>
+Wed Apr  9 20:25:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.{h,i}: fixed readPPCTimeBase declaration and return
-	  value (for now: it really needs to return a 64 bit quantity).
-	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
-	  reporting these.
+	* ace/Timer_Heap.cpp (reheap_down): Fixed a *very* subtle bug in
+ 	  reheap_down() where parent was starting off at 0 whereas it
+ 	  should have been starting off at child_index / 2.
 
-Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* examples/Logger/simple-server/Logging_Handler: Removed the use
+ 	  of the operator ACE_SOCK_Stream &() and replaced it with the
+ 	  more intuitive peer() approach used in ACE_Svc_Handler et al.
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* ace: Added a bunch of changes to improve ACE support on SCO 5.0.
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for these fixes.
+
+	* tests/Conn_Test.cpp: Completely reworked this test so that it
+ 	  illustrates how to use the ACE_Strategy_Connector, which is
+ 	  customized with a special Caching_Connect_Strategy that recycles
+ 	  connections.
+
+	* ace/Connector: Finished implementing the new
+ 	  ACE_Strategy_Connector.  This is similar in design to the
+ 	  ACE_Strategy_Acceptor.
 
 	* ace: Changed the signature of all the make_svc_handler() methods
  	  so that they return int (rather than SVC_HANDLER *) and they
@@ -54,6 +68,13 @@ Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/OS.i: Fixed a typo in the new condition variable
  	  implementation for Win32.  Thanks to Norbert Rapp
  	  <norbert.rapp@nexus-informatics.de> for reporting this.
+
+Wed Apr 09 16:46:16 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i}: fixed readPPCTimeBase declaration and return
+	  value (for now: it really needs to return a 64 bit quantity).
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
+	  reporting these.
 
 Wed Apr  9 03:12:24 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 

@@ -16,14 +16,29 @@
 #define MAXPATHLEN 1023
 #endif /* SCO */
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
+// Need this for difference in msghdr struct
+#ifndef msg_accrights
+#undef msg_control
+#define msg_accrights msg_control
+#endif
+
+#ifndef msg_accrightslen
+#undef msg_controllen
+#define msg_accrightslen msg_controllen
+#endif
+
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_STRRECVFD
-#define ACE_NEEDS_FTRUNCATE
-#define ACE_LACKS_RLIMIT
+//#define ACE_LACKS_STRRECVFD
+//#define ACE_NEEDS_FTRUNCATE
+//#define ACE_LACKS_RLIMIT
 #define ACE_LACKS_MADVISE
 
 // Compiler doesn't support static data member templates.
@@ -33,7 +48,10 @@
 #define ACE_HAS_SYSV_IPC			
 
 // Platform supports recvmsg and sendmsg.
-//#define ACE_HAS_MSG
+#define ACE_HAS_MSG
+
+// Platform supports recvmsg and sendmsg.
+#define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
 //#define ACE_HAS_SYSCALL_H
@@ -81,11 +99,20 @@
 #define ACE_HAS_SELECT_H
 
 // Platform has prototypes for ACE_TLI.
-//#define ACE_HAS_TLI_PROTOTYPES
+#define ACE_HAS_TLI_PROTOTYPES
+#define ACE_HAS_TLI
+#define ACE_HAS_TIMOD_H
+#define ACE_HAS_TIUSER_H
+#define ACE_LACKS_T_ERRNO
+//#define ACE_HAS_SVR4_TLI
+
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI
 
 #define ACE_HAS_GNU_CSTRING_H
+
+#define ACE_HAS_STRBUF_T
+#define ACE_HAS_STREAMS
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

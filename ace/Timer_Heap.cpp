@@ -218,48 +218,6 @@ ACE_Timer_Heap::remove (size_t index)
 }
 
 void
-ACE_Timer_Heap::reheap_down (ACE_Timer_Node *moved_node,
-                             size_t child_index)
-{
-  int parent = 0;
-
-  // Restore the heap property after a deletion.
-
-  for (size_t child = child_index; 
-       child < this->cur_size_;
-       child += child + 1) // Multiple child by 2 and add 1.
-    {
-      // Choose the smaller of the two children.
-      if (child + 1 < this->cur_size_
-          && this->heap_[child + 1]->timer_value_ < this->heap_[child]->timer_value_)
-        child++;
-
-      // Perform a swap if the child has a larger timeout value than
-      // the front node.
-      if (this->heap_[child]->timer_value_ < moved_node->timer_value_)
-        {
-	  // Insert the child node into its new location in the heap.
-          this->heap_[parent] = this->heap_[child];
-
-	  // Update the corresponding slot in the parallel <timer_ids>
-	  // array.
-	  this->timer_ids_[this->heap_[child]->timer_id_] = parent;
-
-          parent = child;
-        }
-      else 
-        break; 
-    }
-
-  // Insert moved_node into its final resting place.
-  this->heap_[parent] = moved_node;   
-
-  // Update the corresponding slot in the parallel <timer_ids>
-  // array.
-  this->timer_ids_[moved_node->timer_id_] = parent;
-}
-
-void
 ACE_Timer_Heap::insert (ACE_Timer_Node *new_node)
 {
   if (this->cur_size_ + 1 >= max_size_)
@@ -338,16 +296,58 @@ ACE_Timer_Heap::grow_heap (void)
 }
 
 void
+ACE_Timer_Heap::reheap_down (ACE_Timer_Node *moved_node,
+                             size_t child_index)
+{
+  // The parent of the <child_index> is always half-way up the array.
+  int parent = child_index / 2;
+
+  // Restore the heap property after a deletion.
+
+  for (size_t child = child_index; 
+       child < this->cur_size_;
+       child += child + 1) // Multiple child by 2 and add 1.
+    {
+      // Choose the smaller of the two children.
+      if (child + 1 < this->cur_size_
+          && this->heap_[child + 1]->timer_value_ < this->heap_[child]->timer_value_)
+        child++;
+
+      // Perform a swap if the child has a larger timeout value than
+      // the front node.
+      if (this->heap_[child]->timer_value_ < moved_node->timer_value_)
+        {
+	  // Insert the child node into its new location in the heap.
+          this->heap_[parent] = this->heap_[child];
+
+	  // Update the corresponding slot in the parallel <timer_ids>
+	  // array.
+	  this->timer_ids_[this->heap_[child]->timer_id_] = parent;
+
+          parent = child;
+        }
+      else 
+        break; 
+    }
+
+  // Insert moved_node into its final resting place.
+  this->heap_[parent] = moved_node;   
+
+  // Update the corresponding slot in the parallel <timer_ids>
+  // array.
+  this->timer_ids_[moved_node->timer_id_] = parent;
+}
+
+void
 ACE_Timer_Heap::reheap_up (ACE_Timer_Node *new_node)
 {
-  int parent;
   int child = this->cur_size_;
 
   // Restore the heap property after an insertion.
 
   while (child > 0) 
     {
-      parent = (child - 1) / 2;
+      int parent = (child - 1) / 2;
 
       // If the parent node is great than the new node we need to swap
       // them.
