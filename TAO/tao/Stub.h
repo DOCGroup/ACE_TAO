@@ -51,14 +51,6 @@ class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
 class TAO_Policy_Manager_Impl;
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-class TAO_PriorityModelPolicy;
-class TAO_PriorityBandedConnectionPolicy;
-class TAO_ClientProtocolPolicy;
-class TAO_PrivateConnectionPolicy;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // Descriptions of parameters.
 
@@ -114,50 +106,30 @@ public:
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-    );
+  virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type,
+                                        CORBA::Environment &ACE_TRY_ENV =
+                                        TAO_default_environment ()
+                                        );
 
-  CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type,
-                                       CORBA::Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ()
-    );
-  TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                  CORBA::SetOverrideType set_add,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-    );
-  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
-                                            CORBA::Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ()
-    );
-  CORBA::Boolean validate_connection (
-      CORBA::PolicyList_out inconsistent_policies,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+  virtual CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type,
+                                               CORBA::Environment &ACE_TRY_ENV =
+                                               TAO_default_environment ()
+                                               );
+  virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
+                                          CORBA::SetOverrideType set_add,
+                                          CORBA::Environment &ACE_TRY_ENV =
+                                          TAO_default_environment ());
+
+  virtual CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
+                                                    CORBA::Environment &ACE_TRY_ENV =
+                                                    TAO_default_environment ());
+
+  CORBA::Boolean validate_connection (CORBA::PolicyList_out inconsistent_policies,
+                                      CORBA::Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ());
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  /// Returns the CORBA::Policy (which will be narrowed to be
-  /// used as RTCORBA::PriorityModelPolicy) exported
-  /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_model (CORBA::Environment &ACE_TRY_ENV);
-
-  /// Returns the CORBA::Policy (which will be narrowed and used
-  /// as RTCORBA::PriorityBandedConnectionPolicy) exported
-  /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV);
-
-  /// Returns the CORBA::Policy (which will be narrowed and used
-  /// as RTCORBA::ClientProtocolPolicy) exported
-  /// in object's IOR.
-  CORBA::Policy_ptr exposed_client_protocol (CORBA::Environment &ACE_TRY_ENV);
-
-# endif /*TAO_HAS_RT_CORBA == 1*/
 
   // = Methods for obtaining effective overrides.
   //
@@ -184,30 +156,6 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  CORBA::Policy *private_connection (void);
-
-  CORBA::Policy *priority_banded_connection (void);
-
-  CORBA::Policy *client_protocol (void);
-
-  // = Methods for obtaining effective policies.
-  //
-  //   Effective policy is the one that would be used if a request
-  //   were made.  The policy is determined by obtaining the effective
-  //   override for a given policy type, and then reconciling it with
-  //   the policy value exported in the Object's IOR.
-
-  CORBA::Policy *
-  effective_priority_banded_connection (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ());
-  CORBA::Policy *
-  effective_client_protocol (CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ());
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   /// Return the sync strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
@@ -351,6 +299,10 @@ public:
                        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+protected:
+  /// Destructor is to be called only through _decr_refcnt().
+  virtual ~TAO_Stub (void);
+
 private:
   /// Makes a copy of the profile and frees the existing profile_in_use.
   /// NOT THREAD SAFE
@@ -368,9 +320,6 @@ private:
    /// lists and resets the forward_profiles_ pointer.
   void reset_forward ();
 
-  /// Destructor is to be called only through _decr_refcnt().
-  ~TAO_Stub (void);
-
   /// NON-THREAD-SAFE.  utility method for next_profile.
   TAO_Profile *next_forward_profile (void);
 
@@ -381,7 +330,7 @@ private:
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-private:
+protected:
   /// Automatically manage the ORB_Core reference count
   /**
    * The ORB_Core cannot go away until the object references it
@@ -413,37 +362,6 @@ private:
    *      the ORB's RootPOA.
    */
   CORBA::ORB_var servant_orb_;
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  /// Helper method used to parse the policies.
-  void parse_policies (CORBA::Environment &ACE_TRY_ENV);
-
-  void exposed_priority_model (CORBA::Policy_ptr policy);
-
-  void exposed_priority_banded_connection (CORBA::Policy_ptr policy);
-
-  void exposed_client_protocol (CORBA::Policy_ptr policy);
-
-  /** @name Cache RT-CORBA policies
-   *
-   * The following attribute are used to cache the different kind of
-   * policies and avoid to parse the MProfile's policy list each time
-   * we are asked about a given policy.
-   */
-  //@{
-
-  CORBA::Policy *priority_model_policy_;
-
-  CORBA::Policy *priority_banded_connection_policy_;
-
-  CORBA::Policy *client_protocol_policy_;
-
-  CORBA::Boolean are_policies_parsed_;
-
-  //@}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   /// Ordered list of profiles for this object.
   TAO_MProfile base_profiles_;

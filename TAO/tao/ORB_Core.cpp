@@ -30,10 +30,13 @@
 #include "Services_Activate.h"
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
-#include "Endpoint_Selector_Factory.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
-#include "RT_Endpoint_Selector_Factory.h"
+ #include "RT_Endpoint_Selector_Factory.h"
+ #include "RT_Stub_Factory.h"
+#else
+ #include "Stub_Factory.h"
+ #include "Endpoint_Selector_Factory.h"
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 #include "IORInfo.h"
@@ -62,6 +65,9 @@ TAO_default_environment ()
 
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
+
+const char * TAO_ORB_Core::stub_factory_name_ =
+  "Stub_Factory";
 
 const char * TAO_ORB_Core::resource_factory_name_ =
   "Resource_Factory";
@@ -195,9 +201,15 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #if (TAO_HAS_RT_CORBA == 1)
   ACE_NEW (this->endpoint_selector_factory_,
            RT_Endpoint_Selector_Factory);
+
+  ACE_NEW (this->stub_factory_,
+           TAO_RT_Stub_Factory);
 #else /* TAO_HAS_RT_CORBA == 1 */
   ACE_NEW (this->endpoint_selector_factory_,
            TAO_Endpoint_Selector_Factory);
+
+  ACE_NEW (this->stub_factory_,
+           TAO_Stub_Factory);
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   ACE_NEW (this->transport_sync_strategy_,
@@ -1251,6 +1263,13 @@ TAO_ORB_Core::fini (void)
 }
 
 void
+TAO_ORB_Core::set_stub_factory(const char *stub_factory_name)
+{
+  TAO_ORB_Core::stub_factory_name_ = stub_factory_name;
+}
+
+
+void
 TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 {
   TAO_ORB_Core::resource_factory_name_ = resource_factory_name;
@@ -1482,8 +1501,8 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
 
 void
 TAO_ORB_Core::service_context_list (
-    TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list,
+    TAO_Stub *stub,
+    TAO_Service_Context &service_context,
     CORBA::Boolean restart,
     CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1494,11 +1513,17 @@ TAO_ORB_Core::service_context_list (
   if (this->ft_service_.service_callback ())
     {
       this->ft_service_.service_callback ()->service_context_list (stub,
-                                                                   service_list,
+                                                                   service_context.service_info (),
                                                                    restart,
                                                                    ACE_TRY_ENV);
       ACE_CHECK;
     }
+
+  this->protocols_hooks_->rt_service_context (stub,
+                                              service_context,
+                                              restart,
+                                              ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 
@@ -1696,6 +1721,22 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
 }
 
 TAO_Stub *
+TAO_ORB_Core::create_stub(const char *repository_id,
+                          const TAO_MProfile &profiles,
+                          TAO_ORB_Core *orb_core,
+                          CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Stub *retval =
+    this->stub_factory_->create_stub (repository_id,
+                                      profiles,
+                                      orb_core,
+                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN(0);
+  return retval;
+}
+
+
+TAO_Stub *
 TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list,
@@ -1762,10 +1803,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (0);
 
   // Done creating profiles.  Initialize a TAO_Stub object with them.
-  ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (type_id, mp, this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_MAYBE));
+  stub = this->create_stub (type_id, mp, this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);

@@ -130,18 +130,21 @@ TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  return create_rt_mprofile (object_key, mprofile);
+  // @@ RTCORBA_SUBSETTING
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("This method is deprecated for RTCORBA, \ncreate_endpoint_for_mprofile should be called instead")));
+  // This method should not be called anymore
+  return -1;
 
-#else  /* TAO_HAS_RT_CORBA == 1 */
+#endif  /* TAO_HAS_RT_CORBA == 1 */
+
 
   return create_profile (object_key, mprofile);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 int
-TAO_SHMIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
-                                         TAO_MProfile &mprofile)
+TAO_SHMIOP_Acceptor::create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
+                                                   TAO_MProfile &mprofile)
 {
   TAO_Profile *pfile = 0;
   TAO_SHMIOP_Profile *shmiop_profile = 0;

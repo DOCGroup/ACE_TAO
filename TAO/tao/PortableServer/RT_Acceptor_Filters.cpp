@@ -36,8 +36,8 @@ fill_mprofile (const TAO_ObjectKey &object_key,
            ++acceptor)
         if ((*acceptor)->tag () == protocol_type
             && this->validate_acceptor (*acceptor)
-            && (*acceptor)->create_mprofile (object_key,
-                                             mprofile) == -1)
+            && (*acceptor)->create_endpoint_for_mprofile (object_key,
+                                                          mprofile) == -1)
           return -1;
     }
 

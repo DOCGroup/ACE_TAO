@@ -127,6 +127,16 @@ TAO_Protocols_Hooks::set_default_policies (TAO_ORB_Core *)
   return 0;
 }
 
+void
+TAO_Protocols_Hooks::rt_service_context (TAO_Stub *,
+                                         TAO_Service_Context &,
+                                         CORBA::Boolean ,
+                                         CORBA::Environment &)
+{
+  // No-Op.
+}
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Protocols_Hooks>;

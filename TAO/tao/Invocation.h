@@ -69,15 +69,6 @@ enum TAO_Invoke_Status
  */
 class TAO_Export TAO_GIOP_Invocation
 {
-  friend class RT_Endpoint_Selector_Factory;
-  friend class TAO_Default_Endpoint_Selector;
-  friend class TAO_Priority_Endpoint_Selector;
-  friend class TAO_Bands_Endpoint_Selector;
-  friend class TAO_Protocol_Endpoint_Selector;
-  friend class TAO_Priority_Protocol_Selector;
-  friend class TAO_Bands_Protocol_Selector;
-  friend class TAO_Client_Priority_Policy_Selector;
-
 public:
   /// Default constructor. This should never get called, it is here
   /// only to appease older versions of g++.
@@ -142,6 +133,11 @@ public:
   void start (CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Called by the invocation endpoint selector for each selected
+  /// endpoint.
+  int perform_call (TAO_Transport_Descriptor_Interface &desc,
+                    CORBA::Environment &ACE_TRY_ENV);
+
   /// Dynamically allocate \param inconsistent_policies_ PolicyList.
   void init_inconsistent_policies (CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -171,6 +167,33 @@ public:
 
   /// Returns true if a location forward was
   CORBA::Boolean received_location_forward (void) const;
+
+  /// Accessor for the stub associated with this invocation.
+  TAO_Stub * stub(void);
+
+  /// Accessor for the stub associated with this invocation.
+  CORBA::PolicyList_var& inconsistent_policies();
+
+  /// Endpoint Accessor
+  TAO_Endpoint *endpoint (void);
+
+  void endpoint (TAO_Endpoint *ep);
+
+  /// Profile Accessor
+  TAO_Profile *profile(void);
+
+  /// Profile Accessor
+  void profile (TAO_Profile *p);
+
+  /// ORB_Core Accessor
+  TAO_ORB_Core *orb_core (void);
+
+  CORBA::ULong& profile_index (void);
+
+protected:
+
+  //  int valid_end_point_found_;
+  //  int client_protocol_index
 
 protected:
 
@@ -215,12 +238,6 @@ protected:
                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /**
-   * Add RT-related context to the service context list if the
-   * invocation target supports RTCORBA::CLIENT_PROPAGATED priority
-   * model.
-   */
-  void add_rt_service_context (CORBA_Environment &ACE_TRY_ENV);
 
 protected:
 
@@ -254,13 +271,12 @@ protected:
   /// initialized.
   int is_selector_initialized_;
 
-#if (TAO_HAS_RT_CORBA == 1)
-
   /// Store information used by endpoint_selector_ for making endpoint
-  /// selection decisions.
-  TAO_Endpoint_Selection_State endpoint_selection_state_;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
+  /// selection decisions. This is a hack. The state should be kept in
+  /// the selector, but to do this, we'd need to dynamically allocate
+  /// the endpoint selector. Since this is in the critical path, we
+  /// don't do this.
+  // TAO_Endpoint_Selection_State endpoint_selection_state_;
 
   /**
    * If current effective policies cause the invocation to raise
@@ -282,20 +298,15 @@ protected:
   /// This invocation is using this endpoint from \param profile_.
   TAO_Endpoint *endpoint_;
 
+  /// Keep track of the remaining time for this invocation.
+  ACE_Countdown_Time *countdown_;
+
   /// The timeout remaining for this request.  It is initialized in
   /// start() and updated as required.
   //@{
   ACE_Time_Value max_wait_time_value_;
   ACE_Time_Value *max_wait_time_;
   //@}
-
-  /**
-   * Flag indicating whether RTCORBA-specific service context list
-   * processing has taken place.  This is needed because
-   * prepare_header() may get called multiple times, but we only need
-   * to do the service context list processing once.
-   */
-  int rt_context_initialized_;
 
   /**
    * This flag is turned on when the previous invocation on an
@@ -314,6 +325,11 @@ protected:
 
   /// Flag is true when a LOCATION_FORWARD reply is received.
   CORBA::Boolean received_location_forward_;
+
+  /// Keep the position of the  profile that should be used in
+  /// performing the invocation.
+  CORBA::ULong profile_index_;
+
 };
 
 // ****************************************************************
