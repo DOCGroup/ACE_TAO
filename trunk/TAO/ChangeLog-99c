@@ -1,11 +1,28 @@
+Fri Oct 29 19:36:33 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
+          Changed the output library for the AV service to 
+          TAO_AV*.dll.  Thanks to Paulo Breda Vieira <breda@inesca.pt>
+          for pointing out that the benchmark files were not set
+          up correctly.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Removed CORBA::String's and replaced with char *.
+
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+          Fixed a problem on NT with the Naming Service executable
+          startup string (there was an extra space)
+
 Fri Oct 29 19:44:39 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init):
 	  Added option:
 
 	  -ORBLogFile <file> to allow redirection of ACE_DEBUG
-	  and ACE_ERROR statments.
-
+	  and ACE_ERROR statements.
 
 Fri Oct 29 12:58:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
