@@ -39,13 +39,13 @@ public:
   
   ~TAO_Service_Type_Repository (void);
   
-  virtual SERVICE_TYPE_REPOS::IncarnationNumber 
+  virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber 
     incarnation (CORBA::Environment& _env);  
 
-  virtual SERVICE_TYPE_REPOS::IncarnationNumber 
+  virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber 
     add_type (const char * name, 
 	      const char * if_name, 
-	      const SERVICE_TYPE_REPOS::PropStructSeq& props,
+	      const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 	      const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
 	      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,

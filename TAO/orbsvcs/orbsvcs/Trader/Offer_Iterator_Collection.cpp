@@ -82,7 +82,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
   // Determine if we have anything left to offer.
   if (this->iters_.empty ())
-    return_value = B_FALSE;
+    return_value = CORBA::B_FALSE;
 
   return return_value;
 }
