@@ -1,3 +1,21 @@
+Mon Jul  9 10:13:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be_visitor_interface/interface_cs.cpp:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+
+          Added static int _tao_class_id to CORBA::Object and
+          to all classes generated from IDL interfaces. The
+          address of this variable is used in all 
+          _unchecked_narrow() and _tao_QueryInterface() methods.
+          Formerly, the address of the _narrow() method was used,
+          but on BCB, this address is not usable across DLLs.
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          suggesting the fix.
+
 Mon Jul  9 15:27:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/tests/AVStreams/Makefile.bor
