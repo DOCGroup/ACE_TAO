@@ -354,25 +354,12 @@ int
 ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
-  char name [MAXHOSTNAMELEN + 1];
 
 #if defined (VXWORKS)
   int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
-                               name);
+                               hostname);
   if (error == OK)
-    {
-      if (ACE_OS::strlen (name) >= len)
-        {
-          // Not enough space to store the name.
-          errno = ENOSPC;
-          return -1;
-        }
-      else
-        {
-          ACE_OS::strcpy (hostname, name);
-          return 0;
-        }
-    }
+    return 0;
   else
     {
       errno = error;
@@ -381,7 +368,7 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 #else
   if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
     {
-      if (ACE_OS::hostname (name, len) == -1)
+      if (ACE_OS::hostname (hostname, len) == -1)
         return -1;
       else
         return 0;
