@@ -86,7 +86,7 @@ module AVStreams
   //  typedef CosPropertyService::Property streamEvent;
   typedef string streamEvent;
   // Used to convey events, in Basic_StreamCtrl::push_event
-
+  
   exception notSupported {};
   // Used to indicate that an operation is not supported
 
@@ -429,9 +429,7 @@ module AVStreams
 
     };
 
-  // @@
-  //  interface MMDevice : CosPropertyService::PropertySet 
-  interface MMDevice  
+  interface MMDevice : CosPropertyService::PropertySet 
     // = DESCRIPTION
     //     Implements a factory to create Endpoints and VDevs
     {

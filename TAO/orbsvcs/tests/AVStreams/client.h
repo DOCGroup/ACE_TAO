@@ -24,6 +24,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
+#include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/Get_Opt.h"
 #include "tao/tao_util.h"
@@ -45,22 +46,38 @@ public:
 
   // Run the client. This will call StreamCtrl::bind_devs
   int run (CORBA::Environment &env);
-
+  
+  // Testing  the property service methods.
+  int property_tester (CORBA::Environment &env);
 protected:
   // Bind to the remote MMDevice
   int bind_to_remote_mmdevice (int argc,
                                char **argv,
                                CORBA::Environment &env);
+  
+  // = Property Testing.
+  
+  // Testing the define property method.
+  int test_define_property (CORBA::Environment &env);
+  
+  //Testing get_all_property_names.
+  int test_get_all_property_names (CORBA::Environment &env);
+  
+  //Testing get_properties. Give the names and get their properties.
+  int test_get_properties (CORBA::Environment &env);
 
+  // Testing get_all_properties.
+  int test_get_all_properties (CORBA::Environment &env);
+  
   // The ORB manager, handles ORB initialization etc.
   TAO_ORB_Manager manager_;
   
   // Our MMDevice
   AVStreams::MMDevice_var local_mmdevice_;
-
+  
   // Servers MMDevice
   AVStreams::MMDevice_var remote_mmdevice_;
-
+  
   // Stream Controller
   AVStreams::StreamCtrl_var stream_ctrl_;
 };

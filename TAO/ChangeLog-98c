@@ -1,3 +1,13 @@
+Thu Mar 19 18:45:13 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/client.h: 
+	* orbsvcs/tests/AVStreams/client.cpp: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+	* orbsvcs/orbsvcs/AVStreams.idl (interface MMDevice):
+	PropertyService's PropertySet methods have been tested in the
+	AVStreams' test application. Tested using the MMDevice interface
+	of the AVStreams.
+
 Thu Mar 19 18:20:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/README: New notes about this release
