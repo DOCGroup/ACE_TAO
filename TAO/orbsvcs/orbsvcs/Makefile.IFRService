@@ -122,10 +122,13 @@ realclean: clean
 .obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.so .shobj/AbstractInterfaceDef_i.o .shobj/AbstractInterfaceDef_i.so: IFRService/AbstractInterfaceDef_i.cpp \
  IFRService/AbstractInterfaceDef_i.h IFRService/InterfaceDef_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -342,6 +345,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -554,10 +559,13 @@ realclean: clean
 
 .obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: IFRService/ArrayDef_i.cpp IFRService/ArrayDef_i.h \
  IFRService/IDLType_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -774,6 +782,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -991,6 +1001,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1208,10 +1220,13 @@ realclean: clean
 .obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: IFRService/ComponentRepository_i.cpp \
  IFRService/ComponentRepository_i.h IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1431,6 +1446,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1647,6 +1664,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1864,6 +1883,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2097,10 +2118,13 @@ realclean: clean
 
 .obj/Container_i.o .obj/Container_i.so .shobj/Container_i.o .shobj/Container_i.so: IFRService/Container_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2312,10 +2336,13 @@ realclean: clean
 
 .obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: IFRService/EmitsDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2532,6 +2559,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2744,10 +2773,13 @@ realclean: clean
 
 .obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: IFRService/EventDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2963,6 +2995,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3174,10 +3208,13 @@ realclean: clean
 
 .obj/FactoryDef_i.o .obj/FactoryDef_i.so .shobj/FactoryDef_i.o .shobj/FactoryDef_i.so: IFRService/FactoryDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3389,10 +3426,13 @@ realclean: clean
 
 .obj/FinderDef_i.o .obj/FinderDef_i.so .shobj/FinderDef_i.o .shobj/FinderDef_i.so: IFRService/FinderDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3604,10 +3644,13 @@ realclean: clean
 
 .obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: IFRService/FixedDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3818,10 +3861,13 @@ realclean: clean
 
 .obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: IFRService/HomeDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4042,6 +4088,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4245,6 +4293,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4570,6 +4620,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4896,11 +4948,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.so .shobj/IFR_ComponentsS.o .shobj/IFR_ComponentsS.so: IFRService/IFR_ComponentsS.cpp \
- IFRService/IFR_ComponentsS.h $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ComponentsS.h \
+ $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_ExtendedS.h IFRService/IFR_BasicS.h \
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5235,10 +5290,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.so .shobj/IFR_ExtendedS.o .shobj/IFR_ExtendedS.so: IFRService/IFR_ExtendedS.cpp \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5569,8 +5627,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_Service_Utils.o .obj/IFR_Service_Utils.so .shobj/IFR_Service_Utils.o .shobj/IFR_Service_Utils.so: IFRService/IFR_Service_Utils.cpp \
- IFRService/IFR_Service_Utils.h $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_Service_Utils.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5928,6 +5989,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6131,6 +6194,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6343,10 +6408,13 @@ realclean: clean
  IFRService/Servant_Factory.h
 
 .obj/IRObject_i.o .obj/IRObject_i.so .shobj/IRObject_i.o .shobj/IRObject_i.so: IFRService/IRObject_i.cpp IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6549,10 +6617,13 @@ realclean: clean
 .obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.so .shobj/LocalInterfaceDef_i.o .shobj/LocalInterfaceDef_i.so: IFRService/LocalInterfaceDef_i.cpp \
  IFRService/LocalInterfaceDef_i.h IFRService/InterfaceDef_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6764,10 +6835,13 @@ realclean: clean
 
 .obj/ModuleDef_i.o .obj/ModuleDef_i.so .shobj/ModuleDef_i.o .shobj/ModuleDef_i.so: IFRService/ModuleDef_i.cpp IFRService/ModuleDef_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6983,6 +7057,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7199,6 +7275,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7414,6 +7492,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7536,6 +7616,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7751,6 +7833,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7966,6 +8050,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8181,6 +8267,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8392,10 +8480,13 @@ realclean: clean
 
 .obj/Repository_i.o .obj/Repository_i.so .shobj/Repository_i.o .shobj/Repository_i.so: IFRService/Repository_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8617,7 +8708,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- IFRService/Servant_Factory.h $(TAO_ROOT)/tao/ORB.h \
+ IFRService/Servant_Factory.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/objectid.h \
@@ -8630,6 +8722,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8845,6 +8939,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9085,6 +9181,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9297,10 +9395,13 @@ realclean: clean
 
 .obj/StringDef_i.o .obj/StringDef_i.so .shobj/StringDef_i.o .shobj/StringDef_i.so: IFRService/StringDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9516,6 +9617,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9729,10 +9832,13 @@ realclean: clean
 .obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: IFRService/tmplinst.cpp IFRService/concrete_classes.h \
  IFRService/ComponentRepository_i.h IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9965,10 +10071,13 @@ realclean: clean
 
 .obj/TypedefDef_i.o .obj/TypedefDef_i.so .shobj/TypedefDef_i.o .shobj/TypedefDef_i.so: IFRService/TypedefDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10185,6 +10294,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10397,10 +10508,13 @@ realclean: clean
 
 .obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: IFRService/UsesDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10612,10 +10726,13 @@ realclean: clean
 .obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.so .shobj/ValueBoxDef_i.o .shobj/ValueBoxDef_i.so: IFRService/ValueBoxDef_i.cpp \
  IFRService/ValueBoxDef_i.h IFRService/TypedefDef_i.h \
  IFRService/Contained_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10828,10 +10945,13 @@ realclean: clean
 
 .obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: IFRService/ValueDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11048,6 +11168,8 @@ realclean: clean
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11258,10 +11380,13 @@ realclean: clean
 
 .obj/WstringDef_i.o .obj/WstringDef_i.so .shobj/WstringDef_i.o .shobj/WstringDef_i.so: IFRService/WstringDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ IFRService/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
