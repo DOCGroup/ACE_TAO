@@ -1,15 +1,27 @@
+Tue Sep 01 10:21:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/TSS_Test.cpp (cleanup, worker): with ACE_HAS_PTHREADS_DRAFT4,
+          delete the tss instances in cleanup instead of worker.  This gets
+          rid of the memory leaks on those platforms.
+
+        * include/makeinclude/platform_osf1_4.0.GNU: added
+          -hidden [...] -non_hidden magic.  See comments in the file;
+          this solves a problem with mutiply defined symbols between
+          shared libraries and DEC's libcxxstd.a.  It only affected
+          tests/IO_Stream_Test.
+
 Tue Sep 01 10:03:55 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.33 released.
 
 Tue Sep 01 03:46:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Acceptor.{h cpp}: Enable the contents for platforms
-	  with ACE_HAS_AIO_CALLS, not just ACE_WIN32.  Thanks to John Mulhern
-	  for these fixes.
+        * ace/Asynch_Acceptor.{h cpp}: Enable the contents for platforms
+          with ACE_HAS_AIO_CALLS, not just ACE_WIN32.  Thanks to John Mulhern
+          for these fixes.
 
-	* examples/Reactor/Proactor/Makefile: Removed include of
-	  platform_macros.GNU. Thanks to John Mulhern for this one too.
+        * examples/Reactor/Proactor/Makefile: Removed include of
+          platform_macros.GNU. Thanks to John Mulhern for this one too.
 
 Mon Aug 31 16:38:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
