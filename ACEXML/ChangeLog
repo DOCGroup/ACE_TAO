@@ -1,3 +1,8 @@
+Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
+
+        * common/NamespaceSupport.i:
+          Added include of ACE.h.
+
 Sun Jun  1 09:09:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* parser/parser/Parser.cpp:
