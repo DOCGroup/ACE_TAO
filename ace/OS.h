@@ -317,13 +317,13 @@ typedef long      id_t;
 #       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
 #     endif /* ACE_HAS_WINNT4 */
 #   else
-#     define ACE_DEFAULT_FILE_PERMS 0666
+#     define ACE_DEFAULT_FILE_PERMS 0644
 #   endif /* ACE_WIN32 */
 # endif /* ACE_DEFAULT_FILE_PERMS */
 
 // Default directory permissions.
 # if !defined (ACE_DEFAULT_DIR_PERMS)
-#   define ACE_DEFAULT_DIR_PERMS 0777
+#   define ACE_DEFAULT_DIR_PERMS 0755
 # endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
@@ -3733,7 +3733,7 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 
 extern "C"
 {
-  int select (int n, fd_set *readfds, fd_set *writefds, 
+  int select (int n, fd_set *readfds, fd_set *writefds,
               fd_set *exceptfds, const struct timeval *timeout);
 };
 #   elif ! defined (VXWORKS)
