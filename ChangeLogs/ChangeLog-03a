@@ -1,3 +1,9 @@
+Mon Mar 11 16:27:59 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+          Added missing #include "ace/Auto_Ptr.h" to fix compile problem
+          for platforms w/o native auto_ptr (like MSVC).
+
 Mon Mar 11 14:23:00 2002  Si Mong Park  <spark@ociweb.com>
 
  	* tests/Config_Test.cpp:
