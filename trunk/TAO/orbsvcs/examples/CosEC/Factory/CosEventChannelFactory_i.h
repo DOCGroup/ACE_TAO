@@ -20,8 +20,21 @@
 #ifndef TAO_COSEVENTCHANNELFACTORY_I_H
 #define TAO_COSEVENTCHANNELFACTORY_I_H
 
+#include "ace/pre.h"
+
 #include "CosEventChannelFactoryS.h"
 #include "orbsvcs/CosNamingC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 class TAO_CosEventChannelFactory_i :
   public virtual POA_CosEventChannelFactory::ChannelFactory,
@@ -108,5 +121,11 @@ class TAO_CosEventChannelFactory_i :
   CosNaming::NamingContext_var naming_;
   // The naming context to use.
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+#include "ace/post.h"
 
 #endif /* TAO_COSEVENTCHANNELFACTORY_I_H */
