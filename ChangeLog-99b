@@ -1,3 +1,20 @@
+Fri Jul 16 19:41:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE.cpp (out_of_file_descriptors): Added a function to check
+	  if a process is out of file descriptors.  This is required to
+	  avoid repeating this code in many places.  Also, note that all
+	  platform specific quirks can be captured in this function.
+
+	* ace/Cached_Connect_Strategy_T.cpp (cached_connect):
+	* tests/Cached_Conn_Test.cpp (out_of_sockets_handler):
+	* tests/Cached_Accept_Conn_Test.cpp (out_of_sockets_handler):
+
+	  Changed the above to use the new ACE::out_of_file_descriptors()
+	  function.
+
+	* ace/OS.h (ENFILE): Added ENFILE if missing on platform.  In that
+	  case, ENFILE will equal to EMFILE.
+
 Fri Jul 16 13:55:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/{build_dll.bor,build_exe.bor,compiler.bor},
@@ -6,7 +23,7 @@ Fri Jul 16 13:55:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  when you right click them in windows explorer you can see what
  	  version the file is (e.g., "4.6.45").  Thanks to Christopher
  	  Kohlhoff <chris@kohlhoff.com> for contributing this.
-  
+
 	* netsvcs/servers/main.cpp (main): Disable debugging messages
 	  if the -d option isn't given to ACE_Service_Config.  Thanks to
  	  Jerry De Master <jdemaste@ipdinc.com> for reporting this.
@@ -51,7 +68,7 @@ Fri Jul 16 13:55:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  ACE_Log_Msg::VERBOSE_LITE flag is OR'd into the clr_flags()
  	  call.  Thanks to Jerry De Master <jdemaste@ipdinc.com> for
  	  reporting this.
-  
+
 	* netsvcs/lib/Logging_Strategy.cpp (tokenize): Make sure that
 	  the ACE_Log_Msg::VERBOSE_LITE flag is correctly parsed.  Thanks
  	  to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
@@ -70,21 +87,21 @@ Fri Jul 16 16:41:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  It needed an additional percent specifier.
 
 Fri Jul 16 09:20:42 1999  Arturo Montes <mitosys@colomsat.net.co>
-  
+
         * ace/OS.i: Patch the dl* family to keep ACE
 	  compatible in SCO OpenServer 5.0.0, 5.0.2, 5.0.4 with 5.0.5
 
 	* ace/config-sco-5.0.0.h: Bring OpenServer up to date.
-  
+
         * include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU:
 	  Use gcc-2.95.
-  
+
 Fri Jul 16 11:50:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log):
 	* tests/Basic_Types_Test.cpp (main): Reverted my previous
 	  change.  It was not a safe assumption.
-  
+
 Fri Jul 16 02:28:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Changed (*va_arg (argp,PTF))(), which
