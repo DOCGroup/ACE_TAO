@@ -210,6 +210,9 @@ unless ("$release_tag_files") {
 &ex ("$touch  $export_dir/DON")  &&
  die "$0: Write failures in $export_dir, access problems..\n";
 
+&ex ("$touch  $old_versions_dir/DON")  &&
+ die "$0: Write failures in $old_versions_dir, access problems..\n";
+
 my $ace_root = $ENV{'ACE_ROOT'};
 
 &ex ("$touch  $ace_root/MPC/DON")  &&
