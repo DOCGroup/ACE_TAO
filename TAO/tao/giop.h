@@ -251,12 +251,12 @@ struct TAO_GIOP_LocateReplyHeader
 };
 
 class TAO_GIOP_Invocation 
-// = TITLE
-// Invocation: Sends a Request, optionally reads associated Reply.
-// Uses transport info passed in, doesn't locate anything.
-//
-// = NOTES
-// This should maybe be moved into its own file (invoke.h?)
+  // = TITLE
+  // Invocation: Sends a Request, optionally reads associated Reply.
+  // Uses transport info passed in, doesn't locate anything.
+  //
+  // = NOTES
+  // This should maybe be moved into its own file (invoke.h?)
 {
 public:
   TAO_GIOP_Invocation (IIOP_Object *data,
@@ -285,11 +285,11 @@ private:
   // @@ Please add comments.
   IIOP_Object *data_;
 
-  const char *opname;
+  const char *opname_;
 
-  CORBA::Boolean do_rsvp;
+  CORBA::Boolean do_rsvp_;
 
-  CORBA::ULong my_request_id;
+  CORBA::ULong my_request_id_;
 
   u_char buffer [CDR::DEFAULT_BUFSIZE];
   CDR stream_;

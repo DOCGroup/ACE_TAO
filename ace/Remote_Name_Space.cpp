@@ -44,7 +44,8 @@ ACE_Remote_Name_Space::bind (const ACE_WString &name,
 			    name.length () * sizeof (ACE_USHORT16),
 			    value.rep (),
 			    value.length () * sizeof (ACE_USHORT16),
-			    type, strlen (type));
+			    type, 
+                            ACE_OS::strlen (type));
   int result = this->ns_proxy_.request_reply (request);
   return result == ACE_Name_Reply::SUCCESS ? 0 : result;
 }
@@ -59,7 +60,8 @@ ACE_Remote_Name_Space::rebind (const ACE_WString &name,
 			    name.length () * sizeof (ACE_USHORT16),
 			    value.rep (),
 			    value.length () * sizeof (ACE_USHORT16),
-			    type, strlen (type));
+			    type, 
+                            ACE_OS::strlen (type));
   int result = this->ns_proxy_.request_reply (request);
   return result == ACE_Name_Reply::SUCCESS ? 0 : result;
 }
