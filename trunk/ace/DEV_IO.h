@@ -46,10 +46,51 @@ public:
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
-  ssize_t send_n (const void *buf, size_t n) const;
+  ssize_t send_n (const void *buf,
+                  size_t n) const;
 
-  /// Recv n bytes, keep trying until n are received.
-  ssize_t recv_n (void *buf, size_t n) const;
+  /**
+   * @name I/O operations
+   *
+   * Notes on common parameters:
+   *
+   * <buf> is the buffer to write from or receive into.
+   *
+   * <len> is the number of bytes to transfer.
+   *
+   * The <timeout> parameter in the following methods indicates how
+   * long to blocking trying to transfer data.  If <timeout> == 0,
+   * then the call behaves as a normal send/recv call, i.e., for
+   * blocking sockets, the call will block until action is possible;
+   * for non-blocking sockets, EWOULDBLOCK will be returned if no
+   * action is immediately possible.
+   *
+   * If <timeout> != 0, the call will wait until the relative time
+   * specified in *<timeout> elapses.
+   *
+   * The "_n()" I/O methods keep looping until all the data has been
+   * transferred.  These methods also work for sockets in non-blocking
+   * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
+   * to make sure we keep making progress, i.e., the same timeout
+   * value is used for every I/O operation in the loop and the timeout
+   * is not counted down.
+   *
+   * The return values for the "*_n()" methods match the return values
+   * from the non "_n()" methods and are specified as follows:
+   *
+   * - On complete transfer, the number of bytes transferred is returned.
+   * - On timeout, -1 is returned, errno == ETIME.
+   * - On error, -1 is returned, errno is set to appropriate error.
+   * - On EOF, 0 is returned, errno is irrelevant.
+   *
+   * On partial transfers, i.e., if any data is transferred before
+   * timeout/error/EOF, <bytes_transferred> will contain the number of
+   * bytes transferred.
+   */
+  ssize_t recv_n (void *buf,
+                  size_t n,
+                  const ACE_Time_Value *timeout = 0,
+                  size_t *bytes_transferred = 0) const;
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Recv bytes via STREAM pipes using "band" mode.
