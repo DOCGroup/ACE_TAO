@@ -459,6 +459,135 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::open
   return 0;
 }
 
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> void
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hint_i 
+  (SVC_HANDLER *&sh,
+   HASH_ADDRESS &search_addr,
+   CONNECTION_MAP_ENTRY *&entry,
+   int &found)
+{
+  found = 0;
+
+  // Get the recycling act for the svc_handler 
+  CONNECTION_MAP_ENTRY *possible_entry = (CONNECTION_MAP_ENTRY *) sh->recycling_act ();
+  
+  // Check to see if the hint svc_handler has been closed down
+  if (possible_entry->ext_id_.state () == ACE_Recyclable::CLOSED)
+    {
+      // If close, decrement refcount
+      if (possible_entry->ext_id_.decrement () == 0)
+        {
+          // If refcount goes to zero, close down the svc_handler
+          possible_entry->int_id_->close ();
+        }
+      
+      // Hint not successful
+      found = 0;
+      
+      // Reset hint
+      sh = 0;
+    }
+
+  // If hint is not closed, see if it is connected to the correct
+  // address and is recyclable
+  else if (possible_entry->ext_id_ == search_addr)
+    {
+      // Hint successful
+      found = 1;
+      
+      // Tell the <svc_handler> that it should prepare itself for
+      // being recycled.
+      this->prepare_for_recycling (sh);
+    }
+  else
+    {
+      // This hint will not be used.
+      possible_entry->ext_id_.decrement ();
+
+      // Hint not successful
+      found = 0;
+      
+      // If <sh> is not connected to the correct address or is busy,
+      // we will not use it.
+      sh = 0;
+    }
+
+  if (found)
+    entry = possible_entry;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_create_svc_handler_i 
+  (SVC_HANDLER *&sh,
+   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+   ACE_Time_Value *timeout,
+   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+   int reuse_addr,
+   int flags,
+   int perms,
+   HASH_ADDRESS &search_addr,
+   CONNECTION_MAP_ENTRY *&entry,
+   int &found)
+{
+  // Try to find the address in the cache.  Only if we don't find it
+  // do we create a new <SVC_HANDLER> and connect it with the server.
+  if (this->connection_cache_.find (search_addr, entry) == -1)
+    {
+      // Set the flag
+      found = 0;
+            
+      // Create a new svc_handler
+      if (this->make_svc_handler (sh) == -1)
+        return -1;
+
+      // Actively establish the connection.  This is a timed blocking
+      // connect.
+      if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                       remote_addr,
+                                                       timeout,
+                                                       local_addr,
+                                                       reuse_addr,
+                                                       flags,
+                                                       perms) == -1)
+        {
+          // If connect() failed because of timeouts, we have to
+          // reject the connection entirely. This is necessary since
+          // currently there is no way for the non-blocking connects
+          // to complete and for the <Connector> to notify the cache
+          // of the completion of connect().
+          if (errno == EWOULDBLOCK)
+            errno = ENOTSUP;
+          return -1;
+        }
+      else
+        {
+          // Insert the new SVC_HANDLER instance into the cache.
+          if (this->connection_cache_.bind (search_addr,
+                                            sh,
+                                            entry) == -1)
+            return -1;
+          
+          // Set the recycler and the recycling act
+          this->assign_recycler (sh, this, entry);
+        }
+    }
+  else
+    // We found a cached svc_handler.
+    {
+      // Set the flag
+      found = 1;
+      
+      // Get the cached <svc_handler>
+      sh = entry->int_id_;
+      
+      // Tell the <svc_handler> that it should prepare itself for
+      // being recycled.
+      this->prepare_for_recycling (sh);
+    }
+  
+  return 0;
+}
+
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_svc_handler
   (SVC_HANDLER *&sh,
@@ -478,105 +607,40 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
     CONNECTION_MAP_ENTRY *entry = 0;
 
     // Create the search key
-    ADDRESS search_addr (remote_addr);
+    HASH_ADDRESS search_addr (remote_addr);
 
     // Synchronization is required here as the setting of the
-    // recyclable bit must be done atomically with the finding and
+    // recyclable state must be done atomically with the finding and
     // binding of the service handler in the cache.
     ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
 
     // Check if the user passed a hint svc_handler
     if (sh != 0)
-      {
-        // If so, see if it is connected to the correct address and is
-        // recyclable
-        entry = (CONNECTION_MAP_ENTRY *) sh->recycling_act ();
-        if (entry->ext_id_ == search_addr)
-          {
-            // Set the flag
-            found = 1;
-            
-            // Tell the <svc_handler> that it should prepare itself for
-            // being recycled.
-            this->prepare_for_recycling (sh);
-          }
-        else
-          {
-            // If <sh> is not connected to the correct address or is
-            // busy, we will not use it.
-            sh = 0;
-          }
-      }
+      this->check_hint_i (sh, search_addr, entry, found);
 
     // If not found
     if (!found)
       {
-        // Try to find the address in the cache.  Only if we don't
-        // find it do we create a new <SVC_HANDLER> and connect it
-        // with the server.
-        if (this->connection_cache_.find (search_addr, entry) == -1)
-          {
-            // Set the flag
-            found = 0;
-            
-            // Create a new svc_handler
-            if (this->make_svc_handler (sh) == -1)
-              return -1;
-
-            // Actively establish the connection.  This is a timed
-            // blocking connect.
-            if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                             remote_addr,
-                                                             timeout,
-                                                             local_addr,
-                                                             reuse_addr,
-                                                             flags,
-                                                             perms) == -1)
-              {
-                // If connect() failed because of timeouts, we have to
-                // reject the connection entirely. This is necessary
-                // since currently there is no way for the
-                // non-blocking connects to complete and for the
-                // <Connector> to notify the cache of the completion
-                // of connect().
-                if (errno == EWOULDBLOCK)
-                  errno = ENOTSUP;
-                return -1;
-              }
-            else
-              {
-                //
-                // Insert the new SVC_HANDLER instance into the cache.
-                //
-                // Create the key
-                ADDRESS server_addr (remote_addr);
-                if (this->connection_cache_.bind (server_addr,
-                                                  sh,
-                                                  entry) == -1)
-                  return -1;
-                
-                // Set the recycler and the recycling act
-                this->assign_recycler (sh, this, entry);
-              }
-          }
-        else
-          // We found a cached svc_handler.
-          {
-            // Set the flag
-            found = 1;
-            
-            // Get the cached <svc_handler>
-            sh = entry->int_id_;
-
-            // Tell the <svc_handler> that it should prepare itself
-            // for being recycled.
-            this->prepare_for_recycling (sh);
-          }
+        int result = this->find_or_create_svc_handler_i (sh, 
+                                                         remote_addr,
+                                                         timeout,
+                                                         local_addr,
+                                                         reuse_addr,
+                                                         flags,
+                                                         perms,
+                                                         search_addr, 
+                                                         entry, 
+                                                         found);
+        if (result != 0)
+          return result;
       }
 
     // For all successful cases: mark the <svc_handler> in the cache
-    // as being <in_use>.  Therefore recyclable is 0.
-    entry->ext_id_.recyclable (0);         
+    // as being <in_use>.  Therefore recyclable is BUSY.
+    entry->ext_id_.state (ACE_Recyclable::BUSY);        
+    
+    // And increment the refcount 
+    entry->ext_id_.increment ();    
   }
   
   // If it is a new connection, activate it.
@@ -599,16 +663,22 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache (const void *recycling_act)
 {
   // Synchronization is required here as the setting of the recyclable
-  // bit must be done atomically with respect to other threads that
+  // state must be done atomically with respect to other threads that
   // are querying the cache.
   ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  
+  return this->cache_i (recycling_act);
+}
 
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache_i (const void *recycling_act)
+{
   // The wonders and perils of ACT
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
-  // Therefore recyclable is 1.
-  entry->ext_id_.recyclable (1);
+  // Therefore recyclable is IDLE.
+  entry->ext_id_.state (ACE_Recyclable::IDLE);
 
   return 0;
 }
@@ -619,11 +689,67 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::purge (co
   // Excluded other threads from changing cache while we take this
   // entry out.
   ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  
+  return this->purge_i (recycling_act);
+}
 
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::purge_i (const void *recycling_act)
+{
   // The wonders and perils of ACT
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
 
   return this->connection_cache_.unbind (entry);
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::mark_as_closed (const void *recycling_act)
+{
+  // Excluded other threads from changing cache while we take this
+  // entry out.
+  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  
+  return this->mark_as_closed_i (recycling_act);
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::mark_as_closed_i (const void *recycling_act)
+{
+  // The wonders and perils of ACT
+  CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
+
+  // Mark the <svc_handler> in the cache as CLOSED.  
+  entry->ext_id_.state (ACE_Recyclable::CLOSED);
+
+  return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_hint (const void *recycling_act)
+{
+  // Excluded other threads from changing cache while we take this
+  // entry out.
+  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  
+  return this->cleanup_hint_i (recycling_act);
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_hint_i (const void *recycling_act)
+{
+  // The wonders and perils of ACT
+  CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
+
+  // Decrement the refcount on the <svc_handler>.  
+  int refcount = entry->ext_id_.decrement ();
+
+  // If the svc_handler state is closed and the refcount == 0, call
+  // close() on svc_handler.
+  if (entry->ext_id_.state () == ACE_Recyclable::CLOSED && 
+      refcount == 0)    
+    entry->int_id_->close ();
+
+  return 0;
 }
 
 template <class SVC_HANDLER> void

@@ -686,59 +686,6 @@ public:
   // This is a no-op.
 };
 
-template <class T>
-class ACE_Recyclable
-{
-public:
-
-  // = Initialization methods.
-  ACE_Recyclable (void);
-  // Default constructor.
-
-  ACE_Recyclable (const T &t, int recyclable = 0);
-  // Constructor.
-
-  ~ACE_Recyclable (void);
-  // Destructor.
-
-  int operator== (const ACE_Recyclable<T> &rhs) const;
-  // Compares two values.
-
-  // = Set/Get the recyclable bit
-  int recyclable (void) const;
-  void recyclable (int new_value);
-
-protected:
-  int recyclable_;
-  // We need to know if the <T> is "in-use".  If it is, we can
-  // operator==() can skip the comparison.
-
-  T t_;
-  // The underlying class.
-};
-
-template <class T>
-class ACE_Hash_Recyclable : public ACE_Recyclable<T>
-{
-public:
-
-  // = Initialization methods.
-  ACE_Hash_Recyclable (void);
-  // Default constructor.
-
-  ACE_Hash_Recyclable (const T &t, int recyclable = 0);
-  // Constructor.
-
-  ~ACE_Hash_Recyclable (void);
-  // Destructor.
-
-  u_long hash (void) const;
-  // Computes and returns hash value.  
-
-  int operator== (const ACE_Recyclable<T> &rhs) const;
-  // Compares two values.
-};
-
 template <class ADDR_T>
 class ACE_Hash_Addr
 {
@@ -778,6 +725,33 @@ private:
 
   ADDR_T addr_;
   // The underlying address.
+};
+
+template <class T>
+class ACE_Refcounted_Hash_Recyclable :  public ACE_Refcountable,
+                                        public ACE_Hashable, 
+                                        public ACE_Recyclable
+{
+public:
+  ACE_Refcounted_Hash_Recyclable (void);
+  // Default constructor.
+
+  ACE_Refcounted_Hash_Recyclable (const T &t, 
+                                  int refcount = 0,
+                                  ACE_Recyclable::State state = ACE_Recyclable::UNKNOWN);
+  // Constructor.
+
+  virtual ~ACE_Refcounted_Hash_Recyclable (void);
+  // Destructor
+
+  u_long hash (void) const;
+  // Computes and returns hash value.  
+
+  int operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
+  // Compares two instances.
+
+protected:
+  T t_;
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
@@ -868,7 +842,12 @@ public:
   virtual int cache (const void *recycling_act);
   // Add to cache.
 
-private:
+  virtual int mark_as_closed (const void *recycling_act);
+  // Mark as closed.
+
+  virtual int cleanup_hint (const void *recycling_act);
+  // Cleanup hint.
+
   // = Define some useful typedefs.
   typedef ACE_Creation_Strategy<SVC_HANDLER> 
           CREATION_STRATEGY;
@@ -883,15 +862,46 @@ private:
 
   // = Typedefs for managing the map
   typedef ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> 
-          ADDRESS;
-  typedef ACE_Hash_Recyclable<ADDRESS> 
-          RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Map_Manager <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
+          HASH_ADDRESS;
+  typedef ACE_Refcounted_Hash_Recyclable<HASH_ADDRESS> 
+          REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
+  typedef ACE_Hash_Map_Manager <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
           CONNECTION_MAP;
-  typedef ACE_Hash_Map_Iterator <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Iterator <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
           CONNECTION_MAP_ITERATOR;
-  typedef ACE_Hash_Map_Entry<RECYCLABLE_ADDRESS, SVC_HANDLER *> 
+  typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *> 
           CONNECTION_MAP_ENTRY;
+
+protected:
+
+  virtual int purge_i (const void *recycling_act);
+  // Remove from cache (non-locking version).
+
+  virtual int cache_i (const void *recycling_act);
+  // Add to cache (non-locking version).
+
+  virtual int mark_as_closed_i (const void *recycling_act);
+  // Mark as closed (non-locking version).
+
+  virtual int cleanup_hint_i (const void *recycling_act);
+  // Cleanup hint.
+
+  // = Helpers
+  void check_hint_i (SVC_HANDLER *&sh,
+                     HASH_ADDRESS &search_addr,
+                     CONNECTION_MAP_ENTRY *&entry,
+                     int &found);
+
+  int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
+                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                    ACE_Time_Value *timeout,
+                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                    int reuse_addr,
+                                    int flags,
+                                    int perms,
+                                    HASH_ADDRESS &search_addr,
+                                    CONNECTION_MAP_ENTRY *&entry,
+                                    int &found);
 
   CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.

@@ -287,7 +287,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) closing conn %d after fault %p\n",
                             peer.get_handle (), "GIOP::send_request"));
-              handler->close ();
+              handler->handle_close ();
               return 0;
             }
           else if (n == 0)
@@ -297,7 +297,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                             "(%P|%t) GIOP::send_request (): "
                             "EOF, closing conn %d\n",
                             peer.get_handle ()));
-              handler->close ();
+              handler->handle_close ();
               return 0;
             }
           iovcnt = 0;
@@ -313,7 +313,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) closing conn %d after fault %p\n",
                         peer.get_handle (), "GIOP::send_request"));
-          handler->close ();
+          handler->handle_close ();
           return 0;
         }
       else if (n == 0)
@@ -323,7 +323,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                         "(%P|%t) GIOP::send_request (): "
                         "EOF, closing conn %d\n",
                         peer.get_handle ()));
-          handler->close ();
+          handler->handle_close ();
           return 0;
         }
       iovcnt = 0;
@@ -374,7 +374,7 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
 
   handler->peer ().send (close_message, TAO_GIOP_HEADER_LEN);
   ACE_HANDLE which = handler->peer ().get_handle ();
-  handler->close ();
+  handler->handle_close ();
   handler = 0;
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) shut down socket %d\n", which));
@@ -406,7 +406,7 @@ TAO_GIOP::send_error (TAO_Client_Connection_Handler *&handler)
                       TAO_GIOP_HEADER_LEN);
   handler->peer ().send_n (error_message, TAO_GIOP_HEADER_LEN);
   ACE_HANDLE which = handler->peer ().get_handle ();
-  handler->close ();
+  handler->handle_close ();
   handler = 0;
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", which));

@@ -332,7 +332,7 @@ DII_Cubit_Client::init_naming_service (void)
   TAO_TRY
     {
       // Initialize the naming services
-      if (my_name_client_.init (orb_var_.in (), argc_, argv_) != 0)
+      if (my_name_client_.init (orb_var_.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),

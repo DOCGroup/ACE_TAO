@@ -20,18 +20,18 @@
 
 ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
-// Default Constructor.
+  // Default Constructor.
 
-TAO_Naming_Service::TAO_Naming_Service (void)
-  : ior_output_file_ (0),
-    pid_file_name_ (0)
+  TAO_Naming_Service::TAO_Naming_Service (void)
+    : ior_output_file_ (0),
+      pid_file_name_ (0)
 {
 }
 
 // Constructor taking command-line arguments.
 
 TAO_Naming_Service::TAO_Naming_Service (int argc,
-                                char* argv[])
+                                        char* argv[])
   : ior_output_file_ (0),
     pid_file_name_ (0)
 {
@@ -40,7 +40,7 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
 
 int
 TAO_Naming_Service::parse_args (int argc,
-                            char *argv[])
+                                char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "do:p:");
   int c;
@@ -80,7 +80,7 @@ TAO_Naming_Service::parse_args (int argc,
 // Initialize the state of the TAO_Naming_Service object
 int
 TAO_Naming_Service::init (int argc,
-                      char* argv[])
+                          char* argv[])
 {
   int result;
   CORBA::ORB_var orb;
@@ -93,14 +93,12 @@ TAO_Naming_Service::init (int argc,
                                          "child_poa",
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
+      
       orb = this->orb_manager_.orb ();
       child_poa = this->orb_manager_.child_poa ();
-
+      
       result = this->my_naming_server_.init (orb.in (),
-                                             child_poa.in (),
-                                             argc,
-                                             argv);
+                                             child_poa.in ());
       TAO_CHECK_ENV;
       if (result == -1)
         return result;
@@ -180,3 +178,4 @@ main (int argc, char* argv[])
   TAO_ENDTRY;
   return 0;
 }
+

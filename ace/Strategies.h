@@ -96,9 +96,76 @@ public:
   virtual int cache (const void *recycling_act) = 0;
   // Add to cache.
 
+  virtual int mark_as_closed (const void *recycling_act) = 0;
+  // Mark as closed.
+
+  virtual int cleanup_hint (const void *recycling_act) = 0;
+  // Cleanup as hint.
+
 protected:
   ACE_Connection_Recycling_Strategy (void);
   // Default ctor.
+};
+
+class ACE_Export ACE_Recyclable
+{
+public:
+  enum State 
+  {
+    IDLE,
+    BUSY,
+    CLOSED,
+    UNKNOWN
+  };
+
+  virtual ~ACE_Recyclable (void);
+  // Destructor.
+
+  // = Set/Get the recyclable bit
+  State state (void) const;
+  void state (State new_state);
+
+protected:
+  ACE_Recyclable (State initial_state);
+  // Protected constructor.
+
+  State state_;
+  // Our state.
+};
+
+class ACE_Export ACE_Hashable
+{
+public:
+  virtual ~ACE_Hashable (void);
+  // Destructor.
+
+  virtual u_long hash (void) const = 0;
+  // Computes and returns hash value.  
+
+protected:
+  ACE_Hashable (void);
+  // Protected constructor.
+};
+
+class ACE_Export ACE_Refcountable
+{
+public:
+  virtual ~ACE_Refcountable (void);
+  // Destructor.
+
+  // = Increment/Decrement refcount
+  int increment (void);
+  int decrement (void);
+
+  int refcount (void) const;
+  // Returns the current refcount.
+
+protected:
+  ACE_Refcountable (int refcount);
+  // Protected constructor.
+
+  int refcount_;
+  // Current refcount.
 };
 
 // This needs to come here to avoid circular dependencies.
