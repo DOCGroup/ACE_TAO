@@ -359,13 +359,14 @@ main (int argc, char *argv[])
           // make second half of array depend on first half.
           for (int i = 0; i < operation_count; ++i)
           {
-                // create the RT_Info
+            // create the RT_Info
             config_infos[i].handle =
                   ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
                                                             ACE_TRY_ENV);
+            ACE_TRY_CHECK;
 
-                // initialize the RT_Info
-                ACE_Scheduler_Factory::server ()->
+            // initialize the RT_Info
+            ACE_Scheduler_Factory::server ()->
               set (config_infos[i].handle,
                   ACE_static_cast (RtecScheduler::Criticality_t, config_infos[i].criticality),
                config_infos[i].worst_case_execution_time,
@@ -377,19 +378,21 @@ main (int argc, char *argv[])
                config_infos[i].threads,
                ACE_static_cast (RtecScheduler::Info_Type_t, config_infos[i].info_type),
                            ACE_TRY_ENV);
+            ACE_TRY_CHECK;
 
-        // make operations in second half dependant on
-                // operations in the first half of the array,
-                // and have each called twice as a oneway call
-                if (i >= (operation_count / 2))
-                {
-                  ACE_Scheduler_Factory::server ()->
-                add_dependency (config_infos[i].handle,
-                                        config_infos[i - (operation_count / 2)].handle,
-                                                        2,                             // number of calls
-                                                        RtecScheduler::ONE_WAY_CALL,   // type of dependency
-                                        ACE_TRY_ENV);
-                }
+            // make operations in second half dependant on
+            // operations in the first half of the array,
+            // and have each called twice as a oneway call
+            if (i >= (operation_count / 2))
+              {
+                ACE_Scheduler_Factory::server ()->
+                  add_dependency (config_infos[i].handle,
+                                  config_infos[i - (operation_count / 2)].handle,
+                                                    2,                             // number of calls
+                                                    RtecScheduler::ONE_WAY_CALL,   // type of dependency
+                                  ACE_TRY_ENV);
+                ACE_TRY_CHECK;
+              }
       }
 
       RtecScheduler::RT_Info_Set_var infos;

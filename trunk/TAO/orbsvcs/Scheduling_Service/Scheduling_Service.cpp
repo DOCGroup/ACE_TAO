@@ -98,7 +98,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
 
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO_Naming_Service::init: "
+                               "TAO_Scheduling_Service::init: "
                                "unrecognized Scheduler_Type"), -1);
 	}
 
@@ -157,7 +157,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Scheduling_Service::init");
       return -1;
     }
   ACE_ENDTRY;

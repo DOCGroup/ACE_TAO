@@ -1,3 +1,17 @@
+Wed Jul 07 21:28:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+          orbsvcs/orbsvcs/Sched/DynSched.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.{cpp, h}
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}
+          orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: bug fixes from
+          testing the reconfig scheduler alongside the config scheduler.
+          Reconfig scheduler now executes with no exceptions and generates
+          a schedule in the Sched_Conf test.
+
 Wed Jul  7 21:16:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.cpp (multicast_to_service): Revised the code to use

@@ -369,8 +369,15 @@ protected:
   CONFIG_INFO_MAP config_info_map_;
   // Map for O(1) lookup of Config_Infos by priority level.
 
+  long config_info_count_;
+  // The number of config infos, which is also the number of priority
+  // levels.
+
   RT_INFO_MAP rt_info_map_;
   // Map for O(1) lookup of RT_Infos by handle.
+
+  long rt_info_count_;
+  // The number of registered RT_Infos.
 
   RT_INFO_TREE rt_info_tree_;
   // Map for O(1) lookup of RT_Infos by handle.
@@ -385,7 +392,7 @@ protected:
 
   RtecScheduler::handle_t next_handle_;
   // Next RT_Info descriptor handle to allocate.  The first handle is
-  // 0, so this member also holds the number of handles allocated.
+  // always 1.
 
   TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
   // Array of pointers to scheduling entries.  This

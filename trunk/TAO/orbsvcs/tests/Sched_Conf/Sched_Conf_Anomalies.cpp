@@ -222,37 +222,40 @@ main (int argc, char *argv[])
       
       if (ACE_Scheduler_Factory::use_config (my_name_client.get_context (),
 					     service_name) < 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Unable to bind to the scheduling service.\n"),
-                          1);
-          }
-          // create and initialize RT_Infos in the scheduler,
-          // make second half of array depend on first half.
-          for (int i = 0; i < operation_count; ++i)
-          {
-            // create the RT_Info
-            config_infos[i].handle =
-              ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
-                                                        ACE_TRY_ENV);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to bind to the scheduling service.\n"),
+                            1);
+        }
 
-            // initialize the RT_Info
-            ACE_Scheduler_Factory::server ()->
-              set (config_infos[i].handle,
-                   ACE_static_cast (RtecScheduler::Criticality_t,
-                                    config_infos[i].criticality),
-                   config_infos[i].worst_case_execution_time,
-                   config_infos[i].typical_execution_time,
-                   config_infos[i].cached_execution_time,
-                   config_infos[i].period,
-                   ACE_static_cast (RtecScheduler::Importance_t,
-                                    config_infos[i].importance),
-                   config_infos[i].quantum,
-                   config_infos[i].threads,
-                   ACE_static_cast (RtecScheduler::Info_Type_t, 
-                                    config_infos[i].info_type),
-                   ACE_TRY_ENV);
-      }
+      // create and initialize RT_Infos in the scheduler,
+      // make second half of array depend on first half.
+      for (int i = 0; i < operation_count; ++i)
+        {
+          // create the RT_Info
+          config_infos[i].handle =
+            ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
+                                                      ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // initialize the RT_Info
+          ACE_Scheduler_Factory::server ()->
+            set (config_infos[i].handle,
+                 ACE_static_cast (RtecScheduler::Criticality_t,
+                                  config_infos[i].criticality),
+                 config_infos[i].worst_case_execution_time,
+                 config_infos[i].typical_execution_time,
+                 config_infos[i].cached_execution_time,
+                 config_infos[i].period,
+                 ACE_static_cast (RtecScheduler::Importance_t,
+                                  config_infos[i].importance),
+                 config_infos[i].quantum,
+                 config_infos[i].threads,
+                 ACE_static_cast (RtecScheduler::Info_Type_t, 
+                                  config_infos[i].info_type),
+                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
 
       // register dependency of good consumer on good supplier
@@ -262,6 +265,7 @@ main (int argc, char *argv[])
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // register dependency of consumer that will have unresolved remote 
       // dependencies on supplier with unresolved remote dependencies
@@ -271,6 +275,7 @@ main (int argc, char *argv[])
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
       // register dependency of consumer that will have unresolved local
@@ -281,6 +286,7 @@ main (int argc, char *argv[])
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
       // register dependencies on each supplier of first consumer that will 
@@ -291,19 +297,23 @@ main (int argc, char *argv[])
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
-
+      ACE_TRY_CHECK;
 
       // Register dependencies on each of the other consumers by second 
       // consumer that will have both unresolved local and unresolved remote 
@@ -314,25 +324,31 @@ main (int argc, char *argv[])
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[3].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[5].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[6].handle,
                         1,                            // number of calls
                         RtecScheduler::ONE_WAY_CALL,  // type of dependency
                         ACE_TRY_ENV);
-
+      ACE_TRY_CHECK;
 
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;
