@@ -68,6 +68,7 @@ PUB_HDRS = \
   Asynch_Reply_Dispatcher_Base \
   BoundC \
   GIOPC \
+  GIOPA \
   TAO_Export \
   TAO_Singleton_Manager \
   TAO_Singleton \
@@ -110,6 +111,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   IIOP_Connection_Handler \
   IIOP_Endpoint \
   IIOP_EndpointsC \
+  IIOP_EndpointsA \
   IIOPC
 
 PLUGGABLE_MESSAGING_FILES = \
@@ -152,6 +154,7 @@ ORB_CORE_FILES = \
   Any_SystemException \
   CORBA_String \
   CurrentC \
+  CurrentA \
   Exception \
   WrongTransactionC \
   Environment \
@@ -170,6 +173,7 @@ ORB_CORE_FILES = \
   Remote_Object_Proxy_Broker \
   Object_Proxy_Impl \
   DomainC \
+  DomainA \
   TimeBaseC \
   Principal \
   Sequence \
@@ -205,6 +209,7 @@ ORB_CORE_FILES = \
   DynamicC \
   DynamicA \
   Dynamic_ParameterC \
+  Dynamic_ParameterA \
   ParameterMode \
   OctetSeqC \
   OctetSeqA \
@@ -257,10 +262,12 @@ ORB_CORE_FILES = \
   IOPC \
   PollableC \
   CONV_FRAMEC \
+  CONV_FRAMEA \
   Tagged_Components \
   Service_Context \
   GIOPC \
   BoundsC \
+  BoundsA \
   TAOC \
   Object_Loader \
   TAO_Singleton_Manager \
