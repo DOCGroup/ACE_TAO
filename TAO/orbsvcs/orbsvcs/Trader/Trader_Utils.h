@@ -186,9 +186,9 @@ class TAO_ORBSVCS_Export TAO_Dynamic_Property :
 {
 public:
 
-  TAO_Dynamic_Property (const TAO_Dynamic_Property& dp)
-    {
-    }
+  TAO_Dynamic_Property (void) {}
+  
+  TAO_Dynamic_Property (const TAO_Dynamic_Property& dp) {}
   
   virtual ~TAO_Dynamic_Property (void);
   
