@@ -119,9 +119,10 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
       CORBA::TypeCode_ptr tc = any->type ();
 
       tc->AddRef ();
-      ACE_NEW (value, char [tc->size (env)]);
 
       void *value;
+      ACE_NEW (value, char [tc->size (env)]);
+
       any->replace (tc, value, CORBA::B_TRUE, env);
 
       // Decrement the refcount of "tc".
