@@ -1,3 +1,21 @@
+Tue Oct 19 00:03:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+	* include/makeinclude/rules.bin.GNU:
+	* include/makeinclude/rules.lib.GNU:
+	* include/makeinclude/rules.local.GNU: Chaged the following
+	  settings to be platform configurable:
+
+	  OBJDIRS: Names of directories to keep obj files.  Default is
+	           '.obj' and '.shobj'.
+	  OBJEXT:  Extension name for obj files.  Default is 'o'.
+	  SOEXT:   Extension name for so files.  Default is 'so'.
+	  LIBEXT:  Extension name for lib files.  Default is 'a'.
+	  CC_OUTPUT_FLAG:
+	  LINK_OUTPUT_FLAG:
+	  SO_OUTPUT_FLAG: Flags to specify output file name for cc, linker
+	  and so_linker.  Defaults are '-o'.
+
 Mon Oct 18 23:46:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Undefined ACE_HAS_PENTIUM for

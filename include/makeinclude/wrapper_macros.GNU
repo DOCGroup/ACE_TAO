@@ -221,6 +221,34 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
 
+ifndef OBJDIRS
+  OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
+endif # OBJDIRS
+
+ifndef OBJEXT
+  OBJEXT=o
+endif
+
+ifndef SOEXT
+  SOEXT=so
+endif
+
+ifndef LIBEXT
+  LIBEXT=a
+endif
+
+ifndef CC_OUTPUT_FLAG
+  CC_OUTPUT_FLAG = -o 
+endif # CC_OUTPUT_FLAG
+
+ifndef SO_OUTPUT_FLAG
+  SO_OUTPUT_FLAG = -o 
+endif # SO_OUTPUT_FLAG
+
+ifndef LINK_OUTPUT_FLAG
+  LINK_OUTPUT_FLAG = -o 
+endif # LINK_OUTPUT_FLAG
+
 #----------------------------------------------------------------------------
 #      make flags
 #----------------------------------------------------------------------------

@@ -6,10 +6,6 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
-ifndef OBJDIRS
-  OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
-endif # OBJDIRS
-
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
 #### platform_sunos5_sunc++.GNU for an example.
@@ -46,22 +42,32 @@ endif # TAO_ROOT
 
 # C++ related targets
 
+ifeq ($(OS),"Windows_NT")
+$(VDIR)%.obj: %.c
+	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+
+$(VDIR)%.obj: %.cpp
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+else
 $(VDIR)%.o: %.c
-	$(COMPILE.c) -o $@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
 $(VDIR)%.o: %.cpp
-	$(COMPILE.cc) -o $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
+endif
 
 #$(VDIR)%.o: %.C
-#	$(COMPILE.cc) -o $@ $<
+#	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 
 #$(VDIR)%.o: %.cc
-#	$(COMPILE.cc) -o $@ $<
+#	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 
-# If SOLINK is defined, then the .so file is built from the .o file via
-# separate rules in the same directory.  Otherwise, the .so and .o are
+# If SOLINK is defined, then the .$(SOEXT) file is built from the .$(OBJEXT) file via
+# separate rules in the same directory.  Otherwise, the .$(SOEXT) and .$(OBJEXT) are
 # built via the same rule.  SOLINK is required for the repository under
 # gcc.
 ifndef SOLINK
@@ -76,11 +82,11 @@ else
 $(VSHDIR)%.$(SOEXT): %.cpp
 	$(SOBUILD)
 endif
-$(VSHDIR)%.o: %.cpp
-	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.o: %.cc
-	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.o
+$(VSHDIR)%.$(OBJEXT): %.cpp
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+$(VSHDIR)%.$(OBJEXT): %.cc
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
 	$(SOLINK)
 endif
 
@@ -111,7 +117,7 @@ show_uninit:
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) \
+	$(RM) $(INSTALL) $(LIB:%.$(LIBEXT)=$(INSLIB)/%*.$(LIBEXT)) \
 $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 
 
@@ -139,7 +145,7 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-	@if test $(shell pwd) != $(@D) -o -n "$(ACE_LDSO_Version_Number)" ; then \
+	@if test $(shell pwd) != $(@D) $(CC_OUTPUT_FLAG) -n "$(ACE_LDSO_Version_Number)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
@@ -164,7 +170,7 @@ endif
 #----------------------------------------------------------------------------
 
 clean.local:
-	-$(RM) *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-$(RM) *.$(OBJEXT) *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) cxx_repository ptrepository \
 Templates.DB gcctemp.c gcctemp so_locations
 
@@ -199,7 +205,7 @@ depend.local: $(MAKEFILE)
 	    $(ACE_DEPEND_SED_CMD) \
 	    -e '/$$(ACE_ROOT)\/ace\/config[^\.]*\.h/d' \
 	    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
-	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
+	    -e "s;\([-a-zA-Z0-9._]*\)\.$(OBJEXT):;.obj/\1.$(OBJEXT) .obj/\1.$(SOEXT) $(VSHDIR)\1.$(OBJEXT) $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
 	@cat $(MAKEFILE).new >$(MAKEFILE)
 	@$(RM) $(MAKEFILE).new
@@ -223,5 +229,10 @@ rcs_info.local:
 
 build.objdirs: $(OBJDIRS)
 
+ifeq ($(OS),"Windows_NT")
+$(OBJDIRS):
+	if not exist $@ mkdir $@
+else
 $(OBJDIRS):
 	test -d $@ || mkdir $@
+endif
