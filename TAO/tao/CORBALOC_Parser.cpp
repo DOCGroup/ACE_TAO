@@ -34,15 +34,19 @@ TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 }
 
 void
-TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
+TAO_CORBALOC_Parser::parse_string_count_helper (const char * corbaloc_name,
                                                 CORBA::ULong &addr_list_length,
-                                                CORBA::ULong
-                                                &count_addr
+                                                CORBA::ULong &count_addr
                                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean start_key_string = 1;
+
+  char object_key_delimiter = '/';
+
+  if (ACE_OS::strncmp (corbaloc_name, "uiop", 4) == 0)
+      object_key_delimiter = '|';
 
   for (const char *i = corbaloc_name; *i != '\0'; ++i)
     {
@@ -52,27 +56,23 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
           ++count_addr;
         }
 
-      if (*i == ':')
+      if (*i == ':'
+          && *(i+1) == '/'
+          && *(i+2) == '/')
         {
-          if (*(i+1) == '/' && *(i+2) == '/')
-            {
-              ACE_ERROR((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
+          ACE_ERROR((LM_ERROR,
+                     ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
 
-              ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
-                                           CORBA::COMPLETED_NO));
-
-            }
+          ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
+                                       CORBA::COMPLETED_NO));
         }
 
-      if (*i == '/')
+      if (*i == object_key_delimiter
+          && *(i+1) != object_key_delimiter)
         {
-          if (*(i+1) != '/')
-            {
-              // Indication that the next characters are to be
-              // assigned to key_string
-              start_key_string = 0;
-            }
+          // Indication that the next characters are to be
+          // assigned to key_string
+          start_key_string = 0;
         }
 
       if (start_key_string == 1)
@@ -92,7 +92,6 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
                                         TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
   CORBA::String_var end_point;
   const char protocol_prefix[] = ":";
   const char protocol_suffix_append[] = "://";
