@@ -68,9 +68,10 @@ handle_signal (int signum)
     case SIGTERM:
       // Shut_Down our thread using <ACE_Thread_Manager::exit>.
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) shutting down\n")));
+                  ASYS_TEXT ("(%P|%t) shutting down due to %S\n"),
+                  signum));
 
-      // Signal to the main thread to shut_down.
+      // Signal to the worker thread to shut_down.
       shut_down = 1;
 
       // Bail out and close down.
@@ -202,6 +203,13 @@ worker_child (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
+  // We need to do this to dislodge the signal handling thread if it
+  // hasn't shut down on its own accord yet.
+  int result = ACE_OS::kill (ACE_OS::getpid (),
+                             SIGINT);
+  ACE_ASSERT (result != -1);
+  ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) finished running child\n")));
   return 0;
 }
@@ -254,6 +262,7 @@ worker_parent (void *arg)
   if (handle_signals_synchronously)
     {
       int status;
+      // Wait for the child process to exit.
       pm.wait (&status);
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) reaped child with status %d\n"),
@@ -313,7 +322,7 @@ run_test (ACE_THR_FUNC worker,
                THR_DETACHED);
             ACE_ASSERT (result != -1);
 
-            // Wait for the other thread to finish.
+            // Wait for the other threads to finish.
             result = ACE_Thread_Manager::instance ()->wait ();
             ACE_ASSERT (result != -1);
           }

@@ -1,5 +1,14 @@
 Sun Sep 19 10:39:30 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
+	* tests/run_tests.lst: Reenabled Signal_Test so we can see if it's
+	  still working.
+
+	* tests/Signal_Test.cpp: Changed the worker_child() function so that
+	  just before its thread exits, it will sent its process a signal
+ 	  to the signal handling thread to dislodge it if it hasn't
+ 	  shutdown on its own accord yet.  Thanks to David Levine for
+ 	  reporting this.  This fixes [BUGID:309].
+
 	* ACE/Handle_Set.h: Updated the documentation to point out that it's
 	  the *caller's* responsibility to ensure handles aren't
  	  added/cleared from the set if their values are larger than
