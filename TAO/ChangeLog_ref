@@ -1,3 +1,13 @@
+Sun Oct 26 10:29:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+
+          Added missing generation of explicit template instantiation
+          of the Any class associated with exceptions, and also made
+          indentation changes to the generation of explicit template
+          instantiations for TAO::Objref_Traits<>, TAO::Narrow_Utils,
+          and TAO::Arg_Traits<>.
+
 Sat Oct 25 12:06:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ImplRepoC.cpp:
