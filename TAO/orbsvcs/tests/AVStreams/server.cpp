@@ -27,19 +27,19 @@ Video_Server_StreamEndPoint::Video_Server_StreamEndPoint (void)
 {
 }
 
-void 
+int 
 Video_Server_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
                                           CORBA::Environment &env)
 {
 }
 
-void 
+int 
 Video_Server_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,  
                                            CORBA::Environment &env)
 {
 }
 
-void 
+int 
 Video_Server_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,  
                                              CORBA::Environment &env)
 {

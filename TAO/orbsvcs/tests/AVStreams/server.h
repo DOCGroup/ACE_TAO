@@ -34,15 +34,15 @@ public:
   Video_Server_StreamEndPoint (void);
   // Constructor.
   
-  virtual void handle_stop (const AVStreams::flowSpec &the_spec,
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env);
   // Handles stream stoppage.
   
-  virtual void handle_start (const AVStreams::flowSpec &the_spec,  
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env);
   // Handles stream start. Starts the flow of data.
   
-  virtual void handle_destroy (const AVStreams::flowSpec &the_spec,  
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
                                CORBA::Environment &env);
   // Handles the destruction of the stream, tears down the transport.
 
