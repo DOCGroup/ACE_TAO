@@ -147,7 +147,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              const ACE_Addr &local_sap,
                              int reuse_addr,
                              int /* flags */,
-                             int /* perms */, 
+                             int /* perms */,
                              int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
@@ -273,7 +273,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         const ACE_Addr &local_sap,
                                         int reuse_addr,
                                         int flags,
-                                        int perms, 
+                                        int perms,
                                         int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
