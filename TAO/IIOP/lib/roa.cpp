@@ -304,7 +304,9 @@ ROA::get_request (
     CORBA_Environment	&env
 )
 {
+#if 0
   server_endpoint	*fd;
+#endif
 
   env.clear ();
 
@@ -606,7 +608,9 @@ request_dispatcher (GIOP::RequestHeader& req,
   (void) ACE_Thread::setspecific(p->oa().req_key_, &req);
 #endif
 
-  helper->skeleton (*p->oa(),req.object_key, svr_req, helper->context, env);
+  CORBA_BOA_ptr oa = p->oa();
+  CORBA_BOA::dsi_handler ptmf = helper->skeleton;
+  (oa->*ptmf)(req.object_key, svr_req, helper->context, env);
   // is this the correct way to do it? skeleton is a member function
 
   svr_req.release ();
