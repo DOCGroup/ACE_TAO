@@ -137,8 +137,6 @@ process_sequential_element (DOMNode* node,
       int length = named_node_map->getLength();
       // if there is no other attribute but 'version'
 
-      ACE_DEBUG ((LM_DEBUG, "i am inside seq element\n"));
-
       if (length == 1) // call directly the static process_ method
         (*func) (doc, iter, seq[i]);
       else             // Check the xmi::id & href attributes
@@ -183,7 +181,6 @@ process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 
   if (result == true)
     {
-  ACE_DEBUG ((LM_DEBUG, "i am inside seq remote \n"));
       OBJECT obj (doc, iter, false);
       
       Process_Member_Function_Remote<OBJECT, DATA>
