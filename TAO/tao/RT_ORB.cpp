@@ -57,8 +57,8 @@ TAO_RT_ORB::create_named_mutex (const char *name,
     {
       created_flag = 0;
 
-      // Increment the reference count to pass ownership
-      // to the caller.
+      // Increment the reference count to pass ownership to the
+      // caller.
       mutex->_add_ref ();
     }
   else
@@ -69,7 +69,7 @@ TAO_RT_ORB::create_named_mutex (const char *name,
                                           CORBA::COMPLETED_NO));
 
       // registration should always succeed
-      if ( mutex_mgr_.register_mutex (name, mutex) != 0)
+      if (mutex_mgr_.register_mutex (name, mutex) != 0)
         {
           delete mutex;
           ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -90,19 +90,13 @@ TAO_RT_ORB::open_named_mutex (const char *name,
 
   mutex = mutex_mgr_.find_mutex (name);
   if (mutex == 0)
-    {
-      ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (), 0);
-    }
+    ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (), 0);
   else
-    {
-      // Increment the reference count to pass ownership
-      // to the caller.
-      mutex->_add_ref ();
-    }
+    // Increment the reference count to pass ownership to the caller.
+    mutex->_add_ref ();
 
   return mutex;
 }
-
 
 RTCORBA::ThreadpoolId
 TAO_RT_ORB::create_threadpool (CORBA::ULong /*stacksize*/,
