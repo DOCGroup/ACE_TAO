@@ -60,7 +60,7 @@ public:
   // specified mode.
 
 private:
-  typedef ACE_Malloc <ACE_MMAP_Memory_Pool, ACE_Null_Mutex> MALLOC;
+  typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
   typedef ACE_Allocator_Adapter<MALLOC> ALLOCATOR;
 
   ALLOCATOR *shmem_;

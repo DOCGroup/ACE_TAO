@@ -81,6 +81,6 @@ ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode mode)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Null_Mutex>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Null_Mutex> >;
+template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

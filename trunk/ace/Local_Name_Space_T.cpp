@@ -137,8 +137,8 @@ ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
   return result;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::shared_bind (const ACE_WString &name,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind (const ACE_WString &name,
 						   const ACE_WString &value, 
 						   const char *type,
 						   int rebind)
@@ -210,8 +210,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::shared_bind (const ACE_WString &name,
     }
 }
 
-template <class MEM_POOL, class LOCK> int  
-ACE_Local_Name_Space<MEM_POOL, LOCK>::unbind (const ACE_WString &name)
+template <ACE_MEM_POOL_1, class LOCK> int  
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::unbind (const ACE_WString &name)
 {
   ACE_TRACE ("ACE_Local_Name_Space::unbind");
 
@@ -231,8 +231,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::unbind (const ACE_WString &name)
     }
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::bind (const ACE_WString &name,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::bind (const ACE_WString &name,
 					    const ACE_WString &value, 
 					    const char *type)
 {
@@ -242,8 +242,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::bind (const ACE_WString &name,
   return this->shared_bind (name, value, type, 0);
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::rebind (const ACE_WString &name, 
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::rebind (const ACE_WString &name, 
 					      const ACE_WString &value, 
 					      const char *type)
 {
@@ -253,8 +253,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::rebind (const ACE_WString &name,
   return this->shared_bind (name, value, type, 1);
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::resolve (const ACE_WString &name,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve (const ACE_WString &name,
 					       ACE_WString &value, 
 					       char *&type)
 {
@@ -290,8 +290,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::resolve (const ACE_WString &name,
     }
 }
 
-template <class MEM_POOL, class LOCK> int
-ACE_Local_Name_Space<MEM_POOL, LOCK>::open (ACE_Naming_Context::Context_Scope_Type scope_in) 
+template <ACE_MEM_POOL_1, class LOCK> int
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::open (ACE_Naming_Context::Context_Scope_Type scope_in) 
 {
   ACE_TRACE ("ACE_Local_Name_Space::open");
   this->ns_scope_ = scope_in;
@@ -299,8 +299,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::open (ACE_Naming_Context::Context_Scope_Ty
   return this->create_manager ();
 }
 
-template <class MEM_POOL, class LOCK> 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::ACE_Local_Name_Space (void)
+template <ACE_MEM_POOL_1, class LOCK> 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::ACE_Local_Name_Space (void)
   : name_space_map_ (0),
     name_options_ (0),
     allocator_ (0)
@@ -308,8 +308,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::ACE_Local_Name_Space (void)
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
 }
 
-template <class MEM_POOL, class LOCK> 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in, 
+template <ACE_MEM_POOL_1, class LOCK> 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in, 
 							    ACE_Name_Options *name_options)
   : name_options_ (name_options)
 {  
@@ -318,8 +318,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::ACE_Local_Name_Space (ACE_Naming_Context::
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Local_Name_Space::ACE_Local_Name_Space"));
 }
 
-template <class MEM_POOL, class LOCK> 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::~ACE_Local_Name_Space (void)
+template <ACE_MEM_POOL_1, class LOCK> 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::~ACE_Local_Name_Space (void)
 {
   ACE_TRACE ("ACE_Local_Name_Space::~ACE_Local_Name_Space");
 
@@ -327,8 +327,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::~ACE_Local_Name_Space (void)
   delete this->allocator_;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::create_manager (void)
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager");
   // Get directory name
@@ -408,8 +408,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::create_manager (void)
   return 0;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::list_names (ACE_PWSTRING_SET &set,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
 						  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names");
@@ -441,8 +441,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::list_names (ACE_PWSTRING_SET &set,
   return result;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::list_values (ACE_PWSTRING_SET &set,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values (ACE_PWSTRING_SET &set,
 						   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values");
@@ -474,8 +474,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::list_values (ACE_PWSTRING_SET &set,
   return result;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::list_types (ACE_PWSTRING_SET &set,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
 						  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types");
@@ -536,8 +536,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::list_types (ACE_PWSTRING_SET &set,
   return result;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space <MEM_POOL, LOCK>::list_name_entries (ACE_BINDING_SET &set,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries (ACE_BINDING_SET &set,
                                                           const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries");
@@ -564,8 +564,8 @@ ACE_Local_Name_Space <MEM_POOL, LOCK>::list_name_entries (ACE_BINDING_SET &set,
   return 0;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::list_value_entries (ACE_BINDING_SET &set,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries (ACE_BINDING_SET &set,
 					                  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_value_entries");
@@ -591,8 +591,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::list_value_entries (ACE_BINDING_SET &set,
   return 0;
 }
 
-template <class MEM_POOL, class LOCK> int 
-ACE_Local_Name_Space<MEM_POOL, LOCK>::list_type_entries (ACE_BINDING_SET &set,
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &set,
 							 const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_type_entries");
@@ -649,8 +649,8 @@ ACE_Local_Name_Space<MEM_POOL, LOCK>::list_type_entries (ACE_BINDING_SET &set,
 }
 
 
-template <class MEM_POOL, class LOCK> void
-ACE_Local_Name_Space<MEM_POOL, LOCK>::dump (void) const
+template <ACE_MEM_POOL_1, class LOCK> void
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
 {
   ACE_TRACE ("ACE_Local_Name_Space::dump");
 
