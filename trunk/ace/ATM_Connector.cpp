@@ -24,12 +24,12 @@ ACE_ATM_Connector::ACE_ATM_Connector (void)
 // <timeout> amount of time if necessary.
 
 int
-ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream, 
-                            const ACE_ATM_Addr &remote_sap, 
+ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
+                            const ACE_ATM_Addr &remote_sap,
                             ACE_ATM_Params params,
                             ACE_ATM_QoS options,
                             ACE_Time_Value *timeout,
-                            const ACE_ATM_Addr &local_sap, 
+                            const ACE_ATM_Addr &local_sap,
                             int reuse_addr,
                             int flags,
                             int perms)
@@ -65,15 +65,15 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   ACE_DEBUG(LM_DEBUG,
             ACE_LIB_TEXT ("ATM_Connector(connect): connecting...\n"));
 
-  int result = ACE_OS::connect( s, 
-                                ( struct sockaddr *)saddr, 
-                                sizeof( struct sockaddr_atm ), 
+  int result = ACE_OS::connect( s,
+                                ( struct sockaddr *)saddr,
+                                sizeof( struct sockaddr_atm ),
                                 qos_params );
-  
-  if ( result != 0 ) 
-    ACE_OS::printf( "ATM_Connector(connect): connection failed, %d\n", 
+
+  if ( result != 0 )
+    ACE_OS::printf( "ATM_Connector(connect): connection failed, %d\n",
                     ::WSAGetLastError());
-  
+
   return result;
 #elif defined (ACE_HAS_LINUX_ATM)
   ACE_UNUSED_ARG (params);
@@ -90,8 +90,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   if (ACE_OS::setsockopt(handle,
                          SOL_ATM,
                          SO_ATMSAP,
-                         ACE_reinterpret_cast(char*,
-                                              &(local_addr->atmsap)),
+                         reinterpret_cast<char*> (&(local_addr->atmsap)),
                          sizeof(local_addr->atmsap)) < 0) {
     ACE_OS::printf( "ATM_Connector(connect): unable to set atmsap %d\nContinuing...",
                     errno);
@@ -99,8 +98,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   if (ACE_OS::setsockopt(handle,
                          SOL_ATM,
                          SO_ATMQOS,
-                         ACE_reinterpret_cast(char*,
-                                              &qos),
+                         reinterpret_cast<char*> (&qos),
                          sizeof(qos)) < 0) {
     ACE_DEBUG((LM_DEBUG,ACE_LIB_TEXT ("ATM_Connector(connect): unable to set qos %d\n"),
                errno));
@@ -108,9 +106,9 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   }
 
   int result = ACE_OS::connect(handle,
-                               (struct sockaddr *)&(remote_addr->sockaddratmsvc), 
+                               (struct sockaddr *)&(remote_addr->sockaddratmsvc),
                                sizeof( remote_addr->sockaddratmsvc));
-  
+
   if ( result != 0 )
     ACE_DEBUG(LM_DEBUG,
               ACE_LIB_TEXT ("ATM_Connector(connect): connection failed, %d\n"),
@@ -132,4 +130,3 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
 }
 
 #endif /* ACE_HAS_ATM */
-

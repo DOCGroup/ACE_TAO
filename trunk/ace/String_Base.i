@@ -232,7 +232,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
                                smaller_length * sizeof (CHAR));
 
   if (!result)
-    result = ACE_static_cast (int, (this->len_ - s.len_));
+    result = static_cast<int> (this->len_ - s.len_);
   return result;
 }
 
@@ -315,8 +315,8 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
 template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 {
-  if (pos == npos || pos > ACE_static_cast (ssize_t, this->len_))
-    pos = ACE_static_cast (ssize_t, this->len_);
+  if (pos == npos || pos > static_cast<ssize_t> (this->len_))
+    pos = static_cast<ssize_t> (this->len_);
 
   for (ssize_t i = pos - 1; i >= 0; i--)
     if (this->rep_[i] == c)

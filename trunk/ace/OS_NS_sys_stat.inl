@@ -83,7 +83,7 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
       stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
       stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-      stp->st_nlink = ACE_static_cast (short, fdata.nNumberOfLinks);
+      stp->st_nlink = static_cast (short> (fdata.nNumberOfLinks);
       stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
       stp->st_mode = S_IXOTH | S_IROTH |
         (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH) |

@@ -39,8 +39,7 @@ template <class CONCRETE> ACE_INLINE CONCRETE
 ACE_Based_Pointer_Basic<CONCRETE>::operator *(void) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator *");
-  return *ACE_reinterpret_cast (CONCRETE *,
-                                ACE_COMPUTE_BASED_POINTER (this));
+  return *reinterpret_cast<CONCRETE *> (ACE_COMPUTE_BASED_POINTER (this));
 }
 
 template <class CONCRETE> ACE_INLINE CONCRETE *
@@ -51,8 +50,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::addr (void) const
   if (this->target_ == -1)
     return 0;
   else
-    return ACE_reinterpret_cast (CONCRETE *,
-                                 ACE_COMPUTE_BASED_POINTER (this));
+    return reinterpret_cast<CONCRETE *> (ACE_COMPUTE_BASED_POINTER (this));
 }
 
 template <class CONCRETE> ACE_INLINE
@@ -67,8 +65,8 @@ template <class CONCRETE> ACE_INLINE CONCRETE
 ACE_Based_Pointer_Basic<CONCRETE>::operator [] (int index) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator []");
-  CONCRETE *c = ACE_reinterpret_cast (CONCRETE *,
-                                      ACE_COMPUTE_BASED_POINTER (this));
+  CONCRETE *c =
+    reinterpret_cast<CONCRETE *> (ACE_COMPUTE_BASED_POINTER (this));
   return c[index];
 }
 

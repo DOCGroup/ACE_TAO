@@ -34,14 +34,13 @@ ACE_SOCK::get_remote_addr (ACE_Addr &sa) const
   ACE_TRACE ("ACE_SOCK::get_remote_addr");
 
   int len = sa.get_size ();
-  sockaddr *addr = ACE_reinterpret_cast (sockaddr *,
-                                         sa.get_addr ());
+  sockaddr *addr = reinterpret_cast<sockaddr *> (sa.get_addr ());
 
   if (ACE_OS::getpeername (this->get_handle (),
                            addr,
                            &len) == -1)
     return -1;
-  
+
   sa.set_size (len);
   sa.set_type (addr->sa_family);
   return 0;
@@ -53,8 +52,7 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
   ACE_TRACE ("ACE_SOCK::get_local_addr");
 
   int len = sa.get_size ();
-  sockaddr *addr = ACE_reinterpret_cast (sockaddr *,
-                                         sa.get_addr ());
+  sockaddr *addr = reinterpret_cast<sockaddr *> (sa.get_addr ());
 
   if (ACE_OS::getsockname (this->get_handle (),
                            addr,
@@ -83,8 +81,8 @@ ACE_SOCK::close (void)
 }
 
 int
-ACE_SOCK::open (int type, 
-                int protocol_family, 
+ACE_SOCK::open (int type,
+                int protocol_family,
                 int protocol,
                 int reuse_addr)
 {
@@ -97,8 +95,8 @@ ACE_SOCK::open (int type,
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
-  else if (protocol_family != PF_UNIX 
-           && reuse_addr 
+  else if (protocol_family != PF_UNIX
+           && reuse_addr
            && this->set_option (SOL_SOCKET,
                                 SO_REUSEADDR,
                                 &one,
@@ -113,14 +111,14 @@ ACE_SOCK::open (int type,
 // General purpose constructor for performing server ACE_SOCK
 // creation.
 
-ACE_SOCK::ACE_SOCK (int type, 
-                    int protocol_family, 
+ACE_SOCK::ACE_SOCK (int type,
+                    int protocol_family,
                     int protocol,
                     int reuse_addr)
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
   if (this->open (type,
-                  protocol_family, 
+                  protocol_family,
                   protocol,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -129,8 +127,8 @@ ACE_SOCK::ACE_SOCK (int type,
 }
 
 int
-ACE_SOCK::open (int type, 
-                int protocol_family, 
+ACE_SOCK::open (int type,
+                int protocol_family,
                 int protocol,
                 ACE_Protocol_Info *protocolinfo,
                 ACE_SOCK_GROUP g,
@@ -149,7 +147,7 @@ ACE_SOCK::open (int type,
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
-  else if (reuse_addr 
+  else if (reuse_addr
            && this->set_option (SOL_SOCKET,
                                 SO_REUSEADDR,
                                 &one,
@@ -161,9 +159,9 @@ ACE_SOCK::open (int type,
   else
     return 0;
 }
-      
-ACE_SOCK::ACE_SOCK (int type, 
-                    int protocol_family, 
+
+ACE_SOCK::ACE_SOCK (int type,
+                    int protocol_family,
                     int protocol,
                     ACE_Protocol_Info *protocolinfo,
                     ACE_SOCK_GROUP g,

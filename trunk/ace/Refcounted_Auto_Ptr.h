@@ -176,7 +176,7 @@ private:
   // = Mutex variable to protect the <ptr_>.
 
   /// Synchronization variable for the MT_SAFE <ACE_Hash_Map_Manager_Ex>.
-  ACE_LOCK lock_;
+  mutable ACE_LOCK lock_;
 
 private:
   /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.

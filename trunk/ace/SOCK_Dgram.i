@@ -3,7 +3,7 @@
 
 // SOCK_Dgram.i
 
-// Here's the simple-minded constructor. 
+// Here's the simple-minded constructor.
 
 ASYS_INLINE
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
@@ -20,18 +20,18 @@ ACE_SOCK_Dgram::~ACE_SOCK_Dgram (void)
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram::send (const void *buf, 
-		      size_t n, 
-		      const ACE_Addr &addr, 
+ACE_SOCK_Dgram::send (const void *buf,
+		      size_t n,
+		      const ACE_Addr &addr,
 		      int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len = addr.get_size ();
-  return ACE_OS::sendto (this->get_handle (), 
+  return ACE_OS::sendto (this->get_handle (),
 			 (const char *) buf,
                          n,
-                         flags, 
+                         flags,
 			 (struct sockaddr *) saddr,
                          len);
 }
@@ -39,23 +39,23 @@ ACE_SOCK_Dgram::send (const void *buf,
 // <recvfrom> an n byte datagram (connectionless version).
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram::recv (void *buf, 
-		      size_t n, 
-		      ACE_Addr &addr, 
+ACE_SOCK_Dgram::recv (void *buf,
+		      size_t n,
+		      ACE_Addr &addr,
 		      int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
 
-  ssize_t status = ACE_OS::recvfrom (this->get_handle (), 
+  ssize_t status = ACE_OS::recvfrom (this->get_handle (),
 				     (char *) buf,
                                      n,
-                                     flags, 
+                                     flags,
 				     (sockaddr *) saddr,
                                      &addr_len);
   addr.set_size (addr_len);
-  addr.set_type (ACE_reinterpret_cast(sockaddr_in *, saddr)->sin_family);
+  addr.set_type (reinterpret_cast<sockaddr_in *> (saddr)->sin_family);
   return status;
 }
 
@@ -71,11 +71,11 @@ ACE_SOCK_Dgram::send (const iovec buffers[],
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len = addr.get_size ();
-  return ACE_OS::sendto (this->get_handle (), 
+  return ACE_OS::sendto (this->get_handle (),
                          buffers,
                          buffer_count,
                          number_of_bytes_sent,
-                         flags, 
+                         flags,
 			 (const sockaddr *) saddr,
                          len,
                          overlapped,
@@ -95,26 +95,26 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
 
-  ssize_t status = ACE_OS::recvfrom (this->get_handle (), 
+  ssize_t status = ACE_OS::recvfrom (this->get_handle (),
 				     buffers,
                                      buffer_count,
                                      number_of_bytes_recvd,
-                                     flags, 
+                                     flags,
 				     (sockaddr *) saddr,
                                      &addr_len,
                                      overlapped,
                                      func);
   addr.set_size (addr_len);
-  addr.set_type (ACE_reinterpret_cast(sockaddr_in *, saddr)->sin_family);
+  addr.set_type (reinterpret_cast<sockaddr_in *> (saddr)->sin_family);
   return status;
 }
 
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram::send (const void *buf, 
-		      size_t n, 
-		      const ACE_Addr &addr, 
+ACE_SOCK_Dgram::send (const void *buf,
+		      size_t n,
+		      const ACE_Addr &addr,
 		      int flags,
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const
@@ -122,7 +122,7 @@ ACE_SOCK_Dgram::send (const void *buf,
   ACE_TRACE ("ACE_SOCK_Dgram::send");
 
   iovec buffer[1];
-  buffer[0].iov_len = ACE_static_cast (u_long, n);  // Betting on < 4G
+  buffer[0].iov_len = static_cast<u_long> (n);  // Betting on < 4G
   buffer[0].iov_base = (char *) buf;
   size_t number_of_bytes_sent = 0;
   return this->send (buffer,
@@ -137,9 +137,9 @@ ACE_SOCK_Dgram::send (const void *buf,
 // <recvfrom> an n byte datagram (connectionless version).
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram::recv (void *buf, 
-		      size_t n, 
-		      ACE_Addr &addr, 
+ACE_SOCK_Dgram::recv (void *buf,
+		      size_t n,
+		      ACE_Addr &addr,
 		      int flags,
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const
@@ -147,7 +147,7 @@ ACE_SOCK_Dgram::recv (void *buf,
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 
   iovec buffer[1];
-  buffer[0].iov_len = ACE_static_cast (u_long, n);  // Betting on < 4G
+  buffer[0].iov_len = static_cast<u_long> (n);  // Betting on < 4G
   buffer[0].iov_base = (char *) buf;
   size_t number_of_bytes_recvd = 0;
   return this->recv (buffer,

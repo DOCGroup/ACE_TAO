@@ -991,7 +991,7 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Recyclable_St
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycle_state (const void *recycling_act) const
 {
   // Const cast.
-  SELF *fake_this = ACE_const_cast (SELF *, this);
+  SELF *fake_this = const_cast<SELF *> (this);
 
   // Synchronization is required here.
   ACE_GUARD_RETURN (MUTEX, ace_mon, *fake_this->lock_, ACE_RECYCLABLE_UNKNOWN);

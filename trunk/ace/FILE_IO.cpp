@@ -42,8 +42,8 @@ ssize_t
 ACE_FILE_IO::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
-  va_list argp;  
-  int  total_tuples = (ACE_static_cast (int, n)) / 2;
+  va_list argp;
+  int total_tuples = (static_cast<int> (n)) / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -61,7 +61,7 @@ ACE_FILE_IO::send (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::writev (this->get_handle (), 
+  ssize_t result = ACE_OS::writev (this->get_handle (),
                                    iovp,
                                    total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
@@ -81,8 +81,8 @@ ssize_t
 ACE_FILE_IO::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
-  va_list argp;  
-  int total_tuples = ACE_static_cast (int, (n / 2));
+  va_list argp;
+  int total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -101,7 +101,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
     }
 
   ssize_t result = ACE_OS::readv (this->get_handle (),
-                                  iovp, 
+                                  iovp,
                                   total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;

@@ -205,7 +205,7 @@ ACE_INLINE int
 ACE_SString::rfind (char c, int pos) const
 {
   if (pos == ACE_SString::npos)
-    pos = ACE_static_cast (int, this->len_);
+    pos = static_cast<int> (this->len_);
 
   for (int i = pos - 1; i >= 0; i--)
     if (this->rep_[i] == c)

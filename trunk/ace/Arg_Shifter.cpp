@@ -133,7 +133,7 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
               size_t remaining = ACE_OS::strspn
                 (this->temp_[current_index_] + flag_length,
 		 ACE_LIB_TEXT (" ")) + flag_length;
-              return ACE_static_cast (int, remaining);
+              return static_cast<int> (remaining);
 	    }
 	}
     }

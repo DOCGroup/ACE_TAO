@@ -40,9 +40,7 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
   ACE_DIR *dir;
   u_long result;
   ACE_NEW_RETURN (dir, ACE_DIR, 0);
-  result = ::open_dir (ACE_const_cast (ACE_TCHAR *,
-                                       filename),
-                       &dir->xdir);
+  result = ::open_dir (const_cast<ACE_TCHAR *> (filename), &dir->xdir);
   if (result == 0)
     return dir;
   else
@@ -55,7 +53,7 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
   return ::ACE_OS::opendir_emulation (filename);
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   // VxWorks' ::opendir () is declared with a non-const argument.
-  return ::opendir (ACE_const_cast (ACE_TCHAR *, filename));
+  return ::opendir (const_cast<ACE_TCHAR *> (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
 #  endif /* ACE_PSOS */
 #else

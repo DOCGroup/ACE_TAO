@@ -166,10 +166,10 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
 template <class CHAR> u_long
 ACE_String_Base<CHAR>::hash (void) const
 {
-  return ACE::hash_pjw ((ACE_reinterpret_cast (char *,
-                                               ACE_const_cast (CHAR *,
-                                                               this->rep_))),
-                        this->len_ * sizeof (CHAR));
+  return
+    ACE::hash_pjw (reinterpret_cast<char *> (
+                      const_cast<CHAR *> (this->rep_)),
+                   this->len_ * sizeof (CHAR));
 }
 
 template <class CHAR> void

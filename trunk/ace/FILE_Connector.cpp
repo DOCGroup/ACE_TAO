@@ -44,9 +44,8 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 
   // Check to see if caller has requested that we create the filename.
-  if (ACE_reinterpret_cast (const ACE_Addr &,
-                            ACE_const_cast (ACE_FILE_Addr &,
-                                            remote_sap)) == ACE_Addr::sap_any)
+  if (reinterpret_cast<const ACE_Addr &> (
+        const_cast<ACE_FILE_Addr &> (remote_sap)) == ACE_Addr::sap_any)
     {
       // Create a new temporary file.
 #ifdef ACE_LACKS_MKSTEMP

@@ -107,8 +107,8 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 void
 ACE_FlReactor::fl_io_proc (int fd, void* reactor)
 {
-  ACE_FlReactor *self = ACE_static_cast(ACE_FlReactor *, reactor);
-  ACE_HANDLE handle = (ACE_HANDLE)fd; //ACE_reinterpret_cast(ACE_HANDLE, fd);
+  ACE_FlReactor *self = static_cast<ACE_FlReactor *> (reactor);
+  ACE_HANDLE handle = (ACE_HANDLE)fd; //reinterpret_cast<ACE_HANDLE> (fd);
 
   // my copy isn't const.
   ACE_Time_Value zero = ACE_Time_Value::zero;
@@ -149,7 +149,7 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
 void
 ACE_FlReactor::fl_timeout_proc (void* reactor)
 {
-  ACE_FlReactor *self = ACE_static_cast (ACE_FlReactor *, reactor);
+  ACE_FlReactor *self = static_cast<ACE_FlReactor *> (reactor);
 
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -188,7 +188,7 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
 
   if (condition != 0)
     {
-      Fl::add_fd ((int)handle, // ACE_reinterpret_cast(int,handle),
+      Fl::add_fd ((int)handle, // reinterpret_cast<int> (handle),
                   ACE_FlReactor::fl_io_proc,
                   this);
     }
@@ -216,7 +216,7 @@ ACE_FlReactor::remove_handler_i (ACE_HANDLE handle,
   // in reverse order.
 
   // First clean up the corresponding X11Input.
-  Fl::remove_fd ((int)handle); // ACE_reinterpret_cast(int,handle));
+  Fl::remove_fd ((int)handle); // reinterpret_cast<int> (handle);
 
   // Now let the reactor do its work.
   return ACE_Select_Reactor::remove_handler_i (handle,

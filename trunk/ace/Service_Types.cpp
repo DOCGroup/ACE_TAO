@@ -207,7 +207,7 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
     return -1;
   else
     ACE_OS::strsncpy (*str, buf, len);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 void
@@ -291,7 +291,7 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
     return -1;
   else
     ACE_OS::strsncpy (*str, buf, len);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 int

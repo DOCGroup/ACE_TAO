@@ -51,7 +51,7 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr),
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (const_cast<char *> (addr),
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
@@ -127,7 +127,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr),
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (const_cast<char *> (addr),
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
@@ -153,7 +153,7 @@ ACE_OS::gethostbyname (const char *name)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)),
+  ACE_SOCKCALL_RETURN (::gethostbyname (const_cast<char *> (name)),
                        struct hostent *,
                        0);
 # else
@@ -228,7 +228,7 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)),
+  ACE_SOCKCALL_RETURN (::gethostbyname (const_cast<char *> (name)),
                        struct hostent *,
                        0);
 # else
@@ -263,8 +263,8 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 #else
   // IPv4-only implementation
   if (family == AF_INET)
-    return ACE_OS::gethostbyaddr (ACE_static_cast (const char *, src),
-                                  ACE_static_cast (int, len),
+    return ACE_OS::gethostbyaddr (static_cast<const char *> (src),
+                                  static_cast<int> (len),
                                   family);
 
   ACE_NOTSUP_RETURN (0);
@@ -284,7 +284,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
 #   if defined (__GLIBC__)
   ACE_UNUSED_ARG (flags);
 #     if defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name),
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (const_cast<char *> (name),
                                          family),
                        struct hostent *, 0);
 #     else
@@ -319,7 +319,7 @@ ACE_OS::getprotobyname (const char *name)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name)),
+  ACE_SOCKCALL_RETURN (::getprotobyname (const_cast<char *> (name)),
                        struct protoent *,
                        0);
 #else
@@ -372,7 +372,7 @@ ACE_OS::getprotobyname_r (const char *name,
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
-  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name)),
+  ACE_SOCKCALL_RETURN (::getprotobyname (const_cast<char *> (name)),
                        struct protoent *, 0);
 #else
   ACE_UNUSED_ARG (buffer);
@@ -451,8 +451,8 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc),
-                                        ACE_const_cast (char *, proto)),
+  ACE_SOCKCALL_RETURN (::getservbyname (const_cast<char *> (svc),
+                                        const_cast<char *> (proto)),
                        struct servent *,
                        0);
 #else
@@ -512,8 +512,8 @@ ACE_OS::getservbyname_r (const char *svc,
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc),
-                                        ACE_const_cast (char *, proto)),
+  ACE_SOCKCALL_RETURN (::getservbyname (const_cast<char *> (svc),
+                                        const_cast<char *> (proto)),
                        struct servent *,
                        0);
 #else

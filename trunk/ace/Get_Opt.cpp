@@ -1,4 +1,3 @@
-// Get_Opt.cpp
 // $Id$
 
 #include "ace/Get_Opt.h"
@@ -12,7 +11,9 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, Get_Opt, "$Id$")
+ACE_RCSID (ace,
+           Get_Opt,
+           "$Id$")
 
 /*
  * Copyright (c) 1987, 1993, 1994
@@ -359,8 +360,8 @@ ACE_Get_Opt::short_option_i (void)
   this->last_option (opt);
 
   ACE_TCHAR *oli = 0;
-  oli = ACE_const_cast (ACE_TCHAR*,
-                        ACE_OS::strchr (this->optstring_->c_str (), opt));
+  oli =
+    const_cast<ACE_TCHAR*> (ACE_OS::strchr (this->optstring_->c_str (), opt));
 
   /* Increment `optind' when we start to process its last character.  */
   if (*this->nextchar_ == '\0')
@@ -490,9 +491,9 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       // If the short_option already exists, make sure it matches, otherwise
       // add it.
       ACE_TCHAR *s = 0;
-      if ((s = ACE_const_cast (ACE_TCHAR*,
-                               ACE_OS::strchr (this->optstring_->c_str (),
-                                               short_option))) != 0)
+      if ((s = const_cast<ACE_TCHAR*> (
+                 ACE_OS::strchr (this->optstring_->c_str (),
+                                 short_option))) != 0)
         {
           // Short option exists, so verify the argument options
           if (s[1] == ':')
@@ -703,22 +704,23 @@ ACE_Get_Opt::permute (void)
 }
 
 const ACE_TCHAR *
-ACE_Get_Opt::optstring (void) const 
-{ 
+ACE_Get_Opt::optstring (void) const
+{
   return this->optstring_->c_str ();
 }
 
-ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
-                                                               int has_arg,
-                                                               int val)
-  :  name_ (ACE::strnew(name)),
+ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (
+  const ACE_TCHAR *name,
+  int has_arg,
+  int val)
+  :  name_ (ACE::strnew (name)),
      has_arg_ (has_arg),
      val_ (val)
 {}
 
 ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option (void)
 {
-  delete [] ACE_const_cast (ACE_TCHAR*, this->name_);
+  delete [] this->name_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

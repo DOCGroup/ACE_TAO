@@ -50,7 +50,7 @@ ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::read_char (ACE_InputCDR &in,
                                 ACE_CDR::Char &x)
 {
-  if (this->read_1 (in, ACE_reinterpret_cast (ACE_CDR::Octet*, &x)))
+  if (this->read_1 (in, reinterpret_cast<ACE_CDR::Octet*> (&x)))
     {
       x = ACE_to_IBM1047[x];
       return 1;
@@ -106,9 +106,9 @@ ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
                                  ACE_CDR::Char x)
 {
-  return this->write_1 (out,
-                        ACE_reinterpret_cast (const ACE_CDR::Octet*,
-                                              &ACE_from_IBM1047[x]));
+  return
+    this->write_1 (out,
+                   reinterpret_cast<const ACE_CDR::Octet*> (&ACE_from_IBM1047[x]));
 }
 
 ACE_CDR::Boolean
@@ -168,7 +168,7 @@ ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::read_char (ACE_InputCDR& in,
                                 ACE_CDR::Char& x)
 {
-  if (this->read_1 (in, ACE_reinterpret_cast (ACE_CDR::Octet*, &x)))
+  if (this->read_1 (in, reinterpret_cast<ACE_CDR::Octet*> (&x)))
     {
       x = ACE_from_IBM1047[x];
       return 1;
@@ -224,9 +224,9 @@ ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::write_char (ACE_OutputCDR &out,
                                  ACE_CDR::Char x)
 {
-  return this->write_1 (out,
-                        ACE_reinterpret_cast (const ACE_CDR::Octet *,
-                                              &ACE_to_IBM1047[x]));
+  return
+    this->write_1 (out,
+                   reinterpret_cast<const ACE_CDR::Octet *> (&ACE_to_IBM1047[x]));
 }
 
 ACE_CDR::Boolean

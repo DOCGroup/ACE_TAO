@@ -84,7 +84,7 @@ ACE_OS::atop (const char *s)
 #else
   int ip = ::atoi (s);
 #endif /* ACE_WIN64 */
-  void *p = ACE_reinterpret_cast (void *, ip);
+  void *p = reinterpret_cast<void *> (ip);
   return p;
 }
 
@@ -97,7 +97,7 @@ ACE_OS::atop (const wchar_t *s)
 #  else
   int ip = ACE_OS::atoi (s);
 #  endif /* ACE_WIN64 */
-  void *p = ACE_reinterpret_cast (void *, ip);
+  void *p = reinterpret_cast<void *> (ip);
   return p;
 }
 #endif /* ACE_HAS_WCHAR */

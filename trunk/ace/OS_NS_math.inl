@@ -5,7 +5,7 @@ ACE_INLINE double
 ACE_OS::floor (double x)
 {
   // This method computes the largest integral value not greater than x.
-  return double (ACE_static_cast (long, x));
+  return double (static_cast<long> (x));
 }
 
 ACE_INLINE double

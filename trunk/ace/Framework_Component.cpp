@@ -19,8 +19,8 @@ ACE_Framework_Component::~ACE_Framework_Component (void)
 {
   ACE_TRACE ("ACE_Framework_Component::~ACE_Framework_Component");
 
-  ACE::strdelete (ACE_const_cast (ACE_TCHAR*, this->dll_name_));
-  ACE::strdelete (ACE_const_cast (ACE_TCHAR*, this->name_));
+  ACE::strdelete (const_cast<ACE_TCHAR*> (this->dll_name_));
+  ACE::strdelete (const_cast<ACE_TCHAR*> (this->name_));
 }
 
 /***************************************************************/
@@ -69,8 +69,8 @@ ACE_Framework_Repository::close (void)
         if (this->component_vector_[i])
           {
             ACE_Framework_Component *s =
-              ACE_const_cast (ACE_Framework_Component *,
-                              this->component_vector_[i]);
+              const_cast<ACE_Framework_Component *> (
+                this->component_vector_[i]);
 
             this->component_vector_[i] = 0;
             delete s;

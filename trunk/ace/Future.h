@@ -215,13 +215,17 @@ private:
   OBSERVER_COLLECTION observer_collection_;
 
   // = Condition variable and mutex that protect the <value_>.
-  ACE_Recursive_Thread_Mutex value_ready_mutex_;
-  ACE_Condition_Recursive_Thread_Mutex value_ready_;
+  mutable ACE_Recursive_Thread_Mutex value_ready_mutex_;
+  mutable ACE_Condition_Recursive_Thread_Mutex value_ready_;
 
 private:
-  // = Constructor and destructor private.
+
   ACE_Future_Rep (void);
+
+protected:
+
   ~ACE_Future_Rep (void);
+
 };
 
 /**

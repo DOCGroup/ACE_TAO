@@ -134,7 +134,8 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                        ACE_LIB_TEXT ("ACE_MEM_Connector::connect error receiving shm filename.\n")),
                       -1);
 
-  if (new_stream.init (buf, ACE_static_cast (ACE_MEM_IO::Signal_Strategy, server_strategy),
+  if (new_stream.init (buf,
+                       static_cast<ACE_MEM_IO::Signal_Strategy> (server_strategy),
                        &this->malloc_options_) == -1)
     return -1;
 

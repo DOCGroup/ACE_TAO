@@ -122,15 +122,14 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 #endif /* ACE_HAS_IPV6 */
           )
         {
-          if (ACE::bind_port (this->get_handle (), 
-			      INADDR_ANY, 
+          if (ACE::bind_port (this->get_handle (),
+			      INADDR_ANY,
 			      protocol_family) == -1)
             error = 1;
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
-                         ACE_reinterpret_cast (sockaddr *,
-                                               local.get_addr ()),
+                         reinterpret_cast<sockaddr *> (local.get_addr ()),
                          local.get_size ()) == -1)
     error = 1;
 
@@ -533,8 +532,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
 
   /* Cast this into the required format */
   sockaddr_in *socket_address;
-  socket_address = ACE_reinterpret_cast(sockaddr_in *,
-                                        &if_address.ifr_addr);
+  socket_address = reinterpret_cast<sockaddr_in *> (&if_address.ifr_addr);
   multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #endif /* ACE_WIN32 */
 
