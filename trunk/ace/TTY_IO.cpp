@@ -50,25 +50,27 @@ ACE_TTY_IO::control (Control_Mode cmd,
     case SETPARAMS:
       switch (arg->baudrate)
         {
-        case   600:
+        case 300:
+          c_cflag |= B300;
+          break;
+        case 600:
           c_cflag |= B600;
           break;
-        case  1200:
+        case 1200:
           c_cflag |= B1200;
           break;
-        case  2400:
+        case 2400:
           c_cflag |= B2400;
           break;
-        case  4800:
+        case 4800:
           c_cflag |= B4800;
           break;
-        case  9600:
+        case 9600:
           c_cflag |= B9600;
           break;
         case 19200:
           c_cflag |= B19200;
           break;
-
         case 38400:
           c_cflag |= B38400;
           break;
@@ -158,6 +160,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
       switch (arg->baudrate)
         {
+        case   300: dcb.BaudRate = CBR_300; break;
         case   600: dcb.BaudRate = CBR_600; break;
         case  1200: dcb.BaudRate = CBR_1200; break;
         case  2400: dcb.BaudRate = CBR_2400; break;
