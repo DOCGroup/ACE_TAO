@@ -1,12 +1,12 @@
-#include "IIOP_Profile.h"
-#include "Environment.h"
-#include "ORB_Core.h"
-#include "debug.h"
-#include "IIOP_EndpointsC.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
+#include "tao/IIOP_EndpointsC.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
-
 
 ACE_RCSID (tao,
            IIOP_Profile,

@@ -26,6 +26,7 @@
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/CDR.h"
 
 class TAO_Pluggable_Reply_Params;
 class TAO_Queued_Data;

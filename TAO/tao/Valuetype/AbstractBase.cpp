@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "AbstractBase.inl"
