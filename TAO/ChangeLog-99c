@@ -6,8 +6,8 @@ Thu Feb 04 23:42:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/TAO[_Static].dsp: Removed IIOP_Object and added MProfile.
 
 Thu Feb  4 22:18:13 1999 Fred Kuhns <fredk@cs.wustl.edu>
-
-  * added public destructor to TAO_IIOP_Profile
+  
+        * added public destructor to TAO_IIOP_Profile
 
 Thu Feb  4 21:33:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
