@@ -1,3 +1,7 @@
+Wed May 22 23:18:26 2002  Priyanka  <oci@cs.wustl.edu>
+
+        * ACE version 5.2.3 released.
+
 Sat May 18 09:32:58 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
