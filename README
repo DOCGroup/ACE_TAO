@@ -761,6 +761,7 @@ Mark Little <M.C.Little@ncl.ac.uk>
 Tim Stack <stack@cs.utah.edu>
 Marc Engel <engelm@tlse.sofreavia.fr> 
 
+
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
 Makefile scheme that underlies this distribution and also spent
