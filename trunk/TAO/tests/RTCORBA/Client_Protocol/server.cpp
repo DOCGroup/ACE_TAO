@@ -194,7 +194,7 @@ main (int argc, char *argv[])
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
       poa_policy_list[0] =
-        rt_orb->create_server_protocol_policy (protocols,
+        rt_orb->create_client_protocol_policy (protocols,
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -232,7 +232,7 @@ main (int argc, char *argv[])
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "\nServer ORB event loop finished\n\n"));
+      ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
   ACE_CATCHANY
     {
