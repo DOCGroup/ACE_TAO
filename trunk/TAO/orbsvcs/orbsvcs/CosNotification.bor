@@ -56,7 +56,7 @@ OBJFILES = \
         $(OBJDIR)\ID_Factory.obj \
         $(OBJDIR)\Method_Request.obj \
         $(OBJDIR)\Method_Request_Dispatch.obj \
-        $(OBJDIR)\Method_Request_Dispatch_No_Filtering.obj \
+        $(OBJDIR)\Method_Request_Event.obj \
         $(OBJDIR)\Object.obj \
         $(OBJDIR)\Method_Request_Lookup.obj \
         $(OBJDIR)\Method_Request_Shutdown.obj \
