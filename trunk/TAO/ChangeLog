@@ -24,16 +24,6 @@ Mon Mar  3 14:36:53 2003  Ossama Othman  <ossama@uci.edu>
 	  CORBA::String_var instead of the raw
 	  CORBA::string_{alloc,release} functions.
 
-Mon Mar  3 11:46:59 2003  Ossama Othman  <ossama@uci.edu>
-
-	* tao/DynamicInterface/Request.h:
-
-	  Explicitly qualify the TAO_Dynamic_Adapter_Impl friend
-	  declaration with a global scope qualifier in an attempt to work
-	  around a problem where some compilers assume that the friend
-	  declaration refers to a class in the local scope or current
-	  namespace.
-
 Mon Mar  3 15:42:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynStruct_i.cpp (get_members):
