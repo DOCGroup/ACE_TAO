@@ -3,6 +3,7 @@
 #include "SSLIOP_Factory.h"
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
+#include "SSLIOP_ORBInitializer.h"
 #include "ace/SSL/SSL_Context.h"
 
 ACE_RCSID (TAO_SSLIOP, SSLIOP_Factory, "$Id$")
@@ -149,8 +150,47 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
         }
     }
 
+  if (this->register_orb_initializer () != 0)
+    return -1;
+
   return 0;
 }
+
+int
+TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Register the SSLIOP ORB initializer.
+      PortableInterceptor::ORBInitializer_ptr tmp;
+      ACE_NEW_THROW_EX (tmp,
+                        TAO_SSLIOP_ORBInitializer (this->no_protection_),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_TRY_CHECK;
+
+      PortableInterceptor::ORBInitializer_var initializer = tmp;
+
+      PortableInterceptor::register_orb_initializer (initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unable to register SSLIOP ORB "
+                           "initializer.");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
 
 TAO_Connector *
 TAO_SSLIOP_Protocol_Factory::make_connector (void)

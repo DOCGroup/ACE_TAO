@@ -42,6 +42,9 @@ public:
   virtual int init (int argc, char* argv[]);
   // Dynamic linking hook
 
+  /// Create and register the SSLIOP ORB initializer.
+  int register_orb_initializer (void);
+
   virtual int match_prefix (const ACE_CString &prefix);
   // Verify prefix is a match
 

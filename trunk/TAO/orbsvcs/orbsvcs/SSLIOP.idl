@@ -17,7 +17,7 @@
 
 module SSLIOP {
 
-  // Security mechanism SSL
+  /// Security mechanism SSL
   const IOP::ComponentId        TAG_SSL_SEC_TRANS = 20;
 
   struct SSL {
@@ -28,20 +28,23 @@ module SSLIOP {
 
   // const Firewall::IdTag TAG_ID_SSL_CERT = xx;  // OMG allocated
 
+  /// A DER encoded X.509 certificate.
   typedef sequence<octet> ASN_1_Cert;
-  // A DER encoded X.509 certificate.
 
+  /// A chain of DER encoded X.509 certificates.  The chain is actually
+  /// a sequence, according CORBA CDR encapsulation rules.
+  /// The sender's certificate is first, followed by any Certificate
+  /// Authority certificates proceeding sequentially upward.
   typedef sequence<ASN_1_Cert> SSL_Cert;
-  // A chain of DER encoded X.509 certificates.  The chain is actually
-  // a sequence, according CORBA CDR encapsulation rules.
-  // The sender's certificate is first, followed by any Certificate
-  // Authority certificates proceeding sequentially upward.
 
   local interface Current : CORBA::Current {
 
-    SSL_Cert get_peer_certificate_chain ();
-    // Return the certificate chain associated with the current
-    // execution context.
+    exception   NoContext { };
+
+    /// Return the certificate chain associated with the current
+    /// execution context.  If no SSL session is being used for the
+    /// request or upcall, then the NoContext exception is raised.
+    SSL_Cert get_peer_certificate_chain () raises (NoContext);
 
   };
 

@@ -908,19 +908,30 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
     return this->resolve_rt_current (ACE_TRY_ENV);
 
+  // -----------------------------------------------------------------
+
+  // Search the object reference table.  This search must occur before
+  // the InitRef table search, since it may contain local objects.
   CORBA::Object_var result =
     this->orb_core ()->object_ref_table ().resolve_initial_references (
       name,
       ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  if (!CORBA::is_nil (result.in ()))
+    return result._retn ();
+
+  // -----------------------------------------------------------------
+
+  // Is not one of the well known services, try to find it in the
+  // InitRef table....  
   result = this->orb_core ()->resolve_rir (name, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Is not one of the well known services, try to find it in the
-  // InitRef table....
   if (!CORBA::is_nil (result.in ()))
     return result._retn ();
+
+  // -----------------------------------------------------------------
 
   // Did not find it in the InitRef table, or in the DefaultInitRef
   // entry.... Try the hard-coded ways to find the basic services...

@@ -1,16 +1,17 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
 //
 // = LIBRARY
-//    TAO_SSLIOP
+//     TAO_SSLIOP
 //
 // = FILENAME
-//    SSLIOP_Connector.h
+//     SSLIOP_Connector.h
 //
 // = DESCRIPTION
-//    SSLIOP specific connector processing
+//     SSLIOP specific connector processing
 //
 // = AUTHOR
 //     Carlos O'Ryan <coryan@ece.uci.edu>
@@ -30,7 +31,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
-#include "tao/IIOP_Connector.h"
+#include "IIOP_SSL_Connector.h"
 #include "SSLIOP_Connect.h"
 #include "tao/Resource_Factory.h"
 
@@ -38,7 +39,8 @@
 class TAO_Base_Connection_Property;
 // ****************************************************************
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
+class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy
+  : public ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
 {
   // = TITLE
   //   Helper creation strategy
@@ -46,7 +48,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creati
   // = DESCRIPTION
   //   Creates SSLIOP_Client_Connection_Handler objects but satisfies
   //   the interface required by the
-  //   ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
+  //   ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>.
   //
 public:
   TAO_SSLIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
@@ -69,15 +71,15 @@ private:
 
 // ****************************************************************
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_Connector
+class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_SSL_Connector
 {
   // = TITLE
   //   IIOP-specific Connector bridge for pluggable protocols.
   //
   // = DESCRIPTION
   //   Concrete instance of the TAO_Connector class.  Responsible
-  //   for establishing a connection with a server and is called from the
-  //   Connector_Registory.
+  //   for establishing a connection with a server and is called from
+  //   the Connector_Registry.
   //
 public:
   // = Initialization and termination methods.
@@ -101,7 +103,7 @@ protected:
   virtual void make_profile (const char *endpoint,
                              TAO_Profile *&,
                              CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
+                               TAO_default_environment ());
 
 public:
 
