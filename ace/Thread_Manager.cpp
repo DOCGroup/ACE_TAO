@@ -1150,17 +1150,17 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
           }
 
 #if !defined (VXWORKS)
-        // Threads created with THR_DAEMON shouldn't exist here,
-        // but just to be safe, let's put it here.
-        if (((td->flags_ & (THR_DETACHED | THR_DAEMON)) == 0) ||
-            ((td->flags_ & THR_JOINABLE != 0))))
+        // Threads created with THR_DAEMON shouldn't exist here, but
+        // just to be safe, let's put it here.
+
+        if (ACE_BIT_DISABLED (td->flags_, (THR_DETACHED | THR_DAEMON))
+	    || (ACE_BIT_ENABLED (td->flags_, THR_JOINABLE)))
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
-            this->terminated_thr_queue_.enqueue_tail
-              (*td);
+            this->terminated_thr_queue_.enqueue_tail (*td);
           }
-#endif /* VXWORKS */
+#endif /* !VXWORKS */
 
         // Remove thread descriptor from the table.
         this->remove_thr (td);
