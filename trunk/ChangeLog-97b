@@ -48,6 +48,10 @@ Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: support TSS_Emulation.
 
+	* ace/Thread_Manager.cpp (resize): zero out unused cleanup_hooks
+	  in thr_table_; (run_thread_exit_hooks): check for zero cleanup
+	  hook before calling.
+
 	* ace/Synch_T.*: allow ACE_HAS_TSS_EMULATION _or_
 	  ACE_HAS_THREAD_SPECIFIC_STORAGE.
 
