@@ -154,7 +154,7 @@ protected:
 
   CORBA::ULong request_id_;
   // Request ID of this operation.
-  
+
   char buffer [ACE_CDR::DEFAULT_BUFSIZE];
   // Buffer used for both the output and input CDR streams, this is
   // "safe" because we only one of the streams at a time.
@@ -219,7 +219,7 @@ public:
 
   TAO_InputCDR &inp_stream (void);
   // return the underlying input stream
-  
+
 private:
   int invoke_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -229,9 +229,9 @@ private:
 private:
   TAO_InputCDR inp_stream_;
   // Stream into which the reply is placed.
-  
+
   TAO_Synch_Reply_Dispatcher rd_;
-  // Reply dispatcher for the current synchronous invocation. 
+  // Reply dispatcher for the current synchronous invocation.
 };
 
 class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation

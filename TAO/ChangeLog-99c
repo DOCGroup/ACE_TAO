@@ -1,3 +1,14 @@
+Fri May 28 16:50:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.h:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Request_Mux_Strategy.h:
+	* tao/Request_Mux_Strategy.cpp:
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	  Minor fixes and several @@ comments.
+
 Fri May 28 11:58:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Wait_Strategy.cpp:
