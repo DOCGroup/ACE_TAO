@@ -103,6 +103,7 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_1_i::ccm_passivate\n"));
+
   CORBA::Object_var comp_object =
     this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -113,16 +114,9 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     this->context_->get_registered_consumers ("click_out"
        ACE_ENV_ARG_PARAMETER);
   this->base_exec_->consumers (retval._retn ());
+
   this->context_->deactivate_facet ("Hello_Sender_push_message");
   this->context_->update_port_activator ("Hello_Sender_push_message");
-  /*
-  ::Components::ConsumerDescriptions_var cons_desc =
-    sender->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-  ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", cons_desc->length ()));
-  */
-  // this->base_exec_->consumers (cons_desc._retn ());
 }
 
 void

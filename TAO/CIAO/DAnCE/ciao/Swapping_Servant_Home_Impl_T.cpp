@@ -250,6 +250,7 @@ namespace CIAO
     if (this->dynamic_servant_map_.find (oid, servant) == 0)
     {
       servant->update_destroy_count ();
+      this->dynamic_servant_map_.unbind (oid);
     }
     return;
   }

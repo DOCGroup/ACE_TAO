@@ -32,6 +32,7 @@ namespace CIAO
 {
   class Servant_Activator;
   class Dynamic_Component_Servant_Base;
+  class Container_Impl;
 
   /**
    * @class Container
@@ -53,6 +54,7 @@ namespace CIAO
     explicit Container (void);
 
     Container (CORBA::ORB_ptr o);
+    Container (CORBA::ORB_ptr o, Container_Impl *container_impl);
 
     virtual ~Container (void) = 0;
 
@@ -121,6 +123,7 @@ namespace CIAO
      */
     PortableServer::POA_var facet_cons_poa_;
     PortableServer::POA_var home_servant_poa_;
+    Container_Impl *container_impl_;
   };
 
   class Session_Container;
@@ -165,6 +168,7 @@ namespace CIAO
     //         It appears to be a boolean value.  Please use bool
     //         instead.
     Session_Container (CORBA::ORB_ptr o,
+                       Container_Impl *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 

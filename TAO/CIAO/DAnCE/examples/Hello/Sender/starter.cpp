@@ -90,7 +90,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "creating one more servant here\n"));
       sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      sender->remove ();
+      //sender->remove ();
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

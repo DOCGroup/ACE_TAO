@@ -16,8 +16,9 @@ namespace CIAO
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
   Swapping_Container::serial_number_ (0);
 
-  Swapping_Container::Swapping_Container (CORBA::ORB_ptr o)
-  : Session_Container (o),
+  Swapping_Container::Swapping_Container (CORBA::ORB_ptr o,
+                                          Container_Impl *container_impl)
+  : Session_Container (o, container_impl),
     number_ (0)
   {
   }

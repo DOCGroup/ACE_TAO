@@ -169,11 +169,12 @@ Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
                    Components::CCMException))
 {
   Components::EnterpriseComponent_ptr tmp;
-  
+    
   ACE_NEW_THROW_EX (tmp,
                     Receiver_Impl::ReceiverSwap_exec_i,
                     CORBA::NO_MEMORY ());
-  /*  
+ 
+  /* 
   ACE_NEW_THROW_EX (tmp,
                     Receiver_Impl::Receiver_exec_i,
                     CORBA::NO_MEMORY ());
