@@ -15,10 +15,36 @@
 #include "ace/SOCK_Connector.h"
 #include "client.h"
 
-class Bench_Server_StreamEndPoint :
-  public virtual TAO_Server_StreamEndPoint
+
+class ttcp_Stream_Handler : public virtual ACE_Event_Handler
+{
+  // = TITLE
+  //   Defines the event handler class for the Video Control.
+  //
+  // = DESCRIPTION
+  //   This class makes use of a TCP socket.It contains a pointer to
+  //   the current state which is implemented using the state pattern.
+public:
+
+  ttcp_Stream_Handler (int ttcp_Stream_fd);
+  // Construct this handler with a control (TCP) fd
+  // %% use sock stream instead of fd
+
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  // Called when input events occur (e.g., connection or data).
+
+  virtual ACE_HANDLE get_handle (void) const;
+  // Returns the handle used by the event_handler.
+private:
+  ACE_HANDLE control_handle_;
+};
+
+class Bench_Server_StreamEndPoint 
+  :public  TAO_Server_StreamEndPoint
 {
 public:
+  Bench_Server_StreamEndPoint (void);
+
   virtual int handle_open (void) ;
   // called when streamendpoint is instantiated
 
@@ -43,6 +69,7 @@ public:
 private:
   ACE_SOCK_Connector connector_;
   ACE_SOCK_Stream tcp_stream_;
+  ttcp_Stream_Handler *stream_handler_;
 };
 
 
