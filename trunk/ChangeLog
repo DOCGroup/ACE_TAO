@@ -1,3 +1,14 @@
+Thu May 29 11:08:44 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests/RMCast/RMCast_Fragment_Test.dsp:
+        * tests/RMCast/RMCast_Membership_Test.dsp:
+        * tests/RMCast/RMCast_Reassembly_Test.dsp:
+        * tests/RMCast/RMCast_Reordering_Test.dsp:
+        * tests/RMCast/RMCast_Retransmission_Test.dsp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.dsp:
+
+          Fixed incorrect library path.
+
 Wed May 28 15:18:47 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tests/Proactor_Test.dsp:
