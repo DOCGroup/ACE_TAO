@@ -18,12 +18,13 @@
 #define TAO_COLLOCATED_OBJECT_PROXY_BROKER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_Proxy_Broker.h"
 #include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Object_Proxy_Broker.h"
 
 namespace TAO
 {
@@ -35,14 +36,12 @@ namespace TAO
    * A broker for standard CORBA::Object calls that needs to be made
    * on remote objects.
    */
-
-  class TAO_PortableServer_Export Collocated_Object_Proxy_Broker 
+  class TAO_PortableServer_Export Collocated_Object_Proxy_Broker
     : public Object_Proxy_Broker
   {
   public:
     /// Please see the documentation in Object_Proxy_Broker.h for
     /// details.
-
     virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,
                                   const char *logical_type_id
                                   ACE_ENV_ARG_DECL);
@@ -69,7 +68,6 @@ namespace TAO
 /// This function is used to access the unique instance of strategized
 /// proxy broker. All the CORBA::Object share the proxy broker.
 TAO::Collocated_Object_Proxy_Broker *the_tao_collocated_object_proxy_broker (void);
-
 
 #include /**/ "ace/post.h"
 

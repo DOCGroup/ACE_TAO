@@ -14,7 +14,8 @@
 #define TAO_ORB_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "PortableServer.h"
+#include "utils_export.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +33,7 @@
  * CORBA applications.  It's just a wrapper and doesn't do
  * anything special within the ORB itself.
  */
-class TAO_PortableServer_Export TAO_ORB_Manager
+class TAO_UTILS_Export TAO_ORB_Manager
 {
 public:
   // = Initialization and termination methods.
@@ -56,20 +57,24 @@ public:
                    PortableServer::POA_ptr poa = 0,
                    PortableServer::POAManager_ptr poa_manager = 0);
 
-  /** Initialize the ORB/root POA, using the supplied command line
-   *  arguments or the default ORB components.
+  /**
+   * Initialize the ORB/root POA, using the supplied command line
+   * arguments or the default ORB components.
    *
-   *  @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int init (int &argc,
             char *argv[]
             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Initialize the ORB/root POA, using the supplied command line
-    * arguments or the default ORB components.
-    *
-    * @return -1 on failure, 0 on success
-    */
+  /**
+   * Initialize the ORB/root POA, using the supplied command line
+   * arguments or the default ORB components.
+   *
+   * @retval -1 Failure
+   * @retval 0 Success
+   */
   int init (int &argc,
             char *argv[],
             const char *orb_name
@@ -77,10 +82,11 @@ public:
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
-   * USER_ID policies.  Call this if you want a <child_poa> with the
+   * USER_ID policies.  Call this if you want a @c child_poa with the
    * above policies, otherwise call init.
    *
-   * @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int init_child_poa (int &argc,
                       char *argv[],
@@ -89,8 +95,11 @@ public:
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
-   * USER_ID policies.  Call this if you want a <child_poa> with the
-   * above policies, otherwise call init.  Returns -1 on failure.
+   * USER_ID policies.  Call this if you want a @a child_poa with the
+   * above policies, otherwise call init.
+   *
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int init_child_poa (int &argc,
                       char *argv[],
@@ -98,9 +107,11 @@ public:
                       const char *orb_name
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Shut down.  Invoke the destroy() methods on the orb and poa.
+  /**
+   * Shut down.  Invoke the destroy() methods on the orb and poa.
    *
-   * @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int fini (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -116,7 +127,8 @@ public:
    *  service incoming requests while waiting for a result of CORBA
    *  call on a server.
    *
-   *  @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
@@ -133,7 +145,7 @@ public:
 
   /** Deactivate object in RootPOA.
    *
-   *  @param id  a string representation of the Object ID
+   *  @param id  A string representation of the Object ID
    *             of the servant to deactivate in the POA
    */
   void deactivate (const char *id
@@ -157,21 +169,28 @@ public:
                                   PortableServer::Servant servant
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Deactivate object in child POA.
+  /**
+   * Deactivate object in child POA.
    *
-   *  @param id  string representation of the object ID, which represents
-   *             the object to deactivate in the POA
+   * @param id  string representation of the object ID, which represents
+   *            the object to deactivate in the POA
    */
   void deactivate_under_child_poa (const char *id
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Run the ORB event loop with the specified <tv> time value.
+  /**
+   * Run the ORB event loop with the specified @a tv time value.
    *
    * @param tv  the time interval for how long to run the ORB event loop.
-   * @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int run (ACE_Time_Value &tv
            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  /**
+   * Run the ORB event loop.
+   */
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
@@ -180,8 +199,8 @@ public:
    * this function duplicates the orb return value before returning
    * it.
    *
-   * @return orb  ORB pointer which has been duplicated, so caller
-   *              must release pointer when done.
+   * @return ORB pointer which has been duplicated, so caller
+   *         must release pointer when done.
    */
   CORBA::ORB_ptr orb (void);
 
@@ -190,8 +209,8 @@ public:
    * memory management rules of return values from functions, this
    * function duplicates the poa return value before returning it.
    *
-   * @return poa  Root POA pointer which has been duplicated.  Caller
-   *              must release pointer when done.
+   * @return Root POA pointer which has been duplicated.  Caller
+   *         must release pointer when done.
    */
   PortableServer::POA_ptr root_poa (void);
 
