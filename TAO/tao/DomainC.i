@@ -29,7 +29,7 @@ CORBA_DomainManager::CORBA_DomainManager (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA::Object (objref, _tao_collocated, servant)
+  : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->CORBA_DomainManager_setup_collocation (_tao_collocated);
 }
@@ -47,7 +47,7 @@ CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA::Object_ptr (objref, _tao_collocated, servant)
+  : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->CORBA_ConstructionPolicy_setup_collocation (_tao_collocated);
 }
