@@ -552,14 +552,17 @@ ACE_Reactor::max_notify_iterations (void)
   return this->max_notify_iterations_;
 }
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Enqueue ourselves into the list of waiting threads.
 void
 ACE_Reactor::renew (void)
 {
   ACE_TRACE ("ACE_Reactor::renew");
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->token_.renew (this->requeue_position_);
+#endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 void
 ACE_Reactor_Token::dump (void) const
