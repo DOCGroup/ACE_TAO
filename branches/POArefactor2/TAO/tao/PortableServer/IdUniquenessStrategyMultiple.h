@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Id_Uniqueness_Strategy.h
+ *  @file IdUniquenessStrategyMultiple.h
  *
  *  $Id$
  *

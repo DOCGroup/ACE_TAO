@@ -1,14 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    Request_Processing_Strategy.cpp
- *
- *  $Id$
- *
- */
-//=============================================================================
-
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/PortableServer/RequestProcessingStrategyServantLocator.h"

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ImplicitActivationPolicyValue.h
+ *  @file ImplicitActivationPolicyValueImplicit.h
  *
  *  $Id$
  *

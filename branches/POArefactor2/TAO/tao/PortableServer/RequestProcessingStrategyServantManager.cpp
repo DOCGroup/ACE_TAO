@@ -1,14 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    Request_Processing_Strategy.cpp
- *
- *  $Id$
- *
- */
-//=============================================================================
-
 #include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/POA.h"

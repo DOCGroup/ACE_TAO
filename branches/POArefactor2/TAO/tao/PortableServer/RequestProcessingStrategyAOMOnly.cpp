@@ -1,14 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    RequestProcessingStrategy.cpp
- *
- *  $Id$
- *
- */
-//=============================================================================
-
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"

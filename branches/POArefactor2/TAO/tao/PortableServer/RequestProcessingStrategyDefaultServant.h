@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Request_Processing_Strategy.h
+ *  @file RequestProcessingStrategyDefaultServant.h
  *
  *  $Id$
  *

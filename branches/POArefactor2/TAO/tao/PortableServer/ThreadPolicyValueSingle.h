@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ThreadPolicyValue.h
+ *  @file ThreadPolicyValueSingle.h
  *
  *  $Id$
  *

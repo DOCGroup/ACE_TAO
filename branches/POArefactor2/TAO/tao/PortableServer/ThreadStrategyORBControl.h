@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ThreadStrategy.h
+ *  @file ThreadStrategyORBControl.h
  *
  *  $Id$
  *

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file IdUniquenessPolicyValue.h
+ *  @file IdUniquenessPolicyValueUnique.h
  *
  *  $Id$
  *

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Id_Assignment_Strategy.h
+ *  @file IdAssignmentStrategy.h
  *
  *  $Id$
  *

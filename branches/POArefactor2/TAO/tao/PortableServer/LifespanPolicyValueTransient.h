@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file LifespanPolicyValue.h
+ *  @file LifespanPolicyValueTransient.h
  *
  *  $Id$
  *

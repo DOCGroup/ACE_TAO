@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file IdAssignmentPolicyValue.h
+ *  @file IdAssignmentPolicyValueUser.h
  *
  *  $Id$
  *

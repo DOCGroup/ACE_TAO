@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Activation_Strategy.h
+ *  @file ImplicitActivationStrategyExplicit.h
  *
  *  $Id$
  *

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ServantRetentionPolicyValue.h
+ *  @file ServantRetentionPolicyValueNonRetain.h
  *
  *  $Id$
  *

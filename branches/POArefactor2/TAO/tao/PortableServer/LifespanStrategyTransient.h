@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Lifespan_Strategy.h
+ *  @file LifespanStrategyTransient.h
  *
  *  $Id$
  *
