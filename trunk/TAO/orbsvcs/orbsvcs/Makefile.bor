@@ -100,12 +100,15 @@ OBJFILES = \
 	$(OBJDIR)\Event_Utilities.obj \
 	$(OBJDIR)\EventChannel_i.obj \
 	$(OBJDIR)\Hash_Naming_Context.obj \
+        $(OBJDIR)\Interpreter.obj \
+        $(OBJDIR)\Interpreter_Utils.obj \
+        $(OBJDIR)\Interpreter_Utils_T.obj \
 	$(OBJDIR)\IOR_Multicast.obj \
 	$(OBJDIR)\IR_Helper.obj \
 	$(OBJDIR)\Local_ESTypes.obj \
 	$(OBJDIR)\Memory_Pools.obj \
 	$(OBJDIR)\Module_Factory.obj \
-	$(OBJDIR)\Naming_Context.obj \
+        $(OBJDIR)\Naming_Context_Interface.obj \
 	$(OBJDIR)\Naming_Utils.obj \
 	$(OBJDIR)\Offer_Iterators.obj \
 	$(OBJDIR)\Persistent_Context_Index.obj \
@@ -134,6 +137,7 @@ OBJFILES = \
 	$(OBJDIR)\Timer_Helper.obj \
 	$(OBJDIR)\Timer_Module.obj \
 	$(OBJDIR)\Trader.obj \
+        $(OBJDIR)\Trader_Constraint_Visitors.obj \
 	$(OBJDIR)\Trader_Utils.obj \
 	$(OBJDIR)\Transient_Naming_Context.obj
 
