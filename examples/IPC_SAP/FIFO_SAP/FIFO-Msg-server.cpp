@@ -12,7 +12,7 @@ main (int, char *[])
   char buf[BUFSIZ];
   ACE_Str_Buf msg (buf, 0, sizeof buf);
   int flags = MSG_ANY;
-  int band  = 0;
+  int band = 0;
   int n;
 
   while ((n = server.recv (&band, &msg, (ACE_Str_Buf *) 0, &flags)) >= 0)
@@ -20,7 +20,7 @@ main (int, char *[])
       if (msg.len == 0)
 	break;
       else
-	printf ("%4d (%4d): %*s", msg.len, band, msg.len, msg.buf);
+	ACE_DEBUG (("%4d (%4d): %*s", msg.len, band, msg.len, msg.buf));
       flags = MSG_ANY;
       band  = 0;
     }

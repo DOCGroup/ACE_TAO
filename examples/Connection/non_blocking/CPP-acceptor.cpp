@@ -101,7 +101,7 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
   // Handle SIGPIPE signal through the ACE_Reactor.
   else if (ACE_Service_Config::reactor ()->register_handler 
 	   (SIGPIPE, &this->done_handler_) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
   else
     return 0;
 }

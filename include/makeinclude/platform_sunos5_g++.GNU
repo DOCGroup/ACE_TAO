@@ -3,7 +3,7 @@
 # SOBUILD - compile into .so directly
 #
 CC	= gcc 
-CXX	= gcc -I. -fno-strict-prototypes -D__ACE_INLINE__ -Wall -Wpointer-arith -Winline -frepo 
+CXX	= gcc -I. -fno-strict-prototypes -D__ACE_INLINE__ -Wall -Wpointer-arith -Winline 
 DLD	= $(CXX)
 LDFLAGS	+= -L $(WRAPPER_ROOT)/ace -L ./ # -z muldefs
 LIBS	+= -lsocket -ldl -lstdc++ -lgen -lnsl -lthread -lw

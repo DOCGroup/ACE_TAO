@@ -218,7 +218,7 @@ ACE_Service_Repository::remove (const char name[])
       if (handle != 0)
 	ACE_OS::dlclose ((void *) handle);
 
-      if (--this->current_size_ > 1)
+      if (--this->current_size_ >= 1)
 	this->service_vector_[i] 
 	  = this->service_vector_[this->current_size_];
       return 0;

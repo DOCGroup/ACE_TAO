@@ -104,12 +104,12 @@ private:
   // Keeps track of the synchronization options (i.e., the timeout
   // interval).
 
+  ACE_Token_Collection collection_;
+  // collection of the client's token proxies.
+
   int timeout_id_;
   // ID returned by the Reactor that is used to kill registered timers
   // when a token operation times out.
-
-  ACE_Token_Collection collection_;
-  // collection of the client's token proxies.
 
   ACE_Token_Request token_request_;
   // Cache request from the client.
@@ -341,7 +341,7 @@ ACE_Token_Handler::send_reply (ACE_UINT32 err)
 
   n = this->peer ().send (buf, len);
 
-  if (n != len)
+  if (n != (ssize_t) len)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "%p, expected len = %d, actual len = %d\n",
 		      "send failed", len, n), -1);
@@ -645,7 +645,7 @@ ACE_Token_Handler::recv_request (void)
 	ssize_t length = this->token_request_.length ();
 
 	// Do a sanity check on the length of the message.
-	if (length > sizeof this->token_request_)
+	if (length > (ssize_t) sizeof this->token_request_)
 	  {
 	    ACE_ERROR ((LM_ERROR, "length %d too long\n", length));
 	    return this->abandon (1);
@@ -875,8 +875,6 @@ ACE_TS_WLock::clone (void) const
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
+template class ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_Token_Handler>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-

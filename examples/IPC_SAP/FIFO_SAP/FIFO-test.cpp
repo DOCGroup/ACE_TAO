@@ -1,9 +1,10 @@
-/* Purpose:  This program uses ACE_FIFO wrappers to perform interprocess
 // $Id$
 
-   communication between a parent process and a child process.        
-   The parents reads from an input file and writes it into the fifo.  
-   The child reads from the ACE_FIFO and executes the more command.       */
+// Purpose: This program uses ACE_FIFO wrappers to perform
+// interprocess communication between a parent process and a child
+// process.  The parents reads from an input file and writes it into
+// the fifo.  The child reads from the ACE_FIFO and executes the more
+// command.
 
 #include "ace/Log_Msg.h"
 #include "ace/FIFO_Recv.h"
@@ -18,7 +19,7 @@ const char *FIFO_NAME = "/tmp/fifo";
 int
 do_child (ACE_FIFO_Recv &fifo_reader)
 {
-  /* Set child's stdin to read from the fifo */
+  // Set child's stdin to read from the fifo.
   if (ACE_OS::close (0) == -1 || ACE_OS::dup (fifo_reader.get_handle ()) == -1)
     return -1;
 
@@ -28,6 +29,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)
     return -1;
+  return 0;
 }
 
 int 
@@ -44,7 +46,7 @@ do_parent (const char fifo_name[], char input_filename[])
   if ((inputfd = ACE_OS::open (input_filename, O_RDONLY)) == -1)
     return -1;
 
-  /* Read from input file and write into input end of the fifo */
+  // Read from input file and write into input end of the fifo.
 
   while ((len = ACE_OS::read (inputfd, buf, sizeof buf)) > 0)
     if (fifo_sender.send (buf, len) != len)
@@ -84,7 +86,8 @@ main (int argc, char *argv[])
       if (do_parent (FIFO_NAME, argv[1]) == -1)
         ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "do_parent", 1));
 
-      if (ACE_OS::waitpid (child_pid, (int *) 0, 0) == -1)    /* wait for child to ACE_OS::exit */
+      // wait for child to ACE_OS::exit.
+      if (ACE_OS::waitpid (child_pid, (int *) 0, 0) == -1)    
         ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "waitpid", 1));
     }
 

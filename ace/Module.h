@@ -47,15 +47,17 @@ public:
   ACE_Module (void);
   // Create an empty Module.
 
-  ACE_Module (char *module_name, 
+  ACE_Module (const char *module_name, 
 	      ACE_Task<ACE_SYNCH_2> *writer = 0, 
-	      ACE_Task<ACE_SYNCH_2> *reader = 0, void *a = 0);
+	      ACE_Task<ACE_SYNCH_2> *reader = 0, 
+	      void *a = 0);
   // Create an initialized module with <module_name> as its identity
   // and <reader> and <writer> as its tasks.
 
-  int open (char *module_name, 
-	       ACE_Task<ACE_SYNCH_2> *writer = 0, 
-	       ACE_Task<ACE_SYNCH_2> *reader = 0, void *a = 0);
+  int open (const char *module_name, 
+	    ACE_Task<ACE_SYNCH_2> *writer = 0, 
+	    ACE_Task<ACE_SYNCH_2> *reader = 0, 
+	    void *a = 0);
   // Create an initialized module with <module_name> as its identity
   // and <reader> and <writer> as its tasks.
 
@@ -80,7 +82,7 @@ public:
   // = Identify the module 
   const char *name (void) const;
   // Get the module name.
-  void name (char *);
+  void name (const char *);
   // Set the module name.
 
   // = Argument to the Tasks. 

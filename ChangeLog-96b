@@ -1,4 +1,34 @@
+Fri Nov  1 00:25:01 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (remove): Fixed a bug with
+ 	  Service_Record::remove() that was failing if there were only two
+ 	  records and we are removing the first one.  Thanks to Alex
+ 	  Villazon <villazon@cui.unige.ch> for reporting this.
+
+	* ace: Recompiled everything on Solaris with G++ and CC and it
+	  seems to work fine.
+
+	* ace/Module: Replaced the use of char * with const char * for
+ 	  assigning the Module a name.
+
+	* ace: Split the Task.{cpp,i.h} file into Task_T.{cpp,i,h} in
+ 	  order to factor out the new non-template ACE_Task_Base and
+ 	  ACE_Task_Exit classes.  This is required for GCC-based compilers
+ 	  that include the *.cpp files...
+
 Thu Oct 31 00:36:38 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc_T.h: Made the destructor of ACE_Allocator_Adapter
+ 	  virtual.
+
+	* ace/Thread: Reorganized the ACE_Thread so that the
+ 	  ACE_HAS_THREADS #ifdef is no longer required...
+
+	* ace/Strategies.h: Changed all the destructors to be virtual so
+ 	  that G++ will stop complaining...
+
+	* ace/Thread_Manager: Reorganized the ACE_Thread_Manager so that
+ 	  the ACE_HAS_THREADS #ifdef is no longer required...
 
 	* ace/config-win32-msvc4.0.h: Added Dieter Quehl's great hack to
  	  get ACE to compile correctly on Win32 with MFC!

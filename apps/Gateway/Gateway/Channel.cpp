@@ -25,15 +25,15 @@ Channel::Channel (ROUTING_TABLE *rt,
                   Channel_Connector *cc,
 		  ACE_Thread_Manager *thr_mgr,
 		  int socket_queue_size)
-  : id_ (-1),
+  : ACE_Svc_Handler<CHANNEL_PEER_STREAM, SYNCH> (thr_mgr),
+    routing_table_ (rt),
+    id_ (-1),
     total_bytes_ (0),
     state_ (Channel::IDLE),
-    routing_table_ (rt),
     connector_ (cc),
     timeout_ (1),
     max_timeout_ (Channel::MAX_RETRY_TIMEOUT), 
-    socket_queue_size_ (socket_queue_size),
-    ACE_Svc_Handler<CHANNEL_PEER_STREAM, SYNCH> (thr_mgr)
+    socket_queue_size_ (socket_queue_size)
 {
 }
 

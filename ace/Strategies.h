@@ -77,7 +77,7 @@ public:
 			  ACE_Thread_Manager * = 0);
   int open (SVC_HANDLER *,
 	    ACE_Thread_Manager * = 0);
-  ~ACE_Singleton_Strategy (void);
+  virtual ~ACE_Singleton_Strategy (void);
   
   // = Factory method.
   virtual SVC_HANDLER *make_svc_handler (void);
@@ -206,7 +206,7 @@ public:
 		    int n_threads = 1);
   // Initialize the strategy.
   
-  ~ACE_Thread_Strategy (void);
+  virtual ~ACE_Thread_Strategy (void);
 
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -259,7 +259,7 @@ public:
   virtual int open (int n_processes = 1);
   // Initialize the strategy.
   
-  ~ACE_Process_Strategy (void);
+  virtual ~ACE_Process_Strategy (void);
 
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -311,7 +311,7 @@ public:
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
   // Return a reference to the <peer_acceptor_>.
 
-  ~ACE_Accept_Strategy (void);
+  virtual ~ACE_Accept_Strategy (void);
 
   // = Factory method.
   virtual int accept_svc_handler (SVC_HANDLER *);
@@ -346,7 +346,7 @@ public:
   ACE_Scheduling_Strategy (SVC_HANDLER * = 0);
   // Constructor
 
-  ~ACE_Scheduling_Strategy (void);
+  virtual ~ACE_Scheduling_Strategy (void);
   // Destructor
 
   // = Scheduling methods

@@ -445,7 +445,7 @@ ACE_Name_Handler::recv_request (void)
 	ssize_t length = ntohl (this->name_request_.length ());
 
 	// Do a sanity check on the length of the message.
-	if (length > sizeof this->name_request_)
+	if (length > (ssize_t) sizeof this->name_request_)
 	  {
 	    ACE_ERROR ((LM_ERROR, "length %d too long\n", length));
 	    return this->abandon ();
@@ -733,6 +733,6 @@ ACE_Name_Handler::~ACE_Name_Handler (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
+template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
