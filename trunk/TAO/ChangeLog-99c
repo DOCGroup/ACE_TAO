@@ -1,3 +1,8 @@
+Sat May 08 17:17:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_valuetype.cpp,be_valuetype_fwd.cpp: removed
+          extraneous ; after function definitions.
+
 Sat May  8 16:10:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
