@@ -3,6 +3,7 @@
 # Irix 6.[234] with SGI C++
 
 debug = 1
+optimize = 1
 
 # Instead of setting the ABI here we rely on the the macro SGI_ABI.
 CC		= cc
@@ -14,7 +15,7 @@ LD		= $(CXX)
 
 # In Irix 6.2 w/o the thread patches this macro should have no effect.
 CPPFLAGS	+= -D_SGI_MP_SOURCE
-CCFLAGS		+= -O
+OCCFLAGS	+= -O
 
 # Enable exceptions even in the o32 bit ABI.
 CCFLAGS		+= -exceptions
