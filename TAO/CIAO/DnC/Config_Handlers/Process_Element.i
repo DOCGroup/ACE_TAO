@@ -17,11 +17,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMNodeIterator* iter,
                                 VALUE value,
                                 DATA& data,
-                                OBJECT& obj,
-                                void (OBJECT::*func)(DOMDocument*,
-                                                     DOMNodeIterator*,
-                                                     DATA&),
-                                ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
+                                Process_Function <OBJECT>* func,
+                                REFMAP& id_map)
 {
   // the number of attributes
   int length = named_node_map->getLength();
@@ -36,7 +33,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
       // if xmi::id is given process the element and bind the value
       if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
         {
-          (obj.*func)(doc, iter, data);
+          (*func) (iter, data);
           id_map.bind (aceattrnodevalue, value);
         }
       // if href is given find out the referenced position
@@ -75,7 +72,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
              true);
           href_iter->nextNode ();
 
-          (obj.*func) (href_doc, href_iter, data);
+          static_cast< Process_Member_Function<OBJECT>* > (href)->doc(href_doc);
+          (*func) (iter, data);
         }
     }
 }
@@ -87,11 +85,8 @@ void process_element (DOMNode* node,
                       DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
-                      OBJECT& obj,
-                      void (OBJECT::*func)(DOMDocument*,
-                                           DOMNodeIterator*,
-                                           DATA&),
-                      ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
+                      Process_Function <OBJECT>* func,
+                      REFMAP& id_map)
 {
   // fetch attributes
   DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -101,12 +96,12 @@ void process_element (DOMNode* node,
   if (length == 1)
     {
       // call directly the static process_ method
-      (obj.*func)(doc, iter, data);
+      (*func) (iter, data);
     }
   else if (length > 1)
     {
       // Check the xmi::id & href attributes
-      process_element_attributes(named_node_map, doc, iter, val, data, obj, func, id_map);
+      process_element_attributes(named_node_map, doc, iter, val, data, func, id_map);
     }
 }
 
@@ -116,11 +111,8 @@ void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
-                                 OBJECT& obj,
-                                 void (OBJECT::*func)(DOMDocument*,
-                                                      DOMNodeIterator*,
-                                                      DATA&),
-                                 ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex>& id_map)
+                                 Process_Function <OBJECT>* func,
+                                 REFMAP& id_map)
 {
   if (node->hasAttributes ())
     {
@@ -129,6 +121,6 @@ void process_sequential_element (DOMNode* node,
       // add 1 to the size of the sequence
       seq.length (i + 1);
       // call process only one element
-      process_element(node, doc, iter, seq[i], i, obj, func, id_map);
+      process_element(node, doc, iter, seq[i], i, func, id_map);
     }
 }
