@@ -1,20 +1,29 @@
+Sun May 31 23:05:10 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html,include/makeinclude/wrapper_macros.GNU:
+          added repo=1 make option support.  It only helps when
+          building ACE applications.  ACE and TAO still use explicit
+          instantiation when building their libraries, because it's
+          easiest to avoid link collisions that way.  And it already
+          works.
+
 Sun May 31 18:31:24 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/RB_Tree.i:
-	* ace/RB_Tree.cpp: Changes suggested by Sergio to make it work
-	  with older version of GCC.  Referred to RB_Tree_Node_Color
-	  through the parent class RB_Tree_Node_Base.
+        * ace/RB_Tree.i:
+        * ace/RB_Tree.cpp: Changes suggested by Sergio to make it work
+          with older version of GCC.  Referred to RB_Tree_Node_Color
+          through the parent class RB_Tree_Node_Base.
 
 Sat May 30 13:14:18 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/RB_Tree.h: Try to put enum into a class again.  This time,
-	  created a dummy base class to hold the RED and BLACK enums.
+        * ace/RB_Tree.h: Try to put enum into a class again.  This time,
+          created a dummy base class to hold the RED and BLACK enums.
 
 Sat May 30 08:01:31 1998  levine  <levine@lambada.cs.wustl.edu>
 
-	* ace/RB_Tree.h (RB_Tree_Iterator::operator =): Added explicit
-	  return type to the declaration.  Wrapped with
-	  ACE_UNIMPLEMENTED_FUNC.
+        * ace/RB_Tree.h (RB_Tree_Iterator::operator =): Added explicit
+          return type to the declaration.  Wrapped with
+          ACE_UNIMPLEMENTED_FUNC.
 
 Fri May 29 23:06:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
