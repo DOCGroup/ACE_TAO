@@ -1,3 +1,8 @@
+Wed Sep  1 10:48:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/sequence.idl:
+	  Added nested sequence examples to this file.
+
 Wed Sep  1 09:52:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sequence.cpp:
