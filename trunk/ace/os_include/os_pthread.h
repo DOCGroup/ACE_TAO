@@ -93,8 +93,8 @@ extern "C" pthread_t pthread_self (void);
 // programs to have their own ACE-wide "default".
 
 // PROCESS-level values
-#  if defined (_POSIX_PRIORITY_SCHEDULING) && \
-         !defined(_UNICOS) && !defined(UNIXWARE_7_1)
+#  if (defined (_POSIX_PRIORITY_SCHEDULING) || defined (ACE_TANDEM_T1248_PTHREADS)) \
+   && !defined(_UNICOS) && !defined(UNIXWARE_7_1)
 #    define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
 #    if defined (HPUX)

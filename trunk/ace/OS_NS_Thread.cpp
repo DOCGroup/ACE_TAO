@@ -1957,6 +1957,9 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                      int, -1);
 #elif defined (ACE_HAS_STHREADS)
   return ACE_OS::set_scheduling_params (sched_params, id);
+#elif defined (ACE_HAS_PTHREADS) \
+           && ( !defined (ACE_LACKS_SETSCHED) \
+              || defined( ACE_TANDEM_T1248_PTHREADS) )
 #elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED)
   ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
@@ -1976,6 +1979,9 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
+# if defined(ACE_TANDEM_T1248_PTHREADS)
+      ACE_NOTSUP_RETURN (-1);
+# else  /* ! ACE_TANDEM_T1248_PTHREADS */
       int result = ::sched_setscheduler (0, // this process
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
@@ -1988,6 +1994,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 # else  /* ! DIGITAL_UNIX */
       return result;
 # endif /* ! DIGITAL_UNIX */
+# endif /* ! ACE_TANDEM_T1248_PTHREADS */
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
@@ -2424,6 +2431,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if defined (ACE_HAS_ONLY_SCHED_OTHER)
           // SunOS, thru version 5.6, only supports SCHED_OTHER.
           spolicy = SCHED_OTHER;
+#     elif defined (ACE_HAS_ONLY_SCHED_FIFO)
+          // NonStop OSS standard pthread supports only SCHED_FIFO.
+          spolicy = SCHED_FIFO;
 #     else
           // Make sure to enable explicit scheduling, in case we didn't
           // enable it above (for non-default priority).
