@@ -10,5 +10,9 @@ To run the test:
 The command line parameters for the Supplier are:
  -n <Name of the Event Service>,the default name is "CosEventService"
 
+ -c <event_count>, number of events to send to the CosEC.
+
 The command line parameters for the Consumer are:
  -n <Name of the Event Service>,the default name is "CosEventService"
+
+ -c <event_count>, number of events to receive from the CosEC.

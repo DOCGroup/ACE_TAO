@@ -34,6 +34,10 @@ class CosECConsumer : public POA_CosEventComm::PushConsumer,
   //   CosEC and receives events from it.
 
 public:
+  // = Initializatiopn and termination methods.
+  CosECConsumer ();
+  // Constructor.
+
   int init_Consumer (void);
   // Initialize the Consumer.
 
@@ -68,6 +72,9 @@ private:
 
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   // We talk to the EC using this proxy.
+
+  int event_count_;
+  // The number of Events to receive before switching off.
 };
 
 #endif /* COSECCONSUMER_H_ */

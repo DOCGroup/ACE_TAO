@@ -3,10 +3,16 @@
 
 #include "CosECSupplier.h"
 
+CosECSupplier::CosECSupplier ()
+  : event_count_ (1)
+{
+  // No-Op.
+}
+
 int
 CosECSupplier::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:");
+  ACE_Get_Opt get_opt (argc, argv, "n:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -15,6 +21,10 @@ CosECSupplier::parse_args (int argc, char *argv [])
         {
         case 'n':
           this->service_name = get_opt.optarg;
+          break;
+
+        case 'c':
+          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
         case '?':
@@ -125,9 +135,21 @@ CosECSupplier::run (void)
       this->connect (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
-      this->send_event (any,
-                        TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P):sending %d events...\n",
+                  this->event_count_));
+
+      for (int count = this->event_count_;
+           count != 0;
+           count--)
+        {
+          this->send_event (any,
+                            TAO_TRY_ENV);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P):Done!. exiting now..\n"));
 
       this->close (TAO_TRY_ENV);
       TAO_TRY_ENV;
@@ -148,6 +170,8 @@ main (int argc, char *argv[])
     return 1;
 
   supp.run ();
+
   supp.shutdown ();
+
   return 0;
 }
