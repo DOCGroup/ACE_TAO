@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 
-#if !defined (_MPEG_SERVER_H)
-#define      _MPEG_SERVER_H
+#if !defined (TAO_AV_SERVER_H)
+#define      TAO_AV_SERVER_H
 
 #include <stdio.h>
 #include <errno.h>
@@ -139,4 +139,4 @@ private:
 
 };
 
-#endif // _MPEG_SERVER_H
+#endif // TAO_AV_SERVER_H
