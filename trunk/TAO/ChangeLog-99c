@@ -1,3 +1,7 @@
+Fri Feb 26 16:46:37 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+	* Added some methods to Stub_Object for forwarding.
+
 Fri Feb 26 13:32:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/grid/README: 
