@@ -39,7 +39,8 @@ if ($input_file and $ARGV[1])
 }
 else
 {
-    die "Usage: process-output.pl output-file-name number-of-iterations \n";
+    die "Usage: process-output.pl output-file-name "
+        ."number-of-iterations priority1 priority2\n";
 }
 
 $thread_priority_pattern =
@@ -114,15 +115,26 @@ close (DATA);
 if ($server_shutdown == 0
     or $threads_finished == 0)
 {
-    print "Missing test over message\n";
+    print "ERROR: Missing test over message\n";
 }
 elsif ($iiop_requests != $shmiop_requests
-       or $iiop_requests != $iterations
-       or $priority1_requests != $priority2_requests
-       or $priority1_requests != $iterations
-       or $test_method != 2*$iterations)
+       or $iiop_requests != $iterations)
 {
-    print "Error in invocation log messages count\n";
+    print "ERROR: Number of iiop requests differs from shmiop differs from "
+        ."number of iterations\n";
+}
+elsif (($priority1 != $priority2 
+        and ($priority1_requests != $priority2_requests
+             or $priority1_requests != $iterations))
+       or ($priority1 == $priority2 
+           and ($priority2_requests != 0 
+                or $priority1_requests != @*$iterations)))
+{
+    print "ERROR: Nonmatching number of requests of each priority\n";
+}
+elsif ($test_method != 2*$iterations)
+{
+    print "ERROR: Incorrect number servant invocations\n";
 }
 else
 {

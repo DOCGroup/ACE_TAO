@@ -1,3 +1,17 @@
+Thu Dec 07 23:15:38 2000  Marina Spivak  <administrator@cs.wustl.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+
+	  Changed default value of protocol1 to be SHMIOP.
+	
+	* tests/RTCORBA/MT_Client_Protocol_Priority/README:
+
+	  Added test description.
+	 
+	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl:
+
+	  Modified to provide more descriptive messages in case of errors.
+
 Thu Dec 07 22:20:12 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object.cpp (_is_a): Checking the hint of the object can be

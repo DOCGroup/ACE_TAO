@@ -49,7 +49,7 @@ const char *ior = "file://test.ior";
 int iterations = 100;
 CORBA::Short priority1 = -1;
 CORBA::Short priority2 = -1;
-CORBA::ULong protocol1 = 0;
+CORBA::ULong protocol1 = 1413566210;
 CORBA::ULong protocol2 = 0;
 
 int
