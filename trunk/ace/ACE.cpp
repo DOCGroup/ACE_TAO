@@ -2974,10 +2974,12 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
   ACE_OS::strncpy (yeartmp,
                    &date_and_time[20],
                    4);
+  yeartmp[4] = '\0';
   char timetmp[9];
   ACE_OS::strncpy (timetmp,
                    &date_and_time[11],
                    8);
+  timetmp[8] = '\0';
   ACE_OS::sprintf (&date_and_time[11],
                    "%s %s.%06ld",
                    yeartmp,
