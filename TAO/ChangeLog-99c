@@ -1,3 +1,17 @@
+Thu Mar 11 20:41:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp: There were some major
+ 	  inconsistencies with byte order conversions.
+
+	* tao/ORB.cpp (multicast_query): Fixed some subtle bugs with
+ 	  multicast.  First, we were sending a struct when we should have
+ 	  been sending an array (due to portability issues with struct
+ 	  padding).  Second, we weren't being consistent with ACE macros.
+
+	* tao/ORB.cpp (multicast_query): There was a read of BUFSIZ where
+ 	  there should have been a read of ACE_MAX_DGRAM_SIZE.  Thanks to
+ 	  Marina for noticing this.
+
 Thu Mar 11 20:46:04 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp
