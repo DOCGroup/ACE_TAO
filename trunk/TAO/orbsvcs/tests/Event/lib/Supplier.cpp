@@ -205,31 +205,33 @@ EC_Supplier_Task::EC_Supplier_Task (EC_Supplier* supplier,
 int
 EC_Supplier_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  // Initialize a time value to pace the test
+  ACE_Time_Value tv (0, this->burst_pause_);
+
+  RtecEventComm::EventSet event (1);
+  event.length (1);
+
+  event[0].header.ttl = 1;
+
+  ACE_hrtime_t t = ACE_OS::gethrtime ();
+  ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
+  event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
+  event[0].header.ec_send_time = ORBSVCS_Time::zero ();
+
+  event[0].data.x = 0;
+  event[0].data.y = 0;
+
+  // We use replace to minimize the copies, this should result
+  // in just one memory allocation;
+  event[0].data.payload.length (this->payload_size_);
+
+  for (int i = 0; i < this->burst_count_; ++i)
     {
-      // Initialize a time value to pace the test
-      ACE_Time_Value tv (0, this->burst_pause_);
-
-      RtecEventComm::EventSet event (1);
-      event.length (1);
-
-      event[0].header.ttl = 1;
-
-      ACE_hrtime_t t = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
-      event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
-      event[0].header.ec_send_time = ORBSVCS_Time::zero ();
-
-      event[0].data.x = 0;
-      event[0].data.y = 0;
-
-      // We use replace to minimize the copies, this should result
-      // in just one memory allocation;
-      event[0].data.payload.length (this->payload_size_);
-
-      for (int i = 0; i < this->burst_count_; ++i)
+      for (int j = 0; j < this->burst_size_; ++j)
         {
-          for (int j = 0; j < this->burst_size_; ++j)
+          ACE_TRY
             {
               this->supplier_->event_type (j, event[0]);
 
@@ -242,17 +244,29 @@ EC_Supplier_Task::svc (void)
 
               ACE_TRY_CHECK;
             }
+          ACE_CATCH (CORBA::SystemException, sys_ex)
+            {
+              ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+            }
+          ACE_ENDTRY;
 
           ACE_OS::sleep (tv);
         }
+    }
 
+  ACE_TRY_EX(SHUTDOWN)
+    {
       // Send one event shutdown from each supplier
       event[0].header.type = this->shutdown_event_type_;
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      now);
       this->supplier_->send_event (event, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (SHUTDOWN);
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
