@@ -1,4 +1,4 @@
-Fri Dec 2 11:46:17 1997    <nw1@CHA-CHA>
+Fri Dec 02 11:46:17 1997    <nw1@CHA-CHA>
 
 	* ace/Proactor.cpp (ACE_Proactor): Reenabled Proactor's thread
 	  manager to wait on its Timer_Handler thread.
