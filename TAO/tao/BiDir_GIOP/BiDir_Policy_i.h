@@ -15,7 +15,7 @@
 #ifndef TAO_BIDIR_POLICY_I_H
 #define TAO_BIDIR_POLICY_I_H
 #include "ace/pre.h"
-#include "tao/orbconf.h"
+#include "bidirgiop_export.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "tao/BiDirPolicyC.h"
+#include "BiDirGIOP.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
@@ -45,7 +45,7 @@
  *
  */
 
-class TAO_Export TAO_BidirectionalPolicy
+class TAO_BiDirGIOP_Export TAO_BidirectionalPolicy
   : public BiDirPolicy::BidirectionalPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -88,7 +88,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/BiDir_Policy_i.inl"
+#include "BiDir_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -14,7 +14,7 @@
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,7 @@
 #endif /* _MSC_VER */
 
 /// Policy factory for all Messaging related policies.
-class TAO_Export TAO_BiDir_PolicyFactory :
+class TAO_BiDirGIOP_Export TAO_BiDir_PolicyFactory :
   public PortableInterceptor::PolicyFactory,
   public TAO_Local_RefCounted_Object
 {

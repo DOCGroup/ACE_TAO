@@ -20,7 +20,7 @@
 #include "tao/Acceptor_Registry.h"
 
 #include "tao/RT_Policy_i.h"
-#include "tao/BiDir_Policy_i.h"
+
 
 #include "Default_Acceptor_Filter.h"
 #include "RT_Acceptor_Filters.h"
@@ -3895,21 +3895,16 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-  // Bidirectional policy. If we have a BiDirectional policy, we set a
-  // flag in the ORB_Core for use by the ORB
+  // Check whether we have a BiDirectional policy set. Call the
+  // ORB_Core to do the checking for us
+  int retval = this->orb_core_.parse_bidir_policy (policy,
+                                                   ACE_TRY_ENV);
 
-  BiDirPolicy::BidirectionalPolicy_var bidir_policy
-    = BiDirPolicy::BidirectionalPolicy::_narrow (policy,
-                                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (!CORBA::is_nil (bidir_policy.in ()))
-    {
-      // Set the flag in the ORB_Core
-      if (bidir_policy->value () == BiDirPolicy::BOTH)
-        this->orb_core_.bidir_giop_policy (1);
-      return;
-    }
+  // The policy has been successfully parsed, so return
+  if (retval)
+    return;
 
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
