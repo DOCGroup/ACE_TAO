@@ -120,21 +120,21 @@ namespace CIAO
 
     /// handle label attribute
     void CompPkgDesc_Handler::process_label
-      (const XMLCh* name, ::Deployment::ComponentPackageDescription &comppkgdesc)
+      (const XMLCh* label, ::Deployment::ComponentPackageDescription &comppkgdesc)
     {
-      if (name)
+      if (label)
         {
-          comppkgdesc.label = XMLString::transcode (name);
+          comppkgdesc.label = XMLString::transcode (label);
         }
     }
 
     /// handle UUID attribute
     void CompPkgDesc_Handler::process_UUID
-      (const XMLCh* name, ::Deployment::ComponentPackageDescription &comppkgdesc)
+      (const XMLCh* UUID, ::Deployment::ComponentPackageDescription &comppkgdesc)
     {
-      if (name)
+      if (UUID)
         {
-          comppkgdesc.UUID = XMLString::transcode (name);
+          comppkgdesc.UUID = XMLString::transcode (UUID);
         }
     }
 

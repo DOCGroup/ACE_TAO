@@ -12,7 +12,7 @@
 #define DNC_DUMP_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers/DeploymentC.h"
+#include "DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -36,7 +36,17 @@ namespace Deployment
 
     static void dump (const ::Deployment::AssemblyPropertyMapping &apm);
 
+    static void dump (const ::Deployment::ComponentPackageDescription &comppkgdesc);
+
+    static void dump (const ::Deployment::ComponentPortDescription &compportdesc);
+
+    static void dump (const ::Deployment::ComponentPropertyDescription &comppropdesc);
+
     static void dump (const ::Deployment::MonolithicImplementationDescription &mid);
+
+    static void dump (const ::Deployment::PackageConfiguration &pc);
+
+    static void dump (const ::Deployment::PackagedComponentImplementation &pci);
 
     static void dump (const ::Deployment::SubcomponentPortEndpoint &spe);
 
