@@ -210,7 +210,7 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
   for (TAO_PHandle h=0; h < last_ ; h++)
     {
       hashval += pfiles_[h]->hash (max, ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
     }
 
   // The above hash function return an ULong between 0 and max here we
