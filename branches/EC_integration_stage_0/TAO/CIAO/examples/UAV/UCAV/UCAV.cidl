@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef UCAV_CIDL
+#define UCAV_CIDL
+
+#include "UCAV.idl"
+
+composition session UCAV_Impl
+{
+  home executor UCAVHome_Exec
+  {
+    implements BBN_UAV::UCAVHome;
+    manages UCAV_Exec;
+  };
+};
+
+#endif /* UCAV_CIDL */

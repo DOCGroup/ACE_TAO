@@ -1,0 +1,28 @@
+//$Id$
+//=============================================================================
+/**
+ * @file ATR.idl
+ *
+ * Definition of the ATR component
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_ATR_IDL
+#define CIAO_ATR_IDL
+
+#include "../BBN_UAV.idl"
+
+module BBN_UAV
+{
+  component ATR
+    {
+      publishes TargetRecognized target_recognized;
+    };
+
+  home ATRHome manages ATR
+    {
+    };
+};
+
+#endif /*CIAO_ATR_IDL */

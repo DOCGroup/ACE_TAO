@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef CAOC_CIDL
+#define CAOC_CIDL
+
+#include "CAOC.idl"
+
+composition session CAOC_Impl
+{
+  home executor CAOCHome_Exec
+  {
+    implements BBN_UAV::CAOCHome;
+    manages CAOC_Exec;
+  };
+};
+
+#endif /* CAOC_CIDL */

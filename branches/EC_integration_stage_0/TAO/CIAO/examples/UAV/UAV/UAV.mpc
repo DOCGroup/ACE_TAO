@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl UAV"
+
+project(UAV_stub): ciao_client {
+  
+  sharedname = UAV_stub
+  idlflags += -Wb,stub_export_macro=UAV_STUB_Export -Wb,stub_export_include=UAV_stub_export.h -Wb,skel_export_macro=UAV_SVNT_Export -Wb,skel_export_include=UAV_svnt_export.h
+  dynamicflags   = UAV_STUB_BUILD_DLL
+
+  IDL_Files {
+    UAV.idl
+  }
+
+  Source_Files {
+    UAVC.cpp
+  }
+}
+
+project(UAV_svnt) : ciao_servant {
+  after +=  UAV_stub
+  sharedname  = UAV_svnt
+  libs    += UAV_stub 
+  
+  idlflags  +=  -Wb,export_macro=UAV_SVNT_Export -Wb,export_include=UAV_svnt_export.h
+  dynamicflags = UAV_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    UAV.cidl
+  }
+
+  IDL_Files {
+    UAVE.idl
+  }
+
+  Source_Files {
+    UAVEC.cpp
+    UAVS.cpp
+    UAV_svnt.cpp
+  }
+}
+
+
+project(UAV_exec) : ciao_component {
+  after   += UAV_svnt
+  sharedname = UAV_exec
+  libs      += UAV_stub UAV_svnt 
+  
+  idlflags  +=  -Wb,export_macro=UAV_EXEC_Export -Wb,export_include=UAV_exec_export.h
+  dynamicflags   = UAV_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    UAV_exec.cpp
+  }
+}
+
+
+

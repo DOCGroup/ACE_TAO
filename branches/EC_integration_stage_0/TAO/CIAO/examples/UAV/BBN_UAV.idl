@@ -1,0 +1,50 @@
+// $Id$
+//=============================================================================
+/**
+ * @file BBN_UAV.idl
+ *
+ * Definition of events, and used in the BBN_UAV module.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_BBN_UAV_IDL
+#define CIAO_BBN_UAV_IDL
+
+#include "Components.idl"
+
+// @@NOTE: Do we need a pragma prefix. Anyway its broken now in TAO..
+// #pragma prefix ""
+
+module BBN_UAV
+{
+
+  /**
+   * @eventtype 
+   */
+  eventtype TargetLocated {};
+
+  /**
+   * @eventtype 
+   */
+  eventtype PrepareCapture {};
+
+  /**
+   * @eventtype 
+   */
+  eventtype StartCapture {};
+
+  /**
+   * @eventtype 
+   */
+  eventtype TargetRecognized {};
+
+  /**
+   * @eventtype 
+   */
+  eventtype EngageTarget {};
+
+};
+
+#endif /*CIAO_BBN_UAV_IDL*/

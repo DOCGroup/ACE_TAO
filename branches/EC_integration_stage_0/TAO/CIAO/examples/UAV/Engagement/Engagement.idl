@@ -1,0 +1,29 @@
+//$Id$
+//=============================================================================
+/**
+ * @file Engagement.idl
+ *
+ * Definition of the Engagement component
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_ENGAGEMENT_IDL
+#define CIAO_ENGAGEMENT_IDL
+
+#include "../BBN_UAV.idl"
+
+module BBN_UAV
+{
+  component Engagement
+    {
+      publishes EngageTarget engage_target;
+      consumes TargetRecognized target_recognized;
+    };
+
+  home EngagementHome manages Engagement
+    {
+    };
+};
+
+#endif /*CIAO_ENGAGEMENT_IDL */

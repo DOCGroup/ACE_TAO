@@ -1,0 +1,28 @@
+//$Id$
+//=============================================================================
+/**
+ * @file UCAV.idl
+ *
+ * Definition of the UCAV component
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_UCAV_IDL
+#define CIAO_UCAV_IDL
+
+#include "../BBN_UAV.idl"
+
+module BBN_UAV
+{
+  component UCAV
+    {
+      consumes EngageTarget engage_target;
+    };
+
+  home UCAVHome manages UCAV
+    {
+    };
+};
+
+#endif /*CIAO_UCAV_IDL */

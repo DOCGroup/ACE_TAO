@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl UCAV"
+
+project(UCAV_stub): ciao_client {
+  
+  sharedname = UCAV_stub
+  idlflags += -Wb,stub_export_macro=UCAV_STUB_Export -Wb,stub_export_include=UCAV_stub_export.h -Wb,skel_export_macro=UCAV_SVNT_Export -Wb,skel_export_include=UCAV_svnt_export.h
+  dynamicflags   = UCAV_STUB_BUILD_DLL
+
+  IDL_Files {
+    UCAV.idl
+  }
+
+  Source_Files {
+    UCAVC.cpp
+  }
+}
+
+project(UCAV_svnt) : ciao_servant {
+  after +=  UCAV_stub
+  sharedname  = UCAV_svnt
+  libs    += UCAV_stub 
+  
+  idlflags  +=  -Wb,export_macro=UCAV_SVNT_Export -Wb,export_include=UCAV_svnt_export.h
+  dynamicflags = UCAV_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    UCAV.cidl
+  }
+
+  IDL_Files {
+    UCAVE.idl
+  }
+
+  Source_Files {
+    UCAVEC.cpp
+    UCAVS.cpp
+    UCAV_svnt.cpp
+  }
+}
+
+
+project(UCAV_exec) : ciao_component {
+  after   += UCAV_svnt
+  sharedname = UCAV_exec
+  libs      += UCAV_stub UCAV_svnt 
+  
+  idlflags  +=  -Wb,export_macro=UCAV_EXEC_Export -Wb,export_include=UCAV_exec_export.h
+  dynamicflags   = UCAV_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    UCAV_exec.cpp
+  }
+}
+
+
+

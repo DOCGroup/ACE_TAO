@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl ATR"
+
+project(ATR_stub): ciao_client {
+  after += BBN_UAV_stub
+  sharedname = ATR_stub
+  idlflags += -Wb,stub_export_macro=ATR_STUB_Export -Wb,stub_export_include=ATR_stub_export.h -Wb,skel_export_macro=ATR_SVNT_Export -Wb,skel_export_include=ATR_svnt_export.h
+  dynamicflags   = ATR_STUB_BUILD_DLL
+
+  IDL_Files {
+    ATR.idl
+  }
+
+  Source_Files {
+    ATRC.cpp
+  }
+}
+
+project(ATR_svnt) : ciao_servant {
+  after +=  BBN_UAV_svnt ATR_stub
+  sharedname  = ATR_svnt
+  libs    += ATR_stub 
+  
+  idlflags  +=  -Wb,export_macro=ATR_SVNT_Export -Wb,export_include=ATR_svnt_export.h
+  dynamicflags = ATR_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    ATR.cidl
+  }
+
+  IDL_Files {
+    ATRE.idl
+  }
+
+  Source_Files {
+    ATREC.cpp
+    ATRS.cpp
+    ATR_svnt.cpp
+  }
+}
+
+
+project(ATR_exec) : ciao_component {
+  after   += ATR_svnt
+  sharedname = ATR_exec
+  libs      += ATR_stub ATR_svnt 
+  
+  idlflags  +=  -Wb,export_macro=ATR_EXEC_Export -Wb,export_include=ATR_exec_export.h
+  dynamicflags   = ATR_EXEC_BUILD_DLL
+
+  IDL_Files {
+    ATREDEI.idl
+  }
+
+  Source_Files {
+    ATREIC.cpp
+    ATR_exec.cpp
+  }
+}
+
+
+
