@@ -1,3 +1,39 @@
+Mon Jul 17 13:26:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/SHMIOP_Transport.cpp:
+	* tao/UIOP_Transport.cpp:
+
+	  Added missing ACE_RCSID macros.
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Stub.i:
+
+	  Removed trailing whitespace.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+
+	  Changed name of SSLIOP pluggable protocol from `TAO_SSL' to
+	  `TAO_SSLIOP'.  The new name is more consistent with the naming
+	  conventions used throughout TAO's SSLIOP pluggable protocol.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+
+	  Protected all code within a "#ifdef ACE_HAS_SSL" preprocessor
+	  conditional block.  While this isn't strictly necessary, it is
+	  useful for eliminating compile-time errors in automated builds.
+
 Mon Jul 17 12:14:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/RT_Policy_i.cpp (destroy): 

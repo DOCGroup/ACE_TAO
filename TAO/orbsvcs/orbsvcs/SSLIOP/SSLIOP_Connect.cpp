@@ -1,5 +1,9 @@
 // $Id$
 
+#include "ace/config-all.h"
+
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+
 #include "SSLIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -14,7 +18,7 @@
 # include "SSLIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, SSLIOP_Connect, "$Id$")
+ACE_RCSID(TAO_SSLIOP, SSLIOP_Connect, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -450,10 +454,10 @@ TAO_SSLIOP_Client_Connection_Handler::close (u_long)
 int
 TAO_SSLIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  int r = this->transport ()->handle_client_input (); 
-  if (r == -1) 
-    return -1; 
-  return 0; 
+  int r = this->transport ()->handle_client_input ();
+  if (r == -1)
+    return -1;
+  return 0;
 }
 
 int
@@ -576,3 +580,5 @@ template class ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif  /* ACE_HAS_SSL */
