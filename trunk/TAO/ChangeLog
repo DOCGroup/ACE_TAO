@@ -1,3 +1,16 @@
+Thu Oct 17 14:45:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.cpp:
+	
+	  Changed all the 'transport->send_message ()' from the default
+	  parameter for 'message_semantics' (TAO_Transport::Two_Way) to
+	  TAO_Transport::TAO_Reply.  Doing this blocks the sender until
+	  the reply is sent. This change suggested by Balachandran
+	  Natarajan <bala@isis-server.isis.vanderbilt.edu> fixes a bug
+	  reported by Martin Johnson <mjhn@bigpond.net.au> where an AMH
+	  server crashed when it was sending back huge payload (>16K) to a
+	  multithreaded (>50) client.
+
 Thu Oct 17 14:47:50 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
