@@ -16,17 +16,17 @@ Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fixed a problem which used to make the client ORB hang when the
 	  BiDirPolicy was set and a corbaloc URL was used. The problem
-	  stemmed from the following 
+	  stemmed from the following
 
 	  - The reply dispatcher was bounded to the table with some
-	    request ID. 
+	    request ID.
 
 	  - When the request header was generated, the request ID was
-	    munged to be compliant with BiDir GIOP semantics. 
+	    munged to be compliant with BiDir GIOP semantics.
 
 	  - The request could possible be sent out with a different
 	    request ID whose reply dispatcher could have been bounded with
-	    a different ID. 
+	    a different ID.
 
 	  The above made the client ORB hang. We now marshal the whole
 	  request before we bind the dispatcher, which will get us the
