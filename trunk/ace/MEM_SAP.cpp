@@ -65,8 +65,10 @@ ACE_MEM_SAP::close_shm_malloc (void)
 
   int retv = -1;
 
-  if (this->shm_malloc_ != 0 && this->shm_malloc_->release () == 0)
-    retv = this->shm_malloc_->remove ();
+  if (this->shm_malloc_ != 0)
+    this->shm_malloc_->release (1);
+
+  this->shm_malloc_ = 0;
 
   return retv;
 }

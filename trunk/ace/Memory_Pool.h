@@ -70,7 +70,7 @@ public:
                          size_t &rounded_bytes);
 
   /// Instruct the memory pool to release all of its resources.
-  virtual int release (void);
+  virtual int release (int destroy = 1);
 
   /**
    * Sync <len> bytes of the memory region to the backing store
@@ -186,7 +186,7 @@ public:
                          size_t &rounded_bytes);
 
   /// Instruct the memory pool to release all of its resources.
-  virtual int release (void);
+  virtual int release (int destroy = 1);
 
   /// Sync the memory region to the backing store starting at
   /// <this->base_addr_>.
@@ -324,7 +324,7 @@ public:
                          size_t &rounded_bytes);
 
   /// Instruct the memory pool to release all of its resources.
-  virtual int release (void);
+  virtual int release (int destroy = 1);
 
   /**
    * Sync <len> bytes of the memory region to the backing store
@@ -504,7 +504,7 @@ public:
                          size_t &rounded_bytes);
 
   /// Instruct the memory pool to release all of its resources.
-  virtual int release (void);
+  virtual int release (int destroy = 1);
 
   /// Sync the memory region to the backing store starting at
   /// <this->base_addr_>.
@@ -693,7 +693,7 @@ public:
                  size_t &rounded_bytes);
 
   /// Instruct the memory pool to release all of its resources.
-  int release (void);
+  int release (int destroy = 1);
 
   /**
    * Win32 Structural exception selector.  The return value decides

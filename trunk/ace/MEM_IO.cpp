@@ -36,7 +36,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
 {
   ACE_TRACE ("ACE_Reactive_MEM_IO::recv_buf");
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
   off_t new_offset = 0;
@@ -67,7 +67,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 {
   ACE_TRACE ("ACE_Reactive_MEM_IO::send_buf");
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
   off_t offset = ACE_reinterpret_cast (char *, buf) -

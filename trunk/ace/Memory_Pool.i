@@ -187,7 +187,7 @@ ACE_Sbrk_Memory_Pool::round_up (size_t nbytes)
 /* No-op for now... */
 
 ACE_INLINE int
-ACE_Sbrk_Memory_Pool::release (void)
+ACE_Sbrk_Memory_Pool::release (int)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::release");
   return 0;
