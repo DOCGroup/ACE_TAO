@@ -66,5 +66,5 @@ static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
 
 #endif /* ACE_HAS_THREADS */
 
-#include /**/ "ace/pre.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_STATIC_OBJECT_LOCK_H */
