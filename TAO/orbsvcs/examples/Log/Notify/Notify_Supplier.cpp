@@ -1,5 +1,5 @@
 #include "Notify_Supplier.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"
 
 ACE_RCSID (Notify,
@@ -47,7 +47,7 @@ Supplier::run (int argc, char* argv[])
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
- 
+
 
       CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
@@ -91,7 +91,7 @@ Supplier::run (int argc, char* argv[])
       DsLogAdmin::LogId logid = 0;
       CosNotification::QoSProperties initial_qos;
       CosNotification::AdminProperties initial_admin;
- 
+
       this->notify_log_ =
         this->notify_log_factory_->create (logfullaction,
                                           max_size,
@@ -119,7 +119,7 @@ Supplier::run (int argc, char* argv[])
         }
 
       CosNotifyChannelAdmin::AdminID adminID = 0;
-      this->supplier_admin_ = 
+      this->supplier_admin_ =
         notify_log_->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, adminID);
       ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
