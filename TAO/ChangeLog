@@ -87,8 +87,10 @@ Tue Oct 28 07:05:46 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
 
-	  Added a sanity check for properly functioning SSLIOP profile
-	  equivalence checks.
+	  Added a sanity check for properly functioning SSLIOP object
+	  reference equivalence checks.  Thanks to Sebastien Lalonde
+	  <SLalonde@interstarinc.com> for pointing out that SSLIOP object
+	  reference equivalence was not working properly.
 
 Sat Oct 25 13:19:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
