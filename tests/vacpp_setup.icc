@@ -17,7 +17,8 @@ if $__TOS_WIN__ {
                                  "user32.lib",
                                  "ws2_32.lib",
                                  "wsock32.lib",
-                                 "mswsock.lib"
+                                 "mswsock.lib",
+                                 "Test_Output.lib"
 }
 if $__TOS_AIX__ {
         option PlatformOptions =
@@ -27,5 +28,6 @@ if $__TOS_AIX__ {
                 opt(level, 3),
                 gen(enumsize, small)
         platformLibSearchPath = "../ace"
-        group platformLinkLibs = "libACE.a"
+        group platformLinkLibs = "libACE.a",
+                                 "libTest_Output.a"
 }

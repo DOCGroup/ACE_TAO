@@ -9,7 +9,7 @@ option
     {
 	target type (exe) "TP_Reactor_Test"
 	{
-	   source type (cpp) "TP_Reactor_Test.cpp"
+	   source type (cpp) "TP_Reactor_Test.cpp", "Main.cpp"
 	   if ($__IBMCPP__ >= 500) {
 	     option macros(global) {
 	       source type (hpp) "test_config.h"

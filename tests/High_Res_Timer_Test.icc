@@ -9,7 +9,7 @@ option
     {
 	target type (exe) "High_Res_Timer_Test"
 	{
-	   source type (cpp) "High_Res_Timer_Test.cpp"
+	   source type (cpp) "High_Res_Timer_Test.cpp", "Main.cpp"
 	   if ($__IBMCPP__ >= 500) {
 	     option macros(global) {
 	       source type (hpp) "test_config.h"

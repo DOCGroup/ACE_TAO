@@ -2,6 +2,10 @@
 //
 // Visual Age C++ 5 Project file for building all the tests.
 
+subproject libTest_Output icc "libTest_Output.icc", ics "libTest_Output.ics"
+{
+}
+
 subproject Arg_Shifter_Test icc "Arg_Shifter_Test.icc", ics "Arg_Shifter_Test.ics"
 {
 }

@@ -7,7 +7,7 @@ option
     link(linkWithMultiThreadLib,yes),
     link(debug)
     {
-	target type (exe) "Capabilities_Test"
+	target type (exe) "Capabilities_Test", "Main.cpp"
 	{
 	   source type (cpp) "Capabilities_Test.cpp"
 	   if ($__IBMCPP__ >= 500) {
