@@ -4,6 +4,9 @@
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
 #include "EC_Event_Channel.h"
+#include "orbsvcs/ESF/ESF_Peer_Workers.h"
+#include "orbsvcs/ESF/ESF_Peer_Admin.h"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_SupplierAdmin.i"

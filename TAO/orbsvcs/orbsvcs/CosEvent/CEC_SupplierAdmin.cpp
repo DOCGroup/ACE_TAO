@@ -4,6 +4,7 @@
 #include "CEC_ProxyPushConsumer.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_SupplierAdmin.i"
