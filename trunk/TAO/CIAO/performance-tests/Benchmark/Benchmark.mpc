@@ -28,11 +28,9 @@ project(Benchmark_svnt) : ciao_server {
   }
 }
 
-project (*server) : taoserver, strategies,ciao_client {
+project (*server) : taoserver, strategies,ciao_server {
   after += Benchmark_svnt
   libs += Benchmark_svnt Benchmark_stub 
-  libs += TAO_Security TAO_IFR_Client
-  libs += CIAO_Server CIAO_Container
 
   Source_Files {
     server.cpp
