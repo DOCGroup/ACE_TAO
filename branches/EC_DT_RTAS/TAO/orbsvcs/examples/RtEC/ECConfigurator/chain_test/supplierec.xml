@@ -30,7 +30,7 @@
 
 <!-- Configure the ECs -->
 <RemoteEventChannel name="Middle" >
-  <IORFile>middle.ior</IORFile>
+  <IORFile>Middle.ior</IORFile>
 </RemoteEventChannel>
 
 <LocalEventChannel name="Server" >
