@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel testsuite
-//
-// = FILENAME
-//   Observer
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Observer.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_OBSERVER_H
 #define EC_OBSERVER_H
@@ -26,79 +22,80 @@
 
 class EC_Observer;
 
+/**
+ * @class EC_Master
+ *
+ * @brief Run multiple events channels
+ *
+ * This test runs multiple event channels, all connected using
+ * gateways.
+ */
 class EC_Master
 {
-  // = TITLE
-  //   Run multiple events channels
-  //
-  // = DESCRIPTION
-  //   This test runs multiple event channels, all connected using
-  //   gateways.
-  //
 public:
   EC_Master (void);
 
   virtual ~EC_Master (void);
 
+  /// Execute the test.
   virtual int run (int argc, char* argv[]);
-  // Execute the test.
 
+  /// Obtain the orb and the poa pointers
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
                                        ACE_ENV_ARG_DECL);
-  // Obtain the orb and the poa pointers
 
+  /// Accessors
   int channel_count (void) const;
   EC_Observer* channel (int i) const;
-  // Accessors
 
 private:
   int parse_args (int &argc, char *argv []);
 
 private:
+  /// The seed
   ACE_RANDR_TYPE seed_;
-  // The seed
 
+  /// The driver programs
   int n_channels_;
   EC_Observer** channels_;
-  // The driver programs
 
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
+  /// The Root POA
   PortableServer::POA_var root_poa_;
-  // The Root POA
 };
 
+/**
+ * @class EC_Observer
+ *
+ * @brief Test the EC observers
+ *
+ */
 class EC_Observer : public EC_Driver
 {
-  //
-  // = TITLE
-  //   Test the EC observers
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Constructor
   EC_Observer (EC_Master *master,
                ACE_RANDR_TYPE seed,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr root_poa,
                int id);
-  // Constructor
 
+  /// Destructor
   ~EC_Observer (void);
-  // Destructor
 
   // = The EC_Driver methods
+  /// add some command line args to enable/disable observerions
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
                                        ACE_ENV_ARG_DECL);
   virtual int parse_args (int& argc, char* argv[]);
   virtual void print_args (void) const;
   virtual void print_usage (void);
-  // add some command line args to enable/disable observerions
 
+  /// Run the suppliers, using the <thread_manager> parameter
   void execute_test (ACE_ENV_SINGLE_ARG_DECL);
   void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the suppliers, using the <thread_manager> parameter
 
   void dump_results (void);
   void connect_consumer (
@@ -116,8 +113,8 @@ private:
 
   TAO_EC_Gateway_IIOP *gwys_;
 
+  /// lock internal state
   TAO_SYNCH_MUTEX lock_;
-  // lock internal state
 };
 
 #endif /* EC_OBSERVER_H */

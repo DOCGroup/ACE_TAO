@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel tests
-//
-// = FILENAME
-//   Random.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Random.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_RANDOM_H
 #define EC_RANDOM_H
@@ -44,8 +40,8 @@ class RND_Consumer
   // = DESCRIPTION
   //
 public:
+  /// Constructor
   RND_Consumer (RND_Driver *driver);
-  // Constructor
 
   void push (const RtecEventComm::EventSet &event
              ACE_ENV_ARG_DECL)
@@ -59,14 +55,14 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
+  /// The driver
   RND_Driver *driver_;
-  // The driver
 
+  /// The supplier.
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
-  // The supplier.
 
+  /// Synch
   TAO_SYNCH_MUTEX lock_;
-  // Synch
 };
 
 inline
@@ -106,34 +102,34 @@ class RND_Supplier
   // = DESCRIPTION
   //
 public:
+  /// Constructor
   RND_Supplier (int verbose);
-  // Constructor
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos
                 ACE_ENV_ARG_DECL);
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Push a single event...
   void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
   void push (RtecEventComm::EventSet &event
              ACE_ENV_ARG_DECL);
-  // Push a single event...
 
   virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Active method
   virtual int svc (void);
-  // Active method
 
 private:
+  /// The supplier.
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
-  // The supplier.
 
+  /// Synch
   TAO_SYNCH_MUTEX lock_;
-  // Synch
 
+  /// Be verbose about the progress of the test
   int verbose_;
-  // Be verbose about the progress of the test
 };
 
 inline
@@ -149,45 +145,45 @@ class RND_Driver
 public:
   RND_Driver (void);
 
+  /// Run the test
   int run (int argc, char *argv[]);
-  // Run the test
 
+  /// The main timer has expired
   void timer (const RtecEventComm::Event &e
               ACE_ENV_ARG_DECL);
-  // The main timer has expired
 
+  /// One of the consumers has received an event
   void event (const RtecEventComm::Event &e
               ACE_ENV_ARG_DECL);
-  // One of the consumers has received an event
 
 private:
   RND_Driver (const RND_Driver &);
   RND_Driver& operator= (const RND_Driver &);
 
 private:
+  /// The main timer
   RND_Timer timer_;
-  // The main timer
 
+  /// The supplier
   RND_Supplier supplier_;
-  // The supplier
 
+  /// Number of suppliers
   int nsuppliers_;
-  // Number of suppliers
 
+  /// The suppliers
   RND_Supplier **suppliers_;
-  // The suppliers
 
+  /// Number of consumers
   int nconsumers_;
-  // Number of consumers
 
+  /// The consumers
   RND_Consumer **consumers_;
-  // The consumers
 
+  /// Maximum recursion
   int max_recursion_;
-  // Maximum recursion
 
+  /// Be verbose about the progress of the test
   int verbose_;
-  // Be verbose about the progress of the test
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;
