@@ -1,3 +1,8 @@
+Wed Dec 31 00:01:40 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/server.cpp: Added support so that
+	  the program can break out of main () in case of any exception/error.
+	
 Wed Dec 30 21:12:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main): 
