@@ -1,3 +1,9 @@
+Sat Apr 21 00:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+
+          Added this perl script.
+
 Fri Apr 20 21:29:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO/tao/Client_Strategy_Factory.cpp:
