@@ -1,3 +1,25 @@
+Sat Jul  8 17:45:00 2000  Bruce Trask  <brucetrask@aol.com>
+
+      * tao/DomainS.cpp:
+        Changed all _dispatch functions in skeletons to call
+        synchronous_upcall_dispatch function. 
+ 
+      * tao/ImplRepoS.cpp:
+        Changed all _dispatch functions in skeletons to call
+        synchronous_upcall_dispatch function. 
+
+      * tao/MessagingS.cpp:
+        Changed all _dispatch functions in skeletons to call
+        synchronous_upcall_dispatch function. 
+
+      * tao/POAS.cpp:
+        Changed all _dispatch functions in skeletons to call
+        synchronous_upcall_dispatch function. 
+ 
+      * tao/PolicyS.cpp:
+        Changed all _dispatch functions in skeletons to call
+        synchronous_upcall_dispatch function.      
+
 Sat Jul  8 16:10:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/IFR_Service.dsp:

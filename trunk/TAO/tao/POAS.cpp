@@ -205,16 +205,7 @@ void* POA_PortableServer::ThreadPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -488,16 +479,7 @@ void* POA_PortableServer::LifespanPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -768,16 +750,7 @@ void* POA_PortableServer::IdUniquenessPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -1051,16 +1024,7 @@ void* POA_PortableServer::IdAssignmentPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -1335,16 +1299,7 @@ void* POA_PortableServer::ImplicitActivationPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -1617,16 +1572,7 @@ void* POA_PortableServer::ServantRetentionPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -1899,16 +1845,7 @@ void* POA_PortableServer::RequestProcessingPolicy::_downcast (
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
