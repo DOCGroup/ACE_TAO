@@ -30,7 +30,7 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, ciaoversion {
+project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client {
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
@@ -60,7 +60,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
   }
 }
 
-project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security, utils, ciaoversion {
+project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security, utils {
   after += CIAO_Container
   includes += $(CIAO_ROOT)
   sharedname  = CIAO_Server
