@@ -1,3 +1,7 @@
+Sat Sep 12 19:18:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (qsort): Fixed a typo.
+
 Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/README: Reformatted this file and also changed 
