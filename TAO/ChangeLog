@@ -1,3 +1,10 @@
+Tue Aug 26 09:21:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp (named_orbs):
+
+	  Removed this unused static global variable.  Fixes a
+	  compile-time warning.
+
 Tue Aug 26 09:16:55 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Dynamic/test_i.cpp (the_structure):

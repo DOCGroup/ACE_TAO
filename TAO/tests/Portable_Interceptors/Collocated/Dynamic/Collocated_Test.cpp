@@ -9,7 +9,6 @@
 
 const char *output = "test.ior";
 const char *input = "file://test.ior";
-static int named_orbs = 0;
 ACE_CString server_orb;
 ACE_CString client_orb;
 int
