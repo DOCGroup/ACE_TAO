@@ -1,3 +1,10 @@
+Fri Aug 21 23:16:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	  Added Alpha configurations.
+
 Fri Aug 21 20:12:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Thruput/TAO/client.cpp: 
