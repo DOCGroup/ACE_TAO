@@ -106,6 +106,10 @@ SOURCE=.\RMCast_IO_UDP.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Membership.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Module.cpp
 # End Source File
 # Begin Source File
@@ -118,7 +122,15 @@ SOURCE=.\RMCast_Partial_Message.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Proxy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reassembly.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Retransmission.cpp
 # End Source File
 # Begin Source File
 
@@ -150,6 +162,10 @@ SOURCE=.\RMCast_IO_UDP.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Membership.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Module.h
 # End Source File
 # Begin Source File
@@ -162,7 +178,15 @@ SOURCE=.\RMCast_Partial_Message.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Proxy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reassembly.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Retransmission.h
 # End Source File
 # Begin Source File
 
@@ -190,6 +214,10 @@ SOURCE=.\RMCast_IO_UDP.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Membership.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Module.i
 # End Source File
 # Begin Source File
@@ -202,7 +230,15 @@ SOURCE=.\RMCast_Partial_Message.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Proxy.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reassembly.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Retransmission.i
 # End Source File
 # Begin Source File
 

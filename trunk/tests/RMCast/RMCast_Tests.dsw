@@ -15,6 +15,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RMCast_Membership_Test"=.\RMCast_Membership_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RMCast_Reassembly_Test"=.\RMCast_Reassembly_Test.dsp - Package Owner=<4>
 
 Package=<5>
