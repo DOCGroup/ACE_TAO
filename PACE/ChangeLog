@@ -1,3 +1,13 @@
+Sun Jul 23 18:34:26 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pthread.inl:
+
+	  Win32 doesn't support pthreads. These all need to be emulated.
+
+	* pace/docs/PACE_POSIX_support.txt
+
+	  Updated.
+
 Sun Jul 23 17:32:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/pthread.h:
@@ -55,8 +65,8 @@ Fri Jul 21 19:49:19 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/win32/utime.inl (pace_utime):
 
 	  Implemented the "RIGHT ANSWER[TM]" but it doesn't work so
-	  casted away and made the current func work. Left the
-	  correct implementation in the file.
+	  casted away and made the current func work. Left the 
+	  correct implementation -- "unimplemented" :-/ in the file.
 
 	* pace/docs/PACE_POSIX_support.txt
 
