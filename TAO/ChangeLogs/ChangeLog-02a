@@ -1,3 +1,14 @@
+Thu Mar 15 11:27:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMI_Timeouts/client.cpp (main): 
+	* tests/AMI_Timeouts/server.cpp:
+	* tests/AMI_Timeouts/timeout_client.cpp:
+	* tests/AMI_Timeouts/timeout_client.h:
+	* tests/AMI_Timeouts/timeout_i.cpp: Fixed quite few errors in
+	  SunCC 4.2 builds. The problem was the usage of the keyword 'bool'
+	  which is not supported in SunCC 4.2. Changed them to
+	  CORBA::Boolean which should be supported widely.
+
 Thu Mar 15 10:32:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory: Fixed a problem in

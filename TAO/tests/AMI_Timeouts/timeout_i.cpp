@@ -43,7 +43,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
       //            "Timeout_i::sendTimeToWait: sleeping\n\n"));
 
       ACE_Time_Value tv (0, msec * 1000);
-	    ACE_OS::sleep (tv);
+            ACE_OS::sleep (tv);
     }
 }
 
@@ -51,7 +51,7 @@ void
 Timeout_i::shutdown (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  orb_->shutdown (false);
+  orb_->shutdown ();
   //ACE_DEBUG ((LM_DEBUG,
   //            "Timeout_i::shutdown: shut down ORB\n\n"));
 }
