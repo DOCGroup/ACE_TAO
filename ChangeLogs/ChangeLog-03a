@@ -1,3 +1,8 @@
+Wed Feb 28 16:04:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst (TYPE): Added a build with AMI and
+	  Messaging support disabled for the nightly builds.
+
 Wed Feb 28 15:35:59 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * docs/build-setup.html:
@@ -45,7 +50,6 @@ Tue Feb 27 11:38:38 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* performance-tests/TCP/README: Fixed a typo.  Thanks to 
 	  Mike Curtis for reporting this.
-
 
 Tue Feb 27 10:51:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 

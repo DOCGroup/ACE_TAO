@@ -154,6 +154,11 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine_Core/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine_Core
 
+[RedHat_7.0_No_AMI_Messaging]
+TYPE = TIMEONLY
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine_No_AMI_Messaging/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine_No_AMI_Messaging
+
 [Debian_Full_WU]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
