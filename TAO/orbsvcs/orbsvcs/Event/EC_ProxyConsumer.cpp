@@ -41,25 +41,28 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
       CORBA::Boolean_out disconnected,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (
+  CORBA::Object_var supplier;
+  {
+    ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK_RETURN (0);
+    ACE_CHECK_RETURN (0);
 
-  disconnected = 0;
-  if (this->is_connected_i () == 0)
-    {
-      disconnected = 1;
-      return 0;
-    }
-  if (CORBA::is_nil (this->supplier_.in ()))
-    {
-      return 0;
-    }
+    disconnected = 0;
+    if (this->is_connected_i () == 0)
+      {
+        disconnected = 1;
+        return 0;
+      }
+    if (CORBA::is_nil (this->supplier_.in ()))
+      {
+        return 0;
+      }
+    supplier = CORBA::Object::_duplicate (this->supplier_.in ());
+  }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return this->supplier_->_non_existent (ACE_TRY_ENV);
+  return supplier->_non_existent (ACE_TRY_ENV);
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
