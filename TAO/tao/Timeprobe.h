@@ -5,7 +5,7 @@
 
 // Please see ace/Timeprobe.h for details on these #defines.
 
-#define ACE_ENABLE_TIMEPROBES
+//#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 
@@ -13,7 +13,7 @@
 
 // The macro for turning off all timeprobes except
 // the ones that are pertinent to pluggable protocols.
-#define TAO_SELECT_PP_TIMEPROBES
+//#define TAO_SELECT_PP_TIMEPROBES
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 #  define TAO_PP_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
