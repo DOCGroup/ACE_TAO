@@ -1,3 +1,11 @@
+Mon Nov 27 10:17:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/tutorials/005/005.dsp:
+
+	  Corrected name of output binary.  It should have been
+	  `server.exe' not `client.exe'.  Thanks to David Channon
+	  <djc@uq.net.au> for reporting this problem.
+
 Mon Nov 27 09:56:09 2000  Ossama Othman  <ossama@uci.edu>
 
 	The following updates are based on feedback from David Channon
