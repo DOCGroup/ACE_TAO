@@ -1,5 +1,6 @@
 // $Id$
 
+#include "JAWS/Data_Block.h"
 #include "JAWS/IO_Acceptor.h"
 
 JAWS_IO_Acceptor::JAWS_IO_Acceptor (void)
