@@ -25,14 +25,14 @@
 simple_i::simple_i (void)
   {
   }
-  
+
 // Implementation skeleton destructor
 simple_i::~simple_i (void)
   {
   }
-  
+
 void simple_i::test (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -41,4 +41,4 @@ void simple_i::test (
   {
     //Add your implementation here
   }
-  
+
