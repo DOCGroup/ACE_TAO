@@ -32,11 +32,18 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
   }
 
   Header_Files {
+    PortableGroup_Simple_export.h
     PortableGroup_Simple_DSS.h
+    PortableGroup_Simple_DSS_T.h
     FaultTolerance/FT_ORB_Utils_export.h
   }
 
+  Inline_Files {
+    PortableGroup_Simple_DSS_T.inl
+  }
+
   Template_Files {
+    PortableGroup_Simple_DSS_T.cpp
   }
 }
 

@@ -1,3 +1,16 @@
+Wed Dec  1 11:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Update.
+
+	* orbsvcs/orbsvcs/FTORB.mpc:
+
+	  Added PortableGroup_Simple_export.h, PortableGroup_Simple_DSS_T.h
+	  to Header_Files; PortableGroup_Simple_DSS_T.inl to Inline_Files;
+	  and PortableGroup_Simple_DSS_T.cpp to Template_Files so headers
+	  will be installed.
+
 Wed Dec  1 19:29:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/SystemException.cpp:
@@ -11,15 +24,15 @@ Wed Dec  1 17:19:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
 
 	  Added minor code while throwing BAD_OPERATION exception in
-	  conformance with the CORBA spec. 
+	  conformance with the CORBA spec.
 
 	* tao/IIOP_Endpoint.cpp:
 
-	  Removed a weird DEBUG statemnet. 
-	
+	  Removed a weird DEBUG statemnet.
+
 	* tao/SystemException.cpp:
 
-	  Added a minor code lookup table for BAD_OPERATION. 
+	  Added a minor code lookup table for BAD_OPERATION.
 
 Wed Dec  1 16:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
