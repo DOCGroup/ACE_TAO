@@ -22,7 +22,7 @@
 #include "Entries.h"
 
 // Forward declaration.
-class NS_BindingIterator;
+class TAO_BindingIterator;
   
 class TAO_ORBSVCS_Export TAO_NamingContext : public POA_CosNaming::NamingContext
 {
