@@ -151,7 +151,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       if (store_in_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
         {
-          CosEC_Utility_Methods<CosEC_Utility_NIL>::
+          CosEC_Utility_Methods<CORBA::Object>::
             bind (this->naming_.in (),
                   channel_id,
                   obj.in(),
@@ -240,7 +240,7 @@ TAO_CosEventChannelFactory_i::destroy
       if (unbind_from_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
         {
-          CosEC_Utility_Methods<CosEC_Utility_NIL>::
+          CosEC_Utility_Methods<CORBA::Object>::
             unbind (this->naming_.in (),
                     channel_id,
                     ACE_TRY_ENV);
@@ -333,14 +333,10 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Auto_Basic_Ptr<FactoryCosEventChannel_i>;
-template class auto_ptr<FactoryCosEventChannel_i>;
-template class CosEC_Utility_Methods<CosEC_Utility_NIL>;
+template class CosEC_Utility_Methods<CORBA::Object>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Auto_Basic_Ptr<FactoryCosEventChannel_i>
-#pragma instantiate auto_ptr<FactoryCosEventChannel_i>
-#pragma instantiate CosEC_Utility_Methods<CosEC_Utility_NIL>
+#pragma instantiate CosEC_Utility_Methods<CORBA::Object>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
