@@ -28,4 +28,7 @@
 # endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
 #endif /* __GNUG__ */
 
+#undef ACE_HAS_AIO_CALLS
+// Proactor code does not work on 5.7 yet.
+
 #endif /* ACE_CONFIG_H */
