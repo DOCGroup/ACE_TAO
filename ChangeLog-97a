@@ -64,6 +64,8 @@ Thu Apr 24 21:13:51 1997    <irfan@TWOSTEP>
 
 	* ace/Shared_Memory_MM.i: Fixed typo.
 
+	* ace/SOCK_Connector.cpp: Fixed typo.
+
 Fri Apr 25 00:11:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/FILE_IO.h: Removed a trailing default initializer from the
