@@ -6,6 +6,7 @@
 // is useful as a baseline to compare against ORB-level performance
 // for the same types of data.
 
+#include "ace/OS_NS_string.h"
 #include "ace/MEM_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Thread_Manager.h"
