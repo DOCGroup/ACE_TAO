@@ -1,0 +1,41 @@
+
+#
+# Makefile for building the TypeCode_Creation example
+#
+
+NAME = create_tc
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\main.obj
+
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_IFR_CLIENT_CFLAGS) \
+        $(TAO_TYPECODEFACTORY_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_IFR_CLIENT_LIB) \
+        $(TAO_TYPECODEFACTORY_LIB)
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\TestC.cpp : $(IDLDIR)\test.idl
+	$(TAO_IDL) $**
+

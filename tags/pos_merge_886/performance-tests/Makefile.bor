@@ -1,0 +1,11 @@
+#
+# Makefile for building the ACE performance-tests
+#
+
+DIRS = \
+        Misc \
+        Server_Concurrency \
+        Tcp \
+        Udp
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
