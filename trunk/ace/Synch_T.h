@@ -282,7 +282,7 @@ protected:
   // thread-specific storage. 
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
-  TYPE type_;
+  TYPE *type_;
   // This implementation only works for non-threading systems...
 #else
   ACE_Thread_Mutex keylock_;

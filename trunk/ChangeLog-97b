@@ -1,5 +1,9 @@
 Mon Oct 27 14:26:10 1997    <irfan@TWOSTEP>
 
+	* ace/Synch_T (ACE_TSS): When ACE does not have thread specific
+ 	  storage, ACE_TSS will be a simple pointer holder. Previously, it
+ 	  had a instance as a member, now it has a pointer to an instance.
+
 	* ace/WFMO_Reactor.cpp (update_state): Fixed a bug in the
  	  WFMO_Reactor.  wakeup_all_threads() used to be an internal
  	  method that was called when changes were made to the state of
