@@ -1,3 +1,11 @@
+Thu Apr  9 19:25:44 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,
+		  orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp.
+		  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
+		  Had to conform to the new RtecScheduler.set ( ..) method,
+		  some parameters were added.
+
 Thu Apr  9 15:55:44 1998  Michael Kircher <mk1@cs.wustl.edu>
 
         * docs/releasenotes/index.html: Enhanced description of the DOVE 
