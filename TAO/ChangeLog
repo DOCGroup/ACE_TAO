@@ -1,12 +1,21 @@
+Thu Dec  9 12:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RTPortableServerC.{h,cpp,i,inl}:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
 Wed Dec  8 17:11:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_module/module.cpp:
-        
+
           Cosmetic change to source code.
-          
+
         * TAO_IDL/util/utl_scope.cpp:
-        
-          Fixed a situation where a variable holding the number of 
+
+          Fixed a situation where a variable holding the number of
           members in a scope's 'referenced' list could be mistakenly
           incremented, leading to access of a garbage member of the
           list later on. This situation occurred when checking the
