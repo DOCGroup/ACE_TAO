@@ -1,33 +1,33 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#       $Id$
 #
-#	Makefile for the SNMP+ACE Release
+#       Makefile for the SNMP+ACE Release
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
 LIB      = libasnmp.a
-SHLIB	 = libasnmp.$(SOEXT)
+SHLIB    = libasnmp.$(SOEXT)
 
-FILES	 = address \
-	asn1 \
-	counter \
-	ctr64 \
-	gauge \
-	integer \
-	octet \
-	oid \
-	pdu \
-	snmp \
-	target \
-	timetick \
-	transaction \
-	vb \
+FILES    = address \
+        asn1 \
+        counter \
+        ctr64 \
+        gauge \
+        integer \
+        octet \
+        oid \
+        pdu \
+        snmp \
+        target \
+        timetick \
+        transaction \
+        vb \
         wpdu \
         sagent
 
-TEMPLATE_FILES = 
+TEMPLATE_FILES =
 
-DEFS    = $(addsuffix .h,$(FILES)) 
+DEFS    = $(addsuffix .h,$(FILES))
 DEFS    += $(addsuffix .i,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))
 #LSRC2   = $(addsuffix .cpp,$(TEMPLATE_FILES))
@@ -36,558 +36,709 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 #### This works around an apparent problem with template
 #### instantiation with Sun C++ 4.1 and 4.2 (the symptom is link
 #### error due to ACE_TimeValue::normalize () not being found).
-BUILD	= $(VSHLIB) $(SHLIBA) $(VLIB)
+BUILD   = $(VSHLIB) $(SHLIBA) $(VLIB)
+
+# For make depend:
+SRC = -I..
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
- 
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 CCFLAGS += -I$(ACE_ROOT)/ASNMP/
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-address.o: address.cpp /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h
-asn1.o: asn1.cpp /home/cs/guest/mrm/ASNMP/asnmp/asn1.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Atomic_Op.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Time_Value.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.i \
- /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/vb.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmperrs.h \
- /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /home/cs/guest/mrm/ASNMP/asnmp/target.h \
- /home/cs/guest/mrm/ASNMP/asnmp/pdu.h
-counter.o: counter.cpp /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h
-ctr64.o: ctr64.cpp /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i
-gauge.o: gauge.cpp /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i
-integer.o: integer.cpp /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i
-octet.o: octet.cpp \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h
-oid.o: oid.cpp /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h
-pdu.o: pdu.cpp /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Atomic_Op.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Time_Value.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.i \
- /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/vb.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmperrs.h \
- /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /home/cs/guest/mrm/ASNMP/asnmp/target.h \
- /home/cs/guest/mrm/ASNMP/asnmp/pdu.h
-snmp.o: snmp.cpp /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Atomic_Op.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Time_Value.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.i \
- /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/vb.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmperrs.h \
- /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /home/cs/guest/mrm/ASNMP/asnmp/target.h \
- /home/cs/guest/mrm/ASNMP/asnmp/pdu.h \
- /home/cs/guest/mrm/ASNMP/asnmp/enttraps.h \
- /home/cs/guest/mrm/ASNMP/asnmp/asn1.h \
- /home/cs/guest/mrm/ASNMP/asnmp/wpdu.h \
- /home/cs/guest/mrm/ASNMP/asnmp/transaction.h
-target.o: target.cpp /home/cs/guest/mrm/ASNMP/asnmp/target.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.i \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/oid.h
-timetick.o: timetick.cpp /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i
-transaction.o: transaction.cpp \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Atomic_Op.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Time_Value.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.i \
- /home/cs/guest/mrm/ASNMP/asnmp/transaction.h \
- /home/cs/guest/mrm/ASNMP/asnmp/target.h \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /home/cs/guest/mrm/ASNMP/asnmp/pdu.h \
- /home/cs/guest/mrm/ASNMP/asnmp/vb.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmperrs.h \
- /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/wpdu.h \
- /home/cs/guest/mrm/ASNMP/asnmp/asn1.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.i
-vb.o: vb.cpp /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/vb.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmperrs.h \
- /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h
-wpdu.o: wpdu.cpp /home/cs/guest/mrm/ASNMP/asnmp/wpdu.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Priority.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Record.i \
- /home/cs/guest/mrm/ASNMP/asnmp/asn1.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Handle_Set.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Simple.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SV_Semaphore_Complex.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Event_Handler.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Synch_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Thread.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Atomic_Op.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Time_Value.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Free_List.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Timer_Queue_T.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Containers.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Signal.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Token.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Pipe.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/IPC_SAP.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_IO.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/INET_Addr.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Stream.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Reactor.i \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/SOCK_Dgram.i \
- /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smival.h \
- /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
- /home/cs/guest/mrm/ASNMP/asnmp/vb.h \
- /home/cs/guest/mrm/ASNMP/asnmp/snmperrs.h \
- /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
- /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
- /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
- /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
- /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
- /home/cs/guest/mrm/ASNMP/asnmp/octet.h \
- /home/cs/guest/mrm/ASNMP/asnmp/address.h \
- /home/cs/guest/mrm/ASNMP/asnmp/target.h \
- /home/cs/guest/mrm/ASNMP/asnmp/pdu.h \
- /home/cs/guest/mrm/ASNMP/asnmp/enttraps.h
+.obj/address.o .obj/address.so .shobj/address.o .shobj/address.so: address.cpp ../asnmp/address.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i ../asnmp/smival.h \
+ ../asnmp/smi.h ../asnmp/octet.h
+.obj/asn1.o .obj/asn1.so .shobj/asn1.o .shobj/asn1.so: asn1.cpp ../asnmp/asn1.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i ../asnmp/snmp.h \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i ../asnmp/oid.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/vb.h ../asnmp/snmperrs.h \
+ ../asnmp/timetick.h ../asnmp/integer.h ../asnmp/counter.h \
+ ../asnmp/gauge.h ../asnmp/ctr64.h ../asnmp/octet.h ../asnmp/address.h \
+ ../asnmp/target.h $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/pdu.h \
+ ../asnmp/transaction_result.h
+.obj/counter.o .obj/counter.so .shobj/counter.o .shobj/counter.so: counter.cpp ../asnmp/counter.h ../asnmp/smival.h \
+ ../asnmp/smi.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ ../asnmp/integer.h
+.obj/ctr64.o .obj/ctr64.so .shobj/ctr64.o .shobj/ctr64.so: ctr64.cpp ../asnmp/ctr64.h ../asnmp/smival.h ../asnmp/smi.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i
+.obj/gauge.o .obj/gauge.so .shobj/gauge.o .shobj/gauge.so: gauge.cpp ../asnmp/gauge.h ../asnmp/integer.h \
+ ../asnmp/smival.h ../asnmp/smi.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i
+.obj/integer.o .obj/integer.so .shobj/integer.o .shobj/integer.so: integer.cpp ../asnmp/integer.h ../asnmp/smival.h \
+ ../asnmp/smi.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i
+.obj/octet.o .obj/octet.so .shobj/octet.o .shobj/octet.so: octet.cpp $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i ../asnmp/octet.h \
+ ../asnmp/smival.h ../asnmp/smi.h
+.obj/oid.o .obj/oid.so .shobj/oid.o .shobj/oid.so: oid.cpp ../asnmp/oid.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i ../asnmp/smival.h \
+ ../asnmp/smi.h
+.obj/pdu.o .obj/pdu.so .shobj/pdu.o .shobj/pdu.so: pdu.cpp ../asnmp/snmp.h \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i ../asnmp/oid.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/vb.h ../asnmp/snmperrs.h \
+ ../asnmp/timetick.h ../asnmp/integer.h ../asnmp/counter.h \
+ ../asnmp/gauge.h ../asnmp/ctr64.h ../asnmp/octet.h ../asnmp/address.h \
+ ../asnmp/target.h $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/pdu.h \
+ ../asnmp/transaction_result.h
+.obj/snmp.o .obj/snmp.so .shobj/snmp.o .shobj/snmp.so: snmp.cpp ../asnmp/snmp.h \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i ../asnmp/oid.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/vb.h ../asnmp/snmperrs.h \
+ ../asnmp/timetick.h ../asnmp/integer.h ../asnmp/counter.h \
+ ../asnmp/gauge.h ../asnmp/ctr64.h ../asnmp/octet.h ../asnmp/address.h \
+ ../asnmp/target.h $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/pdu.h \
+ ../asnmp/transaction_result.h ../asnmp/enttraps.h ../asnmp/asn1.h \
+ ../asnmp/wpdu.h ../asnmp/transaction.h
+.obj/target.o .obj/target.so .shobj/target.o .shobj/target.so: target.cpp ../asnmp/target.h \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/address.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/octet.h ../asnmp/oid.h
+.obj/timetick.o .obj/timetick.so .shobj/timetick.o .shobj/timetick.so: timetick.cpp ../asnmp/timetick.h ../asnmp/integer.h \
+ ../asnmp/smival.h ../asnmp/smi.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i
+.obj/transaction.o .obj/transaction.so .shobj/transaction.o .shobj/transaction.so: transaction.cpp \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ ../asnmp/transaction.h ../asnmp/target.h \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/address.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/octet.h ../asnmp/oid.h \
+ ../asnmp/pdu.h ../asnmp/vb.h ../asnmp/snmperrs.h ../asnmp/timetick.h \
+ ../asnmp/integer.h ../asnmp/counter.h ../asnmp/gauge.h \
+ ../asnmp/ctr64.h ../asnmp/transaction_result.h ../asnmp/wpdu.h \
+ ../asnmp/asn1.h ../asnmp/snmp.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i
+.obj/vb.o .obj/vb.so .shobj/vb.o .shobj/vb.so: vb.cpp ../asnmp/oid.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i ../asnmp/smival.h \
+ ../asnmp/smi.h ../asnmp/vb.h ../asnmp/snmperrs.h ../asnmp/timetick.h \
+ ../asnmp/integer.h ../asnmp/counter.h ../asnmp/gauge.h \
+ ../asnmp/ctr64.h ../asnmp/octet.h ../asnmp/address.h
+.obj/wpdu.o .obj/wpdu.so .shobj/wpdu.o .shobj/wpdu.so: wpdu.cpp ../asnmp/wpdu.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i ../asnmp/asn1.h \
+ ../asnmp/snmp.h $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i ../asnmp/oid.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/vb.h ../asnmp/snmperrs.h \
+ ../asnmp/timetick.h ../asnmp/integer.h ../asnmp/counter.h \
+ ../asnmp/gauge.h ../asnmp/ctr64.h ../asnmp/octet.h ../asnmp/address.h \
+ ../asnmp/target.h $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/pdu.h \
+ ../asnmp/transaction_result.h ../asnmp/enttraps.h
+.obj/sagent.o .obj/sagent.so .shobj/sagent.o .shobj/sagent.so: sagent.cpp $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i ../asnmp/oid.h \
+ ../asnmp/smival.h ../asnmp/smi.h ../asnmp/vb.h ../asnmp/snmperrs.h \
+ ../asnmp/timetick.h ../asnmp/integer.h ../asnmp/counter.h \
+ ../asnmp/gauge.h ../asnmp/ctr64.h ../asnmp/octet.h ../asnmp/address.h \
+ ../asnmp/target.h $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i ../asnmp/pdu.h \
+ ../asnmp/snmp.h ../asnmp/transaction_result.h ../asnmp/sagent.h \
+ ../asnmp/transaction.h ../asnmp/wpdu.h ../asnmp/asn1.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
