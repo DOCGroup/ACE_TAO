@@ -1,3 +1,19 @@
+Sat Aug 14 09:28:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h (ACE_CDR::Boolean):
+
+	  MSVC++ 6 can't handle partial template specializations so fall
+	  back on an unsigned char typedef if _MSC_VER < 1300 (i.e. MSVC++
+	  version is less than 7).  This is an interim solution to get the
+	  MSVC++ 6 builds going again.
+
+	* ace/IfThenElse.h:
+	* ace/If_Then_Else.h:
+
+	  Renamed the former to the latter, including the class template
+	  defined within, to match ACE naming conventions.  Thanks to Doug
+	  for pointing this out.
+
 Sat Aug 14 01:43:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/CDR_Base.h (ACE_CDR):
