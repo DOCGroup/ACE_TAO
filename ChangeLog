@@ -1,3 +1,10 @@
+Sun Oct 22 18:01:34 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+
+          strtok_r_emulation wasn't protected by #if !defined
+          (ACE_HAS_REENTRANT_FUNCTIONS).
+
 Sun Oct 22 17:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.i:
