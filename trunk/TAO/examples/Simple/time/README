@@ -42,7 +42,8 @@ Options:
 -x    Tells the server to shutdown at the end of the test.
 -f    Reads the server ior from the file
 -n    number of iterations
--k    IOR
+-k    IOR or The IOR can also be given in the format like file://[file.ior]
+      with the full path
 	
 You can either cut and paste the IOR from the server to the client
 (with the -k option), or have the client read the IOR from a file

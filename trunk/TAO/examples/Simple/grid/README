@@ -47,7 +47,9 @@ Options:
 -x    Tells the server to shutdown at the end of the test.
 -f    Reads the server ior from the file
 -n    no. of iterations
--k    IOR
+-k    IOR or The IOR can also be given in the format like file://[file.ior]
+      with the full path
+
 -n    Use the naming service
 
 -p    A horizontal position of the grid where the value [v] is stored
