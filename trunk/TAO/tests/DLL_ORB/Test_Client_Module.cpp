@@ -1,9 +1,8 @@
 // -*- C++ -*-
 
-#include "ace/Get_Opt.h"
-#include "tao/TAO_Singleton_Manager.h"
-
 #include "Test_Client_Module.h"
+#include "tao/TAO_Singleton_Manager.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID (DLL_ORB,
            Test_Client_Module,
