@@ -33,10 +33,10 @@ class ACE_WIN32_Proactor_Timer_Handler;
 /**
  * @class ACE_WIN32_Proactor
  *
- * @brief A manager for asynchronous event demultiplexing.
+ * @brief A manager for asynchronous event demultiplexing on Win32.
  *
  * See the Proactor pattern description at
- * http://www.cs.wustl.edu/~schmidt/proactor.ps.gz for more
+ * http://www.cs.wustl.edu/~schmidt/PDF/proactor.pdf for more
  * details.
  */
 class ACE_Export ACE_WIN32_Proactor : public ACE_Proactor_Impl
