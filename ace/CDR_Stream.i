@@ -50,9 +50,10 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 {
 #if defined(ACE_HAS_PENTIUM)
 # if defined(__GNUG__)
-  asm( "movw 0(%0), %%ax" : /* no output */ : "r" (orig)     : "%ax");
-  asm( "rolw $8, %%ax"    : /* no output */ : /* no input */ : "%ax");
-  asm( "movw %%ax, 0(%0)" : /* no output */ : "r" (target)   : "memory");
+  unsigned short a =
+    *ACE_reinterpret_cast(const unsigned short*, orig);
+  asm( "rolw $8, %0" : "=r" (a) : "0" (a) );
+  *ACE_reinterpret_cast(unsigned short*, target) = a;
 # elif (defined(_MSC_VER) || defined(__BORLANDC__)) \
        && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   __asm mov ebx, orig;
@@ -100,12 +101,12 @@ ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
 #if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
-  ACE_CDR::swap_4 (orig, target);
-  ACE_CDR::swap_4 (orig + 4, target + 4);
   register unsigned int i =
-    *ACE_reinterpret_cast(const unsigned int*, target);
+    *ACE_reinterpret_cast(const unsigned int*, orig);
   register unsigned int j =
-    *ACE_reinterpret_cast(const unsigned int*, target + 4);
+    *ACE_reinterpret_cast(const unsigned int*, orig + 4);
+  asm ("bswap %1" : "=r" (i) : "0" (i));
+  asm ("bswap %1" : "=r" (j) : "0" (j));
   *ACE_reinterpret_cast(unsigned int*, target + 4) = i;
   *ACE_reinterpret_cast(unsigned int*, target) = j;
 #elif defined(ACE_HAS_PENTIUM) \
