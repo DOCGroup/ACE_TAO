@@ -65,7 +65,9 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
     object_table_size_ (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE),
     object_lookup_strategy_ (TAO_DYNAMIC_HASH),
-    concurrency_strategy_ (0)
+    concurrency_strategy_ (0),
+    poa_lock_type_ (TAO_THREAD_LOCK),
+    poa_mgr_lock_type_ (TAO_THREAD_LOCK)
 {
 }
 
@@ -78,6 +80,50 @@ TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
 TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
 {
   return this->concurrency_strategy_;
+}
+
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
+{
+  ACE_Lock *thelock = 0;
+
+  switch (this->poa_lock_type_)
+    {
+    case TAO_THREAD_LOCK:
+      ACE_NEW_RETURN (thelock,
+                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      0);
+      break;
+    case TAO_NULL_LOCK:
+      ACE_NEW_RETURN (thelock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
+                      0);
+      break;
+    }
+  
+  return thelock;// Just to make sure we return something
+}
+
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
+{
+  ACE_Lock *thelock = 0;
+
+  switch (this->poa_mgr_lock_type_)
+    {
+    case TAO_THREAD_LOCK:
+      ACE_NEW_RETURN (thelock,
+                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      0);
+      break;
+    case TAO_NULL_LOCK:
+      ACE_NEW_RETURN (thelock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
+                      0);
+      break;
+    }
+  
+  return thelock;// Just to make sure we return something
 }
 
 TAO_Object_Table_Impl *
@@ -134,13 +180,11 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
 void
 TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 {
-  // @@ Danger!  strtok not re-entrant...need to find a re-entrant
-  // version!  @@ Chris, please see ACE_OS::strtok_r ().  There are
-  // some examples of how to use this in JAWS.
-
-  for (char *flag = ACE_OS::strtok (flag_string, "|");
+  char *lasts = 0;
+  
+  for (char *flag = ACE_OS::strtok_r (flag_string, "|", &lasts);
        flag != 0;
-       flag = ACE_OS::strtok (0, "|"))
+       flag = ACE_OS::strtok_r (0, "|", &lasts))
     {
       TAO_BEGINCHECK;
       TAO_CHECKANDSET (THR_DETACHED);
@@ -215,6 +259,32 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                 this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
               else if (ACE_OS::strcasecmp (name, "user") == 0)
                 this->object_lookup_strategy_ = TAO_USER_DEFINED;
+            }
+        }
+      else if (ACE_OS::strcmp (argv[curarg], "-ORBpoalock") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              char *name = argv[curarg];
+
+              if (ACE_OS::strcasecmp (name, "thread") == 0)
+                this->poa_lock_type_ = TAO_THREAD_LOCK;
+              else if (ACE_OS::strcasecmp (name, "null") == 0)
+                this->poa_lock_type_ = TAO_NULL_LOCK;
+            }
+        }
+      else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamgrlock") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              char *name = argv[curarg];
+
+              if (ACE_OS::strcasecmp (name, "thread") == 0)
+                this->poa_mgr_lock_type_ = TAO_THREAD_LOCK;
+              else if (ACE_OS::strcasecmp (name, "null") == 0)
+                this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
             }
         }
       else if (ACE_OS::strcmp (argv[curarg], "-ORBthreadflags") == 0)

@@ -1,3 +1,16 @@
+Mon Jan 12 14:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/default_server.*: Added implementations of create_poa_lock()
+ 	and create_poa_mgr_lock() to obtain their values from -ORBpoalock
+ 	and -ORBpoamgrlock options, respectively, to the Default Server
+ 	Strategy Factory specified in svc.conf.  Values for these are
+ 	either "thread" or "null", which specify an ACE_Thread_Mutex or
+ 	ACE_NULL_Mutex, respectively.
+
+	* tao/server_factory.*: Added create_poa_lock() and
+ 	create_poa_mgr_lock() to obtain locks for use in POA and POA
+ 	Manager instances.
+
 Mon Jan 12 12:10:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/objtable.cpp: 
