@@ -17,8 +17,14 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
   this->client_connection_handler_ = ST_CLIENT_CONNECTION_HANDLER;
+  // @@ Later, we will have a separate flag for the wait
+  //    strategies. (Alex). 
+  this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
 #else
   this->client_connection_handler_ = MT_CLIENT_CONNECTION_HANDLER;
+  // @@ Later, we will have a separate flag for the wait
+  //    strategies. (Alex). 
+  this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
 
 #if defined (TAO_USE_MUXED_REQUEST_MUX_STRATEGY)
