@@ -1,3 +1,17 @@
+Thu Feb 24 18:33:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/Param_Test/param_test.idl:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/run_test.pl:
+	* tests/Param_Test/tests.h:
+	* tests/Param_Test/driver.cpp:
+	* tests/Param_Test/param_test_i.h:
+	* tests/Param_Test/param_test_i.cpp:
+	* tests/Param_Test/multdim_array.h:
+	* tests/Param_Test/multdim_array.cpp:
+	  Activated the multidimensional array test, which
+	  had been commented out for some time.
+
 Thu Feb 24 18:21:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
