@@ -1,12 +1,12 @@
-Sat Sep 05 02:00:00 1999  Luther J. Baker  <ljb1@cs.wustl.edu>
-
-	* ORB_Core.cpp: Part 1 of two part incremental change to allow
-	  ORB_init to correctly parse 'mangled' orb flags and arguments
-	  ie -ORBflag 123, -orbflag 123, -oRbfLAg123, "-orbflag123"
-
-Sat Sep 05 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* ace/OS.cpp: Fixed a missing "#else".
+
+	* ace/Process.i,
+	  ace/Process_Manager.h,
+	  ace/Process_Manager.cpp:
+	  Fixed an "int" versus "ACE_exitcode" conversion
+	  problem.
 
 Sat Sep  4 23:37:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
