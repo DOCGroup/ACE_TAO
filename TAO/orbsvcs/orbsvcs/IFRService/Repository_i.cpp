@@ -170,7 +170,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                       "count",
                                       count);
 
-  if (status == -3) // Field "count" does not exist.
+  if (status == -1) // Field "count" does not exist.
     {
       this->config_->set_integer_value (this->strings_key_,
                                         "count",
