@@ -310,10 +310,10 @@ main (int argc, char *argv[])
   DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 
   non_dsui_timer.stop();
-  ACE_Time_Value dsui_ovhd_time;
+  ACE_hrtime_t dsui_ovhd_time;
   non_dsui_timer.elapsed_time (dsui_ovhd_time);
 
-  ACE_DEBUG ((LM_DEBUG, "Elapsed time: %lu\n", ((double)dsui_ovhd_time.msec() / 1000)));
+  ACE_OS::printf ( ACE_TEXT ("Elapsed time: %lu (nsec)\n"), dsui_ovhd_time);
   return 0;
 }
 
