@@ -1,28 +1,28 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
- *  @file    LocalObject.h
+ * @file LocalObject.h
  *
- *  $Id$
+ * $Id$
  *
- *   Header file for CORBA's base "LocalObject" type.
+ * Header file for CORBA's base "LocalObject" type.
  *
- *   A "LocalObject" is an entity that can be the target of an local
- *   invocation.  See the CORBA Component Model specification for details.
+ * A "LocalObject" is an entity that can be the target of a local
+ * invocation.  See the CORBA Component Model specification for
+ * details.
  *
- *
- *  @author  Portions Copyright 1997 by Washington University
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
 
 
 #ifndef TAO_CORBA_LOCALOBJECT_H
 #define TAO_CORBA_LOCALOBJECT_H
+
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
-#include "tao/Object.h"
+#include "Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,19 +30,21 @@
 
 /**
  * @class CORBA_LocalObject
- * @@ NW: It is not clear whether minimum CORBA should support
+ *
+ * @note NW: It is not clear whether minimum CORBA should support
  * LocalObject or not.  I think it should.
  */
 class TAO_Export CORBA_LocalObject : public virtual CORBA_Object
 {
 public:
-  /// destructor
+
+  /// Destructor
   virtual ~CORBA_LocalObject (void);
 
-  /// increment the ref count
+  /// Increment the ref count
   static CORBA_LocalObject_ptr _duplicate (CORBA_LocalObject_ptr obj);
 
-  /// return a NUL object
+  /// Return a NIL object
   static CORBA_LocalObject_ptr _nil (void);
 
   /**
@@ -52,14 +54,15 @@ public:
    * object.  Or, even easier, add a <is_local> member into
    * CORBA_Object.  I'll take the easier route for now.
    */
-  static CORBA_LocalObject_ptr _narrow (CORBA_Object_ptr obj,
+  static CORBA_LocalObject_ptr _narrow (CORBA::Object_ptr obj,
                                         CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
 
-  /// no-op it is just here to simplify some templates.
-  static CORBA_LocalObject_ptr _unchecked_narrow (CORBA_Object_ptr obj,
-                                                  CORBA_Environment &ACE_TRY_ENV =
-                                                    TAO_default_environment ());
+  /// No-op it is just here to simplify some templates.
+  static CORBA_LocalObject_ptr _unchecked_narrow (
+             CORBA::Object_ptr obj,
+             CORBA_Environment &ACE_TRY_ENV =
+               TAO_default_environment ());
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -67,7 +70,7 @@ public:
   virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
 
-  /// throws NO_IMPLEMENT.
+  /// Throws CORBA::NO_IMPLEMENT.
   virtual CORBA::ImplementationDef_ptr
       _get_implementation (CORBA_Environment &ACE_TRY_ENV =
                              TAO_default_environment ());
@@ -77,7 +80,7 @@ public:
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
 
-  /// throws NO_IMPLEMENT.
+  /// Throws NO_IMPLEMENT.
   virtual void _create_request (CORBA::Context_ptr ctx,
                                 const CORBA::Char *operation,
                                 CORBA::NVList_ptr arg_list,
@@ -98,9 +101,7 @@ public:
                                 CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ());
 
-  // throws NO_IMPLEMENT.
-
-  /// throws NO_IMPLEMENT.
+  /// Throws NO_IMPLEMENT.
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
@@ -109,21 +110,21 @@ public:
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  /// throws NO_IMPLEMENT.
+  /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Policy_ptr _get_policy (
       CORBA::PolicyType type,
       CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
-  /// throws NO_IMPLEMENT.
+  /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Policy_ptr _get_client_policy (
       CORBA::PolicyType type,
       CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
-  /// throws NO_IMPLEMENT.
+  /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add,
@@ -131,14 +132,14 @@ public:
         TAO_default_environment ()
     );
 
-  /// throws NO_IMPLEMENT.
+  /// Throws CORBA::NO_IMPLEMENT.
   CORBA::PolicyList * _get_policy_overrides (
       const CORBA::PolicyTypeSeq & types,
       CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
-  /// throws NO_IMPLEMENT.
+  /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Boolean _validate_connection (
       CORBA::PolicyList_out inconsistent_policies,
       CORBA_Environment &ACE_TRY_ENV =
@@ -178,41 +179,33 @@ public:
 
   // = TAO extensions
 
-  /// throws NO_IMPLEMENT.
-  virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
-
-#if 0
-  /**
-   * Return a reference to the object key of profile in-use.
-   * If there's no in-use profile, then the program will
-   * probably crash.  This method does not create a new copy.
-   */
-  virtual const TAO_ObjectKey &_object_key (void);
-
-  /// Downcasting this object pointer to some other derived class.
-  /// This QueryInterface stuff only work for local object.
-  virtual void * _tao_QueryInterface (ptr_arith_t type);
-#endif /* 0 */
+  /// Throws CORBA::NO_IMPLEMENT.
+  virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  /// Useful for template programming.
   typedef CORBA_LocalObject_ptr _ptr_type;
   typedef CORBA_LocalObject_var _var_type;
 #endif /* __GNUC__ */
-  // Useful for template programming.
 
 protected:
+
+  /// Default constructor.
+  /**
+   * Make it protected to prevent instantiation of this class.
+   */
   CORBA_LocalObject (void);
-  // Default constructor.  Make it protected to prevent instantiation
-  // of this class.
 
 private:
 
-  // = Unimplemented methods
-  // constructor
-
+  /**
+   * @name Unimplemented methods
+   */
+  //@{
   CORBA_LocalObject (const CORBA_LocalObject &);
   CORBA_LocalObject &operator = (const CORBA_LocalObject &);
+  //@}
+
 };
 
 class TAO_Export CORBA_LocalObject_var
@@ -272,21 +265,27 @@ public:
   virtual void _remove_ref (void);
 
 protected:
+
+  // Default constructor.
+  /**
+   * Make it protected to prevent instantiation of this class.
+   */
   TAO_Local_RefCounted_Object (void);
-  // Default constructor.  Make it protected to prevent instantiation
-  // of this class.
 
 private:
 
-  // = Unimplemented methods
-  // constructor
-
+  /**
+   * @name Unimplemented methods
+   */
+  //@{
   TAO_Local_RefCounted_Object (const TAO_Local_RefCounted_Object &);
   TAO_Local_RefCounted_Object &operator = (const TAO_Local_RefCounted_Object &);
+  //@}
+
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/LocalObject.i"
+# include "LocalObject.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
