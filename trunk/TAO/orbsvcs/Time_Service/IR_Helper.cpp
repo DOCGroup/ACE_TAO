@@ -208,5 +208,5 @@ IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &_env)
 
   // @@ Only same host for now
 
-  iiop_obj->profile.port = implrepo_obj->profile.port;
+  iiop_obj->profile_in_use ()->port (implrepo_obj->profile_in_use ()->port ());
 }

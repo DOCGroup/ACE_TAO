@@ -45,8 +45,8 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                       IIOP_Object (iiop_obj->type_id,
                                    ACE::strnew (new_addr->host_),
                                    new_addr->port_,
-                                   iiop_obj->profile.object_key,
-                                   iiop_obj->profile.object_addr ()),
+                                   iiop_obj->profile_in_use ()->object_key (),
+                                   iiop_obj->profile_in_use ()->object_addr ()),
                       0);
     }
   TAO_CATCHANY
@@ -758,9 +758,8 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
                                             forward_object->_stubobj ());
 
-  iiop_obj->profile.port = new_addr->port_;
-  delete [] iiop_obj->profile.host;
-  iiop_obj->profile.host = ACE::strnew (new_addr->host_);
+  iiop_obj->profile_in_use ()->port (new_addr->port_);
+  iiop_obj->profile_in_use ()->host (new_addr->host_);
 
 //  if (TAO_debug_level > 0)
 //    ACE_DEBUG ((LM_DEBUG,
