@@ -1,3 +1,9 @@
+Thu Jan  1 20:12:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/XML_Helpers/XML_Utils.cpp:
+
+	  Fixed a unused variable warning.
+
 Thu Jan  1 20:05:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/Assembly_Deployer/Assembly_Impl.cpp:
