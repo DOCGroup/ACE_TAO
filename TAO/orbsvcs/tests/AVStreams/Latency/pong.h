@@ -19,7 +19,6 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Policy.h"
 #include "orbsvcs/AV/Flows_T.h"
-#include "ace/Stats.h"
 
 class Pong_Recv_Callback : public TAO_AV_Callback
 {
@@ -47,11 +46,19 @@ private:
 class Ping_Send_Callback : public TAO_AV_Callback
 {
 public:
+  Ping_Send_Callback (void);
 
   virtual int handle_timeout (void *arg);
   virtual int handle_end_stream (void);
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
+
+private:
+  ACE_Time_Value timeout_;
+  // the timeout value
+
+  ACE_Message_Block frame_;
+  // Pre-allocate the message block to send...
 };
 
 class Ping_Send : public TAO_FlowProducer
