@@ -56,6 +56,7 @@ public:
   // Returns the QoS for this RAPI session.
   
   virtual int qos (ACE_SOCK *socket,
+                   ACE_QoS_Manager *qos_manager,
                    const ACE_QoS &ace_qos);
   // Set QoS for this RAPI session. The socket parameter is used to confirm if
   // this QoS session was subscribed to by the socket.
@@ -71,6 +72,10 @@ public:
   // Calls rapi_dispatch () that further triggers the call back function.    
   // It is a mechanism of updating the QoS for this session asynchronously, as
   // RSVP events occur.
+
+  virtual ACE_End_Point_Type flags (void) const;
+  virtual void flags (const ACE_End_Point_Type flags);
+  // Get/Set methods for the flags_.
 
   virtual int session_id (void) const;
   // Get the RAPI session id.
@@ -144,6 +149,7 @@ public:
   // Returns the QoS for this GQoS session.
 
   virtual int qos (ACE_SOCK *socket,
+                   ACE_QoS_Manager *qos_manager,
                    const ACE_QoS &ace_qos);
   // Set QoS for this GQoS session. The socket parameter is used to confirm if
   // this QoS session was subscribed to by the socket.
@@ -158,6 +164,10 @@ public:
   virtual int update_qos (void);
   // Calls the ioctl (ACE_SIO_GET_QOS). It is a mechanism of updating the 
   // QoS for this session asynchronously, as RSVP events occur.
+
+  virtual ACE_End_Point_Type flags (void) const;
+  virtual void flags (const ACE_End_Point_Type flags);
+  // Get/Set methods for the flags_.
 
   virtual ACE_INET_Addr dest_addr (void) const;
   // Get the destination address for this GQoS session.
@@ -192,3 +202,5 @@ private:
 
 #include "ace/post.h"
 #endif /* ACE_QOS_SESSION_IMPL_H */
+
+

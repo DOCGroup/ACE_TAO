@@ -21,6 +21,7 @@
 #include "ace/pre.h"
 
 #include "ace/SOCK_Dgram.h"
+#include "ace/QoS_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -76,6 +77,7 @@ public:
                  ACE_Protocol_Info *protocolinfo = 0,
                  ACE_SOCK_GROUP g = 0,
                  u_long flags = 0,
+                 ACE_QoS_Manager *qos_manager = 0,
                  ACE_QoS_Session *qos_session = 0);
   // This is a QoS-enabled method for joining a multicast group, which
   // passes <qos_params> via <ACE_OS::join_leaf>.  The network

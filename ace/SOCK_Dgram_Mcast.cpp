@@ -394,6 +394,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                  ACE_Protocol_Info *protocolinfo,
                                  ACE_SOCK_GROUP g,
                                  u_long flags,
+                                 ACE_QoS_Manager *qos_manager,
                                  ACE_QoS_Session *qos_session)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
@@ -430,7 +431,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
       {
 
         // Subscribe to the QoS session.
-        if (this->join_qos_session (qos_session) == -1)
+        if (qos_manager->join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to join QoS Session\n"),
                             -1);
