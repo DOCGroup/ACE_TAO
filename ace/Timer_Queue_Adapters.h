@@ -49,7 +49,8 @@ public:
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule the timer according to the semantics of the
   // <ACE_Timer_List>.  However, this timer gets dispatched via a
-  // signal, rather than by a user calling <expire>.
+  // signal, rather than by a user calling <expire>.  Note that
+  // interval timers are not implemented yet.
 
   int cancel (long timer_id, const void **act = 0);
   // Cancel the <timer_id> and pass back the <act> if an address is
