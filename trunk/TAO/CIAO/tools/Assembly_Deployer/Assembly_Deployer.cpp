@@ -4,6 +4,7 @@
 #include "Assembly_ServiceC.h"
 #include "Client_init.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 const char *ior = "file://test.ior";
 const char *cad = 0;

@@ -3,6 +3,8 @@
 #include "tools/Simple_Component_Server/Simple_ServerC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/streams.h"
+
 // @@ Include component stub file here:
 //#include "helloC.h"
 

@@ -1,3 +1,10 @@
+Fri Aug 01 23:34:38 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/sample_client.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp: Fixed compilation
+	  errors.  We need to include "ace/streams.h" explicitly if we
+	  want to use iostream stuff.
+
 2003-08-01  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
