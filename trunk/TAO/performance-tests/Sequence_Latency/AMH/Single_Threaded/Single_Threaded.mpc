@@ -1,4 +1,4 @@
-project(*AMH sequence server): server, strategies {
+project(*AMH sequence server): server, strategies, valuetype {
   idlflags += -GH
   requires += ami
 
@@ -8,13 +8,15 @@ project(*AMH sequence server): server, strategies {
   }
 }
 
-project(* AMH sequence client): client, strategies {
-  idlflags += -GH
+project(*AMH sequence client): client, strategies, valuetype {
   requires += ami
+  after  += Single_Threaded_AMH_Sequence_Server
 
   Source_Files {
     TestC.cpp
     client.cpp
+  }
+  IDL_Files {
   }
 }
 

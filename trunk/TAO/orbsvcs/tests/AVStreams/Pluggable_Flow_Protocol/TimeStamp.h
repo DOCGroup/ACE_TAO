@@ -43,10 +43,11 @@ class TAO_AV_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Fac
   virtual ~TimeStamp_Protocol_Factory (void);
   virtual int init (int argc, char *argv[]);
   virtual int match_protocol (const char *flow_string);
-  virtual TimeStamp_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                           TAO_Base_StreamEndPoint *endpoint,
-                                                           TAO_AV_Flow_Handler *handler,
-                                                           TAO_AV_Transport *transport);
+  // Note : Some platforms still don't support Covariant returns
+  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                        TAO_Base_StreamEndPoint *endpoint,
+                                                        TAO_AV_Flow_Handler *handler,
+                                                        TAO_AV_Transport *transport);
 };
 
 ACE_STATIC_SVC_DECLARE (TimeStamp_Protocol_Factory)

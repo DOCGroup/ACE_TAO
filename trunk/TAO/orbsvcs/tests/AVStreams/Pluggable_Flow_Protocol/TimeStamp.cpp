@@ -201,7 +201,7 @@ TimeStamp_Protocol_Factory::match_protocol (const char *flow_string)
   return 0;
 }
 
-TimeStamp_Protocol_Object*
+TAO_AV_Protocol_Object*
 TimeStamp_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                   TAO_Base_StreamEndPoint *endpoint,
                                                   TAO_AV_Flow_Handler *handler,

@@ -71,7 +71,7 @@ project (EC_client) : ciao_client, valuetype {
 }
 
 
-project (controller) : ciao_client, valuetype {
+project (EC_controller) : ciao_client, valuetype {
   exename = controller
   after += EC_stub
   libs += EC_stub BasicSP_stub

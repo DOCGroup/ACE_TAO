@@ -1,11 +1,15 @@
 // $Id$
 
+#if !defined(_WIN32) 
+
 #include "ace/OS.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
 
 ACE_RCSID(IO_tests, IO_Test, "$Id$")
+
+
 
 IO_Test::IO_Test (const char *name,
                   ACE_Profile_Timer &tm)
@@ -30,8 +34,8 @@ Slow_Read_Write_Test::run_test (int iterations,
                                 FILE *input_fp,
                                 FILE *output_fp)
 {
-  int ifd = fileno (input_fp);
-  int ofd = fileno (output_fp);
+  ACE_HANDLE ifd = fileno (input_fp);
+  ACE_HANDLE ofd = fileno (output_fp);
 
   this->tm_.start ();
 
@@ -40,7 +44,7 @@ Slow_Read_Write_Test::run_test (int iterations,
       char c;
 
       while (ACE_OS::read (ifd, &c, sizeof c) > 0)
-	::write (ofd, &c, sizeof c);
+        ::write (ofd, &c, sizeof c);
 
       ACE_OS::lseek (ifd, 0, SEEK_SET);
       ACE_OS::lseek (ofd, 0, SEEK_SET);
@@ -68,7 +72,7 @@ Stdio_Test::run_test (int iterations,
       int c;
 
       while ((c = getc (input_fp)) != EOF)
-	putc (c, output_fp);
+        putc (c, output_fp);
 
       ACE_OS::rewind (input_fp);
       ACE_OS::rewind (output_fp);
@@ -101,7 +105,7 @@ Block_Read_Write_Test::run_test (int iterations,
       while ((n = ACE_OS::read (ifd,
                                 buf,
                                 sizeof buf)) > 0)
-	::write (ofd, buf, n);
+                                ::write (ofd, buf, n);
 
       ACE_OS::lseek (ifd, 0, SEEK_SET);
       ACE_OS::lseek (ofd, 0, SEEK_SET);
@@ -133,7 +137,7 @@ Block_Fread_Fwrite_Test::run_test (int iterations,
                                  1,
                                  sizeof buf,
                                  input_fp)) != 0)
-	::fwrite (buf, n, 1, output_fp);
+                                 ::fwrite (buf, n, 1, output_fp);
 
       ACE_OS::rewind (input_fp);
       ACE_OS::rewind (output_fp);
@@ -167,18 +171,18 @@ Mmap1_Test::run_test (int iterations,
       this->tm_.start ();
 
       while (--iterations >= 0)
-	{
-	  if (ACE_OS::write (fileno (output_fp),
+      {
+        if (ACE_OS::write (fileno (output_fp),
                              src,
                              map_input.size ()) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s",
                                this->name ()),
                               -1);
-	  ACE_OS::lseek (fileno (output_fp),
+        ACE_OS::lseek (fileno (output_fp),
                          0,
                          SEEK_SET);
-	}
+      }
 
       this->tm_.stop ();
     }
@@ -219,7 +223,7 @@ Mmap2_Test::run_test (int iterations,
       this->tm_.start ();
 
       while (--iterations >= 0)
-	ACE_OS::memcpy (dst, src, size);
+        ACE_OS::memcpy (dst, src, size);
 
       this->tm_.stop ();
     }
@@ -230,3 +234,4 @@ Mmap2_Test::run_test (int iterations,
   else
     return 0;
 }  
+#endif

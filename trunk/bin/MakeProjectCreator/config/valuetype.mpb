@@ -1,4 +1,5 @@
 project {
-  after   += Valuetype
-  libs    += TAO_Valuetype
+  idlflags += -Gv
+  after    += Valuetype
+  libs     += TAO_Valuetype
 }
