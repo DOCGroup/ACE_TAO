@@ -16,7 +16,7 @@ module SecurityLevel1 {
 
   local interface Current : CORBA::Current {	// Locality Constrained
 #   pragma version Current 1.8
-  
+
     // thread specific operations
 
     Security::AttributeList get_attributes (
