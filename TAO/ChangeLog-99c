@@ -1,3 +1,13 @@
+Tue Nov 30 00:49:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/AMI/index.html:
+	* docs/tutorials/Quoter/Event_Service/index.html:
+	* docs/tutorials/Quoter/Naming_Service/index.html:
+	* docs/tutorials/Quoter/Simple/Client/index.html:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+	* docs/tutorials/Quoter/Simple/Server/index.html:
+	  Spell checking.
+
 Tue Nov 30 00:28:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tutorials/Quoter/index.html:
