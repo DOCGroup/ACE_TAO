@@ -1,42 +1,43 @@
 $Id$
 
 This directory houses a collection of tests which exercise TAO support
-for features defined in the RTCORBA specification.  OMG Real-time
+for features defined in the RT-CORBA specification.  OMG Real-time
 CORBA specification is available at:
 http://cgi.omg.org/cgi-bin/doc?ptc/99-05-03 (or check the OMG website
-for a more recent version).  Documentation for TAO's implementation of
-RTCORBA 1.0 specification is available at:
+for a more recent version).  More information on TAO's implementation
+of RT-CORBA 1.0 specification is available at:
 
-Each individual subdirectory contains a README file with more information
-on the corresponding test.  List of tests:
+http://www.cs.wustl.edu/~schmidt/corba-research-realtime.html
 
+and information on the status of TAO's RT-CORBA status is available at
 
-              . Client_Propagated
+$TAO_ROOT/docs/releasenotes/RTCorba.html
 
-                Tests PriorityModelPolicy with
-                RTCORBA::CLIENT_PROPAGATED value.
+Each individual subdirectory contains a README file with more
+information on the corresponding test.  The list of tests so far
+includes the following:
 
+        . Client_Propagated
 
-              . Server_Declared
+          Tests PriorityModelPolicy with RTCORBA::CLIENT_PROPAGATED
+          value.
 
-                Tests PriorityModelPolicy with
-                RTCORBA::SERVER_DECLARED value.
+        . Server_Declared
+        
+          Tests PriorityModelPolicy with RTCORBA::SERVER_DECLARED
+          value.
 
-              . Server_Protocol
+        . Server_Protocol
 
-                Tests various settings of
-                RTCORBA::ServerProtocolPolicy.
+          Tests various settings of RTCORBA::ServerProtocolPolicy.
 
-              . Client_Protocol
+        . Client_Protocol
 
-                Tests various settings of
-                RTCORBA::ClientProtocolPolicy.
+          Tests various settings of RTCORBA::ClientProtocolPolicy.
 
-              . MT_Client_Protocol_Priority
-
-                Multithreaded test with two client threads [with
-                different priorities and different
-                ClientProtocolPolicy Current-level overrides]
-                concurrently making invocations on one object
-                reference, which has a CLIENT_PROPAGATED priority
-                model.
+        . MT_Client_Protocol_Priority
+        
+          Multithreaded test with two client threads [with different
+          priorities and different ClientProtocolPolicy Current-level
+          overrides] concurrently making invocations on one object
+          reference, which has a CLIENT_PROPAGATED priority model.
