@@ -6,7 +6,7 @@
 ACE_RCSID(Thread_Pools, client, "$Id$")
 
 const char *ior = "file://ior";
-int iterations = 5;
+int iterations = 6;
 int shutdown_server = 0;
 
 int
