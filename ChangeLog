@@ -1,3 +1,8 @@
+Tue Apr 16 19:25:47 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Makefile.bor:
+        * ace/ace.icc: Added new Asynch_Connector and Asynch_Pseudo_Task files.
+
 Tue Apr 16 19:07:22 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Basically replaced; new version also
