@@ -1,0 +1,120 @@
+##
+## Automake Template
+##
+
+## The number in AUTOMAKE_OPTIONS is the minimum required version automake
+## needed to process this file.
+AUTOMAKE_OPTIONS = 1.4
+
+<%if(idl_files)%> 
+<%if(idlflags)%>
+TAO_IDLFLAGS = <%idlflags%>
+<%endif%>
+<%endif%>
+<%if(includes)%>
+INCLUDES =<%foreach(includes)%> -I<%include%><%endfor%>
+<%endif%>
+
+<%if(exename)%>
+bin_PROGRAMS = <%exename%>
+
+<%exename%>_SOURCES = \
+<%foreach(source_files)%>
+  <%source_file%><%fornotlast(" \\")%>
+<%endfor%>
+<%if(header_files)%>
+
+noinst_HEADERS = \
+<%foreach(header_files)%>
+  <%header_file%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%else%>
+<%if(grouped_source_files)%>
+<%foreach(grouped_source_files)%>
+lib<%sharedname%>_<%uc(grouped_source_file)%>_la_SOURCES = \
+<%foreach(grouped_source_file->files)%>
+  <%grouped_source_file->file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endfor%>
+<%foreach(grouped_source_files)%>
+if BUILD_<%uc(grouped_source_file)%>_FILES
+LIB<%sharedname%>_<%uc(grouped_source_file)%> = lib<%sharedname%>_<%grouped_source_file%>.la
+else
+LIB<%sharedname%>_<%uc(grouped_source_file)%> =
+endif
+
+<%endfor%>
+
+lib_LTLIBRARIES = \
+  $(LIB<%sharedname%>) \
+<%foreach(grouped_source_files)%>
+  $(LIB<%sharedname%>_<%uc(grouped_source_file)%>)<%fornotlast(" \\")%>
+<%endfor%>
+
+lib<%sharedname%>_la_SOURCES = \
+<%foreach(grouped_source_files)%>
+  $(lib<%sharedname%>_<%uc(grouped_source_file)%>_la_SOURCES)<%fornotlast(" \\")%>
+<%endfor%>
+
+<%foreach(grouped_source_files)%>
+lib<%sharedname%>_<%uc(grouped_source_file)%>_la_SOURCES = \
+<%foreach(grouped_source_file->files)%>
+  <%grouped_source_file->file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endfor%>
+lib<%sharedname%>_la_LDFLAGS = $(X_LIBS) \
+  -version-info <%if(tao)%>@TAO_CURRENT@:@TAO_REVISION@:@TAO_AGE@<%else%>@ACE_CURRENT@:@ACE_REVISION@:@ACE_AGE@<%endif%>
+
+lib<%sharedname%>_la_LIBADD = $(X_PRE_LIBS) $(<%sharedname%>_XLIBS) $(X_EXTRA_LIBS)
+<%else%>
+lib_LTLIBRARIES = lib<%sharedname%>.la
+
+lib<%sharedname%>_la_SOURCES = \
+<%foreach(source_files)%>
+  <%source_file%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+
+<%if(template_files)%>
+TEMPLATE_FILES = \
+<%foreach(template_files)%>
+  <%template_file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
+<%if(header_files)%>
+HEADER_FILES = \
+<%foreach(header_files)%>
+  <%header_file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
+<%if(inline_files)%>
+INLINE_FILES = \
+<%foreach(inline_files)%>
+  <%inline_file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
+
+pkginclude_HEADERS = \
+<%if(template_files)%>
+  $(INLINE_FILES) \
+<%endif%>
+<%if(inline_files)%>
+  $(INLINE_FILES) \
+<%endif%>
+<%if(header_files)%>
+  $(HEADER_FILES)
+<%endif%>
+<%endif%>
+<%vpath%>
+
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -f gcctemp.c gcctemp so_locations
+	-rm -rf ptrepository SunWS_cache Templates.DB
