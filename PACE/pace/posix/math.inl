@@ -129,9 +129,9 @@ pace_modf (double x, double * iptr)
 
 PACE_INLINE
 double
-pace_pow (double x)
+pace_pow (double x, double y)
 {
-  return pow (x);
+  return pow (x, y);
 }
 
 PACE_INLINE

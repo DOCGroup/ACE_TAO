@@ -52,7 +52,7 @@ extern "C" {
 
   PACE_INLINE double pace_modf (double x, double * iptr);
 
-  PACE_INLINE double pace_pow (double x);
+  PACE_INLINE double pace_pow (double x, double y);
 
   PACE_INLINE double pace_sqrt (double x);
 

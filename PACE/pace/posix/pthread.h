@@ -77,9 +77,9 @@ extern "C" {
 
   PACE_INLINE int pace_pthread_cancel (pace_pthread_t thread);
 
-  PACE_INLINE void pace_cleanup_pop (int execute);
-
   PACE_INLINE void pace_pthread_cleanup_push (void (*routine)(void*), void * arg);
+
+  PACE_INLINE void pace_pthread_cleanup_pop (int execute);
 
   # define PACE_PTHREAD_COND_INITIALIZER PTHREAD_COND_INITIALIZER
 
@@ -151,7 +151,7 @@ extern "C" {
                                                      int prioceiling,
                                                      int * old_ceiling);
 
-  PACE_INLINE int pace_pace_pthread_mutex_trylock (pthread_mutex_t * mutex);
+  PACE_INLINE int pace_pthread_mutex_trylock (pthread_mutex_t * mutex);
 
   PACE_INLINE int pace_pthread_mutex_unlock (pace_pthread_mutex_t * mutex);
 
@@ -198,7 +198,7 @@ extern "C" {
                                         const sigset_t * set,
                                         sigset_t * oset);
 
-  PACE_INLINE void pace_pace_pthread_testcancel ();
+  PACE_INLINE void pace_pthread_testcancel ();
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

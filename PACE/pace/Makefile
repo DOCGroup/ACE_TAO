@@ -44,14 +44,38 @@ VPATH:=common:arpa:config:netinet:sys
 #ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
 ifeq ($(PACE_SYSNAME),SunOS)
 VPATH :=.:posix:$(VPATH)
-INCLDIRS += -I$(PACE_ROOT)/pace/posix
+CFLAGS += -DPACE_SUNOS
+endif
+
+ifeq ($(PACE_SYSNAME),NT)
+VPATH :=.:win32:$(VPATH)
+CFLAGS += -DPACE_WIN32
+endif
+
+ifeq ($(PACE_SYSNAME),LynxOS)
+VPATH :=.:posix:$(VPATH)
+CFLAGS += -DPACE_LYNXOS
+endif
+
+ifeq ($(PACE_SYSNAME),VxWorks)
+VPATH :=.:vxworks:$(VPATH)
+CFLAGS += -DPACE_VXWORKS
+endif
+
+ifeq ($(PACE_SYSNAME),Linux)
+VPATH :=.:posix:$(VPATH)
+CFLAGS += -DPACE_LINUX
 endif
 
 PACE_FILES = \
   aio \
+  assert \
+  ctype \
   dirent \
   fcntl \
   grp \
+  locale \
+  math \
   mqueue \
   netdb \
   pthread \

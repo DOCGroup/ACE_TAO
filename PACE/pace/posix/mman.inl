@@ -48,11 +48,11 @@ pace_munlock (const void * addr, size_t len)
 
 PACE_INLINE
 int
-pace_mprotect (const void * addr,
+pace_mprotect (void * addr,
                size_t len,
                int prot)
 {
-  return PACE_mprotect (addr, len, prot);
+  return mprotect (addr, len, prot);
 }
 
 PACE_INLINE
@@ -61,7 +61,7 @@ pace_msync (void * addr,
             size_t len,
             int flags)
 {
-  return PACE_msync (addr, len, flags);
+  return msync (addr, len, flags);
 }
 
 PACE_INLINE
@@ -87,6 +87,9 @@ pace_shm_open (const char * name,
 # if (PACE_POSIX_C_SOURCE > 2)
   return shm_open (name, oflag, mode);
 # else /* !PACE_POSIX_C_SOURCE */
+  PACE_UNUSED_ARG (name);
+  PACE_UNUSED_ARG (oflag);
+  PACE_UNUSED_ARG (mode);
   PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_POSIX_C_SOURCE);
 # endif /* !PACE_POSIX_C_SOURCE */
 }
@@ -98,6 +101,7 @@ pace_shm_unlink (const char * name)
 # if (PACE_POSIX_C_SOURCE > 2)
   return shm_unlink (name);
 # else /* !PACE_POSIX_C_SOURCE */
+  PACE_UNUSED_ARG (name);
   PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_POSIX_C_SOURCE);
 # endif /* !PACE_POSIX_C_SOURCE */
 }
