@@ -332,23 +332,23 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],)
 
+ dnl The ace/config-all.h file defaults ACE_NTRACE properly, so only emit
+ dnl something if the user specifies this option.
  AC_ARG_ENABLE([trace],
   AS_HELP_STRING(--enable-trace,enable ACE tracing [[[no]]]),
   [
    case "${enableval}" in
     yes)
+      AC_DEFINE([ACE_NTRACE],0)
       ;;
     no)
-      AC_DEFINE([ACE_NTRACE])
+      AC_DEFINE([ACE_NTRACE],1)
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-trace])
       ;;
    esac
-  ],
-  [
-   AC_DEFINE([ACE_NTRACE])
-  ])
+  ],)
 
  AC_ARG_ENABLE([wfmo],
   AS_HELP_STRING(--enable-wfmo,build WFMO-using examples [[[no]]]),
@@ -388,7 +388,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
       ace_user_enable_winregistry=no
       ;;
     *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
+      AC_MSG_ERROR([bad value ${enableval} for --enable-winregistry])
       ;;
    esac
   ],

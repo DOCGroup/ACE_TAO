@@ -1,3 +1,19 @@
+Fri Oct  8 18:40:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/ssl.mpc: Removed the automake-specific part. The MPC-supplied
+	  openssl.mpb file now includes the automake libs/includes that were
+	  here.
+
+	* examples/NT_Service/NT_Service.mpc: Inherit from the winregistry
+	  project. Makes this require winregistry. Although not strictly
+	  correct, it's close enough. Probably would be more correct to
+	  rename winregistry to windows, but I won't rock the boat today.
+
+	* m4/ace.m4: Don't emit ACE_NTRACE unless the user specifically
+	  says --enable-trace. ace/config-all.h knows how to default
+	  tracing correctly. Also, for --enable-tracing, set ACE_NTRACE
+	  to 0; for disable tracing, set ACE_NTRACE to 1.
+
 Fri Oct  8 06:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc_Allocator.cpp:
