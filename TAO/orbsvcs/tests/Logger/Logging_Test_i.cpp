@@ -134,15 +134,15 @@ Logger_Client::init_loggers (CORBA::Environment &env)
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
   this->logger_1_ = factory_->make_logger ("key1",
-					   env);
+                                           env);
   if (env.exception () != 0)
     return -1;
-  
+
   this->logger_2_ = factory_->make_logger ("key2",
                                            env);
   if (env.exception () != 0)
     return -1;
-  
+
   if (CORBA::is_nil (this->logger_1_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "nil logger1"),
@@ -244,14 +244,14 @@ Logger_Client::run (void)
       this->logger_2_->log (rec2, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Change the verbosity again 
+      // Change the verbosity again
       this->logger_2_->verbosity (Logger::SILENT, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Log the third log record using logv() (this shows if the
       // verbosity level overrides the logger's verbosity level)
       this->logger_2_->logv (rec3, Logger::VERBOSE, TAO_TRY_ENV);
-      
+
       // Change the verbosity again (so that regular log msgs can be
       // seen again)
       this->logger_2_->verbosity (Logger::VERBOSE, TAO_TRY_ENV);
@@ -306,7 +306,7 @@ Logger_Client::init_record (Logger::Log_Record &newrec,
                             const char *msg)
 {
   // Copy the message data into newrec.
-  newrec.msg_data = CORBA::string_copy (msg);
+  newrec.msg_data = CORBA::string_dup (msg);
 
   // Assign the log priority.
   newrec.type = lp;

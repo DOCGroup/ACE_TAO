@@ -206,6 +206,115 @@ private:
   void operator= (const CORBA_String_var &);
 };
 
+// ****************************************************************
+
+class TAO_Export CORBA_WString_var
+{
+  // = TITLE
+  //   CORBA_WString var class. Provides automatic deallocation of
+  //   storage for wide strings
+  //
+public:
+  CORBA_WString_var (void);
+  // default constructor.
+
+  CORBA_WString_var (CORBA::WChar *p);
+  // constructor, owns p.
+
+  CORBA_WString_var (const CORBA::WChar *p);
+  // constructor. Makes a copy of p.
+
+  CORBA_WString_var (const CORBA_WString_var &s);
+  // copy constructor.
+
+  ~CORBA_WString_var (void);
+  // destructor.
+
+  CORBA_WString_var &operator= (CORBA::WChar *p);
+  // assignment operator.
+
+  CORBA_WString_var &operator= (const CORBA::WChar *p);
+  // assignment to a const char*.  Makes a copy.
+
+  CORBA_WString_var &operator= (const CORBA_WString_var &s);
+  // assignment operator.
+
+  operator CORBA::WChar *();
+  // access and modify.
+
+  operator const CORBA::WChar *() const;
+  // only read privileges.
+
+  CORBA::WChar &operator[] (CORBA::ULong index);
+  // allows access and modification using an index.
+
+  CORBA::WChar operator[] (CORBA::ULong index) const;
+  // allows only accessing thru an index.
+
+    // = in, out, out, and _retn operations.
+    // ORBOS/97-05-15, Appendix C.2
+
+  const CORBA::WChar *in (void) const;
+  // for in parameter.
+
+  CORBA::WChar *&inout (void);
+  // for inout parameter.
+
+  CORBA::WChar *&out (void);
+  // for out parameter.
+
+  CORBA::WChar *_retn (void);
+  // for string of return type.
+
+private:
+  CORBA::WChar *ptr_;
+  // instance.
+};
+
+class TAO_Export CORBA_WString_out
+{
+  // = TITLE
+  //   CORBA_WString_out
+  //
+  // = DESCRIPTION
+  //   To support the memory management for "out" parameter passing
+  //   mode.  ORBOS/97-05-15, Appendix C.2 defines a CORBA_WString_out
+  //   class
+  //
+public:
+  // = operations.
+
+  CORBA_WString_out (CORBA::WChar *&p);
+  // Construction from a reference to a string.
+
+  CORBA_WString_out (CORBA_WString_var &p);
+  // Construction from a var.
+
+  CORBA_WString_out (const CORBA_WString_out &s);
+  // Copy constructor.
+
+  CORBA_WString_out &operator= (const CORBA_WString_out &s);
+  // Assignment from a string_out.
+
+  CORBA_WString_out &operator= (CORBA::WChar *p);
+  // Assignment from a string.
+
+  operator CORBA::WChar *&();
+  // Cast.
+
+  CORBA::WChar *&ptr (void);
+  // Return underlying instance.
+
+private:
+  CORBA::WChar *&ptr_;
+  // Instance.
+
+  // assignment from _var disallowed
+  void operator= (const CORBA_WString_var &);
+};
+
+// ****************************************************************
+
 class TAO_Export CORBA_ORB
 {
   // = TITLE

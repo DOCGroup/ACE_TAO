@@ -78,7 +78,7 @@ Options::parse_args (int argc, char **argv)
 
      case 'k':
         CORBA::string_free (this->ior_);
-        this->ior_ = CORBA::string_copy (get_opts.optarg);
+        this->ior_ = CORBA::string_dup (get_opts.optarg);
         break;
 
       case 'i':  // invocation

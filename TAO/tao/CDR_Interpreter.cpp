@@ -190,7 +190,7 @@ declare_entry (CORBA::LongLong, tk_longlong);
 declare_entry (CORBA::ULongLong, tk_ulonglong);
 declare_entry (CORBA::LongDouble, tk_longdouble);
 declare_entry (CORBA::WChar, tk_wchar);
-declare_entry (CORBA::WString, tk_wstring);
+declare_entry (CORBA::WChar*, tk_wstring);
 
 void
 TAO_CDR_Interpreter::init (void)
@@ -231,7 +231,7 @@ TAO_CDR_Interpreter::init (void)
   setup_entry (CORBA::ULongLong, tk_ulonglong);
   setup_entry (CORBA::LongDouble, tk_longdouble);
   setup_entry (CORBA::WChar, tk_wchar);
-  setup_entry (CORBA::WString, tk_wstring);
+  setup_entry (CORBA::WChar*, tk_wstring);
 }
 
 #undef  setup
@@ -461,7 +461,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
     }
 
   // Notice how we change the sign of the offset to estimate the
-  // maximum size. 
+  // maximum size.
   // Also note that the offset is computed starting from the offset
   // field. However, by this time, we have already read the offset field i.e.,
   // we have already moved ahead by 4 bytes (size of CORBA::Long). So we should
@@ -638,7 +638,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
     void *two;
   };
   align_ptr ap;
-  
+
   // the first member of the union internal representation is the VPTR
   // since every union inherits from TAO_Base_Union
   overall_alignment = (char *) &ap.two - (char *) &ap.one
@@ -663,7 +663,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   CORBA::TypeCode discrim_tc (CORBA::tk_void);
 
   discrim_and_base_size = sizeof (TAO_Base_Union) +
-    calc_nested_size_and_alignment (&discrim_tc, 
+    calc_nested_size_and_alignment (&discrim_tc,
                                     stream,
                                     value_alignment,
                                     env);
@@ -673,7 +673,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (value_alignment > overall_alignment)
     overall_alignment = value_alignment;
 
-  
+
   // skip "default used" indicator, and save "member count"
 
   if (!stream->read_ulong (temp)                 // default used
@@ -797,9 +797,9 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
   // Round up the discriminator's size to include padding it needs in
   // order to be followed by the value.
-  discrim_and_base_size_with_pad = 
+  discrim_and_base_size_with_pad =
     (size_t) align_binary (discrim_and_base_size, value_alignment);
-  discrim_size_with_pad = discrim_and_base_size_with_pad - 
+  discrim_size_with_pad = discrim_and_base_size_with_pad -
     sizeof (TAO_Base_Union);
   // Now calculate the overall size of the structure, which is the
   // discriminator, inter-element padding, value, and tail padding.

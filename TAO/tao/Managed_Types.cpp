@@ -28,3 +28,22 @@ TAO_SeqElem_String_Manager::operator= (const CORBA::String_var &var)
   return *this;
 }
 
+// ****************************************************************
+
+TAO_WString_Manager&
+TAO_WString_Manager::operator= (const CORBA::WString_var &var)
+{
+  CORBA::wstring_free (this->ptr_);
+  this->ptr_ = CORBA::wstring_dup (var.in ());
+  return *this;
+}
+
+TAO_SeqElem_WString_Manager&
+TAO_SeqElem_WString_Manager::operator= (const CORBA::WString_var &var)
+{
+  if (this->release_)
+    CORBA::wstring_free (*this->ptr_);
+  *this->ptr_ = CORBA::wstring_dup (var.in ());
+  return *this;
+}
+
