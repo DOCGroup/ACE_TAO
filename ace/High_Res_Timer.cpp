@@ -16,7 +16,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // For Intel platforms, a scale factor is required for
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
-#if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER)) && \
+#if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER) || \
+     defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
 # include "ace/Synch.h"
@@ -62,19 +63,22 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
   // value.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
-#else  /* ! (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER)  ||
+#else  /* ! (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
+             ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
   // A scale_factor of 1000 converts nanosecond ticks to microseconds.
   // That is, on these platforms, 1 tick == 1 nanosecond.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1000u;
-#endif /* ! (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER)  ||
+#endif /* ! (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
+             ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
 
 ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor ()
 {
-#if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER)) && \
+#if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER) || \
+     defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      defined (ghs) || defined (__GNUG__))
@@ -122,7 +126,8 @@ ACE_High_Res_Timer::global_scale_factor ()
             ACE_High_Res_Timer::calibrate ();
         }
     }
-#endif /* (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER) && \
+#endif /* (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
+           ACE_HAS_ALPHA_TIMER) && \
           ! ACE_HAS_HIGH_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
