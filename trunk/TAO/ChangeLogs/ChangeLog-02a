@@ -1,3 +1,9 @@
+Fri Mar 23 11:58:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/ImplRepo/NameService/Makefile: Fixed
+	  dependencies. Thanks to Thomas Groth <groth.th@nord-com.net> for
+	  reporting this. 
+
 Fri Mar 23 09:42:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Hello/Hello.dsw:
