@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 ace.lib TAO.lib coll_test_skels.lib coll_test_stubs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ELSEIF  "$(CFG)" == "Collocation - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 aced.lib TAOd.lib coll_test_skelsd.lib coll_test_stubsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ENDIF 
 
@@ -97,14 +97,6 @@ SOURCE=.\Diamond_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DiamondC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DiamondS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\main.cpp
 # End Source File
 # End Group
@@ -118,14 +110,6 @@ SOURCE=.\Coll_Tester.h
 # Begin Source File
 
 SOURCE=.\Diamond_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DiamondC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DiamondS.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
