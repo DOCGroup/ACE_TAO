@@ -38,9 +38,6 @@ main (int argc, char *argv[])
                                " (%P|%t) Unable to resolve the given Name.\n"),
                               -1);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "Fail now\n"));
-
           accountmanager_server =
             Bank::AccountManager::_narrow (naming_obj.in (),
                                            TAO_TRY_ENV);
@@ -49,8 +46,6 @@ main (int argc, char *argv[])
           server = accountmanager_server->open ("Vishal",
                                                 100.00,
                                                 TAO_TRY_ENV);
-          ACE_DEBUG ((LM_DEBUG,
-                      "Unreachable\n"));
 
           TAO_CHECK_ENV;
 

@@ -1,3 +1,12 @@
+Mon Mar 29 22:42:31 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* tao/Connect.cpp : Used CORBA::string_dup () in handle_message ().
+	  Un-owned memory was being assigned to an auto-ptr, which caused 
+	  the INS test to fail on NT.
+	
+	* tests/InterOp-Naming/InterOp_test.cpp (main): Removed some Debug
+	  statements.
+
 Mon Mar 29 21:27:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO-INSTALL.html: removed 2>&1 from cross-compilation instructions.
