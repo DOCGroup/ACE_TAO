@@ -1,3 +1,9 @@
+Mon Jan 14 16:49:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h (ACE_STATIC_SVC_DEFINE): Corrected the documentation to
+          say the service-implementing class must be derived from
+          ACE_Service_Object, not ACE_Service_Config.
+
 Mon Jan 14 07:40:16 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.i (mmap): There was a typo that prevented the ACE Memory Map
