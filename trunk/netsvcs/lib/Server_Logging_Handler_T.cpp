@@ -90,12 +90,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       {
         ACE_Log_Record lp;
 
-        // This temporary variable is needed to prevent egcs 2.91.63
-        // from producing improper code on the ntohl() call.
-        // (a compiler bug?)
-        ACE_INT32 temp_length = length;
-
-        length = ntohl (temp_length);
+        length = ntohl (length);
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
         u_long count = ++this->request_count_;
