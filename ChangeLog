@@ -1,3 +1,16 @@
+Sat Aug  7 10:43:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/OS_NS_string.cpp:
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.inl:
+        
+          Uninlined the ACE_OS::strerror() method, so the #include of ACE.h
+          necessitated by the changes in
+          
+          Fri Aug  6 07:58:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+          can be moved to the .cpp file.
+
 Fri Aug  6 20:22:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
