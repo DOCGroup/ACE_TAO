@@ -566,7 +566,7 @@ ACE_INLINE void
 TAO_POA_Current::clear (void)
 {
   this->poa_impl_ = 0;
-  this->object_id_ = 0;
+  this->object_id_.length (0);
   this->object_key_ = 0;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -585,7 +585,7 @@ TAO_POA_Current::context_is_valid (void)
 {
   return
     this->poa_impl_ != 0 &&
-    this->object_id_ != 0 &&
+    this->object_id_.length () != 0 &&
     this->servant_ != 0 &&
     this->object_key_ != 0;
 }
@@ -605,13 +605,13 @@ TAO_POA_Current::POA_impl (void) const
 ACE_INLINE void
 TAO_POA_Current::object_id (const PortableServer::ObjectId &id)
 {
-  this->object_id_ = &id;
+  this->object_id_ = id;
 }
 
 ACE_INLINE const PortableServer::ObjectId &
 TAO_POA_Current::object_id (void) const
 {
-  return *this->object_id_;
+  return this->object_id_;
 }
 
 ACE_INLINE void
