@@ -160,8 +160,8 @@ protected:
   void create_EC (ACE_ENV_SINGLE_ARG_DECL);
   // Create participants.
 
-  CORBA::Boolean colocated_ec_;
-  // is the ec colocated.
+  CORBA::Boolean collocated_ec_;
+  // is the ec collocated.
 
   int burst_count_;
   // How many bursts we will send from each supplier.

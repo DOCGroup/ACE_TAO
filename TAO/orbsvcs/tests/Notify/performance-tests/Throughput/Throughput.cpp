@@ -191,7 +191,7 @@ Throughput_StructuredPushSupplier::svc (void)
 
 /***************************************************************************/
 Notify_Throughput::Notify_Throughput (void)
-  : colocated_ec_ (0),
+  : collocated_ec_ (0),
     burst_count_ (1),
     burst_pause_ (10000),
     burst_size_ (1000),
@@ -335,9 +335,9 @@ Notify_Throughput::parse_args(int argc, char *argv[])
     const ACE_TCHAR* current_arg = 0;
     while (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-colocated_ec") == 0)
+      if (arg_shifter.cur_arg_strncasecmp ("-collocated_ec") == 0)
         {
-          this->colocated_ec_ = 1;
+          this->collocated_ec_ = 1;
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-consumers")))
@@ -396,7 +396,7 @@ Notify_Throughput::parse_args(int argc, char *argv[])
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
-                     "-colocated_ec, "
+                     "-collocated_ec, "
                      "-consumers [count], "
                      "-suppliers [count], "
                      "-burst_size [size], "
@@ -424,7 +424,7 @@ Notify_Throughput::parse_args(int argc, char *argv[])
 void
 Notify_Throughput::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->colocated_ec_ == 1)
+  if (this->collocated_ec_ == 1)
     {
       TAO_Notify_Service* notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
 
@@ -485,7 +485,7 @@ void
 Notify_Throughput::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
 
-  ACE_DEBUG ((LM_DEBUG, "colocated_ec_ %d ,"
+  ACE_DEBUG ((LM_DEBUG, "collocated_ec_ %d ,"
               "burst_count_ %d, "
               "burst_pause_ %d, "
               "burst_size_  %d, "
@@ -493,7 +493,7 @@ Notify_Throughput::run_test (ACE_ENV_SINGLE_ARG_DECL)
               "consumer_count_ %d,  "
               "supplier_count_ %d "
               "expected count %d\n",
-              colocated_ec_,
+              collocated_ec_,
               burst_count_ ,
               burst_pause_ ,
               burst_size_ ,

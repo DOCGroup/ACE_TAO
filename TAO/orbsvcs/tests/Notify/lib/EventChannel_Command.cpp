@@ -12,7 +12,7 @@ ACE_RCSID(lib, TAO_EventChannel_Command, "$id$")
 #include "../../../orbsvcs/Notify/Service.h"
 
 TAO_NS_EventChannel_Command::TAO_NS_EventChannel_Command (void)
-  : colocated_ (0)
+  : collocated_ (0)
 {
 }
 
@@ -37,7 +37,7 @@ TAO_NS_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0) // -Create ec_name factory_name [COLOCATED]
+      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0) // -Create ec_name factory_name [COLLOCATED]
         {
           this->command_ = CREATE;
 
@@ -49,9 +49,16 @@ TAO_NS_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->factory_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
 
-          if (arg_shifter.cur_arg_strncasecmp ("COLOCATED") == 0)
+          if (arg_shifter.cur_arg_strncasecmp ("COLLOCATED") == 0)
             {
-              this->colocated_ = 1;
+              this->collocated_ = 1;
+            }
+
+          if (arg_shifter.cur_arg_strncasecmp ("COLOCATED") == 0) // grandfather in misspelled
+            {
+              this->collocated_ = 1;
+              ACE_DEBUG ((LM_WARNING, "TAO_NS_EventChannel_Command::init --"
+                          " warning: deprecated misspelled COLOCATED option used.\n"));
             }
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0) // -Destroy ec_name
@@ -81,7 +88,7 @@ TAO_NS_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_NS_EventChannel_Command::create_colocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
@@ -136,9 +143,9 @@ TAO_NS_EventChannel_Command::create_colocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->colocated_ == 1)
+  if (this->collocated_ == 1)
     {
-      this->create_colocated_ecf (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->create_collocated_ecf (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 

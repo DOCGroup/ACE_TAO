@@ -76,11 +76,11 @@ protected:
 
   CosNotification::AdminProperties admin_;
 
-  /// Flag to tell if the Channel Factory should be colocated.
-  CORBA::Boolean colocated_;
+  /// Flag to tell if the Channel Factory should be collocated.
+  CORBA::Boolean collocated_;
 
-  /// Helper method to create a colocated ECF.
-  void create_colocated_ecf (ACE_ENV_SINGLE_ARG_DECL);
+  /// Helper method to create a collocated ECF.
+  void create_collocated_ecf (ACE_ENV_SINGLE_ARG_DECL);
 
   /// = Handlers
   void handle_create (ACE_ENV_SINGLE_ARG_DECL);
