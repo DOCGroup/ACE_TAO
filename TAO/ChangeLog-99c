@@ -1,3 +1,15 @@
+Sat Jan  9 18:53:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
+	  (connect_push_supplier): Changed to use TAO_IN_ENV.
+
+	* tao/try_macros.h: Added a new macro definition TAO_IN_ENV which
+	  maps to _env.  The purpose of adding this macro is to make the
+	  use of TAO try macros more readable.  From now on, we should
+	  always use TAO_IN_ENV to name the CORBA environment passed in
+	  from function arguments.  TAO_TRY_ENV should only be used within
+	  TAO_TRY block.
+
 Sat Jan  9 14:53:15 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
