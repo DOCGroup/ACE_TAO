@@ -18,18 +18,16 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#ifndef _XOPEN_SOURCE
-#define _XOPEN_SOURCE 600
-#endif /* _XOPEN_SOURCE */
-
-#if (defined _XOPEN_SOURCE &&  _XOPEN_SOURCE - 0 >= 500)
-#define ACE_HAS_PTHREADS_UNIX98_EXT
-#endif /* _XOPEN_SOURCE - 0 >= 500 */
+// #ifndef _XOPEN_SOURCE
+// #  define _XOPEN_SOURCE 600
+// #endif /* _XOPEN_SOURCE */
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
-// It's there on all libc 5 systems I checked.
 #include <features.h>
 
+#if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
+#  define ACE_HAS_PTHREADS_UNIX98_EXT
+#endif /* _XOPEN_SOURCE - 0 >= 500 */
 
 // First the machine specific part
 
