@@ -1,3 +1,8 @@
+Wed Feb 16 20:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          We are now using doxygen 1.4.1
+
 Wed Feb 16 11:17:27 2005  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdlib.cpp: Don't #include <limits> if the max() method
@@ -8,7 +13,7 @@ Wed Feb 16 18:15:07 2005  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
           Fixed setting of ACE_LYNXOS_MAJOR and ACE_LYNXOS_MINOR.
-        
+
 Wed Feb 16 11:04:29 2005  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_Asynch_Stream.cpp: Corrections to use ACE_Handler::Proxy
