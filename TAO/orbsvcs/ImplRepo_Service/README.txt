@@ -267,7 +267,7 @@ and updates its database to reflect the new state of the server.
   <li>First run the <b>ImplRepo_Service</b>
     <em>Example:<code> </code> </em><code> ImplRepo_Service -o locator.ior<br></code>
   <li>Run the <b>Activator</b>
-    <em>Example:<code> </code> </em><code> ImR_Activator -ORBInitRef ImplRepo_Service=file://locator.ior<br></code>
+    <em>Example:<code> </code> </em><code> ImR_Activator -ORBInitRef ImplRepoService=file://locator.ior<br></code>
 
 @subsection use How is the ImR used?
 
