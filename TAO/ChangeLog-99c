@@ -1,3 +1,9 @@
+Fri Aug  6 19:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* docs/releasenotes/trader.html: changed code snippets in
+	  documentation to have ACE exception macros instead of TAO
+	  exception macros.
+	
 Fri Aug  6 18:31:31 1999  Mike Moran  <mm4@cs.wustl.edu>
 
 	* tests/Explicit_Event_Loop/
