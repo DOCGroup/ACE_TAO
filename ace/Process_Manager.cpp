@@ -125,22 +125,12 @@ ACE_Process_Manager::~ACE_Process_Manager (void)
 // held...
 
 pid_t
-ACE_Process_Manager::start (char *argv[],
-			    char *envp[])
+ACE_Process_Manager::start (ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::start");
 
-  // Create a new process, potentially causing an exec(), as well.
-  // This API clearly needs to be improved to pass more information
-  // in...
-
   ACE_Process process;
-
-  process.set_handles (ACE_INVALID_HANDLE,
-		       ACE_INVALID_HANDLE,
-		       ACE_INVALID_HANDLE);
-
-  pid_t pid = process.start (argv, envp);
+  pid_t pid = process.start (options);
 
   // Only include the pid in the parent's table.
   if (pid == -1 || pid == 0)
@@ -159,23 +149,20 @@ ACE_Process_Manager::start (char *argv[],
 // Create N new processs running FUNC.
 
 int 
-ACE_Process_Manager::start_n (size_t n,
-			      char *argv[],
-			      char *envp[])
+ACE_Process_Manager::start_n (size_t n, ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 
 #if 0
   // This doesn't work (yet).
   for (size_t i = 0; i < n; i++)
-    if (this->start (argv, envp) == -1)
+    if (this->start (options) == -1)
       return -1;
 
   return 0;
 #else
   ACE_UNUSED_ARG (n);
-  ACE_UNUSED_ARG (argv);
-  ACE_UNUSED_ARG (envp);
+  ACE_UNUSED_ARG (options);
   ACE_NOTSUP_RETURN (-1);
 #endif /* 0 */
 }
