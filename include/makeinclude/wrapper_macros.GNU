@@ -327,9 +327,7 @@ ifdef shared_libs
       BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
       LIB           =
       OBJEXT        = so
-      ifndef VXWORKS
-        VDIR        = .shobj/
-      endif # ! VXWORKS
+      VDIR          = .shobj/
       ifeq ($(BIN),)
         #### No executables are being built, so don't create .obj/.
         OBJDIRS     = .shobj

@@ -69,13 +69,6 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
-
-// Forward declaration and typedefs for the exception thrown by
-// the ORB Dynamic Any factory functions.
-class CORBA_ORB_InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
-
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
@@ -235,6 +228,14 @@ public:
     virtual int _is_a (const char* interface_id) const;
   };
 
+  // Typedefs for CORBA_ORB_RequestSeq,
+  // which is an argument of send_multiple_requests_*().
+  // See Request.{h,i,cpp} for definitions.
+  typedef CORBA_ORB_RequestSeq RequestSeq;
+  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
+  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
+  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
+
   typedef char *ObjectId;
   typedef CORBA::String_var ObjectId_var;
   typedef CORBA::String_out ObjectId_out;
@@ -281,14 +282,6 @@ public:
 #endif /* TAO_HAS_VALUETYPE */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  // Typedefs for CORBA_ORB_RequestSeq,
-  // which is an argument of send_multiple_requests_*().
-  // See Request.{h,i,cpp} for definitions.
-  typedef CORBA_ORB_RequestSeq RequestSeq;
-  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
-  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
-  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
 
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &new_list,
@@ -352,6 +345,12 @@ public:
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
 
+  // Forward declaration and typedefs for the exception thrown by
+  // the ORB Dynamic Any factory functions.
+  class CORBA_ORB_InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
+
   // Typecode for the above exception.
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
 
@@ -403,10 +402,10 @@ public:
 
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
-  CORBA_Object_ptr resolve_initial_references (const CORBA::String name,
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name,
                                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  CORBA_Object_ptr resolve_initial_references (const CORBA::String name,
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name,
                                                ACE_Time_Value *timeout,
                                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is

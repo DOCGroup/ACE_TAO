@@ -56,12 +56,6 @@ public:
 class TAO_ORBSVCS_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
-  TAO_EC_Dispatch_Command (void);
-  // Constructor, it will allocate its own data block
-
-  TAO_EC_Dispatch_Command (ACE_Data_Block*);
-  // Constructor, it assumes ownership of the data block
-
   virtual ~TAO_EC_Dispatch_Command (void);
   // Destructor
 
@@ -87,8 +81,7 @@ class TAO_ORBSVCS_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 {
 public:
   TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
-                       RtecEventComm::EventSet& event,
-                       ACE_Data_Block* data_block);
+                       RtecEventComm::EventSet& event);
   // Constructor
 
   virtual int execute (CORBA::Environment&);

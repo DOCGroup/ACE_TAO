@@ -89,7 +89,7 @@ be_union_branch::gen_encapsulation (void)
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_DEBUG,
                              "be_union_branch: (%N:%l) Label value "
                              "type (%d) is invalid\n", ev->et), -1);
         }

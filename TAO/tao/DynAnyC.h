@@ -45,8 +45,17 @@
 #endif /* _MSC_VER */
 
 
+#if !defined (_CORBA_DYNANY___PTR_CH_)
+#define _CORBA_DYNANY___PTR_CH_
+
 class CORBA_DynAny;
 typedef CORBA_DynAny *CORBA_DynAny_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY___VAR_CH_)
+#define _CORBA_DYNANY___VAR_CH_
 
 class  CORBA_DynAny_var
 {
@@ -74,6 +83,13 @@ private:
   CORBA_DynAny_ptr ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY___OUT_CH_)
+#define _CORBA_DYNANY___OUT_CH_
+
 class  CORBA_DynAny_out
 {
 public:
@@ -90,6 +106,13 @@ public:
 private:
   CORBA_DynAny_ptr &ptr_;
 };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_CH_)
+#define _CORBA_DYNANY_CH_
 
 class TAO_Export CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
 {
@@ -108,8 +131,18 @@ public:
     );
   static CORBA_DynAny_ptr _nil (void);
 
+
+#if !defined (_CORBA_DYNANY_INVALID___PTR_CH_)
+#define _CORBA_DYNANY_INVALID___PTR_CH_
+
   class Invalid;
   typedef Invalid *Invalid_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_INVALID_CH_)
+#define _CORBA_DYNANY_INVALID_CH_
 
   class TAO_Export Invalid : public CORBA::UserException
   {
@@ -137,8 +170,21 @@ public:
 
     static CORBA::TypeCode_ptr _tc_Invalid;
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_INVALIDVALUE___PTR_CH_)
+#define _CORBA_DYNANY_INVALIDVALUE___PTR_CH_
+
   class InvalidValue;
   typedef InvalidValue *InvalidValue_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_INVALIDVALUE_CH_)
+#define _CORBA_DYNANY_INVALIDVALUE_CH_
 
   class TAO_Export InvalidValue : public CORBA::UserException
   {
@@ -166,8 +212,21 @@ public:
 
     static CORBA::TypeCode_ptr _tc_InvalidValue;
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_TYPEMISMATCH___PTR_CH_)
+#define _CORBA_DYNANY_TYPEMISMATCH___PTR_CH_
+
   class TypeMismatch;
   typedef TypeMismatch *TypeMismatch_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_TYPEMISMATCH_CH_)
+#define _CORBA_DYNANY_TYPEMISMATCH_CH_
 
   class TAO_Export TypeMismatch : public CORBA::UserException
   {
@@ -195,8 +254,21 @@ public:
 
     static CORBA::TypeCode_ptr _tc_TypeMismatch;
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_INVALIDSEQ___PTR_CH_)
+#define _CORBA_DYNANY_INVALIDSEQ___PTR_CH_
+
   class InvalidSeq;
   typedef InvalidSeq *InvalidSeq_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNANY_INVALIDSEQ_CH_)
+#define _CORBA_DYNANY_INVALIDSEQ_CH_
 
   class TAO_Export InvalidSeq : public CORBA::UserException
   {
@@ -223,6 +295,9 @@ public:
   }; // exception CORBA_DynAny::InvalidSeq
 
     static CORBA::TypeCode_ptr _tc_InvalidSeq;
+
+
+#endif /* end #if !defined */
 
   virtual CORBA::TypeCode_ptr type (
       CORBA::Environment &_tao_environment =
@@ -429,10 +504,23 @@ private:
   void operator= (const CORBA_DynAny &);
 };
 
+
+#endif /* end #if !defined */
+
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynAny;
+
+
+#if !defined (_CORBA_DYNENUM___PTR_CH_)
+#define _CORBA_DYNENUM___PTR_CH_
 
 class CORBA_DynEnum;
 typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNENUM___VAR_CH_)
+#define _CORBA_DYNENUM___VAR_CH_
 
 class  CORBA_DynEnum_var
 {
@@ -459,6 +547,13 @@ private:
   CORBA_DynEnum_ptr ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNENUM___OUT_CH_)
+#define _CORBA_DYNENUM___OUT_CH_
+
 class  CORBA_DynEnum_out
 {
 public:
@@ -475,6 +570,13 @@ public:
 private:
   CORBA_DynEnum_ptr &ptr_;
 };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNENUM_CH_)
+#define _CORBA_DYNENUM_CH_
 
 class TAO_Export CORBA_DynEnum: public virtual CORBA_DynAny
 {
@@ -528,6 +630,9 @@ private:
   CORBA_DynEnum (const CORBA_DynEnum &);
   void operator= (const CORBA_DynEnum &);
 };
+
+
+#endif /* end #if !defined */
 
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynEnum;
 
@@ -597,6 +702,10 @@ struct  NameValuePair
 };
 
 extern  CORBA::TypeCode_ptr  _tc_NameValuePair;
+
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_NAMEVALUEPAIRSEQ_CH_)
+#define __TAO_UNBOUNDED_SEQUENCE_NAMEVALUEPAIRSEQ_CH_
 
 class _TAO_Unbounded_Sequence_NameValuePairSeq : public TAO_Unbounded_Base_Sequence
 {
@@ -784,6 +893,8 @@ public:
 
 };
 
+#endif /* end #if !defined */
+
 // Forward declarations.
 class NameValuePairSeq;
 typedef NameValuePairSeq *NameValuePairSeq_ptr;
@@ -820,6 +931,13 @@ private:
   NameValuePairSeq *ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_NAMEVALUEPAIRSEQ___OUT_CH_)
+#define _NAMEVALUEPAIRSEQ___OUT_CH_
+
 class  NameValuePairSeq_out
 {
 public:
@@ -838,6 +956,12 @@ private:
   // assignment from T_var not allowed
   void operator= (const NameValuePairSeq_var &);
 };
+
+
+#endif /* end #if !defined */
+
+#if !defined (_NAMEVALUEPAIRSEQ_CH_)
+#define _NAMEVALUEPAIRSEQ_CH_
 
 // *************************************************************
 // NameValuePairSeq
@@ -870,10 +994,26 @@ public:
 
 };
 
+#endif /* end #if !defined */
+
+
+#if !defined (_NAMEVALUEPAIRSEQ___VAR_CH_)
+#define _NAMEVALUEPAIRSEQ___VAR_CH_
+
 extern  CORBA::TypeCode_ptr  _tc_NameValuePairSeq;
+
+
+#if !defined (_CORBA_DYNSTRUCT___PTR_CH_)
+#define _CORBA_DYNSTRUCT___PTR_CH_
 
 class CORBA_DynStruct;
 typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNSTRUCT___VAR_CH_)
+#define _CORBA_DYNSTRUCT___VAR_CH_
 
 class  CORBA_DynStruct_var
 {
@@ -900,6 +1040,13 @@ private:
   CORBA_DynStruct_ptr ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNSTRUCT___OUT_CH_)
+#define _CORBA_DYNSTRUCT___OUT_CH_
+
 class  CORBA_DynStruct_out
 {
 public:
@@ -916,6 +1063,13 @@ public:
 private:
   CORBA_DynStruct_ptr &ptr_;
 };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNSTRUCT_CH_)
+#define _CORBA_DYNSTRUCT_CH_
 
 class TAO_Export CORBA_DynStruct: public virtual CORBA_DynAny
 {
@@ -969,10 +1123,23 @@ private:
   void operator= (const CORBA_DynStruct &);
 };
 
+
+#endif /* end #if !defined */
+
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynStruct;
+
+
+#if !defined (_CORBA_DYNUNION___PTR_CH_)
+#define _CORBA_DYNUNION___PTR_CH_
 
 class CORBA_DynUnion;
 typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNUNION___VAR_CH_)
+#define _CORBA_DYNUNION___VAR_CH_
 
 class  CORBA_DynUnion_var
 {
@@ -999,6 +1166,13 @@ private:
   CORBA_DynUnion_ptr ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNUNION___OUT_CH_)
+#define _CORBA_DYNUNION___OUT_CH_
+
 class  CORBA_DynUnion_out
 {
 public:
@@ -1015,6 +1189,13 @@ public:
 private:
   CORBA_DynUnion_ptr &ptr_;
 };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNUNION_CH_)
+#define _CORBA_DYNUNION_CH_
 
 class TAO_Export CORBA_DynUnion: public virtual CORBA_DynAny
 {
@@ -1085,7 +1266,14 @@ private:
   void operator= (const CORBA_DynUnion &);
 };
 
+
+#endif /* end #if !defined */
+
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynUnion;
+
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_ANYSEQ_CH_)
+#define __TAO_UNBOUNDED_SEQUENCE_ANYSEQ_CH_
 
 class _TAO_Unbounded_Sequence_AnySeq : public TAO_Unbounded_Base_Sequence
 {
@@ -1273,9 +1461,14 @@ public:
 
 };
 
+#endif /* end #if !defined */
+
 // Forward declarations.
 class AnySeq;
 typedef AnySeq *AnySeq_ptr;
+
+#if !defined (_ANYSEQ___VAR_CH_)
+#define _ANYSEQ___VAR_CH_
 
 // *************************************************************
 // class AnySeq_var
@@ -1309,6 +1502,13 @@ private:
   AnySeq *ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_ANYSEQ___OUT_CH_)
+#define _ANYSEQ___OUT_CH_
+
 class  AnySeq_out
 {
 public:
@@ -1327,6 +1527,12 @@ private:
   // assignment from T_var not allowed
   void operator= (const AnySeq_var &);
 };
+
+
+#endif /* end #if !defined */
+
+#if !defined (_ANYSEQ_CH_)
+#define _ANYSEQ_CH_
 
 // *************************************************************
 // AnySeq
@@ -1359,10 +1565,23 @@ public:
 
 };
 
+#endif /* end #if !defined */
+
+
 extern  CORBA::TypeCode_ptr  _tc_AnySeq;
+
+
+#if !defined (_CORBA_DYNSEQUENCE___PTR_CH_)
+#define _CORBA_DYNSEQUENCE___PTR_CH_
 
 class CORBA_DynSequence;
 typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNSEQUENCE___VAR_CH_)
+#define _CORBA_DYNSEQUENCE___VAR_CH_
 
 class  CORBA_DynSequence_var
 {
@@ -1389,6 +1608,13 @@ private:
   CORBA_DynSequence_ptr ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNSEQUENCE___OUT_CH_)
+#define _CORBA_DYNSEQUENCE___OUT_CH_
+
 class  CORBA_DynSequence_out
 {
 public:
@@ -1405,6 +1631,13 @@ public:
 private:
   CORBA_DynSequence_ptr &ptr_;
 };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNSEQUENCE_CH_)
+#define _CORBA_DYNSEQUENCE_CH_
 
 class TAO_Export CORBA_DynSequence: public virtual CORBA_DynAny
 {
@@ -1459,10 +1692,23 @@ private:
   void operator= (const CORBA_DynSequence &);
 };
 
+
+#endif /* end #if !defined */
+
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynSequence;
+
+
+#if !defined (_CORBA_DYNARRAY___PTR_CH_)
+#define _CORBA_DYNARRAY___PTR_CH_
 
 class CORBA_DynArray;
 typedef CORBA_DynArray *CORBA_DynArray_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNARRAY___VAR_CH_)
+#define _CORBA_DYNARRAY___VAR_CH_
 
 class  CORBA_DynArray_var
 {
@@ -1489,6 +1735,13 @@ private:
   CORBA_DynArray_ptr ptr_;
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNARRAY___OUT_CH_)
+#define _CORBA_DYNARRAY___OUT_CH_
+
 class  CORBA_DynArray_out
 {
 public:
@@ -1505,6 +1758,13 @@ public:
 private:
   CORBA_DynArray_ptr &ptr_;
 };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_DYNARRAY_CH_)
+#define _CORBA_DYNARRAY_CH_
 
 class TAO_Export CORBA_DynArray: public virtual CORBA_DynAny
 {
@@ -1549,6 +1809,9 @@ private:
   CORBA_DynArray (const CORBA_DynArray &);
   void operator= (const CORBA_DynArray &);
 };
+
+
+#endif /* end #if !defined */
 
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynArray;
 

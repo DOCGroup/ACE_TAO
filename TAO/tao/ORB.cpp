@@ -323,81 +323,6 @@ CORBA_ORB::work_pending (void)
   return 1;
 }
 
-// The following functions are not implemented - they just throw
-// CORBA::NO_IMPLEMENT.
-
-void
-CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
-                                  CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::create_environment (CORBA::Environment_ptr &,
-                               CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
-                               CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
-                                CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::get_default_context (CORBA::Context_ptr &,
-                                CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
-                                          CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
-                                            CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::get_next_response (CORBA_Request_ptr &,
-                              CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-CORBA::Boolean
-CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                    0);
-}
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
@@ -866,7 +791,7 @@ CORBA_ORB::multicast_to_service (const char * service_name,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (const CORBA::String name,
+CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        CORBA_Environment &TAO_IN_ENV)
 {
   return this->resolve_initial_references (name,
@@ -875,7 +800,7 @@ CORBA_ORB::resolve_initial_references (const CORBA::String name,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (const CORBA::String name,
+CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1795,6 +1720,81 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
   obj = this->string_to_object (ior.c_str ());
 
   return 0;
+}
+
+// The following functions are not implemented - they just throw
+// CORBA::NO_IMPLEMENT.
+
+void
+CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
+                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
+                                  CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
+                                CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::get_default_context (CORBA::Context_ptr &,
+                                CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::create_environment (CORBA::Environment_ptr &,
+                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
+                                          CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
+                                            CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::get_next_response (CORBA_Request_ptr &,
+                              CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+CORBA::Boolean
+CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 // ****************************************************************

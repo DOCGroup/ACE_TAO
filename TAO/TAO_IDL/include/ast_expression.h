@@ -136,10 +136,8 @@ public:
       long                lval;     // Contains long expression value
       unsigned long       ulval;    // Contains unsigned long expr value
       unsigned long       bval;     // Contains boolean expression value
-#if ! defined (ACE_LACKS_LONGLONG_T)
-      ACE_CDR::LongLong   llval;   // Contains long long expr value
-      ACE_CDR::ULongLong  ullval;  // Contains unsigned long long expr value
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
+      ACE_CDR::LongLong   llval;    // Contains long long expr value
+      ACE_CDR::ULongLong  ullval;   // Contains unsigned long long expr value
       float               fval;     // Contains 32-bit float expr value
       double              dval;     // Contains 64-bit float expr value
       char                cval;     // Contains char expression value
@@ -163,10 +161,6 @@ public:
   AST_Expression(long           l);
   AST_Expression(long           l, ExprType t);
   AST_Expression(unsigned long  ul);
-#if ! defined (ACE_LACKS_LONGLONG_T)
-  AST_Expression (ACE_CDR::LongLong ll);
-  AST_Expression (ACE_CDR::ULongLong ull);
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   AST_Expression(float          f);
   AST_Expression(double         d);
   AST_Expression(char           c);

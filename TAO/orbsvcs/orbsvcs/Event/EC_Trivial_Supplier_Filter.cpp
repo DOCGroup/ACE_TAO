@@ -97,3 +97,4 @@ TAO_EC_Trivial_Supplier_Filter_Builder::destroy (
     TAO_EC_SupplierFiltering*)
 {
 }
+

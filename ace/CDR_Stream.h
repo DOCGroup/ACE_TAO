@@ -129,13 +129,13 @@ public:
   // Definitions of the IDL basic types, for use in the CDR
   // classes. The cleanest way to avoid complaints from all compilers
   // is to define them all.
-  #if defined (CHORUS) && defined (ghs) && !defined (__STANDARD_CXX)
+  #if defined (ghs) && defined (CHORUS)
     // This is non-compliant, but a nasty bout with
     // Green Hills C++68000 1.8.8 forces us into it.
     typedef unsigned long Boolean;
-  #else  /* ! (CHORUS && ghs 1.8.8) */
+  #else  /* ! (ghs && CHORUS) */
     typedef u_char Boolean;
-  #endif /* ! (CHORUS && ghs 1.8.8) */
+  #endif /* ! (ghs && CHORUS) */
 
   typedef u_char Octet;
   typedef char Char;

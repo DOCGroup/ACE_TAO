@@ -134,7 +134,6 @@ int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Thread_Manager_Test"));
-  int status = 0;
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = DEFAULT_THREADS;
@@ -247,21 +246,7 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
   // Perform a barrier wait until all the threads have shut down.
-  // But, wait for a limited time because sometimes the test hangs
-  // on SunOS 5.5.1 and 5.7.
-  const ACE_Time_Value max_wait (60);
-  const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (thr_mgr->wait (&wait_time) == -1)
-    {
-      if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
-                               max_wait.msec ()));
-      else
-        ACE_OS::perror ("wait");
-
-      status = -1;
-    }
+  ACE_ASSERT (thr_mgr->wait () != -1);
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) main thread finished\n")));
 
@@ -287,5 +272,5 @@ main (int, ASYS_TCHAR *[])
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
-  return status;
+  return 0;
 }
