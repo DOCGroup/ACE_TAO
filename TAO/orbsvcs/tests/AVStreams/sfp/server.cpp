@@ -49,6 +49,7 @@ class mySFP_Callback: public SFP_Callback
 int
 main (int argc, char **argv)
 {
+  server_addr = ACE_OS::strdup ("localhost:10000");
   TAO_ORB_Manager orb_manager;
   
   orb_manager.init (argc,argv);
