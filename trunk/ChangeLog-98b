@@ -1,11 +1,11 @@
 Mon Aug 31 14:02:34 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/ace.dsw:
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Updated to MSVC 6, which consisted of changing the 
-	  version number insde to 6.00.  This change gets it
-	  to work in both 5 and 6, without any trouble.
+        * ace/ace.dsw:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Updated to MSVC 6, which consisted of changing the
+          version number insde to 6.00.  This change gets it
+          to work in both 5 and 6, without any trouble.
 
 Mon Aug 31 12:25:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -21,6 +21,11 @@ Mon Aug 31 12:25:15 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER, and
           therefore need to explicitly initialize and finalize
           the ACE_Object_Manager singleton.
+
+        * tests/Semaphore_Test.cpp (test_timeout): a timed
+          semaphore acquire fails on ACE_HAS_PTHREADS_DRAFT4
+          with EINTR instead of ETIME if it times out.  That's
+          the way it's documented, as well as the way it behaves on LynxOS.
 
 Sun Aug 30 23:05:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
