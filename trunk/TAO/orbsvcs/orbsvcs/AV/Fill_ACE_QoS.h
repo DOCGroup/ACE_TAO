@@ -41,18 +41,18 @@ public:
   // destructor.
 
   int fill_simplex_receiver_qos (ACE_QoS &ace_qos,
-                                 const ACE_Flow_Spec *recv_flow_spec);
+                                 ACE_Flow_Spec *recv_flow_spec);
   // To be used by receivers. Fills the receiver qos and sets the
   // sender qos to NO_TRAFFIC.
 
   int fill_simplex_sender_qos (ACE_QoS &ace_qos,
-                               const ACE_Flow_Spec *recv_flow_spec);
+                               ACE_Flow_Spec *recv_flow_spec);
   // To be used by senders. Fills the sender qos and sets the receiver
   // qos to NO_TRAFFIC.
 
   int fill_duplex_qos (ACE_QoS &ace_qos,
-                       const ACE_Flow_Spec *recv_flow_spec,
-                       const ACE_Flow_Spec *sender_flow_spec);
+                       ACE_Flow_Spec *recv_flow_spec,
+                       ACE_Flow_Spec *sender_flow_spec);
   // To be used by applications that wish to be both receivers and
   // senders.
 
