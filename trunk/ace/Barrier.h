@@ -87,7 +87,7 @@ struct ACE_Export ACE_Sub_Barrier
 class ACE_Export ACE_Barrier
 {
 public:
-  /// Initialize the barrier to synchronize <count> threads.
+  /// Initialize the barrier to synchronize @a count threads.
   ACE_Barrier (unsigned int count,
                const ACE_TCHAR *name = 0,
                void *arg = 0);
@@ -95,7 +95,7 @@ public:
   /// Default dtor.
   ~ACE_Barrier (void);
 
-  /// Block the caller until all <count> threads have called <wait> and
+  /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
   int wait (void);
 
@@ -117,7 +117,7 @@ protected:
   int count_;
 
   /**
-   * We keep two <sub_barriers>, one for the first "generation" of
+   * We keep two @c sub_barriers, one for the first "generation" of
    * waiters, and one for the next "generation" of waiters.  This
    * efficiently solves the problem of what to do if all the first
    * generation waiters don't leave the barrier before one of the
@@ -168,7 +168,7 @@ public:
 class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 {
 public:
-  /// Create a Thread_Barrier, passing in the optional <name>.
+  /// Create a Thread_Barrier, passing in the optional @a name.
   ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
 
   /// Default dtor.
