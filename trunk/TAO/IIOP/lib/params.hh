@@ -112,6 +112,8 @@ public:
   CONCURRENCY_STRATEGY* concurrency_strategy();
   SCHEDULING_STRATEGY*  scheduling_strategy();
   
+  ROA_Factory();
+
 private:
   CONCURRENCY_STRATEGY* concurrency_strategy_;
   ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;

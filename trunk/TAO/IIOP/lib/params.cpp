@@ -43,6 +43,11 @@ ROA_Factory::concurrency_strategy()
   return concurrency_strategy_;
 }
 
+ROA_Factory::ROA_Factory()
+  : concurrency_strategy_(0)
+{
+}
+
 
 #if !defined(__ACE_INLINE__)
 #  include "params.i"
