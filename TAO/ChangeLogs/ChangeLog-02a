@@ -1,3 +1,7 @@
+Mon Dec 17 07:23:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/performance.html: Adde some commenst to the document. 
+
 Sun Dec 16 10:33:47 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
