@@ -219,14 +219,14 @@ dnl TAO_CONFIGURATION_OPTIONS
 # called so that the proper values are cached beforehand.  We also do
 # it before any linker flags (LDFLAGS) are set so that C++ specific
 # ones don't break the tests.
-AC_LANG_PUSH([C])
-AC_OBJEXT
-AC_EXEEXT
-AC_LANG_POP([C])
+dnl AC_LANG_PUSH([C])
+dnl AC_OBJEXT
+dnl AC_EXEEXT
+dnl AC_LANG_POP([C])
 
 dnl Call ACE_SET_COMPILER_FLAGS before AC_PROG_LIBTOOL and after the
 dnl AC_ARG_ENABLE and AC_ARG_WITH calls.
-dnl ACE_SET_COMPILER_FLAGS
+ACE_SET_COMPILER_FLAGS
 
 
 dnl SECTION 3: check for programs <--- moved before section 2 (Ossama)
@@ -7300,6 +7300,9 @@ AC_CONFIG_FILES([
   aceConf.sh
   Makefile
   ace/Makefile
+  ace/RMCast/Makefile
+  ace/QoS/Makefile
+  ace/SSL/Makefile
   apps/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile

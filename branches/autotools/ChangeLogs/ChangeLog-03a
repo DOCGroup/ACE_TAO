@@ -1,3 +1,61 @@
+Wed Feb 19 17:02:42 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac (AC_CONFIG_FILES):
+
+	  Added RMCast, QoS and SSL Makefiles to the list of files to be
+	  generated.
+
+	* Makefile.am (ACLOCAL_AMFLAGS):
+
+	  Define this variable.  It contains options to be passed to
+	  `aclocal' whenever the generated Makefile invokes `aclocal'.
+	  Addresses failed automatic attempts at regenerating the
+	  `configure' script.
+
+	  (CONFIGURE_DEPENDENCIES):
+
+	  Define this variable to include all of the ACE-specific M4 files
+	  in the `m4' directory.  Those files will be included in the list
+	  of dependencies for the `configure' script.  Addresses failed
+	  automatic attempts at regenerating the `configure' script.
+
+	* ace/Makefile.am (DIST_SUBDIRS):
+
+	  Added RMCast, QoS and SSL subdirectories to the list of
+	  directories to include in the ACE distribution.
+
+	  (SUBDIRS):
+
+	  Conditionally build the RMCast, QoS and SSL subdirectories.  The
+	  user may explicitly enable or disable them using the
+	  "--with-rmcast", "--with-qos" and "--with-ssl" configure script
+	  options, respectively.
+
+	  (libACE_la_SOURCES):
+
+	  Added $(libACE_Codecs_la_SOURCES) to the list of ACE library
+	  sources.  Fixes "unresolved symol" link-time errors when
+	  building the `Codecs_Test' one-button test.
+
+	* ace/RMCast/Makefile.am:
+	* ace/QoS/Makefile.am:
+	* ace/SSL/Makefile.am:
+
+	  Added these Automake input files for the ACE_RMCast, ACE_QoS and
+	  ACE_SSL libraries, respectively.
+
+	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
+
+	  Added "--with-rmcast", "--with-qos" and "--with-ssl"
+	  configuration options that allow the user to explicitly enable
+	  or disable the ACE_RMCast, ACE_QoS and ACE_SSL libraries,
+	  respectively.  The ACE_RMCast is enabled by default, while the
+	  ACE_QoS and ACE_SSL libraries are not.
+
+	* tests/Makefile.am:
+
+	  Build CDR_Array_Test, Codecs_Test and Tokens_Test.
+
 Fri Feb 14 10:02:30 2003  Ossama Othman  <ossama@uci.edu>
 
 	* Makefile.am (all-local):

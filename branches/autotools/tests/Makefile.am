@@ -34,21 +34,47 @@ noinst_SCRIPTS = \
   run_tests.psosim \
   run_tests_remote.sh
 
+
+## @todo Do not build/run this test if running on LynxOS < 3.1.0.
+CDR_ARRAY_TEST = CDR_Array_Test
+
+## @todo Do not build these tests if their corresponding components in
+##       ACE have not been enabled/built.
+##if BUILD_CODECS_FILES
+CODECS_TEST = Codecs_Test
+##else
+##CODECS_TEST =
+##endif
+
+##if BUILD_TOKEN_FILES
+TOKENS_TEST = Tokens_Test
+##else
+##TOKENS_TEST =
+##endif
+
 if COMPILE_XTREACTOR_TEST
 XTREACTOR_TEST = XtReactor_Test
 else
 XTREACTOR_TEST =
 endif
 
+## @todo Make the DLL_Test, Service_Config_Test and
+##       Framework_Component tests conditional on shared library
+##       builds.  Do not build in static library only builds.
+FRAMEWORK_COMPONENT_TEST = Framework_Component_Test
+## FRAMEWORK_COMPONENT_TEST =
+
 ## Build the shared libraries needed for the DLL_Test and the
 ## Service_Config_DLL test. 
-noinst_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la
+libdir = $(shell pwd)
+lib_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la
 
-libDLL_Test_la_LDFLAGS = -module
 libDLL_Test_la_SOURCES = DLL_Test_Impl.cpp DLL_Test_Impl.h
+libDLL_Test_la_LDFLAGS = -module
 
-libService_Config_DLL_la_LDFLAGS = -module
 libService_Config_DLL_la_SOURCES = Service_Config_DLL.cpp Service_Config_DLL.h
+libService_Config_DLL_la_LDFLAGS = -module
+libService_Config_DLL_la_LIBADD = $(top_builddir)/ace/libACE.la
 
 ## Build the following test programs when a `make check' is
 ## issued by the user.
@@ -168,7 +194,12 @@ noinst_PROGRAMS = \
   FlReactor_Test \
   Thread_Pool_Reactor_Test \
   Thread_Pool_Reactor_Resume_Test \
-  TkReactor_Test $(XTREACTOR_TEST)
+  TkReactor_Test \
+  $(CDR_ARRAY_TEST) \
+  $(CODECS_TEST) \
+  $(FRAMEWORK_COMPONENT_TEST) \
+  $(TOKENS_TEST) \
+  $(XTREACTOR_TEST)
 
 Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
 
@@ -188,6 +219,8 @@ Bound_Ptr_Test_SOURCES = Bound_Ptr_Test.cpp
 
 Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
+CDR_Array_Test_SOURCES = CDR_Array_Test.cpp
+
 CDR_Test_SOURCES = CDR_Test.cpp
 
 CDR_File_Test_SOURCES = CDR_File_Test.cpp
@@ -204,6 +237,8 @@ Cache_Map_Manager_Test_SOURCES = Cache_Map_Manager_Test.cpp \
                                  Cache_Map_Manager_Test.h
 
 Capabilities_Test_SOURCES = Capabilities_Test.cpp
+
+Codecs_Test_SOURCES = Codecs_Test.cpp
 
 Collection_Test_SOURCES = Collection_Test.cpp Collection_Test.h
 
@@ -231,6 +266,9 @@ Env_Value_Test_SOURCES = Env_Value_Test.cpp
 FIFO_Test_SOURCES = FIFO_Test.cpp
 
 FlReactor_Test_SOURCES = FlReactor_Test.cpp
+
+Framework_Component_Test_SOURCES = Framework_Component_Test.cpp \
+                                   Framework_Component_Test.h
 
 Future_Test_SOURCES = Future_Test.cpp
 
@@ -399,9 +437,11 @@ Timeprobe_Test_SOURCES = Timeprobe_Test.cpp
 
 Timer_Queue_Test_SOURCES = Timer_Queue_Test.cpp
 
+TkReactor_Test_SOURCES = TkReactor_Test.cpp
+
 Token_Strategy_Test_SOURCES = Token_Strategy_Test.cpp
 
-TkReactor_Test_SOURCES = TkReactor_Test.cpp
+Tokens_Test_SOURCES = Tokens_Test.cpp
 
 UPIPE_SAP_Test_SOURCES = UPIPE_SAP_Test.cpp
 
@@ -458,10 +498,10 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 ## Automake recognized target.  Appends these rules to the "all"
 ## target.
 all-local:
-	@for p in $(noinst_SCRIPTS) $(noinst_DATA); do \
+	for p in $(noinst_SCRIPTS) $(noinst_DATA); do \
 	  test -f $$p \
 	  || $(LN_S) $(top_srcdir)/tests/$$p $$p; done
-	@touch tests-link-stamp
+	touch tests-link-stamp
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -34,6 +34,23 @@ SUBDIRS = \
 ##          etc \
 ##          includes
 
+## Additional flags to pass to `aclocal' when invoked by the generated
+## Makefile.  In particular, add ACE's `m4' directory to the macro
+## search path.
+ACLOCAL_AMFLAGS = -I m4
+
+## If any of these files are modified, `configure' will be
+## regenerated.
+CONFIGURE_DEPENDENCIES = \
+  m4/ace.m4 \
+  m4/acinclude.m4 \
+  m4/compiler.m4 \
+  m4/config_h.m4 \
+  m4/features.m4 \
+  m4/platform.m4 \
+  m4/subsets.m4 \
+  m4/threads.m4
+
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST = \
   ACE-INSTALL.html \
@@ -65,7 +82,7 @@ ACE_EXTRA_DIST = ChangeLogs bin docs m4
 ## Automake recognized target.  Appends these rules to the "all"
 ## target.
 all-local:
-	@test -d bin || ($(LN_S) $(top_srcdir)/bin bin && touch ace-bin-stamp)
+	test -d bin || ($(LN_S) $(top_srcdir)/bin bin && touch ace-bin-stamp)
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.

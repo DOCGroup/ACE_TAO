@@ -8,8 +8,47 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
+## These are subdirectories that are always included in the
+## distribution.
+DIST_SUBDIRS = \
+  RMCast \
+  QoS \
+  SSL
+
+## Conditionally built subdirectories.
+
+if BUILD_RMCAST
+RMCAST_DIR = RMCast
+else
+RMCAST_DIR =
+endif
+
+if BUILD_QOS
+QOS_DIR = QoS
+else
+QOS_DIR =
+endif
+
+if BUILD_SSL
+SSL_DIR = SSL
+else
+SSL_DIR =
+endif
+
+## List of conditionally built subdirectories.
+##
+## Note that the "." (current) directory in the below SUBDIRS list is
+## required to make the ACE directory be built prior to the
+## subdirectories.
+##
 ## Disable building of CLASSIX library for now.
 ## SUBDIRS = CLASSIX
+SUBDIRS = \
+  . \
+  $(RMCAST_DIR) \
+  $(QOS_DIR) \
+  $(SSL_DIR)
+
 
 INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
@@ -420,6 +459,7 @@ libACE_la_SOURCES = \
   $(libACE_Memory_la_SOURCES) \
   $(libACE_Timer_la_SOURCES) \
   $(libACE_Token_la_SOURCES) \
+  $(libACE_Codecs_la_SOURCES) \
   $(libACE_Other_la_SOURCES)
 
 
