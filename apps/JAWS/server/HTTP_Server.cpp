@@ -48,9 +48,8 @@ HTTP_Server::parse_args (int argc, char *argv[])
 int
 HTTP_Server::init (int argc, char *argv[])
 {
-#if !defined (ACE_WIN32)
-  sigignore (SIGPIPE);
-#endif
+  ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+  ACE_UNUSED_ARG (sig);
 
   this->parse_args (argc, argv);
 
