@@ -249,7 +249,14 @@ ACE_Log_Msg::instance (void)
         ACE_reinterpret_cast (ACE_thread_mutex_t *,
                               ACE_OS_Object_Manager::preallocated_object
                               [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
-      ACE_OS::thread_mutex_lock (lock);
+
+      if (1 == ACE_OS_Object_Manager::starting_up())
+        //This function is called before ACE_OS_Object_Manager is
+        //initialized.  So the lock might not be valid.  Assume it's
+        //single threaded and so don't need the lock.
+        ;
+      else
+        ACE_OS::thread_mutex_lock (lock);
 
       if (key_created_ == 0)
         {
@@ -261,6 +268,12 @@ ACE_Log_Msg::instance (void)
             if (ACE_Thread::keycreate (&log_msg_tss_key_,
                                        &ACE_TSS_cleanup) != 0)
               {
+                if (1 == ACE_OS_Object_Manager::starting_up())
+                  //This function is called before ACE_OS_Object_Manager is
+                  //initialized.  So the lock might not be valid.  Assume it's
+                  //single threaded and so don't need the lock.
+                  ;
+                else
                 ACE_OS::thread_mutex_unlock (lock);
                 return 0; // Major problems, this should *never* happen!
               }
@@ -269,7 +282,13 @@ ACE_Log_Msg::instance (void)
           key_created_ = 1;
         }
 
-      ACE_OS::thread_mutex_unlock (lock);
+      if (1 == ACE_OS_Object_Manager::starting_up())
+        //This function is called before ACE_OS_Object_Manager is
+        //initialized.  So the lock might not be valid.  Assume it's
+        //single threaded and so don't need the lock.
+        ;
+      else
+        ACE_OS::thread_mutex_unlock (lock);
     }
 
   ACE_Log_Msg *tss_log_msg = 0;

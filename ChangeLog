@@ -1,3 +1,18 @@
+Mon Oct  1 18:06:48 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Object_Manager.cpp (ACE_UnhandledExceptionFilter):
+	  Removed the un-needed #if 0's. Left them before as a safety
+	  measure (in case something doesnt work) and forgot to remove
+	  them later.
+
+	* ace/Log_Msg.cpp (instance):
+	  Fixed the seg faults that are raised when ace is compiled with
+	  ACE_NTRACE=0 on SunOS. Added a check before locking and
+	  releasing a lock.
+
+	  Thanks to Tushar Nair <ntushar@yahoo.com> for reporting the
+	  problem and for providing a fix.
+
 Mon Oct  1 18:27:41 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Logging_Client.cpp: Remove the third (optional)
@@ -26,11 +41,11 @@ Mon Oct  1 15:19:11 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Mon Oct  1 12:58:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (handle_socket_events): A fix for the problem 
+	* ace/TP_Reactor.cpp (handle_socket_events): A fix for the problem
 	  that started showing  up this time is like this. One of the
 	  threads was dispatching an upcall. In the intermediate time the
 	  Reactor woke up another thread to close the handler, remember
-	  that this is possible with the TP_Reactor if the application 
+	  that this is possible with the TP_Reactor if the application
 	  resumes the handles (the way TAO does that). Now when the thread
 	  that that dispatched the upcall returned it tries to invoke a
 	  method on the already closed handle. To prevent that from
@@ -38,7 +53,7 @@ Mon Oct  1 12:58:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  associated with the handler is still available in the internal
 	  map of the Reactor. As this check is done in the return path of
 	  the thread this should have less performance impact. This is
-	  another reason why we should have #1031 in place ASAP. 
+	  another reason why we should have #1031 in place ASAP.
 
 Mon Oct  1 12:23:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -115,7 +130,7 @@ Fri Sep 28 23:38:07 2001  Ossama Othman  <ossama@uci.edu>
 	  Added a "bytes transferred" pointer parameter.  This allows the
 	  amount of bytes transferred to returned via this parameter, thus
 	  matching the semantics of their ACE_SOCK_Stream counterparts.
-	
+
 	* ace/SSL/SSL_SOCK_Stream.cpp (send):
 
 	  Do not block attempt a timed send() if data is available in
@@ -158,7 +173,7 @@ Fri Sep 28 12:31:39 2001  Ossama Othman  <ossama@uci.edu>
 	  SSL_ERROR_ZERO_RETURN case.  Previously, this method returned
 	  without removing it, resulting in a seg fault.
 
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect): 
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
 	  Ported the updates made to the ssl_accept() counterpart to this
 	  method.
@@ -216,7 +231,7 @@ Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/TTY_IO.cpp: Fixed numerous bugs in the control() method.
           Thanks to Airat A. Sadreev <airatsa@nm.ru> for reporting this.
-	
+
 	* ace/TTY_IO.h: Add a new field for Win32.  Thanks to
 	  Airat A. Sadreev <airatsa@nm.ru> for reporting this.
 
@@ -227,14 +242,14 @@ Thu Sep 27 06:12:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  Kohloff for reporting this.  This fixes Bug ID 899 for the time
  	  being.
 
-	* ace/Module.cpp (ACE_Module): The line 
-	
+	* ace/Module.cpp (ACE_Module): The line
+
 	  this->name ("<unknown>");
-  
+
 	  was  be replaced with
-  
-          this->name (ACE_TEXT("<unknown>"));  
-	  
+
+          this->name (ACE_TEXT("<unknown>"));
+
 	  Thanks to Airat A. Sadreev <sadreevaa@hq.tatenergo.ru> for
  	  reporting this.  This fixes bug id 1041.
 
