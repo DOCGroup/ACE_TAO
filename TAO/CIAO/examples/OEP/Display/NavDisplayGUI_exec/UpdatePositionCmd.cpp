@@ -23,8 +23,8 @@ UpdatePositionCmd::create(
 
 
 int
-UpdatePositionCmd::execute(void *context)
+UpdatePositionCmd::execute (void * /* context */)
 {
-  this->form_->updateUnit(this->unit_);
+  this->form_->updateUnit (this->unit_);
   return 0;
 }

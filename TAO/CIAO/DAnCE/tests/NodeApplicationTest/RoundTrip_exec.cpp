@@ -18,17 +18,19 @@ RoundTrip_Impl::RoundTrip_exec_i::~RoundTrip_exec_i ()
 }
 
 NodeAppTest::CCM_LatencyTest_ptr
-RoundTrip_Impl::RoundTrip_exec_i::get_facet_1(ACE_ENV_SINGLE_ARG_DECL)
+RoundTrip_Impl::RoundTrip_exec_i::get_facet_1 (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return new RoundTrip_Impl::LatencyTest_Impl ();
+  return new RoundTrip_Impl::LatencyTest_Impl;
 }
 
 NodeAppTest::CCM_LatencyTest_ptr
-RoundTrip_Impl::RoundTrip_exec_i::get_facet_2(ACE_ENV_SINGLE_ARG_DECL)
+RoundTrip_Impl::RoundTrip_exec_i::get_facet_2 (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return new RoundTrip_Impl::LatencyTest_Impl ();
+  return new RoundTrip_Impl::LatencyTest_Impl;
 }
 
 CORBA::Long
@@ -40,15 +42,15 @@ RoundTrip_Impl::RoundTrip_exec_i::cube_long (CORBA::Long data)
 
 // Operations from Components::SessionComponent
 void
-RoundTrip_Impl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+RoundTrip_Impl::RoundTrip_exec_i::set_session_context (
+    Components::SessionContext_ptr
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "RoundTrip_Impl::RoundTrip_exec_i::set_session_context\n"));
-  ACE_CHECK;
-
+    ACE_DEBUG ((LM_DEBUG,
+                "RoundTrip_Impl::RoundTrip_exec_i::set_session_context\n"));
 }
 
 void
@@ -107,11 +109,11 @@ RoundTrip_Impl::RoundTripHome_exec_i::~RoundTripHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-RoundTrip_Impl::RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+RoundTrip_Impl::RoundTripHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  return new RoundTrip_Impl::RoundTrip_exec_i ();
+  return new RoundTrip_Impl::RoundTrip_exec_i;
 }
 
 // Implementation for the probided inferface.

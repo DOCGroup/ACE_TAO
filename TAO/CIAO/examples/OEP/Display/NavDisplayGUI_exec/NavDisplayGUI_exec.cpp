@@ -33,21 +33,22 @@ MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl ()
 // Operations from HUDisplay::NavDisplay
 
 void
-MyImpl::NavDisplayGUI_exec_impl::push_Refresh (HUDisplay::tick *ev
-                                               ACE_ENV_ARG_DECL)
+MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
+    HUDisplay::tick * /* ev */
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
 
   // Refresh position
-  HUDisplay::position_var loc
-    = this->context_->get_connection_GPSLocation (ACE_ENV_ARG_PARAMETER);
+  HUDisplay::position_var loc =
+    this->context_->get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Long lx = loc->posx (ACE_ENV_ARG_PARAMETER);
+  CORBA::Long lx = loc->posx (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Long ly = loc->posy (ACE_ENV_ARG_PARAMETER);
+  CORBA::Long ly = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   mutex_.acquire();
@@ -186,13 +187,14 @@ MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "MyImpl::NavDisplayGUIHome_exec_impl::create()\n"));
+
   return new MyImpl::NavDisplayGUI_exec_impl;
 }
 

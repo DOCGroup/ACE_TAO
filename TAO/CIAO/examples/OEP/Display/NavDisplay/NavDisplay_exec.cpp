@@ -34,7 +34,7 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
 
   CORBA::Long x = loc->posx (ACE_ENV_SINGLE_ARG_PARAMETER) % 500;
   ACE_CHECK;
-  
+
   CORBA::Long y = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER) % 300;
   ACE_CHECK;
 
@@ -80,7 +80,7 @@ MyImpl::NavDisplay_exec_impl::ciao_preactivate (
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -89,7 +89,6 @@ MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
     }
-
 }
 
 void

@@ -67,7 +67,7 @@ MyImpl::BMDevice_exec_i::set_session_context (
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::set_session_context\n"));
     }
 
@@ -91,16 +91,15 @@ MyImpl::BMDevice_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_activate\n"));
     }
-    
 }
 
 void
@@ -117,7 +116,7 @@ MyImpl::BMDevice_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
     }
 }
@@ -129,7 +128,7 @@ MyImpl::BMDevice_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_remove\n"));
     }
 }
