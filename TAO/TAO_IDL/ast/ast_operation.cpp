@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * clause (implemented as an array of AST_Exceptions).
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_operation, "$Id$")
 
@@ -94,12 +94,15 @@ AST_Operation::AST_Operation ()
 {
 }
 
-AST_Operation::AST_Operation (AST_Type *rt, 
-                              Flags fl, 
+AST_Operation::AST_Operation (AST_Type *rt,
+                              Flags fl,
                               UTL_ScopedName *n,
-			                        UTL_StrList *p)
+                              UTL_StrList *p,
+                              idl_bool local,
+                              idl_bool abstract)
   : AST_Decl(AST_Decl::NT_op, n, p),
     UTL_Scope(AST_Decl::NT_op),
+    COMMON_Base (local, abstract),
     pd_return_type(rt),
     pd_flags(fl),
     pd_context(NULL),
@@ -172,10 +175,10 @@ UTL_NameList *
 AST_Operation::fe_add_exceptions(UTL_NameList *t)
 {
   UTL_NamelistActiveIterator *nl_i;
-  UTL_ScopedName	 *nl_n;
-  UTL_Scope		     *fs = idl_global->scopes()->top();
-  AST_Exception		 *fe;
-  AST_Decl		     *d;
+  UTL_ScopedName         *nl_n;
+  UTL_Scope                  *fs = idl_global->scopes()->top();
+  AST_Exception          *fe;
+  AST_Decl                   *d;
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (fs);
@@ -264,9 +267,9 @@ AST_Operation::dump(ostream &o)
   UTL_ScopeActiveIterator   *i;
   UTL_StrlistActiveIterator *si;
   UTL_ExceptlistActiveIterator *ei;
-  AST_Decl		    *d;
-  AST_Exception		    *e;
-  UTL_String		    *s;
+  AST_Decl                  *d;
+  AST_Exception             *e;
+  UTL_String                *s;
 
   if (pd_flags == OP_oneway)
     o << "oneway ";
@@ -296,7 +299,7 @@ AST_Operation::dump(ostream &o)
       ei->next();
       e->local_name()->dump(o);
       if (!(ei->is_done()))
-	o << ", ";
+        o << ", ";
     }
     delete ei;
     o << ")";
@@ -309,7 +312,7 @@ AST_Operation::dump(ostream &o)
       si->next();
       o << s->get_string();
       if (!(si->is_done()))
-	o << ", ";
+        o << ", ";
     }
     delete si;
     o << ")";

@@ -94,9 +94,6 @@ public:
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
-    TAO_LOCAL_ATTRIBUTE_H,
-    TAO_LOCAL_ATTRIBUTE_S,
-
     // emitting code for array defn
     TAO_ARRAY_CH,
     TAO_ARRAY_CI,
@@ -165,10 +162,6 @@ public:
     TAO_INTERFACE_TIE_SI,
     TAO_INTERFACE_SMART_PROXY_CH,
     TAO_INTERFACE_SMART_PROXY_CS,
-
-    TAO_LOCAL_INTERFACE_H,
-    TAO_LOCAL_INTERFACE_I,
-    TAO_LOCAL_INTERFACE_S,
 
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
@@ -292,11 +285,6 @@ public:
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
     TAO_OBV_OPERATION_ARGLIST_IMPL_CH,       // for implementations, e.g. exception holders
     TAO_OBV_OPERATION_ARGLIST_IMPL_CS,       // for implementations, e.g. exception holders
-
-    TAO_LOCAL_OPERATION_H,
-    TAO_LOCAL_OPERATION_I,
-    TAO_LOCAL_OPERATION_S,
-    TAO_LOCAL_OPERATION_ARGLIST_H,
 
     // AMI next generation states
     TAO_AMI_INTERFACE_CH,

@@ -39,7 +39,9 @@ be_visitor_structure_cdr_op_cs::~be_visitor_structure_cdr_op_cs (void)
 int
 be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 {
-  if (node->cli_stub_cdr_op_gen () || node->imported ())
+  if (node->cli_stub_cdr_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   // set the substate as generating code for the types defined in our scope

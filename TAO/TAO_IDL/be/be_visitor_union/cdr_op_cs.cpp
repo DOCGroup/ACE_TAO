@@ -45,7 +45,9 @@ int
 be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_cdr_op_gen () || node->imported ())
+  if (node->cli_stub_cdr_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   // set the substate as generating code for the types defined in our scope

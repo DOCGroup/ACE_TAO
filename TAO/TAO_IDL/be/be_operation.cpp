@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_operation, "$Id$")
 
@@ -35,11 +35,16 @@ be_operation::be_operation (void)
 {
 }
 
-be_operation::be_operation (AST_Type *rt, AST_Operation::Flags fl,
-                            UTL_ScopedName *n, UTL_StrList *p)
-  : AST_Operation (rt, fl, n, p),
+be_operation::be_operation (AST_Type *rt,
+                            AST_Operation::Flags fl,
+                            UTL_ScopedName *n,
+                            UTL_StrList *p,
+                            idl_bool local,
+                            idl_bool abstract)
+  : AST_Operation (rt, fl, n, p, local, abstract),
     AST_Decl (AST_Decl::NT_op, n, p),
     UTL_Scope (AST_Decl::NT_op),
+    COMMON_Base (local, abstract),
     argument_count_ (-1),
     has_native_ (0),
     strategy_ (new be_operation_default_strategy (this))
@@ -69,15 +74,15 @@ be_operation::compute_argument_attr (void)
     {
       // instantiate a scope iterator.
       UTL_ScopeActiveIterator *si =
-	      new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+              new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
         {
           // get the next AST decl node
-	        AST_Decl *d = si->item ();
+                AST_Decl *d = si->item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
-	          {
+            {
               this->argument_count_++;
               be_argument *arg = be_argument::narrow_from_decl (d);
               be_type* type =
@@ -99,7 +104,7 @@ be_operation::compute_argument_attr (void)
 }
 
 
-int 
+int
 be_operation::void_return_type ()
 {
   be_type* type = be_type::narrow_from_decl (this->return_type ());
@@ -199,7 +204,7 @@ TAO_CodeGen::CG_STATE
 be_operation::next_state (TAO_CodeGen::CG_STATE current_state,
                           int is_extra_state)
 {
-  return this->strategy_->next_state (current_state, is_extra_state); 
+  return this->strategy_->next_state (current_state, is_extra_state);
 }
 
 int

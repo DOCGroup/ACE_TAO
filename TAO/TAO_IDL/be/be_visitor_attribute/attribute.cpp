@@ -73,7 +73,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   be_operation *op = new be_operation (node->field_type (),
                                        AST_Operation::OP_noflags,
                                        node->name (),
-                                       0);
+                                       0,
+                                       node->is_local (),
+                                       node->is_abstract ());
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->set_defined_in (node->defined_in ());
 
@@ -87,12 +89,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // exactly the same code except different states.
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_H:
-      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_H);
-      break;
-    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_S:
-      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_S);
-      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
@@ -208,7 +204,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op = new be_operation (rt,
                          AST_Operation::OP_noflags,
                          node->name (),
-                         0);
+                         0,
+                         node->is_local (),
+                         node->is_abstract ());
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->set_defined_in (node->defined_in ());
   op->add_argument_to_scope (arg);
@@ -225,14 +223,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
-    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_H:
-      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_H);
-      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
-      break;
-    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_S:
-      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_S);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);

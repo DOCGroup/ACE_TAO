@@ -236,16 +236,17 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                     idl_bool local,
                                     idl_bool abstract)
 {
-  return (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n,
-                                                                            0,
-                                                                            -1,
-                                                                            0,
-                                                                            0,
-                                                                            p,
-                                                                            local,
-                                                                            abstract),
-                                                    n,
-                                                    p);
+  return
+    (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n,
+                                                                       0,
+                                                                       -1,
+                                                                       0,
+                                                                       0,
+                                                                       p,
+                                                                       local,
+                                                                       abstract),
+                                               n,
+                                               p);
 }
 
 /*
@@ -329,17 +330,26 @@ AST_Operation *
 be_generator::create_operation(AST_Type *rt,
                                AST_Operation::Flags fl,
                                UTL_ScopedName *n,
-                               UTL_StrList *p)
+                               UTL_StrList *p,
+                               idl_bool local,
+                               idl_bool abstract)
 {
-  return (AST_Operation *) new be_operation(rt, fl, n, p);
+  return (AST_Operation *) new be_operation(rt,
+                                            fl,
+                                            n,
+                                            p,
+                                            local,
+                                            abstract);
 }
 
 /*
  * Create a BE_Field node
  */
 AST_Field *
-be_generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
-                                                 AST_Field::Visibility vis)
+be_generator::create_field(AST_Type *ft,
+                           UTL_ScopedName *n,
+                           UTL_StrList *p,
+                           AST_Field::Visibility vis)
 {
   return (AST_Field *) new be_field(ft, n, p, vis);
 }
@@ -363,9 +373,16 @@ AST_Attribute *
 be_generator::create_attribute(idl_bool ro,
                                AST_Type *ft,
                                UTL_ScopedName *n,
-                               UTL_StrList *p)
+                               UTL_StrList *p,
+                               idl_bool local,
+                               idl_bool abstract)
 {
-  return (AST_Attribute *) new be_attribute(ro, ft, n, p);
+  return (AST_Attribute *) new be_attribute(ro,
+                                            ft,
+                                            n,
+                                            p,
+                                            local,
+                                            abstract);
 }
 
 /*
@@ -537,9 +554,15 @@ be_generator::create_enum_val(unsigned long v,
 AST_Array *
 be_generator::create_array(UTL_ScopedName *n,
                            unsigned long ndims,
-                           UTL_ExprList *dims)
+                           UTL_ExprList *dims,
+                           idl_bool local,
+                           idl_bool abstract)
 {
-  return (AST_Array *) new be_array(n, ndims, dims);
+  return (AST_Array *) new be_array(n,
+                                    ndims,
+                                    dims,
+                                    local,
+                                    abstract);
 }
 
 /*

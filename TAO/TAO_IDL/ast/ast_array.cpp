@@ -74,8 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * arrays of AST_Interfaces???
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_array, "$Id$")
 
@@ -83,15 +83,20 @@ ACE_RCSID(ast, ast_array, "$Id$")
  * Constructor(s) and destructor
  */
 AST_Array::AST_Array()
-	 : pd_n_dims(0),
-	   pd_dims(NULL),
-	   pd_base_type(NULL)
+         : pd_n_dims(0),
+           pd_dims(NULL),
+           pd_base_type(NULL)
 {
 }
 
-AST_Array::AST_Array(UTL_ScopedName *n, unsigned long nd, UTL_ExprList *ds)
-	 : AST_Decl(AST_Decl::NT_array, n, NULL),
-	   pd_n_dims(nd), pd_base_type(NULL)
+AST_Array::AST_Array(UTL_ScopedName *n,
+                     unsigned long nd,
+                     UTL_ExprList *ds,
+                     idl_bool local,
+                     idl_bool abstract)
+         : AST_Decl(AST_Decl::NT_array, n, NULL),
+           COMMON_Base (local, abstract),
+           pd_n_dims(nd), pd_base_type(NULL)
 {
   pd_dims = compute_dims(ds, nd);
 }
@@ -111,9 +116,9 @@ AST_Array::~AST_Array (void)
 AST_Expression **
 AST_Array::compute_dims(UTL_ExprList *ds, unsigned long nds)
 {
-  AST_Expression	**result;
+  AST_Expression        **result;
   UTL_ExprlistActiveIterator *l;
-  unsigned long		i;
+  unsigned long         i;
 
   if (ds == NULL)
     return NULL;
@@ -142,7 +147,7 @@ AST_Array::compute_dims(UTL_ExprList *ds, unsigned long nds)
 void
 AST_Array::dump(ostream &o)
 {
-  unsigned long	i;
+  unsigned long i;
 
   pd_base_type->dump(o);
   o << " ";
