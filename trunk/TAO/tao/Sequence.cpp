@@ -258,6 +258,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
   if (this->mb_ != 0)
     {
       ACE_Message_Block::release (this->mb_);
+      this->mb_ = 0;
       this->buffer_ =
         TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (rhs.length_);
     }
