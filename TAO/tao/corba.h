@@ -89,8 +89,9 @@
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
 
+#include "tao/PortableInterceptor.h" // This needs to remain visible.
+
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/PortableInterceptor.h"
 #include "tao/ClientRequestInfo.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #endif  /* TAO_HAS_INTERCEPTORS */
