@@ -1,15 +1,33 @@
+Fri Nov 17 11:22:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_sunos5_kcc.GNU:
+          Same fix as for platform_linux_kcc.GNU.
+          A little more detail has surfaced: apparently under this
+          compiler we attempted to link the static run-time and system
+          libraries if static_libs_only=1 was set.  Not only this would be
+          unique (in that we don't do this for other compilers), but it
+          fails when only one directory is compiled with
+          static_libs_only=1, hile only the dynamic version of ACE (or any
+          other of our libraries) is compiled.
+          IMHO it is better to make it consistent with all the other
+          platforms, and leave the extra optimization of using static
+          system libraries for a future makefile option.
+
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Remove obsolete comment
+
 Fri Nov 17 03:37:37 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added RTCORBA/Banded_Connections test.
+          Added RTCORBA/Banded_Connections test.
 
 Fri Nov 17 01:16:25 2000  Ossama Othman  <ossama@uci.edu>
 
-	* include/makeinclude/wrapper_macros.GNU (ssl):
+        * include/makeinclude/wrapper_macros.GNU (ssl):
 
-	  Removed definition of the ACE_HAS_SSL macro.  It is no longer
-	  used.
+          Removed definition of the ACE_HAS_SSL macro.  It is no longer
+          used.
 
 Thu Nov 16 16:14:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
