@@ -59,6 +59,15 @@ ACE_ReactorEx_Handler_Repository::max_handlep1 (void) const
 }
 
 ACE_INLINE int
+ACE_ReactorEx_Handler_Repository::scheduled_for_deletion (int index) const
+{
+  if (ACE_Thread::self () == this->reactorEx_.owner ())
+    return this->to_be_deleted_set_[index] == 1;
+  else
+    return this->to_be_deleted_set_[index + 1] == 1;
+}
+
+ACE_INLINE int
 ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_ReactorEx_Handler_Repository::invalid_handle");
