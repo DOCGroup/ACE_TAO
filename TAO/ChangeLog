@@ -1,3 +1,73 @@
+Sat Aug 24 22:47:22 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * examples/POA/Loader/Servant_Activator.cpp:
+        * examples/POA/Loader/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+
+          The explicit call to ACE::ldname() is no longer required since
+          it will be automatically done by the ACE_DLL_Manager. This
+          should fix these tests for Borland C++.
+
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.mpc:
+        * orbsvcs/Event_Service/Event_Service.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/Logging_Service/Logging_Service.mpc:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.mpc:
+        * orbsvcs/TAO_Service/TAO_Service.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+
+          Added "core" as a base project.
+
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * tao/tao.mpc:
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/Domain/Domain.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTPortableServer/RTPortableServer.mpc:
+        * tao/SmartProxies/SmartProxies.mpc:
+        * tao/Strategies/Strategies.mpc:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+
+          Added "core" as a base project and added "include_dir" value.
+
 Sat Aug 24 16:17:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE_Static.dsw:

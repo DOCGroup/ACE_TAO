@@ -1,4 +1,4 @@
-project : orbsvcsexe {
+project : orbsvcsexe, core {
   depends += Svc_Utils IORTable PortableServer
   exename  = ImplRepo_Service
   libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer
@@ -16,7 +16,7 @@ project : orbsvcsexe {
 }
 
 
-project(tao_imr) : orbsvcsexe {
+project(tao_imr) : orbsvcsexe, core {
   depends += Svc_Utils IORTable PortableServer
   exename  = tao_imr
   libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer

@@ -1,4 +1,4 @@
-project(Time_Service_Server) : orbsvcsexe {
+project(Time_Service_Server) : orbsvcsexe, core {
   depends += CosTime CosNaming Svc_Utils IORTable PortableServer
   exename  = Time_Service_Server
   libs    += TAO_CosTime TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
@@ -9,7 +9,7 @@ project(Time_Service_Server) : orbsvcsexe {
   }
 }
 
-project(Time_Service_Clerk) : orbsvcsexe {
+project(Time_Service_Clerk) : orbsvcsexe, core {
   depends += CosTime CosNaming Svc_Utils IORTable PortableServer
   exename  = Time_Service_Clerk
   libs    += TAO_CosTime TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer

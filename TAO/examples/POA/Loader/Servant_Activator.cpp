@@ -43,20 +43,16 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
 
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
-  char *function_name = ACE::ldname (factory_function);
-  void *symbol = this->dll_.symbol (function_name);
+  void *symbol = this->dll_.symbol (factory_function);
   long function = ACE_reinterpret_cast (long, symbol);
-  delete [] function_name;
 
   servant_supplier_ =
     ACE_reinterpret_cast (SERVANT_FACTORY, function);
 
   // Obtain the symbol for the function which will destroy the
   // servant.
-  function_name = ACE::ldname (garbage_collection_function);
-  symbol = this->dll_.symbol (function_name);
+  symbol = this->dll_.symbol (garbage_collection_function);
   function = ACE_reinterpret_cast (long, symbol);
-  delete [] function_name;
   servant_garbage_collector_ =
     ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, function);
 }
