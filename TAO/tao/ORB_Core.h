@@ -33,7 +33,7 @@
 #include "Parser_Registry.h"
 #include "Service_Callbacks.h"
 #include "Fault_Tolerance_Service.h"
-#include "Connection_Cache_Manager.h"
+#include "Transport_Cache_Manager.h"
 #include "Cleanup_Func_Registry.h"
 #include "Object_Ref_Table.h"
 
@@ -56,7 +56,7 @@ class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
-class TAO_Connection_Cache;
+class TAO_Transport_Cache;
 
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
@@ -139,10 +139,10 @@ public:
   ACE_Allocator *input_cdr_buffer_allocator_;
   //@}
 
-  /// This is is just a place holder, in the future the connection
+  /// This is is just a place holder, in the future the transport
   /// cache will be separated from the connectors and it will be a
   /// (potentially) TSS object.
-  TAO_Connection_Cache *connection_cache_;
+  TAO_Transport_Cache *transport_cache_;
 
   /// Counter for how (nested) calls this thread has made to run the
   /// event loop.
@@ -849,7 +849,7 @@ public:
   int open (CORBA::Environment &ACE_TRY_ENV);
 
   /// Return the underlying connection cache.
-  TAO_Connection_Cache_Manager &connection_cache (void);
+  TAO_Transport_Cache_Manager &transport_cache (void);
 
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
@@ -1199,7 +1199,7 @@ protected:
   TAO_Parser_Registry parser_registry_;
 
   /// TAO's connection cache.
-  TAO_Connection_Cache_Manager connection_cache_;
+  TAO_Transport_Cache_Manager transport_cache_;
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;

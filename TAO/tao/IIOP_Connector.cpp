@@ -10,7 +10,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
-#include "tao/Base_Connection_Property.h"
+#include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "ace/Strategies_T.h"
 
@@ -119,7 +119,7 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
+TAO_IIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                              TAO_Transport *&transport,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
@@ -157,16 +157,17 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
 
   int result = 0;
   TAO_IIOP_Connection_Handler *svc_handler = 0;
-  TAO_Connection_Handler *conn_handler = 0;
+  TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->connection_cache ().find_handler (desc,
-                                                           conn_handler) == 0)
+  // If transport found, reference count is incremented on assignment
+  if (this->orb_core ()->transport_cache ().find_transport (desc,
+                                                            base_transport) == 0)
     {
-      // We have found a connection and a handler
+      // We have found a connection and a transport
       svc_handler =
         ACE_dynamic_cast (TAO_IIOP_Connection_Handler *,
-                          conn_handler);
+                          base_transport->connection_handler ());
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
@@ -227,10 +228,11 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                     ACE_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->peer ().get_handle ()));
 
+      base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->connection_cache ().cache_handler (desc,
-                                                              svc_handler);
+        this->orb_core ()->transport_cache ().cache_transport (desc,
+                                                               base_transport);
 
       if (retval != 0 && TAO_debug_level > 0)
         {
@@ -240,7 +242,10 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
         }
     }
 
-  transport = svc_handler->transport ();
+  // No need to _duplicate and release since base_transport
+  // is going out of scope.  transport now has control of base_transport.
+  transport = base_transport;
+
   return 0;
 }
 
@@ -368,12 +373,12 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
             {
               TAO_IIOP_Endpoint endpoint (remote_addrs[slot],
                                           0);
-              TAO_Base_Connection_Property prop (&endpoint);
+              TAO_Base_Transport_Property prop (&endpoint);
 
               // Add the handler to Cache
               int retval =
-                this->orb_core ()->connection_cache ().cache_handler (&prop,
-                                                                      handlers[slot]);
+                this->orb_core ()->transport_cache ().cache_transport (&prop,
+                                                                       handlers[slot]->transport ());
               successes++;
 
               if (retval != 0 && TAO_debug_level > 4)

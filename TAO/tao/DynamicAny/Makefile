@@ -296,7 +296,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -306,12 +306,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -602,7 +602,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -612,12 +612,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -912,7 +912,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -922,12 +922,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -1218,7 +1218,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1228,12 +1228,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -1526,7 +1526,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1536,12 +1536,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -1834,7 +1834,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1844,12 +1844,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -2140,7 +2140,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2150,12 +2150,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -2448,7 +2448,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2458,12 +2458,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -2756,7 +2756,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2766,12 +2766,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \

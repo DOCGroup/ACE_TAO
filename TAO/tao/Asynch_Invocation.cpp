@@ -106,6 +106,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // when the reply dispatcher goes away.
   this->rd_->transport (this->transport_);
 
+
   // AMI Timeout Handling Begin
 
   if (this->max_wait_time_ != 0)

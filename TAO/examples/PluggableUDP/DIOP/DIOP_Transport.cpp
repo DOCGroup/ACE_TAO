@@ -71,24 +71,6 @@ TAO_DIOP_Transport::event_handler (void)
   return this->connection_handler_;
 }
 
-void
-TAO_DIOP_Transport::close_connection (void)
-{
-  // Call handle close
-  this->connection_handler_->handle_close ();
-
-  // Purge the entry
-  this->connection_handler_->purge_entry ();
-}
-
-int
-TAO_DIOP_Transport::idle (void)
-{
-  // @@ Michael: We do not use this information
-  //return this->connection_handler_->make_idle ();
-  return 0;
-}
-
 ssize_t
 TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
                           const ACE_Time_Value * /*max_wait_time*/,
@@ -195,9 +177,9 @@ TAO_DIOP_Transport::recv (char *buf,
                                                   local_buffer_.size (),
                                                   from_addr);
 
-	    // Remember the from addr to eventually use it as remote
-	    // addr for the reply.
-	    this->connection_handler_->addr (from_addr);
+            // Remember the from addr to eventually use it as remote
+            // addr for the reply.
+            this->connection_handler_->addr (from_addr);
 
       if (n == -1)
         return -1;
@@ -276,10 +258,6 @@ TAO_DIOP_Transport::register_handler (void)
 
   if (r == this->connection_handler_->reactor ())
     return 0;
-
-  // About to be registered with the reactor, so bump the ref
-  // count
-  this->connection_handler_->incr_ref_count ();
 
   // Set the flag in the Connection Handler
   this->connection_handler_->is_registered (1);
@@ -709,3 +687,15 @@ TAO_DIOP_Transport::get_listen_point (
   return 1;
 }
 */
+
+void
+TAO_DIOP_Transport::transition_handler_state (void)
+{
+  connection_handler_ = 0;
+}
+
+TAO_Connection_Handler*
+TAO_DIOP_Transport::connection_handler (void) const
+{
+  return connection_handler_;
+}

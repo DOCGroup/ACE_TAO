@@ -32,7 +32,7 @@ class ACE_Addr;
 class ACE_Reactor;
 class TAO_ORB_Core;
 
-class TAO_Connection_Descriptor_Interface;
+class TAO_Transport_Descriptor_Interface;
 class TAO_Stub;
 class TAO_MProfile;
 class TAO_Resource_Factory;
@@ -81,7 +81,7 @@ public:
    * TAO_Connector class which in turn will call the concrete
    * connector.
    */
-  int connect (TAO_Connection_Descriptor_Interface *desc,
+  int connect (TAO_Transport_Descriptor_Interface *desc,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);

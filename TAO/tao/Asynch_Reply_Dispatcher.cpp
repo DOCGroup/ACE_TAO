@@ -32,6 +32,7 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
   if (this->transport_ != 0)
     {
       this->transport_->idle_after_reply ();
+      TAO_Transport::release (this->transport_);
     }
 }
 

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Connection_Cache_Manager.h
+ *  @file    Transport_Cache_Manager.h
  *
  *  $Id$
  *
@@ -35,11 +35,11 @@ class TAO_ORB_Core;
 class ACE_Handle_Set;
 
 /**
- * @class TAO_Connection_Cache_Manager
+ * @class TAO_Transport_Cache_Manager
  *
- * @brief The Connection Cache Manager for TAO
+ * @brief The Transport Cache Manager for TAO
  */
-class TAO_Export TAO_Connection_Cache_Manager
+class TAO_Export TAO_Transport_Cache_Manager
 {
 
   // = DESCRIPTION
@@ -74,21 +74,21 @@ public:
   // == Public methods
 
   /// Constructor
-  TAO_Connection_Cache_Manager (void);
+  TAO_Transport_Cache_Manager (void);
 
   /// Destructor
-  virtual ~TAO_Connection_Cache_Manager (void);
+  virtual ~TAO_Transport_Cache_Manager (void);
 
-  /// Add the handler to the cache. The handler has the property
+  /// Add the transport to the cache. The transport has the property
   /// definition based on which caching can be done
-  int cache_handler (TAO_Connection_Descriptor_Interface *prop,
-                     TAO_Connection_Handler *handler);
+  int cache_transport (TAO_Transport_Descriptor_Interface *prop,
+                       TAO_Transport *transport);
 
 
-  /// Check the Connection Cache to check whether the connection exists
+  /// Check the Transport Cache to check whether the connection exists
   /// in the Cache and return the connection
-  int find_handler (TAO_Connection_Descriptor_Interface *prop,
-                    TAO_Connection_Handler *&handler);
+  int find_transport (TAO_Transport_Descriptor_Interface *prop,
+                      TAO_Transport *&transport);
 
   /// Initialize a <HASH_MAP> with <size> elements.
   int open (TAO_ORB_Core *orb_core,
@@ -150,7 +150,7 @@ private:
    * Non-Locking version and actual implementation of bind ()
    * call. Calls bind on the Hash_Map_Manager that it holds. If the
    * bind succeeds, it adds the Hash_Map_Entry in to the
-   * Connection_Handler for its reference. If the bind fails because
+   * Transport for its reference. If the bind fails because
    * of an exiting entry, this method calls the get_last_index_bind
    * ().
    */
@@ -161,18 +161,18 @@ private:
    * Non-locking version and actual implementation of find ()
    * call. This calls the find () on the underlying
    * Hash_Map_Manager. If the find succeeds, it calls the
-   * get_idle_handler ().
+   * get_idle_transport ().
    */
   int find_i (const TAO_Cache_ExtId &key,
               TAO_Cache_IntId &value);
 
   /// Non-locking version and actual implementation of rebind () call
   int rebind_i (const TAO_Cache_ExtId &key,
-              const TAO_Cache_IntId &value);
+                const TAO_Cache_IntId &value);
 
   /// Non-locking version and actual implementation of trybind () call
   int trybind_i (const TAO_Cache_ExtId &key,
-               TAO_Cache_IntId &value);
+                 TAO_Cache_IntId &value);
 
   /// Non-locking version and actual implementation of unbind () call
   int unbind_i (const TAO_Cache_ExtId &key);
@@ -222,7 +222,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Connection_Cache_Manager.inl"
+# include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

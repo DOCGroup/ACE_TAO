@@ -123,7 +123,7 @@ int
 TAO_Exclusive_TMS::idle_after_reply (void)
 {
   if (this->transport_ != 0)
-    return this->transport_->idle ();
+    return this->transport_->make_idle ();
 
   return 0;
 }

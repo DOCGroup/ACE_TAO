@@ -41,8 +41,8 @@ OBJFILES = \
 	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
-	$(OBJDIR)\Connection_Cache_Manager.obj \
-	$(OBJDIR)\Connection_Descriptor_Interface.obj \
+	$(OBJDIR)\Transport_Cache_Manager.obj \
+	$(OBJDIR)\Transport_Descriptor_Interface.obj \
 	$(OBJDIR)\Connection_handler.obj \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\Connector_Impl.obj \
@@ -144,7 +144,7 @@ OBJFILES = \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
-	$(OBJDIR)\Private_Connection_Descriptor.obj \
+	$(OBJDIR)\Private_Transport_Descriptor.obj \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Protocols_Hooks.obj \
@@ -187,7 +187,7 @@ OBJFILES = \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
-	$(OBJDIR)\Base_Connection_Property.obj \
+	$(OBJDIR)\Base_Transport_Property.obj \
 	$(OBJDIR)\ValueBase.obj \
 	$(OBJDIR)\ValueFactory.obj \
 	$(OBJDIR)\ValueFactory_Map.obj \

@@ -23,6 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Transport.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/Asynch_Timeout_Handler.h"
 

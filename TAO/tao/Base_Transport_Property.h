@@ -3,7 +3,7 @@
 
 // ===================================================================
 /**
- *  @file  Base_Connection_Property.h
+ *  @file  Base_Transport_Property.h
  *
  *  $Id$
  *
@@ -15,7 +15,7 @@
 #define TAO_BASE_CONNECTION_PROPERTY_H
 #include "ace/pre.h"
 
-#include "tao/Connection_Descriptor_Interface.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,52 +30,52 @@
 
 
 /**
- * @class TAO_Base_Connection_Property
+ * @class TAO_Base_Transport_Property
  *
  * @brief A concrete implementation for connnection property
  *
  * This class is a concrete implementation of a simple connection
  * property class. This provides an implementation for the virtual
- * functions declared in TAO_Connection_Descriptor_Interface.
+ * functions declared in TAO_Transport_Descriptor_Interface.
  */
 
 
-class TAO_Export TAO_Base_Connection_Property:
-  public TAO_Connection_Descriptor_Interface
+class TAO_Export TAO_Base_Transport_Property:
+  public TAO_Transport_Descriptor_Interface
 {
 public:
 
   /// Default constructor
-  TAO_Base_Connection_Property (void);
+  TAO_Base_Transport_Property (void);
 
 
   /// Constructor
-  TAO_Base_Connection_Property (TAO_Endpoint *endpoint,
-                                CORBA::Boolean flag = 0);
+  TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
+                               CORBA::Boolean flag = 0);
 
   /// Dtor
-  virtual ~TAO_Base_Connection_Property (void);
+  virtual ~TAO_Base_Transport_Property (void);
 
 
   /// The copy constructor.
-  TAO_Base_Connection_Property (
-      const TAO_Base_Connection_Property &rhs);
+  TAO_Base_Transport_Property (
+      const TAO_Base_Transport_Property &rhs);
 
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual  TAO_Connection_Descriptor_Interface *duplicate (void);
+  virtual  TAO_Transport_Descriptor_Interface *duplicate (void);
 
   /// Try to determine if this object is same as the <other_prop>.
   virtual CORBA::Boolean is_equivalent (
-      const TAO_Connection_Descriptor_Interface *other_prop);
+      const TAO_Transport_Descriptor_Interface *other_prop);
 
   /// Generate hash value for our class
   virtual u_long hash (void) const;
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Base_Connection_Property.inl"
+# include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
