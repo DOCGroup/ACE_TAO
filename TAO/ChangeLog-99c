@@ -1,9 +1,15 @@
+Sat Jul 10 23:46:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html:
+	* docs/configurations.html: More updates to the configuration
+	  document.
+
 Sat Jul 10 21:56:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Acceptor.h:
 	* tao/UIOP_Acceptor.cpp (open_i, close):
 
-	  Added an "unlink_on_close_" member that flags whether or not the 
+	  Added an "unlink_on_close_" member that flags whether or not the
 	  UIOP rendezvous point should be unlinked when closing the
 	  acceptor.  Currently this flag is only unset when an "address
 	  already in use" error (EADDRINUSE) occurs.  An existing
@@ -12,7 +18,7 @@ Sat Jul 10 21:56:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Acceptor.cpp (create_mprofile):
 
-	  Initialized a pointer to zero to prevent potential uninitialized 
+	  Initialized a pointer to zero to prevent potential uninitialized
 	  variable warnings.
 
 	  Minor coding style updates.
