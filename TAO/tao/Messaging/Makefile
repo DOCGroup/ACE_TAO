@@ -16,7 +16,6 @@ ACE_SHLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IOR
   -lTAO_Valuetype -lTAO -lACE
 
 CPP_SRCS += \
-  Twoway_Asynch_Invocation \
   Asynch_Invocation_Adapter \
   Asynch_Invocation \
   Asynch_Reply_Dispatcher \

@@ -120,11 +120,11 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
       10,
       0
     );
-  
+
   ACE_TRY
     {
       _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (_tao_retval.excp ());
+      ACE_TRY_CHECK (_tao_retval.excp ());
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
@@ -135,7 +135,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  
+
   return _tao_retval.retn ();
 }
 
@@ -161,4 +161,3 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
-
