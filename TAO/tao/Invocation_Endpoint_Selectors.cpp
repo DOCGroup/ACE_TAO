@@ -43,8 +43,8 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       // Check whether we need to do a blocked wait or we have a
       // non-blocked wait and we support that.  If this is not the
       // case we can't use this profile so try the next.
-      if (r->blocked () ||
-         (!r->blocked () && r->profile ()->supports_non_blocking_oneways ()))
+      if (r->blocked_connect () ||
+         (!r->blocked_connect () && r->profile ()->supports_non_blocking_oneways ()))
         {
           const size_t endpoint_count =
             r->profile ()->endpoint_count ();

@@ -499,15 +499,17 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
   // load on the POA....
   ACE_Reactor *reactor = leader_follower.reactor ();
 
-  reactor->wakeup_all_threads ();
-
   // If there are some client threads running we have to wait until
   // they finish, when the last one does it will shutdown the reactor
   // for us.  Meanwhile no new requests will be accepted because the
   // POA will not process them.
-  if (!leader_follower.has_clients ())
+  if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () &&
+      leader_follower.has_clients ())
     {
-      // Wake up all waiting threads in the reactor.
-      reactor->end_reactor_event_loop ();
+      reactor->wakeup_all_threads ();
+      return;
     }
+
+  // Wake up all waiting threads in the reactor.
+  reactor->end_reactor_event_loop ();
 }

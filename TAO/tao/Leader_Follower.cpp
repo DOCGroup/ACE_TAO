@@ -148,7 +148,8 @@ TAO_Leader_Follower::set_client_thread (void)
     }
 
   if (this->clients_ == 0 &&
-      this->orb_core_->has_shutdown ())
+      this->orb_core_->has_shutdown () &&
+      !this->orb_core_->resource_factory ()->drop_replies_during_shutdown ())
     {
       // The ORB has shutdown and we are the first client after
       // that. This means that the reactor is disabled, we must
@@ -171,7 +172,8 @@ TAO_Leader_Follower::reset_client_thread (void)
     }
 
   this->clients_--;
-  if (this->clients_ == 0 && this->orb_core_->has_shutdown ())
+  if (this->clients_ == 0 &&
+      this->orb_core_->has_shutdown ())
     {
       // The ORB has shutdown and we are the last client thread, we
       // must stop the reactor to ensure that any server threads go
@@ -441,7 +443,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                        t_id),
                       -1);
 
-  if (result == -1)
+  if (result == -1 && !this->reactor_->reactor_event_loop_done ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                        " handle_events failed\n",

@@ -44,6 +44,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
   , codeset_manager_ (0)
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
+  , drop_replies_ (true)
 {
 #if TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY == 1
   this->resource_usage_strategy_ =
@@ -94,13 +95,15 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   int curarg = 0;
 
   for (curarg = 0; curarg < argc; ++curarg)
-  {
+    {
     // Parse thro' and find the number of Parsers to be loaded.
     if (ACE_OS::strcasecmp (argv[curarg],
                             ACE_TEXT("-ORBIORParser")) == 0)
       ++this->parser_names_count_;
 
     ++curarg;
+
+
 
     if (curarg == (argc-1) && this->parser_names_count_ != 0)
       {
@@ -119,16 +122,11 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   }
 
   for (curarg = 0; curarg < argc; ++curarg)
-    if (ACE_OS::strcasecmp (argv[curarg],
-                            ACE_TEXT("-ORBResources")) == 0)
-      {
-        ++curarg;
-
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) This option has been deprecated \n")));
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "The curr arg is [%s] \n",
+                  argv[curarg]));
+      if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBReactorMaskSignals")) == 0)
       {
         ++curarg;
@@ -462,6 +460,25 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           this->report_option_value_error (ACE_TEXT("-ORBMuxedConnectionMax"),
                                            argv[curarg]);
       }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT("-ORBDropRepliesDuringShutdown")) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "IN HERE \n"));
+        ++curarg;
+        if (curarg < argc)
+          {
+            int tmp = ACE_OS::atoi (argv[curarg]);
+
+            if (tmp == 0)
+              this->drop_replies_ = false;
+            else
+              this->drop_replies_ = true;
+          }
+        else
+          this->report_option_value_error (ACE_LIB_TEXT("-ORBDropRepliesDuringShutdown"),
+                                           argv[curarg]);
+      }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
                               4) == 0)
@@ -480,6 +497,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("ignoring option <%s>\n"),
                     argv[curarg]));
       }
+    }
 
   TAO_Codeset_Manager *csm = this->get_codeset_manager();
   if (csm)
@@ -1033,6 +1051,12 @@ TAO_Resource_Factory::Resource_Usage
 TAO_Default_Resource_Factory::resource_usage_strategy (void) const
 {
   return this->resource_usage_strategy_;
+}
+
+bool
+TAO_Default_Resource_Factory::drop_replies_during_shutdown (void) const
+{
+  return this->drop_replies_;
 }
 
 // ****************************************************************

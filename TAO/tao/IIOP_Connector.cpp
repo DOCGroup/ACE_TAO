@@ -158,7 +158,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                 "to <%s:%d> which should %s\n",
                 ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
                 iiop_endpoint->port(),
-                r->blocked () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
+                r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -169,7 +169,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked ())
+  if (!r->blocked_connect ())
     {
       synch_options.timeout (ACE_Time_Value::zero);
       timeout = &tmp_zero;
