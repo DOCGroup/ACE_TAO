@@ -284,9 +284,10 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
 
 #if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
   // Win32 has a timing problem - if you check to see if the
-  // connection has completed too fast, it will fail - so wait a bit
-  // to let it catch up.
-  ACE_OS::sleep (0);
+  // connection has completed too fast, it will fail - so wait 1
+  // millisecond to let it catch up.
+  ACE_Time_Value tv (0, 1000);
+  ACE_OS::sleep (tv);
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
   // Check to see if we're connected.

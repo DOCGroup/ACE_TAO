@@ -1,5 +1,15 @@
 Thu Apr 24 13:56:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/SOCK_Connector.cpp (complete): There's a bug in WinNT that
+ 	  causes non-blocking connects to fail.  The workaround is to
+ 	  sleep for 1 millisecond.  Thanks to Steve Huston
+ 	  <shuston@riverace.com> for reporting this.
+
+	* ace/Connector.cpp (handle_output): There's a bug in WinNT that
+ 	  causes non-blocking connects to fail.  The workaround is to
+ 	  sleep for 1 millisecond.  Thanks to Steve Huston
+ 	  <shuston@riverace.com> for reporting this.
+
 	* tests/Conn_Test.cpp: Changed from operator != to operator == to
  	  be consistent with what is required by the ACE_Hash_Map_Manager.
 
