@@ -18,7 +18,8 @@ public:
   Roundtrip (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Timestamp test_method (Test::Timestamp send_time
+  virtual Test::Timestamp test_method (Test::Timestamp send_time,
+                                       CORBA::Long workload_in_usecs
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -29,6 +30,9 @@ private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
+
+  /// Translate the high resolution timer units into microseconds
+  ACE_UINT32 gsf_;
 };
 
 #include "ace/post.h"

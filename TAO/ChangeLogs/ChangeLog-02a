@@ -1,3 +1,91 @@
+Wed Mar 27 10:53:44 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/Makefile:
+	  Add the RTCORBA_Callback directory.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Test.idl:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.h:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+	  Add workload parameters to the test, the server will burn a
+	  prescribed amount of CPU before returning, command-line
+	  arguments in the client are used to set the amount of CPU.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile:
+	  Regenerate depedendencies.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+	  Print out progress every 1000 iterations.  Reduce length of
+	  critical section when checking if the task should be stopped.
+	  Use helper class to run ORB event loop thread(s).
+	  Just wait for the low priority task, not for all the tasks in
+	  its Thread_Manager, otherwise we dead-lock during shutdown.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+	  Use helper class to run ORB event loop thread(s).
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	  Run only one thread for the ORB event loop, no more should be
+	  needed because all the events are processed by the RT-POA
+	  threads.
+	  Simplify POA configuration.
+	  Improve debug messages.
+	  Make it possible to connect the high-priority consumer/supplier
+	  after all the low-priority consumers or before them.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+	  Use helper class to run ORB event loop thread(s).
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.cpp:
+	  Fixed options for low/high-priority workload (they were
+	  reversed).
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTPOA_Setup.cpp:
+	  Move thread pool policy to the end of the list, easier to remove
+	  the thread pool stuff that way.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+	  Configure a special POA when RT-CORBA is enabled, though the POA
+	  may not have a thread pool for the moment.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/roundtrip.conf:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/realtime.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/roundtrip.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_copy_on_read.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_copy_on_write.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_delayed.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_immediate.conf:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/realtime.conf:
+	  Per Irfan's recommendation used the 'direct' mapping instead of
+	  'continuous', with no visible effects.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/generate_percentiles.sh:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/run.sh:
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/parameters:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/run_roundtrip.sh:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/parameters:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/run_test.sh:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/parameters:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/run_roundtrip.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/parameters:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/run_dispatching.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/run_locking.sh:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/run_locking.sh:
+	  Commit the driver scripts, I didn't keep track of all the
+	  changes, and IMHO they do no matter all that much, the scripts
+	  are throw-away prototypes, once the tests become stable I'll add
+	  the final perl scripts.
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_gnuplot.pl:
+	  Receive the list of 'types' from the command line, better than
+	  some hard-coded set.
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_percentiles.sh:
+	  Receive the list of types from the command line, also made the
+	  list of percentiles configurable.  Fix subtle problems in the
+	  boundary conditions.
+
 Wed Mar 27 09:23:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:

@@ -18,7 +18,8 @@ module Test
      * without the need for a different reply handler for each
      * request.
      */
-    Timestamp test_method (in Timestamp send_time);
+    Timestamp test_method (in Timestamp send_time,
+                           in long workload_in_usecs);
 
     /// Shutdown the ORB
     void shutdown ();

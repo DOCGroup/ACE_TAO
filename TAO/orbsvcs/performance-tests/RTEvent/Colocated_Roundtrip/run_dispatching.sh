@@ -6,7 +6,7 @@
 . parameters
 
 for n in 2; do
-  for c in 12; do
+  for c in 2 4 6 8 10 12; do
 
   date
   echo rtcorba $c $n

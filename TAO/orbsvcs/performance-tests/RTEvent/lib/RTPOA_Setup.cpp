@@ -59,20 +59,25 @@ RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
                                          rtcorba_setup.process_priority ()
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  policies[1] =
-    rtorb->create_threadpool_policy (pool_id
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
-  policies[2] =
+  policies[1] =
     root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  policies[3] =
+  policies[2] =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+#if 0
+  policies.length (3);
+#else
+  policies[3] =
+    rtorb->create_threadpool_policy (pool_id
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+#endif /* 0 */
 
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);

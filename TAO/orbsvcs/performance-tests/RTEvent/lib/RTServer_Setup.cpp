@@ -31,7 +31,6 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
 {
   ACE_CHECK;
 
-#if 0
   if (use_rt_corba)
     {
       this->rtpoa_setup_ =
@@ -44,7 +43,6 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
         this->rtpoa_setup_->poa ();
     }
   else
-#endif /* 0 */
     {
       this->poa_ =
         RIR_Narrow<RTPortableServer::POA>::resolve (orb,
