@@ -1,0 +1,54 @@
+eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+while( $#ARGV > -1 ) {
+
+	print "$ARGV[0]\n";
+
+	$source = "$ARGV[0]";
+
+	if( $source =~ /~$/ ) {
+		$dest = "$`";
+	} else {
+		rename("$source","$source"."~") || die "Cannot rename ($source)";
+		$dest = "$source";
+		$source .= "~";
+	}
+
+	open(INPUT,"<$source") || die "Cannot open ($source)";
+	open(OUTPUT,">$dest")  || die "Cannot open ($dest)";
+	
+	$n = 1;
+	
+	$prestrip = 0;
+	while( <INPUT> ) {
+		chomp;
+
+		if( ! $prestrip && /^[0-9]+\.\t/ ) {
+			$prestrip = 1;
+			$_ = $';
+		} elsif( $prestrip ) {
+			if( /^[0-9]+\.\t/ ) {
+				$_ = $';
+			} else {
+				s/^\t//;
+			}
+		}
+
+		if( /^\s*$/ || /^\s*({|})\s*;?\s*$/ || /^\s*\/\//
+			|| /^\s*private\s*:/ || /^\s*protected\s*:/ || /^\s*public\s*:/
+			|| /^\s*}?\s*else\s*{?\s*:/
+			) {
+			print OUTPUT "\t$_\n";
+		} else {
+			print OUTPUT "$n.\t$_\n";
+			++$n;
+		}
+	}
+	
+	close(INPUT);
+	close(OUTPUT);
+
+	shift(@ARGV);
+}

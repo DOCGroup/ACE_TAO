@@ -1,0 +1,219 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+And now the implementation of the Protocol_Stream.  There are more
+lines of code here than we've seen so far but it still isn't
+complicated.  The basic idea is to construct the ACE_Stream with our
+set of protocol objects that will manipulate the data.  Our primary
+concern in this file is to get everything in the correct order!
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>Protocol_Stream.h</font>"
+<font color=blue>#include</font> "<font color=green>Protocol_Task.h</font>"
+
+<font color=blue>#include</font> "<font color=green>Xmit.h</font>"
+<font color=blue>#include</font> "<font color=green>Recv.h</font>"
+
+<font color=blue>#include</font> "<font color=green>Compressor.h</font>"
+<font color=blue>#include</font> "<font color=green>Crypt.h</font>"
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Stream_Modules.h">ace/Stream_Modules.h</A>"
+
+<font color=red>/* You can choose at compile time to include/exclude the protocol
+   pieces.
+*/</font>
+<font color=blue>#define</font> <font color=purple>ENABLE_COMPRESSION</font>
+<font color=blue>#define</font> <font color=purple>ENABLE_ENCRYPTION</font>
+
+<font color=red>// The usual typedefs to make things easier to type.</font>
+typedef ACE_Module&lt;ACE_MT_SYNCH> Module;
+typedef ACE_Thru_Task&lt;ACE_MT_SYNCH> Thru_Task;
+
+<font color=red>/* An ACE_Stream is a collection of ACE_Modules.  You can think of it
+   as a doubly-linked list if you like.  Each Module contains two
+   ACE_Task derivatives.  One of these tasks is used when sending data 
+   "<font color=green>upstream</font>", the other is used for "<font color=green>downstream</font>" operation.  In some
+   cases, you'll only need to move data in one direction.  To provide
+   a placeholder for the other direction, ACE_Thru_Task can be used.
+   ACE_Thru_Task responds to the put() by simply invoking put_next()
+   to send the data to the next module.
+ */</font>
+
+<font color=red>/* Do-nothing constructor and destructor
+ */</font>
+  
+<font color=#008888>Protocol_Stream::Protocol_Stream</font> (void)
+{
+}
+
+<font color=#008888>Protocol_Stream::~Protocol_Stream</font> (void)
+{
+}
+
+<font color=red>/* Even opening the stream is rather simple.  The important thing to
+   remember is that the modules you push onto the stream first will be
+   at the tail (eg -- most downstream) end of things when you're
+   done.
+ */</font>
+int 
+<font color=#008888>Protocol_Stream::open</font> (ACE_SOCK_Stream &peer,
+                       Protocol_Task *reader)
+{
+  <font color=red>// Initialize our peer() to read/write the socket we're given</font>
+  peer_.set_handle (peer.get_handle ());
+
+  <font color=red>// Construct (and remember) the Recv object so that we can read from</font>
+  <font color=red>// the peer().</font>
+  ACE_NEW_RETURN (recv_,
+                  Recv ( this->peer ()),
+                  -1);
+
+  <font color=red>// Add the transmit and receive tasks to the head of the stream.  As</font>
+  <font color=red>// we add more modules these will get pushed downstream and end up</font>
+  <font color=red>// nearest the tail by the time we're done.</font>
+  if (stream ().push (new Module ("<font color=green>Xmit/Recv</font>",
+                                  new Xmit ( this->peer ()),
+                                  recv_)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>stream().push(xmit/recv)</font>"),
+                      -1);
+
+  <font color=red>// Add any other protocol tasks to the stream.  Each one is added at</font>
+  <font color=red>// the head.  The net result is that Xmit/Recv are at the tail.</font>
+  if (this->open () == -1)
+    return -1;
+
+  <font color=red>// If a reader task was provided then push that in as the upstream</font>
+  <font color=red>// side of the next-to-head module.  Any data read from the peer()</font>
+  <font color=red>// will be sent through here last.  Server applications will</font>
+  <font color=red>// typically use this task to do the actual processing of data.</font>
+  <font color=red>// Note the use of Thru_Task.  Since a module must always have a</font>
+  <font color=red>// pair of tasks we use this on the writer side as a no-op.</font>
+  if (reader)
+    {
+      if (stream ().push (new Module ("<font color=green>Reader</font>",
+                                      new Thru_Task (),
+                                      reader)) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "<font color=green>%p\n</font>",
+                           "<font color=green>stream().push(reader)</font>"),
+                          -1);
+    }
+
+  return 0;
+}
+
+<font color=red>/* Add the necessary protocol objects to the stream.  The way we're
+   pushing things on we will encrypt the data before compressing it.
+*/</font>
+int 
+<font color=#008888>Protocol_Stream::open</font> (void)
+{
+<font color=blue>#if defined</font> (<font color=purple>ENABLE_COMPRESSION</font>)
+  if (stream ().push (new Module ("<font color=green>compress</font>",
+                                  new Compressor (),
+                                  new Compressor ())) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>stream().push(comprssor)</font>"),
+                      -1);
+<font color=blue>#endif</font> <font color=red>/* ENABLE_COMPRESSION */</font>
+    
+<font color=blue>#if defined</font> (<font color=purple>ENABLE_ENCRYPTION</font>)
+  if (stream ().push (new Module ("<font color=green>crypt</font>",
+                                  new Crypt (),
+                                  new Crypt ())) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>stream().push(crypt)</font>"),
+                      -1);
+<font color=blue>#endif</font> <font color=red>/* ENABLE_ENCRYPTION */</font>
+  return 0;
+}
+
+<font color=red>// Closing the Protocol_Stream is as simple as closing the ACE_Stream.</font>
+int 
+<font color=#008888>Protocol_Stream::close</font> (void)
+{
+  return stream ().close ();
+}
+
+<font color=red>// Simply pass the data directly to the ACE_Stream.</font>
+int 
+<font color=#008888>Protocol_Stream::put</font> (ACE_Message_Block *&message,
+                      ACE_Time_Value *timeout)
+{
+  return stream ().put (message,
+                        timeout);
+}
+
+<font color=red>/* Tell the Recv module to read some data from the peer and pass it
+   upstream.  Servers will typically use this method in a
+   handle_input() method to tell the stream to get a client's request.  */</font>
+
+int 
+<font color=#008888>Protocol_Stream::get</font>(void)
+{
+  <font color=red>// If there is no Recv module, we're in big trouble!</font>
+  if (recv_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>(%P|%t) No Recv object!\n</font>"),
+                      -1);
+
+  <font color=red>// This tells the Recv module to go to it's peer() and read some</font>
+  <font color=red>// data.  Once read, that data will be pushed upstream.  If there is</font>
+  <font color=red>// a reader object then it will have a chance to process the data.</font>
+  <font color=red>// If not, the received data will be available in the message queue</font>
+  <font color=red>// of the stream head's reader object (eg --</font>
+  <font color=red>// stream().head()->reader()->msg_queue()) and can be read with our</font>
+  <font color=red>// other get() method below.</font>
+  if (recv_->get () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>(%P|%t) Cannot queue read request\n</font>"),
+                      -1);
+
+  <font color=red>// For flexibility I've added an error() method to tell us if</font>
+  <font color=red>// something bad has happened to the Recv object.</font>
+  if (recv_->error ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>(%P|%t) Recv object error!\n</font>"),
+                      -1);
+
+  return 0;
+}
+
+<font color=red>/* Take a message block off of the stream head reader's message queue.
+   If the queue is empty, use get() to read from the peer.  This is
+   most often used by client applications.  Servers will generaly
+   insert a reader that will prevent the data from getting all the way
+   upstream to the head.  */</font>
+int 
+<font color=#008888>Protocol_Stream::get</font> (ACE_Message_Block *&response,
+                      ACE_Time_Value *timeout )
+{
+  if (stream ().head ()->reader ()->msg_queue ()->is_empty ()
+      && this->get () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>(%P|%t) Cannot get data into the stream.\n</font>"),
+                      -1);
+    
+  return stream ().head ()->reader ()->getq (response,
+                                             timeout);
+}
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page12.html">Continue This Tutorial</A>]</CENTER>
