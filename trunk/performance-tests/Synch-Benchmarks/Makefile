@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for the Solaris 2.x synchronization benchmarks
 #----------------------------------------------------------------------------
@@ -26,9 +26,6 @@ FILES	= mutex_test \
 	  pipe_proc_test \
 	  Options \
 	  Benchmark
-
-SRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
 
 LSRC	= $(addsuffix .cpp,$(FILES)) 
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
