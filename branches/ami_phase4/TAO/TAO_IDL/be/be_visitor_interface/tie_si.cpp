@@ -66,16 +66,16 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   if (!node->is_nested ())
     {
       ACE_OS::sprintf (localskelname, "POA_%s",
-                       node->local_name ()->get_string ());
+                       node->local_name ());
       ACE_OS::sprintf (localtiename, "POA_%s_tie",
-                       node->local_name ()->get_string ());
+                       node->local_name ());
     }
   else
     {
       ACE_OS::sprintf (localskelname, "%s",
-                       node->local_name ()->get_string ());
+                       node->local_name ());
       ACE_OS::sprintf (localtiename, "%s_tie",
-                       node->local_name ()->get_string ());
+                       node->local_name ());
     }
 
   if (node->is_nested ())

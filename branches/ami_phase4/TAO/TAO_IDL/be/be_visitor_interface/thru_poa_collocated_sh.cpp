@@ -46,14 +46,14 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->flatname (), "_thru_poa_collocated");
+  os->gen_ifdef_macro (node->flat_name (), "_thru_poa_collocated");
 
   // output the class defn
   os->indent ();
   *os << "class " << idl_global->export_macro ()
       << " " << node->local_coll_name (be_interface::THRU_POA);
   os->incr_indent ();
-  *os << " : public virtual " << node->name ();
+  *os << " : public virtual " << node->full_name ();
 
   // generate base classes if any
   if (node->n_inherits () > 0)

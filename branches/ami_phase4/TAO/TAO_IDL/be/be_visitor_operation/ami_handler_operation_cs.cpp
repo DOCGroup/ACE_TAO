@@ -90,8 +90,20 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
                         -1);
     }
 
-  // Genereate scope name.
-  *os << parent->compute_name ("AMI_", "_Handler");
+  // Here we do not have our overridden be_interface methods,
+  // so the interface type strategy does not work here. 
+  // We have to go by foot.
+  {
+    char *full_name = 0;
+    
+    parent->compute_full_name ("AMI_", 
+                               "_Handler",
+                               full_name);
+    // Genereate scope name.
+    *os << full_name;
+
+    delete full_name;
+  }
 
   // Generate the operation name.
   *os << "::" << node->local_name ();
@@ -374,7 +386,7 @@ be_interpretive_visitor_operation_ami_handler_operation_cs::gen_pre_stub_info (b
       else
         *os << "_get_";
     }
-  *os << node->flatname () <<
+  *os << node->flat_name () <<
     "_paramdata [] = " << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -397,7 +409,7 @@ be_interpretive_visitor_operation_ami_handler_operation_cs::gen_pre_stub_info (b
   os->indent ();
   *os << be_nl;
   os->decr_indent ();
-  *os << "}; // " << node->flatname () << "_paramdata\n\n";
+  *os << "}; // " << node->flat_name () << "_paramdata\n\n";
 
   // Check if this operation raises any exceptions. In that case, we must
   // generate a list of exception typecodes. This is not valid for
@@ -430,7 +442,7 @@ be_interpretive_visitor_operation_ami_handler_operation_cs::gen_pre_stub_info (b
       else
         *os << "_get_";
     }
-  *os << node->flatname ()
+  *os << node->flat_name ()
       << "_calldata = " << be_nl
       << "{"
       << "\"";
@@ -468,7 +480,7 @@ be_interpretive_visitor_operation_ami_handler_operation_cs::gen_pre_stub_info (b
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_paramdata, ";
+  *os << node->flat_name () << "_paramdata, ";
 
       // insert exception list (if any) - node for attributes
   if (this->ctx_->attribute ())
@@ -478,7 +490,7 @@ be_interpretive_visitor_operation_ami_handler_operation_cs::gen_pre_stub_info (b
       if (node->exceptions ())
         {
           *os << node->exceptions ()->length ()
-              << ", _tao_" << node->flatname () << "_exceptiondata};\n\n";
+              << ", _tao_" << node->flat_name () << "_exceptiondata};\n\n";
         }
       else
         *os << "0, 0};\n\n";
@@ -546,7 +558,7 @@ gen_marshal_and_invoke (be_operation*node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_calldata," << be_nl
+  *os << node->flat_name () << "_calldata," << be_nl
       << "_tao_arguments" << be_uidt_nl
       << ");\n";
 
@@ -647,8 +659,6 @@ gen_marshal_and_invoke (be_operation *node,
                         be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
 
   os->indent ();
 
@@ -699,43 +709,28 @@ gen_marshal_and_invoke (be_operation *node,
           << be_nl
           << "if (!(\n" << be_idt << be_idt << be_idt;
 
-      // @@ Michael: This has to be replaced witht he code in the
-      //             "#if 0" clause
-      // Marshal the ami result argument, if the return type is not
-      // void.
-      if (!this->void_return_type (bt))
-        {
-          os->indent ();
-          *os << "(_tao_out << _tao_retval)";
-
-          // Print the && if there are OUT or INOUT arguements in the
-          // signature.
-          if (this->has_param_type (node, AST_Argument::dir_OUT) ||
-              this->has_param_type (node, AST_Argument::dir_INOUT))
-            *os << " &&\n";
-        }
-
-#if 0
-      // @@ This for giving the _tao_retval argument only. But
-      //    this may be needed for some data types.
-      //    But the one that is above is ok for basic types.
-      // @@ We may need to do this.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_MARSHAL_CS);
+      // demarshal
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_ami_handler_operation_cs::"
-                             "gen_marshal_and_invoke - "
-                             "codegen for return var in do_static_call failed\n"),
+                             "gen_demarshal_params - "
+                             "codegen for demarshal failed\n"),
                             -1);
         }
       delete visitor;
-      visitor = 0;
-#endif /* 0 */
+
+      // Print the && if there are OUT or INOUT arguements in the
+      // signature.
+      if (this->has_param_type (node, AST_Argument::dir_OUT) ||
+          this->has_param_type (node, AST_Argument::dir_INOUT))
+        *os << " &&\n";
+
 
       // Marshal each out and inout argument.
       ctx = *this->ctx_;
@@ -774,7 +769,7 @@ gen_marshal_and_invoke (be_operation *node,
     {
       if (node->exceptions ())
         {
-          *os << "_tao_call.invoke (_tao_" << node->flatname ()
+          *os << "_tao_call.invoke (_tao_" << node->flat_name ()
               << "_exceptiondata, "
               << node->exceptions ()->length ()
               << ", ACE_TRY_ENV);";

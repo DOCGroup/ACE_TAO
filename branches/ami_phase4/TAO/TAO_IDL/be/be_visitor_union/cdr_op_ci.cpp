@@ -98,7 +98,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
     be_type::narrow_from_decl (node->disc_type ());
 
   // Generate a temporary to store the discriminant
-  *os << disc_type->fullname ()
+  *os << disc_type->full_name ()
       << " " << "_tao_discriminant;" << be_nl
       << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl
       << "return 0;" << be_uidt_nl
