@@ -1,3 +1,12 @@
+Fri Oct  1 15:00:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          David Dunn <dunn@tripos.com> reported that the ImplRepo
+          server was still outputting an IOR to implrepo.ior, in
+          addition to the file specified by the -o flag.  It is
+          now fixed so only the -o specified file is used (and the
+          correct IOR is put in it).
+
 Fri Oct 01 15:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_reply_handler_stub_operation_cs.cpp:
