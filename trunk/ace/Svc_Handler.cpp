@@ -31,8 +31,9 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy");
 
-  // Only delete ourselves if we've been allocated dynamically.
-  if (this->dynamic_ && this->closing_ == 0)
+  // Only delete ourselves if we're not owned by a module and have
+  // been allocated dynamically.
+  if (this->mod_ == 0 && this->dynamic_ && this->closing_ == 0)
     // Will call the destructor, which automatically calls <shutdown>.
     // Note that if we are *not* allocated dynamically then the
     // destructor will call <shutdown> automatically when it gets run
