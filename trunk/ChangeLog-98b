@@ -10,6 +10,9 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/Connection/non_blocking/CPP-acceptor.cpp (handle_close):
           added ACE_UNUSED_ARG's.
 
+        * ace/config-sunos5.5-sunc++-4.x.h,config-sunos5.5-g++.h:
+          removed, because config-sunos5.5.h should be used instead.
+
 Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
