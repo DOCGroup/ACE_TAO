@@ -37,6 +37,7 @@
 
 #include "ace/os_include/os_signal.h"
 #include "ace/os_include/sys/os_socket.h"
+#include "ace/os_include/sys/os_types.h"
 
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)
