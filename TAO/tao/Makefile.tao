@@ -176,6 +176,7 @@ ORB_CORE_FILES = \
   DomainC \
   DomainA \
   TimeBaseC \
+  TimeBaseA \
   Principal \
   Sequence \
   MProfile \
