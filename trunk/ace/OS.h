@@ -5293,7 +5293,8 @@ public:
   int priority (void) const;
   void priority (int p);
 
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
 #else
 private:
   u_long token_rate_;
