@@ -1,3 +1,16 @@
+Mon Oct 05 16:39:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/corba.h: Removed duplicated macro definitions that are
+	  defined in try_macros.h.
+
+	* tao/try_macros.h (TAO_CATCH): Added ACE_UNUSED_ARG (VAR) for
+	  this when TAO_USE_EXCEPTIONS and removed ACE_UNUSED_ARG (VAR)
+	  when !TAO_USE_EXCEPTIONS.
+
+	* tao/Dyn{Any,Array,Enum,Sequence,Struct,Union}_i.cpp: Changed
+	  exceptions CORBA::NO_MEMORY to CORBA::NO_MEMORY () to avoid
+	  compilation errors when TAO_USE_EXCEPTIONS is enabled.
+
 Mon Oct 05 16:13:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.16 released.
