@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_
@@ -63,7 +63,7 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
