@@ -32,6 +32,7 @@
 #include "ace/config-g++-common.h"
 
 #include /**/ <_mingw.h>
+#include /**/ <w32api.h>
 
 #define ACE_LACKS_MODE_MASKS
 #define ACE_HAS_USER_MODE_MASKS
@@ -60,63 +61,31 @@
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
-// The MingW32 w32api version 1.4 and 1.5 don't define this union but we need
-// it in the Win32_Asynch_IO.cpp
-#if defined (ACE_MINGW_LACKS_FILE_SEGMENT_ELEMENT)
+#if ( __W32API_MAJOR_VERSION < 1) || ((__W32API_MAJOR_VERSION == 1) && (__W32API_MINOR_VERSION <= 5))
 
-// Define stuff for PVOID64
-#if !defined(_MAC) && (defined(_M_MRX000) || defined(_M_ALPHA) || defined(_M_IA64)) && (_MSC_VER >= 1100) && !(defined(MIDL_PASS) || defined(RC_INVOKED))
-#define POINTER_64 __ptr64
-typedef unsigned __int64 POINTER_64_INT;
-#if defined(_AXP64_)
-#define POINTER_32 __ptr32
-#else
-#define POINTER_32
-#endif
-#else
-#if defined(_MAC) && defined(_MAC_INT_64)
-#define POINTER_64 __ptr64
-typedef unsigned __int64 POINTER_64_INT;
-#else
-#define POINTER_64
-typedef unsigned long POINTER_64_INT;
-#endif
-#define POINTER_32
-#endif
+// The MingW32 w32api version 1.50 and lower don't define these types and methods
+// but we need it in the Win32_Asynch_IO.cpp
 
-typedef void * POINTER_64 PVOID64;
+typedef void *PVOID,*LPVOID;
+
+/* FIXME for __WIN64 */
+#ifndef  __ptr64
+#define __ptr64
+#endif
+typedef void* __ptr64 PVOID64;
 
 //
 // Define segement buffer structure for scatter/gather read/write.
 //
 typedef union _FILE_SEGMENT_ELEMENT {
-    PVOID64 Buffer;
-    ULONGLONG Alignment;
+           PVOID64 Buffer;
+           ULONGLONG Alignment;
 }FILE_SEGMENT_ELEMENT, *PFILE_SEGMENT_ELEMENT;
-#endif
 
-// The MingW32 w32api version 1.4 and 1.5 don't define these methods but we need
-// it in the Win32_Asynch_IO.cpp
-#if defined (ACE_MINGW_LACKS_READWRITE_FILESCATTER)
-BOOL
-WINAPI
-ReadFileScatter(
-    IN HANDLE hFile,
-    IN FILE_SEGMENT_ELEMENT aSegmentArray[],
-    IN DWORD nNumberOfBytesToRead,
-    IN LPDWORD lpReserved,
-    IN LPOVERLAPPED lpOverlapped
-    );
 
-BOOL
-WINAPI
-WriteFileGather(
-    IN HANDLE hFile,
-    OUT FILE_SEGMENT_ELEMENT aSegmentArray[],
-    IN DWORD nNumberOfBytesToWrite,
-    IN LPDWORD lpReserved,
-    IN LPOVERLAPPED lpOverlapped
-    );
+BOOL WINAPI ReadFileScatter(HANDLE,FILE_SEGMENT_ELEMENT[],DWORD,LPDWORD,LPOVERLAPPED);
+
+BOOL WINAPI WriteFileGather(HANDLE,FILE_SEGMENT_ELEMENT[],DWORD,LPDWORD,LPOVERLAPPED);
 #endif
 
 #include "ace/post.h"
