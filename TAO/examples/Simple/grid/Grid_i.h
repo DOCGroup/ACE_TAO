@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 // $Id$
 
@@ -89,6 +90,9 @@ public:
   // = Initialization and termination methods.
   Grid_Factory_i (void);
   // Constructor.
+
+  Grid_Factory_i (Grid_Factory_i &);
+  // Copy constructor to fool g++
 
   ~Grid_Factory_i (void);
   // Destructor.

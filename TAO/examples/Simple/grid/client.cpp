@@ -1,20 +1,23 @@
-// -*- C++ -*-
-// $Id$
-#include "Client_i.h"
+//$Id$
 
-// This function runs the grid test.
+# include "Grid_Client_i.h"
+
+// The client program for the application.
 
 int
 main (int argc, char **argv)
 {
-  Client_i client;
+  Grid_Client_i client;
+  
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Grid client\n"));
+              "\nGrid client\n\n"));
 
-  if (client.init (argc, argv) == -1)
-    return -1;
+  if (client.run (argc, argv) == -1)
+    return -1; 
   else
-    return client.run ();
+    return 0;
+   
 }
 
+                                 
