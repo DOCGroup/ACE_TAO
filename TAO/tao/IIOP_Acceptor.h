@@ -130,6 +130,10 @@ protected:
   TAO_ORB_Core *orb_core_;
   // ORB Core.
 
+  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
+  // TCP configuration properties to be used for all
+  // connections opened by this acceptor.
+
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.
@@ -141,10 +145,6 @@ private:
 
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
-
-  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
-  // TCP configuration properties to be used for all
-  // connections opened by this acceptor.
 };
 
 #if defined(__ACE_INLINE__)

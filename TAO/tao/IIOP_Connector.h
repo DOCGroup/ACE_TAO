@@ -211,6 +211,10 @@ protected:
   TAO_ORB_Core *orb_core_;
   // ORB Core.
 
+  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
+  // TCP configuration properties to be used for all
+  // connections established by this connector.
+
 private:
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
@@ -229,10 +233,6 @@ private:
   // Caching strategy which decides the order of removal of entries
   // from the connection cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
-  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
-  // TCP configuration properties to be used for all
-  // connections established by this connector.
 };
 
 #include "ace/post.h"
