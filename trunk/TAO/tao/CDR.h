@@ -612,6 +612,8 @@ extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
                                             CORBA::ULongLong x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
+                                            CORBA::LongDouble x);
+extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
                                             CORBA::Float x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
                                             CORBA::Double x);
@@ -649,6 +651,8 @@ extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
                                             CORBA::LongLong &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
                                             CORBA::ULongLong &x);
+extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
+                                            CORBA::LongDouble &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
                                             CORBA::Float &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,

@@ -1,3 +1,9 @@
+Fri Nov 20 07:48:54 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/CDR.{h, i}:
+
+	  Added the missing <<, >> operators for long double.
+
 Thu Nov 19 15:12:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp (output_latency):
