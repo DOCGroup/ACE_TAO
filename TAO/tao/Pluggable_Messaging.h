@@ -141,10 +141,6 @@ public:
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
 
-  /// @@Bala:Docu??
-  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd) = 0;
-
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
@@ -173,6 +169,10 @@ public:
 
   /// Header length
   virtual size_t header_length (void) const = 0;
+
+  /// Fragment header length
+  virtual size_t fragment_header_length (CORBA::Octet major,
+                                         CORBA::Octet minor) const = 0;
 
   /// Accessor for the output CDR stream
   virtual TAO_OutputCDR &out_stream (void) = 0;

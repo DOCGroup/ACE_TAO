@@ -129,6 +129,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , wchar_translator_ (0)
   , tcs_set_ (0)
   , first_request_ (1)
+  , partial_message_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -157,6 +158,10 @@ TAO_Transport::~TAO_Transport (void)
       // Cleanup our cache entry
       this->purge_entry();
     }
+
+  // Release the partial message block, however we may
+  // have never allocated one.
+  ACE_Message_Block::release (this->partial_message_);
 
   // By the time the destructor is reached here all the connection stuff
   // *must* have been cleaned up.
@@ -1277,6 +1282,26 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         this->messaging_object ()->header_length ();
     }
 
+  // If we have a partial message, copy it into our message block
+  // and clear out the partial message.
+  if (this->partial_message_ != 0 && this->partial_message_->length () != 0)
+    {
+      if (message_block.copy (this->partial_message_->rd_ptr (),
+                              this->partial_message_->length ()) == 0)
+        {
+          recv_size -= this->partial_message_->length ();
+          this->partial_message_->reset ();
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) - Transport[%d]::handle_input, "
+                             "unable to copy the partial message\n",
+                             this->id ()),
+                             -1);
+        }
+    }
+
   // Saving the size of the received buffer in case any one needs to
   // get the size of the message thats received in the
   // context. Obviously the value will be changed for each recv call
@@ -1286,7 +1311,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t n = this->recv (message_block.wr_ptr (),
                           recv_size,
                           max_wait_time);
 
@@ -1325,27 +1350,32 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       return retval;
     }
 
-  // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block,
-                      this->orb_core_->transport_message_buffer_allocator ());
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
-
-  // Check whether the message was fragmented..
-  if (qd.more_fragments_ ||
-      (qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+  if (message_block.length () > 0)
     {
-      // Duplicate the node that we have as the node is on stack..
-      TAO_Queued_Data *nqd =
-        TAO_Queued_Data::duplicate (qd);
+      // Make a node of the message block..
+      TAO_Queued_Data qd (&message_block,
+                          this->orb_core_->transport_message_buffer_allocator ());
 
-      return this->consolidate_fragments (nqd, rh);
+      // Extract the data for the node..
+      this->messaging_object ()->get_message_data (&qd);
+
+      // Check whether the message was fragmented..
+      if (qd.more_fragments_ ||
+          (qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+        {
+          // Duplicate the node that we have as the node is on stack..
+          TAO_Queued_Data *nqd =
+            TAO_Queued_Data::duplicate (qd);
+
+          return this->consolidate_fragments (nqd, rh);
+        }
+
+      // Process the message
+      return this->process_parsed_messages (&qd,
+                                            rh);
     }
 
-  // Process the message
-  return this->process_parsed_messages (&qd,
-                                        rh);
+  return 0;
 }
 
 int
@@ -1355,9 +1385,47 @@ TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
 {
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->parse_incoming_messages (block) == -1)
+  switch (this->parse_incoming_messages (block))
     {
+    // An error has occurred during message parsing
+    case -1:
       return -1;
+
+    // This message block does not contain enough data to
+    // parse the header.  We do not need to grow the partial
+    // message block since we are guaranteed that it can hold
+    // at least a GIOP header plus a GIOP fragment header.
+    case 1:
+      if (this->partial_message_ == 0)
+        {
+          this->allocate_partial_message_block ();
+        }
+
+      if (this->partial_message_ != 0 &&
+          this->partial_message_->copy (block.rd_ptr (),
+                                        block.length ()) == 0)
+        {
+          block.rd_ptr (block.length ());
+          return 0;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) - Transport[%d]::parse_consolidate_messages, "
+                             "unable to save the partial message\n",
+                             this->id ()),
+                             -1);
+        }
+
+    case 0: // The normal case
+      break;
+
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) - Transport[%d]::parse_consolidate_messages, "
+                         "impossible return value from parse_incoming_messages\n",
+                         this->id ()),
+                         -1);
     }
 
   // Check whether we have a complete message for processing
@@ -1397,18 +1465,15 @@ TAO_Transport::parse_incoming_messages (ACE_Message_Block &block)
       int retval =
         this->messaging_object ()->parse_incoming_messages (block);
 
-      if (retval == -1)
+      if (retval == -1 && TAO_debug_level > 2)
         {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Transport[%d]::parse_incoming_messages, "
-                          "error in incoming message\n",
-                          this->id ()));
-            }
-
-          return -1;
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::parse_incoming_messages, "
+                      "error in incoming message\n",
+                      this->id ()));
         }
+
+      return retval;
     }
 
   return 0;
@@ -1511,40 +1576,98 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   // in the queue as they would have been taken care before. Put
   // ourselves in the queue and  then try processing one of the
   // messages..
-  if ((missing_data > 0
-       ||this->incoming_message_queue_.queue_length ())
-      && this->incoming_message_queue_.is_tail_fragmented () == 0)
+  if (missing_data >= 0 ||
+      this->incoming_message_queue_.queue_length () != 0)
     {
-      if (TAO_debug_level > 4)
+      if (missing_data == 0 ||
+          !this->incoming_message_queue_.is_tail_fragmented ())
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::consolidate_message, "
-                      "queueing up the message\n",
-                      this->id ()));
+          if (TAO_debug_level > 4)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport[%d]::consolidate_message, "
+                          "queueing up the message\n",
+                          this->id ()));
+            }
+
+          // Get a queued data
+          TAO_Queued_Data *qd =
+            this->make_queued_data (incoming);
+
+          // Add the missing data to the queue
+          qd->missing_data_ = missing_data;
+
+          // Get the rest of the messaging data
+          this->messaging_object ()->get_message_data (qd);
+
+          // If this is a full GIOP fragment, then we need only
+          // to consolidate the fragments
+          if (missing_data == 0 &&
+              (qd->more_fragments_ ||
+               qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+            {
+              this->consolidate_fragments (qd, rh);
+            }
+          else
+            {
+              // Add it to the tail of the queue..
+              this->incoming_message_queue_.enqueue_tail (qd);
+
+              if (this->incoming_message_queue_.is_head_complete ())
+                {
+                  return this->process_queue_head (rh);
+                }
+            }
         }
-
-      // Get a queued data
-      TAO_Queued_Data *qd =
-        this->make_queued_data (incoming);
-
-      // Add the missing data to the queue
-      qd->missing_data_ = missing_data;
-
-      // Get the rest of the messaging data
-      this->messaging_object ()->get_message_data (qd);
-
-      // Add it to the tail of the queue..
-      this->incoming_message_queue_.enqueue_tail (qd);
-
-      if (this->incoming_message_queue_.is_head_complete ())
+      else
         {
-          return this->process_queue_head (rh);
+          // This block of code will only come into play when GIOP
+          // message fragmentation is employed.  If we have a fragment
+          // in the message queue, we can only chain message blocks
+          // onto the TAO_Queued_Data for that fragment.  Unless we have
+          // a full GIOP fragment, and since we know we're missing data,
+          // we need to save what we have until we can read in some more of
+          // the fragment until we get it all.  This bit of data could be
+          // larger than what the partial message block can hold, so we may
+          // need to grow the partial message block.
+          if (this->partial_message_ == 0)
+            {
+              this->allocate_partial_message_block ();
+            }
+
+          if (this->partial_message_ != 0)
+            {
+              const size_t incoming_length = incoming.length ();
+              ACE_CDR::grow (this->partial_message_,
+                             incoming_length);
+              if (this->partial_message_->copy (incoming.rd_ptr (),
+                                                incoming_length) == 0)
+                {
+                  incoming.rd_ptr (incoming_length);
+                }
+              else
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "TAO (%P|%t) - Transport[%d]::consolidate_message, "
+                                     "unable to save the partial message\n",
+                                     this->id ()),
+                                     -1);
+                }
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) - Transport[%d]::consolidate_message, "
+                                 "unable to allocate the partial message\n",
+                                 this->id ()),
+                                 -1);
+            }
         }
 
       return 0;
     }
 
-  // We dont have any missing data. Just make a queued_data node with
+  // We don't have any missing data. Just make a queued_data node with
   // the existing message block and send it to the higher layers of
   // the ORB.
   TAO_Queued_Data pqd (&incoming,
@@ -1557,10 +1680,10 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   if (pqd.more_fragments_ ||
       (pqd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
     {
-      // Duplicate the queued data as it is on stack..
-      TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (pqd);
+        // Duplicate the queued data as it is on stack..
+        TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (pqd);
 
-      return this->consolidate_fragments (nqd, rh);
+        return this->consolidate_fragments (nqd, rh);
     }
 
   // Now we have a full message in our buffer. Just go ahead and
@@ -1570,42 +1693,148 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
 }
 
 int
-TAO_Transport::consolidate_fragments (TAO_Queued_Data *qd,
+TAO_Transport::consolidate_fragments (TAO_Queued_Data *queueable_message,
                                       TAO_Resume_Handle &rh)
 {
-  // If we have received a fragment message then we have to
-  // consolidate <qd> with the last message in queue
-  // @@todo: this piece of logic follows GIOP a bit... Need to revisit
-  // if we have protocols other than GIOP
+  // Get the version numbers
+  CORBA::Octet major  = queueable_message->major_version_;
+  CORBA::Octet minor  = queueable_message->minor_version_;
+  CORBA::UShort whole = major << 8 | minor;
 
-  // @@todo: Fragments now have too much copying overhead. Need to get
-  // them out if we want to have some reasonable performance metrics
-  // in future.. Post 1.2 seems a nice time..
-  if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
+  switch(whole)
     {
-      TAO_Queued_Data *tqd =
-        this->incoming_message_queue_.dequeue_tail ();
-
-      tqd->more_fragments_ = qd->more_fragments_;
-      tqd->missing_data_ = qd->missing_data_;
-
-      if (this->messaging_object ()->consolidate_fragments (tqd, qd) == -1)
+    case 0x0100:
+      if (!queueable_message->more_fragments_)
         {
-          return -1;
+          this->incoming_message_queue_.enqueue_tail (queueable_message);
         }
+      else
+        {
+          // Fragments aren't supported in 1.0.  This is an error and
+          // we should reject it somehow.  What do we do here?  Do we throw
+          // an exception to the receiving side?  Do we throw an exception
+          // to the sending side?
+          //
+          // At the very least, we need to log the fact that we received
+          // nonsense.
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("TAO (%P|%t) - ")
+                             ACE_TEXT("TAO_Transport::enqueue_incoming_message ")
+                             ACE_TEXT("detected a fragmented GIOP 1.0 message\n")),
+                            -1);
+        }
+      break;
+    case 0x0101:
+      {
+        // One note is that TAO_Queued_Data contains version numbers,
+        // but doesn't indicate the actual protocol to which those
+        // version numbers refer.  That's not a problem, though, because
+        // instances of TAO_Queued_Data live in a queue, and that queue
+        // lives in a particular instance of a Transport, and the
+        // transport instance has an association with a particular
+        // messaging_object.  The concrete messaging object embodies a
+        // messaging protocol, and must cover all versions of that
+        // protocol.  Therefore, we just need to cover the bases of all
+        // versions of that one protocol.
 
-      TAO_Queued_Data::release (qd);
-      this->incoming_message_queue_.enqueue_tail (tqd);
-      this->process_queue_head (rh);
-    }
-  else
-    {
-      // if we dont have a fragment already in the queue just add it in
-      // the queue
-      this->incoming_message_queue_.enqueue_tail (qd);
+        // In 1.1, fragments kinda suck because they don't have they're
+        // own message-specific header.  Therefore, we have to find the
+        // fragment based on the major and minor version.
+        TAO_Queued_Data* fragment_message_chain =
+            this->incoming_message_queue_.find_fragment_chain (major, minor);
+
+        // Deal with the fragment and the queueable message
+        this->process_fragment (fragment_message_chain,
+                                queueable_message,
+                                major, minor, rh);
+        break;
+      }
+    case 0x0102:
+      {
+        // In 1.2, we get a little more context.  There's a
+        // FRAGMENT message-specific header, and inside that is the
+        // request id with which the fragment is associated.
+        TAO_Queued_Data* fragment_message_chain =
+            this->incoming_message_queue_.find_fragment_chain (
+                                  queueable_message->request_id_);
+
+        // Deal with the fragment and the queueable message
+        this->process_fragment (fragment_message_chain,
+                                queueable_message,
+                                major, minor, rh);
+        break;
+      }
+    default:
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - ")
+                  ACE_TEXT("TAO_Transport::consolidate_fragments ")
+                  ACE_TEXT("can not handle a GIOP %d.%d ")
+                  ACE_TEXT("message\n"), major, minor));
+      ACE_HEX_DUMP ((LM_DEBUG,
+                     queueable_message->msg_block_->rd_ptr (),
+                     queueable_message->msg_block_->length ()));
+      return -1;
     }
 
   return 0;
+}
+
+void
+TAO_Transport::process_fragment (TAO_Queued_Data* fragment_message_chain,
+                                 TAO_Queued_Data* queueable_message,
+                                 CORBA::Octet major,
+                                 CORBA::Octet minor,
+                                 TAO_Resume_Handle &rh)
+{
+  // No fragment was found
+  if (fragment_message_chain == 0)
+    {
+      this->incoming_message_queue_.enqueue_tail (queueable_message);
+    }
+  else
+    {
+      if (fragment_message_chain->major_version_ != major ||
+          fragment_message_chain->minor_version_ != minor)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT("TAO (%P|%t) - ")
+                    ACE_TEXT("TAO_Transport::process_fragment ")
+                    ACE_TEXT("GIOP versions do not match ")
+                    ACE_TEXT("(%d.%d != %d.%d\n"),
+                    fragment_message_chain->major_version_,
+                    fragment_message_chain->minor_version_,
+                    major, minor));
+
+      // Find the last message block in the continuation
+      ACE_Message_Block* mb = fragment_message_chain->msg_block_;
+      while (mb->cont () != 0)
+        mb = mb->cont ();
+
+      // Add the current message block to the end of the chain
+      // after adjusting the read pointer to skip the header(s)
+      const size_t header_adjustment =
+         this->messaging_object ()->header_length () +
+         this->messaging_object ()->fragment_header_length (major, minor);
+      queueable_message->msg_block_->rd_ptr(header_adjustment);
+      mb->cont (queueable_message->msg_block_);
+
+      // Remove our reference to the message block.  At this point
+      // the message block of the fragment head owns it as part of a
+      // chain
+      queueable_message->msg_block_ = 0;
+
+      if (!queueable_message->more_fragments_)
+        {
+          // This is the end of the fragments for this request
+          fragment_message_chain->consolidate ();
+
+          // Process the queue head to make sure that the newly
+          // consolidated fragments get handled
+          this->process_queue_head (rh);
+        }
+
+      // Get rid of the queuable message
+      TAO_Queued_Data::release (queueable_message);
+    }
 }
 
 int
@@ -1922,7 +2151,7 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
 {
   // Get an instance of TAO_Queued_Data
   TAO_Queued_Data *qd =
-    TAO_Queued_Data::get_queued_data (
+    TAO_Queued_Data::make_queued_data (
       this->orb_core_->transport_message_buffer_allocator ());
 
   // Get the flag for the details of the data block...
@@ -2178,6 +2407,19 @@ TAO_Transport::post_open (size_t id)
     }
 
   return true;
+}
+
+void
+TAO_Transport::allocate_partial_message_block (void)
+{
+  if (this->partial_message_ == 0)
+    {
+      // This value must be at least large enough to hold a GIOP message
+      // header plus a GIOP fragment header
+      const size_t partial_message_size = 16;
+      ACE_NEW (this->partial_message_,
+               ACE_Message_Block (partial_message_size));
+    }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

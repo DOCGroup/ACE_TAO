@@ -96,6 +96,9 @@ public:
   /// request/response?
   virtual int is_ready_for_bidirectional (void);
 
+  /// The header length of a fragment
+  virtual size_t fragment_header_length (void) const = 0;
+
 protected:
 
   /// Marshall the reply status
