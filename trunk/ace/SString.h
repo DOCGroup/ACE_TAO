@@ -31,9 +31,13 @@ class ACE_Export ACE_CString
   //   ANSI/ISO C++ standard String class.  Note that we need to use
   //   this class since the ACE ACE_Map_Manager requires an object
   //   that supports the operator== and operator!=.
-  //   This class uses an ACE_Allocator to allocate memory
+  //   This class uses an ACE_Allocator to allocate memory.
   //   The user can make this a persistant class by providing an 
-  //   ACE_Allocator with a persistable memory pool
+  //   ACE_Allocator with a persistable memory pool.
+  //   NOTE: if an instance of this class is constructed from or assigned
+  //   an empty string (with first element of '\0'), then it is _not_
+  //   allocated new space.  Instead, its internal representation is set
+  //   equal to a global empty string.
 {
 public:
   ACE_CString (ACE_Allocator *allocator = 0);
@@ -70,6 +74,8 @@ public:
 
   const char *fast_rep (void) const;
   // Get at the underlying representation directly!
+  // _Don't_ even think about casting the result to (char *) and modifying it,
+  // if it has length 0!
 
   void operator += (const ACE_CString &);
   // Concat operator (copies memory).
@@ -81,6 +87,7 @@ public:
   char operator[] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
+  // _Don't_ even think about modifying the result if it has length 0!
 
   int operator== (const ACE_CString &s) const;
   // Comparison operator (must match entire string).
@@ -103,6 +110,9 @@ private:
 
   char *rep_;
   // Pointer to data.
+
+  static char null_string_;
+  // Static null string.
 };
 
 class ACE_Export ACE_SString
