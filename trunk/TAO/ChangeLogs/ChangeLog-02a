@@ -1,3 +1,24 @@
+Mon Nov 19 02:06:53 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * orbsvcs/tests/Concurrency/Makefile:
+
+          Modified so that when the lex/yacc file changes the Makefile
+          regenerates the .cpp and .h files instead of printing out a lame
+          warning. Makefile also adds the CVS magic cookie automatically.
+
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.h:
+
+          New versions which fix the warning that showed up under Windows.
+
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+
+          New version necessitated by change in Makefile.
+
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp.diff:
+
+          Removed the bogus hunk which included a invalid //$Id$.
+
 Sun Nov 18 17:33:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
@@ -16,11 +37,11 @@ Sat Nov 17 13:22:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Invocation_Endpoint_Selectors.cpp:
 	* tao/Invocation_Endpoint_Selectors.i:  Moved constructors
-	  from .i to .cpp file to remove VC++ warning. 
+	  from .i to .cpp file to remove VC++ warning.
 
 Sat Nov 17 10:09:33 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report): Changed sdes_type from 
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report): Changed sdes_type from
 	ACE_UINT16 to unsigned char to remove VC++ warning.
 
 Fri Nov 16 23:11:33 2001  Ossama Othman  <ossama@uci.edu>
@@ -57,7 +78,7 @@ Fri Nov 16 13:36:09 2001  Craig Rodrigues  <crodrigu@bbn.com>
 Thu Nov 15 17:54:41 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTCP_Channel.h:
-	* orbsvcs/orbsvcs/AV/RTCP_Packet.h:  Added #includes of ace/pre.h, 
+	* orbsvcs/orbsvcs/AV/RTCP_Packet.h:  Added #includes of ace/pre.h,
 	  and ace/post.h.  Thanks to Rob Ruff.
 	* orbsvcs/orbsvcs/AV/md5.h:  Added names of variables to function
 	  prototypes to appease HPUX compiler.
@@ -75,7 +96,7 @@ Tue Nov 13 20:58:02 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/md5.h: Changed comments from C++ style
 	  to C style in C file.
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
 	  Default initialized variables.
 	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
 	  Default initialized variable.
@@ -137,79 +158,79 @@ Tue Nov 13 14:14:24 2001  Craig Rodrigues <crodrigu@bbn.com>
 	  only allows one flow between stream endpoints). The code was modified
 	  to allow data and control information to be passed as part of the
 	  same flow.
-  
+
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	  Added/renamed several properties defined in the CORBA AV spec.
 	  Implemented the TAO_StreamCtrl::unbind operation.
 	  Fixed several memory leaks.
-  
+
 	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
 	  Added code to clean up transport/flow factories (fix memory leak).
 	  Added get_transport_factory(const char *transport_protocol).
 	  Added get_flow_protocol_factory(const char *flow_protocol).
-  
+
 	* orbsvcs/orbsvcs/AV/AV_Core.h:
 	  Added get_transport_factory(const char *transport_protocol).
 	  Added get_flow_protocol_factory(const char *flow_protocol).
-  
+
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 	  Added a remove_ref call to activate_mediactrl.
-  
+
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
 	  Changed the flow specification to better conform to the AV Service
 	  spec.
-  
+
 	* orbsvcs/orbsvcs/AV/MCast.cpp:
 	  TAO_AV_UDP_MCast_Flow_Handler::handle_input now returns the value
 	  returned by protocol_object->handle_input rather than 0.
-  
+
 	* orbsvcs/orbsvcs/AV/MCast.h:
 	  Made the TAO_AV_UDP_MCast_Flow_Handler destructor virtual.
-  
+
 	* orbsvcs/orbsvcs/AV/RTCP.cpp:
 	* orbsvcs/orbsvcs/AV/RTCP.h:
 	  Added full RFC compliant RTCP control protocol implementation.
 	  Modified the ssrc allocation operation to use the MD5 algorithm to
 	  more reliably choose a unique id.
-  
+
 	* orbsvcs/orbsvcs/AV/RTCP_Channel.h: (added)
 	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: (added)
 	  These files contain two classes, one used to represent incoming RTP
 	  streams and one to represent outgoing streams.  They keep track of
 	  transmission/reception statistics.
-  
+
 	* orbsvcs/orbsvcs/AV/RTCP_Packet.h: (added)
 	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp: (added)
 	  These files contain classes to represent each of the control packet
 	  message types.
-  
+
 	* orbsvcs/orbsvcs/AV/RTP.cpp:
 	* orbsvcs/orbsvcs/AV/RTP.h:
 	  Made several changes to support the RTCP implementation.
 	  Added a class to represent an RTP packet.
-  
+
 	* orbsvcs/orbsvcs/AV/Transport.cpp:
 	  Modified code to use the get_xxx_factory routines added to AV_Core
 	  rather than doing the search in this file.
-  
+
 	* orbsvcs/orbsvcs/AV/UDP.cpp:
 	  When the protocol is RTP/UDP, an even/odd port pair will be reserved
 	  as is called out in the RTP RFC.
 	  The class TAO_AV_UDP_Connection_Setup was added to replace duplicated
 	  code used for both the TAO_AV_UDP_Acceptor and TAO_AV_UDP_Connector.
-  
+
 	* orbsvcs/orbsvcs/AV/global.h: (added)
 	* orbsvcs/orbsvcs/AV/md5.h: (added)
 	* orbsvcs/orbsvcs/AV/md5c.c: (added)
 	  Used by the operation to allocate ssrc's in RTCP.cpp to help guarantee
 	  a unique id.
-  
+
 	* orbsvcs/orbsvcs/AV/source.cpp: (removed)
 	* orbsvcs/orbsvcs/AV/source.h: (removed)
 	* orbsvcs/orbsvcs/AV/source.i: (removed)
 	  The functionality contained in these files is now implemented in the
 	  RTCP*.* files.
-  
+
 	* orbsvcs/orbsvcs/Makefile.av: (updated)
 	* orbsvcs/orbsvcs/AV.bor: (updated)
 
