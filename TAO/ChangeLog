@@ -1,3 +1,10 @@
+Thu Mar 17 11:00:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add no-define to AC_INIT_AUTOMAKE so that PLATFORM and VERSION
+	  are not defined in config.h.
+
 Thu Mar 17 09:02:28 2005  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
