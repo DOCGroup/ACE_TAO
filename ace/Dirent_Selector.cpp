@@ -3,6 +3,12 @@
 #include "ace/OS.h"
 #include "ace/Dirent_Selector.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Dirent_Selector.inl"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace, Dirent_Selector, "$Id$")
+
 // Construction/Destruction
 
 ACE_Dirent_Selector::ACE_Dirent_Selector (void) 
