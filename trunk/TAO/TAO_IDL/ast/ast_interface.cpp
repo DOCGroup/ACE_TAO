@@ -922,7 +922,15 @@ AST_Interface::redefine (AST_Interface *from,
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
   this->set_file_name (idl_global->filename ());
-  this->add_pragmas (p);
+
+  // If we are being defined from a forward declaration in 
+  // the same scope (i.e., the same opening of the enclosing
+  // module), the two pragma lists will share the same pointer.
+  // In this case, addition would lead to infinite recursion.
+  if (this->pragmas () != p)
+    {
+      this->add_pragmas (p);
+    }
 }
 
 AST_Interface **
