@@ -30,17 +30,17 @@ appending the following suffixes (see the list of TAO's IDL compiler
 these files:) <P>
 
 <UL>
-<LI> <EM>Client stubs</EM> -- <tt>C.h</tt>, <tt>C.i</tt>, and <tt>C.cpp</tt>
-<LI> <EM>Server skeletons</EM> -- <tt>S.h</tt>, <tt>S.i</tt>, and
-<tt>S.cpp</tt>
-<LI> <EM>Server skeleton templates </EM> -- <tt>S_T.h</tt>, <tt>S_T.i</tt>,
-and <tt>S_T.cpp</tt>
+<LI> <EM>Client stubs</EM> -- <tt>*C.h</tt>, <tt>*C.i</tt>, and <tt>*C.cpp</tt>
+<LI> <EM>Server skeletons</EM> -- <tt>*S.h</tt>, <tt>*S.i</tt>, and
+<tt>*S.cpp</tt>
+<LI> <EM>Server skeleton templates </EM> -- <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
+and <tt>*S_T.cpp</tt>
 </UL>
 
 TAO's IDL compiler creates separate <TT>*.i</TT> and <TT>*S_T.*</TT>
 files to improve the performance of the generated code.  Fortunately,
 you only need to <CODE>#include</CODE> the client stubs declared in
-the <tt>C.h</tt> file and the skeletons in the <tt>S.h</tt> file in
+the <tt>*C.h</tt> file and the skeletons in the <tt>*S.h</tt> file in
 your code. <P>
 
 <HR><P>
