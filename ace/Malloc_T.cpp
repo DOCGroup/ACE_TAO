@@ -34,7 +34,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator (void)
 {
-  char* tmp = (char*)this->pool_;
+  char* tmp = (char *) this->pool_;
   delete [] tmp;
 }
 
