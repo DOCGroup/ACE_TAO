@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE ECConfiguration SYSTEM "ecconfig.dtd">
+
+<ECConfiguration>
+    
+<!-- Define the events -->
+<!-- THESE NEED TO BE THE SAME AS DEFINED IN THE CLIENT XML! -->
+<Timeout name="Subtask1 Timeout" >
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+</Timeout>
+  
+<Event name="Subtask1 Trigger" type="16">
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+  <Criticality value="VERY_LOW" />
+  <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<Event name="Subtask2 Trigger" type="17">
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+  <Criticality value="VERY_LOW" />
+  <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<!-- Configure the ECs -->
+<RemoteEventChannel name="Middle" >
+  <IORFile>middle.ior</IORFile>
+</RemoteEventChannel>
+
+<LocalEventChannel name="Server" >
+  <SchedulingStrategy type="EDF" enableRG="true" />
+  <Supplier name="Subtask1 Notifier" id="1">
+    <Publications>
+      <EventName>Subtask1 Trigger</EventName>
+    </Publications>
+    <Triggers>
+      <TimeoutName>Subtask1 Timeout</TimeoutName>
+    </Triggers>
+  </Supplier>
+  <Supplier name="Subtask2 Notifier" id="2">
+    <Publications>
+      <EventName>Subtask2 Trigger</EventName>
+    </Publications>
+  </Supplier>
+  <Consumer name="Subtask1 Executor" >
+    <Subscriptions>
+      <EventName>Subtask1 Trigger</EventName>
+    </Subscriptions>
+    <Dependants>
+      <SupplierName>Subtask2 Notifier</SupplierName>
+    </Dependants>
+  </Consumer>
+</LocalEventChannel>
+
+<!-- Configure the driver -->
+<TestDriver>
+  <StartCondition type="DelayAfterConnect" master="yes" >
+    <Time>30000</Time> <!-- in msecs -->
+  </StartCondition>
+  <StopCondition type="Duration" >
+    <Value>340000</Value> <!-- duration in msecs -->
+  </StopCondition>
+</TestDriver>
+
+</ECConfiguration>

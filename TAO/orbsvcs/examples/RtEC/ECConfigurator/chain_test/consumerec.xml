@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE ECConfiguration SYSTEM "ecconfig.dtd">
+
+<ECConfiguration>
+    
+<Event name="Subtask3 Trigger" type="18">
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+  <Criticality value="VERY_HIGH" />
+  <Importance value="VERY_HIGH" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<!-- Configure the ECs -->
+<LocalEventChannel name="Client" >
+  <SchedulingStrategy type="EDF" enableRG="true" />
+  <Consumer name="Subtask3 Executor" >
+    <Subscriptions>
+      <EventName>Subtask3 Trigger</EventName>
+    </Subscriptions>
+  </Consumer>
+</LocalEventChannel>
+
+<!-- Configure the driver -->
+<!-- there should only be one Driver -->
+<TestDriver>
+  <StartCondition type="DelayAfterConnect">
+    <Time>30000</Time> <!-- in msecs -->
+  </StartCondition>
+  <StopCondition type="Duration" >
+    <Value>340000</Value> <!-- duration in msecs -->
+  </StopCondition>
+</TestDriver>
+
+</ECConfiguration>
