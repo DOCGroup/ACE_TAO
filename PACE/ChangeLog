@@ -1,10 +1,19 @@
+Wed Jul 12 11:51:52 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/errno.h:
+
+	  Added to repository.
+	  Added to pace_dll.dsp.
+	  Added to pace_lib.dsp.
+
 Wed Jul 12 11:45:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.commmon.GNU: added OSF1 support.
 
 Wed Jul 12 10:53:01 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-        * pace/win32/pace.dsw:
+        * pace/win32/pace_lib.dsp:
+        * pace/win32/pace_dll.dsp:	
 
           Added the PACE/pace/*.h files. These currently contain
           the interface we need to compile into our code. Maybe
