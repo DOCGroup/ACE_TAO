@@ -20,6 +20,9 @@ Tue Mar 10 06:59:42 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.h,Basic_Types.h: moved ACE_USHORT16 typedef from OS.h to
           Basic_Types.h.
 
+        * ace/High_Res_Timer.h: fixed comment:  timer.start () instead of
+          timer.stop () (twice).
+
 Mon Mar 09 22:15:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SString.cpp (ACE_CString::operator=): Special cases have to
