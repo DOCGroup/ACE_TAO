@@ -5,7 +5,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID(IFR_Service, TypeCodeFactory_i, "$Id$")
+ACE_RCSID(TypeCodeFactory, TypeCodeFactory_i, "$Id$")
 
 TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
 {
