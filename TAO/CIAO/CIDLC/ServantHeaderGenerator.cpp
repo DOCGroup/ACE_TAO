@@ -1852,6 +1852,27 @@ namespace
       os << "}" << endl;
     }
   };
+
+
+  struct CompositionEmitter : Traversal::Composition, EmitterBase
+  {
+    CompositionEmitter (Context& c)
+      : EmitterBase (c)
+    {
+    }
+
+    virtual void
+    pre (Type& t)
+    {
+      os << "namespace " << t.name () << "{";
+    }
+
+    virtual void
+    post (Type& t)
+    {
+      os << "}";
+    }
+  };
 }
 
 ServantHeaderEmitter::ServantHeaderEmitter (std::ostream& os_,
@@ -1948,6 +1969,8 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 {
   pre (u);
 
+  Context c (os, export_macro_);
+
   Traversal::TranslationUnit unit;
 
   // Layer 1
@@ -1979,7 +2002,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 
   //--
   Traversal::Module module;
-  Traversal::Composition composition;
+  CompositionEmitter composition (c);
   defines.node_traverser (module);
   defines.node_traverser (composition);
 
@@ -2001,7 +2024,6 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   home_executor.edge_traverser (implements);
 
   //--
-  Context c (os, export_macro_);
   ContextEmitter context_emitter (c);
   ServantEmitter servant_emitter (c);
   HomeEmitter home_emitter (c);
