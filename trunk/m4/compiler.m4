@@ -192,6 +192,11 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
 
          if test "$ace_user_enable_exceptions" != yes; then
            CXXFLAGS="$CXXFLAGS -noex"
+
+           if (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
+             dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
+             AC_DEFINE(_RWSTD_NO_EXCEPTIONS)
+           fi
          fi
 
          CXXFLAGS="$CXXFLAGS"
