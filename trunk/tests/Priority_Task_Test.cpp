@@ -53,12 +53,13 @@ Priority_Task::close (u_long)
 int
 Priority_Task::open (void *arg)
 {
-  ACE_Thread_Priority priority(ACE_Thread_Priority::ACE_HIGH_PRIORITY_CLASS,
+  ACE_Thread_Priority priority(ACE_Thread_Priority::ACE_NORMAL_PRIORITY_CLASS,
 			       ACE_Thread_Priority::Thread_Priority(*(int *) arg));
+  this->priority_ = priority.os_default_thread_priority ();
 
   // Become an active object.
   ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0,
-			      priority.os_default_thread_priority()) != -1);
+			      priority.os_default_thread_priority ()) != -1);
   return 0;
 }
 
