@@ -13,7 +13,7 @@ This test runs the following configurations*:
 	       onto the final consummer.
 3. Notify    : A supplier sends events via Cos Notification to a consumer.
 
-4. Colocated : A supplier sends events via a colocated
+4. Collocated: A supplier sends events via a collocated
 	       RT Notification to a consumer.
 
 [* Note that the payload is identical in all configurations.

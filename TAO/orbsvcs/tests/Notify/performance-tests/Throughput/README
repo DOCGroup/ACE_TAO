@@ -5,7 +5,7 @@ Test to measure Notify's throughput
 
 Command line options:
 -------------------- 
--colocated_ec,
+-collocated_ec,
 -consumers [count],
 -suppliers [count],
 -burst_size [size],
