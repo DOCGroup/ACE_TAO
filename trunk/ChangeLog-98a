@@ -1,3 +1,10 @@
+Thu Apr 23 11:21:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
+ 	  can be a proper base class by making the destructor virtual and
+ 	  putting the methods into the protected section.  Thanks to Garry
+ 	  Brother <gmbroth@romulus.ncsc.mil> for this.
+
 Thu Apr 23 06:38:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/XtReactor.cpp: Commented out most of the logic if we're
