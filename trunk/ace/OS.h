@@ -28,10 +28,10 @@
 # define ACE_reinterpret_cast(TYPE, EXPR)  reinterpret_cast<TYPE> (EXPR)
 # define ACE_dynamic_cast(TYPE, EXPR)      dynamic_cast<TYPE> (EXPR)
 #else
-# define ACE_static_cast(TYPE, EXPR)       (TYPE) (EXPR)
-# define ACE_const_cast(TYPE, EXPR)        (TYPE) (EXPR)
-# define ACE_reinterpret_cast(TYPE, EXPR)  (TYPE) (EXPR)
-# define ACE_dynamic_cast(TYPE, EXPR)      (TYPE) (EXPR)
+# define ACE_static_cast(TYPE, EXPR)       ((TYPE) (EXPR))
+# define ACE_const_cast(TYPE, EXPR)        ((TYPE) (EXPR))
+# define ACE_reinterpret_cast(TYPE, EXPR)  ((TYPE) (EXPR))
+# define ACE_dynamic_cast(TYPE, EXPR)      ((TYPE) (EXPR))
 #endif /* ACE_HAS_ANSI_CASTS */
 
 // Deal with MSVC++ insanity for CORBA...
