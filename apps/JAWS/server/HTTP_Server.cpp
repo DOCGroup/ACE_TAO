@@ -18,14 +18,14 @@ class JAWS
 public:
   enum
   {
-    POOL = 0,
-    PER_REQUEST = 1
+    JAWS_POOL = 0,
+    JAWS_PER_REQUEST = 1
   };
 
   enum
   {
-    SYNCH = 0,
-    ASYNCH = 2
+    JAWS_SYNCH = 0,
+    JAWS_ASYNCH = 2
   };
 };
 
@@ -60,15 +60,15 @@ HTTP_Server::parse_args (int argc,
 	// PER_REQUEST -> thread per request
 	// THROTTLE    -> thread per request with throttling
         if (ACE_OS::strcmp (get_opt.opt_arg (), "POOL") == 0)
-          thr_strategy = JAWS::POOL;
+          thr_strategy = JAWS::JAWS_POOL;
         else if (ACE_OS::strcmp (get_opt.opt_arg (), "PER_REQUEST") == 0)
           {
-            thr_strategy = JAWS::PER_REQUEST;
+            thr_strategy = JAWS::JAWS_PER_REQUEST;
             this->throttle_ = 0;
           }
         else if (ACE_OS::strcmp (get_opt.opt_arg (), "THROTTLE") == 0)
           {
-            thr_strategy = JAWS::PER_REQUEST;
+            thr_strategy = JAWS::JAWS_PER_REQUEST;
             this->throttle_ = 1;
           }
 	break;
@@ -87,9 +87,9 @@ HTTP_Server::parse_args (int argc,
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
         if (ACE_OS::strcmp (get_opt.opt_arg (), "SYNCH") == 0)
-          io_strategy = JAWS::SYNCH;
+          io_strategy = JAWS::JAWS_SYNCH;
         else if (ACE_OS::strcmp (get_opt.opt_arg (), "ASYNCH") == 0)
-          io_strategy = JAWS::ASYNCH;
+          io_strategy = JAWS::JAWS_ASYNCH;
 	break;
       case 'b':
 	this->backlog_ = ACE_OS::atoi (get_opt.opt_arg ());
@@ -129,13 +129,13 @@ HTTP_Server::init (int argc, char *argv[])
   // Choose what concurrency strategy to run.
   switch (this->strategy_)
     {
-    case (JAWS::POOL | JAWS::ASYNCH) :
+    case (JAWS::JAWS_POOL | JAWS::JAWS_ASYNCH) :
       return this->asynch_thread_pool ();
 
-    case (JAWS::PER_REQUEST | JAWS::SYNCH) :
+    case (JAWS::JAWS_PER_REQUEST | JAWS::JAWS_SYNCH) :
       return this->thread_per_request ();
 
-    case (JAWS::POOL | JAWS::SYNCH) :
+    case (JAWS::JAWS_POOL | JAWS::JAWS_SYNCH) :
     default:
       return this->synch_thread_pool ();
     }
