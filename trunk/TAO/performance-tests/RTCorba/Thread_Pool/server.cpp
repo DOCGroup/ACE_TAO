@@ -89,7 +89,7 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
                         "b:f:hl:n:o:s:" // server options
-                        "c:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" // client options
+                        "c:e:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" // client options
                         );
   int c;
 
@@ -121,6 +121,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'c':
+      case 'e':
       case 'g':
       case 'i':
       case 'j':
@@ -154,7 +155,7 @@ parse_args (int argc, char *argv[])
                            "\n",
                            argv [0],
                            bands_file,
-			   default_thread_priority,
+                           default_thread_priority,
                            lanes_file,
                            number_of_lanes,
                            ior_output_file,
@@ -308,10 +309,10 @@ main (int argc, char *argv[])
         }
       else
         {
-	  if (pool_priority == ACE_INT16_MIN)
-	    pool_priority = 
-	      default_thread_priority;
-	  
+          if (pool_priority == ACE_INT16_MIN)
+            pool_priority =
+              default_thread_priority;
+
           RTCORBA::ThreadpoolId threadpool_id =
             rt_orb->create_threadpool (stacksize,
                                        static_threads,
@@ -339,9 +340,9 @@ main (int argc, char *argv[])
 
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
-	rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-					      default_thread_priority,
-					      ACE_TRY_ENV);
+        rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+                                              default_thread_priority,
+                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =

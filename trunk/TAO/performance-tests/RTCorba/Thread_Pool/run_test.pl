@@ -24,9 +24,9 @@ for ($rate = $min_rate, $i = 0;
    @rates[$i] = $rate;
 }
 
-$min_work = 150; 
-$max_work = 410;
-$work_increment = 10;
+$min_work = 10; 
+$max_work = 30;
+$work_increment = 1;
 
 for ($work = $min_work, $i = 0; 
      $work <= $max_work; 
@@ -69,7 +69,7 @@ $results_directory = "results";
      );
 
 $iorfile = "ior";
-$work = 30;
+$work = 13;
 $time_for_test = 10;
 $max_throughput_timeout = 5;
 
@@ -186,8 +186,7 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
      },
      {
          description => "work",
-         server => "-s 3 -f 32767", 
-#        server => "-n 1", 
+         server => "-n 1", 
      },
      {
          description => "workers",
@@ -455,7 +454,7 @@ sub zap_server
 
 unlink $iorfile;
 
-mkdir $results_directory;
+mkdir $results_directory, 0777;
 
 print STDOUT "\n______________________________________________________\n";
 

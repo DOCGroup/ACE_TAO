@@ -41,6 +41,7 @@ static int print_missed_invocations = 0;
 static int continuous_workers_are_rt = 1;
 static ACE_hrtime_t test_start;
 static CORBA::ULong prime_number = 9619;
+static int count_missed_end_deadlines = 0;
 
 struct Synchronizers
 {
@@ -62,7 +63,7 @@ int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
-                        "c:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
+                        "c:e:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
                         "b:l:n:o:s:" // server options
                         );
   int c;
@@ -72,6 +73,11 @@ parse_args (int argc, char *argv[])
       {
       case 'c':
         continuous_workers =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'e':
+        count_missed_end_deadlines =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -164,6 +170,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
                            "\t-c <number of continuous workers> (defaults to %d)\n"
+                           "\t-g <count missed end deadlines> (defaults to %d)\n"
                            "\t-g <show history> (defaults to %d)\n"
                            "\t-h <help: shows options menu>\n"
                            "\t-i <print stats of individual continuous workers> (defaults to %d)\n"
@@ -183,6 +190,7 @@ parse_args (int argc, char *argv[])
                            "\n",
                            argv [0],
                            continuous_workers,
+                           count_missed_end_deadlines,
                            do_dump_history,
                            individual_continuous_worker_stats,
                            continuous_workers_are_rt,
@@ -390,12 +398,12 @@ max_throughput (test_ptr test,
     calls_made / max_throughput_timeout;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nPriority = %d/%d; Max rate calculations => %d calls in %d seconds; Max rate = %d\n",
+              "\nPriority = %d/%d; Max rate calculations => %d calls in %d seconds; Max rate = %.2f\n",
               CORBA_priority,
               native_priority,
               calls_made,
               max_throughput_timeout,
-              max_rate));
+              calls_made / (double) max_throughput_timeout));
 
   return 0;
 }
@@ -418,6 +426,8 @@ public:
   void reset_priority (CORBA::Environment &ACE_TRY_ENV);
   void print_stats (ACE_hrtime_t test_end);
   int setup (CORBA::Environment &ACE_TRY_ENV);
+  void missed_start_deadline (CORBA::ULong invocation);
+  void missed_end_deadline (CORBA::ULong invocation);
 
   test_var test_;
   int rate_;
@@ -429,10 +439,12 @@ public:
   CORBA::Short CORBA_priority_;
   CORBA::Short native_priority_;
   ACE_hrtime_t interval_between_calls_;
-  CORBA::ULong deadlines_missed_;
+  CORBA::ULong missed_start_deadlines_;
+  CORBA::ULong missed_end_deadlines_;
 
   typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
-  Missed_Invocations missed_invocations_;
+  Missed_Invocations missed_start_invocations_;
+  Missed_Invocations missed_end_invocations_;
 };
 
 Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
@@ -454,8 +466,10 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
     CORBA_priority_ (0),
     native_priority_ (0),
     interval_between_calls_ (),
-    deadlines_missed_ (0),
-    missed_invocations_ (iterations)
+    missed_start_deadlines_ (0),
+    missed_end_deadlines_ (0),
+    missed_start_invocations_ (iterations),
+    missed_end_invocations_ (iterations)
 {
   this->interval_between_calls_ =
     to_hrtime (1 / double (this->rate_), gsf);
@@ -498,20 +512,39 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
              mon,
              this->synchronizers_.worker_lock_);
 
+  CORBA::ULong missed_total_deadlines =
+    this->missed_start_deadlines_ + this->missed_end_deadlines_;
+
+  CORBA::ULong made_total_deadlines =
+    this->history_.max_samples () - missed_total_deadlines;
+
   ACE_DEBUG ((LM_DEBUG,
               "\n************ Statistics for thread %t ************\n\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Priority = %d/%d; Rate = %d/sec; Iterations = %d; "
-              "deadlines made = %d; deadlines missed = %d; Success = %d%%\n",
+              "Priority = %d/%d; Rate = %d/sec; Iterations = %d; ",
               this->CORBA_priority_,
               this->native_priority_,
               this->rate_,
-              this->history_.max_samples (),
-              this->history_.sample_count (),
-              this->deadlines_missed_,
-              this->history_.sample_count () * 100 /
               this->history_.max_samples ()));
+
+  if (count_missed_end_deadlines)
+    ACE_DEBUG ((LM_DEBUG,
+                "Deadlines made/missed[start,end]/%% = %d/%d[%d,%d]/%.2f%%; Effective Rate = %.2f\n",
+                made_total_deadlines,
+                missed_total_deadlines,
+                this->missed_start_deadlines_,
+                this->missed_end_deadlines_,
+                made_total_deadlines * 100 / (double) this->history_.max_samples (),
+                made_total_deadlines / to_seconds (test_end - test_start, gsf)));
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
+                made_total_deadlines,
+                missed_total_deadlines,
+                made_total_deadlines * 100 / (double) this->history_.max_samples (),
+                made_total_deadlines / to_seconds (test_end - test_start, gsf)));
+
 
   if (do_dump_history)
     {
@@ -528,18 +561,34 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
 
   if (print_missed_invocations)
     {
-      ACE_DEBUG ((LM_DEBUG, "\nMissed invocations are: "));
+      ACE_DEBUG ((LM_DEBUG, "\nMissed start invocations are: "));
 
       for (CORBA::ULong j = 0;
-           j != this->deadlines_missed_;
+           j != this->missed_start_deadlines_;
            ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%d ",
-                      this->missed_invocations_[j]));
+                      this->missed_start_invocations_[j]));
         }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
+
+      if (count_missed_end_deadlines)
+        {
+          ACE_DEBUG ((LM_DEBUG, "\nMissed end invocations are: "));
+
+          for (CORBA::ULong j = 0;
+               j != this->missed_end_deadlines_;
+               ++j)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%d ",
+                          this->missed_end_invocations_[j]));
+            }
+
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
     }
 }
 
@@ -570,6 +619,21 @@ Paced_Worker::setup (CORBA::Environment &ACE_TRY_ENV)
                            this->synchronizers_);
 }
 
+void
+Paced_Worker::missed_start_deadline (CORBA::ULong invocation)
+{
+  this->missed_start_invocations_[this->missed_start_deadlines_++] =
+    invocation;
+}
+
+void
+Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
+{
+  if (count_missed_end_deadlines)
+    this->missed_end_invocations_[this->missed_end_deadlines_++] =
+      invocation;
+}
+
 int
 Paced_Worker::svc (void)
 {
@@ -594,8 +658,7 @@ Paced_Worker::svc (void)
 
           if (time_before_call > deadline_for_current_call)
             {
-              this->missed_invocations_[this->deadlines_missed_] = i + 1;
-              this->deadlines_missed_++;
+              this->missed_start_deadline (i + 1);
               continue;
             }
 
@@ -609,7 +672,10 @@ Paced_Worker::svc (void)
           this->history_.sample (time_after_call - time_before_call);
 
           if (time_after_call > deadline_for_current_call)
-            continue;
+            {
+              this->missed_end_deadline (i + 1);
+              continue;
+            }
 
           ACE_hrtime_t sleep_time =
             deadline_for_current_call - time_after_call;
@@ -990,7 +1056,9 @@ main (int argc, char *argv[])
                                         force_active,
                                         native_priority);
           if (result != 0)
-            return result;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Continuous_Worker::activate failed\n"),
+                              result);
         }
       else
         {
@@ -998,7 +1066,9 @@ main (int argc, char *argv[])
             continuous_worker.activate (flags,
                                         continuous_workers);
           if (result != 0)
-            return result;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Continuous_Worker::activate failed\n"),
+                              result);
         }
 
       flags =
@@ -1034,14 +1104,18 @@ main (int argc, char *argv[])
                                             force_active,
                                             native_priority);
               if (result != 0)
-                return result;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Paced_Worker::activate failed\n"),
+                                  result);
             }
           else
             {
               result =
                 paced_workers[i]->activate (flags);
               if (result != 0)
-                return result;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Paced_Worker::activate failed\n"),
+                                  result);
             }
         }
 
@@ -1072,7 +1146,7 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
