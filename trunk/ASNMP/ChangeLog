@@ -1,3 +1,9 @@
+Sun Nov 24 17:04:33 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* agent/main.cpp (main): Added ACE::init() to the beginning of
+	  main() to prevent crashes on Windows.  Thanks to Huseyin Calgin
+ 	  <calgin@yahoo.com> for reporting this.
+
 Fri Feb  8 04:42:21 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* asnmp/transaction.cpp (run): Changed the code to use ACE_Reactor::instance ()
