@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$
+// -*- C++ -*- $Id$
 
 #include "RedGreen_Test.h"
 #include "ace/Arg_Shifter.h"
