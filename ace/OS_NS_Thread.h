@@ -1406,7 +1406,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int rwlock_destroy (ACE_rwlock_t *rw);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int rwlock_init (ACE_rwlock_t *rw,
                    int type = ACE_DEFAULT_SYNCH_TYPE,
                    const ACE_TCHAR *name = 0,
