@@ -21,6 +21,16 @@ TAO_OA_Connection_Handler::open (void*)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
+  const int MAX_SOCK_BUF_SIZE = 65536;
+  if (this->peer ().set_option(SOL_SOCKET, SO_SNDBUF, (void
+						       *)&MAX_SOCK_BUF_SIZE,
+			       sizeof (MAX_SOCK_BUF_SIZE)) == -1)
+    return -1;
+  if (this->peer ().set_option(SOL_SOCKET, SO_RCVBUF, (void
+						       *)&MAX_SOCK_BUF_SIZE,
+			       sizeof(MAX_SOCK_BUF_SIZE)) == -1) 
+    return -1;
+
   ACE_DEBUG ((LM_DEBUG, 
 	      " (%P|%t) %sconnection from client %s\n", 
 	      params_->using_threads () ? "threaded " : "",
