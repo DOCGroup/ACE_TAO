@@ -1472,7 +1472,7 @@ TAO_DynArray_i::get_arg_length (CORBA::TypeCode_ptr tc,
   return retval;
 }
 
-//**********************************************************
+// **********************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array_Base<CORBA_DynAny_var>;
