@@ -167,7 +167,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
-      if ((kind < CORBA::TC_KIND_COUNT)
+      if ((kind < CORBA::TAO_TC_KIND_COUNT)
           || (kind == ~0u))
         {
           // Either a non-constant typecode or an indirected typecode.
