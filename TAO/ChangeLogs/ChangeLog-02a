@@ -1,3 +1,48 @@
+Sat May 13 23:27:31 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+        * examples/Load_Balancing/Load_Balancing.dsw:
+        * examples/Load_Balancing/client.dsp:
+        * examples/Load_Balancing/server.dsp:
+        * examples/Load_Balancing/service.dsp:
+        * examples/Load_Balancing_persistent/client.dsp:
+        * examples/Load_Balancing_persistent/server.dsp:
+        * examples/Load_Balancing_persistent/service.dsp:
+        * examples/Simple/time/client.dsp:
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server.dsp:
+        * examples/Simple/time/server_static.dsp:
+        * examples/mfc/client.dsp:
+        * examples/mfc/server.dsp:
+        * orbsvcs/tests/Trading/TradingLib.dsp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+        * performance-tests/Latency/client.dsp:
+        * performance-tests/Latency/deferred_synch_client.dsp:
+        * performance-tests/Latency/server.dsp:
+        * performance-tests/Latency/st_client.dsp:
+        * performance-tests/Latency/st_server.dsp:
+        * tests/Endpoint_Per_Priority/client.dsp:
+        * tests/Endpoint_Per_Priority/server.dsp:
+        * tests/Explicit_Event_Loop/client.cpp:
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Smart_Proxies/Collocation/Collocation.dsp:
+        * tests/Smart_Proxies/Collocation/Collocation.dsw:
+        * tests/Smart_Proxies/Collocation/Diamond.dsp:
+
+          Made various fixes, including disabling precompiled header
+          generation, changing names to work better with the auto
+          compile script, updating tao_idl command, and fixing
+          Release configurations.
+
+        * examples/AMI/FL_Callback/FL_Callback.dsw: (added)
+         
+          There wasn't a dsw file already in this directory.
+
+        * tests/AMI/simple_client.dsp: (removed)
+          
+          Didn't look used anymore, so removed.
+
 Sat May 13 22:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Connection_Purging/run_test.pl: Removed -d debug option by
