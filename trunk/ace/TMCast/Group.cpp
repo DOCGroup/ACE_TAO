@@ -484,7 +484,7 @@ namespace TMCast
   //
   Group::
   Group (ACE_INET_Addr const& addr, char const* id)
-    throw (Failed)
+    throw (Group::Failed)
       : pimpl_ (new GroupImpl (addr, id))
   {
   }
@@ -494,14 +494,14 @@ namespace TMCast
   {
   }
 
-  void Group::
-  send (void const* msg, size_t size) throw (InvalidArg, Failed, Aborted)
+  void 
+  Group::send (void const* msg, size_t size) throw (Group::InvalidArg, Group::Failed, Group::Aborted)
   {
     pimpl_->send (msg, size);
   }
 
-  size_t Group::
-  recv (void* msg, size_t size) throw (Failed, InsufficienSpace)
+  size_t 
+  Group::recv (void* msg, size_t size) throw (Group::Failed, Group::InsufficienSpace)
   {
     return pimpl_->recv (msg, size);
   }
