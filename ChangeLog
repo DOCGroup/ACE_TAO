@@ -1,3 +1,8 @@
+Fri Nov 25 19:12:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Threads/task_three.cpp:
+	  Fixed another compile problem.
+
 Fri Nov 25 16:16:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
