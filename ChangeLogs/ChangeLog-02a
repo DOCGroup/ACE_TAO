@@ -1,3 +1,17 @@
+Mon Jun 25 10:05:37 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (avail_chunks): Guarded againt the case when a
+	  Malloc_Header contains 0 available header for allocation as it
+	  caused an assignment of negative number to an unsigned number.
+	  Thanks to Ben Howard <Benn_Howard@raytheon.com> for pointing
+	  this out.
+
+Sun Jun 24 21:51:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Obstack.h: Moved the trailing semicolon into the
+	  ACE_EXPORT_SINGLETON_DECLARATION macro to avoid a warning from
+	  Tru65.
+
 Sun Jun 24 08:57:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * bin/auto_run_tests.lst: Added Oneways_Invoking_Twoways to the
