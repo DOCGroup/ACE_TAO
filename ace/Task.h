@@ -110,13 +110,17 @@ public:
                         size_t stack_size[] = 0,
                         ACE_thread_t  thread_names[] = 0);
   // Turn the task into an active object, i.e., having <n_threads> of
-  // control, all running at the <priority> level (see below) with the same
-  // <grp_id>, all of which invoke <Task::svc>.  Returns -1 if failure
-  // occurs, returns 1 if Task is already an active object and
-  // <force_active> is false (doesn't *not* create a new thread in
+  // control, all running at the <priority> level (see below) with the
+  // same <grp_id>, all of which invoke <Task::svc>.  Returns -1 if
+  // failure occurs, returns 1 if Task is already an active object and
+  // <force_active> is false (i.e., do *not* create a new thread in
   // this case), and returns 0 if Task was not already an active
   // object and a thread is created successfully or thread is an
-  // active object and <force_active> is true.
+  // active object and <force_active> is true.  Note that if
+  // <force_active> is true and there are already threads spawned in
+  // this <Task>, the <grp_id> parameter is ignored and the <grp_id>
+  // of any newly activated thread(s) will inherit the existing
+  // <grp_id> of the existing thread(s) in the <Task>.
   //
   // The <{flags}> are a bitwise-OR of the following:
   // = BEGIN<INDENT>
