@@ -271,6 +271,9 @@ TAO_ServerRequest::send_no_exception_reply (void)
 void
 TAO_ServerRequest::tao_send_reply (void)
 {
+  if (this->collocated ())
+    return;  // No transport in the collocated case.
+
   int result = this->transport_->send_message (*this->outgoing_,
                                                0,
                                                TAO_Transport::TAO_REPLY);
@@ -291,7 +294,7 @@ void
 TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 {
   //  int result = 0;
-  if (this->response_expected_)
+  if (this->response_expected_ && !this->collocated ())
     {
       // A copy of the reply parameters
       TAO_Pluggable_Reply_Params_Base reply_params;
@@ -334,7 +337,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                             TAO_DEF_GIOP_MAJOR,
                             TAO_DEF_GIOP_MINOR);
 
-      this->transport_->assign_translators(0,&output);
+      this->transport_->assign_translators (0, &output);
       // Make the reply message
       if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
                                                       reply_params,

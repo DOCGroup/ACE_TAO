@@ -218,6 +218,9 @@ public:
   void argument_flag (CORBA::Boolean flag);
   CORBA::Boolean argument_flag (void);
 
+  /// Returns @c true if the current request is collocated.
+  bool collocated (void) const;
+
 #if TAO_HAS_INTERCEPTORS == 1
   /// Send cached reply. Used in scenarios where the FTORB thinks that
   /// this request is a duplicate
