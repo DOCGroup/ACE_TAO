@@ -158,8 +158,8 @@ main (int argc, char *argv[])
           argv++;
         }
 
-      CORBA::Object_var obj;
-      obj = orb->resolve_initial_references ("NameService");
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
