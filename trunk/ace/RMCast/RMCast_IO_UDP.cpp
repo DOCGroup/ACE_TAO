@@ -20,6 +20,19 @@ ACE_RMCast_IO_UDP::~ACE_RMCast_IO_UDP (void)
 }
 
 int
+ACE_RMCast_IO_UDP::open (const ACE_INET_Addr &mcast_group,
+                         const ACE_Addr &local,
+                         int protocol_family,
+                         int protocol,
+                         int reuse_addr)
+{
+  this->mcast_group_ = mcast_group;
+
+  ACE_SOCK_Dgram &dgram = this->dgram_;
+  return dgram.open (local, protocol_family, protocol, reuse_addr);
+}
+
+int
 ACE_RMCast_IO_UDP::subscribe (const ACE_INET_Addr &mcast_addr,
                               int reuse_addr,
                               const ACE_TCHAR *net_if,
@@ -65,28 +78,6 @@ ACE_RMCast_IO_UDP::handle_events (ACE_Time_Value *tv)
 }
 
 int
-ACE_RMCast_IO_UDP::register_handlers (ACE_Reactor *reactor)
-{
-  this->eh_.reactor (reactor);
-  return reactor->register_handler (&this->eh_,
-                                    ACE_Event_Handler::READ_MASK);
-}
-
-int
-ACE_RMCast_IO_UDP::remove_handlers (void)
-{
-  ACE_Reactor *r = this->eh_.reactor ();
-  if (r != 0)
-    {
-      r->remove_handler (&this->eh_,
-                         ACE_Event_Handler::ALL_EVENTS_MASK
-                         | ACE_Event_Handler::DONT_CALL);
-      this->eh_.reactor (0);
-    }
-  return 0;
-}
-
-int
 ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
 {
   // @@ We should use a system constant instead of this literal
@@ -102,7 +93,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
       // @@ LOG??
       ACE_DEBUG ((LM_DEBUG,
                   "RMCast_IO_UDP::handle_input () - "
-                  "error in recv\n"));
+                  "error in recv %p\n", ""));
       return -1;
     }
 
@@ -156,7 +147,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
 
       // The message type is valid, we must create a new proxy,
       // initially in the JOINING state...
-      ACE_RMCast_Module *module = this->factory_->create (this);
+      ACE_RMCast_Module *module = this->factory_->create ();
       if (module == 0)
         {
           // @@ LOG??

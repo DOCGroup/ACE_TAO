@@ -30,21 +30,6 @@ ACE_RMCast_Module::next (void) const
 }
 
 int
-ACE_RMCast_Module::prev (ACE_RMCast_Module *prev)
-{
-  if (this->prev_ != 0 && prev != 0)
-    return 1;
-  this->prev_ = prev;
-  return 0;
-}
-
-ACE_RMCast_Module *
-ACE_RMCast_Module::prev (void) const
-{
-  return this->prev_;
-}
-
-int
 ACE_RMCast_Module::open (void)
 {
   return 0;

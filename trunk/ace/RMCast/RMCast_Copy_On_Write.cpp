@@ -87,6 +87,16 @@ ACE_RMCast_Copy_On_Write<KEY,ITEM,C,ITERATOR>::first_key (void)
   return (*begin).key ();
 }
 
+template<class KEY, class ITEM, class C, class ITERATOR> int
+ACE_RMCast_Copy_On_Write<KEY,ITEM,C,ITERATOR>::empty (void)
+{
+  Read_Guard ace_mon (*this);
+  ITERATOR end = ace_mon.collection->collection.end ();
+  ITERATOR begin = ace_mon.collection->collection.begin ();
+
+  return end == begin;
+}
+
 template<class KEY, class ITEM, class C, class I> int
 ACE_RMCast_Copy_On_Write<KEY,ITEM,C,I>::bind (KEY const & k,
                                               ITEM const & i)

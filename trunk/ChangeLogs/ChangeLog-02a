@@ -1,3 +1,79 @@
+Mon Oct 09 16:45:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/Makefile:
+        * ace/RMCast/RMCast.dsp:
+          Add new files to the RMCast project and Makefile.
+
+        * ace/RMCast/RMCast_Control_Splitter.h:
+        * ace/RMCast/RMCast_Control_Splitter.i:
+        * ace/RMCast/RMCast_Control_Splitter.cpp:
+          A module to separate control messages from regular data flow.
+
+        * ace/RMCast/RMCast_Copy_On_Write.h:
+        * ace/RMCast/RMCast_Copy_On_Write.cpp:
+          Add accessor to check if the collection is empty.
+
+        * ace/RMCast/RMCast_IO_UDP.h:
+        * ace/RMCast/RMCast_IO_UDP.i:
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_UDP_Event_Handler.cpp:
+          Decouple the event handler.
+
+        * ace/RMCast/RMCast_Module.h:
+        * ace/RMCast/RMCast_Module.i:
+        * ace/RMCast/RMCast_Module.cpp:
+        * ace/RMCast/RMCast_UDP_Proxy.h:
+          Fixed comments.
+
+        * ace/RMCast/RMCast_Module_Factory.h:
+          No need to pass the IO_UDP to the module factory.
+
+        * ace/RMCast/RMCast_Reliable_Factory.h:
+        * ace/RMCast/RMCast_Reliable_Factory.i:
+        * ace/RMCast/RMCast_Reliable_Factory.cpp:
+          A factory to create the per-proxy stack on the receivers.
+
+        * ace/RMCast/RMCast_Resend_Handler.h:
+        * ace/RMCast/RMCast_Resend_Handler.i:
+        * ace/RMCast/RMCast_Resend_Handler.cpp:
+          An adapter to resend messages on a Reactor scheduled timer.
+
+        * ace/RMCast/RMCast_Retransmission.h:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+          Add a method to resend all the messages.
+
+        * ace/RMCast/RMCast_Singleton_Factory.h:
+        * ace/RMCast/RMCast_Singleton_Factory.i:
+        * ace/RMCast/RMCast_Singleton_Factory.cpp:
+          A module factory that "creates" the same object over and over.
+
+
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.i:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.cpp:
+          Helper class to simplify the creation and configuration of a UDP
+          receiver.
+
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.i:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
+          Helper class to simplify the creation and configuration of a UDP
+          sender.
+
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+          Had to change due to modifications in the I/O UDP layer
+          interface.
+
+        * examples/RMCast/Makefile:
+        * examples/RMCast/Send_File/Makefile:
+        * examples/RMCast/Send_File/Receiver.cpp:
+        * examples/RMCast/Send_File/Receiver.dsp:
+        * examples/RMCast/Send_File/Send_File.dsw:
+        * examples/RMCast/Send_File/Sender.cpp:
+        * examples/RMCast/Send_File/Sender.dsp:
+          Add a simple example that sends a file over reliable UDP
+          multicast.
+
 Mon Oct  9 14:44:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/generate_export_file.pl:
@@ -11,8 +87,8 @@ Mon Oct  9 14:44:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Oct 09 03:23:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/generate_export_file.pl: Changed the script so we can define
-	  a single macro to switch multiple *_HAS_DLL default definitions.
+        * bin/generate_export_file.pl: Changed the script so we can define
+          a single macro to switch multiple *_HAS_DLL default definitions.
 
 Sat Oct  7 000:50:02 2000  Darrell Brunsch <brunsch@uci.edu>
 

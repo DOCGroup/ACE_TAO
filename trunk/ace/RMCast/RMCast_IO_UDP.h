@@ -15,7 +15,6 @@
 #include "ace/pre.h"
 
 #include "RMCast_Module.h"
-#include "RMCast_UDP_Event_Handler.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
@@ -27,7 +26,6 @@
 
 class ACE_RMCast_UDP_Proxy;
 class ACE_RMCast_Module_Factory;
-class ACE_Reactor;
 class ACE_Time_Value;
 
 class ACE_RMCast_Export ACE_RMCast_IO_UDP : public ACE_RMCast_Module
@@ -45,6 +43,20 @@ public:
 
   //! Destructor
   ~ACE_RMCast_IO_UDP (void);
+
+  /// Open the internal socket, but only to send multicast data.
+  /**
+   * It is not clear to me if this is a valid configuration.  Maybe it
+   * would be a problem to expose two separate, incompatible
+   * interfaces (check the subscribe() method). However, the
+   * alternative would be to implement almost identical class for
+   * outgoing and incoming UDP I/O
+   */
+  int open (const ACE_INET_Addr &mcast_group,
+            const ACE_Addr &local,
+            int protocol_family = PF_INET,
+            int protocol = 0,
+            int reuse_addr = 0);
 
   //! Join a new multicast group
   /*!
@@ -64,20 +76,6 @@ public:
   //! Wait for events for the period <tv>. If <tv> is zero it blocks
   //! forever.
   int handle_events (ACE_Time_Value *tv = 0);
-
-  //! Register any event handlers into <reactor>
-  /*!
-   * @@TODO: This should be left for the clients of the class, there
-   * is no reason why this class must know about reactors.
-   */
-  int register_handlers (ACE_Reactor *reactor);
-
-  //! Remove all the handlers from the reactor
-  /*!
-   * @@TODO: This should be left for the clients of the class, there
-   * is no reason why this class must know about reactors.
-   */
-  int remove_handlers (void);
 
   //! There is data to read, read it and process it.
   int handle_input (ACE_HANDLE h);
@@ -124,9 +122,6 @@ private:
   typedef ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Null_Mutex> Map;
   //! The collection of proxies
   Map map_;
-
-  //! The event handler adapter
-  ACE_RMCast_UDP_Event_Handler eh_;
 };
 
 #if defined (__ACE_INLINE__)
