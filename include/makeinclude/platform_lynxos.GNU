@@ -1,5 +1,7 @@
 # $Id$
-# LynxOS with g++
+#
+# LynxOS with g++.  Defaults to LynxOS Version 2.5.0.  For Version 3.0.0,
+# add "VERSION=3.0.0" to your make invocation.
 
 debug = 1
 optimize = 1
@@ -37,7 +39,11 @@ endif # ! LynxOS
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -mthreads -pipe -ansi -Wpointer-arith -Winline
+CFLAGS          += -mthreads -pipe -ansi -Wpointer-arith
+#### -Winline complains a lot with -O2.
+#### CFLAGS          += -Winline
+#### LynxOS 3.0.0's g++ has a lot of warnings about non-virtual base class
+#### destructors with -Wall.
 ifeq (2.5.0,$(VERSION))
   CFLAGS += -Wall
 endif # VERSION
@@ -53,5 +59,6 @@ RANLIB          = @true
 PRELIB          = @true
 
 # To save much disk space, strip all executables.  Comment the
-# following line out if you want to debug.
+# following line out if you want to debug.  Or, added "POSTLINK="
+# to your make invocation.
 POSTLINK        = ; strip $@
