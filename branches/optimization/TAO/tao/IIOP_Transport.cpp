@@ -169,12 +169,13 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
     return result;
 
   // Now we know that we have been able to read the complete message
-  // here..
-  result = 2; // Dummy
-  while (result > 1)
+  // here.. We loop here to see whether we have read more than one
+  // message in our read.
+  do
     {
       result = this->process_message ();
     }
+  while (result > 1);
 
   return result;
 }
@@ -474,8 +475,6 @@ TAO_IIOP_Transport::process_message (void)
     {
       return -1;
     }
-
-  //  this->messaging_object_->reset ();
 
   return this->messaging_object_->more_messages ();
 }
