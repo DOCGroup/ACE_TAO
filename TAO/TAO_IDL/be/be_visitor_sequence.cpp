@@ -61,7 +61,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
       if (node->unbounded ())
         *os << "TAO_Unbounded_String_Sequence";
       else
-        *os << "TAO_Bounded_String_Sequence<";
+        *os << "TAO_Bounded_String_Sequence";
       break;
     default: // not a managed type
       if (node->unbounded ())
@@ -90,7 +90,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
     {
       if (!node->unbounded ())
         {
-          *os << node->max_size () << ">";
+          *os << "<" << node->max_size () << ">";
         }
     }
   else
@@ -959,7 +959,7 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
       if (node->unbounded ())
         *os << "TAO_Unbounded_String_Sequence";
       else
-        *os << "TAO_Bounded_String_Sequence<";
+        *os << "TAO_Bounded_String_Sequence";
       break;
     default: // not a managed type
       if (node->unbounded ())

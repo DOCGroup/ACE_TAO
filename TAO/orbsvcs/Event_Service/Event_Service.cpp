@@ -10,8 +10,6 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/Event_Channel.h"
 
-
-
 const char* service_name = "EventService";
 
 int

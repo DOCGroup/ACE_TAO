@@ -1,4 +1,4 @@
-// $Id
+// $Id$
 
 // ============================================================================
 //
@@ -77,12 +77,56 @@ public:
                      CORBA::Environment &env);
   // test for fixed structures
 
-  virtual Param_Test::StrSeq *
-  test_strseq (const Param_Test::StrSeq &s1,
-               Param_Test::StrSeq &s2,
-               Param_Test::StrSeq_out s3,
-               CORBA::Environment &env);
-  // test for string sequence
+  // = Start of sequences tests...
+  virtual Param_Test::Long_Seq * test_long_sequence (
+      const Param_Test::Long_Seq & s1,
+      Param_Test::Long_Seq & s2,
+      Param_Test::Long_Seq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::Bounded_Long_Seq * test_bounded_long_sequence (
+      const Param_Test::Bounded_Long_Seq & s1,
+      Param_Test::Bounded_Long_Seq & s2,
+      Param_Test::Bounded_Long_Seq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::StrSeq * test_strseq (
+      const Param_Test::StrSeq & s1,
+      Param_Test::StrSeq & s2,
+      Param_Test::StrSeq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::Bounded_StrSeq * test_bounded_strseq (
+      const Param_Test::Bounded_StrSeq & s1,
+      Param_Test::Bounded_StrSeq & s2,
+      Param_Test::Bounded_StrSeq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::StructSeq * test_struct_sequence (
+      const Param_Test::StructSeq & s1,
+      Param_Test::StructSeq & s2,
+      Param_Test::StructSeq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::Bounded_StructSeq * test_bounded_struct_sequence (
+      const Param_Test::Bounded_StructSeq & s1,
+      Param_Test::Bounded_StructSeq & s2,
+      Param_Test::Bounded_StructSeq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::Coffee_Mix * test_coffe_mix (
+      const Param_Test::Coffee_Mix & s1,
+      Param_Test::Coffee_Mix & s2,
+      Param_Test::Coffee_Mix_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::Bounded_Coffee_Mix * test_bounded_coffe_mix (
+      const Param_Test::Bounded_Coffee_Mix & s1,
+      Param_Test::Bounded_Coffee_Mix & s2,
+      Param_Test::Bounded_Coffee_Mix_out s3,
+      CORBA::Environment &env
+     );
+  // = End of sequences tests.... 
 
   virtual Param_Test::Var_Struct *
   test_var_struct (const Param_Test::Var_Struct &s1,
@@ -97,13 +141,6 @@ public:
                       Param_Test::Nested_Struct_out s3,
                       CORBA::Environment &env);
   // test for nested structs
-
-  virtual Param_Test::StructSeq *
-  test_struct_sequence (const Param_Test::StructSeq &s1,
-                        Param_Test::StructSeq &s2,
-                        Param_Test::StructSeq_out s3,
-                        CORBA::Environment &env);
-  // test for struct sequences
 
   virtual Coffee_ptr
   make_coffee (CORBA::Environment &env);
