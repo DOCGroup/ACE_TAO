@@ -599,6 +599,13 @@ lookup tables built through commandline arguments to the ORB,
 Future work:
 <ul>
 <li>
+Support for a load balancing feature similar to the one provided in ORBIX.
+It will be possible to bind a group of objects under a single name, and when a client attempts to resolve the name in question, a preset policy (e.g., random, round robin, etc.) will determine which one of the object references from the group will be returned.
+</li>
+<li>
+Update destroy method, once the POA restructuring effort is complete, to do the "Right Thing TM".
+</li>
+<li>
 Replication of the bindings to other Naming Service's currently running.
 It will probably be modeled after the LDAP Multi-Master Replication Protocol.</li>
 </ul>
@@ -649,16 +656,16 @@ Persistent storage of service types and offers.</li>
 <h3>
 <a NAME="pservices"></a>CORBA Property Service</h3>
 Point of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Babu
-Arulanthu</a> 
+Arulanthu</a>
 
 <p>Current status (as of Mar 9th, 1999): All the interfaces of this
-service have been implemented.  Please 
+service have been implemented.  Please
 go through the test examples at $TAO/orbsvcs/tests/CosPropertyService.
 Property Service is has been used by the TAO's <a href="#av">Audio Video Streaming
 Service</a>developed for TAO. For general documentation of the
 Property Service, please read <a
 href="http://www.omg.org/corba/sectrans.htm#prop">The Property Service
-Specification.</a> 
+Specification.</a>
 
 <P>Recent Work:
 <ul>
