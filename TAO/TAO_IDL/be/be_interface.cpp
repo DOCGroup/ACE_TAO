@@ -333,13 +333,15 @@ be_interface::gen_copy_ctors_helper (be_interface* node, be_interface* base, TAO
     {
       if(first)
         {
-          *os << idl_global->impl_class_prefix () << base->flat_name () << idl_global->impl_class_suffix () << " (t)"
+          *os << idl_global->impl_class_prefix () << base->flat_name () 
+              << idl_global->impl_class_suffix () << " (t)"
               << ", " << base->full_skel_name () << " (t)";
           first = 0;
         }
       else
         {
-          *os << ", " << idl_global->impl_class_prefix () << base->flat_name () << idl_global->impl_class_suffix () << " (t)"
+          *os << ", " << idl_global->impl_class_prefix () << base->flat_name () 
+              << idl_global->impl_class_suffix () << " (t)"
               << ", " << base->full_skel_name () << " (t)";   ;
 
         }
@@ -372,12 +374,14 @@ be_interface::gen_def_ctors_helper (be_interface* node, be_interface* base, TAO_
     {
       if(first)
         {
-          *os << idl_global->impl_class_prefix () << base->flat_name () << idl_global->impl_class_suffix () << " ()";
+          *os << idl_global->impl_class_prefix () << base->flat_name () 
+              << idl_global->impl_class_suffix () << " ()";
           first = 0;
         }
       else
         {
-          *os << ", " << idl_global->impl_class_prefix () << base->flat_name () << idl_global->impl_class_suffix () << " ()";
+          *os << ", " << idl_global->impl_class_prefix () << base->flat_name () 
+              << idl_global->impl_class_suffix () << " ()";
 
         }
     }
@@ -407,7 +411,10 @@ be_interface::gen_var_defn (char* interface_name)
     interface_name = (char *) this->local_name ();
 
   // Buffer with name of the var class.
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
   ACE_OS::sprintf (namebuf,
                    "%s_var",
                    interface_name);
@@ -503,11 +510,21 @@ be_interface::gen_var_impl (char *interface_local_name,
       interface_full_name = (char *) this->full_name ();
     }
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", interface_full_name);
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_var", interface_local_name);
+  ACE_OS::sprintf (fname, 
+                   "%s_var", 
+                   interface_full_name);
+
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  ACE_OS::sprintf (lname, 
+                   "%s_var", 
+                   interface_local_name);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
