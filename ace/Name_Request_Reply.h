@@ -54,8 +54,8 @@ public:
     OP_TABLE_MASK = 07,     // Mask for lookup of operation
     LIST_OP_MASK = 030,     // Mask for lookup of list_operation
 
-    /* Class-specific constant values. */
-    MAX_NAME_LEN = MAXPATHLEN + 1
+    // Class-specific constant values.
+    MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
   ACE_Name_Request (void);
@@ -156,7 +156,7 @@ private:
     ACE_UINT32 type_len_;
     // Len of type in bytes
 
-    ACE_USHORT16 data_[MAX_NAME_LEN + MAXPATHLEN + MAXPATHLEN + 2];
+    ACE_USHORT16 data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
     // The data portion contains the <name_>
     // followed by the <value_>
     // followed by the <type_>.
@@ -191,7 +191,7 @@ public:
     FAILURE = 2, // Reply for failed operation.
 
     /* Class-specific constant values. */
-    MAX_NAME_LEN = MAXPATHLEN + 1
+    MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
   ACE_Name_Reply (void);
