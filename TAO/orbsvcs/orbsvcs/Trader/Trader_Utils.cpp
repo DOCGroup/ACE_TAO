@@ -219,7 +219,6 @@ TAO_Property_Evaluator::~TAO_Property_Evaluator (void)
 int
 TAO_Property_Evaluator::is_dynamic_property (int index)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Environment env;
   int return_value = 0,
     num_properties = this->props_.length();
@@ -231,8 +230,10 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
       const CORBA::Any& value = this->props_[index].value;
       CORBA::TypeCode_var type = value.type ();
 
+      ACE_DECLARE_NEW_CORBA_ENV;
+
       if (type->equal (CosTradingDynamic::_tc_DynamicProp,
-                       ACE_TRY_END))
+                       ACE_TRY_ENV))
         return_value = 1;
     }
 
@@ -442,6 +443,8 @@ construct_dynamic_prop (const char* name,
 
   if (this->prop_.in () == CosTradingDynamic::DynamicPropEval::_nil ())
     {
+      ACE_DECLARE_NEW_CORBA_ENV;
+
       this->prop_ = this->_this (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
