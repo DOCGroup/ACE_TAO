@@ -1,3 +1,11 @@
+Sun Sep 23 20:34:23 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Typecode.cpp (BadKind, Bounds):
+
+	  Fixed bugs where the RepositoryId for these TypeCode user
+	  exceptions contained the incorrect prefix, i.e. "omg.orb"
+	  instead of "omg.org."
+
 Sun Sep 23 20:11:45 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tests/Collocation/Collocation.bor:
