@@ -169,4 +169,9 @@ template class ACE_Singleton<File_Manager,ACE_Null_Mutex>;
 
 #pragma instantiate ACE_Singleton<File_Manager,ACE_Null_Mutex>
 
+#elif defined (__GNUC__) && defined (_AIX)
+
+template ACE_Singleton<File_Manager, ACE_Null_Mutex> *
+  ACE_Singleton<File_Manager, ACE_Null_Mutex>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
