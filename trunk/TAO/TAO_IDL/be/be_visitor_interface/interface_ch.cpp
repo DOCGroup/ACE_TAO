@@ -143,10 +143,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // generate the body
 
       *os << "{" << be_nl
-          << "public:" << be_idt_nl
+          << "public:" << be_nl
+
           // generate the _ptr_type and _var_type typedefs
+          // but we must protect against certain versions of g++
+          << "#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8" 
+          << be_idt_nl
           << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
-          << "typedef " << node->local_name () << "_var _var_type;" << be_nl
+          << "typedef " << node->local_name () << "_var _var_type;" << be_uidt_nl
+          << "#endif /* __GNUC__ */\n" << be_idt_nl
+
           // generate the static _duplicate, _narrow, and _nil operations
           << "// the static operations" << be_nl
           << "static " << node->local_name () << "_ptr " << "_duplicate ("
@@ -173,23 +179,23 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // the _is_a method
       os->indent ();
       *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-	  << "const CORBA::Char *type_id, " << be_nl
+	        << "const CORBA::Char *type_id, " << be_nl
           << "CORBA::Environment &env = " << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
-	  << be_uidt << be_uidt_nl
-	  << ");" << be_uidt_nl
-	  << "virtual const char* "
-	  << "_interface_repository_id (void) const;" << be_uidt_nl;
+	        << "CORBA::Environment::default_environment ()"
+	        << be_uidt << be_uidt_nl
+	        << ");" << be_uidt_nl
+	        << "virtual const char* "
+	        << "_interface_repository_id (void) const;" << be_uidt_nl;
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
       *os << "protected:" << be_idt_nl
-	  << node->local_name () << " (void); // default constructor" << be_nl
+	        << node->local_name () << " (void); // default constructor" << be_nl
           << node->local_name ()
-	  << " (STUB_Object *objref, " << be_idt << be_idt_nl
+	        << " (STUB_Object *objref, " << be_idt << be_idt_nl
           << "TAO_ServantBase *_tao_servant = 0, " << be_nl
           << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
-	  << ");" << be_uidt_nl
+	        << ");" << be_uidt_nl
           << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
