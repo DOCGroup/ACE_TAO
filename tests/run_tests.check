@@ -1,29 +1,33 @@
 #! /bin/sh -f
+# $Id$
+#
 # Checks one ore more ACE test log file(s) for expected results.
 
 IFS="|"
 tmp=/tmp
 
-# these patterns should not be included in log file
-ERROR_MSGS="assertion failed|not supported|No such file or directory|Invalid argument|timeout|Bad file number"
-
-# these patterns must be included in log file
+# These patterns must be contained in log file.
 SUCCESS_MSGS="starting|Ending"
+
+# These patterns should not be contained in log file.
+ERROR_MSGS="assertion failed|not supported|No such file or directory|Invalid argument|timeout|Bad file number"
 
 status=0
 
-for arg
-do
+for arg do
   for i in $SUCCESS_MSGS; do
-    grep $i $arg >/dev/null
+    egrep -q $i $arg
     if [ $? -eq 1 ]; then
-      echo Error in log file no line with $i
+      echo Error in $arg:  no line with $i
       status=1
     fi
   done
 
   for i in $ERROR_MSGS; do
-    grep $i $arg
+    #### The /dev/null arg to egrep causes the filename to be printed
+    #### out.  The sed command strips off the leading 'log/' and
+    #### trailing '.log'.
+    egrep $i $arg /dev/null | sed -e 's%^log/%%' -e 's%[.]log:%: %'
     if [ $? -ne 0 ]; then status=1; fi
   done
 done
