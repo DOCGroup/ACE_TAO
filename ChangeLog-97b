@@ -1,3 +1,21 @@
+Sat Sep 20 08:07:36 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.h (schedule_ualaram): changed return type
+	  to "ong to match its definition.
+
+	* ace/OS.i (gethrtime): on Linux only, removed "volatile" qualifier
+	  from declaration of local variable "now".  I don't think that
+	  it's necessary.  It causes compilation failure with g++ because
+	  the ACE_U_LongLong copy constructor won't take a volatile
+	  argument.  Thanks to Sandro Doro <doros@aureus.sublink.org> for
+	  tracking down this problem.
+
+	* tests/Time_Value_Test.cpp: reverted to test ACE_U_LongLong on
+	  all platforms except WIN32.  It works properly on Linux with
+	  the removal of volatile from ACE_OS::gethrtime's "now".  Thanks
+	  to Sandro Doro <doros@aureus.sublink.org> for figuring this one
+	  out.
+
 Fri Sep 19 18:49:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/config-irix6.x-g++.h: 
@@ -40,8 +58,9 @@ Fri Sep 19 14:52:53 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 Fri Sep 19 12:50:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ACE-INSTALL*: added requirement for explicit main () arguments
-	  and int return type on VxWorks.
+	* ACE-INSTALL*,ace/README: added more documentation of requirement
+	  for explicit main (int, char *[]) arguments and int return type
+	  with ACE_HAS_NONSTATIC_OBJECT_MANAGER (on VxWorks).
 
 Thu Sep 18 22:45:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -87,13 +106,6 @@ Thu Sep 18 21:56:33 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  ACE_HAS_TSS_EMULATION are defined.
 	
 Thu Sep 18 16:30:24 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/Time_Value_Test.cpp: disable ACE_U_LongLong test except
-	  on platforms that use it and Solaris, because its hard to rig
-	  up the test properly on other platforms.  We still test it
-	  thoroughly on Solaris.  ACE_U_LongLong isn't used on most
-	  platforms, including Win32.  Thanks to Sandro Doro
-	  <doros@aureus.sublink.org> for reporting this.
 
 	* ace/Semaphore_Test: protected declarations of test_timeout_count
 	  and timeouts because they're not used on Solaris.
