@@ -20,9 +20,9 @@
 #include "ace/OS.h"
 
 class FP 
-  // = TITLE
-  //     This class serves as a namespace for the Return_Type
 {
+  // = TITLE
+  //     This class serves as a namespace for the <Return_Type>.
 public:
   enum Return_Type 
   { 
@@ -37,10 +37,10 @@ public:
 
 template <class ENTRY>
 class File_Parser
-  // = TITLE
-  //     Class used to parse the configuration file for the Consumer
-  //     Map.
 {
+  // = TITLE
+  //     Class used to parse the configuration file for the
+  //     <Consumer_Map>.
 public:
   // = Open and Close the file specified
   int open (const char filename[]);

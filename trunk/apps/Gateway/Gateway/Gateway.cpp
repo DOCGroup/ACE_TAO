@@ -12,7 +12,7 @@ class ACE_Svc_Export Gateway : public ACE_Service_Object
   //     Integrates the whole Gateway application.
   //
   // = DESCRIPTION
-  //     This implementation uses the <ACE_Event_Channel> as the basis
+  //     This implementation uses the <Event_Channel> as the basis
   //     for the <Gateway> routing.
 {
 protected:
@@ -27,7 +27,7 @@ protected:
   // Return info about this service.
 
   // = Configuration methods.
-  int parse_proxy_config_file (void);
+  int parse_connection_config_file (void);
   // Parse the proxy configuration file.
 
   int parse_consumer_config_file (void);
@@ -41,12 +41,12 @@ protected:
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Shut down the Gateway when a signal arrives.
 
-  ACE_Event_Channel event_channel_;
+  Event_Channel event_channel_;
   // The Event Channel routes events from Supplier(s) to Consumer(s)
-  // using <Supplier_Proxy> and <Consumer_Proxy> objects.
+  // using <Supplier_Handler> and <Consumer_Handler> objects.
 
-  Proxy_Handler_Factory proxy_handler_factory_;
-  // Creates the appropriate type of <Proxy_Handlers>.
+  Connection_Handler_Factory connection_handler_factory_;
+  // Creates the appropriate type of <Connection_Handlers>.
 
   int debug_;
   // Are we debugging?
@@ -120,10 +120,11 @@ Gateway::init (int argc, char *argv[])
 		   Options::instance ()->performance_window ()));
     }
 
-  if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
+  if (Options::instance ()->enabled 
+      (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
     {
       // Parse the proxy configuration file.
-      this->parse_proxy_config_file ();
+      this->parse_connection_config_file ();
 
       // Parse the consumer config file and build the event forwarding
       // discriminator.
@@ -172,22 +173,22 @@ Gateway::info (char **strp, size_t length) const
 // Parse and build the proxy table.
 
 int
-Gateway::parse_proxy_config_file (void)
+Gateway::parse_connection_config_file (void)
 {
   // File that contains the proxy configuration information.
-  Proxy_Config_File_Parser proxy_file;
+  Connection_Config_File_Parser connection_file;
   int file_empty = 1;
   int line_number = 0;
 
-  if (proxy_file.open (Options::instance ()->proxy_config_file ()) == -1)
+  if (connection_file.open (Options::instance ()->connection_config_file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "(%t) %p\n",
-		       Options::instance ()->proxy_config_file ()),
+		       Options::instance ()->connection_config_file ()),
 		      -1);
 
   // Read config file one line at a time.
-  for (Proxy_Config_Info pci;
-       proxy_file.read_entry (pci, line_number) != FP::EOFILE;
+  for (Connection_Config_Info pci;
+       connection_file.read_entry (pci, line_number) != FP::EOFILE;
        )
     {
       file_empty = 0;
@@ -196,10 +197,10 @@ Gateway::parse_proxy_config_file (void)
 	ACE_DEBUG ((LM_DEBUG,
 		    "(%t) conn id = %d, host = %s, remote port = %d, proxy role = %c, "
 		    "max retry timeout = %d, local port = %d, priority = %d\n",
-		    pci.proxy_id_,
+		    pci.connection_id_,
 		    pci.host_,
 		    pci.remote_port_,
-		    pci.proxy_role_,
+		    pci.connection_role_,
 		    pci.max_retry_timeout_,
 		    pci.local_port_,
 		    pci.priority_));
@@ -207,22 +208,22 @@ Gateway::parse_proxy_config_file (void)
       pci.event_channel_ = &this->event_channel_;
 
       // Create the appropriate type of Proxy.
-      Proxy_Handler *proxy_handler =
-	this->proxy_handler_factory_.make_proxy_handler (pci);
+      Connection_Handler *connection_handler =
+	this->connection_handler_factory_.make_connection_handler (pci);
 
-      if (proxy_handler == 0)
+      if (connection_handler == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
-                           "make_proxy_handler"),
+                           "make_connection_handler"),
                           -1);
 
-      // Bind the new Proxy_Handler to the connection ID.
-      this->event_channel_.bind_proxy (proxy_handler);
+      // Bind the new Connection_Handler to the connection ID.
+      this->event_channel_.bind_proxy (connection_handler);
     }
 
   if (file_empty)
     ACE_ERROR ((LM_WARNING,
-	       "warning: connection proxy_handler configuration file was empty\n"));
+	       "warning: connection connection_handler configuration file was empty\n"));
   return 0;
 }
 
@@ -250,10 +251,9 @@ Gateway::parse_consumer_config_file (void)
       if (Options::instance ()->enabled (Options::DEBUG))
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn id = %d, supplier id = %d, payload = %d, "
+                      "(%t) connection id = %d, payload = %d, "
 		      "number of consumers = %d\n",
-		      cci.proxy_id_,
-		      cci.supplier_id_,
+		      cci.connection_id_,
 		      cci.type_,
 		      cci.total_consumers_));
 
@@ -267,20 +267,19 @@ Gateway::parse_consumer_config_file (void)
       Consumer_Dispatch_Set *dispatch_set;
       ACE_NEW_RETURN (dispatch_set, Consumer_Dispatch_Set, -1);
 
-      Event_Key event_addr (cci.proxy_id_,
-			    cci.supplier_id_,
+      Event_Key event_addr (cci.connection_id_,
 			    cci.type_);
 
       // Add the Consumers to the Dispatch_Set.
       for (int i = 0; i < cci.total_consumers_; i++)
 	{
-	  Proxy_Handler *proxy_handler = 0;
+	  Connection_Handler *connection_handler = 0;
 
 	  // Lookup destination and add to Consumer_Dispatch_Set set
 	  // if found.
 	  if (this->event_channel_.find_proxy (cci.consumers_[i],
-					       proxy_handler) != -1)
-	    dispatch_set->insert (proxy_handler);
+					       connection_handler) != -1)
+	    dispatch_set->insert (connection_handler);
 	  else
 	    ACE_ERROR ((LM_ERROR, "(%t) not found: destination[%d] = %d\n",
 		       i, cci.consumers_[i]));
@@ -301,10 +300,10 @@ Gateway::parse_consumer_config_file (void)
 ACE_SVC_FACTORY_DEFINE (Gateway)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Proxy_Handler *>;
-template class ACE_Unbounded_Set<Proxy_Handler *>;
+template class ACE_Node<Connection_Handler *>;
+template class ACE_Unbounded_Set<Connection_Handler *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Proxy_Handler *>
-#pragma instantiate ACE_Unbounded_Set<Proxy_Handler *>
+#pragma instantiate ACE_Node<Connection_Handler *>
+#pragma instantiate ACE_Unbounded_Set<Connection_Handler *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

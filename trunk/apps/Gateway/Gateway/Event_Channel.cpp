@@ -2,24 +2,24 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#include "Proxy_Handler_Connector.h"
+#include "Connection_Handler_Connector.h"
 #include "Event_Channel.h"
 
-ACE_Event_Channel::~ACE_Event_Channel (void)
+Event_Channel::~Event_Channel (void)
 {
 }
 
-ACE_Event_Channel::ACE_Event_Channel (void)
-  : supplier_acceptor_ (*this),
-    consumer_acceptor_ (*this)
+Event_Channel::Event_Channel (void)
+  : supplier_acceptor_ (*this, 'S'),
+    consumer_acceptor_ (*this, 'C')
 {
 }
 
 int
-ACE_Event_Channel::compute_performance_statistics (void)
+Event_Channel::compute_performance_statistics (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) doing the performance timeout here...\n"));
-  PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+  CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
   // If we've got a ACE_Thread Manager then use it to suspend all the
   // threads.  This will enable us to get an accurate count.
@@ -38,44 +38,32 @@ ACE_Event_Channel::compute_performance_statistics (void)
   // Iterate through the connection map summing up the number of bytes
   // sent/received.
 
-  for (PROXY_MAP_ENTRY *me = 0;
+  for (CONNECTION_MAP_ENTRY *me = 0;
        cmi.next (me) != 0;
        cmi.advance ())
     {
-      Proxy_Handler *proxy_handler = me->int_id_;
+      Connection_Handler *connection_handler = me->int_id_;
 
-      if (proxy_handler->proxy_role () == 'C')
-	total_bytes_out += proxy_handler->total_bytes ();
-      else // proxy_handler->proxy_role () == 'S'
-	total_bytes_in += proxy_handler->total_bytes ();
+      if (connection_handler->connection_role () == 'C')
+	total_bytes_out += connection_handler->total_bytes ();
+      else // connection_handler->connection_role () == 'S'
+	total_bytes_in += connection_handler->total_bytes ();
     }
 
-#if defined (ACE_NLOGGING)
-  ACE_OS::fprintf (stderr,
-		   "After %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
-		   performance_window_,
-		   total_bytes_in,
-		   total_bytes_out);
-
-  ACE_OS::fprintf (stderr, "%f Mbits/sec received.\n",
-		   (float) (total_bytes_in * 8 / (float) (1024*1024*this->performance_window_)));
-
-  ACE_OS::fprintf (stderr, "%f Mbits/sec sent.\n",
-		   (float) (total_bytes_out * 8 / (float) (1024*1024*this->performance_window_)));
-#else
   ACE_DEBUG ((LM_DEBUG, "(%t) after %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
 	      Options::instance ()->performance_window (),
 	      total_bytes_in,
 	      total_bytes_out));
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) %f Mbits/sec received.\n",
 	      (float) (total_bytes_in * 8 /
                        (float) (1024 * 1024 * Options::instance ()->performance_window ()))));
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) %f Mbits/sec sent.\n",
 	      (float) (total_bytes_out * 8 /
                        (float) (1024 * 1024 * Options::instance ()->performance_window ()))));
-#endif /* ACE_NLOGGING */
 
   // Resume all the threads again.
 
@@ -91,7 +79,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 }
 
 int
-ACE_Event_Channel::handle_timeout (const ACE_Time_Value &,
+Event_Channel::handle_timeout (const ACE_Time_Value &,
 				   const void *)
 {
   return this->compute_performance_statistics ();
@@ -101,7 +89,7 @@ ACE_Event_Channel::handle_timeout (const ACE_Time_Value &,
 // to receive it.
 
 int
-ACE_Event_Channel::put (ACE_Message_Block *event,
+Event_Channel::put (ACE_Message_Block *event,
 			ACE_Time_Value *)
 {
   // We got a valid event, so determine its virtual forwarding
@@ -120,9 +108,8 @@ ACE_Event_Channel::put (ACE_Message_Block *event,
   if (this->efd_.find (*forwarding_addr, dispatch_set) == -1)
     // Failure.
     ACE_ERROR ((LM_DEBUG,
-		"(%t) find failed on conn id = %d, supplier id = %d, type = %d\n",
-		forwarding_addr->proxy_id_,
-		forwarding_addr->supplier_id_,
+		"(%t) find failed on connection id = %d, type = %d\n",
+		forwarding_addr->connection_id_,
 		forwarding_addr->type_));
   else
     {
@@ -140,28 +127,28 @@ ACE_Event_Channel::put (ACE_Message_Block *event,
 	  // multi-threaded configuration.
 	  // data->locking_strategy (MB_Locking_Strategy::instance ());
 
-	  for (Proxy_Handler **proxy_handler = 0;
-	       dsi.next (proxy_handler) != 0;
+	  for (Connection_Handler **connection_handler = 0;
+	       dsi.next (connection_handler) != 0;
 	       dsi.advance ())
 	    {
-	      // Only process active proxy_handlers.
-	      if ((*proxy_handler)->state () == Proxy_Handler::ESTABLISHED)
+	      // Only process active connection_handlers.
+	      if ((*connection_handler)->state () == Connection_Handler::ESTABLISHED)
 		{
 		  // Duplicate the event portion via reference
 		  // counting.
 		  ACE_Message_Block *dup_msg = data->duplicate ();
 
 		  ACE_DEBUG ((LM_DEBUG, "(%t) forwarding to Consumer %d\n",
-			      (*proxy_handler)->id ()));
+			      (*connection_handler)->id ()));
 
-		  if ((*proxy_handler)->put (dup_msg) == -1)
+		  if ((*connection_handler)->put (dup_msg) == -1)
 		    {
 		      if (errno == EWOULDBLOCK) // The queue has filled up!
 			ACE_ERROR ((LM_ERROR, "(%t) %p\n",
 				   "gateway is flow controlled, so we're dropping events"));
 		      else
 			ACE_ERROR ((LM_ERROR, "(%t) %p transmission error to peer %d\n",
-				   "put", (*proxy_handler)->id ()));
+				   "put", (*connection_handler)->id ()));
 
 		      // We are responsible for releasing an
 		      // ACE_Message_Block if failures occur.
@@ -178,13 +165,13 @@ ACE_Event_Channel::put (ACE_Message_Block *event,
 }
 
 int
-ACE_Event_Channel::svc (void)
+Event_Channel::svc (void)
 {
   return 0;
 }
 
 int
-ACE_Event_Channel::initiate_proxy_connection (Proxy_Handler *proxy_handler)
+Event_Channel::initiate_connection_connection (Connection_Handler *connection_handler)
 {
   ACE_Synch_Options synch_options;
 
@@ -193,36 +180,36 @@ ACE_Event_Channel::initiate_proxy_connection (Proxy_Handler *proxy_handler)
   else
     synch_options = ACE_Synch_Options::synch;
 
-  return this->connector_.initiate_connection (proxy_handler,
+  return this->connector_.initiate_connection (connection_handler,
 					       synch_options);
 }
 
 int
-ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
+Event_Channel::complete_connection_connection (Connection_Handler *connection_handler)
 {
-  int option = proxy_handler->proxy_role () == 'S' ? SO_RCVBUF : SO_SNDBUF;
+  int option = connection_handler->connection_role () == 'S' ? SO_RCVBUF : SO_SNDBUF;
   int socket_queue_size = Options::instance ()->socket_queue_size ();
 
   if (socket_queue_size > 0)
-    if (proxy_handler->peer ().set_option (SOL_SOCKET,
+    if (connection_handler->peer ().set_option (SOL_SOCKET,
 					   option,
 					   &socket_queue_size,
 					   sizeof (int)) == -1)
       ACE_ERROR ((LM_ERROR, "(%t) %p\n", "set_option"));
 
-  proxy_handler->thr_mgr (ACE_Thread_Manager::instance ());
+  connection_handler->thr_mgr (ACE_Thread_Manager::instance ());
 
   // Our state is now "established."
-  proxy_handler->state (Proxy_Handler::ESTABLISHED);
+  connection_handler->state (Connection_Handler::ESTABLISHED);
 
   // Restart the timeout to 1.
-  proxy_handler->timeout (1);
+  connection_handler->timeout (1);
 
-  ACE_INT32 id = htonl (proxy_handler->id ());
+  ACE_INT32 id = htonl (connection_handler->id ());
 
   // Send the connection id to the peerd.
 
-  ssize_t n = proxy_handler->peer ().send ((const void *) &id, sizeof id);
+  ssize_t n = connection_handler->peer ().send ((const void *) &id, sizeof id);
 
   if (n != sizeof id)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n",
@@ -235,24 +222,24 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
 // synchronously or asynchronously).
 
 int
-ACE_Event_Channel::reinitiate_proxy_connection (Proxy_Handler *proxy_handler)
+Event_Channel::reinitiate_connection_connection (Connection_Handler *connection_handler)
 {
   // Skip over proxies with deactivated handles.
-  if (proxy_handler->get_handle () != ACE_INVALID_HANDLE)
+  if (connection_handler->get_handle () != ACE_INVALID_HANDLE)
     {
       // Make sure to close down peer to reclaim descriptor.
-      proxy_handler->peer ().close ();
+      connection_handler->peer ().close ();
     }
 
-  if (proxy_handler->state () != Proxy_Handler::DISCONNECTING)
+  if (connection_handler->state () != Connection_Handler::DISCONNECTING)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) scheduling reinitiation of Proxy_Handler %d\n",
-		  proxy_handler->id ()));
+		  "(%t) scheduling reinitiation of Connection_Handler %d\n",
+		  connection_handler->id ()));
 
       // Reschedule ourselves to try and connect again.
       if (ACE_Reactor::instance ()->schedule_timer
-	  (proxy_handler, 0, proxy_handler->timeout ()) == -1)
+	  (connection_handler, 0, connection_handler->timeout ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n",
 			   "schedule_timer"), -1);
     }
@@ -262,22 +249,22 @@ ACE_Event_Channel::reinitiate_proxy_connection (Proxy_Handler *proxy_handler)
 // Initiate active connections with the Consumer and Supplier Peers.
 
 void
-ACE_Event_Channel::initiate_connector (void)
+Event_Channel::initiate_connector (void)
 {
   if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
     {
-      PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+      CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
       // Iterate through the Consumer Map connecting all the
-      // Proxy_Handlers.
+      // Connection_Handlers.
 
-      for (PROXY_MAP_ENTRY *me = 0;
+      for (CONNECTION_MAP_ENTRY *me = 0;
            cmi.next (me) != 0;
            cmi.advance ())
         {
-          Proxy_Handler *proxy_handler = me->int_id_;
+          Connection_Handler *connection_handler = me->int_id_;
 
-          if (this->initiate_proxy_connection (proxy_handler) == -1)
+          if (this->initiate_connection_connection (connection_handler) == -1)
             continue; // Failures are handled elsewhere...
         }
     }
@@ -287,7 +274,7 @@ ACE_Event_Channel::initiate_connector (void)
 // to accept.
 
 void
-ACE_Event_Channel::initiate_acceptors (void)
+Event_Channel::initiate_acceptors (void)
 {
   if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
       && this->consumer_acceptor_.open
@@ -307,10 +294,10 @@ ACE_Event_Channel::initiate_acceptors (void)
 }
 
 // This method gracefully shuts down all the Handlers in the
-// Proxy_Handler Connection Map.
+// Connection_Handler Connection Map.
 
 int
-ACE_Event_Channel::close (u_long)
+Event_Channel::close (u_long)
 {
   if (Options::instance ()->threading_strategy ()
       != Options::REACTIVE)
@@ -322,22 +309,22 @@ ACE_Event_Channel::close (u_long)
 
   // First tell everyone that the spaceship is here...
   {
-    PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+    CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
     // Iterate over all the handlers and shut them down.
 
-    for (PROXY_MAP_ENTRY *me;
+    for (CONNECTION_MAP_ENTRY *me;
 	 cmi.next (me) != 0;
 	 cmi.advance ())
       {
-	Proxy_Handler *proxy_handler = me->int_id_;
+	Connection_Handler *connection_handler = me->int_id_;
 
 	ACE_DEBUG ((LM_DEBUG, "(%t) closing down connection %d\n",
-		    proxy_handler->id ()));
+		    connection_handler->id ()));
 
-	// Mark Proxy_Handler as DISCONNECTING so we don't try to
+	// Mark Connection_Handler as DISCONNECTING so we don't try to
 	// reconnect...
-	proxy_handler->state (Proxy_Handler::DISCONNECTING);
+	connection_handler->state (Connection_Handler::DISCONNECTING);
       }
   }
 
@@ -352,16 +339,16 @@ ACE_Event_Channel::close (u_long)
 
   // Now tell everyone that it is now time to commit suicide.
   {
-    PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+    CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
-    for (PROXY_MAP_ENTRY *me;
+    for (CONNECTION_MAP_ENTRY *me;
 	 cmi.next (me) != 0;
 	 cmi.advance ())
       {
-	Proxy_Handler *proxy_handler = me->int_id_;
+	Connection_Handler *connection_handler = me->int_id_;
 
-	// Deallocate Proxy_Handler resources.
-	proxy_handler->destroy (); // Will trigger a delete.
+	// Deallocate Connection_Handler resources.
+	connection_handler->destroy (); // Will trigger a delete.
       }
   }
 
@@ -369,28 +356,28 @@ ACE_Event_Channel::close (u_long)
 }
 
 int
-ACE_Event_Channel::find_proxy (ACE_INT32 proxy_id,
-			       Proxy_Handler *&proxy_handler)
+Event_Channel::find_proxy (ACE_INT32 connection_id,
+			       Connection_Handler *&connection_handler)
 {
-  return this->proxy_map_.find (proxy_id, proxy_handler);
+  return this->connection_map_.find (connection_id, connection_handler);
 }
 
 int
-ACE_Event_Channel::bind_proxy (Proxy_Handler *proxy_handler)
+Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 {
-  int result = this->proxy_map_.bind (proxy_handler->id (), proxy_handler);
+  int result = this->connection_map_.bind (connection_handler->id (), connection_handler);
 
   switch (result)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) bind failed for connection %d\n",
-			 proxy_handler->id ()), -1);
+			 connection_handler->id ()), -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) duplicate connection %d, already bound\n",
-			 proxy_handler->id ()), -1);
+			 connection_handler->id ()), -1);
       /* NOTREACHED */
     case 0:
       // Success.
@@ -406,7 +393,7 @@ ACE_Event_Channel::bind_proxy (Proxy_Handler *proxy_handler)
 }
 
 int
-ACE_Event_Channel::subscribe (const Event_Key &event_addr,
+Event_Channel::subscribe (const Event_Key &event_addr,
 			      Consumer_Dispatch_Set *cds)
 {
   int result = this->efd_.bind (event_addr, cds);
@@ -417,12 +404,12 @@ ACE_Event_Channel::subscribe (const Event_Key &event_addr,
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) bind failed for connection %d\n",
-			 event_addr.proxy_id_), -1);
+			 event_addr.connection_id_), -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
       ACE_ERROR_RETURN ((LM_DEBUG,
 			 "(%t) duplicate consumer map entry %d, "
-			 "already bound\n", event_addr.proxy_id_), -1);
+			 "already bound\n", event_addr.connection_id_), -1);
       /* NOTREACHED */
     case 0:
       // Success.
@@ -437,9 +424,9 @@ ACE_Event_Channel::subscribe (const Event_Key &event_addr,
 }
 
 int
-ACE_Event_Channel::open (void *)
+Event_Channel::open (void *)
 {
-  // Ignore SIPPIPE so each Consumer_Proxy can handle it.
+  // Ignore SIPPIPE so each Consumer_Handler can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
@@ -469,18 +456,18 @@ ACE_Event_Channel::open (void *)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-template class ACE_Map_Entry<ACE_INT32, Proxy_Handler *>;
-template class ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
-template class ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
-template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
+template class ACE_Map_Entry<ACE_INT32, Connection_Handler *>;
+template class ACE_Map_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
+template class ACE_Map_Manager<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
+template class ACE_Unbounded_Set_Iterator<Connection_Handler *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_INT32, Proxy_Handler *>
-#pragma instantiate ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Unbounded_Set_Iterator<Proxy_Handler *>
+#pragma instantiate ACE_Map_Entry<ACE_INT32, Connection_Handler *>
+#pragma instantiate ACE_Map_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_INT32, Connection_Handler *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_INT32, Connection_Handler *, MAP_MUTEX>
+#pragma instantiate ACE_Unbounded_Set_Iterator<Connection_Handler *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

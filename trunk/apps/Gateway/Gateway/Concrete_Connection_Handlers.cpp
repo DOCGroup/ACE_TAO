@@ -2,41 +2,41 @@
 
 #define ACE_BUILD_SVC_DLL
 #include "Event_Channel.h"
-#include "Concrete_Proxy_Handlers.h"
+#include "Concrete_Connection_Handlers.h"
 
-Consumer_Proxy::Consumer_Proxy (const Proxy_Config_Info &pci)
-  : Proxy_Handler (pci)
+Consumer_Handler::Consumer_Handler (const Connection_Config_Info &pci)
+  : Connection_Handler (pci)
 {
-  this->proxy_role_ = 'C';
-  this->msg_queue ()->high_water_mark (Consumer_Proxy::MAX_QUEUE_SIZE);
+  this->connection_role_ = 'C';
+  this->msg_queue ()->high_water_mark (Options::instance ()->max_queue_size ());
 }
 
 // This method should be called only when the Consumer shuts down
-// unexpectedly.  This method simply marks the Proxy_Handler as having
+// unexpectedly.  This method simply marks the Connection_Handler as having
 // failed so that handle_close () can reconnect.
 
 int 
-Consumer_Proxy::handle_input (ACE_HANDLE)
+Consumer_Handler::handle_input (ACE_HANDLE)
 {
   char buf[1];
 
-  this->state (Proxy_Handler::FAILED);
+  this->state (Connection_Handler::FAILED);
 
   switch (this->peer ().recv (buf, sizeof buf))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
-			"(%t) Peer has failed unexpectedly for Consumer_Proxy %d\n",
+			"(%t) Peer has failed unexpectedly for Consumer_Handler %d\n",
 			this->id ()), -1);
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
-			"(%t) Peer has shutdown unexpectedly for Consumer_Proxy %d\n",
+			"(%t) Peer has shutdown unexpectedly for Consumer_Handler %d\n",
 			this->id ()), -1);
       /* NOTREACHED */
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-			"(%t) Consumer is erroneously sending input to Consumer_Proxy %d\n",
+			"(%t) Consumer is erroneously sending input to Consumer_Handler %d\n",
 			this->id ()), -1);
       /* NOTREACHED */
     }
@@ -47,7 +47,7 @@ Consumer_Proxy::handle_input (ACE_HANDLE)
 // Event_List.
 
 int
-Consumer_Proxy::nonblk_put (ACE_Message_Block *event)
+Consumer_Handler::nonblk_put (ACE_Message_Block *event)
 {
   // Try to send the event.  If we don't send it all (e.g., due to
   // flow control), then re-queue the remainder at the head of the
@@ -60,7 +60,7 @@ Consumer_Proxy::nonblk_put (ACE_Message_Block *event)
     {
       // Things have gone wrong, let's try to close down and set up a
       // new reconnection by calling handle_close().
-      this->state (Proxy_Handler::FAILED);
+      this->state (Connection_Handler::FAILED);
       this->handle_close ();
       return -1;
     }
@@ -86,7 +86,7 @@ Consumer_Proxy::nonblk_put (ACE_Message_Block *event)
 }
 
 ssize_t
-Consumer_Proxy::send (ACE_Message_Block *event)
+Consumer_Handler::send (ACE_Message_Block *event)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) sending %d bytes to Consumer %d\n",
 	      event->length (), this->id ()));
@@ -114,7 +114,7 @@ Consumer_Proxy::send (ACE_Message_Block *event)
 // This method is automatically called by the ACE_Reactor.
 
 int 
-Consumer_Proxy::handle_output (ACE_HANDLE)
+Consumer_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *event = 0;
 
@@ -169,7 +169,7 @@ Consumer_Proxy::handle_output (ACE_HANDLE)
 // Send an event to a Consumer (may queue if necessary).
 
 int 
-Consumer_Proxy::put (ACE_Message_Block *event, ACE_Time_Value *)
+Consumer_Handler::put (ACE_Message_Block *event, ACE_Time_Value *)
 {
   if (this->msg_queue ()->is_empty ())
     // Try to send the event *without* blocking!
@@ -181,11 +181,11 @@ Consumer_Proxy::put (ACE_Message_Block *event, ACE_Time_Value *)
       (event, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-Supplier_Proxy::Supplier_Proxy (const Proxy_Config_Info &pci)
-  : Proxy_Handler (pci),
+Supplier_Handler::Supplier_Handler (const Connection_Config_Info &pci)
+  : Connection_Handler (pci),
     msg_frag_ (0)
 {
-  this->proxy_role_ = 'S';
+  this->connection_role_ = 'S';
   this->msg_queue ()->high_water_mark (0);
 }
 
@@ -201,7 +201,7 @@ Supplier_Proxy::Supplier_Proxy (const Proxy_Config_Info &pci)
 // of software from knowledge of the event structure.
 
 int
-Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
+Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 { 
   if (this->msg_frag_ == 0)
     // No existing fragment...
@@ -329,8 +329,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
 	    }
 
           Event_Key event_addr (this->id (), 
-				 event->header_.supplier_id_,
-				 event->header_.type_);
+                                event->header_.type_);
           // Copy the forwarding address from the Event_Key into
           // forward_addr.
           forward_addr->copy ((char *) &event_addr, sizeof (Event_Key));
@@ -340,10 +339,16 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
         }
 
       this->total_bytes (data_received + header_received);
-      ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
-		  event->header_.supplier_id_, event->header_.len_, data_received + header_received));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) connection id = %d, cur len = %d, total bytes read = %d\n",
+		  event->header_.connection_id_,
+                  event->header_.len_,
+                  data_received + header_received));
       if (Options::instance ()->enabled (Options::VERBOSE))
-	ACE_DEBUG ((LM_DEBUG, "data_ = %*s\n", event->header_.len_ - 2, event->data_));
+	ACE_DEBUG ((LM_DEBUG,
+                    "data_ = %*s\n",
+                    event->header_.len_ - 2,
+                    event->data_));
 
       // Encode before returning so that we can set things out in
       // network byte order.
@@ -356,7 +361,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
 // gatewayd, as well as stdio).
 
 int 
-Supplier_Proxy::handle_input (ACE_HANDLE)
+Supplier_Handler::handle_input (ACE_HANDLE)
 {
   ACE_Message_Block *forward_addr = 0;
 
@@ -365,9 +370,9 @@ Supplier_Proxy::handle_input (ACE_HANDLE)
     case 0:
       // Note that a peer should never initiate a shutdown by closing
       // the connection.  Instead, it should reconnect.
-      this->state (Proxy_Handler::FAILED);
+      this->state (Connection_Handler::FAILED);
       ACE_ERROR_RETURN ((LM_ERROR, 
-			"(%t) Peer has closed down unexpectedly for Input Proxy_Handler %d\n", 
+			"(%t) Peer has closed down unexpectedly for Input Connection_Handler %d\n", 
                         this->id ()), -1);
       /* NOTREACHED */
     case -1:
@@ -376,8 +381,8 @@ Supplier_Proxy::handle_input (ACE_HANDLE)
         return 0;
       else // A weird problem occurred, shut down and start again.
         {
-          this->state (Proxy_Handler::FAILED);
-          ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p for Input Proxy_Handler %d\n", 
+          this->state (Connection_Handler::FAILED);
+          ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p for Input Connection_Handler %d\n", 
 			    "Peer has failed unexpectedly",
                            this->id ()), -1);
         }
@@ -388,32 +393,32 @@ Supplier_Proxy::handle_input (ACE_HANDLE)
 }
 
 // Forward an event to its appropriate Consumer(s).  This delegates to
-// the <ACE_Event_Channel> to do the actual forwarding.
+// the <Event_Channel> to do the actual forwarding.
 
 int
-Supplier_Proxy::forward (ACE_Message_Block *forward_addr)
+Supplier_Handler::forward (ACE_Message_Block *forward_addr)
 {
   return this->event_channel_->put (forward_addr);
 }
 
 #if defined (ACE_HAS_THREADS)
-Thr_Consumer_Proxy::Thr_Consumer_Proxy (const Proxy_Config_Info &pci)
-  : Consumer_Proxy (pci)
+Thr_Consumer_Handler::Thr_Consumer_Handler (const Connection_Config_Info &pci)
+  : Consumer_Handler (pci)
 {
 }
 
 // This method should be called only when the Consumer shuts down
-// unexpectedly.  This method marks the Proxy_Handler as having failed
+// unexpectedly.  This method marks the Connection_Handler as having failed
 // and deactivates the ACE_Message_Queue (to wake up the thread
 // blocked on <dequeue_head> in svc()).
 // Thr_Output_Handler::handle_close () will eventually try to
 // reconnect...
 
 int 
-Thr_Consumer_Proxy::handle_input (ACE_HANDLE h)
+Thr_Consumer_Handler::handle_input (ACE_HANDLE h)
 {
-  // Call down to the <Consumer_Proxy> to handle this first.
-  this->Consumer_Proxy::handle_input (h);
+  // Call down to the <Consumer_Handler> to handle this first.
+  this->Consumer_Handler::handle_input (h);
 
   ACE_Reactor::instance ()->remove_handler 
     (h, ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
@@ -423,19 +428,19 @@ Thr_Consumer_Proxy::handle_input (ACE_HANDLE h)
   return 0;
 }
 
-// Initialize the threaded Consumer_Proxy object and spawn a new
+// Initialize the threaded Consumer_Handler object and spawn a new
 // thread.
 
 int 
-Thr_Consumer_Proxy::open (void *)
+Thr_Consumer_Handler::open (void *)
 {
   // Turn off non-blocking I/O.
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Call back to the <Event_Channel> to complete our initialization.
-  else if (this->event_channel_->complete_proxy_connection (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_proxy_connection"), -1);
+  else if (this->event_channel_->complete_connection_connection (this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_connection_connection"), -1);
 
   // Register ourselves to receive input events (which indicate that
   // the Consumer has shut down unexpectedly).
@@ -461,10 +466,10 @@ Thr_Consumer_Proxy::open (void *)
 }
 
 // Queue up an event for transmission (must not block since
-// Supplier_Proxys may be single-threaded).
+// Supplier_Handlers may be single-threaded).
 
 int 
-Thr_Consumer_Proxy::put (ACE_Message_Block *mb, ACE_Time_Value *)
+Thr_Consumer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   // Perform non-blocking enqueue.
   return this->msg_queue ()->enqueue_tail 
@@ -475,13 +480,13 @@ Thr_Consumer_Proxy::put (ACE_Message_Block *mb, ACE_Time_Value *)
 // threads...)
 
 int 
-Thr_Consumer_Proxy::svc (void)
+Thr_Consumer_Handler::svc (void)
 {
 
   for (;;)
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) Thr_Consumer_Proxy's handle = %d\n", 
+		  "(%t) Thr_Consumer_Handler's handle = %d\n", 
 		 this->peer ().get_handle ()));
 
       // Since this method runs in its own thread it is OK to block on
@@ -496,14 +501,14 @@ Thr_Consumer_Proxy::svc (void)
       ACE_ASSERT (errno == ESHUTDOWN);
 
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) shutting down threaded Consumer_Proxy %d on handle %d\n", 
+		  "(%t) shutting down threaded Consumer_Handler %d on handle %d\n", 
 		  this->id (), this->get_handle ()));
 
       this->peer ().close ();
 
       for (this->timeout (1);
 	   // Default is to reconnect synchronously.
-	   this->event_channel_->initiate_proxy_connection (this) == -1; )
+	   this->event_channel_->initiate_connection_connection (this) == -1; )
 	{
 	  ACE_Time_Value tv (this->timeout ());
 
@@ -519,21 +524,21 @@ Thr_Consumer_Proxy::svc (void)
   return 0;
 }
 
-Thr_Supplier_Proxy::Thr_Supplier_Proxy (const Proxy_Config_Info &pci)
-  : Supplier_Proxy (pci)
+Thr_Supplier_Handler::Thr_Supplier_Handler (const Connection_Config_Info &pci)
+  : Supplier_Handler (pci)
 {
 }
 
 int 
-Thr_Supplier_Proxy::open (void *)
+Thr_Supplier_Handler::open (void *)
 {
   // Turn off non-blocking I/O.
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Call back to the <Event_Channel> to complete our initialization.
-  else if (this->event_channel_->complete_proxy_connection (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_proxy_connection"), -1);
+  else if (this->event_channel_->complete_connection_connection (this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_connection_connection"), -1);
 
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
@@ -556,24 +561,25 @@ Thr_Supplier_Proxy::open (void *)
 // existing code!).
 
 int 
-Thr_Supplier_Proxy::svc (void)
+Thr_Supplier_Handler::svc (void)
 {
   for (;;)
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) Thr_Supplier_Proxy's handle = %d\n", 
+		  "(%t) Thr_Supplier_Handler's handle = %d\n", 
 		 this->peer ().get_handle ()));
 
       // Since this method runs in its own thread and processes events
       // for one connection it is OK to call down to the
-      // <Supplier_Proxy::handle_input> method, which blocks on input.
+      // <Supplier_Handler::handle_input> method, which blocks on input.
 
-      while (this->Supplier_Proxy::handle_input () != -1)
+      while (this->Supplier_Handler::handle_input () != -1)
 	continue;
 
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) shutting down threaded Supplier_Proxy %d on handle %d\n", 
-		 this->id (), this->get_handle ()));
+		  "(%t) shutting down threaded Supplier_Handler %d on handle %d\n",
+                  this->id (),
+                  this->get_handle ()));
 
       this->peer ().close ();
 
@@ -582,7 +588,7 @@ Thr_Supplier_Proxy::svc (void)
 
       for (this->timeout (1);
 	   // Default is to reconnect synchronously.
-	   this->event_channel_->initiate_proxy_connection (this) == -1; )
+	   this->event_channel_->initiate_connection_connection (this) == -1; )
 	{
 	  ACE_Time_Value tv (this->timeout ());
 	  ACE_ERROR ((LM_ERROR, 
