@@ -1,3 +1,10 @@
+Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Addded a new pair of priority() fields as place
+	  holders for the forthcoming DiffServ QoS features.  Thanks to
+ 	  Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
+ 	  this.
+
 Tue Jul 27 13:28:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (getuid): removed extra ACE_TRACE with
