@@ -1,3 +1,11 @@
+Sat Nov 10 23:13:37 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+
+	  Updated/modernized these scripts to conform to our current
+	  regression test script conventions.
+
 Sat Nov 10 23:06:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Big_Request.dsw:

@@ -5,46 +5,48 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 # $Id$
 
-use Env (ACE_ROOT);
+use lib  '../../../../../bin';
+use PerlACE::Run_Test;
 
-unshift @INC, "$ACE_ROOT/bin";
-require ACEutils;
+$status = 0;
+$file = PerlACE::LocalFile ("test.ior");
+
+unlink $file;
 
 $status = 0;
 
 # Set the SSL environment
 $ENV{'SSL_CERT_FILE'} = 'ca.pem';
 
-$iorfile = "server.ior";
-unlink $iorfile;
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       " -ORBSvcConf server.conf "
-                       . " -o $iorfile");
+$SV = new PerlACE::Process ("server",
+			    "-o $file -ORBSvcConf server.conf");
+$CL = new PerlACE::Process ("client",
+			    "-ORBSvcConf client.conf -k file://$file");
 
-if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+print STDERR "\n\n==== Running SecurityLevel1 test\n";
+
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($file, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$file>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       " -ORBSvcConf client.conf "
-                       . " -k file://$iorfile");
+$client = $CL->SpawnWaitKill (60);
 
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
-  $status = 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$server = $SV->TimedWait (15);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  $status = 1;
+$server = $SV->WaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
-unlink $iorfile;
+unlink $file;
 
 exit $status;
