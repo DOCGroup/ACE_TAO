@@ -667,10 +667,6 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\POA_Extension_Initializer.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Policy_Manager.cpp
 # End Source File
 # Begin Source File
@@ -1472,10 +1468,6 @@ SOURCE=.\Pluggable_Messaging.h
 # Begin Source File
 
 SOURCE=.\Pluggable_Messaging_Utils.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\POA_Extension_Initializer.h
 # End Source File
 # Begin Source File
 

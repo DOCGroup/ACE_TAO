@@ -18,10 +18,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task.h"
-#include "RTCORBA.h"
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "ace/Task.h"
 
 class TAO_Thread_Lane;
 

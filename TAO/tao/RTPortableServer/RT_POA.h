@@ -23,8 +23,10 @@
 
 #include "rtportableserver_export.h"
 #include "tao/PortableServer/POA.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "RTPortableServer.h"
+
+#define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
+#include "RTPortableServerC.h"
+#undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

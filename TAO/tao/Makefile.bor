@@ -135,7 +135,6 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
 	$(OBJDIR)\OctetSeqC.obj \
-	$(OBJDIR)\POA_Extension_Initializer.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \

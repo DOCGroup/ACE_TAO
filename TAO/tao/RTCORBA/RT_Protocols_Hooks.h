@@ -155,7 +155,6 @@ protected:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
-ACE_STATIC_SVC_REQUIRE(TAO_RT_Protocols_Hooks)
 
 #include "ace/post.h"
 #endif /* TAO_RT_PROTOCOLS_HOOKS_H */

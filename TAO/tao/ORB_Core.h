@@ -90,8 +90,6 @@ class TAO_Delayed_Buffering_Sync_Strategy;
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 
-class TAO_POA_Extension_Initializer;
-
 // ****************************************************************
 
 /**
@@ -257,13 +255,6 @@ public:
 
   /// Get the adapter registry
   TAO_Adapter_Registry *adapter_registry (void);
-
-  /// Add a POA extension initializer.  The ORB Core takes ownership of
-  /// the passed in instance.
-  void add_poa_extension_initializer (TAO_POA_Extension_Initializer *initializer);
-
-  /// Get the POA extension initializers.
-  TAO_POA_Extension_Initializer *poa_extension_initializer (void);
 
   /// Get the priority normalizer.
   TAO_CORBA_Priority_Normalizer *corba_priority_normalizer (void) const;
@@ -600,9 +591,6 @@ public:
 
   /// This strategy will sync with the transport.
   TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
-
-  /// Pointer to chain of POA extension initializers.
-  TAO_POA_Extension_Initializer *poa_extension_initializer_;
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
@@ -1086,29 +1074,11 @@ protected:
   // poa_factory_name_ dynamically.
   static const char *poa_factory_directive_;
 
-  // @@ This is not needed since the default resource factory
-  //    is staticaly added to the service configurator.
-  /// TRUE if <resource_factory_> was obtained from the Service
-  /// Configurator.
-  CORBA::Boolean resource_factory_from_service_config_;
-
   /// Handle to the factory for Client-side strategies.
   TAO_Client_Strategy_Factory *client_factory_;
 
-  // @@ This is not needed since the client facotry factory
-  //    is staticaly added to the service configurator.
-  /// TRUE if <client_factory_> was obtained from the Service
-  /// Configurator.
-  CORBA::Boolean client_factory_from_service_config_;
-
   /// Handle to the factory for Server-side strategies.
   TAO_Server_Strategy_Factory *server_factory_;
-
-  // @@ This is not needed since the server factory factory
-  //    is staticaly added to the service configurator.
-  /// TRUE if <server_factory_> was obtained from the Service
-  /// Configurator.
-  CORBA::Boolean server_factory_from_service_config_;
 
   /**
    * @name Service Level Hooks

@@ -6,7 +6,10 @@
 
 ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 
-#include "RTCORBA.h"
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "tao/RTCORBA/RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
 #include "RT_Policy_i.h"
 #include "RT_Protocols_Hooks.h"
 #include "Priority_Mapping_Manager.h"

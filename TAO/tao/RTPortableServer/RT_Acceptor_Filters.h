@@ -29,7 +29,10 @@
 
 #include "rtportableserver_export.h"
 #include "tao/Acceptor_Filter.h"
-#include "tao/RTCORBA/RTCORBA.h"
+
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "tao/RTCORBA/RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
