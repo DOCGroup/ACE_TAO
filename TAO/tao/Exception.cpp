@@ -155,7 +155,7 @@ ostream& operator<< (ostream &os,
       p = tc->name ();
     }
 
-  if (*p != '\0')
+  if (p != 0 && *p != '\0')
     {
       os << p << " (" << e._id () << ')';
     }
