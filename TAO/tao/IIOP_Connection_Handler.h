@@ -132,14 +132,25 @@ public:
 
   int set_dscp_codepoint (int tos);
 
-  ///Update the tcp properties of the hanlder to the most recent 
-  ///properties set after the last invocation
+  /// Update the tcp properties of the hanlder to the most recent
+  /// properties set after the last invocation
   virtual void update_protocol_properties (int send_buffer_size,
-					   int recv_buffer_size,
-					   int no_delay,
-					   int enable_network_priority);
+                                           int recv_buffer_size,
+                                           int no_delay,
+                                           int enable_network_priority);
 
 protected:
+
+  /// Constructor that could be used by the derived classes.
+  /**
+   * Sometimes new pluggbale protocols which have similarties with
+   * IIOP may be tempted to this class for their use. Classical
+   * example being that of IIOP_SSL_Connection_Handler. This
+   * constructor just initializes its base class and sets all of its
+   * contents to the default value, if any
+   */
+  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+                               void *arg);
 
   //@{
   /**
