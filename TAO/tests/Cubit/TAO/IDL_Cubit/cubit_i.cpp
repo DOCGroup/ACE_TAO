@@ -67,7 +67,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
-                                  CUBIT_I_CUBE_OCTET_START);
+                                  CUBIT_I_CUBE_OCTET_START)
 
 // Constructor
 

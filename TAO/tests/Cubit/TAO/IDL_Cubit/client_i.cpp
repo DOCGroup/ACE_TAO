@@ -9,8 +9,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *Cubit_Client_Timeprobe_Description[] = 
-{ 
+static const char *Cubit_Client_Timeprobe_Description[] =
+{
   "Cubit_Client::cube_octet - start",
   "Cubit_Client::cube_octet - end",
 
@@ -33,7 +33,7 @@ static const char *Cubit_Client_Timeprobe_Description[] =
   "Cubit_Client::cube_raw - end"
 };
 
-enum 
+enum
 {
   CUBIT_CLIENT_CUBE_OCTET_START = 10000,
   CUBIT_CLIENT_CUBE_OCTET_END,
@@ -60,8 +60,8 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description, 
-                                  CUBIT_CLIENT_CUBE_OCTET_START);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
+                                  CUBIT_CLIENT_CUBE_OCTET_START)
 
 // Constructor.
 Cubit_Client::Cubit_Client (void)
@@ -426,7 +426,7 @@ Cubit_Client::cube_long (int i)
   CORBA::Long ret_long;
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_START);
-    
+
     ret_long = this->cubit_->cube_long (arg_long, this->env_);
   }
 
@@ -470,7 +470,7 @@ Cubit_Client::cube_struct (int i)
   // Cube a "struct" ...
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_STRUCT_START);
-    
+
     ret_struct = this->cubit_->cube_struct (arg_struct, this->env_);
   }
 
@@ -523,7 +523,7 @@ Cubit_Client::cube_sequence (int i, int l)
   // Cube the sequence
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_SEQUENCE_START);
-    
+
     this->cubit_->cube_sequence (input, vout, this->env_);
   }
 
@@ -546,7 +546,7 @@ Cubit_Client::cube_sequence (int i, int l)
       u_int rl = output->length ();
       if (input.length () < rl)
         rl = input.length ();
-#if 0      
+#if 0
       for (u_int j = 0; j < rl; ++j)
         {
           CORBA::Long x = input[j];
@@ -559,10 +559,10 @@ Cubit_Client::cube_sequence (int i, int l)
 #else
       CORBA::Long x = input[0];
       if (x * x *x != output[0])
-	{
-	  ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
-	  this->error_count_++;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
+          this->error_count_++;
+        }
 #endif
     }
 }
@@ -592,7 +592,7 @@ Cubit_Client::cube_raw (int i, int l)
   // Cube the sequence
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_RAW_START);
-    
+
     this->cubit_->cube_raw (input, vout, this->env_);
   }
 
@@ -615,7 +615,7 @@ Cubit_Client::cube_raw (int i, int l)
       u_int rl = output->length ();
       if (input.length () < rl)
         rl = input.length ();
-#if 0      
+#if 0
       for (u_int j = 0; j < rl; ++j)
         {
           CORBA::Octet x = input[j];
@@ -628,10 +628,10 @@ Cubit_Client::cube_raw (int i, int l)
 #else
       CORBA::Octet x = input[0];
       if (x * x *x != output[0])
-	{
-	  ACE_ERROR ((LM_ERROR, "** cube_octet ERROR\n"));
-	  this->error_count_++;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "** cube_octet ERROR\n"));
+          this->error_count_++;
+        }
 #endif
     }
 }
@@ -966,7 +966,7 @@ Cubit_Client::run (int testing_collocation)
           return -1;
         }
       TAO_ENDTRY;
-          
+
     }
   else if (this->shutdown_)
     {

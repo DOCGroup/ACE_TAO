@@ -21,8 +21,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_IIOP_Object_Timeprobe_Description[] = 
-{ 
+static const char *TAO_IIOP_Object_Timeprobe_Description[] =
+{
   "IIOP_Object::do_static_call - start",
   "IIOP_Object::do_static_call - end",
   "IIOP_Object::do_static_call - invocation_ctor",
@@ -30,7 +30,7 @@ static const char *TAO_IIOP_Object_Timeprobe_Description[] =
   "IIOP_Object::do_static_call - put_params"
 };
 
-enum 
+enum
 {
   TAO_IIOP_OBJECT_DO_STATIC_CALL_START = 500,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_END,
@@ -42,8 +42,8 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Object_Timeprobe_Description, 
-                                  TAO_IIOP_OBJECT_DO_STATIC_CALL_START);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Object_Timeprobe_Description,
+                                  TAO_IIOP_OBJECT_DO_STATIC_CALL_START)
 
 int
 IIOP::Profile::set (const char *h,
@@ -211,7 +211,7 @@ IIOP::Profile::Profile (const ACE_INET_Addr &addr,
 }
 
 
-IIOP::Profile 
+IIOP::Profile
 &IIOP::Profile::operator = (const IIOP::Profile &src)
 {
   this->set (src.host,
@@ -537,7 +537,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
       TAO_GIOP_ReplyStatusType status;
 #if 0
       CORBA::ExceptionList exceptions (info->except_count,
-				       info->excepts);
+                                       info->excepts);
       status = call.invoke (exceptions, env);
 #endif
 

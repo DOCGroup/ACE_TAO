@@ -37,7 +37,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
-                                  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+                                  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START)
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
   : TAO_SVC_HANDLER (t, 0, 0),

@@ -35,7 +35,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_RT_Task_Timeprobe_Description,
-                                  TAO_RT_TASK_START_EXECUTE);
+                                  TAO_RT_TASK_START_EXECUTE)
 
 class ACE_RT_Task_Shutdown : public ACE_RT_Task_Command
 // = TITLE
