@@ -422,7 +422,7 @@ ace_cc_yyloop:
 #ifdef lint
     goto ace_cc_yyerrlab;
 #endif
-ace_cc_yyerrlab:
+
     ++ace_cc_yynerrs;
 ace_cc_yyinrecovery:
     if (ace_cc_yyerrflag < 3)
