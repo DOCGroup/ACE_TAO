@@ -27,11 +27,11 @@ Sat Jun 26 14:41:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* ace/Hash_Map_With_Allocator.{h,i,cpp}:    
 	  Added these files to ACE.  These files contain a thin wrapper
-	  around ACE_Hash_Map_Manager, which is useful when
-	  ACE_Hash_Map_Manager is used with a shared memory (or memory
-	  mapped file) allocator (e.g., ACE Naming Service, and TAO Naming
-	  Service are example use cases).  Please see header file for more
-	  details.
+ 	  around ACE_Hash_Map_Manager, which is useful when
+ 	  ACE_Hash_Map_Manager is used with a shared memory (or memory
+ 	  mapped file) allocator (e.g., ACE Naming Service, and TAO Naming
+ 	  Service are example use cases).  Please see header file for more
+ 	  details.
 
 Sat Jun 26 12:45:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -46,6 +46,121 @@ Sat Jun 26 12:45:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Arg_Shifter.cpp (ACE_Arg_Shifter): Reformatted this
 	  stuff a bit.
+  
+Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>  
+  
+        This is a change log for the modifications made to support
+	Borland C++Builder 4.0, Patch 1.  Thanks to 
+	Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
+	<chris@uzdavinis.com>	for helping with this.
+  
+        First, I did not get integrate the makefiles to the BCB environment
+	as it requires alot of tools and more time.  I hope to fet to this
+	in the somewhat near future.  However, each directory that has stuff
+	that I built and tested has a Makefile.bor, which will make whatever
+	is there with BCB4.  Note that the makefiles do not, at present,
+	have a clean or anything except the default make.
+
+	To build, make sure config.h points to, or simply includes
+	ace/config-win32.h.
+
+	Finally, not all the programs and exampales have BCB makefiles.
+	However, it should not be too difficult to adapt the ones that are
+	there.  In addition, the .bpr files should NOT be used to build
+	the libraries, or any examples.  If you want to build examples,
+	you will need to start with a fresh project in BCB.
+
+	At present (4.6.42) all tests, except SOCK_Send_Recv_Test run
+	successfully, and some of my own tests run.  Also, the TAO services
+	and programs seem to be operating as well.
+	
+	* ace/Asynch_Acceptor.cpp: Need CancelIO for BCB as well
+
+	* ace/Atomic_Op.i: Need ACE_TEMPLATE_SPECIALIZE on specializations. 
+
+	* ace/CDR_Stream.h: Need LongLong for BCB as well
+
+	* ace/Functor.i: Need ACE_TEMPLATE_SPECIALIZE on specializations.
+
+	* ace/Future.h: Work around a BCB4 bug which causes the create()
+ 	  method from being seen.
+
+	* ace/IOStream.h: Only want CString stuff for MSC.
+
+	* ace/IOStream_T.cpp: Only want CString stuff for MSC.
+
+	* ace/OS.cpp: _fdopen, in BCB, takes a non-const pointer
+
+	* ace/OS.h: Differentiate between mode masks and user mode masks.
+
+	  BCB doesn't like initialized data in precompiled header files so
+ 	  define certain constants instead.  A bug in BCB prevents calling
+ 	  a destructor explicitly on a typedef declared inside a class.
+  	  So, TEMPLATE3 and TEMPLATE4 versions of ACE_DES_FREE are
+ 	  necessary for destruction of templates with more parameters.
+
+	  BCB4 has a bug in the RTL that resets the GetLastError() value
+ 	  to zero when errno is accessed.  Thus, setting errno to
+ 	  ::GetLastError requires a copy.  To keep from having the code
+ 	  everywhere, I added ACE_set_errno_to_last_error () and
+ 	  ACE_set_errno_to_wsa_last_error (), and used it everywhere errno
+ 	  was being set to GetLastError() or WSAGetLastError().
+
+	  BCB4 has a bug in the optimizer that screws up the return from
+ 	  certain expressions when a variable is set on both sides of an
+ 	  assignment.  Thus, the definition of ACE_WIN32CALL_RETURN needed
+ 	  to change.
+
+	* ace/OS.i: Use ACE_set_errno_to_last_error where appropriate.
+	  BCB4 bug requires splitting FILETIME dummy_1, dummy_2; into
+	  separate declarations.
+
+	* ace/Select_Reactor.h: Need ACE_TEMPLATE_SPECIALIZE on 
+	  specializations.
+
+	* ace/WFMO_Reactor.cpp: Use ACE_set_errno_to_last_error where appropriate.
+	  auto_ptr copy ctor can not take a const ref.
+
+	* ace/WIN32_Asynch_IO.cpp: Use ACE_set_errno_to_last_error 
+	  where appropriate.  Need CancelIo for BCB as well.
+
+	* ace/WIN32_Proactor.cpp: Use ACE_set_errno_to_last_error 
+	  where appropriate.
+
+	* ace/config-win32-borland.h: Specific build stuff for BCB
+
+	* ace/config-win32-common.h: Differences between BCB and MSC
+
+	* apps/JAWS/PROTOTYPE/JAWS/Cache_Hash_T.cpp: BCB4 bug prevents
+ 	  using typedef inside class for explicit dextructor.
+
+	* apps/JAWS/PROTOTYPE/JAWS/Cache_List_T.cpp:
+	  BCB4 bug prevents using typedef inside class for explicit
+ 	  dextructor.
+
+	* apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents
+ 	  using typedef inside class for explicit dextructor.
+
+	* apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Get rid of const warning
+
+	* tests/DLL_Test.cpp: The get_hello function has calling 
+	  convention __cdecl (by default since the calling convention is
+ 	  not mentioned).  However, BCB decorates __cdecl with a leading
+ 	  underscore (and doesn't decorate __stdcall). Thus, we needed to
+ 	  add some decoration to find the function.  Also, added prefix to
+ 	  find the executable.
+
+	* tests/Message_Queue_Test.cpp: BCB4 defines a "messages" and by default 
+	  sucks that namespace into the global namespace, so a new
+ 	  variable name was needed.
+
+	* tests/Reactor_Exceptions_Test.cpp: The test throws a structured exception.
+	  The ISO does not require non C++ exceptions to be caught by
+ 	  catch (...).  MSVC catches it but BCB4 does not.  So, the code
+ 	  needed to be changed to catch a structured exception as well.
+
+	* tests/run_tests.bat: Changed to allow running the BCB tests, when in another 
+ 	  directory.
 
 Sat Jun 26 08:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
