@@ -523,18 +523,17 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
         }
     }
 
-  // if the type was a string, an obj ref, or a pseudo-obj, we are dealing with
-  // the _var type and hence we must use the appropriate in () and out () methods
+  // @@ (JP) Need to factor out some of this into method call(s).
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "{" << be_idt_nl;
 
-      // handle the array of array case in which case, we need to pass the
+      // handle the array of array case, where we need to pass the
       // forany type
       if (bt->node_type () == AST_Decl::NT_array)
         {
-          *os << bt->name () << "_forany tmp (ACE_const_cast (" << bt->name ()
+          *os << bt->name () << "_forany tmp (ACE_reinterpret_cast (" << bt->name ()
               << "_slice *, _tao_array ";
           for (i = 0; i < node->n_dims (); i++)
             {
@@ -626,55 +625,98 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "{" << be_idt_nl;
 
-      *os << "_tao_marshal_flag = (strm << ";
-      // handle the array of array case in which case, we need to pass the
+      // handle the array of array case, where we need to pass the
       // forany type
       if (bt->node_type () == AST_Decl::NT_array)
         {
-          *os << bt->name () << "_forany ((" << bt->name ()
-              << "_slice *) ";
-        }
-      *os << "_tao_array ";
-      for (i = 0; i < node->n_dims (); i++)
-        {
-          *os << "[i" << i << "]";
-        }
-      switch (bt->node_type ())
-        {
-          // the follwoing three have a _var type and must be handled in a
-          // special way
-        case AST_Decl::NT_string:
-        case AST_Decl::NT_interface:
-        case AST_Decl::NT_interface_fwd:
-          *os << ".in ()";
-          break;
-        case AST_Decl::NT_pre_defined:
-          {
-            be_predefined_type *pt = be_predefined_type::narrow_from_decl (bt);
-            if (!pt)
-              {
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "(%N:%l) be_visitor_array_cdr_op_ci::"
-                                   "visit_node - "
-                                   "bad predefined type node\n"),
-                                  -1);
-              }
-            if (pt->pt () == AST_PredefinedType::PT_pseudo)
-              {
+          *os << bt->name () << "_forany tmp (ACE_const_cast (" 
+              << bt->name () << "_slice *, ACE_reinterpret_cast (const " 
+              << bt->name () << "_slice *, _tao_array ";
+          for (i = 0; i < node->n_dims (); i++)
+            {
+              *os << "[i" << i << "]";
+            }
+
+          switch (bt->node_type ())
+            {
+              // the following have a _var type and must be 
+              // handled in a special way
+              case AST_Decl::NT_string:
+              case AST_Decl::NT_interface:
+              case AST_Decl::NT_interface_fwd:
                 *os << ".in ()";
-              }
-          }
-          break;
-        default:
-          break;
+                break;
+              case AST_Decl::NT_pre_defined:
+                {
+                  // we need to separately handle this case of pseudo
+                  // objects because they have a _var type
+                  be_predefined_type *pt = 
+                    be_predefined_type::narrow_from_decl (bt);
+                  if (!pt)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_array_cdr_op_ci::"
+                                         "visit_node - "
+                                         "bad predefined type node\n"),
+                                        -1);
+                    }
+                  if (pt->pt () == AST_PredefinedType::PT_pseudo)
+                    {
+                      *os << ".in ()";
+                    }
+                }
+              default:
+                break;
+            }
+
+          *os << ")));" << be_nl;
+          *os << "_tao_marshal_flag = (strm << tmp);" << be_uidt_nl;
         }
-      if (bt->node_type () == AST_Decl::NT_array)
+      else
         {
-          // array of array case
-          *os << ")";
+          *os << "_tao_marshal_flag = (strm << ";
+          *os << "_tao_array ";
+          for (i = 0; i < node->n_dims (); i++)
+            {
+              *os << "[i" << i << "]";
+            }
+
+          switch (bt->node_type ())
+            {
+              // the following have a _var type and must be 
+              // handled in a special way
+              case AST_Decl::NT_string:
+              case AST_Decl::NT_interface:
+              case AST_Decl::NT_interface_fwd:
+                *os << ".in ()";
+                break;
+              case AST_Decl::NT_pre_defined:
+                {
+                  // we need to separately handle this case of pseudo
+                  // objects because they have a _var type
+                  be_predefined_type *pt = 
+                    be_predefined_type::narrow_from_decl (bt);
+                  if (!pt)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_array_cdr_op_ci::"
+                                         "visit_node - "
+                                         "bad predefined type node\n"),
+                                        -1);
+                    }
+                  if (pt->pt () == AST_PredefinedType::PT_pseudo)
+                    {
+                      *os << ".in ()";
+                    }
+                }
+              default:
+                break;
+            }
+
+          *os << ");" << be_uidt_nl;
         }
-      *os << ");" << be_uidt_nl
-          << "}" << be_nl;
+
+      *os << "}" << be_nl;
 
       break;
     default:
