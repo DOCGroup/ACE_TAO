@@ -103,6 +103,8 @@ ACE_Thread_Manager::thread_desc_self (void)
   ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
 
   // Wasn't in the cache, so we'll have to look it up and cache it.
+  // If ACE_HAS_THREAD_ADAPTER, we are guranteed never need to search
+  // the list.
   if (desc == 0)
     {
       ACE_thread_t id = ACE_OS::thr_self ();
@@ -215,6 +217,8 @@ ACE_Thread_Manager::close_singleton (void)
 
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
+      // First, we clean up the thread descriptor list.
+      ACE_Thread_Manager::thr_mgr_->close (0);
       delete ACE_Thread_Manager::thr_mgr_;
       ACE_Thread_Manager::thr_mgr_ = 0;
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
@@ -224,13 +228,26 @@ ACE_Thread_Manager::close_singleton (void)
 // Close up and release all resources.
 
 int
-ACE_Thread_Manager::close (void)
+ACE_Thread_Manager::close (int automatic_wait)
 {
   ACE_TRACE ("ACE_Thread_Manager::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // @@ Clear out thr_list_ here.  Have to iterate thru each of list
-  // entry.
+  // Clean up the thread descriptor list.  Theoretically, there shouldn't
+  // be any leftover thread at this point.
+#if 0
+  // @@ Perhaps we should automatically join our threads when we exit?
+  if (automatic_wait)
+    this->wait ();
+  else
+#else
+    ACE_UNUSED_ARG (automatic_wait);
+#endif /* 0 */
+    while (! this->thr_list_.is_empty ())
+      {
+        ACE_Thread_Descriptor *td = this->thr_list_.delete_head ();
+        delete td;
+      }
 
   return 0;
 }
@@ -410,9 +427,6 @@ ace_thread_manager_adapter (void *args)
   // <exit_hook>.
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
-  // @@@@@@@@@@ Try to insert thread descriptor here.  Wait until the main thread has
-  // our thread_descriptor ready.
-
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
@@ -421,9 +435,6 @@ ace_thread_manager_adapter (void *args)
 
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
 // called with the lock_ held...
-
-// @@ Consider duping the handles so that users can have something
-// to manipulate if they want.
 
 int
 ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
@@ -437,6 +448,14 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                              size_t stack_size,
                              ACE_Task_Base *task)
 {
+  // First, threads created by Thread Manager should not be daemon threads.
+  // Using assertion is probably a bit too strong.  However, it helps
+  // finding this kind of error as early as possible.  Perhaps we can replace
+  // assertion by returning error.
+  ACE_ASSERT (ACE_BIT_DISABLED (flags, THR_DAEMON));
+
+  // Create a new thread running <func>.  *Must* be called with the
+  // <lock_> held...
   ACE_Thread_Descriptor *new_thr_desc = 0;
 
   ACE_NEW_RETURN (new_thr_desc,
@@ -498,9 +517,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       ACE_UNUSED_ARG (t_handle);
 #endif /* ACE_HAS_WTHREADS */
 
-  // @@@@@@@@@@ Try to insert thread descriptor here.  The newly spawned thread
-  // is waiting this information.
-
+      // append_thr also put the <new_thr_desc> into Thread_Manager's
+      // double-linked list.  Only after this point, can we manipulate
+      // double-linked list from a spawned thread's context.
       return this->append_thr (*t_id,
                                thr_handle,
                                ACE_THR_SPAWNED,
@@ -510,9 +529,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                new_thr_desc);
     }
 }
-
-// Create a new thread running <func>.  *Must* be called with the
-// <lock_> held...
 
 int
 ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
@@ -751,6 +767,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td)
 #endif /* ACE_HAS_THREADS */
 }
 
+// ------------------------------------------------------------------
 // Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
   int result = OP (td->thr_handle_); \
@@ -772,7 +789,10 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td)
   int result = ACE_Thread::join (td->thr_handle_);
   if (result != 0)
     {
-      this->remove_thr (td);
+      // Since the thread are being joined, we should
+      // let it remove itself from the list.
+
+      //      this->remove_thr (td);
       errno = result;
       return -1;
     }
@@ -799,7 +819,7 @@ int
 ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_thr");
-  // Don't really know how to handle thread cancel.
+  // @@ Don't really know how to handle thread cancel.
   td->thr_state_ = ACE_THR_CANCELLED;
   return 0;
 }
@@ -820,7 +840,8 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
       // call may reset errno.
       int error = errno;
 
-      //      this->remove_thr (td);
+      this->remove_thr (td);
+
       errno = error;
       return -1;
     }
@@ -828,6 +849,8 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
     return 0;
 }
 
+// ------------------------------------------------------------------
+// Factor out some common behavior to simplify the following methods.
 #define ACE_EXECUTE_OP(OP) \
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
   ACE_FIND (this->find_thread (t_id), ptr); \
@@ -877,21 +900,21 @@ ACE_Thread_Manager::check_state (ACE_Thread_State state,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_Thread_State thr_state;
-#if 0
+
   int self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
 
   // If we're checking the state of our thread, try to get the cached
   // value out of TSS to avoid lookup.
   if (self_check)
     thr_state = this->thread_desc_self ()->thr_state_;
-#else
-   // Turn off caching for the time being until we figure out
-   // how to do it correctly in the face of deletions...
-  ACE_FIND (this->find_thread (id), ptr);
-  if (ptr == 0)
-    return 0;
-  thr_state = ptr->thr_state_;
-#endif /* 0 */
+  else
+    {
+      // Not calling from self, have to look it up from the list.
+      ACE_FIND (this->find_thread (id), ptr);
+      if (ptr == 0)
+        return 0;
+      thr_state = ptr->thr_state_;
+    }
   return thr_state == state;
 }
 
@@ -1225,7 +1248,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     ACE_Thread_Descriptor item;
 
     while (!this->terminated_thr_queue_.dequeue_head (item))
-      ACE_Thread::join (item.thr_handle_);
+      if(ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
+	   || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+        ACE_Thread::join (item.thr_handle_);
   }
 #endif /* VXWORKS */
 #else
@@ -1276,7 +1301,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
          iter.advance ())
-      // If thread are created as THR_DETACHED or THR_DAEMON, we can't help much here.
+      // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
       if (iter.next ()->task_ == task &&
           (((iter.next ()->flags_ & (THR_DETACHED | THR_DAEMON)) == 0)
            || ((iter.next ()->flags_ & THR_JOINABLE) != 0)))
