@@ -2842,10 +2842,14 @@ PAGE_NOCACHE  */
 #   define EDQUOT                  WSAEDQUOT
 #   define ESTALE                  WSAESTALE
 #   define EREMOTE                 WSAEREMOTE
-// Grrr! These two are already defined by the horrible 'standard'
-// library.
+// Grrr! ENAMETOOLONG and ENOTEMPTY are already defined by the horrible
+// 'standard' library.
 // #define ENAMETOOLONG            WSAENAMETOOLONG
-// #define ENOTEMPTY               WSAENOTEMPTY
+
+#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
+#     define ENOTEMPTY               WSAENOTEMPTY
+#   endif /* __BORLANDC__  && __BORLANDC__ <= 0x540*/
+
 
 #   if !defined (ACE_HAS_WINCE)
 #     include /**/ <time.h>
