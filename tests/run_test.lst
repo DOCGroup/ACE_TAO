@@ -40,6 +40,7 @@ DLList_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
 Env_Value_Test: !chorus
+Framework_Component_Test
 Future_Test
 Future_Set_Test
 Get_Opt_Test

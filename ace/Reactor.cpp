@@ -13,6 +13,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Object_Manager.h"
+#include "ace/Framework_Component.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Reactor.i"
@@ -86,6 +87,7 @@ ACE_Reactor::instance (void)
                           ACE_Reactor,
                           0);
           ACE_Reactor::delete_reactor_ = 1;
+          ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_)
         }
     }
   return ACE_Reactor::reactor_;
@@ -107,6 +109,7 @@ ACE_Reactor::instance (ACE_Reactor *r,
     ACE_Reactor::delete_reactor_ = 0;
 
   ACE_Reactor::reactor_ = r;
+  ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_);
   return t;
 }
 
@@ -283,3 +286,9 @@ ACE_Reactor::dump (void) const
 
   implementation_->dump ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Framework_Component_T<ACE_Reactor>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Framework_Component_T<ACE_Reactor>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

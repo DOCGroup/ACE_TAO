@@ -59,7 +59,7 @@ class JAWS_Hash_Bucket_DLCStack
 // Create a doubly linked circular stack to be managed by the
 // Hash_Bucket_Manager
 {
-  friend JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
+  friend class JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
 
 public:
 
