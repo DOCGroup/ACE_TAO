@@ -1,3 +1,11 @@
+Sat Oct  2 18:54:38 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.{cpp,h}: Added ACE_Protocol_info as a
+	  parameter to the QoS enabled private method subscribe_ifs. This
+	  allows the use of ACE_Protocol_Info->iAddressFamily in the call
+	  to join_leaf (). Thanks to Vidya Narayanan 
+	  <CVN065@lmpsil02.comm.mot.com> for pointing this out.
+
 Sat Oct  2 16:20:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-kcc-common.h: The macro __KCC_VERSION was not
