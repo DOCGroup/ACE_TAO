@@ -140,7 +140,7 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s\n"),
-              e->_info ().c_str ()));
+              e->_info ()));
 }
 
 
@@ -271,6 +271,6 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s\n"),
-              e->_info ().c_str ()));
+              e->_info ()));
 
 }
