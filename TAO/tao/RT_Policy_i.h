@@ -63,6 +63,12 @@ public:
   virtual ~TAO_PriorityModelPolicy (void);
   // Destructor.
 
+  RTCORBA::PriorityModel get_priority_model (void);
+  // Accessor for the <priority_model_> attribute.  This method is
+  // used internally by the orb.  This is a more efficient
+  // (non-virtual, no exception handling) relative of the idl interface
+  // implementation <priority_model> below.
+
   virtual RTCORBA::PriorityModel priority_model (CORBA::Environment
                                                  &ACE_TRY_ENV =
                                                  TAO_default_environment ())

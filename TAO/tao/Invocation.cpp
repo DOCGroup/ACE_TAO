@@ -12,6 +12,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
 
+#include "tao/RT_Policy_i.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
 #include "tao/GIOP_Utils.h"
@@ -265,6 +266,68 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // RT CORBA Policies processing code.  This is a temporary location
+  // for this code until more of it is accumulated.  It will likely be
+  // factored into separate method(s)/split/moved to different
+  // locations within this method/<prepare_header>.  (Marina)
+
+  // RTCORBA::PriorityModelPolicy related processing.
+  TAO_PriorityModelPolicy *priority_model_policy =
+    this->stub_->exposed_priority_model ();
+
+  // Auto cleanup of policy.
+  CORBA::Object_var priority_release = priority_model_policy;
+
+  if (priority_model_policy != 0)
+    {
+      if (priority_model_policy->get_priority_model ()
+          == RTCORBA::CLIENT_PROPAGATED)
+        {
+          // Encapsulate the priority of the current thread into
+          // request's service context list.
+
+          RTCORBA::Priority thread_priority;
+
+          if (this->orb_core_->get_thread_priority (thread_priority) == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (1,
+                                               CORBA::COMPLETED_NO));
+
+          TAO_OutputCDR cdr;
+          cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+          cdr << thread_priority;
+
+          IOP::ServiceContextList context_list =
+            this->service_info ();
+
+          CORBA::ULong l = context_list.length ();
+          context_list.length (l + 1);
+          context_list[l].context_id = IOP::RTCorbaPriority;
+
+          // Make a *copy* of the CDR stream...
+          CORBA::ULong length = cdr.total_length ();
+          context_list[l].context_data.length (length);
+          CORBA::Octet *buf = context_list[l].context_data.get_buffer ();
+
+          for (const ACE_Message_Block *i = cdr.begin ();
+               i != 0;
+               i = i->cont ())
+            {
+              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              buf += i->length ();
+            }
+        }
+    }
+  else
+    {
+      // @@ What do we do if the PriorityModel wasn't exported: throw
+      // exception (which one) or assume some priority model?
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   // Loop until a connection is established or there aren't any more
   // profiles to try.
   for (;;)

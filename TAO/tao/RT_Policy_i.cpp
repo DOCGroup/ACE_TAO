@@ -81,6 +81,9 @@ TAO_PriorityModelPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
   // the order specified in the RTCORBA 1.0 spec (ptc/99-05-03)
   // section 4.7.3.
 
+  // @@ Angelo, this code is wrong: you are missing byte ordering
+  // octet here (and in all other encode/decode places).  See section
+  // 15.3.3 of the CORBA 2.3.1
   CORBA::Boolean b = (out_cdr << priority_model_);
   if (b  && (out_cdr << server_priority_))
     return 1;
