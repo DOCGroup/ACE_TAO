@@ -1,3 +1,12 @@
+Thu Apr 15 13:29:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/check_build_logs:
+        * bin/show_log_dir.pl:
+        * bin/vc_filter.pl:
+          Removed these files, they are old and not needed anymore. Looks
+          some more files in bin can be removed, we should have a good look
+          at what we really need
+
 Thu Apr 15 07:20:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACE-INSTALL.html:
