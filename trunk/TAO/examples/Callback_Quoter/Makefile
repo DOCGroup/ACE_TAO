@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -14,18 +14,18 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO -lorbsvcs
 
-IDL_SRC	= NotifierC.cpp NotifierS.cpp ConsumerC.cpp ConsumerS.cpp
+IDL_SRC = NotifierC.cpp NotifierS.cpp ConsumerC.cpp ConsumerS.cpp
 
 PROG_SRCS = \
-	consumer.cpp \
+        consumer.cpp \
         supplier.cpp \
-	Supplier_i.cpp \
-	Supplier_Timer_Handler.cpp\
-	notifier.cpp \
-	Notifier_Input_Handler.cpp \
-	Notifier_i.cpp \
+        Supplier_i.cpp \
+        Supplier_Timer_Handler.cpp\
+        notifier.cpp \
+        Notifier_Input_Handler.cpp \
+        Notifier_i.cpp \
         Consumer_i.cpp \
-	Consumer_Input_Handler.cpp \
+        Consumer_Input_Handler.cpp \
         Consumer_Signal_Handler.cpp \
         Consumer_Handler.cpp
 
@@ -33,44 +33,49 @@ PROG_SRCS = \
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
 CONSUMER_CLT_OBJS = \
-		NotifierC.o \
-		NotifierS.o \
-		Consumer_Input_Handler.o \
+                NotifierC.o \
+                NotifierS.o \
+                Consumer_Input_Handler.o \
                 Consumer_Signal_Handler.o \
                 Consumer_Handler.o \
-		consumer.o\
-		ConsumerC.o\
-		ConsumerS.o \
-		Consumer_i.o
+                consumer.o\
+                ConsumerC.o\
+                ConsumerS.o \
+                Consumer_i.o
 MARKET_CLT_OBJS = \
-		NotifierC.o \
-		NotifierS.o \
-		Supplier_i.o \
-		Supplier_Timer_Handler.o \
-		supplier.o \
-		ConsumerC.o\
-		ConsumerS.o \
-		Consumer_i.o
+                NotifierC.o \
+                NotifierS.o \
+                Supplier_i.o \
+                Supplier_Timer_Handler.o \
+                supplier.o \
+                ConsumerC.o\
+                ConsumerS.o \
+                Consumer_i.o
 
 SIMPLE_SVR_OBJS = \
-		NotifierC.o \
-		NotifierS.o \
-		Notifier_i.o \
-		Notifier_Input_Handler.o \
-		ConsumerC.o\
-		ConsumerS.o\
-		notifier.o
+                NotifierC.o \
+                NotifierS.o \
+                Notifier_i.o \
+                Notifier_Input_Handler.o \
+                ConsumerC.o\
+                ConsumerS.o\
+                notifier.o
 
-BIN = notifier \
-      consumer\
-      supplier
-
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
+
+BIN2 = notifier \
+       consumer\
+       supplier
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -83,7 +88,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 LDFLAGS +=  -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
@@ -105,8 +110,12 @@ supplier:$(addprefix $(VDIR),$(MARKET_CLT_OBJS))
 consumer:$(addprefix $(VDIR),$(CONSUMER_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 realclean: clean
-	-/bin/rm -rf NotifierC.* NotifierS.* NotifierS_T.* \
-                     ConsumerC.* ConsumerS.* ConsumerS_T.*
+	-$(RM) NotifierC.* NotifierS.* NotifierS_T.* \
+               ConsumerC.* ConsumerS.* ConsumerS_T.*
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
