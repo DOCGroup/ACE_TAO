@@ -8,6 +8,7 @@
 #include "GroupInfoPublisher.h"
 #include "Replication_Service.h"
 #include "../Utils/Log.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_Group_Manager,
@@ -189,9 +190,9 @@ void TAO_FTEC_Group_Manager::add_member (
       new_impl->info_list[new_impl->my_position+1] = info;
 
       /// group_info = publisher->set_info(..) should be enough.
-      /// However, GCC 2.96 is not happy with that. 
+      /// However, GCC 2.96 is not happy with that.
 
-      GroupInfoPublisherBase::Info_ptr group_info1 = 
+      GroupInfoPublisherBase::Info_ptr group_info1 =
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position
       ACE_ENV_ARG_PARAMETER);
