@@ -7,7 +7,7 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
+#if (TAO_HAS_INTERCEPTORS == 1)
 #if !defined (_PORTABLEINTERCEPTOR_OCTETSEQ_CI_)
 #define _PORTABLEINTERCEPTOR_OCTETSEQ_CI_
 
@@ -3465,3 +3465,4 @@ operator>> (
   return 0;
 }
 
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
