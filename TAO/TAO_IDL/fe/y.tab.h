@@ -44,14 +44,15 @@
 #define IDL_TRUNCATABLE 299
 #define IDL_VALUETYPE 300
 #define IDL_INTEGER_LITERAL 301
-#define IDL_STRING_LITERAL 302
-#define IDL_CHARACTER_LITERAL 303
-#define IDL_FLOATING_PT_LITERAL 304
-#define IDL_TRUETOK 305
-#define IDL_FALSETOK 306
-#define IDL_SCOPE_DELIMITOR 307
-#define IDL_LEFT_SHIFT 308
-#define IDL_RIGHT_SHIFT 309
+#define IDL_UINTEGER_LITERAL 302
+#define IDL_STRING_LITERAL 303
+#define IDL_CHARACTER_LITERAL 304
+#define IDL_FLOATING_PT_LITERAL 305
+#define IDL_TRUETOK 306
+#define IDL_FALSETOK 307
+#define IDL_SCOPE_DELIMITOR 308
+#define IDL_LEFT_SHIFT 309
+#define IDL_RIGHT_SHIFT 310
 typedef union {
   AST_Decl		*dcval;		/* Decl value		*/
   UTL_StrList		*slval;		/* String list		*/
@@ -71,6 +72,7 @@ typedef union {
   FE_Declarator		*deval;		/* Declarator value	*/
   idl_bool		bval;		/* Boolean value	*/
   long			ival;		/* Long value		*/
+  unsigned long		uival;		/* Unsigned long value	*/
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
