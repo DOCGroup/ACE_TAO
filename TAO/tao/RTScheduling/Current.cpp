@@ -295,13 +295,13 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
 						      RTScheduling::DistributableThread_ptr dt,
 						      TAO_RTScheduler_Current_i* prev_current)
   : orb_ (orb),
-    dt_hash_ (dt_hash),
     guid_ (guid),
     name_ (name),
     sched_param_ (sched_param),
     implicit_sched_param_ (implicit_sched_param),
     dt_ (RTScheduling::DistributableThread::_duplicate (dt)),
-    previous_current_ (prev_current)
+    previous_current_ (prev_current),
+    dt_hash_ (dt_hash)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
@@ -342,7 +342,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
       ACE_DEBUG ((LM_DEBUG,
 		  "The Guid is %d %d\n",
 		  guid,
-		  guid_counter));
+		  guid_counter.value_i ()));
       
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
 						      name,
@@ -356,7 +356,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
       
       //Add new DT to map
       int result = this->dt_hash_->bind (this->guid_,
-					 this->dt_);
+					 this->dt_.in ());
 
       if (result != 0)
 	{
@@ -403,7 +403,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 						     name,
 						     sched_param,
 						     implicit_sched_param,
-						     this->dt_,
+						     this->dt_.in (),
 						     this),
 			  CORBA::NO_MEMORY (
 					    CORBA::SystemException::_tao_minor_code (
@@ -510,7 +510,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  if (!CORBA::is_nil (this->dt_))
+  if (!CORBA::is_nil (this->dt_.in ()))
     {
       // Check if DT has been cancelled.
       if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -532,7 +532,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
       ACE_DEBUG ((LM_DEBUG,
 		  "The Guid is %d %d\n",
 		  guid,
-		  guid_counter));
+		  guid_counter.value_i ()));
       
       // Create new DT.
       RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
@@ -540,7 +540,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
       // Add new DT to map.
       int result =
 	this->dt_hash_->bind (this->guid_, 
-			      dt);
+			      dt.in ());
       
       if (result == 0)
 	{
@@ -568,7 +568,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 				0);
 	    }
 	  
-	  return this->dt_;
+	  return this->dt_.in ();
 	}
     } 
   ACE_ERROR_RETURN  ((LM_ERROR,
@@ -640,9 +640,9 @@ DTTask::svc (void)
 						   this->dt_hash_,
 						   this->guid_,
 						   this->name_,
-						   this->sched_param_,
-						   this->implicit_sched_param_,
-						   this->dt_,
+						   this->sched_param_.in (),
+						   this->implicit_sched_param_.in (),
+						   this->dt_.in (),
 						   0),
 			CORBA::NO_MEMORY (
 					  CORBA::SystemException::_tao_minor_code (
@@ -657,8 +657,8 @@ DTTask::svc (void)
       // Inform scheduler of new DT.
       new_current->scheduler ()->begin_new_scheduling_segment(this->guid_,
 							      this->name_,
-							      this->sched_param_,
-							      this->implicit_sched_param_);
+							      this->sched_param_.in (),
+							      this->implicit_sched_param_.in ());
       
       // Invoke entry point into new DT.
       this->start_->_cxx_do (this->data_
