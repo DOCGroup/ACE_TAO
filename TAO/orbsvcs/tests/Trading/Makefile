@@ -10,7 +10,9 @@
 
 MAKEFILE = Makefile
 
-BIN2 = export_test import_test colocated_test
+BIN2 = export_test \
+       import_test \
+       colocated_test
 
 LIBNAME  = libTTest
 LIB2 = $(LIBNAME).a

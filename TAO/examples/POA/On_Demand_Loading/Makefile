@@ -4,7 +4,10 @@
 
 BIN = server
 
-MYFILES = Server_Manager Servant_Manager Servant_Activator Servant_Locator
+MYFILES = Server_Manager \
+	  Servant_Manager \
+	  Servant_Activator \
+	  Servant_Locator
 
 SRC = $(addsuffix .cpp,$(MYFILES)) $(addsuffix .cpp, $(BIN))
 OBJ = $(addsuffix .o,$(MYFILES))

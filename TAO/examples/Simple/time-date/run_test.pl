@@ -9,7 +9,7 @@ use lib "../../../../bin";
 require ACEutils;
 require Process;
 
-$iorfile = "time_date.ior";
+$iorfile = "./ior";
 
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT");
 

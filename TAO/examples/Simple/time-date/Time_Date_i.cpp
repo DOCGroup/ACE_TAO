@@ -1,5 +1,6 @@
 // -*- C++ -*-
 // $Id$
+
 #include "Time_Date_i.h"
 #include "tao/corba.h"
 
@@ -33,6 +34,7 @@ Time_Date_i::str_date (CORBA::String_out time_date,
                        CORBA::Environment &ACE_TRY_ENV)
 {
   const time_t time = ACE_OS::time (0);
+
   time_date = CORBA::string_dup (ACE_OS::ctime (&time));
 }
 

@@ -4,8 +4,9 @@ This directory contains source code for a prototype CORBA-based
 distributed notification mechanism.  This mechanism implements a
 "publish/subscribe" communication protocol.  It allows Suppliers to
 pass messages containing object references to a dynamically managed
-group of Consumers.  This is similar to the OMG COSS Event Service,
-though not as sophisticated.
+group of Consumers.  This is similar to the OMG COS Events Service,
+though not as sophisticated.  For more examples on the COS Events
+Service check out $TAO_ROOT/orbsvcs/orbsvcs/.
 
 DIRECTORY STRUCTURE
 
