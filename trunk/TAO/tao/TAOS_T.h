@@ -39,27 +39,15 @@
 #endif /* _MSC_VER */
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_root/root_sth.cpp:116
 
 namespace POA_TAO
 {
 } // module TAO
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:1094
-
-#if defined (__ACE_INLINE__)
-#include "TAOS_T.inl"
-#endif /* defined INLINE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "TAOS_T.cpp"
-#endif /* defined REQUIRED SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("TAOS_T.cpp")
-#endif /* defined REQUIRED PRAGMA */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
