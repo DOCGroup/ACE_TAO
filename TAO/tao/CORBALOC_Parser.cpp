@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
@@ -35,34 +33,33 @@ TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 }
 
 void
-TAO_CORBALOC_Parser::parse_string_count_helper (const char * corbaloc_name,
+TAO_CORBALOC_Parser::parse_string_count_helper (const char * s,
                                                 CORBA::ULong &addr_list_length,
-                                                CORBA::ULong &count_addr
+                                                CORBA::ULong &addr_count
                                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-  CORBA::Boolean start_key_string = 1;
-
   char object_key_delimiter = '/';
 
-  if (ACE_OS::strncmp (corbaloc_name, "uiop", 4) == 0)
+  if (ACE_OS::strncmp (s, "uiop", 4) == 0)
       object_key_delimiter = '|';
 
-  for (const char *i = corbaloc_name; *i != '\0'; ++i)
+  for (const char *i = s; *i != '\0'; ++i)
     {
       if (*i == ',')
         {
-          // Increment the count of the addresses in the list
-          ++count_addr;
+          // Increment the address count
+          ++addr_count;
         }
 
       if (*i == ':'
-          && *(i+1) == '/'
-          && *(i+2) == '/')
+          && *(i + 1) == '/'
+          && *(i + 2) == '/')
         {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
+          if (TAO_debug_level > 0)
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT ("TAO (%P|%t) Invalid Syntax: %s\n"),
+                       s));
 
           ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
                                        CORBA::COMPLETED_NO));
@@ -73,19 +70,16 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * corbaloc_name,
         {
           // Indication that the next characters are to be
           // assigned to key_string
-          start_key_string = 0;
+          return;
         }
 
-      if (start_key_string == 1)
-        {
-          ++addr_list_length;
-        }
+      ++addr_list_length;
     }
 }
 
 void
-TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
-                                        ACE_CString &key_string,
+TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
+                                        ACE_CString & key_string,
                                         CORBA::ULong
                                         &addr_list_length,
                                         CORBA::ORB_ptr orb,
@@ -213,13 +207,13 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
 }
 
 void
-TAO_CORBALOC_Parser::parse_string_assign_helper (CORBA::ULong
-                                                 &addr_list_length,
-                                                 ACE_CString &key_string,
-                                                 ACE_CString &cloc_name,
-                                                 CORBA::ORB_ptr orb,
-                                                 TAO_MProfile &mprofile
-                                                 TAO_ENV_ARG_DECL)
+TAO_CORBALOC_Parser::parse_string_assign_helper (
+    CORBA::ULong &addr_list_length,
+    ACE_CString &key_string,
+    ACE_CString &cloc_name,
+    CORBA::ORB_ptr orb,
+    TAO_MProfile &mprofile
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *cloc_name_ptr = 0;
@@ -262,9 +256,10 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (
   TAO_MProfile jth_mprofile;
 
   int retv =
-    orb->orb_core ()->connector_registry ()->make_mprofile (end_point,
-                                                            jth_mprofile
-                                                            TAO_ENV_ARG_PARAMETER);
+    orb->orb_core ()->connector_registry ()->make_mprofile (
+      end_point,
+      jth_mprofile
+      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (retv != 0)
@@ -283,8 +278,8 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (
 
   if (result == -1)
     {
-      // The profle is not added. Either ways, go to the
-      // next endpoint.
+      // The profile is not added.  Either way, go to the next
+      // endpoint.
     }
 }
 
@@ -319,8 +314,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
-                                              &corbaloc_name,
+TAO_CORBALOC_Parser::parse_string_rir_helper (const char *& corbaloc_name,
                                               CORBA::ORB_ptr orb
                                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -385,10 +379,11 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
                           rir_prefix,
                           sizeof rir_prefix - 1) == 0)))
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) ")
-                  ACE_TEXT ("no usable transport protocol ")
-                  ACE_TEXT ("was found.\n")));
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) ")
+                    ACE_TEXT ("no usable transport protocol ")
+                    ACE_TEXT ("was found.\n")));
 
       ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
                                           CORBA::COMPLETED_NO),
@@ -405,7 +400,7 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::parse_string (const char *ior,
+TAO_CORBALOC_Parser::parse_string (const char * ior,
                                    CORBA::ORB_ptr orb
                                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -446,7 +441,7 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
 
       // Get the key_string which is a substring of corbaloc_name_str
       ACE_CString key_string =
-        corbaloc_name_str.substring ((addr_list_length + 1), -1);
+        corbaloc_name_str.substring (addr_list_length + 1);
 
       // Copy the <obj_addr_list> to cloc_name.
       ACE_CString cloc_name (corbaloc_name,
