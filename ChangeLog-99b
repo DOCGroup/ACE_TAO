@@ -1,6 +1,8 @@
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.
+	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
+	  implementation is "smarter" than the default behavior of
+ 	  sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
 
 	* ace/config-sunos5.5.h,
 	* ace/config-linux-common.h: Added support for
