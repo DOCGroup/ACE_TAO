@@ -177,6 +177,9 @@ TAO_DIOP_Connection_Handler::open (void*)
               this->addr_.get_host_name (),
               this->addr_.get_port_number ()));
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id ((int) this->get_handle ());
+
   return 0;
 }
 
@@ -266,7 +269,7 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->pending_upcalls_;
-  if (this->pending_upcalls_ == 0)
+  if (this->pending_upcalls_ <= 0)
     {
       if (this->is_registered ())
         {
@@ -424,7 +427,8 @@ TAO_DIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     }
 
   // The upcall is done. Bump down the reference count
-  --this->pending_upcalls_;
+  if (--this->pending_upcalls_ <= 0)
+    result = -1;
 
   if (result == -1)
     return result;
