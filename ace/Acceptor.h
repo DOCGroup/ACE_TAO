@@ -251,7 +251,7 @@ public:
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
           creation_strategy_type;
-  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> 
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
           accept_strategy_type;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
           concurrency_strategy_type;
