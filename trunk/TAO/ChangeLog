@@ -1,3 +1,8 @@
+Wed Mar 09 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/idl_make_vars:
+          Removed this file, it is not used anymore
+
 Wed Mar 09 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocated_Invocation.cpp (invoke):
