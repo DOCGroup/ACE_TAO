@@ -267,30 +267,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "_out;" << be_uidt;
 
       break;
-    case be_sequence::MNG_ABSTRACT:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl << ">" 
-          << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl << ">" 
-          << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
     case be_sequence::MNG_PSEUDO:
       *os << "typedef" << be_idt_nl
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl

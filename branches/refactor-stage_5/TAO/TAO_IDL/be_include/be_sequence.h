@@ -49,7 +49,6 @@ public:
     MNG_STRING,
     MNG_WSTRING,
     MNG_OBJREF,
-    MNG_ABSTRACT,
     MNG_VALUE,
     MNG_PSEUDO
   };

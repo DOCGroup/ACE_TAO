@@ -788,16 +788,6 @@ be_visitor_tmplinst_cs::gen_managed_type_tmplinst (be_sequence *node,
             << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
         break;
-      case be_sequence::MNG_ABSTRACT:
-        *os << be_nl << be_nl
-            << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Abstract_Manager<" << this->linebreak_ 
-            << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_va," << this->linebreak_ << be_uidt_nl
-            << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
-
-        break;
       case be_sequence::MNG_VALUE:
         *os << be_nl << be_nl
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
@@ -869,45 +859,6 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_ 
-            << be_uidt << be_uidt << be_uidt;
-
-        break;
-      case be_sequence::MNG_ABSTRACT:
-        *os << be_nl << be_nl
-            << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_MngSeq_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
-            << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Abstract_Manager<" << this->linebreak_ 
-            << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
-            << ">" << this->linebreak_ << be_uidt << be_uidt_nl
-            << ">" << this->suffix_
-            << be_uidt << be_uidt << be_uidt;
-
-        *os << be_nl << be_nl
-            << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Seq_Var_Base_T<" << this->linebreak_ << be_idt << be_idt_nl
-            << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Abstract_Manager<" << this->linebreak_ 
-            << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
-            << ">" << this->linebreak_ << be_uidt << be_uidt_nl
-            << ">" << this->suffix_
-            << be_uidt << be_uidt << be_uidt;
-
-        *os << be_nl << be_nl
-            << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_MngSeq_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
-            << node->name () << "," << this->linebreak_ << be_nl
-            << node->name () << "_var," << this->linebreak_ << be_nl
-            << "TAO_Abstract_Manager<" << this->linebreak_ 
-            << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
-            << ">" << this->linebreak_ << be_uidt << be_uidt_nl
-            << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
 
         break;

@@ -1414,8 +1414,7 @@ TAO_CodeGen::gen_seq_file_includes (void)
   // files have been split up.
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.abs_iface_seq_seen_
-      | idl_global->decls_seen_masks.vt_seq_seen_,
+      idl_global->decls_seen_masks.vt_seq_seen_,
       "tao/Valuetype/Sequence_T.h",
       this->client_header_
     );

@@ -98,7 +98,6 @@ IDL_GlobalData::dsf::dsf (void)
 
     seq_seen_ (0),
     iface_seq_seen_ (0),
-    abs_iface_seq_seen_ (0),
     vt_seq_seen_ (0),
     array_seq_seen_ (0),
     pseudo_seq_seen_ (0),
@@ -233,12 +232,11 @@ IDL_GlobalData::IDL_GlobalData (void)
 
   ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 21);
   ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 22);
-  ACE_SET_BITS (this->decls_seen_masks.abs_iface_seq_seen_,     cursor << 23);
-  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 24);
-  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 25);
-  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 26);
-  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 27);
-  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 28);
+  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 23);
+  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 24);
+  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 25);
+  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 26);
+  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 27);
 
   ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 32);
   ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 33);
