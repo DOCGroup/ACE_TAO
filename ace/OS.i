@@ -7204,7 +7204,11 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
       return errno == 0  ?  *sig  :  -1;
 #   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 #     if (defined (ACE_HAS_PTHREADS_DRAFT4) || (defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)) || (defined (_UNICOS) && _UNICOS == 9)
+#       if defined (HPUX_10)
+        *sig = cma_sigwait (set);
+#       else
         *sig = ::sigwait (set);
+#       endif  /* HPUX_10 */
         return *sig;
 #     elif defined(ACE_HAS_FSU_PTHREADS)
         return ::sigwait (set, sig);
