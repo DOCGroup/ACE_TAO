@@ -33,7 +33,7 @@ public:
 
 private:
   char *message_;
-  Log_Wrapper::ACE_Log_Record *log_record_;
+  Log_Wrapper::Log_Record *log_record_;
   char buf_[4 * BUFSIZ];
   char hostname_[MAXHOSTNAMELEN];
 
@@ -96,8 +96,8 @@ Server_Events::Server_Events (u_short port,
       // Point to NULL so that we block in the beginning.
       this->how_long_ = 0;
 
-      this->log_record_ = (Log_Wrapper::ACE_Log_Record *) &buf_;
-      this->message_ = &buf_[sizeof (Log_Wrapper::ACE_Log_Record)];
+      this->log_record_ = (Log_Wrapper::Log_Record *) &buf_;
+      this->message_ = &buf_[sizeof (Log_Wrapper::Log_Record)];
     }
 }
 

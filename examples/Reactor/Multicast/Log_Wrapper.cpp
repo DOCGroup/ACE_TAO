@@ -49,7 +49,7 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
 // uses iovector stuff to make contiguous header and message.
 
 int
-Log_Wrapper::log_message (ACE_Log_Priority type, char *message)
+Log_Wrapper::log_message (Log_Priority type, char *message)
 { 
   sequence_number_++;
 
