@@ -1,3 +1,10 @@
+Fri Aug 29 10:55:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Collocated_Invocation.cpp (TAO): 
+	* tao/Invocation_Base.h: Fixed compilation errors when built with
+	  interceptors == 0. The problems were basically wrong scoping of
+	  the TAO_HAS_INTERCEPTORS == 1 flag.
+
 Thu Aug 28 19:38:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ClientRequestInfo_i.cpp:
