@@ -1,3 +1,20 @@
+Fri Feb 05 21:59:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/CDR.{h,i,cpp}:
+        * tao/orbconf.h:
+        * tao/GIOP.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.cpp:
+        * tao/orb.cpp:
+        * tao/orb.h:
+        * tao/corba.h:
+        * tao/Any.{h,i}::
+        * tao/Invocation.cpp:
+        * tao/Connect.cpp:
+          The leveraging of the ACE CDR classes into TAO. Compiles 
+          cleanly on VC, suncc and g++. Both the ACE and the TAO
+          CDR tests are working fine.
+
 Fri Feb 05 21:23:33 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.2 released.
