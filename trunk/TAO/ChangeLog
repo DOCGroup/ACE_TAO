@@ -171,7 +171,7 @@ Fri Jul 18 10:35:23 2003  George Edwards <g.edwards@vanderbilt.edu>
         IORInterceptor_Adapter. This is accomplished via the new
         IORInterceptor_Adapter_Factory class. This change was made so that
         processes with multiple ORBs can have different IOR interceptors
-        registered with each ORB.
+        registered with each ORB (fixes Bugzilla [1548]).
 
 Fri Jul 18 15:29:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
