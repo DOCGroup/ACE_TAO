@@ -21,9 +21,8 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($self)    = shift;
-  my($objects) = shift;
-  my($files)   = shift;
+  my($objects) = $_[1];
+  my($files)   = $_[2];
   my($dep)     = "@$objects: \\\n";
 
   ## Sort the dependencies to make them reproducible
