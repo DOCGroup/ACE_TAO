@@ -1099,9 +1099,9 @@ struct cancel_state
 #      define PTHREAD_MAX_PRIORITY            126
 #    endif /* ACE_HAS_FSU_PTHREADS */
 
-#    if defined (ACE_HAS_SETKIND_NP)
+#    if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
 #      define PRIORITY_MAX                    PTHREAD_MAX_PRIORITY
-#    endif /* ACE_HAS_SETKIND_NP */
+#    endif /* ACE_HAS_DCETHREADS */
 
 // Definitions for THREAD- and PROCESS-LEVEL priorities...some
 // implementations define these while others don't.  In order to
@@ -3227,7 +3227,7 @@ public:
 			 int type = USYNC_THREAD,
                          LPCTSTR name = 0,
 			 void *arg = 0,
-			 LPSECURITY_ATTRIBUTES sa = 0);
+		         LPSECURITY_ATTRIBUTES sa = 0);
   static int mutex_destroy (ACE_mutex_t *m);
 
   static int mutex_lock (ACE_mutex_t *m);
