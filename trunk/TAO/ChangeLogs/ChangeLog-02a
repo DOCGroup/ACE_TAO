@@ -1,3 +1,10 @@
+Fri Jan 28 17:27:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Fix sent in by Alex Arulanthu <Alex.Arulanthu@sylantro.com>
+	  that plugs a memory leak in generated code when decoding
+	  a sequence of length 0.
+
 Fri Jan 28 14:05:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/Latency/st_client.cpp:
