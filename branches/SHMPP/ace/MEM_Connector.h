@@ -36,7 +36,7 @@ public:
   // Default constructor.
 
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                     const ACE_MEM_Addr &remote_sap,
+                     const ACE_INET_Addr &remote_sap,
                      ACE_Time_Value *timeout = 0,
                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
@@ -58,7 +58,7 @@ public:
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   int connect (ACE_MEM_Stream &new_stream,
-               const ACE_MEM_Addr &remote_sap,
+               const ACE_INET_Addr &remote_sap,
                ACE_Time_Value *timeout = 0,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
@@ -83,7 +83,7 @@ public:
   // Accessor to underlying malloc options.
 
   // = Meta-type info
-  typedef ACE_MEM_Addr PEER_ADDR;
+  typedef ACE_INET_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;
@@ -93,6 +93,8 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+  ACE_MEM_Addr address_;
+
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
 };
 

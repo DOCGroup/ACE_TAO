@@ -113,7 +113,7 @@ TAO_SHMIOP_Connector::make_caching_strategy (void)
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_SHMIOP_Client_Connection_Handler>
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_SHMIOP_Client_Connection_Handler, ACE_MEM_CONNECTOR, TAO_Cached_Connector_Lock>
-#define TAO_ADDR ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr>
+#define TAO_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #define TAO_HANDLER TAO_SHMIOP_Client_Connection_Handler
 #define TAO_HASH_KEY ACE_Hash<TAO_ADDR>
 #define TAO_COMPARE_KEYS ACE_Equal_To<TAO_ADDR>
@@ -127,9 +127,9 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Client_Connection_Handler*>;
 template class auto_ptr<TAO_SHMIOP_Connect_Creation_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_SHMIOP_Connect_Creation_Strategy>;
 
-template class ACE_Node<ACE_MEM_Addr>;
-template class ACE_Unbounded_Stack<ACE_MEM_Addr>;
-template class ACE_Unbounded_Stack_Iterator<ACE_MEM_Addr>;
+template class ACE_Node<ACE_INET_Addr>;
+template class ACE_Unbounded_Stack<ACE_INET_Addr>;
+template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 template class CACHED_CONNECT_STRATEGY;
@@ -137,15 +137,15 @@ template class TAO_ADDR;
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 template class ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr>;
+template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
 template class ACE_NOOP_Creation_Strategy<TAO_HANDLER>;
 template class ACE_Concurrency_Strategy<TAO_HANDLER>;
 template class ACE_Connect_Strategy<TAO_HANDLER, ACE_MEM_CONNECTOR>;
 template class ACE_Connector<TAO_HANDLER, ACE_MEM_CONNECTOR>;
 template class ACE_Creation_Strategy<TAO_HANDLER>;
 template class ACE_Hash_Map_Entry<TAO_ADDR, TAO_HANDLER *>;
-template class ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr> >;
-template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr> >;
+template class ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
+template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
 template class ACE_Map_Entry<ACE_HANDLE, TAO_SVC_TUPLE *>;
 template class ACE_Map_Manager<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>;
@@ -221,9 +221,9 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate auto_ptr<TAO_SHMIOP_Connect_Creation_Strategy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_SHMIOP_Connect_Creation_Strategy>
 
-#pragma instantiate ACE_Node<ACE_MEM_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_MEM_Addr>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_MEM_Addr>
+#pragma instantiate ACE_Node<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #pragma instantiate CACHED_CONNECT_STRATEGY
@@ -231,15 +231,15 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #pragma instantiate ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr>
+#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #pragma instantiate ACE_NOOP_Creation_Strategy<TAO_HANDLER>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_HANDLER>
 #pragma instantiate ACE_Connect_Strategy<TAO_HANDLER, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_Connector<TAO_HANDLER, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_HANDLER>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_ADDR, TAO_HANDLER *>
-#pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr> >
-#pragma instantiate ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr> >
+#pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
+#pragma instantiate ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, TAO_SVC_TUPLE *>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>
@@ -460,21 +460,6 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
   const ACE_INET_Addr &oa =
     shmiop_profile->object_addr ();
 
-  if (! this->address_.same_host (oa))
-    {
-      if (TAO_orbdebug)
-        ACE_DEBUG ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) %s:%u, is not local ")
-                    ASYS_TEXT ("SHMIOP endpoint)\n"),
-                    __FILE__,
-                    __LINE__,
-                    oa.get_host_name (),
-                    oa.get_port_number ()));
-      return -1;
-    }
-
-  this->address_.set (oa.get_port_number ());
-
   ACE_Synch_Options synch_options;
   if (max_wait_time != 0)
     synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
@@ -488,7 +473,7 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
   // affected.
   if (this->base_connector_.connect (shmiop_profile->hint (),
                                      result,
-                                     this->address_,
+                                     oa,
                                      synch_options) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
