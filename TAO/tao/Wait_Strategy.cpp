@@ -142,9 +142,9 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     // remember in which thread the client connection handler was running
     this->calling_thread_ = ACE_Thread::self ();
 
-    //if (TAO_debug_level > 0)
-    //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
-    //this->transport_));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
+                  this->transport_));
   }
 
   // Register the handler.
@@ -209,15 +209,22 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
         this->cond_response_available ();
 
       // Add ourselves to the list, do it only once because we can
-      // wake up multiple times from the CV loop
-      if (leader_follower.add_follower (cond) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                    "add_follower failed for <%x>\n",
-                    cond));
+      // wake up multiple times from the CV loop. And only do it if
+      // the reply has not been received (it could have arrived while
+      // we were preparing to receive it).
 
-      while (!this->reply_received_ &&
-             leader_follower.leader_available ())
+      if (!this->reply_received_
+          && leader_follower.leader_available ())
+        {
+          if (leader_follower.add_follower (cond) == -1)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
+                        "add_follower failed for <%x>\n",
+                        cond));
+        }
+
+      while (!this->reply_received_
+             && leader_follower.leader_available ())
         {
           if (max_wait_time == 0)
             {
@@ -235,10 +242,15 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
         }
 
       countdown.update ();
+#if 0
+      // Cannot remove the follower here, we *must* remove it when we
+      // signal it so the same condition is not signalled for both
+      // wake up as a follower and as the next leader.
       if (leader_follower.remove_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
                     "remove_follower failed for <%x>\n", cond));
+#endif /* 0 */
 
       //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
       //this->reply_received_, this->transport_));
@@ -457,6 +469,21 @@ TAO_Wait_On_Leader_Follower::wake_up (void)
   // awake and will get this too.
   ACE_SYNCH_CONDITION* cond =
     this->cond_response_available ();
+
+  //if (TAO_debug_level > 0)
+  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wake up follower %x\n",
+  //                cond));
+
+  TAO_Leader_Follower& leader_follower =
+    this->transport_->orb_core ()->leader_follower ();
+
+  // We *must* remove it when we signal it so the same condition is
+  // not signalled for both wake up as a follower and as the next
+  // leader. 
+  // The follower may not be there if the reply is received while the
+  // consumer is not yet waiting for it (i.e. it send the request but
+  // has not blocked to receive the reply yet)
+  (void) leader_follower.remove_follower (cond); // Ignore errors
 
   if (cond != 0)
     (void) cond->signal ();
