@@ -29,6 +29,35 @@
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
 # endif /* ACE_MALLOC_ALIGN */
 
+// Allow an installation to replace the lowest-level allocation
+// functions without changing the source of ACE.
+//
+// To do this, simple #define ACE_*_FUNC macros in config.h to
+// the names of the site-specific functions, e.g.,
+//
+//   #define ACE_MALLOC_FUNC  dlmalloc
+//   #define ACE_CALLOC_FUNC  dlcalloc
+//   #define ACE_FREE_FUNC    dlfree
+//   #define ACE_REALLOC_FUNC dlrealloc
+//
+// For completeness' sake, you should probably put
+//   #define ACE_HAS_STRDUP_EMULATION
+// too, so that you guarantee that strdup() calls your desired mallocator
+// and not the system mallocator.
+//
+# if !defined (ACE_MALLOC_FUNC)
+#   define ACE_MALLOC_FUNC ::malloc
+# endif
+# if !defined (ACE_CALLOC_FUNC)
+#   define ACE_CALLOC_FUNC ::calloc
+# endif
+# if !defined (ACE_FREE_FUNC)
+#   define ACE_FREE_FUNC ::free
+# endif
+# if !defined (ACE_REALLOC_FUNC)
+#   define ACE_REALLOC_FUNC ::realloc
+# endif
+
 # if !defined (ACE_HAS_POSITION_INDEPENDENT_POINTERS)
 #   define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 # endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
