@@ -25,7 +25,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "tao/tao.h"
-#include "QuoterImpl.h"
+#include "Quoter_Impl.h"
 #include "QuoterC.h"
 
 class Quoter_Server 

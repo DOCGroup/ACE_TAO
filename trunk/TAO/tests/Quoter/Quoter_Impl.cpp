@@ -14,8 +14,8 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "QuoterImpl.h"
-#include "QuoterC.h"
+#include "Quoter_Impl.h"
+//#include "QuoterC.h"
 
 // Constructor
 
