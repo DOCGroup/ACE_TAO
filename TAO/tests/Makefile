@@ -23,7 +23,6 @@ DIRS  = CDR \
         IORManipulation \
         Connection_Purging \
         ORB_init \
-        Smart_Proxies \
         Nested_Event_Loop \
         Leader_Followers \
 	Object_Loader
@@ -67,6 +66,10 @@ ifeq ($(corba_messaging),1)
           Timed_Buffered_Oneways
 
 endif # corba_messaging
+
+ifeq ($(smart_proxies), 1) 
+  DIRS += Smart_Proxies 
+endif # smart proxies
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
