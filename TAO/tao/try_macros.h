@@ -30,7 +30,7 @@
 // through the Enviroment parameter.  Their use requires some
 // discipline, but they certainly help...
 
-#if defined (TAO_USE_EXCEPTIONS)
+#if defined (TAO_HAS_EXCEPTIONS)
 
 #define TAO_TRY_ENV __env
 // The first "do" scope is for the env.
@@ -209,7 +209,7 @@ return RETURN
 
 #define TAO_RAISE(EXCEPTION)
 
-#endif /* TAO_USE_EXCEPTIONS */
+#endif /* TAO_HAS_EXCEPTIONS */
 
 // This macros can be used even outside the TAO_TRY blocks, in fact
 // some are designed for that purpose.
