@@ -1,3 +1,9 @@
+Thu Apr 29 19:16:04 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): 
+	  Fixed a Vxworks warning for ACE_NOTREACHED in the connect
+	  function.Thanks to Irfan for pointing this out.
+	
 Thu Apr 29 18:35:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Request.{h,cpp}:
