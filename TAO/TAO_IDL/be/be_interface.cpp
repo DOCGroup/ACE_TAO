@@ -454,51 +454,6 @@ be_interface::redefine (AST_Interface *from)
   AST_Interface::redefine (from);
 }
 
-// Gen copy constructors,
-void
-be_interface::gen_copy_ctors (TAO_OutStream *os)
-{
-  this->traverse_inheritance_graph (
-      be_interface::gen_copy_ctors_helper,
-      os
-    );
-
-  return;
-}
-
-int
-be_interface::gen_copy_ctors_helper (be_interface *node,
-                                     be_interface *base,
-                                     TAO_OutStream *os)
-{
-  static int first = 0;
-
-  if (node != base)
-    {
-      if (first)
-        {
-          *os << be_global->impl_class_prefix () << base->flat_name ()
-              << be_global->impl_class_suffix () << " (t)"
-              << ", " << base->full_skel_name () << " (t)";
-
-          first = 0;
-        }
-      else
-        {
-          *os << ", " << be_global->impl_class_prefix () << base->flat_name ()
-              << be_global->impl_class_suffix () << " (t)"
-              << ", " << base->full_skel_name () << " (t)";   ;
-        }
-    }
-  else
-    {
-      *os << ":";
-      first = 1;
-    }
-
-  return 1;
-}
-
 // Generate default constructors.
 void
 be_interface::gen_def_ctors (TAO_OutStream *os)
@@ -2342,7 +2297,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
   else
     {
-      *os << "  " << base->full_skel_name () << " (rhs)" << be_nl;
+      *os << "  " << base->full_skel_name () << " (rhs)";
     }
 
   return 0;

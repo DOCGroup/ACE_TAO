@@ -138,8 +138,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-
-
   *os << be_uidt_nl
       << "{" << be_nl
       << "}" << be_nl << be_nl;
