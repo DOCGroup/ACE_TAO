@@ -516,6 +516,12 @@ sub write_workspace {
   my($duplicates) = 0;
 
   if ($self->get_toplevel()) {
+    my($progress) = $self->get_progress_callback();
+
+    if (defined $progress) {
+      &$progress();
+    }
+
     if ($addfile) {
       ## To be consistent across multiple project types, we disallow
       ## duplicate project names for all types, not just VC6.
@@ -682,6 +688,7 @@ sub generate_hierarchy {
   my($cwd)       = $self->getcwd();
 
   ## Make a copy of these.  We will be modifying them.
+  ## It is necessary to sort the project to get the correct ordering.
   my(@projects)  = sort @{$origproj};
   my(%projinfo)  = %{$originfo};
 

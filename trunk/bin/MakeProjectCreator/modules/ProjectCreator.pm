@@ -1688,34 +1688,29 @@ sub list_generated_file {
 
     $file = $self->escape_regex_special($file);
 
-    my($names) = $self->{$tag};
-    foreach my $name (keys %$names) {
-      foreach my $key (keys %{$$names{$name}}) {
-        foreach my $gen (@{$$names{$name}->{$key}}) {
-          ## Remove the extension
-          my($start) = $gen;
-          foreach my $ext (@{$self->{'valid_components'}->{$gentype}}) {
-            $gen =~ s/$ext$//;
-            if ($gen ne $start) {
-              last;
-            }
-          }
+    foreach my $gen ($self->get_component_list($gentype, 1)) {
+      ## Remove the extension
+      my($start) = $gen;
+      foreach my $ext (@{$self->{'valid_components'}->{$gentype}}) {
+        $gen =~ s/$ext$//;
+        if ($gen ne $start) {
+          last;
+        }
+      }
 
-          ## See if we need to add the file
-          foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
-            foreach my $genext (@genexts) {
-              if ("$pf$gen$genext" =~ /$file(.*)?$/) {
-                my($created) = "$file$1";
-                $created =~ s/\\//g;
-                if (!$self->already_added($array, $created)) {
-                  if (defined $ofile) {
-                    $created = $self->prepend_gendir($created, $ofile, $gentype);
-                  }
-                  push(@$array, $created);
-                }
-                last;
+      ## See if we need to add the file
+      foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
+        foreach my $genext (@genexts) {
+          if ("$pf$gen$genext" =~ /$file(.*)?$/) {
+            my($created) = "$file$1";
+            $created =~ s/\\//g;
+            if (!$self->already_added($array, $created)) {
+              if (defined $ofile) {
+                $created = $self->prepend_gendir($created, $ofile, $gentype);
               }
+              push(@$array, $created);
             }
+            last;
           }
         }
       }
