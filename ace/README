@@ -33,6 +33,7 @@ ACE_HAS_BROKEN_MMAP_H			HP/UX does not wrap the mmap(2) header files with extern
 ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS	Platform has a bug with non-blocking connects (e.g., WinNT 4.0)
 ACE_HAS_BROKEN_POSIX_TIME               Platform defines struct timespec in <sys/timers.h>
 ACE_HAS_BROKEN_RANDR			OS/compiler's header files are inconsistent with libC definition of rand_r().
+ACE_HAS_BROKEN_READV()			OS/Compiler's header files are not consistent with readv() definition.
 ACE_HAS_BROKEN_SENDMSG			OS/compiler omits the const from the sendmsg() prototype.
 ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const from the rlimit parameter in the setrlimit() prototype.
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS		platform define struct timespec members as ts_sec and ts_nsec instead of tv_sec and tv_nsec.  This is highly non-portable.  Currently only FreeBSD 2.1.x uses it.

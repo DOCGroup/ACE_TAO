@@ -45,6 +45,7 @@
 
 #define ACE_NEEDS_WRITEV
 #define ACE_NEEDS_READV
+#define ACE_HAS_BROKEN_READV
 
 // Platforms lacks UNIX domain sockets.
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
