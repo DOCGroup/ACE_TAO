@@ -1,5 +1,5 @@
 // @ (#) $Id$
-//
+
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -48,9 +48,9 @@ CORBA_Any::value (void) const
 
 // Default "Any" constructor -- initializes to nulls per the
 // OMG C++ mapping.
-//
-// NOTE:  null (zero) typecode pointers are also treated as
-// the null typecode ...
+
+// NOTE: null (zero) typecode pointers are also treated as // the null
+typecode ...
 
 CORBA_Any::CORBA_Any (void)
   : type_ (CORBA::_tc_null),
@@ -60,9 +60,9 @@ CORBA_Any::CORBA_Any (void)
 {
 }
 
-// The more common "Any" constructor has its own copy of a
-// typecode, and either holds or "consumes" an arbitrary data
-// value satisfying the normal binary interface rules.
+// The more common "Any" constructor has its own copy of a typecode,
+// and either holds or "consumes" an arbitrary data value satisfying
+// the normal binary interface rules.
 
 CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       void *value,
@@ -196,14 +196,15 @@ deep_copy (CORBA::TypeCode_ptr tc,
     break;
 
     case CORBA::tk_objref:
-      *(CORBA::Object_ptr *) dest = CORBA::Object::_duplicate (*(CORBA::Object_ptr *) source);
+      *(CORBA::Object_ptr *) dest =
+        CORBA::Object::_duplicate (*(CORBA::Object_ptr *) source);
       break;
 
     case CORBA::tk_sequence:
       {
         CORBA::OctetSeq *src, *dst;
-        CORBA::TypeCode_ptr      tcp;
-        size_t                  size;
+        CORBA::TypeCode_ptr tcp;
+        size_t size;
 
         // Rely on binary format of sequences -- all are the same
         // except for the type pointed to by "buffer"
@@ -306,6 +307,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   this->value_ = (char *) calloc (1, size);
 
 #if 0
+  // @@ Andy, can we remove this code if its not needed?
   (void) this->type_->traverse (src.value_,
                                 value_,
                                 (CORBA::TypeCode::VisitRoutine) deep_copy,
