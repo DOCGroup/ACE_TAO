@@ -127,7 +127,7 @@ namespace TAO
     POA_Current_Impl::orb_core (void) const
 
     {
-      return this->poa_->orb_core_;
+      return this->poa_->orb_core ();
     }
   }
 }
