@@ -4,8 +4,8 @@
 
 ACE_RCSID (Notify_Tests, Notify_Test_Updates_Client, "$Id$")
 
-#define DOMAIN "Test_Domain"
-#define TYPE "Test_Type"
+#define NOTIFY_UPDATES_TEST_DOMAIN "Test_Domain"
+#define NOTIFY_UPDATES_TEST_TYPE "Test_Type"
 
   int BUFFER_TEST_COUNT = 5;
 
@@ -121,10 +121,10 @@ Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
   int i = 0;
   for (; i < update_count; ++i)
     {
-      ACE_OS::sprintf (update_test_buf, "%s_%d", DOMAIN, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_DOMAIN, i);
       added[i].domain_name =  CORBA::string_dup (update_test_buf);
 
-      ACE_OS::sprintf (update_test_buf, "%s_%d", TYPE, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_TYPE, i);
       added[i].type_name = CORBA::string_dup (update_test_buf);
     }
 
@@ -143,10 +143,10 @@ Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
 
   for (i = 0; i < update_count; ++i)
     {
-      ACE_OS::sprintf (update_test_buf, "%s_%d", DOMAIN, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_DOMAIN, i);
       removed[i].domain_name =  CORBA::string_dup (update_test_buf);
 
-      ACE_OS::sprintf (update_test_buf, "%s_%d", TYPE, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_TYPE, i);
       removed[i].type_name = CORBA::string_dup (update_test_buf);
     }
 
