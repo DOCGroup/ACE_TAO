@@ -46,6 +46,7 @@ $dont_update = 0;
 $copy_logs = 0;
 $LOG_DESTINATION='bugzilla'.'@cs.wustl.edu';
 
+$dont_build_tao = 0;
 $dont_run = 0;
 $pre_realclean = 0;
 $post_realclean = 0;
@@ -111,6 +112,8 @@ while ($#ARGV >= 0) {
     $debug = 1;
   } elsif ($ARGV[0] eq "-sendreport") {
     $sendreport = 1;
+  } elsif ($ARGV[0] eq "-notao") {
+    $dont_build_tao = 1;
   } else {
     print "Ignoring option $ARGV[0]\n";
   }
@@ -170,7 +173,12 @@ $config_list = new PerlACE::ConfigList;
 $config_list->my_config_list (@CONFIGURATION_OPTIONS);
 
 if ($#BUILD_LIST == -1) {
-  @BUILD_LIST=('.', 'TAO');
+  if ($dont_build_tao) {
+    @BUILD_LIST=('ace', 'netsvcs', 'tests');
+  }
+  else {
+    @BUILD_LIST=('.', 'TAO');
+  }
 }
 
 sub mydie {
@@ -187,7 +195,7 @@ if ($debug) {
   $ADMIN = $ENV{'LOGNAME'};
 
 } else {
-  $config_list->load ($CHECKOUT . '/' . $MODULE . '/bin/auto_run_tests.lst');
+  $config_list->load ($CHECKOUT . '/' . $MODULE . '/' . 'build/' . $BUILD . '/bin/auto_run_tests.lst');
   
   @RUN_LIST = $config_list->valid_entries ();
 }
@@ -337,12 +345,14 @@ chop;
 print LOG "ACE ChangeLogTag:", $_, "\n";
 close (CHLOG);
 
-open (CHLOG, "TAO/ChangeLog")
-  ||  mydie "cannot open TAO/Changelog";
-$_ = <CHLOG>;
-chop;
-print LOG "TAO ChangeLogTag:", $_, "\n";
-close (CHLOG);
+if ($dont_build_tao == 0) {
+  open (CHLOG, "TAO/ChangeLog")
+    ||  mydie "cannot open TAO/Changelog";
+  $_ = <CHLOG>;
+  chop;
+  print LOG "TAO ChangeLogTag:", $_, "\n";
+  close (CHLOG);
+}
 
 print LOG "================ ace/config.h ================\n";
 open (CONFIG, "build/$BUILD/ace/config.h")
