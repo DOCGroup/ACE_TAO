@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_IIOP_SSL_CONNECT_H
-#define TAO_IIOP_SSL_CONNECT_H
+#ifndef TAO_IIOP_SSL_CONNECTION_HANDLER_H
+#define TAO_IIOP_SSL_CONNECTION_HANDLER_H
 
 #include "ace/pre.h"
 
@@ -35,18 +35,9 @@
  * sure that SSL session state from a previous connection is not
  * associated with the non-SSL connection handled by this handler.
  *
- * This connection handler is essentially the same as the
- * standard IIOP client connection handler it is derived from.
- * However, this class overrides the handle_input() method to
- * invalidate the current TSS SSL state during a standard IIOP
- * (insecure) upcall.  This prevents SSL session state from a previous
- * SSL connection from being associated with non-SSL connections
- * processed by this connection handler.  In particular, this is very
- * important for closing a security hole in nested upcalls.  For
- * example, an SSLIOP request is made.  During that secure upcall, an
- * insecure nested upcall is made.  A naive implementation would
- * associate the TSS SSL state from the secure upcall with the
- * insecure upcall.  This implementation closes that security hole.
+ * This class is just a place holder to create the
+ * TAO_IIOP_SSL_Transport  which does the work of clearing the TSS SSL
+ * state
  */
 class TAO_SSLIOP_Export TAO_IIOP_SSL_Connection_Handler
   : public TAO_IIOP_Connection_Handler
@@ -64,12 +55,6 @@ public:
   ~TAO_IIOP_SSL_Connection_Handler (void);
 
 protected:
-
-  /// Overridden method that invalidates the TSS SSL state for the
-  /// current upcall, and restores the previous state once the upcall
-  /// is done.
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0);
 
 };
 
@@ -111,4 +96,4 @@ private:
 
 #include "ace/post.h"
 
-#endif  /* TAO_IIOP_SSL_CONNECT_H */
+#endif  /* TAO_IIOP_SSL_CONNECTION_HANDLER_H */

@@ -1,3 +1,15 @@
+Thu Jul  5 23:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/GIOP_Message_NonReactive_Base.h:
+	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.inl: 
+	* tao/GIOP_Message_Reactive_Handler.h:
+	* tao/GIOP_Message_Reactive_Handler.cpp:
+	* tao/GIOP_Message_Reactive_Handler.inl: Removed them from the
+	  main trunk. They are no longer needed.
+
 Thu Jul  5 23:42:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_State.i: Removed from the main trunk. Replaced
