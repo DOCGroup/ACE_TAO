@@ -9,8 +9,11 @@
 
 // ---------------- platform features or lack of them -------------
 
+#if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
+#endif /* ! ACE_HAS_WINCE */
+
 #define ACE_LACKS_GETPGID
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 #define ACE_HAS_EXCEPTIONS
