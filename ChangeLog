@@ -1,3 +1,13 @@
+Tue Apr 27 08:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Service_Config_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+          Don't use ACE_Get_Opt and ACE_Reactor deprecreated methods.
+
 Mon Apr 26 17:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Change the tests for sem_init() and sem_destroy() to
