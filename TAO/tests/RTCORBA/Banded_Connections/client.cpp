@@ -135,7 +135,7 @@ invocation_exception_test (Test_ptr obj,
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Test failed: no exception caught\n"));
+      ACE_DEBUG ((LM_DEBUG, "Test Succeeded: no exception caught\n"));
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {
