@@ -197,6 +197,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                           ACE_TOKEN_INVARIANTS_CREATION_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_TSS_BASE_LOCK)
 # endif /* ACE_MT_SAFE */
 
   // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It shouldn't
@@ -712,6 +713,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
                                     ACE_TOKEN_INVARIANTS_CREATION_LOCK)
     ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                     ACE_TSS_CLEANUP_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_TSS_BASE_LOCK)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 
