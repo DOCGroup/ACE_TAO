@@ -52,8 +52,6 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
       PortableServer::Servant
       get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -64,6 +62,8 @@ namespace TAO
                    ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       virtual
       TAO_SERVANT_LOCATION

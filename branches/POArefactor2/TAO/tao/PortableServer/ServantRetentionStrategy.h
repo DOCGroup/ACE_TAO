@@ -28,8 +28,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 class TAO_Root_POA;
 class TAO_Active_Object_Map;
 struct TAO_Active_Object_Map_Entry;
@@ -155,7 +153,6 @@ namespace TAO
     };
   }
 }
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANTRETENTIONSTRATEGY_H */
