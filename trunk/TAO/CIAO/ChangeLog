@@ -1,3 +1,10 @@
+Wed Mar 10 14:59:19 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* docs/static_ciao_toc.html: 
+	* docs/static_ciao_contents.html: 
+	* docs/static_ciao_index.html: Updated documentation. Renamed
+	  static_ciao.html to static_ciao_contents.html.
+
 Wed Mar 10 12:36:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
