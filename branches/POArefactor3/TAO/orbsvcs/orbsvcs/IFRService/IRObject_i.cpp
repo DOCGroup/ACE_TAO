@@ -6,7 +6,8 @@
 #include "Contained_i.h"
 #include "IFR_Service_Utils.h"
 
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/TSS_Resources.h"
 
 
@@ -44,12 +45,13 @@ void
 TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_POA_Current_Impl *pc_impl =
-    static_cast<TAO_POA_Current_Impl *> (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+  TAO::Portable_Server::POA_Current_Impl *pc_impl =
+    static_cast <TAO::Portable_Server::POA_Current_Impl *>
+                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   PortableServer::ObjectId object_id;
-  int status = TAO_POA::parse_ir_object_key (pc_impl->object_key (),
-                                             object_id);
+  int status = TAO_Root_POA::parse_ir_object_key (pc_impl->object_key (),
+                                                  object_id);
   if (status != 0)
     {
       ACE_DEBUG ((LM_DEBUG,

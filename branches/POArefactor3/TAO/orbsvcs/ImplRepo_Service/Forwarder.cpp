@@ -18,7 +18,8 @@
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Constants.h"
 
-#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/POA_Current.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 /**
 * This constructor takes in orb and ImR_Locator_i pointers to store for later
@@ -84,7 +85,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     ACE_TRY_CHECK;
 
     ACE_CString ior = pior.in();
- 
+
     // Check that the returned ior is the expected partial ior with
     // missing ObjectKey.
     if (ior.find("corbaloc:") != 0 || ior[ior.length() - 1] != '/')
@@ -94,17 +95,18 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
         CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
         CORBA::COMPLETED_NO));
     }
- 
+
     CORBA::String_var key_str;
     // Unlike POA Current, this implementation cannot be cached.
-    TAO_POA_Current* tao_current =
-      dynamic_cast<TAO_POA_Current*> (this->poa_current_var_.in ());
+    TAO::Portable_Server::POA_Current* tao_current =
+      dynamic_cast <TAO::Portable_Server::POA_Current*> (this->poa_current_var_.in ());
+
     ACE_ASSERT(tao_current != 0);
-    TAO_POA_Current_Impl* impl = tao_current->implementation ();
+    TAO::Portable_Server::POA_Current_Impl* impl = tao_current->implementation ();
     TAO::ObjectKey::encode_sequence_to_string (key_str.out(), impl->object_key ());
- 
+
     ior += key_str.in();
- 
+
     forward_obj =
       this->orb_->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);

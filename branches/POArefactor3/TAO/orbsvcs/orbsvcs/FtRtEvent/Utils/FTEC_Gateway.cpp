@@ -4,6 +4,7 @@
 #include "resolve_init.h"
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 ACE_RCSID (Utils,
            FTEC_Gateway,
@@ -144,7 +145,7 @@ FTEC_Gateway::FTEC_Gateway(CORBA::ORB_ptr orb, FtRtecEventChannelAdmin::EventCha
 : impl_(new FTEC_Gateway_Impl)
 {
   impl_->local_orb = CORBA::is_nil(orb);
-  if (!impl_->local_orb) 
+  if (!impl_->local_orb)
     impl_->orb = CORBA::ORB::_duplicate(orb);
   impl_->ftec = FtRtecEventChannelAdmin::EventChannel::_duplicate(ftec);
 }
@@ -291,7 +292,7 @@ void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consu
                         const RtecEventComm::EventSet & data
                         ACE_ENV_ARG_DECL)
 {
-  PortableServer::ObjectId_var object_id = 
+  PortableServer::ObjectId_var object_id =
     impl_->poa->reference_to_id(proxy_consumer  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   FtRtecEventComm::ObjectId** result;

@@ -9,7 +9,6 @@
 
 #include "tao/debug.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
@@ -37,7 +36,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
    local_sec_addr_ (0),
    num_local_sec_addrs_ (0),
    peer_sec_addr_ (0),
-   num_peer_sec_addrs_ (0),   
+   num_peer_sec_addrs_ (0),
    peer_control_addr_ (0),
    local_addr_ (0),
    local_control_addr_ (0),
@@ -77,7 +76,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    local_sec_addr_ (0),
    num_local_sec_addrs_ (0),
    peer_sec_addr_ (0),
-   num_peer_sec_addrs_ (0),   
+   num_peer_sec_addrs_ (0),
    peer_control_addr_ (0),
    local_addr_ (0),
    local_control_addr_ (0),
@@ -117,7 +116,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    local_sec_addr_ (0),
    num_local_sec_addrs_ (0),
    peer_sec_addr_ (0),
-   num_peer_sec_addrs_ (0),  
+   num_peer_sec_addrs_ (0),
    peer_control_addr_ (0),
    local_addr_ (0),
    local_control_addr_ (0),
@@ -243,11 +242,11 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
   TAO_Tokenizer protocol_tokenizer (address,'=');
 
   this->carrier_protocol_ = protocol_tokenizer[0];
-  
+
   int result = this->set_protocol ();
   if (result < 0)
     return result;
-  
+
   if (protocol_tokenizer [1] != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -260,11 +259,11 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 	  if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
 	    {
 	      TAO_Tokenizer addr_token (protocol_tokenizer [1], ';');
-	      
+
 	      ACE_DEBUG ((LM_DEBUG,
 			  "Number of local sec addresses = %d\n",
 			  addr_token.num_tokens () - 1));
-	      
+
 	      if (addr_token.num_tokens () != 0)
 		{
 		  addr += addr_token [0];
@@ -281,7 +280,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 		}
 	    }
 	  else addr += protocol_tokenizer[1];
-	  
+
 
           switch (this->protocol_)
             {
@@ -355,7 +354,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 
 	  if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
 	    {
-	      
+
 	      ACE_DEBUG ((LM_DEBUG,
 			  "Number of local sec addresses = %d\n",
 			  port_tokenizer.num_tokens () - 1));
@@ -554,35 +553,35 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
   if (tokenizer [TAO_AV_PEER_ADDR] != 0)
     {
       ACE_INET_Addr *addr = 0;
-                  
-      
+
+
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
 	{
 	  TAO_Tokenizer addr_token (tokenizer [TAO_AV_PEER_ADDR], ';');
-	  
+
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Number of peer sec addresses = %d\n",
 		      addr_token.num_tokens () - 1));
-	  
+
 	  if (addr_token.num_tokens () != 0)
 	    {
 	      ACE_NEW_RETURN (addr,
 			      ACE_INET_Addr (addr_token [0]),
 			      0);
-	      
+
 	      ACE_NEW_RETURN (peer_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
 	      for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
 		{
 		  ACE_DEBUG ((LM_DEBUG,
 			      "adding addresses to sequence %s\n",
 			      addr_token [j]));
-		  
+
 		  peer_sec_addr_ [j-1] =  CORBA::string_dup (addr_token [j]);
 		}
 	      num_peer_sec_addrs_ = addr_token.num_tokens () - 1;
 	    }
 	}
-      else  
+      else
 	{
 	  ACE_NEW_RETURN (addr,
 			  ACE_INET_Addr (tokenizer [TAO_AV_PEER_ADDR]),
@@ -595,13 +594,13 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
       ACE_DEBUG ((LM_DEBUG,
 		  "Peer Address %s \n",
 		  buf));
-      
-    }  
+
+    }
 
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
       return -1;
-  
+
   return 0;
 }
 
@@ -629,7 +628,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 {
   if (this->flowname_.length() == 0)
     return "";
-  
+
   char address [BUFSIZ];
   ACE_CString address_str;
   ACE_CString peer_address_str;
@@ -671,7 +670,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 	      address_str += this->local_sec_addr_ [i];
 	    }
 	}
-      
+
     }
   else
     {
@@ -733,7 +732,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 	    ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (this->peer_addr_);
             inet_addr->addr_to_string (address,BUFSIZ);
 	    //inet_addr->get_host_name (address, BUFSIZ);
-	    
+
 	    //cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
 
           }
@@ -747,7 +746,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 	  //peer_address_str = this->carrier_protocol_;
 	  //peer_address_str += "=";
 	  peer_address_str += cstring;
-	  
+
 	  if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
 	    {
 	      for (int i = 0; i < this->num_peer_sec_addrs_; i++)
@@ -800,7 +799,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
   this->entry_ += this->flow_protocol_;
   this->entry_ += "\\";
   this->entry_ += address_str;
-  
+
   if (this->peer_addr_ != 0)
     {
       this->entry_ += "\\";
@@ -808,8 +807,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
     }
   else ACE_DEBUG ((LM_DEBUG,
 		   "No peer address specified\n"));
-  
-  if (TAO_debug_level > 0) 
+
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,"Forward entry_to_string: entry = %s\n",this->entry_.c_str()));
 
   return this->entry_.c_str();
@@ -892,7 +891,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Reverse_FlowSpec_Entry::parse %s\n",
                 flowSpec_entry));
-  
+
   if (tokenizer [TAO_AV_ADDRESS] != 0)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
       return -1;

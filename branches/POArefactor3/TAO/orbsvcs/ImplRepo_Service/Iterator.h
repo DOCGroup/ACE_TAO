@@ -15,8 +15,8 @@
 #define IMR_ITERATOR_H
 
 #include "Locator_Repository.h"
-#include "tao/PortableServer/PortableServerC.h"
-#include "tao/PortableServer/ImplRepoS.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/ImR_Client/ImplRepoS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

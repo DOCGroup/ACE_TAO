@@ -34,9 +34,16 @@ namespace TAO
       if (CORBA::is_nil (imr.in ()))
           return;
 
-      ImplementationRepository::Administration_var imr_locator =
-        ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ImplementationRepository::Administration_var imr_locator
+      {
+        // ATTENTION: Trick locking here, see class header for details
+        TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
+        ACE_UNUSED_ARG (non_servant_upcall);
+
+        imr_locator =
+          ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
 
       if (CORBA::is_nil(imr_locator.in ()))
           return;
@@ -101,6 +108,10 @@ namespace TAO
 
       ACE_TRY
         {
+          // ATTENTION: Trick locking here, see class header for details
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
+          ACE_UNUSED_ARG (non_servant_upcall);
+
           imr_locator->server_is_running (poa->name().c_str (),
                                           partial_ior.c_str(),
                                           svr.in()
@@ -133,7 +144,8 @@ namespace TAO
       // Notify the Implementation Repository about shutting down.
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
 
-      // Check to see if there was an imr returned.  If none, return ourselves.
+      // Check to see if there was an imr returned.
+      // If none, return ourselves.
       if (CORBA::is_nil (imr.in ()))
         return;
 
@@ -141,6 +153,10 @@ namespace TAO
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown server:%s\n", poa->the_name()));
+
+          // ATTENTION: Trick locking here, see class header for details
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
+          ACE_UNUSED_ARG (non_servant_upcall);
 
           // Get the IMR's administrative object and call shutting_down on it
           ImplementationRepository::Administration_var imr_locator =
