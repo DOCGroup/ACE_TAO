@@ -27,12 +27,16 @@ main (int argc, char *argv[])
 template class ACE_Connector<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
 template class ACE_Svc_Tuple<PEER_HANDLER>;
-template class ACE_TSS<ACE_Dynamic>;
 template class IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
 template class Peer_Handler<ACE_SOCK_STREAM>;
-template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
+
+#if defined (ACE_HAS_THREADS)
+  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#else
+  // These are specialized in libACE if ACE doesn't have threads.
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

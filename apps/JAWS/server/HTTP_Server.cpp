@@ -252,8 +252,4 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
-template class ACE_Task<ACE_NULL_SYNCH>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
