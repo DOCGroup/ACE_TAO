@@ -1,3 +1,11 @@
+Wed Nov  3 06:14:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/FTORB.mpc:
+
+	  Removed PortableGroup_Simple_DSC.cpp from FT_ClientORB and
+	  FT_ServerORB projects, as it is already in the FTORB_Utils
+	  library that both depend on.
+
 Wed Nov  3 07:15:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i:
