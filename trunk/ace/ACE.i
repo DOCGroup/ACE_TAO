@@ -129,7 +129,7 @@ ACE::debug (char c)
   ACE::debug_ = c;
 }
 
-ACE_INLINE char *
+ASYS_INLINE char *
 ACE::strnew (const char *s)
 {
   // ACE_TRACE ("ACE::strnew");
@@ -140,7 +140,7 @@ ACE::strnew (const char *s)
     return ACE_OS::strcpy (t, s);
 }
 
-ACE_INLINE wchar_t *
+ASYS_INLINE wchar_t *
 ACE::strnew (const wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::strnew");
