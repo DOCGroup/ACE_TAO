@@ -39,4 +39,12 @@ class Foo_v
 };
 
 
+// A derived class.
+class Foo_d_v : public Foo_v
+{
+  public:
+    virtual void v_func ();
+};
+
+
 // EOF
