@@ -1,3 +1,8 @@
+Thu Dec 12 20:11:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.cpp (cancel): Release the queue lock before
+          upcalling to handle_close. Fixed Bugzilla #1387.
+
 Thu Dec 12 12:50:34 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.cpp: Changed a cast of unique_name to &unique_name to
