@@ -261,7 +261,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 	// Child process executes the command.
 	int result;
       
-	if (options.env_argv () == 0)
+	if (options.env_argv ()[0] == 0)
 	  result = ACE_OS::execvp (options.command_line_argv ()[0],
 				   options.command_line_argv ()); // command-line args
 	else
@@ -561,6 +561,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 
   working_directory_[0] = '\0';
   environment_buf_[0] = '\0';
+  environment_argv_[0] = 0;
   
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->startup_info_, 
