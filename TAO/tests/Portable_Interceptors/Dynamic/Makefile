@@ -20,8 +20,13 @@ BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) test_i interceptors) $(IDL_SRC)
 
-CLIENT_OBJS = client.o interceptors.o testC.o
-SERVER_OBJS = server.o test_i.o interceptors.o $(IDL_SRC:.cpp=.o)
+CLIENT_OBJS = client.o interceptors.o testC.o Echo_Client_ORBInitializer.o
+SERVER_OBJS = \
+  server.o \
+  test_i.o \
+  interceptors.o \
+  Echo_Server_ORBInitializer.o \
+  $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

@@ -354,7 +354,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_uidt_nl;
   *os << "TAO_ClientRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
-      << "istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV)"
+      << "istub->orb_core ()->client_request_interceptors ()"
       << be_uidt_nl
       << ");" << be_uidt_nl;
   os->decr_indent ();
@@ -381,7 +381,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << parent->full_name () << "::";
     }
 
-  *os << "TAO_ClientRequest_Info_" << node->flat_name ();
+  *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this

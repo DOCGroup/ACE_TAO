@@ -55,11 +55,11 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   // Save the node
   this->ctx_->node (node);
 
-  // Generate the ClientRequest_Info object per operation to
+  // Generate the ClientRequestInfo object per operation to
   // be used by the interecptors.
 
   // Start with the current indentation level.
-  *os << "class TAO_ClientRequest_Info_" << node->flat_name ();
+  *os << "class TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -91,7 +91,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
         }
     }
 
-  *os << " : public TAO_ClientRequest_Info" << be_nl
+  *os << " : public TAO_ClientRequestInfo" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
 
@@ -104,7 +104,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 
   *os << parent->full_name () << ";" << be_nl << be_nl;
 
-  *os << "TAO_ClientRequest_Info_" << node->flat_name ();
+  *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -202,7 +202,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 
   *os << "private:" << be_idt_nl;
 
-  *os << "TAO_ClientRequest_Info_" << node->flat_name ();
+  *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -234,7 +234,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
         }
     }
 
-  *os << " (const " << "TAO_ClientRequest_Info_" << node->flat_name ();
+  *os << " (const " << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -268,7 +268,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 
   *os << " &);" << be_nl
       << "void operator= (const "
-      << "TAO_ClientRequest_Info_"<< node->flat_name ();
+      << "TAO_ClientRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
