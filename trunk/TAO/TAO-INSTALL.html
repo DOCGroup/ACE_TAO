@@ -301,7 +301,7 @@ adding an IDL file named foobar.idl into a VC project.
        Project</b>" call foobar_idl for compiling the shared IDL file.
        Add the IDL file &lt;foobar.idl&gt to foobar_idl project and
        other non-IDL generated files into both client and server
-       projects.</LI>  
+       projects.</LI>
 
   <LI>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and
       foobarS.cpp into server project and foobarC.h, foobarC.i,
@@ -311,26 +311,26 @@ adding an IDL file named foobar.idl into a VC project.
        Setting... or just press Alt-F7.) Select the IDL file in the
        projects.  Choose to set the setting for "All Configuration."
        Make sure the "Always use custom build step" is checked and
-       "Exclude from build" is unchecked.</LI> 
+       "Exclude from build" is unchecked.</LI>
 
   <LI>Click on the "Custom Build" tab. Add this entry as the build command
       for IDL files:<BR><BR>
 
-      <PRE>tao_idl $(InputName).idl</PRE>
+      <PRE>tao_idl $(InputPath) -o $(InputDir) -I $(InputDir)</PRE>
       Notice that your absolute path to TAO_IDL may vary.</LI>
 
   <LI>Now add the following entries as "Output file(s)."<BR><BR>
 
       <PRE>
-      $(InputName)S.h
-      $(InputName)C.h
-      $(InputName)C.i
-      $(InputName)C.cpp
-      $(InputName)S.i
-      $(InputName)S.cpp
-      $(InputName)S_T.h
-      $(InputName)S_T.i
-      $(InputName)S_T.cpp
+      $(InputDir)\$(InputName)S.h
+      $(InputDir)\$(InputName)C.h
+      $(InputDir)\$(InputName)C.i
+      $(InputDir)\$(InputName)C.cpp
+      $(InputDir)\$(InputName)S.i
+      $(InputDir)\$(InputName)S.cpp
+      $(InputDir)\$(InputName)S_T.h
+      $(InputDir)\$(InputName)S_T.i
+      $(InputDir)\$(InputName)S_T.cpp
       </PRE>
       Add only one entry in each line.</LI>
 
