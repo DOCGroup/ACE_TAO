@@ -20,15 +20,15 @@ CFG=TAO - Win32 Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
-# PROP WCE_FormatVersion ""
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -105,13 +105,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP nologo MT Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
-# SUBTRACT BASE CPP YX
-# ADD CPP nologo MD Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 nologo MT Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
+# ADD CPP /Gt0 nologo MD Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -136,13 +135,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MTd ..\\ c
-# SUBTRACT BASE CPP YX
-# ADD CPP nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MDd ..\\ c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MTd ..\\ c
+# ADD CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MDd ..\\ c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -14711,6 +14709,21 @@ NODEP_CPP_GIOP_=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Server_Request.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -14742,21 +14755,6 @@ SOURCE=.\IIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Profile.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Server_Request.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -30621,6 +30619,51 @@ NODEP_CPP_UNION=\
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\ValueBase.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory_Map.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -30731,6 +30774,10 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Server_Request.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
@@ -30740,10 +30787,6 @@ SOURCE=.\IIOP_Connector.h
 # Begin Source File
 
 SOURCE=.\IIOP_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Server_Request.h
 # End Source File
 # Begin Source File
 
@@ -30919,6 +30962,18 @@ SOURCE=.\typecode.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ValueBase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory_Map.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\varout.h
 # End Source File
 # End Group
@@ -30975,11 +31030,11 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_ORB.i
+SOURCE=.\GIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.i
+SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
@@ -31076,6 +31131,18 @@ SOURCE=.\Timeprobe.i
 # Begin Source File
 
 SOURCE=.\typecode.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueBase.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory_Map.i
 # End Source File
 # End Group
 # Begin Group "Resource Files"
