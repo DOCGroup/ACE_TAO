@@ -1,6 +1,6 @@
 //==================================================================
 /**
- *  @file  CompIntrDesc_Handler.h
+ *  @file  CCD_Handler.h
  *
  *  $Id$
  *
@@ -8,8 +8,8 @@
  */
 //=====================================================================
 
-#ifndef COMPINTRDESC_HANDLER_H
-#define COMPINTRDESC_HANDLER_H
+#ifndef CCD_HANDLER_H
+#define CCD_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -48,18 +48,18 @@ namespace CIAO
   namespace Config_Handler
   {
 
-    class CompIntrDesc_Handler
+    class CCD_Handler
     {
     public:
 
       /// constructor
-      CompIntrDesc_Handler (DOMDocument* doc, unsigned long filter_);
+      CCD_Handler (DOMDocument* doc, unsigned long filter_);
 
       /// constructor
-      CompIntrDesc_Handler (DOMNodeIterator* iter, bool release = false);
+      CCD_Handler (DOMNodeIterator* iter, bool release = false);
 
       /// destructor
-      ~CompIntrDesc_Handler();
+      ~CCD_Handler();
 
       /// Process the component package description
       void process_ComponentInterfaceDescription (::Deployment::ComponentInterfaceDescription &CompIntrDesc);
@@ -97,4 +97,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* COMPINTRDESC_HANDLER_H */
+#endif /* CCD_HANDLER_H */

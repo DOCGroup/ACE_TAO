@@ -1,6 +1,6 @@
 //==================================================================
 /**
- *  @file  CompIntrDesc_Handler.cpp
+ *  @file  CCD_Handler.cpp
  *
  *  $Id$
  *
@@ -8,8 +8,8 @@
  */
 //=====================================================================
 
-#ifndef COMPINTRDESC_HANDLER_C
-#define COMPINTRDESC_HANDLER_C
+#ifndef CCD_HANDLER_C
+#define CCD_HANDLER_C
 
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
@@ -31,7 +31,7 @@ namespace CIAO
 {
   namespace Config_Handler
   {
-    CompIntrDesc_Handler::CompIntrDesc_Handler (DOMDocument* doc, unsigned long filter)
+    CCD_Handler::CCD_Handler (DOMDocument* doc, unsigned long filter)
       : // traverse_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
@@ -42,21 +42,21 @@ namespace CIAO
         release_ (true)
     {}
 
-    CompIntrDesc_Handler::CompIntrDesc_Handler (DOMNodeIterator* iter, bool release)
+    CCD_Handler::CCD_Handler (DOMNodeIterator* iter, bool release)
       : // traverse_ (0),
 	root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 
-    CompIntrDesc_Handler::~CompIntrDesc_Handler()
+    CCD_Handler::~CCD_Handler()
     {
       if (this->release_)
         this->iter_->release();
     }
 
     /// handle the package configuration and populate it
-    void CompIntrDesc_Handler::process_ComponentInterfaceDescription
-      (::Deployment::ComponentInterfaceDescription &cid)
+    void CCD_Handler::process_ComponentInterfaceDescription
+      (::Deployment::ComponentInterfaceDescription &ccd)
     {
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
@@ -68,28 +68,28 @@ namespace CIAO
               // Fetch the text node which contains the "label"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_label (text->getNodeValue(), cid);
+              this->process_label (text->getNodeValue(), ccd);
             }
           else if (node_name == XStr (ACE_TEXT ("UUID")))
             {
               // Fetch the text node which contains the "UUID"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_UUID (text->getNodeValue(), cid);
+              this->process_UUID (text->getNodeValue(), ccd);
             }
           else if (node_name == XStr (ACE_TEXT ("specificType")))
             {
               // Fetch the text node which contains the "specificType"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_specificType (text->getNodeValue(), cid);
+              this->process_specificType (text->getNodeValue(), ccd);
             }
           else if (node_name == XStr (ACE_TEXT ("supportedType")))
             {
               // Fetch the text node which contains the "supportedType"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_supportedType (text->getNodeValue(), cid);
+              this->process_supportedType (text->getNodeValue(), ccd);
             }
           else if (node_name == XStr (ACE_TEXT ("configProperty")))
             {
@@ -103,14 +103,14 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("port")))
             {
               // increase the length of the sequence
-              CORBA::ULong i (cid.port.length ());
-              cid.port.length (i + 1);
+              CORBA::ULong i (ccd.port.length ());
+              ccd.port.length (i + 1);
 
 	      // fetch the CompPortDesc handler
 	      CompPortDesc_Handler compportdesc_handler (this->iter_, false);
 
               // delegate the populating process
-	      compportdesc_handler.process_ComponentPortDescription (cid.port[i]);
+	      compportdesc_handler.process_ComponentPortDescription (ccd.port[i]);
             }
           else
             {
@@ -122,51 +122,51 @@ namespace CIAO
     }
 
     /// handle label attribute
-    void CompIntrDesc_Handler::process_label
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
+    void CCD_Handler::process_label
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &ccd)
     {
       if (name)
         {
-          cid.label = XMLString::transcode (name);
+          ccd.label = XMLString::transcode (name);
         }
     }
 
     /// handle UUID attribute
-    void CompIntrDesc_Handler::process_UUID
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
+    void CCD_Handler::process_UUID
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &ccd)
     {
       if (name)
         {
-          cid.UUID = XMLString::transcode (name);
+          ccd.UUID = XMLString::transcode (name);
         }
     }
 
     /// handle specificType attribute
-    void CompIntrDesc_Handler::process_specificType
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
+    void CCD_Handler::process_specificType
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &ccd)
     {
       if (name)
         {
-          cid.specificType = XMLString::transcode (name);
+          ccd.specificType = XMLString::transcode (name);
         }
     }
 
     /// handle supportedType attribute
-    void CompIntrDesc_Handler::process_supportedType
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
+    void CCD_Handler::process_supportedType
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &ccd)
     {
       if (name)
         {
 	  // increase the length of the sequence
-	  CORBA::ULong i (cid.supportedType.length ());
-	  cid.supportedType.length (i + 1);
+	  CORBA::ULong i (ccd.supportedType.length ());
+	  ccd.supportedType.length (i + 1);
 
 	  // push back the last item
-          cid.supportedType[i] = XMLString::transcode (name);
+          ccd.supportedType[i] = XMLString::transcode (name);
         }
     }
 
   }
 }
 
-#endif /* COMPINTRDESC_HANDLER_C */
+#endif /* CCD_HANDLER_C */

@@ -89,7 +89,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               // fetch the component package reference handler
-              CompIntrDesc_Handler compintrdesc_handler (iter_, false);
+              CCD_Handler compintrdesc_handler (iter_, false);
 
               // delegate the populating process
               compintrdesc_handler.process_ComponentInterfaceDescription (comppkgdesc.realizes);
