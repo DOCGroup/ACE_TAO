@@ -43,6 +43,7 @@ Sun Oct 11 23:18:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/EC_Multiple/Makefile: 
 	* orbsvcs/tests/EC_Basic/Makefile: 
 	* orbsvcs/tests/EC_Mcast/Makefile: 
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile: 
 	  Updated the dependencies.
 
 	* orbsvcs/tests/EC_Basic/README: 
