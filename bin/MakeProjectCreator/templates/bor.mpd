@@ -30,16 +30,14 @@ LFLAGS = \
 	-j"<%libpath%>\$(CONFIG_SUBDIR)" <%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
-<%if(lit_libs)%>
-LIBFILES = \
 
+LIBFILES = \
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
 <%foreach(libs defaultlibs)%>
 	<%lib%>$(LIB_DECORATOR).lib<%fornotlast(" \\")%>
 <%endfor%>
-<%endif%>
 <%if(idl_files)%>
 
 IDLFILES = \
