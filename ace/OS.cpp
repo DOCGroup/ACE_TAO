@@ -7371,11 +7371,12 @@ exit (int status)
 #undef GetEnvironmentStrings
 #endif /* ACE_WIN32 && UNICODE !ACE_USES_TCHAR */
 
-#if !defined (ACE_LACKS_ENV)
 ACE_TCHAR *
 ACE_OS::getenvstrings (void)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_ENV)
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
   return ::GetEnvironmentStringsW ();
 # else /* ACE_USES_WCHAR */
@@ -7385,7 +7386,6 @@ ACE_OS::getenvstrings (void)
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_LACKS_ENV */
 
 #if defined (ACE_HAS_STRPTIME)
 char *
