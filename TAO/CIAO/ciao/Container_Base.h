@@ -17,6 +17,7 @@
 #define CIAO_CONTAINER_BASE_H
 #include /**/ "ace/pre.h"
 
+#include "ace/Hash_Map_Manager_T.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
