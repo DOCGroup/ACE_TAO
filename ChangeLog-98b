@@ -1,3 +1,8 @@
+Fri Jul 03 08:52:13 1998  Steve Huston  <shuston@riverace.com>
+
+	* netsvcs/lib/Name_Handler.{cpp h}: Moved class Naming_Context from
+	  .cpp to .h so that AIX xlC can find it when instantiating templates.
+
 Thu Jul  2 11:49:16 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/OS.h:
