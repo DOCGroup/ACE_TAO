@@ -5,11 +5,11 @@
 component HelloWorld
 {
   // The name of this greeting machine.
-  //  attribute string helloname;
+  attribute string helloname;
 
   // Return the greating string as:
   //   "Greeting from <helloname>.  How are you, <username>?"
-  //  string hello (in string username);
+  string hello (in string username);
 };
 
 
