@@ -1,0 +1,24 @@
+// $Id$
+
+module Stock
+{
+  exception Invalid_Stock {};
+  exception Invalid_Quoter {};
+
+  interface Quoter
+  {
+    // Returns the current stock value or throws and exception
+    long get_quote (in string stock_name) raises (Invalid_Stock, Invalid_Quoter);
+
+    // Destroy a Quoter session and release resources.
+    void destroy ();
+  };
+  
+  // Manage the lifecycle of a Quoter object.
+  interface Quoter_Factory 
+  {
+    // Returns a new Quoter selected by name
+    // e.g., "Dow Jones," "Reuters,", etc
+    Quoter create_quoter (in string name) raises (Invalid_Quoter);
+  };
+};
