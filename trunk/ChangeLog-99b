@@ -1,3 +1,15 @@
+Fri May 14 12:58:02 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Addr.h:
+        * ace/ATM_Addr.i:
+        * ace/ATM_Addr.cpp:
+          Added accessor methods for the selector byte of an ATM address.
+
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
+          Modify example code to have the user optioanlly specify the
+          selector byte.
+
 Fri May 14 12:47:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Addr.cpp,ace/Synch_Options.cpp: added comments about

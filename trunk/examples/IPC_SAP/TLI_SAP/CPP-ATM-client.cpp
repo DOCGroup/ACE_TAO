@@ -13,18 +13,44 @@ int main (int argc, char *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "Usage: %s hostname [QoS in KB/sec] [timeout]\n",
+                       "Usage: %s hostname [-s selector] [QoS in KB/sec]\n",
                        argv[0]),
                       1);
+
   const char *host = argv[1];
-  int qos = argc > 2 ? ACE_OS::atoi (argv[2]) : 0;
-  int timeout = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_DEFAULT_TIMEOUT;
+  unsigned char selector = ACE_ATM_Addr::DEFAULT_SELECTOR;
+  int selector_specified = 0;
+  int opt;
+  while ((opt = ACE_OS::getopt (argc, argv, "s:?h")) != EOF)
+    {
+    switch(opt)
+      {
+      case 's':
+        selector = ACE_OS::atoi (optarg);
+        selector_specified = 1;
+        break;
+      case '?':
+      case 'h':
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Usage: %s hostname [-s selector] [QoS in KB/s]\n",
+                           argv[0]),
+                          1);
+      } // switch
+    } // while getopt
+
+  int qos = (argc == 3) ? ACE_OS::atoi (argv[2]) :
+    (argc == 5) ? ACE_OS::atoi (argv[4]) : 0;
+  // The timeout really gets ignored since FORE's drivers don't work when
+  //  ioctl or fcntl calls are made on the transport id/file descriptor
+  int timeout = ACE_DEFAULT_TIMEOUT;
 
   char buf[BUFSIZ];
 
   ACE_TLI_Stream cli_stream;
 
   ACE_ATM_Addr remote_addr (host);
+  if (selector_specified)
+    remote_addr.set_selector(selector);
   char hostname[MAXNAMELEN];
   ACE_OS::hostname(hostname, MAXNAMELEN);
   ACE_ATM_Addr local_addr (hostname);
