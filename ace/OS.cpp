@@ -880,7 +880,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 						  flags, thr_id), result), 
 		  int, -1, result);
       if (result == 0 && thr_handle != 0)
-	*thr_handle = *thr_id;
+	*thr_handle = thr_id == 0 ? 0 : *thr_id;
       return result;
 #elif defined (ACE_HAS_WTHREADS)
       ACE_thread_t t;
@@ -950,8 +950,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       // args must be an array of _exactly_ 10 ints.
 
-      // stack arg is ignored:  if there's a need for it, we'd have to use
-      // taskInit ()/taskActivate () instead of taskSpawn ()
+      // The stack arg is ignored:  if there's a need for it, we'd have to
+      // use ::taskInit ()/::taskActivate () instead of ::taskSpawn ().
 
       // The hard-coded arguments are what ::sp() would use.  ::taskInit()
       // is used instead of ::sp() so that we can set the priority, flags,
@@ -959,7 +959,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // to VX_FP_TASK, and stacksize to 20,000.)  stacksize should be
       // an even integer.
 
-      // if called with thr_create() defaults, use same default values as ::sp()
+      // If called with thr_create() defaults, use same default values as ::sp():
       if (stacksize == 0) stacksize = 20000;
       if (priority == 0) priority = 100;
 
@@ -977,12 +977,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
           // return the thr_id and thr_handle, if addresses were provided for them
           if (thr_id != 0)
-            // taskTcb (int tid) returns the address of the WIND_TCB
-            // (task control block).  According to the taskSpawn()
+            // ::taskTcb (int tid) returns the address of the WIND_TCB
+            // (task control block).  According to the ::taskSpawn()
             // documentation, the name of the new task is stored at
             // pStackBase, but is that of the current task?  If so, it
-            // would be a bit quicker than this extraction of the tcb . . .
-            *thr_id = taskTcb (tid)->name;
+            // might be a bit quicker than this extraction of the tcb . . .
+            *thr_id = ::taskTcb (tid)->name;
           if (thr_handle != 0)
             *thr_handle = tid;
           return 0;
