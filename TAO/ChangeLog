@@ -1,12 +1,18 @@
+Thu Jan 23 18:29:03 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * tests/MT_Timeout/client.cpp: Modified ACE_DEBUG to 
+          print a warning instead of an error when "Too many 
+          calls have too big differences..." 
+
 Thu Jan 23 16:31:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
-	* TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/idl_global.h:
 
-	  Fixed a bug in the clearing of a #pragma prefix directive
-	  at the end of an indirectly included IDL file, based on an
-	  example set of five IDL files sent in by 
-	  John Fletcher <john.fletcher@rd.bbc.co.uk>
+          Fixed a bug in the clearing of a #pragma prefix directive
+          at the end of an indirectly included IDL file, based on an
+          example set of five IDL files sent in by
+          John Fletcher <john.fletcher@rd.bbc.co.uk>
 
 Thu Jan 23 11:30:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -26,15 +32,15 @@ Thu Jan 23 10:54:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jan 22 14:56:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Invocation.cpp (invoke_i): Unbind the dispatcher instead of
-	  setting the state in the Bind_Dispatcher_Guard. Improves code
-	  readability. 
+        * tao/Invocation.cpp (invoke_i): Unbind the dispatcher instead of
+          setting the state in the Bind_Dispatcher_Guard. Improves code
+          readability.
 
 Wed Jan 22 11:08:57 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/Messaging/Messaging_Policy_i.cpp (hook): Fixed debug message
           so that it actually printed out milliseconds rather than the
-	  microsecond component expressed as milliseconds.
+          microsecond component expressed as milliseconds.
 
 Wed Jan 22 17:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
