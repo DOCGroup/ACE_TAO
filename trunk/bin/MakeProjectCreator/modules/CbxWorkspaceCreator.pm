@@ -41,8 +41,10 @@ sub pre_workspace {
   my($fh)   = shift;
   my($crlf) = $self->crlf();
 
-  print $fh "<?xml version=\"1.0\" encoding=\"UTF-8\"?>$crlf" .
-            "<!--Project Group-->$crlf";
+  print $fh '<?xml version="1.0" encoding="UTF-8"?>', $crlf,
+            '<!-- $Id$ -->', $crlf,
+            '<!-- MPC Command -->', $crlf,
+            "<!-- $0 @ARGV -->", $crlf;
 }
 
 
@@ -54,7 +56,8 @@ sub write_comps {
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  print $fh "<projectgroup>$crlf";
+  print $fh '<!--Project Group-->', $crlf,
+            '<projectgroup>', $crlf;
   foreach my $project (@list) {
     print $fh "  <project path=\"$project\"/>$crlf";
   }

@@ -1,3 +1,24 @@
+Mon Mar 15 10:01:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/BMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/CbxWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/EM3WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/HTMLWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VA4WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC71WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+
+          Added information at the top of the generated workspace for these
+          types.  The information includes the CVS $Id keyword, the command
+          line options for MPC and a warning about directly editing the
+          file.
+
 Mon Mar 15 08:31:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
