@@ -1,3 +1,9 @@
+Thu Mar 05 16:18:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.cpp (ObjectId_to_wstring and ObjectId_to_const_wstring):
+ 	  Changed the odd looking access to a sequence's buffer to use the
+ 	  new buffer() accessor.
+
 Thu Mar  5 13:15:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/cdr.h: 
