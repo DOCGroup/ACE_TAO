@@ -1,3 +1,9 @@
+Tue Jul 11 06:21:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer.cpp (transmit): The last two arguments to
+	  Event_Header were reversed!  Thanks to Kim Lester
+ 	  <Kim_R_Lester@rta.nsw.gov.au> for reporting this.
+
 Mon Jul 10 20:35:08 2000 Marina Spivak  <marina@cs.wustl.edu>
 
         * ACE version 5.1.5 released.
