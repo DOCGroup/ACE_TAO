@@ -1,3 +1,8 @@
+Sat Feb 21 15:14:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* Kokyu/tests/EDF/test.cpp:
+	  Fixed compile problem in wchar build.
+
 Sat Feb 21 15:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Synch-Benchmarks/synch_driver.cpp:
