@@ -1,3 +1,12 @@
+Mon Nov  3 16:09:59 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+          Don't check IOGR on tao_update_object_group.
+          Find IORManipulator in prep. for fixing is_primary_.
+
+        These changes were made in the oci_haft branch.
+
 Mon Nov  3 10:17:06 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
