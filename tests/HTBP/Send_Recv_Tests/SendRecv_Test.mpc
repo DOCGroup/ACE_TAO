@@ -5,7 +5,8 @@
 
 project: aceexe, htbp {
   exename = SendRecv_Test
-  libs += Test_Output
+  after  += Test_Output
+  libs   += Test_Output
 
   Source_Files {
      SendRecv_Test.cpp
