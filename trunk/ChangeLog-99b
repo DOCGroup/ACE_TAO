@@ -1,3 +1,11 @@
+Mon May 31 16:13:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: if ACE_COMPONENTS is equal to FOR_TAO,
+          override it with the proper component values.  The
+          override allows it to be set on the command line, e.g.,
+          make ACE_COMPONENTS=FOR_TAO.  Thanks to Carlos for
+          reporting this.
+
 Mon May 31 14:00:21 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/RB_Tree.i: Reverted changes from May 21.  It broke the LynxOS
@@ -5,67 +13,67 @@ Mon May 31 14:00:21 1999  Steve Huston  <shuston@riverace.com>
 
 Mon May 31 11:51:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/CORBA_Handler.h: Updated the comments to clarify how to use
- 	  this class.  Thanks to Ram Vishnuvajjala
- 	  <rvishnuvajjala@lucent.com> for motivating this.
+        * ace/CORBA_Handler.h: Updated the comments to clarify how to use
+          this class.  Thanks to Ram Vishnuvajjala
+          <rvishnuvajjala@lucent.com> for motivating this.
 
-	* ace/Service_Config: Added a static variable called is_initialized
-	  that keeps track of whether the <ACE_Service_Config> is already
-	  initialized.  If it is, we can't allow <yyparse> to be called
-	  since it's not reentrant...  
+        * ace/Service_Config: Added a static variable called is_initialized
+          that keeps track of whether the <ACE_Service_Config> is already
+          initialized.  If it is, we can't allow <yyparse> to be called
+          since it's not reentrant...
 
 Sun May 30 14:08:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile:
-	* ace/Vector.{h,i,cpp}:
-	* tests/Makefile:
-	* tests/Vector_Test.cpp: Removed the ACE_Vector implementation
- 	  from the distribution.
+        * ace/Makefile:
+        * ace/Vector.{h,i,cpp}:
+        * tests/Makefile:
+        * tests/Vector_Test.cpp: Removed the ACE_Vector implementation
+          from the distribution.
 
 Sat May 29 14:14:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Vector.{h,i,cpp}: Added STL Vector-style insert() and
- 	  erase() methods.  Also added a new constructor that creates an
- 	  ACE_Vector from a specified range of iterators.  ACE_Vector
- 	  class is now Purify clean (i.e. fixed any and all memory leaks).
+        * ace/Vector.{h,i,cpp}: Added STL Vector-style insert() and
+          erase() methods.  Also added a new constructor that creates an
+          ACE_Vector from a specified range of iterators.  ACE_Vector
+          class is now Purify clean (i.e. fixed any and all memory leaks).
 
-	* tests/Vector_Test.cpp: Added tests for the newly added
- 	  ACE_Vector<T>::insert() and ACE_Vector<T>::erase() methods.
+        * tests/Vector_Test.cpp: Added tests for the newly added
+          ACE_Vector<T>::insert() and ACE_Vector<T>::erase() methods.
 
 Fri May 28 20:19:50 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Vector.{h,i,cpp},
-	  tests/Vector_Test.cpp: Implemented an ACE_Vector class based on
- 	  the ACE_Array class.  It is not derived from it, however.  The
- 	  ACE_Vector class provides an STL Vector-like interface.  The
- 	  Vector_Test tests the important features of the ACE_Vector class
- 	  and sends output to `logs/Vector_Test.log'.
+        * ace/Vector.{h,i,cpp},
+          tests/Vector_Test.cpp: Implemented an ACE_Vector class based on
+          the ACE_Array class.  It is not derived from it, however.  The
+          ACE_Vector class provides an STL Vector-like interface.  The
+          Vector_Test tests the important features of the ACE_Vector class
+          and sends output to `logs/Vector_Test.log'.
 
-	* ace/Makefile,
-	  tests/Makefile: Added ACE_Vector related files to the makefiles
- 	  and updated the dependencies.
+        * ace/Makefile,
+          tests/Makefile: Added ACE_Vector related files to the makefiles
+          and updated the dependencies.
 
 Thu May 27 15:50:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/UNIX_Addr.cpp (set), Explicitly set the sun_family to
- 	  AF_UNIX, otherwise it will be zero by a previous call to
- 	  memset().  AF_UNSPEC, which is zero, is what the call to
- 	  memset() cause the sun_family to be.
+        * ace/UNIX_Addr.cpp (set), Explicitly set the sun_family to
+          AF_UNIX, otherwise it will be zero by a previous call to
+          memset().  AF_UNSPEC, which is zero, is what the call to
+          memset() cause the sun_family to be.
 
 Wed May 26 01:46:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd.GNU:
-	* include/makeinclude/platform_freebsd_pthread.GNU: Consolidated
-	  platform macro files for FreeBSD.
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_freebsd_pthread.GNU: Consolidated
+          platform macro files for FreeBSD.
 
-	* ace/config-freebsd-pthread.h:
-	* ace/config-freebsd.h: Added ACE_HAS_NONCONST_SELECT_TIMEVAL.
+        * ace/config-freebsd-pthread.h:
+        * ace/config-freebsd.h: Added ACE_HAS_NONCONST_SELECT_TIMEVAL.
 
 Tue May 25 21:38:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/UNIX_Addr.cpp: The default constructor was not setting the
- 	  address family to AF_UNIX.  Now that we do so we can let the OS
- 	  select a ephemeral UNIX domain endpoint for us.
+        * ace/UNIX_Addr.cpp: The default constructor was not setting the
+          address family to AF_UNIX.  Now that we do so we can let the OS
+          select a ephemeral UNIX domain endpoint for us.
 
 Tue May 25 19:20:15 1999  Steve Huston  <shuston@riverace.com>
 
@@ -77,7 +85,7 @@ Tue May 25 16:54:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           Fixed a signed/unsigned mismatch warning and
           changed several uses of static_cast to
           reinterpret_cast. This is a belated entry, I put it
-	  first in TAO/ChangeLog by mistake.
+          first in TAO/ChangeLog by mistake.
 
 Tue May 25 15:19:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
