@@ -3550,6 +3550,14 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_continue (target_thread),
                                        ace_result_),
                      int, -1);
+#  elif defined (ACE_HAS_PTHREAD_CONTINUE_NP)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_continue_np (target_thread),
+                                       ace_result_),
+                     int, -1);
+#  elif defined (ACE_HAS_PTHREAD_RESUME_NP)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_resume_np (target_thread),
+                                       ace_result_),
+                     int, -1);
 #  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
@@ -4315,6 +4323,10 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 # elif defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_PTHREAD_SUSPEND)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend (target_thread),
+                                       ace_result_),
+                     int, -1);
+#  elif defined (ACE_HAS_PTHREAD_SUSPEND_NP)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend_np (target_thread),
                                        ace_result_),
                      int, -1);
 #  else

@@ -4107,8 +4107,16 @@ dnl Check for Unix98 pthreads extensions
        ])
     ],,)
 
-  AC_CHECK_FUNC([pthread_continue],,)
-  AC_CHECK_FUNC([pthread_suspend],,)
+  AC_CHECK_FUNC([pthread_continue],
+    [AC_DEFINE([ACE_HAS_PTHREAD_CONTINUE])],)
+  AC_CHECK_FUNC([pthread_continue_np],
+    [AC_DEFINE([ACE_HAS_PTHREAD_CONTINUE_NP])],)
+  AC_CHECK_FUNC([pthread_resume_np],
+    [AC_DEFINE([ACE_HAS_PTHREAD_RESUME_NP])],)
+  AC_CHECK_FUNC([pthread_suspend],
+    [AC_DEFINE([ACE_HAS_PTHREAD_SUSPEND])],)
+  AC_CHECK_FUNC([pthread_suspend_np],
+    [AC_DEFINE([ACE_HAS_PTHREAD_SUSPEND_NP])],)
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
   AC_CHECK_FUNC([pthread_rwlock_rdlock],,)
