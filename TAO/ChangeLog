@@ -1,3 +1,18 @@
+Wed Apr 23 22:12:37 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/CDR_Encaps_Codec.cpp (encode_value):
+
+	  If the internal ACE_Message_Block in the supplied Any is null,
+	  explicitly create an ACE_Message_Block and populate with the
+	  marshalled data.  Fixes run-time errors in the Codec and
+	  IORInterceptor tests.  Thanks to Jeff for providing a fix.
+
+	* tao/PortableServer/POA.cpp (TAO_POA, create_POA_i):
+
+	  Reverted one more change from fix described in "Wed Apr 23
+	  18:06:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>".
+	  Fixes a remaining problem in the IORInterceptor test.
+
 Wed Apr 23 18:27:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:

@@ -163,7 +163,23 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
     {
       CORBA::TypeCode_var tc = data.type ();
 
-      TAO_InputCDR input (data._tao_get_cdr (),
+      ACE_Message_Block * mb = data._tao_get_cdr ();
+
+      if (mb == 0)
+	{
+	  ACE_NEW_THROW_EX (mb,
+			    ACE_Message_Block,
+			    CORBA::NO_MEMORY ());
+	  ACE_CHECK_RETURN (0);
+
+	  TAO_OutputCDR out;
+	  CORBA::Any any (data);
+	  any.impl ()->marshal_value (out);
+
+	  ACE_CDR::consolidate (mb, out.begin ());
+	}
+
+      TAO_InputCDR input (mb,
                           data._tao_byte_order (),
                           this->major_,
                           this->minor_,
