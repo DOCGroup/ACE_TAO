@@ -124,7 +124,7 @@ int main (int argc, char *argv[])
 
       wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR ("Wide String"));
       for (int i = 0; i < 11; i++)
-	cout << "ws[" << i << "] = " << (short) wide_string[i] << endl;
+        cout << "ws[" << i << "] = " << (short) wide_string[i] << endl;
       wchar_t *wide_reply = server->op2 (wide_string);
       cout << "sent " << wide_string << " got " << wide_reply << endl;
     }

@@ -99,7 +99,7 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
      ACE_DEBUG ((LM_DEBUG,
                  ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
                  ACE_LIB_TEXT("setting char translator(%08x)\n"),
-		 tcs));
+                 tcs));
    trans.char_translator(this->get_char_trans (tcs));
 
    tcs = computeTCS (remote.ForWcharData,

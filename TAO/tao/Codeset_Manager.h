@@ -172,7 +172,7 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
 
   // Find CodesetId in the codeset component
   int isElementOf (CONV_FRAME::CodeSetId,
-		   CONV_FRAME::CodeSetComponent & );
+                   CONV_FRAME::CodeSetComponent & );
 
   // find the intersection of CodesetIds between Client and Server CCS
   CONV_FRAME::CodeSetId intersectionOf (CONV_FRAME::CodeSetComponent &,

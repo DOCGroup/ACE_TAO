@@ -311,8 +311,8 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
       this->out_stream_.set_version (version.major, version.minor);
 
       if (!this->transport_->is_tcs_set())
-	this->orb_core_->codeset_manager()->
-	  set_tcs(*this->profile_,*this->transport_);
+        this->orb_core_->codeset_manager()->
+          set_tcs(*this->profile_,*this->transport_);
 
       if (result == -1)
         {
