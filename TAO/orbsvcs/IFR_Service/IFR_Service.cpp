@@ -234,10 +234,14 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
 int
 IFR_Service::create_locator (CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
   ACE_NEW_THROW_EX (this->servant_locator_impl_,
                     IFR_ServantLocator (this->repo_impl_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   this->ir_object_poa_->set_servant_manager (this->servant_locator_impl_,
                                              ACE_TRY_ENV);

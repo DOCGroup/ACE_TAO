@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 class IFR_ServantLocator : public PortableServer::ServantLocator
 {
   // = TITLE
@@ -67,5 +69,7 @@ private:
   TAO_Repository_i *repo_;
   // Passed in to each created servant.
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #endif /* IFR_SERVANT_LOCATOR_H */
