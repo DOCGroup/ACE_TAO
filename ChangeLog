@@ -1,5 +1,10 @@
 Tue Jun  1 16:37:30 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* ace/SOCK_Dgram_Bcast.cpp (send): Set the port number of the
+	  broadcast address before sending the iovec.  Thanks to Dave
+ 	  Wolfe <dwolfe@gforcetech.com> for this patch, which fixes
+	  bugid 1830.
+  
 	* ace/OS_NS_Thread.cpp: Added a cast for (ACE_TSS_DESTRUCTOR)
 	  so the code will compile properly on Solaris when
  	  ACE_HAS_TSS_EMULATION is enabled.  Thanks to Kevin Christian

@@ -322,7 +322,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
 ssize_t
 ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
                             int n,
-                            u_short /* port_number */,
+                            u_short port_number,
                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");
@@ -335,11 +335,15 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
   for (ACE_Bcast_Node *temp = this->if_list_;
        temp != 0;
        temp = temp->next_)
-    if (ACE_SOCK_Dgram::send (iov,
-                              n,
-                              temp->bcast_addr_,
-                              flags) == -1)
-      return -1;
+    {
+      temp->bcast_addr_.set_port_number (port_number);
+
+      if (ACE_SOCK_Dgram::send (iov,
+                                n,
+                                temp->bcast_addr_,
+                                flags) == -1)
+        return -1;
+    }
 
   return 0;
 }
