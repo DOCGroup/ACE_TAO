@@ -1,3 +1,9 @@
+Wed Mar 13 12:45:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Muxed_GIOP_Versions/client.cpp:
+        * tests/Muxed_GIOP_Versions/server.cpp:
+          Fixed fuzz errors
+
 Wed Mar 13 10:47:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV.dsp:

@@ -1,4 +1,4 @@
-// $Idclient.cpp,v 1.16 2002/01/29 20:21:08 okellogg Exp$
+// $Id$
 
 #include "testC.h"
 #include "tao/debug.h"
