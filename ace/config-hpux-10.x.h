@@ -53,6 +53,9 @@
 
 extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 
+// HP-UX is a POSIX-compliant system - see what's available.
+#include "ace/config-posix.h"
+
 
 ////////////////////////////////////////////////////////////////////////////
 //
