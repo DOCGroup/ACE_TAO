@@ -478,10 +478,19 @@ make: *** [libACE.so] Error 8
       <A HREF="http://www.cs.wustl.edu/~levine/">David Levine</A>
       &lt<A
       HREF="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</A>&gt has
-      ported ACE to VxWorks 5.2/5.3/5.3.1 with the GreenHills 1.8.8
-      and g++ 2.7.2 compilers.  An anonymous contributor has also
+      ported ACE to VxWorks 5.2/5.3/5.3.1/5.4 with the GreenHills
+      1.8.8/1.8.9 and g++ compilers that are distributed with
+      VxWorks/Tornado.  An anonymous contributor has also
       provided <a href="os-patches/vxworks-5.1.txt">notes for using
       ACE with VxWorks 5.1.</a><P>
+
+      Please note that ACE and TAO build with Tornado II.  The version
+      of egcs that is provided with Tornado II produces some spurious
+      warnings about uninitialized variables (including "this" :-).
+      This was a problem in older versions of egcs, but has since been
+      fixed.  If you'd like to disable the warnings, you can add
+      <code>-Wno-uninitialized</code> to your <code>CCFLAGS</code> in
+      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code><p>
 
       In addition to all of the other benefits of ACE, it helps work
       around some deficiencies with VxWorks 5.3/5.3.1.  Some of these
