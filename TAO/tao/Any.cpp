@@ -1034,13 +1034,13 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 // Specializations for CORBA::Any
 
 CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Any>::marshal_value (TAO_OutputCDR &cdr)
+TAO::Any_Impl_T<CORBA::Any>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
 CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Any>::demarshal_value (TAO_InputCDR &cdr)
+TAO::Any_Impl_T<CORBA::Any>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
