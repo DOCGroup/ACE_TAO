@@ -1,3 +1,8 @@
+Thu Aug  5 08:48:50 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * CIAO-INSTALL.html: Updated to reflect dependency on Xerces and
+          native exceptions.
+
 Wed Aug  4 22:50:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Hello/Sender/Sender.mpc (Hello_Starter):
