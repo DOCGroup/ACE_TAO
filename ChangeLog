@@ -1,3 +1,9 @@
+Fri Jan 21 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+          Also parse config-lite.h and config-all.h to generate the
+          ACE documentation
+
 Thu Jan 20 22:48:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/ACE-guidelines.html:
