@@ -35,7 +35,8 @@ TAO_FTEC_ProxyPushConsumer::activate (
 {
   result = RtecEventChannelAdmin::ProxyPushConsumer::_nil();
   ACE_TRY {
-    object_id_ = Request_Context_Repository().get_object_id();
+    object_id_ = Request_Context_Repository().get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
     PortableServer::POA_var poa = _default_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     activate_object_with_id(result, poa.in(), this, object_id_ ACE_ENV_ARG_PARAMETER);

@@ -51,7 +51,9 @@ template <class EC_PROXY_ADMIN, class Proxy,
 typename FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::ProxyInterface_ptr
 FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Any_var any = Request_Context_Repository().get_cached_result();
+  CORBA::Any_var any = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+
   CORBA::Object_var obj;
   if (*any >>= CORBA::Any::to_object(obj))
     return ProxyInterface::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);

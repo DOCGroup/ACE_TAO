@@ -245,13 +245,13 @@ CORBA::Boolean
 TAO_FTEC_Event_Channel::start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out location
-        ACE_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))
 {
-  return ec_impl_->start(listener, location);
+  return ec_impl_->start(listener, location ACE_ENV_ARG_PARAMETER);
 }
 
 void
