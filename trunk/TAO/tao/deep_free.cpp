@@ -29,10 +29,14 @@
 // ============================================================================
 
 #include "tao/Marshal.h"
+#include "tao/CDR.h"
 #include "tao/Environment.h"
-#include "tao/Object.h"
 #include "tao/Any.h"
-#include "tao/Sequence.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/Principal.h"
+#include "tao/varout.h"
+#include "tao/Union.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, deep_free, "$Id$")
