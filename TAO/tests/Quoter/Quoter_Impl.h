@@ -16,7 +16,7 @@
 #if !defined (QUOTER_IMPL_H)
 #define	QUOTER_IMPL_H
 
-#include "quoterS.h"
+#include "QuoterS.h"
 
 // Forward declarations.
 class Quoter_Impl;

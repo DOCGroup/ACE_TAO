@@ -103,11 +103,11 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       for (u_int i = 0; i < factories_ptr->length (); i++) 
         {
           // Get the first object reference to a factory.
-          CORBA::Object_var quoter_FactoryObj_var = (*factories_ptr)[i];
+          CORBA::Object_ptr quoter_FactoryObj_ptr = (*factories_ptr)[i];
 
           // Narrow it to a Quoter Factory.
           Stock::Quoter_Factory_var quoter_Factory_var =
-            Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (),
+            Stock::Quoter_Factory::_narrow (quoter_FactoryObj_ptr,
                                             TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
@@ -145,7 +145,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
         }
 
       // Return an object reference to the newly created Quoter.
-      return (CosLifeCycle::LifeCycleObject_ptr) quoter_var;
+      return (CosLifeCycle::LifeCycleObject_ptr) quoter_var.ptr();
     }
   TAO_CATCHANY
     {
