@@ -24,7 +24,7 @@ CFLAGS = \
 	$(TAO_NAMING_CFLAGS) \
 	$(TAO_EVENT_CFLAGS) \
 	$(TAO_NOTIFY_CFLAGS) \
-	$(TAO_FT_CFLAGS)
+        $(TAO_FTORB_CFLAGS)
 
 CPPDIR = .;FaultTolerance
 
@@ -39,7 +39,7 @@ LIBFILES = \
 	$(TAO_NAMING_LIB) \
 	$(TAO_EVENT_LIB) \
 	$(TAO_NOTIFY_LIB) \
-	$(TAO_FT_LIB)
+        $(TAO_FTORB_LIB)
 
 all: idl_src_files
 
