@@ -96,6 +96,7 @@ typedef unsigned __int64 ACE_UINT64;
 
 // Platform supports POSIX timers via timestruc_t.
 //define ACE_HAS_POSIX_TIME
+#define ACE_LACKS_STRPTIME
 
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
@@ -307,6 +308,14 @@ typedef unsigned __int64 ACE_UINT64;
 #if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
         #undef __ACE_INLINE__
 #endif /* __ACE_INLINE__ */
+
+// ACE_USES_STATIC_MFC always implies ACE_HAS_MFC
+#if defined (ACE_USES_STATIC_MFC)
+# if defined (ACE_HAS_MFC)
+#   undef ACE_HAS_MFC
+# endif
+# define ACE_HAS_MFC 1
+#endif /* ACE_USES_STATIC_MFC */
 
 // We are build ACE and want to use MFC (multithreaded)
 #if defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
