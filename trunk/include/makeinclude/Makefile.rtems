@@ -1,0 +1,26 @@
+#  Makefile
+
+export RTEMS_MAKEFILE_PATH=/opt/rtems/sparc-rtems/erc32/
+include $(RTEMS_MAKEFILE_PATH)/Makefile.inc
+include $(RTEMS_CUSTOM)
+include $(PROJECT_ROOT)/make/leaf.cfg
+
+print_cxx:
+	@echo sparc-rtems-g++
+
+print_cc:
+	@echo sparc-rtems-gcc
+
+print_cflags:
+	@echo -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs -qrtems -mcpu=cypress 
+
+print_prefix:
+	@echo /opt/rtems
+
+print_target:
+	@echo sparc-rtems
+
+is_big_endian:
+	t=`echo "#include <rtems.h>" | \
+	   sparc-rtems-gcc -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs -qrtems -mcpu=cypress -E -dM - | \
+	   grep CPU_BIG_ENDIAN | cut -d' ' -f3` ; echo $$t

@@ -1,3 +1,21 @@
+Sat Apr  7 16:00:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests: Added a new rtems_init.c file.  Thanks to Joel Sherrill
+ 	  <joel@OARcorp.com> for contributing this port.
+
+	* include/makeinclude: Added the new platform_rtems.x_g++.GNU file.
+	* ace: Added the new config-rtems.h file.
+
+	* ace/OS.cpp: Added support for RTEMS, which is an open-source
+	  real-time operating system that can be downloaded from
+ 	  ftp://ftp.oarcorp.com/pub/rtems.  Thanks to Joel Sherrill
+ 	  <joel@OARcorp.com> for contributing this port.
+
+	* ace/OS.cpp: The return type for ACE_OS::readv_emulation()
+	  should have been ssize_t, not int, to be consistent with its
+ 	  definition in the header file.  Thanks to Joel Sherrill
+ 	  <joel@OARcorp.com> for reporting this.
+  
 Sat Apr  7 21:16:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
