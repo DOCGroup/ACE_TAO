@@ -18,13 +18,16 @@
 
 INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
+## Local lib directory
+libdir = $(shell pwd)
+
 ## LDFLAGS =
 ## Libtool will automatically link against the "proper" library.
 ## Do not change the "libACE.la."  It is not a typographical error!
 ##
 ## We override the "LIBS" variable provided by the configure script since
 ## we should only need to link against the ACE library for these tests.
-LDADD = $(top_builddir)/ace/libACE.la
+LDADD = $(top_builddir)/ace/libACE.la $(libdir)/libTest_Output.la
 ##LIBS = $(top_builddir)/ace/libACE.la
 
 noinst_SCRIPTS = \
@@ -66,8 +69,12 @@ FRAMEWORK_COMPONENT_TEST = Framework_Component_Test
 
 ## Build the shared libraries needed for the DLL_Test and the
 ## Service_Config_DLL test. 
-libdir = $(shell pwd)
-lib_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la
+## libdir = $(shell pwd)
+lib_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la libTest_Output.la
+
+libTest_Output_la_SOURCES = Test_Output.cpp test_config.h
+libTest_Output_la_LDFLAGS = -module
+libTest_Output_la_LIBADD = $(top_builddir)/ace/libACE.la
 
 libDLL_Test_la_SOURCES = DLL_Test_Impl.cpp DLL_Test_Impl.h
 libDLL_Test_la_LDFLAGS = -module
@@ -203,221 +210,236 @@ noinst_PROGRAMS = \
   $(TOKENS_TEST) \
   $(XTREACTOR_TEST)
 
-Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
+Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp Main.cpp
 
-Arg_Shifter_Test_SOURCES = Arg_Shifter_Test.cpp
+Arg_Shifter_Test_SOURCES = Arg_Shifter_Test.cpp Main.cpp
 
-ARGV_Test_SOURCES = ARGV_Test.cpp
+ARGV_Test_SOURCES = ARGV_Test.cpp Main.cpp
 
-Atomic_Op_Test_SOURCES = Atomic_Op_Test.cpp
+Atomic_Op_Test_SOURCES = Atomic_Op_Test.cpp Main.cpp
 
-Auto_IncDec_Test_SOURCES = Auto_IncDec_Test.cpp
+Auto_IncDec_Test_SOURCES = Auto_IncDec_Test.cpp Main.cpp
 
-Barrier_Test_SOURCES = Barrier_Test.cpp
+Barrier_Test_SOURCES = Barrier_Test.cpp Main.cpp
 
-Basic_Types_Test_SOURCES = Basic_Types_Test.cpp
+Basic_Types_Test_SOURCES = Basic_Types_Test.cpp Main.cpp
 
-Bound_Ptr_Test_SOURCES = Bound_Ptr_Test.cpp
+Bound_Ptr_Test_SOURCES = Bound_Ptr_Test.cpp Main.cpp
 
-Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
+Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp Main.cpp
 
-CDR_Array_Test_SOURCES = CDR_Array_Test.cpp
+CDR_Array_Test_SOURCES = CDR_Array_Test.cpp Main.cpp
 
-CDR_Test_SOURCES = CDR_Test.cpp
+CDR_Test_SOURCES = CDR_Test.cpp Main.cpp
 
-CDR_File_Test_SOURCES = CDR_File_Test.cpp
+CDR_File_Test_SOURCES = CDR_File_Test.cpp Main.cpp
 
 Cached_Accept_Conn_Test_SOURCES = Cached_Accept_Conn_Test.cpp \
-                                  Cached_Accept_Conn_Test.h
+                                  Cached_Accept_Conn_Test.h \
+                                  Main.cpp
 
-Cached_Allocator_Test_SOURCES = Cached_Allocator_Test.cpp
+Cached_Allocator_Test_SOURCES = Cached_Allocator_Test.cpp Main.cpp
 
 Cached_Conn_Test_SOURCES = Cached_Conn_Test.cpp \
-                           Cached_Conn_Test.h
+                           Cached_Conn_Test.h \
+                           Main.cpp
 
 Cache_Map_Manager_Test_SOURCES = Cache_Map_Manager_Test.cpp \
-                                 Cache_Map_Manager_Test.h
+                                 Cache_Map_Manager_Test.h \
+                                 Main.cpp
 
-Capabilities_Test_SOURCES = Capabilities_Test.cpp
+Capabilities_Test_SOURCES = Capabilities_Test.cpp Main.cpp
 
-Codecs_Test_SOURCES = Codecs_Test.cpp
+Codecs_Test_SOURCES = Codecs_Test.cpp Main.cpp
 
-Collection_Test_SOURCES = Collection_Test.cpp Collection_Test.h
+Collection_Test_SOURCES = Collection_Test.cpp Collection_Test.h Main.cpp
 
-Config_Test_SOURCES = Config_Test.cpp Config_Test.h
+Config_Test_SOURCES = Config_Test.cpp Config_Test.h Main.cpp
 
-Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h
+Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h Main.cpp
 
-DLList_Test_SOURCES = DLList_Test.cpp
+DLList_Test_SOURCES = DLList_Test.cpp Main.cpp
 
-DLL_Test_SOURCES = DLL_Test.cpp DLL_Test.h
+DLL_Test_SOURCES = DLL_Test.cpp DLL_Test.h Main.cpp
 DLL_Test_DEPENDENCIES = libDLL_Test.la
 
-Date_Time_Test_SOURCES = Date_Time_Test.cpp
+Date_Time_Test_SOURCES = Date_Time_Test.cpp Main.cpp
 
-Dev_Poll_Reactor_Test_SOURCES = Dev_Poll_Reactor_Test.cpp
+Dev_Poll_Reactor_Test_SOURCES = Dev_Poll_Reactor_Test.cpp Main.cpp
 
-Dirent_Test_SOURCES = Dirent_Test.cpp
+Dirent_Test_SOURCES = Dirent_Test.cpp Main.cpp
 
-Dynamic_Priority_Test_SOURCES = Dynamic_Priority_Test.cpp
+Dynamic_Priority_Test_SOURCES = Dynamic_Priority_Test.cpp Main.cpp
 
-Enum_Interfaces_Test_SOURCES = Enum_Interfaces_Test.cpp
+Enum_Interfaces_Test_SOURCES = Enum_Interfaces_Test.cpp Main.cpp
 
-Env_Value_Test_SOURCES = Env_Value_Test.cpp
+Env_Value_Test_SOURCES = Env_Value_Test.cpp Main.cpp
 
-FIFO_Test_SOURCES = FIFO_Test.cpp
+FIFO_Test_SOURCES = FIFO_Test.cpp Main.cpp
 
-FlReactor_Test_SOURCES = FlReactor_Test.cpp
+FlReactor_Test_SOURCES = FlReactor_Test.cpp Main.cpp
 
 Framework_Component_Test_SOURCES = Framework_Component_Test.cpp \
-                                   Framework_Component_Test.h
+                                   Framework_Component_Test.h \
+                                   Main.cpp
 
-Future_Test_SOURCES = Future_Test.cpp
+Future_Test_SOURCES = Future_Test.cpp Main.cpp
 
-Future_Set_Test_SOURCES = Future_Set_Test.cpp
+Future_Set_Test_SOURCES = Future_Set_Test.cpp Main.cpp
 
-Get_Opt_Test_SOURCES = Get_Opt_Test.cpp
+Get_Opt_Test_SOURCES = Get_Opt_Test.cpp Main.cpp
 
-Handle_Set_Test_SOURCES = Handle_Set_Test.cpp
+Handle_Set_Test_SOURCES = Handle_Set_Test.cpp Main.cpp
 
-Hash_Map_Manager_Test_SOURCES = Hash_Map_Manager_Test.cpp
+Hash_Map_Manager_Test_SOURCES = Hash_Map_Manager_Test.cpp Main.cpp
 
-Hash_Map_Bucket_Iterator_Test_SOURCES = Hash_Map_Bucket_Iterator_Test.cpp
+Hash_Map_Bucket_Iterator_Test_SOURCES = Hash_Map_Bucket_Iterator_Test.cpp \
+                                        Main.cpp
 
-High_Res_Timer_Test_SOURCES = High_Res_Timer_Test.cpp
+High_Res_Timer_Test_SOURCES = High_Res_Timer_Test.cpp Main.cpp
 
-INET_Addr_Test_SOURCES = INET_Addr_Test.cpp
+INET_Addr_Test_SOURCES = INET_Addr_Test.cpp Main.cpp
 
-IOStream_Test_SOURCES = IOStream_Test.cpp
+IOStream_Test_SOURCES = IOStream_Test.cpp Main.cpp
 
-Lazy_Map_Manager_Test_SOURCES = Lazy_Map_Manager_Test.cpp
+Lazy_Map_Manager_Test_SOURCES = Lazy_Map_Manager_Test.cpp Main.cpp
 
-Log_Msg_Test_SOURCES = Log_Msg_Test.cpp
+Log_Msg_Test_SOURCES = Log_Msg_Test.cpp Main.cpp
 
-Logging_Strategy_Test_SOURCES = Logging_Strategy_Test.cpp
+Logging_Strategy_Test_SOURCES = Logging_Strategy_Test.cpp Main.cpp
 
-MEM_Stream_Test_SOURCES = MEM_Stream_Test.cpp MEM_Stream_Test.h
+MEM_Stream_Test_SOURCES = MEM_Stream_Test.cpp MEM_Stream_Test.h Main.cpp
 
-MM_Shared_Memory_Test_SOURCES = MM_Shared_Memory_Test.cpp
+MM_Shared_Memory_Test_SOURCES = MM_Shared_Memory_Test.cpp Main.cpp
 
 MT_Reactor_Timer_Test_SOURCES = MT_Reactor_Timer_Test.cpp \
-                                MT_Reactor_Timer_Test.h
+                                MT_Reactor_Timer_Test.h \
+                                Main.cpp
 
-MT_Reactor_Upcall_Test_SOURCES = MT_Reactor_Upcall_Test.cpp
+MT_Reactor_Upcall_Test_SOURCES = MT_Reactor_Upcall_Test.cpp Main.cpp
 
-MT_SOCK_Test_SOURCES = MT_SOCK_Test.cpp
+MT_SOCK_Test_SOURCES = MT_SOCK_Test.cpp Main.cpp
 
-Malloc_Test_SOURCES = Malloc_Test.cpp Malloc_Test.h
+Malloc_Test_SOURCES = Malloc_Test.cpp Malloc_Test.h Main.cpp
 
-Map_Manager_Test_SOURCES = Map_Manager_Test.cpp
+Map_Manager_Test_SOURCES = Map_Manager_Test.cpp Main.cpp
 
-Map_Test_SOURCES = Map_Test.cpp Map_Test.h
+Map_Test_SOURCES = Map_Test.cpp Map_Test.h Main.cpp
 
 Max_Default_Port_Test_SOURCES = Max_Default_Port_Test.cpp \
-                                Max_Default_Port_Test.h
+                                Max_Default_Port_Test.h \
+                                Main.cpp
 
-Mem_Map_Test_SOURCES = Mem_Map_Test.cpp
+Mem_Map_Test_SOURCES = Mem_Map_Test.cpp Main.cpp
 
-Message_Block_Test_SOURCES = Message_Block_Test.cpp
+Message_Block_Test_SOURCES = Message_Block_Test.cpp Main.cpp
 
-Message_Queue_Notifications_Test_SOURCES = Message_Queue_Notifications_Test.cpp
+Message_Queue_Notifications_Test_SOURCES = Message_Queue_Notifications_Test.cpp \
+                                           Main.cpp
 
-Message_Queue_Test_SOURCES = Message_Queue_Test.cpp
+Message_Queue_Test_SOURCES = Message_Queue_Test.cpp Main.cpp
 
 Message_Queue_Test_Ex_SOURCES = Message_Queue_Test_Ex.cpp \
-                                Message_Queue_Test_Ex.h
+                                Message_Queue_Test_Ex.h \
+                                Main.cpp
 
-Multicast_Test_SOURCES = Multicast_Test.cpp
+Multicast_Test_SOURCES = Multicast_Test.cpp Main.cpp
 
 Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp \
-                                    Multihomed_INET_Addr_Test.h
+                                    Multihomed_INET_Addr_Test.h \
+                                    Main.cpp
 
-Naming_Test_SOURCES = Naming_Test.cpp
+Naming_Test_SOURCES = Naming_Test.cpp Main.cpp
 
-Notify_Performance_Test_SOURCES = Notify_Performance_Test.cpp
+Notify_Performance_Test_SOURCES = Notify_Performance_Test.cpp Main.cpp
 
-OS_Test_SOURCES = OS_Test.cpp
+OS_Test_SOURCES = OS_Test.cpp Main.cpp
 
-Object_Manager_Test_SOURCES = Object_Manager_Test.cpp
+Object_Manager_Test_SOURCES = Object_Manager_Test.cpp Main.cpp
 
-Obstack_Test_SOURCES = Obstack_Test.cpp
+Obstack_Test_SOURCES = Obstack_Test.cpp Main.cpp
 
-OrdMultiSet_Test_SOURCES = OrdMultiSet_Test.cpp
+OrdMultiSet_Test_SOURCES = OrdMultiSet_Test.cpp Main.cpp
 
-Pipe_Test_SOURCES = Pipe_Test.cpp
+Pipe_Test_SOURCES = Pipe_Test.cpp Main.cpp
 
-Priority_Buffer_Test_SOURCES = Priority_Buffer_Test.cpp
+Priority_Buffer_Test_SOURCES = Priority_Buffer_Test.cpp Main.cpp
 
 Priority_Reactor_Test_SOURCES = Priority_Reactor_Test.cpp \
-                                Priority_Reactor_Test.h
+                                Priority_Reactor_Test.h \
+                                Main.cpp
 
-Priority_Task_Test_SOURCES = Priority_Task_Test.cpp
+Priority_Task_Test_SOURCES = Priority_Task_Test.cpp Main.cpp
 
-Proactor_Scatter_Gather_Test_SOURCES = Proactor_Scatter_Gather_Test.cpp
+Proactor_Scatter_Gather_Test_SOURCES = Proactor_Scatter_Gather_Test.cpp \
+                                       Main.cpp
 
-Proactor_Test_SOURCES = Proactor_Test.cpp
+Proactor_Test_SOURCES = Proactor_Test.cpp Main.cpp
 
-Proactor_Timer_Test_SOURCES = Proactor_Timer_Test.cpp
+Proactor_Timer_Test_SOURCES = Proactor_Timer_Test.cpp Main.cpp
 
-Process_Manager_Test_SOURCES = Process_Manager_Test.cpp
+Process_Manager_Test_SOURCES = Process_Manager_Test.cpp Main.cpp
 
-Process_Mutex_Test_SOURCES = Process_Mutex_Test.cpp
+Process_Mutex_Test_SOURCES = Process_Mutex_Test.cpp Main.cpp
 
 Process_Strategy_Test_SOURCES = Process_Strategy_Test.cpp \
-                                Process_Strategy_Test.h
+                                Process_Strategy_Test.h \
+                                Main.cpp
 
-RB_Tree_Test_SOURCES = RB_Tree_Test.cpp RB_Tree_Test.h
+RB_Tree_Test_SOURCES = RB_Tree_Test.cpp RB_Tree_Test.h Main.cpp
 
-Reactor_Dispatch_Order_Test_SOURCES = Reactor_Dispatch_Order_Test.cpp
+Reactor_Dispatch_Order_Test_SOURCES = Reactor_Dispatch_Order_Test.cpp Main.cpp
 
 Reactor_Exceptions_Test_SOURCES = Reactor_Exceptions_Test.cpp
 
-Reactor_Notify_Test_SOURCES = Reactor_Notify_Test.cpp
+Reactor_Notify_Test_SOURCES = Reactor_Notify_Test.cpp Main.cpp
 
 Reactor_Performance_Test_SOURCES = Reactor_Performance_Test.cpp \
-                                   Reactor_Performance_Test.h
+                                   Reactor_Performance_Test.h \
+                                   Main.cpp
 
-Reactor_Timer_Test_SOURCES = Reactor_Timer_Test.cpp
+Reactor_Timer_Test_SOURCES = Reactor_Timer_Test.cpp Main.cpp
 
-Reactors_Test_SOURCES = Reactors_Test.cpp
+Reactors_Test_SOURCES = Reactors_Test.cpp Main.cpp
 
-Reader_Writer_Test_SOURCES = Reader_Writer_Test.cpp
+Reader_Writer_Test_SOURCES = Reader_Writer_Test.cpp Main.cpp
 
-Recursive_Condition_Test_SOURCES = Recursive_Condition_Test.cpp
+Recursive_Condition_Test_SOURCES = Recursive_Condition_Test.cpp Main.cpp
 
-Recursive_Mutex_Test_SOURCES = Recursive_Mutex_Test.cpp
+Recursive_Mutex_Test_SOURCES = Recursive_Mutex_Test.cpp Main.cpp
 
 Refcounted_Auto_Ptr_Test_SOURCES = Refcounted_Auto_Ptr_Test.cpp \
-                                   Refcounted_Auto_Ptr_Test.h
+                                   Refcounted_Auto_Ptr_Test.h \
+                                   Main.cpp
 
-Reverse_Lock_Test_SOURCES = Reverse_Lock_Test.cpp
+Reverse_Lock_Test_SOURCES = Reverse_Lock_Test.cpp Main.cpp
 
-SOCK_Connector_Test_SOURCES = SOCK_Connector_Test.cpp
+SOCK_Connector_Test_SOURCES = SOCK_Connector_Test.cpp Main.cpp
 
-SOCK_Send_Recv_Test_SOURCES = SOCK_Send_Recv_Test.cpp
+SOCK_Send_Recv_Test_SOURCES = SOCK_Send_Recv_Test.cpp Main.cpp
 
-SOCK_Test_SOURCES = SOCK_Test.cpp
+SOCK_Test_SOURCES = SOCK_Test.cpp Main.cpp
 
-SPIPE_Test_SOURCES = SPIPE_Test.cpp
+SPIPE_Test_SOURCES = SPIPE_Test.cpp Main.cpp
 
-SString_Test_SOURCES = SString_Test.cpp
+SString_Test_SOURCES = SString_Test.cpp Main.cpp
 
-SV_Shared_Memory_Test_SOURCES = SV_Shared_Memory_Test.cpp
+SV_Shared_Memory_Test_SOURCES = SV_Shared_Memory_Test.cpp Main.cpp
 
-Semaphore_Test_SOURCES = Semaphore_Test.cpp
+Semaphore_Test_SOURCES = Semaphore_Test.cpp Main.cpp
 
-Service_Config_Test_SOURCES = Service_Config_Test.cpp
+Service_Config_Test_SOURCES = Service_Config_Test.cpp Main.cpp
 Service_Config_Test_DEPENDENCIES = libService_Config_DLL.la
 
-Signal_Test_SOURCES = Signal_Test.cpp
+Signal_Test_SOURCES = Signal_Test.cpp Main.cpp
 
-Sigset_Ops_Test_SOURCES = Sigset_Ops_Test.cpp
+Sigset_Ops_Test_SOURCES = Sigset_Ops_Test.cpp Main.cpp
 
-Simple_Message_Block_Test_SOURCES = Simple_Message_Block_Test.cpp
+Simple_Message_Block_Test_SOURCES = Simple_Message_Block_Test.cpp Main.cpp
 
-Svc_Handler_Test_SOURCES = Svc_Handler_Test.cpp
+Svc_Handler_Test_SOURCES = Svc_Handler_Test.cpp Main.cpp
 
-TP_Reactor_Test_SOURCES = TP_Reactor_Test.cpp TP_Reactor_Test.h
+TP_Reactor_Test_SOURCES = TP_Reactor_Test.cpp TP_Reactor_Test.h Main.cpp
 
 TSS_Test_SOURCES = TSS_Test.cpp \
                    TSS_Test_Errno.h
@@ -430,34 +452,36 @@ Thread_Mutex_Test_SOURCES = Thread_Mutex_Test.cpp
 
 Thread_Pool_Reactor_Test_SOURCES = Thread_Pool_Reactor_Test.cpp
 
-Thread_Pool_Reactor_Resume_Test_SOURCES = Thread_Pool_Reactor_Resume_Test.cpp
+Thread_Pool_Reactor_Resume_Test_SOURCES = Thread_Pool_Reactor_Resume_Test.cpp \
+                                          Main.cpp
 
-Thread_Pool_Test_SOURCES = Thread_Pool_Test.cpp
+Thread_Pool_Test_SOURCES = Thread_Pool_Test.cpp Main.cpp
 
-Time_Service_Test_SOURCES = Time_Service_Test.cpp
+Time_Service_Test_SOURCES = Time_Service_Test.cpp Main.cpp
 
-Time_Value_Test_SOURCES = Time_Value_Test.cpp
+Time_Value_Test_SOURCES = Time_Value_Test.cpp Main.cpp
 
-Timeprobe_Test_SOURCES = Timeprobe_Test.cpp
+Timeprobe_Test_SOURCES = Timeprobe_Test.cpp Main.cpp
 
-Timer_Queue_Test_SOURCES = Timer_Queue_Test.cpp
+Timer_Queue_Test_SOURCES = Timer_Queue_Test.cpp Main.cpp
 
-TkReactor_Test_SOURCES = TkReactor_Test.cpp
+TkReactor_Test_SOURCES = TkReactor_Test.cpp Main.cpp
 
-Token_Strategy_Test_SOURCES = Token_Strategy_Test.cpp
+Token_Strategy_Test_SOURCES = Token_Strategy_Test.cpp Main.cpp
 
-Tokens_Test_SOURCES = Tokens_Test.cpp
+Tokens_Test_SOURCES = Tokens_Test.cpp Main.cpp
 
-UPIPE_SAP_Test_SOURCES = UPIPE_SAP_Test.cpp
+UPIPE_SAP_Test_SOURCES = UPIPE_SAP_Test.cpp Main.cpp
 
 Upgradable_RW_Test_SOURCES = Upgradable_RW_Test.cpp \
-                             Upgradable_RW_Test.h
+                             Upgradable_RW_Test.h \
+                             Main.cpp
 
-Unbounded_Set_Test_Ex_SOURCES = Unbounded_Set_Test_Ex.cpp
+Unbounded_Set_Test_Ex_SOURCES = Unbounded_Set_Test_Ex.cpp Main.cpp
 
-Vector_Test_SOURCES = Vector_Test.cpp
+Vector_Test_SOURCES = Vector_Test.cpp Main.cpp
 
-XtReactor_Test_SOURCES = XtReactor_Test.cpp
+XtReactor_Test_SOURCES = XtReactor_Test.cpp Main.cpp
 XtReactor_Test_LDADD = $(top_builddir)/ace/libACE.la @XTREACTOR_TEST_XLIBS@
 
 ## Additional test header files
