@@ -6,6 +6,15 @@ Tue May 11 20:40:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  constructor. This was causing all the DII param_tests to
 	  fail.
 
+	* tao/Any.cpp:
+	  Removed the branch from value() that returns (void *)cdr_. 
+	  After checking through all the code in the TAO directory, 
+	  there seems to be nothing that this endangers. Also ran the 
+	  DII param_tests before and after committing the change - 
+	  the results were the same. So now the functionality is
+	  cleanly divided: Any::value() for the void* and 
+	  Any::_tao_get_cdr() for the cdr_.
+
 Tue May 11 18:06:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile:
