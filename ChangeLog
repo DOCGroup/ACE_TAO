@@ -1,45 +1,50 @@
+Sat May 27 17:09:03 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added const to example
+          accessor declaration.
+
 Sat May 27 14:17:35 2000  Ossama Othman  <ossama@uci.edu>
 
-	* apps/JAWS2/HTTPU/parse_url.cpp:
-	* examples/Web_Crawler/URL_Addr.cpp:
-	* examples/Reactor/Multicast/client.cpp:
-	* examples/OS/Process/process.cpp:
-	* examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
-	* examples/IPC_SAP/ATM_SAP/CPP-server.cpp:
-	* examples/DLL/Newsweek.cpp:
-	* examples/DLL/Today.cpp:
-	* examples/DLL/test_dll.cpp:
-	* websvcs/tests/Test_URL_Addr.cpp:
+        * apps/JAWS2/HTTPU/parse_url.cpp:
+        * examples/Web_Crawler/URL_Addr.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-server.cpp:
+        * examples/DLL/Newsweek.cpp:
+        * examples/DLL/Today.cpp:
+        * examples/DLL/test_dll.cpp:
+        * websvcs/tests/Test_URL_Addr.cpp:
 
-	  Added missing `ace/Log_Msg.h' include.
+          Added missing `ace/Log_Msg.h' include.
 
-	* examples/Web_Crawler/URL_Addr.cpp (ACE_URL_Addr):
+        * examples/Web_Crawler/URL_Addr.cpp (ACE_URL_Addr):
 
-	  Fixed warning about missing base class initialization in copy
-	  constructor base member initializer list.
+          Fixed warning about missing base class initialization in copy
+          constructor base member initializer list.
 
-	  (~ACE_URL_Addr, addr_to_string):
+          (~ACE_URL_Addr, addr_to_string):
 
-	  Changed use of "LPTSTR" to "ACE_TCHAR *".  This fixes an error
-	  on UNIX builds.
+          Changed use of "LPTSTR" to "ACE_TCHAR *".  This fixes an error
+          on UNIX builds.
 
 Sat May 27 14:59:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Stream.h: Improved the documentation of recv_n() et al.
-	  Thanks to Sami Aario <saempylae@hotmail.com> for this
- 	  suggestion.
+        * ace/SOCK_Stream.h: Improved the documentation of recv_n() et al.
+          Thanks to Sami Aario <saempylae@hotmail.com> for this
+          suggestion.
 
 Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-common.h:
 
-          Added a semicolon to the definitions of 
+          Added a semicolon to the definitions of
           ACE_EXPORT_SINGLETON_DECLARE
           ACE_IMPORT_SINGLETON_DECLARE
 
           Since the default definition for this is nothing, the semicolon is
-          better off in the definitions themselves.  Otherwise, one needs to 
-          add a semicolon after the use of these macros, which can cause 
+          better off in the definitions themselves.  Otherwise, one needs to
+          add a semicolon after the use of these macros, which can cause
           warnings when the macro expands to nothing.
 
 Fri May 26 20:00:22 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -47,23 +52,23 @@ Fri May 26 20:00:22 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_String.inl (strcasecmp, strncasecmp):
 
           I have no idea how this worked before, but in these two functions
-          we were using _stricmp/_strnicmp for Win32.  Borland doesn't define  
+          we were using _stricmp/_strnicmp for Win32.  Borland doesn't define
           these by default, instead they use stricmp/strnicmp.  So instead
           of trying to figure out how this all worked before, I just added
           an #elif for __BORLAND__ and called the stricmp/strnicmp.
 
 Fri May 26 19:26:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* netsvcs/clients/Logger/direct_logging.cpp:
+        * netsvcs/clients/Logger/direct_logging.cpp:
 
-	  Added missing include of `ace/Log_Msg.h'.
+          Added missing include of `ace/Log_Msg.h'.
 
 Fri May 26 18:14:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl:
 
-          Moved the ACE_OS_String::to_lower () methods up in the file, since 
-          they are used in other inlined functions. 
+          Moved the ACE_OS_String::to_lower () methods up in the file, since
+          they are used in other inlined functions.
 
 Fri May 26 16:13:08 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -77,234 +82,234 @@ Fri May 26 16:13:08 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri May 26 15:58:52 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Select_Reactor_Base.cpp (open):
+        * ace/Select_Reactor_Base.cpp (open):
 
           Re-enabled the change that added ability to set the handle limit
-	  to a value greater than FD_SETSIZE on platforms that support
-	  this functionality.  This was made possible by Steve Huston's
-	  change to the ACE::max_handles() method described several
-	  ChangeLog entries below.
+          to a value greater than FD_SETSIZE on platforms that support
+          this functionality.  This was made possible by Steve Huston's
+          change to the ACE::max_handles() method described several
+          ChangeLog entries below.
 
 Fri May 26 14:27:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl:
 
-          Changed the strncasecmp methods to not use ssize_t inside of 
-          them.  This required a reworking of the loop, since it 
-          depended on negative values.  This was needed since ssize_t 
-          is more difficult to get defined than size_t, so it seemed 
+          Changed the strncasecmp methods to not use ssize_t inside of
+          them.  This required a reworking of the loop, since it
+          depended on negative values.  This was needed since ssize_t
+          is more difficult to get defined than size_t, so it seemed
           less obtrusive to do it this way.
 
 Fri May 26 12:30:56 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/TLI_Connector.h:
-	* ace/TLI_Connector.cpp:
+        * ace/TLI_Connector.h:
+        * ace/TLI_Connector.cpp:
 
-	  Moved include of ace/Log_Msg.h to the header file.
-	  TLI_Connector.i utilizes some of the ACE_Log_Msg macros.
+          Moved include of ace/Log_Msg.h to the header file.
+          TLI_Connector.i utilizes some of the ACE_Log_Msg macros.
 
 Fri May 26 14:25:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	  Added OS_String.h to project for convenience.
+        * ace/ace_dll.dsp:
+          Added OS_String.h to project for convenience.
 
 Fri May 26 12:23:55 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/TLI_Acceptor.cpp:
-	* ace/TLI_Connector.cpp:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.cpp:
 
-	  *sigh* These files also needed to include "ace/Log_Msg.h."
+          *sigh* These files also needed to include "ace/Log_Msg.h."
 
 Fri May 26 12:13:26 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Singleton.cpp:
-	* ace/TLI.cpp:
+        * ace/Singleton.cpp:
+        * ace/TLI.cpp:
 
-	  These files needed to explicitly include "ace/Log_Msg.h," too.
+          These files needed to explicitly include "ace/Log_Msg.h," too.
 
 Fri May 26 12:04:39 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/ARGV.cpp:
-	* ace/Capabilities.cpp:
-	* ace/Dump.cpp:
-	* ace/Filecache.cpp:
-	* ace/Local_Tokens.h:
-	* ace/Log_Msg.cpp:
-	* ace/Malloc.h:
-	* ace/Map_Manager.h:
-	* ace/Memory_Pool.cpp:
-	* ace/Name_Proxy.cpp:
-	* ace/Process.cpp:
-	* ace/Process_Manager.cpp:
-	* ace/QoS_Manager.cpp:
-	* ace/QoS_Session_Factory.cpp:
-	* ace/QoS_Session_Impl.cpp:
-	* ace/Remote_Name_Space.cpp:
-	* ace/SOCK_Acceptor.cpp:
-	* ace/SOCK_Dgram.cpp:
-	* ace/Select_Reactor_Base.cpp:
-	* ace/Service_Repository.cpp:
-	* ace/Signal.cpp:
-	* ace/Stats.h:
-	* ace/Synch.cpp:
-	* ace/TP_Reactor.h:
-	* ace/Thread_Manager.h:
-	* ace/Token.cpp:
+        * ace/ARGV.cpp:
+        * ace/Capabilities.cpp:
+        * ace/Dump.cpp:
+        * ace/Filecache.cpp:
+        * ace/Local_Tokens.h:
+        * ace/Log_Msg.cpp:
+        * ace/Malloc.h:
+        * ace/Map_Manager.h:
+        * ace/Memory_Pool.cpp:
+        * ace/Name_Proxy.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/QoS_Manager.cpp:
+        * ace/QoS_Session_Factory.cpp:
+        * ace/QoS_Session_Impl.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Signal.cpp:
+        * ace/Stats.h:
+        * ace/Synch.cpp:
+        * ace/TP_Reactor.h:
+        * ace/Thread_Manager.h:
+        * ace/Token.cpp:
 
-	  These files needed to explicitly include "ace/Log_Msg.h," too.
+          These files needed to explicitly include "ace/Log_Msg.h," too.
 
 Fri May 26 11:29:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/ACE.cpp:
-	* ace/Malloc.h:
+        * ace/ACE.cpp:
+        * ace/Malloc.h:
 
-	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
-	  the ACE llessogging macros.  This fixes a problem on Solaris.
+          Include "ace/Log_Msg.h" to pull in the appropriate definition of
+          the ACE llessogging macros.  This fixes a problem on Solaris.
 
 Thu May 25 19:39:59 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Re-enabled test for ACE_HAS_SIGNAL_SAFE_OS_CALLS.  The fixes to
-	  the ACE_OSCALL* macros below make it possible to enable this
-	  feature.
+          Re-enabled test for ACE_HAS_SIGNAL_SAFE_OS_CALLS.  The fixes to
+          the ACE_OSCALL* macros below make it possible to enable this
+          feature.
 
-	* ace/config-all.h (ACE_OSCALL, ACE_OSCALL_RETURN):
+        * ace/config-all.h (ACE_OSCALL, ACE_OSCALL_RETURN):
 
-	  Removed call to "ACE_LOG_MSG->restart()" from these macros in
-	  the "ACE_HAS_SIGNAL_SAFE_OS_CALLS" case.
+          Removed call to "ACE_LOG_MSG->restart()" from these macros in
+          the "ACE_HAS_SIGNAL_SAFE_OS_CALLS" case.
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Remove inclusion of "ace/Log_Msg.h" when the
-	  ACE_ONLY_LATEST_AND_GREATEST preprocessor macro is defined.
-	  This reduces the number of extraneous header interdependencies
-	  in much of the ACE source files.
+          Remove inclusion of "ace/Log_Msg.h" when the
+          ACE_ONLY_LATEST_AND_GREATEST preprocessor macro is defined.
+          This reduces the number of extraneous header interdependencies
+          in much of the ACE source files.
 
-	  Added a forward declaration for ACE_Log_Msg to compensate for
-	  the declaration that was initially pulled in by "ace/Log_Msg.h"
-	  It was only needed for "friend" declaration inside the
-	  ACE_OS_Object_Manager class.
+          Added a forward declaration for ACE_Log_Msg to compensate for
+          the declaration that was initially pulled in by "ace/Log_Msg.h"
+          It was only needed for "friend" declaration inside the
+          ACE_OS_Object_Manager class.
 
-	* ace/Addr.cpp:
-	* ace/Addr.h:
-	* ace/Auto_Ptr.h:
-	* ace/DEV_Addr.cpp:
-	* ace/DEV_Connector.h:
-	* ace/DEV_Connector.i:
-	* ace/DEV_IO.cpp:
-	* ace/DLL.cpp:
-	* ace/FIFO.cpp:
-	* ace/FIFO_Recv.cpp:
-	* ace/FIFO_Recv_Msg.cpp:
-	* ace/FIFO_Send.cpp:
-	* ace/FIFO_Send_Msg.cpp:
-	* ace/FILE_Addr.cpp:
-	* ace/FILE_Connector.h:
-	* ace/FILE_IO.cpp:
-	* ace/Get_Opt.cpp:
-	* ace/Handle_Set.cpp:
-	* ace/INET_Addr.cpp:
-	* ace/IO_SAP.cpp:
-	* ace/IPC_SAP.cpp:
-	* ace/LSOCK.cpp:
-	* ace/LSOCK_Acceptor.cpp:
-	* ace/LSOCK_CODgram.cpp:
-	* ace/LSOCK_Connector.cpp:
-	* ace/LSOCK_Dgram.cpp:
-	* ace/LSOCK_Stream.cpp:
-	* ace/Log_Record.cpp:
-	* ace/MEM_Addr.cpp:
-	* ace/Makefile:
-	* ace/Mem_Map.cpp:
-	* ace/Name_Request_Reply.cpp:
-	* ace/OS.cpp:
-	* ace/Pipe.cpp:
-	* ace/SOCK.cpp:
-	* ace/SOCK_CODgram.cpp:
-	* ace/SOCK_Connector.cpp:
-	* ace/SOCK_Dgram_Bcast.cpp:
-	* ace/SOCK_Dgram_Mcast_QoS.cpp:
-	* ace/SPIPE_Acceptor.cpp:
-	* ace/SPIPE_Connector.cpp:
-	* ace/SV_Message_Queue.cpp:
-	* ace/SV_Semaphore_Complex.cpp:
-	* ace/SV_Semaphore_Simple.cpp:
-	* ace/SV_Shared_Memory.cpp:
-	* ace/Time_Request_Reply.cpp:
-	* ace/Trace.cpp:
-	* ace/Typed_SV_Message_Queue.cpp:
-	* ace/UNIX_Addr.h:
-	* apps/Gateway/Peer/Options.cpp:
-	* apps/JAWS/server/Parse_Headers.cpp:
-	* apps/drwho/Binary_Search.cpp:
-	* apps/drwho/CM_Client.cpp:
-	* apps/drwho/CM_Server.cpp:
-	* apps/drwho/Hash_Table.cpp:
-	* apps/drwho/Multicast_Manager.cpp:
-	* apps/drwho/Options.cpp:
-	* apps/drwho/PMC_All.cpp:
-	* apps/drwho/PMC_Flo.cpp:
-	* apps/drwho/PMC_Ruser.cpp:
-	* apps/drwho/PMC_Usr.cpp:
-	* apps/drwho/PMS_All.cpp:
-	* apps/drwho/PMS_Flo.cpp:
-	* apps/drwho/PMS_Ruser.cpp:
-	* apps/drwho/PMS_Usr.cpp:
-	* apps/drwho/PM_Client.cpp:
-	* apps/drwho/Protocol_Manager.cpp:
-	* apps/drwho/Protocol_Record.cpp:
-	* apps/drwho/SMR_Client.cpp:
-	* apps/drwho/SMR_Server.cpp:
-	* apps/drwho/SM_Client.cpp:
-	* apps/drwho/SM_Server.cpp:
-	* apps/drwho/Search_Struct.cpp:
-	* apps/drwho/Single_Lookup.cpp:
-	* apps/drwho/client.cpp:
-	* apps/drwho/server.cpp:
-	* examples/IOStream/client/iostream_client.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
-	* examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
-	* examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
-	* examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
-	* examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
-	* examples/IPC_SAP/TLI_SAP/db-client.cpp:
-	* examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
-	* examples/Log_Msg/test_callback.cpp:
-	* examples/Log_Msg/test_log_msg.cpp:
-	* examples/Log_Msg/test_ostream.cpp:
-	* examples/Logger/client/logging_app.cpp:
-	* examples/Mem_Map/IO-tests/IO_Test.cpp:
-	* examples/Mem_Map/file-reverse/file-reverse.cpp:
-	* examples/Misc/test_get_opt.cpp:
-	* examples/Misc/test_profile_timer.cpp:
-	* examples/Misc/test_sstring.cpp:
-	* examples/Reactor/FIFO/client.cpp:
-	* examples/Reactor/Misc/test_early_timeouts.cpp:
-	* examples/Reactor/Misc/test_time_value.cpp:
-	* examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
-	* examples/Shared_Malloc/Options.cpp:
-	* examples/Shared_Memory/test_MM.cpp:
-	* examples/Shared_Memory/test_SV.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
-	* netsvcs/clients/Logger/indirect_logging.cpp:
-	* netsvcs/lib/Logging_Strategy.cpp:
-	* performance-tests/Misc/basic_perf.cpp:
+        * ace/Addr.cpp:
+        * ace/Addr.h:
+        * ace/Auto_Ptr.h:
+        * ace/DEV_Addr.cpp:
+        * ace/DEV_Connector.h:
+        * ace/DEV_Connector.i:
+        * ace/DEV_IO.cpp:
+        * ace/DLL.cpp:
+        * ace/FIFO.cpp:
+        * ace/FIFO_Recv.cpp:
+        * ace/FIFO_Recv_Msg.cpp:
+        * ace/FIFO_Send.cpp:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Connector.h:
+        * ace/FILE_IO.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/IO_SAP.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK_Acceptor.cpp:
+        * ace/LSOCK_CODgram.cpp:
+        * ace/LSOCK_Connector.cpp:
+        * ace/LSOCK_Dgram.cpp:
+        * ace/LSOCK_Stream.cpp:
+        * ace/Log_Record.cpp:
+        * ace/MEM_Addr.cpp:
+        * ace/Makefile:
+        * ace/Mem_Map.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/OS.cpp:
+        * ace/Pipe.cpp:
+        * ace/SOCK.cpp:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SV_Message_Queue.cpp:
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Shared_Memory.cpp:
+        * ace/Time_Request_Reply.cpp:
+        * ace/Trace.cpp:
+        * ace/Typed_SV_Message_Queue.cpp:
+        * ace/UNIX_Addr.h:
+        * apps/Gateway/Peer/Options.cpp:
+        * apps/JAWS/server/Parse_Headers.cpp:
+        * apps/drwho/Binary_Search.cpp:
+        * apps/drwho/CM_Client.cpp:
+        * apps/drwho/CM_Server.cpp:
+        * apps/drwho/Hash_Table.cpp:
+        * apps/drwho/Multicast_Manager.cpp:
+        * apps/drwho/Options.cpp:
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PMS_Usr.cpp:
+        * apps/drwho/PM_Client.cpp:
+        * apps/drwho/Protocol_Manager.cpp:
+        * apps/drwho/Protocol_Record.cpp:
+        * apps/drwho/SMR_Client.cpp:
+        * apps/drwho/SMR_Server.cpp:
+        * apps/drwho/SM_Client.cpp:
+        * apps/drwho/SM_Server.cpp:
+        * apps/drwho/Search_Struct.cpp:
+        * apps/drwho/Single_Lookup.cpp:
+        * apps/drwho/client.cpp:
+        * apps/drwho/server.cpp:
+        * examples/IOStream/client/iostream_client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/Log_Msg/test_callback.cpp:
+        * examples/Log_Msg/test_log_msg.cpp:
+        * examples/Log_Msg/test_ostream.cpp:
+        * examples/Logger/client/logging_app.cpp:
+        * examples/Mem_Map/IO-tests/IO_Test.cpp:
+        * examples/Mem_Map/file-reverse/file-reverse.cpp:
+        * examples/Misc/test_get_opt.cpp:
+        * examples/Misc/test_profile_timer.cpp:
+        * examples/Misc/test_sstring.cpp:
+        * examples/Reactor/FIFO/client.cpp:
+        * examples/Reactor/Misc/test_early_timeouts.cpp:
+        * examples/Reactor/Misc/test_time_value.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+        * examples/Shared_Malloc/Options.cpp:
+        * examples/Shared_Memory/test_MM.cpp:
+        * examples/Shared_Memory/test_SV.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/lib/Logging_Strategy.cpp:
+        * performance-tests/Misc/basic_perf.cpp:
 
-	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
-	  the ACE logging macros.
+          Include "ace/Log_Msg.h" to pull in the appropriate definition of
+          the ACE logging macros.
 
 Fri May 26 09:16:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -1320,9 +1325,9 @@ Thu May 11 02:04:58 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
           - On EOF, 0 is returned, errno is irrelevant.
 
           On partial transfers, i.e., if any data is transferred before
- 	  timeout/error/EOF, <bytes_transferred> will contain the number
- 	  of bytes transferred.  These return values now closely match the
- 	  return values from the non "_n" methods.
+          timeout/error/EOF, <bytes_transferred> will contain the number
+          of bytes transferred.  These return values now closely match the
+          return values from the non "_n" methods.
 
           Thanks to Douglas Schmidt, Chris Cleeland, Steve Huston, James
           Hu, and Rich Seibel for helping out!
