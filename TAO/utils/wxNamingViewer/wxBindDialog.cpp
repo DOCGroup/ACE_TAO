@@ -80,5 +80,6 @@ bool WxBindDialog::TransferDataFromWindow()
     object = CORBA::Object::_nil();
 
   }
+  return true;
 }
 
