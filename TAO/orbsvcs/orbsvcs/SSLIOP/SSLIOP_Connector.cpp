@@ -166,6 +166,27 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
       trust = &tmp_trust;
     }
 
+  // @@ Should this be in a "policy validator?"
+  //
+  // If the SSL port is zero, then no SSLIOP tagged component was
+  // available in the IOR, meaning that there is no way to establish
+  // trust.  Throw an exception.
+  if (ssl_endpoint->ssl_component ().port == 0
+      && trust != 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO_SSLIOP (%P|%t) ERROR: ")
+                      ACE_TEXT ("Cannot establish trust since ")
+                      ACE_TEXT ("no SSLIOP tagged component was ")
+                      ACE_TEXT ("found in the IOR.\n")));
+        }
+
+      ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
+                        -1);
+    }
+
   // Check if the user overrode the default Quality-of-Protection for
   // the current object.
   policy = invocation->stub ()->get_policy (Security::SecQOPPolicy,
@@ -190,15 +211,35 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
         no_protection = 1;
     }
 
-  if (no_protection)
+  // If the SSL port is zero, then no SSLIOP tagged component was
+  // available in the IOR, meaning that there is no way to make a
+  // secure invocation.  Throw an exception.
+  if (no_protection == 0
+      && ssl_endpoint->ssl_component ().port == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO_SSLIOP (%P|%t) ERROR: ")
+                      ACE_TEXT ("Cannot make secure invocation since ")
+                      ACE_TEXT ("no SSLIOP tagged component was ")
+                      ACE_TEXT ("found in the IOR.\n")));
+        }
+
+      ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
+                        -1);
+    }
+
+  if (no_protection || ssl_endpoint->ssl_component ().port == 0)
     {
       // If establishment of trust is required, then establish an
       // SSLIOP connection first.  Certificate verification will occur
       // during the connection negotiation.  If the SSLIOP connection
       // is successfully negotiated, then trust is established and
       // continue on to the unprotected connection.
-      if (trust != 0
-          && (trust->trust_in_target || trust->trust_in_client))
+      if (ssl_endpoint->ssl_component ().port != 0
+          && trust != 0
+          && trust->trust_in_target)
         {
           int result = this->ssliop_connect (ssl_endpoint,
                                              trust,
