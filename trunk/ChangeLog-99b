@@ -3,6 +3,16 @@ Thu Jul 15 10:05:40 1999  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-guidelines.html: removed reference to
           ACE_OS::scanf ().  No such thing.
 
+Thu Jul 15 10:01:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: TRANSMIT_FILE_BUFFERS are not defined on PharLap ETS -
+          it's a Microsoft-specific extension to Winsock 1.1.
+
+        * ace/config-win32-common.h: ACE_HAS_IP_MULTICAST is only set for
+          Winsock 2.
+
+        Thanks to David Hauck <davidh@realtimeint.com> for these fixes.
+
 Thu Jul 15 09:28:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_cxx.GNU: changed
