@@ -1,22 +1,23 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Persistent_Naming_Context.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
 #include "ace/Auto_Ptr.h"
 #include "Persistent_Naming_Context.h"
 #include "Persistent_Context_Index.h"
 #include "Bindings_Iterator_T.h"
 
-ACE_RCSID(Naming, Persistent_Naming_Context, "$Id$")
+ACE_RCSID (Naming,
+           Persistent_Naming_Context,
+           "$Id$")
+
+
+// The following #pragma is needed to disable a warning that occurs
+// in MSVC 6 due to the overly long debugging symbols generated for
+// the ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_...> > template
+// instance used by some of the methods in this file.
+#ifdef _MSC_VER
+#  pragma warning(disable: 4786)  /* identifier was truncated to '255'
+                                     characters in the browser
+                                     information */
+#endif  /* _MSC_VER */
+
 
 int
 TAO_Persistent_Bindings_Map::unbind (const char *id,
