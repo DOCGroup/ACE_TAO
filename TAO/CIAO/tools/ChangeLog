@@ -1,3 +1,19 @@
+Wed Aug 13 01:45:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/XML_Utils.h: Added parse_rtcad_extension
+	  static method.  This is yet to be implemented.
+
+	* tools/XML_Helpers/RTConfig_Handlers.h:
+	* tools/XML_Helpers/RTConfig_Handlers.inl:
+	* tools/XML_Helpers/RTConfig_Handlers.cpp: Added new files for
+	  parsing RTConfig extention.
+
+	* tools/XML_Helpers/RTConfiguration.idl: Renamed
+	  RTORB_Resources_Info to RTORB_Resource_Info.
+
+	* tools/XML_Helpers/XMLHelper.mpc: Added rtcorba as a base
+	  project.  We now depend on RTCORBA.
+
 Sun Aug 10 13:50:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/RTComponentServer/RTConfiguration.idl:

@@ -10,7 +10,7 @@
 
 void
 CIAO::RTResource_Config_Manager::init
-(const CIAO::RTConfiguration::RTORB_Resources_Info &info
+(const CIAO::RTConfiguration::RTORB_Resource_Info &info
  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

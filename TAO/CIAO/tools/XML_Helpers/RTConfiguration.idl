@@ -54,7 +54,7 @@ module CIAO
      * These are Real-time related resources that are global within an
      * RT component server.  They can be shared by several containers.
      */
-    struct RTORB_Resources_Info
+    struct RTORB_Resource_Info
     {
       ThreadPool_Configurations tp_configs;
 
