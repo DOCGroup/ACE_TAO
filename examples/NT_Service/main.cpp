@@ -161,22 +161,57 @@ Process::run (int argc, ACE_TCHAR* argv[])
   parse_args (argc, argv);
 
   if (opt_install && !opt_remove)
-    return SERVICE::instance ()->insert (opt_startup);
+    {
+      if (-1 == SERVICE::instance ()->insert (opt_startup))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("insert")));
+          return -1;
+        }
+      return 0;
+    }
 
   if (opt_remove && !opt_install)
-    return SERVICE::instance ()->remove ();
+    {
+      if (-1 == SERVICE::instance ()->remove ())
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("remove")));
+          return -1;
+        }
+      return 0;
+    }
 
   if (opt_start && opt_kill)
     print_usage_and_die ();
 
   if (opt_start)
-    return SERVICE::instance ()->start_svc ();
+    {
+      if (-1 == SERVICE::instance ()->start_svc ())
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("start")));
+          return -1;
+        }
+      return 0;
+    }
 
   if (opt_kill)
-    return SERVICE::instance ()->stop_svc ();
+    {
+      if (-1 == SERVICE::instance ()->stop_svc ())
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("stop")));
+          return -1;
+        }
+      return 0;
+    }
 
   if (opt_type)
-    return SERVICE::instance ()->startup (opt_startup);
+    {
+      if (-1 == SERVICE::instance ()->startup (opt_startup))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set startup")));
+          return -1;
+        }
+      return 0;
+    }
 
   // If we get here, we either run the app in debug mode (-d) or are
   // being called from the service manager to start the service.
