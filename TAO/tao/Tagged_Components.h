@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CONV_FRAMEC.h"
+class TAO_Profile;
 
 class TAO_Export TAO_Tagged_Components
 {
@@ -97,7 +98,7 @@ public:
   IOP::MultipleComponentProfile &components (void);
   // Read/Write access to the underlying
   // MutipleComponentProfile. Added by request from Chris Hafey
-  // <chris@stentorsoft.com> 
+  // <chris@stentorsoft.com>
 
 private:
   void set_code_sets_i (CONV_FRAME::CodeSetComponent &lhs,

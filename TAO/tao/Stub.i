@@ -30,6 +30,7 @@ TAO_Stub::reset_first_locate_request (void)
   this->first_locate_request_ = 1;
 }
 
+
 ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
@@ -38,6 +39,28 @@ TAO_Stub::reset_base (void)
   this->profile_success_ = 0;
 
   this->set_profile_in_use_i (base_profiles_.get_next ());
+}
+
+
+ACE_INLINE CORBA::Boolean
+TAO_Stub::service_profile_selection (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_ptr_,
+                            0));
+
+  TAO_Profile *profile = 0;
+
+  this->orb_core_->service_profile_selection (this->base_profiles_,
+                                              profile);
+  if (profile)
+    {
+      this->set_profile_in_use_i (profile);
+      return 1;
+    }
+
+  return 0;
 }
 
 ACE_INLINE void
@@ -219,6 +242,17 @@ TAO_Stub::next_profile_retry (void)
     }
   else
     {
+      // Check whether the loaded services have something to say about
+      // this condition
+      TAO_Profile *prof = 0;
+      this->orb_core_->service_profile_reselection (this,
+                                                    prof);
+
+      // If the service is loaded and has a profile then try it.
+      if (prof)
+        {
+          return 1;
+        }
       this->reset_profiles_i ();
       return 0;
     }

@@ -266,6 +266,19 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  if (obj == 0)
+    return 1;
+
+  // To accomodate new definitions
+  if (obj->_stubobj ())
+    return obj->_stubobj ()->orb_core ()->object_is_nil (obj);
+
+  return 0;
+}
+
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
 // the latter case, return FALSE.

@@ -354,9 +354,31 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // profiles to try.
   for (;;)
     {
-      // Select the profile for this invocation.
-      this->select_endpoint_based_on_policy (ACE_TRY_ENV);
-      ACE_CHECK;
+      // Check whether any of the services that are loaded wants to
+      // select the profile.
+      // @@ IMHO, the selection of profiles has become *too*
+      // complicated. I am going to increase the complication by
+      // adding another call. This becomes important for FT service
+      // whose profile selection are done elsewhere. At this point I
+      // am just going to call the right call that would select the
+      // profile. IMHO, the RT guys should do this too ie. move the
+      // profile selection elsewhere. It is becoming hard to read the
+      // code that does profile selection.
+      if (this->stub_->service_profile_selection ())
+        {
+          // @@ This is something a bit crazy again. We are setting
+          // this at too many places.. Result, confusion.
+          this->profile_ = this->stub_->profile_in_use ();
+          this->endpoint_ = this->profile_->endpoint ();
+        }
+      else
+        {
+          // Select the profile for this invocation if the loaded
+          // services have nothing to say on profile selection.
+          this->select_endpoint_based_on_policy (ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+
 
       // Get the transport object.
       if (this->transport_ != 0)

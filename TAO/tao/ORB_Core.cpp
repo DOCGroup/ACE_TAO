@@ -35,6 +35,8 @@
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
+#include "tao/Services_Activate.h"
+
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
@@ -43,6 +45,7 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
+
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
@@ -82,6 +85,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     server_factory_from_service_config_ (0),
     // @@ This is not needed since the default server factory, fredk
     //    is statically added to the service configurator.
+    ft_service_callbacks_ (0),
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
@@ -1234,6 +1238,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                       this,
                       this->orb_params ()->preconnects ());
 
+
+
   // Set ORB-level policy defaults.
   if (this->set_default_policies () != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
@@ -1242,6 +1248,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           0),
                         CORBA::COMPLETED_NO),
                       -1);
+
+  // As a last step perform initializations of the service callbacks
+  this->services_callbacks_init ();
 
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
@@ -1371,6 +1380,29 @@ TAO_ORB_Core::resource_factory (void)
       // But, for now we let it leak.
     }
   return this->resource_factory_;
+}
+
+void
+TAO_ORB_Core::services_callbacks_init (void)
+{
+  // We (should) know what are the services that would need
+  // callbacks. So, what we do is go through the Service Configurator
+  // list for looking at the services that we want to load.
+
+  // @@ At this point of time, we have hard coded the names of services
+  // @@ callbacks that we are looking at. But this needs to change
+  // @@ once we have some more understanding of the other services
+  // @@ that have specs similar to FT.
+  if (this->ft_service_callbacks_ == 0)
+    {
+      TAO_Services_Activate *service =
+        ACE_Dynamic_Service <TAO_Services_Activate>::instance ("TAO_FT_Service_Activate");
+
+      // Activate the callback
+      if (service)
+        this->ft_service_callbacks_ = service->activate_services (this);
+    }
+  // @@ Other service callbacks can be added here
 }
 
 TAO_Client_Strategy_Factory *
@@ -2476,6 +2508,8 @@ TAO_ORB_Core::implrepo_service (void)
 
   return CORBA::Object::_duplicate (this->implrepo_service_);
 }
+
+
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 

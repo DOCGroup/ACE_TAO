@@ -57,6 +57,69 @@ TAO_ORB_Core::remove_handle (ACE_HANDLE handle)
   return 0;
 }
 
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
+                                         TAO_Profile  *&profile)
+{
+  CORBA::Boolean retval = 0;
+  // @@ If different services have the same feature we may want to
+  // prioritise them here. We need to decide here whose selection of
+  // profile is more important.
+  if (this->ft_service_callbacks_ != 0)
+    {
+      cout << "ORB_Core.i "<<endl;
+      retval =
+        this->ft_service_callbacks_->select_profile (&mprofile,
+                                                     profile);
+    }
+  return retval;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::service_profile_reselection (TAO_Stub *stub,
+                                           TAO_Profile *&profile)
+{
+  CORBA::Boolean retval = 0;
+  // @@ If different services have the same feature we may want to
+  // prioritise them here. We need to decide here whose selection of
+  // profile is more important.
+  if (this->ft_service_callbacks_ != 0)
+    {
+      retval =
+        this->ft_service_callbacks_->reselect_profile (stub,
+                                                       profile);
+    }
+  return retval;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::reset_service_profile_flags (void)
+{
+  // @@ If different services have the same feature we may want to
+  // prioritise them here. We need to decide here whose selection of
+  // profile is more important.
+
+  if (this->ft_service_callbacks_ != 0)
+    {
+      this->ft_service_callbacks_->reset_profile_flags ();
+    }
+  return;
+}
+
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
+{
+  CORBA::Boolean retval = 0;
+  if (this->ft_service_callbacks_ != 0)
+    {
+      retval =
+        this->ft_service_callbacks_->object_is_nil (obj);
+    }
+  return retval;
+}
+
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)
 {
@@ -319,6 +382,13 @@ TAO_ORB_Core::resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV)
     }
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
+
+/*ACE_INLINE void
+TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
+{
+  this->typecode_factory_ = tf;
+}
+*/
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
