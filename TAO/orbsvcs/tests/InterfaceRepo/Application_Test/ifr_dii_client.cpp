@@ -2,13 +2,15 @@
 // $Id$
 
 #include "ifr_dii_client.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(Application_Test, ifr_dii_client, "$Id$")
 
 IFR_DII_Client::IFR_DII_Client (void)
   : namespace_name (CORBA::string_dup ("warehouse")),
     interface_name (CORBA::string_dup ("inventory")),
-    op_name (CORBA::string_dup ("getCDinfo"))
+    op_name (CORBA::string_dup ("getCDinfo")),
+    lookup_by_name_ (0)
 {
 }
 
@@ -27,15 +29,6 @@ IFR_DII_Client::init (int argc,
                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("InterfaceRepository",
-                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  this->repo_ = IR_Repository::_narrow (obj.in (),
-                                        ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
   // In a reall application, we would get the scoped or
   // local name from the Interface Repository and use that
   // to get the object reference of the target via the Naming 
@@ -46,13 +39,25 @@ IFR_DII_Client::init (int argc,
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  if (this->parse_args (argc, argv) == -1)
+    {
+      return -1;
+    }
+
   return 0;
 }
 
 int 
 IFR_DII_Client::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->find_interface_def (ACE_TRY_ENV);
+  if (this->lookup_by_name_)
+    {
+      this->lookup_interface_def (ACE_TRY_ENV);
+    }
+  else
+    {
+      this->find_interface_def (ACE_TRY_ENV);
+    }
   ACE_CHECK_RETURN (-1);
 
   this->get_operation_def (ACE_TRY_ENV);
@@ -67,22 +72,63 @@ IFR_DII_Client::run (CORBA::Environment &ACE_TRY_ENV)
   return 0;
 }
 
+int
+IFR_DII_Client::parse_args (int argc,
+                            char *argv[])
+{
+  ACE_Get_Opt opts (argc, argv, "n");
+  int c;
+
+  while ((c = opts ()) != -1)
+    switch (c)
+      {
+      case 'n':   // Select lookup by name.
+        this->lookup_by_name_ = 1;
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage: %s"
+                           " [-n]"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+
+  return 0;
+}
+
 void 
 IFR_DII_Client::find_interface_def (CORBA::Environment &ACE_TRY_ENV)
 {
+  this->target_def_ = this->target_->_get_interface (ACE_TRY_ENV);
+}
+
+void 
+IFR_DII_Client::lookup_interface_def (CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Object_var obj =
+    this->orb_->resolve_initial_references ("InterfaceRepository",
+                                            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->repo_ = CORBA::Repository::_narrow (obj.in (),
+                                            ACE_TRY_ENV);
+  ACE_CHECK;
+
   // Is there a contained object of some kind at any level in the
   // repository called "warehouse"?
-  IR_ContainedSeq_var candidates =
+  CORBA::ContainedSeq_var candidates =
     this->repo_->lookup_name (this->namespace_name.in (),
-                              -1,       // Unlimited level recursion.
-                              dk_all,   // Any type of contained object.
-                              1,        // Exclude parents of interfaces.
+                              -1,               // Unlimited level recursion.
+                              CORBA::dk_all,    // Any type of contained object.
+                              1,                // Exclude parents of interfaces.
                               ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::ULong length = candidates->length ();
-  IR_Container_var candidate;
-  IR_ContainedSeq_var interfaces;
+  CORBA::Container_var candidate;
+  CORBA::ContainedSeq_var interfaces;
   CORBA::ULong n_interfaces = 0;
   CORBA::String_var name;
 
@@ -91,15 +137,15 @@ IFR_DII_Client::find_interface_def (CORBA::Environment &ACE_TRY_ENV)
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       candidate =
-        IR_Container::_narrow (candidates[i],
-                               ACE_TRY_ENV);
+        CORBA::Container::_narrow (candidates[i],
+                                   ACE_TRY_ENV);
       ACE_CHECK;
 
       // Is this contained item itself a container?
       if (!CORBA::is_nil (candidate.in ()))
         {
           // Does this container contain any interfaces?
-          interfaces = candidate->contents (dk_Interface,
+          interfaces = candidate->contents (CORBA::dk_Interface,
                                             1,    // Exclude parents.
                                             ACE_TRY_ENV);
           ACE_CHECK;
@@ -128,8 +174,8 @@ IFR_DII_Client::find_interface_def (CORBA::Environment &ACE_TRY_ENV)
       if (!ACE_OS::strcmp (name.in (), this->interface_name.in ()))
         {
           this->target_def_ = 
-            IR_InterfaceDef::_narrow (interfaces[j].in (),
-                                      ACE_TRY_ENV);
+            CORBA::InterfaceDef::_narrow (interfaces[j].in (),
+                                          ACE_TRY_ENV);
           ACE_CHECK;
         }
     }
@@ -139,8 +185,8 @@ void
 IFR_DII_Client::get_operation_def (CORBA::Environment &ACE_TRY_ENV)
 {
   // What operation(s) does this interface contain?
-  IR_ContainedSeq_var operations = 
-    this->target_def_->contents (dk_Operation,
+  CORBA::ContainedSeq_var operations = 
+    this->target_def_->contents (CORBA::dk_Operation,
                                  1,
                                  ACE_TRY_ENV);
   ACE_CHECK;
@@ -157,8 +203,8 @@ IFR_DII_Client::get_operation_def (CORBA::Environment &ACE_TRY_ENV)
       if (!ACE_OS::strcmp (op_name.in (), this->op_name.in ()))
         {
           this->op_ =
-            IR_OperationDef::_narrow (operations[i],
-                                      ACE_TRY_ENV);
+            CORBA::OperationDef::_narrow (operations[i],
+                                          ACE_TRY_ENV);
           ACE_CHECK;
         }
     }
@@ -176,7 +222,7 @@ IFR_DII_Client::create_dii_request (CORBA::Environment &ACE_TRY_ENV)
 
   this->req_->set_return_type (this->result_.in ());
 
-  IR_ParDescriptionSeq_var params = this->op_->params (ACE_TRY_ENV);
+  CORBA::ParDescriptionSeq_var params = this->op_->params (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::ULong length = params->length ();
@@ -189,7 +235,7 @@ IFR_DII_Client::create_dii_request (CORBA::Environment &ACE_TRY_ENV)
     {
       switch (params[i].mode)
       {
-        case PARAM_IN:
+        case CORBA::PARAM_IN:
           if (params[i].type->kind () == CORBA::tk_string
               && ACE_OS::strcmp (params[i].name, "artist") == 0)
             {
@@ -198,7 +244,7 @@ IFR_DII_Client::create_dii_request (CORBA::Environment &ACE_TRY_ENV)
             }
 
           break;
-        case PARAM_INOUT:
+        case CORBA::PARAM_INOUT:
           if (params[i].type->kind () == CORBA::tk_string
               && ACE_OS::strcmp (params[i].name, "title") == 0)
             {
@@ -208,7 +254,7 @@ IFR_DII_Client::create_dii_request (CORBA::Environment &ACE_TRY_ENV)
             }
 
           break;
-        case PARAM_OUT:
+        case CORBA::PARAM_OUT:
           {
             // It doesn't matter for basic types, like float, but for
             // cases where it does, this is an alternative method of 
