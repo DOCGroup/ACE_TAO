@@ -202,7 +202,7 @@ int ACE_Scheduler_Factory::dump_schedule
     (const RtecScheduler::RT_Info_Set& infos,
      const char* filename)
 {
-  FILE* file = stdin;
+  FILE* file = stdout;
   if (filename != 0)
     {
       file = ACE_OS::fopen (filename, "w");

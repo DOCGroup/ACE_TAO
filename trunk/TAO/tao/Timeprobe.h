@@ -5,6 +5,8 @@
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
 
+#include "ace/Synch.h"
+
 class ACE_Timeprobe
 {
 public:
@@ -19,9 +21,17 @@ public:
   void destroy ();
 
 private:
+  ACE_Timeprobe ();
+  ~ACE_Timeprobe ();
+
+  ACE_Timeprobe (const ACE_Timeprobe &); // not implemented
+
+private:
   static ACE_Timeprobe *instance_;
 
   enum { SLOTS = 8192 };
+
+  ACE_SYNCH_MUTEX mutex_;
 
   u_int current_slot_;
 
@@ -32,12 +42,7 @@ private:
   } timeprobe_t;
   timeprobe_t timeprobes [SLOTS];
 
-  ACE_Timeprobe ();
-  ~ACE_Timeprobe ();
-
   friend class null_friend_to_avoid_compiler_warning_about_no_friends;
-
-  ACE_Timeprobe (const ACE_Timeprobe &); // not implemented
 };
 
 #if defined (ACE_ENABLE_TIMEPROBES)

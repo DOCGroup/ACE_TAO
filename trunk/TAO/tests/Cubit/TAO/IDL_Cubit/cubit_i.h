@@ -60,6 +60,11 @@ public:
                                    CORBA::Environment &env);
   // Cube a union.
 
+  virtual void cube_sequence (const Cubit::vector &input,
+			      Cubit::vector_out output,
+			      CORBA::Environment &env);
+  // Cube a sequence.
+
   virtual void please_exit (CORBA::Environment &env);
   // Shutdown routine.
 };

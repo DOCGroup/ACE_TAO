@@ -156,6 +156,25 @@ Cubit_i::cube_union (const Cubit::oneof &values,
   return temp;
 }
 
+// Cube a sequence
+void
+Cubit_i::cube_sequence(const Cubit::vector &input,
+		       Cubit::vector_out output,
+		       CORBA::Environment &)
+{
+  if (output == 0)
+    {
+      output = new Cubit::vector (input.length ());
+    }
+  output->length (input.length ());
+  for (CORBA::ULong i = 0; i < input.length (); ++i)
+    {
+      CORBA::Long x = input[i];
+      output[i] = x * x * x;
+    }
+}
+
+
 // Shutdown.
 
 void Cubit_i::please_exit (CORBA::Environment &env)

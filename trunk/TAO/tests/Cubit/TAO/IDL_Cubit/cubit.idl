@@ -59,6 +59,12 @@ interface Cubit
   oneof	cube_union (in oneof values);
   // cube a union.
 
+  typedef sequence<long> vector;
+
+  void cube_sequence (in vector input,
+		      out vector output);
+  // Cube several longs...
+
   oneway void please_exit ();
   // shutdown the application.
 };
