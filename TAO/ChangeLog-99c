@@ -9,6 +9,12 @@ Thu Jun 24 10:12:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
 	  Removed the unused arguments altogether.
 
+	* orbsvcs/Time_Service/Makefile:
+	* orbsvcs/tests/AVStreams/sfp/Makefile:
+	* orbsvcs/tests/ImplRepo/Makefile:
+	  Several minor fixes, such as outdated dependencies and
+	  typos. Things are happy now.
+
 Thu Jun 24 07:44:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IR_Helper.cpp:
