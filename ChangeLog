@@ -1,3 +1,11 @@
+Sat Aug  9 13:56:37 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Dispatcher_Task.h: Deleted extra qualification for method
+	  prototype declarations to get rid of compiler warnings in
+	  Debian_Full_Reactors build. 
+	
+	* Kokyu/Makefile: Updated dependencies.
+
 Sat Aug  9 18:23:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/ace.mpc:

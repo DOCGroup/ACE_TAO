@@ -30,12 +30,12 @@ class Dispatch_Queue_Item : public ACE_Message_Block
 public:
   Dispatch_Queue_Item (const Dispatch_Command* , const QoSDescriptor&);
 
-  Dispatch_Queue_Item::Dispatch_Queue_Item (
+  Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Allocator* mb_allocator =0);
 
-  Dispatch_Queue_Item::Dispatch_Queue_Item (
+  Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Data_Block* data_block,
