@@ -114,4 +114,4 @@ public:
 #include "EC_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_FILTER_H */
+#endif /* TAO_EC_FACTORY_H */

@@ -2,6 +2,7 @@
 
 #include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel.h"
+#include "EC_SupplierFiltering.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ProxyConsumer.i"
@@ -9,9 +10,13 @@
 
 ACE_RCSID(Event, EC_ProxyConsumer, "$Id$")
 
-TAO_EC_ProxyPushConsumer::TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* ec)
-  : event_channel_ (ec)
+TAO_EC_ProxyPushConsumer::
+    TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* ec,
+                              TAO_EC_SupplierFiltering* filtering)
+  : event_channel_ (ec),
+    supplier_filtering_ (filtering)
 {
+  this->supplier_filtering_->bind (this);
 }
 
 TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
@@ -29,6 +34,20 @@ PortableServer::POA_ptr
 TAO_EC_ProxyPushConsumer::_default_POA (CORBA::Environment&)
 {
   return PortableServer::POA::_duplicate (this->default_POA_);
+}
+
+void
+TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
+                                     CORBA::Environment &ACE_TRY_ENV)
+{
+  this->supplier_filtering_->connected (supplier, ACE_TRY_ENV);
+}
+
+void
+TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
+                                        CORBA::Environment &ACE_TRY_ENV)
+{
+  this->supplier_filtering_->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
@@ -61,6 +80,13 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
 }
 
 void
+TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  this->supplier_filtering_->push (event, ACE_TRY_ENV);
+}
+
+void
 TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
       CORBA::Environment &ACE_TRY_ENV)
 {
@@ -78,4 +104,3 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
 
   this->event_channel_->destroy_proxy_push_consumer (this);
 }
-

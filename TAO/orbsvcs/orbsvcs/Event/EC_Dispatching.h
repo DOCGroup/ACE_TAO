@@ -69,7 +69,7 @@ public:
                      CORBA::Environment& env) = 0;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::EventSet& event,
-                            const TAO_EC_QOS_Info& qos_info,
+                            TAO_EC_QOS_Info& qos_info,
                             CORBA::Environment& env) = 0;
   // The consumer represented by <proxy> should receive <event>.
   // It can use the information in <qos_info> to determine the event
@@ -78,7 +78,7 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Reactive_Dispatching
+class TAO_EC_Reactive_Dispatching : public TAO_EC_Dispatching
 {
   // = TITLE
   //   Dispatch using the caller thread.
