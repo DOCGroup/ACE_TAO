@@ -19,7 +19,7 @@
 // the poa_name is a user-supplied string that is used to name the
 // POA created.
 int
-TAO_Util::ORB_Manager::init (int argc,
+TAO_ORB_Manager::init (int argc,
                        char **argv,
                        char *poa_name,
                        CORBA::Environment &env)
@@ -77,14 +77,14 @@ TAO_Util::ORB_Manager::init (int argc,
 }
 
 CORBA::String_var
-TAO_Util::ORB_Manager::activate (const char *object_name,
+TAO_ORB_Manager::activate (const char *object_name,
                            PortableServer::Servant servant,
                            CORBA_Environment &env)
 {
 
   if (object_name == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "\n(%P|%t) TAO_Util::ORB_Manager::register: "
+                       "\n(%P|%t) TAO_ORB_Manager::register: "
                        "object_name is null!"),
                       0);
 
@@ -111,7 +111,7 @@ TAO_Util::ORB_Manager::activate (const char *object_name,
 }
 
 int
-TAO_Util::ORB_Manager::run (CORBA::Environment &env)
+TAO_ORB_Manager::run (CORBA::Environment &env)
 {
   this->poa_manager_->activate (env);
   TAO_CHECK_ENV_RETURN (env, 1);
@@ -128,7 +128,7 @@ TAO_Util::ORB_Manager::run (CORBA::Environment &env)
 }
 
 CORBA::ORB_var 
-TAO_Util::ORB_Manager::orb (void)
+TAO_ORB_Manager::orb (void)
 {
   return this->orb_;
 }
