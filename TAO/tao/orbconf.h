@@ -340,6 +340,8 @@
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
+// INTERFACE_REPOSITORY
+//#define TAO_HAS_INTERFACE_REPOSITORY
 // Without Minimum CORBA, the user will get regular (no locality
 // constraints) policies by default.  With Minimum CORBA, the user
 // will get locality constraint policies by default.
