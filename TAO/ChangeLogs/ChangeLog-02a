@@ -1,3 +1,14 @@
+Sun Mar 12 19:13:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Server_Request.cpp: Initialized the variable
+	  sync_with_server_ in the constructors for the class
+	  TAO_GIOP_Server_Request. This was creating a problem for
+	  Endpoint_Per_Priority test which uses LOCATE_REQUEST to validate
+	  connections. The bug was actually nailed down by Marina Spivak
+	  <marina@cs.wustl.edu>. It was an awesome detective work by her
+	  to have nailed it down to the uninitialized variable in the
+	  class. 
+
 Sun Mar 12 18:42:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbscvs/orbsvcs.dsp:
