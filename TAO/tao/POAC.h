@@ -2284,10 +2284,10 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Current;
 
-  TAO_Export char *ObjectId_to_string (const PortableServer::ObjectId &id);
-  TAO_Export CORBA::WChar *ObjectId_to_wstring (const PortableServer::ObjectId &id);
-  TAO_Export PortableServer::ObjectId *string_to_ObjectId (const char *id);
-  TAO_Export PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
+  TAO_NAMESPACE_STORAGE_CLASS char *ObjectId_to_string (const PortableServer::ObjectId &id);
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::WChar *ObjectId_to_wstring (const PortableServer::ObjectId &id);
+  TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (const char *id);
+  TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
 
 }
 TAO_NAMESPACE_CLOSE
