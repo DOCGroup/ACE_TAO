@@ -85,6 +85,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Deployment::ExecutionManager::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      if (CORBA::is_nil (exec_mgr.in ()))
+        {
+          ACE_DEBUG ((LM_DEBUG, "Executor: nil Execution Manager reference, narrow failed\n"));
+          return 1;
+
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "Executor: Obtained Execution Manager ref \n"));
       Deployment::DomainApplicationManager_var dapp_mgr =
         exec_mgr->preparePlan (plan, 1);
 
@@ -94,6 +102,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "Executor:preparePlan call failed:nil DomainApplicationManager reference\n"));
           return 1;
         }
+      ACE_DEBUG ((LM_DEBUG,
+                  "Executor: Obtained DomainApplication Manager ref \n"));
 
       // Create a dummy set of properties and start the
       // Launching of applications
@@ -101,12 +111,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (properties,
                       Deployment::Properties,
                       1);
+      ACE_DEBUG ((LM_DEBUG, "Executor: start Launch application....."));
       // Start the Application immediately
       int start = 1;
       dapp_mgr->startLaunch (properties.in (), start);
+      ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "Executor: finish Launch application....."));
       // Call finish Launch to complete the connections
       dapp_mgr->finishLaunch (start);
+      ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Executor: Application Deployed successfully \n"));
       ACE_DEBUG ((LM_DEBUG, "Press <Enter> to tear down application \n"));
