@@ -7,7 +7,7 @@
 // =  DESCRITPTION
 //     Testing the platform for POSIX Asynchronous I/O. If
 //     ACE_HAS_AIO_CALLS is defined, we also test the POSIX <aio_>
-//     calls with real time signals on. 
+//     calls with real time signals on.
 //
 // = AUTHOR
 //    Programming for the Real World. Bill O. GallMeister.
@@ -43,10 +43,11 @@ int issue_aio_calls (void);
 int query_aio_completions (void);
 int setup_signal_delivery (void);
 #endif /* ACE_HAS_AIO_CALLS */
-  
+
 int
 do_sysconf (void)
 {
+#if !defined (VXWORKS)
   // Call sysconf to find out runtime values.
   errno = 0;
 #if defined (_SC_LISTIO_AIO_MAX)
@@ -59,8 +60,8 @@ do_sysconf (void)
               "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
               ACE_OS::sysconf(_SC_AIO_LISTIO_MAX),
               errno));
-#endif  
-  
+#endif
+
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of AIO_MAX is %d, errno = %d\n",
@@ -82,43 +83,45 @@ do_sysconf (void)
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of RTSIG_MAX %d, Errno = %d\n",
-              ACE_OS::sysconf (_SC_RTSIG_MAX), 
+              ACE_OS::sysconf (_SC_RTSIG_MAX),
               errno));
-  
+
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of SIGQUEUE_MAX %d, Errno = %d\n",
               ACE_OS::sysconf (_SC_SIGQUEUE_MAX),
-              errno)); 
+              errno));
+#endif /* ! VXWORKS */
+
   return 0;
 }
 
 #if defined (ACE_HAS_AIO_CALLS)
 int
-test_aio_calls (void) 
+test_aio_calls (void)
 {
   ACE_DEBUG ((LM_DEBUG, "test_aio_calls: Errno : %d\n", errno));
 
   // Set up the input file.
   // Open file (in SEQUENTIAL_SCAN mode)
   file_handle = ACE_OS::open ("Aio_Platform_Test.cpp", O_RDONLY);
-  
+
   if (file_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
 
   if (setup_signal_delivery () < 0)
     return -1;
-  
+
   if (issue_aio_calls () < 0)
     return -1;
-  
+
   if (query_aio_completions () < 0)
     return -1;
-  
+
   return 0;
 }
 
-int 
+int
 setup_signal_delivery (void)
 {
   // Make the sigset_t consisting of the completion signal.
@@ -126,19 +129,19 @@ setup_signal_delivery (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt init the RT completion signal set\n"),
                       -1);
-  
+
   if (sigaddset (&completion_signal,
                  SIGRTMIN) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt init the RT completion signal set\n"),
                       -1);
-  
+
   // Mask them.
   if (sigprocmask (SIG_BLOCK, &completion_signal, 0) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt maks the RT completion signals\n"),
                       -1);
-  
+
   // Setting up the handler(!) for these signals.
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
@@ -146,7 +149,7 @@ setup_signal_delivery (void)
 #if defined (SA_SIGACTION)
   // Lynx says, it is better to set this bit to be portable.
   reaction.sa_flags &= SA_SIGACTION;
-#endif /* SA_SIGACTION */      
+#endif /* SA_SIGACTION */
   reaction.sa_sigaction = 0;         // No handler.
   int sigaction_return = sigaction (SIGRTMIN,
                                     &reaction,
@@ -155,7 +158,7 @@ setup_signal_delivery (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
-  
+
   return 0;
 }
 
@@ -165,37 +168,37 @@ issue_aio_calls (void)
   // Setup AIOCB.
   aiocb1.aio_fildes = file_handle;
   aiocb1.aio_offset = 0;
-  aiocb1.aio_buf = mb1.wr_ptr ();   
+  aiocb1.aio_buf = mb1.wr_ptr ();
   aiocb1.aio_nbytes = BUFSIZ;
   aiocb1.aio_reqprio = 0;
   aiocb1.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb1.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1; 
-  
+  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1;
+
   // Fire off the aio write.
   if (aio_read (&aiocb1) == -1)
     // Queueing failed.
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Erro:%p:Asynch_Read_Stream: aio_read queueing failed\n"),
                       -1);
-  
+
   // Setup AIOCB.
   aiocb2.aio_fildes = file_handle;
   aiocb2.aio_offset = BUFSIZ + 1;
-  aiocb2.aio_buf = mb2.wr_ptr ();   
+  aiocb2.aio_buf = mb2.wr_ptr ();
   aiocb2.aio_nbytes = BUFSIZ;
   aiocb2.aio_reqprio = 0;
   aiocb2.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb2.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2; 
-  
+  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2;
+
   // Fire off the aio write.
   if (aio_read (&aiocb2) == -1)
     // Queueing failed.
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Erro:%p:Asynch_Read_Stream: aio_read queueing failed\n"),
                       -1);
-  
+
   return 0;
 }
 
@@ -212,15 +215,15 @@ query_aio_completions (void)
       timespec timeout;
       timeout.tv_sec = ACE_INFINITE;
       timeout.tv_nsec = 0;
-      
+
       // To get back the signal info.
       siginfo_t sig_info;
-  
+
       // Await the RT completion signal.
       int sig_return = sigtimedwait (&completion_signal,
                                      &sig_info,
                                      &timeout);
-  
+
       // Error case.
       // If failure is coz of timeout, then return *0* but set
       // errno appropriately. This is what the WinNT proactor
@@ -229,31 +232,31 @@ query_aio_completions (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error:%p:Error waiting for RT completion signals\n"),
                           0);
-      
+
       // RT completion signals returned.
       if (sig_return != SIGRTMIN)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
                            sig_return),
                           -1);
-      
+
       // @@ Debugging.
       ACE_DEBUG ((LM_DEBUG,
                   "Sig number found in the sig_info block : %d\n",
                   sig_info.si_signo));
-  
+
       // Is the signo returned consistent?
       if (sig_info.si_signo != sig_return)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Inconsistent signal number (%d) in the signal info block\n",
                            sig_info.si_signo),
                           -1);
-      
+
       // @@ Debugging.
       ACE_DEBUG ((LM_DEBUG,
                   "Signal code for this signal delivery : %d\n",
                   sig_info.si_code));
-      
+
       // Is the signal code an aio completion one?
       if ((sig_info.si_code != SI_ASYNCIO) &&
           (sig_info.si_code != SI_QUEUE))
@@ -261,10 +264,10 @@ query_aio_completions (void)
                            "Unexpected signal code (%d) returned on completion querying\n",
                            sig_info.si_code),
                           0);
-  
+
       // Retrive the aiocb.
       aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
-      
+
       // Analyze error and return values. Return values are
       // actually <errno>'s associated with the <aio_> call
       // corresponding to aiocb_ptr.
@@ -273,14 +276,14 @@ query_aio_completions (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p:Invalid control block was sent to <aio_error> for compleion querying\n"),
                           -1);
-      
+
       if (error_code != 0)
         // Error occurred in the <aio_>call. Return the errno
         // corresponding to that <aio_> call.
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p:An AIO call has failed\n"),
                           error_code);
-  
+
       // No error occured in the AIO operation.
       int nbytes = aio_return (aiocb_ptr);
       if (nbytes == -1)
@@ -300,7 +303,7 @@ query_aio_completions (void)
                     nbytes,
                     mb2.rd_ptr ()));
     }
-  
+
   return 0;
 }
 #endif /* ACE_HAS_AIO_CALLS */
@@ -309,26 +312,26 @@ int
 have_asynchio (void)
 {
 #if defined (_POSIX_ASYNCHRONOUS_IO)
-  
+
 #if defined (_POSIX_ASYNC_IO)
 
 #if _POSIX_ASYNC_IO == -1
   ACE_DEBUG ((LM_DEBUG,
-              "_POSIX_ASYNC_IO = -1.. ASYNCH IO NOT supported at all\n")); 
+              "_POSIX_ASYNC_IO = -1.. ASYNCH IO NOT supported at all\n"));
   return -1;
 #else /* Not _POSIX_ASYNC_IO == -1 */
   ACE_DEBUG ((LM_DEBUG,
               "_POSIX_ASYNC_IO = %d\n ASYNCH IO is supported FULLY\n",
               _POSIX_ASYNC_IO));
 #endif /* _POSIX_ASYNC_IO == -1 */
-  
+
 #else  /* Not defined  _POSIX_ASYNC_IO */
   ACE_ERROR ((LM_DEBUG,
               "_POSIX_ASYNC_IO is not defined.\n"));
   ACE_DEBUG ((LM_DEBUG,
               "AIO might *not* be supported on some paths\n"));
 #endif /* _POSIX_ASYNC_IO */
-  
+
   // System defined POSIX Values.
   ACE_DEBUG ((LM_DEBUG, "System claims to have  POSIX_ASYNCHRONOUS_IO\n"));
   ACE_DEBUG ((LM_DEBUG, "_POSIX_AIO_LISTIO_MAX = %d\n", _POSIX_AIO_LISTIO_MAX));
@@ -336,7 +339,7 @@ have_asynchio (void)
 
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG, "Before do_sysconf : Errno %d\n", errno));
-  
+
   // Check and print the run time values.
   do_sysconf ();
 
@@ -348,14 +351,14 @@ have_asynchio (void)
   // this signal by doing <sigtimedwait>.
   test_aio_calls ();
 #endif /* ACE_HAS_AIO_CALLS */
-  
+
   return 0;
-  
+
 #else /* Not _POSIX_ASYNCHRONOUS_IO */
   ACE_DEBUG ((LM_DEBUG,
               "No support._POSIX_ASYNCHRONOUS_IO itself is not defined\n"));
   return -1;
-#endif /* _POSIX_ASYNCHRONOUS_IO */  
+#endif /* _POSIX_ASYNCHRONOUS_IO */
 }
 
 int
