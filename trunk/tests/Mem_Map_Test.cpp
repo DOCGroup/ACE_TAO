@@ -65,7 +65,10 @@ create_test_file (int size, int num_lines)
 					 0666);
 
   if (file_handle  == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
+    {
+      delete [] mybuf;
+      ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
+    }
   
   for (int j = 0; j < num_lines; j++)
     {
@@ -80,13 +83,21 @@ create_test_file (int size, int num_lines)
       c = ++d;
 
       if (ACE_OS::write (file_handle, mybuf, size) != size)
-	ACE_ERROR_RETURN ((LM_ERROR, "write to file failed\n"), -1);
+        {
+          delete [] mybuf;
+          ACE_ERROR_RETURN ((LM_ERROR, "write to file failed\n"), -1);
+        }
 
       if (ACE_OS::write (file_handle, "\n", 1) != 1)
-	ACE_ERROR_RETURN ((LM_ERROR, "write to file failed\n"), -1);
+        {
+          delete [] mybuf;
+          ACE_ERROR_RETURN ((LM_ERROR, "write to file failed\n"), -1);
+        }
     }
 
   ACE_OS::close (file_handle);
+
+  delete [] mybuf;
   return 0;
 }
 
