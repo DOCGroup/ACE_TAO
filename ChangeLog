@@ -1,3 +1,14 @@
+Tue Jan 21 21:44:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/examples/SAXPrint/broken.xml: Added a new broken XML file
+	  to make sure we handle this case properly.
+
+	* ACEXML/parser/parser/Parser.i (get): Added a check for
+	  successful <get> operation from the input CharStream to avoid
+	  out of the infinite loop when reading broken XML files.  Thanks
+	  to Volodymyr Orlenko <vorlenko@jaalam.com> for reporting this
+	  and submitting the patch.
+
 Mon Jan 20 20:32:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Added a '}' at line 1531 to fix a
@@ -6,7 +17,7 @@ Mon Jan 20 20:32:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Tue Jan 21 19:29:04 2003  Heather Drury  <drury_h@ociweb.com>
 
-        * bin/auto_run_tests.lst: Disabled orbsvcs/Test/EC_MT_MCast on 
+        * bin/auto_run_tests.lst: Disabled orbsvcs/Test/EC_MT_MCast on
           static builds.
 
 Tue Jan 21 08:43:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
