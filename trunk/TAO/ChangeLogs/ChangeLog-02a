@@ -1,8 +1,19 @@
-Tue Jul  4 09:53:01 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+Wed Jul  4 09:53:01 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Strategies/TAO_Strategies_Static.dsp:
 
           Updated static build with DIOP files.
+
+Wed Jul  4 09:52:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (insert_reference):
+
+          Added a call to _is_a() as a final check to see if there
+          is a type mismatch between the dynamic any and the
+          object reference argument. Thanks to Jonathan Biggar
+          <jon@floorboard.com> for clarifying the spec and to
+          Philippe Merle <Philippe.Merle@lifl.fr> for suggesting
+          optimizations.
 
 Wed Jul  4 09:10:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
