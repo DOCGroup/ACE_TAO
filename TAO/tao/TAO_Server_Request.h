@@ -38,6 +38,11 @@
 #include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+// Added by Mayur 10/12
+#include "TAO_AMH_Response_Handler.h"
+// Mayur 10/12
+
+
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
 
@@ -73,6 +78,9 @@ public:
 
   /// Destructor.
   virtual ~TAO_ServerRequest (void);
+
+  /// Create an AMH Handler with all necessary data copied into it
+  void instantiate_AMH_Handler (TAO_AMH_Response_Handler* response_handler);  
 
   /**
    * @name Request attributes.

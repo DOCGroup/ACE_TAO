@@ -120,6 +120,17 @@ TAO_ServerRequest::~TAO_ServerRequest (void)
   TAO_Transport::release (this->transport_);
 }
 
+void 
+TAO_ServerRequest::instantiate_AMH_Handler (TAO_AMH_Response_Handler* response_handler)  
+{
+  response_handler->mesg_base (mesg_base_);
+  response_handler->request_id (request_id ());
+  response_handler->response_expected (response_expected_);
+  response_handler->transport (TAO_Transport::_duplicate (transport()));
+  //response_handler->reply_service_info (reply_service_info ());
+}
+
+
 CORBA::ORB_ptr
 TAO_ServerRequest::orb (void)
 {
