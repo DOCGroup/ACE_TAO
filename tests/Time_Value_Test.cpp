@@ -24,8 +24,8 @@
 
 ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
-// Force test of ACE_U_LongLong class on Solaris, et al.
-#if defined (sun)
+// Force test of ACE_U_LongLong class on Solaris.
+#if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
 # include <limits.h>
 # undef ULLONG_MAX
 
@@ -33,9 +33,7 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 #   undef ACE_HAS_HI_RES_TIMER
 # endif /* ACE_HAS_HI_RES_TIMER */
 
-# if !defined (ACE_LACKS_LONGLONG_T)
-#   define ACE_LACKS_LONGLONG_T
-# endif /* ! ACE_LACKS_LONGLONG_T */
+# define ACE_LACKS_LONGLONG_T
 
   // Force inlining, in case ACE_U_LongLong member function
   // definitions are not in libACE.
@@ -45,7 +43,7 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 # if defined (ACE_NO_INLINE)
 #   undef ACE_NO_INLINE
 # endif /* ACE_NO_INLINE */
-#endif /* sun */
+#endif /* sun && ! ACE_LACKS_LONGLONG_T */
 
 #include "test_config.h"
 #include "ace/ACE.h"
