@@ -1,3 +1,16 @@
+Tue May 09 10:19:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsw:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+          Add new project file for the common library and update all
+          project files to use it.
+
 Tue May  9 09:40:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/RTCorba/Multiple_Endpoints/Makefile:
