@@ -371,6 +371,7 @@ class Purged_Notify : public ACE_Event_Handler
 static int
 run_notify_purge_test (void)
 {
+  int status;
   ACE_Reactor *r = ACE_Reactor::instance ();
   {
     Purged_Notify n1;
@@ -382,7 +383,7 @@ run_notify_purge_test (void)
     r->notify (&n1);
     r->notify (n2);
 
-    int status = r->purge_pending_notifications (&n1);
+    status = r->purge_pending_notifications (&n1);
     if (status == -1 && errno == ENOTSUP)
       return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
     if (status != 1)
