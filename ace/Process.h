@@ -578,7 +578,7 @@ protected:
  * @brief A process easily managed by ACE_Process_Manager.
  *
  * @arg ACE_Managed_Process is just an @arg ACE_Process with an
- * @arg unmanage method that deletes the instance.
+ * @arg unmanage() method that deletes the instance.
  * This class is only valid for use as a dynamically-allocated object!
  */
 class ACE_Export ACE_Managed_Process : public ACE_Process
