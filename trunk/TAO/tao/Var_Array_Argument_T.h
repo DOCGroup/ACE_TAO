@@ -35,9 +35,9 @@ namespace TAO
     In_Var_Array_Argument_T (const S_slice * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     const S_slice * arg (void) const;
 
   private:
@@ -58,9 +58,9 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice * arg (void);
 
   private:
@@ -85,9 +85,9 @@ namespace TAO
     Out_Var_Array_Argument_T (S_out x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice *& arg (void);
 
   private:
@@ -111,9 +111,9 @@ namespace TAO
     Ret_Var_Array_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice *& arg (void);
 
     S_slice * excp (void);

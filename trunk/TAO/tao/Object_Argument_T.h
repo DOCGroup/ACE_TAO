@@ -41,9 +41,9 @@ namespace TAO
     In_Object_Argument_T (S_ptr x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr arg (void) const;
 
   private:
@@ -64,9 +64,9 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg (void);
 
   private:
@@ -86,9 +86,9 @@ namespace TAO
     Out_Object_Argument_T (S_out & x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_out arg (void);
 
   private:
@@ -108,9 +108,9 @@ namespace TAO
     Ret_Object_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg (void);
 
     S_ptr excp (void);

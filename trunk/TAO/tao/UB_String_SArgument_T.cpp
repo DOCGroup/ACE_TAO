@@ -21,6 +21,8 @@ TAO::In_UB_String_SArgument_T<S,S_var>::demarshal (TAO_InputCDR &cdr)
   return cdr >> this->x_.out ();
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, typename S_var>
 void
 TAO::In_UB_String_SArgument_T<S,S_var>::interceptor_param (
@@ -30,6 +32,8 @@ TAO::In_UB_String_SArgument_T<S,S_var>::interceptor_param (
   p.argument <<= this->x_.in ();
   p.mode = CORBA::PARAM_IN;
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
@@ -47,6 +51,8 @@ TAO::Inout_UB_String_SArgument_T<S,S_var>::demarshal (TAO_InputCDR & cdr)
   return cdr >> this->x_.out ();
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, typename S_var>
 void
 TAO::Inout_UB_String_SArgument_T<S,S_var>::interceptor_param (
@@ -57,6 +63,8 @@ TAO::Inout_UB_String_SArgument_T<S,S_var>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
+#endif /* TAO_HAS_INTERCEPTORS */
+
 // ==============================================================
 
 template<typename S, typename S_var>
@@ -65,6 +73,8 @@ TAO::Out_UB_String_SArgument_T<S,S_var>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
+
+#if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S, typename S_var>
 void
@@ -76,6 +86,8 @@ TAO::Out_UB_String_SArgument_T<S,S_var>::interceptor_param (
   p.mode = CORBA::PARAM_OUT;
 }
 
+#endif /* TAO_HAS_INTERCEPTORS */
+
 // ============================================================
 
 template<typename S, typename S_var>
@@ -85,11 +97,15 @@ TAO::Ret_UB_String_SArgument_T<S,S_var>::marshal (TAO_OutputCDR & cdr)
   return cdr << this->x_.in ();
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, typename S_var>
 void
 TAO::Ret_UB_String_SArgument_T<S,S_var>::interceptor_result (CORBA::Any * any)
 {
   (*any) <<= this->x_.in ();
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_UB_STRING_SARGUMENT_T_C */

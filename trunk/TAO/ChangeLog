@@ -1,3 +1,54 @@
+Fri Aug  6 12:51:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+        * tao/Argument.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_SArgument_T.cpp:
+        * tao/BD_String_SArgument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_SArgument_T.cpp:
+        * tao/Basic_SArgument_T.h:
+        * tao/DomainC.cpp:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_SArgument_T.cpp:
+        * tao/Fixed_Array_SArgument_T.h:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_SArgument_T.cpp:
+        * tao/Fixed_Size_SArgument_T.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Object_SArgument_T.cpp:
+        * tao/Object_SArgument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_SArgument_T.cpp:
+        * tao/Special_Basic_SArgument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_SArgument_T.cpp:
+        * tao/UB_String_SArgument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_SArgument_T.cpp:
+        * tao/Var_Array_SArgument_T.h:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_SArgument_T.cpp:
+        * tao/Var_Size_SArgument_T.h:
+        * tao/operation_details.cpp:
+        * tao/operation_details.h:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        
+          Added TAO_HAS_INTERCEPTORS == 1 guards to all interceptor-related
+          operations, so code generated from IDL operations will compile
+          if Any operators (used by interceptors) are suppressed in code
+          generation. Thanks to Nicolas HUYNH <HUYNH_Nicolas at cena dot fr>
+          for reporting the problem.
+
 Fri Aug  6 15:45:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * TAO/utils/catior/catior.cpp
