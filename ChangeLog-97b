@@ -1,24 +1,43 @@
+Wed Oct 29 15:56:01 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp: replaced ACE_TSS_REF_TABLE with a reference count to
+          remove dynamic allocation from ACE_TSS_Info.  Also, enabled call
+          of ACE_Task close hook before calling TSS destructors.
+
+        * ace/Thread_Manager.cpp (ace_thread_manager_adapter): with
+          TSS_EMULATION, moved the call of tss_close () from here to
+          ACE_Thread_Adapter::invoke () so that it can be called after
+          the task's close hook, if any.
+
+        * ace/{OS.h,Log_Msg.h,Object_Manager.cpp} (cleanup_tss): added
+          an argument to indicate whether the main thread is calling or not.
+
+        * ace/OS.i (ACE_TSS_Emulation::next_key): start key values at
+          0 instead of 1, because it's easier to deal with arrays of
+          keys then.  That also corresponds with the starting key value
+          on Windows NT.
+
 Wed Oct 29 10:25:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Changes all uses of the overly long
- 	  ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS to
- 	  ACE_LACKS_SOME_POSIX_PROTOTYPES.  However, I'm not really sure
- 	  how this relates to the ACE_LACKS_POSIX_PROTOTYPES macro.  I
- 	  suspect we probably only need one of these...
+        * ace: Changes all uses of the overly long
+          ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS to
+          ACE_LACKS_SOME_POSIX_PROTOTYPES.  However, I'm not really sure
+          how this relates to the ACE_LACKS_POSIX_PROTOTYPES macro.  I
+          suspect we probably only need one of these...
 
-	* ace/OS.h: Added a new ACE_HAS_STDARG_THR_DEST to handle
- 	  weirdness with LynxOS.  Thanks to Kirill.Rybaltchenko
- 	  <Kirill.Rybaltchenko@cern.ch> for reporting this.
+        * ace/OS.h: Added a new ACE_HAS_STDARG_THR_DEST to handle
+          weirdness with LynxOS.  Thanks to Kirill.Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for reporting this.
 
-	* ace: OS.h,config-lynxos.h: Added a new ACE_LACKS_GETOPT_PROTO
-	  for LynxOS.  Thanks to Kirill.Rybaltchenko
-	  <Kirill.Rybaltchenko@cern.ch> for reporting this.
+        * ace: OS.h,config-lynxos.h: Added a new ACE_LACKS_GETOPT_PROTO
+          for LynxOS.  Thanks to Kirill.Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for reporting this.
 
-	* ace/config-lynxos.h: Replaced
- 	  ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS with
- 	  ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
- 	  Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
- 	  this.
+        * ace/config-lynxos.h: Replaced
+          ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS with
+          ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
+          Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
+          this.
 
 Wed Oct 29 10:32:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -41,40 +60,40 @@ Wed Oct 29 08:40:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Oct 29 07:39:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.cpp: Added an explicit template instantiations for
- 	  ACE_Guard<ACE_Process_Mutex>.
+        * ace/Synch.cpp: Added an explicit template instantiations for
+          ACE_Guard<ACE_Process_Mutex>.
 
-	* ace/LOCK_SOCK_Acceptor.h: Removed the typedef of
- 	  ACE_SOCK_Acceptor with a full expansion of the name to fix a G++
- 	  bug.
+        * ace/LOCK_SOCK_Acceptor.h: Removed the typedef of
+          ACE_SOCK_Acceptor with a full expansion of the name to fix a G++
+          bug.
 
-	* tests/Conn_Test.cpp: Fixed a template instantiation problem.
+        * tests/Conn_Test.cpp: Fixed a template instantiation problem.
 
-	* ACE-INSTALL.html: Pointed out that ACE is ported to LynxOS and
-	  Chorus.
+        * ACE-INSTALL.html: Pointed out that ACE is ported to LynxOS and
+          Chorus.
 
-	* ACE-INSTALL.html: Added information about cloning that explains
- 	  how you must to build a config.h and platform_macros.GNU in
- 	  cloned directory.  Thanks to Arturo for this.
+        * ACE-INSTALL.html: Added information about cloning that explains
+          how you must to build a config.h and platform_macros.GNU in
+          cloned directory.  Thanks to Arturo for this.
 
         * bin/Makefile: Added
- 	  $(ACE_ROOT)/include/makeinclude/platform_macros.GNU to Makefile
- 	  so we can compile clone on any ACE platform.  Thanks to Arturo
- 	  for this.
+          $(ACE_ROOT)/include/makeinclude/platform_macros.GNU to Makefile
+          so we can compile clone on any ACE platform.  Thanks to Arturo
+          for this.
 
         * include/makefiles: Added new platform file for SCO UNIX with
- 	  nothreads.  Thanks to Arturo for this.
+          nothreads.  Thanks to Arturo for this.
 
         * ace: Added new config files for SCO UNIX with nothreads.
-	  Thanks to Arturo for this.
+          Thanks to Arturo for this.
 
-	* apps/JAWS/server/HTTP_Server.cpp: Fixed the typedef for
- 	  ACE_LOCK_SOCK_Acceptor.  Thanks to Hans Rohnert for reporting
- 	  this.
+        * apps/JAWS/server/HTTP_Server.cpp: Fixed the typedef for
+          ACE_LOCK_SOCK_Acceptor.  Thanks to Hans Rohnert for reporting
+          this.
 
-	* tests/Conn_Test.cpp: Changed template instantiations from
- 	  SOCK_ACCEPTOR to LOCK_SOCK_ACCEPTOR.  Thanks to Han Rohnert for
- 	  reporting this.
+        * tests/Conn_Test.cpp: Changed template instantiations from
+          SOCK_ACCEPTOR to LOCK_SOCK_ACCEPTOR.  Thanks to Han Rohnert for
+          reporting this.
 
 Wed Oct 29 02:10:37 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -82,51 +101,51 @@ Wed Oct 29 02:10:37 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Oct 29 01:25:54 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Conn_Test.cpp: Modified Conn_Test to fully integrate
- 	  Irfan's new LOCK_SOCK_Acceptor.  This new implementation is
- 	  truly the "mother of all Conn_Tests" ;-).
+        * tests/Conn_Test.cpp: Modified Conn_Test to fully integrate
+          Irfan's new LOCK_SOCK_Acceptor.  This new implementation is
+          truly the "mother of all Conn_Tests" ;-).
 
-	* ace/LOCK_SOCK_Acceptor.cpp (lock): Added a lock() accessor
- 	  method to the new ACE_LOCK_SOCK_Acceptor so that we can remove
- 	  the lock (somehow).
+        * ace/LOCK_SOCK_Acceptor.cpp (lock): Added a lock() accessor
+          method to the new ACE_LOCK_SOCK_Acceptor so that we can remove
+          the lock (somehow).
 
 Wed Oct 29 00:29:52 1997    <irfan@TWOSTEP>
 
-	* apps/JAWS/server: Fixed Win32 related compilation errors.
+        * apps/JAWS/server: Fixed Win32 related compilation errors.
 
-	* ace/OS.h (SIGUSR1 and SIGUSR2): Added new defines for these two
- 	  signals.
+        * ace/OS.h (SIGUSR1 and SIGUSR2): Added new defines for these two
+          signals.
 
-	* ace/LOCK_SOCK_Acceptor: New class added to ACE (it was
- 	  originally a class in JAWS).  It specialize ACE_SOCK_Acceptor to
- 	  lock around <accept>.  This class is particular useful if you
- 	  want to have multiple threads accepting on the same endpoint and
- 	  the system does not support have thread safe accept.  Thanks to
- 	  James Hu who initially wrote this class for JAWS.  Thanks also
- 	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> who decided to
- 	  use this in the Conn_Test.
+        * ace/LOCK_SOCK_Acceptor: New class added to ACE (it was
+          originally a class in JAWS).  It specialize ACE_SOCK_Acceptor to
+          lock around <accept>.  This class is particular useful if you
+          want to have multiple threads accepting on the same endpoint and
+          the system does not support have thread safe accept.  Thanks to
+          James Hu who initially wrote this class for JAWS.  Thanks also
+          to Johannes Gutleber <Johannes.Gutleber@cern.ch> who decided to
+          use this in the Conn_Test.
 
-	* tests/Conn_Test.cpp: Updated to use the new LOCK_SOCK_Acceptor.
+        * tests/Conn_Test.cpp: Updated to use the new LOCK_SOCK_Acceptor.
 
-	* apps/JAWS/server/HTTP_Server.h: Updated to use the new
- 	  LOCK_SOCK_Acceptor.
+        * apps/JAWS/server/HTTP_Server.h: Updated to use the new
+          LOCK_SOCK_Acceptor.
 
-	* apps/JAWS/server/HTTP_Server_T.*: These files are no longer
- 	  necessary since this class has been absorbed into ACE.
+        * apps/JAWS/server/HTTP_Server_T.*: These files are no longer
+          necessary since this class has been absorbed into ACE.
 
-	* tests: Fixed auto_ptr use in:
-	  
-	  Notify_Performance_Test.cpp
-	  Priority_Reactor_Test.cpp 
-	  Reactor_Performance_Test.cpp 
+        * tests: Fixed auto_ptr use in:
+          
+          Notify_Performance_Test.cpp
+          Priority_Reactor_Test.cpp 
+          Reactor_Performance_Test.cpp 
 
-	  Thanks to Jack Erickson (jack@pinion.com) for pointing this out.
-	
+          Thanks to Jack Erickson (jack@pinion.com) for pointing this out.
+        
 Tue Oct 28 11:26:39 1997  Nanbor Wang  <nw1@CHA-CHA>
 
-	* ace/ace_{dll,lib}.dsp:  Moved Acceptor.cpp from Source file
-	  folders to Template file folders.  Thanks to Satheesh Kumar
-	  <satheesh@aspectdv.com> for pointing this out.
+        * ace/ace_{dll,lib}.dsp:  Moved Acceptor.cpp from Source file
+          folders to Template file folders.  Thanks to Satheesh Kumar
+          <satheesh@aspectdv.com> for pointing this out.
 
 Tue Oct 28 05:44:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -149,38 +168,38 @@ Tue Oct 28 05:44:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Oct 28 00:38:58 1997    <irfan@TWOSTEP>
 
-	* ace/Strategies_T:
+        * ace/Strategies_T:
 
-	  ACE_Recycling_Strategy - Added new class ACE_Recycling_Strategy.
-  	  It defines the interface (and default implementation) for
- 	  specifying a recycling strategy for a SVC_HANDLER.  This
- 	  strategy acts as a consular to the Svc_Handler, preparing it for
- 	  the tough times ahead when the Svc_Handler will be recycled.
+          ACE_Recycling_Strategy - Added new class ACE_Recycling_Strategy.
+          It defines the interface (and default implementation) for
+          specifying a recycling strategy for a SVC_HANDLER.  This
+          strategy acts as a consular to the Svc_Handler, preparing it for
+          the tough times ahead when the Svc_Handler will be recycled.
 
-	  ACE_NOOP_Concurrency_Strategy - Added new class
- 	  ACE_NOOP_Concurrency_Strategy.  It implements a no-op activation
- 	  strategy in order to avoid calling open on a recycled
- 	  svc_handler multiple times.
+          ACE_NOOP_Concurrency_Strategy - Added new class
+          ACE_NOOP_Concurrency_Strategy.  It implements a no-op activation
+          strategy in order to avoid calling open on a recycled
+          svc_handler multiple times.
 
-	  ACE_Cached_Connect_Strategy - Added a ACE_Creation_Strategy,
- 	  ACE_Concurrency_Strategy, and ACE_Recycling_Strategy to the
- 	  cached connector.  This gives it more flexibility than by simply
- 	  providing template methods.  This is similar to the Strategy
- 	  Connector.
+          ACE_Cached_Connect_Strategy - Added a ACE_Creation_Strategy,
+          ACE_Concurrency_Strategy, and ACE_Recycling_Strategy to the
+          cached connector.  This gives it more flexibility than by simply
+          providing template methods.  This is similar to the Strategy
+          Connector.
 
-	  ACE_Cached_Connect_Strategy - Added new template methods for
- 	  certain key occasions in the cached connector: make_svc_handler,
- 	  activate_svc_handler, assign_recycler, and
- 	  prepare_for_recycling.
+          ACE_Cached_Connect_Strategy - Added new template methods for
+          certain key occasions in the cached connector: make_svc_handler,
+          activate_svc_handler, assign_recycler, and
+          prepare_for_recycling.
 
-	* tests/Conn_Test.cpp (client): Updated the tests such that it
- 	  uses a null activation strategy.
+        * tests/Conn_Test.cpp (client): Updated the tests such that it
+          uses a null activation strategy.
 
 Mon Oct 27 22:17:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* OS.h: Added the ACE_NESTED_CLASS macro to deal with those
-	compilers that do not allow a fully scoped type name appearing
-	inside a scope in which it was defined.
+        * OS.h: Added the ACE_NESTED_CLASS macro to deal with those
+        compilers that do not allow a fully scoped type name appearing
+        inside a scope in which it was defined.
 
 Mon Oct 27 22:17:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
