@@ -209,7 +209,9 @@ public:
   // This one's not in ACE.
   struct TAO_Export to_object
   {
-    to_object (CORBA::Object_ptr &obj);
+    // This signature reflects the change seet out in
+    // issue 154 of the 1.3 RTF.
+    to_object (CORBA_Object_out obj);
     CORBA::Object_ptr &ref_;
   };
 
