@@ -103,6 +103,25 @@ friend class ace_dewarn_gplusplus
 
 // ----------------------------------------------------------------
 
+// Deal with MSVC++ 6 (or less) insanity for CORBA...
+# if defined (ACE_HAS_BROKEN_NAMESPACES)
+#   define ACE_CORBA_1(NAME) CORBA_##NAME
+#   define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
+#   define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE::NAME
+#   if !defined (ACE_NESTED_CLASS)
+#     define ACE_NESTED_CLASS(TYPE, NAME) NAME
+#   endif  /* !ACE_NESTED_CLASS */
+# else  /* ! ACE_HAS_BROKEN_NAMESPACES */
+#   define ACE_CORBA_1(NAME) CORBA::NAME
+#   define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
+#   define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
+#   if !defined (ACE_NESTED_CLASS)
+#     define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
+#   endif  /* !ACE_NESTED_CLASS */
+# endif /* ! ACE_HAS_BROKEN_NAMESPACES */
+
+// ----------------------------------------------------------------
+
 # define ACE_TRACE_IMPL(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 # if (ACE_NTRACE == 1)

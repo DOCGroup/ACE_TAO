@@ -59,19 +59,6 @@ typedef long long longlong_t;
 typedef long      id_t;
 # endif /* ACE_PSOS_TM */
 
-// Deal with MSVC++ insanity for CORBA...
-# if defined (ACE_HAS_BROKEN_NAMESPACES)
-#   define ACE_CORBA_1(NAME) CORBA_##NAME
-#   define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
-#   define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE::NAME
-#   define ACE_NESTED_CLASS(TYPE, NAME) NAME
-# else  /* ! ACE_HAS_BROKEN_NAMESPACES */
-#   define ACE_CORBA_1(NAME) CORBA::NAME
-#   define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
-#   define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
-#   define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
-# endif /* ! ACE_HAS_BROKEN_NAMESPACES */
-
 // Here are all ACE-specific default constants, needed throughout ACE
 // and its applications.  The values can be over written by user
 // specific values in config.h files.
