@@ -1,3 +1,9 @@
+Tue Dec  2 16:19:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bound_Ptr_Test.h:
+          Moved Printer definition outside the ACE_HAS_THREADS check to
+          fix compile problems in single threaded builds.
+
 Tue Dec  2 12:15:18 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/Server_Shutdown.cpp:
@@ -10,13 +16,13 @@ Tue Dec  2 12:07:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec  1 22:04:37 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* tests/Task_Ex_Test.cpp: 
+	* tests/Task_Ex_Test.cpp:
 	Move User_Defined_Msg class to Task_Ex_Test.h.
-	
-	* tests/Task_Ex_Test.dsp: 
+
+	* tests/Task_Ex_Test.dsp:
 	Add Task_Ex_Test.h to dsp.
-	
-	* tests/Task_Ex_Test.h: 
+
+	* tests/Task_Ex_Test.h:
 	Added to fix problems with AIX IBM and Template instantiations.
 
 Mon Dec  1 13:03:50 2003  Chad Elliott  <elliott_c@ociweb.com>
