@@ -274,6 +274,15 @@ struct ACE_Svc_Export CDR
 // in this ONE file, we defer to David Brownell's considerable prowess
 // at creating typecode interpreters as well as to the ACE convention
 // of placing inline functions into separate files.
+#  if !defined(__ACE_INLINE__)
+#    define ACE_INLINE inline
+#    define do_undef_on_ACE_INLINE
+#  endif
+
 #  include "cdr.i"
+
+#  if defined(do_undef_on_ACE_INLINE)
+#    undef ACE_INLINE
+#  endif
 
 #endif /* TAO_CDR_H */
