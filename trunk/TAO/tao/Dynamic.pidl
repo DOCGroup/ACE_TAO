@@ -10,7 +10,7 @@
  *   used to generate code is:
  *
  *     tao_idl
- *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *        -o orig -Gp -Gd -Ge 1 -Gv
  *          -Wb,export_macro=TAO_Export
  *          -Wb,export_include="tao/corbafwd.h"
  *          -Wb,pre_include="ace/pre.h"
@@ -34,12 +34,9 @@
 #ifndef _DYNAMIC_IDL_
 #define _DYNAMIC_IDL_
 
-#ifndef CORBA3
-#define local
-#endif
-
-
 module Dynamic {
+
+  typeprefix Dynamic "omg.org";
 
   struct Parameter {
     any argument;
@@ -56,4 +53,5 @@ module Dynamic {
   typedef CORBA::StringSeq RequestContext;
 
 };
+
 #endif // _DYNAMIC_IDL_
