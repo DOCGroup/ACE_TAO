@@ -3,7 +3,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Crashed_Callback, client, "$Id$")
+ACE_RCSID(Client_Leaks, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int iterations = 1200;
