@@ -2,8 +2,9 @@
 // $Id$
 //
 #include "Roundtrip.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(Single_Threaded,
+ACE_RCSID(LoadBalancing,
           Roundtrip,
           "$Id$")
 
@@ -14,7 +15,7 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 }
 
 Test::Timestamp
-Roundtrip::test_method (Test::Timestamp send_time, 
+Roundtrip::test_method (Test::Timestamp send_time,
 		        Test::number cl_number,
 		        Test::number it_number
                         ACE_ENV_ARG_DECL_NOT_USED)
@@ -29,7 +30,7 @@ Roundtrip::test_method (Test::Timestamp send_time,
 
   if ((it_number % 2) == 0)
   {
-    prime_number = ACE::is_prime (20000, 2, 10000); 
+    prime_number = ACE::is_prime (20000, 2, 10000);
     return send_time;
   }
   else
