@@ -43,18 +43,22 @@ ECB_Driver::run (int argc, char* argv[])
   TAO_TRY
     {
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
+        CORBA::ORB_init (argc,
+                         argv,
+                         "",
+                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
@@ -67,14 +71,17 @@ ECB_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "EC_Basic: Execution parameters:\n"
                   "  pid file name = <%s>\n",
-                  this->pid_filename_?this->pid_filename_:"nil") );
+                  this->pid_filename_ ? this->pid_filename_ : "nil"));
 
       if (this->pid_filename_ != 0)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_filename_, "w");
+          FILE *pid = ACE_OS::fopen (this->pid_filename_,
+                                     "w");
           if (pid != 0)
             {
-              ACE_OS::fprintf (pid, "%d\n", ACE_OS::getpid ());
+              ACE_OS::fprintf (pid,
+                               "%d\n",
+                               ACE_OS::getpid ());
               ACE_OS::fclose (pid);
             }
         }
@@ -85,7 +92,8 @@ ECB_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       CORBA::String_var str =
-        this->orb_->object_to_string (scheduler.in (), TAO_TRY_ENV);
+        this->orb_->object_to_string (scheduler.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "EC_Basic: The (local) scheduler IOR is <%s>\n",
@@ -106,7 +114,8 @@ ECB_Driver::run (int argc, char* argv[])
         ec_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      str = this->orb_->object_to_string (ec.in (), TAO_TRY_ENV);
+      str = this->orb_->object_to_string (ec.in (),
+                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -122,9 +131,11 @@ ECB_Driver::run (int argc, char* argv[])
 
       ec_impl.activate ();
 
-      ACE_DEBUG ((LM_DEBUG, "EC_Basic: local EC objref ready\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Basic: local EC objref ready\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "EC_Basic: start supplier_id_test\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Basic: start supplier_id_test\n"));
 
       ECB_SupplierID_Test supplier_id_test;
       supplier_id_test.run (this->orb_.in (),
@@ -137,9 +148,11 @@ ECB_Driver::run (int argc, char* argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "EC_Basic: supplier_id test failed\n"),
                           -1);
-      ACE_DEBUG ((LM_DEBUG, "EC_Basic: end supplier_id_test\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Basic: end supplier_id_test\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "EC_Basic: start correlation_test\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Basic: start correlation_test\n"));
 
       ECB_Correlation_Test correlation_test;
       correlation_test.run (this->orb_.in (),
@@ -152,9 +165,11 @@ ECB_Driver::run (int argc, char* argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "EC_Basic: correlation test failed\n"),
                           -1);
-      ACE_DEBUG ((LM_DEBUG, "EC_Basic: end correlation_test\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Basic: end correlation_test\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "EC_Basic: shutdown the EC\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Basic: shutdown the EC\n"));
       ec_impl.shutdown ();
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
@@ -184,8 +199,6 @@ ECB_Driver::parse_args (int argc, char *argv [])
         case 'p':
           this->pid_filename_ = get_opt.optarg;
           break;
-
-
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
@@ -321,10 +334,10 @@ ECB_Supplier::open (const char* name,
     scheduler->create (name, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  // The execution times are set to reasonable values, but
-  // actually they are changed on the real execution, i.e. we
-  // lie to the scheduler to obtain right priorities; but we
-  // don't care if the set is schedulable.
+  // The execution times are set to reasonable values, but actually
+  // they are changed on the real execution, i.e. we lie to the
+  // scheduler to obtain right priorities; but we don't care if the
+  // set is schedulable.
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
@@ -429,21 +442,27 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 
   // Startup
   this->consumer0_.open ("SupplierID/consumer0",
-                         ec, scheduler, _env);
+                         ec,
+                         scheduler,
+                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->consumer1_.open ("SupplierID/consumer1",
-                         ec, scheduler, _env);
+                         ec,
+                         scheduler,
+                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->supplier0_.open ("SupplierID/supplier0",
-                         ec, scheduler, _env);
+                         ec,
+                         scheduler,
+                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->supplier1_.open ("SupplierID/supplier1",
-                         ec, scheduler, _env);
+                         ec,
+                         scheduler,
+                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  //
   // Precompute the QoS for the consumers and suppliers.
-  //
   ACE_ConsumerQOS_Factory consumer0_qos;
   consumer0_qos.start_disjunction_group ();
   consumer0_qos.insert_source (ECB_SupplierID_Test::SUPPLIER_ID,
@@ -466,9 +485,7 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
                         this->supplier1_.rt_info (),
                         1);
 
-  //
   // Precompute the event set
-  //
   RtecEventComm::EventSet events (1);
   events.length (1);
 
@@ -485,9 +502,7 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
   e.data.x = 0;
   e.data.y = 0;
 
-  //
-  // Start the real test
-  //
+  // Start the real test.
 
   // PHASE 0, test filtering by supplier ID in the presence of
   // multiple suppliers with the same ID...
@@ -649,13 +664,17 @@ ECB_SupplierID_Test::dump_results (void)
   };
 
   int result = 0;
-  for (int i = 0; i < ECB_SupplierID_Test::PHASE_END; ++i)
+
+  for (int i = 0;
+       i < ECB_SupplierID_Test::PHASE_END;
+       ++i)
     {
       if (this->error_count_[i] != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "SupplierID_Test: Error count for phase %d "
-                      "is not zero\n", i));
+                      "is not zero\n",
+                      i));
           result = -1;
         }
       if (this->event_count_[i] != expected_count[i])
@@ -676,10 +695,8 @@ ECB_SupplierID_Test::dump_results (void)
       result = -1;
     }
   if (result == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "SupplierID_Test: All phases successful\n"));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "SupplierID_Test: All phases successful\n"));
 
   return result;
 }
@@ -733,7 +750,6 @@ ECB_SupplierID_Test::push (int consumer_id,
     case ECB_SupplierID_Test::PHASE_7:
       this->event_count_[ECB_SupplierID_Test::PHASE_7]++;
       break;
-
     }
 }
 
@@ -764,18 +780,22 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 
   // Startup
   this->consumer_.open ("Correlation/consumer",
-                        ec, scheduler, _env);
+                        ec,
+                        scheduler,
+                        _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->supplier0_.open ("Correlation/supplier0",
-                         ec, scheduler, _env);
+                         ec,
+                         scheduler,
+                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->supplier1_.open ("Correlation/supplier1",
-                         ec, scheduler, _env);
+                         ec,
+                         scheduler,
+                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  //
   // Precompute the QoS for the consumers and suppliers.
-  //
   ACE_ConsumerQOS_Factory consumer_qos;
   consumer_qos.start_conjunction_group ();
   consumer_qos.insert_type (ECB_Correlation_Test::EVENT_A,
@@ -803,9 +823,7 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
                         this->supplier1_.rt_info (),
                         1);
 
-  //
   // Precompute the events
-  //
   RtecEventComm::EventSet event_a (1);
   event_a.length (1);
   {
@@ -871,9 +889,7 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     e.data.y = 0;
   }
 
-  //
-  // Start the real test
-  //
+  // Start the real test.
 
   // PHASE 0
   this->phase_ = ECB_Correlation_Test::PHASE_0;
@@ -1053,7 +1069,8 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 int
 ECB_Correlation_Test::dump_results (void)
 {
-  static CORBA::ULong expected_count[PHASE_END]={
+  static CORBA::ULong expected_count[PHASE_END] =
+  {
     1 * ECB_Correlation_Test::EVENTS_SENT,
     2 * ECB_Correlation_Test::EVENTS_SENT,
     2 * ECB_Correlation_Test::EVENTS_SENT,
@@ -1063,13 +1080,17 @@ ECB_Correlation_Test::dump_results (void)
   };
 
   int result = 0;
-  for (int i = 0; i < ECB_Correlation_Test::PHASE_END; ++i)
+
+  for (int i = 0;
+       i < ECB_Correlation_Test::PHASE_END;
+       ++i)
     {
       if (this->error_count_[i] != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "Correlation_Test: Error count for phase %d "
-                      "is not zero\n", i));
+                      "is not zero\n",
+                      i));
           result = -1;
         }
       if (this->event_count_[i] != expected_count[i])
@@ -1090,10 +1111,8 @@ ECB_Correlation_Test::dump_results (void)
       result = -1;
     }
   if (result == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Correlation_Test: All phases successful\n"));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "Correlation_Test: All phases successful\n"));
 
   return result;
 }
@@ -1117,10 +1136,10 @@ ECB_Correlation_Test::push (int consumer_id,
     }
 
   // If the types do not match we have an error.
-  if (! ((events[0].header.type == ECB_Correlation_Test::EVENT_A
-          && events[1].header.type == ECB_Correlation_Test::EVENT_B)
-         || (events[0].header.type == ECB_Correlation_Test::EVENT_B
-          && events[1].header.type == ECB_Correlation_Test::EVENT_A)))
+  if (!((events[0].header.type == ECB_Correlation_Test::EVENT_A
+         && events[1].header.type == ECB_Correlation_Test::EVENT_B)
+        || (events[0].header.type == ECB_Correlation_Test::EVENT_B
+            && events[1].header.type == ECB_Correlation_Test::EVENT_A)))
     {
       ACE_ERROR ((LM_ERROR,
                   "Correlation_Test::push - event type\n"));
