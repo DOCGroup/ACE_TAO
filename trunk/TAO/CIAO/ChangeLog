@@ -1,3 +1,16 @@
+Mon Nov 24 14:41:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Assembly_Deployer/Assembly_Manager.cpp:
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp:
+        * tools/Assembly_Deployer/Deployment_Configuration.cpp:
+        * tools/Daemon/DaemonController.cpp:
+        * tools/Daemon/controller_i.cpp:
+        * tools/ServerActivator/ServerActivator.cpp:
+        * tools/ServerActivator/ServerActivator_test_client.cpp:
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp:
+        
+          Added missing ACE file includes.
+
 Mon Nov 24 14:21:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Container_Base.cpp:
