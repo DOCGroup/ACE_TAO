@@ -58,8 +58,9 @@ CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvo
 CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
 INCLDIRS        += -I$(WIND_BASE)/target/h
-LD              = ld$(TOOLENV)
-LDFLAGS         += -X -r .obj/__ctordtor.o
+LD              = $(ACE_ROOT)/etc/ace_ld -c "$(COMPILE.c) -traditional" \
+                  -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
+LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
 #### the i386 family.
 OCFLAGS         += -O
@@ -67,7 +68,6 @@ PIC             =
 AR              = ar$(TOOLENV)
 ARFLAGS         = rv
 RANLIB          = /bin/true
-PRELINK         = nm$(TOOLENV) .obj/$@.o $(MUNCHED) $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
 VXWORKS         = 1
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
@@ -75,5 +75,5 @@ LINK.c           = override
 LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
 
 LINK.cc          = override
-LINK.cc.override = $(PRELINK) $(LD) $(PTDIRS)
+LINK.cc.override = $(LD)
 POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) xsymDec < $@ > $@.sym
