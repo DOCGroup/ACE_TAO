@@ -1,3 +1,11 @@
+Sat May 24 09:21:08 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: protected second
+	  ACE_Svc_Handler specialization for case that ACE_HAS_THREADS,
+	  when ACE_HAS_TLI.  It had gotten lost in the last pass of
+	  that module.  Thanks to Sandro Doro <doros@aureus.sublink.org>
+	  for reporting this problem.
+
 Sat May 24 03:19:38 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* ace/OS.i (sigaddset, sigdelset, sigemptyset, sigfillset,
