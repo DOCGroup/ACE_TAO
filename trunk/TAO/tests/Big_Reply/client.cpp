@@ -62,7 +62,7 @@ main (int argc, char *argv[])
 
 
       Client_Task client_task (reply_gen.in (),
-                               1000,
+                               10,
                                ACE_Thread_Manager::instance ());
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
