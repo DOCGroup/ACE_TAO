@@ -2200,6 +2200,8 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_wstring:
       copy->u.wstrval = this->pd_ev->u.wstrval;
       break;
+    default:
+      break;
   }
 
   if (this->pd_ev->et == t)
@@ -2368,6 +2370,8 @@ AST_Expression::operator== (AST_Expression *vc)
     case EV_enum:
     case EV_void:
     case EV_none:
+    case EV_any:
+    case EV_object:
       return I_FALSE;
     }
 
@@ -2455,6 +2459,8 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_enum:
     case EV_void:
     case EV_none:
+    case EV_any:
+    case EV_object:
       return I_FALSE;
     }
 
@@ -2548,6 +2554,8 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
     case AST_Expression::EV_enum:
     case AST_Expression::EV_none:
     case AST_Expression::EV_void:
+    case AST_Expression::EV_any:
+    case AST_Expression::EV_object:
       break;
     }
 }
