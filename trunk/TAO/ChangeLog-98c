@@ -1,3 +1,8 @@
+Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/sequence_T.i (replace): Fixed some typos in the template
+ 	  code.  Thanks to Ben Eng <ben@jetpen.com> for reporting these.
+
 Fri Mar 20 23:25:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading_Service/Makefile:
