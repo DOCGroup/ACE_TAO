@@ -1,3 +1,11 @@
+Wed Jul 09 13:17:57 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Select_Reactor_Base.cpp (purge_pending_notifications): 
+
+	  Fixed build problem when ACE_HAS_REACTOR_NOTIFICATION_QUEUE,
+	  there was a typo in the name of a local variable.  Thanks to
+	  Carlos for pointing this out.
+
 Tue Jul 08 17:28:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\MT_Reactor_Timer_Test.cpp (handle_close): 
