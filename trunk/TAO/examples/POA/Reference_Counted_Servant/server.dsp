@@ -7,24 +7,22 @@
 CFG=POA Reference Counted Servant Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "server.mak"\
- CFG="POA Reference Counted Servant Server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "server.mak" CFG="POA Reference Counted Servant Server - Win32 Debug"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "POA Reference Counted Servant Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "POA Reference Counted Servant Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "POA Reference Counted Servant Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA Reference Counted Servant Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -82,7 +80,7 @@ LINK32=link.exe
 # ADD LINK32 ..\Generic_Servant\Generic_Servantd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -91,6 +89,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Reference_Counted_Foo.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\server.cpp
