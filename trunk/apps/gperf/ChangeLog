@@ -1,3 +1,8 @@
+Sat Aug 22 08:44:15 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Options.cpp : Fixed the typo (-V instead of -v) under 'case
+	  h' print string.  
+
 Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Key_List.cpp (set_output_types): Make sure that we leave an
@@ -7,7 +12,7 @@ Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/gperf.cpp: Modified the main() program so that it doesn't
  	  print the starting time until AFTER we've parsed the arguments.
-
+ 
 	* src/Version.cpp: Updated the version to 2.7 to reflect the
 	  new changes.
 
