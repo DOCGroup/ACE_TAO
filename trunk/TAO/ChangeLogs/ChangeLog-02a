@@ -1,3 +1,13 @@
+Sun Apr 07 16:18:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_BiDir/server.dsp:
+	* tests/MT_BiDir/client.dsp: Fixed the release build
+	  configuration. This shoudl fix errors in the release builds of
+	  Win32. 
+
+	* examples/POA/POA_BiDir/POA_BiDir.dsp: Fixed the release build
+	  configuration. 
+
 Sun Apr  7 07:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO-inheritance.pdf:
