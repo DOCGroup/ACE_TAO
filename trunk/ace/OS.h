@@ -1364,7 +1364,9 @@ private:
 #undef ctime
 #endif /* ACE_HAS_BROKEN_CTIME */
 
+extern "C" {
 typedef void (*ACE_Service_Object_Exterminator)(void *);
+}
 
 // Static service macros
 #define ACE_STATIC_SVC_DECLARE(X) extern ACE_Static_Svc_Descriptor ace_svc_desc_##X ;
