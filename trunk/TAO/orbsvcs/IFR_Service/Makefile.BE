@@ -66,8 +66,6 @@ realclean: clean
 
 .obj/be_global.o .obj/be_global.so .shobj/be_global.o .shobj/be_global.so: be_global.cpp be_global.h TAO_IFR_BE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -229,8 +227,6 @@ realclean: clean
 .obj/be_produce.o .obj/be_produce.so .shobj/be_produce.o .shobj/be_produce.so: be_produce.cpp ../../TAO_IDL/include/global_extern.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -438,16 +434,13 @@ realclean: clean
  ../../TAO_IDL/include/ast_concrete_type.h \
  ../../TAO_IDL/include/ast_type.h ../../TAO_IDL/include/ast_decl.h \
  ../../TAO_IDL/include/utl_scoped_name.h \
- ../../TAO_IDL/include/utl_idlist.h \
+ ../../TAO_IDL/include/utl_idlist.h ../../TAO_IDL/include/utl_list.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/utl_list.h ../../TAO_IDL/include/idl_bool.h \
- $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -660,16 +653,13 @@ realclean: clean
  ../../TAO_IDL/include/ast_concrete_type.h \
  ../../TAO_IDL/include/ast_type.h ../../TAO_IDL/include/ast_decl.h \
  ../../TAO_IDL/include/utl_scoped_name.h \
- ../../TAO_IDL/include/utl_idlist.h \
+ ../../TAO_IDL/include/utl_idlist.h ../../TAO_IDL/include/utl_list.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/utl_list.h ../../TAO_IDL/include/idl_bool.h \
- $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -837,16 +827,13 @@ realclean: clean
  ../../TAO_IDL/include/ast_argument.h \
  ../../TAO_IDL/include/ast_field.h ../../TAO_IDL/include/ast_decl.h \
  ../../TAO_IDL/include/utl_scoped_name.h \
- ../../TAO_IDL/include/utl_idlist.h \
+ ../../TAO_IDL/include/utl_idlist.h ../../TAO_IDL/include/utl_list.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/utl_list.h ../../TAO_IDL/include/idl_bool.h \
- $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1019,16 +1006,13 @@ realclean: clean
  ../../TAO_IDL/include/ast_concrete_type.h \
  ../../TAO_IDL/include/ast_type.h ../../TAO_IDL/include/ast_decl.h \
  ../../TAO_IDL/include/utl_scoped_name.h \
- ../../TAO_IDL/include/utl_idlist.h \
+ ../../TAO_IDL/include/utl_idlist.h ../../TAO_IDL/include/utl_list.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/utl_list.h ../../TAO_IDL/include/idl_bool.h \
- $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1196,16 +1180,13 @@ realclean: clean
  ../../TAO_IDL/include/ast_concrete_type.h \
  ../../TAO_IDL/include/ast_type.h ../../TAO_IDL/include/ast_decl.h \
  ../../TAO_IDL/include/utl_scoped_name.h \
- ../../TAO_IDL/include/utl_idlist.h \
+ ../../TAO_IDL/include/utl_idlist.h ../../TAO_IDL/include/utl_list.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/utl_list.h ../../TAO_IDL/include/idl_bool.h \
- $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1375,13 +1356,10 @@ realclean: clean
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- be_extern.h TAO_IFR_BE_Export.h be_global.h \
- ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl be_extern.h \
+ TAO_IFR_BE_Export.h be_global.h ../../TAO_IDL/include/idl_bool.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1546,13 +1524,10 @@ realclean: clean
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- be_extern.h TAO_IFR_BE_Export.h be_global.h \
- ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl be_extern.h \
+ TAO_IFR_BE_Export.h be_global.h ../../TAO_IDL/include/idl_bool.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \

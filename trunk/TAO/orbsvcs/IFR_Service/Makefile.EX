@@ -62,8 +62,6 @@ endif # !def TAO_IDL_PREPROCESSOR
  ../../TAO_IDL/include/global_extern.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -277,8 +275,6 @@ endif # !def TAO_IDL_PREPROCESSOR
  ../../TAO_IDL/include/global_extern.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -484,8 +480,6 @@ endif # !def TAO_IDL_PREPROCESSOR
  ../../TAO_IDL/include/global_extern.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \

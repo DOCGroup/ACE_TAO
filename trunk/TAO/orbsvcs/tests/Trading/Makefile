@@ -108,8 +108,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 .obj/TT_Info.o .obj/TT_Info.so .shobj/TT_Info.o .shobj/TT_Info.so: TT_Info.cpp TT_Info.h TTestS.h TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -288,8 +286,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -378,8 +375,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  Service_Type_Exporter.h TT_Info.h TTestS.h TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -558,8 +553,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -587,11 +581,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i
 
 .obj/Offer_Exporter.o .obj/Offer_Exporter.so .shobj/Offer_Exporter.o .shobj/Offer_Exporter.so: Offer_Exporter.cpp Offer_Exporter.h TT_Info.h \
- TTestS.h TTestC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TTestS.h TTestC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -770,8 +761,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -856,18 +846,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
- Simple_Dynamic.cpp \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ Simple_Dynamic.cpp $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i
 
 .obj/Offer_Importer.o .obj/Offer_Importer.so .shobj/Offer_Importer.o .shobj/Offer_Importer.so: Offer_Importer.cpp Offer_Importer.h TT_Info.h \
- TTestS.h TTestC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TTestS.h TTestC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1046,8 +1032,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1171,8 +1156,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1433,8 +1416,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 .obj/TTestS.o .obj/TTestS.so .shobj/TTestS.o .shobj/TTestS.so: TTestS.cpp TTestS.h TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1613,8 +1594,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1632,9 +1612,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  TTestS_T.h TTestS_T.i TTestS_T.cpp TTestS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -1774,8 +1752,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 .obj/TTestC.o .obj/TTestC.so .shobj/TTestC.o .shobj/TTestC.so: TTestC.cpp TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1954,8 +1930,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2074,8 +2050,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2213,9 +2187,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/objectid.h \
- $(TAO_ROOT)/tao/ORB.i \
- Offer_Exporter.h TT_Info.h TTestS.h TTestC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/ORB.i Offer_Exporter.h TT_Info.h \
+ TTestS.h TTestC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -2258,8 +2231,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -2382,8 +2354,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2521,9 +2491,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/objectid.h \
- $(TAO_ROOT)/tao/ORB.i \
- Offer_Importer.h TT_Info.h TTestS.h TTestC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/ORB.i Offer_Importer.h TT_Info.h \
+ TTestS.h TTestC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -2566,8 +2535,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -2684,8 +2652,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 .obj/colocated_test.o .obj/colocated_test.so .shobj/colocated_test.o .shobj/colocated_test.so: colocated_test.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2838,9 +2804,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/objectid.h \
- $(TAO_ROOT)/tao/ORB.i \
- Offer_Exporter.h TT_Info.h TTestS.h TTestC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/ORB.i Offer_Exporter.h TT_Info.h \
+ TTestS.h TTestC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -2880,8 +2845,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TTestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TTestC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
