@@ -139,6 +139,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
   cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
   cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default is interpretive)\n");
+  cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default)\n");
   cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
   cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
   cerr << GTDEVEL ("    \t\t\tNo effect if TypeCode generation is suppressed\n");
@@ -478,6 +479,11 @@ DRV_parse_args (long ac, char **av)
               if (av[i][2] == 'c')
                 {
                   // compiled marshaling support
+                  idl_global->compiled_marshaling (1);
+                }
+              else if (av[i][2] == 'i')
+                {
+                  // exception support
                   idl_global->compiled_marshaling (1);
                 }
               else if (av[i][2] == 'e')
