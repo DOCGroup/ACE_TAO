@@ -1,3 +1,34 @@
+Thu Nov  4 22:08:40 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/HTBP/:
+          Moved to new protocols/ace/HTBP.
+
+        * protocols/:
+          This is a new subdirectory added in anticipation of new
+          libraries that use ACE to create new methods of transporting
+          data between peers. This directory exists as a peer to ace
+          signifying that entites under this directory are not wrappers in
+          and of themselves, but do not necessarily have dependencies on
+          any higher level code.
+
+        * protocols/ace/HTBP:
+          This directory contains the implementation of the Hypertext
+          Tunneling Bidirectional Protocol, that was previously under the
+          ace directory. The additional ace directory was added to avoid
+          having to modify any code that depends on HTBP, currently its
+          tests and the TAO pluggable protocol, HTIOP. Keeping the
+          relative path the same meant that the only external change
+          required as a side effect of this move was to add a single line
+          to htbp.mpb so that code including HTBP headers get
+          -I $ACE_ROOT/protocols added to the compile line. No other
+          changes are required.
+
+        * ace/ace.mwc:
+          Removed ace/HTBP from the workspace definition.
+
+        * bin/MakeProjectCreator/config/htbp.mpb:
+          Added "includes += $(ACE_ROOT)/protocols" to the base project.
+
 Thu Nov  4 18:47:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-WinCE.h: Added ACE_LACKS_WCTYPE_H for CE 3 and lower.
@@ -7,7 +38,7 @@ Thu Nov  4 18:47:22 2004  Steve Huston  <shuston@riverace.com>
 Thu Nov  4 17:06:08 CST 2004 Scott Harris <harris_s@ociweb.com>
 
         * test/Test_Output.cpp:
-          
+
           Fix a bug introduced by a memory leak fix in Logging_Strategy.cpp,
           Mon Oct 18 21:13:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
           , that broke the test/Logging_Strategy_Test on some platforms.
@@ -16,14 +47,14 @@ Thu Nov  4 17:06:08 CST 2004 Scott Harris <harris_s@ociweb.com>
           stream but ACE_END_TEST still tries to close and destory it.
           The solution was to only have Test_Output close/destroy the
           stream if it has not already be changed in ACE_LOG_MSG.
-          
+
         * test/Log_Msg_Test.cpp:
-        
+
           The above change made it so ACE_Test_Output::output_file ()
           returns the ACE_MSG_LOG stream so it would not return
           a possibly destroyed stream. Log_Msg_Test had
           to be changed to save off the message stream when it
-          switched to a different file stream and then back 
+          switched to a different file stream and then back
           to the original.
 
 Thu Nov  4 14:00:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
