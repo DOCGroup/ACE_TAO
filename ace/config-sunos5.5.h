@@ -339,4 +339,9 @@
 #endif /* i386 */
 
 #define ACE_MALLOC_ALIGN 8
+
+#if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
+#undef ACE_HAS_PROC_FS
+#undef ACE_HAS_PRUSAGE_T
+#endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
 #endif /* ACE_CONFIG_H */

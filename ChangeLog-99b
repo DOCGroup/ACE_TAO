@@ -1,14 +1,23 @@
+Tue Aug 17 17:49:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: If (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
+	  are enabled then #undef ACE_HAS_PROC_FS and ACE_HAS_PRUSAGE_T to
+ 	  work around problems with Solaris 7.  Thanks to Sridhara Rao
+ 	  Dasu <dasu@slac.stanford.edu> for reporting this.
+
+	* ace/OS.i: Updated the readdir_r() conditional compilation so that
+	  it'll work when _FILE_OFFSET_BITS == 64.  Thanks to Sridhara Rao
+ 	  Dasu <dasu@slac.stanford.edu> for reporting this.
+
 Tue Aug 17 17:17:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
 	* ace/OS.i:
 	* ace/OS.cpp:
 	  Added new data type to handle condition variable attributes
-	  (ACE_condattr_t).
- 	  New methods to manipulate that data type (ACE_OS::cond_attr_init 
-	  and destroy)
-	  Add new method to create a condition variable from a
-	  pre-initialized attribute.
+ 	  (ACE_condattr_t).  New methods to manipulate that data type
+ 	  (ACE_OS::cond_attr_init and destroy) Add new method to create a
+ 	  condition variable from a pre-initialized attribute.
 
 	* ace/Synch.h:
 	* ace/Synch.i:

@@ -1,3 +1,10 @@
+Tue Aug 17 15:28:43 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+ 
+	* TAO-INSTALL.html: Added a reference to the
+	  http://www.tenermerx.com/tao_bcb/index.html link provided by
+ 	  Christopher Kohlhoff <chris@kohlhoff.com> to explain how to
+	  build TAO using Borland C++ Builder.
+
 Tue Aug 17 16:45:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO-INSTALL.html: Changed Windows NT directions to adhere
