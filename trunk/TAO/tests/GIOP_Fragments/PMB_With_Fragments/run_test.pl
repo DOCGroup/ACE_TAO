@@ -13,6 +13,8 @@ $iorfile = PerlACE::LocalFile ('server.ior');
 $TARGETHOSTNAME = 'localhost';
 $port = PerlACE::uniqueid () + 12000;
 $debug = 0;
+$data = (pack('L', 0x41424344) eq 'ABCD' ? 'giop1.2_fragments_be.dat' :
+                                           'giop1.2_fragments.dat');
 
 unlink $iorfile;
 
@@ -29,7 +31,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
 }
 
 my($cl) = system("$^X dribble.pl --port=$port " .
-                 "--stream=giop1.2_fragments.dat " .
+                 "--stream=$data " .
                  "--layout=giop1.2_fragments.layout");
 if ($cl != 0) {
     print STDERR "ERROR: client returned $cl\n";
