@@ -1,3 +1,12 @@
+Sat Nov 18 11:35:53 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/OS_Test.cpp:
+
+          Changed the signature of main to use ACE_TCHAR.  Although
+          I don't consider this the "right" way of doing this, it 
+          will make the builds happy with ACE_USES_WCHAR until we
+          implement something better.
+
 Sat Nov 18 09:58:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Basic_Types.h:
