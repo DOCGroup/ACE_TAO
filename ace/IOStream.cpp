@@ -4,10 +4,10 @@
 #if !defined (ACE_IOSTREAM_C)
 #define ACE_IOSTREAM_C
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
+
 #define ACE_BUILD_DLL
 #include "ace/IOStream.h"
-#include "ace/Thread.h"
-#include "ace/Handle_Set.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +42,7 @@
   // invokes iostream::operator>> (int&) then iostream::operator>> (String&)
   //
   // What has happened is that the first >> is invoked on the base class and returns
-  // a reference to iostream.  The second >> has no idea of the ACE_IOStream and
+  // a reference to iostream.  The second >> has no idea of the ACE_IOStream_T and
   // gets invoked on iostream.  Probably NOT what you wanted!
 
 
@@ -84,10 +84,8 @@
   // a myiostream&, the second >> will be invoked as desired.  */
 
 
-#if ! defined (ACE_IOSTREAM_BUILDING_TEMPLATE)
-
-ACE_Time_Value * 
-ACE_Streambuf_T::recv_timeout (ACE_Time_Value * tv)
+ACE_Time_Value *
+ACE_Streambuf::recv_timeout (ACE_Time_Value * tv)
 {
   ACE_Time_Value * rval = recv_timeout_;
   if (tv)
@@ -102,7 +100,7 @@ ACE_Streambuf_T::recv_timeout (ACE_Time_Value * tv)
 }
 
 int
-ACE_Streambuf_T::underflow (void)
+ACE_Streambuf::underflow (void)
 {
   // If input mode is not set, any attempt to read from the stream is
   // a failure.
@@ -221,7 +219,7 @@ ACE_Streambuf_T::underflow (void)
 // rather than repeating a lot of what you've already seen.
 
 int
-ACE_Streambuf_T::overflow (int c)
+ACE_Streambuf::overflow (int c)
 {
   // Check to see if output is allowed at all.
   if (! (mode_ & ios::out))
@@ -291,7 +289,7 @@ ACE_Streambuf_T::overflow (int c)
 // syncin
 
 int
-ACE_Streambuf_T::syncin (void)
+ACE_Streambuf::syncin (void)
 {
   // As discussed, there really isn't any way to sync input from a socket-like
   // device.  We specifially override this base-class function so that it won't
@@ -302,7 +300,7 @@ ACE_Streambuf_T::syncin (void)
 // syncout
 
 int
-ACE_Streambuf_T::syncout (void)
+ACE_Streambuf::syncout (void)
 {
   // Unlike syncin, syncout is a doable thing.  All we have to do is
   // write whatever is in the output buffer to the peer.  flushbuf ()
@@ -315,7 +313,7 @@ ACE_Streambuf_T::syncout (void)
 }
 
 int
-ACE_Streambuf_T::sync (void)
+ACE_Streambuf::sync (void)
 {
   // sync () is fairly traditional in that it syncs both input and output.
   // We could have omitted the call to syncin () but someday, we may want it
@@ -334,7 +332,7 @@ ACE_Streambuf_T::sync (void)
 // flushbuf
 
 int
-ACE_Streambuf_T::flushbuf (void)
+ACE_Streambuf::flushbuf (void)
 {
   // pptr () is one character beyond the last character put
   // into the buffer.  pbase () points to the beginning of
@@ -395,8 +393,8 @@ ACE_Streambuf_T::flushbuf (void)
   return 0;
 }
 
-int 
-ACE_Streambuf_T::get_one_byte (void)
+int
+ACE_Streambuf::get_one_byte (void)
 {
   // The recv function will return immediately if there is no data
   // waiting.  So, we use recv_n to wait for exactly one byte to come
@@ -411,7 +409,7 @@ ACE_Streambuf_T::get_one_byte (void)
 }
 
 int
-ACE_Streambuf_T::fillbuf (void)
+ACE_Streambuf::fillbuf (void)
   // This will be called when the read (get) buffer has been
   // exhausted (ie -- gptr == egptr)
 {
@@ -422,7 +420,7 @@ ACE_Streambuf_T::fillbuf (void)
     return EOF;
 
   // Now, get whatever else may be in the buffer.  This will return if
-  // there is nothing in the buffer. 
+  // there is nothing in the buffer.
 
   int bc = this->recv (base (), blen (), recv_timeout_);
 
@@ -441,7 +439,7 @@ ACE_Streambuf_T::fillbuf (void)
   return bc;
 }
 
-ACE_Streambuf_T::ACE_Streambuf_T (u_int streambuf_size, int io_mode)
+ACE_Streambuf::ACE_Streambuf (u_int streambuf_size, int io_mode)
   : eback_saved_ (0),  // to avoid Purify UMR
     pbase_saved_ (0),  // to avoid Purify UMR
     get_mode_ (1),
@@ -454,26 +452,26 @@ ACE_Streambuf_T::ACE_Streambuf_T (u_int streambuf_size, int io_mode)
  (void)reset_put_buffer ();
 }
 
-u_int ACE_Streambuf_T::streambuf_size (void)
+u_int ACE_Streambuf::streambuf_size (void)
 {
   return streambuf_size_;
 }
 
-u_int ACE_Streambuf_T::get_waiting (void)
+u_int ACE_Streambuf::get_waiting (void)
   // Return the number of bytes not yet gotten.
   //	eback + get_waiting = gptr
 {
 	return this->gptr_saved_ - this->eback_saved_;
 }
 
-u_int ACE_Streambuf_T::get_avail (void)
+u_int ACE_Streambuf::get_avail (void)
   // Return the number of bytes in the get area (includes some already gotten);
   //	eback + get_avail = egptr
 {
 	return this->egptr_saved_ - this->eback_saved_;
 }
 
-u_int ACE_Streambuf_T::put_avail (void)
+u_int ACE_Streambuf::put_avail (void)
   // Return the number of bytes to be 'put' onto the stream media.
   //	pbase + put_avail = pptr
 {
@@ -481,7 +479,7 @@ u_int ACE_Streambuf_T::put_avail (void)
 }
 
 char *
-ACE_Streambuf_T::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int _gptr, u_int _egptr)
+ACE_Streambuf::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int _gptr, u_int _egptr)
 //
 // Typical usage:
 //
@@ -536,7 +534,7 @@ ACE_Streambuf_T::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_in
 }
 
 char *
-ACE_Streambuf_T::reset_put_buffer (char * newBuffer, u_int _streambuf_size, u_int _pptr)
+ACE_Streambuf::reset_put_buffer (char * newBuffer, u_int _streambuf_size, u_int _pptr)
 //
 // Typical usage:
 //
@@ -584,7 +582,7 @@ ACE_Streambuf_T::reset_put_buffer (char * newBuffer, u_int _streambuf_size, u_in
 }
 
 void
-ACE_Streambuf_T::reset_base (void)
+ACE_Streambuf::reset_base (void)
 {
   // Until we experience the first get or put operation, we do not
   // know what our current IO mode is.
@@ -602,191 +600,12 @@ ACE_Streambuf_T::reset_base (void)
 // would be deleted when the object destructs.  Since we are providing
 // separate read/write buffers, it is up to us to manage their memory.
 
-ACE_Streambuf_T::~ACE_Streambuf_T (void)
+ACE_Streambuf::~ACE_Streambuf (void)
 {
   delete [] this->eback_saved_;
   delete [] this->pbase_saved_;
 }
 
-#endif	// ACE_IOSTREAM_BUILDING_TEMPLATE
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
 
-///////////////////////////////////////////////////////////////////////////
-
-
-// We will be given a STREAM by the iostream object which creates us.
-// See the ACE_IOStream template for how that works.  Like other
-// streambuf objects, we can be input-only, output-only or both.
-
-template <class STREAM>
-ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, u_int streambuf_size, int io_mode)
-  : ACE_Streambuf_T (streambuf_size, io_mode), peer_ (peer)
-{
-  // A streambuf allows for unbuffered IO where every character is
-  // read as requested and written as provided.  To me, this seems
-  // terribly inefficient for socket-type operations, so I've disabled
-  // it.  All of the work would be done by the underflow/overflow
-  // functions anyway and I haven't implemented anything there to
-  // support unbuffered IO.
-
-  this->unbuffered (0);
-
-  // Linebuffered is similar to unbuffered.  Again, I don't have any
-  // need for this and I don't see the advantage.  I believe this
-  // would have to be supported by underflow/overflow to be effective.
-#if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
-  this->linebuffered (0);
-#endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
-
-}
-
-
-///////////////////////////////////////////////////////////////////////////
-
-
-// The typical constructor.  This will initiailze your STREAM and then
-// setup the iostream baseclass to use a custom streambuf based on
-// STREAM.
-
-template <class STREAM>
-ACE_IOStream<STREAM>::ACE_IOStream (STREAM & stream, u_int streambuf_size)
-  : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size)),
-    STREAM (stream)
-{
-  iostream::init (this->streambuf_);
-}
-
-template <class STREAM>
-ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
-  : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size))
-{
-  iostream::init (this->streambuf_);
-}
-
-// We have to get rid of the streambuf_ ourselves since we gave it to
-// iostream ()
-
-template <class STREAM>
-ACE_IOStream<STREAM>::~ACE_IOStream (void)
-{
-  delete this->streambuf_;
-}
-
-// The only ambituity in the multiple inheritance is the close ()
-// function.
-
-template <class STREAM> int
-ACE_IOStream<STREAM>::close (void)
-{
-  return STREAM::close ();
-}
-
-template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *& tv)
-{
-	ACE_Time_Value * old_tv = this->streambuf_->recv_timeout (tv);
-	tv = old_tv;
-	return *this;
-}
-
-#if defined (ACE_HAS_STRING_CLASS)
-
-// A simple string operator.  The base iostream has 'em for char* but
-// that isn't always the best thing for a String.  If we don't provide
-// our own here, we may not get what we want.
-
-template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String & v)
-{
-  if (ipfx0 ())
-  {
-    char c;
-    iostream::operator>> (c);
-
-    for (v = c ; this->get (c) && !isspace (c) ; v += c)
-      continue;
-  }
-
-  isfx ();
-
-  return *this;
-}
-
-
-template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String & v)
-{
-  if (opfx ())
-    {
-#if defined (ACE_WIN32)
-      for (int i = 0 ; i < v.GetLength () ; ++i)
-#else
-	for (u_int i = 0 ; i < (u_int) v.length () ; ++i)
-#endif
-	  this->put (v[i]);
-    }
-
-  osfx ();
-
-  return *this;
-}
-
-
-//////////////////////////////////////////////////////////////////
-// A more clever put operator for strings that knows how to
-// deal with quoted strings containing back-quoted quotes.
-//
-template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator>> (QuotedString & str)
-{
-  if (ipfx0 ())
-    {
-      char c;
-
-      if (! (*this >> c)) // eat space up to the first char
-	// this->set (ios::eofbit|ios::failbit);
-	return *this;
-
-      str = "";	// Initialize the string
-
-      // if we don't have a quote, append until we see space
-      if (c != '"')
-	for (str = c ; this->get (c) && !isspace (c) ; str += c)
-	  continue;
-      else
-	for (; this->get (c) && c != '"' ; str += c)
-	  if (c == '\\')
-	    {
-	      this->get (c);
-	      if (c != '"')
-		str += '\\';
-	    }
-    }
-
-  isfx ();
-	
-  return *this;
-}
-
-template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator<< (QuotedString & str)
-{
-  if (opfx ())
-  {
-	this->put ('"');
-	for (u_int i = 0 ; i < str.length () ; ++i)
-	{
-		if (str[i] == '"')
-			this->put ('\\');
-		this->put (str[i]);
-	}
-	this->put ('"');
-  }
-
-  osfx ();
-
-  return *this;
-}
-
-#endif /* ACE_HAS_STRING_CLASS */
 #endif /* ACE_IOSTREAM_C */
-
