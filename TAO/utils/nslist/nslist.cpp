@@ -31,25 +31,18 @@ static void list_context (CosNaming::NamingContext_ptr nc,
 static void
 get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
 {
-  switch(tag)
-    {
-    case TAO_TAG_IIOP_PROFILE:
+  if (tag == IOP::TAG_INTERNET_IOP)
       tag_string = "IIOP";
-      break;
-    case TAO_TAG_UIOP_PROFILE:
+  else if (tag == TAO_TAG_UIOP_PROFILE)  
       tag_string = "UIOP";
-      break;
-    case TAO_TAG_SHMEM_PROFILE:
+  else if (tag == TAO_TAG_SHMEM_PROFILE)
       tag_string = "SHMEM";
-      break;
 #ifdef TAO_TAG_UDP_PROFILE
-    case TAO_TAG_UDP_PROFILE:
+  else if (tag == TAO_TAG_UDP_PROFILE)
       tag_string = "GIOP over UDP";
 #endif /* TAO_TAG_UDP_PROFILE */
-    default:
+  else
       tag_string = "Unknown tag: " + tag;
-      break;
-    }
 }
 
 
