@@ -1,3 +1,21 @@
+Fri Oct 15 16:44:29 2004  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdlib.cpp (mkstemp_emulation): Related to:
+	  Fri Oct  8 23:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+	  Only figure out a configurable limit on non-WinCE platforms. WinCE
+	  lacks too much to get fancy, so just use 127.
+
+	* ace/Ping_Socket.cpp: Added Win32 /**/ trickery to keep MSVC from
+	  complaining about missing header files.
+
+	* ace/OS_main.{h cpp}: Use ACE_HAS_WINCE, not ACE_WINCE, as the
+	  config macro to decide on Windows CE stuff.
+	  Also, the WinCE version of ACE_Main_Base::run() takes the WinCE
+	  command line args, not argc/argv. The argc/argv conversion from
+	  the text command line is now in the .cpp file, removing the need
+	  for including ARGV.h in OS_main.h, the source of many header file
+	  loops.
+
 Fri Oct 15 13:28:02 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.h:
@@ -51,10 +69,10 @@ Fri Oct 15 10:09:34 2004  Dale Wilson  <wilson_d@ociweb.com>
         * tests/TSS_Test.cpp:
         * tests/TSS_Test_Errno.h:
 
-          Olli's report that TSS_Test was failing when TSS_Emulation prompted me
-          to take a closer look at TSS_Test.  I found a number of problems, none
-          of which was related to the TSS Emulation issue.  That will be addressed
-          separately.
+          Olli's report that TSS_Test was failing when TSS_Emulation prompted
+	  me to take a closer look at TSS_Test.  I found a number of problems,
+	  none of which was related to the TSS Emulation issue.  That will be
+	  addressed separately.
 
           The most serious problem was attempting to log a message from within
           a TSS cleanup function.  Since the log message buffer is itself a TSS

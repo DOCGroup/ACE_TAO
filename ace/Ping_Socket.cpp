@@ -32,9 +32,9 @@ namespace ACE
 /*
  * This is where ICMP-related stuff is defined on any sane system...
  */
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/ip_icmp.h>
+#include /**/ <netinet/in_systm.h>
+#include /**/ <netinet/ip.h>
+#include /**/ <netinet/ip_icmp.h>
 
 #else  /* #if ! defined (ACE_WIN32) */
 

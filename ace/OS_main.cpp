@@ -74,7 +74,7 @@ int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
   return ace_main_i (argc, argv);           /* what the user calls "main" */ 
 }
 
-#  elif !defined (ACE_WINCE)
+#  elif !defined (ACE_HAS_WINCE)
 
 #    if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
 int ACE_Main_Base::run (int argc, ACE_TCHAR *argv[])
@@ -102,22 +102,18 @@ ace_os_main_i (ACE_Main_Base &mbase, int argc, char *argv[]) /* user's entry poi
 } 
 #    endif /* ACE_WIN32 && ACE_USES_WCHAR */
 
-#  else /* ACE_WINCE */
-
-int ACE_Main_Base::run (int argc, ACE_TCHAR *argv[])
-{
-  return this->run_i (argc, argv);
-}
+#  else /* ACE_HAS_WINCE */
 
 // CE only gets a command line string;  no argv. So we need to convert it
 // when the main entrypoint expects argc/argv. ACE_ARGV supports this.
+#    include "ace/OS_NS_string.h"
+#    include "ace/ACE.h"
 #    include "ace/ARGV.h"
 
-// Support for ACE_TMAIN, which is a recommended way. It would be nice if
-// CE had CommandLineToArgvW()... but it's only on NT3.5 and up.
-
-int WINAPI ace_os_wintmain_i (ACE_Main_Base &mbase, HINSTANCE hInstance,
-                              HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
+int ACE_Main_Base::run (HINSTANCE,
+                        HINSTANCE,
+                        LPWSTR lpCmdLine,
+                        int)
 {
   ACE_TCHAR cmdline[1024];
   ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program "));
@@ -125,46 +121,10 @@ int WINAPI ace_os_wintmain_i (ACE_Main_Base &mbase, HINSTANCE hInstance,
   ACE_ARGV ce_argv (cmdline);
   ACE::init ();
   ACE_MAIN_OBJECT_MANAGER
-  int i = mbase.run (ce_argv.argc (), ce_argv.argv ());
+  int i = this->run_i (ce_argv.argc (), ce_argv.argv ());
   ACE::fini ();
   return i;
 }
 
-// Support for wchar_t but still can't fit to CE because of the command
-// line parameters.
-int WINAPI ace_os_winwmain_i (ACE_Main_Base &mbase, HINSTANCE hInstance,
-                              HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
-{
-  ACE_TCHAR cmdline[1024];
-  ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program "));
-  ACE_OS::strcat (cmdline, lpCmdLine);
-  ACE_ARGV ce_argv (cmdline);
-  ACE::init ();
-  ACE_MAIN_OBJECT_MANAGER
-  int i = mbase.run (ce_argv.argc (), ce_argv.argv ());
-  ACE::fini ();
-  return i;
-}
-
-// Supporting legacy 'main' is A LOT easier for users than changing existing
-// code on WinCE. Unfortunately, evc 3 can't grok a #include within the macro
-// expansion, so it needs to go out here.
-#    include "ace/Argv_Type_Converter.h"
-int WINAPI ace_os_winmain_i (ACE_Main_Base &mbase, HINSTANCE hInstance,
-                             HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
-{
-  ACE_TCHAR cmdline[1024];
-  ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program "));
-  ACE_OS::strcat (cmdline, lpCmdLine);
-  ACE_ARGV ce_argv (cmdline);
-  ACE::init ();
-  ACE_MAIN_OBJECT_MANAGER
-  ACE_Argv_Type_Converter command_line (ce_argv.argc (), ce_argv.argv ());
-  int i = mbase.run (command_line.get_argc(), command_line.get_ASCII_argv());
-  ACE::fini ();
-  return i;
-}
-int ace_main_i
-
-#  endif   /* !ACE_WINCE */
+#  endif   /* !ACE_HAS_WINCE */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
