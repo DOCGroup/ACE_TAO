@@ -224,9 +224,44 @@ copied instead of appended to the CDR stream.</TD></TR>
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 <TR>
 <TD><CODE>-ORBreactorlock</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBcoltable"></a>Specify whether the ORB reactor is thread-safe
+<TD><a name="-ORBreactorlock"></a>Specify whether the ORB reactor is
+	      thread-safe
 (<em>which</em> = <code>token</code>) or not
-(<em>which</em> = <code>null</code>).  Default is <code>token</code></TD></TR>
+(<em>which</em> = <code>null</code>).  Default is <code>token</code>.
+	      <P>This option has been superseeded by
+		<CODE>-ORBreactortype</CODE>
+	      </P>
+</TD></TR>
+<TR>
+<TD><CODE>-ORBreactortype</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBcoltable"></a>Specify what kind of reactor does the
+	      ORB use, the options are:
+  <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
+  <TR><TH><em>which</em></TH><TH>Reactor</TH></TR>
+  <TR><TD><CODE>select_mt<CODE></TD><TD>Use the
+		    <CODE>ACE_Select_Reactor</CODE> with the usual
+		    locking mechanism for this platform</TD></TR>
+  <TR><TD><CODE>select_st<CODE></TD><TD>Use the
+		    <CODE>ACE_Select_Reactor</CODE> with null locks
+		  </TD></TR>
+  <TR><TD><CODE>fl_reactor<CODE></TD><TD>Use the
+		    <CODE>ACE_FlReactor</CODE> only available if ACE
+		    was compiled with support for the FL toolkit
+		  </TD></TR>
+  <TR><TD><CODE>xt_reactor<CODE></TD><TD>Use the
+		    <CODE>ACE_FlReactor</CODE> only available if ACE
+		    was compiled with support for the XWindows Toolkit
+		  </TD></TR>
+  <TR><TD><CODE>WFMO<CODE></TD><TD>Use the
+		    <CODE>ACE_WFMO_Reactor</CODE> only available on
+		    Win32 platforms.
+		  </TD></TR>
+  <TR><TD><CODE>MsgWFMO<CODE></TD><TD>Use the
+		    <CODE>ACE_Msg_WFMO_Reactor</CODE> only available on
+		    Win32 platforms.
+		  </TD></TR>
+  </TABLE>
+  The default is <code>select_mt</code></TD></TR>
 <TR>
 <TD><CODE>-ORBcoltable</CODE> <EM>which</EM></TD>
 <TD><a name="-ORBcoltable"></a>Specify whether each ORB uses a global
