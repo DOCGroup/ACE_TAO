@@ -59,6 +59,7 @@ namespace CIAO
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX>
       servant_map_;
+    int component_removed_;
   };
 }
 

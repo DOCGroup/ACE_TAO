@@ -119,7 +119,6 @@ Sender_Impl::Sender_exec_2_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_2_i::ccm_passivate\n"));
-  ACE_DEBUG ((LM_DEBUG, "2 being removed\n"));
 }
 
 void
