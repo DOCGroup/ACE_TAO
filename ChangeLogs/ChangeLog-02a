@@ -1,3 +1,9 @@
+Thu Aug 23 09:17:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (file): Reduced the number of bytes copied in
+	  ACE_Log_Msg::file () and ACE_Log_Msg::msg () by one. Thanks to
+	  Alain Decamps <Alain.Decamps@PIDPA.be> for pointing this out. 
+
 Thu Aug 23 08:11:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration_Import_Export.cpp (process_previous_line_format):
