@@ -1,3 +1,11 @@
+Sat Sep 05 01:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+	  Fixed default cases in two switch statements.
+
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	  Fixed default case in switch statements.
+
 Sun Sep 05 23:04:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/IIOP_Connector.cpp,UIOP_Connector.cpp:

@@ -205,7 +205,15 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
           // Last argument - is always CORBA::Environment.
           *os << "CORBA::Environment &ACE_TRY_ENV";
           break;
-        }
+        default:
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_visitor_ami_handler_arglist::"
+                               "visit_operation - "
+                               "Bad context\n"),
+                              -1);
+          }
+      }
     }
   *os << be_uidt_nl << ")" << be_uidt;
 
