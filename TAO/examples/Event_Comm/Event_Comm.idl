@@ -52,7 +52,7 @@ module Event_Comm
     // = TITLE
     //   Defines the interface for a <Consumer> of events.
 
-    void push (in Event event);
+    void push (in Event event_instance);
     // Inform the <Consumer> that <event> has occurred.
 
     void disconnect (in string reason);
@@ -86,7 +86,7 @@ module Event_Comm
     void disconnect (in string reason);
     // Disconnect all the receivers, giving them the <reason>.
 
-    void push (in Event event);
+    void push (in Event event_instance);
     // Send the <event> to all the consumers who have subscribed and
     // who match the filtering criteria.
 
