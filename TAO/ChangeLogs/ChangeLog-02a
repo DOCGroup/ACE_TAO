@@ -1,3 +1,56 @@
+Mon Feb  4 10:47:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_factory.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/ast/ast_recursive.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/ast/ast_union_branch.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_strategy.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_sunsoft.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_root/root_sth.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be_include/be_attribute.h:
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.cpp:.diff:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/util/utl_decllist.cpp:
+
+	  Replaced heap visitors with stack visitors, 'new' with
+	  'ACE_NEW*', put iterators into the stack-created FOR
+	  loop format suggested by Carlos, and made cosmetic
+	  changes.
+
 Mon Feb  4 09:46:09 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTCORBA/Activity/activity.dsp: 
