@@ -1,10 +1,30 @@
+/* -*- C++ -*- */
+
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+// 
+// = FILENAME
+//    Thread_Timer_Queue_Test.h
+//
+// = DESCRIPTION
+//   // @@ Please comment me
+//
+// = AUTHORS
+//    Carlos O'Ryan <coryan@cs.wustl.edu> and 
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+// 
+// ============================================================================
+
 #if !defined (_THREAD_TIMER_QUEUE_TEST_H_)
 #define _THREAD_TIMER_QUEUE_TEST_H_
 
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
-
 #include "Driver.h"
 
 // These typedefs ensure that we use the minimal amount of locking
