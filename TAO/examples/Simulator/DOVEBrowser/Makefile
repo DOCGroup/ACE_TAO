@@ -8,8 +8,13 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-#### VisiBroker 3.3
-JAVA_DIR = /project/doc/pkg/VisiJava3.4/bin/
+#### VisiBroker
+ifdef VBROKER_ADM
+  JAVA_DIR = $(VBROKER_ADM)/../bin/
+  CLASSPATH = $(VBROKER_ADM)/../lib/:$(VBROKER_ADM)/../bin/:$(CLASSPATH)
+else  # ! VBROKER_ADM
+  JAVA_DIR = /project/doc/pkg/VisiJava3.4/bin/
+endif # ! VBROKER_ADM
 IDL2JAVA = $(JAVA_DIR)idl2java
 JAVAC = $(JAVA_DIR)vbjc
 
@@ -20,12 +25,14 @@ JAVAC = $(JAVA_DIR)vbjc
 
 DOVE_BROWSER_JAVA = \
         CosNaming.java \
-        CosTimeBase.java \
+        TimeBase.java \
+        RtecDefaultEventData.java \
         RtecEventComm.java \
         RtecScheduler.java \
         RtecEventChannelAdmin.java \
         Navigation.java \
-        Weapons.java
+        Weapons.java \
+	Persian.java
 
 DOVE_BROWSER_CLASS = Navigation.class
 
@@ -46,11 +53,12 @@ ifeq ($(CROSS-COMPILE),)
   include $(TAO_ROOT)/taoconfig.mk
 
   realclean: clean
-	-$(RM) $(DOVE_BROWSER_JAVA) \
+	-$(RM) -r $(DOVE_BROWSER_JAVA) \
          $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
          Navigation.java NavigationH*.java \
          Weapons.java WeaponsH*.java *.class CosNaming \
-         RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase
+         RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase \
+         NavWeapTerminator*.java _*.java
 
 else
   all default_embedded:
@@ -74,8 +82,7 @@ OBJDIRS =
 .PRECIOUS: $(DOVE_BROWSER_JAVA) $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA))
 
 %.java: %.idl
-	@$(IDL2JAVA) $<
-
+	@$(IDL2JAVA) -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT) $<
 
 #### VisiBroker 3.2 idl2java creates references to a _long type,
 #### but never defines it.  Just change it to long if it's present.
@@ -92,7 +99,7 @@ NavWeap.idl: ../NavWeap.idl
 	@cp -p $< .
 
 Navigation.java Weapons.java: NavWeap.idl
-	@$(IDL2JAVA) $<
+	@$(IDL2JAVA) -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT) $<
 
 %.idl: $(TAO_ROOT)/orbsvcs/orbsvcs/%.idl
 	@cp -p $< .
