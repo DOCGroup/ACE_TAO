@@ -173,7 +173,7 @@ while (($directory,$program) = each %RUN_LIST) {
     $run_error = 0;
     while (<RUN>) {
 	print LOG $_;
-	if (m/^Error/) {
+	if (m/^Error/ || m/FAILED/) {
 	    $run_error = 1;
 	}
     }
