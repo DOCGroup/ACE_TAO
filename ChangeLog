@@ -1,3 +1,9 @@
+Mon Apr 26 17:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Acceptor.cpp:
+	  Use ACE_Reactor::instance()->end_reactor_event_loop () to end the
+	  event loop instead of the deprecated ACE::Reactor::end_event_loop()
+
 Mon Apr 26 02:09:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/CDR_Base.h (ACE_CDR::Boolean):
