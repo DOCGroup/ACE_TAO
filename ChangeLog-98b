@@ -1,3 +1,11 @@
+Sat Oct 24 18:39:11 1998  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (get_ip_interfaces, get_handle): Add _AIX to the list
+          of macros which enable the proper code for these to work.
+          ACE::get_ip_interfaces still doesn't work right on AIX, though -
+          it reports one link-level interface.  May need to get IBM's help
+          with this.
+
 Sat Oct 24 18:07:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_TEXT): Consolidated various ACE_TEXT definitions
