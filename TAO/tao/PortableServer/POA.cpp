@@ -2282,6 +2282,8 @@ TAO_POA::locate_servant_i (const char *operation,
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
         }
+
+      servant_upcall.user_id (&poa_current_impl.object_id_);
     }
   else
     {
@@ -2294,6 +2296,8 @@ TAO_POA::locate_servant_i (const char *operation,
                                            ACE_const_cast (CORBA::Octet *,
                                                            system_id.get_buffer ()),
                                            0);
+
+      servant_upcall.user_id (&system_id);
     }
 
   // If the POA has the RETAIN policy, the POA looks in the Active

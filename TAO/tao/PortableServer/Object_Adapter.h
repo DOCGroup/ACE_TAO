@@ -627,7 +627,12 @@ public:
     // Object Adapter accessor.
 
     const PortableServer::ObjectId &id (void) const;
-    // ID accessor.
+    // System ID accessor.
+
+    void user_id (const PortableServer::ObjectId *);
+    const PortableServer::ObjectId &user_id (void) const;
+    // User ID accessors.  This is the same value returned by
+    // PortableServer::Current::get_object_id().
 
     PortableServer::Servant servant (void) const;
     // Servant accessor.
@@ -682,7 +687,9 @@ public:
 
     State state_;
 
-    PortableServer::ObjectId id_;
+    PortableServer::ObjectId system_id_;
+
+    const PortableServer::ObjectId *user_id_;
 
     TAO_POA_Current_Impl current_context_;
 

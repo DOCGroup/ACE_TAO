@@ -1079,7 +1079,8 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
     poa_ (0),
     servant_ (0),
     state_ (INITIAL_STAGE),
-    id_ (),
+    system_id_ (),
+    user_id_ (0),
     current_context_ (),
 #if (TAO_HAS_MINIMUM_POA == 0)
     cookie_ (0),
@@ -1119,7 +1120,7 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
   // Locate the POA.
   this->object_adapter_->locate_poa (key,
-                                     this->id_,
+                                     this->system_id_,
                                      this->poa_,
                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
@@ -1145,7 +1146,7 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
       // Lookup the servant.
       this->servant_ = this->poa_->locate_servant_i (operation,
-                                                     this->id_,
+                                                     this->system_id_,
                                                      *this,
                                                      this->current_context_,
                                                      ACE_TRY_ENV);
