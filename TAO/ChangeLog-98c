@@ -31,6 +31,14 @@ Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
           replaced orbsvcs/orbsvcs/orbsvcs with orbsvcs/orbsvcs in some
           dependencies.
 
+        * tao/ORB.{h,cpp},tao/POA.cpp,tao/encode.cpp,
+          TAO_IDL/ast/ast_generator.cpp,TAO_IDL/be/be_generator.cpp:
+          migrated to ACE_OS::WChar.  That has a size of 32 bits.
+          Thanks to Irfan for this recommendation.
+
+        * tao/ORB.cpp (wstring_copy): changed null check at beginning
+          from "if (*str)" to "if (!str)".
+
 Mon Mar 23 03:20:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.1.10, released Mon Mar 23 03:20:47 1998.
