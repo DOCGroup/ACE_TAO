@@ -1,3 +1,0 @@
-Sender      corbaloc:iiop:localhost:30000/NodeManager
-Receiver    corbaloc:iiop:localhost:40000/NodeManager
-
