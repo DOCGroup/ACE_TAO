@@ -7,6 +7,8 @@
 #include "ace/TMCast/Group.hpp"
 
 #include "tao/PortableServer/Servant_Base.h"
+#include "tao/Any_Impl.h"
+#include "tao/DynamicC.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
@@ -225,6 +227,7 @@ namespace
     ACE_ENV_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
 }
 
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
 ReplicaController::tao_ft_interception_point (
   PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -259,6 +262,8 @@ ReplicaController::tao_ft_interception_point (
 
   return;
 }
+
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
 void
 ReplicaController::send_reply (
