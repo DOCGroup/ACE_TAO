@@ -86,7 +86,7 @@ int main(int,char**)
            ourselves.  To do so, we need an anonymous local address from
            which we'll send the response and a datagram in which to send
            it.  (An anonymous address is simply one where we let the OS
-           choose a port for us.  We really don't care what it is.O
+           choose a port for us.  We really don't care what it is.
          */
         ACE_INET_Addr  local((u_short)0);
         ACE_SOCK_Dgram client;
@@ -106,7 +106,7 @@ int main(int,char**)
         sprintf(buf,"I am here");
 
         /*
-           and send it to the client.  Notice the symetry with the recv()
+           and send it to the client.  Notice the symmetry with the recv()
            method.  Again, the unconnected nature of datagrams forces
            us to specify an address object with each read/write operation.
            In the case of read (recv()) that's where the OS stuffs the

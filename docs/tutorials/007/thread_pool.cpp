@@ -190,7 +190,7 @@ int Thread_Pool::svc(void)
 
 	/*
 	   Create the guard for our active thread counter object.  No matter where we choose to
-	   return() from svc(), we no know that the counter will be decremented.
+	   return() from svc(), we now know that the counter will be decremented.
 	 */
 	Counter_Guard counter_guard(active_threads_);
 
