@@ -1,3 +1,7 @@
+Tue Nov 26 16:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Added two new tests to our daily builds. 
+
 Tue Nov 26 15:10:57 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ACE-INSTALL.html: Updated the file to have the right GNU make
