@@ -144,13 +144,15 @@ void TAO_Bounded_Sequence<T,MAX>::_deallocate_buffer (void)
 template <class T>
 TAO_Object_Manager<T>::~TAO_Object_Manager (void)
 {
+  if (this->release_)
+    T::_release (*(this->ptr_));
 }
 
 template <class T>
 TAO_Object_Manager<T>::TAO_Object_Manager (const TAO_Object_Manager &rhs)
 {
-  *this->ptr_ = T::_duplicate (*rhs.ptr_);
-  this->release_ = _tao_mng_type.release_;
+  this->ptr_ = rhs.ptr_;
+  this->release_ = rhs.release_;
 }
 
 template <class T>
@@ -163,7 +165,7 @@ TAO_Object_Manager<T>::operator= (const TAO_Object_Manager &rhs)
   if (this->release_) // need to free old one
     CORBA::release (*this->ptr_);
 
-  *this->ptr_ = T::_duplicate (*rhs.ptr_);
+  this->ptr_ = rhs.ptr_;
   return *this;
 }
 
@@ -216,7 +218,7 @@ TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
   T* *tmp1 = ACE_reinterpret_cast(T* *,this->buffer_);
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
-    tmp [i] = T::_duplicate (tmp2 [i]);
+    tmp1 [i] = T::_duplicate (tmp2 [i]);
 }
 
 // assignment operator
@@ -235,7 +237,7 @@ TAO_Unbounded_Managed_Sequence<T,Manager>::operator=
   T* *tmp1 = ACE_reinterpret_cast(T* *,this->buffer_);
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
-    tmp [i] = T::_duplicate (tmp2 [i]);
+    tmp1 [i] = T::_duplicate (tmp2 [i]);
   return *this;
 }
 
@@ -309,7 +311,7 @@ TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence
   T* *tmp1 = ACE_reinterpret_cast(T* *,this->buffer_);
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
-    tmp [i] = T::_duplicate (tmp2 [i]);
+    tmp1 [i] = T::_duplicate (tmp2 [i]);
 }
 
 // assignment operator
@@ -328,7 +330,7 @@ TAO_Bounded_Managed_Sequence<T,Manager,MAX>::operator=
   T* *tmp1 = ACE_reinterpret_cast(T* *,this->buffer_);
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
-    tmp [i] = T::_duplicate (tmp2 [i]);
+    tmp1 [i] = T::_duplicate (tmp2 [i]);
   return *this;
 }
 

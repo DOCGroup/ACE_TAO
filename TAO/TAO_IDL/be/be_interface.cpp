@@ -378,13 +378,12 @@ be_interface::gen_client_header (void)
       *ch << "protected:\n";
       ch->incr_indent ();
       *ch << this->local_name () << " (void); // default constructor" << nl;
-      *ch << this->local_name () << " (STUB_Object *objref);" << nl;
+      *ch << this->local_name () << " (STUB_Object *objref);\n";
       ch->decr_indent ();
 
       // dtor is public...
-      *ch << "public:\n";
-      *ch << "virtual ~" << this->local_name () << " (void);\n";
-      ch->decr_indent ();
+      *ch << "public:" << be_idt_nl
+	  << "virtual ~" << this->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
@@ -591,7 +590,7 @@ be_interface::gen_client_stubs (void)
   // generate the is_a method
   cs->indent ();
   *cs << "CORBA::Boolean " << this->name () << "::_is_a (" <<
-    "const CORBA::Char *value, CORBA::Environment &env)" << nl;
+    "const CORBA::Char *value, CORBA::Environment &_tao_environment)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "if (\n";
@@ -603,11 +602,11 @@ be_interface::gen_client_stubs (void)
                          "inheritance graph failed\n"), -1);
     }
   cs->indent ();
-  *cs << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
+  *cs << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))\n";
   *cs << "\treturn 1; // success using local knowledge\n";
   cs->decr_indent ();
   *cs << "else" << nl;
-  *cs << "\treturn this->CORBA_Object::_is_a (value, env); // remote call\n";
+  *cs << "\treturn this->CORBA_Object::_is_a (value, _tao_environment); // remote call\n";
   cs->decr_indent ();
   *cs << "}\n\n";
 
@@ -726,7 +725,7 @@ int be_interface::gen_server_header (void)
   // add our _is_a method
   sh->indent ();
   *sh << "static void _is_a_skel (CORBA::ServerRequest &req, " <<
-    "void *obj, void *context, CORBA::Environment &env);\n\n";
+    "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
 
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call
@@ -835,8 +834,9 @@ int be_interface::gen_server_skeletons (void)
   *ss << "CORBA::String value;" << nl;
   *ss << nl;
   *ss << "req.orb()->create_list (0, nvlist);" << nl;
-  *ss << "nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);" << nl;
-  *ss << "req.params (nvlist, env); // parse the args" << nl;
+  *ss << "nv = nvlist->add_value (0, temp_value, "
+      << "CORBA::ARG_IN, _tao_environment);" << nl;
+  *ss << "req.params (nvlist, _tao_environment); // parse the args" << nl;
   *ss << "if (_tao_environment.exception () != 0) return;" << nl;
   *ss << "value = *(CORBA::String *)nv->value ()->value ();" << nl;
 
@@ -848,7 +848,7 @@ int be_interface::gen_server_skeletons (void)
       << "if (_tao_environment.exception () != 0) return;" << be_nl;
   *ss << "any = new CORBA::Any (CORBA::_tc_boolean, "
       << "retval, CORBA::B_TRUE);" << nl;
-  *ss << "req.result (any, env);\n";
+  *ss << "req.result (any, _tao_environment);\n";
   ss->decr_indent ();
   *ss << "}\n\n";
 
@@ -866,7 +866,8 @@ int be_interface::gen_server_skeletons (void)
     }
 
   ss->indent ();
-  *ss << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))"
+  *ss << "(!ACE_OS::strcmp ((char *)value, "
+      << "CORBA::_tc_Object->id (_tao_environment))))"
       << be_idt_nl << "return CORBA::B_TRUE;" << be_uidt_nl
       << "else" << be_idt_nl
       << "return CORBA::B_TRUE;" << be_uidt << be_uidt << be_uidt_nl
@@ -1816,7 +1817,9 @@ be_interface::gen_optable_helper (be_interface *derived,
 }
 
 int
-be_interface::is_a_helper (be_interface * /*derived*/, be_interface *bi, TAO_OutStream *os)
+be_interface::is_a_helper (be_interface * /*derived*/,
+			   be_interface *bi,
+			   TAO_OutStream *os)
 {
   // emit the comparison code
   os->indent ();

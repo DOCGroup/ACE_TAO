@@ -1,3 +1,25 @@
+Sat Jan 17 20:54:26 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_attribute.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	  More bug fixes in code generation for sequences, attributes,
+	  etc. Most of them were minor inconsitencies. Also fixed
+	  constructors for collocated classes on NT (working around MSVC++
+	  bug).
+
+	* tao/servant_base.cpp: 
+	* tao/servant_base.h: 
+	  Added default implementation for _downcast(), it just works if
+	  downcasting to "Object".
+
+	* tao/sequence_T.cpp: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.i: 
+	  Fixed some problems with managed sequences.
+
 Sat Jan 17 19:27:12 1998    <coryan@MILONGA>
 
 	* tao/servant_base.h: 
