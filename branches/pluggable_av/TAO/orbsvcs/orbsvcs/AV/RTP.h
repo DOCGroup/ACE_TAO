@@ -53,18 +53,6 @@
 #ifndef TAO_AV_RTP_H
 #define TAO_AV_RTP_H
 
-//#ifndef WIN32
-//#include <sys/param.h>
-//#endif
-//extern "C" {
-  //#include <sys/types.h>
-//#ifndef WIN32
-  //#include <sys/time.h>
-//#endif
-//}
-
-#include "Policy.h"
-#include "Transport.h"
 
 #define RTP_PT_BVC              22      /* Berkeley video codec */
 
@@ -115,8 +103,8 @@
 #define RTCP_PT_BYE     203     /* end of participation */
 #define RTCP_PT_APP     204     /* application specific functions */
 
-#define         RTCP_SDES_MIN   1
-#define         RTCP_SDES_MAX   7
+#define RTCP_SDES_MIN   1
+
 
 /*
  * Parameters controling the RTCP report rate timer.
@@ -135,6 +123,14 @@
 
 #define MAXHDR 24
 
+#include "Policy.h"
+#include "Transport.h"
+#include "MCast.h"
+#include "RTCP.h"
+//------------------------------------------------------------
+// TAO_AV_RTP_UDP
+//------------------------------------------------------------
+
 class TAO_AV_RTP_UDP_Acceptor
   :public TAO_AV_UDP_Acceptor
 {
@@ -142,6 +138,15 @@ public:
   TAO_AV_RTP_UDP_Acceptor (void);
   virtual ~TAO_AV_RTP_UDP_Acceptor (void);
   virtual int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
+  virtual int open (TAO_Base_StreamEndPoint *endpoint,
+                    TAO_AV_Core *av_core,
+                    TAO_FlowSpec_Entry *entry);
+  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
+                            TAO_AV_Core *av_core,
+                            TAO_FlowSpec_Entry *entry);
+protected:
+  int make_rtp_handler_;
+  ACE_Reactor *reactor_;
 };
 
 class TAO_AV_RTP_UDP_Connector
@@ -151,6 +156,11 @@ public:
   TAO_AV_RTP_UDP_Connector (void);
   virtual ~TAO_AV_RTP_UDP_Connector (void);
   virtual int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
+  virtual int connect (TAO_FlowSpec_Entry *entry,
+                       TAO_AV_Transport *&transport);
+protected:
+  int make_rtp_handler_;
+  ACE_Reactor *reactor_;
 };
 
 class TAO_AV_RTP_UDP_Protocol_Factory
@@ -162,23 +172,86 @@ public:
   virtual TAO_AV_Connector *make_connector (void);
 };
 
+class TAO_AV_SourceManager;
+class TAO_AV_RTCP_UDP_Flow_Handler;
+class TAO_AV_RTP_State;
 class TAO_AV_RTP_UDP_Flow_Handler
   :public TAO_AV_UDP_Flow_Handler
 {
 public:
   TAO_AV_RTP_UDP_Flow_Handler (TAO_AV_Callback *callback);
   virtual int handle_input (ACE_HANDLE fd);
+  virtual void rtcp_handler (TAO_AV_RTCP_UDP_Flow_Handler *handler);
+protected:
+  TAO_AV_SourceManager *source_manager_;
+  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler_;
+  TAO_AV_RTP_State *state_;
 };
 
-class TAO_AV_RTCP_UDP_Flow_Handler
-  :public TAO_AV_UDP_Flow_Handler
+class TAO_AV_UDP_MCast_Flow_Handler;
+//------------------------------------------------------------
+// TAO_AV_RTP_UDP_MCast
+//------------------------------------------------------------
+
+class TAO_AV_RTP_UDP_MCast_Acceptor
+  :public TAO_AV_UDP_MCast_Acceptor
 {
 public:
-  TAO_AV_RTCP_UDP_Flow_Handler (void);
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  TAO_AV_RTP_UDP_MCast_Acceptor (void);
+  virtual ~TAO_AV_RTP_UDP_MCast_Acceptor (void);
+  virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
+  virtual int open (TAO_Base_StreamEndPoint *endpoint,
+                    TAO_AV_Core *av_core,
+                    TAO_FlowSpec_Entry *entry);
+  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
+                            TAO_AV_Core *av_core,
+                            TAO_FlowSpec_Entry *entry);
+protected:
+  int make_rtp_handler_;
+  ACE_Reactor *reactor_;
 };
+
+
+class TAO_AV_RTP_UDP_MCast_Connector
+  :public TAO_AV_UDP_MCast_Connector
+{
+public:
+  TAO_AV_RTP_UDP_MCast_Connector (void);
+  virtual ~TAO_AV_RTP_UDP_MCast_Connector (void);
+  virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
+  virtual int connect (TAO_FlowSpec_Entry *entry,
+                       TAO_AV_Transport *&transport);
+protected:
+  int make_rtp_handler_;
+  ACE_Reactor *reactor_;
+};
+
+class TAO_AV_RTP_UDP_MCast_Protocol_Factory
+  :public TAO_AV_UDP_MCast_Protocol_Factory
+{
+public:
+  virtual int match_protocol (TAO_AV_Core::Protocol protocol);
+  virtual TAO_AV_Acceptor *make_acceptor (void);
+  virtual TAO_AV_Connector *make_connector (void);
+};
+
+class TAO_AV_RTP_UDP_MCast_Flow_Handler
+  :public TAO_AV_UDP_MCast_Flow_Handler
+{
+public:
+  TAO_AV_RTP_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback);
+  virtual int handle_input (ACE_HANDLE fd);
+  virtual void rtcp_handler (TAO_AV_RTCP_UDP_MCast_Flow_Handler *handler);
+protected:
+  TAO_AV_SourceManager *source_manager_;
+  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler_;
+  TAO_AV_RTP_State *state_;
+};
+
+//------------------------------------------------------------
+// TAO_AV_RTP
+//------------------------------------------------------------
+
 
 class TAO_AV_RTP
 {
@@ -211,7 +284,8 @@ public:
  * Frag offset = The byte offset into the frame for the data in
  * this packet
  */
-  struct jpeghdr {
+  struct jpeghdr
+  {
     ACE_UINT32 off;             /* fragment offset */
     unsigned char type;         /* id of jpeg decoder params */
     unsigned char q;            /* quantization factor (or table id) */
@@ -222,7 +296,8 @@ public:
   /*
  * NV encapsulation.
  */
-  struct nvhdr {
+  struct nvhdr
+  {
     ACE_UINT16 width;
     ACE_UINT16 height;
     /* nv data */
@@ -231,7 +306,8 @@ public:
   /*
  * CellB encapsulation.
  */
-  struct cellbhdr {
+  struct cellbhdr
+  {
     ACE_UINT16 x;
     ACE_UINT16 y;
     ACE_UINT16 width;
@@ -250,13 +326,15 @@ public:
  * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  */
 #ifdef notdef
-  struct h261hdr {
+  struct h261hdr
+  {
     ACE_UINT16  flags;
     ACE_UINT16 off;
   };
 #endif
 
-  struct bvchdr {
+  struct bvchdr
+  {
     unsigned char version;
     unsigned char pad;
     unsigned char width;
@@ -267,69 +345,32 @@ public:
     ACE_UINT16 blkno;
   };
 
-  static int  bad_version_;
+
   static int handle_input (TAO_AV_Transport *transport,
-                           rtphdr &header,
                            ACE_Message_Block *&data,
-                           ACE_Addr &addr);
+                           ACE_Addr &addr,
+                           TAO_AV_SourceManager *source_manager,
+                           TAO_AV_RTP_State *state);
 
   static int write_header (rtphdr &header,
                            int format,
                            ACE_UINT16 &sequence_num,
                            ACE_UINT32 ts,
-                           ACE_UINT32 ssrc);
+                           ACE_UINT32 ssrc,
+                           CORBA::Boolean boundary_marker);
 
   static int send_frame (TAO_AV_Transport *transport,
                          rtphdr &header,
                          ACE_Message_Block *frame);
+
+  static int demux (rtphdr* rh,
+                     ACE_Message_Block *data,
+                     ACE_UINT32 addr,
+                     TAO_AV_SourceManager *sm,
+                     TAO_AV_RTP_State *state);
 };
 
 
-class TAO_AV_RTCP
-{
-public:
-  struct rtcphdr
-  {
-    ACE_UINT16 rh_flags;        /* T:2 P:1 CNT:5 PT:8 */
-    ACE_UINT16 rh_len;  /* length of message (in bytes) */
-    ACE_UINT32 rh_ssrc; /* synchronization src id */
-  };
-
-  typedef struct
-  {
-    ACE_UINT32 upper;   /* more significant 32 bits */
-    ACE_UINT32 lower;   /* less significant 32 bits */
-  } ntp64;
-
-  /*
- * Sender report.
- */
-  struct rtcp_sr {
-    ntp64 sr_ntp;               /* 64-bit ntp timestamp */
-    ACE_UINT32 sr_ts;   /* reference media timestamp */
-    ACE_UINT32 sr_np;   /* no. packets sent */
-    ACE_UINT32 sr_nb;   /* no. bytes sent */
-  };
-
-  /*
- * Receiver report.
- * Time stamps are middle 32-bits of ntp timestamp.
- */
-  struct rtcp_rr {
-    ACE_UINT32 rr_srcid;        /* sender being reported */
-    ACE_UINT32 rr_loss; /* loss stats (8:fraction, 24:cumulative)*/
-    ACE_UINT32 rr_ehsr; /* ext. highest seqno received */
-    ACE_UINT32 rr_dv;   /* jitter (delay variance) */
-    ACE_UINT32 rr_lsr;  /* orig. ts from last rr from this src  */
-    ACE_UINT32 rr_dlsr; /* time from recpt of last rr to xmit time */
-  };
-
-  static int handle_input (TAO_AV_Transport *transport,rtcphdr &header);
-protected:
-  static int nrunt_;
-  static int badversion_;
-  static int rtcp_avg_size_;
-};
 
 class TAO_AV_RTP_Object
   :public TAO_AV_Protocol_Object
@@ -339,10 +380,13 @@ public:
                      TAO_AV_Transport *transport = 0);
 
   int send_frame (ACE_Message_Block *frame,
-                  ACE_UINT32 timestamp = 0);
+                  TAO_AV_frame_info *frame_info = 0);
   int end_stream (void);
+  virtual int set_policies (const PolicyList &policy_list);
 protected:
   ACE_UINT16 sequence_num_;
+  int format_;
+  CORBA::ULong ssrc_;
 };
 
 #endif /* TAO_AV_RTP_H */

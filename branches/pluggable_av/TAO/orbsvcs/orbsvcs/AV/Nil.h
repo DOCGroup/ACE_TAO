@@ -31,9 +31,9 @@ public:
 
   virtual ~TAO_AV_TCP_Object (void);
   // Dtor
-  
+
   virtual int send_frame (ACE_Message_Block *frame,
-                          ACE_UINT32 timestamp = 0);
+                          TAO_AV_frame_info *frame_info = 0);
   // send a data frame.
 
   virtual int end_stream (void);
@@ -52,7 +52,7 @@ public:
   // Dtor
 
   virtual int send_frame (ACE_Message_Block *frame,
-                          ACE_UINT32 timestamp = 0);
+                          TAO_AV_frame_info *frame_info = 0);
   // send a data frame.
 
   virtual int end_stream (void);
@@ -70,7 +70,7 @@ public:
   // Dtor
 
   virtual int send_frame (ACE_Message_Block *frame,
-                          ACE_UINT32 timestamp = 0);
+                          TAO_AV_frame_info *frame_info = 0);
   // send a data frame.
 
   virtual int end_stream (void);

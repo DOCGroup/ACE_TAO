@@ -22,14 +22,31 @@
 #include "tao/TAO.h"
 #include "Transport.h"
 
+struct TAO_AV_frame_info
+{
+  CORBA::Boolean boundary_marker;
+  CORBA::Octet format;
+  CORBA::ULong timestamp;
+  CORBA::ULong ssrc;
+  CORBA::ULong sequence_num;
+};
+
 class TAO_ORBSVCS_Export TAO_AV_Policy
 {
 public:
+  struct sdes
+  {
+    CORBA::String_var name_;
+    CORBA::String_var value_;
+  };
+
   enum PolicyType
   {
     TAO_AV_SSRC_POLICY,
     TAO_AV_PAYLOAD_TYPE_POLICY,
-    TAO_AV_TIMEOUT_POLICY
+    TAO_AV_TIMEOUT_POLICY,
+    TAO_AV_RTCP_SDES_POLICY,
+    TAO_AV_TIMESTAMP_POLICY
   };
   TAO_AV_Policy (PolicyType type);
   PolicyType type (void);
@@ -57,6 +74,29 @@ public:
   void value (int pt);
 protected:
   int payload_type_;
+};
+
+
+class TAO_AV_RTCP_Sdes_Policy
+  :public TAO_AV_Policy
+{
+public:
+  TAO_AV_RTCP_Sdes_Policy (void);
+  TAO_AV_Policy::sdes &value (void);
+  void value (const TAO_AV_Policy::sdes& sdes_val);
+protected:
+  TAO_AV_Policy::sdes sdes_;
+};
+
+class TAO_AV_Timestamp_Policy
+  :public TAO_AV_Policy
+{
+public:
+  TAO_AV_Timestamp_Policy (void);
+  ACE_UINT32 value (void);
+  void value (ACE_UINT32 timestamp);
+protected:
+  ACE_UINT32 timestamp_;
 };
 
 typedef TAO_Unbounded_Sequence<TAO_AV_Policy*> PolicyList;
@@ -87,12 +127,12 @@ public:
   TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
                           TAO_AV_Transport *transport = 0);
   // constructor.
-  
+
   virtual ~TAO_AV_Protocol_Object (void);
   // Destructor
 
-  int set_policies (PolicyList &policy_list);
-  PolicyList get_policies (void);
+  virtual int set_policies (const PolicyList &policy_list);
+  virtual PolicyList get_policies (void);
   // set/get policies.
 
   virtual int start (void);
@@ -100,7 +140,7 @@ public:
   // start/stop the flow.
 
   virtual int send_frame (ACE_Message_Block *frame,
-                          ACE_UINT32 timestamp = 0) = 0;
+                          TAO_AV_frame_info *frame_info = 0) = 0;
   // send a data frame.
 
   void transport (TAO_AV_Transport *transport);

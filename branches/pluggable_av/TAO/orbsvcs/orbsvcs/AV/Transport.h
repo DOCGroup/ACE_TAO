@@ -310,6 +310,7 @@ protected:
   TAO_AV_Dgram_Acceptor acceptor_;
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_FlowSpec_Entry *entry_;
+  TAO_AV_UDP_Flow_Handler *handler_;
 };
 
 // Connectors
@@ -387,6 +388,7 @@ protected:
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_AV_Core *av_core_;
   TAO_FlowSpec_Entry *entry_;
+  TAO_AV_UDP_Flow_Handler *handler_;
 };
 
 // Protocol Factories

@@ -194,7 +194,7 @@ public:
   // Dtor
 
   virtual int send_frame (ACE_Message_Block *frame,
-                          ACE_UINT32 timestamp = 0);
+                          TAO_AV_frame_info *frame_info = 0);
   virtual int end_stream (void);
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,

@@ -21,6 +21,17 @@ TAO_AV_Payload_Type_Policy::TAO_AV_Payload_Type_Policy (int payload_type)
 {
 }
 
+// TAO_AV_RTP_Sdes_Policy
+TAO_AV_RTCP_Sdes_Policy::TAO_AV_RTCP_Sdes_Policy (void)
+  :TAO_AV_Policy (TAO_AV_Policy::TAO_AV_RTCP_SDES_POLICY)
+{
+}
+
+// TAO_AV_Timestamp_Policy
+TAO_AV_Timestamp_Policy::TAO_AV_Timestamp_Policy (void)
+  :TAO_AV_Policy (TAO_AV_Policy::TAO_AV_TIMESTAMP_POLICY)
+{
+}
 
 TAO_AV_Policy *
 TAO_AV_Policy_Manager::create_policy (TAO_AV_Policy::PolicyType type,
@@ -79,6 +90,19 @@ TAO_AV_Protocol_Object::stop (void)
   return this->callback_->handle_stop ();
 }
 
+int
+TAO_AV_Protocol_Object::set_policies (const PolicyList &policy_list)
+{
+  this->policy_list_ = policy_list;
+  return 0;
+}
+
+PolicyList
+TAO_AV_Protocol_Object::get_policies (void)
+{
+  return this->policy_list_;
+}
+
 // TAO_AV_Callback
 int
 TAO_AV_Callback::handle_start (void)
@@ -125,4 +149,3 @@ template class TAO_Unbounded_Sequence<TAO_AV_Policy*>;
 #pragma instantiate TAO_Unbounded_Sequence<TAO_AV_Policy*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

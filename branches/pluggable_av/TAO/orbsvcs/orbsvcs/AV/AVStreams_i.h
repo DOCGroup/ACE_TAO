@@ -117,7 +117,8 @@ public:
     TAO_AV_RTP_AAL5   =  6,
     TAO_AV_IPX        =  7,
     TAO_AV_SFP_UDP    =  8,
-    TAO_AV_UDP_MCAST  =  9
+    TAO_AV_UDP_MCAST  =  9,
+    TAO_AV_RTP_UDP_MCAST = 10
   };
 
   TAO_AV_Core (void);
@@ -528,6 +529,9 @@ class TAO_AV_UDP_Flow_Handler;
 class TAO_AV_UDP_MCast_Flow_Handler;
 class TAO_AV_Protocol_Object;
 class TAO_AV_Callback;
+class TAO_AV_SourceManager;
+class TAO_AV_Source;
+class TAO_AV_RTP_State;
 
 class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
 {
@@ -572,6 +576,16 @@ public:
 
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
+
+  virtual int set_rtcp_info (const char *flowname,
+                             TAO_AV_SourceManager *source_manager,
+                             TAO_AV_RTP_State *state);
+
+  virtual int get_rtp_source (TAO_AV_Source *&source,
+                              const char *flowname,
+                              ACE_UINT32 srcid,
+                              ACE_UINT32 ssrc,
+                              ACE_UINT32 addr);
 };
 
 // Forward declarations.
@@ -1138,6 +1152,7 @@ public:
   // drops a flow endpoint from the flow.
 
   int set_mcast_addr (ACE_UINT32 addr,u_short port);
+  void set_protocol (const char *protocol);
 protected:
   typedef ACE_Unbounded_Set<AVStreams::FlowProducer_ptr> FlowProducer_Set;
   typedef ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer_ptr> FlowProducer_SetItor;
@@ -1157,6 +1172,7 @@ protected:
   AVStreams::MCastConfigIf_var mcastconfigif_;
   u_short mcast_port_;
   ACE_UINT32 mcast_addr_;
+  CORBA::String_var protocol_;
 };
 
 class TAO_ORBSVCS_Export TAO_FlowEndPoint :

@@ -8,7 +8,7 @@
 
 int
 TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
-                               ACE_UINT32 /*timestamp*/)
+                               TAO_AV_frame_info *frame_info)
 {
   int result = this->transport_->send (frame);
   if (result < 0)
@@ -39,7 +39,7 @@ TAO_AV_TCP_Object::end_stream (void)
 
 int
 TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
-                               ACE_UINT32 /*timestamp*/)
+                               TAO_AV_frame_info *frame_info)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
   int result = this->transport_->send (frame);
@@ -72,7 +72,7 @@ TAO_AV_UDP_Object::end_stream (void)
 
 
 TAO_AV_UDP_MCast_Object::TAO_AV_UDP_MCast_Object (TAO_AV_Callback *callback,
-                                      TAO_AV_Transport *transport)
+                                                  TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
 {
 }
@@ -84,7 +84,7 @@ TAO_AV_UDP_MCast_Object::~TAO_AV_UDP_MCast_Object (void)
 
 int
 TAO_AV_UDP_MCast_Object::send_frame (ACE_Message_Block *frame,
-                                     ACE_UINT32 /*timestamp*/)
+                                     TAO_AV_frame_info *frame_info)
 {
   int result = this->transport_->send (frame);
   if (result < 0)
@@ -98,5 +98,3 @@ TAO_AV_UDP_MCast_Object::end_stream (void)
   this->callback_->handle_end_stream ();
   return 0;
 }
-
-
