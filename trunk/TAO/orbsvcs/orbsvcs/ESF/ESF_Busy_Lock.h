@@ -23,7 +23,7 @@
 /**
  * The ACE Lock interface allows us to use any mutex-like object with
  * the ACE synchronization components (such as guards, Lock_Adapter,
- * etc.). 
+ * etc.).
  * One of the synchronization protocols used in the event services
  * uses the following protocol:
  * <UL>
@@ -43,9 +43,12 @@ public:
   /// Constructor
   TAO_ESF_Busy_Lock_Adapter (Adaptee* adaptee);
 
-  // = The ACE_Lock methods, please check $ACE_ROOT/ace/Synch.h for
-  // details.
-
+  /**
+   * @name The ACE_Lock methods
+   *
+   * Check the documentation in ace/Synch.h for details.
+   */
+  //@{
   int remove (void);
   int acquire (void);
   int tryacquire (void);
@@ -54,6 +57,7 @@ public:
   int acquire_write (void);
   int tryacquire_read (void);
   int tryacquire_write (void);
+  //@}
 
 private:
   Adaptee* adaptee_;
