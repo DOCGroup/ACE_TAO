@@ -81,7 +81,9 @@ ifeq (2.5.0,$(VERSION))
   optimize = 0
   ACE_HAS_GNUG_PRE_2_8 = 1
 else
-  optimize = 1
+  ifeq ($(optimize),)
+    optimize = 1
+  endif
 
   #### Even though the g++ version is 2.7-97r1, it supports nested
   #### classes, so it can build the TAO tests.
