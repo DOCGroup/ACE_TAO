@@ -509,10 +509,10 @@ CORBA::ComponentIR::EventDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/EventDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -864,10 +864,10 @@ CORBA::ComponentIR::Container::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/Container:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1040,10 +1040,10 @@ CORBA::ComponentIR::ModuleDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/ModuleDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1212,10 +1212,10 @@ CORBA::ComponentIR::Repository::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/Repository:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1460,10 +1460,10 @@ CORBA::ComponentIR::ProvidesDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/ProvidesDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1806,10 +1806,10 @@ CORBA::ComponentIR::UsesDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/UsesDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2112,10 +2112,10 @@ CORBA::ComponentIR::EventPortDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/EventPortDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2292,10 +2292,10 @@ CORBA::ComponentIR::EmitsDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/EmitsDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2459,10 +2459,10 @@ CORBA::ComponentIR::PublishesDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/PublishesDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2626,10 +2626,10 @@ CORBA::ComponentIR::ConsumesDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/ConsumesDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -3252,10 +3252,10 @@ CORBA::ComponentIR::ComponentDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/ComponentDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -3591,10 +3591,10 @@ CORBA::ComponentIR::FactoryDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/FactoryDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -3758,10 +3758,10 @@ CORBA::ComponentIR::FinderDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/FinderDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -4395,10 +4395,10 @@ CORBA::ComponentIR::HomeDef::_is_a (
           "IDL:omg.org/CORBA/ComponentIR/HomeDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }

@@ -671,10 +671,10 @@ CORBA::FixedDef::_is_a (
           "IDL:omg.org/CORBA/FixedDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1112,10 +1112,10 @@ CORBA::ValueMemberDef::_is_a (
           "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2160,10 +2160,10 @@ CORBA::ValueDef::_is_a (
           "IDL:omg.org/CORBA/ValueDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2551,10 +2551,10 @@ CORBA::ExtValueDef::_is_a (
           "IDL:omg.org/CORBA/ExtValueDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2807,10 +2807,10 @@ CORBA::ValueBoxDef::_is_a (
           "IDL:omg.org/CORBA/ValueBoxDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
