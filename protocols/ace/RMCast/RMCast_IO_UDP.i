@@ -7,10 +7,10 @@
 ACE_INLINE
 ACE_RMCast_IO_UDP::
     ACE_RMCast_IO_UDP (ACE_RMCast_Module_Factory *factory)
-  :  factory_ (factory)
+  :  factory_ (factory),
+     dgram_ (ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_NO)
 {
 }
-
 
 // Workaround failure in gcc for lynx hosted on solaris
 // see ACE_RMCast_IO_UDP::handle_input() for more details
