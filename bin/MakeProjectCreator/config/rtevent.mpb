@@ -1,5 +1,6 @@
 project : messaging, svc_utils {
-  after   += RTEvent
-  libs    += TAO_RTEvent
-  comps   += RTEvent
+  after    += RTEvent
+  libs     += TAO_RTEvent
+  comps    += RTEvent
+  requires += RTEvent
 }

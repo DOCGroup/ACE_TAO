@@ -1,6 +1,7 @@
 project: property, naming, qos {
-  after   += AV
-  libs    += TAO_AV
-  comps   += AV
+  after    += AV
+  libs     += TAO_AV
+  comps    += AV
+  requires += AV
 }
 

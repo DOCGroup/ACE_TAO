@@ -1,5 +1,6 @@
 project : naming, messaging {
-  after   += CosEvent
-  libs    += TAO_CosEvent
-  comps   += CosEvent
+  after    += CosEvent
+  libs     += TAO_CosEvent
+  comps    += CosEvent
+  requires += CosEvent
 }

@@ -1,4 +1,5 @@
 project : acelib {
-  after   += RMCast
-  libs    += ACE_RMCast
+  requires += rmcast
+  after    += RMCast
+  libs     += ACE_RMCast
 }

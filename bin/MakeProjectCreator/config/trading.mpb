@@ -1,5 +1,6 @@
 project : dynamicany, portableserver {
-  after   += CosTrading 
-  libs    += TAO_CosTrading
-  comps   += Trader
+  after    += CosTrading 
+  libs     += TAO_CosTrading
+  comps    += Trader
+  requires += Trader
 }
