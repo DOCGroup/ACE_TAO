@@ -1,3 +1,10 @@
+Mon Jan  3 12:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * DAnCE/ciao/CCM_Core.mpc:
+          Added ciaoversion as base project to all projects so that SOVERSION
+          is set to the correct version number in the GNU makefiles
+
 Thu Dec 30 13:24:16 2004  Chris Cleeland  <cleeland@ociweb.com>
 
         * CIAO version 0.4.3 released.
