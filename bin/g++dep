@@ -80,7 +80,7 @@ cat << _EOF_ >> $TMP
 
 _EOF_
 
-g++ -MM -DACE_LACKS_PRAGMA_ONCE $* | \
+g++ -MM -MG -DACE_LACKS_PRAGMA_ONCE $* | \
   sed -e "s; \./; ;g" $SED $REL | \
   awk '{ if ($1 != prev) \
          { if (rec != "") print rec; rec = $0; prev = $1; } \
@@ -98,7 +98,11 @@ then
   cat $TMP | \
   sed \
       -e "s/${ACE_PLATFORM_CONFIG}/\$(ACE_PLATFORM_CONFIG)/g" \
-      -e '/config[-][^a][^l][^l]*\.h/d' \
+      -e 's/config-all/configx-all/' \
+      -e 's/config-lite/configx-lite/' \
+      -e '/config-.*\.h/d' \
+      -e 's/configx-all/config-all/' \
+      -e 's/configx-lite/config-lite/' \
       -e "s; /[-a-zA-Z0-9_./+]*\.h;;g" \
       -e 's/\\[ \t][ \t]*\\/\\/g' \
       -f $SCRIPT > $TMP2

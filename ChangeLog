@@ -1,3 +1,19 @@
+Tue Mar  2 23:26:28 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/g++dep:
+          Added the -MG option so that missing dependency files won't
+          cause g++ to stop processing.  Thanks for Steve Huston for
+          pointing this out.
+
+          Modified the sed script that modifies the output to correctly
+          blow away only the platform specific config file.  This was
+          needed since we now have config-all.h and config-lite.h.  Thanks
+          to Bala for pointing out the problem.
+
+        * ace/Makefile.ace:
+        * ace/RMCast/Makefile:
+          Updated dependencies.
+
 Tue Mar  2 23:12:17 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * tests/Dirent_Test.cpp:
