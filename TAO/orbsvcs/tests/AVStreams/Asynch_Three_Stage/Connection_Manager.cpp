@@ -103,7 +103,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	  pos = addr->receiver_addr.find ('\n');
 	  if (pos != ACE_CString::npos)
 	    {
-	      addr->sender_addr = (addr->receiver_addr.substr (0, pos)).c_str ();
+	      addr->receiver_addr = (addr->receiver_addr.substr (0, pos)).c_str ();
 	    }
 	}
       
