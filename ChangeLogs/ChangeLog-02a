@@ -1,3 +1,10 @@
+Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/install.bor:
+          Borland makefile fix to ensure that, when doing the install
+          target, core executables are built correctly if they don't
+          already exist.
+
 Wed Oct 17 16:00:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Graeme Clark to the Hall of Fame.

@@ -29,6 +29,9 @@ CFLAGS = \
 
 CPPDIR = .
 
+INCDIR_NAME = tao\TypeCodeFactory
+INCLUDES = *.h *.inl *.pidl
+
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
