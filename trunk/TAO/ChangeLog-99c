@@ -1,3 +1,13 @@
+Fri Jul  2 10:52:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+	  Fixed few IRIX warnings thanks to Carlos.
+	
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp (TAO_AV_Child_Process): 
+	  Moved the naming service unbind code from ~TAO_AV_Child_Process
+	  to a helper function unbind_names to avoid IRIX errors. Thanks
+	  to Carlos for helping with this. 
+	
 Fri Jul  2 09:49:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Server.cpp:
