@@ -1067,9 +1067,15 @@ ACE_OS::to_lower (int c)
 }
 
 ACE_INLINE char *
-ACE_OS::strpbrk (const char *s1, const char *s2)
+ACE_OS::strpbrk (char *s1, const char *s2)
 {
   return ::strpbrk (s1, s2);
+}
+
+ACE_INLINE const char *
+ACE_OS::strpbrk (const char *s1, const char *s2)
+{
+  return (const char *) ::strpbrk (s1, s2);
 }
 
 ACE_INLINE char *
