@@ -74,6 +74,8 @@ send_echo (CORBA::ORB_ptr orb,
       // Sleep so the server can send the reply...
       ACE_Time_Value tv (max_timeout / 1000,
                          (max_timeout % 1000) * 1000);
+
+      // This is a non-standard TAO call.
       orb->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -160,6 +162,7 @@ int main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "client (%P) testing from %d to %d milliseconds\n",
                   min_timeout, max_timeout));
+
       for (CORBA::Long t = min_timeout; t != max_timeout; ++t)
         {
           //ACE_DEBUG ((LM_DEBUG,
@@ -250,13 +253,12 @@ int main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       if (timeout_count == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: No messaged timed out\n"));
-        }
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: No messaged timed out\n"));
+
       if (in_time_count == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: No messages on time\n"));
-        }
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: No messages on time\n"));
 
       ACE_DEBUG ((LM_DEBUG, "In time = %d, timed out = %d\n",
                   in_time_count, timeout_count));

@@ -29,12 +29,42 @@ const ACE_TCHAR *ACE_Log_Record::priority_names_[] =
   ACE_LIB_TEXT ("LM_ERROR"),
   ACE_LIB_TEXT ("LM_CRITICAL"),
   ACE_LIB_TEXT ("LM_ALERT"),
-  ACE_LIB_TEXT ("LM_EMERGENCY")};
+  ACE_LIB_TEXT ("LM_EMERGENCY"),
+  ACE_LIB_TEXT ("LM_UNK(04000)")
+  ACE_LIB_TEXT ("LM_UNK(010000)")
+  ACE_LIB_TEXT ("LM_UNK(020000)")
+  ACE_LIB_TEXT ("LM_UNK(040000)")
+  ACE_LIB_TEXT ("LM_UNK(0100000)")
+  ACE_LIB_TEXT ("LM_UNK(0200000)")
+  ACE_LIB_TEXT ("LM_UNK(0400000)")
+  ACE_LIB_TEXT ("LM_UNK(01000000)")
+  ACE_LIB_TEXT ("LM_UNK(02000000)")
+  ACE_LIB_TEXT ("LM_UNK(04000000)")
+  ACE_LIB_TEXT ("LM_UNK(010000000)")
+  ACE_LIB_TEXT ("LM_UNK(020000000)")
+  ACE_LIB_TEXT ("LM_UNK(040000000)")
+  ACE_LIB_TEXT ("LM_UNK(0100000000)")
+  ACE_LIB_TEXT ("LM_UNK(0200000000)")
+  ACE_LIB_TEXT ("LM_UNK(0400000000)")
+  ACE_LIB_TEXT ("LM_UNK(01000000000)")
+  ACE_LIB_TEXT ("LM_UNK(02000000000)")
+  ACE_LIB_TEXT ("LM_UNK(04000000000)")
+  ACE_LIB_TEXT ("LM_UNK(010000000000)")
+  ACE_LIB_TEXT ("LM_UNK(020000000000)")
+};
 
 const ACE_TCHAR *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
 {
   return ACE_Log_Record::priority_names_[ACE::log2 (p)];
+}
+
+void
+ACE_Log_Record::priority_name (ACE_Log_Priority p,
+                               const ACE_TCHAR *name)
+{
+  // Name must be a statically allocated string
+  ACE_Log_Record::priority_names_[ACE::log2 (p)] = name;
 }
 
 u_long
