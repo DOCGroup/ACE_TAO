@@ -1,3 +1,13 @@
+Tue Oct  5 19:01:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.i:
+	  Changed << for bounded (w)strings to marshal only 'length'
+	  bytes, instead of 'bound' bytes. The previous method could
+	  cause an access violation if the string fits near the end 
+	  of a system page, but the 'bound' extends beyond it. Thanks
+	  to Brian Wright <bwright@paladyne.com> for reporting this
+	  bug.
+
 Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_persistence.cpp: Enhanced the
