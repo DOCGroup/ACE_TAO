@@ -37,6 +37,9 @@ namespace TAO
       virtual bool has_system_id (void) const;
     private:
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdAssignmentStrategyUser)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, IdAssignmentStrategyUser)
   }
 }
 

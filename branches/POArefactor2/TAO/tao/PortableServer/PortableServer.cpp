@@ -41,6 +41,8 @@
 
 #include "tao/PortableServer/IdAssignmentPolicyValueSystem.h"
 #include "tao/PortableServer/IdAssignmentPolicyValueUser.h"
+#include "tao/PortableServer/IdAssignmentStrategySystem.h"
+#include "tao/PortableServer/IdAssignmentStrategyUser.h"
 
 #include "tao/PortableServer/IdUniquenessPolicyValueMultiple.h"
 #include "tao/PortableServer/IdUniquenessPolicyValueUnique.h"
@@ -142,6 +144,14 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyValueUser
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategySystem
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategyUser
     );
 
   ACE_Service_Config::process_directive (

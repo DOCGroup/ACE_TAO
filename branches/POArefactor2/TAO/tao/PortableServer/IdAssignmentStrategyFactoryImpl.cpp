@@ -1,8 +1,8 @@
 // $Id$
 
 #include "IdAssignmentStrategyFactoryImpl.h"
-#include "IdAssignmentStrategySystem.h"
-#include "IdAssignmentStrategyUser.h"
+#include "IdAssignmentStrategy.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
            IdAssignmentStrategyFactoryImpl,
@@ -25,12 +25,34 @@ namespace TAO
       {
         case ::PortableServer::SYSTEM_ID :
         {
-          ACE_NEW_RETURN (strategy, IdAssignmentStrategySystem, 0);
+          strategy =
+            ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategySystem");
+
+          if (strategy == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic IdAssignmentStrategy Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_IdAssignmentStrategySystem()"));
+
+              strategy =
+                ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategySystem");
+            }
           break;
         }
         case ::PortableServer::USER_ID :
         {
-          ACE_NEW_RETURN (strategy, IdAssignmentStrategyUser, 0);
+          strategy =
+            ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategyUser");
+
+          if (strategy == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic IdAssignmentStrategy Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_IdAssignmentStrategyUser()"));
+
+              strategy =
+                ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategyUser");
+            }
           break;
         }
       }
