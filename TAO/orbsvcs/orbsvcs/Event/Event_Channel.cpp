@@ -577,6 +577,7 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
     type_ (type),
     state_ (INITIAL_STATE),
     destroyed_ (0),
+    handle_generator_ (0),
     own_factory_ (0),
     module_factory_ (factory)
 {
@@ -747,85 +748,118 @@ void
 ACE_EventChannel::add_gateway (TAO_EC_Gateway* gw,
                                CORBA::Environment& _env)
 {
-  this->gwys_.insert (gw);
-
-  RtecEventChannelAdmin::ConsumerQOS c_qos;
-  RtecEventChannelAdmin::SupplierQOS s_qos;
-
-  this->consumer_module_->fill_qos (c_qos, s_qos);
-  gw->update_consumer (c_qos, s_qos, _env);
-  if (_env.exception () != 0) return;
-
-  this->supplier_module_->fill_qos (c_qos, s_qos);
-  gw->update_supplier (c_qos, s_qos, _env);
-  if (_env.exception () != 0) return;
+  RtecEventChannelAdmin::Observer_var observer = gw->_this (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  
+  gw->observer_handle (this->append_observer (observer.in (), _env));
 }
 
 void
 ACE_EventChannel::del_gateway (TAO_EC_Gateway* gw,
-                               CORBA::Environment&)
+                               CORBA::Environment& _env)
 {
-  this->gwys_.remove (gw);
+  this->remove_observer (gw->observer_handle (), _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  gw->observer_handle (0);
 }
 
 void
 ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
 {
-  if (this->gwys_.is_empty ())
+  if (this->observers_.current_size () == 0)
     return;
 
   ACE_DEBUG ((LM_DEBUG,
               "EC (%t) Event_Channel::update_consumer_gwys\n"));
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
-  RtecEventChannelAdmin::SupplierQOS s_qos;
-  this->consumer_module_->fill_qos (c_qos, s_qos);
-  for (Gateway_Set_Iterator i = this->gwys_.begin ();
-       i != this->gwys_.end ();
+  this->consumer_module_->fill_qos (c_qos);
+  for (Observer_Map_Iterator i = this->observers_.begin ();
+       i != this->observers_.end ();
        ++i)
     {
-      TAO_EC_Gateway* gw = *i;
-      gw->update_consumer (c_qos, s_qos, _env);
-      if (_env.exception () != 0) return;
+      (*i).int_id_.observer->update_consumer (c_qos, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 
 void
 ACE_EventChannel::update_supplier_gwys (CORBA::Environment& _env)
 {
-  if (this->gwys_.is_empty ())
+  if (this->observers_.current_size () == 0)
     return;
 
   ACE_DEBUG ((LM_DEBUG,
               "EC (%t) Event_Channel::update_supplier_gwys\n"));
 
-  RtecEventChannelAdmin::ConsumerQOS c_qos;
   RtecEventChannelAdmin::SupplierQOS s_qos;
-  this->supplier_module_->fill_qos (c_qos, s_qos);
-  for (Gateway_Set_Iterator i = this->gwys_.begin ();
-       i != this->gwys_.end ();
+  this->supplier_module_->fill_qos (s_qos);
+  for (Observer_Map_Iterator i = this->observers_.begin ();
+       i != this->observers_.end ();
        ++i)
     {
-      TAO_EC_Gateway* gw = *i;
-      gw->update_supplier (c_qos, s_qos, _env);
-      if (_env.exception () != 0) return;
+      (*i).int_id_.observer->update_supplier (s_qos, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 
 RtecEventChannelAdmin::Observer_Handle
-ACE_EventChannel::append_observer (RtecEventChannelAdmin::Observer_ptr,
-				   CORBA::Environment &)
+ACE_EventChannel::append_observer (RtecEventChannelAdmin::Observer_ptr obs,
+				   CORBA::Environment &_env)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+		   RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR))
 {
-  return 0;
-  // @@ TODO fill in the "implementation details"
+  TAO_GUARD_THROW_RETURN (ACE_ES_MUTEX, ace_mon, this->lock_, 0, _env,
+			  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+
+  this->handle_generator_++;
+  Observer_Entry entry (this->handle_generator_,
+			RtecEventChannelAdmin::Observer::_duplicate (obs));
+
+  if (this->observers_.bind (entry.handle, entry) == -1)
+    TAO_THROW_ENV_RETURN (RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(),
+			  _env, 0);
+
+  RtecEventChannelAdmin::ConsumerQOS c_qos;
+  this->consumer_module_->fill_qos (c_qos);
+  obs->update_consumer (c_qos, _env);
+  TAO_CHECK_ENV_RETURN (_env, 0);
+
+  RtecEventChannelAdmin::SupplierQOS s_qos;
+  this->supplier_module_->fill_qos (s_qos);
+  obs->update_supplier (s_qos, _env);
+  TAO_CHECK_ENV_RETURN (_env, 0);
+  
+  return entry.handle;
 }
 
 void
-ACE_EventChannel::remove_observer (RtecEventChannelAdmin::Observer_Handle,
-				   CORBA::Environment &)
+ACE_EventChannel::remove_observer (RtecEventChannelAdmin::Observer_Handle h,
+				   CORBA::Environment &_env)
 {
-  // @@ TODO fill in the "implementation details"
+  TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
+		   RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+
+  if (this->observers_.unbind (h) == -1)
+    TAO_THROW_ENV
+      (RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER(), _env);
 }
+
+// ****************************************************************
+
+ACE_EventChannel::Observer_Entry::Observer_Entry (void)
+  :  handle (0)
+{
+}
+
+ACE_EventChannel::Observer_Entry::Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+						  RtecEventChannelAdmin::Observer_ptr o)
+  :  handle (h),
+     observer (o)
+{
+}
+
 
 // ****************************************************************
 
@@ -1317,13 +1351,11 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
 }
 
 void
-ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
-                                  RtecEventChannelAdmin::SupplierQOS& s_qos)
+ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
 {
   ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
   c_qos.is_gateway = 1;
-  s_qos.is_gateway = 1;
 
   int count = 0;
   {
@@ -1341,13 +1373,10 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
   }
 
   RtecEventChannelAdmin::DependencySet& dep = c_qos.dependencies;
-  RtecEventChannelAdmin::PublicationSet& pub = s_qos.publications;
 
   dep.length (count + 1);
-  pub.length (count);
 
   CORBA::ULong cc = 0;
-  CORBA::ULong sc = 0;
   dep[cc].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   dep[cc].event.header.source = 0;
   dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
@@ -1396,20 +1425,10 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
               // The RT_Info is filled up later.
               dep[cc].rt_info = 0;
               cc++;
-
-              pub[sc].event.header.type = event.header.type;
-              pub[sc].event.header.source = event.header.source;
-              pub[sc].event.header.creation_time = ORBSVCS_Time::zero;
-              pub[sc].dependency_info.dependency_type =
-                RtecScheduler::TWO_WAY_CALL;
-              pub[sc].dependency_info.number_of_calls = 1;
-              pub[sc].dependency_info.rt_info = 0;
-              sc++;
             }
         }
     }
   dep.length (cc);
-  pub.length (sc);
 }
 
 // ************************************************************
@@ -3216,12 +3235,10 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 }
 
 void
-ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
-                                  RtecEventChannelAdmin::SupplierQOS& s_qos)
+ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
 {
   ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
-  c_qos.is_gateway = 1;
   s_qos.is_gateway = 1;
 
   int count = 0;
@@ -3239,19 +3256,11 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
       }
   }
 
-  RtecEventChannelAdmin::DependencySet& dep = c_qos.dependencies;
   RtecEventChannelAdmin::PublicationSet& pub = s_qos.publications;
 
-  dep.length (count + 1);
   pub.length (count);
 
-  CORBA::ULong cc = 0;
   CORBA::ULong sc = 0;
-  dep[cc].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
-  dep[cc].event.header.source = 0;
-  dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
-  dep[cc].rt_info = 0;
-  cc++;
 
   for (Supplier_Iterator i = this->all_suppliers_.begin ();
        i != this->all_suppliers_.end ();
@@ -3289,13 +3298,6 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
             }
           if (k == sc)
             {
-              dep[cc].event.header.type = event.header.type;
-              dep[cc].event.header.source = event.header.source;
-              dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
-              // The RT_Info is filled up later.
-              dep[cc].rt_info = 0;
-              cc++;
-
               pub[sc].event.header.type = event.header.type;
               pub[sc].event.header.source = event.header.source;
               pub[sc].event.header.creation_time = ORBSVCS_Time::zero;
@@ -3307,7 +3309,6 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
             }
         }
     }
-  dep.length (cc);
   pub.length (sc);
 }
 

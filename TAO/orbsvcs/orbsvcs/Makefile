@@ -11174,7 +11174,10 @@ realclean: clean
  Event/Local_ESTypes.i
 .obj/EC_Gateway.o .obj/EC_Gateway.so .shobj/EC_Gateway.o .shobj/EC_Gateway.so: Event/EC_Gateway.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -11405,23 +11408,30 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
