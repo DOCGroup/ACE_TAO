@@ -1,3 +1,24 @@
+Thu Sep 04 08:48:13 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.cpp: moved tss_open ()/tss_close () calls from invoke ()
+	  to ace_thread_adapter.
+
+	* examples/Threads/auto_event.cpp,manual_event.cpp,
+	  process_manager.cpp,reader_writer.cpp,tss2.cpp:
+	  cast spawn entry point to ACE_THR_FUNC.
+
+	* examples/Threads/task_four.cpp (Invoker_Task): rearranged
+	  initializers to match declaration order.
+
+	* examples/Threads/thread_specific.cpp (worker): use
+	  ACE_OS::printf () instead of printf (), and print out the
+	  ACE_hthread_t instead of the ACE_thread_t.
+	
+	* examples/Reactor/Ntalker/ntalker.cpp (main): removed unused "argc".
+
+	* examples/*/*.cpp,netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+	  added args to main ().
+
 Wed Sep  3 21:38:18 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
 
 	* ace/config-irix6.x-sgic++.h: 
@@ -870,7 +891,7 @@ Mon Aug 25 10:15:06 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	  From now on, we should always declare main () with arguments, e.g.,
 	  int
-	  main (int argc, char *[])
+	  main (int, char *[])
 
 Sun Aug 24 10:27:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
