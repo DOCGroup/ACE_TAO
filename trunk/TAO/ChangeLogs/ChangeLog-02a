@@ -1,3 +1,17 @@
+Thu Aug 31 09:46:44 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	  Fixed the if/else/endif for ACE_HAS_GNUG_PRE_2_8
+
+	* orbsvcs/Logging_Service/Makefile:
+	* orbsvcs/orbsvcs/Makefile:
+	  Enable the Logging and AV streaming services on minimum CORBA
+	  builds, they were disabled because they depend on Trading, but
+	  that service now builds with minimum CORBA.
+
+	* tests/DynAny_Test/Makefile:
+	  Now we can test Dynamic Anys even in minimum CORBA builds
+
 Wed Aug 30 19:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
