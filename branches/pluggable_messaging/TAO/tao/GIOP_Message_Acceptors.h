@@ -23,6 +23,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_Accept_State.h"
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 class TAO_Export TAO_GIOP_Message_Acceptors:
   public TAO_GIOP_Message_Base
@@ -81,10 +82,9 @@ private:
   // sensitive. Only the common stuff for all the replies to be
   // sent would be handled.
   
-  int make_locate_reply (TAO_Transport *transport,
-                         TAO_OutputCDR & output,
-                         TAO_GIOP_Locate_Request_Header &request,
-                         TAO_GIOP_Locate_Status_Msg &status);
+  int make_send_locate_reply (TAO_Transport *transport,
+                              TAO_GIOP_Locate_Request_Header &request,
+                              TAO_GIOP_Locate_Status_Msg &status);
   // As on date 1.1 & 1.2 seem to have similar headers. Til an
   // unmanageable difference comes let them be implemented here. 
 

@@ -1,6 +1,5 @@
 //$Id$
 #include "tao/GIOP_Message_Acceptors.h"
-#include "tao/debug.h"
 #include "tao/POA.h"
 
 #if !defined (__ACE_INLINE__)
@@ -151,7 +150,7 @@ TAO_GIOP_Message_Acceptors::
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       // Make the GIOP header and Reply header
-      this->make_reply (request_id,
+      this->make_reply (request_id, 
                         this->output_);
       
       this->output_.write_ulong (TAO_GIOP_LOCATION_FORWARD);
@@ -457,69 +456,9 @@ TAO_GIOP_Message_Acceptors::
   ACE_ENDTRY;
 
 
-  return this->make_locate_reply (transport,
-                                  this->output_,
-                                  locate_request,
-                                  status_info);
-}
-
-
-
-CORBA::Boolean
-TAO_GIOP_Message_Acceptors::
-  make_reply (CORBA::ULong request_id,
-              TAO_OutputCDR &output)
-{
-  // Write the GIOP header first
-  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                               output);
-
-  // Write the reply header
-  this->accept_state_->write_reply_header (output,
-                                           request_id);
-  
-  return 0;
-                               
-}
-
-int
-TAO_GIOP_Message_Acceptors::
-  make_locate_reply (TAO_Transport *transport,
-                     TAO_OutputCDR & output,
-                     TAO_GIOP_Locate_Request_Header &request,
-                     TAO_GIOP_Locate_Status_Msg &status_info)
-{
-  // Note here we are making the Locate reply header which is *QUITE*
-  // different from the reply header made by the make_reply () call.. 
-  
-  // Make the GIOP message header
-  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_LOCATEREPLY,
-                               output);             
-
-  
-  // This writes the header & body
-  this->accept_state_->write_locate_reply_mesg (output,
-                                                request.request_id (),
-                                                status_info);
-
-
-
-  // Send the message
-  int result = this->send_message (transport,
-                                   output);
-                                   
-  // Print out message if there is an error
-  if (result == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
-                      ASYS_TEXT ("TAO_GIOP::process_server_message")));
-        }
-    }   
-  
-  return result;
+  return this->make_send_locate_reply (transport,
+                                       locate_request,
+                                       status_info);
 }
 
 
@@ -596,62 +535,16 @@ TAO_GIOP_Message_Acceptors::
 }
 
 
-int
-TAO_GIOP_Message_Acceptors::
-  validate_version (TAO_GIOP_Message_State *state)
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_Acceptors::major_version (void)
 {
-  char *buf = state->cdr.rd_ptr (); 
-  CORBA::Octet incoming_major = 
-    buf[this->major_version_offset ()];
-  CORBA::Octet incoming_minor = 
-    buf[this->minor_version_offset ()];
-
-  if (this->implementations_.check_revision (incoming_major,
-                                             incoming_minor) == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t|%N|%l) bad version <%d.%d>\n"),
-                    incoming_major, incoming_minor));
-      return -1;
-    }
-
-  // Sets the version
-  // @@Bala Need to remove this as redundant data
-  state->giop_version.minor = incoming_minor;
-  state->giop_version.major = incoming_major;
-
-  // Sets the state
-  this->set_state (incoming_major,
-                   incoming_minor);
-  
-  return 0;
+  return this->accept_state_->major_version ();
 }
 
-void
-TAO_GIOP_Message_Acceptors::
-set_state (CORBA::Octet def_major,
-           CORBA::Octet def_minor)
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_Acceptors::minor_version (void)
 {
-  // @@Bala Need to find a better way
-  switch (def_major)
-    {
-    case 1:
-      switch (def_minor)
-        {
-        case 0:
-          this->accept_state_ = &this->implementations_.version_10;
-          break;
-        case 1:
-          this->accept_state_ = &this->implementations_.version_11;
-          break;
-        default:
-          break;
-        }
-      break;
-    default:
-      break;
-    }
+  return this->accept_state_->minor_version ();
 }
 
 
