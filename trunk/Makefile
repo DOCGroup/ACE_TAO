@@ -118,7 +118,6 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                    print; } ' $$CHANGELOG; \
               cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG; \
               chmod 644 VERSION) &&
-  FILTER = -name CVS -prune -o ! -name '.#*' ! -name '#*' ! -name '*~' -print
 else
   TIMESTAMP =
 endif
@@ -126,6 +125,8 @@ endif
 #### The following tar creation commands assume that cpio supports -H tar.
 #### Old versions of cpio might not, but the version that's shipped with
 #### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
+
+FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
 
 cleanrelease:
 	@$(TIMESTAMP) (make realclean; cd ..; \
