@@ -22,7 +22,7 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 // #define YYDEBUG 1
 
 // Efficient memory allocation technique.
-ACE_Obstack *ace_obstack;
+ACE_Obstack_T<ACE_TCHAR> *ace_obstack = 0;
 
 // Keeps track of the number of errors encountered so far.
 int yyerrno = 0;
@@ -458,7 +458,7 @@ int
 main (int argc, char *argv[])
 {
   yyin = stdin;
-  ace_obstack = new ACE_Obstack;
+  ace_obstack = new ACE_Obstack_T<ACE_TCHAR>;
 
   // Try to reopen any filename argument to use YYIN.
   if (argc > 1 && (yyin = freopen (argv[1], "r", stdin)) == 0)
