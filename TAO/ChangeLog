@@ -1,3 +1,7 @@
+Sun May 18 05:47:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/POA.cpp: Fixed a warning in minimum builds.
+
 Sun May 18 05:42:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Sequence_T.i: TAO_Unbounded_Array_Sequence and
