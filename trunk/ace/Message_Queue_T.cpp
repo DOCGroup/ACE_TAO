@@ -553,7 +553,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
   new_item->next (this->head_);
 
   if (this->head_ != 0)
-      this->head_->prev (new_item);
+    this->head_->prev (new_item);
   else
     this->tail_ = new_item;
 
