@@ -43,7 +43,11 @@ ACE_Proactor::get_handle (void) const
 {
   ACE_TRACE ("ACE_Proactor::get_handle");
 
+#if defined (ACE_WIN32)
   return this->shared_event_.handle ();
+#else
+  return ACE_INVALID_HANDLE;
+#endif
 }
 
 ACE_INLINE int
