@@ -285,14 +285,14 @@ public:
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
                                   ACE_Null_Mutex> 
           CONNECTION_HASH_MAP_REVERSE_ITERATOR;
-  typedef ACE_Svc_Caching_Strategy_Utility <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, \
+  typedef ACE_Pair_Caching_Utility <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, \
                                             ACE_Pair<Svc_Handler *, int>, \
-                                            CONNECTION_HASH_MAP,int > 
-          SVC_CACHING_STRATEGY_UTILITY;
+                                            CONNECTION_HASH_MAP, CONNECTION_HASH_MAP_ITERATOR, int > 
+          CACHING_STRATEGY_UTILITY;
   typedef ACE_LRU_Caching_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                    ACE_Pair<Svc_Handler *, int>,\
                                    CONNECTION_HASH_MAP, int,\
-                                   SVC_CACHING_STRATEGY_UTILITY >
+                                   CACHING_STRATEGY_UTILITY >
           LRU;
   typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler,ACE_SOCK_CONNECTOR, LRU,int, ACE_SYNCH_NULL_MUTEX>
           CACHED_CONNECT_STRATEGY;
