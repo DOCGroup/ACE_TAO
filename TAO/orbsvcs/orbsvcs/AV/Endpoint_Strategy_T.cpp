@@ -550,7 +550,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process ()
 {
   // Remove the names from the naming service
-  if (this->naming_context_ == 0)
+  if (CORBA::is_nil (this->naming_context_.in ()) == 0)
     return;
   TAO_TRY
     {
