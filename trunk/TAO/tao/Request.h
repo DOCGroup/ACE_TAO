@@ -31,6 +31,7 @@
 #include "tao/Environment.h"
 #include "tao/Context.h"
 #include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
 
 class TAO_Export CORBA_Request
 {
@@ -238,16 +239,47 @@ private:
   CORBA_Request_ptr &ptr_;
 };
 
-class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
+// Make sure you instantiate this in Request.cpp
+class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request>
 {
 public:
-
-  // Helpful with template programming.
+// Helpful with template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_RequestSeq_ptr _ptr_type;
   typedef CORBA_ORB_RequestSeq_var _var_type;
 #endif /* __GNUC__ */
 
+  // Implement the same constructors provided by the template here,
+  // check Sequence_T.h for ideas.
+  // Simply delegate on the template for the implementation...
+  
+  CORBA_ORB_RequestSeq (void);
+  // default ctor
+
+  CORBA_ORB_RequestSeq (CORBA::ULong max);
+  // Constructor with a "hint" for the maximum capacity.
+
+  CORBA_ORB_RequestSeq (CORBA::ULong maximum,
+                        CORBA::ULong length,
+                        CORBA_Request* * data,
+                        CORBA::Boolean release=0);
+  // Constructor with a given buffer.
+
+  CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &);
+  // Copy ctor, deep copies.
+
+  //~CORBA_ORB_RequestSeq (void);
+  // dtor releases all the contained elements.
+};
+
+// This class definition should be removed.. But need to 
+// check with all the compiler guys before we have this removed
+
+/*class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
+{
+public:
+
+  
   // Default constructor.
   CORBA_ORB_RequestSeq (void);
 
@@ -297,7 +329,7 @@ public:
                 CORBA::Request_ptr *data,
                 CORBA::Boolean release);
 };
-
+*/
 class CORBA_ORB_RequestSeq_var
 {
 public:
