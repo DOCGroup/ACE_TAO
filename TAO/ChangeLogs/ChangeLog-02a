@@ -4,6 +4,10 @@ Fri May 26 08:31:52 2000  Carlos O'Ryan  <coryan@uci.edu>
           Fixed warnings under gcc-2.95.2  The copy constructor should
           explicitly initialize virtual base classes.
 
+        * orbsvcs/tests/Trading/Makefile:
+          Updated dependencies, the binaries where not included in the
+          list of files.
+
 Thu May 25 22:00:04 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/SHMIOP_Connect.cpp (svc):
