@@ -136,6 +136,8 @@ DRV_usage (void)
   cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic hashed operation lookup strategy. Default is perfect hashing\n");
   cerr << GTDEVEL (" -H linear_search\t\tTo force linear searchoperation lookup strategy\n");
   cerr << GTDEVEL (" -H binary_search\t\tTo force binary search operation lookup strategy\n");
+  cerr << GTDEVEL (" -in \t\t\tTo generate <>s for standard #include'd files (non-changing files)\n");
+  cerr << GTDEVEL (" -ic \t\t\tTo generate \"\"s for standard #include'd files (changing files) <\n");
   cerr << GTDEVEL (" -Idir\t\t\tincludes dir in search path for preprocessor\n");
   cerr << GTDEVEL (" -o <output_dir>\tOutput directory for the generated files. Default is current directory\n");
   cerr << GTDEVEL (" -si\t\t\tServer's inline file name ending. Default is S.i\n");
@@ -342,6 +344,13 @@ DRV_parse_args (long ac, char **av)
               i++;
               break;
 
+              // Switching between "'s and <'s when we generate
+              // #include statements for the standard files (e.g. tao/corba.h)
+            case 'i':
+              if (av[i][2] == 'c')
+                idl_global->changing_standard_include_files (1);
+              break;
+                
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':

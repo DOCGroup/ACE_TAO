@@ -158,7 +158,27 @@ TAO_CodeGen::start_client_header (const char *fname)
       this->client_header_->print ("#if !defined (%s)\n", macro_name);
       this->client_header_->print ("#define %s\n\n", macro_name);
 
-      *this->client_header_ << "#include \"tao/corba.h\"\n";
+      // Including standard files
+
+      // switch between changing or non-changing standard include files
+      // include files, so that #include statements can be 
+      // generated with ""s or <>s respectively, for the standard include
+      // files (e.g. tao/corba.h)       
+      *this->client_header_ << "#include ";
+
+      if (idl_global->changing_standard_include_files () == 1)
+        *this->client_header_ << "\"";
+      else
+        *this->client_header_ << "<";
+
+      *this->client_header_ << "tao/corba.h";
+
+      if (idl_global->changing_standard_include_files () == 1)
+        *this->client_header_ << "\"\n";
+      else
+        *this->client_header_ << ">\n";
+
+      // Other include files
 
       if (idl_global->export_include () != 0)
         {

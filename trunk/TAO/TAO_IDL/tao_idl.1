@@ -86,6 +86,14 @@ based operation lookup strategy.
 To specify the IDL compiler to generate skelton code that uses linear search
 based operation lookup strategy.
 .TP
+.B "\-in"
+To generate #include statements with <>'s for the standard include
+files (e.g. tao/corba.h) indicating them as non-changing files
+.TP
+.B "\-ic"
+To generate #include statements with ""s for changing standard include
+files (e.g. tao/corba.h). 
+.TP
 .B \-g
 To specify the path for the perfect hasing program (GPERF). Default is
 $ACE_ROOT/bin/gperf or whatever the ACE_GPERF macro was defined to be during

@@ -280,8 +280,8 @@ public:
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
-  // "#include"d in the main IDL file, not the ones after CC
-  // preprocessor parsed the file.
+  //   "#include"d in the main IDL file, not the ones after CC
+  //   preprocessor parsed the file.
 
   // Just storing the pointer. No memory will be allocated.
   virtual void add_to_included_idl_files (char* file_name);
@@ -315,7 +315,14 @@ public:
   virtual void                  idl_src_file(String *);
   // Set the source IDL file that is being parsed.
 
-  // helper functions that generate the file names for the C++ mapping
+  virtual void changing_standard_include_files (size_t changing);
+  virtual size_t changing_standard_include_files (void);
+  // To switch between changing or non-changing standard include
+  // files (e.g. tao/corba.h)  so that #include statements can be
+  // generated with ""s or <>s respectively.
+
+
+  // Helper functions that generate the file names for the C++ mapping
   // generated code.
   // The parameter <base_name_only> set to 0 (no base name, but full
   // name with output dir path, is useful, when I just want just the
@@ -562,6 +569,11 @@ private:
                                                         // before?
 
   String                        *pd_idl_src_file;       // IDL source file.
+  
+  size_t  changing_standard_include_files_;
+  // To switch between changing or non-changing standard include
+  // files (e.g. tao/corba.h)  so that #include statements can be
+  // generated with ""s or <>s respectively.
 
   char* export_macro_;
   char* export_include_;
