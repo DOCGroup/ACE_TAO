@@ -34,7 +34,7 @@ namespace CIAO
 
     ::Deployment::DeploymentPlan const *
     DP_Handler::plan (void) const
-      throw (NoPlan)
+      throw (DP_Handler::NoPlan)
     {
       if (this->retval_)
         return this->idl_dp_.get ();
@@ -44,7 +44,7 @@ namespace CIAO
 
     ::Deployment::DeploymentPlan *
     DP_Handler::plan (void)
-      throw (NoPlan)
+      throw (DP_Handler::NoPlan)
     {
       if (this->retval_)
         return this->idl_dp_.release ();
@@ -66,7 +66,7 @@ namespace CIAO
 	  this->idl_dp_->label =
 	    CORBA::string_dup (this->dp_.label ().c_str ());
 	}
-      
+
       // Read in the UUID, if present
       if (this->dp_.UUID_p ())
 	{
@@ -82,7 +82,7 @@ namespace CIAO
 	{
 	  CORBA::ULong len =
 	    this->idl_dp_->dependsOn.length ();
-	  
+
 	  this->idl_dp_->dependsOn.length (len + 1);
 
 	  ID_Handler::get_ImplementationDependency (
@@ -90,7 +90,7 @@ namespace CIAO
              *dstart);
 
 	}
-      
+
       /* @@ Not needed at this time...
 
       // ... An the property stuff
@@ -121,7 +121,7 @@ namespace CIAO
                       "Error parting Component Interface Descriptor."));
           return false;
         }
-      
+
 
       this->retval_ =
         ADD_Handler::artifact_deployment_descrs (
@@ -148,7 +148,7 @@ namespace CIAO
                       "Error parting Monolithic Deployment Decriptions."));
           return false;
         }
-      
+
       this->retval_ =
         IDD_Handler::instance_deployment_descrs (
           this->dp_,
