@@ -1,3 +1,10 @@
+Tue Sep 21 15:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/QtReactor_Test.cpp:
+          Fixed incorrect ACE_TRACE usage, thanks to Vincent Newsum
+          <Newsum at fel dot tno dot nl> for reporting this, this fixes
+          BUG 1940.
+
 Tue Sep 21 06:38:17 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
