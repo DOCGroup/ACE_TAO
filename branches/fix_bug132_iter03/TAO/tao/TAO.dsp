@@ -187,6 +187,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -264,14 +268,6 @@ SOURCE=.\CodecFactory.cpp
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
@@ -803,6 +799,10 @@ SOURCE=.\Sync_Strategies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -844,6 +844,14 @@ SOURCE=.\TimeBaseS.cpp
 # Begin Source File
 
 SOURCE=.\Transport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
@@ -920,6 +928,10 @@ SOURCE=.\arg_shifter.h
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Queued_Message.h
 # End Source File
 # Begin Source File
 
@@ -1004,14 +1016,6 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.h
 # End Source File
 # Begin Source File
 
@@ -1611,6 +1615,10 @@ SOURCE=.\Sync_Strategies.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Queued_Message.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -1680,6 +1688,14 @@ SOURCE=.\Transport.h
 # Begin Source File
 
 SOURCE=.\Transport.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.h
 # End Source File
 # Begin Source File
 
@@ -1792,14 +1808,6 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
@@ -2288,6 +2296,14 @@ SOURCE=.\TimeBaseS.i
 # Begin Source File
 
 SOURCE=.\TimeBaseS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Cache_Manager.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 

@@ -1,3 +1,65 @@
+Sun Apr 01 15:34:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Specialize the Queue_Message class for Synchronous and
+          Asynchronous messages.  Their behavior is completely different:
+          synchronous messages (twoways and reliable oneways) are
+          allocated from the stack, they should not copy the CDR stream
+          and thus have to deal with message block chains.
+          Asynchronous messages (oneways and AMIs with SYNC_NONE policy)
+          are allocated from the heap, they must copy their data and thus
+          can reassemble it in a single buffer.
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Changed the transport to use the new interface in the
+          Queued_Message class.
+          Completely separate the synchronous and asynchronous operation
+          path.
+          The new implementation recovers some functionality lost in
+          previous revisions: multiple messages can be sent in a single
+          iovector.
+
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+          Add ping() operation to the Session IDL interface.
+          This is used to validate the session during startup, i.e. ensure
+          that enough connections are available for all the threads.
+
+Sat Mar 31 14:56:37 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Fixed memory management and synchronization problems.
+          Invoke the connection_closed() method on all the pending
+          messages if the connection is closed.
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          If the connection is closed there is no sense in trying to
+          continue sending the message.
+          The done() method returns 1 if the connection was closed or if
+          the message was completely sent.
+
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Propagate any errors from Transport::schedule_output() and
+          Transport::cancel_output()
+
+        * tests/Big_Request_Muxing/Big_Request_Muxing.dsw:
+        * tests/Big_Request_Muxing/client.dsp:
+        * tests/Big_Request_Muxing/server.dsp:
+          Add MSVC project files
+
 Fri Mar 30 17:06:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:
