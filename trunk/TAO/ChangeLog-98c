@@ -1,3 +1,13 @@
+Wed Apr 15 09:28:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.h: 
+	  A field was declared <const CORBA::TypeCode_ptr*>, this field is
+	  needed to initialize a Sequence that requires a
+	  <CORBA::TypeCode**> parameter.  The careful reader will notice
+	  that there is no implicit conversion between the two types, the
+	  first is a pointer to constant TypeCode_ptr no a constant
+	  pointer to TypeCode_ptr.  Only SGI/C++ detected this problem.
+
 Wed Apr 15 09:11:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp (compare_entry_finish_times):
