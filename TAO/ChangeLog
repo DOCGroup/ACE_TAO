@@ -1,3 +1,10 @@
+Tue Nov  4 16:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+	  Added missing includes to get them compiling. 
+
 Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/include/ast_union_label.h:

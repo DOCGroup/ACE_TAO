@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "SSLIOP_Current_Impl.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Current_Impl,
