@@ -25,6 +25,7 @@ ACE_HAS_BROKEN_SENDMSG			OS/compiler omits the const from the sendmsg() prototyp
 ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const from the rlimit parameter in the setrlimit() prototype.
 ACE_HAS_BROKEN_WRITEV                   OS/compiler omits the const from the iovec parameter in the writev() prototype.
 ACE_HAS_BSTRING				Platform has <bstring.h> (which contains bzero() prototype)		
+ACE_HAS_CANCEL_IO			Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond).
 ACE_HAS_CHARPTR_DL			OS/platform uses char * for dlopen/dlsym args, rather than const char *.
 ACE_HAS_CHARPTR_SOCKOPT			OS/platform uses char * for sockopt, rather than const char *
 ACE_HAS_COMPLEX_LOCK			Platform supports non-standard readers/writer locks...

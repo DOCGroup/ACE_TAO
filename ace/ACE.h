@@ -250,9 +250,13 @@ public:
   static int ldfind (const char *filename, 
 		     char *pathname, 
 		     size_t maxlen);
-  // Finds the file <filename> either using absolute path or using
-  // ACE_LD_SEARCH_PATH (e.g., $LD_LIBRARY_PATH on UNIX or $PATH on
-  // Win32).
+  // Finds the file <filename> either using an absolute path or using
+  // a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
+  // $LD_LIBRARY_PATH on UNIX or $PATH on Win32).  This function will
+  // add appropriate suffix (e.g., .dll on Win32 or .so on UNIX)
+  // according to the OS platform.  In addition, if a relative path is
+  // used, this function will prefix the appropriate prefix (e.g.,
+  // "lib" on UNIX and "" on Win32).
 
   static FILE *ldopen (const char *filename, const char *type);
   // Uses <ldopen> to locate and open the appropriate <filename> and

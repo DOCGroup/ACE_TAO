@@ -1,3 +1,30 @@
+Sat Dec 28 19:02:13 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ACE.cpp: Changed the implementation of ldfind() so that it
+ 	  doesn't try to add the DLL prefix (e.g., "lib") unless given a
+ 	  relative pathname.  In other words, we never try to modify the
+ 	  prefix for an absolute pathname.  This is necessary to keep lots
+ 	  of existing svc.conf files from breaking.
+
+	* ace/Event_Handler.h: Added a new ACCEPT_MASK for use with the
+ 	  new asynchronous accept() operation support for Win32.
+
+	* ace: Added a new config file for WinNT 4.0 called
+ 	  config-winnt-4.0-msvc4.x.h.  This file contains #defines for new
+ 	  features in WinNT 4.0 such as non-blocking acquire for
+ 	  CRITICALSECTIONs (TryEnterCriticalSection()),
+ 	  SignalObjectAndWait(), and CancelIO().  Oddly enough, these
+ 	  functions seem to be missing from the MSVC++ 4.2 #include files,
+ 	  so I added them to the config file.
+
+	* ace: Changed the name of config-win32-msvc4.0.h to
+ 	  config-win32-msvc4.x.h since this config file works for MSVC++
+ 	  4.0, 4.1, and 4.2.
+
+	* ace/Proactor: Added a new "cancel_io" method on the Proactor.
+  	  This makes it possible to cancel all I/O that is outstanding on
+ 	  a thread.  Thanks to Tim for help with this.
+
 Sat Dec 28 23:49:09 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/ReactorEx.h: Fixed some bugs with ACE_ReactorEx::dispatch.
@@ -7,12 +34,18 @@ Sat Dec 28 23:49:09 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 	* ace/OS.i: Fixed some typos regarding the ACE_cond_t for NT.
 
 	* examples/Reactor/Proactor/test_proactor.cpp: Dr. Schmidt and I
-	  hacked this to be way cool.  The Peer Handler now uses calls
-	  close_writer on the stream to notify the remote peer when its
-	  done writing.  The Input File Handler sends an mb==0 to tell the
-	  Peer Handler when it's done reading from the file.  The Peer
-	  Handle uses a state variable to OR in all the different
-	  conditions for exiting.  It works.
+	  hacked this to be way cool.  In particular, we no longer
+	  have to know the size of the files to be transferred in
+	  advance.  This scheme uses a clever protocol that shuts down 
+ 	  the Peer Handler when (1) all input from the file has arrived,
+ 	  (2) all output to the remote peer handler has been sent, and (3)
+ 	  all input from the remote peer handler has been received.
+	  The Peer Handler now uses calls close_writer on the stream
+	  to notify the remote peer when its done writing.  The Input
+	  File Handler sends an mb==0 to tell the Peer Handler when
+	  it's done reading from the file.  The Peer Handle uses a
+	  state variable to OR in all the different conditions for
+	  exiting.  It works.
 
 Fri Dec 27 23:39:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
