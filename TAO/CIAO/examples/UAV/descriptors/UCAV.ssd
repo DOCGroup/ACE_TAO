@@ -1,0 +1,43 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+
+<!DOCTYPE softpkg SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/softpkg.dtd">
+
+<!-- UCAV's Servant Software Descriptor  -->
+<!-- This file describes various UCAV servant -->
+<!-- implementations. -->
+
+<softpkg name="BBN_UAV-UCAV-Servant" version="1.0">
+  <pkgtype>CIAO Servant</pkgtype>
+  <title>BBN_UAV::UCAV Servants</title>
+  <author>
+    <company>ISIS at Vanderbilt University</company>
+    <webpage href="http://www.dre.vanderbilt.edu/"/>
+  </author>
+  <description>UCAV test component for BBN_UAV.</description>
+  <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
+  <idl id="IDL:BBN_UAV/UCAV:1.0" homeid="IDL:BBN_UAV/UCAVHome:1.0">
+    <fileinarchive name="UCAV.idl"/>
+  </idl>
+
+  <descriptor type="CORBA Component">
+    <fileinarchive name="UCAV.ccd"/>
+  </descriptor>
+
+  <implementation id="DCE:9c49fa76-a420-4014-ac0f-942e3e1326c8">
+
+    <dependency type="ORB">
+      <name>TAO</name>
+    </dependency>
+
+    <code>
+      <!-- No need to specify extension below since ACE takes care of that, -->
+      <fileinarchive name="UCAV_svnt"/>
+      <entrypoint>createUCAVHome_Servant</entrypoint>
+    </code>
+
+  </implementation>
+
+</softpkg>

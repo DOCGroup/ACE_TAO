@@ -1,0 +1,43 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+
+<!DOCTYPE softpkg SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/softpkg.dtd">
+
+<!-- Battle's Servant Software Descriptor  -->
+<!-- This file describes various Battle servant -->
+<!-- implementations. -->
+
+<softpkg name="BBN_UAV-Battle-Servant" version="1.0">
+  <pkgtype>CIAO Servant</pkgtype>
+  <title>BBN_UAV::Battle Servants</title>
+  <author>
+    <company>ISIS at Vanderbilt University</company>
+    <webpage href="http://www.dre.vanderbilt.edu/"/>
+  </author>
+  <description>Battle test component for BBN_UAV.</description>
+  <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
+  <idl id="IDL:BBN_UAV/Battle:1.0" homeid="IDL:BBN_UAV/BattleHome:1.0">
+    <fileinarchive name="Battle.idl"/>
+  </idl>
+
+  <descriptor type="CORBA Component">
+    <fileinarchive name="Battle.ccd"/>
+  </descriptor>
+
+  <implementation id="DCE:9dcbd41b-02f7-4150-a958-423a6ce740c1">
+
+    <dependency type="ORB">
+      <name>TAO</name>
+    </dependency>
+
+    <code>
+      <!-- No need to specify extension below since ACE takes care of that, -->
+      <fileinarchive name="Battle_svnt"/>
+      <entrypoint>createBattleHome_Servant</entrypoint>
+    </code>
+
+  </implementation>
+
+</softpkg>
