@@ -16,6 +16,9 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.cpp (thr_create): added || ACE_HAS_DCETHREADS to
           #ifndef ACE_LACKS_SETSCHED, so that priority is set with DCETHREADS.
 
+        * ace/OS.cpp (sched_params): moved paren so that DCETHREADS block
+          will be executed even if ACE_LACKS_SETSCHED.
+
         * ace/Sched_Params.cpp ({next,previous)_priority): added
           ACE_HAS_DCETHREADS check before !defined(ACE_LACKS_SETSCHED).
 
