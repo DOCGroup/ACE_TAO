@@ -140,7 +140,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
   this->flows_ [this->flow_count_++] = CORBA::string_dup (flow_name);
   TAO_String_Hash_Key flow_name_key (flow_name);
   if (this->flow_map_.bind (flow_name_key,flow_connection) != 0)
-    TAO_THROW_ENV (AVStreams::noSuchFlow,env);// is this right?
+    TAO_THROW_ENV (new AVStreams::noSuchFlow (),env);// is this right?
 }
 
 // ----------------------------------------------------------------------
@@ -569,7 +569,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,
   // put the flowname and the flowendpoint in a hashtable.
   TAO_String_Hash_Key fep_name_key (flow_name);
   if (this->fep_map_.bind (fep_name_key,the_fep) != 0)
-    TAO_THROW_ENV_RETURN (AVStreams::streamOpFailed,env,0);
+    TAO_THROW_ENV_RETURN (new AVStreams::streamOpFailed (),env,0);
 
   // increment the flow count.
   this->flow_count_++;
@@ -1062,7 +1062,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr the_fdev,
   // put the flowname and the fdev in a hashtable.
   TAO_String_Hash_Key fdev_name_key (flow_name);
   if (this->fdev_map_.bind (fdev_name_key,the_fdev) != 0)
-    TAO_THROW_ENV_RETURN (AVStreams::streamOpFailed,env,0);
+    TAO_THROW_ENV_RETURN (new AVStreams::streamOpFailed (),env,0);
 
   // increment the flow count.
   this->flow_count_++;
