@@ -89,6 +89,8 @@
 #define ACE_LACKS_PWD_REENTRANT_FUNCTIONS 1
 #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS 1
 
+#define ACE_LACKS_UNIX_SIGNALS 1
+
 #define ACE_MT_SAFE 1
                                         /*Compile using multi-thread libraries*/
 #define ACE_NEW_THROWS_EXCEPTIONS 1
@@ -209,6 +211,8 @@
 #define ACE_HAS_SIGWAIT 1
                                         /*Platform/compiler has the
                                         sigwait(2) prototype*/
+#define ACE_HAS_SIGTIMEDWAIT 1
+
 #define ACE_HAS_SIG_C_FUNC 1
                                         /*Compiler requires extern "C"
                                         functions for signals.*/
@@ -240,6 +244,9 @@
 #define ACE_HAS_TEMPLATE_SPECIALIZATION 1
                                         /*Compiler implements template
                                         specialization*/
+
+#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 1
+
 #define ACE_HAS_TEMPLATE_TYPEDEFS 1
                                         /*Compiler implements templates
                                         that support typedefs inside
