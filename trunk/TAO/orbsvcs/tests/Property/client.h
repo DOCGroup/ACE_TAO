@@ -46,52 +46,52 @@ public:
 
   int init (int argc,
             char **argv,
-            CORBA::Environment &env);
+            CORBA::Environment &ACE_TRY_ENV);
   // Initialize the ORB etc, and bind the MMDevices.
 
-  int run (CORBA::Environment &env);
+  int run (CORBA::Environment &ACE_TRY_ENV);
   // Run the client.  This will call StreamCtrl::bind_devs.
 
-  int property_tester (CORBA::Environment &env);
+  int property_tester (CORBA::Environment &ACE_TRY_ENV);
   // Testing  the property service methods.
 
 protected:
   int bind_to_remote_mmdevice (int argc,
                                char *argv[],
-                               CORBA::Environment &env);
+                               CORBA::Environment &ACE_TRY_ENV);
   // Bind to the remote MMDevice.
 
   // = Property Testing.
 
-  int test_define_property (CORBA::Environment &env);
+  int test_define_property (CORBA::Environment &ACE_TRY_ENV);
   // Testing the define property method.
 
-  int test_get_number_of_properties (CORBA::Environment &env);
+  int test_get_number_of_properties (CORBA::Environment &ACE_TRY_ENV);
   // Testing the number of properties, currently in the Property Set.
 
-  int test_get_all_property_names (CORBA::Environment &env);
+  int test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV);
   //Testing get_all_property_names.
 
-  int test_get_property_value (CORBA::Environment &env);
+  int test_get_property_value (CORBA::Environment &ACE_TRY_ENV);
   // Testing get_property_value.
 
-  int test_get_properties (CORBA::Environment &env);
+  int test_get_properties (CORBA::Environment &ACE_TRY_ENV);
   //Testing get_properties.  Give the names and get their properties.
 
-  int test_get_all_properties (CORBA::Environment &env);
+  int test_get_all_properties (CORBA::Environment &ACE_TRY_ENV);
   // Testing get_all_properties.
 
   int test_delete_property (CORBA::String property_name,
-                            CORBA::Environment &env);
+                            CORBA::Environment &ACE_TRY_ENV);
   // Testing delete_property.
 
-  int test_delete_properties (CORBA::Environment &env);
+  int test_delete_properties (CORBA::Environment &ACE_TRY_ENV);
   // Testing delete_properties.
 
-  int test_define_properties (CORBA::Environment &env);
+  int test_define_properties (CORBA::Environment &ACE_TRY_ENV);
   // Defining a sequence of properties.
 
-  int test_define_property_with_mode (CORBA::Environment &env);
+  int test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV);
   // Defines properties with various modes.
 
   TAO_ORB_Manager manager_;
