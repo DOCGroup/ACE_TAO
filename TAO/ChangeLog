@@ -1,3 +1,47 @@
+Sun Dec 29 08:44:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_argument.cpp:
+	* TAO_IDL/be/be_visitor_array.cpp:
+	* TAO_IDL/be/be_visitor_attribute.cpp:
+	* TAO_IDL/be/be_visitor_component.cpp:
+	* TAO_IDL/be/be_visitor_decl.cpp:
+	* TAO_IDL/be/be_visitor_exception.cpp:
+	* TAO_IDL/be/be_visitor_field.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/be/be_visitor_structure.cpp:
+	* TAO_IDL/be/be_visitor_typedef.cpp:
+	* TAO_IDL/be/be_visitor_union.cpp:
+	* TAO_IDL/be/be_visitor_union_branch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd.cpp: #include'd
+	  ace/Log_Msg.h  to all the above files. This helps compilation to
+	  go smooth on AIX. 
+	
+	* TAO_IDL/include/ast_module.h: #include'd ace/Unbounded_Set.h. 
+
+	* tao/Condition.h: #include'd tao/orbconf.h 
+	* tao/FILE_Parser.cpp:
+	* tao/Typecode.cpp: #include'd ace/Malloc_Base.h. 
+
+	  All the above changes help compilation on AIX. Thanks to Jon
+	  Wackley <jonw@mountaincable.net> for providing these patches. 
+	
+	* tao/Muxed_TMS.cpp: 
+	* tao/Muxed_TMS.h: Use recursive mutex instead of a simple
+	  mutex. This prevents deadlock that might occur, when a thread
+	  tries to send a request during reply dispatching.
+
 Sat Dec 28 13:09:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Transport.cpp (recv_i): Changed the recv_i

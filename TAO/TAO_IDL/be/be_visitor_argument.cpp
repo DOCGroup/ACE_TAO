@@ -43,6 +43,7 @@
 #include "be_operation.h"
 #include "be_helper.h"
 #include "utl_identifier.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_argument/arglist.cpp"
 #include "be_visitor_argument/argument.cpp"

@@ -41,6 +41,7 @@
 #include "be_visitor_structure.h"
 #include "be_visitor_union.h"
 #include "be_visitor_context.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_union_branch/private_ch.cpp"
 #include "be_visitor_union_branch/public_assign_cs.cpp"

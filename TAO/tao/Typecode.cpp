@@ -20,6 +20,7 @@
 #include "tao/Principal.h"
 #include "tao/Marshal.h"
 #include "tao/debug.h"
+#include "ace/Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"

@@ -49,6 +49,7 @@
 #include "be_visitor_operation.h"
 #include "be_visitor_argument.h"
 #include "be_visitor_context.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_operation/operation.cpp"
 #include "be_visitor_operation/arglist.cpp"

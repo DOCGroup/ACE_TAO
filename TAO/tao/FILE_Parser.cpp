@@ -7,6 +7,7 @@
 #include "tao/Exception.h"
 #include "tao/Environment.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Malloc_Base.h"
 
 #if !defined(__ACE_INLINE__)
 #include "FILE_Parser.i"
