@@ -1,3 +1,8 @@
+Thu Jun 20 20:29:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Codecs.h (ACE_Base64): Added "friend class ace_dewarn_gplusplus"
+          to silence g++ warnings about private ctors and no friends.
+
 Thu Jun 20 20:21:39 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Recursive_Condition_Test.icc: Visual Age C++ configuration
