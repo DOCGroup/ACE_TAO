@@ -111,7 +111,7 @@ Repository_Test: $(addprefix $(VDIR),$(REPOSITORY_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), Airplane$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), Airplane$(ext)) \
                $(foreach ext, $(IDL_EXT), Nestea$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
