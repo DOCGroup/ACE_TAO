@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 021</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 021</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Pooling your memories</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+	  As you can see, using a memory pool is really rather easy.  The
+	  most difficult part, as always, is with the synch mechanisms.
+	<P>
+	  The other nice thing about ACE_Malloc&lt;> is that you can swap
+	  between System V shared memory and memory mapped files just by
+	  changing the template parameters.  The truly adventurous will
+	  likely find a runtime way of doing this.
+	<p>
+	  
+	<ul>
+	  <li><A HREF="Makefile">Makefile</A>
+	  <li><A HREF="server.cpp">server.cpp</A>
+	  <li><A HREF="client.cpp">client.cpp</A>
+	  <li><A HREF="mpool.h">mpool.h</A>
+	  <li><A HREF="mpool.cpp">mpool.cpp</A>
+	</ul>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>
