@@ -36,7 +36,7 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
   // Create the appropriate-sized object table based on passed
   // arguments.
   TAO_Object_Table *objtable = 0;
-  
+
   switch (this->object_lookup_strategy_)
     {
     case TAO_LINEAR:
@@ -99,7 +99,7 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
       TAO_CHECKANDSET (THR_SUSPENDED);
 #if !defined (ACE_WIN32)
       TAO_CHECKANDSET (THR_DAEMON);
-#endif /* ACE_WIN32 */      
+#endif /* ACE_WIN32 */
       TAO_ENDCHECK;
     }
 }
@@ -108,7 +108,7 @@ int
 TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 {
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  
+
   if (this->parse_args (argc, argv) == 0
       && reactive_strategy_.open (orb_core->reactor ()) == 0
       && threaded_strategy_.open (orb_core->thr_mgr (),
@@ -124,7 +124,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
   int curarg;
-  for (curarg = 0; curarg < argc; )
+  for (curarg = 0; curarg < argc; curarg++)
     {
       if (ACE_OS::strcmp (argv[curarg], "-ORBconcurrency") == 0)
         {
@@ -132,7 +132,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           if (curarg < argc)
             {
               char *name = argv[curarg];
-              
+
               if (ACE_OS::strcasecmp (name, "reactive") == 0)
                 this->concurrency_strategy_ = &reactive_strategy_;
               else if (ACE_OS::strcasecmp (name, "thread-per-connection") == 0)
@@ -171,7 +171,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
       else if (ACE_OS::strcmp (argv[curarg], "-ORBthreadflags") == 0)
         {
           curarg++;
-          
+
           if (curarg < argc)
             {
               this->tokenize (argv[curarg]);
@@ -179,7 +179,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             }
         }
     }
-  
+
   return 0;
 }
 
@@ -192,4 +192,3 @@ template class ACE_Thread_Strategy<TAO_OA_Connection_Handler>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_SVC_FACTORY_DEFINE (TAO_Default_Server_Strategy_Factory)
-
