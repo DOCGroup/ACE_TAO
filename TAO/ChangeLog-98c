@@ -1,3 +1,7 @@
+Thu Dec 25 20:36:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.49, released Thu Dec 25 20:36:58 1997.
+
 Thu Dec 25 18:43:03 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_state_attribute, be_state_argument}.cpp: Handled
