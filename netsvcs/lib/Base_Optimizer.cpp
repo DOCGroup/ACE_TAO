@@ -4,6 +4,9 @@
 
 #include "Base_Optimizer.h"
 
+#if !define (BASE_OPTIMIZER_CPP)
+#define BASE_OPTIMIZER_CPP
+
 template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (void)
 {
@@ -23,3 +26,4 @@ Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base)
 {
 }
 
+#endif /* BASE_OPTIMIZER_CPP */
