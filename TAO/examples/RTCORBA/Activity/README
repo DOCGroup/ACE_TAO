@@ -41,6 +41,12 @@ Lanes - 2 Lanes with Lane values as follows -
 	Lane 1 : priority = 10, 1 static thread, 0 dynamic threads
 	Lane 2 : priority = 80, 1 static thread, 0 dynamic threads
 
+You can specify options for creating POA, Job and Task as shown below. Please note that you must specify the number of POA, Job or Task via the following options at the beginning of the conf. file:
+
+-POACount [count]
+-TaskCount [count]
+-JobCount [count]
+
 Job Options
 ===========
 The format for specify a Job is:
