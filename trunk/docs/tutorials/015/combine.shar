@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
+# Made on 2000-04-09 01:31 EDT by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -83,7 +83,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh32712; then
+if mkdir _sh16810; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -110,7 +110,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 03191459100 'hdr' &&
+  $shar_touch -am 04090120100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -245,7 +245,7 @@ derivative of the ACE_Task) which will then process it.
 <P>
 The implementation of this Protocol Stream model is done using the
 ACE_Module class. The module for Xmit/Recv is shoved in first
-into the stream, followed by the compression and encryption modules. The
+into the stream, followed by the encryption and compression modules. The
 optional Reader if defined is bundled with a dummy task
 (ACE_Thru_Task class) into a module. The get() and put() methods do
 the job of reading and writing to the Stream. Each module is made up
@@ -278,14 +278,14 @@ etc.)
 X        compression objects.  I'll leave that as a thought
 X        exercise!</font>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page01.pre' &&
+  $shar_touch -am 04090120100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-b3ff2b28d9ceb96e6393ff64c131e743  page01.pre
+693002c5a94ef0d514f8b6c4bf2ea36e  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
@@ -305,7 +305,7 @@ X      delegate the tricky stuff to another object.
 X
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page02.pre' &&
+  $shar_touch -am 04090120100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -333,7 +333,7 @@ X      Note the Protocol_Stream member that will take care of
 X      converting and sending/receiving the data.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page03.pre' &&
+  $shar_touch -am 04090120100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -359,7 +359,7 @@ X      really does any work.  The other methods simply delegate their
 X      function to the Protocol_Stream.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page04.pre' &&
+  $shar_touch -am 04090120100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -388,7 +388,7 @@ simplification.
 <HR>
 X
 SHAR_EOF
-  $shar_touch -am 03191459100 'page05.pre' &&
+  $shar_touch -am 04090120100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -419,7 +419,7 @@ only be one Server instance but since you can't provide a TCP/IP port,
 that's probably a valid assumption!
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page06.pre' &&
+  $shar_touch -am 04090120100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -448,7 +448,7 @@ application when you take this sort of approach.
 <HR>
 X
 SHAR_EOF
-  $shar_touch -am 03191459100 'page07.pre' &&
+  $shar_touch -am 04090120100 'page07.pre' &&
   chmod 0664 'page07.pre' ||
   $echo 'restore of' 'page07.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -480,7 +480,7 @@ collect data from the peer and pass it along to another object for
 processing.  Again, keep it simple and delegate authority.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page08.pre' &&
+  $shar_touch -am 04090120100 'page08.pre' &&
   chmod 0664 'page08.pre' ||
   $echo 'restore of' 'page08.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -513,7 +513,7 @@ Handler_Task::recv() where we'll process it as required by our
 application logic.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page09.pre' &&
+  $shar_touch -am 04090120100 'page09.pre' &&
   chmod 0664 'page09.pre' ||
   $echo 'restore of' 'page09.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -557,7 +557,7 @@ going on here.
 <P><center><img src="stream.gif"></center></p>
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page10.pre' &&
+  $shar_touch -am 04090120100 'page10.pre' &&
   chmod 0664 'page10.pre' ||
   $echo 'restore of' 'page10.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -585,7 +585,7 @@ set of protocol objects that will manipulate the data.  Our primary
 concern in this file is to get everything in the correct order!
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page11.pre' &&
+  $shar_touch -am 04090120100 'page11.pre' &&
   chmod 0664 'page11.pre' ||
   $echo 'restore of' 'page11.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -609,7 +609,7 @@ else
 A quick look at the Protocol_Task header...
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page12.pre' &&
+  $shar_touch -am 04090120100 'page12.pre' &&
   chmod 0664 'page12.pre' ||
   $echo 'restore of' 'page12.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -637,7 +637,7 @@ ACE_Task<> derivatives look very similar in the four basic methods and
 only need one or two additional to do any real work.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page13.pre' &&
+  $shar_touch -am 04090120100 'page13.pre' &&
   chmod 0664 'page13.pre' ||
   $echo 'restore of' 'page13.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -669,7 +669,7 @@ interact if you're going to ensure a safe transit.  By having a single
 object it's easier to coordinate and maintain the interaction.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page14.pre' &&
+  $shar_touch -am 04090120100 'page14.pre' &&
   chmod 0664 'page14.pre' ||
   $echo 'restore of' 'page14.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -707,7 +707,7 @@ processes which typically work better with blocks of data instead of
 streams of data.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page15.pre' &&
+  $shar_touch -am 04090120100 'page15.pre' &&
   chmod 0664 'page15.pre' ||
   $echo 'restore of' 'page15.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -742,7 +742,7 @@ earlier, that data will eventually show up either in the <i>reader</i>
 message queue.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page16.pre' &&
+  $shar_touch -am 04090120100 'page16.pre' &&
   chmod 0664 'page16.pre' ||
   $echo 'restore of' 'page16.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -769,7 +769,7 @@ manage the lifetime of the tickler but other than that it's pretty
 basic stuff.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page17.pre' &&
+  $shar_touch -am 04090120100 'page17.pre' &&
   chmod 0664 'page17.pre' ||
   $echo 'restore of' 'page17.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -798,7 +798,7 @@ stuff though and if anyone wants to integrate one of them into the
 tutorial I'll be glad to take it!
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page18.pre' &&
+  $shar_touch -am 04090120100 'page18.pre' &&
   chmod 0664 'page18.pre' ||
   $echo 'restore of' 'page18.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -825,7 +825,7 @@ of implementation details.  Splitting Xmit/Recv like I did will make
 things more difficult if something has to change in their interaction.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page19.pre' &&
+  $shar_touch -am 04090120100 'page19.pre' &&
   chmod 0664 'page19.pre' ||
   $echo 'restore of' 'page19.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -855,7 +855,7 @@ show you the hooks and entry points and let someone else contribute an
 encryptor.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page20.pre' &&
+  $shar_touch -am 04090120100 'page20.pre' &&
   chmod 0664 'page20.pre' ||
   $echo 'restore of' 'page20.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -881,7 +881,7 @@ compressor.  Still, the hooks are there for you to insert your
 favorite library.
 <HR>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page21.pre' &&
+  $shar_touch -am 04090120100 'page21.pre' &&
   chmod 0664 'page21.pre' ||
   $echo 'restore of' 'page21.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -969,7 +969,7 @@ Here's the complete file list:
 <LI><A HREF="Crypt.h">Crypt.h</A>
 </UL>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page22.pre' &&
+  $shar_touch -am 04090120100 'page22.pre' &&
   chmod 0664 'page22.pre' ||
   $echo 'restore of' 'page22.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -1005,7 +1005,7 @@ For a quick look back:
 <P>
 Now we'll move on and examine the server counter-part of our client.
 SHAR_EOF
-  $shar_touch -am 03191459100 'page04.pst' &&
+  $shar_touch -am 04090120100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -1044,7 +1044,7 @@ X
 </UL>
 <P>
 SHAR_EOF
-  $shar_touch -am 03191459100 'page09.pst' &&
+  $shar_touch -am 04090120100 'page09.pst' &&
   chmod 0664 'page09.pst' ||
   $echo 'restore of' 'page09.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -1059,5 +1059,5 @@ SHAR_EOF
     $echo 'page09.pst:' 'original size' '616,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh32712
+rm -fr _sh16810
 exit 0

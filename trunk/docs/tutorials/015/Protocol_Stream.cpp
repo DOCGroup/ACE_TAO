@@ -97,21 +97,11 @@ Protocol_Stream::open (ACE_SOCK_Stream &peer,
 }
 
 /* Add the necessary protocol objects to the stream.  The way we're
-   pushing things on we will encrypt the data before compressing it.
+   pushing things on we will compress the data before encrypting it.
 */
 int
 Protocol_Stream::open (void)
 {
-#if defined (ENABLE_COMPRESSION)
-  if (stream ().push (new Module ("compress",
-                                  new Compressor (),
-                                  new Compressor ())) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "stream().push(comprssor)"),
-                      -1);
-#endif /* ENABLE_COMPRESSION */
-
 #if defined (ENABLE_ENCRYPTION)
   if (stream ().push (new Module ("crypt",
                                   new Crypt (),
@@ -121,6 +111,16 @@ Protocol_Stream::open (void)
                        "stream().push(crypt)"),
                       -1);
 #endif /* ENABLE_ENCRYPTION */
+
+#if defined (ENABLE_COMPRESSION)
+  if (stream ().push (new Module ("compress",
+                                  new Compressor (),
+                                  new Compressor ())) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "stream().push(comprssor)"),
+                      -1);
+#endif /* ENABLE_COMPRESSION */
   return 0;
 }
 
