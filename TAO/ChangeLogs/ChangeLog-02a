@@ -11,8 +11,7 @@ Thu Sep 13 11:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  When creating an IIOP Endpoint, passed in the value of the
 	  ORBDottedDecimal address value from the ORB_Core. This is a real
 	  stupid mistake :(. Added a debug statement. Thanks to Werner
-	  Buchert <w.buchert@medat.de> [Name and Mail to be confirmed] for 
-	  reporting this problem. 
+	  Buchert <w.buchert@medat.de> for reporting this problem. 
 
 Wed Sep 12 17:05:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
