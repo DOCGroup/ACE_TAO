@@ -10436,6 +10436,5 @@ ACE_OS::qsort (void *base,
   ACE_UNUSED_ARG (nel);
   ACE_UNUSED_ARG (width);
   ACE_UNUSED_ARG (compar);
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_QSORT */
 }
