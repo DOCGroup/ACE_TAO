@@ -101,8 +101,15 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
       // Continue until each element is visited
       while (!si->is_done ())
         {
-          be_argument *bd = be_argument::narrow_from_decl (si->item ());
-          if (bd && (bd->direction () != AST_Argument::dir_OUT))
+          be_argument *bd =
+            be_argument::narrow_from_decl (si->item ());
+
+          // We do not generate insertion operators for valuetypes
+          // yet.  Do not include them in the count.
+          be_valuetype *vt =
+            be_valuetype::narrow_from_decl (bd->field_type ());
+
+          if (bd && (bd->direction () != AST_Argument::dir_OUT) && !vt)
             count++;
 
           si->next ();

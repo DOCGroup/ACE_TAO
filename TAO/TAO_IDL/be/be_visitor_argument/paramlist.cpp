@@ -85,6 +85,11 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
     {
       be_valuetype *vt = be_valuetype::narrow_from_decl (node->field_type ());
 
+      // @@ NOTE: If this check is removed, and insertion operators
+      //          for valuetypes are implemented, don't forget to also
+      //          remove the same valuetype check in
+      //          be_visitor_operation::count_non_out_parameters().
+
       // If it is a valuetype just return.
       if (vt)
         {
