@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -69,7 +69,7 @@ be_visitor_sequence_base::visit_node (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      if (this->ctx_->sub_state () 
+      if (this->ctx_->sub_state ()
             == TAO_CodeGen::TAO_ARRAY_SEQ_CH_TEMPLATE_VAR)
         {
           *os << bt->nested_type_name (this->ctx_->scope (), "_var");
@@ -96,7 +96,7 @@ be_visitor_sequence_base::visit_sequence (be_sequence *node)
 int
 be_visitor_sequence_base::visit_interface (be_interface *node)
 {
-  
+
   return this->visit_node (node);
 
 }
@@ -163,6 +163,21 @@ be_visitor_sequence_base::visit_typedef (be_typedef *node)
   return 0;
 }
 
+#if defined(IDL_HAS_VALUETYPE)
+
+int
+be_visitor_sequence_base::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_base::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_node (node);
+}
+#endif /*IDL_HAS_VALUETYPE*/
+
 
 be_visitor_sequence_base_template_args::
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
@@ -206,7 +221,7 @@ be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
       *os << bt->name () << "_var";
     }
 
-  return 0;      
+  return 0;
 }
 
 int
@@ -237,7 +252,7 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
       *os << bt->name () << "_var";
     }
 
-  return 0;      
+  return 0;
 }
 
 int
@@ -248,11 +263,11 @@ be_visitor_sequence_base_template_args::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
   *os << node->name ();
 
-  if (beseq_->managed_type () == be_sequence::MNG_PSEUDO 
+  if (beseq_->managed_type () == be_sequence::MNG_PSEUDO
       || beseq_->managed_type () == be_sequence::MNG_OBJREF)
     {
       *os << "," << node->name () << "_var";
     }
-      
+
   return 0;
 }
