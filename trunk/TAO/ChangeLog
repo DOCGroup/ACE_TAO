@@ -1,3 +1,7 @@
+Sat Oct 18 17:02:49 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* TAOACE.dsw: Added RTCosScheduling.dsp.
+
 Sat Oct 18 16:53:10 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling.dsp: Modified include and
