@@ -52,8 +52,7 @@ sub translate_value {
 
     ## Only write dependencies for non-static projects
     ## and static exe projects
-    my($wt) = $self->get_writing_type();
-    if ($wt == 0 || $self->exe_target()) {
+    if ($self->get_writing_type() == 0 || $self->exe_target()) {
       foreach my $entry (@$arr) {
         $val .= "\"$entry\" ";
       }

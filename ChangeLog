@@ -1,84 +1,102 @@
+Tue Nov  4 06:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+
+          Remove an unnecessary intermediate variable.
+
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+        * bin/MakeProjectCreator/templates/vc7lib.mpt:
+        * bin/MakeProjectCreator/templates/vc7libexe.mpt:
+
+          Split static projects from dyanmic projects ala VC6.  When one VC7
+          static library project depends on another, they are linked
+          together as the second one is built.  This causes the contents of
+          each library to grow tremendously.  Splitting the projects allows
+          us to omit the project dependencies for static libraries.
+
 Tue Nov  4 01:03:56 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac (AC_PREREQ):
+        * configure.ac (AC_PREREQ):
 
-	  Fixed typo in copyright statement.
+          Fixed typo in copyright statement.
 
-	  Bumped autoconf prerequisite to version 2.57g.  Function tests
-	  in versions prior to that did not function properly on HP-UX.
+          Bumped autoconf prerequisite to version 2.57g.  Function tests
+          in versions prior to that did not function properly on HP-UX.
 
-	  (AC_CONFIG_AUX_DIR):
+          (AC_CONFIG_AUX_DIR):
 
-	  Call this Autoconf macro with an "aux" argument.  This causes
-	  all autotool related scripts to be placed in to the `aux'
-	  directory.  Addresses a problem with some versions of libtoolize
-	  where an empty auxiliary directory name is assumed instead of
-	  the well defined defaults.  This change also happens to remove
-	  some of the clutter in the top-level directory.
+          Call this Autoconf macro with an "aux" argument.  This causes
+          all autotool related scripts to be placed in to the `aux'
+          directory.  Addresses a problem with some versions of libtoolize
+          where an empty auxiliary directory name is assumed instead of
+          the well defined defaults.  This change also happens to remove
+          some of the clutter in the top-level directory.
 
-	  (AC_CONFIG_MACRO_DIR):
+          (AC_CONFIG_MACRO_DIR):
 
-	  Call this Autoconf macro with a "m4" argument to inform
-	  autotools that recognize this macro where the ACE Autconf/M4
-	  macros are located.
+          Call this Autoconf macro with a "m4" argument to inform
+          autotools that recognize this macro where the ACE Autconf/M4
+          macros are located.
 
-	* bin/bootstrap:
+        * bin/bootstrap:
 
-	  Replaced manual calls to aclocal, autoheader, autoconf, automake
-	  and libtoolize with a single call to `autoreconf'.  The latter
-	  is a bit smarter about bootstrapping autoconfiscated
-	  workspaces, and also allows us to simplify this bootstrap
-	  script.
+          Replaced manual calls to aclocal, autoheader, autoconf, automake
+          and libtoolize with a single call to `autoreconf'.  The latter
+          is a bit smarter about bootstrapping autoconfiscated
+          workspaces, and also allows us to simplify this bootstrap
+          script.
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Started converting all Bourne shell "if" blocks to Autoconf
-	  "AS_IF" blocks.  The latter provides improved portability.
+          Started converting all Bourne shell "if" blocks to Autoconf
+          "AS_IF" blocks.  The latter provides improved portability.
 
-	* m4/acinclude.m4:
-	* m4/compiler.m4:
-	* m4/features.m4:
-	* m4/subsets.m4:
+        * m4/acinclude.m4:
+        * m4/compiler.m4:
+        * m4/features.m4:
+        * m4/subsets.m4:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* m4/config_h.m4 (AH_TOP):
+        * m4/config_h.m4 (AH_TOP):
 
-	  Removed "-*- C++ -*-" Emacs mode comment.  It had no effect
-	  since it wasn't in the first few lines of the generated
-	  `config.h' file.
+          Removed "-*- C++ -*-" Emacs mode comment.  It had no effect
+          since it wasn't in the first few lines of the generated
+          `config.h' file.
 
-	  (AH_BOTTOM):
+          (AH_BOTTOM):
 
-	  Define Emacs mode at the bottom of the generated `config.h' file
-	  using the canonical Emacs "Local Variables" block.  The
-	  generated `config.h' file is now correctly interpreted as a C++
-	  header when opened in Emacs.
+          Define Emacs mode at the bottom of the generated `config.h' file
+          using the canonical Emacs "Local Variables" block.  The
+          generated `config.h' file is now correctly interpreted as a C++
+          header when opened in Emacs.
 
 
-	* m4/threads.m4:
+        * m4/threads.m4:
 
-	  Started converting all Bourne shell "if" blocks to Autoconf
-	  "AS_IF" blocks.  The latter provides improved portability.
+          Started converting all Bourne shell "if" blocks to Autoconf
+          "AS_IF" blocks.  The latter provides improved portability.
 
-	  Refactored common POSIX threads detection code to an autoconf
-	  macro.
+          Refactored common POSIX threads detection code to an autoconf
+          macro.
 
-	  Replaced brittle POSIX thread code that checked for backward
-	  compatibility macros.  Use a run/link-time test instead.  This
-	  allows us to avoid determining what the real pthread_create()
-	  function is called.  This should fix a Pthread detection problem
-	  that occurred on HP-UX.
+          Replaced brittle POSIX thread code that checked for backward
+          compatibility macros.  Use a run/link-time test instead.  This
+          allows us to avoid determining what the real pthread_create()
+          function is called.  This should fix a Pthread detection problem
+          that occurred on HP-UX.
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Updated source lists with latest set of source filenames.
+          Updated source lists with latest set of source filenames.
 
-	* apps/gperf/mdate-sh:
-	* apps/gperf/texinfo.tex:
+        * apps/gperf/mdate-sh:
+        * apps/gperf/texinfo.tex:
 
-	  Removed these files.  They are automatically added when
-	  bootstrapping an "autoconfiscated" workspace.
+          Removed these files.  They are automatically added when
+          bootstrapping an "autoconfiscated" workspace.
 
 Wed Nov  4 08:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -172,29 +190,29 @@ Tue Nov  4 04:55:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Nov  3 22:11:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-sunos5.5.h: Added a note about SunCC 5.0.
+        * ace/config-sunos5.5.h: Added a note about SunCC 5.0.
 
 Mon Nov  3 20:35:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-sunos5.5.h:
+        * ace/config-sunos5.5.h:
 
-	  Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION, since
-	  CC 5.3 seems to be doing the right thing for class member
-	  specializations. We will soon check things out on other
-	  compilers.
+          Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION, since
+          CC 5.3 seems to be doing the right thing for class member
+          specializations. We will soon check things out on other
+          compilers.
 
 Mon Nov  3 19:38:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-all.h:
+        * ace/config-all.h:
 
-	  Added a new #define, ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-	  which defines template <>  for definitions of member functions
-	  of a class that is specialized.
+          Added a new #define, ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+          which defines template <>  for definitions of member functions
+          of a class that is specialized.
 
-	* ace/config-g++-common.h:
+        * ace/config-g++-common.h:
 
           Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION, since
-	  g++ is doing the right thing for class member specializations.
+          g++ is doing the right thing for class member specializations.
 
 Mon Nov  3 17:02:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -274,11 +292,11 @@ Mon Nov  3 04:43:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Nov  3 04:12:12 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_freebsd.GNU:
-	  Overhaul the OS version tests so that they actually work.
-	  The "-pthread" gcc flag was recently deprecated in FreeBSD's gcc, so
-	  use the correct pthread flags for gcc, based on the OS version.
-	  Inspired by similar tests in /usr/ports/Mk/bsd.port.mk
+        * include/makeinclude/platform_freebsd.GNU:
+          Overhaul the OS version tests so that they actually work.
+          The "-pthread" gcc flag was recently deprecated in FreeBSD's gcc, so
+          use the correct pthread flags for gcc, based on the OS version.
+          Inspired by similar tests in /usr/ports/Mk/bsd.port.mk
 
 Mon Nov  3 03:04:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
