@@ -559,22 +559,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
               // that contained this parameter, The
               // application should use the appropriate >>=
               // operator to retrieve the value
-
-              char *begin = call.inp_stream ().rd_ptr ();
-              CORBA::Any *any = result->value ();
-              CORBA::TypeCode::traverse_status retval = 
-                call.inp_stream ().skip (any->type_, 
-                                         ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                {
-                  char *end = call.inp_stream ().rd_ptr ();
-                  any->cdr_ = new ACE_Message_Block (begin, 
-                                                     end - begin);
-                  any->cdr_->wr_ptr (end - begin);
-                }
-#if 0
               char *begin, *end;
               TAO_InputCDR temp (call.inp_stream ());
               CORBA::TypeCode::traverse_status retval;
@@ -588,7 +572,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                 {
                   end = temp.rd_ptr ();
-                  any->cdr_ = new ACE_Message_Block (begin, end - begin);
+                  any->cdr_ = new ACE_Message_Block (end - begin);
                   any->cdr_->wr_ptr (end - begin);
                   TAO_OutputCDR out (any->cdr_);
                   retval = out.append (any->type_,
@@ -601,7 +585,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
                       any->any_owns_data_ = 0;
                     }
                 }
-#endif
             }
           else
             {
