@@ -1,3 +1,112 @@
+Fri Jun 28 09:03:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+	  Finished support for forward declared valuetypes not defined
+	  in the same IDL file.
+
+	  Changed the behavior when dealing with assignment of literals
+	  to constants. CORBA 2.6 and earlier state that each subexpression
+	  in a literal must be within the range of the assigned type.
+	  However, the OMG has realized that this may pose a problem if
+	  a compiler must check every possible grouping of subexpressions,
+	  so open issue #1189 addresses this problem. Thanks to Jon Biggar
+	  <jon@floorboard.com>, I have it good authority that the issue
+	  will soon be resolved in favor or relaxing the rule, to state
+	  that only the value of the entire expression must be within the
+	  range of the assigned type. So the IDL compiler has bee modified
+	  to comply with the relaxed rule.
+
+	  Added checks to valuetypes and components to check for
+	  redefinition clashes of operations or attributes between class
+	  members and parent members, class members and supported 
+	  interface members, parent members and supported interface
+	  members, two parent members and two supported interface members.
+
+	  Fixed several bugs:
+
+	  - Defining an enum inside a union [BUGID:568]
+
+	  - Assigning an enum value of one type to an enum constant of
+	    another type.
+
+	  - Handling a set of strings as a string literal, for example
+	    const string hello = "hel" "lo";
+
+	  - Finding a redefinition clash between operations or attributes
+            of two parents of an interface.
+
+	  - Adding to the referenced list of a scope the top-level
+	    component of a scoped type name that is introduced into
+	    that scope.
+
+	  - Expanding the 'potential' scope of a type declaration until
+	    a module or global containing scope is reached 
+	    (CORBA 2.6 3.5.13).
+
+        * TAO_IDL/be/be_visitor_root/root_is.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+        * TAO_IDL/be/be_visitor_module/module_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ih.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_is.h:
+        * TAO_IDL/be_include/be_visitor_module/module_ih.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_ih.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_is.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ih.h:
+
+	  Cosmetic changes.
+
 Thu Jun 20 18:48:28 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp (set_name):
