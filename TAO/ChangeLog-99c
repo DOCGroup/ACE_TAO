@@ -1,3 +1,21 @@
+Sat Mar 20 01:34:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Timeprobe.h:
+	* tao/CDR.cpp:
+	* tao/Connect.cpp:
+	* tao/GIOP.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/Invocation.cpp:
+	* tao/Operation_Table.cpp:
+	* tao/ORB.cpp:
+	* tao/POA.cpp:
+	* tao/Servant_Base.cpp:
+	* tao/Server_Request.cpp:
+	* tao/Stub.cpp:
+	  Renamed the timeprobe macros that are pertinent to
+	  the pluggable protocols test and added a macro to
+	  Timeprobe.h that turns off all the others.
+
 Fri Mar 19 22:04:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/decode.cpp (decode): 
