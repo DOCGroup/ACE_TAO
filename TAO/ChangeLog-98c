@@ -1,3 +1,8 @@
+Sun Nov 16 16:52:47 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Fixed some formatting
+ 	problems dealing with the precision of the output.
+
 Sun Nov 16 14:48:00 1997    <nw1@COYOTE>
 
 	* test/Cubit/TAO/IDL_Cubit/{server,client}.dsp: Updated library
