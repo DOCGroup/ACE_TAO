@@ -78,3 +78,11 @@ ifeq ($(PACE_SYSNAME),Linux)
   emulation=1
   CFLAGS += -DPACE_LINUX=$(PACE_SYSVER)
 endif
+
+ifeq ($(debug),)
+  ifeq (,$(findstring $(CFLAGS),$(CCFLAGS)))
+    CCFLAGS += -DPACE_NDEBUG
+  else
+    CFLAGS  += -DPACE_NDEBUG
+  endif
+endif # debug
