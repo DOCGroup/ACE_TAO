@@ -12,71 +12,69 @@ ACE_Message_Block::data_block (void) const
 
 ACE_INLINE char *
 ACE_Data_Block::base (void) const
-{ 
+{
   ACE_TRACE ("ACE_Data_Block::base");
   return this->base_;
 }
 
 ACE_INLINE size_t
 ACE_Data_Block::size (void) const
-{ 
+{
   ACE_TRACE ("ACE_Data_Block::size");
   return this->cur_size_;
 }
 
-#if 0
 ACE_INLINE void
-ACE_Data_Block::base (char *msg_data, 
-		      size_t msg_length, 
-		      Message_Flags msg_flags)
+ACE_Data_Block::base (char *msg_data,
+		      size_t msg_length,
+		      ACE_Message_Block::Message_Flags msg_flags)
 {
   this->max_size_ = msg_length;
   this->cur_size_ = msg_length;
   this->base_ = msg_data;
   this->flags_ = msg_flags;
 }
-#endif /* 0 */
 
-ACE_INLINE ACE_Message_Block::Message_Flags 
+ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Data_Block::set_flags (ACE_Message_Block::Message_Flags more_flags)
-{						
+{
   ACE_TRACE ("ACE_Data_Block::set_flags");
   // Later we might mask more_glags so that user can't change internal
   // ones: more_flags &= ~(USER_FLAGS -1).
   return ACE_SET_BITS (this->flags_, more_flags);
 }
 
-ACE_INLINE ACE_Message_Block::Message_Flags 
+ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Data_Block::clr_flags (ACE_Message_Block::Message_Flags less_flags)
-{						
+{
   ACE_TRACE ("ACE_Data_Block::clr_flags");
   // Later we might mask more_flags so that user can't change internal
   // ones: less_flags &= ~(USER_FLAGS -1).
   return ACE_CLR_BITS (this->flags_, less_flags);
 }
 
-ACE_INLINE ACE_Message_Block::Message_Flags 
+ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Data_Block::flags (void) const
 {
   ACE_TRACE ("ACE_Data_Block::flags");
    return this->flags_;
 }
 
-ACE_INLINE ACE_Message_Block::Message_Flags 
+ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::set_flags (ACE_Message_Block::Message_Flags more_flags)
-{						
+{
   ACE_TRACE ("ACE_Message_Block::set_flags");
   return this->data_block ()->set_flags (more_flags);
 }
 
-ACE_INLINE ACE_Message_Block::Message_Flags 
+ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::clr_flags (ACE_Message_Block::Message_Flags less_flags)
-{						
+{
   ACE_TRACE ("ACE_Message_Block::clr_flags");
   return this->data_block ()->clr_flags (less_flags);
 }
 
-ACE_INLINE ACE_Message_Block::Message_Flags 
+ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::flags (void) const
 {
   ACE_TRACE ("ACE_Message_Block::flags");
@@ -186,8 +184,8 @@ ACE_Message_Block::base (void) const
 
 #if 0
 ACE_INLINE void
-ACE_Message_Block::base (char *msg_data, 
-			 size_t msg_length, 
+ACE_Message_Block::base (char *msg_data,
+			 size_t msg_length,
 			 Message_Flags msg_flags)
 {
   ACE_TRACE ("ACE_Message_Block::base");
@@ -256,7 +254,7 @@ ACE_Message_Block::wr_ptr (size_t n)
   this->wr_ptr_ += n;
 }
 
-ACE_INLINE void		
+ACE_INLINE void
 ACE_Message_Block::cont (ACE_Message_Block *cont_msg)
 {
   ACE_TRACE ("ACE_Message_Block::cont");
@@ -270,8 +268,8 @@ ACE_Message_Block::cont (void) const
   return this->cont_;
 }
 
-ACE_INLINE void		
-ACE_Message_Block::next (ACE_Message_Block *next_msg) 
+ACE_INLINE void
+ACE_Message_Block::next (ACE_Message_Block *next_msg)
 {
   ACE_TRACE ("ACE_Message_Block::next");
   this->next_ = next_msg;
@@ -284,8 +282,8 @@ ACE_Message_Block::next (void) const
   return this->next_;
 }
 
-ACE_INLINE void		
-ACE_Message_Block::prev (ACE_Message_Block *next_msg) 
+ACE_INLINE void
+ACE_Message_Block::prev (ACE_Message_Block *next_msg)
 {
   ACE_TRACE ("ACE_Message_Block::prev");
   this->prev_ = next_msg;
@@ -299,7 +297,7 @@ ACE_Message_Block::prev (void) const
 }
 
 ACE_INLINE ACE_Lock *
-ACE_Data_Block::locking_strategy (void) 
+ACE_Data_Block::locking_strategy (void)
 {
   ACE_TRACE ("ACE_Data_Block::locking_strategy");
   return this->locking_strategy_;
@@ -322,7 +320,7 @@ ACE_Data_Block::reference_count (void) const
 }
 
 ACE_INLINE ACE_Lock *
-ACE_Message_Block::locking_strategy (void) 
+ACE_Message_Block::locking_strategy (void)
 {
   ACE_TRACE ("ACE_Message_Block::locking_strategy");
   return this->data_block ()->locking_strategy ();
@@ -336,5 +334,3 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
   this->data_block ()->locking_strategy (nls);
   return ols;
 }
-
-
