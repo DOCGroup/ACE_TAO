@@ -230,11 +230,13 @@ public:
 
   virtual CORBA::Boolean next_n (CORBA::ULong how_many,
                                  ImplementationRepository::ServerInformationList_out server_list,
-                                 CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+                                 CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
+     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the next list of up to <how_many> servers.  If empty, will return
   // false.
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys the iterator.
 
 private:
