@@ -142,7 +142,9 @@ read_IOR_from_file (void)
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV 
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, 
@@ -230,9 +232,11 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Error!");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Error!");
+      return -1;
     }
   ACE_ENDTRY;  
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
