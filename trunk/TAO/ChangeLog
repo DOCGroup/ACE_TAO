@@ -1,3 +1,22 @@
+Fri Aug 16 09:43:03 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+
+	  Removed unused "monitor_ior_file" variable.  Fixes a
+	  compile-time warning. 
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  Fixed an "unreachable code" warning.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp (get_dscp_codepoint):
+
+	  Do not print exception if debugging output is not enabled.
+	  Libraries should not print debugging information unless
+	  configured to do so.
+
+	  Fixed "statement is unreachable" warning.
+
 Fri Aug 16 09:12:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.h (TAO_POA_Hooks):

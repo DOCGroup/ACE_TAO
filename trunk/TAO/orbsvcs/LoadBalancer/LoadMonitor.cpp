@@ -17,7 +17,6 @@ static const char * location_kind = 0;
 static const char * mtype = "CPU";
 static const char * mstyle = "PUSH";
 static const char * custom_monitor_ior = 0;
-static const char * monitor_ior_file = "monitor.ior";
 static long push_interval = 15;
 
 void
@@ -44,7 +43,7 @@ parse_args (int argc,
             ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:o:h"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
   int c = 0;
   const char * s;
@@ -55,10 +54,6 @@ parse_args (int argc,
         {
         case 'm':
           ::custom_monitor_ior = get_opts.opt_arg ();
-          break;
-
-        case 'o':
-          ::monitor_ior_file = get_opts.opt_arg ();
           break;
 
         case 'l':
