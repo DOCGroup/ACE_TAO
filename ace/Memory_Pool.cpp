@@ -321,6 +321,8 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 			   siginfo->si_addr), -1);
       return 0;
     }
+#else
+	ACE_UNUSED_ARG(siginfo);
 #endif /* ACE_HAS_SIGINFO_T && !defined ACE_LACKS_SI_ADDR */
   // This is total desperation since we don't know what the faulting
   // address is in this case!  

@@ -278,7 +278,7 @@ const char *
 ACE::basename (const char *pathname, char delim)
 {
   ACE_TRACE ("ACE::basename");
-  const char *temp = ACE_OS::strrchr (pathname, delim);
+  const char *temp = ::strrchr (pathname, delim);
     
   if (temp == 0)
     return pathname;
