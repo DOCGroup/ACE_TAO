@@ -23,7 +23,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::resize (const size_t new_size,
 {
   ACE_Array<T>::size (new_size);
   if (new_size > length_)
-    for (size_t i = length_ - 1; i < new_size; ++i)
+    for (size_t i = length_; i < new_size; ++i)
       (*this)[i]=t;
 
   curr_max_size_ = this->max_size ();

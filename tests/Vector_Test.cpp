@@ -28,6 +28,7 @@ typedef ACE_Vector<DATA>::Iterator ITERATOR;
 
 const size_t TOP = 100;
 const size_t LEFT = 10;
+const size_t RESIZE = 20;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -56,7 +57,33 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 	      vector.size ()));
 
   for (i = 0; i < LEFT; ++i)
-    ACE_ASSERT (vector[i] == i);
+    {
+      ACE_ASSERT (vector[i] == i);
+      ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("vector[%d]:%d\n"),
+            i, vector[i]));
+    }
+
+  vector.resize(RESIZE, 0);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("After resize\n")));
+
+  for (i = 0; i < RESIZE ; ++i)
+    {
+      // The original vector of size LEFT must have the same original contents
+      // the new elements should have the value 0 (this value is passed as
+      // second argument of the resize() call.
+      if (i < LEFT)
+        {
+          ACE_ASSERT (vector[i] == i);
+        }
+      else
+        {
+          ACE_ASSERT (vector[i] == 0);
+        }
+      ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("vector[%d]:%d\n"),
+              i, vector[i]));
+    }
 
   vector.clear ();
   ACE_ASSERT (vector.size () == 0);
