@@ -1,3 +1,14 @@
+Wed May  7 14:49:46 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/corbacom.cpp: Some bugs from the CORBA_String_var class
+	have been fixed. Thanks to Brian Mendel for noticing these.
+
+	* IIOP/lib/boa.cpp: In CORBA_BOA::dispatch, the opname local
+	variable of type CORBA_String_var is changed to be of type
+	CORBA_String. This was because the String_var class would assume
+	ownership of the quantity assigned and delete it. Thanks again to
+	Brian Mendel for noticing this.
+
 Tue May  6 14:06:49 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/boa.hh: the register_obj's 2nd argument is changed from
