@@ -1,3 +1,15 @@
+Sat Feb  7 22:09:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Makefile*:
+	  
+	  Updated dependencies. A new script $ACE_ROOT/bin/depgen.pl was
+	  used to generate dependencies. The following command was used to
+	  use the above script "make DEPGEN=$ACE_ROOT/bin/depgen.pl
+	  depend".  If the script works well we can make this the
+	  default. 
+
+	  BTW, this should fix some strange errors in the daily builds.
+
 Sat Feb  7 20:32:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
