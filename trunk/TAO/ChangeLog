@@ -1,3 +1,11 @@
+Tue Oct 29 17:50:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.cpp (fini, _set_unexpected):
+
+	  Call set_unexpected() in the global namespace when using
+	  MSVC++.  MSVC++ doesn't place set_unexpected() in the "std"
+	  namespace.  Thanks to Irfan for pointing the build problem.
+
 Tue Oct 29 19:20:29 2002  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Service.h: 
