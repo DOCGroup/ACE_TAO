@@ -748,9 +748,10 @@ Buffering Constraint Policy:
 <p>Current Status:
 <ul>
 
-<li> SyncScopePolicy has been partially implemented.  The options
-currently supported are <CODE>SYNC_NONE</CODE> and
-<CODE>SYNC_WITH_TRANSPORT</CODE>.  </li>
+<li> SyncScopePolicy has been fully implemented. Setting a
+SyncScope Policy value of SYNC_NONE will enable buffering of
+oneway requests according to the current Buffering Constraint
+Policy. </li>
 
 <li> Buffering Constraint Policy is completely supported by TAO
 providing flexible levels of flushing and queueing in the ORB.  </li>
@@ -779,7 +780,7 @@ Critial Work:
 
 Future work:
 <ul>
-<li>
+<li> Integrate SyncScope policy with DII deferred synchronous requests.
 </ul>
 
 <hr>
