@@ -1,3 +1,10 @@
+Wed Oct  7 08:29:51 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* doc/compiler.html:
+
+	  Updated the documentation for the -Ge, -Gt options. Thanks to
+	  Tom Dobridge <dobridge@persimmon.com> for pointing this out.
+
 Wed Oct 07 02:50:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.21 released.
