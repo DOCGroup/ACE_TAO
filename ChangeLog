@@ -1,3 +1,10 @@
+Thu Mar 20 19:50:36 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (ACE_OS::recursive_mutex_cond_unlock): If on WinCE, don't
+	  do the check for RecursionCount; WinCE's structure doesn't have that
+	  member. Also see:
+	  Sat Mar 15 10:55:01 2003  Douglas C. Schmidt
+
 Thu Mar 20 17:51:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* bin/MakeProjectCreator/templates/em3vcp.mpd: Only output a linker
