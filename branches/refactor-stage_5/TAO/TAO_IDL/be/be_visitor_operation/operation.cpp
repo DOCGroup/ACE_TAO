@@ -556,11 +556,12 @@ be_visitor_operation::gen_stub_operation_body (
           << "TAO::TAO_ONEWAY_INVOCATION";
     }
 
-  if (be_global->ami_call_back ())
+  /*  if (be_global->ami_call_back ())
     {
       *os << "," << be_nl
           << "TAO::TAO_ASYNCHRONOUS_CALLBACK_INVOCATION";
     }
+  */
 
   *os << be_uidt_nl
       << ");" << be_uidt;
