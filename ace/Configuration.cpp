@@ -535,8 +535,8 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
                        name, 
                        0, 
                        REG_SZ, 
-                       (BYTE*)value.rep (), 
-                       value.length ()) != ERROR_SUCCESS)
+                       (BYTE *) value.rep (), 
+                       value.length () + 1) != ERROR_SUCCESS)
     return -2;
   
   return 0;
@@ -558,7 +558,7 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
                        name, 
                        0, 
                        REG_DWORD, 
-                       (BYTE*)&value, 
+                       (BYTE *) &value, 
                        sizeof (value)) != ERROR_SUCCESS)
     return -2;
 
