@@ -184,19 +184,37 @@ ACE_Event_Handler::reactor_timer_interface (void) const
 ACE_Event_Handler::Reference_Count
 ACE_Event_Handler::add_reference (void)
 {
-  return ++this->reference_count_;
+  int reference_counting_required =
+    this->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (reference_counting_required)
+    return ++this->reference_count_;
+  else
+    return 1;
 }
 
 ACE_Event_Handler::Reference_Count
 ACE_Event_Handler::remove_reference (void)
 {
-  Reference_Count result =
-    --this->reference_count_;
+  int reference_counting_required =
+    this->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
-  if (result == 0)
-    delete this;
+  if (reference_counting_required)
+    {
+      Reference_Count result =
+        --this->reference_count_;
 
-  return result;
+      if (result == 0)
+        delete this;
+
+      return result;
+    }
+  else
+    {
+      return 1;
+    }
 }
 
 ACE_Event_Handler::Policy::~Policy (void)

@@ -1,3 +1,44 @@
+Fri Feb 27 12:33:10 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Event_Handler.cpp (add_reference and remove_reference): 
+
+	  Previously, add_reference() and remove_reference() were called
+	  on a event handler only if the reference counting policy was
+	  enabled.  Unfortunately, this meant that at every place where
+	  add_reference() and remove_reference() were called, a check had
+	  to be made to see if the reference counting policy was enabled.
+	  It also meant that Event_Handler_var class could not be used
+	  with event handlers that do not enable the reference counting
+	  policy since the Event_Handler_var class was calling
+	  add_reference() and remove_reference() without checking the
+	  reference counting policy.
+
+	  So I modified the add_reference() and remove_reference() methods
+	  so that they check perform the necessary check for the reference
+	  counting policy.  This way the Event_Handler_var can be used
+	  without concern for whether the event handler has the reference
+	  counting policy enabled. Similarly, add_reference() and
+	  remove_reference() can also be called without concern for
+	  whether the event handler has the reference counting policy
+	  enabled.  Only in some places in the ACE library,
+	  remove_reference() cannot be called on the event handler because
+	  it might have been closed.  Therefore, an explicit check for the
+	  reference counting policy still needs to be performed.
+
+	  Reference counting in the following files was made simple
+	  because of above change:
+	
+	  - ace/Select_Reactor_Base.cpp
+	  - ace/Select_Reactor_T.cpp
+	  - ace/Timer_Queue_T.cpp
+	  - ace/WFMO_Reactor.cpp
+	
+	  The tests/Reference_Counted_Event_Handler_Test.cpp test was
+	  extended to check this change.
+	
+	  Thanks to Dom Monteiro <d.monteiro@netia.net> and Liat
+	  (vliat1@hotmail.com) for pointing out this problem.
+
 Fri Feb 27 11:20:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
