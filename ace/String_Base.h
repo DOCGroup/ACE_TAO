@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
 
