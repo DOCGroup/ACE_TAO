@@ -1,3 +1,10 @@
+Tue Aug 26 08:24:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+
+          Set PWD on the make command line when the project makefile isn't
+          in the current directory.
+
 Mon Aug 25 22:03:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/asnmp/address.cpp:
@@ -25,10 +32,10 @@ Mon Aug 25 22:03:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Aug 25 11:51:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* COPYING:
-	* THANKS:
+        * COPYING:
+        * THANKS:
 
-	  Updated Doug's e-mail address.
+          Updated Doug's e-mail address.
 
 Mon Aug 25 11:13:28 2003  Chad Elliott  <elliott_c@ociweb.com>
 
