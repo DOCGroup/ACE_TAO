@@ -43,20 +43,53 @@ namespace ACE_OS {
    *
    *  Since they are often implemented as macros, we don't use the same name
    *  here.  Instead, we change by prepending "ace_" (with the exception of
-   *  to_lower).
-   *
-   *  @todo To be complete, we should add: isalnum, isalpha, iscntrl
-   *  isdigit, isgraph, islower, ispunct, isupper, isxdigit, and toupper.
+   *  to_lower and to_upper).
    */
   //@{
+
+  /// Returns true if the character is an alphanumeric character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isalnum (const ACE_TCHAR c);
+
+  /// Returns true if the character is an alphabetic character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isalpha (const ACE_TCHAR c);
+
+  /// Returns true if the character is a control character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_iscntrl (const ACE_TCHAR c);
+
+  /// Returns true if the character is a decimal-digit character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isdigit (const ACE_TCHAR c);
+
+  /// Returns true if the character is a printable character other than a space.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isgraph (const ACE_TCHAR c);
+
+  /// Returns true if the character is a lowercase character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_islower (const ACE_TCHAR c);
 
   /// Returns true if the character is a printable character.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isprint (const ACE_TCHAR c);
 
+  /// Returns true if the character is a punctuation character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_ispunct (const ACE_TCHAR c);
+
   /// Returns true if the character is a space character.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isspace (const ACE_TCHAR c);
+
+  /// Returns true if the character is an uppercase character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isupper (const ACE_TCHAR c);
+
+  /// Returns true if the character is a hexadecimal-digit character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isxdigit (const ACE_TCHAR c);
 
   /// Converts a character to lower case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -67,6 +100,16 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   wint_t to_lower (wint_t c);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
+
+  /// Converts a character to upper case (char version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int to_upper (int c);
+
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWUPPER)
+  /// Converts a character to upper case (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  wint_t to_upper (wint_t c);
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
 
   //@}
 

@@ -90,7 +90,7 @@
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SOCKET_BUFSIZ
-#define ACE_LACKS_SOCKETPAIR     
+#define ACE_LACKS_SOCKETPAIR
 // Even if the QNX RTP docs says that socket pair are
 // available, there is actually no implementation of
 // soket-pairs.
@@ -141,6 +141,7 @@
 #define ACE_LACKS_WCSCPY
 #define ACE_LACKS_WCSNCPY
 #define ACE_LACKS_TOWLOWER
+#define ACE_LACKS_TOWUPPER
 #define ACE_LACKS_WCSCMP
 #define ACE_LACKS_WCSCAT
 #define ACE_LACKS_WCSNCAT

@@ -1,3 +1,22 @@
+Wed Jun 16 10:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_ctype.{h,inl}:
+          Added ace_isalnum, ace_isalpha, ace_iscntrl, ace_isdigit,
+          ace_isgraph, ace_islower, ace_ispunct, ace_isupper, ace_isxdigit,
+          and to_upper. This fixes bugzilla [1762].
+
+        * ace/config-freebsd.h:
+        * ace/config-linux-common.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-vxworks5.x.h:
+          Added define ACE_LACKS_TOWUPPER, these files already set
+          ACE_LACKS_TOWLOWER so I assume that they are the ones
+          that also lack towlower.
+
+        * ace/Get_Opt.cpp:
+          Use ACE_OS::isalnum instead of isalnum directly to fix compile
+          errors in Tru64 build.
+
 Wed Jun 16 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/Service_Config.perl:
