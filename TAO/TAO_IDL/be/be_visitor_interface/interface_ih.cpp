@@ -74,6 +74,8 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       *os << node->full_skel_name ();
     }
 
+  *os << ", public virtual PortableServer::RefCountServantBase";
+
   *os << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
