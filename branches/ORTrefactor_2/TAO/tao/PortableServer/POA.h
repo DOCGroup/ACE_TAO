@@ -879,9 +879,9 @@ protected:
     );
 
   CORBA::Object_ptr
-  invoke_key_to_object_helper (const char * repository_id,
-                               const PortableServer::ObjectId & id
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  invoke_key_to_object_helper_i (const char * repository_id,
+                                 const PortableServer::ObjectId & id
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the ORT adapter, in case there is no adapter yet, this method will

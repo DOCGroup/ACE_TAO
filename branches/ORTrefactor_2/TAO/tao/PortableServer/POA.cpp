@@ -1933,22 +1933,22 @@ TAO_POA::create_reference_i (const char *intf,
                                    1,
                                    priority);
 
-  return this->invoke_key_to_object_helper (intf,
-                                            user_id
-                                            ACE_ENV_ARG_PARAMETER);
+  return this->invoke_key_to_object_helper_i (intf,
+                                              user_id
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_POA::invoke_key_to_object_helper (const char * repository_id,
-                                      const PortableServer::ObjectId & id
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+TAO_POA::invoke_key_to_object_helper_i (const char * repository_id,
+                                        const PortableServer::ObjectId & id
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const PortableInterceptor::ObjectId &user_oid =
     reinterpret_cast <const PortableInterceptor::ObjectId &>(id);
 
   // Ask the ORT to create the object.
-  if (this->ORT_adapter ())
+  if (this->ORT_adapter_i ())
     {
       // Ask the ORT to create the object.
       return this->ort_adapter_->make_object (repository_id,
@@ -2035,9 +2035,9 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                    1,
                                    priority);
 
-  return this->invoke_key_to_object_helper (intf,
-                                            user_id
-                                            ACE_ENV_ARG_PARAMETER);
+  return this->invoke_key_to_object_helper_i (intf,
+                                              user_id
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -2283,9 +2283,9 @@ TAO_POA::servant_to_reference_i (PortableServer::Servant servant
   // lock, and we are possibly trying to make a call into the
   // application code. Think what would happen if the app calls us
   // back. We need to get to this at some point.
-  return this->invoke_key_to_object_helper (servant->_interface_repository_id (),
-                                            user_id
-                                            ACE_ENV_ARG_PARAMETER);
+  return this->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
+                                              user_id
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -2625,9 +2625,9 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                                        1,
                                        priority);
 
-      return this->invoke_key_to_object_helper (servant->_interface_repository_id (),
-                                                id
-                                                ACE_ENV_ARG_PARAMETER);
+      return this->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
+                                                  id
+                                                  ACE_ENV_ARG_PARAMETER);
     }
   else
     // If the Object Id value is not active in the POA, an

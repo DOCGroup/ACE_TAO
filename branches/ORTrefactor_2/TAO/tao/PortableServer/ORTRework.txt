@@ -1,3 +1,10 @@
+Thu Aug 26 09:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          Changed invoke_key_to_helper to invoke_key_to_helper_i, this is
+          always called from _i methods, and also use then
+          ORT_adapter_i instead of ORT_adapter
+
 Thu Aug 26 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp,i}:
