@@ -65,6 +65,7 @@
 # are using the template instantiation provided in ACE for ACE_Hash
 # and ACE_Equal_To, don't instantiate those templates.
 
+
 $template_instantiation = "template class";
 $end_of_template_instantiation = ";";
 
