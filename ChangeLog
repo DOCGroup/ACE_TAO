@@ -1,3 +1,10 @@
+Thu Aug 19 08:26:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* apps/drwho/Rwho_DB_Manager.h:
+
+	  Changed to #include <sys/types.h> before <protocols/rwhod.h>,
+	  as the latter needs the former on some systems.
+
 Thu Aug 19 08:07:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/APG/Signals/SigAction.cpp:
