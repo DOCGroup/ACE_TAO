@@ -11,23 +11,23 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
-const char *ACE_Log_Record::priority_names_[] = 
+const ASYS_TCHAR *ACE_Log_Record::priority_names_[] = 
 {
-  "<none>",
-  "LM_SHUTDOWN",
-  "LM_TRACE",
-  "LM_DEBUG",
-  "LM_INFO",
-  "LM_NOTICE",
-  "LM_WARNING",
-  "LM_STARTUP",
-  "LM_ERROR",
-  "LM_CRITICAL",
-  "LM_ALERT",
-  "LM_EMERGENCY"
+  ASYS_TEXT ("<none>"),
+  ASYS_TEXT ("LM_SHUTDOWN"),
+  ASYS_TEXT ("LM_TRACE"),
+  ASYS_TEXT ("LM_DEBUG"),
+  ASYS_TEXT ("LM_INFO"),
+  ASYS_TEXT ("LM_NOTICE"),
+  ASYS_TEXT ("LM_WARNING"),
+  ASYS_TEXT ("LM_STARTUP"),
+  ASYS_TEXT ("LM_ERROR"),
+  ASYS_TEXT ("LM_CRITICAL"),
+  ASYS_TEXT ("LM_ALERT"),
+  ASYS_TEXT ("LM_EMERGENCY")
 };
 
-const char *
+const ASYS_TCHAR *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
 {
   return ACE_Log_Record::priority_names_[ACE::log2 (p)];

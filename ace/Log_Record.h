@@ -81,7 +81,7 @@ public:
   // window.
 #endif /* ! ACE_HAS_WINCE */
 
-  static const char *priority_name (ACE_Log_Priority p);
+  static const ASYS_TCHAR *priority_name (ACE_Log_Priority p);
   // Returns a character array with the string form of the
   // <ACE_Log_Priority> parameter.  This is used for the verbose
   // printing format.
@@ -165,7 +165,7 @@ private:
   ASYS_TCHAR msg_data_[MAXLOGMSGLEN]; 
   // Logging record data 
 
-  static const char *priority_names_[];
+  static const ASYS_TCHAR *priority_names_[];
   // Symbolic names for the <ACE_Log_Priority> enums.
 };
 
