@@ -9,7 +9,7 @@
 
 ACE_RCSID (Bug_1495_Regression_Test,
            interceptors,
-           "$Id$");
+           "$Id$")
 
 
 Echo_Client_Request_Interceptor::
