@@ -1,21 +1,17 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/DynAny_Test
-//
-// = FILENAME
-//    driver.h
-//
-// = DESCRIPTION
-//    Header file for the driver program.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    driver.h
+ *
+ *  $Id$
+ *
+ *  Header file for the driver program.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #if !defined (DRIVER_H)
 #define DRIVER_H
@@ -39,21 +35,23 @@ enum TEST_TYPE
     TEST_DYNSTRUCT,
     TEST_DYNUNION
   };
-  
+
+  /// Initialize the driver object.
   int init (int argc, char* argv[]);
-  // Initialize the driver object.
 
+  /// Parse command line arguments.
   int parse_args (int argc, char* argv[]);
-  // Parse command line arguments.
 
+  /// Execute test code.
   int run (void);
-  // Execute test code.
 
 private:
+  /// underlying ORB (we do not own it)
   CORBA::ORB_var orb_;
-  // underlying ORB (we do not own it)
 
   TEST_TYPE test_type_;
+
+  int debug_;
 };
 
 #endif /* DRIVER_H */

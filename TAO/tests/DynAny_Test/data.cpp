@@ -1,20 +1,16 @@
-// -*- c++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/DynAny_Test
-//
-// = FILENAME
-//    data.cpp
-//
-// = DESCRIPTION
-//    Implementation file for the class containing test constants.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    data.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation file for the class containing test constants.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "data.h"
 #include "tao/PortableServer/PortableServer.h"
