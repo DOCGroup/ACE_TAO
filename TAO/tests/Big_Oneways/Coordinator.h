@@ -24,8 +24,6 @@ public:
   /// Constructor
   Coordinator (CORBA::ULong peer_count);
 
-  /// Destructor
-  virtual ~Coordinator (void);
 
   /// Check if all the peers have registered already
   int has_all_peers (void) const;
@@ -45,6 +43,10 @@ public:
   virtual void add_peer (Test::Peer_ptr peer
                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+protected:
+  /// Protected Destructor, call _remove_ref() instead
+  virtual ~Coordinator (void);
 
 private:
   /// Store a reference to each peer

@@ -1,3 +1,13 @@
+Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tests/Big_Oneways/Coordinator.h:
+	* tests/Big_Oneways/Session.cpp:
+	* tests/Big_Oneways/server.cpp:
+	* tests/Big_Twoways/Coordinator.h:
+	* tests/Big_Twoways/Session.h:
+	* tests/Big_Twoways/server.cpp:
+	  Fix use of _remove_ref() to avoid "pure virtual method called" errors.
+
 Tue Apr 30 23:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Fixed some typos and removed duplicate
