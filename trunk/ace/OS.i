@@ -5709,15 +5709,21 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
   void *handle;
   ACE_OSCALL (::dlopen (filename, mode), void *, 0, handle);
 #if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
-  // Some systems (e.g., SunOS4) do not automatically call _init(), so
-  // we'll have to call it manually.
+  if (handle != 0)
+    {
+      void *ptr;
+      // Some systems (e.g., SunOS4) do not automatically call _init(), so
+      // we'll have to call it manually.
 
-  void *ptr;
+      ACE_OSCALL (::dlsym (handle, "_init"), void *, 0, ptr);
 
-  ACE_OSCALL (::dlsym (handle, "_init"), void *, 0, ptr);
-
-  if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
-    return 0;
+      if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
+        {
+          // Close down the handle to prevent leaks.
+          ::dlclose (handle);
+          return 0;
+        }
+    }
 #endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   return handle;
 #elif defined (ACE_WIN32)
