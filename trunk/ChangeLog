@@ -1,3 +1,12 @@
+Tue Jul  1 19:39:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_SYS_UN_H and ACE_LACKS_PTHREAD_H.
+
+        * ace/os_include/sys/os_mman.h:
+          Added !defined (ACE_WIN32) to the intial #if for the PROT_*
+          define section so Windows can make it to the #ifelse section. 
+
 Sun Jun 29 01:31:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/UNIX_Addr.h:
