@@ -116,7 +116,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (CosNotification::QoSProperties& q
 }
 
 template <class Peer_Traits> void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_TRY

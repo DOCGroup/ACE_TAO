@@ -1,3 +1,9 @@
+Thu Jul 24 17:30:33 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/Peer_T.ccp (status):
+	 
+	  Changed ENV to NOT_USED to fix compile warning.
+
 Thu Jul 24 16:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h:
