@@ -1,3 +1,10 @@
+Wed Jan  7 12:38:42 2004  Brian Mendel  <brian.r.mendel@boeing.com>
+
+        * orbsvcs/orbsvcs/Event/rtkokyu_event_export.h:
+
+          Added check for TAO_AS_STATIC_LIBS for setting the export flags for 
+          proper building of static libraries.
+
 Wed Jan  7 12:16:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/tao.mpc:
