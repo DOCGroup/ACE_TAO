@@ -92,7 +92,7 @@ main (int argc, char *argv[])
 {
 #if defined (ACE_LACKS_FORK)
   ACE_START_TEST ("Process_Mutex_Test");
-  ACE_ERROR ((LM_ERROR, "fork is not supported on this platform\n"));
+  ACE_ERROR ((LM_INFO, "fork is not supported on this platform\n"));
   ACE_END_TEST;
 #else  /* ! ACE_LACKS_FORK */
 

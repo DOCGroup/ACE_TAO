@@ -72,7 +72,8 @@ spawn (void)
   ACE_Thread_Manager::instance ()->wait ();
 
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 }
 

@@ -292,7 +292,7 @@ main (int, ASYS_TCHAR *[])
   result = other_thread.wait ();
   ACE_ASSERT (result != -1);
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 

@@ -373,7 +373,8 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Thread_Pool_Reactor_Test"));
 
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;

@@ -287,7 +287,7 @@ main (int, ASYS_TCHAR *[])
 
   Errno::deallocate_lock ();
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads are not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
