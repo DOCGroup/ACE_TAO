@@ -3,7 +3,7 @@
 //
 
 #include "Stock_Factory_i.h"
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 
