@@ -22,23 +22,26 @@
 
 class TAO_POA;
 
-/**
- * @class TAO_POA_Guard
- *
- * @brief TAO_POA_Guard
- *
- * TAO_POA_Guard
- */
-class TAO_PortableServer_Export TAO_POA_Guard
+namespace TAO
 {
-public:
-  TAO_POA_Guard (TAO_POA &poa
-                 ACE_ENV_ARG_DECL,
-                 int check_for_destruction = 1);
+  /**
+   * @class POA_Guard
+   *
+   * @brief POA_Guard
+   *
+   * POA_Guard
+   */
+  class TAO_PortableServer_Export POA_Guard
+  {
+  public:
+    POA_Guard (TAO_POA &poa
+               ACE_ENV_ARG_DECL,
+               int check_for_destruction = 1);
 
-private:
-  ACE_Guard<ACE_Lock> guard_;
-};
+  private:
+    ACE_Guard<ACE_Lock> guard_;
+  };
+}
 
 #include /**/ "ace/post.h"
 #endif /* TAO_POA_GUARD_H */
