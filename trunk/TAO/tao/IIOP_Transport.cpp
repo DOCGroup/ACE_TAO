@@ -51,43 +51,39 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
   delete this->messaging_object_;
 }
 
-TAO_IIOP_SVC_HANDLER *
-TAO_IIOP_Transport::service_handler (void)
-{
-  return this->connection_handler_;
-}
-
+#if 0
 ACE_HANDLE
 TAO_IIOP_Transport::handle (void)
 {
   return this->connection_handler_->get_handle ();
 }
+#endif
 
 ACE_Event_Handler *
-TAO_IIOP_Transport::event_handler (void)
+TAO_IIOP_Transport::event_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 ssize_t
-TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time,
-                          size_t *bytes_transferred)
+TAO_IIOP_Transport::send_i (const ACE_Message_Block *message_block,
+                            const ACE_Time_Value *max_wait_time,
+                            size_t *bytes_transferred)
 {
-  return ACE::send_n (this->handle (),
+  return ACE::send_n (this->connection_handler_->get_handle (),
                       message_block,
                       max_wait_time,
                       bytes_transferred);
 }
 
 ssize_t
-TAO_IIOP_Transport::recv (char *buf,
-                          size_t len,
-                          const ACE_Time_Value *max_wait_time)
+TAO_IIOP_Transport::recv_i (char *buf,
+                            size_t len,
+                            const ACE_Time_Value *max_wait_time)
 {
-  return this->service_handler ()->peer ().recv (buf,
-                                                 len,
-                                                 max_wait_time);
+  return this->connection_handler_->peer ().recv (buf,
+                                                  len,
+                                                  max_wait_time);
 }
 
 
@@ -127,7 +123,7 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 
 
 int
-TAO_IIOP_Transport::register_handler (void)
+TAO_IIOP_Transport::register_handler_i (void)
 {
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
@@ -191,8 +187,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing conn %d after fault %p\n"),
-                    this->handle (),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
       return -1;
@@ -204,8 +200,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
+                    ACE_TEXT ("EOF, closing transport %d\n"),
+                    this->id ()));
       return -1;
     }
 
@@ -389,8 +385,8 @@ TAO_IIOP_Transport::process_message (void)
           // every reply on this connection.
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
-                        ACE_TEXT ("handle_client_input - ")
+                        ACE_TEXT ("TAO (%P|%t) : IIOP_Transport::")
+                        ACE_TEXT ("process_message - ")
                         ACE_TEXT ("dispatch reply failed\n")));
 
           this->messaging_object_->reset ();
@@ -562,13 +558,15 @@ TAO_IIOP_Transport::get_listen_point (
 }
 
 void
-TAO_IIOP_Transport::transition_handler_state (void)
+TAO_IIOP_Transport::transition_handler_state_i (void)
 {
   connection_handler_ = 0;
 }
 
+#if 0
 TAO_Connection_Handler*
 TAO_IIOP_Transport::connection_handler (void) const
 {
   return connection_handler_;
 }
+#endif

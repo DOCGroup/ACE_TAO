@@ -213,6 +213,9 @@ TAO_DIOP_Connection_Handler::activate (long flags,
   // @@ Michael: I believe we do not need active service handlers right now.
   // @@ Frank: Not disabled yet...
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id (this->get_handle ());
+
   return TAO_DIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
                                          force_active,
