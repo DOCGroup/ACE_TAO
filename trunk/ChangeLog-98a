@@ -3,6 +3,10 @@ Sun Jan 04 07:43:10 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-vxworks5.x-g++.h: removed
           ACE_HAS_TEMPLATE_SPECIALIZATION.
 
+        * tests/Hash_Map_Manager_Test.cpp (main): added casts of i->ext_id_
+          and i->int_id_ to (char *) to force g++/VxWorks to apply the
+          conversion from Dumb_String to char *..
+
 Sat Jan  3 22:25:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/Gateway: Changed the name of the ACE_Event_Channel
