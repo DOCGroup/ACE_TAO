@@ -45,5 +45,12 @@ namespace TAO
     {
       return activation_strategy_;
     }
+
+    ACE_INLINE
+    Servant_Retention_Strategy*
+    Active_Policy_Strategies::servant_retention_strategy (void) const
+    {
+      return servant_retention_strategy_;
+    }
   }
 }

@@ -9,6 +9,7 @@
 #include "RequestProcessingPolicyC.h"
 #include "ServantRetentionPolicyC.h"
 #include "ThreadPolicyC.h"
+#include "ServantRetentionPolicyC.h"
 
 #include "Thread_Strategy.h"
 #include "Request_Processing_Strategy.h"
@@ -16,6 +17,7 @@
 #include "Lifespan_Strategy.h"
 #include "Id_Uniqueness_Strategy.h"
 #include "Activation_Strategy.h"
+#include "Servant_Retention_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Active_Policy_Strategies.inl"
@@ -35,7 +37,8 @@ namespace TAO
       id_assignment_strategy_ (0),
       lifespan_strategy_ (0),
       id_uniqueness_strategy_ (0),
-      activation_strategy_ (0)
+      activation_strategy_ (0),
+      servant_retention_strategy_ (0)
     {
     }
 
@@ -152,6 +155,22 @@ namespace TAO
       }
 
       activation_strategy_->strategy_init (poa);
+
+      switch (policies.servant_retention())
+      {
+        case ::PortableServer::RETAIN :
+        {
+          ACE_NEW (servant_retention_strategy_, Retain_Servant_Retention_Strategy);
+          break;
+        }
+        case ::PortableServer::NON_RETAIN :
+        {
+          ACE_NEW (servant_retention_strategy_, Non_Retain_Servant_Retention_Strategy);
+          break;
+        }
+      }
+
+      servant_retention_strategy_->strategy_init (poa);
     }
   }
 }
