@@ -1,3 +1,5 @@
+// $Id$
+
 /*
 
 COPYRIGHT
@@ -69,9 +71,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // This implements the same protocol as AST_Generator but creates instances
 // of the BE-subclassed classes instead of of AST classes
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
+
+#include "ace/inc_user_config.h"
 
 /*
  * Constructor
@@ -94,7 +98,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 AST_Root *
 be_generator::create_root(UTL_ScopedName *n,
-			  UTL_StrList *p)
+                          UTL_StrList *p)
 {
     return new be_root(n, p);
 }
@@ -104,8 +108,8 @@ be_generator::create_root(UTL_ScopedName *n,
  */
 AST_PredefinedType *
 be_generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
-				     UTL_ScopedName *n,
-				     UTL_StrList *p)
+                                     UTL_ScopedName *n,
+                                     UTL_StrList *p)
 {
   return (AST_PredefinedType *) new be_predefined_type(t, n, p);
 }
@@ -124,9 +128,9 @@ be_generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
  */
 AST_Interface *
 be_generator::create_interface(UTL_ScopedName *n,
-			       AST_Interface **ih,
-			       long nih,
-			       UTL_StrList *p)
+                               AST_Interface **ih,
+                               long nih,
+                               UTL_StrList *p)
 {
   return (AST_Interface *) new be_interface(n, ih, nih, p);
 }
@@ -172,9 +176,9 @@ be_generator::create_enum(UTL_ScopedName *n, UTL_StrList *p)
  */
 AST_Operation *
 be_generator::create_operation(AST_Type *rt,
-			       AST_Operation::Flags fl,
-			       UTL_ScopedName *n,
-			       UTL_StrList *p)
+                               AST_Operation::Flags fl,
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return (AST_Operation *) new be_operation(rt, fl, n, p);
 }
@@ -193,9 +197,9 @@ be_generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
  */
 AST_Argument *
 be_generator::create_argument(AST_Argument::Direction d,
-			      AST_Type *ft,
-			      UTL_ScopedName *n,
-			      UTL_StrList *p)
+                              AST_Type *ft,
+                              UTL_ScopedName *n,
+                              UTL_StrList *p)
 {
   return (AST_Argument *) new be_argument(d, ft, n, p);
 }
@@ -205,9 +209,9 @@ be_generator::create_argument(AST_Argument::Direction d,
  */
 AST_Attribute *
 be_generator::create_attribute(idl_bool ro,
-			       AST_Type *ft,
-			       UTL_ScopedName *n,
-			       UTL_StrList *p)
+                               AST_Type *ft,
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return (AST_Attribute *) new be_attribute(ro, ft, n, p);
 }
@@ -217,8 +221,8 @@ be_generator::create_attribute(idl_bool ro,
  */
 AST_Union *
 be_generator::create_union(AST_ConcreteType *dt,
-			   UTL_ScopedName *n,
-			   UTL_StrList *p)
+                           UTL_ScopedName *n,
+                           UTL_StrList *p)
 {
   return (AST_Union *) new be_union(dt, n, p);
 }
@@ -228,9 +232,9 @@ be_generator::create_union(AST_ConcreteType *dt,
  */
 AST_UnionBranch *
 be_generator::create_union_branch(AST_UnionLabel *lab,
-				  AST_Type *ft,
-				  UTL_ScopedName *n,
-				  UTL_StrList *p)
+                                  AST_Type *ft,
+                                  UTL_ScopedName *n,
+                                  UTL_StrList *p)
 {
   return (AST_UnionBranch *) new be_union_branch(lab, ft, n, p);
 }
@@ -240,7 +244,7 @@ be_generator::create_union_branch(AST_UnionLabel *lab,
  */
 AST_UnionLabel *
 be_generator::create_union_label(AST_UnionLabel::UnionLabel ul,
-				 AST_Expression *lv)
+                                 AST_Expression *lv)
 {
   return (AST_UnionLabel *) new be_union_label(ul, lv);
 }
@@ -250,9 +254,9 @@ be_generator::create_union_label(AST_UnionLabel::UnionLabel ul,
  */
 AST_Constant *
 be_generator::create_constant(AST_Expression::ExprType et,
-			      AST_Expression *ev,
-			      UTL_ScopedName *n,
-			      UTL_StrList *p)
+                              AST_Expression *ev,
+                              UTL_ScopedName *n,
+                              UTL_StrList *p)
 {
   return (AST_Constant *) new be_constant (et, ev, n, p);
 }
@@ -280,8 +284,8 @@ be_generator::create_expr(AST_Expression *b, AST_Expression::ExprType t)
  */
 AST_Expression *
 be_generator::create_expr(AST_Expression::ExprComb c,
-			  AST_Expression *v1,
-			  AST_Expression *v2)
+                          AST_Expression *v1,
+                          AST_Expression *v2)
 {
   return (AST_Expression *) new be_expression (c, v1, v2);
 }
@@ -345,8 +349,8 @@ be_generator::create_expr (double d)
  */
 AST_EnumVal *
 be_generator::create_enum_val(unsigned long v,
-			      UTL_ScopedName *n,
-			      UTL_StrList *p)
+                              UTL_ScopedName *n,
+                              UTL_StrList *p)
 {
   return (AST_EnumVal *) new be_enum_val(v, n, p);
 }
@@ -356,8 +360,8 @@ be_generator::create_enum_val(unsigned long v,
  */
 AST_Array *
 be_generator::create_array(UTL_ScopedName *n,
-			   unsigned long ndims,
-			   UTL_ExprList *dims)
+                           unsigned long ndims,
+                           UTL_ExprList *dims)
 {
   return (AST_Array *) new be_array(n, ndims, dims);
 }
@@ -386,7 +390,13 @@ be_generator::create_string(AST_Expression *v)
 AST_String *
 be_generator::create_wstring(AST_Expression *v)
 {
-  return (AST_String *) new be_string(v, sizeof(wchar_t));
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  typedef short WChar;
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  typedef wchar_t WChar;
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+  return (AST_String *) new be_string(v, sizeof(WChar));
 }
 
 /*
