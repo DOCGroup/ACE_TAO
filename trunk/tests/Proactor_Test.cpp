@@ -644,7 +644,7 @@ Receiver::open (ACE_HANDLE handle, ACE_Message_Block &)
     this->handle_ = handle;
     int nodelay = 1;
     ACE_SOCK_Stream option_setter (handle);
-    if (-1 == option_setter.set_option (IPPROTO_TCP,
+    if (-1 == option_setter.set_option (ACE_IPPROTO_TCP,
                                         TCP_NODELAY,
                                         &nodelay,
                                         sizeof (nodelay)))
@@ -1293,7 +1293,7 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
     this->handle_ = handle;
     int nodelay = 1;
     ACE_SOCK_Stream option_setter (handle);
-    if (option_setter.set_option (IPPROTO_TCP,
+    if (option_setter.set_option (ACE_IPPROTO_TCP,
                                   TCP_NODELAY,
                                   &nodelay,
                                   sizeof (nodelay)))
