@@ -631,6 +631,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                           members.in ()
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+          
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+          
           break;
         }
         case CORBA::dk_Alias:
@@ -642,12 +647,18 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             impl.original_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          container_impl.create_alias_i (new_id.c_str (),
-                                         new_name,
-                                         new_version,
-                                         otype.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+          CORBA::AliasDef_var new_defn =
+            container_impl.create_alias_i (new_id.c_str (),
+                                          new_name,
+                                          new_version,
+                                          otype.in ()
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+          
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+          
           break;
         }
         case CORBA::dk_Native:
@@ -668,12 +679,18 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             impl.original_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          container_impl.create_value_box_i (new_id.c_str (),
-                                             new_name,
-                                             new_version,
-                                             otype.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+          CORBA::ValueBoxDef_var new_defn =
+            container_impl.create_value_box_i (new_id.c_str (),
+                                              new_name,
+                                              new_version,
+                                              otype.in ()
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+          
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+          
           break;
         }
         case CORBA::dk_Struct:
@@ -703,7 +720,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                             members.in ()
                                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
+        
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+          
           this->move_contents (new_defn.in ()
                                ACE_ENV_ARG_PARAMETER);
 
@@ -741,7 +762,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                            members.in ()
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
+         
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+          
           this->move_contents (new_defn.in ()
                                ACE_ENV_ARG_PARAMETER);
 
@@ -799,7 +824,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                                bases.in ()
                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
+          
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+          
           this->move_contents (new_defn.in ()
                                ACE_ENV_ARG_PARAMETER);
 

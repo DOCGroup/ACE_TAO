@@ -409,6 +409,12 @@ public:
   static void tmp_name_holder (const char *name);
   // Accesses the static member.
 
+  void update_refs (
+      const char *path,
+      const char *name = 0
+    );
+  // Used with structs, unions and exceptions.
+
 protected:
    void store_label (
       ACE_Configuration_Section_Key key,
@@ -441,12 +447,6 @@ private:
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  void update_refs (
-      const char *path,
-      const char *name
-    );
-  // Used with structs, unions and exceptions.
 
   ACE_TString create_value_common (
       CORBA::DefinitionKind container_kind,
