@@ -65,13 +65,22 @@ public:
   CHAR *copy (const CHAR *data,
               size_t len);
 
-  /// Return the maximum @a length or @a size of a string that can be put into
-  /// this Obstack.  @a size = @a length * sizeof (CHAR).
+  /// Return the maximum @a length or @a size of a string that can be put
+  /// into this Obstack. @a size = @a length * sizeof (CHAR).
+  ///
+  /// Deprecated : No need to use this function as you can put objects of
+  /// arbitrary lengths into the obstack now.
   size_t length (void) const;
   size_t size (void) const;
 
-  /// "Release" the entire stack of Obchunks, putting it back on the
-  /// free list.
+  /// "Unwind" the stack. If @a obj is a null pointer, everything allocated
+  /// in the stack is released. Otherwise, @a obj must be an address of an
+  /// object allocated in the stack. In this case, @a obj is released along
+  /// with everthing allocated in the Obstack since @a obj.
+  void unwind (void* obj);
+
+  /// "Release" the entire stack of Obchunks, putting it back on the free
+  /// list.
   void release (void);
 
   /// Dump the state of an object.
@@ -82,6 +91,10 @@ public:
 
 protected:
   class ACE_Obchunk *new_chunk (void);
+
+  /// Search through the list of Obchunks and release them. Helper funtion
+  /// used by unwind.
+  void unwind_i (void* obj);
 
   /// Pointer to the allocator used by this Obstack.
   ACE_Allocator *allocator_strategy_;
