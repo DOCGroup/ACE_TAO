@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// config-freebsd.h
+// $Id$
 
 // ***** This configuration file is still under testing. *****
 
