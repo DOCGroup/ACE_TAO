@@ -168,6 +168,7 @@ TEMPLATE_FILES = \
            Future \
            Hash_Map_Manager_T \
            IOStream_T \
+           LOCK_SOCK_Acceptor \
            Local_Name_Space_T \
            Malloc_T \
            Managed_Object \
