@@ -69,8 +69,14 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
 
   if (pc->destination () != 0)
     {
+      ACE_CString desti_string (pc->destination ());
+      ssize_t endpos = desti_string.find ('|');
+
+      ACE_CString destination_host =
+        desti_string.substring (0, endpos);
+
       Components::Deployment::ServerActivator_var activator =
-        this->deployment_config_.get_activator (pc->destination ());
+        this->deployment_config_.get_activator (destination_host.c_str ());
 
       if (CORBA::is_nil (activator.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Fail to acquire ServerActivator (%s)\n",
@@ -79,6 +85,17 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
 
       Components::ConfigValues server_config;
       // @@ Nothing to config yet.
+
+      if (endpos != ACE_CString::npos)
+        {
+          ACE_CString svcconf = desti_string.substring (endpos + 1);
+          server_config.length (1);
+
+          Components::ConfigValue *item = new OBV_Components::ConfigValue ();
+          item->name (CORBA::string_dup ("CIAO-svcconf-id"));
+          item->value () <<= CORBA::string_dup (svcconf.c_str ());
+          server_config[0] = item;
+        }
 
       this->compserv_ =
         activator->create_component_server (server_config

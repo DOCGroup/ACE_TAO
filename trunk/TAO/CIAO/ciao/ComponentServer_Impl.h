@@ -93,6 +93,7 @@ namespace CIAO
     // ------------ CIAO Internal operations -------------
     /// Set the cached object reference
     void set_objref (Components::Deployment::ServerActivator_ptr act,
+                     const Components::ConfigValues &config,
                      Components::Deployment::ComponentServer_ptr cs = 0
                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

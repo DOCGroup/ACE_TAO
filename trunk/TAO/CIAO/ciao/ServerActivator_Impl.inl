@@ -2,16 +2,6 @@
 // $Id$
 
 ACE_INLINE
-CIAO::Activator_Callback_Impl::Activator_Callback_Impl (CORBA::ORB_ptr o,
-                                                        PortableServer::POA_ptr p,
-                                                        ::Components::Deployment::ServerActivator_ptr s)
-  : orb_ (CORBA::ORB::_duplicate (o)),
-    poa_ (PortableServer::POA::_duplicate (p)),
-    activator_ (s)
-{
-}
-
-ACE_INLINE
 CIAO::ServerActivator_Impl::ServerActivator_Impl (CORBA::ORB_ptr o,
                                                   PortableServer::POA_ptr p)
   : orb_ (CORBA::ORB::_duplicate (o)),

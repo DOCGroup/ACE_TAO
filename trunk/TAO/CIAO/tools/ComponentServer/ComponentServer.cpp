@@ -10,9 +10,7 @@
 #include "ComponentServer_Impl.h"
 #include "CIAO_ServersC.h"
 #include "Server_init.h"
-#include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
-#include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 
 char *ior_file_name_ = 0;
@@ -55,23 +53,6 @@ parse_args (int argc, char *argv[])
   if (use_callback && callback_ior_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Callback IOR to ServerActivator is required.\n"),
                       -1);
-
-  return 0;
-}
-
-int
-write_IOR(const char* ior)
-{
-  FILE* ior_output_file_ =
-    ACE_OS::fopen (ior_file_name_, "w");
-
-  if (ior_output_file_)
-    {
-      ACE_OS::fprintf (ior_output_file_,
-                       "%s",
-                       ior);
-      ACE_OS::fclose (ior_output_file_);
-    }
 
   return 0;
 }
@@ -146,6 +127,7 @@ main (int argc, char *argv[])
 
 
       Components::Deployment::ServerActivator_var activator;
+      Components::ConfigValues_var config;
 
       if (use_callback)
         {
@@ -158,13 +140,17 @@ main (int argc, char *argv[])
                                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          Components::ConfigValues_out config_out (config.out ());
+
           activator
-              = act_callback->register_component_server (comserv_obj.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
+            = act_callback->register_component_server (comserv_obj.in (),
+                                                       config_out
+                                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       comserv_servant->set_objref (activator.in (),
+                                   config.in (),
                                    comserv_obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -172,7 +158,7 @@ main (int argc, char *argv[])
       CORBA::String_var str = orb->object_to_string (comserv_obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
 
-      write_IOR (str.in ());
+      CIAO::Utility::write_IOR (ior_file_name_, str.in ());
       ACE_DEBUG ((LM_INFO, "ComponentServer IOR: %s\n", str.in ()));
 
       // End Deployment part

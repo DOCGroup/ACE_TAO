@@ -1,3 +1,56 @@
+Sun Jul 06 21:40:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  There are two major changes in this entry.
+
+	1. A scheme for associating component server with a logical
+	  configuration and to map the logical name to a real svc.conf
+	  file.  Each local CIAO_Daemon can determine what default
+	  svc.conf file to use, if none specified, and how logical
+	  names map to actual svc.conf files.
+
+	2. Added mechanism to pass the ConfigValues from
+	  Components::Deployment::ServerActivator::create_component_server
+	  to a Components::Deployment::ComponentServer instance which it
+	  can later use for futher configure the ComponentServer.
+
+	* ciao/Server_init.cpp:
+	* ciao/Server_init.h: Added a new Utility namespace for commonly
+	  used server side functions.  Currently only a write_IOR
+	  method is available.
+
+	* ciao/CIAO_Servers.idl: Updated
+	  CIAO::Activator_Callback::register_component_server method to
+	  pass back ComponentServer's ConfigValues.
+
+	* docs/ConfigValues.html: Docuement the new ConfigValue name
+	  ("CIAO-svcconf-id") that CIAO recognize.
+
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ServerActivator_Impl.h:
+	* ciao/ServerActivator_Impl.inl: Changed to support:
+
+	  Activator_Callback change.
+
+	  Mechanisms to maintain an (id, svc.conf) mapping, and keeping a
+	  default svc.conf file.
+
+	* ciao/ComponentServer_Impl.h:
+	* ciao/ComponentServer_Impl.inl: Changed to update the
+	  ConfigValues when calling back to the ServerActivator.
+
+	* examples/OEP/Display/descriptors/svcmap.dat: Added an example
+	  svcconf-id to svc.conf filename mapping file.
+
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+
+	* tools/Assembly_Deployer/Deployment_Configuration.cpp: Enhanced
+	  to provide a more comprehensive error message.
+
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/README:
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+
 Sun Jul 06 19:41:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OEP/Display/NavDisplayGUI_exec/README: Documented how

@@ -34,3 +34,22 @@ CIAO::Server_init (CORBA::ORB_ptr o)
                                Components::ComponentPortDescription);
   return 0;
 }
+
+int
+CIAO::Utility::write_IOR (const char *pathname,
+                          const char *ior)
+{
+  FILE* ior_output_file_ =
+    ACE_OS::fopen (pathname, "w");
+
+  if (ior_output_file_)
+    {
+      ACE_OS::fprintf (ior_output_file_,
+                       "%s",
+                       ior);
+      ACE_OS::fclose (ior_output_file_);
+      return 0;
+    }
+
+  return -1;
+}
