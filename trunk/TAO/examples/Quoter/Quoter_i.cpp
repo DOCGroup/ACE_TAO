@@ -141,7 +141,7 @@ Quoter_i::get_quote (char const *,
 
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
-                const CosLifeCycle::Criteria &the_criteria,
+                const CosLifeCycle::Criteria &/*the_criteria*/,
                 CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,

@@ -201,7 +201,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 }
 
 int
-Quoter_Generic_Factory_Server::run (CORBA::Environment& env)
+Quoter_Generic_Factory_Server::run (CORBA::Environment& /*env*/)
 {
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
