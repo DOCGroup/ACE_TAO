@@ -93,8 +93,8 @@ main (int argc, char *argv[])
   ACE_hthread_t main_thr_handle;
   ACE_Thread::self (main_thr_handle);
 
-  ACE_OS::thr_setprio (main_thr_handle, 
-		       ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, ACE_SCOPE_THREAD));
+  ACE_OS::thr_setprio (main_thr_handle,
+                       ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, ACE_SCOPE_THREAD));
 
   ACE_TRY_NEW_ENV
     {
@@ -177,9 +177,9 @@ main (int argc, char *argv[])
           if (enable_dynamic_scheduling)
             {
               MIF_Scheduling::SchedulingParameter sched_param;
-	      sched_param.importance = 0;
-              CORBA::Policy_var sched_param_policy = 
-		scheduler->create_scheduling_parameter (sched_param);
+              sched_param.importance = 0;
+              CORBA::Policy_var sched_param_policy =
+                scheduler->create_scheduling_parameter (sched_param);
               CORBA::Policy_ptr implicit_sched_param = 0;
               current->begin_scheduling_segment (0,
                                                  sched_param_policy.in (),
