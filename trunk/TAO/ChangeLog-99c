@@ -1,3 +1,14 @@
+Mon Jun  7 23:49:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	  Fixed problems with conversion from T_var to T_ptr for g++ 2.7.X
+
+	* orbsvcs/tests/Event/Basic/Observer.cpp:
+	* orbsvcs/tests/Event/Performance/Connect.cpp:
+	* orbsvcs/tests/Event/Performance/Throughput.cpp:
+	  More T_var to T_ptr problems and a few unused variables.
+
 Mon Jun  7 21:57:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/append.cpp:

@@ -23,7 +23,7 @@ EC_Connect::EC_Connect (void)
 }
 
 void
-EC_Connect::execute_test (CORBA::Environment& ACE_TRY_ENV)
+EC_Connect::execute_test (CORBA::Environment&)
 {
   // this->EC_Driver::execute_test (ACE_TRY_ENV);
 }
