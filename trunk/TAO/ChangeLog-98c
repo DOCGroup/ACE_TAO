@@ -1,3 +1,7 @@
+Fri Jun 19 11:29:24 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.1.29 released.
+
 Fri Jun 19 10:14:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/POA/On_Demand_Activation/Servant_Activator.h: 
