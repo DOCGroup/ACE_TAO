@@ -26,23 +26,23 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class 
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::ACE_Cached_Connect_Strategy_Ex
   (ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
-   ACE_Recycling_Strategy<SVC_HANDLER> *rec_s)
-    : creation_strategy_ (0),
-      delete_creation_strategy_ (0),
-      concurrency_strategy_ (0),
-      delete_concurrency_strategy_ (0),
-      recycling_strategy_ (0),
-      delete_recycling_strategy_ (0)
+   ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
+   MUTEX *mutex = 0,
+   int delete_mutex = 0)
+    : ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX> (cre_s, 
+                                                                             con_s,
+                                                                             rec_s,
+                                                                             mutex,
+                                                                             delete_mutex)
 {
-  if (this->open (cre_s, con_s, rec_s) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Cached_Connect_Strategy_Ex::ACE_Cached_Connect_Strategy_Ex")));
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX>
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
+  if (this->delete_lock_)
+    delete this->lock_;
+
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
   this->delete_creation_strategy_ = 0;
@@ -83,11 +83,11 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Recycling_Strategy<SVC_HANDLER> *rec_s)
 {
-
   // Set up the cleanup strategy for the svc_handler and give it to
   // the caching_strategy for use.
   ACE_NEW_RETURN (this->svc_cleanup_strategy_,
                   SVC_CLEANUP_STRATEGY, -1);
+  
   ACE_NEW_RETURN (this->caching_strategy_,
                   CACHING_STRATEGY (this->svc_cleanup_strategy_,
                                     0),
@@ -359,108 +359,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
  
 }
 
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::connect_svc_handler
-  (SVC_HANDLER *&sh,
-   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-   ACE_Time_Value *timeout,
-   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-   int reuse_addr,
-   int flags,
-   int perms)
-{
-  int found = 0;
-
-  // This artificial scope is required since we need to let go of the
-  // lock *before* registering the newly created handler with the
-  // Reactor.
-  {
-    // Synchronization is required here as the setting of the
-    // recyclable state must be done atomically with the finding and
-    // binding of the service handler in the cache.
-    ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
-
-    int result = this->connect_svc_handler_i (sh,
-                                              remote_addr,
-                                              timeout,
-                                              local_addr,
-                                              reuse_addr,
-                                              flags,
-                                              perms,
-                                              found);
-    if (result != 0)
-      return result;
-
-  }
-
-  // If it is a new connection, activate it.
-  //
-  // Note: This activation is outside the scope of the lock of the
-  // cached connector.  This is necessary to avoid subtle deadlock
-  // conditions with this lock and the Reactor lock.
-  //
-  // @@ If an error occurs on activation, we should try to remove this
-  // entry from the internal table.
-
-  if (!found)
-    if (this->activate_svc_handler (sh))
-      return -1;
-
-  return 0;
-}
-
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::connect_svc_handler
-  (SVC_HANDLER *&sh,
-   SVC_HANDLER *&sh_copy,
-   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-   ACE_Time_Value *timeout,
-   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-   int reuse_addr,
-   int flags,
-   int perms)
-{
-  int found = 0;
-
-  // This artificial scope is required since we need to let go of the
-  // lock *before* registering the newly created handler with the
-  // Reactor.
-  {
-    // Synchronization is required here as the setting of the
-    // recyclable state must be done atomically with the finding and
-    // binding of the service handler in the cache.
-    ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
-
-    int result = this->connect_svc_handler_i (sh,
-                                              remote_addr,
-                                              timeout,
-                                              local_addr,
-                                              reuse_addr,
-                                              flags,
-                                              perms,
-                                              found);
-    sh_copy = sh;
-
-    if (result != 0)
-      return result;
-
-  }
-
-  // If it is a new connection, activate it.
-  //
-  // Note: This activation is outside the scope of the lock of the
-  // cached connector.  This is necessary to avoid subtle deadlock
-  // conditions with this lock and the Reactor lock.
-  //
-  // @@ If an error occurs on activation, we should try to remove this
-  // entry from the internal table.
-
-  if (!found)
-    if (this->activate_svc_handler (sh))
-      return -1;
-
-  return 0;
-}
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::connect_svc_handler_i
@@ -520,16 +418,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   return 0;
 }
 
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::cache (const void *recycling_act)
-{
-  // Synchronization is required here as the setting of the recyclable
-  // state must be done atomically with respect to other threads that
-  // are querying the cache.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
-
-  return this->cache_i (recycling_act);
-}
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::cache_i (const void *recycling_act)
@@ -544,15 +432,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   return 0;
 }
 
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::purge (const void *recycling_act)
-{
-  // Excluded other threads from changing cache while we take this
-  // entry out.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
-
-  return this->purge_i (recycling_act);
-}
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::purge_i (const void *recycling_act)
@@ -563,15 +442,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   return this->connection_cache_.unbind (entry);
 }
 
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::mark_as_closed (const void *recycling_act)
-{
-  // Excluded other threads from changing cache while we take this
-  // entry out.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
-
-  return this->mark_as_closed_i (recycling_act);
-}
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::mark_as_closed_i (const void *recycling_act)
@@ -583,16 +453,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   entry->ext_id_.state (ACE_Recyclable::CLOSED);
 
   return 0;
-}
-
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::cleanup_hint (const void *recycling_act)
-{
-  // Excluded other threads from changing cache while we take this
-  // entry out.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
-
-  return this->cleanup_hint_i (recycling_act);
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
@@ -615,24 +475,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     }
 
   return 0;
-}
-
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> ACE_Creation_Strategy<SVC_HANDLER> *
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::creation_strategy (void) const
-{
-  return this->creation_strategy_;
-}
-
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> ACE_Recycling_Strategy<SVC_HANDLER> *
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::recycling_strategy (void) const
-{
-  return this->recycling_strategy_;
-}
-
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> ACE_Concurrency_Strategy<SVC_HANDLER> *
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::concurrency_strategy (void) const
-{
-  return this->concurrency_strategy_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cached_Connect_Strategy_Ex)
