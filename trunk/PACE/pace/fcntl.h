@@ -63,6 +63,10 @@ extern "C" {
    * surrounding the arguments.
    */
 
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
+
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/fcntl.inl"
