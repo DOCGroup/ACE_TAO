@@ -53,19 +53,19 @@ TAO_IIOP_Transport::tag (void)
   return this->tag_;
 }
 
-TAO_Client_Connection_Handler * 
+TAO_Client_Connection_Handler *
 TAO_IIOP_Client_Transport::client_handler (void)
 {
   return this->client_handler_;
 }
 
-TAO_Server_Connection_Handler * 
+TAO_Server_Connection_Handler *
 TAO_IIOP_Server_Transport::server_handler (void)
 {
   return this->server_handler_;
 }
 
-TAO_IIOP_Handler_Base *& 
+TAO_IIOP_Handler_Base *&
 TAO_IIOP_Transport::handler (void)
 {
   return this->handler_;
@@ -104,21 +104,21 @@ TAO_IIOP_Transport::close_conn ()
   this->handler_->handle_close ();
 }
 
-ACE_HANDLE 
-TAO_IIOP_Transport::handle(void) 
+ACE_HANDLE
+TAO_IIOP_Transport::handle(void)
 {
   return this->handler_->get_handle ();
 }
- 
-int 
-TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core, 
-                                         TAO_OutputCDR &stream, 
+
+int
+TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
+                                         TAO_OutputCDR &stream,
                                          int twoway)
 {
   return this->client_handler_->send_request (orb_core, stream, twoway);
 }
 
-// int 
+// int
 // TAO_IIOP_Server_Transport::send_response (TAO_OutputCDR &response)
 // {
 //   this->server_handler_->send_response (response);
@@ -143,28 +143,30 @@ TAO_IIOP_Transport::do_sendv (const iovec *iov, int iovcnt, int total_bytes)
     // either an error occured or we sent all the bytes!
     // in either case we are done.
     return n;
-  } 
-    
+  }
+
   // for some reason we didn't send all the data.  Keep trying.
-  // should be the exception ... we also copy the iovec to a temp 
+  // should be the exception ... we also copy the iovec to a temp
   // var so it can be manipulated without violating the const'ness
   // of iov.
   iovec *tmp_iov = ACE_const_cast(iovec *, iov);
   writelen = n;
   int s = 0;
   size_t offset = n;
-  
+
   // iovcnt > 0, iov{0] ... iov[iovcnt-1]
   while ( writelen < total_bytes )
   {
-    // if n < iov_len then not all the bytes were sent from the current iov buf
-    // NOTE, we do a ACE_const_cast so that we can have n = -1.  That is, iov_len
-    // is an unsigned long but n is a signed long.
-    while (s < iovcnt && offset >= tmp_iov[s].iov_len)
+    // if n < iov_len then not all the bytes were sent from the
+    // current iov buf.  NOTE, we do a ACE_static_cast so that we can
+    // have n = -1.  That is, iov_len is an unsigned long but n is a
+    // signed long.
+    while (s < iovcnt  &&
+           offset >= ACE_static_cast (size_t, tmp_iov[s].iov_len))
     {
       offset -= tmp_iov[s].iov_len;
       s++;
-    } // while 
+    } // while
 
     char* base = ACE_reinterpret_cast (char*, tmp_iov[s].iov_base);
     size_t len = tmp_iov[s].iov_len;
@@ -185,12 +187,12 @@ TAO_IIOP_Transport::do_sendv (const iovec *iov, int iovcnt, int total_bytes)
   return writelen;
 }
 
-ssize_t 
+ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
 {
-//  if ( this->handler_ == 0) 
+//  if ( this->handler_ == 0)
 //    return -1;
-  // For the most part this was copied from GIOP::send_request 
+  // For the most part this was copied from GIOP::send_request
   // and friends.
   const int TAO_WRITEV_MAX = 16;
   iovec iov[TAO_WRITEV_MAX];
@@ -203,8 +205,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
       iov[iovcnt].iov_len  = i->length ();
       totlen += i->length ();
       iovcnt++;
-      
-  
+
+
       // The buffer is full make a OS call.
       // @@ TODO this should be optimized on a per-platform basis, for
       // instance, some platforms do not implement writev() there we
@@ -215,10 +217,10 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
       {
         if ( (n = do_sendv ((const iovec *) iov, iovcnt, totlen)) < 1)
           return n;
-        
+
         nbytes += n;
         iovcnt = totlen = 0;
-  
+
       } // iovcnt == TAO_WRITEV_MAX
     } // i->length () > 0
   } // for ( over message blocks, in groups of TAO_WRITEV_MAX )
@@ -228,7 +230,7 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
   {
     if ( (n = do_sendv ((const iovec *)iov, iovcnt, totlen)) < 0 )
       return 0;
-    
+
     nbytes += n;
 
   } // iovcnt != 0
@@ -236,14 +238,14 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
   return nbytes;  // success
 }
 
-ssize_t 
+ssize_t
 TAO_IIOP_Transport::send (const u_char *buf, size_t len)
 {
   // @@ could have used handler_->peer()->send_n()
   return ACE::send_n (this->handler_->get_handle(), buf, len);
 }
 
-ssize_t 
+ssize_t
 TAO_IIOP_Transport::send (const iovec *iov, int iovcnt)
 {
   int totlen = 0;
@@ -252,19 +254,19 @@ TAO_IIOP_Transport::send (const iovec *iov, int iovcnt)
   return do_sendv (iov, iovcnt, totlen);
 }
 
-ssize_t 
+ssize_t
 TAO_IIOP_Transport::receive(char *buf, size_t len)
 {
   return ACE::recv_n (this->handler_->get_handle (), buf, len);
 }
 
-ssize_t 
+ssize_t
 TAO_IIOP_Transport::receive(char *buf, size_t len, int flags)
 {
   return ACE::recv_n (this->handler_->get_handle (), buf, len, flags);
 }
 
-ssize_t 
+ssize_t
 TAO_IIOP_Transport::receive(iovec *iov, int iovcnt)
 {
   return ACE_OS::readv(this->handler_->get_handle (), iov, iovcnt);
