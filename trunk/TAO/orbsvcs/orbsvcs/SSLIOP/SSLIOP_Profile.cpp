@@ -169,7 +169,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
 int
 TAO_SSLIOP_Profile::encode (TAO_OutputCDR &stream) const
 {
-  int r;
+  int r = -1;
 
   // Encode profile endpoints.
   TAO_SSLIOP_Profile *p =
@@ -238,8 +238,8 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
       endpoints.length (this->count_ - 1);
 
       const TAO_SSLIOP_Endpoint *endpoint = this->ssl_endpoint_.next_;
-      for (size_t i = 1;
-           i < this->count_;
+      for (size_t i = 0;
+           i < this->count_ - 1;
            ++i)
         {
           endpoints[i] = endpoint->ssl_component_;
@@ -303,7 +303,7 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
       // Start from the end of the sequence since "add_endpoint"
       // reverses the order of endpoints.
       for (CORBA::ULong i = endpoints.length () - 1;
-           i >= 0;
+           (i + 1) != 0;
            --i)
         {
           TAO_SSLIOP_Endpoint *endpoint = 0;

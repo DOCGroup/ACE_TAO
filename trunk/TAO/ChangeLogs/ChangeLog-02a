@@ -1,3 +1,10 @@
+Sat Sep 16 23:51:27 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+	  Fixed compilation warnings.  Also fixed a bug: iteration loop
+	  erroneously started at 1 rather than 0.
+
 Sat Sep 16 22:37:58 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* utils/NamingViewer/ViewIORDialog.cpp:
