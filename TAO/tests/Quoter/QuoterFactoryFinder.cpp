@@ -19,10 +19,7 @@
 #include "QuoterFactoryFinder.h"
 
 static const char usage [] = 
-"[-? |\n"
-"            [-O[RBport] ORB port number]]";
-// @@ The string above looks odd.  Do you really need it to look like
-// this?!
+"[-? |\n[-O[RBport] ORB port number]]";
 
 // Constructor
 QuoterFactoryFinder_i::QuoterFactoryFinder_i (void)
@@ -63,7 +60,6 @@ QuoterFactoryFinder_i::QuoterFactoryFinder_i (void)
        
       // Bind the QuoterFactory Finder to the IDL_Quoter naming
       // context.
-
       CosNaming::Name quoterFactoryFinderName_ (1);
       quoterFactoryFinderName_.length (1);
       quoterFactoryFinderName_[0].id = CORBA::string_dup ("QuoterFactoryFinder");
@@ -72,7 +68,6 @@ QuoterFactoryFinder_i::QuoterFactoryFinder_i (void)
                                             (CORBA::Object *) this,
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
     }
   TAO_CATCHANY
     {
@@ -101,42 +96,57 @@ QuoterFactoryFinder_i::find_factories (const CosLifeCycle::Key &factory_key,
   CosNaming::Name factoryName = (CosNaming::Name) factory_key;
 
   // Try to get a reference to a Quoter Factory
-  CORBA::Object_var quoterObject_var =  
+  CORBA::Object_var quoterFactoryObject_var =  
     quoterNamingContext_var_->resolve (factoryName, env_here);
   
-  // See if there is an exception, if yes then throw the NoFactory
-  // exception.
-  if (env_here.exception () != 0) 
+  // see if there is an exception, if yes then throw the NoFactory exception
+  if (env_here.exception () != 0) {
+
+    // throw a NoFactory exception  
+    _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+    return 0;
+  }
+
+  // Check if it is a valid Quoter Factory reference
+  if (CORBA::is_nil (quoterFactoryObject_var.in())) {
+
+    // throw a NoFactory exception  
+    _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+    return 0;
+  }
+
+  // were able to get a reference to Quoter Factory
+  else { 
+
+    // create a sequence of factories object
+    CosLifeCycle::Factories *factories_ptr = new CosLifeCycle::Factories (1);      
+
+    // See if there is an exception, if yes then throw the NoFactory
+    // exception.
+    if (env_here.exception () != 0) 
     {
       // Throw a NoFactory exception.
       _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
-  // Check if it is a valid Quoter Factory reference.
-  if (CORBA::is_nil (quoterObject_var.in ())) 
+    // using the Naming Service only one reference is available
+    factories_ptr->length (1);      
+
+    // Check if it is a valid Quoter Factory reference.
+    if (CORBA::is_nil (quoterFactoryObject_var.in ())) 
     {
       // throw a NoFactory exception.
       _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
-  // Were able to get a reference to Quoter Factory.
-  else 
-    {
-      // Create a sequence of factories object.
-      CosLifeCycle::Factories *factories_ptr = new
-        CosLifeCycle::Factories (1);      
-      // Using the Naming Service only one reference is available.
-      factories_ptr->length (1);      
+    // insert the object reference 
+    (*factories_ptr)[0] = quoterFactoryObject_var;
 
-      // Dereference the Object pointer.
-      (*factories_ptr)[0] = quoterObject_var;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Have reference to a Quoter Factory.\n"));
-      return factories_ptr;
-    }
+    ACE_DEBUG ((LM_DEBUG,"Have reference to a Quoter Factory.\n"));
+    return factories_ptr;
+  }
 }
 
 // Function get_options.

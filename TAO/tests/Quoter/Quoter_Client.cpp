@@ -214,28 +214,33 @@ Quoter_Client::init_naming_service (void)
 {
   TAO_TRY
   {
-    CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance ()->orb ();
-    TAO_CHECK_ENV;
-
+    // Resolve the Naming Service
     CORBA::Object_var naming_obj = 
-      orb_ptr->resolve_initial_references ("NameService");
+      orb_->resolve_initial_references ("NameService");
+
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to resolve the Name Service.\n"),
          -1);
+
     CosNaming::NamingContext_var naming_context = 
       CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
     TAO_CHECK_ENV;
     
+    // Try to get the quoter_factory
     CosNaming::Name quoter_factory_name (2);
     quoter_factory_name.length (2);
     quoter_factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
     quoter_factory_name[1].id = CORBA::string_dup ("quoter_factory");
 
+    ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory!\n"));
+
     CORBA::Object_var factory_obj =
       naming_context->resolve (quoter_factory_name,
                                TAO_TRY_ENV);
     TAO_CHECK_ENV;
+
+    ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory!\n"));
     
     this->factory_ =
       Stock::Quoter_Factory::_narrow (factory_obj.in (), 
@@ -260,12 +265,11 @@ Quoter_Client::init_naming_service (void)
 int
 Quoter_Client::init (int argc, char **argv)
 {
-  int naming_result;
   this->argc_ = argc;
   this->argv_ = argv;
   
   TAO_TRY
-    {
+  {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
@@ -278,55 +282,58 @@ Quoter_Client::init (int argc, char **argv)
         return -1;
     
       if (this->use_naming_service_) 
-        {
-          naming_result = this->init_naming_service ();
+      {
+          int naming_result = this->init_naming_service ();
           if (naming_result == -1)
             return naming_result;
-        }
+      }
       else if (this->quoter_factory_key_ == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%s: no quoter factory key specified\n",
-                             this->argv_[0]),
-                            -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "%s: no quoter factory key specified\n",
+                            this->argv_[0]),
+                           -1);
       
       
-          CORBA::Object_var factory_object = 
+        CORBA::Object_var factory_object = 
             this->orb_->string_to_object (this->quoter_factory_key_,
                                           TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+        TAO_CHECK_ENV;
       
-          this->factory_ = 
-            Stock::Quoter_Factory::_narrow (factory_object.in (), TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+        this->factory_ = Stock::Quoter_Factory::_narrow (factory_object.in (), 
+                                                         TAO_TRY_ENV);
+        TAO_CHECK_ENV;
       
-          if (CORBA::is_nil (this->factory_.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid factory key <%s>\n",
-                               this->quoter_factory_key_),
-                              -1);
+        if (CORBA::is_nil (this->factory_.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,"invalid factory key <%s>\n",
+                                       this->quoter_factory_key_),
+                                       -1);
         }
+      }
     
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
     
       // Now retrieve the Quoter obj ref corresponding to the key.
       this->quoter_ =
         this->factory_->create_quoter (this->quoter_key_,
-                                       TAO_TRY_ENV);
-    
+                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
       ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
     
       if (CORBA::is_nil (this->quoter_))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "null quoter objref returned by factory\n"),
-                          -1);
+      {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "null quoter objref returned by factory\n"),
+                            -1);
+      }
     }
   TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Quoter::init");
-      return -1;
-    }
+  {
+    TAO_TRY_ENV.print_exception ("Quoter::init");
+    return -1;
+  }
   TAO_ENDTRY;
   
   return 0;
