@@ -101,13 +101,13 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       // Append the endpoint that is being passed.
       ACE_OS::strcat (end_point,
                       cloc_name_ptr);
-      
+
     }
   else
     {
       // The case where the protocol to be used is explicitly
       // specified.
-      
+
       // Allocate memory for the end_point.
       end_point = CORBA::string_alloc (addr_list_length +
                                        1 + // For the seperator
@@ -133,11 +133,11 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       ACE_OS::strcat (end_point,
                       "/");
     }
-  
+
   // Append the key string.
   ACE_OS::strcat (end_point,
                   key_string.c_str ());
-  
+
   // Call the mprofile helper which makes an mprofile for this
   // endpoint and adds it to the big mprofile.
   this->parse_string_mprofile_helper (end_point,
@@ -150,7 +150,7 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (CORBA::ULong
                                                  &addr_list_length,
                                                  ACE_CString &key_string,
                                                  ACE_CString &cloc_name,
-                                                 CORBA::Environment 
+                                                 CORBA::Environment
                                                  &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -196,7 +196,7 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var end_point,
     (end_point.in (),
      jth_mprofile,
      ACE_TRY_ENV);
-  
+
   if (retv != 0)
     {
       ACE_THROW(CORBA::INV_OBJREF (
@@ -206,7 +206,7 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var end_point,
                   CORBA::COMPLETED_NO));
     }
 
-  
+
   // Add this profile to the main mprofile.
   TAO_MProfile *jth_mprofile_ptr = &jth_mprofile;
 
@@ -248,11 +248,11 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::Environment &ACE_TRY_ENV)
       // All is well, so release the stub object from its
       // auto_ptr.
       (void) safe_data.release ();
-      
+
       // Return the object reference to the application.
       return obj;
     }
-  
+
   // Shouldnt come here: if so, return nil reference.
   return CORBA::Object::_nil ();
 }
@@ -263,15 +263,12 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
                                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-  const char rir_prefix [] = "rir:/";
   CORBA::Object_ptr rir_obj = CORBA::Object::_nil ();
 
   // "rir" protocol. Pass the key string as an
-  // argument to the resolve_initial_references ()
-  const char *key_string =
-    corbaloc_name + sizeof (rir_prefix) -1;
-
+  // argument to the resolve_initial_references.
+  const char *key_string = corbaloc_name + sizeof ("rir:/") -1;
+  
   if (ACE_OS::strcmp (key_string, "") == 0)
     {
       // If the key string is empty, assume the default
@@ -280,9 +277,9 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
     }
 
   rir_obj = this->orb_->resolve_initial_references (key_string,
-                                             ACE_TRY_ENV);
+                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
+  
   return rir_obj;
 }
 
