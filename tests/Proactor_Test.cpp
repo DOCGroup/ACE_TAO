@@ -82,11 +82,9 @@ static int threads = 1;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // Log options
-static int loglevel = 0; // 0 full , 1 only errors
+static int loglevel;       // 0 full , 1 only errors
 
-static const size_t MIN_TIME = 1;    // min 1 sec
-static const size_t MAX_TIME = 3600; // max 1 hour
-static u_int seconds = 2;  // default time to run - 2 seconds
+static size_t xfer_limit;  // Number of bytes for Sender to send.
 
 static ACE_TCHAR complete_message[] =
   ACE_TEXT ("GET / HTTP/1.1\r\n")
@@ -1014,7 +1012,6 @@ public:
   int  start (const ACE_INET_Addr &addr, int num);
   void stop (void);
   void cancel_all (void);
-  void close_all (void);
 
   // Virtual from ACE_Asynch_Connector
   Sender *make_handler (void);
@@ -1064,20 +1061,6 @@ Connector::cancel_all(void)
     {
       if (this->list_senders_[i] != 0)
         this->list_senders_[i]->cancel ();
-    }
-  return;
-}
-
-
-void
-Connector::close_all (void)
-{
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
-
-  for (int i = 0; i < MAX_SENDERS; ++i)
-    {
-      if (this->list_senders_[i] != 0)
-        this->list_senders_[i]->close ();
     }
   return;
 }
@@ -1273,7 +1256,7 @@ Sender::cancel ()
 void
 Sender::close ()
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
+  // This must be called with the lock_ held.
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Closing Sender %d writes; %d I/O outstanding\n"),
               this->index_, this->io_count_));
@@ -1639,7 +1622,13 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     if (result.error () == 0 && result.bytes_transferred () > 0)
       {
         this->total_snd_ += result.bytes_transferred ();
-
+	if (this->total_snd_ >= xfer_limit)
+	  {
+	    ACE_DEBUG ((LM_DEBUG,
+			ACE_TEXT ("(%t) Sender %d sent %d, limit %d\n"),
+			this->index_, this->total_snd_, xfer_limit));
+	    this->close ();
+	  }
         if (duplex != 0)   // full duplex, continue write
           {
             if ((this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
@@ -1800,7 +1789,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n-v log level")
       ACE_TEXT ("\n    0 - log all messages")
       ACE_TEXT ("\n    1 - log only errors and unusual cases")
-      ACE_TEXT ("\n-i time to run in seconds")
+      ACE_TEXT ("\n-x max transfer byte count per Sender")
       ACE_TEXT ("\n-u show this message")
       ACE_TEXT ("\n"),
       argv[0]
@@ -1844,51 +1833,52 @@ set_proactor_type (const ACE_TCHAR *ptype)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  if (argc == 1) // no arguments , so one button test
-    {
-      both = 1;                       // client and server simultaneosly
+  // First, set up all the defaults then let any args change them.
+  both = 1;                       // client and server simultaneosly
 #if defined(ACE_WIN32) || defined(sun)
-      duplex = 1;                     // full duplex is on
+  duplex = 1;                     // full duplex is on
 #else   // Linux,IRIX - weak AIO implementation
-      duplex = 0;                     // full duplex is off
+  duplex = 0;                     // full duplex is off
 #endif
-      host = ACE_LOCALHOST;           // server to connect
-      port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
-      max_aio_operations = 512;       // POSIX Proactor params
+  host = ACE_LOCALHOST;           // server to connect
+  port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
+  max_aio_operations = 512;       // POSIX Proactor params
 #if defined (sun)
-      proactor_type = SUN;            // Proactor type for SunOS
-      threads = 1;                    // aiosuspend() not MT Safe.
+  proactor_type = SUN;            // Proactor type for SunOS
+  threads = 1;                    // aiosuspend() not MT Safe.
 #else
-      proactor_type = DEFAULT;        // Proactor type = default
-      threads = 3;                    // size of Proactor thread pool
+  proactor_type = DEFAULT;        // Proactor type = default
+  threads = 3;                    // size of Proactor thread pool
 #endif
 
-#if defined(__sgi) || defined (ACE_LINUX_COMMON_H)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Weak AIO implementation, test will work with 3 clients\n"));
-      senders = 3;                    // number of senders
+# if 0 /*defined(__sgi) || defined (ACE_LINUX_COMMON_H)*/
+  ACE_DEBUG ((LM_DEBUG,
+	      ACE_TEXT ("Weak AIO implementation, test will work with ")
+	      ACE_TEXT ("3 clients\n")));
+  senders = 3;                    // number of senders
 #else
-      senders = 10;                   // number of senders
+  senders = 10;                   // number of senders
 #endif   
 
-      loglevel = 1;                   // log level : 0 full/ 1 only errors
-      seconds = 15;                   // time to run in seconds
-      return 0;
-    }
+  loglevel = 1;                   // log level : 0 full/ 1 only errors
+  // Default transfer limit 50 messages per Sender
+  xfer_limit = 50 * ACE_OS::strlen (complete_message);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:t:o:n:p:d:h:s:v:ub"));
+  if (argc == 1) // no arguments , so one button test
+    return 0;
+
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("x:t:o:n:p:d:h:s:v:ub"));
   int c;
 
   while ((c = get_opt ()) != EOF)
     {
     switch (c)
       {
-      case 'i':  // time to run
-        seconds = ACE_OS::atoi (get_opt.opt_arg ());
-        if (seconds < MIN_TIME)
-          seconds = MIN_TIME;
-        if (seconds > MAX_TIME)
-          seconds = MAX_TIME;
+      case 'x':  // xfer limit
+        xfer_limit = ACE_static_cast (size_t,
+				      ACE_OS::atoi (get_opt.opt_arg ()));
+        if (xfer_limit == 0)
+	  xfer_limit = 1;          // Bare minimum.
         break;
       case 'b':  // both client and server
         both = 1;
@@ -1968,24 +1958,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           else
             rc += connector.start (addr, senders);
         }
-
-      if (rc > 0)
-        ACE_OS::sleep (seconds);
     }
 
-  // Now close all the connector/senders. This should trip all the receivers
-  // to close as well.
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Close Connector/Senders: sessions_=%d\n"),
-              connector.get_number_sessions ()
-            ));
-  connector.close_all ();
-
-  // Wait til all the sessions run down.
+  // First wait for sessions to begin, then wait for them to run down
+  while (acceptor.get_number_sessions () == 0 &&
+	 connector.get_number_sessions () == 0   )
+    ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
   while (acceptor.get_number_sessions () > 0 ||
-         connector.get_number_sessions () > 0   )
+	 connector.get_number_sessions () > 0   )
     ACE_OS::sleep (1);
+
 #if 0
   // Cancel all pending AIO on Connector and Senders
   ACE_DEBUG ((LM_DEBUG,
