@@ -298,8 +298,8 @@ ACE_Runtime_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*configs */
-                  ACE_ENV_ARG_DECL_NOT_USED)
+ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs 
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   RtecScheduler::NOT_SCHEDULED))
 {
