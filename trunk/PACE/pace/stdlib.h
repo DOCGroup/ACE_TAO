@@ -48,6 +48,13 @@ extern "C" {
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
+    C std ref. 7.20.4.2
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE int pace_atexit (void (*func)(void));
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
      PACE's implementation of the POSIX function atof.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
@@ -86,6 +93,13 @@ extern "C" {
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
+    C std ref. 7.20.6.2
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE pace_div_t pace_div (int numer, int denom);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
      PACE's implementation of the POSIX function exit.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
@@ -102,6 +116,45 @@ extern "C" {
 #if (PACE_HAS_POSIX_MP_UOF)
   PACE_INLINE char * pace_getenv (const char * name);
 #endif /* PACE_HAS_POSIX_MP_UOF */
+
+  /**
+    C std ref. 7.20.6.1
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE long int pace_labs (long int j);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.6.2
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE pace_ldiv_t pace_ldiv (long int numer, long int denom);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.7.1
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE int pace_mblen (const char* s, pace_size_t n);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.8.1
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE pace_size_t pace_mbstowcs (pace_wchar_t* pwcs,
+                                         const char* s,
+                                         pace_size_t n);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.7.2
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE int pace_mbtowc (pace_wchar_t* pwc,
+                               const char* s,
+                               pace_size_t n);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function qsort.
@@ -141,7 +194,57 @@ extern "C" {
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
-  /* Memory Management */
+  /**
+    C std ref. 7.20.1.3
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE double pace_strtod (const char* nptr,
+                                  char** endptr);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.1.4
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE int pace_strtol (const char* nptr,
+                               char** endptr,
+                               int base);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.7.2
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE unsigned long int pace_strtoul (const char* nptr,
+                                              char** endptr,
+                                              int base);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.4.5
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE int pace_system (const char* string);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.8.2
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE pace_size_t pace_wcstombs (char* s,
+                                         const pace_wchar_t* pwcs,
+                                         pace_size_t n);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+  /**
+    C std ref. 7.20.7.3
+    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  PACE_INLINE int pace_wctomb (char* s, pace_wchar_t wchar);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+
+                        /* Memory Management */
 
   /**
      PACE's implementation of the POSIX function malloc.
