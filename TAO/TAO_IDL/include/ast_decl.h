@@ -210,7 +210,7 @@ public:
   // Accessors for the repository ID.
 
   const char *prefix (void);
-  void prefix (char *value);
+  void prefix (const char *value);
   // Accessors for the repository ID prefix.
 
   const char *version (void);
@@ -228,7 +228,7 @@ public:
   void set_id_with_typeid (char *value);
   // Called by a 'typeId' declaration.
 
-  void set_prefix_with_typeprefix (char *value);
+  void set_prefix_with_typeprefix (const char *value);
   // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
@@ -362,7 +362,7 @@ private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 
-  void set_prefix_with_typeprefix_r (char *value,
+  void set_prefix_with_typeprefix_r (const char *value,
                                      UTL_Scope *appeared_in);
   // Non-top-level version of set_prefix_with_typeprefix.
 };

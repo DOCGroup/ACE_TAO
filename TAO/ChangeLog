@@ -1,3 +1,11 @@
+Mon Nov 22 16:37:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/include/ast_decl.h:
+
+          Changed the set_prefix_with_typeprefix and prefix methods to take
+          const char* to avoid warnings with some compilers.
+
 Mon Nov 22 19:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
