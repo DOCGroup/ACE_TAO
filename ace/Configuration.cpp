@@ -945,7 +945,11 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 {
   HKEY result = 0;
   // Make a copy of hKey
+#if defined (ACE_HAS_WINCE)
+  if (::RegOpenKeyEx (hKey, NULL, 0, 0, &result) != ERROR_SUCCESS)
+#else
   if (::RegOpenKey (hKey, NULL, &result) != ERROR_SUCCESS)
+#endif  // ACE_HAS_WINCE
     return 0;
 
   // recurse through the path
@@ -965,9 +969,18 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
     {
       // Open the key
       HKEY subkey;
+
+#if defined (ACE_HAS_WINCE)
+      if (ACE_TEXT_RegOpenKeyEx (result,
+                                 temp,
+                                 0,
+                                 0,
+                                 &subkey) != ERROR_SUCCESS)
+#else
       if (ACE_TEXT_RegOpenKey (result,
                                temp,
                                &subkey) != ERROR_SUCCESS)
+#endif  // ACE_HAS_WINCE
         {
           // try creating it
           if (!create || ACE_TEXT_RegCreateKeyEx (result,
