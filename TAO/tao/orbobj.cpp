@@ -178,7 +178,10 @@ CORBA::ORB_init (int &argc,
 		 char * /* orb_name */,
 		 CORBA::Environment &env)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, TAO_Internal::orbinit_lock_, 0);
+  // Using ACE_Static_Object_Lock::instance() precludes ORB_init from being called
+  // within a static object CTOR.
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard,
+                    *ACE_Static_Object_Lock::instance (), 0);
 
   env.clear ();
 
