@@ -4,7 +4,7 @@ Sun May 16 12:34:48 1999  David L. Levine  <levine@cs.wustl.edu>
           the lock type from ACE_Thread_Mutex to
           ACE_Recursive_Thread_Mutex.  This allows ACE_Log_Msg's
           methods to be called after calling ACE_Log_Msg::acquire (),
-          without deadlock.  Thanks to Bill Rizzi <rizzi@sysci.org>
+          without deadlock.  Thanks to Bill Rizzi <rizzi@softserv.com>
           for suggesting this.
 
 Sat May 15 08:30:43 1999  David L. Levine  <levine@cs.wustl.edu>
