@@ -3,7 +3,7 @@
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_index;
+ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_index;
 
 RTScheduling::Current::IdType*
 Thread_Task::guids (void)
