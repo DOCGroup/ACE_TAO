@@ -1,3 +1,9 @@
+Wed Feb 16 11:17:27 2005  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdlib.cpp: Don't #include <limits> if the max() method
+	  won't be used; same reasoning as:
+	  Tue Feb 15 18:19:25 2005  Steve Huston  <shuston@riverace.com>
+
 Wed Feb 16 18:15:07 2005  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
