@@ -13,10 +13,10 @@
 #ifndef _ACEXML_LOCATOR_H_
 #define _ACEXML_LOCATOR_H_
 
-#include "common/XML_Types.h"
+#include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Locator Locator.h "common/Locator.h"
+ * @class ACEXML_Locator Locator.h "ACEXML/common/Locator.h"
  *
  * @brief ACEXML_Locator defines operations that an XML locator should support.
  *

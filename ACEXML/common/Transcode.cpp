@@ -1,9 +1,9 @@
 // -*- C++ -*-  $Id$
 
-#include "common/Transcode.h"
+#include "ACEXML/common/Transcode.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "common/Transcode.i"
+# include "ACEXML/common/Transcode.i"
 #endif /* __ACEXML_INLINE__ */
 
 int

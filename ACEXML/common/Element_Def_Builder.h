@@ -13,8 +13,8 @@
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 
 #include "ace/Auto_Ptr.h"
-#include "common/XML_Types.h"
-#include "common/Env.h"
+#include "ACEXML/common/XML_Types.h"
+#include "ACEXML/common/Env.h"
 
 /**
  * @ class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"

@@ -12,10 +12,10 @@
 #ifndef _ACEXML_XMLFILTER_H_
 #define _ACEXML_XMLFILTER_H_
 
-#include "common/XMLReader.h"
+#include "ACEXML/common/XMLReader.h"
 
 /**
- * @class ACEXML_XMLFilter XMLFilter.h "common/XMLFilter.h"
+ * @class ACEXML_XMLFilter XMLFilter.h "ACEXML/common/XMLFilter.h"
  *
  * @brief ACEXML_XMLFilter
  *

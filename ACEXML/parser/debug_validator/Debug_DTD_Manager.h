@@ -12,8 +12,8 @@
 #ifndef _ACEXML_DEBUG_DTD_Manager_H_
 #define _ACEXML_DEBUG_DTD_Manager_H_
 
-#include "common/DTD_Manager.h"
-#include "parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "ACEXML/common/DTD_Manager.h"
+#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
 
 class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_DTD_Manager : public ACEXML_DTD_Manager
 {

@@ -13,11 +13,11 @@
 #ifndef _ACEXML_FILECHARSTREAM_H_
 #define _ACEXML_FILECHARSTREAM_H_
 
-#include "common/CharStream.h"
+#include "ACEXML/common/CharStream.h"
 #include "ace/streams.h"
 
 /**
- * @class ACEXML_FileCharStream FileCharStream.h "common/FileCharStream.h"
+ * @class ACEXML_FileCharStream FileCharStream.h "ACEXML/common/FileCharStream.h"
  *
  * An implementation of ACEXML_CharStream for reading
  * input from a file.

@@ -13,10 +13,10 @@
 #ifndef _ACEXML_ATTRIBUTES_H_
 #define _ACEXML_ATTRIBUTES_H_
 
-#include "common/XML_Types.h"
+#include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Attributes Attributes.h "common/Attributes.h"
+ * @class ACEXML_Attributes Attributes.h "ACEXML/common/Attributes.h"
  *
  * @brief ACEXML_Attributes defines a collection of attributes of an XML element.
  *

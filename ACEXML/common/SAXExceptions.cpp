@@ -1,6 +1,6 @@
 // -*- C++ -*- $Id$
 
-#include "common/SAXExceptions.h"
+#include "ACEXML/common/SAXExceptions.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
@@ -34,7 +34,7 @@ static const ACEXML_Char ACEXML_SAXParseException_name[] = {
 const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACEXML_SAXParseException_name;
 
 #if !defined (__ACEXML_INLINE__)
-# include "common/SAXExceptions.i"
+# include "ACEXML/common/SAXExceptions.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_SAXException::ACEXML_SAXException (void)

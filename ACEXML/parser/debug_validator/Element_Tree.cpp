@@ -1,9 +1,9 @@
 // $Id$
 
-#include "parser/debug_validator/Element_Tree.h"
+#include "ACEXML/parser/debug_validator/Element_Tree.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "parser/debug_validator/Element_Tree.i"
+# include "ACEXML/parser/debug_validator/Element_Tree.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Element_Tree_Node::~ACEXML_Element_Tree_Node ()
