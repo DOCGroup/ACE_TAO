@@ -120,7 +120,7 @@ public:
                         CORBA::NVList_ptr args,
                         CORBA::NamedValue_ptr result,
                         CORBA::Flags flags,
-                        CORBA::ExceptionList &exceptions,
+                        CORBA::ExceptionList_ptr exceptions,
                         int lazy_evaluation,
                         CORBA_Environment &ACE_TRY_ENV =
                               TAO_default_environment ());

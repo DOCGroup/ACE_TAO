@@ -324,19 +324,19 @@ CORBA_ORB::create_list (CORBA::Long count,
 // CORBA::NO_IMPLEMENT.
 
 void
-CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
+CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (list, CORBA::ExceptionList (),
+                    CORBA::NO_MEMORY ());
 }
 
 void
-CORBA_ORB::create_environment (CORBA::Environment_ptr &,
+CORBA_ORB::create_environment (CORBA::Environment_ptr &environment,
                                CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (environment, CORBA::Environment (),
+                    CORBA::NO_MEMORY ());
 }
 
 CORBA::Boolean

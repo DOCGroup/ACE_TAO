@@ -1,3 +1,30 @@
+Fri Jun  9 09:45:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Exception.i:
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * tao/ORB.cpp:
+        * tao/Object.cpp:
+        * tao/Request.h:
+        * tao/Request.i:
+        * tao/Request.cpp:
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+          Fixed the support for DSI exceptions.  The ORB was not passing
+          the ExceptionList provided by the application down to the
+          Invocation class.
+          Next the Invocation class was not decoding user exceptions
+          properly, the Interface repository ID was dropped before copying
+          the exception into the Any CDR stream.
+          Finally there were a host of small memory management problems in
+          the ExceptionList_var class.
+          Thanks to Boris Sukholitko <boris@webglide.com> for pointing out
+          the problems and providing the initial ideas for the fixes.
+
+        * tests/Param_Test/except.cpp:
+          Fixed the test it was not initializing the ExceptionList for the
+          DII request.
+
 Fri Jun  9 09:17:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i:
@@ -21,7 +48,7 @@ Fri Jun  9 09:03:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
 
-          Readded the RTOLDEvent.dsp file.  
+          Readded the RTOLDEvent.dsp file.
 
 Fri Jun 09 10:55:33 2000  David L. Levine  <levine@cs.wustl.edu>
 

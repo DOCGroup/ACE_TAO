@@ -80,19 +80,22 @@ CORBA_ExceptionList_var::ptr (void) const
 
 ACE_INLINE
 CORBA_ExceptionList_var::CORBA_ExceptionList_var (const CORBA_ExceptionList_var &p) // copy constructor
-  : ptr_ (p.ptr_->_duplicate ())
-{}
+  : ptr_ (CORBA_ExceptionList::_duplicate (p.ptr_))
+{
+}
 
 ACE_INLINE
 CORBA_ExceptionList_var::~CORBA_ExceptionList_var (void) // destructor
 {
-  this->ptr_->_destroy ();
+  if (this->ptr_ != 0)
+    this->ptr_->_destroy ();
 }
 
 ACE_INLINE CORBA_ExceptionList_var &
 CORBA_ExceptionList_var::operator= (CORBA_ExceptionList_ptr p)
 {
-  this->ptr_->_destroy ();
+  if (this->ptr_ != 0)
+    this->ptr_->_destroy ();
   this->ptr_ = p;
   return *this;
 }
@@ -102,8 +105,9 @@ CORBA_ExceptionList_var::operator= (const CORBA_ExceptionList_var &p)
 {
   if (this != &p)
     {
-      this->ptr_->_destroy ();
-      this->ptr_ = p.ptr_->_duplicate ();
+      if (this->ptr_ != 0)
+        this->ptr_->_destroy ();
+      this->ptr_ = CORBA_ExceptionList::_duplicate (p.ptr_);
     }
   return *this;
 }
@@ -141,7 +145,8 @@ CORBA_ExceptionList_var::inout (void)
 ACE_INLINE CORBA_ExceptionList_ptr &
 CORBA_ExceptionList_var::out (void)
 {
-  this->ptr_->_destroy ();
+  if (this->ptr_ != 0)
+    this->ptr_->_destroy ();
   this->ptr_ = CORBA_ExceptionList::_nil ();
   return this->ptr_;
 }

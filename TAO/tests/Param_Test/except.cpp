@@ -44,16 +44,19 @@ Test_Exception::opname (void) const
 }
 
 void
-Test_Exception::dii_req_invoke (CORBA::Request *req,
+Test_Exception::dii_req_invoke (CORBA::Request_ptr req,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
+      this->in_++;
       req->add_in_arg ("s1") <<= this->in_;
       req->add_inout_arg ("s2") <<= this->inout_;
       req->add_out_arg ("s3") <<= this->out_;
 
       req->set_return_type (CORBA::_tc_long);
+
+      req->exceptions ()->add (CORBA::TypeCode::_duplicate (Param_Test::_tc_Ooops));
 
       req->invoke (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -90,7 +93,6 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
           this->inout_ = this->in_ * 2;
           this->out_ = this->in_ * 3;
           this->ret_ = this->in_ * 4;
-          return;
         }
       else if (user_ex.exception () >>= bad_boy)
         {
@@ -103,24 +105,23 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Test_Exception::dii_req_invoke - "
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR Test_Exception::dii_req_invoke - "
                       "unexpected (and unknown) user exception\n"));
         }
-
+      return;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
-                               "expected system exception\n");
+          ACE_DEBUG ((LM_DEBUG,
+                      "Test_Exception::dii_req_invoke - "
+                      "expected CORBA::UNKNOWN\n"));
         }
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
-
-      return;
     }
   ACE_ENDTRY;
   ACE_CHECK;
