@@ -758,7 +758,11 @@ sub process_cmdline {
     if (defined $options) {
       foreach my $key (keys %$options) {
         my($type) = $self->is_set($key, $options);
-        if ($type eq 'ARRAY') {
+
+        if (!defined $type) {
+          ## This option was not used, so we ignore it
+        }
+        elsif ($type eq 'ARRAY') {
           push(@{$parameters->{$key}}, @{$options->{$key}});
         }
         elsif ($type eq 'HASH') {

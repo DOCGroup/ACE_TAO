@@ -79,7 +79,11 @@ sub create_array {
       elsif ($val =~ /^\'(.*)\'$/) {
         $val = $1;
       }
-      push(@array, $val);
+
+      ## Only add the value to the array if the string isn't empty
+      if ($val ne '') {
+        push(@array, $val);
+      }
       for(; $i < $length; $i++) {
         if (substr($line, $i, 1) !~ /\s/) {
           $i--;
