@@ -597,7 +597,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &env)
                                       this->object_key ());
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
-                  2 /* major # */ + 2 /* minor # */ + 1 /* DOT */ +
+                  2 /* major # */ + 2 /* minor # */ + 1 /* decimal point */ +
                   2 /* double-slash separator */ +
                   ACE_OS::strlen (this->rendezvous_point_) +
                   1 /* slash separator */ +

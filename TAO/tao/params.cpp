@@ -38,6 +38,9 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   //
   // A single endpoint, instead of several, can be added just as well.
 
+  int status = 0;
+  // Return code:  0 = success,  1 = failure
+
   const char endpoints_delimiter = ';';
 
   int length = endpoints.length ();
@@ -77,22 +80,35 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
               continue;
             }
 
-          endpoints_list.insert (endpoints.substring (begin, end));
+          ACE_CString endpt = endpoints.substring (begin, end);
           // The substring call will work even if `end' is equal to
           // ACE_CString::npos since that will just extract the substring
           // from the offset `begin' to the end of the string.
 
+          // Check for a valid URL style endpoint set
+          int check_offset = endpt.find (':');
+
+          if (check_offset > 0 &&
+              check_offset != endpt.npos &&
+              endpt.find ("//", check_offset + 1) != endpt.npos)
+            {
+              endpoints_list.insert (endpt);
+              // Insert endpoint into list
+            }
+          else
+            status = -1;  // Error: invalid URL style endpoint set
+
           begin += end + 1;
           end = endpoints.find (endpoints_delimiter, begin);
         }
-
-      return 0;  // Success
     }
   else
     {
-      return -1;
+      status = -1;
       // Failure:  Empty string
     }
+
+  return status;
 }
 
 

@@ -216,6 +216,9 @@ public:
   TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
   // Constructor.
 
+  ~TAO_UIOP_Server_Connection_Handler (void);
+  // Destructor
+
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.  Argument is unused.

@@ -239,6 +239,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
       else if (ACE_OS::strcmp (current_arg, "-ORBendpoint") == 0)
         {
           // Each "endpoint" is of the form:
@@ -265,10 +266,19 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             {
               ACE_CString endpts (arg_shifter.get_current ());
 
-              this->orb_params ()->endpoints (endpts);
+              if (this->orb_params ()->endpoints (endpts) != 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%P|%t)\n"
+                                     "Invalid endpoint(s) specified:\n%s\n",
+                                     endpts.c_str ()),
+                                    -1);
+                }
+
               arg_shifter.consume_arg ();
             }
         }
+
       else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
         {
           // @@ Fred&Carlos: This option now has the same effect as specifying
@@ -287,7 +297,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // may be dropped in future releases.
 
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) WARNING: The `-ORBhost' option is obsolete.\n"
+                      "(%P|%t) \nWARNING: The `-ORBhost' option is obsolete.\n"
                       "In the future, use the `-ORBendpoint' option.\n"));
 
           if (arg_shifter.is_parameter_next())
@@ -348,7 +358,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
           old_style_endpoint = 1;
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) WARNING: The `-ORBport' option is obsolete.\n"
+                      "(%P|%t) \nWARNING: The `-ORBport' option is obsolete.\n"
                       "In the future, use the `-ORBendpoint' option.\n"));
 
           // Specify the port number/name on which we should listen
@@ -481,33 +491,33 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char *preconnections = arg_shifter.get_current ();
+              ACE_CString preconnections (arg_shifter.get_current ());
 
-              arg_shifter.consume_arg ();
-
-              ACE_CString p;
-
-              if (ACE_OS::strstr (preconnections, "://") == 0)
+              if (this->orb_params ()->endpoints (preconnections) != 0)
                 {
-                  // Handle old style preconnects for backward compatibility
+                  // Handle old style preconnects for backward compatibility.
+                  // The old style preconnects only work for IIOP!
 
                   // Issue a warning since this backward compatibilty support
                   // may be dropped in future releases.
 
                   ACE_DEBUG ((LM_WARNING,
-                              "(%P|%t) WARNING: The `host:port' pair style "
+                              "(%P|%t) \nWARNING: The `host:port' pair style "
                               "for `-ORBpreconnect' is obsolete.\n"
                               "In the future, use the URL style.\n"));
 
-                  p =
+                  preconnections =
                     ACE_CString ("iiop://") +
                     ACE_CString (preconnections) +
                     ACE_CString ("/");
-                }
-              else
-                p = ACE_CString (preconnections);
 
-              this->orb_params ()->endpoints (p);
+                  ACE_DEBUG ((LM_WARNING,
+                              "(%P|%t) \nWARNING: The following preconnection "
+                              "will be used:\n%s\n",
+                              preconnections.c_str()));
+
+                  this->orb_params ()->endpoints (preconnections);
+                }
             }
         }
 
@@ -734,8 +744,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Init acceptor_registry_
   this->acceptor_registry (trf->get_acceptor_registry ());
 
-  if (this->acceptor_registry ()->open (this) == -1)
-    return -1;
+  //   if (this->acceptor_registry ()->open (this) == -1)
+  //     return -1;
 
   // Have registry parse the preconnects
   if (this->orb_params ()->preconnects ().is_empty () == 0)
