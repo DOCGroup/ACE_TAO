@@ -5792,8 +5792,8 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
       return ::pthread_getspecific (key, data);
 #   else /* this is Draft 7 or STD */
       *data = pthread_getspecific (key);
-#   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
       return 0;
+#   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
 # elif defined (ACE_HAS_WTHREADS)
 
   // The following handling of errno is designed like this due to
@@ -9634,8 +9634,8 @@ ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
 #   if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   return wcscmp (s, t);
 #   else
-  while (*s != 0 && 
-         *t != 0 && 
+  while (*s != 0 &&
+         *t != 0 &&
          *s == *t)
     {
       s++;
@@ -9677,8 +9677,8 @@ ACE_INLINE int
 ACE_OS::strcmp (const ACE_USHORT16 *s, const ACE_USHORT16 *t)
 {
   // ACE_TRACE ("ACE_OS::strcpy");
-  while (*s != 0 && 
-         *t != 0 && 
+  while (*s != 0 &&
+         *t != 0 &&
          *s == *t)
     {
       s++;
