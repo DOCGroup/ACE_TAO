@@ -210,8 +210,13 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   else
     return ACE_OS::join_leaf (this->get_handle (),
                               ACE_reinterpret_cast (const sockaddr *,
+#if !defined(_UNICOS)
                                                     &this->mcast_request_if_.imr_multiaddr.s_addr),
                               sizeof this->mcast_request_if_.imr_multiaddr.s_addr,
+#else
+                                                    &this->mcast_request_if_.imr_multiaddr),
+                              sizeof this->mcast_request_if_.imr_multiaddr,
+#endif /* !_UNICOS */
                               qos_params);
 }
 
