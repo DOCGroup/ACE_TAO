@@ -190,11 +190,14 @@ main (int, ASYS_TCHAR *[])
 
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);
-  ACE_Time_Value tv3 (100);
+  ACE_Time_Value tv3 (100U);
   ACE_Time_Value tv4 (1, 1000000);
-  ACE_Time_Value tv5 (2);
+  ACE_Time_Value tv5 (2UL);
   ACE_Time_Value tv6 (1, -1000000);
   ACE_Time_Value tv7 (2.0);
+
+  // Beware!  2.5 gets truncated to a long with value 2!
+  ACE_Time_Value tv8 (2.5);
 
   ACE_ASSERT (tv1 == ACE_Time_Value (0));
   ACE_ASSERT (tv2 < tv3);
@@ -207,6 +210,7 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (tv1 != tv2);
   ACE_ASSERT (tv6 == tv1);
   ACE_ASSERT (tv5 == tv7);
+  ACE_ASSERT (tv7 == tv8); // That's right!  See above . . .
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
   if (test_ace_u_longlong () != 0)
