@@ -1,3 +1,11 @@
+Fri Sep  8 20:50:00 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
+ 	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h: 
+	  Added virtual destructors.
+	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+ 	  Commented unused parameter.
+
 Fri Sep  8 18:54:32 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
