@@ -220,7 +220,7 @@ endif # debug
 
 ifeq ($(debug),)
   CFLAGS  += -DACE_NDEBUG
-  CCFLAGS += -DACE_NDEBUG
+##  CCFLAGS += -DACE_NDEBUG
 else
   CFLAGS  += $(DCFLAGS)
   CCFLAGS += $(DCCFLAGS)
