@@ -1,3 +1,9 @@
+Sun Apr 16 10:25:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/ORB.h: 
+	  The test should be #if (TAO_HAS_INTERCEPTORS == 1) not 
+	  #if defined(TAO_HAS_INTERCEPTORS)
+
 Sat Apr 15 19:48:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/POA.cpp:
