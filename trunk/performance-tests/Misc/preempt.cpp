@@ -39,6 +39,7 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Misc, preempt, "$Id$")
 
