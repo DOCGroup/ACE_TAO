@@ -567,18 +567,35 @@ idl_store_pragma (char *buf)
     {
       char *tmp = buf + 16;
 
-      while (*tmp == ' ')
+      while (*tmp == ' ' || *tmp == '\t')
         {
           ++tmp;
         }
 
       char *number = ACE_OS::strchr (tmp, ' ');
 
-      while (*number == ' ')
+      if (number == 0)
+        {
+          number = ACE_OS::strchr (tmp, '\t');
+        }
+
+      while (*number == ' ' || *number == '\t')
         {
           ++number;
         }
 
+      size_t len = ACE_OS::strlen (number);
+
+      // For some reason, the SunCC preprocessor adds a trailing space, which
+      // messes with idl_valid_version() below, so we check and remove.
+      while (number[len - 1] == ' ')
+        {
+          number[len - 1] = '\0';
+          len = ACE_OS::strlen (number);
+        }
+
+      // This call adds a proper null terminator to tmp, so no need to 
+      // do it here.
       AST_Decl *d = idl_find_node (tmp);
 
       if (d == 0)

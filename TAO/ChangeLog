@@ -1,3 +1,17 @@
+Tue Jan 21 15:31:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+	  Modified code handling #pragma version directive to handle
+	  the case where one or more of the spaces between the words
+	  in the directive contains a tab. Thanks to Dima Scub 
+	  <dima_scub@sniip.ru> for reporting the bug.
+
+	* TAO_IDL/fe/idl.ll:
+
+	  Changed the file that generates lex.yy.cpp to reflect the
+	  change above.
+
 Tue Jan 21 19:28:12 UC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Makefile.av:
