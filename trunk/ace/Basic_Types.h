@@ -264,14 +264,14 @@ typedef unsigned char ACE_Byte;
 # if defined (__SUNPRO_CC)
     // For unknown reasons, Sun CC 5.0 won't allow a reintepret cast
     // of a 64-bit pointer to a 64-bit int.
-    typedef u_long ptr_arith_t;
+    typedef unsigned long ptr_arith_t;
 # else  /* ! __SUNPRO_CC */
-    typedef u_int ptr_arith_t;
+    typedef unsigned int ptr_arith_t;
 # endif /* ! __SUNPRO_CC */
 #elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
-  typedef u_long ptr_arith_t;
+  typedef unsigned long ptr_arith_t;
 #elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-  typedef u_long long ptr_arith_t;
+  typedef unsigned long long ptr_arith_t;
 #else
 # error "Can't find a suitable type for doing pointer arithmetic."
 #endif /* ACE_SIZEOF_VOID_P */
@@ -341,10 +341,10 @@ typedef unsigned char ACE_Byte;
     ACE_U_LongLong operator* (const ACE_UINT32) const;
     ACE_U_LongLong &operator*= (const ACE_UINT32);
 
-    ACE_U_LongLong operator<< (const u_int) const;
-    ACE_U_LongLong &operator<<= (const u_int);
-    ACE_U_LongLong operator>> (const u_int) const;
-    ACE_U_LongLong &operator>>= (const u_int);
+    ACE_U_LongLong operator<< (const unsigned int) const;
+    ACE_U_LongLong &operator<<= (const unsigned int);
+    ACE_U_LongLong operator>> (const unsigned int) const;
+    ACE_U_LongLong &operator>>= (const unsigned int);
 
     double operator/ (const double) const;
 
@@ -378,10 +378,10 @@ typedef unsigned char ACE_Byte;
     ACE_U_LongLong &operator*= (const ACE_INT32);
     ACE_UINT32 operator/ (const ACE_INT32) const;
 #   if ACE_SIZEOF_INT == 4
-    ACE_UINT32 operator/ (const u_long) const;
+    ACE_UINT32 operator/ (const unsigned long) const;
     ACE_UINT32 operator/ (const long) const;
 #   else  /* ACE_SIZEOF_INT != 4 */
-    ACE_UINT32 operator/ (const u_int) const;
+    ACE_UINT32 operator/ (const unsigned int) const;
     ACE_UINT32 operator/ (const int) const;
 #   endif /* ACE_SIZEOF_INT != 4 */
 
@@ -390,8 +390,8 @@ typedef unsigned char ACE_Byte;
     void output (FILE * = stdout) const;
 
     ACE_TCHAR *as_string (ACE_TCHAR *string,
-                          u_int base = 10,
-                          u_int uppercase = 0) const;
+                          unsigned int base = 10,
+                          unsigned int uppercase = 0) const;
 
     ACE_UINT32 hi (void) const;
     ACE_UINT32 lo (void) const;

@@ -1296,7 +1296,8 @@ struct stat
 };
 
 # else /* ! ACE_HAS_WINCE */
-#   if defined (ACE_LACKS_SYS_TYPES_H)
+#   if defined (ACE_LACKS_SYS_TYPES_H) \
+       || (defined (__GLIBC__) && !defined (_BSD_SOURCE))
 #     if ! defined (ACE_PSOS)
   typedef unsigned char u_char;
   typedef unsigned short u_short;
