@@ -381,9 +381,6 @@ public:
   virtual UTL_Indenter     *indent (void);              // Get indenter
   virtual void             set_indent (UTL_Indenter *); // Set it
 
-  virtual idl_bool         read_from_stdin (void);      // Reading from stdin?
-  virtual void             set_read_from_stdin (idl_bool); // Set it
-
   virtual void             store_include_file_name (UTL_String *);
 
   virtual UTL_String       **include_file_names (void); // Array of file names
@@ -556,7 +553,6 @@ private:
   char                       *pd_local_escapes;      // Trapdoor argument
   UTL_Indenter               *pd_indent;             // Indent object
                                                      // as its being built
-  idl_bool                   pd_read_from_stdin;     // Reading from stdin?
   UTL_String                 **pd_include_file_names;// Array of file names.
   unsigned long              pd_n_include_file_names;// How many.
   unsigned long              pd_n_alloced_file_names;// How many alloced.

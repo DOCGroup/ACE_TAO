@@ -153,7 +153,6 @@ IDL_GlobalData::IDL_GlobalData (void)
     pd_be (0),
     pd_local_escapes (0),
     pd_indent (0),
-    pd_read_from_stdin (I_FALSE),
     pd_include_file_names (0),
     pd_n_include_file_names (0),
     pd_n_alloced_file_names (0),
@@ -537,19 +536,6 @@ void
 IDL_GlobalData::set_indent (UTL_Indenter *i)
 {
   this->pd_indent = i;
-}
-
-// Get or set indicator whether we're reading from stdin.
-idl_bool
-IDL_GlobalData::read_from_stdin (void)
-{
-  return this->pd_read_from_stdin;
-}
-
-void
-IDL_GlobalData::set_read_from_stdin (idl_bool r)
-{
-  this->pd_read_from_stdin = r;
 }
 
 // Have we seen this #include file name before?

@@ -2628,10 +2628,10 @@ idl_parse_line_and_file (char *buf)
 
   if (*h == '\0')
     {
-      ACE_NEW (tmp,
-               UTL_String ("standard input"));
-      idl_global->set_filename (tmp);
-      return;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("IDL: No input files\n")));
+
+      ACE_OS::exit (99);
     }
   else
     {
