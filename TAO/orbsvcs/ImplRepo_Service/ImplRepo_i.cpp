@@ -16,19 +16,59 @@ ImplRepo_i::ImplRepo_i (void)
 {
 }
 
+// Starts up the server associated with the object pointer and returns an 
+// updated pointer.
+CORBA::Object_ptr 
+ImplRepo_i::activate_object (CORBA::Object_ptr obj,
+                             CORBA::Environment &_env)
+{
+//  ACE_DEBUG ((LM_DEBUG, "Object is: %s\n", PortableServer::ObjectId_to_string (obj->in ())));
+
+  Implementation_Repository::INET_Addr new_addr;
+  IIOP::Profile *new_profile = new IIOP::Profile;
+  IIOP_Object *new_iiop_obj = 0;
+
+  TAO_TRY
+  {
+    // Where to get the poa name from?
+    new_addr = this->activate_server (0, TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+
+    IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
+
+    *new_profile = iiop_obj->profile;
+    // @@ need to fix host also.
+    new_profile->port = new_addr.port_;
+    new_iiop_obj = new IIOP_Object (iiop_obj->type_id, *new_profile);
+
+/*    ACE_DEBUG ((LM_DEBUG, "The forward_to is <%s>\n", 
+                this->orb_var_->object_to_string (new_iiop_obj, TAO_TRY_ENV)));
+    TAO_CHECK_ENV;*/
+  }
+  TAO_CATCHANY
+  {
+    TAO_RETHROW_RETURN (0);
+  }
+  TAO_ENDTRY;
+
+  return new CORBA_Object (new_iiop_obj, obj->_servant ());
+}
 
 // Starts the server <server> if it is not already started
-void ImplRepo_i::start (const char *server)
+Implementation_Repository::INET_Addr 
+ImplRepo_i::activate_server (const char *server,
+                             CORBA::Environment &_env)
 {
-  int status;
-  // Find out if it is already running
   char *ping_ior;
-  status = this->repository_.get_ping_ior (server, ping_ior);
+  Implementation_Repository::INET_Addr address;
+  address.port_ = 0;
+  address.host_ = 0;
 
-  if (status != 0)
+  // Find out if it is already running
+  if (this->repository_.get_ping_ior (server, ping_ior) != 0)
   {
     ACE_ERROR ((LM_ERROR, "ERROR starting %s: No ping object\n", server));
-    return;
+    TAO_THROW_RETURN (Implementation_Repository::Not_Found (), address);
   }
 
   TAO_TRY
@@ -42,10 +82,8 @@ void ImplRepo_i::start (const char *server)
 
     if (CORBA::is_nil (ping_object.in ()))
     {
-      ACE_ERROR ((LM_ERROR,
-                 "invalid Ping Object ior: <%s>\n",
-                 ping_ior));
-      return;
+      ACE_ERROR ((LM_ERROR, "Invalid Ping Object ior: <%s>\n", ping_ior));
+      TAO_THROW_RETURN (Implementation_Repository::Not_Found (), address);
     }
     
     ping_object->ping (TAO_TRY_ENV);
@@ -56,7 +94,7 @@ void ImplRepo_i::start (const char *server)
     // Start it up
     char *cl;
 
-    status = this->repository_.get_comm_line (server, cl);
+    int status = this->repository_.get_comm_line (server, cl);
 
     if (status == 0)
     {
@@ -70,53 +108,132 @@ void ImplRepo_i::start (const char *server)
 
       proc.spawn (proc_opts);
 
-      ACE_OS::sleep (2);
       delete [] cl;
     }
     else
     {
-      ACE_DEBUG ((LM_DEBUG, "ERROR starting %s\n", server));
+      ACE_DEBUG ((LM_ERROR, "ERROR starting %s\n", server));
+      TAO_THROW_RETURN (Implementation_Repository::Cannot_Activate (), address);
     }
+    
+    // @@ Here is where we need to wait for the response so we
+    // can find out where (host/port) the server started
+    ACE_OS::sleep (3);
+    
   }
   TAO_ENDTRY;
+
+  unsigned long host;
+  unsigned short port;
+
+  this->repository_.get_hostport (server, host, port);
+
+  address.host_ = host;
+  address.port_ = port;
+
+  return address;
+}
+
+
+// Adds an entry to the Repository about this <server>
+void
+ImplRepo_i::register_server (const char *server,
+                             const Implementation_Repository::Process_Options &options,
+                             CORBA::Environment &_env)
+{
+  Repository::Record rec;
+  rec.comm_line = CORBA::string_dup (options.command_line_);
+  rec.env = CORBA::string_dup (options.environment_);
+  rec.wdir = CORBA::string_dup (options.working_directory_);
+  rec.host = 0;
+  rec.port = 0;
+  rec.ping_ior = "";
+
+  int status = this->repository_.add (server, rec);
+
+  if (status == 1)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Server %s Already Registered\n", server));
+    TAO_THROW (Implementation_Repository::Already_Registered ());
+  }
+  else
+    ACE_DEBUG ((LM_DEBUG, "Server %s Successfully Registered\n", server));
+}
+
+
+// Updates the entry in the Repository about this <server> or adds it if
+// necessary.
+void
+ImplRepo_i::reregister_server (const char *server,
+                               const Implementation_Repository::Process_Options &options,
+                               CORBA::Environment &_env)
+{
+  ACE_UNUSED_ARG (_env);
+  Repository::Record rec;
+  rec.comm_line = CORBA::string_dup (options.command_line_);
+  rec.env = CORBA::string_dup (options.environment_);
+  rec.wdir = CORBA::string_dup (options.working_directory_);
+  rec.host = 0;
+  rec.port = 0;
+  rec.ping_ior = "";
+
+  int status = this->repository_.update (server, rec);
+
+  ACE_DEBUG ((LM_DEBUG, "Server %s Successfully Registered\n", server));
+}
+
+
+void 
+ImplRepo_i::remove_server (const char *server,
+                           CORBA::Environment &env)
+{
+  this->repository_.remove (server);
 }
 
 
 // Register the current location of the server
-CORBA::String ImplRepo_i::server_is_running (const char *server,
-                                             //const Implementation_Repository::INET_Addr &addr,
-                                             CORBA::Object_ptr ior,
-                                             CORBA::Object_ptr ping,
-                                             CORBA::Environment &_env)
+Implementation_Repository::INET_Addr
+ImplRepo_i::server_is_running (const char *server,
+                               const Implementation_Repository::INET_Addr &addr,
+                               CORBA::Object_ptr ping,
+                               CORBA::Environment &_env)
 {
+  Implementation_Repository::INET_Addr new_addr;
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Server is running!\n"));
 
   // Update the record in the repository
   Repository::Record rec;
   this->repository_.resolve (server, rec);
-  delete [] rec.ior;
   delete [] rec.ping_ior;
-  rec.ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ior, _env));
+  rec.host = addr.host_;
+  rec.port = addr.port_;
   rec.ping_ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ping, _env));
   this->repository_.update (server, rec);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "The old IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (ior, _env)));
-
-  // Change the ior to ping to the IR instead, and return that 
-  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, ior->_stubobj ());
+    ACE_DEBUG ((LM_DEBUG, "The old host/port was: %Lu:%hu\n", rec.host, rec.port));
 
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
 
-  // We are assuming that we are on the same machine right now
-  iiop_obj->profile.port = my_addr.get_port_number ();
+  // @@ We are assuming that we are on the same machine right now
+  new_addr.host_ = addr.host_;
+  new_addr.port_ = my_addr.get_port_number ();
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "The new IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (ior, _env)));
+    ACE_DEBUG ((LM_DEBUG, "The new host/port is: %Lu:%hu\n", new_addr.host_, new_addr.port_));
 
-  return this->orb_manager_.orb ()->object_to_string (ior, _env);
+  return new_addr;
 }
+
+void 
+ImplRepo_i::server_is_shutting_down (const char *server,
+                                     CORBA::Environment &_env)
+{
+  ACE_UNUSED_ARG (_env);
+  // @@ Implement
+}
+
 
 
 // Reads the Server factory ior from a file
@@ -263,14 +380,24 @@ ImplRepo_i::run (CORBA::Environment& env)
   return 0;
 }
 
-char *
-ImplRepo_i::get_forward (const char *server)
+CORBA::ULong
+ImplRepo_i::get_forward_host (const char *server)
 {
-
-  char *forward;
-  if (this->repository_.get_ior (server, forward) != 0)
+  unsigned long host;
+  unsigned short port;
+  if (this->repository_.get_hostport (server, host, port) != 0)
     return 0;
-  return forward;
+  return host;
+}
+
+CORBA::UShort
+ImplRepo_i::get_forward_port (const char *server)
+{
+  unsigned long host;
+  unsigned short port;
+  if (this->repository_.get_hostport (server, host, port) != 0)
+    return 0;
+  return port;
 }
 
 ImplRepo_i::~ImplRepo_i (void)
@@ -279,30 +406,6 @@ ImplRepo_i::~ImplRepo_i (void)
     delete this->forwarder_impl_;
   if (this->activator_ != 0)
     delete this->activator_;
-}
-
-void
-ImplRepo_i::register_server (const char *server,
-                             const Implementation_Repository::Process_Options &options,
-                             CORBA::Environment &env)
-{
-  Repository::Record rec;
-  rec.comm_line = CORBA::string_dup (options.command_line_);
-  rec.env = CORBA::string_dup (options.environment_);
-  rec.wdir = CORBA::string_dup (options.working_directory_);
-  rec.ior = "";
-  rec.ping_ior = "";
-
-  int status = this->repository_.add (server, rec);
-
-  if (status == 1)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Server %s Already Registered\n", server));
-    TAO_THROW_ENV (Implementation_Repository::Already_Registered (), env);
-  }
-  else
-    ACE_DEBUG ((LM_DEBUG, "Server %s Successfully Registered\n", server));
-  this->repository_.dump ();
 }
 
 
@@ -410,28 +513,6 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 }
 
 
-int IR_Forwarder::forward (char *name, CORBA::Environment &env)
-{
-  this->ir_impl_->start (name);
-  char *forward = this->ir_impl_->get_forward (name);
-
-  ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", forward));
-
-  CORBA::Object_ptr forward_object = this->orb_var_->string_to_object (forward);
-
-  if (!CORBA::is_nil (forward_object))
-    {
-      env.exception (new PortableServer::ForwardRequest (forward_object));
-      return 0;
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, "Forward_to reference is nil.\n"));
-      return -1;
-    }
-}
-
-
 // Constructor
 IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
                             PortableServer::POA_ptr poa_ptr,
@@ -452,23 +533,27 @@ IR_Forwarder::_primary_interface (const PortableServer::ObjectId &oid,
 
 void 
 IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
-                      CORBA::Environment &env)
+                      CORBA::Environment &_env)
 {
   // Get the POA Current object reference
   CORBA::Object_var obj = this->orb_var_->resolve_initial_references ("POACurrent");
 
   // Narrow the object reference to a POA Current reference
-  PortableServer::Current_var poa_current = PortableServer::Current::_narrow (obj.in (), env);
-  if (env.exception () != 0)
+  //PortableServer::Current_var poa_current = PortableServer::Current::_narrow (obj.in (), _env);
+
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  TAO_POA_Current *poa_current = orb_core->poa_current ();
+
+  if (_env.exception () != 0)
     {
-      env.print_exception ("PortableServer::Current::_narrow");
+      _env.print_exception ("PortableServer::Current::_narrow");
       return;
     }
   
   // The servant determines the key associated with the database entry
   // represented by self
-  PortableServer::ObjectId_var oid = poa_current->get_object_id (env);
-  if (env.exception () != 0)
+  PortableServer::ObjectId_var oid = poa_current->get_object_id (_env);
+  if (_env.exception () != 0)
     return;
 
   // Now convert the id into a string
@@ -476,11 +561,46 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   
   ACE_DEBUG ((LM_DEBUG, "Object is: %s\n", key));
 
-  PortableServer::POA_ptr poa = poa_current->get_POA (env);
-  if (env.exception () != 0)
+  PortableServer::POA_ptr poa = poa_current->get_POA (_env);
+  if (_env.exception () != 0)
     return;
 
   ACE_DEBUG ((LM_DEBUG, "POA is: %s\n", poa->the_name ()));
 
-  this->forward (poa->the_name(), env);
+  // Now FORWARD!!!
+
+  Implementation_Repository::INET_Addr new_addr;
+
+  TAO_TRY
+  {
+    new_addr = this->ir_impl_->activate_server (poa->the_name (), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+  }
+  TAO_CATCHANY
+  {
+    TAO_RETHROW;
+  }
+  TAO_ENDTRY;
+
+
+  CORBA_Object_ptr forward_object = this->orb_var_->key_to_object (
+    poa_current->object_key (), 0, _env);
+
+  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, forward_object->_stubobj ());
+  // @@ Only same host for now
+  iiop_obj->profile.port = new_addr.port_;
+
+  ACE_DEBUG ((LM_DEBUG, "The forward_to is <%s>\n", this->orb_var_->object_to_string (forward_object, _env)));
+
+  
+  if (!CORBA::is_nil (forward_object))
+    {
+      _env.exception (new PortableServer::ForwardRequest (forward_object));
+      return;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "Forward_to reference is nil.\n"));
+      return;
+    }
 }
