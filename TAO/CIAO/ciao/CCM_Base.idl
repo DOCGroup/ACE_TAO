@@ -40,7 +40,7 @@ module Components
 
   valuetype PortDescription
   {
-    public FeatureName Name;
+    public FeatureName name;
     public CORBA::RepositoryId type_id;
   };
 
