@@ -12390,7 +12390,6 @@ ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
   return old_hook;
 }
 
-#if defined (ACE_WIN32)
 ACE_INLINE int
 ACE_OS::isatty (int handle)
 {
@@ -12406,6 +12405,7 @@ ACE_OS::isatty (int handle)
 # endif /* defined (ACE_LACKS_ISATTY) */
 }
 
+#if defined (ACE_WIN32)
 ACE_INLINE int
 ACE_OS::isatty (ACE_HANDLE handle)
 {
