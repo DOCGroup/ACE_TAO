@@ -132,21 +132,21 @@ namespace CIAO
 
     /// handle label attribute
     void PC_Handler::process_label
-      (const XMLCh* name, ::Deployment::PackageConfiguration &pc)
+      (const XMLCh* label, ::Deployment::PackageConfiguration &pc)
     {
       if (name)
         {
-          pc.label = XMLString::transcode (name);
+          pc.label = XMLString::transcode (label);
         }
     }
 
     /// handle UUID attribute
     void PC_Handler::process_UUID
-      (const XMLCh* name, ::Deployment::PackageConfiguration &pc)
+      (const XMLCh* UUID, ::Deployment::PackageConfiguration &pc)
     {
       if (name)
         {
-          pc.UUID = XMLString::transcode (name);
+          pc.UUID = XMLString::transcode (UUID);
         }
     }
 
