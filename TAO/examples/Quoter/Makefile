@@ -45,17 +45,6 @@ GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_i.o
 
 BIN2 = client server Factory_Finder Generic_Factory
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  ifeq (LifeCycle,$(findstring LifeCycle,$(TAO_ORBSVCS)))
-    ifeq ($(minimum_corba),0)
-      BIN = $(BIN2)
-    endif # minimum_corba
-  endif # LifeCycle
-endif # Naming
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -73,6 +62,18 @@ else # ! ACE_HAS_GNUG_PRE_2_8
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  ifeq (LifeCycle,$(findstring LifeCycle,$(TAO_ORBSVCS)))
+    ifeq ($(minimum_corba),0)
+      BIN = $(BIN2)
+    endif # minimum_corba
+  endif # LifeCycle
+endif # Naming
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

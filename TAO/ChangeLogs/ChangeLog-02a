@@ -1,3 +1,13 @@
+Tue Feb 13 17:37:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Quoter/Makefile:
+          Nothing was building under Unix.
+
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Generic_Factory.cpp:
+        * examples/Quoter/server.cpp:
+          More fixes for ORB::run()
+
 Tue Feb 13 17:24:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.h:
@@ -7,7 +17,7 @@ Tue Feb 13 17:24:43 2001  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/EC_Custom_Marshal/Makefile:
           Fixed dependencies, my builds failed to recompile some files in
           this directory even after the ORB::run() changes, thus the
-	  previous problem went undetected.
+          previous problem went undetected.
 
 Tue Feb 13 12:54:33 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 

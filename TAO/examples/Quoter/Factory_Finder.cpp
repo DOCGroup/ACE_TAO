@@ -52,7 +52,7 @@ Quoter_Factory_Finder_Server::init (int argc,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   const char *exception_message = "Null Message";
-  
+
   ACE_TRY
     {
       exception_message = "While ORB_Manager::init";
@@ -170,11 +170,9 @@ Quoter_Factory_Finder_Server::run (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Factory_Finder_Server is running\n"));
 
-  if (orb_manager_.orb()->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "run"),
-                      -1);
+  orb_manager_.orb()->run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -196,7 +194,7 @@ Quoter_Factory_Finder_Server::parse_args (void)
         break;
       default:
         exit_code = 1;
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
       case '?':
