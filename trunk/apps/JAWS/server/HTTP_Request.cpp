@@ -6,8 +6,8 @@
 #include "HTTP_Config.h"
 
 const char *const
-HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] = 
-{ 
+HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
+{
   "Date",
   "Pragma",
   "Authorization",
@@ -20,16 +20,16 @@ HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
   "Content-Length",
   "Content-Type",
   "Expires",
-  "Last-Modified" 
+  "Last-Modified"
 };
 
 const char *const
-HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] = 
-{ 
+HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] =
+{
   "GET",
   "HEAD",
   "POST",
-  "PUT" 
+  "PUT"
 };
 
 // For reasons of efficiency, this class expects buffer to be
@@ -266,7 +266,7 @@ HTTP_Request::header_values (int index) const
   if (0 <= index && index < NUM_HEADER_STRINGS)
     {
       hs = this->header_strings_[index];
-      hv = this->headers_[hs];
+      hv = this->headers_[hs].value ();
     }
 
   return hv;
@@ -289,7 +289,7 @@ HTTP_Request::content_length (void)
 {
   if (this->content_length_ == -1)
     {
-      const char * clv = this->headers_["Content-length"];
+      const char * clv = this->headers_["Content-length"].value ();
       this->content_length_ = (clv ? ACE_OS::atoi (clv) : 0);
     }
 
@@ -316,7 +316,7 @@ HTTP_Request::dump (void)
               " length of the file is %d,"
               " data string is %s,"
               " datalen is %d,"
-              " status is %d, which is %s\n\n", 
+              " status is %d, which is %s\n\n",
               this->method () ? this->method () : "EMPTY",
               this->uri () ? this->uri () : "EMPTY",
               this->content_length (),
@@ -337,7 +337,7 @@ HTTP_Request::method (const char *method_string)
       this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
       this->method_ = 0;
     }
-  else 
+  else
     this->method_ = ACE_OS::strdup (method_string);
 
   return this->method_;
@@ -386,7 +386,7 @@ HTTP_Request::type (const char *type_string)
   if (type_string == 0)
     return this->type_;
 
-  for (size_t i = 0; 
+  for (size_t i = 0;
        i < HTTP_Request::NUM_METHOD_STRINGS;
        i++)
 
@@ -409,6 +409,8 @@ HTTP_Request::cgi (char *uri_string)
   this->cgi_env_ = 0;
   this->cgi_args_ = 0;
 
+  ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi (%s)\n", uri_string));
+
   if (uri_string == 0 || ACE_OS::strlen (uri_string) == 0)
     return 0;
 
@@ -418,8 +420,8 @@ HTTP_Request::cgi (char *uri_string)
   // (2) the file resides in a CGI bin directory.
 
   char *extra_path_info = 0;
-  if ((this->cgi_in_path (uri_string, extra_path_info) == 0)
-      || (this->cgi_in_extension (uri_string, extra_path_info)))
+  if (this->cgi_in_path (uri_string, extra_path_info)
+      || this->cgi_in_extension (uri_string, extra_path_info))
     {
       cgi_args_and_env (extra_path_info);
 
@@ -439,6 +441,9 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
 {
   char *cgi_path;
 
+  ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi_in_path (%s)\n",
+              uri_string));
+
   if (HTTP_Config::instance ()->cgi_path ())
     cgi_path = ACE_OS::strdup (HTTP_Config::instance ()->cgi_path ());
   else
@@ -455,10 +460,6 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
     do
       {
         int len = ACE_OS::strlen (cgi_path_next);
-
-	// James, the following code is impossible to understand.
-	// Please simplify it to not use the ?: expression (i.e.,
-	// break it into several statements).
 
         // match path to cgi path
         int in_cgi_path = 0;
@@ -513,6 +514,9 @@ HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
 {
   extra_path_info = ACE_OS::strstr (uri_string, ".cgi");
 
+  ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi_in_extension (%s)\n",
+              uri_string));
+
   while (extra_path_info != 0)
     {
       extra_path_info += 4;
@@ -565,7 +569,7 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
           do
 	    if (*ptr == '+')
 	      *ptr = ' ';
-	    else if (*ptr == '&' || *ptr == '=') 
+	    else if (*ptr == '&' || *ptr == '=')
 	      count++;
           while (*++ptr);
 
@@ -615,12 +619,12 @@ HTTP_Request::path (const char *uri_string)
       if (*file_name == '~')
         {
           char *ptr = buf;
- 
+
           while (*++file_name && *file_name != '/')
             *ptr++ = *file_name;
- 
+
           *ptr = '\0';
- 
+
           if (ptr == buf)
             ACE_OS::strcpy (buf, ACE_OS::getenv ("HOME"));
           else
@@ -634,7 +638,7 @@ HTTP_Request::path (const char *uri_string)
               ACE_OS::strcpy (buf, pw_struct.pw_dir);
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }
- 
+
           ACE_OS::strcat (buf, "/");
           ACE_OS::strcat (buf, HTTP_Config::instance ()->user_dir ());
           ACE_OS::strcat (buf, file_name);
