@@ -224,7 +224,7 @@ project : acelib, taoversion, core {
       Policy_Manager.cpp
       Buffering_Constraint_Policy.cpp
       Messaging_PolicyValueC.cpp
-      Services.cpp
+      ServicesC.cpp
       NVList.cpp
       IFR_TypeCodes.cpp
       Dynamic_Adapter.cpp
