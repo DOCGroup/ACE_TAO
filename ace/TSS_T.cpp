@@ -19,6 +19,10 @@ ACE_RCSID(ace, TSS_T, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 
+#if defined (ACE_HAS_THR_C_DEST)
+#  include "ace/TSS_Adapter.h"
+#endif /* ACE_HAS_THR_C_DEST */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_TSS)
 
 template <class TYPE>

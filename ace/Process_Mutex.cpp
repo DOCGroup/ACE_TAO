@@ -87,10 +87,6 @@ ACE_Process_Mutex::~ACE_Process_Mutex (void)
 //
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Guard<ACE_Process_Mutex>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Guard<ACE_Process_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
