@@ -21,7 +21,7 @@ ACE_Framework_Component_T<Concrete>::ACE_Framework_Component_T (const Concrete *
 template <class Concrete>
 ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T (void)
 {
-  ACE_TRACE ("ACE_Framework_Component_T<Concrete>::dtor");
+  ACE_TRACE ("ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T");
   Concrete::close_singleton ();
 }
 
