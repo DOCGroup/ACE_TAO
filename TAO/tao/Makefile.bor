@@ -11,9 +11,9 @@ DIRS = \
 	IORTable \
 	IORManipulation \
 	Strategies \
-        Domain \
-        SmartProxies \
         IFR_Client \
+        Domain \
+        SmartProxies
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
