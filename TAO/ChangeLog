@@ -1,3 +1,11 @@
+Tue Nov 12 10:17:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+
+	  Removed the include of 
+	  orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h, which no longer exists.
+
 Tue Nov 12 13:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
