@@ -187,7 +187,7 @@ public:
   virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
                                          CORBA_Environment &ACE_TRY_ENV =
                                              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemEception));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the object key as an out parameter.  Caller should release
   /// return value when finished with it.
