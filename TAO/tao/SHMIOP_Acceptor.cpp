@@ -123,7 +123,7 @@ int
 TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile &mprofile)
 {
-  // If RT_CORBA is enabled, only one SHMIOP profile is created for
+  // If RT_CORBA is enabled, only one SHMIOP profile is created per
   // <mprofile> and all SHMIOP endpoints are added into that profile.
   // If RT_CORBA is not enabled, we create a separate profile for each
   // endpoint.
@@ -166,7 +166,7 @@ TAO_SHMIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
     }
   else
     {
-      // There already is a SHMIOP_Profile - just add our endpoint to it.
+      // A SHMIOP_Profile already exists - just add our endpoint to it.
 
       TAO_SHMIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,

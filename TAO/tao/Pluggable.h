@@ -304,7 +304,7 @@ public:
   // Create the corresponding profile for this endpoint.
 
   virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
-  // Return 1 if the <profile> has the same endpoint as the acceptor.
+  // Return 1 if the <endpoint> has the same address as the acceptor.
 
   virtual CORBA::ULong endpoint_count (void) = 0;
   // Returns the number of endpoints this acceptor is listening on.  This

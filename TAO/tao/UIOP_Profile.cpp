@@ -89,7 +89,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
 
 TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 {
-  // Clean up endpoint list.
+  // Clean up the list of endpoints since we own it.
+  // Skip the head, since it is not dynamically allocated.
   TAO_Endpoint *tmp = 0;
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
@@ -207,8 +208,6 @@ TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
     return 0;
 
   // Check endpoints equivalence.
-  // @@ Are we guaranteed that the endpoints in both profiles will be
-  // in the same order?
   const TAO_UIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_UIOP_Endpoint *endp = &this->endpoint_;
        endp != 0;
@@ -496,7 +495,12 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_UIOP_Profile::encode_endpoints (void)
 {
-  // Create a data structure with endpoint info for wire transfer.
+  // Create a data structure and fill it with endpoint info for wire
+  // transfer. 
+  // We include information for the head of the list
+  // together with other endpoints because even though its addressing
+  // info is transmitted using standard ProfileBody components, its
+  // priority is not!
   TAO_UIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
@@ -511,7 +515,7 @@ TAO_UIOP_Profile::encode_endpoints (void)
       endpoint = endpoint->next_;
     }
 
-  // Encode.
+  // Encode the data structure.
   TAO_OutputCDR out_cdr;
   out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
   out_cdr << endpoints;
@@ -533,8 +537,8 @@ TAO_UIOP_Profile::encode_endpoints (void)
       buf += i_length;
     }
 
-  // Eventually we add the TaggedComponent to the TAO_TaggedComponents
-  // member variable.
+  // Add component with encoded endpoint data to this profile's
+  // TaggedComponents. 
   tagged_components_.set_component (tagged_component);
   this->endpoints_encoded_ = 1;
 
@@ -567,14 +571,17 @@ TAO_UIOP_Profile::decode_endpoints (void)
       if ((in_cdr >> endpoints) == 0)
         return 0;
 
-      // Get the priority of the first endpoint.  It's other data is
-      // extracted as part of the standard iiop decoding.
+      // Get the priority of the first endpoint (head of the list.
+      // It's other data is extracted as part of the standard profile
+      // decoding.
       this->endpoint_.priority (endpoints[0].priority);
 
-      // The first endpoint is always extracted through standard
-      // profile body, so skip it.  Also, start from the end of
-      // the sequence to preserve endpoint order, since "add_endpoint"
-      // reverses the order of endpoints.
+      // Use information extracted from the tagged component to
+      // populate the profile.  Skip the first endpoint, since it is
+      // always extracted through standard profile body.  Also, begin
+      // from the end of the sequence to preserve endpoint order,
+      // since <add_endpoint> method reverses the order of endpoints
+      // in the list.
       for (CORBA::ULong i = endpoints.length () - 1;
            i > 0;
            --i)

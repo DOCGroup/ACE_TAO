@@ -68,7 +68,8 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core)
 
 TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile (void)
 {
-  // Clean up our endpoint list.
+  // Clean up the list of endpoints since we own it.
+  // Skip the head, since it is not dynamically allocated.
   TAO_Endpoint *tmp = 0;
 
   for (TAO_Endpoint *next = this->ssl_endpoint_.next ();
@@ -115,7 +116,9 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
       ssl_component_found = 1;
     }
 
-  //
+  // Since IIOP portion of the profile has already been decoded, we
+  // know how many endpoints it should contain and can finish
+  // initialization accordingly.
   if (this->count_ < 2)
     {
       // This profile contains only one endpoint.  Finish initializing
@@ -130,13 +133,15 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
       // This profile contains more than one endpoint.
       if (ssl_component_found)
         {
-          // True ssl profile - must have endpoints encoded.
+          // It is true ssl profile, i.e., not just IIOP, so must have
+          // ssl endpoints encoded. 
           return this->decode_endpoints ();
         }
       else
         {
-          // IIOP profile - doesn't have ssl endpoins encoded.  We
-          // must create 'dummy' ssl endpoint list just to make it work.
+          // IIOP profile - doesn't have ssl endpoints encoded.  We
+          // must create 'dummy' ssl endpoint list anyways, in order to
+          // make iiop endpoints accessable and usable.
           for (size_t i = 0;
                i < this->count_;
                ++i)
@@ -169,6 +174,10 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
 int
 TAO_SSLIOP_Profile::encode (TAO_OutputCDR &stream) const
 {
+#if (TAO_HAS_RT_CORBA == 1)
+  // For now, use/transfer multiple endpoints per profile only with
+  // RTCORBA. 
+
   int r = -1;
 
   // Encode profile endpoints.
@@ -224,9 +233,9 @@ TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint *endp)
   endp->next_ = this->ssl_endpoint_.next_;
   this->ssl_endpoint_.next_ = endp;
 
-  // The case where we don't want to add iiop endpoint is when we are
+  // We do not want to add our iiop endpoint counterpart when we are
   // decoding a profile, and iiop endpoints have been added before we
-  // even get here.
+  // even get to SSLIOP-specific decoding.
   if (endp->iiop_endpoint () != 0)
     this->TAO_IIOP_Profile::add_endpoint (endp->iiop_endpoint ());
 }
@@ -235,11 +244,14 @@ int
 TAO_SSLIOP_Profile::encode_endpoints (void)
 {
   // If we have more than one endpoint, we encode info about others
-  // into a special component for wire transfer.
+  // into a tagged component for wire transfer.
   if (this->count_ > 1)
     {
       // Encode all endpoints except the first one, since it is always
       // transferred through standard profile component.
+
+      // Create a data structure and fill it with endpoint info for wire
+      // transfer. 
       TAO_SSLEndpointSequence endpoints;
       endpoints.length (this->count_ - 1);
 
@@ -252,7 +264,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
           endpoint = endpoint->next_;
         }
 
-      // Encode.
+      // Encode the data structure.
       TAO_OutputCDR out_cdr;
       out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       out_cdr << endpoints;
@@ -274,8 +286,8 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
           buf += i_length;
         }
 
-      // Eventually we add the TaggedComponent to the TAO_TaggedComponents
-      // member variable.
+      // Add component with encoded endpoint data to this profile's
+      // TaggedComponents. 
       tagged_components_.set_component (tagged_component);
     }
 
@@ -306,8 +318,10 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
       TAO_SSLEndpointSequence endpoints;
       in_cdr >> endpoints;
 
-      // Start from the end of the sequence since "add_endpoint"
-      // reverses the order of endpoints.
+      // Use information extracted from the tagged component to
+      // populate the profile.  Begin from the end of the sequence to
+      // preserve endpoint order, since <add_endpoint> method reverses
+      // the order of endpoints in the list.
       for (CORBA::ULong i = endpoints.length () - 1;
            (i + 1) != 0;
            --i)
@@ -321,7 +335,8 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
         }
 
       // Now that we have a complete list of ssl endpoins, we can
-      // connect them with their iiop counterparts.
+      // connect them with their iiop counterparts, which have been
+      // extracted/chained during the IIOP profile decoding.
       TAO_IIOP_Endpoint *iiop_endp =
         &this->endpoint_;
 
@@ -337,6 +352,8 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
       return 1;
     }
 
+  // Since this method is only called if we are expecting
+  // TAO_TAG_SSL_ENDPOINTS component, failure to find it is an error. 
   return -1;
 }
 
