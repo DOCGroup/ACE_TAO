@@ -54,37 +54,58 @@
           <componentinstantiation id="a_CAOC">
         </componentinstantiation>
       </homeplacement>
+     <destination>CAOCHost</destination>
+    </processcollocation>
 
+
+    <processcollocation>
       <homeplacement id="a_UAV_GSHome">
         <componentfileref idref="com-UAV_GS"/>
           <componentinstantiation id="a_UAV_GS">
         </componentinstantiation>
       </homeplacement>
-      
+     <destination>UAVGSHost</destination>
+    </processcollocation>
+  
+  
+    <processcollocation>    
       <homeplacement id="a_UAVHome">
         <componentfileref idref="com-UAV"/>
           <componentinstantiation id="a_UAV">
         </componentinstantiation>
       </homeplacement>
- 
+      <destination>UAVHost</destination>
+    </processcollocation>
+         
+         
+    <processcollocation>              
       <homeplacement id="a_EngagementHome">
         <componentfileref idref="com-Engagement"/>
           <componentinstantiation id="a_Engagement">
         </componentinstantiation>
       </homeplacement>
+     <destination>EngagementBattleHost</destination>
            
       <homeplacement id="a_Battle">
         <componentfileref idref="com-Battle"/>
           <componentinstantiation id="a_Battle">
         </componentinstantiation>
       </homeplacement>
+     <destination>EngagementBattleHost</destination>
+    </processcollocation>
 
+
+    <processcollocation>  
       <homeplacement id="a_UCAV_GSHome">
         <componentfileref idref="com-UCAV_GS"/>
           <componentinstantiation id="a_UCAV_GS">
         </componentinstantiation>
       </homeplacement>
-                
+     <destination>UCAVGSHost</destination>
+    </processcollocation>                  
+                  
+                  
+    <processcollocation>                    
       <homeplacement id="a_UCAVHome">
         <componentfileref idref="com-UCAV"/>
           <componentinstantiation id="a_UCAV">
