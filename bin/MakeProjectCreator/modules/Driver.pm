@@ -227,7 +227,8 @@ sub run {
 
       ## Generate the recursive input list
       my($creator) = $name->new();
-      my(@input) = $creator->generate_recursive_input_list('.');
+      my(@input) = $creator->generate_recursive_input_list(
+                                              '.', $options->{'exclude'});
       $options->{'input'} = \@input;
 
       ## If no files were found above, then we issue a warning

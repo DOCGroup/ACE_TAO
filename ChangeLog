@@ -1,3 +1,13 @@
+Wed Dec 31 13:13:11 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Optimized the implementation of the -exclude option to correctly
+          avoid searching for files located in excluded directories.
+
 Wed Dec 31 07:13:25 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/TMCast/MTQueue.hpp:
