@@ -6320,9 +6320,8 @@ ACE_OS::last_error (int error)
   ACE_OS_TRACE ("ACE_OS::last_error");
 #if defined (ACE_WIN32)
   ::SetLastError (error);
-#else
-  errno = error;
 #endif /* ACE_WIN32 */
+  errno = error;
 }
 
 ACE_INLINE void
