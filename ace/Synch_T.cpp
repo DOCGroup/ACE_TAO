@@ -35,6 +35,13 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
   ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
 }
 
+template <class ACE_LOCKING_MECHANISM>
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
+{
+  if (this->delete_lock_)
+    delete this->lock_;
+}
+
 template <class ACE_LOCK, class TYPE>
 ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
   : is_set_ (initial_value)
