@@ -1,3 +1,8 @@
+Thu Jul 11 21:09:36 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile.bor: Added a new BUILD target called "nightlybuild" to
+	  simplify nightlybuild script.
+
 Thu Jul 11 20:42:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (creat): The Win32 implementation of this function was
