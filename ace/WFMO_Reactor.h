@@ -607,8 +607,14 @@ public:
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
   // Use a user specified signal handler instead.
 
-  virtual int set_timer_queue (ACE_Timer_Queue *timer_queue);
-  // Use a user specified timer queue instead.
+  // = The following method is deprecated.  Use <timer_queue> instead.
+  virtual int set_timer_queue (ACE_Timer_Queue *tq);
+  // Set a user specified timer queue.
+
+  virtual int timer_queue (ACE_Timer_Queue *tq);
+  // Set a user-specified timer queue.
+  virtual ACE_Timer_Queue *timer_queue (void) const;
+  // Return the current <ACE_Timer_Queue>. 
 
   virtual int close (void);
   // Close down the WFMO_Reactor and release all of its resources.

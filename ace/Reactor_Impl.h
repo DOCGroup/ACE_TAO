@@ -110,8 +110,14 @@ public:
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler) = 0;
   // Use a user specified signal handler instead.
 
-  virtual int set_timer_queue (ACE_Timer_Queue *timer_queue) = 0;
-  // Use a user specified timer queue instead.
+  // = The following method is deprecated.  Use <timer_queue> instead.
+  virtual int set_timer_queue (ACE_Timer_Queue *tq) = 0;
+  // Set a user specified timer queue.
+
+  virtual int timer_queue (ACE_Timer_Queue *tq) = 0;
+  // Set a user-specified timer queue.
+  virtual ACE_Timer_Queue *timer_queue (void) const = 0;
+  // Return the current <ACE_Timer_Queue>. 
 
   virtual int close (void) = 0;
   // Close down and release all resources.
