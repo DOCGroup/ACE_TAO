@@ -1,3 +1,5 @@
+# $Id$
+
 # platform_freebsd_pthread.GNU
 
 # ***** Notice: This configuration is still under debugging. *****

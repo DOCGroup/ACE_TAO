@@ -1,3 +1,5 @@
+# $Id$
+
 CC		= /bin/cc
 CXX		= /usr/bin/CC -pta -ti,/bin/true -tr,/bin/true
 CFLAGS		= $(DCFLAGS) -Aa -z

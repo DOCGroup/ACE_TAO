@@ -1,3 +1,5 @@
+# $Id$
+
 # AIX 4.1.3
 # *not* using Orbix
 # This file assumes that the user has installed the AIX patch

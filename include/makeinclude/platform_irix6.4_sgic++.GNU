@@ -1,3 +1,5 @@
+# $Id$
+
 # Irix 6.4 with SGI C++
 
 # This suppresses common compiler warnings which appear in the 

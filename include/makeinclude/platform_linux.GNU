@@ -1,3 +1,5 @@
+# $Id$
+
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
