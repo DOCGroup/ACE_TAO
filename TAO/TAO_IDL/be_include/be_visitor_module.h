@@ -31,5 +31,6 @@
 #include "be_visitor_module/module_ch.h"
 #include "be_visitor_module/module_sh.h"
 #include "be_visitor_module/any_op.h"
+#include "be_visitor_module/cdr_op.h"
 
 #endif // TAO_BE_VISITOR_MODULE_H

@@ -32,5 +32,7 @@
 #include "be_visitor_exception/ctor_assign.h"
 #include "be_visitor_exception/any_op_ch.h"
 #include "be_visitor_exception/any_op_cs.h"
+#include "be_visitor_exception/cdr_op_ch.h"
+#include "be_visitor_exception/cdr_op_cs.h"
 
 #endif /* TAO_BE_VISITOR_EXCEPTION_H */
