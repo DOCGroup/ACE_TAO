@@ -37,7 +37,7 @@
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
+class TAO_RTEvent_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 {
 public:
   TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
