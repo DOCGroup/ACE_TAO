@@ -976,7 +976,7 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDirPolicyC.inl \
   BiDir_GIOP/BiDirPolicy.pidl
 
-pkgconfigdata_DATA += BiDir_GIOP/TAO_BiDirGIOP.pc
+pkgconfigdata_DATA += TAO_BiDirGIOP.pc
 
 TAO_BiDirGIOP.pc: ${top_srcdir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
@@ -1108,7 +1108,7 @@ nobase_include_HEADERS += \
   PortableServer/PortableServer_include.pidl \
   PortableServer/ServerObject.pidl
 
-pkgconfigdata_DATA += PortableServer/TAO_PortableServer.pc
+pkgconfigdata_DATA += TAO_PortableServer.pc
 
 TAO_PortableServer.pc: ${top_srcdir}/config.status ${srcdir}/PortableServer/TAO_PortableServer.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/PortableServer/TAO_PortableServer.pc.in
@@ -1163,7 +1163,7 @@ nobase_include_HEADERS += \
   IFR_Client/IFR_Components.pidl \
   IFR_Client/IFR_Extended.pidl
 
-pkgconfigdata_DATA += IFR_Client/TAO_IFR_Client.pc
+pkgconfigdata_DATA += TAO_IFR_Client.pc
 
 TAO_IFR_Client.pc: ${top_srcdir}/config.status ${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
@@ -1203,7 +1203,7 @@ nobase_include_HEADERS += \
   Domain/DomainS_T.i \
   Domain/DomainS_T.cpp
 
-pkgconfigdata_DATA += Domain/TAO_Domain.pc
+pkgconfigdata_DATA += TAO_Domain.pc
 
 TAO_Domain.pc: ${top_srcdir}/config.status ${srcdir}/Domain/TAO_Domain.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/Domain/TAO_Domain.pc.in
@@ -1257,7 +1257,7 @@ nobase_include_HEADERS += \
   DynamicAny/DynamicAnyC.i \
   DynamicAny/DynamicAny.pidl
 
-pkgconfigdata_DATA += DynamicAny/TAO_DynamicAny.pc
+pkgconfigdata_DATA += TAO_DynamicAny.pc
 
 TAO_DynamicAny.pc: ${top_srcdir}/config.status ${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
@@ -1312,7 +1312,7 @@ nobase_include_HEADERS += \
   Valuetype/Sequence_T.cpp \
   Valuetype/Value_VarOut_T.cpp
 
-pkgconfigdata_DATA += Valuetype/TAO_Valuetype.pc
+pkgconfigdata_DATA += TAO_Valuetype.pc
 
 TAO_Valuetype.pc: ${top_srcdir}/config.status ${srcdir}/Valuetype/TAO_Valuetype.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/Valuetype/TAO_Valuetype.pc.in
@@ -1394,7 +1394,7 @@ nobase_include_HEADERS += \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/TAO_Ext.pidl
 
-pkgconfigdata_DATA += Messaging/TAO_Messaging.pc
+pkgconfigdata_DATA += TAO_Messaging.pc
 
 TAO_Messaging.pc: ${top_srcdir}/config.status ${srcdir}/Messaging/TAO_Messaging.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/Messaging/TAO_Messaging.pc.in
@@ -1461,7 +1461,7 @@ nobase_include_HEADERS += \
   DynamicInterface/Request.inl \
   DynamicInterface/Server_Request.inl
 
-pkgconfigdata_DATA += DynamicInterface/TAO_DynamicInterface.pc
+pkgconfigdata_DATA += TAO_DynamicInterface.pc
 
 TAO_DynamicInterface.pc: ${top_srcdir}/config.status ${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
@@ -1518,7 +1518,7 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplate.pidl \
   ObjRefTemplate/ObjectReferenceTemplate_include.pidl
 
-pkgconfigdata_DATA += ObjRefTemplate/TAO_ObjRefTemplate.pc
+pkgconfigdata_DATA += TAO_ObjRefTemplate.pc
 
 TAO_ObjRefTemplate.pc: ${top_srcdir}/config.status ${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
@@ -1572,7 +1572,7 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInfo.pidl \
   IORInterceptor/IORInterceptor.pidl
 
-pkgconfigdata_DATA += IORInterceptor/TAO_IORInterceptor.pc
+pkgconfigdata_DATA += TAO_IORInterceptor.pc
 
 TAO_IORInterceptor.pc: ${top_srcdir}/config.status ${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
@@ -1613,7 +1613,7 @@ nobase_include_HEADERS += \
   IORManipulation/IORC.i \
   IORManipulation/IOR.pidl
 
-pkgconfigdata_DATA += IORManipulation/TAO_IORManip.pc
+pkgconfigdata_DATA += TAO_IORManip.pc
 
 TAO_IORManip.pc: ${top_srcdir}/config.status ${srcdir}/IORManipulation/TAO_IORManip.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/IORManipulation/TAO_IORManip.pc.in
@@ -1655,7 +1655,7 @@ nobase_include_HEADERS += \
   IORTable/IORTableC.i \
   IORTable/IORTable.pidl
 
-pkgconfigdata_DATA += IORTable/TAO_IORTable.pc
+pkgconfigdata_DATA += TAO_IORTable.pc
 
 TAO_IORTable.pc: ${top_srcdir}/config.status ${srcdir}/IORTable/TAO_IORTable.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/IORTable/TAO_IORTable.pc.in
@@ -1755,7 +1755,7 @@ nobase_include_HEADERS += \
   RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBA_include.pidl
 
-pkgconfigdata_DATA += RTCORBA/TAO_RTCORBA.pc
+pkgconfigdata_DATA += TAO_RTCORBA.pc
 
 TAO_RTCORBA.pc: ${top_srcdir}/config.status ${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
@@ -1813,7 +1813,7 @@ nobase_include_HEADERS += \
   RTPortableServer/RT_POA.i \
   RTPortableServer/RTPortableServer.pidl
 
-pkgconfigdata_DATA += RTPortableServer/TAO_RTPortableServer.pc
+pkgconfigdata_DATA += TAO_RTPortableServer.pc
 
 TAO_RTPortableServer.pc: ${top_srcdir}/config.status ${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
@@ -1874,7 +1874,7 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler.pidl \
   RTScheduling/RTScheduler_include.pidl
 
-pkgconfigdata_DATA += RTScheduling/TAO_RTScheduler.pc
+pkgconfigdata_DATA += TAO_RTScheduler.pc
 
 TAO_RTScheduler.pc: ${top_srcdir}/config.status ${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
@@ -1912,7 +1912,7 @@ nobase_include_HEADERS += \
   SmartProxies/smartproxies_export.h \
   SmartProxies/Smart_Proxies.inl
 
-pkgconfigdata_DATA += SmartProxies/TAO_SmartProxies.pc
+pkgconfigdata_DATA += TAO_SmartProxies.pc
 
 TAO_SmartProxies.pc: ${top_srcdir}/config.status ${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
@@ -2029,7 +2029,7 @@ nobase_include_HEADERS += \
   Strategies/sciop_endpoints.pidl \
   Strategies/uiop_endpoints.pidl
 
-pkgconfigdata_DATA += Strategies/TAO_Strategies.pc
+pkgconfigdata_DATA += TAO_Strategies.pc
 
 TAO_Strategies.pc: ${top_srcdir}/config.status ${srcdir}/Strategies/TAO_Strategies.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
@@ -2072,7 +2072,7 @@ nobase_include_HEADERS += \
   TypeCodeFactory/TypeCodeFactoryC.inl \
   TypeCodeFactory/TypeCodeFactory.pidl
 
-pkgconfigdata_DATA += TypeCodeFactory/TAO_TypeCodeFactory.pc
+pkgconfigdata_DATA += TAO_TypeCodeFactory.pc
 
 TAO_TypeCodeFactory.pc: ${top_srcdir}/config.status ${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
