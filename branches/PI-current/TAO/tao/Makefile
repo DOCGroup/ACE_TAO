@@ -127,6 +127,9 @@ ORB_CORE_FILES = \
   GIOP \
   GIOP_Server_Request \
   Invocation \
+  Interceptor \
+  InterceptorS \
+  InterceptorC \
   Asynch_Invocation \
   ORB_Core \
   params \
