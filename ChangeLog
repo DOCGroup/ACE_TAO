@@ -1,3 +1,12 @@
+Wed Aug 11 11:55:46 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/event.mpb
+	* bin/MakeProjectCreator/config/ftorbutils.mpb
+	* bin/MakeProjectCreator/config/ftrtevent.mpb
+	* bin/MakeProjectCreator/config/rtcorbacommon.mpb
+	  Changed to inherit from minimum_corba instead of providing avoids
+	  statements to eliminate duplicate entries in list.
+
 Wed Aug 11 08:48:48 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
