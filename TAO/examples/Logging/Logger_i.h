@@ -34,33 +34,36 @@ public:
   // destructor
 
   virtual void log (const Logger::Log_Record &log_rec,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    CORBA::Environment &ACE_TRY_ENV =
+                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
 
   virtual void logv (const Logger::Log_Record &log_rec,
                      Logger::Verbosity_Level verbosity,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::Environment &ACE_TRY_ENV =
+                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
   virtual void log2 (const Logger::Log_Record &log_rec,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::Environment &ACE_TRY_ENV =
+                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
   
   virtual void logv2 (const Logger::Log_Record &log_rec,
                       Logger::Verbosity_Level verbosity,
-                      CORBA::Environment &ACE_TRY_ENV)
+                      CORBA::Environment & ACE_TRY_ENV=
+                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
-  Logger::Verbosity_Level verbosity (void) const;
-  // Gets the verbosity level
-
-  void verbosity (Logger::Verbosity_Level level, CORBA::Environment &ACE_TRY_ENV)
+   void verbosity (Logger::Verbosity_Level level, 
+                  CORBA::Environment &ACE_TRY_ENV =
+                  TAO_default_environment ())
     ACE_THROW_SPEC (());
   // Sets the verbosity level. Valid values are {VERBOSE, VERBOSE_LITE
   //  and SILENT}. Defaults to VERBOSE
@@ -95,12 +98,13 @@ public:
   // Destructor.
 
   virtual Logger_ptr make_logger (const char *name,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &ACE_TRY_ENV =
+                                  TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This function returns a logger with name <name>. If <name> is
   // unique, a new logger is created; else, a previously created
   // logger of name <name> is returned
-
+  
 private:
   ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
   // Calls to <make_logger> will create a new instance of <Logger> and
