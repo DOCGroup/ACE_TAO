@@ -15,7 +15,7 @@
  *
  * ============================================================================
  */
-%option noyywrap nounput
+%option noyywrap nounput noinput always-interactive
 %{
 #include "CC_command.h"
 #include "CC_command.tab.h"
