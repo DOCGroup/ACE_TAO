@@ -97,7 +97,7 @@ CosNaming::_tao__seq_Name::length (CORBA::ULong length)
   {
     CosNaming::NameComponent *tmp = CosNaming::_tao__seq_Name::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -106,10 +106,9 @@ CosNaming::_tao__seq_Name::length (CORBA::ULong length)
       CosNaming::_tao__seq_Name::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_CosNaming__tao__seq_Name[] =
@@ -290,7 +289,7 @@ CosNaming::_tao__seq_BindingList::length (CORBA::ULong length)
   {
     CosNaming::Binding *tmp = CosNaming::_tao__seq_BindingList::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -299,10 +298,9 @@ CosNaming::_tao__seq_BindingList::length (CORBA::ULong length)
       CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_CosNaming__tao__seq_BindingList[] =
@@ -622,7 +620,7 @@ static const TAO_Param_Data CosNaming_NamingContext_bind_paramdata [] =
 static const TAO_Call_Data CosNaming_NamingContext_bind_calldata = 
 {"bind", 1, 3, CosNaming_NamingContext_bind_paramdata, 0, 0};
 
-void  CosNaming::NamingContext::bind (const CosNaming::Name & n, CORBA::Object_ptr  obj, CORBA::Environment &env)
+void  CosNaming::NamingContext::bind (const CosNaming::Name &n, CORBA::Object_ptr obj, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -630,9 +628,9 @@ void  CosNaming::NamingContext::bind (const CosNaming::Name & n, CORBA::Object_p
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_NamingContext_bind_calldata, 0, &n, &obj);
+  istub->do_call (env, &CosNaming_NamingContext_bind_calldata, 0, &n);
   return; // no value
   
 }
@@ -647,7 +645,7 @@ static const TAO_Param_Data CosNaming_NamingContext_rebind_paramdata [] =
 static const TAO_Call_Data CosNaming_NamingContext_rebind_calldata = 
 {"rebind", 1, 3, CosNaming_NamingContext_rebind_paramdata, 0, 0};
 
-void  CosNaming::NamingContext::rebind (const CosNaming::Name & n, CORBA::Object_ptr  obj, CORBA::Environment &env)
+void  CosNaming::NamingContext::rebind (const CosNaming::Name &n, CORBA::Object_ptr obj, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -655,9 +653,9 @@ void  CosNaming::NamingContext::rebind (const CosNaming::Name & n, CORBA::Object
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_NamingContext_rebind_calldata, 0, &n, &obj);
+  istub->do_call (env, &CosNaming_NamingContext_rebind_calldata, 0, &n);
   return; // no value
   
 }
@@ -672,7 +670,7 @@ static const TAO_Param_Data CosNaming_NamingContext_bind_context_paramdata [] =
 static const TAO_Call_Data CosNaming_NamingContext_bind_context_calldata = 
 {"bind_context", 1, 3, CosNaming_NamingContext_bind_context_paramdata, 0, 0};
 
-void  CosNaming::NamingContext::bind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc, CORBA::Environment &env)
+void  CosNaming::NamingContext::bind_context (const CosNaming::Name &n, CosNaming::NamingContext_ptr nc, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -680,9 +678,10 @@ void  CosNaming::NamingContext::bind_context (const CosNaming::Name & n, CosNami
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_NamingContext_bind_context_calldata, 0, &n, &nc);
+  CORBA::Object_ptr _tao_base_nc = nc; // cast it
+  istub->do_call (env, &CosNaming_NamingContext_bind_context_calldata, 0, &n, &_tao_base_nc);
   return; // no value
   
 }
@@ -697,7 +696,7 @@ static const TAO_Param_Data CosNaming_NamingContext_rebind_context_paramdata [] 
 static const TAO_Call_Data CosNaming_NamingContext_rebind_context_calldata = 
 {"rebind_context", 1, 3, CosNaming_NamingContext_rebind_context_paramdata, 0, 0};
 
-void  CosNaming::NamingContext::rebind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc, CORBA::Environment &env)
+void  CosNaming::NamingContext::rebind_context (const CosNaming::Name &n, CosNaming::NamingContext_ptr nc, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -705,9 +704,10 @@ void  CosNaming::NamingContext::rebind_context (const CosNaming::Name & n, CosNa
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_NamingContext_rebind_context_calldata, 0, &n, &nc);
+  CORBA::Object_ptr _tao_base_nc = nc; // cast it
+  istub->do_call (env, &CosNaming_NamingContext_rebind_context_calldata, 0, &n, &_tao_base_nc);
   return; // no value
   
 }
@@ -721,7 +721,7 @@ static const TAO_Param_Data CosNaming_NamingContext_resolve_paramdata [] =
 static const TAO_Call_Data CosNaming_NamingContext_resolve_calldata = 
 {"resolve", 1, 2, CosNaming_NamingContext_resolve_paramdata, 0, 0};
 
-CORBA::Object_ptr  CosNaming::NamingContext::resolve (const CosNaming::Name & n, CORBA::Environment &env)
+CORBA::Object_ptr  CosNaming::NamingContext::resolve (const CosNaming::Name &n, CORBA::Environment &env)
 {
   CORBA::Object_ptr retval;
   STUB_Object *istub;
@@ -730,7 +730,7 @@ CORBA::Object_ptr  CosNaming::NamingContext::resolve (const CosNaming::Name & n,
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return 0;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &CosNaming_NamingContext_resolve_calldata, &retval, &n);
   return retval;
@@ -746,7 +746,7 @@ static const TAO_Param_Data CosNaming_NamingContext_unbind_paramdata [] =
 static const TAO_Call_Data CosNaming_NamingContext_unbind_calldata = 
 {"unbind", 1, 2, CosNaming_NamingContext_unbind_paramdata, 0, 0};
 
-void  CosNaming::NamingContext::unbind (const CosNaming::Name & n, CORBA::Environment &env)
+void  CosNaming::NamingContext::unbind (const CosNaming::Name &n, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -754,7 +754,7 @@ void  CosNaming::NamingContext::unbind (const CosNaming::Name & n, CORBA::Enviro
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &CosNaming_NamingContext_unbind_calldata, 0, &n);
   return; // no value
@@ -778,7 +778,7 @@ CosNaming::NamingContext_ptr  CosNaming::NamingContext::new_context (CORBA::Envi
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return CosNaming::NamingContext::_nil ();
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &CosNaming_NamingContext_new_context_calldata, &retval);
   return CosNaming::NamingContext::_narrow (retval, env);
@@ -794,7 +794,7 @@ static const TAO_Param_Data CosNaming_NamingContext_bind_new_context_paramdata [
 static const TAO_Call_Data CosNaming_NamingContext_bind_new_context_calldata = 
 {"bind_new_context", 1, 2, CosNaming_NamingContext_bind_new_context_paramdata, 0, 0};
 
-CosNaming::NamingContext_ptr  CosNaming::NamingContext::bind_new_context (const CosNaming::Name & n, CORBA::Environment &env)
+CosNaming::NamingContext_ptr  CosNaming::NamingContext::bind_new_context (const CosNaming::Name &n, CORBA::Environment &env)
 {
   CORBA::Object_ptr retval = CORBA::Object::_nil ();
   STUB_Object *istub;
@@ -803,7 +803,7 @@ CosNaming::NamingContext_ptr  CosNaming::NamingContext::bind_new_context (const 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return CosNaming::NamingContext::_nil ();
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &CosNaming_NamingContext_bind_new_context_calldata, &retval, &n);
   return CosNaming::NamingContext::_narrow (retval, env);
@@ -826,7 +826,7 @@ void  CosNaming::NamingContext::destroy (CORBA::Environment &env)
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &CosNaming_NamingContext_destroy_calldata, 0);
   return; // no value
@@ -844,7 +844,7 @@ static const TAO_Param_Data CosNaming_NamingContext_list_paramdata [] =
 static const TAO_Call_Data CosNaming_NamingContext_list_calldata = 
 {"list", 1, 4, CosNaming_NamingContext_list_paramdata, 0, 0};
 
-void  CosNaming::NamingContext::list (CORBA::ULong how_many, CosNaming::BindingList_out bl, CosNaming::BindingIterator_out  bi, CORBA::Environment &env)
+void  CosNaming::NamingContext::list (CORBA::ULong how_many, CosNaming::BindingList_out bl, CosNaming::BindingIterator_out bi, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -852,9 +852,15 @@ void  CosNaming::NamingContext::list (CORBA::ULong how_many, CosNaming::BindingL
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_NamingContext_list_calldata, 0, &how_many, &bl, &bi);
+  CosNaming::BindingList *_tao_base_bl = new CosNaming::BindingList;
+  CORBA::Object_ptr _tao_base_bi;
+  istub->do_call (env, &CosNaming_NamingContext_list_calldata, 0, &how_many, _tao_base_bl, &_tao_base_bi);
+  bl = _tao_base_bl;
+  bi = CosNaming::BindingIterator::_narrow (_tao_base_bi, env);
+  // free the Object_ptr
+  CORBA::release (_tao_base_bi);
   return; // no value
   
 }
@@ -934,9 +940,11 @@ CORBA::Boolean  CosNaming::BindingIterator::next_one (CosNaming::Binding_out b, 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return retval;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_BindingIterator_next_one_calldata, &retval, &b);
+  CosNaming::Binding *_tao_base_b = new CosNaming::Binding;
+  istub->do_call (env, &CosNaming_BindingIterator_next_one_calldata, &retval, _tao_base_b);
+  b = _tao_base_b;
   return retval;
   
 }
@@ -960,9 +968,11 @@ CORBA::Boolean  CosNaming::BindingIterator::next_n (CORBA::ULong how_many, CosNa
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return retval;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &CosNaming_BindingIterator_next_n_calldata, &retval, &how_many, &bl);
+  CosNaming::BindingList *_tao_base_bl = new CosNaming::BindingList;
+  istub->do_call (env, &CosNaming_BindingIterator_next_n_calldata, &retval, &how_many, _tao_base_bl);
+  bl = _tao_base_bl;
   return retval;
   
 }
@@ -983,7 +993,7 @@ void  CosNaming::BindingIterator::destroy (CORBA::Environment &env)
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &CosNaming_BindingIterator_destroy_calldata, 0);
   return; // no value

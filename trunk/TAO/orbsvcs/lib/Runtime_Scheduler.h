@@ -12,7 +12,7 @@
 #include "RtecSchedulerS.h"
 
 class ACE_Runtime_Scheduler
-  : public RtecScheduler::Scheduler
+  : public POA_RtecScheduler::Scheduler
   // = TITLE
   //   A proxy server for RtecScheduler::Scheduler.
   //

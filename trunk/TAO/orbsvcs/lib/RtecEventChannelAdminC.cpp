@@ -142,7 +142,7 @@ RtecEventChannelAdmin::_tao__seq_DependencySet::length (CORBA::ULong length)
   {
     RtecEventChannelAdmin::Dependency *tmp = RtecEventChannelAdmin::_tao__seq_DependencySet::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -151,10 +151,9 @@ RtecEventChannelAdmin::_tao__seq_DependencySet::length (CORBA::ULong length)
       RtecEventChannelAdmin::_tao__seq_DependencySet::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecEventChannelAdmin__tao__seq_DependencySet[] =
@@ -537,7 +536,7 @@ RtecEventChannelAdmin::_tao__seq_PublicationSet::length (CORBA::ULong length)
   {
     RtecEventChannelAdmin::Publication *tmp = RtecEventChannelAdmin::_tao__seq_PublicationSet::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -546,10 +545,9 @@ RtecEventChannelAdmin::_tao__seq_PublicationSet::length (CORBA::ULong length)
       RtecEventChannelAdmin::_tao__seq_PublicationSet::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecEventChannelAdmin__tao__seq_PublicationSet[] =
@@ -853,20 +851,20 @@ static const TAO_Param_Data RtecEventChannelAdmin_ProxyPushConsumer_connect_push
 };
 
 static const TAO_Call_Data RtecEventChannelAdmin_ProxyPushConsumer_connect_push_supplier_calldata = 
-{"connect_push_supplier", 1, 3, RtecEventChannelAdmin_ProxyPushConsumer_connect_push_supplier_paramdata, 0, 0};
+{"connect_push_supplier", 0, 3, RtecEventChannelAdmin_ProxyPushConsumer_connect_push_supplier_paramdata, 0, 0};
 
-void  RtecEventChannelAdmin::ProxyPushConsumer::connect_push_supplier (RtecEventComm::PushSupplier_ptr  push_supplier, const RtecEventChannelAdmin::SupplierQOS & qos, CORBA::Environment &env)
+void  RtecEventChannelAdmin::ProxyPushConsumer::connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier, const RtecEventChannelAdmin::SupplierQOS &qos, CORBA::Environment &env)
 {
   STUB_Object *istub;
-  CORBA::Object_ptr _tao_push_supplier = push_supplier;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &RtecEventChannelAdmin_ProxyPushConsumer_connect_push_supplier_calldata, 0, &_tao_push_supplier, &qos);
+  CORBA::Object_ptr _tao_base_push_supplier = push_supplier; // cast it
+  istub->do_call (env, &RtecEventChannelAdmin_ProxyPushConsumer_connect_push_supplier_calldata, 0, &_tao_base_push_supplier, &qos);
   return; // no value
   
 }
@@ -936,20 +934,20 @@ static const TAO_Param_Data RtecEventChannelAdmin_ProxyPushSupplier_connect_push
 };
 
 static const TAO_Call_Data RtecEventChannelAdmin_ProxyPushSupplier_connect_push_consumer_calldata = 
-{"connect_push_consumer", 1, 3, RtecEventChannelAdmin_ProxyPushSupplier_connect_push_consumer_paramdata, 0, 0};
+{"connect_push_consumer", 0, 3, RtecEventChannelAdmin_ProxyPushSupplier_connect_push_consumer_paramdata, 0, 0};
 
-void  RtecEventChannelAdmin::ProxyPushSupplier::connect_push_consumer (RtecEventComm::PushConsumer_ptr  push_consumer, const RtecEventChannelAdmin::ConsumerQOS & qos, CORBA::Environment &env)
+void  RtecEventChannelAdmin::ProxyPushSupplier::connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer, const RtecEventChannelAdmin::ConsumerQOS &qos, CORBA::Environment &env)
 {
   STUB_Object *istub;
-  CORBA::Object_ptr _tao_push_consumer = push_consumer;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &RtecEventChannelAdmin_ProxyPushSupplier_connect_push_consumer_calldata, 0, &_tao_push_consumer, &qos);
+  CORBA::Object_ptr _tao_base_push_consumer = push_consumer; // cast it
+  istub->do_call (env, &RtecEventChannelAdmin_ProxyPushSupplier_connect_push_consumer_calldata, 0, &_tao_base_push_consumer, &qos);
   return; // no value
   
 }
@@ -1028,7 +1026,7 @@ RtecEventChannelAdmin::ProxyPushSupplier_ptr  RtecEventChannelAdmin::ConsumerAdm
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventChannelAdmin_ConsumerAdmin_obtain_push_supplier_calldata, &retval);
   return RtecEventChannelAdmin::ProxyPushSupplier::_narrow (retval, env);
@@ -1109,7 +1107,7 @@ RtecEventChannelAdmin::ProxyPushConsumer_ptr  RtecEventChannelAdmin::SupplierAdm
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventChannelAdmin_SupplierAdmin_obtain_push_consumer_calldata, &retval);
   return RtecEventChannelAdmin::ProxyPushConsumer::_narrow (retval, env);
@@ -1285,7 +1283,7 @@ RtecEventChannelAdmin::ConsumerAdmin_ptr  RtecEventChannelAdmin::EventChannel::f
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return RtecEventChannelAdmin::ConsumerAdmin::_nil ();
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventChannelAdmin_EventChannel_for_consumers_calldata, &retval);
   return RtecEventChannelAdmin::ConsumerAdmin::_narrow (retval, env);
@@ -1309,7 +1307,7 @@ RtecEventChannelAdmin::SupplierAdmin_ptr  RtecEventChannelAdmin::EventChannel::f
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return RtecEventChannelAdmin::SupplierAdmin::_nil ();
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventChannelAdmin_EventChannel_for_suppliers_calldata, &retval);
   return RtecEventChannelAdmin::SupplierAdmin::_narrow (retval, env);
@@ -1332,7 +1330,7 @@ void  RtecEventChannelAdmin::EventChannel::destroy (CORBA::Environment &env)
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventChannelAdmin_EventChannel_destroy_calldata, 0);
   return; // no value

@@ -11,12 +11,54 @@
 #include "RtecEventChannelAdminS.i"
 #endif // !defined INLINE
 
+void POA_RtecEventComm_PushConsumer_push_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
+{
+  CORBA::NVList_ptr 	 nvlist;
+  POA_RtecEventComm::PushConsumer_ptr 	 impl;
+  RtecEventComm::EventSet data;
+  CORBA::NamedValue_ptr nv_data;
+  CORBA::Any 	 any_data (RtecEventComm::_tc_EventSet, &data); // ORB does not own
+  
+  // create an NV list and populate it with typecodes
+  _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
+  // add each argument according to the in, out, inout semantics
+  nv_data = nvlist->add_value ("data", any_data, CORBA::ARG_IN, _tao_environment);
+  // parse the arguments
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
+  
+impl = (POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr) _tao_object_reference->get_subclass ();
+  impl->push(data, _tao_environment);
+  
+
+}
+
+void POA_RtecEventComm_PushConsumer_disconnect_push_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
+{
+  CORBA::NVList_ptr 	 nvlist;
+  POA_RtecEventComm::PushConsumer_ptr 	 impl;
+  
+  // create an NV list and populate it with typecodes
+  _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
+  // add each argument according to the in, out, inout semantics
+  // parse the arguments
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
+  
+impl = (POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr) _tao_object_reference->get_subclass ();
+  impl->disconnect_push_consumer(_tao_environment);
+  
+
+}
+
 static const TAO_operation_db_entry ProxyPushConsumer_operations [] = {
+  {"push", &POA_RtecEventComm_PushConsumer_push_skel},
+  {"disconnect_push_consumer", &POA_RtecEventComm_PushConsumer_disconnect_push_consumer_skel},
   {"connect_push_supplier", &POA_RtecEventChannelAdmin::ProxyPushConsumer::connect_push_supplier_skel},
   {"_is_a", &POA_RtecEventChannelAdmin::ProxyPushConsumer::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_ProxyPushConsumer_optable (ProxyPushConsumer_operations, 2, 4);
+TAO_Dynamic_Hash_OpTable tao_ProxyPushConsumer_optable (ProxyPushConsumer_operations, 4, 8);
 // skeleton constructor
 POA_RtecEventChannelAdmin::ProxyPushConsumer::ProxyPushConsumer (const char *obj_name)
 {
@@ -39,9 +81,9 @@ void POA_RtecEventChannelAdmin::ProxyPushConsumer::connect_push_supplier_skel (C
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr 	 impl;
   RtecEventComm::PushSupplier_ptr push_supplier;
-  CORBA::Object_ptr _tao_push_supplier;
+  CORBA::Object_ptr _tao_base_push_supplier;
   CORBA::NamedValue_ptr nv_push_supplier;
-  CORBA::Any 	 any_push_supplier (RtecEventComm::_tc_PushSupplier, &_tao_push_supplier); // ORB does not own
+  CORBA::Any 	 any_push_supplier (RtecEventComm::_tc_PushSupplier, &_tao_base_push_supplier); // ORB does not own
   RtecEventChannelAdmin::SupplierQOS qos;
   CORBA::NamedValue_ptr nv_qos;
   CORBA::Any 	 any_qos (RtecEventChannelAdmin::_tc_SupplierQOS, &qos); // ORB does not own
@@ -54,12 +96,13 @@ void POA_RtecEventChannelAdmin::ProxyPushConsumer::connect_push_supplier_skel (C
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  push_supplier = RtecEventComm::PushSupplier::_narrow
-    (_tao_push_supplier, _tao_environment);
+  push_supplier = RtecEventComm::PushSupplier::_narrow (_tao_base_push_supplier, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr) _tao_object_reference->get_subclass ();
   impl->connect_push_supplier(push_supplier, qos, _tao_environment);
   
+
 }
 
 void POA_RtecEventChannelAdmin::ProxyPushConsumer::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
@@ -87,12 +130,31 @@ void POA_RtecEventChannelAdmin::ProxyPushConsumer::_is_a_skel (CORBA::ServerRequ
   req.result (any, env);
 }
 
+void POA_RtecEventComm_PushSupplier_disconnect_push_supplier_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
+{
+  CORBA::NVList_ptr 	 nvlist;
+  POA_RtecEventComm::PushSupplier_ptr 	 impl;
+  
+  // create an NV list and populate it with typecodes
+  _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
+  // add each argument according to the in, out, inout semantics
+  // parse the arguments
+  _tao_server_request.params (nvlist, _tao_environment);
+  if (_tao_environment.exception ()) return;
+  
+impl = (POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr) _tao_object_reference->get_subclass ();
+  impl->disconnect_push_supplier(_tao_environment);
+  
+
+}
+
 static const TAO_operation_db_entry ProxyPushSupplier_operations [] = {
+  {"disconnect_push_supplier", &POA_RtecEventComm_PushSupplier_disconnect_push_supplier_skel},
   {"connect_push_consumer", &POA_RtecEventChannelAdmin::ProxyPushSupplier::connect_push_consumer_skel},
   {"_is_a", &POA_RtecEventChannelAdmin::ProxyPushSupplier::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_ProxyPushSupplier_optable (ProxyPushSupplier_operations, 2, 4);
+TAO_Dynamic_Hash_OpTable tao_ProxyPushSupplier_optable (ProxyPushSupplier_operations, 3, 6);
 // skeleton constructor
 POA_RtecEventChannelAdmin::ProxyPushSupplier::ProxyPushSupplier (const char *obj_name)
 {
@@ -115,9 +177,9 @@ void POA_RtecEventChannelAdmin::ProxyPushSupplier::connect_push_consumer_skel (C
   CORBA::NVList_ptr 	 nvlist;
   POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr 	 impl;
   RtecEventComm::PushConsumer_ptr push_consumer;
-  CORBA::Object_ptr _tao_push_consumer;
+  CORBA::Object_ptr _tao_base_push_consumer;
   CORBA::NamedValue_ptr nv_push_consumer;
-  CORBA::Any 	 any_push_consumer (RtecEventComm::_tc_PushConsumer, &_tao_push_consumer); // ORB does not own
+  CORBA::Any 	 any_push_consumer (RtecEventComm::_tc_PushConsumer, &_tao_base_push_consumer); // ORB does not own
   RtecEventChannelAdmin::ConsumerQOS qos;
   CORBA::NamedValue_ptr nv_qos;
   CORBA::Any 	 any_qos (RtecEventChannelAdmin::_tc_ConsumerQOS, &qos); // ORB does not own
@@ -130,12 +192,13 @@ void POA_RtecEventChannelAdmin::ProxyPushSupplier::connect_push_consumer_skel (C
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  push_consumer = RtecEventComm::PushConsumer::_narrow
-    (_tao_push_consumer, _tao_environment);
+  push_consumer = RtecEventComm::PushConsumer::_narrow (_tao_base_push_consumer, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr) _tao_object_reference->get_subclass ();
   impl->connect_push_consumer(push_consumer, qos, _tao_environment);
   
+
 }
 
 void POA_RtecEventChannelAdmin::ProxyPushSupplier::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
@@ -199,9 +262,11 @@ void POA_RtecEventChannelAdmin::ConsumerAdmin::obtain_push_supplier_skel (CORBA:
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::ConsumerAdmin_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::ConsumerAdmin_ptr) _tao_object_reference->get_subclass ();
   *retval = impl->obtain_push_supplier(_tao_environment);
-  result = new CORBA::Any (RtecEventChannelAdmin::_tc_ProxyPushSupplier, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecEventChannelAdmin::_tc_ProxyPushSupplier, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -267,9 +332,11 @@ void POA_RtecEventChannelAdmin::SupplierAdmin::obtain_push_consumer_skel (CORBA:
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::SupplierAdmin_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::SupplierAdmin_ptr) _tao_object_reference->get_subclass ();
   *retval = impl->obtain_push_consumer(_tao_environment);
-  result = new CORBA::Any (RtecEventChannelAdmin::_tc_ProxyPushConsumer, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecEventChannelAdmin::_tc_ProxyPushConsumer, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -337,9 +404,11 @@ void POA_RtecEventChannelAdmin::EventChannel::for_consumers_skel (CORBA::ServerR
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::EventChannel_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::EventChannel_ptr) _tao_object_reference->get_subclass ();
   *retval = impl->for_consumers(_tao_environment);
-  result = new CORBA::Any (RtecEventChannelAdmin::_tc_ConsumerAdmin, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecEventChannelAdmin::_tc_ConsumerAdmin, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -357,9 +426,11 @@ void POA_RtecEventChannelAdmin::EventChannel::for_suppliers_skel (CORBA::ServerR
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::EventChannel_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::EventChannel_ptr) _tao_object_reference->get_subclass ();
   *retval = impl->for_suppliers(_tao_environment);
-  result = new CORBA::Any (RtecEventChannelAdmin::_tc_SupplierAdmin, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecEventChannelAdmin::_tc_SupplierAdmin, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -375,9 +446,11 @@ void POA_RtecEventChannelAdmin::EventChannel::destroy_skel (CORBA::ServerRequest
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventChannelAdmin::EventChannel_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventChannelAdmin::EventChannel_ptr) _tao_object_reference->get_subclass ();
   impl->destroy(_tao_environment);
   
+
 }
 
 void POA_RtecEventChannelAdmin::EventChannel::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)

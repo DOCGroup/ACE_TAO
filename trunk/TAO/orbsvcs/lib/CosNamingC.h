@@ -77,10 +77,10 @@ public:
 #if !defined (_COSNAMING__TAO__SEQ_NAME_CH_)
 #define _COSNAMING__TAO__SEQ_NAME_CH_
 
-// *************************************************************
+  // *************************************************************
   // class _tao__seq_Name
   // *************************************************************
-
+  
   class _tao__seq_Name
   {
   public:
@@ -248,10 +248,10 @@ public:
 #if !defined (_COSNAMING__TAO__SEQ_BINDINGLIST_CH_)
 #define _COSNAMING__TAO__SEQ_BINDINGLIST_CH_
 
-// *************************************************************
+  // *************************************************************
   // class _tao__seq_BindingList
   // *************************************************************
-
+  
   class _tao__seq_BindingList
   {
   public:
@@ -568,16 +568,16 @@ static CORBA::TypeCode_ptr _tc_AlreadyBound;
 
 static CORBA::TypeCode_ptr _tc_NotEmpty;
 
-    virtual void bind (const ACE_NESTED_CLASS (CosNaming,Name) & n, CORBA::Object_ptr  obj, CORBA::Environment &env);
-    virtual void rebind (const ACE_NESTED_CLASS (CosNaming,Name) & n, CORBA::Object_ptr  obj, CORBA::Environment &env);
-    virtual void bind_context (const ACE_NESTED_CLASS (CosNaming,Name) & n, ACE_NESTED_CLASS (CosNaming,NamingContext_ptr)  nc, CORBA::Environment &env);
-    virtual void rebind_context (const ACE_NESTED_CLASS (CosNaming,Name) & n, ACE_NESTED_CLASS (CosNaming,NamingContext_ptr)  nc, CORBA::Environment &env);
-    virtual CORBA::Object_ptr resolve (const ACE_NESTED_CLASS (CosNaming,Name) & n, CORBA::Environment &env);
-    virtual void unbind (const ACE_NESTED_CLASS (CosNaming,Name) & n, CORBA::Environment &env);
+    virtual void bind (const ACE_NESTED_CLASS (CosNaming,Name) &n, CORBA::Object_ptr obj, CORBA::Environment &env);
+    virtual void rebind (const ACE_NESTED_CLASS (CosNaming,Name) &n, CORBA::Object_ptr obj, CORBA::Environment &env);
+    virtual void bind_context (const ACE_NESTED_CLASS (CosNaming,Name) &n, ACE_NESTED_CLASS (CosNaming,NamingContext_ptr) nc, CORBA::Environment &env);
+    virtual void rebind_context (const ACE_NESTED_CLASS (CosNaming,Name) &n, ACE_NESTED_CLASS (CosNaming,NamingContext_ptr) nc, CORBA::Environment &env);
+    virtual CORBA::Object_ptr resolve (const ACE_NESTED_CLASS (CosNaming,Name) &n, CORBA::Environment &env);
+    virtual void unbind (const ACE_NESTED_CLASS (CosNaming,Name) &n, CORBA::Environment &env);
     virtual ACE_NESTED_CLASS (CosNaming,NamingContext_ptr)  new_context (CORBA::Environment &env);
-    virtual ACE_NESTED_CLASS (CosNaming,NamingContext_ptr)  bind_new_context (const ACE_NESTED_CLASS (CosNaming,Name) & n, CORBA::Environment &env);
+    virtual ACE_NESTED_CLASS (CosNaming,NamingContext_ptr)  bind_new_context (const ACE_NESTED_CLASS (CosNaming,Name) &n, CORBA::Environment &env);
     virtual void destroy (CORBA::Environment &env);
-    virtual void list (CORBA::ULong how_many, ACE_NESTED_CLASS (CosNaming,BindingList_out)  bl, ACE_NESTED_CLASS (CosNaming,BindingIterator_out)  bi, CORBA::Environment &env);
+    virtual void list (CORBA::ULong how_many, ACE_NESTED_CLASS (CosNaming,BindingList_out) bl, ACE_NESTED_CLASS (CosNaming,BindingIterator_out) bi, CORBA::Environment &env);
   protected:
     NamingContext (void); // default constructor
     NamingContext (STUB_Object *objref);
@@ -670,8 +670,8 @@ class BindingIterator: public virtual ACE_CORBA_1 (Object)
     static BindingIterator_ptr _nil (void);
     static BindingIterator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual CORBA::Boolean next_one (ACE_NESTED_CLASS (CosNaming,Binding_out)  b, CORBA::Environment &env);
-    virtual CORBA::Boolean next_n (CORBA::ULong how_many, ACE_NESTED_CLASS (CosNaming,BindingList_out)  bl, CORBA::Environment &env);
+    virtual CORBA::Boolean next_one (ACE_NESTED_CLASS (CosNaming,Binding_out) b, CORBA::Environment &env);
+    virtual CORBA::Boolean next_n (CORBA::ULong how_many, ACE_NESTED_CLASS (CosNaming,BindingList_out) bl, CORBA::Environment &env);
     virtual void destroy (CORBA::Environment &env);
   protected:
     BindingIterator (void); // default constructor

@@ -21,7 +21,7 @@ public:
     PushConsumer (const char *obj_name = 0);
     virtual ~PushConsumer (void);
   public:
-    virtual void push (const RtecEventComm::EventSet & data,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void push (const RtecEventComm::EventSet &data,  CORBA::Environment &env) = 0; // pure virtual
     static void push_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     virtual void disconnect_push_consumer ( CORBA::Environment &env) = 0; // pure virtual

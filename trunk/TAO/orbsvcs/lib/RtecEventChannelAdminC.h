@@ -140,10 +140,10 @@ static CORBA::TypeCode_ptr _tc_TypeError;
 #if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET_CH_)
 #define _RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET_CH_
 
-// *************************************************************
+  // *************************************************************
   // class _tao__seq_DependencySet
   // *************************************************************
-
+  
   class _tao__seq_DependencySet
   {
   public:
@@ -377,10 +377,10 @@ static CORBA::TypeCode_ptr _tc_TypeError;
 #if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET_CH_)
 #define _RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET_CH_
 
-// *************************************************************
+  // *************************************************************
   // class _tao__seq_PublicationSet
   // *************************************************************
-
+  
   class _tao__seq_PublicationSet
   {
   public:
@@ -556,7 +556,7 @@ class ProxyPushConsumer: public virtual RtecEventComm::PushConsumer
     static ProxyPushConsumer_ptr _nil (void);
     static ProxyPushConsumer_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr  push_supplier, const ACE_NESTED_CLASS (RtecEventChannelAdmin,SupplierQOS) & qos, CORBA::Environment &env);
+    virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier, const ACE_NESTED_CLASS (RtecEventChannelAdmin,SupplierQOS) &qos, CORBA::Environment &env);
   protected:
     ProxyPushConsumer (void); // default constructor
     ProxyPushConsumer (STUB_Object *objref);
@@ -649,7 +649,7 @@ class ProxyPushSupplier: public virtual RtecEventComm::PushSupplier
     static ProxyPushSupplier_ptr _nil (void);
     static ProxyPushSupplier_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr  push_consumer, const ACE_NESTED_CLASS (RtecEventChannelAdmin,ConsumerQOS) & qos, CORBA::Environment &env);
+    virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer, const ACE_NESTED_CLASS (RtecEventChannelAdmin,ConsumerQOS) &qos, CORBA::Environment &env);
   protected:
     ProxyPushSupplier (void); // default constructor
     ProxyPushSupplier (STUB_Object *objref);
