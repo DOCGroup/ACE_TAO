@@ -204,10 +204,10 @@ ECT_Throughput::run (int argc, char* argv[])
           // Create the EC
           ec_impl = 
             auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
-                (new ACE_EventChannel (1,
+                (new ACE_EventChannel (scheduler.in (),
+                                       1,
                                        ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                       module_factory.get (),
-                                       scheduler.in ()));
+                                       module_factory.get ()));
         }
       else
         {

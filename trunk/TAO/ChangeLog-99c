@@ -9,6 +9,10 @@ Fri Feb 05 03:41:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  MSVC++ gets really confused by a default argument of the form
 	  Module::Foo::_nil ()
 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
+	  Updated to reflect the changes above.
+
 Fri Feb  5 02:34:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
