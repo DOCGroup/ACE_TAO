@@ -168,14 +168,19 @@ Client::svc (void)
       //ACE_DEBUG ((LM_DEBUG, "...finished\n"));
 
       long dur = measured.sec () * 1000000 + measured.usec ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "Time for %u Msgs: %u usec \n",
-                  this->niterations_,
-                  measured.sec () * 1000000 + measured.usec ()));
+      if (dur == 0)
+        ACE_DEBUG ((LM_DEBUG, "Time not measurable, calculation skipped\n"));
+      else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Time for %u Msgs: %u usec \n",
+                    this->niterations_,
+                    dur));
 
-      ACE_DEBUG ((LM_DEBUG, "Time for 1 Msg: %u usec, %u calls/sec\n",
-                  dur / this->niterations_,
-                  1000000 / (dur / this->niterations_)));
+        ACE_DEBUG ((LM_DEBUG, "Time for 1 Msg: %u usec, %u calls/sec\n",
+                    dur / this->niterations_,
+                    1000000 / (dur / this->niterations_)));
+      }
 
       server_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

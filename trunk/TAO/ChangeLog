@@ -1,3 +1,10 @@
+Wed Aug 25 15:06:35 2004  Rich Seibel <seibel_r@ociweb.com>
+
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        The test does an FPE if the time measured is smaller than
+        the resolution of the Hi-Res timer.  It now tests for zero
+        elapsed time and does not try to divide by zero.
+
 Wed Aug 25 11:24:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
