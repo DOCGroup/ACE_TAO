@@ -27,6 +27,7 @@ OBJFILES = \
         $(OBJDIR)\FT_PolicyFactory.obj \
 	$(OBJDIR)\FT_Service_Activate.obj \
         $(OBJDIR)\FT_Service_Callbacks.obj \
+        $(OBJDIR)\FT_ClientRequest_Interceptor.obj \
         $(OBJDIR)\FT_ORBInitializer.obj
 
 RESOURCE = $(OBJDIR)\FaultTolerance.res

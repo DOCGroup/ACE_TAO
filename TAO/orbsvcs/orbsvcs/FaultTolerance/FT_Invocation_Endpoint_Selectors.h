@@ -9,7 +9,7 @@
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *
- *  @author Bala Natarajan <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
