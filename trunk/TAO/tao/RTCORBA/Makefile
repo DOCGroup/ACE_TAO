@@ -4508,7 +4508,19 @@ endif # corba_messaging
   Priority_Mapping_Manager.h Priority_Mapping.h Priority_Mapping.i \
   Priority_Mapping_Manager.i Network_Priority_Mapping_Manager.h \
   Network_Priority_Mapping.h Network_Priority_Mapping.i \
-  Network_Priority_Mapping_Manager.i RT_Protocols_Hooks.i \
+  Network_Priority_Mapping_Manager.i RT_Protocols_Hooks.i RT_ORB_Loader.h \
+  RT_Stub_Factory.h $(TAO_ROOT)/tao/Stub_Factory.h \
+  RT_Endpoint_Selector_Factory.h \
+  $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
+  Continuous_Priority_Mapping.h Continuous_Priority_Mapping.i \
+  Linear_Priority_Mapping.h Linear_Priority_Mapping.i \
+  Direct_Priority_Mapping.h Direct_Priority_Mapping.i \
+  Linear_Network_Priority_Mapping.h Linear_Network_Priority_Mapping.i \
+  RT_ORB.h RT_ORB.i RT_Current.h RT_Current.i \
+  RT_Thread_Lane_Resources_Manager.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
+  RT_Thread_Lane_Resources_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -4570,19 +4582,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/ORBInitInfo.h \
-  $(TAO_ROOT)/tao/ORBInitInfo.inl RT_ORB_Loader.h \
-  RT_Stub_Factory.h $(TAO_ROOT)/tao/Stub_Factory.h \
-  RT_Endpoint_Selector_Factory.h \
-  $(TAO_ROOT)/tao/Endpoint_Selector_Factory.h \
-  Continuous_Priority_Mapping.h Continuous_Priority_Mapping.i \
-  Linear_Priority_Mapping.h Linear_Priority_Mapping.i \
-  Direct_Priority_Mapping.h Direct_Priority_Mapping.i \
-  Linear_Network_Priority_Mapping.h Linear_Network_Priority_Mapping.i \
-  RT_ORB.h RT_ORB.i RT_Current.h RT_Current.i \
-  RT_Thread_Lane_Resources_Manager.h \
-  $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.h \
-  $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
-  RT_Thread_Lane_Resources_Manager.i \
+  $(TAO_ROOT)/tao/ORBInitInfo.inl \
   $(ACE_ROOT)/ace/Service_Repository.h \
   $(ACE_ROOT)/ace/Service_Repository.i \
   $(ACE_ROOT)/ace/Svc_Conf.h \
