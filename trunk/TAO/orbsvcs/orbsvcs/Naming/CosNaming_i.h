@@ -148,13 +148,13 @@ protected:
   // Check to see if we've got a valid name and raise an exception if
   // we don't.
 
-  void list_helper (TAO_BindingIterator* &bind_iter,
+  void list_helper (TAO_BindingIterator *&bind_iter,
                      TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
                      CORBA::Environment &_env);
   // This is a helper function for <list> method.  It is necessary due
   // to inability to have 2 TRY blocks in one function.
 
-  HASH_MAP *context_;
+  HASH_MAP context_;
   // This implementation of <NamingContext> uses <ACE_Hash_Map> for
   // storage and manipulation of name-object bindings.
 
