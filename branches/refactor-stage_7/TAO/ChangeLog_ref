@@ -1,3 +1,11 @@
+Fri Oct 24 19:22:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Valuetype/AbstractBase_T.h:
+	* tao/Valuetype/AbstractBase_T.cpp: 
+
+	  New files that contain the implementation of _narrow () and
+	  _unchecked_narrow ().
+
 Fri Oct 24 19:18:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any.cpp:
