@@ -225,7 +225,10 @@ CORBA::Boolean
 Test_AnySeq::check_validity (void)
 {
   CORBA::Short short_in, short_inout, short_out, short_ret;
-  char *str_in, *str_inout, *str_out, *str_ret;
+  const char *str_in;
+  const char *str_inout;
+  const char *str_out;
+  const char *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
   for (CORBA::ULong i=0; i < this->in_->length (); i++)

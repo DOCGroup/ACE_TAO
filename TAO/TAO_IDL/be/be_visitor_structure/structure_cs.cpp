@@ -39,7 +39,7 @@ be_visitor_structure_cs::~be_visitor_structure_cs (void)
 {
 }
 
-// visit the Structure_Cs node and its scope
+// visit the structure node and its scope
 int be_visitor_structure_cs::visit_structure (be_structure *node)
 {
   if (!node->cli_stub_gen () && !node->imported ())
@@ -61,6 +61,15 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
                              ), -1);
         }
 
+      TAO_OutStream *os = this->ctx_->stream ();
+      os->indent ();
+      *os << "void "
+          << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+          << "{" << be_idt_nl
+          << node->name () << " *tmp = ACE_static_cast ("
+          << node->name () << "*,x);" << be_nl
+          << "delete tmp;" << be_uidt_nl
+          << "}\n\n";
 
       // do any code generation required for the scope members
       // all we have to do is to visit the scope

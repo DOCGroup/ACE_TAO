@@ -121,15 +121,6 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
       this->out_ = Coffee::_nil ();
       this->ret_ = Coffee::_nil ();
 
-      // DII
-      *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                            this->in_.in ());
-      *this->inout_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                               this->inout_.in ());
-      *this->out_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                             this->out_.in ());
-      *this->ret_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                             this->ret_.in ());
       return 0;
     }
   ACE_CATCHANY
@@ -211,13 +202,6 @@ Test_ObjRef::check_validity (void)
   // Environemnt variable
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  //CORBA::Environment env;
-
-  Coffee::Desc_var ret_desc;
-  const char *in = 0;
-  const char *out = 0;
-  const char *inout = 0;
-
   ACE_TRY
     {
       if (CORBA::is_nil (this->in_.in ())
@@ -229,21 +213,21 @@ Test_ObjRef::check_validity (void)
         this->in_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      in = in_desc->name.in ();
+      const char *in = in_desc->name.in ();
 
       Coffee::Desc_var inout_desc =
         this->inout_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      inout = inout_desc->name.in ();
+      const char *inout = inout_desc->name.in ();
 
       Coffee::Desc_var out_desc =
         this->out_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      out = out_desc->name.in ();
+      const char *out = out_desc->name.in ();
 
-      ret_desc = this->out_->description (ACE_TRY_ENV);
+      Coffee::Desc_var ret_desc = this->out_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       const char* ret = ret_desc->name.in ();
@@ -265,37 +249,9 @@ Test_ObjRef::check_validity (void)
 }
 
 CORBA::Boolean
-Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
+Test_ObjRef::check_validity (CORBA::Request_ptr)
 {
-  //ACE_UNUSED_ARG (req);
-  //CORBA::Environment env;
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  // Narrow each checked variable into its _var before
-  // calling check_validity().
-
-  ACE_TRY
-    {
-      this->inout_ = Coffee::_narrow (*this->inout_courier,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->out_ = Coffee::_narrow (*this->out_courier,
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->ret_ = Coffee::_narrow (*this->ret_courier,
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return this->check_validity ();
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "_narrow from DII result");
-    }
-  ACE_ENDTRY;
-  return 0;
+  return this->check_validity ();
 }
 
 void

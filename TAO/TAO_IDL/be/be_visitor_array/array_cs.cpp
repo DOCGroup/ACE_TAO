@@ -97,8 +97,17 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  // dup method
   os->indent ();
+
+  *os << "void " << fname << "_forany"
+      << "::_tao_any_destructor (void *x)" << be_nl
+      << "{" << be_idt_nl
+      << fname << "_slice *tmp = ACE_static_cast ("
+      << fname << "_slice*,x);" << be_nl
+      << fname << "_free (tmp);" << be_uidt_nl
+      << "}\n\n";
+
+  // dup method
   *os << fname << "_slice *" << be_nl
       << fname << "_dup (const " << fname
       << "_slice *_tao_src_array)" << be_nl;

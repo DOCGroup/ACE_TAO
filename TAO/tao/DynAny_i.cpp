@@ -672,7 +672,7 @@ TAO_DynAny_i::get_double (CORBA::Environment &ACE_TRY_ENV)
 char *
 TAO_DynAny_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Char *val;
+  const char *val;
 
   if (!(this->value_ >>= val))
     {

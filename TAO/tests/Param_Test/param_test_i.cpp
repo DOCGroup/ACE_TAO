@@ -762,7 +762,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
 {
   CORBA::Any *ret;
   CORBA::Short short_in;
-  char *str_in;
+  const char *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
   Param_Test::Short_Seq_ptr ub_short_sequence;

@@ -56,27 +56,20 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   *os << "void operator<<= (CORBA::Any &_tao_any, const "
       << node->name () << " &_tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
-      << node->name () << " *_tao_any_val = 0;" << be_nl
-      << "ACE_NEW (_tao_any_val, " << node->name ()
-      << " (_tao_elem));" << be_nl
-      << "if (!_tao_any_val) return;" << be_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "TAO_OutputCDR stream;" << be_nl
-      << "stream << *_tao_any_val;" << be_nl
+      << "stream << _tao_elem;" << be_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "TAO_ENCAP_BYTE_ORDER," << be_nl
       << "stream.begin ()," << be_nl
-      << "1," << be_nl
-      << "_tao_any_val," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY " << be_nl
-      << "{" << be_idt_nl
-      << "delete _tao_any_val;" << be_uidt_nl
+      << "{" << be_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_uidt_nl
       << "}\n" << be_nl;
@@ -94,6 +87,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "_tao_elem," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
@@ -139,6 +133,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, _tao_elem)," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
@@ -190,12 +185,13 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << ");" << be_uidt_nl
       << "if (stream >> *(" << node->name () << " *)_tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->_tao_replace (" 
+      << "((CORBA::Any *)&_tao_any)->_tao_replace ("
       << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, ACE_const_cast ("
       << node->name () << " *&, _tao_elem))," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl

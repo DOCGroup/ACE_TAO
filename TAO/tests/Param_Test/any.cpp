@@ -266,7 +266,10 @@ CORBA::Boolean
 Test_Any::check_validity (void)
 {
   CORBA::Short short_in, short_inout, short_out, short_ret;
-  char *str_in, *str_inout, *str_out, *str_ret;
+  const char *str_in;
+  const char *str_inout;
+  const char *str_out;
+  const char *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
   Param_Test::Fixed_Array_forany array_in, array_inout, array_out, array_ret;
   Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
