@@ -3,6 +3,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Thread_Manager.h"
 #include "Dump_Restore.h"
 
 Dump_Restore::Dump_Restore (int argc, char *argv[])

@@ -4,6 +4,7 @@
 // implementation of recursive mutexes on Win32 and Posix pthreads.
 
 #include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 
