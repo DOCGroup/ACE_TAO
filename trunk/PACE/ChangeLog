@@ -1,3 +1,11 @@
+Mon Apr 23 10:43:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * pace/config/compiler.h:
+          Reverted on of Cristian's changes.  He agrees that it is not
+          worthwhile to use the C9X 'inline' feature when only a few
+          versions of gcc support it, while inlining static functions with
+          -O3 is supported by all versions.
+
 Mon Apr 23 09:45:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/win32/pthread.c (pthread_getschedparam):
