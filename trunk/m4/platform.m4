@@ -458,9 +458,12 @@ AC_DEFUN([ACE_VAR_TIMEZONE],
 [AC_CACHE_CHECK([for timezone variable],
 		[ace_cv_var_timezone],
 		[AC_TRY_LINK([#include <time.h>],
-			     [return (int)timezone;],
-		             [ace_cv_var_timezone=yes],
-			     [ace_cv_var_timezone=no])
+			     [return (int) timezone(0, 0);],
+		             [ace_cv_var_timezone=no],
+			     [AC_TRY_LINK([#include <time.h>],
+					  [return (int) timezone;],
+					  [ace_cv_var_timezone=yes],
+			                  [ace_cv_var_timezone=no])])
 		])
 if test "$ace_cv_var_timezone" = yes; then
   AC_DEFINE([ACE_HAS_TIMEZONE], 1,
