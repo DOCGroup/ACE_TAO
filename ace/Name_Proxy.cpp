@@ -37,8 +37,6 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
 
   if (options[ACE_Synch_Options::USE_TIMEOUT])
     timeout = ACE_const_cast (ACE_Time_Value *, options.time_value ());
-  else
-    timeout = ACE_const_cast (ACE_Time_Value *, &ACE_Time_Value::zero);
 
   // Initiate the connection.
   return this->connector_.connect (this->peer_,
