@@ -65,11 +65,13 @@ sub new {
   my($exclude)   = shift;
   my($makeco)    = shift;
   my($nmod)      = shift;
+  my($applypj)   = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, $nmod, 'workspace');
+                                $feature, $hierarchy, $nmod, $applypj,
+                                'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'}      = undef;
@@ -1308,7 +1310,8 @@ sub project_creator {
                    $parameters{'hierarchy'},
                    $self->{'exclude'}->{$self->{'wctype'}},
                    $self->make_coexistence(),
-                   $parameters{'name_modifier'});
+                   $parameters{'name_modifier'},
+                   $parameters{'apply_project'});
 }
 
 

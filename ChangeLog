@@ -1,3 +1,16 @@
+Wed Jan  7 10:34:29 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added an option that causes MPC to apply the name modifier
+          (specified by the -name_modifier option) to project names in
+          addition to workspace and project file names.
+
 Wed Jan  7 14:04:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
