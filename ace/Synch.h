@@ -192,8 +192,12 @@ public:
   // (i.e., won't block).
 
   int release (void);
-  // Increment the semaphore, potentially unblocking
-  // a waiting thread.
+  // Increment the semaphore by 1, potentially unblocking a waiting
+  // thread.
+
+  int release (size_t release_count);
+  // Increment the semaphore by <release_count>, potentially
+  // unblocking waiting threads.
 
   int acquire_read (void);
   // Acquire semaphore ownership.  This calls <acquire> and is only
