@@ -1,3 +1,9 @@
+Thu Jan  1 22:32:14 UTC 2004  Don Hinton  <dhinton@dresystems.com>
+
+        * rules.tao.GNU:
+          Changed default for security to =1 so that libTAO_Security will
+          be built by default.
+
 Thu Jan  1 20:07:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation.mpc:
