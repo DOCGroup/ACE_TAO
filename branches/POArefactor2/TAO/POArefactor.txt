@@ -1,3 +1,31 @@
+Thu Jan 27 13:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Generate an include of ForwardRequestC.h to get
+          PortableServer::ForwardRequest because we don't give this for free
+          anymore when including portableserver
+
+        * tao/PortableServer/diffs/ForwardRequest.diff:
+          New diff file
+
+        * tao/PortableServer/ForwardRequest.pidl:
+        * tao/PortableServer/ForwardRequestC.{h,cpp,inl}:
+          Moved ForwardRequest to its own file
+
+        * tao/PortableServer/*Policy*.*:
+        * tao/PortableServer/PortableServer.cpp:
+          Removed the classes for policy values, just store the enum
+          The svc conf usage is too expensive
+
+       * tao/PortableServer/PortableServer.h:
+         Removed a lot of *C.h includes, only PortableServerC.h is now there.
+         Do you need other specific interfaces from the PortableServer library
+         you have to include the specific *C.h file.
+
+       * tao/PortableServer/ServantLocator*.*:
+       * tao/PortableServer/ServantManager*.*:
+         Update because of ForwardRequest moval and regenerated
+
 Wed Jan 26 19:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Adapter_Activator.cpp:
