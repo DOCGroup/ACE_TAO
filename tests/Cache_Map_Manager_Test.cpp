@@ -211,7 +211,6 @@ void find_test_hash_cache (HASH_MAP_CACHE &cache)
   ACE_DEBUG ((LM_DEBUG, "find\n"));
 
   size_t total_entries = cache.current_size ();
-  int order = 0;
 
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
@@ -239,7 +238,7 @@ void purge_test_cache (MAP_CACHE &cache)
   size_t current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  size_t entries_to_remove = (double (purge_percent) / 100 * current_map_size) + 0.5;
+  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
@@ -259,7 +258,7 @@ void purge_test_hash_cache (HASH_MAP_CACHE &cache)
   size_t current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  size_t entries_to_remove = (double (purge_percent) / 100 * current_map_size) + 0.5;
+  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
@@ -298,7 +297,14 @@ functionality_test_cache (void)
   run_reverse_iterator_cache (cache);
 
   find_test_cache (cache);
+  
+  ACE_DEBUG ((LM_DEBUG,
+             "Number of entries in cache before purging : %d\n", 
+             cache.current_size ()));     
   purge_test_cache (cache);
+  ACE_DEBUG ((LM_DEBUG,
+              "Number of entries in cache after purging : %d\n", 
+              cache.current_size ()));    
 
   run_iterator_cache (cache);
   run_reverse_iterator_cache (cache);
@@ -329,7 +335,14 @@ functionality_test_hash_cache (void)
   run_reverse_iterator_hash_cache (cache);
 
   find_test_hash_cache (cache);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Number of entries in cache before purging : %d\n", 
+              cache.current_size ()));             
   purge_test_hash_cache (cache);
+  ACE_DEBUG ((LM_DEBUG,
+              "Number of entries in cache after purging : %d\n", 
+              cache.current_size ()));
 
   run_iterator_hash_cache (cache);
   run_reverse_iterator_hash_cache (cache);
@@ -429,6 +442,9 @@ template class ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER::itera
 template class ACE_Cache_Map_Iterator<KEY, VALUE, MAP_MANAGER::iterator, MAP_LRU, ATTR>;
 template class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, MAP_MANAGER::reverse_iterator, MAP_LRU, ATTR>;
 
+template class ACE_Cache_Map_Manager<KEY, VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_LRU, ATTR>;
+template class ACE_Cache_Map_Iterator<KEY, VALUE, HASH_MAP_MANAGER::iterator, HASH_MAP_LRU, ATTR>;
+template class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_LRU, ATTR>;
 template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_LRU, ATTR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -465,6 +481,9 @@ template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_T
 #pragma instantiate ACE_Cache_Map_Iterator<KEY, VALUE, MAP_MANAGER::iterator, MAP_LRU, ATTR>
 #pragma instantiate ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, MAP_MANAGER::reverse_iterator, MAP_LRU, ATTR>
 
+#pragma instantiate ACE_Cache_Map_Manager<KEY, VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_LRU, ATTR>
+#pragma instantiate ACE_Cache_Map_Iterator<KEY, VALUE, HASH_MAP_MANAGER::iterator, HASH_MAP_LRU, ATTR>
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_LRU, ATTR>
 #pragma instantiate ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_LRU, ATTR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
