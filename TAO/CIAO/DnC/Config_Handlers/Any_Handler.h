@@ -45,6 +45,11 @@ namespace CIAO
       static void process_Any (DOMNodeIterator * iter,
                                ::CORBA::Any &any_obj);
       // process elements of type Deployment:Any in the descriptor files
+
+    private:
+      static void validate_ValueNode (DOMNodeIterator * iter,
+                                      const char * name);
+      // validate <value> .. </value> node present in the XML schema
     };
   }
 }

@@ -1,3 +1,14 @@
+Tue May 11 11:17:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Any_Handler.h:
+        * DnC/Config_Handlers/Any_Handler.cpp:
+
+          Any handler that processes schema definitions of the type <any>
+          ... </any>. Currently, this handler supports only built-in
+          types. Issues pertaining to specifying properties in IDL (typed)
+          v/s specifying them in schema (dynamic) as an Any are being
+          examined
+
 Tue May 11 10:45:55 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
