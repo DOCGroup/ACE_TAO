@@ -61,7 +61,7 @@ all:
 	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./iout -v < $(srcdir)/idl.gperf > idl.out
 	-diff -b $(srcdir)/idl.exp idl.out
-	$(GPERF) -a -o < $(srcdir)/corba.gperf > tinset.cpp
+	$(GPERF) -a -D -o < $(srcdir)/corba.gperf > tinset.cpp
 	$(CXX) $(CCFLAGS) -o tout tinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./tout -v < $(srcdir)/corba.gperf > corba.out
 	-diff -b $(srcdir)/corba.exp corba.out

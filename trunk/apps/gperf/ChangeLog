@@ -1,4 +1,6 @@
-Tue Sep 22 02:12:53 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+Tue Sep 22 18:02:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Makefile: Added a new test for CORBA keywords.
 
 	* tests: Added a new test for the type of input that is causing
  	  problems with TAO's IDL compiler.
