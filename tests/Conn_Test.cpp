@@ -360,7 +360,7 @@ client (void *arg)
 
   if (client_manager.spawn_n
       (n_threads,
-       ACE_THR_FUNC (client_connections),
+       (ACE_THR_FUNC) client_connections,
        (void *) &info,
        THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "client thread spawn failed"));
@@ -379,6 +379,11 @@ client (void *arg)
 static void *
 server (void *arg)
 {
+#if defined (VXWORKS)
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server stack size is %u\n",
+              ACE_OS::thr_min_stack ()));
+#endif /* VXWORKS */
+
   ACCEPTOR *acceptor = (ACCEPTOR *) arg;
   ACE_INET_Addr cli_addr;
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
@@ -503,12 +508,24 @@ spawn_threads (ACCEPTOR *acceptor,
   ACE_thread_t *server_name;
   ACE_NEW (server_name, ACE_thread_t[n_servers]);
 
+  // And test ability to provide stacks.
+  size_t *stack_size;
+  ACE_NEW (stack_size, size_t[n_servers]);
+  char **stack;
+  ACE_NEW (stack, char *[n_servers]);
+
   int i;
 
   for (i = 0; i < n_servers; ++i)
     {
-      ACE_NEW (server_name[i], char [32]);
+      ACE_NEW (server_name[i], char[32]);
       ACE_OS::sprintf (server_name[i], "server%u", i);
+
+      stack_size[i] = 40000;
+      ACE_NEW (stack[i], char[stack_size[i]]);
+
+      // Initialize the stack for checkStack.
+      ACE_OS::memset (stack[i], 0xEE, stack_size[i]);
     }
 
   char *client_name = "Conn client";
@@ -520,13 +537,24 @@ spawn_threads (ACCEPTOR *acceptor,
        server_name,
 #endif /* VXWORKS */
        n_servers,
-       ACE_THR_FUNC (server),
+       (ACE_THR_FUNC) server,
        (void *) acceptor,
-       THR_NEW_LWP) == -1)
+       THR_NEW_LWP
+#if defined (VXWORKS)
+       , ACE_DEFAULT_THREAD_PRIORITY
+       , -1
+#if 0 /* Don't support setting of stack, because it doesn't seem to work. */
+       , (void **) stack
+#else
+       , 0
+#endif /* 0 */
+       , stack_size
+#endif /* VXWORKS */
+       ) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "server thread create failed"));
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (client),
+      ((ACE_THR_FUNC) client,
        (void *) server_addr,
        THR_NEW_LWP
 #if defined (VXWORKS)
@@ -541,9 +569,12 @@ spawn_threads (ACCEPTOR *acceptor,
 #if defined (VXWORKS)
   for (i = 0; i < n_servers; ++i)
     {
-      delete [] server_name [i];
+      delete [] server_name[i];
+      delete [] stack[i];
     }
   delete [] server_name;
+  delete [] stack;
+  delete [] stack_size;
 #endif /* VXWORKS */
 }
 #endif /* (ACE_WIN32 || VXWORKS || ACE_PSOS) && ACE_HAS_THREADS */
