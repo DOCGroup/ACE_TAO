@@ -1,3 +1,14 @@
+Tue Apr 18 11:47:57 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SOCK_Connector.cpp:
+
+	  Removed inclusion of `ace/Handle_Set.h'.  The ACE_SOCK_Connector
+	  doesn't directly use an ACE_Handle_Set.
+
+	* ace/Makefile:
+
+	  Updated dependencies.
+
 Tue Apr 18 08:54:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/vc_filter.pl:
