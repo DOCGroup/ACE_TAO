@@ -1,3 +1,9 @@
+Thu Apr 29 19:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added corbafwd.h and Invocation.h to the projects.
+
 Thu Apr 29 19:21:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp (find_servant_i): We are grabbing the
