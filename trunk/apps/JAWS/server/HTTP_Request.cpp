@@ -65,7 +65,7 @@ HTTP_Request::~HTTP_Request (void)
   ACE_OS::free (this->query_string_);
   ACE_OS::free (this->path_info_);
 
-  delete this->cgi_env_;
+  delete [] this->cgi_env_;
 }
 
 int
@@ -402,9 +402,6 @@ HTTP_Request::type (const char *type_string)
   return this->type_;
 }
 
-// James, this function is *way* too long.  Can you please break it
-// into multiple methods?
-
 int
 HTTP_Request::cgi (char *uri_string)
 {
@@ -420,6 +417,26 @@ HTTP_Request::cgi (char *uri_string)
   // (1) the file has a CGI extension.
   // (2) the file resides in a CGI bin directory.
 
+  char *extra_path_info = 0;
+  if ((this->cgi_in_path (uri_string, extra_path_info) == 0)
+      || (this->cgi_in_extension (uri_string, extra_path_info)))
+    {
+      cgi_args_and_env (extra_path_info);
+
+      if (extra_path_info)
+        {
+          this->path_info_ = ACE_OS::strdup (extra_path_info);
+          HTTP_Helper::HTTP_decode_string (this->path_info_);
+          *extra_path_info = '\0';
+        }
+    }
+
+  return this->cgi_;
+}
+
+int
+HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
+{
   char *cgi_path;
 
   if (HTTP_Config::instance ()->cgi_path ())
@@ -427,9 +444,12 @@ HTTP_Request::cgi (char *uri_string)
   else
     cgi_path = ACE_OS::strdup ("");
 
+  // error checking considered helpful!
+  if (cgi_path == 0)
+    return 0;
+
   char *lasts;
   char *cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts);
-  char *extra_path_info = 0;
 
   if (cgi_path_next)
     do
@@ -439,11 +459,25 @@ HTTP_Request::cgi (char *uri_string)
 	// James, the following code is impossible to understand.
 	// Please simplify it to not use the ?: expression (i.e.,
 	// break it into several statements).
-        if ((*cgi_path_next == '/')
-            ? ! ACE_OS::strncmp (extra_path_info = uri_string,
-                                 cgi_path_next, len)
-            : (int)(extra_path_info = ACE_OS::strstr (uri_string,
-                                                      cgi_path_next)))
+
+        // match path to cgi path
+        int in_cgi_path = 0;
+
+        if (*cgi_path_next == '/')
+          {
+            // cgi path next points to an ``absolute'' path
+            extra_path_info = uri_string;
+            in_cgi_path =
+              (ACE_OS::strncmp (extra_path_info, cgi_path_next, len) == 0);
+          }
+        else
+          {
+            // cgi path next points to a ``relative'' path
+            extra_path_info = ACE_OS::strstr (uri_string, cgi_path_next);
+            in_cgi_path = (extra_path_info != 0);
+          }
+
+        if (in_cgi_path)
           {
             if (extra_path_info[len] == '/')
               {
@@ -471,33 +505,41 @@ HTTP_Request::cgi (char *uri_string)
 
   ACE_OS::free (cgi_path);
 
-  if (this->cgi_ == 0)
+  return this->cgi_;
+}
+
+int
+HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
+{
+  extra_path_info = ACE_OS::strstr (uri_string, ".cgi");
+
+  while (extra_path_info != 0)
     {
-      // Nothing found searching through paths, what about CGI
-      // extension?
-      extra_path_info = ACE_OS::strstr (uri_string, ".cgi");
+      extra_path_info += 4;
+      // skip past ``.cgi''
 
-      while (extra_path_info != 0)
+      switch (*extra_path_info)
         {
-          extra_path_info += 4;
-
-          switch (*extra_path_info)
-            {
-            case '\0':
-              extra_path_info = 0;
-              break;
-            case '/':
-            case '?':
-              break;
-            default:
-              extra_path_info = ACE_OS::strstr (extra_path_info, ".cgi");
-              continue;
-            }
-          this->cgi_ = 1;
+        case '\0':
+          extra_path_info = 0;
           break;
+        case '/':
+        case '?':
+          break;
+        default:
+          extra_path_info = ACE_OS::strstr (extra_path_info, ".cgi");
+          continue;
         }
+      this->cgi_ = 1;
+      break;
     }
 
+  return this->cgi_;
+}
+
+void
+HTTP_Request::cgi_args_and_env (char *&extra_path_info)
+{
   char *cgi_question = 0;
 
   if (extra_path_info)
@@ -531,7 +573,7 @@ HTTP_Request::cgi (char *uri_string)
 
           if (ACE_OS::strchr (cgi_question, '='))
             {
-              ACE_NEW_RETURN (this->cgi_env_, char *[count+1], -1);
+              ACE_NEW_RETURN (this->cgi_env_, char *[count+1], );
 
               int i = 0;
               ptr = cgi_question;
@@ -556,15 +598,6 @@ HTTP_Request::cgi (char *uri_string)
             }
         }
     }
-
-  if (extra_path_info)
-    {
-      this->path_info_ = ACE_OS::strdup (extra_path_info);
-      HTTP_Helper::HTTP_decode_string (this->path_info_);
-      *extra_path_info = '\0';
-    }
-
-  return this->cgi_;
 }
 
 const char *

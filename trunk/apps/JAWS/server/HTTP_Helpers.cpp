@@ -282,12 +282,11 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
   error = 0;
   char *indata = data;
   char *outdata = buf;
+  const unsigned char ASCII_MAX = ~0;
 
   while ((c = *indata++) != '\0')
     {
-      // James, can you please define a macro for this, e.g.,
-      // ACE_ASCII_MAX or something.
-      if (c > 255)
+      if (c > (int)ASCII_MAX)
         {
           ACE_DEBUG ((LM_DEBUG, "encountered char > 255 (decimal %d)\n", c));
           error++;

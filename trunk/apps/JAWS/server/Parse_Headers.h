@@ -21,7 +21,9 @@
 #include "ace/OS.h"
 
 class Headers_Map
-// James, please add documentation here.
+  // = TITLE
+  //     Map textual headings to header values (e.g. "Subject:" maps to
+  //     "Re: My left foot"
 {
 public:
   Headers_Map (void);

@@ -24,7 +24,10 @@ class ACE_Message_Block;
 #include "Parse_Headers.h"
 
 class HTTP_Request 
-// James, please document this class.
+  // = TITLE
+  //     This parses the client request of an HTTP transaction.
+  // 
+  // = DESCRIPTION
 {
 public:
   HTTP_Request (void);
@@ -48,32 +51,59 @@ public:
 public:
   // = The Accessors.
 
-  // James, please document.
-
   const char *method (void) const;
+  // HTTP request method
+
   const char *uri (void) const;
+  // HTTP request uri
+
   const char *version (void) const;
+  // HTTP request version
+
   const char *path (void) const;
+  // The HTTP request uri translated into a server filename path
 
   int cgi (void) const;
+  // TRUE of the request is a cgi request
+
   const char *cgi_args (void) const;
+  // The arguments to the cgi request
+
   const char **cgi_env (void) const;
+  // The environment variables passed to the CGI request
 
   const char *query_string (void) const;
+  // The cgi request query string
+
   const char *path_info (void) const;
+  // The cgi request path information
 
   int type (void) const;
+  // The type of the HTTP request
 
   const Headers &headers (void) const;
+  // The headers that were parsed from the request
+
   const char *header_strings (int index) const;
+  // Header strings stored
+
   const char *header_values (int index) const;
+  // Values associated with the header strings
 
   char *data (void);
+  // The buffer into which request data is read
+
   int data_length (void);
+  // The length of the request data
+
   int content_length (void);
+  // The length of incoming content if any
 
   int status (void);
+  // Current status of the incoming request
+
   const char *status_string (void);
+  // A string describing the state of the incoming request
 
   void dump (void);
   // Dump the state of the request.
@@ -87,6 +117,7 @@ public:
     PUT,
     NUM_METHOD_STRINGS
   };
+  // Values for request type
 
   enum
   {
@@ -105,6 +136,7 @@ public:
     LAST_MODIFIED,
     NUM_HEADER_STRINGS
   };
+  // Header strings
 
 private:
   // = Private Accessors which can set values
@@ -114,6 +146,16 @@ private:
   const char *path (const char *uri_string);
 
   int cgi (char *uri_string);
+  // determine if the given URI is a CGI program.
+
+  int cgi_in_path (char *uri_string, char *&extra_path_info);
+  // determine if the given URI resides in a cgi-bin directory
+
+  int cgi_in_extension (char *uri_string, char *&extra_path_info);
+  // determine if the given URI contains a cgi extension
+
+  void cgi_args_and_env (char *&extra_path_info);
+  // set the arguments and environment for the cgi program
 
   int type (const char *type_string);
 

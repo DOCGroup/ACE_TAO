@@ -255,9 +255,6 @@ JAWS_Asynch_IO::receive_file (const char *filename,
   ACE_Message_Block *mb = 0;
   ACE_Filecache_Handle *handle;
 
-  // James, please fix this method so that it returns an int (i.e.,
-  // -1) if new fails.  Then replace ACE_NEW with ACE_NEW_RETURN and
-  // make sure to update all the callers.
   ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length));
 
   int result = handle->error ();
@@ -275,17 +272,17 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 
       if (mb == 0)
 	{
-	  delete handle;
 	  errno = ENOMEM;
-	  // James, make sure that we return -1...
-	  return;
+          result = -1;
 	}
+      else
+        {
+          ACE_Asynch_Read_Stream ar;
 
-      ACE_Asynch_Read_Stream ar;
-
-      if (ar.open (*this, this->handle_) == -1
-          || ar.read (*mb, mb->size () - mb->length (), handle) == -1)
-	result = -1;
+          if (ar.open (*this, this->handle_) == -1
+              || ar.read (*mb, mb->size () - mb->length (), handle) == -1)
+            result = -1;
+        }
     }
 
   if (result != ACE_Filecache_Handle::SUCCESS)
@@ -372,10 +369,14 @@ JAWS_Asynch_IO::send_message (const char *buffer,
 			      int length,
 			      int act)
 {
-  // James, make sure that you return -1 if new fails (and update callers?).
-
   ACE_Message_Block *mb;
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
+
+  if (mb == 0)
+    {
+      this->handler_->error_message_complete ();
+      return;
+    }
 
   ACE_Asynch_Write_Stream aw;
   if (aw.open (*this, this->handle_) == -1

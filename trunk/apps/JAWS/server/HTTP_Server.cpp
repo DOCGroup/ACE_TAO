@@ -7,9 +7,6 @@
 #include "IO.h"
 #include "HTTP_Server.h"
 
-//DONE// James, please make sure that you don't have "free floating"
-//DONE// enums since they will inevitably cause portability problems.
-
 class HTTP_Server_Anchor
 {
 public:

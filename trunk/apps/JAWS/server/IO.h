@@ -46,21 +46,26 @@ public:
   // James, please add documentation here.
 
   virtual void read (ACE_Message_Block& mb, int size) = 0;
+  // read from the handle size bytes into the message block.
 
   virtual void transmit_file (const char *filename,
 			      const char *header,
 			      int header_size,
 			      const char *trailer,
 			      int trailer_size) = 0;
+  // send header, filename, trailer to the handle.
 
   virtual void receive_file (const char *filename,
 			     void *initial_data,
 			     int initial_data_length,
 			     int entire_length) = 0;
+  // read data from the handle and store in filename.
 
   virtual void send_confirmation_message (const char *buffer, int length) = 0; 
+  // send a confirmation message to the handle.
 
   virtual void send_error_message (const char *buffer, int length) = 0; 
+  // send an error message to the handle.
   
 protected:
   ACE_HANDLE handle_;
@@ -68,7 +73,12 @@ protected:
 };
 
 class JAWS_IO_Handler
-// James, please add documentation here.
+  // = TITLE
+  //     
+  //     This class defines the abstract interface for an I/O handler class in
+  //     the context of Web-likes servers
+  //
+  // = DESCRIPTION
 {
 public:
   virtual void read_complete (ACE_Message_Block &data) = 0;
@@ -110,7 +120,11 @@ public:
 };
 
 class JAWS_Synch_IO : public JAWS_IO
-// James, please add documentation here.
+  // = TITLE
+  //     
+  //     This class defines the interface for a Synchronous I/O class.
+  //
+  // = DESCRIPTION
 {
 public:
   JAWS_Synch_IO (void);
@@ -145,7 +159,11 @@ protected:
 #if defined (ACE_WIN32)
 
 class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
-// James, please add documentation here.
+  // = TITLE
+  //     
+  //     This class defines the interface for a Asynchronous I/O class.
+  //
+  // = DESCRIPTION
 {
 public:
   JAWS_Asynch_IO (void);

@@ -41,6 +41,7 @@ main (int argc, char *argv[])
   // Run forever, performing the configured services until we receive
   // a SIGINT.
 
-  ACE_Reactor::run_event_loop ();
+  // ACE_Reactor::run_event_loop ();
+
   return 0;
 }
