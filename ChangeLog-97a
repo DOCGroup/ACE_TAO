@@ -1,5 +1,9 @@
 Thu Jun 26 08:36:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* Makefile: fix UPTODATE check (for release target) by not
+	  running it in a sub-shell.  Also, added ACE-lessons.html
+	  to RELEASE_FILES.
+
 	* performance-tests/Misc/context_switch_time.cpp: use same priority
 	  values on Win32 platforms as on Solaris, because thread priority
 	  increases with increasing priority values on both of those platforms.
