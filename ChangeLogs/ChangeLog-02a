@@ -1,3 +1,15 @@
+Mon Jul  9 11:10:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * config-win32-msvc-5.h:
+        * config-win32-msvc-6.h:
+
+          Added conditional definitions for ACE_LD_DECORATOR_STR
+          "mfc" and "mfcd" so that the MFC release and debug versions
+          of libraries can be dynamically loaded in the same way that
+          the non-MFC release and debug versions are. Thanks to
+          Francois Bernier <fbernier@gel.ulaval.ca> for suggesting
+          this enhancement.
+
 Mon Jul 09 11:31:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/pre.h
