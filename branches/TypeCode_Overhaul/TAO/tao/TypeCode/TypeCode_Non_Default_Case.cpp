@@ -23,6 +23,11 @@ namespace TAO
       {
         return v;
       }
+
+      inline static T any_to (T & v)
+      {
+        return v;
+      }
     };
 
     // Specializations for types that require wrapper for Any
@@ -36,6 +41,11 @@ namespace TAO
       {
         return CORBA::Any::from_boolean (v);
       }
+
+      inline static CORBA::Any::to_boolean any_to (CORBA::Boolean & v)
+      {
+        return CORBA::Any::to_boolean (v);
+      }
     };
 
     template <>
@@ -44,6 +54,11 @@ namespace TAO
       inline static CORBA::Any::from_char any_from (CORBA::Char v)
       {
         return CORBA::Any::from_char (v);
+      }
+
+      inline static CORBA::Any::to_char any_to (CORBA::Char & v)
+      {
+        return CORBA::Any::to_char (v);
       }
     };
 
@@ -54,6 +69,11 @@ namespace TAO
       {
         return CORBA::Any::from_wchar (v);
       }
+
+      inline static CORBA::Any::to_wchar any_to (CORBA::WChar & v)
+      {
+        return CORBA::Any::to_wchar (v);
+      }
     };
 
   } // End TypeCode namespace
@@ -63,10 +83,39 @@ namespace TAO
 
 template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
 bool
-TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE, STRING_TYPE>::marshal_label (
+TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
+                                STRING_TYPE>::marshal_label (
   TAO_OutputCDR & cdr) const
 {
   return (cdr << this->label_);
+}
+
+template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
+bool
+TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
+                                STRING_TYPE>::equal_label (
+  CORBA::ULong index
+  CORBA::TypeCode_ptr tc
+  ACE_ENV_ARG_DECL) const
+{
+  CORBA::Any_var const any = tc->member_label (index
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  // The equality operator==() below is guaranteed to be defined for
+  // the discriminator type since an IDL union discriminator type must
+  // be any of the following: (1) an integer, (2) a character, (3) a
+  // boolean, or (4) an enumeration.
+
+  DISCRIMINATOR_TYPE tc_label;
+  if (any.in ()
+        >>= TAO::TypeCode::Case_Traits<DISCRIMINATOR_TYPE>::any_to (tc_label)
+      && this->label_ == tc_label)
+    {
+      return true;
+    }
+
+  return false;
 }
 
 template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>

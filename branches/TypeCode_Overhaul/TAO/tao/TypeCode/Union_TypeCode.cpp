@@ -23,6 +23,8 @@ TAO::TypeCode::Union<StringType,
   // the CORBA specification), meaning that it must be marshaled into
   // a CDR encapsulation.
 
+  CORBA::ULong const count = this->case_count ();
+
   // Create a CDR encapsulation.
   bool const success =
     (cdr << TAO_ENCAP_BYTE_ORDER)
@@ -30,7 +32,7 @@ TAO::TypeCode::Union<StringType,
     && (cdr << this->base_attributes_.name ())
     && (cdr << *(this->discriminant_type_))
     && (cdr << this->default_index_)
-    && (cdr << this->ncases_);
+    && (cdr << count);
 
   if (!success)
     return false;
@@ -39,11 +41,9 @@ TAO::TypeCode::Union<StringType,
   // case handling is hidden behind the case_count() and case()
   // methods.
 
-  CORBA::ULong const len = this->case_count ();
-
-  for (unsigned int i = 0; i < len; ++i)
+  for (unsigned int i = 0; i < count; ++i)
     {
-      Case const & c = this->case (i);
+      case_type const & c = this->case (i);
 
       if (!c.marshal (cdr))
         return false;
@@ -78,45 +78,48 @@ TAO::TypeCode::Union<StringType,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
-  // This call shouldn't throw since CORBA::TypeCode::equal() verified
-  // that the TCKind is the same as our's prior to invoking this
-  // method, meaning that member_count() is supported.
+  // These calls shouldn't throw since CORBA::TypeCode::equal()
+  // verified that the TCKind is the same as our's prior to invoking
+  // this method, meaning that the CORBA::tk_union TypeCode methods
+  // are supported.
 
   CORBA::ULong const tc_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  CORBA::Long tc_def = tc->default_index (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   CORBA::ULong const this_count = this->case_count ();
 
-  if (tc_count != this_count)
+  if (tc_count != this_count
+      || tc_def != this->default_index_)
     return 0;
 
-  ............. ADD REMAINING ATTRIBUTE CHECKS ...........
+  // Check the discriminator type.
+  CORBA::TypeCode_var tc_discriminator =
+    tc->discriminator_type (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Boolean const equal_discriminators =
+    (*this->discriminator_type_)->equal (tc_discriminator.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (!equal_discriminators)
+    return 0;
 
   for (CORBA::ULong i = 0; i < this_count; ++i)
     {
-      Case const & lhs_case = this->cases (i);
+      case_type const & lhs_case = this->case (i);
 
-      char const * const lhs_name = lhs_case.name ();
-      char const * const rhs_name = tc->member_name (i
-                                                     ACE_ENV_ARG_PARAMETER);
+      bool const equal_case =
+        lhs_case.equal (i,
+                        tc
+                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return 0;
-
-      CORBA::TypeCode_ptr const lhs_tc = *(lhs_case.type);
-      CORBA::TypeCode_var const rhs_tc =
-        tc->member_type (i
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      CORBA::Boolean const equal_members =
-        lhs_tc->equal (rhs_tc.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (!equal_members)
+      if (!equal_case)
         return 0;
     }
 
@@ -189,20 +192,15 @@ TAO::TypeCode::Union<StringType,
 
       for (CORBA::ULong i = 0; i < this_count; ++i)
         {
-          ....  CHECK EQUIVALENCE OF MEMBER LABELS ...
+          case_type const & lhs_case = this->case (i);
 
-          CORBA::TypeCode_ptr const lhs = this->case (i).type ();
-          CORBA::TypeCode_var const rhs =
-            tc->member_type (i
-                             ACE_ENV_ARG_PARAMETER);
+          bool const equivalent_case =
+            lhs_case.equivalent (i,
+                                 tc
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          CORBA::Boolean const equiv_members =
-            lhs->equivalent (rhs.in ()
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          if (!equiv_members)
+          if (!equivalent_case)
             return 0;
         }
     }
@@ -229,13 +227,13 @@ TAO::TypeCode::Union<StringType,
                      RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
-  Case * tc_cases = 0;
+  case_type * tc_cases = 0;
 
   ACE_Auto_Array_Ptr<Case> safe_cases;
 
   CORBA::ULong const len = this->case_count ();
 
-............. BUSTED ... NO DEFAULT CASE HANDLING ...
+............. BUSTED ... NO DEFAULT CASE HANDLING ... SORT OF ...
 
   if (len > 0)
     {
@@ -243,19 +241,21 @@ TAO::TypeCode::Union<StringType,
       // member names.
 
       ACE_NEW_THROW_EX (tc_cases,
-                        Case[len],
+                        case_type[len],
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       safe_cases.reset (cases);
 
+      static char const * empty_name = "";
+
       for (CORBA::ULong i = 0; i < len; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.
-
+          tc_cases[i].name = empty_name;
           tc_cases[i].type =
-            &(this->cases (i).type ()->get_compact_typecode (
+            &(this->case (i).type ()->get_compact_typecode (
                   ACE_ENV_ARG_PARAMETER));
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
         }
@@ -275,8 +275,8 @@ TAO::TypeCode::Union<StringType,
     this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  tc = adapter->_tao_create_union_except_tc (........ FIX ME ....
-                                             ACE_ENV_ARG_PARAMETER);
+  tc = adapter->_tao_create_union_tc (........ FIX ME ....
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   (void) safe_cases.release ();

@@ -47,13 +47,13 @@ namespace TAO
     {
     public:
 
-      typedef TAO::TypeCode::Case<StringType> Case;
+      typedef TAO::TypeCode::Case<StringType> case_type;
 
       /// Constructor.
       Union (char const * id,
              char const * name,
              CORBA::TypeCode_ptr * discriminant_type,
-             Case const * cases,
+             case_type const * cases,
              CORBA::ULong ncases,
              CORBA::Long default_index,
              char const * default_member_name,
@@ -107,14 +107,14 @@ namespace TAO
     private:
 
       /// Get pointer to the underlying @c Case array.
-      Case const * cases (void) const;
+      case_type const * cases (void) const;
 
       /// Return the number of cases in the IDL @c union, including
       /// the @c default case.
       CORBA::ULong case_count (void) const;
 
       /// Return @c union case corresponding to given member (not
-      /// @c Case array) index.
+      /// @c case_type array) index.
       /**
        * @param index The zero-based index of the @c union member,
        *              including the @c default case.  For example, if
@@ -128,7 +128,7 @@ namespace TAO
        *       attempt to perform special handling for the @c default
        *       case by shifting the index value by one, for example.
        */
-      Case const & case (CORBA::ULong index) const;
+      case_type const & case (CORBA::ULong index) const;
 
     private:
 

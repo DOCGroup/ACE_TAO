@@ -3,92 +3,85 @@
 #ifndef TAO_TYPECODE_CASE_CPP
 #define TAO_TYPECODE_CASE_CPP
 
-#include "TypeCode_Case.h"
-
-#include "tao/CDR.h"
-#include "tao/Any.h"
+#include "TypeCode_Case_Base.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/TypeCode_Case.inl"
+# include "tao/TypeCode_Case_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-namespace TAO
+
+template <typename STRING_TYPE>
+char const *
+TAO::TypeCode::Case<STRING_TYPE>::~Case (void)
 {
-  namespace TypeCode
-  {
-    template <typename T>
-    struct Case_Traits
-    {
-      inline static T any_from (T v)
-      {
-        return v;
-      }
-    };
-
-    // Specializations for types that require wrapper for Any
-    // insertion.  Note that we only define specializations for types
-    // that can be used in an IDL union discriminator.
-
-    template <>
-    struct Case_Traits<CORBA::Boolean>
-    {
-      inline static CORBA::Any::from_boolean any_from (CORBA::Boolean v)
-      {
-        return CORBA::Any::from_boolean (v);
-      }
-    };
-
-    template <>
-    struct Case_Traits<CORBA::Char>
-    {
-      inline static CORBA::Any::from_char any_from (CORBA::Char v)
-      {
-        return CORBA::Any::from_char (v);
-      }
-    };
-
-    template <>
-    struct Case_Traits<CORBA::WChar>
-    {
-      inline static CORBA::Any::from_wchar any_from (CORBA::WChar v)
-      {
-        return CORBA::Any::from_wchar (v);
-      }
-    };
-
-  } // End TypeCode namespace
-}  // End TAO namespace
-
-// ----------------------------------------------------------------
-
-template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
-bool
-TAO::TypeCode::Case<DISCRIMINATOR_TYPE, STRING_TYPE>::marshal_label (
-  TAO_OutputCDR & cdr) const
-{
-  return (cdr << this->label_);
+  if (this->type_)
+    CORBA::release (*(this->type_));
 }
 
-template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
-CORBA::Any *
-TAO::TypeCode::Case<DISCRIMINATOR_TYPE, STRING_TYPE>::label (
-  ACE_ENV_SINGLE_ARG_DECL) const
+template <typename STRING_TYPE>
+bool
+TAO::TypeCode::Case<STRING_TYPE>::equal (CORBA::ULong index,
+                                         CORBA::TypeCode_ptr tc
+                                         ACE_ENV_ARG_DECL) const
 {
-  CORBA::Any * value;
-
-  ACE_NEW_THROW_EX (value,
-                    CORBA::Any,
-                    CORBA::NO_MEMORY ());
+  // Check case names.
+  char const * const lhs_name = this->name ();
+  char const * const rhs_name = tc->member_name (index
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Any_var safe_value (value);
+  if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+    return 0;
 
-  *value <<=
-    TAO::TypeCode::Case_Traits<DISCRIMINATOR_TYPE>::any_from (this->label_);
+  // Check case TypeCodes.
+  CORBA::TypeCode_ptr const lhs_tc = this->type ();
+  CORBA::TypeCode_var const rhs_tc =
+    tc->member_type (index
+                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
-  return safe_value._retn ();
+  CORBA::Boolean const equal_members =
+    lhs_tc->equal (rhs_tc.in ()
+                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (!equal_members)
+    return 0;
+
+  // Check case labels.
+  return this->equal_labels (index,
+                             tc
+                             ACE_ENV_ARG_PARAMETER);
 }
 
+template <typename STRING_TYPE>
+bool
+TAO::TypeCode::Case<STRING_TYPE>::equivalent (CORBA::ULong index,
+                                              CORBA::TypeCode_ptr tc
+                                              ACE_ENV_ARG_DECL) const
+{
+  // Member names are ignore when determining equivalence.
 
+  // Check case TypeCodes.
+  CORBA::TypeCode_ptr const lhs_tc = this->type ();
+  CORBA::TypeCode_var const rhs_tc =
+    tc->member_type (index
+                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Boolean const equivalent_members =
+    lhs_tc->equivalent (rhs_tc.in ()
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (!equivalent_members)
+    return 0;
+
+  // Check case labels.
+  // The labels must be equal when determining equivalence, too.
+  return this->equal_labels (index,
+                             tc
+                             ACE_ENV_ARG_PARAMETER);
+}
 
 #endif  /* TAO_TYPECODE_CASE_CPP */
