@@ -1,3 +1,9 @@
+Thu Nov  6 07:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-connector.h:
+          Added include of Signal.h.
+
 Thu Nov  6 04:53:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_dlfcn.inl:
@@ -23,32 +29,32 @@ Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Fixed an alignment problem under the following conditions
 
 	  - The incoming CDR buffer has a message of size exactly 1024
-	    bytes.  
-	  
+	    bytes.
+
 	  - The data block within the message block in the destination CDR
-	    is not aligned on an 8 byte boundary. 
+	    is not aligned on an 8 byte boundary.
 
 	  This lead to improper copying. The problem was that the call
 	  clone () on the source data block returned exactly 1024 bytes
 	  and in addition could potentially (which is the destination)
 	  could be aligned on a 4 byte boundary. This made the destination
-	  buffer to get aligned on a 8 byte boundary and loose 4 bytes of 
+	  buffer to get aligned on a 8 byte boundary and loose 4 bytes of
 	  space which lead to improper copying of the source
 	  buffer. Thanks to Jian Chen  <jchen@huawei.com> for reporting
 	  the problem.
 
 	  The above problem now been fixed by doing an additional size
 	  increment on the cloned datablock. We have also added a small
-	  optimzation. We don't always clone the data block. We do it only 
+	  optimzation. We don't always clone the data block. We do it only
 	  if the size of the source buffer is larger than the size of the
 	  destination buffer. This should lead to a small increase in
 	  performance since we are avoiding an allocation along the
-	  critical path. 
+	  critical path.
 
 	  I haven't received a response yet from Jian on whether this
 	  patch solves his problem. But I am positive that this would
-	  help. 
-	  
+	  help.
+
 Wed Nov  5 18:52:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_sys_socket.h:
@@ -225,11 +231,11 @@ Wed Nov  5 11:58:04 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	* ace/INET_Addr.cpp,
   	* ace/OS.h,
     	* ace/OS.i,
-      	* ace/Sock_Connect.n,  
+      	* ace/Sock_Connect.n,
       	* ace/Sock_Connect.i,
-	* ace/SOCK_Dgram.i,  
+	* ace/SOCK_Dgram.i,
 	* ace/SOCK_Dgram.cpp,
-  	* ace/SOCK_Dgram_Mcast.h,  
+  	* ace/SOCK_Dgram_Mcast.h,
   	* ace/SOCK_Dgram_Mcast.cpp,
 	* ace/SOCK_SEQPACK_Acceptor.cpp,
 	* ace/OS_NS_sys_socket.{h,inl}:
@@ -241,7 +247,7 @@ Wed Nov  5 15:28:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Multihomed_INET_Addr_Test.cpp:
           Added ACE_OS to a couple more memcmp's I missed last time.
-       
+
 Wed Nov  5 14:53:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Multihomed_INET_Addr.{h,cpp}:
@@ -259,12 +265,12 @@ Wed Nov  5 14:53:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tests/Multihomed_INET_Addr_Test.cpp:
           Added ACE_OS to a memcmp call to fix a compile error.
 
-Thu Nov  5 14:08:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov  5 14:08:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
           Added defines ACE_LACKS_TERMIOS_H and ACE_LACKS_NETINET_TCP_H
 
-Thu Nov  5 13:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov  5 13:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
           Removed ACE_LACKS_SYS_MSG_H
@@ -290,7 +296,7 @@ Thu Nov  5 13:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Moved ACE_SIGNAL_C_FUNC from os_signal.h to OS_NS_Signal.h because
           with Cygwin siginfo_t is defined in OS_NS_Signal.h
 
-Thu Nov  5 10:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov  5 10:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/README:
         * ace/config-all.h:
@@ -302,7 +308,7 @@ Thu Nov  5 10:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           defines how ACE_STD_NAMESPACE is expanded. Set this define in the
           Borland config file only.
 
-Thu Nov  5 09:40:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov  5 09:40:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
         * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
@@ -320,13 +326,13 @@ Thu Nov  5 09:40:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Added #include of OS_main.h to get ACE_TMAIN macro and
           OS_NS_unistd.h to get ACE_OS::sleep.
 
-Thu Nov  5 07:53:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov  5 07:53:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:
         * ace/Name_Space.h:
           Fixed fuzz errors
 
-Thu Nov  5 07:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Nov  5 07:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ARGV.h:
           Define a private copy constructor and assignment operator. The
