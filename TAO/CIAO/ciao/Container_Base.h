@@ -91,7 +91,10 @@ namespace CIAO
        const char *sv_dll_name,
        const char *sv_entrypt
        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::Deployment::UnknownImplId,
+                       Components::Deployment::ImplEntryPointNotFound,
+                       Components::Deployment::InstallationFailure));
 
     // Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p
@@ -107,6 +110,11 @@ namespace CIAO
     virtual void uninstall (PortableServer::Servant svt
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void debug_uninstall (CORBA::Object_ptr objref
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
 
   protected:
     long number_;

@@ -107,17 +107,24 @@ CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
                                              const char *sv_dll_name,
                                              const char *sv_entrypt
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::Deployment::UnknownImplId,
+                   Components::Deployment::ImplEntryPointNotFound,
+                   Components::Deployment::InstallationFailure))
 {
-  ACE_DLL executor_dll (0), servant_dll (0);
+  ACE_DLL executor_dll, servant_dll;
 
   if (exe_dll_name == 0 || sv_dll_name == 0)
     ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
 
-  if (executor_dll.open (exe_dll_name) != 0)
+  if (executor_dll.open (exe_dll_name,
+                         ACE_DEFAULT_SHLIB_MODE,
+                         0) != 0)
     ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
 
-  if (servant_dll.open (sv_dll_name) != 0)
+  if (servant_dll.open (sv_dll_name,
+                        ACE_DEFAULT_SHLIB_MODE,
+                        0) != 0)
     {
       executor_dll.close ();
       ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
@@ -179,6 +186,26 @@ CIAO::Session_Container::uninstall (PortableServer::Servant svt
     = this->poa_->servant_to_id (svt
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->poa_->deactivate_object (oid
+                                 ACE_ENV_ARG_PARAMETER);
+}
+
+void
+CIAO::Session_Container::debug_uninstall (CORBA::Object_ptr objref
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var oid
+    = this->poa_->reference_to_id (objref
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  PortableServer::Servant sv
+    = this->poa_->id_to_servant (oid
+                                 ACE_ENV_ARG_PARAMETER);
+
+  sv = sv;
 
   this->poa_->deactivate_object (oid
                                  ACE_ENV_ARG_PARAMETER);

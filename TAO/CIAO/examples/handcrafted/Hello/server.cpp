@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ciao/Container_Base.h"
+#include "hello_servants.h"
+#include "hello_executors.h"
 #include "ace/Get_Opt.h"
 
 char *ior_file_name_ = 0;
@@ -115,6 +117,7 @@ main (int argc, char *argv[])
                                       "createHelloHome_Servant"
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
 #endif /* 0 */
 
       // Start Home registration part
