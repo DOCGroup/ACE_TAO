@@ -935,14 +935,14 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Resource_Factory),
                        ACE_Service_Type::DELETE_THIS
-                       /* | ACE_Service_Type::DELETE_OBJ */ /* SEE ABOVE */,
+                       | ACE_Service_Type::DELETE_OBJ /* | ACE_Service_Type::DELETE_OBJ */ /* SEE ABOVE */,
                        0)
 
 // @@ See below for an explanation of why this macro is not used for
 //    the TAO_Default_Resource_Factory.
-// ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
+ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
-
+#if 0
 // A custom factory definition is used instead of the commonly used
 // one created by the ACE_FACTORY_DEFINE macro below.  This is
 // necessary to get around dynamic unloading issues.  The default
@@ -977,6 +977,7 @@ _make_TAO_Default_Resource_Factory (ACE_Service_Object_Exterminator *gobbler)
 
   return rf;
 }
+#endif  /* 0 */
 
 // ****************************************************************
 
