@@ -1,3 +1,11 @@
+Sun Jan 18 18:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/MT_Cubit/*.{dsp.MAK}:
+	* TAO/tests/Param_Test/*.{dsp,MAK}:  Played with exported
+	  makefiles some more.  It's ultimately funny that when a project
+	  file has some customed build commands in it, the exported
+	  makefile sometime won't work correctly.
+
 Sat Jan 17 23:41:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Added more MSVC makefiles in some test directories.
