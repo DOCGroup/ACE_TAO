@@ -899,7 +899,6 @@ template class TAO_Admin<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
 template class TAO_Link<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
 template class TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
 template class TAO_Register_Offer_Iterator<ACE_RW_Thread_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
 template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
