@@ -221,6 +221,8 @@ FtEventServiceInterceptor::receive_request_service_contexts (
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(block1);
 
+    FTRTEC_LOGTIME("FtEventServiceInterceptor::receive_request_service_contexts");
+
     bool is_new_request = request_table_.is_new_request(
       ft_request_service_context.client_id.in(),
       ft_request_service_context.retention_id);
