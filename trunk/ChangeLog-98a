@@ -1,3 +1,8 @@
+Mon Jan 19 22:16:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Env_Value_T.i (ACE_Convert): Added conversion function for
+	  unsigned short.
+
 Mon Jan 19 15:13:47 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* bin/Makefile: Fixed a problem with the CCFLAGS definition that
@@ -6,12 +11,12 @@ Mon Jan 19 15:13:47 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Sun Jan 18 14:32:42 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Heap_T.cpp: Problems were arising because of the 
+	* ace/Timer_Heap_T.cpp: Problems were arising because of the
 	  use of negative numbers in the timer_id array of the timer
 	  heap for the free list.  When the 0th index is in the free
 	  list, pointers to it will show up as 0 (because 0 == -0).
 	  This will look the same as a timer_id for the top of the
-	  heap, and if cancel () was attempted on this invalid 
+	  heap, and if cancel () was attempted on this invalid
 	  timer_id, bad things would happen.  To prevent this, index
 	  0 is now ignored so it doesn't show up in the free list.
 
@@ -22,11 +27,11 @@ Sun Jan 18 18:12:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sun Jan 18 17:27:52 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Wheel_T.cpp: Fixed a problem with Timer Wheel's 
-	  expire().  The problem occured when the handle_timeout() method 
-	  of the event handler used would return a 0.  This causes the 
-	  Timer Queue to cancel all timers using that event handler.  
-	  Because Timer Wheel's expire caches the position of some timers 
+	* ace/Timer_Wheel_T.cpp: Fixed a problem with Timer Wheel's
+	  expire().  The problem occured when the handle_timeout() method
+	  of the event handler used would return a 0.  This causes the
+	  Timer Queue to cancel all timers using that event handler.
+	  Because Timer Wheel's expire caches the position of some timers
 	  that will be expired, it was trying to expire timers that were
 	  already cancelled.  Now it checks the timer before it expires.
 
@@ -48,7 +53,7 @@ Sun Jan 18 15:54:16 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 	  ace/Timer_Hash_T.h:
 	  ace/Timer_Queue_T.h:
 	  ace/Timer_Wheel_T.cpp:
-	  ace/Timer_Hash_T.cpp:  Added pure virtual get_first() method to 
+	  ace/Timer_Hash_T.cpp:  Added pure virtual get_first() method to
 	  Timer_Queue_T.  Added implementations to Timer_Wheel and Timer_Hash.
 	  Timer_Heap and Timer_List already had implementations.
 
@@ -73,9 +78,9 @@ Sat Jan 17 00:42:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri Jan 16 15:52:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/IOStream.h (ACE_Streambuf): 
-	* ace/config-win32-common.h: 
-	* ace/iosfwd.h: 
+	* ace/IOStream.h (ACE_Streambuf):
+	* ace/config-win32-common.h:
+	* ace/iosfwd.h:
 	* ace/streams.h: Applied IOStream patches from James CE Johnson
  	  <jcej@chiroptera.tragus.org>.
 
