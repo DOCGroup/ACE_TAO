@@ -32,7 +32,7 @@ public:
   JAWS_IO_Acceptor (void);
   virtual ~JAWS_IO_Acceptor (void);
 
-  virtual int open (const ACE_INET_Addr &address);
+  virtual int open (const ACE_INET_Addr &address, int backlog = 5);
   // Initiate a passive mode socket.
 
   virtual int open (const ACE_HANDLE &socket);
@@ -52,7 +52,7 @@ public:
   // Get the listener's handle
 
   enum { ASYNC = 0, SYNCH = 1 };
-  // identify if this is being used for aynchronous or synchronous
+  // identify if this is being used for asynchronous or synchronous
   // accept calls
 
 };
@@ -61,7 +61,7 @@ class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
-  virtual int open (const ACE_INET_Addr &local_sap);
+  virtual int open (const ACE_INET_Addr &local_sap, int backlog = 5);
   // Initiate a passive mode socket.
 
   virtual int open (const ACE_HANDLE &socket);
@@ -95,7 +95,7 @@ class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
-  virtual int open (const ACE_INET_Addr &address);
+  virtual int open (const ACE_INET_Addr &address, int backlog = 5);
   // Initiate an asynchronous passive connection
 
   virtual int open (const ACE_HANDLE &socket);
@@ -108,8 +108,10 @@ public:
   // Get the listener's handle
 
 private:
-
-  JAWS_Asynch_Acceptor acceptor_;
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  JAWS_Asynch_Accept acceptor_;
+  ACE_HANDLE handle_;
+#endif /* defined (ACE_WIN32) */
 };
 
 typedef ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
