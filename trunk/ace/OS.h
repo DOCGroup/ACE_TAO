@@ -832,7 +832,7 @@ private:
 #  define ACE_Proper_Import_Flag
 #  define ACE_EXPORT_SINGLETON_DECLARATION(T)
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T)
-#  define ACE_PROPER_SINGLETONE_INSTANTIATION(T)
+#  define ACE_PROPER_SINGLETON_INSTANTIATION(T)
 #endif /* ACE_WIN32 */
 
 // Here are definition for ACE library.
