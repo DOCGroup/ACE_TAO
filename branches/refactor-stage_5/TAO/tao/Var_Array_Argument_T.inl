@@ -3,7 +3,7 @@
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
 TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::
-In_Var_Array_Argument_T (const S x)
+In_Var_Array_Argument_T (const S_slice * x)
   : x_ (ACE_const_cast (S_slice *, x))
 {}
 
