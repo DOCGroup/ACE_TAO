@@ -1,3 +1,11 @@
+Thu Mar  7 21:01:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Messaging/Messaging.cpp:
+
+	  Include "tao/Stub.h" instead "tao/Invocation.h".  The former is
+	  enough.  This change was brought on the inter-header dependency
+	  reductions below.
+
 Thu Mar  7 20:43:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.h:
