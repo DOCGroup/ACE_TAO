@@ -1,3 +1,10 @@
+Wed Apr 10 11:04:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Array_Base.h:
+
+	  Include "ace/Global_Macros.h" to pull in the ACE_DES_* macros
+	  that required by the inlined ACE_Array_Base destructor.
+
 Wed Apr 10 11:01:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Global_Macros.h:
