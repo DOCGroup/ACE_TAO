@@ -1,3 +1,4 @@
+<!-- $Id -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xmi="http://www.omg.org/XMI"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Deployment="http://www.omg.org/Deployment"
   targetNamespace="http://www.omg.org/Deployment" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema XMLSchema.xsd">
@@ -626,7 +627,9 @@
   <xsd:complexType name="Requirement">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="resourceType" type="xsd:string" />
-      <xsd:element name="property" type="Deployment:Property" />
+<!-- property is not in model -->
+<!--     <xsd:element name="property" type="Deployment:Property" />  -->
+      <xsl:element name="name" type="xsd:string"/>
       <xsd:element ref="xmi:Extension" />
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional" />
