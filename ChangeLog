@@ -1,3 +1,10 @@
+Wed Jul 16 15:27:37 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Dev_Poll_Reactor.h (find_handler): 
+
+	  Pure virtual specifier for find_handler() was a cut and paste
+	  error.
+
 Wed Jul 16 08:38:49 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
