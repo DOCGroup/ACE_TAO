@@ -67,37 +67,37 @@ static int test_configs[][5] =
     // make_invocations, run_event_loop_thread, run_purger_thread, run_receiver_thread, nested_upcalls
     //
 
-    // 0, 0, 0, 0, 0, // At least one thread should be running.
-    // 0, 0, 0, 1, 0, // If event_loop_thread is not running and invocation_thread is not making invocations,
+    // { 0, 0, 0, 0, 0, }, // At least one thread should be running.
+    // { 0, 0, 0, 1, 0, }, // If event_loop_thread is not running and invocation_thread is not making invocations,
     // no thread will know that the socket is closed.
-    // 0, 0, 1, 0, 0, // If invocation_thread is not making invocations and if receiver is not threaded,
+    // { 0, 0, 1, 0, 0, }, // If invocation_thread is not making invocations and if receiver is not threaded,
     // we cannot decide which socket to close.
-    // 0, 0, 1, 1, 0, // If event_loop_thread is not running and invocation_thread is not making invocations,
+    // { 0, 0, 1, 1, 0, }, // If event_loop_thread is not running and invocation_thread is not making invocations,
     // no thread will know that the socket is closed.
-    // 0, 1, 0, 0, 0, // If invocation_thread is not making invocations and if receiver is not threaded,
+    // { 0, 1, 0, 0, 0, }, // If invocation_thread is not making invocations and if receiver is not threaded,
     // we cannot decide which socket to close.
-    0, 1, 0, 1, 0,
-    // 0, 1, 0, 1, 1, // No need for nested upcalls without invocations.
-    // 0, 1, 1, 0, 0, // If invocation_thread is not making invocations and if receiver is not threaded,
+    { 0, 1, 0, 1, 0, },
+    // { 0, 1, 0, 1, 1, }, // No need for nested upcalls without invocations.
+    // { 0, 1, 1, 0, 0, }, // If invocation_thread is not making invocations and if receiver is not threaded,
     // we cannot decide which socket to close.
-    0, 1, 1, 1, 0,
-    // 0, 1, 1, 1, 1, // No need for nested upcalls without invocations.
-    // 1, 0, 0, 0, 0, // If both event_loop_thread and receiver are not threaded,
+    { 0, 1, 1, 1, 0, },
+    // { 0, 1, 1, 1, 1, }, // No need for nested upcalls without invocations.
+    // { 1, 0, 0, 0, 0, }, // If both event_loop_thread and receiver are not threaded,
     // no thread can receive the messages.
-    1, 0, 0, 1, 0,
-    // 1, 0, 0, 1, 1, // No need for nested upcalls without event loop being used by the receiver.
-    // 1, 0, 1, 0, 0, // If both event_loop_thread and receiver are not threaded,
+    { 1, 0, 0, 1, 0, },
+    // { 1, 0, 0, 1, 1, }, // No need for nested upcalls without event loop being used by the receiver.
+    // { 1, 0, 1, 0, 0, }, // If both event_loop_thread and receiver are not threaded,
     // no thread can receive the messages.
-    1, 0, 1, 1, 0,
-    // 1, 0, 1, 1, 1, // No need for nested upcalls without event loop being used by the receiver.
-    1, 1, 0, 0, 0,
-    1, 1, 0, 0, 1,
-    1, 1, 0, 1, 0,
-    // 1, 1, 0, 1, 1, // No need for nested upcalls without event loop being used by the receiver.
-    1, 1, 1, 0, 0,
-    1, 1, 1, 0, 1,
-    1, 1, 1, 1, 0,
-    // 1, 1, 1, 1, 1, // No need for nested upcalls without event loop being used by the receiver.
+    { 1, 0, 1, 1, 0, },
+    // { 1, 0, 1, 1, 1, }, // No need for nested upcalls without event loop being used by the receiver.
+    { 1, 1, 0, 0, 0, },
+    { 1, 1, 0, 0, 1, },
+    { 1, 1, 0, 1, 0, },
+    // { 1, 1, 0, 1, 1, }, // No need for nested upcalls without event loop being used by the receiver.
+    { 1, 1, 1, 0, 0, },
+    { 1, 1, 1, 0, 1, },
+    { 1, 1, 1, 1, 0, },
+    // { 1, 1, 1, 1, 1, }, // No need for nested upcalls without event loop being used by the receiver.
   };
 
 /* Replication of the ACE_Pipe class.  Only difference is that this
