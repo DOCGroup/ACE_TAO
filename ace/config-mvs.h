@@ -9,6 +9,8 @@
 #undef log
 #endif /* log */
 
+#define ACE_LACKS_TCP_H
+
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 

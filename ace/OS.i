@@ -3720,7 +3720,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
   // I didn't manage to find pthread_cancel anywhere int the MIT
   // pthread implementation. So I'll just leave this instead, and
   // see what breaks. -- jwr
-  ACE_UNUSED_ARG (t_id);
+  ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
