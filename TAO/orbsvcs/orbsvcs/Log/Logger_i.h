@@ -58,15 +58,15 @@ private:
   // Converts the IDL defined <Log_Priority> enum type to the
   // <ACE_Log_Priority> enum type.
   
-  u_long verbosity_conversion (Logger::Log_Verbosity verbosity);
-  // Converts the IDL defined <Log_Verbosity> enum type to a u_long
+  u_long verbosity_conversion (Logger::Verbosity_Level verbosity_level);
+  // Converts the IDL defined <Verbosity_Level> enum type to a u_long,
   // which is used by the <ACE_Log_Record> to distinguish the
-  // verbosity level
+  // level of verbosity.
   
   char *name_;
   // Logger identification.
 
-  Logger::Log_Verbosity verbosity_level_;
+  Logger::Verbosity_Level verbosity_level_;
   // Keeps track of what our current verbosity level is.  This can be
   // reset by the client to a new value at any point.
 };

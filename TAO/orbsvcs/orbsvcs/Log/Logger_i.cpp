@@ -51,9 +51,9 @@ Logger_i::priority_conversion (Logger::Log_Priority priority)
 }
 
 u_long
-Logger_i::verbosity_conversion (Logger::Log_Verbosity verbosity)
+Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 {
-  u_long pval = ACE_static_cast (int, verbosity);
+  u_long pval = ACE_static_cast (int, verbosity_level);
   return 1 << pval;
 }
 
