@@ -128,8 +128,8 @@ be_visitor_component_ch::visit_component (be_component *node)
   // g++ problems.
   *os << "static " << node->local_name () << "_ptr _nil (void)"
       << be_idt_nl << "{" << be_idt_nl
-      << "return (" << node->local_name ()
-      << "_ptr)0;" << be_uidt_nl
+      << "return static_cast<" << node->local_name ()
+      << "_ptr> (0);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   if (be_global->any_support ())
