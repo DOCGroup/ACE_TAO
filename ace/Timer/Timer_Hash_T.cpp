@@ -3,14 +3,17 @@
 #ifndef ACE_TIMER_HASH_T_C
 #define ACE_TIMER_HASH_T_C
 
-#include "ace/Timer_Hash_T.h"
+#include "ace/Timer/Timer_Hash_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/High_Res_Timer.h"
+#include "ace/Timer/High_Res_Timer.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace,
           Timer_Hash_T,
@@ -301,6 +304,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::earliest_time (void) const
   return this->table_[this->earliest_position_]->earliest_time ();
 }
 
+#ifdef ACE_SUBSET_0
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> void
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dump (void) const
 {
@@ -316,6 +320,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Reschedule a periodic timer.  This function must be called with the
 // mutex lock held.

@@ -1,7 +1,7 @@
 // System_Time.cpp
 // $Id$
 
-#include "ace/System_Time.h"
+#include "ace/Timer/System_Time.h"
 
 ACE_RCSID(ace, System_Time, "$Id$")
 

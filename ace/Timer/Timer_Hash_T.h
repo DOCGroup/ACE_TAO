@@ -14,13 +14,13 @@
 #define ACE_TIMER_HASH_T_H
 #include "ace/pre.h"
 
-#include "ace/Timer_Queue_T.h"
+#include "ace/Timer/Timer_Queue_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Free_List.h"
+#include "ace/Utils/Templates/Free_List.h"
 
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
@@ -272,7 +272,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_Hash_T.cpp"
+#include "ace/Timer/Timer_Hash_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

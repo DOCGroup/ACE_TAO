@@ -1,7 +1,10 @@
 // $Id$
 
-#include "ace/Time_Request_Reply.h"
-#include "ace/Log_Msg.h"
+#include "ace/Timer/Time_Request_Reply.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Time_Request_Reply, "$Id$")
 
@@ -154,6 +157,7 @@ ACE_Time_Request::decode (void)
 
 // Print out the current values of the ACE_Time_Request.
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Time_Request::dump (void) const
 {
@@ -186,3 +190,4 @@ ACE_Time_Request::dump (void) const
               this->time ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("+++++++\n")));
 }
+#endif

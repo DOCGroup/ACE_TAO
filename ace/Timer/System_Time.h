@@ -17,14 +17,14 @@
 #define ACE_SYSTEM_TIME_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Memory_Pool.h"
-#include "ace/Malloc_T.h"
+#include "ace/Memory/Memory_Pool.h"
+#include "ace/Memory/Malloc_T.h"
 
 /**
  * @class ACE_System_Time
