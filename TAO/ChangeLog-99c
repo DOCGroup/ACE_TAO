@@ -1,17 +1,25 @@
+Sat Mar 20 23:38:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* tests/MT_Client/server.dsp:
+	* tests/MT_Client/client.dsp:
+
+	  Fixed some project settings for the above project files.
+
 Sat Mar 20 20:27:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/MT_Client.dsw: 
+	* tests/MT_Client/MT_Client.dsw:
 	  Added projects and workspace for this test, thanks to Irfan
 	  for helping me out with it.
 
-	* tests/MT_Client/README: 
-	* tests/MT_Client/run_test.pl: 
+	* tests/MT_Client/README:
+	* tests/MT_Client/run_test.pl:
 	  Added canonical files to the example.
 
-	* tests/MT_Client/client.cpp: 
+	* tests/MT_Client/client.cpp:
 	  Added an error message in case thread creation fails.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	  Added a debug message when orb->shutdown() is called.
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -41,7 +49,7 @@ Sat Mar 20 19:10:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  solution is to separate the path to return the new hint and the
 	  new Svc_Handler from the Cached_Connector (check the ACE
 	  changelog for details).
-	  We store the profile and transport used for an invocation in the 
+	  We store the profile and transport used for an invocation in the
 	  Invocation object to avoid the same concurrency problems. In
 	  this way if another thread changes the profile_in_use() of the
 	  stub object that we are using we are not affected.
@@ -52,7 +60,7 @@ Sat Mar 20 15:21:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/nestea_i.cpp:
         * orbsvcs/tests/ImplRepo/nestea_i.h:
-          
+
           Implemented persistance for the number of cans.  It saves
           it to a file.
 
@@ -68,8 +76,8 @@ Sat Mar 20 14:40:10 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * examples/Quoter/client.dsp:
         * examples/Quoter/server.dsp:
 
-          Removed the generated headers from the projects.  I don't 
-          think the listing of generated classes in classview is 
+          Removed the generated headers from the projects.  I don't
+          think the listing of generated classes in classview is
           helpful.
 
         * examples/Quoter/Quoter_i.h:
@@ -79,7 +87,7 @@ Sat Mar 20 14:40:10 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sat Mar 20 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile: 
+	* tests/Makefile:
 	* tests/MT_Client/Makefile:
 	* tests/MT_Client/client.cpp:
 	* tests/MT_Client/server.conf:
@@ -124,7 +132,7 @@ Sat Mar 20 01:34:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Mar 19 22:04:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/decode.cpp (decode): 
+	* tao/decode.cpp (decode):
 	  When decoding an Any we need to create a Message_Block, use
 	  append() to copy the contents of the CDR stream and then store
 	  the message block into the any for later decoding (when we
