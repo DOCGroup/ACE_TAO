@@ -1,3 +1,24 @@
+Mon Mar 21 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lite.h:
+          Always define ACE_TEMPLATE_SPECIALIZATION as template<>
+          and ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION as nothing.
+          All compilers we support do support this syntax and we
+          are updating our code to juse template<> instead of the
+          macro. When ACE_LACKS_DEPRECATED_MACROS is defined these
+          defines are not set making it easy to detect places where
+          deprecated macros are used.
+
+        * ace/Atomic_Op.h:
+        * ace/Condition_Recursive_Thread_Mutex.h:
+        * ace/Functor.h:
+        * ace/Functor_String.h:
+        * ace/Null_Mutex.h:
+        * ace/Process_Semaphore.h:
+        * ace/Select_Reactor.h:
+        * ace/Thread_Semaphore.h:
+          Use template<> instead of ACE_TEMPLATE_SPECIALIZATION
+
 Fri Mar 18 22:40:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
