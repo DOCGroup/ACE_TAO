@@ -1670,7 +1670,7 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
     typedef CodecFactory_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static _tao_class_id;
+  static int _tao_class_id;
 
   // the static operations
   static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
