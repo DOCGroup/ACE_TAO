@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/FIFO_Send_Msg.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_Msg_client, "$Id$")
 
@@ -18,7 +19,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
     {
-      msg.len = strlen (buf) + 1;
+      msg.len = ACE_OS_String::strlen (buf) + 1;
       if (client.send (ACE_OS::rand () % 11, &msg) == -1)
 	::perror ("send");
     }
