@@ -42,7 +42,7 @@ public:
   virtual ~ACE_RMCast_Reliable_Factory (void);
 
   /**
-   * The create() method will return always \param reliable.
+   * The create() method will return always @c reliable.
    */
   virtual ACE_RMCast_Module *create (void);
   virtual void destroy (ACE_RMCast_Module *);

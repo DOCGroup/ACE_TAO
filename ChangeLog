@@ -1,15 +1,16 @@
 Wed Sep 25 17:58:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl
 
-        * Basic_Stats.h:
-        * Connector.h:
-        * INET_Addr.h:
-        * OS.h:
-        * OS.i:
-        * Service_Config.h:
-        * Stats.h:
-        * Timer_Queue_T.cpp:
-        * TLI_Connector.cpp:
-        * XTI_ATM_Mcast.i:
+        * ace/Basic_Stats.h:
+        * ace/Connector.h:
+        * ace/INET_Addr.h:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/Service_Config.h:
+        * ace/Stats.h:
+        * ace/Timer_Queue_T.cpp:
+        * ace/TLI_Connector.cpp:
+        * ace/XTI_ATM_Mcast.i:
+        * ace/RMCast/RMCast_Reliable_Factory.h:
           Small fixes in method argument names, types, comments to fix doxygen
           warnings and improve the generated documentation.
 
