@@ -27,7 +27,8 @@ Tue Jan 11 00:27:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
 	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h: Added
-	  TAO_ORBSVCS_Export.
+	  TAO_ORBSVCS_Export.  Thanks to Stephane Chatre
+	  <schatre@oresis.com> for noticing these.
 
 Mon Jan 10 18:12:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
