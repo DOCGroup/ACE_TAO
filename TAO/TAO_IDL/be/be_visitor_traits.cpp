@@ -141,7 +141,8 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "Object_Arg_Traits_T<" << be_idt << be_idt_nl
           << node->name () << "_ptr," << be_nl
           << node->name () << "_var," << be_nl
-          << node->name () << "_out" << be_uidt_nl
+          << node->name () << "_out," << be_nl
+          << "TAO::Objref_Traits<" << node->name () << ">" << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
@@ -229,7 +230,8 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << "Object_Arg_Traits_T<" << be_idt << be_idt_nl
           << node->name () << " *," << be_nl
           << node->name () << "_var," << be_nl
-          << node->name () << "_out" << be_uidt_nl
+          << node->name () << "_out," << be_nl
+          << "TAO::Value_Traits<" << node->name () << ">" << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";

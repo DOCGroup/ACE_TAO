@@ -1351,36 +1351,17 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueBase.h");
       this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/Value_VarOut_T.h");
-      this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
       // @@@@ (JP) These can be logically separated later
       // with additional checks.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueFactory.h");
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/Sequence_T.h");
     }
 
-  this->gen_arg_file_include (idl_global->decls_seen_masks.basic_arg_seen_,
-                              "tao/Basic_Arguments.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.bd_string_arg_seen_,
-                              "tao/BD_String_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_array_arg_seen_,
-                              "tao/Fixed_Array_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_size_arg_seen_,
-                              "tao/Fixed_Size_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.object_arg_seen_,
-                              "tao/Object_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.special_basic_arg_seen_,
-                              "tao/Special_Basic_Arguments.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.ub_string_arg_seen_,
-                              "tao/UB_String_Arguments.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.var_array_arg_seen_,
-                              "tao/Var_Array_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.var_size_arg_seen_,
-                              "tao/Var_Size_Argument_T.h");
+  this->gen_seq_file_includes ();
+  this->gen_var_file_includes ();
+  this->gen_arg_file_includes ();
 }
 
 void
@@ -1405,20 +1386,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // @@ This probably needs to go..
   this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
 
-  // The following header must always be included.
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/PortableInterceptor.h");
-
-  // Include the Portable Interceptor related headers.
-  *this->client_stubs_ << "\n\n#if TAO_HAS_INTERCEPTORS == 1";
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/RequestInfo_Util.h");
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/ClientRequestInfo_i.h");
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/ClientInterceptorAdapter.h");
-  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
-
   if (be_global->ami_call_back () == I_TRUE)
     {
       // Including Asynch Invocation file.
@@ -1437,31 +1404,167 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "ace/Auto_Ptr.h");
     }
 
-  // This will get smarter and more selective at some point.
+  this->gen_any_file_includes ();
+}
+
+void
+TAO_CodeGen::gen_seq_file_includes (void)
+{
+  // @@@ (JP) These can get more specialized, after the TAO seq template
+  // files have been split up.
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.abs_iface_seq_seen_
+      | idl_global->decls_seen_masks.vt_seq_seen_,
+      "tao/Valuetype/Sequence_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.seq_seen_,
+      "tao/Sequence_T.h",
+      this->client_header_
+    );
+}
+
+void
+TAO_CodeGen::gen_any_file_includes (void)
+{
   if (be_global->any_support ())
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Any_Impl_T.h");
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Any_Basic_Impl_T.h");
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Any_Special_Basic_Impl_T.h");
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Any_Dual_Impl_T.h");
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Any_Special_Impl_T.h");
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Any_Array_Impl_T.h");
+      this->gen_cond_file_include (
+          idl_global->decls_seen_masks.interface_seen_
+          | idl_global->decls_seen_masks.valuetype_seen_,
+          "tao/Any_Impl_T.h",
+          this->client_stubs_
+        );
+
+      this->gen_cond_file_include (
+          idl_global->decls_seen_masks.aggregate_seen_,
+          "tao/Any_Dual_Impl_T.h",
+          this->client_stubs_
+        );
+
+      this->gen_cond_file_include (
+          idl_global->decls_seen_masks.array_seen_,
+          "tao/Any_Array_Impl_T.h",
+          this->client_stubs_
+        );
+
+      this->gen_cond_file_include (
+          idl_global->decls_seen_masks.enum_seen_,
+          "tao/Any_Basic_Impl_T.h",
+          this->client_stubs_
+        );
     }
 }
 
 void
-TAO_CodeGen::gen_arg_file_include (ACE_UINT64 mask, const char *filepath)
+TAO_CodeGen::gen_var_file_includes (void)
 {
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       mask))
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.interface_seen_,
+      "tao/Objref_VarOut_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.valuetype_seen_,
+      "tao/Valuetype/Value_VarOut_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.seq_seen_,
+      "tao/Seq_Var_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.seq_seen_,
+      "tao/Seq_Out_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.aggregate_seen_,
+      "tao/VarOut_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.array_seen_,
+      "tao/Array_VarOut_T.h",
+      this->client_header_
+    );
+}
+
+void
+TAO_CodeGen::gen_arg_file_includes (void)
+{
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.basic_arg_seen_,
+      "tao/Basic_Arguments.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.bd_string_arg_seen_,
+      "tao/BD_String_Argument_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.fixed_array_arg_seen_,
+      "tao/Fixed_Array_Argument_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.fixed_size_arg_seen_,
+      "tao/Fixed_Size_Argument_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.object_arg_seen_,
+      "tao/Object_Argument_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.special_basic_arg_seen_,
+      "tao/Special_Basic_Arguments.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.ub_string_arg_seen_,
+      "tao/UB_String_Arguments.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.var_array_arg_seen_,
+      "tao/Var_Array_Argument_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.var_size_arg_seen_,
+      "tao/Var_Size_Argument_T.h",
+      this->client_header_
+    );
+}
+
+void
+TAO_CodeGen::gen_cond_file_include (ACE_UINT64 mask, 
+                                    const char *filepath,
+                                    TAO_OutStream *stream)
+{
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_, mask))
     {
-      this->gen_standard_include (this->client_header_,
+      this->gen_standard_include (stream,
                                   filepath);
     }
 }

@@ -403,7 +403,13 @@ private:
   // Utility methods for generating ORB file includes.
   void gen_stub_hdr_includes (void);
   void gen_stub_src_includes (void);
-  void gen_arg_file_include (ACE_UINT64, const char *);
+  void gen_seq_file_includes (void);
+  void gen_any_file_includes (void);
+  void gen_var_file_includes (void);
+  void gen_arg_file_includes (void);
+  void gen_cond_file_include (ACE_UINT64 mask, 
+                              const char *filepath,
+                              TAO_OutStream *stream);
 
 private:
   TAO_OutStream *client_header_;

@@ -47,7 +47,6 @@
 #include "tao/LocalObject.h"
 #include "tao/Principal.h"
 #include "tao/ORB.h"
-#include "tao/varbase.h"
 
 #include "tao/CurrentC.h"
 #include "tao/BoundsC.h"
@@ -60,18 +59,9 @@
 
 #include "tao/CDR.h"
 
-#include "tao/Sequence.h"
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
 #include "tao/ObjectIdListC.h"
-
-// Template _var and _out classes.
-#include "tao/Objref_VarOut_T.h"
-#include "tao/Pseudo_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/Array_VarOut_T.h"
-#include "tao/VarOut_T.h"
 
 #include "tao/Remote_Object_Proxy_Impl.h"
 

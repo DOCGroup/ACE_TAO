@@ -56,7 +56,7 @@ namespace TAO
    * @brief Template class for INOUT object argument.
    *
    */
-  template<typename S_ptr>
+  template<typename S_ptr, typename S_traits>
   class Inout_Object_Argument_T : public Argument
   {
   public:
@@ -224,7 +224,7 @@ namespace TAO
    *
    */
 
-  template<typename T_ptr, typename T_var, typename T_out>
+  template<typename T_ptr, typename T_var, typename T_out, typename T_traits>
   struct Object_Arg_Traits_T
   {
     typedef T_ptr                                         ret_type;
@@ -233,7 +233,7 @@ namespace TAO
     typedef T_out                                         out_type;
 
     typedef In_Object_Argument_T<T_ptr>                   in_arg_val;
-    typedef Inout_Object_Argument_T<T_ptr>                inout_arg_val;
+    typedef Inout_Object_Argument_T<T_ptr, T_traits>      inout_arg_val;
     typedef Out_Object_Argument_T<T_ptr,T_out>            out_arg_val;
     typedef Ret_Object_Argument_T<T_ptr,T_var>            stub_ret_val;
 
