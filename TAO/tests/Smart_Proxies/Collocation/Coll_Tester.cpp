@@ -93,6 +93,8 @@ Collocation_Test::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 int
 Collocation_Test::parse_args (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG(argc);
+  ACE_UNUSED_ARG(argv);
   return 0;
 }
 
