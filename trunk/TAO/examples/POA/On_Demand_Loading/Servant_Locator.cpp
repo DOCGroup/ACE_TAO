@@ -6,84 +6,81 @@
 //     TAO/tests/POA/On_Demand_Loading
 //
 // = FILENAME
-//     Servant_Activator.cpp
+//     Servant_Locator.cpp
 //
 // = DESCRIPTION
-//     Implementation of MyFooServantActivator, which is used by a
-//     POA with a RETAIN policy.
+//     Implementation of MyFooServantLocator class, used with a POA
+//     having a NON_RETAIN policy.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 // ============================================================================
 
-#include "Servant_Activator.h"
+#include "Servant_Locator.h"
 #include "MyFooServant.h"
 
-ACE_RCSID(On_Demand_Loading, Servant_Activator, "$Id$")
+ACE_RCSID(On_Demand_Activation, Servant_Locator, "$Id$")
 
 // Initialization.
 
-MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+MyFooServantLocator::MyFooServantLocator (CORBA::ORB_ptr orb)
+  : counter_ (0),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
-                                  PortableServer::POA_ptr poa,
-                                  CORBA::Environment &env)
+MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
+                                PortableServer::POA_ptr poa,
+                                const char * /* operation */,
+                                PortableServer::ServantLocator::Cookie &cookie,
+                                CORBA::Environment &env)
 {
-  
-  // Convert ObjectId to String.
-  
-  CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+  // Convert ObjectID to String.
 
-  // Activate and return the servant else exception.
-  
-  PortableServer::Servant servant = this->activate_servant (s.in (),
-                                                            poa,
-                                                            27);
+  CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+  // If ObjectID string has a Foo Substring create and return a
+  // MyFooServant.
+
+  PortableServer::Servant servant = this->invoke_servant (s.in (),
+                                                         poa,
+                                                         27);
   if (servant != 0)
-    return servant;
+    {
+      // Return the servant as the cookie , used as a check when
+      // postinvoke is called on this MyFooServantLocator.
+      
+      cookie = servant;
+      return servant;
+    }
   else
     {
-
       TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), env, 0);
-      //*done*
-      // @@ Kirthika, can you please make this work for both
-      // native and non-native C++ exceptions?  Please see
-      // Nanbor if you have any questions.
-      // CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      //env.exception (exception);
-      //return 0;
     }
 }
 
-// This is the method invoked when the object is deactivated or the
-// entire POA is is deactivated or destroyed.
+// Since the servant gets invoked per operation, the servant has to be destroyed per operation too.
+// This is accomplished in the postinvoke method.
 
 void
-MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
-                                    PortableServer::POA_ptr poa,
-                                    PortableServer::Servant servant,
-                                    CORBA::Boolean cleanup_in_progress,
-                                    CORBA::Boolean remaining_activations,
-                                    CORBA::Environment &env)
+MyFooServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
+                                 PortableServer::POA_ptr /* poa */,
+                                 const char * /* operation */,
+                                 PortableServer::ServantLocator::Cookie cookie,
+                                 PortableServer::Servant servant,
+                                 CORBA::Environment &/* env */)
 {
-  ACE_UNUSED_ARG (oid);
-  ACE_UNUSED_ARG (poa);
-  ACE_UNUSED_ARG (cleanup_in_progress);
-  ACE_UNUSED_ARG (env);
+  // Check the passed servant with the cookie.
 
-  // If there are no remaining activations i.e ObjectIds associated
-  // with MyFooServant object, deactivate it.
-  // Etheralization happens on POA::destroy() and/or Object::deactivate().
+  PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
+  ACE_ASSERT (servant == my_servant);
+  delete servant;
 
-  if (remaining_activations == 0)
-    deactivate_servant (servant);
+  // To avoid warning about unused variable with ACE_NDEBUG.
+  ACE_UNUSED_ARG (my_servant);
 }
 
 // This method loads the dynamically linked library which is the
@@ -91,18 +88,15 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
 // operations in the library.
 
 PortableServer::Servant
-MyFooServantActivator::activate_servant (const char *str, 
-                                         PortableServer::POA_ptr poa,
-                                         long value)
+MyFooServantLocator::invoke_servant (const char *str, 
+                                     PortableServer::POA_ptr poa,
+                                     long value)
 {
   // The string format is dllname:factory_method which needs to be parsed.
   parse_string (str);
 
   // Now that the library name is available we open the library.  
 
-  // *done*@@
-  // Kirthika, make SURE to check return values from function calls
-  // like this and return failure results correctly...
   int retval = dll_.open (dllname_);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -125,21 +119,12 @@ MyFooServantActivator::activate_servant (const char *str,
   return servant_creator (this->orb_.in (), poa, value);
 }
 
-// This method removes the servant and the dll object associated with
-// it after it has performed the opening and symbol obtaining operations.
- 
-void 
-MyFooServantActivator::deactivate_servant (PortableServer::Servant servant)
-{
-  // the servant is destroyed.
-  delete servant;
-}
 
 // The objectID is in a format of library:factory_method which has to
 // be parsed and separated into tokens to be used.
 
 void
-MyFooServantActivator::parse_string (const char *s)
+MyFooServantLocator::parse_string (const char *s)
 {
   // The format of the object library:factory_method.  This string is
   // parsed to obtain the library name and the function name which
@@ -151,9 +136,6 @@ MyFooServantActivator::parse_string (const char *s)
   at[0]= ':';
   at[1]= '\0';
   
-  //*done*
-  // @@ Kirthika, please use the ACE_OS::str*() functions
-  // consistently.
   ACE_OS::strcpy (func, "");
 
   // As strtok () puts a NULL in the position after it gives back a
@@ -183,14 +165,14 @@ MyFooServantActivator::parse_string (const char *s)
 // to be invoked in the library.The format of the ObjectId is libname:factory_method.
 
 PortableServer::ObjectId_var
-MyFooServantActivator::create_objectId (const char *libname, const char *factory_method)
+MyFooServantLocator::create_objectId (const char *libname, const char *factory_method)
 {
   char format_string [BUFSIZ];
   
   ACE_OS::strcpy (format_string, libname);
   ACE_OS::strcat (format_string, ":");
   ACE_OS::strcat (format_string, factory_method);
-  
+
   // The object ID is created.
 
   PortableServer::ObjectId_var oid =
