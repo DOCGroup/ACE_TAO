@@ -1,3 +1,8 @@
+Mon May  5 22:17:15 1997  Sumedh Mungee      <sumedh@cs.wustl.edu>
+        
+       * apps/JAWS/stress_testing: Removed the usleep definition from
+         global.h, it was unused by the program.
+
 Mon May  5 21:37:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Block: Revised the release() logic for
