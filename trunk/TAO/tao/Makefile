@@ -161,6 +161,11 @@ ORB_CORE_FILES = \
   PolicyC \
   Encodable \
   Policy_Factory \
+  Abstract_Servant_Base \
+  Object_Proxy_Broker \
+  Remote_Object_Proxy_Broker \
+  Object_Proxy_Impl \
+  Remote_Object_Proxy_Impl \
   DomainC \
   TimeBaseC \
   TimeBaseS \

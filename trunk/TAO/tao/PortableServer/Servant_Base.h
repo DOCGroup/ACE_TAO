@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "PortableServerC.h"
+#include "tao/Abstract_Servant_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +27,7 @@
 
 class TAO_Operation_Table;
 
-class TAO_PortableServer_Export TAO_ServantBase
+class TAO_PortableServer_Export TAO_ServantBase : public TAO_Abstract_ServantBase
 {
   // = TITLE
   //     Base class for skeletons and servants.

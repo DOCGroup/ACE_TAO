@@ -1,15 +1,21 @@
 // $Id$
 
+// -- PortableServer Include --
 #include "Object_Adapter.h"
 #include "POA.h"
-#include "Collocated_Object.h"
+#include "Strategized_Object_Proxy_Broker.h"
+
+// -- ACE Include --
+#include "ace/Auto_Ptr.h"
+
+// -- TAO Include --
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/MProfile.h"
-#include "ace/Auto_Ptr.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -702,9 +708,12 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
 
               CORBA::Object_ptr x;
               ACE_NEW_RETURN (x,
-                              TAO_Collocated_Object (stub, 1,
-                                                     servant),
+                              CORBA::Object (stub, 1,
+                                             servant),
                               0);
+              
+              // Here we set the strategized Proxy Broker.
+              x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
               return x;
             }
         }
