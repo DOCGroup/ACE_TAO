@@ -1,8 +1,17 @@
+Sun Oct 07 18:19:14 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp
+	  (target_most_derived_interface):
+
+	  Fixed erroneous minor code.  The minor code is an OMG assigned
+	  one, so it must be logically or'ed with the OMG's vendor minor
+	  code ID.
+
 Sun Oct  7 04:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-  * tao/TypeCodeFactory/Makefile:
-   
-    Changed a wrong "-I" in the linker flags to "-L".
+	* tao/TypeCodeFactory/Makefile:
+
+	  Changed a wrong "-I" in the linker flags to "-L".
     
 Sat Oct 06 23:41:11 2001  Ossama Othman  <ossama@uci.edu>
 
