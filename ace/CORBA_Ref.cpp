@@ -6,6 +6,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/CORBA_Ref.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/CORBA_Ref.i"
