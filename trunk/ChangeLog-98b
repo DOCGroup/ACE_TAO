@@ -21,7 +21,8 @@ Thu Nov 19 23:04:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
         * ace/Functor.h (ACE_Command_Base): Added missing ACE_Export.
 
 Thu Nov 19 18:01:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-        * ace/DLL.cpp ACE_DLL::ACE_DLL (int close_on_destruction):
+
+         * ace/DLL.cpp ACE_DLL::ACE_DLL (int close_on_destruction):
          made base-member initialisation change to member variable
          close_mode_.
 
