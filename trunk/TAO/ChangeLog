@@ -7,6 +7,12 @@ Wed Apr 16 00:47:50 2003  Ossama Othman  <ossama@uci.edu>
 
 Wed Apr 16 00:18:08 2003  Ossama Othman  <ossama@uci.edu>
 
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+
+	  Include "ace/SString.h".  Necessitated by header inclusion
+	  reductions in ACE.
+
 	* tao/AbstractBase.inl (_is_a):
 	* tao/AbstractBase.cpp (_is_a):
 
