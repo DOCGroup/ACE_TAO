@@ -27,7 +27,7 @@
 #include "tao/CONV_FRAMES_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "CONV_FRAMES_T.i"
+#include "tao/CONV_FRAMES_T.i"
 #endif /* !defined INLINE */
 
 
