@@ -2,6 +2,6 @@
 // ace_athena.mpb,v
 
 project: ace_xt {
-  requires += ace_with_athena
+  requires += athena
   lit_libs += Xaw
 }

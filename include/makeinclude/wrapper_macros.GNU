@@ -50,11 +50,10 @@
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
 #  threads          Build with thread support.
-#  xt_reactor       Build the XtReactor.
-#  fl_reactor       Build the FlReactor.
-#  tk_reactor       Build the TkReactor.
-#  qt_reactor       Build the QtReactor.
-#  gtk_reactor      Build the GtkReactor.
+#  ace_xtreactor       Build the XtReactor.
+#  ace_flreactor       Build the FlReactor.
+#  ace_tkreactor       Build the TkReactor.
+#  ace_qtreactor       Build the QtReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
 #  stlport          Build with STLPort support
@@ -256,7 +255,7 @@ endif # static_libs
 
 #### The system has X Windows and we want to include the XtReactor in
 #### the library
-xt_reactor = 0
+ace_xtreactor = 0
 
 #### Set up the build ACE version in case the platform_macros.GNU wants it.
 ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
@@ -446,45 +445,47 @@ ifeq ($(threads),0)
   override threads =
 endif # threads
 
-ifeq ($(xt_reactor),0)
-  override xt_reactor =
-endif # xt_reactor
+ifeq ($(ace_xtreactor),0)
+  override ace_xtreactor =
+endif # ace_xtreactor
 
-ifneq ($(xt_reactor),)
-  override ace_with_x11=1
-  override ace_with_xt=1
-  ACE_MAKE_OPTIONS += xt_reactor
-endif # xt_reactor
+ifneq ($(ace_xtreactor),)
+  override x11=1
+  override xt=1
+  ACE_MAKE_OPTIONS += ace_xtreactor
+endif # ace_xtreactor
 
-fl_reactor ?=
-ifeq ($(fl_reactor),0)
-  override fl_reactor =
-endif # fl_reactor
+ace_flreactor ?=
+ifeq ($(ace_flreactor),0)
+  override ace_flreactor =
+endif # ace_flreactor
 
-ifneq ($(fl_reactor),)
-  override ace_with_x11=1
-  override ace_with_gl=1
-  ACE_MAKE_OPTIONS += rl_reactor
-endif # fl_reactor
+ifneq ($(ace_flreactor),)
+  override x11=1
+  override gl=1
+  ACE_MAKE_OPTIONS += ace_flreactor
+endif # ace_flreactor
 
-tk_reactor ?=
-ifeq ($(tk_reactor),0)
-  override tk_reactor =
-endif # tk_reactor
+ace_tkreactor ?=
+ifeq ($(ace_tkreactor),0)
+  override ace_tkreactor =
+endif # ace_tkreactor
 
-ifneq ($(tk_reactor),)
-  override ace_with_tk=1
-  ACE_MAKE_OPTIONS += tk_reactor
-endif # tk_reactor
+ifneq ($(ace_tkreactor),)
+  override x11=1
+  override tk=1
+  ACE_MAKE_OPTIONS += ace_tkreactor
+endif # ace_tkreactor
 
-qt_reactor ?=
+ace_qtreactor ?=
 ifeq ($(qt_reactor),0)
-  override qt_reactor =
-endif # qt_reactor
+  override ace_qtreactor =
+endif # ace_qtreactor
 
-ifneq ($(qt_reactor),)
-  ACE_MAKE_OPTIONS += qt_reactor
-endif # qt_reactor
+ifneq ($(ace_qtreactor),)
+  override qt=1
+  ACE_MAKE_OPTIONS += ace_qtreactor
+endif # ace_qtreactor
 
 QTDIR ?=
 ifneq ($(QTDIR),)
@@ -492,19 +493,6 @@ ifneq ($(QTDIR),)
 else
   MOC = moc
 endif
-
-gtk_reactor ?=
-ifeq ($(gtk_reactor),0)
-  override gtk_reactor =
-endif # gtk_reactor
-
-ifneq ($(gtk_reactor),)
-  override ace_with_gtk=1
-  CPPFLAGS += -DACE_HAS_GTK $(PLATFORM_GTK_CPPFLAGS)
-  LIBS += $(PLATFORM_GTK_LIBS)
-  LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
-  ACE_MAKE_OPTIONS += gtk_reactor
-endif # gtk_reactor
 
 rapi ?=
 ifeq ($(rapi),0)
@@ -531,21 +519,14 @@ ifneq ($(sctp),)
   ACE_MAKE_OPTIONS += sctp
 endif
 
-ace_with_gl ?=
-ifeq ($(ace_with_gl),0)
-  override ace_with_gl =
-endif # ace_with_gl
+gl ?=
+ifeq ($(gl),0)
+  override gl =
+endif # gl
 
-ifneq ($(ace_with_gl),)
-  override ace_with_x11 = 1
-  ACE_MAKE_OPTIONS += ace_with_gl
-endif # ace_with_gl
-
-ace_with_x11 ?=
-ifeq ($(ace_with_x11),0)
-  override ace_with_x11 =
-  ACE_MAKE_OPTIONS += ace_with_x11
-endif # ace_with_x11
+ifneq ($(gl),)
+  ACE_MAKE_OPTIONS += gl
+endif # gl
 
 ssl ?=
 ifeq ($(ssl),0)

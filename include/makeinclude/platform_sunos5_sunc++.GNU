@@ -59,7 +59,7 @@ ifeq (,$(versioned_so))
   versioned_so = 1
 endif
 tk_reactor = 0
-ace_with_x11 = 0
+x11 = 0
 
 PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
 PLATFORM_TCL_LIBS=-ltcl8.4

@@ -24,12 +24,9 @@ acexml        = 1
 ssl           = 0
 qos           = 0
 rapi          = 0
-fl_reactor    = 0
 repo          = 0
 minimum_corba = 0
 java          = 0
-qt            = 0
-wxWindows     = 0
 zlib          = 0
 zzip          = 0
 mfc           = 0
@@ -41,7 +38,43 @@ boost         = 0
 wince         = 0
 uses_wchar    = 0
 
-ace_with_motif  = 0
-ace_with_athena = 0
-ace_with_x11    = 0
-ace_with_xt     = 0
+// Features for various GUI libraries
+// 1 - wxWindows (wxWidgets) libraries are avalaible
+wxWindows     = 0
+// 1 - Motif (Lestif) libraries are avalaible
+motif         = 0
+// 1 - Athena widgets libraries are avalaible
+athena        = 0
+// 1 - X11 libraries are avalaible
+x11           = 0
+// 1 - X Toolkit libraries are avalaible
+xt            = 0
+// 1 - Tk libraries are avalaible
+tk            = 0
+// 1 - Fast Light toolkit libraries are avalaible (assume lowercase h in header files)
+fl            = 0
+// 1 - Qt libraries are avalaible
+qt            = 0
+// 1 - OpenGL libraries are avalaible
+gl            = 0
+
+// Features for ACE support for various GUI libraries
+// Build and use QtReactor
+ace_qtreactor    = 0
+// Build and use XtReactor
+ace_xtreactor    = 0
+// Build and use TkReactor
+ace_tkreactor    = 0
+// Build and use FlReactor
+ace_flreactor    = 0
+
+// Features for TAO support for various GUI libraries
+// Build and use resources for QtReactor
+tao_qtreactor    = 0
+// Build and use resources XtReactor
+tao_xtreactor    = 0
+// Build and use resources TkReactor. Until tao/Strategies are modified, this is a dummy target
+tao_tkreactor    = 1
+// Build and use resources FlReactor. Until tao/Strategies are modified, this is a dummy target
+tao_flreactor    = 1
+
