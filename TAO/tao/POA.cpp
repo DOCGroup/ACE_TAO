@@ -4232,6 +4232,10 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
       (*client_exposed_policies)[current_length] = priority_model_policy;
     }
 
+#else /* TAO_HAS_RT_CORBA == 1 */
+
+  ACE_UNUSED_ARG (object_priority);
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   return client_exposed_policies;

@@ -247,6 +247,9 @@ public:
   const TAO_MProfile& base_profiles (void) const;
   // Obtain a reference to the basic profile set.
 
+  TAO_MProfile& base_profiles (void);
+  // Obtain a reference to the basic profile set.
+
   // manage forward and base profiles.
   TAO_Profile *next_profile (void);
   // THREAD SAFE.  If forward_profiles is null then this will

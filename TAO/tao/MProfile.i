@@ -4,6 +4,7 @@
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  forward_from_(0),
+     policy_list_ (0),
      pfiles_ (0),
      current_ (0),
      size_ (0),
@@ -15,6 +16,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
   :  forward_from_(0),
+     policy_list_ (0),
      pfiles_ (0),
      current_ (0),
      size_ (0),
@@ -36,6 +38,13 @@ TAO_MProfile::operator= (const TAO_MProfile& rhs)
 ACE_INLINE
 TAO_MProfile::~TAO_MProfile (void)
 {
+  if (policy_list_ != 0)
+    {
+      for (CORBA::ULong i = 0; i < policy_list_->length (); i++)
+        (*policy_list_)[i]->destroy ();
+    }
+  delete policy_list_;
+  
   this->cleanup ();
 }
 
@@ -140,7 +149,6 @@ TAO_MProfile::rewind (void)
   current_ = 0;
 }
 
-ACE_INLINE int
 TAO_MProfile::give_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
@@ -239,4 +247,35 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
                        "(%P|%t) Unable to increment reference count in add_profile!\n"),
                       -1);
   return last_ - 1;
+}
+
+
+ACE_INLINE void
+TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
+{
+  this->policy_list_ = policy_list;
+}
+
+ACE_INLINE CORBA::PolicyList* 
+TAO_MProfile::policy_list (void) 
+{
+  if (policy_list_ == 0)
+    create_policy_list ();
+  return policy_list_;
+}
+
+ACE_INLINE void
+TAO_MProfile::create_policy_list (void)
+{
+  // Precondition: Make sure that the policy list
+  // has not already allocated.
+  ACE_ASSERT (this->policy_list_ == 0);
+
+  ACE_NEW (this->policy_list_, CORBA::PolicyList ());
+ 
+  // Post-Condition: Make sure that the memory get allcated
+  // for real.
+  ACE_ASSERT (this->policy_list_ != 0);
+  
+  // @@ Marina & Irfan I would raise an exception in this case.
 }
