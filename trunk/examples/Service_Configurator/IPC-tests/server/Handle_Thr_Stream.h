@@ -27,8 +27,8 @@ public:
   ~Handle_Thr_Acceptor (void);
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **, size_t) const;
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini (void);
 
 private:
