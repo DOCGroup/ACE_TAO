@@ -14,7 +14,6 @@ TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
 
-TAO/performance-tests/Latency/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/Single_Threaded_Latency/run_test.pl
 TAO/performance-tests/Thread_Pool_Latency/run_test.pl: !ST
 TAO/performance-tests/Thread_Per_Connection_Latency/run_test.pl: !ST
