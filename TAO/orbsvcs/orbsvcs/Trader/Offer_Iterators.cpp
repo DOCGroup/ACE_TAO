@@ -101,6 +101,8 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
         }
       ACE_CATCHANY
         {
+          // Don't let the exceptions propagate since we're in a
+          // destructor!
         }
       ACE_ENDTRY;
     }
