@@ -672,6 +672,4 @@ ACE_STATIC_SVC_DECLARE (TAO_Resource_Factory)
 
 ACE_FACTORY_DECLARE (TAO, TAO_Resource_Factory)
 
-extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
-
 #endif /* TAO_ORB_CORE_H */
