@@ -2,6 +2,7 @@ Tue Nov 21 15:04:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Latency/server.cpp : 
 	* performance-tests/Latency/client.cpp : 
+	* performance-tests/Latency/st_client.cpp : 
 	  Included tao/Strategies/advanced_resource.h.
 
 	* performance-tests/Latency/Makefile: 
