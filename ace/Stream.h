@@ -10,7 +10,7 @@
 //    Stream.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt <schmidt@uci.edu>
 //
 // ============================================================================
 
@@ -125,15 +125,15 @@ public:
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value *timeout = 0);
   // Send the message <mb> down the stream, starting at the Module
-  // below the Stream head.  Wait for upto <timeout> amount of time
-  // for the operation to complete (or block forever if <timeout> ==
-  // 0).
+  // below the Stream head.  Wait for upto <timeout> amount of
+  // absolute time for the operation to complete (or block forever if
+  // <timeout> == 0).
 
   virtual int get (ACE_Message_Block *&mb,
                    ACE_Time_Value *timeout = 0);
   // Read the message <mb> that is stored in the the stream head.
-  // Wait for upto <timeout> amount of time for the operation to
-  // complete (or block forever if <timeout> == 0).
+  // Wait for upto <timeout> amount of absolute time for the operation
+  // to complete (or block forever if <timeout> == 0).
 
   virtual int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
                        void *args);
