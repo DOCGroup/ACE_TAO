@@ -747,7 +747,7 @@ spawn_threads (ACCEPTOR *acceptor,
        (ACE_THR_FUNC) server,
        (void *) acceptor,
        THR_NEW_LWP
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
 #if 0 /* Don't support setting of stack, because it doesn't seem to work. */
