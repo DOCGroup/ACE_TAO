@@ -791,7 +791,7 @@ be_union::compute_default_value (void)
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
-      if (total_case_members == ACE_UINT32_MAX+1)
+      if (total_case_members > ACE_UINT32_MAX)
         this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_longlong:
@@ -991,7 +991,7 @@ be_union::compute_default_value (void)
                           break;
                         case AST_Expression::EV_bool:
                           if (this->default_value_.u.bool_val 
-                              == expr->ev ()->u.bval)
+                              == (long) expr->ev ()->u.bval)
                             {
                               this->default_value_.u.bool_val++;
                               break_loop = 1;
