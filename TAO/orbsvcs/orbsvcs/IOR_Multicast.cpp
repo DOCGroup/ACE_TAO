@@ -130,7 +130,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
         {
           if (errno == EBADF)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%P|%t) Error sending multicast: errno %d.\n", errno)
+                                 "(%P|%t) Error sending multicast: errno %d.\n", errno),
                                 -1);
         }
       else
