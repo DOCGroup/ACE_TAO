@@ -34,7 +34,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 1.2,
+                         'version'  => 1.3,
                          'types'    => {},
                          'creators' => \@creators,
                          'default'  => $creators[0],
@@ -71,7 +71,7 @@ sub usageAndExit {
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                $spaces . "[-template <file>] " .
                "[-dynamic_only] [-static_only]\n" .
-               $spaces . "[-relative NAME=VAR] [-noreldefs]\n" .
+               $spaces . "[-relative NAME=VAR] [-noreldefs] [-notoplevel]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-type <";
@@ -106,6 +106,8 @@ sub usageAndExit {
 "                       is replaced by VAR only if VAR can be made into a\n" .
 "                       relative path based on the current working directory.\n" .
 "       -noreldefs      Do not try to generate default relative definitions.\n" .
+"       -notoplevel     Do not generate the top level target file.  Files\n" .
+"                       are still process, but no top level file is created.\n" .
 "       -value_template This option allows modification of a template input\n" .
 "                       name value pair.  Use += to add VAL to the NAME's\n" .
 "                       value.  Use -= to subtract and = to override the value.\n" .
@@ -130,7 +132,8 @@ sub completion_command {
   my($self) = shift;
   my($str)  = "complete $self->{'name'} " .
               "'c/-/(global include type template relative " .
-              "ti dynamic_only static_only noreldefs)/' " .
+              "ti dynamic_only static_only noreldefs notoplevel " .
+              "value_template value_project)/' " .
               "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
               "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -160,6 +163,7 @@ sub run {
   my($static)     = 1;
   my(%relative)   = ();
   my($reldefs)    = 1;
+  my($toplevel)   = 1;
   my(%addtemp)    = ();
   my(%addproj)    = ();
 
@@ -226,6 +230,9 @@ sub run {
     }
     elsif ($arg eq '-noreldefs') {
       $reldefs = 0;
+    }
+    elsif ($arg eq '-notoplevel') {
+      $toplevel = 0;
     }
     elsif ($arg eq '-template') {
       $i++;
@@ -400,7 +407,8 @@ sub run {
       my($generator) = $name->new($global, \@include, $template,
                                   \%ti, $dynamic, $static, \%relative,
                                   \%addtemp, \%addproj,
-                                  (-t 1 ? \&progress : undef));
+                                  (-t 1 ? \&progress : undef),
+                                  $toplevel);
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";
       print "Start Time: " . scalar(localtime(time())) . "\n";

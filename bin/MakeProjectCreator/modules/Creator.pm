@@ -33,6 +33,7 @@ sub new {
   my($addtemp)  = shift;
   my($addproj)  = shift;
   my($progress) = shift;
+  my($toplevel) = shift;
   my($type)     = shift;
   my($self)     = Parser::new($class);
 
@@ -48,6 +49,7 @@ sub new {
   $self->{'progress'}      = $progress;
   $self->{'addtemp'}       = $addtemp;
   $self->{'addproj'}       = $addproj;
+  $self->{'toplevel'}      = $toplevel;
 
   return $self;
 }
@@ -378,6 +380,11 @@ sub get_addproj {
   return $self->{'addproj'};
 }
 
+
+sub get_toplevel {
+  my($self) = shift;
+  return $self->{'toplevel'};
+}
 
 # ************************************************************
 # Virtual Methods To Be Overridden

@@ -82,10 +82,11 @@ sub new {
   my($addtemp)   = shift;
   my($addproj)   = shift;
   my($progress)  = shift;
+  my($toplevel)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
                                 $addtemp, $addproj,
-                                $progress, 'project');
+                                $progress, $toplevel, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'global_assign'}         = {};
@@ -1259,18 +1260,12 @@ sub write_output_file {
   my($name)     = shift;
   my($status)   = 0;
   my($error)    = '';
-  my($dir)      = dirname($name);
-  my($fh)       = new FileHandle();
   my($tover)    = $self->get_template_override();
   my($template) = (defined $tover ? $tover : $self->get_template()) .
                   ".$TemplateExtension";
   my($tfile)    = $self->search_include_path($template);
 
   if (defined $tfile) {
-    if ($dir ne '.') {
-      mkpath($dir, 0, 0777);
-    }
-
     ## Read in the template values for the
     ## specific target and project type
     ($status, $error) = $self->read_template_input();
@@ -1284,18 +1279,27 @@ sub write_output_file {
       ($status, $error) = $tp->parse_file($tfile);
 
       if ($status) {
-        if (open($fh, ">$name")) {
-          my($lines) = $tp->get_lines();
-          foreach my $line (@$lines) {
-            print $fh $line;
+        if ($self->get_toplevel()) {
+          my($fh)  = new FileHandle();
+          my($dir) = dirname($name);
+
+          if ($dir ne '.') {
+            mkpath($dir, 0, 0777);
           }
-          close($fh);
-          my($fw) = $self->{'files_written'};
-          push(@$fw, $name);
-        }
-        else {
-          $error = "ERROR: Unable to open $name for output.";
-          $status = 0;
+
+          if (open($fh, ">$name")) {
+            my($lines) = $tp->get_lines();
+            foreach my $line (@$lines) {
+              print $fh $line;
+            }
+            close($fh);
+            my($fw) = $self->{'files_written'};
+            push(@$fw, $name);
+          }
+          else {
+            $error = "ERROR: Unable to open $name for output.";
+            $status = 0;
+          }
         }
       }
     }
