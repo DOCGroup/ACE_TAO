@@ -1,5 +1,12 @@
 Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-  
+
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	  Changes to these files again for making it MT safe. Added
+	  SYNCH_MUTEX to the Hash Table. and protected the
+	  request_id_generator with a lock.		
+    
+
 	* tao/GIOP.cpp
 	* tao/IIOP_Transport.cpp
 	* tao/Invocation.cpp
