@@ -1820,7 +1820,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
        ++i)
     {
       // Has the typecode for this member already been generated?
-      if (node->tc_generated () == 0)
+      if (node->tc_generated () == 0 )
         {
           node->tc_generated (1);
           os->indent ();
@@ -1991,6 +1991,10 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
           break;
         }
     } // end of for loop
+
+  // If this node is involved in nesting or recursion, its typecode
+  // will need to be generated again later.
+  node->tc_generated (0);
 
   // revert the state
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
