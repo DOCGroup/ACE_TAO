@@ -1,3 +1,10 @@
+Sun Apr 27 14:18:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_Wheel_T.cpp: Had to revise things just a bit to
+ 	  compile with GCC and it's lame template mechanism.  This
+ 	  required changing NODE * to ACE_Timer_Node_T<TYPE, FUNCTOR> * in
+ 	  several method definitions.
+
 Sun Apr 27 07:41:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp: added #includes for template specializations,
