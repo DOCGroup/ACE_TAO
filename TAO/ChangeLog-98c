@@ -1,3 +1,8 @@
+Thu Jul  3 16:16:14 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* Added ACE_Svc_Export to a couple of declarations to make NT 
+	  happier
+
 Thu Jul  3 13:43:20 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* Added Visual C++ 5.0 project and workspace files for the TAO 
