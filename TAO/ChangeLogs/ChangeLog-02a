@@ -1,3 +1,11 @@
+Thu Feb 21 15:46:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+	  Removed unnused
+	  ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Connection_Handler*>
+	  template instantiation.
+
 Thu Feb 21 15:37:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
