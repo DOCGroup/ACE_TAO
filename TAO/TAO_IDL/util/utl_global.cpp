@@ -935,13 +935,20 @@ IDL_GlobalData::pragma_prefixes (void)
 void 
 IDL_GlobalData::update_prefix (char *filename)
 {
-  UTL_String *fname = idl_global->filename ();
+  // If we are just starting up and processing the temporary filename,
+  // there are no prefix issues to deal with yet.
+  if (this->pd_main_filename == 0 || this->pd_filename == 0)
+    {
+      return;
+    }
+
+  char *fstring = this->pd_filename->get_string ();
 
   // We have to do this check because some preprocessors (gcc 3.2
   // on RedHat Linux 7.1, for one) output the same filename
   // multiple times for no apparent reason, and we don't want it
   // to clear the prefix.
-  if (fname && ACE_OS::strcmp (fname->get_string (), filename) == 0)
+  if (ACE_OS::strcmp (fstring, filename) == 0)
     {
       return;
     }
@@ -949,11 +956,22 @@ IDL_GlobalData::update_prefix (char *filename)
   ACE_CString tmp ("", 0, 0);
   ACE_CString fn (filename, 0, 0);
   (void) this->file_prefixes_.trybind (fn, tmp);
-  char *trash = 0;
-  this->pragma_prefixes_.pop (trash);
-  delete [] trash;
-  this->pragma_prefixes_.push (tmp.rep ());
-  this->pd_root->prefix ((char *) tmp.fast_rep ());
+
+  if (ACE_OS::strcmp (fstring, this->pd_main_filename->get_string ()) != 0
+      && this->pragma_prefixes_.size () > 1)
+    {
+      char *trash = 0;
+      this->pragma_prefixes_.pop (trash);
+      delete [] trash;
+      char *current = 0;
+      this->pragma_prefixes_.top (current);
+      this->pd_root->prefix (current);
+    }
+  else
+    {
+      this->pragma_prefixes_.push (tmp.rep ());
+      this->pd_root->prefix ((char *) tmp.fast_rep ());
+    }
 }
 
 UTL_ScopedName *
