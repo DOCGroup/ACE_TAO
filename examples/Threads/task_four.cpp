@@ -21,6 +21,7 @@
 //                It also, suspends and resumes all the threads in the group to
 //                test the suspend_grp () and resume_grp () methods.
 //                Then it waits for all the tasks to end.
+//
 // Worker_Task  - ACE_Tasks that are started by the Invoker_Task.
 //                Each Worker_Task can start a number of threads.
 //                The Worker_Task threads perform some work (iteration). The number
@@ -33,7 +34,6 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Task.h"
@@ -42,18 +42,18 @@ class Invoker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Invoker_Task (ACE_Thread_Manager *thr_mgr,
-		int n_tasks,
-		int n_threads,
-		int n_iterations);
+		size_t n_tasks,
+		size_t n_threads,
+		size_t n_iterations);
   virtual int svc (void);
   // creats <n_tasks> and wait for them to finish
 
 private:
-  int n_tasks_;
+  size_t n_tasks_;
   // Number of tasks to start.
-  int n_threads_;
+  size_t n_threads_;
   // Number of threads per task.
-  int n_iterations_;
+  size_t n_iterations_;
   // Number of iterations per thread.
 };
 
@@ -61,44 +61,48 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
-	       int n_threads,
-	       int n_iterations);  
+	       size_t n_threads,
+	       size_t n_iterations);  
   virtual int svc (void);
   // Does a small work...
   virtual int open (void * = NULL);
+
 private:
-  static int workers_count_;
-  int index_;
-  int n_threads_;
-  int n_iterations_;
+  static size_t workers_count_;
+  size_t index_;
+  size_t n_threads_;
+  size_t n_iterations_;
 
   // = Not needed for this test.
-  virtual int close (u_long) { return 0; }
+  virtual int close (u_long);
   virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
 };
 
-int Worker_Task::workers_count_ = 1;
+size_t Worker_Task::workers_count_ = 1;
+
+int
+Worker_Task::close (u_long)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) closing task %d\n", this->index_));
+  delete this;
+  return 0;
+}
 
 Worker_Task::Worker_Task (ACE_Thread_Manager *thr_mgr, 
-                          int n_threads,
-                          int n_iterations)
-  : n_threads_ (n_threads), 
-    n_iterations_ (n_iterations), 
-    ACE_Task<ACE_MT_SYNCH> (thr_mgr)
+                          size_t n_threads,
+                          size_t n_iterations)
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+    index_ (Worker_Task::workers_count_++),
+    n_threads_ (n_threads), 
+    n_iterations_ (n_iterations)
 {
-  index_ = workers_count_++;
 }
  
 int 
 Worker_Task::open (void *)
 {
   // Create worker threads.
-  int rc = this->activate (THR_NEW_LWP, n_threads_, 0, 0, -1, this);
-
-  if (rc == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
-
-  return rc;
+  return this->activate (THR_NEW_LWP, n_threads_, 0, -1, -1, this);
 }
 
 int 
@@ -106,7 +110,7 @@ Worker_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) in worker %d\n", index_));
 
-  for (int iterations = 1; 
+  for (size_t iterations = 1; 
        iterations <= this->n_iterations_;
        iterations++)
     {
@@ -120,16 +124,16 @@ Worker_Task::svc (void)
 }
 
 Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr, 
-			    int n_tasks,
-			    int n_threads,
-			    int n_iterations)           
+			    size_t n_tasks,
+			    size_t n_threads,
+			    size_t n_iterations)           
   : n_tasks_ (n_tasks), 
     n_threads_ (n_threads), 
     n_iterations_ (n_iterations),
     ACE_Task<ACE_MT_SYNCH> (thr_mgr)
 {
   // Create worker threads.
-  if (this->activate (THR_NEW_LWP, 1, 0, 0, -1, this) == -1)
+  if (this->activate (THR_NEW_LWP, 1, 0, -1, -1, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }
   
@@ -143,68 +147,74 @@ Invoker_Task::svc (void)
   // the Thread_Manager when the thread begins.
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
-  Worker_Task **pTask = new Worker_Task* [n_tasks_];
+  Worker_Task **worker_task = new Worker_Task *[n_tasks_];
    
-  int task;
+  size_t task;
 
   for (task = 0; 
        task < this->n_tasks_;
        task++)
     {
       ACE_DEBUG ((LM_DEBUG, " (%t) in task %d\n", task+1));
-      pTask[task] = new Worker_Task (thr_mgr, n_threads_, n_iterations_);
-      pTask[task]->open ();  
+
+      ACE_NEW_RETURN (worker_task[task], 
+		      Worker_Task (thr_mgr, n_threads_, n_iterations_), 
+		      -1);
+
+      if (worker_task[task]->open () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open failed"), -1);
     }
 
   // Set all tasks to be one group
   ACE_DEBUG ((LM_DEBUG, " (%t) setting tasks group id\n"));
+
   for (task = 0; 
        task < this->n_tasks_;
        task++)
-    if (thr_mgr->set_grp (pTask[task], 1) == -1)
+    if (thr_mgr->set_grp (worker_task[task], 1) == -1)
       ACE_ERROR ((LM_DEBUG, " (%t) %p\n", "set_grp"));
 
-  int nTasks = thr_mgr->num_tasks_in_group (1);
-  cout << "Number of tasks in group 1: " << nTasks << endl;
+  size_t n_tasks = thr_mgr->num_tasks_in_group (1);
+  cout << "Number of tasks in group 1: " << n_tasks << endl;
 
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, " (%t) suspending group\n"));
+
   if (thr_mgr->suspend_grp (1) == -1)
     ACE_ERROR ((LM_DEBUG, " (%t) %p\n", "suspend_grp"));
 
-  // Wait for 5 more second and then resume every thread in the
+  // Wait for 3 more second and then resume every thread in the
   // group.
-  ACE_OS::sleep (ACE_Time_Value (5));
+  ACE_OS::sleep (ACE_Time_Value (2));
   
-  // @QTSK  This ACE_DEBUG statement blows us away! can't understand why
   ACE_DEBUG ((LM_DEBUG, " (%t) resuming group\n"));
+
   if (thr_mgr->resume_grp (1) == -1)
     ACE_ERROR ((LM_DEBUG, " (%t) %p\n", "resume_grp"));
-
 
   // Wait for all the tasks to reach their exit point.
   thr_mgr->wait ();
 
-  // Note that the ACE_Task::svc_run () method automatically removes us
-  // from the Thread_Manager when the thread exits.
+  // Note that the ACE_Task::svc_run () method automatically removes
+  // us from the Thread_Manager when the thread exits.
 
   return 0;
 }
 
 // Default number of tasks and iterations.
-static const int DEFAULT_TASKS = 4;
-static const int DEFAULT_ITERATIONS = 5;
+static const size_t DEFAULT_TASKS = 4;
+static const size_t DEFAULT_ITERATIONS = 5;
 
 int 
 main (int argc, char *argv[])
 {
-  int n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
-  int n_threads = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_THREADS;
-  int n_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
+  size_t n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
+  size_t n_threads = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_THREADS;
+  size_t n_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
 
-  // Since ACE_Thread_Manager can only wait for all threads, we'll have
-  // special manager for the Invoker_Task.
+  // Since ACE_Thread_Manager can only wait for all threads, we'll
+  // have special manager for the Invoker_Task.
   ACE_Thread_Manager invoker_manager;
 
   Invoker_Task invoker (&invoker_manager, 
@@ -219,19 +229,17 @@ main (int argc, char *argv[])
   if (invoker_manager.suspend_task (&invoker) == -1)
     ACE_ERROR ((LM_DEBUG, " (%t) %p\n", "suspend_task"));
 
-  // Wait for 5 more second and then resume the invoker task.
-  ACE_OS::sleep (ACE_Time_Value (5));
+  // Wait for 3 more second and then resume the invoker task.
+  ACE_OS::sleep (ACE_Time_Value (3));
 
-  // @QTSK  This ACE_DEBUG statement blows us away! can't understand why
   ACE_DEBUG ((LM_DEBUG, " (%t) resuming invoker task\n"));
+
   if (invoker_manager.resume_task (&invoker) == -1)
     ACE_ERROR ((LM_DEBUG, " (%t) %p\n", "resume_task"));
-
 
   // Wait for all the threads to reach their exit point.
   invoker_manager.wait ();
 
-  // @QTSK  This ACE_DEBUG statement blows us away! can't understand why
   ACE_DEBUG ((LM_DEBUG, " (%t) done\n"));
   return 0;
 }

@@ -1,24 +1,3 @@
-Sat Apr 05 20:32:54 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/Log_Msg.cpp (instance): Added another ACE_NO_HEAP_CHECK.
-	  Matthias provided the fix.
-
-	* ace/config-win32.h: Disable ACE_HAS_STRICT by default, because
-	  it will break existing application code.
-
-Sat Apr  5 19:11:46 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
-
-	* ace/Signal.i (ACE_Sig_Guard): Changed the constructor of
- 	  ACE_Sig_Guard so that it doesn't call ACE_OS::sigprocmask for
- 	  Win32.  This keeps errno from being set to ENOSYS at random
-	  times.
-
-Sat Apr 05 17:27:02 1997    <irfan@TWOSTEP>
-
-	* Registry.cpp (resolve): Type and size of the object is only set
- 	  if RegQueryValueEx() returns success. Thanks to Alan
-	  (Alan_Cabrera@fp.cibc.com) for reporting this.
-
 Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/MM_Shared_Memory_Test.cpp: Removed the use of dynamic
@@ -44,7 +23,60 @@ Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* examples/Threads/future1.cpp: Make sure to delete this->name_ in
  	  the Scheduler destructor to avoid a memory leak.
 
+	* examples/Threads/task_four.cpp (close): Enhanced the close()
+ 	  method so that it will actually delete the memory for the
+ 	  Worker_Task.
+
+	* ace/XtReactor.cpp (register_handler_i): Added the 
+
+	  if (mask & ACE_Event_Handler::ACCEPT_MASK)
+	    ACE_SET_BITS (condition, XtInputReadMask);
+
+	  Thanks to Jean-Marc Strauss <strauss@club-internet.fr> for
+ 	  reporting this.
+
+	* ace/Timer_Queue.cpp (expire): This is the only method that calls
+ 	  ACE_Timer_Queue::cancel() with dont_call_handle_close set to 0.
+
+	* ace/Reactor: Modified the cancel_timer() methods so that they
+ 	  also take a dont_call_handle_close parameter and pass it on to
+ 	  the Timer_Queue::cancel() method.
+
+	* ace/Timer_{List,Heap}.cpp: Modified all the cancel() methods so
+ 	  that they will not call handle_close() unless the new parameter
+ 	  dont_call_handle_close is 0 (it is 1 by default).  This will
+ 	  avoid nasty problems with recursion.  Thanks to Paul Han
+	  <phan@CCGATE.HAC.COM> for suggesting this.
+
+	* ace/Timer_{List,Heap}.cpp (schedule): If a user tried to
+ 	  schedule a NULL ACE_Event_Handler then we return -1 with errno
+ 	  set to EINVAL.
+
+	* ace/Message_Block.cpp: Somehow the file got screwed up and was
+ 	  reverted back to an earlier incarnation where we didn't use
+ 	  ACE_Service_Config::alloc()...  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for figuring this out.
+
+Sat Apr  5 19:11:46 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
+
+	* ace/Signal.i (ACE_Sig_Guard): Changed the constructor of
+ 	  ACE_Sig_Guard so that it doesn't call ACE_OS::sigprocmask for
+ 	  Win32.  This keeps errno from being set to ENOSYS at random
+	  times.
+
+Sat Apr 05 17:27:02 1997    <irfan@TWOSTEP>
+
+	* Registry.cpp (resolve): Type and size of the object is only set
+ 	  if RegQueryValueEx() returns success. Thanks to Alan
+	  (Alan_Cabrera@fp.cibc.com) for reporting this.
+
 Sat Apr 05 13:11:04 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (instance): Added another ACE_NO_HEAP_CHECK.
+	  Matthias provided the fix.
+
+	* ace/config-win32.h: Disable ACE_HAS_STRICT by default, because
+	  it will break existing application code.
 
 	* ace/OS.{h,cpp},Log_Msg.{h,cpp}: fixes from Matthias Kerkhoff
 	  <make@cs.tu-berlin.de> to avoid memory-leak reports when MFC
