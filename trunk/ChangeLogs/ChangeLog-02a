@@ -1,3 +1,10 @@
+Thu May  2 14:02:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (work_pending_i):
+
+	  Take into account pending timers when deciding if there is work
+	  to be done.
+
 Thu May 02 13:34:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.cpp:
