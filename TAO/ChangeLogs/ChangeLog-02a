@@ -1,3 +1,31 @@
+Mon Aug 28 14:05:36 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (init_tcp_properties,
+	  open_i):
+
+	  Initialize the TCP properties specific to the SSLIOP pluggable
+	  protocol.
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+
+	  Added TCP properties argument to the server connection handler
+	  constructor.  This argument is used to initialize the TCP
+	  properties to be used by the SSLIOP pluggable protocol during
+	  communication.
+
+	  (open):
+
+	  Obtain TCP properties from the newly added TCP_Properties
+	  structure instead of the corresponding members in
+	  TAO_ORB_Parameters.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+	  Initialize TAO_Protocol_Factory base class with the appropriate
+	  protocol tag (TAO_TAG_IIOP_PROFILE).
+
 Mon Aug 28 11:49:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Notify_Service/Makefile:
