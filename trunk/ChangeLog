@@ -1,3 +1,9 @@
+Tue Dec 14 09:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+          Added missing include when ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO
+          is defined to 1
+
 Mon Dec 13 19:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Semaphore_Test.cpp (worker):
