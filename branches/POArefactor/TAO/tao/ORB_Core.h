@@ -490,39 +490,6 @@ public:
   /// transports.
   ACE_Allocator *transport_message_buffer_allocator (void);
 
-#if 0
-  /// @todo All these need to go. They were added in the first place
-  /// to get around a problem with input_cdr* methods. The input_cdr*
-  /// methods would access from TSS if an option is set. Since some
-  /// portions of the ORB didnt require memory from TSS, we had these
-  /// new set of methods. Now that the semantics are changed for
-  /// input_cdr* methods, these methods may not be required. We can
-  /// remove them at a later date!
-
-  /// This allocator is global, may or may not have locks. It is
-  /// intended for ACE_Data_Blocks used in message blocks or CDR
-  /// streams that have no relation with the life of threads,
-  /// something like used in a class on a per connection basis
-  ACE_Allocator *message_block_dblock_allocator (void);
-
-  /// This allocator is global, may or may not have locks. It is
-  /// intended for ACE_Data_Blocks used in message blocks or CDR
-  /// streams that have no relation with the life of threads,
-  /// something like used in a class on a per connection basis
-  ACE_Allocator *message_block_buffer_allocator (void);
-
-  /// This allocator is global, may or may not have locks. It is
-  /// intended for ACE_Data_Blocks used in message blocks or CDR
-  /// streams that have no relation with the life of threads,
-  /// something like used in a class on a per connection basis
-  ACE_Allocator *message_block_msgblock_allocator (void);
-
-  /// The data blocks returned have memeory from the global pool. Will
-  /// not get anything from the TSS even if it is available.
-  ACE_Data_Block *data_block_for_message_block (size_t size);
-
-#endif /*if 0*/
-
   /// The Message Blocks used for input CDRs must have appropiate
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
@@ -1005,18 +972,6 @@ protected:
   /// destructor.
   int fini (void);
 
-#if 0
-  /// @@todo All these need to go! We dont put input cdr's on the TSS
-  /// anyway.
-  /// Implement the input_cdr_*_allocator() routines using pre-fetched
-  /// TSS resources.  This minimizes the number of calls to them.
-  //@{
-  ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
-  ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
-  ACE_Allocator *input_cdr_msgblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
-  //@}
-
-#endif /*if 0*/
   /// Routine that creates a ACE_Data_Block given the lock and allocators.
   ACE_Data_Block *create_data_block_i (size_t size,
                                        ACE_Allocator *buffer_allocator,
@@ -1140,16 +1095,6 @@ protected:
 
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;
-
-#if 0
-  /// @@todo All these need to go!
-  /// The allocators for the message blocks
-  //@{
-  ACE_Allocator *message_block_dblock_allocator_;
-  ACE_Allocator *message_block_buffer_allocator_;
-  ACE_Allocator *message_block_msgblock_allocator_;
-  //@}
-#endif /*if 0*/
 
   /// The server_id_ that was passed via -ORBServerId option
   ACE_CString server_id_;

@@ -559,48 +559,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreconnect"))))
         {
-#if 0
-          /*
-           *
-           *  TODO: Needs to go. Leaving it around for things to
-           *  settle down.
-           */
-          // Get a string which describes the connections we want to
-          // cache up-front, thus reducing the latency of the first call.
-          //
-          // For example,  specify -ORBpreconnect once for each
-          // protocol:
-          //
-          //   -ORBpreconnect iiop://tango:10015,watusi:10016
-          //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000
-          //
-          // Or chain all possible endpoint designations together:
-          //
-          //   -ORBpreconnect iiop://tango:10015,watusi:10016/;
-          //              busX_iop://board1:0x07450000,board2,0x08450000/
-          //
-          // The old style command line only works for IIOP:
-          //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
-
-          ACE_CString preconnections (ACE_TEXT_ALWAYS_CHAR(current_arg));
-
-
-          if (this->orb_params ()->preconnects (preconnections) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t)\n")
-                          ACE_TEXT ("Invalid preconnect(s)")
-                          ACE_TEXT ("specified:\n%s\n"),
-                          preconnections.c_str ()));
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    EINVAL),
-                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
-#endif /*if 0*/
-
           // validate_connection() supports the same functionality as
           // the -ORBPreconnect option, and more.  Multiple
           // preconnections are also provided by validate_connection()
@@ -2369,24 +2327,6 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
 
   return this->lane_resources ().output_cdr_dblock_allocator ();
-
-#if 0
-  // Allocating memory here confuses purify a bit. We do delete this
-  // memory when TSS delete
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  if (tss == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("TAO_ORB_Core::output_cdr_dblock_allocator (); ")
-                       ACE_TEXT ("no more TSS keys")),
-                      0);
-
-  if (tss->output_cdr_dblock_allocator_ == 0)
-    tss->output_cdr_dblock_allocator_ =
-      this->resource_factory ()->output_cdr_dblock_allocator ();
-
-  return tss->output_cdr_dblock_allocator_;
-#endif /* if 0*/
 }
 
 ACE_Allocator*
