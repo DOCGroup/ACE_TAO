@@ -6,7 +6,7 @@ Mon Jun 21 19:07:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be_include/be_enum_val.h:
 	* TAO_IDL/be/be_enum_val.cpp:
 	  Added a virtual compute_size_type(). method. Even though the
-	  emplementation is trivial, it's necessary because this gets
+	  implementation is trivial, it's necessary because this gets
 	  called for all types from be_decl. Be_decl's own version of
 	  this function is a no-op, so it must be overridden for all
 	  other types. This gets rid of an ACE_ASSERT error when
@@ -16,7 +16,7 @@ Mon Jun 21 19:07:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Removed ACE_ERROR message in in_recursion() method when
 	  a null field pointer is found by field::narrow_from_decl().
 	  Not everything iside a structure is a field, so this 
-	  could be a ligitimate return value.
+	  could be a legitimate return value.
 
 Mon Jun 21 18:57:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
