@@ -44,8 +44,13 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
 
-  // By default the proxy broker is set to the one
-  // that always goes remote.
+  // If the object is collocated then set the broker
+  // using the factory otherwise use the remote proxy
+  // broker.
+  if (this->is_collocated_ &&
+      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
+    this->proxy_broker_ = _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
+  else
   this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 }
 
@@ -648,6 +653,10 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
   return (CORBA::Boolean) cdr.good_bit ();
 }
+
+TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+    ) = 0;
 
 // ****************************************************************
 

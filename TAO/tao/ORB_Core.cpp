@@ -1653,8 +1653,6 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
 
   if (policy_list->length () != 0)
     {
-      // Set the "iterator" to the beginning of MProfile.
-      mp.rewind ();
       TAO_Profile * profile;
 
       for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)

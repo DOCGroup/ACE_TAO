@@ -9,6 +9,8 @@
 
 ACE_RCSID (tao, TAO_Strategized_Object_Proxy_Broker, "$Id$")
 
+
+
 TAO_Strategized_Object_Proxy_Broker *
 the_tao_strategized_object_proxy_broker (void)
 {
@@ -89,3 +91,26 @@ TAO_Strategized_Object_Proxy_Broker::create_proxy (TAO_ORB_Core::TAO_Collocation
         }
     }
 }
+
+TAO_Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (
+                                                         CORBA::Object_ptr obj
+                                                         )
+{
+
+  return the_tao_strategized_object_proxy_broker ();
+}
+
+int _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (long dummy)
+{
+  ACE_UNUSED_ARG (dummy);
+
+  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer =
+    _TAO_collocation_Object_Proxy_Broker_Factory;
+
+  return 0;
+}
+
+static int
+_TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
+_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long,
+                                                                                _TAO_collocation_Object_Proxy_Broker_Factory_Initializer));

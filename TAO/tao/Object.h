@@ -327,6 +327,14 @@ private:
   CORBA::Object_ptr &ptr_;
 };
 
+
+extern TAO_Export  TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
+
+// This function pointer is set only when the Portable server library is
+// present.
+
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA_Object*);
 
