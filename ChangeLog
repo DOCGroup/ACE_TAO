@@ -1,3 +1,10 @@
+Tue Apr  8 13:12:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Mon_Max.h: #included config-all.h. This is needed for the
+	  header file to be used succesfully. This fixes [BUG 1485  and
+	  thanks to Paul Marquis <pmarquis@pobox.com> for reporting this
+	  problem. 
+
 Tue Apr 08 17:01:02 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* apps/mkcsregdb/mkcsregdb.dsp: Changed 'Use run time library'
