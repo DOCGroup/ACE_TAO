@@ -1,12 +1,20 @@
+Mon Jun 26 16:45:49 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile: removed
+          LDLIBS=-lOrb-mt for other than Chorus, because it will
+          be exposed with an upcoming VLDLIBS change in ACE's
+          wrapper_macros.GNU.  Also, commented out the LDLIBS=-lOrb
+          on Chorus, because that lib is only used with miniCOOL.
+
 Mon Jun 26 14:32:17 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/Makefile (DIRS):
+        * examples/Content_Server/Makefile (DIRS):
 
-	  Moved conditional definition of additional directories to
-	  recurse into when AMI is enabled after the inclusion of the
-	  TAO-specific make rule files.  This fixes a problem that was
-	  occuring in the Minimum CORBA build due to the fact that the
-	  "ami" variable wasn't set to zero yet.
+          Moved conditional definition of additional directories to
+          recurse into when AMI is enabled after the inclusion of the
+          TAO-specific make rule files.  This fixes a problem that was
+          occuring in the Minimum CORBA build due to the fact that the
+          "ami" variable wasn't set to zero yet.
 
 Mon Jun 26 16:04:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
