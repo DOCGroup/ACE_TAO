@@ -797,7 +797,12 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       if (status == -1)
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
       else
-        ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+        {
+          if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
+            ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+          if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG))
+            ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
+        }
     }
   else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
     {
