@@ -1,8 +1,14 @@
+Wed Feb 11 19:17:54 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIAO-INSTALL.html:
+
+	  Added this file for CIAO install/build instructions.
+
 Wed Feb 11 12:05:59 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
 
-	  Updated URLs to the Boost website. Fixed incorrect build 
+	  Updated URLs to the Boost website. Fixed incorrect build
 	  instruction for Windows.
 
 Wed Feb 11 11:36:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
