@@ -8,6 +8,13 @@ ACE_RCSID(Multiple_Inheritance, server, "$Id$")
 
 static char *ior_output_file = 0;
 
+Multiple_Inheritance_i::Multiple_Inheritance_i (void)
+{
+  // Sun/CC 5.0 crashes if there is no explicit default
+  // constructor
+  // Default constructor, do nothin..
+}
+
 int
 parse_args (int argc, char **argv)
 {

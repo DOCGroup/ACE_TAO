@@ -83,7 +83,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "-h                  -- prints this information\n";
       print "-t type             -- runs only one type of param test\n";
       print "-i (dii|sii)        -- Changes the type of invocation\n";
-      exit;
+      exit 0;
     }
     if ($ARGV[$i] eq "-n")
     {
@@ -133,3 +133,5 @@ foreach $type (@types) {
 }
 
 unlink $iorfile;
+
+exit 0;

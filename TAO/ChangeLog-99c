@@ -4,6 +4,21 @@ Thu Jul  1 12:37:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed interpretive demarshaling of object references inside
 	  unions, this was breaking Param_Test for big_union using DII.
 
+	* tests/Multiple_Inheritance/Multiple_Inheritance_i.h:
+	* tests/Multiple_Inheritance/server.cpp:
+	  This test crashed on Sun/CC 5.0 because there was no explicit
+	  constructor, the compiler generated constructor was broken.
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	  Fine tune the test timeout.
+
+	* tests/Param_Test/run_test.pl:
+	  The test was falling off the end without an explicit exit
+	  status.
+
+	* orbsvcs/tests/Property/run_test.pl:
+	  Remove the IOR files before waiting for it
+
 Thu Jul 01 00:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* examples/Simulator/DOVEBrowser/Makefile: changed location
