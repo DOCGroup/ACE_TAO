@@ -1,7 +1,14 @@
+Fri Apr 11 06:37:08 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          For assignments within components, we need to get the outer scope
+          value before adding or subtracting.
+
 Fri Apr 11 11:23:22 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* ace/ace_dll.dsp: Replaced missing files to fix build error in
-	TAO.
+        * ace/ace_dll.dsp: Replaced missing files to fix build error in
+        TAO.
 
 Fri Apr 11 05:56:12 UTC 2003  Johnny Willemsen   <jwillemsen@remedy.nl>
 
