@@ -1,12 +1,12 @@
 COPYRIGHT INFORMATION FOR TAO
 
 TAO is copyrighted by Douglas C. Schmidt and his research group at
-Washington University, Copyright (c) 1997, all rights reserved.  In
-addition, some portions of TAO (particularly the IIOP protocol engine)
-are copyrighted by SunSoft (see the ./IIOP/lib/COPYING.sun file for
-more details).  Likewise, TAO relies heavily on ACE, which is also
-copyrighted by Douglas C. Schmidt and his research group at Washington
-University (see the ../COPYING file for more details).
+Washington University, Copyright (c) 1996-1999, all rights reserved.
+In addition, some portions of TAO (particularly the IIOP protocol
+engine) are copyrighted by SunSoft (see the ./IIOP/lib/COPYING.sun
+file for more details).  Likewise, TAO relies heavily on ACE, which is
+also copyrighted by Douglas C. Schmidt and his research group at
+Washington University (see the ../COPYING file for more details).
 
 You are free to do anything you like with the Wash. U. portions of
 TAO's source code (and object code produced from the source).  For
