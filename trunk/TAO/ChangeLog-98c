@@ -1,3 +1,9 @@
+Sat Aug 30 17:07:18 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tests/Thruput: First attempt at ACEifying it and removing the
+	tremendous amount of unnecessary stuff that was in there. This
+	modified version still needs testing on other platforms.
+
 Fri Aug 29 10:59:34 1997  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
 	* tao/Makefile (TAO_ROOT): FINALLY corrected the default
