@@ -9,6 +9,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+#include "tao/PolicyC.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
