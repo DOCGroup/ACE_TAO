@@ -1,4 +1,8 @@
-Wed Feb 03 14:23:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Feb 03 14:57:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_At_Thread_Exit[_Func]): Added
+	  ACE_Export keywords.  Thanks to Terry Rosenbaum
+	  <Terry.Rosenbaum@Radiology.MSU.edu> for pointing this out.
 
 	* ace/Service_Config.{h,i,cpp}: Added one more argument to open
 	  methods that allows ignoring the default svc.conf file.  You can
