@@ -1,5 +1,10 @@
+Tue Jul  6 16:54:32 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	  Fixed several 'unreachable statements' warnings in <run> method.
+
 Tue Jul  6 16:35:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
-        
+
         * replaced calls to printf in IORTest.ccp with ACE_DEBUG
 
 Tue Jul  6 15:55:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
