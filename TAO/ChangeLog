@@ -1,3 +1,18 @@
+Mon Aug 30 18:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Fixed handling of boolean IDL constants so that 'true' or
+          'false' is generated on the rhs, instead of '0' or '1'
+          as formerly. Also added a check for the use of infix
+          operators in an expression with types other than integer or
+          floating point, (illegal as per CORBA 3.0.3 section 3.10.2), and a
+          new error to report if a violation is found. This last
+          fix closes [BUGIS:1682.
+
 Mon Aug 30 12:27:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/Security/Send_File/README:
