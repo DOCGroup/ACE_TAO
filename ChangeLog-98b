@@ -1,3 +1,9 @@
+Fri Aug 21 03:41:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OS/Process/process.cpp:
+	* examples/OS/Process/imore.cpp: Minor bug fixes.  Print out of
+	  child processes' exit status.
+
 Thu Aug 20 23:33:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.cpp (wait): Allow passing back the exit status of
@@ -5,14 +11,14 @@ Thu Aug 20 23:33:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Aug 20 19:52:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/OS.i: 
+	* ace/OS.i:
           ACE_INLINE int
 	  ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 	  ...
 	  #else /* this is Draft 7 or STD */
 	  *data = pthread_getspecific (key);
 
-	  changed the ::pthread_getspecific to pthread_getspecific as it 
+	  changed the ::pthread_getspecific to pthread_getspecific as it
 	  is a macro in Chorus. Thanks to David Levine for finding this.
 
 Thu Aug 20 17:05:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -52,12 +58,12 @@ Thu Aug 20 03:10:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
  	  infinite loop calling ~ACE_Thread_Exit recursively and
 	  eventually the stack gets overflowed and the thread then
 	  "appears" to exit normally.  But in fact, TSS cleanup does not
-	  complete at all.  
+	  complete at all.
 
 	* ace/Thread_Manager.i:
 	* ace/Thread_Manager.cpp (at_exit,thr_self): Moved all at_exit
 	  methods into the .i file.  All at_exit methods and thr_self
-	  don't really need to hold Thread_Manager's lock.  
+	  don't really need to hold Thread_Manager's lock.
 
 	  Notice that after the newly spawned thread enters the
 	  ACE_Thread_Adapter::invoke routine, we can safely manipulate its
