@@ -1,3 +1,7 @@
+Mon Jun 22 00:01:02 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.15 released.
+
 Sun Jun 21 23:54:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Defined
