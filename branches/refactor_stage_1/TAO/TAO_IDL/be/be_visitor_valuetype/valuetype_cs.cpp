@@ -93,10 +93,18 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  const char *fhname = node->fwd_helper_name ();
+
+  if (ACE_OS::strcmp (fhname, "") == 0)
+    {
+      node->gen_fwd_helper_name ();
+      fhname = node->fwd_helper_name ();
+    }
+
   // Helper functions to allow non-defined forward declared valuetypes
   // access to some methods in the full definition.
   *os << "void" << be_nl
-      << node->fwd_helper_name () << "_life::tao_add_ref (" 
+      << fhname << "_life::tao_add_ref (" 
       << be_idt << be_idt_nl
       << node->full_name () << " * p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -105,7 +113,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << node->fwd_helper_name () << "_life::tao_remove_ref (" 
+      << fhname << "_life::tao_remove_ref (" 
       << be_idt << be_idt_nl
        << node->full_name () << " * p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -118,23 +126,23 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "template class" << be_idt_nl
       << "TAO_Value_Var_T<" << be_idt << be_idt_nl
       << node->name () << "," << be_nl
-      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << fhname << "_life" << be_uidt_nl
       << ">;" << be_uidt << be_uidt_nl
       << "template class" << be_idt_nl
       << "TAO_Value_Out_T<" << be_idt << be_idt_nl
       << node->name () << "," << be_nl
-      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << fhname << "_life" << be_uidt_nl
       << ">;" << be_uidt << be_uidt << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
       << "# pragma instantiate \\" << be_idt << be_idt_nl
       << "TAO_Value_Var_T< \\" << be_idt << be_idt_nl
       << node->name () << ", \\" << be_nl
-      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << fhname << "_life \\" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt_nl
       << "# pragma instantiate \\" << be_idt << be_idt_nl
       << "TAO_Value_Out_T< \\" << be_idt << be_idt_nl
       << node->name () << ", \\" << be_nl
-      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << fhname << "_life \\" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 

@@ -60,11 +60,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl
       << "int " << node->full_name () << "::_tao_class_id = 0;";
 
+  const char *fhname = node->fwd_helper_name ();
+
   // Helper functions generated in case this interface was
   // forward declared in some other IDL file and not defined there.
   *os << be_nl << be_nl
       << node->full_name () << "_ptr" << be_nl
-      << node->fwd_helper_name () << "_life::"
+      << fhname << "_life::"
       << "tao_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -75,7 +77,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl
       << "void" << be_nl
-      << node->fwd_helper_name () << "_life::"
+      << fhname << "_life::"
       << "tao_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -85,7 +87,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl
       << node->full_name () <<  "_ptr" << be_nl
-      << node->fwd_helper_name () << "_life::"
+      << fhname << "_life::"
       << "tao_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -96,7 +98,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl
       << "CORBA::Boolean" << be_nl
-      << node->fwd_helper_name () << "_life::"
+      << fhname << "_life::"
       << "tao_marshal (" << be_idt << be_idt_nl
       << node->name () << "_ptr p," << be_nl
       << "TAO_OutputCDR &cdr" << be_uidt_nl
@@ -109,7 +111,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << node->full_name () << "_ptr" << be_nl
-          << node->fwd_helper_name () << "_cast::"
+          << fhname << "_cast::"
           << "tao_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object *p" << be_nl
           << "ACE_ENV_ARG_DECL" << be_uidt_nl
@@ -122,7 +124,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       *os << be_nl << be_nl
           << "CORBA::Object *" << be_nl
-          << node->fwd_helper_name () << "_cast::"
+          << fhname << "_cast::"
           << "tao_upcast (" << be_idt << be_idt_nl
           << "void *src" << be_uidt_nl
           << ")" << be_uidt_nl

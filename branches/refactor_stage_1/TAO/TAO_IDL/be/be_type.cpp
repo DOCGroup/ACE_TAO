@@ -51,35 +51,10 @@ be_type::be_type (AST_Decl::NodeType nt,
     common_varout_gen_ (I_FALSE),
     seen_in_sequence_ (I_FALSE)
 {
-  AST_Decl *parent = ScopeAsDecl (this->defined_in ());
-  Identifier *segment = 0;
-  char *tmp = 0;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+  if (n != 0) 
     {
-      for (UTL_IdListActiveIterator i (parent->name ());
-           !i.is_done ();
-           i.next ())
-        {
-          segment = i.item ();
-          tmp = segment->get_string ();
-
-          if (ACE_OS::strcmp (tmp, "") == 0)
-            {
-              continue;
-            }
-
-          this->fwd_helper_name_ += tmp;
-          this->fwd_helper_name_ += "::";
-        }
+      this->gen_fwd_helper_name ();
     }
-  else
-    {
-      this->fwd_helper_name_= "";
-    }
-
-  this->fwd_helper_name_ += "tao_";
-  this->fwd_helper_name_ += this->local_name ()->get_string ();
 }
 
 be_type::~be_type (void)
@@ -213,6 +188,41 @@ be_type::nested_sp_type_name (be_decl *use_scope,
                             use_scope,
                             suffix,
                             prefix);
+}
+
+void
+be_type::gen_fwd_helper_name (void)
+{
+  AST_Decl *parent = ScopeAsDecl (this->defined_in ());
+  Identifier *segment = 0;
+  char *tmp = 0;
+  this->fwd_helper_name_.clear (1);
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      for (UTL_IdListActiveIterator i (parent->name ());
+           !i.is_done ();
+           i.next ())
+        {
+          segment = i.item ();
+          tmp = segment->get_string ();
+
+          if (ACE_OS::strcmp (tmp, "") == 0)
+            {
+              continue;
+            }
+
+          this->fwd_helper_name_ += tmp;
+          this->fwd_helper_name_ += "::";
+        }
+    }
+  else
+    {
+      this->fwd_helper_name_= "";
+    }
+
+  this->fwd_helper_name_ += "tao_";
+  this->fwd_helper_name_ += this->local_name ()->get_string ();
 }
 
 const char *
