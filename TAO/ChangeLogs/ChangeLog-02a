@@ -1,206 +1,211 @@
+Sun Sep 17 11:52:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IORManipulation/IORC.h:
+          Add missing "ace/post.h" include.
+
 Sun Sep 17 10:41:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/README:  Added the file for
-	  the test.
+        * orbsvcs/tests/FaultTolerance/IOGR/README:  Added the file for
+          the test.
 
 Sun Sep 17 10:19:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/
-	  IOGRManipulation.dsw
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
-	  Another regression test for IOGRManipulation.
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/
+          IOGRManipulation.dsw
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+          Another regression test for IOGRManipulation.
 
 Sun Sep 17 10:01:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp:
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp: Added new
-	  files and removed the old files from these.
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp: Added new
+          files and removed the old files from these.
 
 Sun Sep 17 09:29:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Removed TAO_HAS_FT_CORBA definition. This
-	  shouldn't be needed henceforth.
+        * tao/orbconf.h: Removed TAO_HAS_FT_CORBA definition. This
+          shouldn't be needed henceforth.
 
 Sun Sep 17 09:23:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp (remote_call):
-	  Fixed a warning in g++.
+        * orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp (remote_call):
+          Fixed a warning in g++.
 
 Sun Sep 17 07:14:28 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
-	* orbsvcs/tests/FaultTolerance/IOGR/client.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGR/server.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGR/test.idl:
-	* orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
-	* orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: A test for IOGR.
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/client.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/server.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/test.idl:
+        * orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf: A test for IOGR.
 
 Sun Sep 17 07:09:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance:
-	* orbsvcs/orbsvcs/FT_CORBA.idl: IDl and make files for FT_CORBA.
+        * orbsvcs/orbsvcs/Makefile.FaultTolerance:
+        * orbsvcs/orbsvcs/FT_CORBA.idl: IDl and make files for FT_CORBA.
 
 Sun Sep 17 07:00:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
-	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:  Files for FT
-	  support. We have support for IOGR in now. The library is loaded
-	  on demand in to the ORB_Core.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+        * orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:  Files for FT
+          support. We have support for IOGR in now. The library is loaded
+          on demand in to the ORB_Core.
 
 Sun Sep 17 06:57:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile: Added the new files in to the repo.
+        * tao/Makefile: Added the new files in to the repo.
 
 Sun Sep 17 06:37:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Services_Activate.h:
-	* tao/Services_Activate.cpp: New files added for  service
-	  activation. If a service like FT service that has lot of ORB
-	  components is loaded, a virtual method is used to create a
-	  Service_Callback object. The ORB holds that object to call back
-	  in to the services at appropriate places to override default
-	  behavious in th ORB.
+        * tao/Services_Activate.h:
+        * tao/Services_Activate.cpp: New files added for  service
+          activation. If a service like FT service that has lot of ORB
+          components is loaded, a virtual method is used to create a
+          Service_Callback object. The ORB holds that object to call back
+          in to the services at appropriate places to override default
+          behavious in th ORB.
 
-	* tao/Service_Callbacks.cpp:
-	* tao/Service_Callbacks.h:
-	* tao/Service_Callbacks.i: New files added for service
-	  callbacks. Now services like  FT service can implement methods
-	  in these Callback objects to get the right behaviours.
+        * tao/Service_Callbacks.cpp:
+        * tao/Service_Callbacks.h:
+        * tao/Service_Callbacks.i: New files added for service
+          callbacks. Now services like  FT service can implement methods
+          in these Callback objects to get the right behaviours.
 
-	* tao/Invocation.cpp:
-	* tao/Stub.cpp:
-	* tao/Stub.h:
-	* tao/Stub.i: Added hooks to call the service specific
-	  functions. These methods would do the profile selection if the
-	  service is loaded in to the ORB_Core.
+        * tao/Invocation.cpp:
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+        * tao/Stub.i: Added hooks to call the service specific
+          functions. These methods would do the profile selection if the
+          service is loaded in to the ORB_Core.
 
-	* tao/Object.cpp:
-	* tao/Object.i: Added hooks to call services to supplement the
-	  behaviour of is_nil () function.
+        * tao/Object.cpp:
+        * tao/Object.i: Added hooks to call services to supplement the
+          behaviour of is_nil () function.
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i: The hooks in the ORB_Core to call the service
-	  objects that have been loaded. The hooks are available in the
-	  Service_Callback object for calling teh services.
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i: The hooks in the ORB_Core to call the service
+          objects that have been loaded. The hooks are available in the
+          Service_Callback object for calling teh services.
 
 Sun Sep 17 06:32:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IOR.pidl:
-	* tao/IORManipulation/IORManipulation.cpp:
-	* tao/IORManipulation/IORManipulation.h:
-	* tao/IORManipulation/IORC.h:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.i: Added some methods for FT CORBA
-	  stuff.
+        * tao/IOR.pidl:
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tao/IORManipulation/IORManipulation.h:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.i: Added some methods for FT CORBA
+          stuff.
 
 Sat Sep 16 23:51:27 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
 
-	  Fixed compilation warnings.  Also fixed a bug: iteration loop
-	  erroneously started at 1 rather than 0.
+          Fixed compilation warnings.  Also fixed a bug: iteration loop
+          erroneously started at 1 rather than 0.
 
 Sat Sep 16 22:37:58 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* utils/NamingViewer/ViewIORDialog.cpp:
+        * utils/NamingViewer/ViewIORDialog.cpp:
 
-	  Fixed comilation problems.
+          Fixed comilation problems.
 
 Sat Sep 16 15:04:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Priority_Mapping_Manager.i: Removed unmatched #if #endif
-	  macros.
+        * tao/Priority_Mapping_Manager.i: Removed unmatched #if #endif
+          macros.
 
 Sat Sep 16 11:56:43 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Portable_Interceptors/Benchmark/test_i.cpp: One more
-	  unused argument warning.
+        * tests/Portable_Interceptors/Benchmark/test_i.cpp: One more
+          unused argument warning.
 
 Sat Sep 16 00:58:16 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* utils/NamingViewer/ViewIORDialog.cpp:
+        * utils/NamingViewer/ViewIORDialog.cpp:
 
-	  Fixed comilation problems.
+          Fixed comilation problems.
 
 Fri Sep 15 20:39:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.h:
 
-	  Added a friend.
+          Added a friend.
 
-	* tao/IIOP_Endpoint.cpp
-	* tao/IIOP_Endpoint.i
-	* tao/UIOP_Endpoint.cpp
-	* tao/SHMIOP_Endpoint.cpp
-	* tao/SHMIOP_Endpoint.i:
+        * tao/IIOP_Endpoint.cpp
+        * tao/IIOP_Endpoint.i
+        * tao/UIOP_Endpoint.cpp
+        * tao/SHMIOP_Endpoint.cpp
+        * tao/SHMIOP_Endpoint.i:
 
-	  Moved <next> method from .i to .cpp because it's virtual.
+          Moved <next> method from .i to .cpp because it's virtual.
 
-	* tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.h:
 
-	  - Removed unused data member <orb_core>.
-	  - Made some members protected rather than private, so that they
-	  are accessable to SSLIOP implementation.
+          - Removed unused data member <orb_core>.
+          - Made some members protected rather than private, so that they
+          are accessable to SSLIOP implementation.
 
-	* tao/IIOP_Profile.cpp (decode_endpoints)
-	* tao/UIOP_Profile.cpp (decode_endpoints)
-	* tao/SHMIOP_Profile.cpp (decode_endpoints):
+        * tao/IIOP_Profile.cpp (decode_endpoints)
+        * tao/UIOP_Profile.cpp (decode_endpoints)
+        * tao/SHMIOP_Profile.cpp (decode_endpoints):
 
-	  Reversed the order of the loop to start from the end of the
-	  endpoint sequence to preserve the ordering of the endpoints
-	  within the profile.
+          Reversed the order of the loop to start from the end of the
+          endpoint sequence to preserve the ordering of the endpoints
+          within the profile.
 
-	* tao/Tagged_Components.i (unique_tag):
+        * tao/Tagged_Components.i (unique_tag):
 
-	  Added TAO_TAG_SSL_ENDPOINTS to the list.
+          Added TAO_TAG_SSL_ENDPOINTS to the list.
 
-	* tao/UIOP_Endpoint.i:
+        * tao/UIOP_Endpoint.i:
 
-	  Fixed warning.
+          Fixed warning.
 
-	* tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.h:
 
-	  Removed unused data member.
+          Removed unused data member.
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Added TAO_TAG_SSL_ENDPOINTS.
+          Added TAO_TAG_SSL_ENDPOINTS.
 
-	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp
-	* orbsvcs/orbsvcs/SSLIOP_Acceptor.h
-	* orbsvcs/orbsvcs/SSLIOP_Connector.cpp
-	* orbsvcs/orbsvcs/SSLIOP_Connector.h
-	* orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp
-	* orbsvcs/orbsvcs/SSLIOP_Endpoint.h
-	* orbsvcs/orbsvcs/SSLIOP_Endpoint.i
-	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp
-	* orbsvcs/orbsvcs/SSLIOP_Profile.h
-	* orbsvcs/orbsvcs/SSLIOP_Profile.i
-	* orbsvcs/orbsvcs/ssl_endpoints.cpp
-	* orbsvcs/orbsvcs/ssl_endpoints.h
-	* orbsvcs/orbsvcs/ssl_endpoints.i
-	* orbsvcs/orbsvcs/ssl_endpoints.pidl
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp
+        * orbsvcs/orbsvcs/SSLIOP_Acceptor.h
+        * orbsvcs/orbsvcs/SSLIOP_Connector.cpp
+        * orbsvcs/orbsvcs/SSLIOP_Connector.h
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.h
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.i
+        * orbsvcs/orbsvcs/SSLIOP_Profile.cpp
+        * orbsvcs/orbsvcs/SSLIOP_Profile.h
+        * orbsvcs/orbsvcs/SSLIOP_Profile.i
+        * orbsvcs/orbsvcs/ssl_endpoints.cpp
+        * orbsvcs/orbsvcs/ssl_endpoints.h
+        * orbsvcs/orbsvcs/ssl_endpoints.i
+        * orbsvcs/orbsvcs/ssl_endpoints.pidl
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
 
-	  Updated SSLIOP to use new pluggable protocol framework
-	  component Endpoint.  For details on Endpoint see:
-	  Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+          Updated SSLIOP to use new pluggable protocol framework
+          component Endpoint.  For details on Endpoint see:
+          Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 Fri Sep 15 16:37:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
