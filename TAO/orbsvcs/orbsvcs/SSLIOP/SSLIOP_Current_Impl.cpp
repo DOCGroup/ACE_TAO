@@ -22,6 +22,35 @@ TAO_SSLIOP_Current_Impl::~TAO_SSLIOP_Current_Impl (void)
 }
 
 void
+TAO_SSLIOP_Current_Impl::get_peer_certificate (
+  SSLIOP::ASN_1_Cert *certificate)
+{
+  if (this->ssl_ == 0)
+    return;
+
+  X509 *cert = ::SSL_get_peer_certificate (this->ssl_);
+  if (cert == 0)
+    return;
+
+  // Get the size of the ASN.1 encoding.
+  int cert_length = ::i2d_X509 (cert, 0);
+  if (cert_length <= 0)
+    return;
+
+  certificate->length (cert_length);
+
+  CORBA::Octet *buffer = certificate->get_buffer ();
+
+  // Convert from the internal X509 representation to the DER encoding
+  // representation.
+  (void) ::i2d_X509 (cert, &buffer);
+
+  // Release the X509 certificate since it has already been copied to
+  // the ASN_1_Cert.
+  ::X509_free (cert);
+}
+
+void
 TAO_SSLIOP_Current_Impl::get_peer_certificate_chain (
   SSLIOP::SSL_Cert *cert_chain)
 {
@@ -51,6 +80,9 @@ TAO_SSLIOP_Current_Impl::get_peer_certificate_chain (
       certificate.length (cert_length);
 
       CORBA::Octet *buffer = certificate.get_buffer ();
+
+      // Convert from the internal X509 representation to the DER
+      // encoding representation.
       (void) ::i2d_X509 (x, &buffer);
     }
 }

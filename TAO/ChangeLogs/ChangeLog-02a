@@ -1,3 +1,48 @@
+Thu Nov 23 12:18:06 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (~TAO_ORB_Core_TSS_Resources):
+
+	  As an interim solution to an access violation, do not invoke the
+	  TSS object destructors on the "ts_object_" array.  The only
+	  service known to currently use this feature (i.e the TSS object
+	  array) is the SSLIOP pluggable protocol.  Fortunately, it
+	  registers a null cleanup function so we're not leaking anything
+	  yet.  However, we *do* need to fix this a before other services
+	  start to use this array.  The real fix is non-trivial.
+
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+
+	  Added missing SSLIOP::Current::get_peer_certificate() method.
+	  It is necessary since the peer certificate is not available in
+	  the certificate chain on the server side, and since obtaining
+	  the peer certificate chain may be overkill if all that is
+	  desired is the peer certificate.
+
+	  Added SSLIOP::Current::no_context() method.  Returns true if the
+	  current execution context is not within a SSL session.  This
+	  method is mostly useful as an inexpensive means of determining
+	  whether or not SSL session state is available.  It is used by
+	  the SSLIOP secure invocation server request interceptor.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+
+	  Added implementation for the
+	  SSLIOP::Current::get_peer_certificate() and the
+	  SSLIOP::Current::no_context() methods.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
+	  (receive_request):
+
+	  Invoke the SSLIOP::Current::no_context() method
+	  instead of SSLIOP::Current::get_peer_certificate_chain() since
+	  the former provides the functionality that this secure
+	  invocation server request interceptor requires.  The latter
+	  can provide similar functionality but it performs several heap
+	  allocations, which can degrade performance significantly.
+
 Thu Nov 23 11:31:06 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
@@ -69,6 +114,15 @@ Wed Nov 22 17:37:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tests/Multiple/server.cpp:
         * tests/Multiple/run_test.pl:
 
+<<<<<<< ChangeLog
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/MessagingS.h:
+
+	  Modified code to reflect the change made in the IDL generated
+	  code.
+=======
           Cosmetic changes to some file, plus perl script for automatically
           running the test.
 
@@ -89,13 +143,22 @@ Wed Nov 22 14:30:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/MessagingC.h:
         * tao/PortableServer/MessagingS.cpp:
         * tao/PortableServer/MessagingS.h:
+>>>>>>> 1.2069
 
+<<<<<<< ChangeLog
+	  Thanks to Andy <gokhale@research.bell-labs.com> for the support,
+	  and hint.
+=======
           Modified code to reflect the change made in the IDL generated
           code.
+>>>>>>> 1.2069
 
+<<<<<<< ChangeLog
+=======
           Thanks to Andy <gokhale@research.bell-labs.com> for the support,
           and hint.
 
+>>>>>>> 1.2069
 Wed Nov 22 10:05:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * performance-tests/Latency/server.dsp

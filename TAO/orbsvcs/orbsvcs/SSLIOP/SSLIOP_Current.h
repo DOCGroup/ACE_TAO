@@ -55,18 +55,38 @@ public:
   /// Constructor.
   TAO_SSLIOP_Current (size_t tss_slot, const char *orb_id);
 
-  /// Return the peer certificate chain associated with the current
-  /// upcall and SSL session.
+  /// Return the peer certificate associated with the current
+  /// request.
+  virtual SSLIOP::ASN_1_Cert * get_peer_certificate (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     SSLIOP::Current::NoContext));
+
+  /// Return the certificate chain associated with the current
+  /// execution context.  If no SSL session is being used for the
+  /// request or upcall, then the NoContext exception is raised.
+  ///
+  /// On the client side, the chain does include the peer (server)
+  /// certficate.  However, the certificate chain on the server side
+  /// does NOT contain the peer (client) certificate.
   virtual SSLIOP::SSL_Cert * get_peer_certificate_chain (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      SSLIOP::Current::NoContext));
 
-  void setup (TAO_SSLIOP_Current_Impl *impl);
-  // Setup the Current.
+  /// Returns true if the current execution context is not within a
+  /// SSL session.  This method is mostly useful as an inexpensive
+  /// means of determining whether or not SSL session state is
+  /// available.
+  virtual CORBA::Boolean no_context (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Setup the Current.
+  void setup (TAO_SSLIOP_Current_Impl *impl);
+
+  /// Teardown the Current for this request.
   void teardown (void);
-  // Teardown the Current for this request.
 
 protected:
 
