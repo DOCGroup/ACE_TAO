@@ -43,7 +43,7 @@ TAO_PG_Default_Property_Validator::validate_property (
         }
       else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue * factories;
+          const PortableGroup::FactoriesValue * factories;
           if (!(property.val >>= factories))
             ACE_THROW (PortableGroup::InvalidProperty (property.nam,
                                                        property.val));
