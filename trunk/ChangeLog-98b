@@ -1,4 +1,12 @@
-Tue Jun 30 03:30:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jun 30 03:39:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.h (ACE_RW_Process_Mutex): This class no longer needs
+	  to inherit from ACE_Process_Mutex.
+
+	* ace/Synch.cpp (ACE_RW_Process_Mutex): On non-Win32 platforms,
+	  the underlying ACE_File_Lock needs to be created with owner's
+	  read/write permission.  Otherwise, other process won't be able
+	  to access the lock.
 
 	* Makefile (CONTROLLED_FILES): Added ChangeLog-98a and
 	  ChangeLog-97b into release.  Thanks to Ivan Murphy
