@@ -10,6 +10,7 @@ require ACEutils;
 
 $iorfile = "test.ior";
 $middlefile = "middle.ior";
+$dum_core = "core";
 $status = 0;
 
 print STDERR "===== Base test, no crashes\n";
@@ -208,5 +209,6 @@ if ($server == -1) {
   $SV->Kill (); $SV->TimedWait (1);
   $status = 1;
 }
+unlink $dum_core;
 
 exit $status;
