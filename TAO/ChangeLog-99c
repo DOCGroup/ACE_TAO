@@ -1,3 +1,18 @@
+Sun Oct 17 20:42:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/QtTests/Makefile: 
+	* tests/QtTests/server.cpp:
+	* tests/QtTests/client.cpp:
+	* tests/QtTests/client.h:
+	* tests/QtTests/test_i.h:
+	* tests/QtTests/test_i.cpp:
+	* tests/QtTests/test_i.i:
+	* tests/QtTests/test_i.idl:
+	* tests/QtTests/svc.conf:
+	* tests/QtTests/README: This is a simple test that demonstrates
+	  how to use the QtReactor with the ORB event loop. Please refer
+	  to the README for details on how to build & run this test.
+
 Sun Oct 17 20:20:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Param_Test/recursive_union.cpp:
