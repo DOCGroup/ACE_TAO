@@ -268,7 +268,7 @@ TAO_Transport::generate_request_header (
   return 0;
 }
 
-// @@TODO: Ideally the following should be inline.
+/// @todo Ideally the following should be inline.
 int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
@@ -615,7 +615,7 @@ TAO_Transport::schedule_output_i (void)
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::schedule_output\n",
+                  "TAO (%P|%t) - Transport[%d]::schedule_output_i\n",
                   this->id ()));
     }
 
@@ -631,7 +631,7 @@ TAO_Transport::cancel_output_i (void)
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::cancel_output\n",
+                  "TAO (%P|%t) - Transport[%d]::cancel_output_i\n",
                   this->id ()));
     }
 
@@ -1020,7 +1020,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                       "trying to send the message (ml = %d)\n",
                       this->id (), total_length));
         }
@@ -1044,7 +1044,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                              "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                               "fatal error in "
                               "send_message_block_chain_i %m\n",
                               this->id ()));
@@ -1067,7 +1067,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                       "partial send %d / %d bytes\n",
                       this->id (), byte_count, total_length));
         }
@@ -1090,7 +1090,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                  "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                   "message is queued\n",
                   this->id ()));
     }
@@ -1145,7 +1145,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::handle_input_i\n",
+                  "TAO (%P|%t) - Transport[%d]::handle_input\n",
                   this->id ()));
     }
 
@@ -1158,7 +1158,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         {
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport[%d]::handle_input_i, "
+                        "TAO (%P|%t) - Transport[%d]::handle_input, "
                         "error while parsing the head of the queue\n",
                         this->id()));
         }
@@ -1251,7 +1251,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       if (retval == -1 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::handle_input_i, "
+                      "TAO (%P|%t) - Transport[%d]::handle_input, "
                       "error while parsing and consolidating\n",
                       this->id ()));
         }
@@ -2000,7 +2000,7 @@ TAO_Transport::notify_reactor (void)
       // @@todo: need to think about what is the action that
       // we can take when we get here.
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::process_queue_head, "
+                  "TAO (%P|%t) - Transport[%d]::notify_reactor, "
                   "notify to the reactor failed..\n",
                   this->id ()));
     }
