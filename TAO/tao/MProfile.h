@@ -63,11 +63,17 @@ public:
 
   int set (CORBA::ULong sz);
   // Inits MProfile to hold sz TAO_Profiles.
+  // NOT THREAD SAFE
 
   int set (const TAO_MProfile &mprofile);
   // Inits this to the values of mprofile.  NOTE: We use
   // mprofile->last_ instead of mprofile->size_ to set this->size_.
   // This is so we can use set () to trim a profile list!!
+  // NOT THREAD SAFE
+
+  int grow (CORBA::ULong sz);
+  // increate the number of profiles this object can hold.
+  // NOT THREAD SAFE
 
   TAO_Profile_ptr get_cnext (void);
   // Treat as a circular list.
@@ -94,7 +100,11 @@ public:
   // Returns the index for the current profile.
 
   CORBA::ULong profile_count (void) const;
-  // Returns the number of profiles stored in the list (last_).
+  // Returns the number of profiles stored in the list (last_+1).
+
+  CORBA::ULong size (void) const;
+  // return the maximum number of profiles that can be stored in this
+  // container, (size_+1)
 
   const TAO_Profile* get_profile (CORBA::ULong index) const;
   // Return the profile at position <index>.

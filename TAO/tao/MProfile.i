@@ -163,6 +163,12 @@ TAO_MProfile::profile_count (void) const
   return this->last_;
 }
 
+ACE_INLINE CORBA::ULong
+TAO_MProfile::size (void) const;
+{
+  return this->size_;
+}
+
 ACE_INLINE const TAO_Profile*
 TAO_MProfile::get_profile (CORBA::ULong index) const
 {
@@ -175,4 +181,34 @@ ACE_INLINE TAO_Profile_ptr *
 TAO_MProfile::pfiles (void) const
 {
   return this->pfiles_;
+}
+
+
+// Not thread safe!
+ACE_INLINE int
+TAO_MProfile::grow (CORBA::ULong sz)
+{
+  if (sz <= this->size_)
+    return 0;
+
+  // get the additional space
+  TAO_Profile_ptr *new_pfiles, *old_pfiles;
+  ACE_NEW_RETURN (pfiles,
+                  TAO_Profile_ptr[sz],
+                  -1);
+  
+  old_pfiles = this->pfiles_;
+
+  // got it, now copy profiles
+  for (TAO_PHandle h = 0; h < this->size_; h++)
+    {
+      new_pfiles[h] = old_pfiles[h]; 
+      old_pfiles[h] = 0;
+    }
+      
+  this->pfiles_ = new_pfiles;
+  this->size_ = sz;
+  delete [] old_pfiles;
+
+  return 0;
 }

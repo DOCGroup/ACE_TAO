@@ -30,21 +30,38 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 //    And isn't this the right place to setup the tagged components of
 //    a v1.[12] profile?
 
-// @@ Fred&Ossama: We need to check this interface: a single
+/s/ @@ Fred&Ossama: We need to check this interface: a single
 //    TAO_Acceptor may be bound to multiple addresses (think of a
 //    multihomed machine with an acceptor listening on the wildcard
 //    address), hence the "Right Thing" seems to be that we pass an
 //    MProfile that is filled up by the TAO_Acceptor class.
 
-TAO_Profile *
-TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey &object_key)
+int
+TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
+                                    TAO_MProfile  *&mprofile)
 {
   ACE_INET_Addr new_address;
 
   if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
     return 0;
 
-  return new TAO_IIOP_Profile (new_address, object_key);
+  // we only make one
+  int count = mprofile->profile_count ();
+  if ((mprofile->size () - count) < 1)
+    {
+      if (mprofile->grow (count + 1) == -1)
+        return -1;
+    }
+
+  TAO_IIOP_Profile pfile;
+  ACE_NEW_RETURN (pfile
+                  TAO_IIOP_Profile (new_address, object_key),
+                  -1);
+
+  if (mprofile->give_profile (pfile) == -1)
+    return -1;
+
+  return 0;
 }
 
 int
@@ -88,4 +105,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1; // Failure
 
   return 0;  // Success
+}
+
+
+CORBA::ULong 
+TAO_IIOP_Profile::endpoint_count (void)
+{
+  // @@ for now just assume one!
+  // we should take a look at the local address, if it is zero then
+  // get the list of available IP interfaces and return this number.
+  return 1;
 }

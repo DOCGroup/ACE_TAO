@@ -20,6 +20,41 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 {
 }
 
+size_t
+TAO_Acceptor_Registry::endpoint_count (void)
+{
+  int count;
+  TAO_AcceptorSetItor end =
+                this->acceptors_.end ();
+  TAO_AcceptorSetItor acceptor =
+                this->acceptors_.begin ();
+
+  for (; acceptor != end; acceptor++)
+    {
+      count += (*acceptor)->endpoint_count ();
+    }
+
+  return count;
+}
+
+TAO_Mprofile *
+TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
+                                      TAO_MProfile  *&mprofile)
+{
+  TAO_AcceptorSetItor end =
+                this->acceptors_.end ();
+  TAO_AcceptorSetItor acceptor =
+                this->acceptors_.begin ();
+
+  for (; acceptor != end; acceptor++)
+    {
+      if ((*acceptor)->create_mprofile (object_key, mprofile) == -1)
+        return -1;
+	    }
+
+  return 0;
+}
+
 TAO_Acceptor  *
 TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 {
