@@ -1746,22 +1746,22 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
 # define ACE_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return;
 # define ACE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return;
 # define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 # define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return;
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 
 # if defined (ACE_HAS_POSIX_SEM)
