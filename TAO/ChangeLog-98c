@@ -1,19 +1,19 @@
 Fri Mar 27 14:10:34 1998  Steve Huston  <shuston@riverace.com>
 
-	* TAO_IDL/driver/drv_preproc.cpp: (also see my entry from 09:50)
-	  Removed explicit char * operator call, and use the conversion
-	  as it was before.  However, I needed to change the ?: operator to
-	  an if/else for AIX xlC to compile it correctly.
+        * TAO_IDL/driver/drv_preproc.cpp: (also see my entry from 09:50)
+          Removed explicit char * operator call, and use the conversion
+          as it was before.  However, I needed to change the ?: operator to
+          an if/else for AIX xlC to compile it correctly.
 
 Fri Mar 27 13:38:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/IOR_Multicast.{h,cpp}:
-	* orbsvcs/Makefile:
-	* orbsvcs/Naming/Naming_Utils.{h,cpp}:
-	I moved the Ior_Multicast.{h,cpp} files up a directory and changed
-	the class name to TAO_IOR_Multicast. It didn't logically belong
-	in the Naming directory, since other bootstrappable services
-	require it. 
+        * orbsvcs/IOR_Multicast.{h,cpp}:
+        * orbsvcs/Makefile:
+        * orbsvcs/Naming/Naming_Utils.{h,cpp}:
+        I moved the Ior_Multicast.{h,cpp} files up a directory and changed
+        the class name to TAO_IOR_Multicast. It didn't logically belong
+        in the Naming directory, since other bootstrappable services
+        require it. 
 
 Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -36,48 +36,48 @@ Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 27 09:50:52 1998  Steve Huston  <shuston@riverace.com>
 
-	* TAO_IDL/driver/drv_preproc.cpp: Use explicit char * operator on
-	  cpp_path (AIX xlC requires this).  Added CVS Id.
+        * TAO_IDL/driver/drv_preproc.cpp: Use explicit char * operator on
+          cpp_path (AIX xlC requires this).  Added CVS Id.
 
-	* tao/Sequence_T.h: Fully qualify the template type when used as a
-	  function return.
+        * tao/Sequence_T.h: Fully qualify the template type when used as a
+          function return.
 
 Fri Mar 27 04:45:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.h: Added two pure virtual functions
-	  _register_collocation and _get_collocated_servant to CORBA_ORB
-	  class so the derived classes have their own implementations.
-	  (resolve_poa,resolve_poa_current): Changed these two functions
-	  from private methods to protected methods.  I need to access
-	  them from IIOP_ORB.
+        * tao/ORB.h: Added two pure virtual functions
+          _register_collocation and _get_collocated_servant to CORBA_ORB
+          class so the derived classes have their own implementations.
+          (resolve_poa,resolve_poa_current): Changed these two functions
+          from private methods to protected methods.  I need to access
+          them from IIOP_ORB.
 
-	* tao/IIOP_ORB.{h,cpp} (_register_collocation): Added this new
-	  method to record connection end points an IIOP ORB owns.
-	  (_get_collocated_servant): Added this new method which uses a
-	  passed in STUB_Object to determine whether a requested object is
-	  collocated or not.  If it's a collocated object, returns the
-	  servant of that object and we can use that to create a
-	  collocated object reference.
-	  (object_to_string): Added code to register object end point with
-	  IIOP ORB.
-	  (iiop_string_to_object): Added code to check whether a requested
-	  object is collocated or not and return a collocated object if it
-	  fits to do so.
+        * tao/IIOP_ORB.{h,cpp} (_register_collocation): Added this new
+          method to record connection end points an IIOP ORB owns.
+          (_get_collocated_servant): Added this new method which uses a
+          passed in STUB_Object to determine whether a requested object is
+          collocated or not.  If it's a collocated object, returns the
+          servant of that object and we can use that to create a
+          collocated object reference.
+          (object_to_string): Added code to register object end point with
+          IIOP ORB.
+          (iiop_string_to_object): Added code to check whether a requested
+          object is collocated or not and return a collocated object if it
+          fits to do so.
 
-	* tao/ORB_Core.cpp (preconnect): Added code to register success
-	  preconnections to IIOP's end point repository.
+        * tao/ORB_Core.cpp (preconnect): Added code to register success
+          preconnections to IIOP's end point repository.
 
-	* tao/decode.cpp (TAO_Marshal_ObjRef::decode): Added code to
-	  optimize against collocation objects.
+        * tao/decode.cpp (TAO_Marshal_ObjRef::decode): Added code to
+          optimize against collocation objects.
 
 Thu Mar 27 10:57:02 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEMIB: New version of the DOVE
-		  MIB.
+                  MIB.
 
-		* orbsvcs/tests/Simulator/README: Updated.
+                * orbsvcs/tests/Simulator/README: Updated.
 
-		* docs/releasenotes/index.html: Updated.
+                * docs/releasenotes/index.html: Updated.
 
 Thu Mar 26 21:24:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
