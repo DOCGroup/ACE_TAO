@@ -1,3 +1,34 @@
+Tue Sep  9 14:10:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Basic_Impl.cpp:
+        * tao/Any_Basic_Impl.h:
+
+          New files, containing a non-template class to take over
+          the Any implementation for basic IDL types.
+
+        * tao/Any.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl.h:
+
+          Related changes.
+
+        * tao/Object.h:
+
+          Cosmetic changes.
+
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Added Objref_Traits<> specialization.
+
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.h:
+        * tao/Any_Special_Basic_Impl_T.inl:
+
+          Removed these files, they are completely replaced by
+          the new class above.
+
 Mon Sep  8 18:24:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Impl.cpp:
