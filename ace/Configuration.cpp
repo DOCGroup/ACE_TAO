@@ -216,7 +216,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name, int allow_path)
 {
   // Invalid character set
   const ACE_TCHAR* reject =
-    allow_path ? ACE_LIB_TEXT("][") : ACE_LIB_TEXT("\\][");
+    allow_path ? ACE_LIB_TEXT ("][") : ACE_LIB_TEXT ("\\][");
   
   // Position of the first invalid character or terminating null.
   size_t pos = ACE_OS_String::strcspn (name, reject);
@@ -383,7 +383,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                           unsigned char* rhsCharData = (unsigned char*)rhsData;
                           // yes, then check each element
                           for (u_int count = 0;
-                               (rc) && (count < thisLength);
+ (rc) && (count < thisLength);
                                count++)
                             {
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
@@ -409,7 +409,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           // look in the rhs for values not in this
           valueIndex = 0;
           while ((rc) &&
-                 (!nonconst_rhs.enumerate_values (rhsSection,
+ (!nonconst_rhs.enumerate_values (rhsSection,
                                                   valueIndex,
                                                   valueName,
                                                   rhsType)))
@@ -490,7 +490,7 @@ ACE_Configuration_Win32Registry::operator== (const ACE_Configuration_Win32Regist
 }
 
 int
-ACE_Configuration_Win32Registry::operator!=(const ACE_Configuration_Win32Registry &rhs) const
+ACE_Configuration_Win32Registry::operator!= (const ACE_Configuration_Win32Registry &rhs) const
 {
   ACE_UNUSED_ARG (rhs);
   return 1;
@@ -542,7 +542,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                    0,
                                    &result_key,
 #if defined (__MINGW32__)
-                                   (PDWORD) 0
+ (PDWORD) 0
 #else
                                    0
 #endif /* __MINGW32__ */
@@ -725,8 +725,8 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
                               name,
                               0,
                               REG_SZ,
-                              (BYTE *) value.fast_rep (),
-                              (value.length () + 1) * sizeof (ACE_TCHAR)) != ERROR_SUCCESS)
+ (BYTE *) value.fast_rep (),
+ (value.length () + 1) * sizeof (ACE_TCHAR)) != ERROR_SUCCESS)
     return -2;
 
   return 0;
@@ -748,7 +748,7 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
                               name,
                               0,
                               REG_DWORD,
-                              (BYTE *) &value,
+ (BYTE *) &value,
                               sizeof (value)) != ERROR_SUCCESS)
     return -2;
 
@@ -772,7 +772,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                               name,
                               0,
                               REG_BINARY,
-                              (BYTE *) data,
+ (BYTE *) data,
                               length) != ERROR_SUCCESS)
     return -2;
 
@@ -798,7 +798,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
-                                (BYTE *) 0,
+ (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
     return -2;
 
@@ -816,7 +816,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
-                                (BYTE *) buffer.get (),
+ (BYTE *) buffer.get (),
                                 &buffer_length) != ERROR_SUCCESS)
   {
     return -5;
@@ -844,7 +844,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
                                 name,
                                 0,
                                 &type,
-                                (BYTE *) &value,
+ (BYTE *) &value,
                                 &length) != ERROR_SUCCESS)
     return -2;
 
@@ -874,7 +874,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
-                                (BYTE *) 0,
+ (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
     return -2;
 
@@ -889,7 +889,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
-                                (BYTE *) data,
+ (BYTE *) data,
                                 &buffer_length) != ERROR_SUCCESS)
     {
       delete [] (BYTE *) data;
@@ -1026,7 +1026,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
                                                   0,
                                                   &subkey,
 #if defined (__MINGW32__)
-                                                  (PDWORD) 0
+ (PDWORD) 0
 #else
                                                   0
 #endif /* __MINGW32__ */
@@ -1457,7 +1457,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
       ACE_Configuration_ExtId name (ptr);
       ACE_Configuration_Section_IntId entry ((VALUE_MAP*) value_hash_map ,
-                                             (SUBSECTION_MAP*) section_hash_map);
+ (SUBSECTION_MAP*) section_hash_map);
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
@@ -1514,9 +1514,31 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
                                       ACE_Configuration_Section_Key& result)
 {
   ACE_ASSERT (this->allocator_);
-  if (validate_name (sub_section))
+  if (validate_name (sub_section, true))
     return -1;
 
+  const ACE_TCHAR* separator;
+  result = base;
+
+  while (separator = ACE_OS_String::strchr (sub_section, ACE_TEXT ('\\')))
+    {
+      ACE_TString simple_section (sub_section, separator - sub_section);
+      int ret_val =
+        open_simple_section (result, simple_section.c_str (), create, result);
+      if (ret_val)
+        return ret_val;
+      sub_section = separator + 1;
+    }
+
+  return open_simple_section (result, sub_section, create, result);
+}
+
+int
+ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key& base,
+                                             const ACE_TCHAR* sub_section,
+                                             int create,
+                                             ACE_Configuration_Section_Key& result)
+{
   ACE_TString section;
   if (load_key (base, section))
     return -1;
@@ -1759,7 +1781,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value =
-        (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+ (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_Value_IntId new_value_int (pers_value);
       entry->int_id_ = new_value_int;
@@ -1768,10 +1790,10 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+ (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value =
-        (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+ (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value);
@@ -1820,7 +1842,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+ (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (value);
@@ -1874,7 +1896,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+ (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
@@ -1903,10 +1925,10 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+ (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value =
-      (ACE_TCHAR *) allocator_->malloc (length);
+ (ACE_TCHAR *) allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId VExtId (pers_name);
       ACE_Configuration_Value_IntId VIntId (pers_value, length);
