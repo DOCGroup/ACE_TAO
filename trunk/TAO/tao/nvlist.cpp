@@ -279,7 +279,7 @@ CORBA_NVList::add_item_consume (char *name,
 // add a value. If necessary, increment the list
 CORBA::NamedValue_ptr
 CORBA_NVList::add_value_consume (char * /*name*/,
-                                 CORBA::Any */*value*/,
+                                 CORBA::Any * /*value*/,
                                  CORBA::Flags /*flags*/,
                                  CORBA::Environment &/*env*/)
 {
