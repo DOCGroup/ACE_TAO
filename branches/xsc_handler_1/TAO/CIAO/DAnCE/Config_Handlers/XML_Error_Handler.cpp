@@ -42,6 +42,9 @@ namespace CIAO
 
       ACE_Auto_Basic_Array_Ptr<char> cleanup_msg (msg);
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s\n", msg));
+      
       return true;
     }
 
