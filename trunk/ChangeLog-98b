@@ -1,17 +1,17 @@
 Thu May 28 16:17:41 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/README: Added ACE_HAS_ONE_DEFINITION_RULE.
-	* ace/config-hpux-10.x-hpc++.h:
-	* ace/config-hpux-11.x-hpc++.h: Added ACE_HAS_ONE_DEFINITION_RULE
-	  for aC++.  This is part of a set of changes to make ACE work
-	  with HP aC++ A.01.09 (10.20) and A.03.05 (11.00).  The other
-	  changes are being tested still.  Thanks _very_ much to Steve Coy
-	  for digging through this with HP and working out a solution!
+        * ace/README: Added ACE_HAS_ONE_DEFINITION_RULE.
+        * ace/config-hpux-10.x-hpc++.h:
+        * ace/config-hpux-11.x-hpc++.h: Added ACE_HAS_ONE_DEFINITION_RULE
+          for aC++.  This is part of a set of changes to make ACE work
+          with HP aC++ A.01.09 (10.20) and A.03.05 (11.00).  The other
+          changes are being tested still.  Thanks _very_ much to Steve Coy
+          for digging through this with HP and working out a solution!
 
 Thu May 28 15:55:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* Added new configuration files for SCO.  Thanks to Arturo for
-	  this.
+        * Added new configuration files for SCO.  Thanks to Arturo for
+          this.
 
 Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -21,7 +21,7 @@ Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
           for LynxOS 3.0.0.
 
         * ace/Hash_Map_Manager.cpp,Map_Manager.cpp: replaced bare explicit
-          destructor calls with ACE_DES_FREE_TEMPLATE macro invocations.
+          destructor calls with ACE_DES_FREE_TEMPLATE{,2} macro invocations.
 
         * ace/OS.h: #define ACE_DES_FREE_TEMPLATE to be null on LynxOS.
           Without it, the g++ that's distributed with LynxOS 3.0.0 hopelessly
@@ -29,6 +29,8 @@ Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
           hack could cause memory leaks, though currently ACE_DES_FREE_TEMPLATE
           is only used to call empty, non-virtual destructors (in
           Containers.cpp, Hash_Map_Manager.cpp, and Map_Manager.cpp).
+          Also, added ACE_DES_FREE_TEMPLATE2 macro for use with two
+          template arguments.  There's got to be a better way.
 
         * include/makeinclude/platform_lynxos.GNU: added LynxOS Version 3.0.0
           support.  It's optional at this point:  add VERSION=3.0.0 to your
