@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*- 
 // $Id$
 
 #if defined (ACE_HAS_PACE)
@@ -123,9 +123,9 @@ ACE_OS_Dirent::readdir (ACE_DIR *d)
 
 ACE_INLINE int
 ACE_OS_Dirent::readdir_r (ACE_DIR *dirp,
-                           struct dirent *entry,
-                           struct dirent **result)
-{
+                          struct dirent *entry,
+                          struct dirent **result)
+{                                 
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   return pace_readdir_r (dirp, entry, result);
 # elif !defined (ACE_HAS_REENTRANT_FUNCTIONS)
@@ -207,3 +207,17 @@ ACE_OS_Dirent::rewinddir (ACE_DIR *d)
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
 }
+
+ACE_INLINE int 
+ACE_OS_Dirent::scandir (const ACE_TCHAR *dirname, 
+                        struct dirent **namelist[], 
+                        int (*selector)(const struct dirent *), 
+                        int (*comparator) (const struct dirent **f1, 
+                                           const struct dirent **f2))
+{ 
+#if defined (ACE_HAS_SCANDIR) 
+  return ::scandir (dirname, namelist, selector, comparator); 
+#else /* ! defined ( ACE_HAS_SCANDIR) */ 
+  return ACE_OS_Dirent::scandir_emulation (dirname, namelist, selector, comparator); 
+#endif /* ACE_HAS_SCANDIR */ 
+} 

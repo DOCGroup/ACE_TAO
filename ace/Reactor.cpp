@@ -20,7 +20,6 @@
 
 ACE_RCSID(ace, Reactor, "$Id$")
 
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
 ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,

@@ -1,3 +1,25 @@
+Mon Jul  9 06:52:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Makefile.bor (OBJFILES): Added the Dirent_Selector.obj file.
+
+	* tests/Dirent_Test.cpp: Integrated a new test for the ACE_Dirent_Selector
+	  class.
+
+	* ace/Makefile (UTILS_FILES),
+  	* ace/Dirent_Selector.h,
+    	* ace/Dirent_Selector.inl,
+    	* ace/Dirent_Selector.cpp: Added support for a C++ wrapper facade that
+	  encapsulates ACE_OS_Dirent::scandir().  Thanks to Rich Newman for
+	  contributing this, as well.
+
+	* ace/OS_Dirent.h,
+  	* ace/OS_Dirent.inl,
+	* ace/OS_Dirent.cpp: Added support for the scandir() feature, which
+	  makes it possible to selectively pick which files in a directory
+ 	  to iterate over.  Also fixed a bug in the emulation of dirent.
+  	  Thanks to Rich Newman <RNewman@directv.com> for contributing
+ 	  these fixes.
+
 Mon Jul 09 14:39:50 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (thr_getprio and thr_setprio): Changed these two
