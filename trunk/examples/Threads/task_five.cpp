@@ -36,9 +36,10 @@ int
 TestTask::svc (void)
 {
    while (!thr_mgr_->testcancel(ACE_OS::thr_self()))
-	{
-		::Sleep(350);
-	}
+     {
+       ACE_Time_Value sleep_time (0, 350000);
+       ACE_OS::sleep (sleep_time);
+     }
    return 0;
 }
 
@@ -63,57 +64,58 @@ TestTask::synch (void)
 int
 main (int, char *[])
 {
-	const int	numTasks = 1000;
-	unsigned int loopCnt = 0;
-	unsigned int errCnt = 0;
+        const int       numTasks = 1000;
+        unsigned int loopCnt = 0;
+        unsigned int errCnt = 0;
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
 
-  TestTask	*TaskArrPtr;
+  TestTask      *TaskArrPtr;
 
   while (1)
   {
-	  TaskArrPtr = new TestTask[numTasks];
+          int ii;
+          TaskArrPtr = new TestTask[numTasks];
 
-	  cout << "Opening Tasks!" << loopCnt
+          cout << "Opening Tasks!" << loopCnt
                << " " << errCnt << endl;
 
-	  for (int ii =0; ii < numTasks; ii++)
-	  {
-		  TaskArrPtr[ii].open();
-	  }
+          for (ii =0; ii < numTasks; ii++)
+          {
+                  TaskArrPtr[ii].open();
+          }
 
-	  ACE_OS::sleep (1);
+          ACE_OS::sleep (1);
 
-	  cout << "Cancelling Tasks!" << loopCnt
+          cout << "Cancelling Tasks!" << loopCnt
                << " " << errCnt << endl;
 
-	  for (ii = 0; ii < numTasks; ii++)
-	  {
-		  TaskArrPtr[ii].shutdownRq();
-	  }
+          for (ii = 0; ii < numTasks; ii++)
+          {
+                  TaskArrPtr[ii].shutdownRq();
+          }
 
-	  cout << "Synching Tasks!" << loopCnt
+          cout << "Synching Tasks!" << loopCnt
                << " " << errCnt << endl;
 
-	  for (ii = 0; ii < numTasks; ii++)
-	  {
-		  if (-1 == TaskArrPtr[ii].synch())
-		  {
-			  cout << "Error in synch! " << loopCnt
+          for (ii = 0; ii < numTasks; ii++)
+          {
+                  if (-1 == TaskArrPtr[ii].synch())
+                  {
+                          cout << "Error in synch! " << loopCnt
                                << " " << errCnt << " " << ii << endl;
-			  errCnt++;
-		  }
-	  }
+                          errCnt++;
+                  }
+          }
 
-	  cout << "thr_mgr->wait ();!" << loopCnt
+          cout << "thr_mgr->wait ();!" << loopCnt
                << " " << errCnt << endl;
 
-	  thr_mgr->wait ();
-	  
-	  delete [] TaskArrPtr;
+          thr_mgr->wait ();
 
-	  loopCnt++;
+          delete [] TaskArrPtr;
+
+          loopCnt++;
 
   }
 
