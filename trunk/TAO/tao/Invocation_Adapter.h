@@ -11,8 +11,8 @@
 //=============================================================================
 #ifndef TAO_INVOCATION_ADAPTER_H
 #define TAO_INVOCATION_ADAPTER_H
-
 #include /**/ "ace/pre.h"
+
 #include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -53,7 +53,7 @@ namespace TAO
    *
    * The main objective of this class is to adapt the type and
    * invocation specific information declared in the IDL by the
-   * application and convert them as CORBA invocations to the remote
+   * application and convert them as CORBA invocations to the target
    * object.
    *
    * @@ More info..

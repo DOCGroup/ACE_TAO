@@ -2,6 +2,7 @@
 #include "ORB_Constants.h"
 #include "Exception.h"
 #include "Environment.h"
+#include "Invocation_Utils.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Callbacks.i"
@@ -70,7 +71,7 @@ TAO_Service_Callbacks::raise_comm_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           -1),
       CORBA::COMPLETED_MAYBE),
-      2);
+      TAO::TAO_INVOKE_FAILURE);
 }
 
 TAO::Invocation_Status
@@ -84,5 +85,5 @@ TAO_Service_Callbacks::raise_transient_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           -1),
       CORBA::COMPLETED_MAYBE),
-      2);
+      TAO::TAO_INVOKE_FAILURE);
 }

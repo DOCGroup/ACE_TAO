@@ -873,7 +873,7 @@ CORBA::ORB::create_component_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_component_tc (id,
@@ -924,7 +924,7 @@ CORBA::ORB::create_event_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_event_tc (id,
