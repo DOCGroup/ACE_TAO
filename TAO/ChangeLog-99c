@@ -1,3 +1,19 @@
+Fri Feb 12 10:03:56 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * tao/IIOP_Profile.{h,cpp}
+	  tao/ORB.cpp
+	  tao/Stub.{i,cpp}
+	  Modified Stub and IIOP_Profile creation to use the 
+	  cached address info in the orb_core.
+
+	  Thanks to Dr. David A. Janello <argon@mcs.net> for
+	  reporting this performance problem.
+
+        * Modified tao/Stub.i to not print warning messages with 
+	  a forwarded request is itself forwarded.  Since the multiple
+	  profile code and forwarding is still in development I left a
+	  debug message.
+	  
+
 Fri Feb 12 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
