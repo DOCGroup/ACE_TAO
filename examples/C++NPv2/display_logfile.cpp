@@ -135,9 +135,9 @@ public:
            ACE_Message_Block (sizeof (ACE_CDR::Long),
                               MB_TYPE, temp),
            0);
+        head->cont (temp);
 
         // Demarshal the type
-        head->cont (temp);
         ACE_CDR::Long *lp;
         lp = ACE_reinterpret_cast
           (ACE_CDR::Long*, temp->wr_ptr ());
