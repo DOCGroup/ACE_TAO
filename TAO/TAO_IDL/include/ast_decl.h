@@ -154,7 +154,8 @@ public:
 
   AST_Decl (NodeType type, 
             UTL_ScopedName *n, 
-            UTL_StrList *pragmas);
+            UTL_StrList *pragmas,
+            idl_bool anonymous = I_FALSE);
 
   virtual ~AST_Decl (void);
 
@@ -205,6 +206,9 @@ public:
 
   const char *prefix (void);
   // Retrieve the repository ID prefix.
+
+  idl_bool anonymous (void) const;
+  // Are we an anonymous (no repo ID) type?
 
   // If there is _cxx_ in the beginning, we will remove that and keep
   // a copy of the original name. TAO IDL's front end adds _cxx_
@@ -299,6 +303,9 @@ private:
 
   char *prefix_;
   // The repository ID prefix.
+
+  idl_bool anonymous_;
+  // Are we an anonymous (no repo ID) type?
 
   // Operations
 

@@ -87,7 +87,8 @@ AST_String::AST_String (AST_Expression *ms)
                                                  0, 
                                                  I_FALSE),
 					                       0),
-		         0),
+		         0,
+             I_TRUE),
 	 pd_max_size (ms),
    pd_width (sizeof (char))
 {
@@ -108,7 +109,8 @@ AST_String::AST_String (AST_Expression *ms,
                                                       0,
                                                       I_FALSE),
 					                       0),
-		         0),
+		         0,
+             I_TRUE),
     pd_max_size (ms),
     pd_width (wide)
 {
