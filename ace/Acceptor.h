@@ -196,6 +196,9 @@ public:
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
   // Return the underlying PEER_ACCEPTOR object.
 
+  virtual ACE_HANDLE get_handle (void) const;
+  // Returns the listening acceptor's <ACE_HANDLE>.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -249,9 +252,6 @@ protected:
   // multi-processing).
 
   // = Demultiplexing hooks.
-  virtual ACE_HANDLE get_handle (void) const;
-  // Returns the listening acceptor's <ACE_HANDLE>.
-
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
 			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities when <this> is removed from the

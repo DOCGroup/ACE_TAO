@@ -552,11 +552,11 @@ server (void *arg)
   return 0;
 }
 
-// Spawn off the client and server process/thread and run the tests.
-
-static void
-spawn (void)
+int
+main (int, char *[])
 {
+  ACE_START_TEST ("Conn_Test");
+
   // Acceptor
   ACCEPTOR acceptor;
 
@@ -609,14 +609,6 @@ spawn (void)
       "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */	
     }
-}
-
-int
-main (int, char *[])
-{
-  ACE_START_TEST ("Conn_Test");
-
-  spawn ();
 
   ACE_END_TEST;
   return 0;
