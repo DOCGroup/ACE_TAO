@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Cleanup.h"
+
 
 /**
  * @class TAO_Singleton

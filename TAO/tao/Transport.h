@@ -40,6 +40,7 @@ class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
 class TAO_Stub;
+struct iovec;
 
 /**
  * @class TAO_Transport
