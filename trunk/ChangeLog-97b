@@ -1,3 +1,7 @@
+Sat Oct 11 16:02:33 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.3.15, released Sat Oct 11 16:02:33 1997.
+
 Sat Oct 11 14:38:16 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK_Connector.cpp (complete): Fixed a typo with
