@@ -201,6 +201,18 @@ CORBA::UserException::_downcast (CORBA::Exception* exception)
   return 0;
 }
 
+const CORBA::UserException*
+CORBA::UserException::_downcast (const CORBA::Exception *exception)
+{
+  if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
+    {
+      return ACE_dynamic_cast (const CORBA::UserException *,
+                               exception);
+    }
+
+  return 0;
+}
+
 ACE_CString
 CORBA::UserException::_info (void) const
 {
@@ -233,6 +245,13 @@ CORBA::SystemException::SystemException (const char *repository_id,
   : CORBA::Exception (repository_id,
                       local_name),
     minor_ (code),
+    completed_ (completed)
+{
+}
+
+CORBA::SystemException::SystemException (CORBA::ULong code,
+                                         CORBA::CompletionStatus completed)
+  : minor_ (code),
     completed_ (completed)
 {
 }
@@ -273,6 +292,18 @@ CORBA::SystemException::_downcast (CORBA::Exception* exception)
   if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
     {
       return ACE_dynamic_cast (CORBA::SystemException *,
+                               exception);
+    }
+
+  return 0;
+}
+
+const CORBA::SystemException*
+CORBA::SystemException::_downcast (const CORBA::Exception *exception)
+{
+  if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
+    {
+      return ACE_dynamic_cast (const CORBA::SystemException *,
                                exception);
     }
 
