@@ -1,3 +1,15 @@
+Tue Jan 24 17:50:32 2003  Gonzalo Diethelm  <gonzalo.diethelm@aditiva.com>
+
+	* ace/INET_Addr.cpp:
+  	  Method string_to_addr() now uses ACE_OS_String::strtol() instead
+ 	  of the ugly hack using ACE_OS::strspn() and ACE_OS::atoi().  The
+ 	  two set() methods that receive a const char port_name[] now try
+ 	  first to parse that port_name as a simple number (like "901"),
+ 	  and if that fails they try to resolve the port name as a
+ 	  service.  In order to implement this, I added a static helper
+ 	  function called get_port_number_from_name() (sorry for the awful
+ 	  name).
+	
 Tue Mar  4 12:53:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
