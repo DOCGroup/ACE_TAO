@@ -28,7 +28,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 // @@ Kirthika and Irfan, do you think we should add the new
 // create_dll_object_id() method to the ServantActivator base class or
 // should it be provided as a subclass provided by TAO, e.g.,
@@ -107,11 +106,13 @@ private:
   // The symbol which on getting invoked will give us the servant
   // pointer.
 
- 
-  // ACE_DLL *dll_;
-  // This is the dll object associated with the servant.
+  // @@ Kirthika, can you please make this be a map of <ACE_DLL> and
+  // NOT <ACE_DLL *>?  I think we should try to avoid dynamic memory
+  // allocation unless it's absolutely necessary.
 
-  typedef ACE_Hash_Map_Manager<PortableServer::ObjectId, ACE_DLL *, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager<PortableServer::ObjectId,
+                               ACE_DLL *,
+                               ACE_Null_Mutex>
           SERVANT_MAP;
 
   SERVANT_MAP servant_map_;

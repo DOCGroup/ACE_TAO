@@ -89,31 +89,24 @@ MyFooServantActivator::activate_servant (const char *str,
                                          PortableServer::POA_ptr poa,
                                          long value)
 {
-
- 
   // The string format is dllname:factory_function that must be
   // parsed.
   parse_string (str); 
 
   ACE_DLL *dll_;
 
- 
   // Create the dll object.
   ACE_NEW_RETURN (dll_,
                   ACE_DLL,
                   0);
 
-  
-
    PortableServer::ObjectId_var oid =
      PortableServer::string_to_ObjectId (str);
 
-
-  // Make an HASH_MAP entry by binding the object_id and the dll object
-  // associated with it together.
+  // Make an HASH_MAP entry by binding the object_id and the dll
+  // object associated with it together.
    int result = this->servant_map_.bind (oid.in (), 
                                          dll_);
-  
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,                      
                        "%p\n", 
@@ -157,14 +150,15 @@ MyFooServantActivator::deactivate_servant (PortableServer::Servant servant,
   // The servant is destroyed.
   delete servant;
 
+  // @@ Kirthika, you'll need to clean this stuff up if you don't use
+  // dynamic memory allocation for the ACE_DLL stuff.
   ACE_DLL *dll;
   
-  // Since the servant is no more the dll object associated with it has 
-  // to be destroyed too.
+  // Since the servant is no more the dll object associated with it
+  // has to be destroyed too.
   this->servant_map_.unbind (oid,
                              dll);
   delete dll;                          
-    
 }
 
 // The objectID is in a format of dll:factory_function which has
