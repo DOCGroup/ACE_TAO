@@ -67,11 +67,12 @@ TAO_ServerRequest::sync_with_server (CORBA::Boolean sync_flag)
   this->sync_with_server_ = sync_flag;
 }
 
-ACE_INLINE CORBA::Principal_ptr
+/*ACE_INLINE CORBA::Principal_ptr
 TAO_ServerRequest::principal (void) const
 {
   return this->requesting_principal_.ptr ();
 }
+*/
 
 ACE_INLINE TAO_ObjectKey &
 TAO_ServerRequest::object_key (void)
@@ -104,7 +105,7 @@ TAO_ServerRequest::request_id (CORBA::ULong req)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::requesting_principal (CORBA_Principal_ptr principal)
+TAO_ServerRequest::requesting_principal (const CORBA_OctetSeq &principal)
 {
   this->requesting_principal_ = principal;
 }
@@ -133,15 +134,14 @@ TAO_ServerRequest::exception_type (CORBA::ULong except_type)
   this->exception_type_ = except_type;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_ServerRequest::is_dsi (void)
 {
   this->is_dsi_ = 1;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_ServerRequest::dsi_nvlist_align (ptr_arith_t alignment)
 {
   this->dsi_nvlist_align_ = alignment;
 }
-
