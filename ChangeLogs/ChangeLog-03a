@@ -1,3 +1,142 @@
+Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_ce.dsw: (removed)
+        * ace/ace_dll_ce.dsp: (removed)
+        * ace/ace.vcw: (added)
+        * ace/ace_dll.vcp: (added)
+        * ace/ace_os_dll.vcp: (added)
+
+          Removed the old Windows CE project files, and replaced
+          them with ones created by the eMbedded Visual C++ from
+          MS.  
+
+        * ace/OS_Errno.cpp: (added)
+        * ace/OS_Errno.h: (added)
+        * ace/OS_Errno.inl: (added)
+        * ace/config-all.h:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Moved the Errno stuff from ACE_OS to a separate class,
+          since it needed to be in its own layer for Windows CE.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+
+          Added OS_Errno.* files.
+
+        * ace/ACE.cpp:
+        * ace/Sock_Connect.cpp:
+
+          Moved get_reg_value () to Sock_Connect since that is where
+          it is being used.
+
+        * ace/ARGV.cpp:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Added ACE_LACKS_ENV for platforms (like Windows CE) which
+          doesn't have an environment.  Maybe in the future this can
+          be emulated, for now, we do nothing.
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/OS.h:
+
+          Replace ACE_Export with ACE_OS_Export.
+
+        * ace/Base_Thread_Adapter.inl:
+        * ace/Thread_Adapter.inl:
+
+          Moved some of the ACE_OS_Thread_Descriptor methods to 
+          Base_Thread_Adapter, since they were declared in 
+          Base_Thread_Adapter.h.
+
+        * ace/SUN_Proactor.cpp:
+
+          Removed ACE_BUILD_DLL from this file, since it should only 
+          be defined in the project file.
+
+        * ace/OS_Dirent.h:
+
+          Added ACE_WINCE to the #if block around some of the includes.
+
+        * ace/OS_Memory.h:
+        * ace/OS_Dirent.inl:
+        * ace/OS_String.inl:
+        * ace/OS.h:
+
+          Added /**/ to the #includes of pace, since they seem to 
+          totally confuse EVC's automatic dependency generation.
+
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+
+          Added strerror.  On machines without it, just returns
+          "Unknown Error" all the time.
+
+          Added strspn_emulation, strpbrk_emulation, strtol_emulation,
+          and strtoul_emulation.
+
+          New compile time defines:
+          - ACE_LACKS_STERROR
+          - ACE_LACKS_STRPBRK
+          - ACE_LACKS_STRSPN
+          - ACE_LACKS_STRTOL
+          - ACE_LACKS_STRTOUL
+          - ACE_LACKS_STRTOD
+
+        * ace/Log_Msg.cpp:
+
+          Since there is now strerror in ACE, removed the !ACE_HAS_WINCE
+          blocks and replaced them with direct calls to ACE_OS_String's
+          version.
+
+        * ace/config-win32.h:
+
+          Changed check for #include-ing config-wince.h to be based on
+          _WIN32_WCE because this definition has been automatically added
+          to the default projects by the misc WinCE editors.
+
+        * ace/Service_Config.i:
+
+          The char versions of the following fuctions (which are defined
+          only under WinCE) were recursive and would fail miserably if 
+          ever used.  I added ACE_CHAR_TO_TCHAR to resolve the infinate
+          recursion.
+          - ACE_Service_Config::initialize ()
+          - ACE_Service_Config::resume ()
+          - ACE_Service_Config::suspend ()
+          - ACE_Service_Config::remove ()
+
+        * ace/config-win32-msvc.h:
+
+          We were defining ACE_HAS_GNU_CSTRING_H.  I doubt that MSVC has
+          GNU's cstring.h, so I removed it.
+
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Added ACE_LACKS_CUSERID and ACE_LACKS_CHDIR.
+
+          Added writev and readv emulation methods to ACE_OS, since they 
+          were just being defined as global functions.  This is more 
+          consistent with what we are doing elsewhere. 
+
+          Added ACE_LACKS_SYS_NERR emulation.
+
+        * ace/config-WinCE.h:
+
+          Added all the necessary defined to get ACE compiling for Windows 
+          CE 3.0.  As for previous versions, they do not currently compile,
+          although that could change in the future
+
 Sun Nov 12 12:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Cache_Map_Manager_T.h:

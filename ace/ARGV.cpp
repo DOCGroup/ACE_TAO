@@ -100,6 +100,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 
   for (int i = 0; argv[i] != 0; i++)
     {
+#if !defined (ACE_LACKS_ENV)
       ACE_TCHAR *temp;
 
       // Account for environment variables.
@@ -108,6 +109,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
 	buf_len += ACE_OS::strlen (temp);	
       else
+#endif /* !ACE_LACKS_ENV */
 	buf_len += ACE_OS::strlen (argv[i]);
 
       // Add one for the extra space between each string.
@@ -125,6 +127,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 
   for (j = 0; argv[j] != 0; j++)
     {
+#if !defined (ACE_LACKS_ENV)
       ACE_TCHAR *temp;
 
       // Account for environment variables.
@@ -133,6 +136,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 	  && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
 	end = ACE_OS::strecpy (end, temp);
       else
+#endif /* ACE_LACKS_ENV */
 	end = ACE_OS::strecpy (end, argv[j]);
 
       // Replace the null char that strecpy copies with white space as

@@ -15,6 +15,7 @@ OS_FILES = \
   OS_Memory \
   OS_String \
   OS_TLI \
+  OS_Errno \
   Base_Thread_Adapter \
   OS_Thread_Adapter \
   OS_Log_Msg_Attributes \

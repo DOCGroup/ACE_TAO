@@ -27,7 +27,7 @@
 #if defined (ACE_PSOS)
 extern "C" void ace_thread_adapter (unsigned long args);
 #else /* ! defined (ACE_PSOS) */
-extern "C" ACE_Export void *ace_thread_adapter (void *args);
+extern "C" ACE_OS_Export void *ace_thread_adapter (void *args);
 #endif /* ACE_PSOS */
 
 /**
