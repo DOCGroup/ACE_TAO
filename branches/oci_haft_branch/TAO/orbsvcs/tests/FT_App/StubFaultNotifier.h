@@ -145,7 +145,7 @@ private:
   /**
    * The CORBA object id assigned to this object.
    */
-  PortableServer::ObjectId_var objectId_;
+  PortableServer::ObjectId_var object_id_;
 
   /**
    * IOR of this object as assigned by poa
@@ -155,12 +155,12 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const char * iorOutputFile_;
+  const char * ior_output_file_;
 
   /**
    * A file from which the detecor's IOR should be read.
    */
-  const char * iorDetectorFile_;
+  const char * detector_ior_file_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
@@ -168,13 +168,13 @@ private:
    * A collection of files containing replica IORs
    */
   ACE_Vector < const char * > iorReplicaFiles_;
-  char * replicaIorBuffer_;
+  char * replica_ior_buffer_;
 
   ACE_Vector < FT::PullMonitorable_var > replicas_;
   /**
    * A name to be used to register with the name service.
    */
-  const char * nsName_;
+  const char * ns_name_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.

@@ -220,6 +220,11 @@ private:
   PortableGroup::FactoryRegistry_var factory_registry_;
 
   /**
+   * true if registered with FactoryRegistry
+   */
+  int registered_; // bool
+
+  /**
    * A file to which the test replica's IOR will be written
    */
   const char * test_output_file_;

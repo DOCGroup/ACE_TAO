@@ -6,66 +6,54 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 # Purpose:
-#       To test the FaultNotifier
+#       To test the FactoryRegistry
 #
 # Process being tested:
-#       Fault_Notifier
-#           implements FaultNotifier interface.
+#       FT_Registry
+#           implements PortableGroup::FactoryRegistry interface.
 # Processes used in test:
-#       FT_Replica
-#           implements TestReplica interface.
-#           implements PullMonitorable.
-#       Fault_Detector
-#         implements FaultDetectorFactory interface
-#         implements PullMonitorable interface
+#       FT_Replica * 2
+#           implements GenericFactory interface to create TestReplicas
+#           TestReplica implements TestReplica interface.
+#           TestReplica implements PullMonitorable interface.
 #       FT_Client
 #           client for TestReplica interface.
 #           client for PullMonitorable.
-#       StubAnalyzer
-#           Subscribes to Fault_Notfier
+#       StubConfiguratonManager
+#           Orchestrates the test.
 #
 # Test Scenario (***Test: marks behavior being tested):
 #   Phase 1:
-#     Start two FT_Replicas
-#       FT_Replicas write TestReplica IORs (FR#1 and FR#2) to files
-#     Start the Fault_Detector
-#       Fault_Detector writes its IOR (FDF) to a file
-#     Start the Fault_Notifier
-#       Fault_Notifier writes its IOR (FN) to a file.
+#     Start FactoryRegistry (FR)
+#       FR writes IOR to file.
 #   Phase 2:
-#     Wait for IORs: FR#1, FR#2, FDF, and FN
-#     Start the StubAnalyzer giving it IORS: FR#1, FR#2 FDF, FN
-#      StubAnalyzer calls FDF to create a FaultDetector
-#       for each Replica.
-#      StubAnalyzer subscribes to Fault_Notifier
-#      StubAnalyzer writes dummy message(READY) to a file.
+#     Wait for IOR: FR.
+#     Start two FT_ReplicaFactories giving them FR IOR.
+#         Specifying same type_id, different location.
+#       ***Test: FT_ReplicaFactories register with FactoryRegistry.
+#       RFs write IORs to files (used for synchronization purposes only).
 #   Phase 3:
-#     Wait for READY
-#     Start FT_Client giving it IORS: FR#1 and FR#2. [1]
-#       FT_Client interacts with FR#1.
-#       FT_Client asks FR#1 to fault.  It does so.
-#       FT_Client notices fault and switches to FR#2. [1]
-#       FD#1 notices fault and notifies Fault_Notifier
-#       FD#1 terminates
-#       ***Test: Fault_Notifier forwards notification to StubAnalyzer
-#       StubAnalyzer prints notification.
-#       FT_Client interacts with FR#2.
-#       FT_Client asks FR#2 to shut down.
+#     Wait for IORS: RF1, RF2
+#     Start StubConfiguratonManager given type_id and IORs: FR
+#       ***Test: StubConfiguratonManager asks FR for factory-by-type.
+#           Receives list of factories(RF1 RF2).
+#       StubConfiguratonManager uses create_object for each factory to
+#           create TestReplicas (TR1 and TR2).
+#       StubConfiguratonManager writes TestReplica IORs (TR1 and TR2) to files
+#       StubConfigurationManger exits.  It's job is done!
+#   Phase 4:
+#     Wait for IORS: TR1 and TR2
+#     Start FT_Client giving it TR1 and TR2. [1]
+#       FT_Client interacts with TR1.
+#       FT_Client asks TR1 to fault.  It does so
+#       FR1 is idle.  It honors quit-on-idle option.  As it exits, it unregisters from FR.
+#       FT_Client notices fault and switches to TR2. [1]
+#       FT_Client interacts with TR2.
+#       FT_Client asks TR2 to shut down.
 #       FT_Client shuts down.
-#       FD#2 notices FR2 is gone, interprets this
-#         as a fault, and sends notification to Fault_Notifier
-#       FD#2 terminates.
-#       ***Test: Fault_Notifier forwards notification to StubAnalyzer
-#       StubAnalyzer prints notification.
-#     Phase 4: shutting down.
-#       All FaultDetectors have terminated so the FaultDetectorFactory
-#        honors the "quit-on-idle" option on it's command line and exits.
-#       StubAnalyzer compares # fault notifications to # replicas. When
-#        they match, it "knows" that the test is over, so it shuts down.
-#        As it does so, it disconnects its fault consumers from the FaultNotifier.
-#       FaultNotifier notices the last fault consumer disconnecting and exits because
-#        the "quit-on-idle" option was specified on the command line.
-#     Phase 5: housekeeping
+#       FR2 notices TR2 is gone and honors it's quit-on-idle option.  It unregisters from FR.
+#				All factories have unregistered from FR.  FR honors its quit-on-idle option.
+#   Phase 7: housekeeping
 #       Wait for all processes to terminate.
 #       Check termination status.
 #       Delete temp files.
@@ -110,34 +98,32 @@ if ( $verbose > 1) {
   print "simulated: $simulated\n";
 }
 
+my($type_id) = "test_replica";
+my($location1) = "hither";
+my($location2) = "yon";
 
 #define temp files
+my($registry_ior) = PerlACE::LocalFile ("registry.ior");
 my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
 my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
-my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
-my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
-my($detector_ior) = PerlACE::LocalFile ("detector.ior");
-my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
-my($ready_file) = PerlACE::LocalFile ("ready.file");
+my($replica1_ior) = PerlACE::LocalFile ("${location1}_$type_id.ior");
+my($replica2_ior) = PerlACE::LocalFile ("${location2}_$type_id.ior");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
 #discard junk from previous tests
+unlink $registry_ior;
 unlink $factory1_ior;
 unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
-unlink $detector_ior;
-unlink $notifier_ior;
-unlink $ready_file;
 unlink $client_data;
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -r 1 -q");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -r 2 -q");
-my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
-my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
-my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
+my($REG) = new PerlACE::Process (".$build_directory/ft_registry", "-o $registry_ior -q");
+my($FAC1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -f $registry_ior -l $location1 -i $type_id -q");
+my($FAC2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -f $registry_ior -l $location2 -i $type_id -q");
+my($CFG) = new PerlACE::Process (".$build_directory/ft_config", "-t $type_id -f $registry_ior ");
 
 my($CL);
 if (simulated) {
@@ -147,65 +133,72 @@ if (simulated) {
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
 }
 
-print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
-$REP1->Spawn ();
+#########
+# Phase 1
 
-print "TEST: waiting for replica 1's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
+print "\nTEST: starting registry " . $REG->CommandLine . "\n" if ($verbose);
+$REG->Spawn ();
+
+print "TEST: waiting for registry's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($registry_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$registry_ior>\n";
+    $REG->Kill (); $REG->TimedWait (1);
+    exit 1;
+}
+
+#########
+# Phase 2
+
+print "\nTEST: starting factory 1 " . $FAC1->CommandLine . "\n" if ($verbose);
+$FAC1->Spawn ();
+
+print "TEST: waiting for factory 1's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($factory1_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$factory1_ior>\n";
+    $REG->Kill (); $REG->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    exit 1;
+}
+
+print "\nTEST: starting factory 2 " . $FAC2->CommandLine . "\n" if ($verbose);
+$FAC2->Spawn ();
+
+print "TEST: waiting for factory 2's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($factory2_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$factory2_ior>\n";
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    $REG->Kill (); $REG->TimedWait (1);
+    $FAC2->Kill (); $FAC2->TimedWait (1);
+    exit 1;
+}
+
+
+#########
+# Phase 3
+
+print "\nTEST: starting configuration manager " . $CFG->CommandLine . "\n" if ($verbose);
+$CFG->Spawn ();
+
+print "TEST: waiting for Replica 1 IOR file from configuration manager\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1){
     print STDERR "ERROR: cannot find file <$replica1_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
+    $FAC2->Kill (); $FAC2->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    $REG->Kill (); $REG->TimedWait (1);
+    $CFG->Kill (); $CFG->TimedWait(1);
+    exit 1;
+}
+if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1){
+    print STDERR "ERROR: cannot find file <$replica2_ior> \n";
+    $FAC2->Kill (); $FAC2->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    $REG->Kill (); $REG->TimedWait (1);
+    $CFG->Kill (); $CFG->TimedWait(1);
     exit 1;
 }
 
-print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
-$REP2->Spawn ();
-
-print "TEST: waiting for replica 2's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica2_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
-    exit 1;
-}
-
-print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
-$DET->Spawn ();
-
-print "TEST: waiting for detector's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$detector_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
-    $DET->Kill (); $DET2->TimedWait(1);
-    exit 1;
-}
-
-print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
-$NOT->Spawn ();
-
-print "TEST: waiting for notifier's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$notifier_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
-    $DET->Kill (); $DET2->TimedWait(1);
-    $ANA->Kill (); $ANA->TimedWait(1);
-    exit 1;
-}
-
-print "\nTEST: starting analyzer " . $ANA->CommandLine . "\n" if ($verbose);
-$ANA->Spawn ();
-
-print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$ready_file>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
-    $DET->Kill (); $DET2->TimedWait(1);
-    $NOT->Kill (); $NOT->TimedWait(1);
-    $ANA->Kill (); $ANA->TimedWait(1);
-    exit 1;
-}
+#########
+# Phase 4
 
 print "\nTEST: starting client " . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
@@ -215,49 +208,44 @@ if ($client != 0) {
     $status = 1;
 }
 
-print "\nTEST: wait for replica 1.\n" if ($verbose);
-$replica1 = $REP1->WaitKill (60);
-if ($replica1 != 0) {
-    print STDERR "ERROR: replica returned $replica1\n";
+#########
+# Phase 4
+
+print "\nTEST: wait for factory 1.\n" if ($verbose);
+$factory1 = $FAC1->WaitKill (5);
+if ($factory1 != 0) {
+    print STDERR "ERROR: replica returned $factory 1\n";
     $status = 1;
 }
 
-print "\nTEST: wait for replica 2.\n" if ($verbose);
-$replica2 = $REP2->WaitKill (60);
-if ($replica2 != 0) {
-    print STDERR "ERROR: replica returned $replica2\n";
+print "\nTEST: wait for factory 2.\n" if ($verbose);
+$factory2 = $FAC2->WaitKill (5);
+if ($factory2 != 0) {
+    print STDERR "ERROR: factory 2 returned $factory2\n";
     $status = 1;
 }
 
-print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
-$detector = $DET->WaitKill (60);
-if ($detector != 0) {
-    print STDERR "ERROR: detector returned $detector\n";
+print "\nTEST: wait for configuration manager to leave.\n" if ($verbose);
+$config = $CFG->WaitKill (5);
+if ($config != 0) {
+    print STDERR "ERROR: configuration manager returned $config\n";
     $status = 1;
 }
 
-print "\nTEST: wait for notifier to leave.\n" if ($verbose);
-$notifier = $NOT->WaitKill (60);
-if ($notifier != 0) {
-    print STDERR "ERROR: notifier returned $notifier\n";
+print "\nTEST: wait for FactoryRegistry to leave.\n" if ($verbose);
+$registry = $REG->WaitKill (5);
+if ($registry != 0) {
+    print STDERR "ERROR: FactoryRegistry returned $registry\n";
     $status = 1;
 }
 
-print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
-$analyzer = $ANA->WaitKill (60);
-if ($analyzer != 0) {
-    print STDERR "ERROR: analyzer returned $analyzer\n";
-    $status = 1;
-}
 
 print "\nTEST: releasing scratch files.\n" if ($verbose);
+unlink $registry_ior;
+unlink $factory1_ior;
+unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
-unlink $detector_ior;
-unlink $notifier_ior;
-unlink $ready_file;
-
-#client's work file
 unlink $client_data;
 
 exit $status;

@@ -110,6 +110,21 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
   IDL_Files {
   }
   Documentation_Files {
+  }
+}
+
+project(*Config): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_config
+
+	Source_Files {
+		StubConfig.cpp
+	}
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+
+  Documentation_Files {
     // pretend the pl file is documentation for now
     run_test_registry.pl
   }
