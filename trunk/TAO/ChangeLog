@@ -1,3 +1,10 @@
+Tue May  6 16:04:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ChangeLog_ref:
+
+          Removed this file, which somehow got added and committed
+          by accident.
+
 Tue May  6 13:19:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
