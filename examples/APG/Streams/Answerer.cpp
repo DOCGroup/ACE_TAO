@@ -6,6 +6,7 @@
  * An answering machine based on a one-way ACE_Stream
  */
 
+#include "ace/OS_NS_string.h"
 #include "ace/Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/FILE_IO.h"

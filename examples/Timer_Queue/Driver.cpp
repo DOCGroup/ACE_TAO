@@ -20,6 +20,9 @@
 #if !defined (_DRIVER_CPP_)
 #define _DRIVER_CPP_
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Auto_Ptr.h"
 #include "Driver.h"
 

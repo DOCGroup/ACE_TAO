@@ -4,6 +4,8 @@
 #define CPP_CONNECTOR_C
 
 #include "CPP-connector.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
 ACE_RCSID(non_blocking, CPP_connector, "$Id$")

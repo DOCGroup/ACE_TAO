@@ -21,7 +21,10 @@
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/FILE_Connector.h"
+#include "ace/Null_Condition.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Synch_Traits.h"
 
 ACE_RCSID(tests, Svc_Handler_Test, "$Id$")
 

@@ -32,6 +32,7 @@ ACE_RCSID(tests, Thread_Pool_Test, "$Id$")
 #if defined (ACE_HAS_THREADS)
 #include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
 // Number of iterations to run the test.

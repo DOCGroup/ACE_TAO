@@ -42,10 +42,13 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Get_Opt.h"
+#include "ace/Null_Condition.h"
+#include "ace/Null_Mutex.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Strategies_T.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
 #include "ace/File_Lock.h"
 
 // Counting_Service and Options in here

@@ -28,6 +28,7 @@
 // the Mutex_Singleton performance would get increasing worse...
 
 #include "ace/OS_main.h"
+#include "ace/Guard_T.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"

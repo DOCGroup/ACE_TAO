@@ -34,6 +34,7 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_string.h"
 
 // FUZZ: disable check_for_math_include
 #include <math.h>

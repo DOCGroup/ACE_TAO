@@ -12,6 +12,8 @@
 #include "ace/CDR_Base.h"
 #endif
 
+#include "ace/streams.h"
+
 class Options_Manager
 {
 public:

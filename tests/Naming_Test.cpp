@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
