@@ -16,6 +16,13 @@
 ACE_RCSID(ace, Caching_Strategies_T, "$Id$")
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
+ACE_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::~ACE_Caching_Strategy (void)
+{
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::ACE_LRU_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                                                                                                                  int delete_cleanup_strategy,
                                                                                                                  CACHING_STRATEGY_UTILITY *utility_s,
