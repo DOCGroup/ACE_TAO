@@ -47,8 +47,10 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.4 and TAO-1.4.5
 . The POA has been split in Root_POA and Regular_POA, on this we will more
   in the future so that the Root_POA just pulls in the minimal set of things
   needed.
+. The RootPOA has now RootPOA as adapter name, previously it had an empty
+  string
 
-USER VISIBLE CHANGES BETWEEN TAO-1.4.3 and TAO-1.4.4
+USER VIS        IBLE CHANGES BETWEEN TAO-1.4.3 and TAO-1.4.4
 ====================================================
 
 . Reimplemented the way that TAO_Transport deals with GIOP headers.  In
