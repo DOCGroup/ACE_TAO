@@ -1,3 +1,9 @@
+Tue Nov 11 14:54:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Request.cpp:
+
+	  Fixed a compile error due to wrong environment variable usage.   
+
 Tue Nov 11 11:43:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
