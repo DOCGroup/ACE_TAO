@@ -1,7 +1,11 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/BasicLog_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
+
+
+ACE_RCSID (Log,
+           BasicLog_i,
+           "$Id$")
+
 
 BasicLog_i::BasicLog_i (LogMgr_i &logmgr_i,
                         DsLogAdmin::LogMgr_ptr factory,
@@ -15,48 +19,51 @@ BasicLog_i::BasicLog_i (LogMgr_i &logmgr_i,
   // No-Op.
 }
 
-BasicLog_i::~BasicLog_i ()
+BasicLog_i::~BasicLog_i (void)
 {
   // No-Op.
 }
 
-DsLogAdmin::Log_ptr 
-BasicLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
+DsLogAdmin::Log_ptr
+BasicLog_i::copy (DsLogAdmin::LogId &id
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::BasicLogFactory_var basicLogFactory =
-    DsLogAdmin::BasicLogFactory::_narrow (factory_.in () 
+    DsLogAdmin::BasicLogFactory::_narrow (factory_.in ()
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  DsLogAdmin::BasicLog_var log = 
+  DsLogAdmin::BasicLog_var log =
     basicLogFactory->create (DsLogAdmin::halt, 0, id
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   // Copy the attributes from the log.
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 
 }
 
-DsLogAdmin::Log_ptr 
+DsLogAdmin::Log_ptr
 BasicLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::BasicLogFactory_var basicLogFactory =
-    DsLogAdmin::BasicLogFactory::_narrow (factory_.in () 
+    DsLogAdmin::BasicLogFactory::_narrow (factory_.in ()
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  DsLogAdmin::BasicLog_var log = 
-    basicLogFactory->create_with_id (id, DsLogAdmin::halt, 0 
+  DsLogAdmin::BasicLog_var log =
+    basicLogFactory->create_with_id (id, DsLogAdmin::halt, 0
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   // Copy the attributes from the log.
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 
