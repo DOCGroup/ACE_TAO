@@ -18,7 +18,7 @@
 
 interface client
 {
-  void ping (in UShort time_to_live);
+  void ping (in unsigned short time_to_live);
   // Decrements <time_to_live>.  If <time_to_live> becomes zero, it
   // stops. Otherwise, it pings the server.
 };
@@ -26,10 +26,10 @@ interface client
 interface server
 {
   void start (in client c,
-              in UShort time_to_live);
+              in unsigned short time_to_live);
   // Turns around and starts pinging the client.
 
-  void ping (in UShort time_to_live);
+  void ping (in unsigned short time_to_live);
   // Decrements <time_to_live>.  If <time_to_live> becomes zero, it
   // stops. Otherwise, it pings the client.
 
