@@ -1,3 +1,16 @@
+Tue Jun  1 16:56:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: Changed use of
+	  SHUT_RDWR arg for ACE_OS::shutdown() to ACE_SHUTDOWN_BOTH, which is
+	  set up correctly across all platforms. Fixes compile error on
+	  Windows.
+
+	* ace/SOCK.h:
+	* ace/OS_NS_sys_socket.h: Moved the setup of ACE_SHUTDOWN_READ,
+	  ACE_SHUTDOWN_WRITE, and ACE_SHUTDOWN_BOTH from SOCK.h to
+	  OS_NS_sys_socket.h. There's no need to include SOCK.h to use
+	  the lower-level ACE_OS::shutdown() directly.
+
 Sat May 29 16:12:28 2004  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:

@@ -965,7 +965,7 @@ Close_Socket_Thread::svc (void)
                         "Close socket thread closing client handle %d\n",
                         client_handle));
 
-          ACE_OS::shutdown (client_handle, SHUT_RDWR);
+          ACE_OS::shutdown (client_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (client_handle);
         }
       else
@@ -975,7 +975,7 @@ Close_Socket_Thread::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "Close socket thread closing server handle %d\n",
                         server_handle));
-          ACE_OS::shutdown (server_handle, SHUT_RDWR);
+          ACE_OS::shutdown (server_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (server_handle);
         }
     }
