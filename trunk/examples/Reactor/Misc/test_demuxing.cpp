@@ -11,9 +11,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
-// Used to shut down the event loop.
-static sig_atomic_t done = 0;
-
 // Default is to have a 2 second timeout.
 static int timeout = 2;
 
