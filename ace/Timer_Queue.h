@@ -214,6 +214,10 @@ private:
 
   ACE_Time_Value timer_skew_;
   // Adjusts for timer skew in various clocks.
+
+  // = Don't allow these operations for now.
+  ACE_Timer_Queue (const ACE_Timer_Queue &);
+  void operator= (const ACE_Timer_Queue &);
 };
 
 #if defined (__ACE_INLINE__)

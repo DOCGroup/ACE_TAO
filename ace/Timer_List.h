@@ -145,6 +145,10 @@ private:
   // Keeps track of the timer id that uniquely identifies each timer.
   // This id can be used to cancel a timer via the <cancel (int)>
   // method.
+
+  // = Don't allow these operations for now.
+  ACE_Timer_List (const ACE_Timer_List &);
+  void operator= (const ACE_Timer_List &);
 };
 
 #endif /* ACE_TIMER_LIST_H */
