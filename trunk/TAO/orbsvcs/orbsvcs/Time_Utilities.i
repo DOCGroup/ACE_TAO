@@ -16,11 +16,11 @@ ORBSVCS_Time::hrtime_to_TimeT (TimeBase::TimeT& lhs,
 {
   ACE_UINT64 t = rhs / 100; // convert to 100ns
   ACE_UINT32 mask = ~0L;
-  lhs.low = t & mask;
+  lhs.low = ACE_static_cast(ACE_UINT32, t & mask);
 #if defined (ACE_LACKS_LONGLONG_T)
-  lhs.high = t.hi ();
+  lhs.high = ACE_static_cast (ACE_UINT32, t.hi ());
 #else  /* ! ACE_LACKS_LONGLONG_T */
-  lhs.high = (t >> 32);
+  lhs.high = ACE_static_cast (ACE_UINT32, t >> 32);
 #endif /* ! ACE_LACKS_LONGLONG_T */
 }
 
@@ -48,8 +48,8 @@ ORBSVCS_Time::TimeT_to_Time_Value (ACE_Time_Value& lhs,
 
   ORBSVCS_Time::TimeT_to_hrtime (t, rhs);
 
-  lhs.set ((t / ACE_ONE_SECOND_IN_NSECS),
-           (t % ACE_ONE_SECOND_IN_NSECS) / 1000);
+  lhs.set (ACE_static_cast(ACE_UINT32, t / ACE_ONE_SECOND_IN_NSECS),
+           ACE_static_cast(ACE_UINET32, (t % ACE_ONE_SECOND_IN_NSECS) / 1000));
 }
 
 ACE_INLINE ACE_Time_Value
