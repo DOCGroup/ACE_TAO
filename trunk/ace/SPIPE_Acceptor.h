@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
- *  @author Prashant Jain
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
 
