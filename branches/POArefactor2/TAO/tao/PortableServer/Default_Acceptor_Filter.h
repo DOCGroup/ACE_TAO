@@ -65,4 +65,4 @@ public:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_POA_H */
+#endif /* TAO_DEFAULT_ACCEPTOR_FILTER_H */
