@@ -974,8 +974,9 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 
       begin = end + 1;
     }
-
+#if !defined (ghs)
   return 0;
+#endif // ghs
 }
 
 

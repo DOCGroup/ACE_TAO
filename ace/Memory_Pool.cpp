@@ -200,7 +200,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                       ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
       if (ACE_Lib_Find::get_temp_dir (this->backing_store_name_,
-                                      MAXPATHLEN - 17) == -1) 
+                                      MAXPATHLEN - 17) == -1)
         // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
@@ -1165,7 +1165,6 @@ int
 ACE_Pagefile_Memory_Pool::map (int &first_time,
                                int append_bytes)
 {
-  int mem_offset = 0;
   int map_size;
   void *map_addr;
 
@@ -1282,8 +1281,6 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
         + ACE_Pagefile_Memory_Pool::round_to_chunk_size
         (append_bytes);
 
-      mem_offset =
-        this->local_cb_.sh_.mapped_size_;
       map_addr = (void *)((char *) this->shared_cb_ +
                           this->local_cb_.sh_.mapped_size_);
 

@@ -421,20 +421,20 @@ typedef ACE_UINT16 ACE_USHORT16;
 # endif /* ! ACE_LACKS_LONGLONG_T */
 
 // 64-bit literals require special marking on some platforms.
-# if defined (ACE_WIN32)
-#   if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#     define ACE_UINT64_LITERAL(n) n ## LL
-#     define ACE_INT64_LITERAL(n) n ## LL
-#else
-#   define ACE_UINT64_LITERAL(n) n ## ui64
-#   define ACE_INT64_LITERAL(n) n ## i64
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
-# elif defined (ACE_LACKS_LONGLONG_T)
+# if defined (ACE_LACKS_LONGLONG_T)
     // Can only specify 32-bit arguments.
 #   define ACE_UINT64_LITERAL(n) (ACE_U_LongLong (n))
       // This one won't really work, but it'll keep
       // some compilers happy until we have better support
 #   define ACE_INT64_LITERAL(n) (ACE_U_LongLong (n))
+# elif defined (ACE_WIN32)
+#  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#   define ACE_UINT64_LITERAL(n) n ## LL
+#   define ACE_INT64_LITERAL(n) n ## LL
+#  else
+#   define ACE_UINT64_LITERAL(n) n ## ui64
+#   define ACE_INT64_LITERAL(n) n ## i64
+#  endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 # else  /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll
@@ -450,11 +450,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64
 // on some platforms.
-# if defined (ACE_WIN32)
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_static_cast (__int64, n)
-# elif defined (ACE_LACKS_LONGLONG_T)
+# if defined (ACE_LACKS_LONGLONG_T)
    // Only use the low 32 bits.
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_U64_TO_U32 (n)
+# elif defined (ACE_WIN32)
+#   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_static_cast (__int64, n)
 # else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 # endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */

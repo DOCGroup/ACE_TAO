@@ -27,7 +27,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
   // value.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
-  
+
 #else  /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
              ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
@@ -77,7 +77,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
           if (::sscanf (buf,
                         "BogoMIPS : %d.%d\n",
                         &whole,
-                        &fractional) == 2 
+                        &fractional) == 2
               || ::sscanf (buf,
                            "bogomips : %d.%d\n",
                            &whole,
@@ -173,13 +173,19 @@ ACE_High_Res_Timer::global_scale_factor (void)
                 ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 
                 // We have a high-res timer
-                ACE_High_Res_Timer::global_scale_factor 
-                  (ACE_static_cast (unsigned int, 
+#             if defined (ghs)
+                ACE_UINT64 uint64_freq(freq.u.LowPart, (ACE_UINT32) freq.u.HighPart);
+                ACE_High_Res_Timer::global_scale_factor
+                  (uint64_freq / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS);
+#             else
+                ACE_High_Res_Timer::global_scale_factor
+                  (ACE_static_cast (unsigned int,
                                     freq.QuadPart / ACE_HR_SCALE_CONVERSION));
+#             endif // (ghs)
               }
             else
               // High-Res timers not supported
-              ACE_High_Res_Timer::global_scale_factor_status_ = -1;  
+              ACE_High_Res_Timer::global_scale_factor_status_ = -1;
 
             return ACE_High_Res_Timer::global_scale_factor_;
 
@@ -187,9 +193,11 @@ ACE_High_Res_Timer::global_scale_factor (void)
             ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
 #         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
 
+#         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
             // Failed to retrieve CPU speed from system, so calculate it.
             ACE_High_Res_Timer::calibrate ();
+#         endif // (ACE_WIN32)
         }
     }
 
@@ -219,7 +227,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
   const ACE_Time_Value sleep_time (0, usec);
   ACE_Stats delta_hrtime;
   // In units of 100 usec, to avoid overflow.
-  ACE_Stats actual_sleeps; 
+  ACE_Stats actual_sleeps;
 
   for (u_int i = 0;
        i < iterations;
@@ -358,10 +366,10 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // designed and tested to avoid overflow on machines that don't have
   // native 64-bit ints.
 #if defined (ACE_WIN32)
-  nanoseconds = (this->end_ - this->start_) 
+  nanoseconds = (this->end_ - this->start_)
                 * (1000000u / ACE_High_Res_Timer::global_scale_factor ());
 #else
-  nanoseconds = (this->end_ - this->start_) 
+  nanoseconds = (this->end_ - this->start_)
                 * (1000u / ACE_High_Res_Timer::global_scale_factor ());
 #endif /* ACE_WIN32 */
 }
@@ -374,7 +382,7 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
   nanoseconds = this->total_
                 / ACE_High_Res_Timer::global_scale_factor () * 1000000u;
 #else
-  nanoseconds = this->total_ 
+  nanoseconds = this->total_
                 / ACE_High_Res_Timer::global_scale_factor () * 1000u;
 #endif
 }
@@ -446,7 +454,7 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
     {
       ACE_hrtime_t avg_nsecs = this->total_ / (ACE_UINT32) count;
 
-      ACE_OS::sprintf (buf, 
+      ACE_OS::sprintf (buf,
                        ACE_LIB_TEXT (" count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n"),
                        count,
                        total_secs,

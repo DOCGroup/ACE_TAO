@@ -225,7 +225,10 @@
 #define ACE_HAS_VFWPRINTF
 
 #define ACE_SIZEOF_LONG_LONG 8
+// Green Hills Native x86 does not support __int64 keyword
+#if !defined (ghs)
 typedef unsigned __int64 ACE_UINT64;
+#endif // (ghs)
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT

@@ -241,8 +241,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 //
 // In the beginning (Jan. 1, 1601), there was no time and no computer.
 // And Bill said: "Let there be time," and there was time....
+# if defined (ghs)
+const ACE_U_LongLong ACE_Time_Value::FILETIME_to_timval_skew =
+ACE_U_LongLong (0xd53e8000, 0x19db1de);
+# else
 const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_INT64_LITERAL (0x19db1ded53e8000);
+# endif
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
@@ -253,6 +258,14 @@ ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 void ACE_Time_Value::set (const FILETIME &file_time)
 {
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
+#if defined (ghs)
+  ACE_U_LongLong LL_100ns(file_time.dwLowDateTime, file_time.dwHighDateTime);
+  LL_100ns -= ACE_Time_Value::FILETIME_to_timval_skew;
+  // Convert 100ns units to seconds;
+  this->tv_.tv_sec = (long) (LL_100ns / ((double) (10000 * 1000)));
+  // Convert remainder to microseconds;
+  this->tv_.tv_usec = (long)((LL_100ns % ((ACE_UINT32)(10000 * 1000))) / 10);
+#else
   ULARGE_INTEGER _100ns =
   {
     file_time.dwLowDateTime,
@@ -264,21 +277,32 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   this->tv_.tv_sec = (long) (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
   this->tv_.tv_usec = (long) ((_100ns.QuadPart % (10000 * 1000)) / 10);
+#endif // ghs
 }
 
 // Returns the value of the object as a Win32 FILETIME.
 
 ACE_Time_Value::operator FILETIME () const
 {
+  FILETIME file_time;
   ACE_OS_TRACE ("ACE_Time_Value::operator FILETIME");
+
+#if defined (ghs)
+  ACE_U_LongLong LL_sec(this->tv_.tv_sec);
+  ACE_U_LongLong LL_usec(this->tv_.tv_usec);
+  ACE_U_LongLong LL_100ns =
+       LL_sec * (ACE_UINT32)(10000 * 1000) + LL_usec * (ACE_UINT32)10;
+  file_time.dwLowDateTime = LL_100ns.lo();
+  file_time.dwHighDateTime = LL_100ns.hi();
+#else
   ULARGE_INTEGER _100ns;
   _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
                       this->tv_.tv_usec * 10) +
                      ACE_Time_Value::FILETIME_to_timval_skew);
-  FILETIME file_time;
 
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
+#endif //ghs
 
   return file_time;
 }
@@ -430,7 +454,6 @@ ACE_OS_Exit_Info::call_hooks ()
         (* ACE_reinterpret_cast (ACE_EXIT_HOOK, info.cleanup_hook_)) ();
       else
         (*info.cleanup_hook_) (info.object_, info.param_);
-      
     }
 }
 
@@ -600,7 +623,11 @@ ACE_OS::uname (struct utsname *name)
       ACE_TCHAR processor[bufsize] = ACE_LIB_TEXT ("Unknown");
       ACE_TCHAR subtype[bufsize] = ACE_LIB_TEXT ("Unknown");
 
-      WORD arch = sinfo.wProcessorArchitecture;
+#   if defined (ghs)
+    WORD arch = sinfo.u.s.wProcessorArchitecture;
+#   else
+    WORD arch = sinfo.wProcessorArchitecture;
+#   endif
 
       switch (arch)
         {
@@ -2402,8 +2429,11 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (NULL, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)
 #else
+// Green Hills compiler gets confused when __stdcall is imbedded in parameter list,
+// so we define the type ACE_WIN32THRFUNC_T and use it instead.
+      typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
+      ::_beginthreadex (STACK, STACKSIZE, (ACE_WIN32THRFUNC_T) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -3785,9 +3815,9 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   // If we are using TSS emulation then we shuld use ACE's implementation
   //  of it and not make any PACE calls.
 #if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setspecific (key, data),
                                        ace_result_),
                      int, -1);
@@ -3969,9 +3999,9 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   //  of it and not make any PACE calls.
 #if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (inst);
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
                                        ace_result_),
                      int, -1);
@@ -4447,7 +4477,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
 // "Fake" writev for operating systems without it.  Note that this is
 // thread-safe.
 
-int 
+int
 ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
   ACE_OS_TRACE ("::writev");
