@@ -1030,7 +1030,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
-  // a length that works (ULONG_MAX doesn't). If this isn't ok, use
+  // a length that works (ULONG_MAX doesn't on all platform since some check
+  // to see if the operation will remain in bounds). If this isn't ok, use
   // ACE_OS::snprintf().
   return vswprintf (buffer, 4096, format, argptr);
 
