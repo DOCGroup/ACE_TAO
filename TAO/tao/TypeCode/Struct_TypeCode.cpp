@@ -217,11 +217,14 @@ TAO::TypeCode::Struct<StringType,
 
       safe_fields.reset (fields);
 
+      static char const * empty_name = "";
+
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.
 
+          tc_fields[i].name = empty_name;
           tc_fields[i].type =
             &(*(this->fields_[i].type)->get_compact_typecode (
                   ACE_ENV_ARG_PARAMETER));

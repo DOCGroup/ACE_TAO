@@ -47,13 +47,21 @@ namespace TAO
       Default_Case (char const * member_name,
                     CORBA::TypeCode_ptr * member_type);
 
-      /// Return the IDL @c union default_case label value embedded within a
-      /// @c CORBA::Any.
+      /**
+       * @name @c TAO::TypeCode::Case Methods
+       *
+       * Methods required by the @c TAO::TypeCode::Case abstract base
+       * class.
+       *
+       * @see @c TAO::TypeCode::Case
+       */
+      //@{
       virtual CORBA::Any * label (ACE_ENV_SINGLE_ARG_DECL) const;
-
-      /// Marshal this IDL @c union member into the given output CDR
-      /// stream.
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
+      virtual bool equal_label (CORBA::ULong index,
+                                CORBA::TypeCode_ptr tc
+                                ACE_ENV_ARG_DECL) const;
+      //@}
 
     };
 

@@ -175,7 +175,7 @@ TAO::TypeCode::Enum<StringType,
 
   if (this->nenumerators_ > 0)
     {
-      // Dynamically conenum a new array of enumerators stripped of
+      // Dynamically construct a new array of enumerators stripped of
       // member names.
 
       ACE_NEW_THROW_EX (tc_enumerators,
@@ -184,6 +184,16 @@ TAO::TypeCode::Enum<StringType,
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       safe_enumerators.reset (enumerators);
+
+      static char const * empty_name = "";
+
+      for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
+        {
+          // Member names will be stripped, i.e. not embedded within
+          // the compact TypeCode.
+
+          tc_enumerators[i].name = empty_name;
+        }
     }
 
   TAO_TypeCodeFactory_Adapter * adapter =

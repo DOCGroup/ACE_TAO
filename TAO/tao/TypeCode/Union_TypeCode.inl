@@ -23,14 +23,6 @@ TAO::TypeCode::Union<StringType, CaseArrayType, RefCountPolicy>::Union (
 }
 
 template <typename StringType, typename CaseArrayType, class RefCountPolicy>
-ACE_INLINE TAO::TypeCode::Case<StringType> const *
-TAO::TypeCode::Union<StringType,
-                     CaseArrayType>::cases (void) const
-{
-  return this->cases_;
-}
-
-template <typename StringType, typename CaseArrayType, class RefCountPolicy>
 ACE_INLINE CORBA::ULong
 TAO::TypeCode::Union<StringType,
                      CaseArrayType>::case_count (void) const
@@ -39,7 +31,7 @@ TAO::TypeCode::Union<StringType,
 }
 
 template <typename StringType, typename CaseArrayType, class RefCountPolicy>
-ACE_INLINE TAO::TypeCode::Union::Case const &
+ACE_INLINE TAO::TypeCode::Union::case_type const &
 TAO::TypeCode::Union<StringType,
                      CaseArrayType>::case (CORBA::ULong index) const
 {
