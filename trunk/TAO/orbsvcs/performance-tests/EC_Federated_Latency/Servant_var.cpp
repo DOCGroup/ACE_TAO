@@ -15,7 +15,7 @@
 #include "Servant_var.inl"
 #endif /* __ACE_INLINE__ */
 
-template<typename SERVANT>
+template<class SERVANT>
 Servant_var<SERVANT>::~Servant_var ()
 {
   if (this->ptr_ == 0)
