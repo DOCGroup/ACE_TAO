@@ -42,13 +42,13 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   ACE_TCHAR *buffer;
   ACE_NEW_RETURN (buffer, ACE_TCHAR[buffer_size], -1);
   ACE_Configuration_Section_Key section;
+  ACE_TCHAR *end = 0;
 
   while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in))
     {
       // Check if we got all the line.
-      ACE_TCHAR *end =
-        ACE_OS::strrchr (buffer + read_pos,
-                         ACE_LIB_TEXT ('\n')); // look for end of line
+      end = ACE_OS::strrchr (buffer + read_pos,
+                             ACE_LIB_TEXT ('\n')); // look for end of line
       if (!end) // we havn't reach the end of the line yet
         {
           // allocate a new buffer - double size the previous one
@@ -72,7 +72,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_LIB_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
@@ -93,7 +93,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_LIB_TEXT ('"'))
         {
           // we have a value
-          ACE_TCHAR* end = ACE_OS::strchr (buffer+1, '"');
+          end = ACE_OS::strchr (buffer+1, '"');
           if (!end)  // no closing quote, not a value so just skip it
             continue;
 
@@ -173,8 +173,8 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           // processing a file in the old format.
           // Try and process the line as such and if it fails,
           // return an error
-          int rc;
-          if ((rc = process_previous_line_format (buffer, section)) != 0)
+          int rc = process_previous_line_format (buffer, section);
+          if (rc != 0)
             {
               ACE_OS::fclose (in);
               delete [] buffer;
