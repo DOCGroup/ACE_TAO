@@ -435,7 +435,7 @@ Options::parse_args (int argc, char *argv[])
         case 'j':
           {
             jump_ = atoi (getopt.optarg);
-            if (jump < 0)
+            if (jump_ < 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Jump value %d must be a positive number.\n%r",
                                  jump_,
