@@ -1,3 +1,12 @@
+Tue Aug 10 14:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        I shouldn't have been rushed into these guarded #includes. The following
+        two files now need these guarded #includes to be moved after the rest.
+
+        * ace/FILE_IO.h
+        * ace/FIFO_Send_Msg.h
+          Moved guarded  #include "ace/OS_NS_stropts.h"  to end of other #includes
+
 Tue Aug 10 11:20:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * examples/IOStream/server/iostream_server.cpp
