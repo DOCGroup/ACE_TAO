@@ -268,8 +268,7 @@ CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_property (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+      CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -292,8 +291,7 @@ TAO_IOR_Manipulation_impl::set_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr ior1,
       CORBA::Object_ptr ior2,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+      CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -322,8 +320,7 @@ CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+      CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -343,8 +340,7 @@ CORBA::Boolean
 TAO_IOR_Manipulation_impl::is_primary_set (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+      CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
