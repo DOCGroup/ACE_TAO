@@ -1,3 +1,9 @@
+Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* ace/OS.h: Moved the #define's and typedef's (related to Proactor
+	stuff, things like TRANSMIT_BUFFERS etc) under '#if defined
+	(WIN32)' before OS.i. They were at the end of the file.
+
 Fri Jun 12 16:31:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* ace/OS.h: (ACE_NTOHL, ACE_HTONL): Added macros for conversion
