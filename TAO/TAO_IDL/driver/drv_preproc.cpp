@@ -743,7 +743,7 @@ DRV_pre_proc (const char *myfile)
       // symbolic link attack, or another process opened the file before
       // us.
       fd = ACE_OS::open (t_file,
-                         O_WRONLY | O_CREAT,
+                         O_WRONLY | O_CREAT | O_EXCL,
                          ACE_DEFAULT_FILE_PERMS);
                          
       if (fd == ACE_INVALID_HANDLE)
