@@ -371,6 +371,13 @@ TAO_Default_Resource_Factory::get_reactor (void)
   ACE_NEW_RETURN (reactor,
                   ACE_Reactor (this->allocate_reactor_impl (), 1),
                   0);
+
+  if (ACE_LOG_MSG->errnum () != 0)
+    {
+      delete reactor;
+      reactor = 0;
+    }
+
   return reactor;
 }
 
