@@ -1,3 +1,10 @@
+Wed Aug 11 22:15:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+
+	  Fixed yet another problem with MPC file. Should by now compile
+	  clean on the scoreboard. Let us see hwo it goes.
+
 Wed Aug 11 20:08:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.mpc:
