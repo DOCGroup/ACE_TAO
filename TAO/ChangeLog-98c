@@ -1,3 +1,8 @@
+Sat Apr 18 15:52:20 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* tao/Exception.cpp (CORBA_Exception): Removed a debugging
+	statement assert (1==2) in the destructor of this class.
+
 Sat Apr 18 12:19:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/server.cpp (init_naming_service):
