@@ -97,8 +97,8 @@ TAO_NS_ThreadPool_Task::svc (void)
               ACE_ERROR ((LM_ERROR,
                           "EC (%P|%t) getq error in Dispatching Queue\n"));
 
-          // Decrement the global event count.
-          (*this->queue_length_)--;
+          //(*this->queue_length_)--;
+          // To be Fixed
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "removing from queue, queue_length = %d\n",this->queue_length_->value () ));
