@@ -18,8 +18,8 @@ In this example, the Servant Activator as well as the Servant_Loactor
 interfaces are used.  The servant is an dynamically linkable library
 which is loaded on demand. The case of the Servantor Activator once the
 servant is loaded, the Object to Servant association is added to the 
-Actiove Object Map maintained by the POA. This association becomes
-invalid when the POA is destroyed or/and the Object i sdeactivated.
+Active Object Map maintained by the POA. This association becomes
+invalid when the POA is destroyed or/and the Object is deactivated.
 On the other hand, the Servant_Locator is called per operation request
 from the client and the associations too are made per request and the
 servant is destroyed per request too.
@@ -34,7 +34,7 @@ server along with the library.
 Execution:
 ---------
 
-        Run the run_test_pl script.
+        Run the run_test_pl perl script.
 
 example:
         run_test_pl -f ior_file
