@@ -37,6 +37,8 @@
 class Audio_Sig_Handler 
   : public virtual ACE_Event_Handler
 {
+  // = TITLE
+  //    Defines the signal handler for the audio process.
 public:
   Audio_Sig_Handler (Audio_Global *audio_global);
   // Constructor.
@@ -78,77 +80,6 @@ public:
 private:
   ACE_HANDLE data_fd_;
   Audio_Global *audio_global_;
-};
-
-class Audio_Control_Handler : public virtual ACE_Event_Handler
-{
-public:
-  Audio_Control_Handler (ACE_HANDLE fd,
-                         Audio_Global *audio_global);
-  // Constructor
-
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  // Called when data shows up.
-
-  virtual ACE_HANDLE get_handle (void) const;
-  // Get the handle used by this event handler
-
-private:
-  ACE_HANDLE control_fd_;
-  // The underlying TCP socket.
-  Audio_Global *audio_global_;
-  // Pointer to the global object.
-};
-
-
-class Audio_Server
-{
-public:
-  Audio_Server (void);
-  // Default constructor
-  Audio_Server (int argc,
-                char **argv,
-                //ACE_SOCK_Stream& control,
-               int rttag,
-               int max_pkt_size);
-  // Taking the control,data fd's and rttag.
-  int init (int argc,
-            char **argv,
-            int rttag,
-            int max_pkt_size,
-            CORBA::Environment &env);
-  // inits the Audio_Server
-  int run (CORBA::Environment & env);
-  // runs the loop.
-  int set_peer (void);
-  // sets the peer endpoint.
-private:
-  int parse_args (int argc,
-                  char **argv);
-  // Parse the arguments.
-
-  int initialize_orb (int argc,
-                      char **argv,
-                      CORBA::Environment &env);
-  TAO_ORB_Manager orb_manager_;
-  // The ORB Manager.
-
-  Audio_Global *audio_global_;
-  // The globals object.
-
-//   Audio_Control_Handler *control_handler_;
-//   // The audio control handler
-
-//   Audio_Data_Handler *data_handler_;
-//   // The audio data i.e feedback handler.
-
-//   Audio_Sig_Handler *sig_handler_;
-//   // The signal handler.
-
-//   ACE_SOCK_Stream control;
-//   // The control stream.
-//   ACE_SOCK_CODgram dgram_;
-//   // The data socket.
 };
 
 // The stream endpoint

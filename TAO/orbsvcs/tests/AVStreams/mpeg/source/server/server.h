@@ -47,75 +47,6 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "vs.h"
 
-// Forward declaration.
-class AV_Svc_Handler;
-
-// @@ We should probably try to replace the ACE_Acceptor with the
-// ACE_Strategy_Acceptor using the ACE_Process_Strategy... 
-//   : public virtual ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR>
-// {
-//   // = TITLE
-//   //   This defines a AV_Acceptor which is an Acceptor and
-//   //   overrides the make_svc_handler method of the Acceptor.
-//   //
-//   // = DESCRIPTION
-//   //   This class overrides the Acceptor's make_svc_handler so that a
-//   //   AV_Svc_Handler can be created with a non-default constructor.
-// public:  
-//   virtual int make_svc_handler (AV_Svc_Handler *&sh);
-//   // Create a new <AV_Svc_Handler> passing 'this' to the service
-//   // handler.
-// };
-
-class AV_Svc_Handler 
-  : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-{
-  // = TITLE
-  //   This class defines the service handler for a new connection to
-  //   the AV_Server.
-  //
-  // = DESCRIPTION
-  //   This calls the handle_connection method for a new connection
-  //   which demuxes the connection to a video or audio server
-  //   depending on the connection request.
-public:
-  // = Initialization method.
-  AV_Svc_Handler (ACE_Thread_Manager *t = 0);
-
-  virtual int open (void *);
-  // Perform the work of the SVC_HANDLER. Called by the acceptor
-  // when a new connection shows up
-  
-  virtual int handle_connection (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Handle one client connection.
-
-  virtual int svc (void);
-  // Thread method
-
-  virtual int close (u_long);
-  // Called if ACE_Svc_Handler is closed down unexpectedly.
-
-  int handle_timeout (const ACE_Time_Value &,
-                                  const void *arg);
-  // handle the timeout 
-
-private:
-
-  ACE_SOCK_CODgram dgram_;
-  // the UDP data socket
-
-  ACE_INET_Addr server_data_addr_;
-  // Data (UDP) Address of this server.
-  
-  ACE_INET_Addr client_data_addr_;
-  // Data (UDP) Address of the client.
-
-  Video_Server *vs_;
-  // @@ need a similar component for audio!
-  
-  Audio_Server *as_;
-  // the audio server.
-};
 
 class AV_Server_Sig_Handler 
   : public virtual ACE_Event_Handler
@@ -159,40 +90,6 @@ private:
   ACE_Sig_Set sig_set;
 };
 
-
-/*
-class Video_Server_MMDevice 
-  :public virtual TAO_MMDevice
-{
-public:
-  Video_Server_MMDevice (CosNaming::NamingContext_ptr ns);
-  // constructor taking a pointer to the root naming context of the
-  // naming service
-
-  
-  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  
-  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
-private:
-  CosNaming::NamingContext_ptr naming_context_;
-  // The NamingService root naming context
-
-  ACE_Process_Options video_process_options_;
-  // The options for the video process to be spawned by the process strategy
-
-  TAO_AV_Endpoint_Process_Strategy_B process_strategy_;
-  // The strategy to create endpoints and vdevs.
-};
-*/
-
-typedef ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
-
 class AV_Server
 {
   // = TITLE
@@ -213,9 +110,6 @@ public:
 
   int run (CORBA::Environment& env);
   // Run the AV_Server
-
-  AV_ACCEPTOR *acceptor (void);
-  // Returns the acceptor.
 
   static void on_exit_routine (void);
   // Routine called when this process exits.
@@ -239,9 +133,6 @@ private:
 
   CosNaming::NamingContext_var naming_context_;
   // The root naming context of the naming service
-
-  AV_ACCEPTOR acceptor_;
-  // the acceptor
 
   AV_Server_Sig_Handler signal_handler_;
   // Signal handler for SIGCHLD,SIGINT,SIGTERM,SIGBUS
