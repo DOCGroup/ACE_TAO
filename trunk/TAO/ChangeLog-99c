@@ -1,3 +1,8 @@
+Thu Mar 25 22:08:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CDR.cpp:
+	  Changed TAO_TRY stuff to ACE_TRY;
+
 Thu Mar 25 21:11:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Dynany_Test/driver.cpp:
@@ -19,7 +24,7 @@ Thu Mar 25 21:11:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
 	  Changed TAO_TRY stuff to ACE_TRY.
-	  Also re-enabled the cube_union test in DII_Cubit
+	  Also re-enabled the cube_union test in DII_Cubit.
 
 Thu Mar 25 20:26:40 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
