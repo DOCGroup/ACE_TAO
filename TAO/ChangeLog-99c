@@ -1,3 +1,8 @@
+Mon Aug 09 09:38:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Exception.cpp (_tao_errno): only provide the
+          ENOTSUP case if ENOTSUP != ENOSYS.
+
 Sun Aug 08 21:09:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h,Exception.cpp: added minor code support
