@@ -1,3 +1,16 @@
+Mon Feb 18 23:17:08 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ACEXML/parser/parser/Makefile.bor:
+          Changed library name for the Borland build to be consistent with the
+          UNIX build.
+
+        * include/makeinclude/ace_flags.bor:
+          Added macros for the ACEXML Parser library.
+
+        * ACEXML/examples/Makefile.bor:
+        * ACEXML/examples/SAXPrint/Makefile.bor:
+          Added Borland makefiles for the SAXPrint example.
+
 Mon Feb 18 20:16:27 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Acceptor.cpp (make_svc_handler): 
