@@ -1,3 +1,12 @@
+Tue Jun  9 15:57:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader: The Trading Service now uses ACE
+	containers rather than stl containers.  
+	
+	* orbsvcs/orbsvcs/Makefile: Since all stl containers in the
+	Trading Service have been replaced with ACE analogues, I've
+	updated the orbsvcs Makefile to eliminate the stl dependency.
+
 Tue Jun 09 15:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.27 released.
