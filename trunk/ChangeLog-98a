@@ -1,5 +1,8 @@
 Sun May 03 22:37:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/Parse_Node.cpp (open_handle): WinCE doesn't support
+ 	  ExpandEnvironmentStringA.
+
 	* ace/config-win32-common.h: Only define ACE_HAS_GETRUSAGE when
 	  ACE_HAS_WINNT4 != 0.  Thanks to Paul Motuzenko
 	  <p_motuzenko@hotmail.com> for reporting this.
