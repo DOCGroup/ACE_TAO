@@ -31,6 +31,7 @@
 #include "tao/Typecode.h"
 #include "tao/IOPC.h"
 
+
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
@@ -44,6 +45,10 @@ class TAO_Resource_Factory;
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
+
+class TAO_Pluggable_Messaging_Interface;
+class TAO_Target_Specification;
+class TAO_Operation_Details;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
@@ -110,20 +115,21 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
+
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
+                              TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
-                             CORBA::ULong request_id,
+                             TAO_Target_Specification &spec,
+                             TAO_Operation_Details &opdetails,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+                             TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
@@ -138,6 +144,13 @@ public:
   // Using this method, instead of send(), allows the transport (and
   // wait strategy) to take appropiate action.
 
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &op_details,
+                       TAO_Target_Specification &spec,
+                       TAO_OutputCDR &msg) = 0;
+  // This is a request for the transport object to write a request
+  // header before it sends out a request
+                                
   TAO_ORB_Core *orb_core (void) const;
   // Access the ORB that owns this connection.
 
@@ -189,6 +202,13 @@ public:
 
   ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
   // Send any messages that have been buffered.
+
+  virtual int
+  messaging_init (CORBA::Octet major,
+                  CORBA::Octet minor);
+  // Initialising the messaging object. This would be used by the
+  // connector  side. On the acceptor side the connection handler
+  // would take care of the messaging objects.
 
 protected:
 

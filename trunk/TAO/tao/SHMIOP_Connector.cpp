@@ -6,7 +6,6 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/SHMIOP_Profile.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
@@ -295,9 +294,11 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 TAO_SHMIOP_Connect_Creation_Strategy::
   TAO_SHMIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                        TAO_ORB_Core *orb_core)
+                                        TAO_ORB_Core *orb_core,
+                                        CORBA::Boolean flag)
     :  ACE_Creation_Strategy<TAO_SHMIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core)
+       orb_core_ (orb_core),
+       lite_flag_ (flag)
 {
 }
 
@@ -323,10 +324,11 @@ typedef ACE_Cached_Connect_Strategy<TAO_SHMIOP_Client_Connection_Handler,
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
-TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
+TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Octet flag)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     orb_core_ (0),
-    base_connector_ ()
+    base_connector_ (),
+    lite_flag_ (flag)
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
     ,
     cached_connect_strategy_ (0),
@@ -350,7 +352,8 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SHMIOP_Connect_Creation_Strategy
                   (this->orb_core_->thr_mgr (),
-                   this->orb_core_),
+                   this->orb_core_,
+                   this->lite_flag_),
                   -1);
 
   auto_ptr<TAO_SHMIOP_Connect_Creation_Strategy>
@@ -491,6 +494,22 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
     }
 
   transport = svc_handler->transport ();
+  
+  // Now that we have the client connection handler object we need to
+  // set the right messaging protocol for the connection handler.
+  const TAO_GIOP_Version& version = shmiop_profile->version ();
+  int ret_val = transport->messaging_init (version.major,
+                                       version.minor);
+  if (ret_val == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+        }
+      return -1;
+    }
+  
   return 0;
 }
 
