@@ -22,18 +22,20 @@ FILES = \
   RT_Factories_Define
 
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Notify, $(findstring Notify, $(CURRENT_COMPONENTS)))
-ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
-LIB   = $(LIB_UNCHECKED)
-SHLIB = $(SHLIB_UNCHECKED)
-endif
-endif
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+ifeq ($(rt_corba),1)
+ifeq (Notify, $(findstring Notify, $(CURRENT_COMPONENTS)))
+ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+endif
+endif
+endif #rt_corba
 LSRC   = $(addsuffix .cpp, $(FILES))
 ACELIB = -lACE
 
