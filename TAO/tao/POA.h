@@ -435,6 +435,28 @@ public:
                                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+#if (TAO_HAS_FT_CORBA == 1)
+
+  // Start of FT-CORBA stuff
+  CORBA::Boolean set_group_primary_member (const CORBA::Object &member,
+                                           const FT_TagFTGroupTaggedComponent &group_info);
+
+  // Set the member <member> as primary and set the group information
+  // for the primary as specified by <group_info>
+
+  CORBA::Boolean set_group_info (const CORBA::Object &member,
+                                 const FT_TagFTGroupTaggedComponent &group_info);
+  // Set the group information for the member <member> of the Object
+  // group as specified by <group_info>
+
+  CORBA::Boolean unset_group_primary_member (const CORBA::Object &member);
+  // Unset the primary membership assigned to <member>
+
+
+  // End of FT-CORBA stuff
+
+#endif/*TAO_HAS_FT_CORBA */
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicy_ptr create_lifespan_policy (PortableServer::LifespanPolicyValue value,
@@ -887,8 +909,6 @@ protected:
 
   void validate_priority_and_policies (RTCORBA::Priority priority,
                                        CORBA::Environment &ACE_TRY_ENV);
-
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 protected:
@@ -972,6 +992,30 @@ protected:
   PortableServer::ServantLocator_var servant_locator_;
 
   PortableServer::ServantBase_var default_servant_;
+
+#if (TAO_HAS_FT_CORBA == 1)
+
+  class TAO_FT_Servant_Tagged_Properties
+  {
+    TAO_FT_Servant_Tagged_Properties (void);
+    // Ctor
+
+    CORBA::Boolean is_primary_;
+    // This flag indicates whether the servant associated with this
+    // property is a primary or not.
+
+    FT_TagFTGroupTaggedComponent tagged_properties_;
+    // The tagged component properties that would be part of the
+    // IOGR.
+  };
+  typedef ACE_Hash_Map_Manager<CORBA::Object_var,
+    ACE_NESTED_CLASS (TAO_POA, TAO_FT_Servant_Tagged_Properties),
+    ACE_Null_Mutex> SERVANT_PROPERTY_MAP;
+
+  SERVANT_PROPERTY_MAP servant_property_map_;
+  // Map that holds the servant to tagged component property mapping.
+
+#endif /* TAO_HAS_FT_CORBA == 1*/
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -531,7 +531,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       if (this->server_object_)
         {
           TAO_POA *root_poa = this->orb_core ().root_poa ();
-  
+
           PortableServer::ObjectId_var id =
             root_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
           ACE_CHECK;
@@ -4029,7 +4029,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   // Activate the servant in the root poa.
   TAO_POA *root_poa = this->orb_core ().root_poa ();
-  PortableServer::ObjectId_var id = 
+  PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
                                  TAO_INVALID_PRIORITY,
                                  ACE_TRY_ENV);
@@ -4122,6 +4122,30 @@ TAO_POA::imr_notify_shutdown (void)
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+
+
+// Start of the FT_CORBA related interface definitions
+# if (TAO_HAS_MINIMUM_POA == 0)
+
+# if (TAO_HAS_FT_CORBA == 1)
+
+TAO_POA::TAO_FT_Servant_Tagged_Properties::TAO_FT_Servant_Tagged_Properties (void)
+  :is_primary (0)
+{
+  // no-op
+}
+
+CORBA::Boolean
+TAO_POA::set_group_primary_member (const CORBA::Object &member,
+                                   const FT_TagFTGroupTaggedComponent &group_info)
+{
+  if (this->servant_property_map_ (member,
+}
+#endif /*TAO_HAS_FT_CORBA == 1*/
+
+#endif /*TAO_HAS_MINIMUM_POA == 0 */
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<PortableServer::ObjectId>;
