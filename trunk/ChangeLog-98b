@@ -7,6 +7,9 @@ Mon Oct 19 11:47:20 1998  David L. Levine  <levine@cs.wustl.edu>
           reporting this.
 
         * ace/config-g++-common.h: added ACE_LACKS_PRAGMA_ONCE.
+          g++ doesn't need it, because it optimizes includes if the #ifndef
+          header protection convention is followed.  And, it
+          complains about #pragma once.
 
         * ace/config-win32-common.h: added ACE_LACKS_PRAGMA_ONCE,
           unless _MSC_VER < 1000.
