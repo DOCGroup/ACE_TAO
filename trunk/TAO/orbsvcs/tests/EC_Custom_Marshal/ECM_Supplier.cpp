@@ -462,7 +462,26 @@ Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();
 
-  proxy->disconnect_push_consumer (ACE_TRY_ENV);
+  ACE_TRY
+    {
+      proxy->disconnect_push_consumer (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      // Ignore, the EC can shutdown before we get a chance to
+      // disconnect
+    }
+  ACE_CATCH (CORBA::TRANSIENT, ex)
+    {
+      // Ignore, the EC can shutdown before we get a chance to
+      // disconnect
+    }
+  ACE_CATCHANY
+    {
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
 }
 
 int
@@ -475,6 +494,8 @@ void
 Test_Supplier::disconnect_push_supplier (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->consumer_proxy_ =
+    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 int Test_Supplier::supplier_id (void) const
