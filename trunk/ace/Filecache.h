@@ -101,7 +101,8 @@ public:
                         int size,
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
   // Create new entry, and acquire it.  Presence of SIZE assumes the
-  // file is being opened for writing.
+  // file is being opened for writing.  If SIZE is zero, assumes the
+  // file is to be removed from the cache.
 
   ~ACE_Filecache_Handle (void);
   // Closes any open handles, release acquired file.
