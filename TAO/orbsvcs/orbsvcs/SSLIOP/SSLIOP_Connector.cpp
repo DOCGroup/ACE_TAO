@@ -9,7 +9,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
-#include "tao/Base_Connection_Property.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(TAO_SSLIOP, SSLIOP_Connector, "$Id$")
@@ -79,7 +78,7 @@ TAO_SSLIOP_Connector::close (void)
 }
 
 int
-TAO_SSLIOP_Connector::connect (TAO_Base_Connection_Property *prop,
+TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                                TAO_Transport *&transport,
                                ACE_Time_Value *max_wait_time,
                                CORBA::Environment &ACE_TRY_ENV)
@@ -89,7 +88,7 @@ TAO_SSLIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
-  TAO_Endpoint *endpoint = prop->endpoint ();
+  TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
@@ -129,7 +128,7 @@ TAO_SSLIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                           -1);
 
       return this->TAO_IIOP_Connector::connect (
-                     prop,
+                     desc,
                      transport,
                      max_wait_time,
                      ACE_TRY_ENV);
@@ -180,7 +179,7 @@ TAO_SSLIOP_Connector::connect (TAO_Base_Connection_Property *prop,
   TAO_Connection_Handler *conn_handler = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->connection_cache ().find_handler (prop,
+  if (this->orb_core ()->connection_cache ().find_handler (desc,
                                                            conn_handler) == 0)
     {
       if (TAO_debug_level > 5)
@@ -249,7 +248,7 @@ TAO_SSLIOP_Connector::connect (TAO_Base_Connection_Property *prop,
 
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->connection_cache ().cache_handler (prop,
+        this->orb_core ()->connection_cache ().cache_handler (desc,
                                                               svc_handler);
 
       if (retval != 0 && TAO_debug_level > 0)

@@ -3,6 +3,7 @@
 #include "SSLIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
+#include "tao/Base_Connection_Property.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
@@ -12,6 +13,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
 #include "SSLIOP_Endpoint.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connect.i"
