@@ -154,7 +154,7 @@ int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, char * argv[])
  * Register this object.
  */
 int ReplicationManagerFaultConsumerAdapter::init (
-  TAO_ORB_Manager & orbManager
+  CORBA::ORB_ptr orb
   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_DEBUG ((
@@ -163,7 +163,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
   ));
 
   int result = 0;
-  this->orb_ = orbManager.orb();
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   //////////////////////////////////////////
   // resolve reference to detector factory
@@ -176,8 +176,12 @@ int ReplicationManagerFaultConsumerAdapter::init (
 
   if (this->readIORFile(this->iorDetectorFile_, factoryIOR))
   {
-    CORBA::Object_var obj = this->orb_->string_to_object(factoryIOR);
-    this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
+    CORBA::Object_var obj = this->orb_->string_to_object (
+      factoryIOR.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    this->factory_ = ::FT::FaultDetectorFactory::_narrow (
+      obj.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
     if (CORBA::is_nil (this->factory_.in()))
     {
       ACE_ERROR_RETURN ((
@@ -209,8 +213,12 @@ int ReplicationManagerFaultConsumerAdapter::init (
   CORBA::String_var notifierIOR;
   if (this->readIORFile(this->iorNotifierFile_, notifierIOR))
   {
-    CORBA::Object_var obj = this->orb_->string_to_object(notifierIOR);
-    this->notifier_ = ::FT::FaultNotifier::_narrow(obj);
+    CORBA::Object_var obj = this->orb_->string_to_object (
+      notifierIOR.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    this->notifier_ = ::FT::FaultNotifier::_narrow (
+      obj.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
     if (CORBA::is_nil (this->notifier_.in()))
     {
       ACE_ERROR_RETURN ((
@@ -255,18 +263,23 @@ int ReplicationManagerFaultConsumerAdapter::init (
   // - FT::FaultNotifier IOR.
   // - FT::ReplicationManager IOR (fake it for now).
 
-  // Get the RootPOA from the ORBManager.
-  PortableServer::POA_var poa = orbManager.root_poa();
+  // Get the RootPOA from the ORB.
+  CORBA::Object_var poa_obj = this->orb_->resolve_initial_references (
+    "RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  PortableServer::POA_var poa = PortableServer::POA::_narrow (
+    poa_obj.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
   // Fake out the ReplicationManager IOR.
   CORBA::Object_var obj = this->orb_->string_to_object (
     "corbaloc::localhost:1900/ReplicationManager"
     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
   FT::ReplicationManager_var repl_mgr =
     FT::ReplicationManager::_unchecked_narrow (
       obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
   if (CORBA::is_nil (repl_mgr.in())) {
     ACE_ERROR_RETURN ((
       LM_ERROR,
@@ -290,7 +303,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     this->notifier_.in(),
     repl_mgr.in()
     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
   if (result != 0)
   {
     ACE_ERROR_RETURN ((
@@ -302,6 +315,13 @@ int ReplicationManagerFaultConsumerAdapter::init (
 
   this->identity_ = "ReplicationManagerFaultConsumerAdapter";
 
+  // Activate the RootPOA.
+  PortableServer::POAManager_var poa_manager =
+    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
   /////////////////////////
   // Set up fault detectors
   if (result == 0)
@@ -310,15 +330,23 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // resolve references to replicas
     // create a fault detector for each replica
     size_t replicaCount = this->iorReplicaFiles_.size();
-    for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("Number of replicas being monitored: (%u)\n"),
+      ACE_static_cast (unsigned int, replicaCount)
+    ));
+    for (size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
       const char * iorName = this->iorReplicaFiles_[nRep];
       CORBA::String_var ior;
       if (this->readIORFile(iorName, ior))
       {
-        CORBA::Object_var obj = this->orb_->string_to_object(ior);
-        FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj);
-        if (CORBA::is_nil(replica))
+        CORBA::Object_var obj = this->orb_->string_to_object (
+          ior.in() ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
+        FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow (
+          obj.in() ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
+        if (CORBA::is_nil(replica.in()))
         {
           ACE_ERROR_RETURN ((
             LM_ERROR,
@@ -347,16 +375,19 @@ int ReplicationManagerFaultConsumerAdapter::init (
           encoder.add(::FT::FT_DOMAIN_ID, value);
 
           FT::Location object_location;
-          object_location.length(1);
-          object_location[0].id = CORBA::string_dup("Test location");
+          object_location.length(2);
+          object_location[0].id = CORBA::string_dup("test");
+          object_location[1].id = CORBA::string_dup("Location_A");
           value <<= object_location;
           encoder.add(::FT::FT_LOCATION, value);
 
-          FT::TypeId object_type = 0;
+          FT::TypeId_var object_type = CORBA::string_dup (
+            "IDL:org.omg/CosNaming/NamingContextExt:1.0");
           value <<= object_type;
           encoder.add(::FT::FT_TYPE_ID, value);
 
-          FT::ObjectGroupId group_id = 0;
+          FT::ObjectGroupId group_id =
+            ACE_static_cast (FT::ObjectGroupId, 6191982);
           value <<= group_id;
           encoder.add(::FT::FT_GROUP_ID, value);
 
@@ -382,7 +413,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
               criteria.in(),
               factory_creation_id
               ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            ACE_CHECK_RETURN (-1);
           }
         }
       }

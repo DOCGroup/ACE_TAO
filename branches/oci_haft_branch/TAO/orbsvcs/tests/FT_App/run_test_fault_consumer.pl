@@ -83,7 +83,7 @@ use PerlACE::Run_Test;
 #command line options
 #set defaults:
 my($verbose) = 0;         # 1: report perl actions before executing them
-my($debug_builds) = 1;    # 0: use exes from Release directories
+my($debug_builds) = 0;    # 0: use exes from Release directories
 my($simulated) = 1;       # 1: use "client simulated" fault tolerance
 
 foreach $i (@ARGV) {
@@ -136,11 +136,11 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -r 1 -q");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -r 2 -q");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
-my($ANA) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
+my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
 
 my($CL);
 if (simulated) {
@@ -196,8 +196,8 @@ if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting fault consumer " . $ANA->CommandLine . "\n" if ($verbose);
-$ANA->Spawn ();
+print "\nTEST: starting fault consumer " . $CONS->CommandLine . "\n" if ($verbose);
+$CONS->Spawn ();
 
 print "TEST: waiting for READY.FILE from fault consumer\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
@@ -206,7 +206,7 @@ if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
     $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET->TimedWait(1);
     $NOT->Kill (); $NOT->TimedWait(1);
-    $ANA->Kill (); $ANA->TimedWait(1);
+    $CONS->Kill (); $CONS->TimedWait(1);
     exit 1;
 }
 
@@ -219,37 +219,37 @@ if ($client != 0) {
 }
 
 print "\nTEST: wait for replica 1.\n" if ($verbose);
-$replica1 = $REP1->WaitKill (60);
+$replica1 = $REP1->WaitKill (5);
 if ($replica1 != 0) {
     print STDERR "ERROR: replica returned $replica1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 2.\n" if ($verbose);
-$replica2 = $REP2->WaitKill (60);
+$replica2 = $REP2->WaitKill (5);
 if ($replica2 != 0) {
     print STDERR "ERROR: replica returned $replica2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
-$detector = $DET->WaitKill (60);
+$detector = $DET->WaitKill (20);
 if ($detector != 0) {
     print STDERR "ERROR: detector returned $detector\n";
     $status = 1;
 }
 
 print "\nTEST: wait for notifier to leave.\n" if ($verbose);
-$notifier = $NOT->WaitKill (60);
+$notifier = $NOT->WaitKill (20);
 if ($notifier != 0) {
     print STDERR "ERROR: notifier returned $notifier\n";
     $status = 1;
 }
 
 print "\nTEST: wait for fault consumer to leave.\n" if ($verbose);
-$analyzer = $ANA->WaitKill (60);
-if ($analyzer != 0) {
-    print STDERR "ERROR: fault consumer returned $analyzer\n";
+$consumer = $CONS->WaitKill (20);
+if ($consumer != 0) {
+    print STDERR "ERROR: fault consumer returned $consumer\n";
     $status = 1;
 }
 
