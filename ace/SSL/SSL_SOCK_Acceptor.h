@@ -28,6 +28,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
+#include "ace/OS_QoS.h"
 
 /**
  * @class ACE_SSL_SOCK_Acceptor

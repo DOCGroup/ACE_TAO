@@ -22,6 +22,7 @@
 #include "ace/Synch.h"
 #include "ace/ACE.h"
 #include "ace/OS.h"
+#include "ace/OS_QoS.h"
 
 class Fill_ACE_QoS
 {
