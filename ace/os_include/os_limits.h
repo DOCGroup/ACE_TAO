@@ -97,6 +97,10 @@ extern "C"
 #  define ACE_IOV_MAX IOV_MAX
 #endif /* ACE_IOV_MAX */
 
+#if !defined (PIPE_BUF)
+#  define PIPE_BUF 5120
+#endif /* PIPE_BUF */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
