@@ -6,6 +6,7 @@
 
 #include "tao/Policy_Manager.h"
 #include "tao/Environment.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Manager.i"
