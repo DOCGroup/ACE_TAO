@@ -24,17 +24,6 @@ MIF_DT_Creator::create_thr_task (int importance,
   return task;
 }
 
-//  Task*
-//  MIF_DT_Creator::task (void)
-//  {
-//    MIF_Task *fp_task;
-//    ACE_NEW_RETURN (fp_task,
-//  		  MIF_Task,
-//  		  0);
-//    return fp_task;
-
-//  }
-
 CORBA::Policy_ptr
 MIF_DT_Creator::sched_param (int importance)
 {
@@ -45,15 +34,10 @@ void
 MIF_DT_Creator::yield (int suspend_time,
 		       Thread_Task*)
 {
-  //    ACE_DEBUG ((LM_DEBUG,
-  //  	      "%d\n",
-  //  	      suspend_time));
   ACE_Time_Value suspend (suspend_time);
   ACE_Time_Value now (ACE_OS::gettimeofday ());
-  while ((now - *base_time_) < suspend_time)
+  while ((now - *base_time_) < suspend_time || suspend_time == 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-		  "Main Yield\n"));
       CORBA::Policy_var sched_param;
       sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
       const char * name = 0;
@@ -64,6 +48,8 @@ MIF_DT_Creator::yield (int suspend_time,
 					   ACE_ENV_ARG_DECL);
       ACE_CHECK;
       now = ACE_OS::gettimeofday ();
+      if (suspend_time == 1)
+	break;
     }
 }
 
@@ -75,5 +61,6 @@ ACE_STATIC_SVC_DEFINE(MIF_DT_Creator,
                       0)
 
 ACE_FACTORY_DEFINE (MIF_DT_Creator, MIF_DT_Creator)
+
 
 

@@ -6,6 +6,7 @@
 #include "tao/RTScheduling/RTSchedulerC.h"
 #include "MIF_SchedulingC.h"
 #include "ace/Message_Queue.h"
+#include "ace/Atomic_Op.h"
 
 class DT : public ACE_Message_Block
 {
@@ -50,9 +51,16 @@ public TAO_Local_RefCounted_Object
 
   ~MIF_Scheduler (void);
 
+  
   virtual MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr 
     create_segment_scheduling_parameter (CORBA::Short segment_priority)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void wait (void);
+
+  void resume_main (void);
+
+  void incr_thr_count (void);
 
   virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
 					     const char * name,
@@ -162,9 +170,11 @@ public TAO_Local_RefCounted_Object
  private:
   RTScheduling::Current_var current_;
   ACE_Thread_Mutex lock_;  
-  ACE_Lock* state_lock_;
+  ACE_Thread_Mutex wait_lock_;
+  ACE_Condition_Thread_Mutex wait_cond_;
   DT_Message_Queue ready_que_;
   DT_Message_Queue wait_que_;
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> wait_;
 };
 
 #endif //MIF_SCHEDULER_H

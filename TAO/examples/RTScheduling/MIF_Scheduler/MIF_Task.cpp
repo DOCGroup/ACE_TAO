@@ -1,5 +1,6 @@
 //$Id$
 #include "MIF_Task.h"
+#include "test.h"
 
 
 MIF_Task::MIF_Task (int importance,
@@ -13,6 +14,18 @@ MIF_Task::MIF_Task (int importance,
   this->dt_creator_ = dt_creator;
 }
 
+void
+MIF_Task::pre_activate (void)
+{
+  DT_TEST::instance ()->scheduler ()->incr_thr_count ();
+}
+
+void
+MIF_Task::post_activate (void)
+{
+  DT_TEST::instance ()->scheduler ()->wait ();
+}
+
 int 
 MIF_Task::perform_task (void)
 {
@@ -24,20 +37,15 @@ MIF_Task::perform_task (void)
   
   static CORBA::ULong prime_number = 9619;
   
-  //ACE_Time_Value base_time = ACE_OS::gettimeofday ();
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < this->load_; i++)
     {
-      for (int j = 0; j < this->load_; j++)
+      for (int j = 0; j < 500; j++)
 	{
 	  ACE::is_prime (prime_number,
 			 2,
 			 prime_number / 2);
 	}
-      
-      ACE_DEBUG ((LM_DEBUG,
-		  "%d\n",
-		  count_));
-      
+
       run_time = ACE_OS::gettimeofday () - *base_time_;
       TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
 				       count_);

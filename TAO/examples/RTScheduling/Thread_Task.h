@@ -20,6 +20,8 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 /*  	       int load, */
 /*  	       DT_Creator *dt_creator); */
 
+  Thread_Task (void);
+
   int activate_task (RTScheduling::Current_ptr current,
 		     CORBA::Policy_ptr sched_param,
 		     long flags,
@@ -32,6 +34,9 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int importance (void);
 
   int start_time (void);
+
+  virtual void pre_activate (void);
+  virtual void post_activate (void);
 
  protected:
   /// task svc
