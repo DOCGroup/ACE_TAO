@@ -1,3 +1,11 @@
+Mon Mar 11 16:59:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/TP_Reactor_Test.h (new file):
+        * tests/TP_Reactor_Test.cpp: Moved declarations for Receiver,
+          Acceptor, Sender, and Connector classes to the new file
+          TP_Reactor_Test.h so Visual Age C++ can find them when
+          instantiating templates.
+
 Mon Mar 11 16:38:49 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Reactor_Notify_Test.cpp: Added missing #include "ace/Reactor.h"
