@@ -275,6 +275,10 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
   // now generate the typedefs
   os->indent ();
 
+  // typedef the object
+  *os << "typedef " << bt->nested_type_name (scope) << " "
+      << tdef->nested_type_name (scope) << ";" << be_nl;
+
   // typedef the _ptr
   *os << "typedef " << bt->nested_type_name (scope, "_ptr")
       << " " << tdef->nested_type_name (scope, "_ptr") << ";" << be_nl;
