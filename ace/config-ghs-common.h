@@ -25,6 +25,7 @@
 # define ACE_HAS_WCHAR_TYPEDEFS_CHAR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_LONGLONG_T
+# define ACE_LACKS_SIGNED_CHAR
 
 #else  /* ! ghs */
 # error ace/config-ghs-common.h can only be used with Green Hills compilers!

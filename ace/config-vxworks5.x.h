@@ -63,7 +63,6 @@
 # define ACE_CONFIG_INCLUDE_GHS_COMMON
 # include "ace/config-ghs-common.h"
 
-# define ACE_LACKS_SIGNED_CHAR
 # define ACE_LACKS_UNISTD_H
 
 #else  /* ! __GNUG__ && ! ghs */
