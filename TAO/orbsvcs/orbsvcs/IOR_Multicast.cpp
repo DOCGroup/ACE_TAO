@@ -8,19 +8,19 @@ TAO_IOR_Multicast::get_handle (void) const
   return this->mcast_dgram_.get_handle ();
 }
 
-TAO_IOR_Multicast::TAO_IOR_Multicast (char * ior,
-                              u_short port,
-                              const char *mcast_addr,
-                              TAO_Service_ID service_id)
-  : service_id_ (service_id),
-    mcast_addr_ (port, mcast_addr),
-    ior_ (ior),
-    response_addr_ ((u_short) 0),
-    response_ (response_addr_)
+TAO_IOR_Multicast::TAO_IOR_Multicast (void)
+  : service_id_ ((TAO_Service_ID) 0),
+    ior_ (0)    
 {
-  // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
-  if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "subscribe"));
+}  
+
+TAO_IOR_Multicast::TAO_IOR_Multicast (char * ior,
+                                      u_short port,
+                                      const char *mcast_addr,
+                                      TAO_Service_ID service_id)
+{
+  if (this->init (ior, port, mcast_addr, service_id) == -1)
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("TAO_IOR_Multicast")));
 }
 
 // destructor
@@ -28,6 +28,25 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (char * ior,
 TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
 {
   this->mcast_dgram_.unsubscribe ();
+}
+
+int
+TAO_IOR_Multicast::init (char* ior,
+                         u_short port,
+                         const char* mcast_addr,
+                         TAO_Service_ID service_id)
+{
+  this->service_id_ = service_id;
+  this->mcast_addr_.set (port, mcast_addr);
+  this->ior_ = ior;
+  this->response_addr_.set ((u_short) 0);
+  this->response_.open (this->response_addr_);
+
+  // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
+  if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "subscribe"), -1);
+
+  return 0;
 }
 
 int
@@ -39,17 +58,19 @@ TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
 
 int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
-{
+{  
   struct
   {
     u_short reply_port;
     CORBA::Short service_id;
   } mcast_info;
 
+
+  ACE_INET_Addr remote_addr;
   ssize_t retcode =
     this->mcast_dgram_.recv (&mcast_info,
                              sizeof (mcast_info),
-                             this->remote_addr_);
+                             remote_addr);
 
   if (retcode == -1)
     return -1;
@@ -73,12 +94,12 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       // Convert port number received to network byte order and set port
       // number to reply;
       mcast_info.reply_port = ntohs (mcast_info.reply_port);
-      this->remote_addr_.set_port_number (mcast_info.reply_port);
+      remote_addr.set_port_number (mcast_info.reply_port);
 
       // send the object reference for the naming service
       retcode = response_.send (this->ior_,
                                 ACE_OS::strlen (this->ior_) + 1,
-                                this->remote_addr_,
+                                remote_addr,
                                 0);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -86,7 +107,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                   " sent through port %u.\n"
                   "retcode=%d\n",
                   this->ior_,
-                  this->remote_addr_.get_port_number (),
+                  remote_addr.get_port_number (),
                   retcode));
 
       if (retcode == -1)

@@ -33,12 +33,20 @@ class TAO_ORBSVCS_Export TAO_IOR_Multicast : public ACE_Event_Handler
   // make sure that all the comments for each method go underneath the
   // method name?
 public:
-   // constructor
-  TAO_IOR_Multicast (char * ior,
-		 u_short port,
-		 const char *mcast_addr,
-		 TAO_Service_ID service_id);
 
+  TAO_IOR_Multicast (void);
+  // Default constructor  
+
+  TAO_IOR_Multicast (char * ior,
+                     u_short port,
+                     const char *mcast_addr,
+                     TAO_Service_ID service_id);
+
+  int init (char* ior,
+            u_short port,
+            const char* mcast_addr,
+            TAO_Service_ID service_id);
+  
   // destructor
   ~TAO_IOR_Multicast (void);
 
@@ -61,9 +69,6 @@ private:
   
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
   // multicast endpoint of communication
-
-  ACE_INET_Addr remote_addr_;
-  // remote address that sent multicast
 
   ACE_INET_Addr mcast_addr_;
   // multicast address
