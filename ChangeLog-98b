@@ -26,17 +26,25 @@ Tue Oct 20 19:37:42 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
         * docs/tutorials/014/Makefile:
         * docs/tutorials/014/combine.shar:
           Colorized using the new and improved 'combine' script.  Also
-          modified the Makefile so that the HTML sources won't get destroyed 
+          modified the Makefile so that the HTML sources won't get destroyed
           if the shar operation failed.
 
        * docs/tutorials/015/Makefile:
           Added the same Makefile modification to prevent loss of HTML sources
-	
+
 Tue Oct 20 16:28:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added recommended DU CXX version info.
           Thanks to Susan Liebeskind <shl@janis.gtri.gatech.edu>
           for suggesting this.
+
+        * tests/Thread_Manager._Test.cpp (main): changed debug messages
+          for suspend_grp/resume_grp with Pthreads, which fail due to
+          ENOTSUP.  The resume_grp message was wrong (copy and paste
+          error).  In addition, I reworded the messages to that
+          run_tests.check won't catch them.  They don't indicate a
+          problem, just that Pthreads doesn't support those operations.
+          And more importantly, that ACE preserves the errno.
 
 Tue Oct 20 14:31:37 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
