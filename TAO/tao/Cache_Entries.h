@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,6 +13,7 @@
 
 #ifndef TAO_CACHE_ENTRIES_H
 #define TAO_CACHE_ENTRIES_H
+
 #include "ace/pre.h"
 
 #include "tao/Transport_Descriptor_Interface.h"
@@ -26,8 +27,8 @@
 class TAO_Transport;
 
 #ifdef index
-#undef index
-#endif /* index */
+# undef index
+#endif  /* index */
 
 /**
  * @class TAO_Cache_IntId
@@ -39,7 +40,7 @@ class TAO_Transport;
  * they can be stored together as a <value> for a <key> in a
  * table holding the state of the Transport Cache.
  */
-class TAO_Cache_IntId
+class TAO_Export TAO_Cache_IntId
 {
 public:
 
@@ -174,4 +175,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_CACHE_ENTRIES_H */
