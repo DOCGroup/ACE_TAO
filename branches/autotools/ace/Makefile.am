@@ -198,8 +198,7 @@ libACE_Utils_la_SOURCES = \
   String_Base_Const.cpp \
   SString.cpp \
   Stats.cpp \
-  Sample_History.cpp \
-  Filecache.cpp
+  Sample_History.cpp
 
 libACE_Logging_la_SOURCES = \
   Dump.cpp \
