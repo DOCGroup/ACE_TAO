@@ -1,109 +1,119 @@
+Tue Apr 14 07:16:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: added CONTROLLED_FILES macro.
+
+        * INSTALL,Makefile: removed INSTALL from CVS control.
+
+Tue Apr 14 00:51:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.14 released.
+
 Sat Apr 11 20:02:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO version 0.1.13, released Sat Apr 11 20:02:32 1998.
+        * TAO version 0.1.13, released Sat Apr 11 20:02:32 1998.
 
 Sat Apr 11 10:00:09 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.java:
-	  modified to be used only when the DOVE Browser is running as
-	  an Java Application.
+          modified to be used only when the DOVE Browser is running as
+          an Java Application.
 
-        * orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowserApplet.java: 
+        * orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowserApplet.java:
           used when the DOVE Browser is running as an Applet.
 
         * orbsvcs/tests/Simulator/DOVEBrowser/*: minor changes to handle
-	  the afore mentioned changes.
+          the afore mentioned changes.
 
 Fri Apr 10 15:11:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/GIOP.cpp (message_name): Fixed a missing increment by 1
-	  code.  Thanks to Sumedh for noticing the bug.
+        * tao/GIOP.cpp (message_name): Fixed a missing increment by 1
+          code.  Thanks to Sumedh for noticing the bug.
 
 Fri Apr 10 10:41:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/tmplinst.cpp: 
-	  Added a missing template instantiation.
+        * tests/Param_Test/tmplinst.cpp:
+          Added a missing template instantiation.
 
 Fri Apr 10 04:38:36 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_typedef.cpp: The changes made by me in the
-	log entry mentioned just below had some flaws. I had sort of
-	blidly applied it to a case in the "visit_typedef" node of the
-	be_visitor_typedef_ci class. I was resetting the alias context
-	before the code generation action was taken as aooposed to doing
-	it after the action was taken. Thanks to Seth Widoff for sending
-	the bug report.
+        * TAO_IDL/be/be_visitor_typedef.cpp: The changes made by me in the
+        log entry mentioned just below had some flaws. I had sort of
+        blidly applied it to a case in the "visit_typedef" node of the
+        be_visitor_typedef_ci class. I was resetting the alias context
+        before the code generation action was taken as aooposed to doing
+        it after the action was taken. Thanks to Seth Widoff for sending
+        the bug report.
 
 Thu Apr  9 21:57:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/POAS.cpp: Fixed up the POA to use the new
- 	  ACE_Static_Allocator_Base stuff.
+        * tao/POAS.cpp: Fixed up the POA to use the new
+          ACE_Static_Allocator_Base stuff.
 
-	* tao/Operation_Table: Added an additional parameter to the
- 	  TAO_Dynamic_Hash_OpTable constructor so that we can pass in the
- 	  ACE_Static_Allocator_Base.  Also, changed the code to use the
- 	  base/member initialization section, which is more efficient.
+        * tao/Operation_Table: Added an additional parameter to the
+          TAO_Dynamic_Hash_OpTable constructor so that we can pass in the
+          ACE_Static_Allocator_Base.  Also, changed the code to use the
+          base/member initialization section, which is more efficient.
 
 Thu Apr  9 22:53:21 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp: We now use the
-	ACE_Static_Allocator_Base to define a static allocator for the
-	Dynamic Operation Hash Table. Using this approach will finally
-	solve the seg faults in the static destructors.
+        * TAO_IDL/be/be_interface.cpp: We now use the
+        ACE_Static_Allocator_Base to define a static allocator for the
+        Dynamic Operation Hash Table. Using this approach will finally
+        solve the seg faults in the static destructors.
 
-	* TAO_IDL/be/{be_visitor_args, be_visitor_array, be_visitor_field,
-	be_visitor_exception, be_visitor_operation, be_visitor_typedef,
-	be_visitor_union, be_visitor_union_branch}.cpp: The visit_typedef
-	operation on all the classes in these files was setting the
-	TAO_Visitor_Context's alias state to the typedef node being
-	visited. However, we were not resetting this context alias state
-	after the action has been taken. This broke code for a scenario
-	shown in a dummy IDL below:
+        * TAO_IDL/be/{be_visitor_args, be_visitor_array, be_visitor_field,
+        be_visitor_exception, be_visitor_operation, be_visitor_typedef,
+        be_visitor_union, be_visitor_union_branch}.cpp: The visit_typedef
+        operation on all the classes in these files was setting the
+        TAO_Visitor_Context's alias state to the typedef node being
+        visited. However, we were not resetting this context alias state
+        after the action has been taken. This broke code for a scenario
+        shown in a dummy IDL below:
 
-	       typedef X Y;
-	       struct foo { ... };
-	       struct bar {
-		 Y y_field;
-		 long long_field;
-	       };
-	In the code generation for the struct "bar" (for that matter for
-	unions, exceptions, sequences, and others), when we are generating
-	the code for the field whose type is "Y", we set the alias
-	context, it gets set to Y and we use its primitive type which is X
-	to do the "accept". However, we do not reset the alias context. As
-	a result, when we are generating the code for the long_field, the
-	alias context is still "Y" which leads our IDL compiler to
-	generate code that says "Y long_field;" rather than "long
-	long_field;". This is now fixed.
+               typedef X Y;
+               struct foo { ... };
+               struct bar {
+                 Y y_field;
+                 long long_field;
+               };
+        In the code generation for the struct "bar" (for that matter for
+        unions, exceptions, sequences, and others), when we are generating
+        the code for the field whose type is "Y", we set the alias
+        context, it gets set to Y and we use its primitive type which is X
+        to do the "accept". However, we do not reset the alias context. As
+        a result, when we are generating the code for the long_field, the
+        alias context is still "Y" which leads our IDL compiler to
+        generate code that says "Y long_field;" rather than "long
+        long_field;". This is now fixed.
 
 Thu Apr  9 20:15:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Added code to
-	recognize the -o option to output the Naming Service ior to a file
-	to avoid setting the NameService env. variable when multiple
-	naming services are running.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (init): Added code to
+        recognize the -o option to output the Naming Service ior to a file
+        to avoid setting the NameService env. variable when multiple
+        naming services are running.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Added a
- 	naming_service_ior () method to return the ior of the Naming
- 	Service.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Added a
+        naming_service_ior () method to return the ior of the Naming
+        Service.
 
 Thu Apr  9 19:25:44 1998  Michael Kircher <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,
-		  orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp.
-		  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
-		  Had to conform to the new RtecScheduler.set ( ..) method,
-		  some parameters were added.
+                  orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp.
+                  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+                  Had to conform to the new RtecScheduler.set ( ..) method,
+                  some parameters were added.
 
         * docs/releasenotes/index.html: Enhanced description of the DOVE
 
 Thu Apr  9 10:07:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time_Utilities.i:
-	  Fixed warnings in convertion from 64 bit ints to 32 bit
-	  ints. This is a classical example of a "good" cast, we know the
-	  numbers will be in range (unless something *really* bad happens,
-	  like), so the conversion will work.
+        * orbsvcs/orbsvcs/Time_Utilities.i:
+          Fixed warnings in convertion from 64 bit ints to 32 bit
+          ints. This is a classical example of a "good" cast, we know the
+          numbers will be in range (unless something *really* bad happens,
+          like), so the conversion will work.
 
 Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
