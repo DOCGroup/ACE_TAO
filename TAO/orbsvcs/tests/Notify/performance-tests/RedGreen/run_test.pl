@@ -20,7 +20,7 @@ unlink $namingior;
 $Naming = new PerlACE::Process ("../../../../Naming_Service/Naming_Service",
                                 "-o $namingior");
 
-$test = new PerlACE::Process ("RedGreen",
+$test = new PerlACE::Process ("RedGreen_Test",
                               "-ORBInitRef NameService=file://$namingior");
 
 @test_configs =
