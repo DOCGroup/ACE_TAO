@@ -13,9 +13,9 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
-#include "Load_BalancerC.h"
-#include "IdentityC.h"
 #include "Identity_Client.h"
+#include "IdentityC.h"
+#include "Load_BalancerC.h"
 
 Identity_Client::Identity_Client (void)
   : group_factory_ior_ (0),
@@ -161,7 +161,7 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
                            "Identity_Client: cannot narrow an object received from"
                            "<Object_Group::resolve> to <Identity>\n"),
                           -1);
-      identity_object->get_name (identity.out (), ACE_TRY_ENV);
+      identity_object->get_name (identity.out ());
       ACE_CHECK_RETURN (-1);
       ACE_DEBUG ((LM_DEBUG,
                   "Invocation %d: %s\n",

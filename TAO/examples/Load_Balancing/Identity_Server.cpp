@@ -106,7 +106,7 @@ Identity_Server::init (int argc,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Object_Group_var rr_group =
+      Load_Balancer::Object_Group_var rr_group =
         factory->make_round_robin ("Round Robin group",
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
