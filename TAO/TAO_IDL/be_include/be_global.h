@@ -395,6 +395,10 @@ public:
   void void_type (AST_PredefinedType *val);
   // Accessors for the member.
 
+  be_interface *ccmobject (void) const;
+  void ccmobject (be_interface *val);
+  // Accessors for the member.
+
 private:
   size_t changing_standard_include_files_;
   // To switch between changing or non-changing standard include
@@ -514,6 +518,9 @@ private:
 
   AST_PredefinedType *void_type_;
   // Used for void operation return types.
+
+  be_interface *ccmobject_;
+  // Reference holder for component skeleton visitors.
 };
 
 #endif /* _BE_GLOBAL_H */
