@@ -30,6 +30,14 @@ module RtecEventComm {
   struct EventData {
     long x;
     long y;
+    
+    double pad0;
+    long   pad1;
+    // This two objects ensure that the encapsulated stream below is
+    // properly aligned; this makes the decoding of the payload more
+    // efficient because we can use the usual demarshalling code
+    // (without making extra copies).
+
     EventPayload payload;
   };
 #endif
