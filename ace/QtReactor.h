@@ -22,7 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_QT)
 #include "ace/Map_Manager.h"
 
 // Qttoolkit specific includes.
@@ -211,8 +210,6 @@ void read_event (int FD);
     /// Dispach a timeout event
     void timeout_event (void);
 };
-
-#endif /*ACE_HAS_QT */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_QTREACTOR_H */

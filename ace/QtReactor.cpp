@@ -1,6 +1,5 @@
 //$Id$
 #include "ace/QtReactor.h"
-#if defined (ACE_HAS_QT)
 ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
 
 // Must be called with lock held
@@ -637,4 +636,3 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /*ACE_HAS_QT */

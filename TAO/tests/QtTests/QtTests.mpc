@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, tao_qtreactor {
-  requires += qt
+project(*server): taoexe, portableserver, tao_qtreactor  {
 
   MOC_Files {
     test_i.h
@@ -16,7 +15,6 @@ project(*server): taoexe, portableserver, tao_qtreactor {
 }
 
 project(*client): taoexe, tao_qtreactor {
-  requires += qt
 
   MOC_Files {
     client.h

@@ -1,3 +1,9 @@
+2004-12-05  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/.cvsignore (Module):
+	* src/.cvsignore (Module):
+	Created some entries to prevent cvs warnings.
+
 Fri Aug  5 15:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * apps/gperf/tests/gperf_test.mpb

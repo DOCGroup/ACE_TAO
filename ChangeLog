@@ -1,3 +1,30 @@
+Sun Dec  5 23:18:29 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* include/makeinclude/wrapper_macros.GNU (Module):
+	* include/makeinclude/platform_linux_pgi.GNU (Module):
+	* include/makeinclude/platform_linux_icc.GNU (Module):
+	* include/makeinclude/platform_linux.GNU (Module):
+	Removed unnecessary ACE_HAS_QT and make options regarding qt. All those things
+	are now set up by MPC.
+	* tests/tests.mpc (Module):
+	Removed explicit dependency on qt. It is ensured now by qt base project.
+	* tests/QtReactor_Test.h (Module):
+	* tests/QtReactor_Test.cpp (Module):
+	Removed ACE_HAS_QT section as MPC manages now configuration.
+	* bin/MakeProjectCreator/config/tao_qtreactor.mpb (Module):
+	Removed tao_qtreactor as it seems to be redundant with qt=1. I'm not sure if this.
+	* bin/MakeProjectCreator/config/ace_qt.mpb (Module):
+	Removed ace_qtreactor as it seems to be redundant with qt=1. I'm not sure if this.
+	* ace/config-win32-msvc.h (Module):
+	Removed sections related with ACE_HAS_QT and QT_DLL definition. It is manged now by MPC.
+	* ace/config-doxygen.h (Module):
+	Removed ACE_HAS_QT as it is ACE_QtReactor compiles now alway if qt option is set.
+	* ace/README (Module):
+	Removed paragraph on ACE_HAS_QT.
+	* ace/QtReactor.h (Module):
+	* ace/QtReactor.cpp (Module):
+	Removed code compiled conditionally on ACE_HAS_QT predicate. Compilation is now managed by MPC.
+
 Sat Dec  4 17:03:38 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/RMCast/.cvsignore (Module):

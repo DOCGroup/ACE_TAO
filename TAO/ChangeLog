@@ -1,3 +1,22 @@
+Mon Dec  6 00:35:59 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* TAO_IDL/.cvsignore (Module):
+	To remove cvs warnings.
+
+Sun Dec  5 23:17:46 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/QtTests/test_i.h (Module):
+	* tests/QtTests/test_i.cpp (Module):
+	* tests/QtTests/server.cpp (Module):
+	* tests/QtTests/server.cpp (Module):
+	* tests/QtTests/client.h (Module):
+	* tests/QtTests/client.cpp (Module):
+	* tao/qt_resource.h (Module):
+	* tao/qt_resource.cpp (Module):
+	Removed dependencies on ACE_HAS_QT. Compilation is now managed by MPC.
+	* tests/QtTests/QtTests.mpc (Module):
+	Removed explicite dependencies on qt. They are managed now by qt based projects.
+
 Fri Dec  3 23:15:18 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tao/tao_xtreactor.mpc (Added):
