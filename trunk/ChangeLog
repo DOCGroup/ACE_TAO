@@ -1,3 +1,8 @@
+Wed Feb 11 15:39:29 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
+        * examples/APG/Signals/SigAction.cpp
+
+          Added a reinterpret_cast to fix a build error with LynxOS.
+
 Wed Feb 11 15:31:06 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
         * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/Makefile
         * TAO/orbsvcs/Logging_Service/Event_Logging_Service/Makefile
