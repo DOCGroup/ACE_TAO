@@ -1,3 +1,13 @@
+1997-10-30  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* tests/: Changed the directory heirarchy to the following:
+	tests/Cubit now contains all the Cubit examples, i.e. IDL_Cubit,
+	MT_Cubit and DII_Cubit, instead of tests/. Updated the README and
+	Makefiles to reflect this.
+
+	* tests/Cubit/COOL: Added the COOL version of the Cubit test. The
+	COOL version is written for Chorus COOL version 4.1.	
+
 Wed Oct 29 22:26:10 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/IDL_Cubit/clnt.cpp (init): Fixed the error handling so we
