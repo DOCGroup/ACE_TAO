@@ -301,7 +301,7 @@ protected:
   ACE_Configuration (void);
 
   /// Skips whitespace
-  ACE_TCHAR *skip_whitespace (ACE_TCHAR *src);
+  const ACE_TCHAR *skip_whitespace (const ACE_TCHAR *src);
 
   /// resolves the internal key from a section key
   ACE_Section_Key_Internal* get_internal_key
