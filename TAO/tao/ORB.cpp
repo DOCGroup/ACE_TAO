@@ -1425,6 +1425,20 @@ CORBA::ORB_init (int &argc,
   CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
+  // @@ Make sure the following is done after the global ORB
+  //    initialization since we need to have exceptions initialized.
+  //
+  // It doesn't make sense for argc to be zero and argv to be
+  // non-empty/zero, or for argc to be greater than zero and argv be
+  // zero/empty.
+  size_t argv0_len = (argv ? (*argv ? ACE_OS::strlen (*argv) : 0) : 0);
+  if ((argc < 1 && argv0_len != 0) ||
+      (argc != 0 && argv0_len == 0))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        CORBA::ORB::_nil ());
+    }
+
   if (orbid == 0 || ACE_OS::strcmp (orbid, "") == 0)
     {
       orbid = "";
