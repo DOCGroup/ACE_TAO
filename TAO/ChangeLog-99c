@@ -1,3 +1,11 @@
+Wed Aug 18 21:32:25 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* PROBLEM-REPORT-FORM:
+	* TAO-INSTALL.html:
+	
+	  Updated with information about the bugzilla usage
+	  documentation.
+
 Wed Aug 18 18:00:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
