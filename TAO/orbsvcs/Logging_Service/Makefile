@@ -10,7 +10,7 @@ LSRC = Logging_Service.cpp
 
 LOG_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_DsLogAdmin -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_DsLogAdmin -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO
 
 BIN2 = Logging_Service
 
@@ -27,9 +27,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Log,$(findstring Log,$(TAO_ORBSVCS)))
   ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-    ifeq ($(minimum_corba),0)
-      BIN = $(BIN2)
-    endif # minimum_corba
+    BIN = $(BIN2)
   endif # Naming
 endif # Log
 
