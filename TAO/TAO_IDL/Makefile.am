@@ -84,6 +84,9 @@ libTAO_IDL_FE_la_SOURCES = \
   util/utl_decllist.cpp \
   narrow/narrow.cpp
 
+libTAO_IDL_FE_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ 
+
 libTAO_IDL_FE_la_LIBADD = \
  $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -256,6 +259,9 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_attribute.cpp \
   be/be_visitor_ccm_pre_proc.cpp \
   be/be_visitor_component.cpp
+
+libTAO_IDL_BE_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ 
 
 libTAO_IDL_BE_la_LIBADD = \
  libTAO_IDL_FE.la \
