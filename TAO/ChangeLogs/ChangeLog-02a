@@ -1,3 +1,11 @@
+Wed Mar 28 13:43:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
+	  compilation errors in the Core build. The TAO_GIOP_Invocation
+	  class now stores TAO_Service_Context instead of
+	  IOP::ServiceContextList.  Made changes to access the
+	  IOP::ServiceContextList from the TAO_Service_Context class.  
+
 Wed Mar 28 13:30:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Smart_Proxies/server.cpp:
