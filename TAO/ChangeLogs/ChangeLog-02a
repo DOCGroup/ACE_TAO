@@ -1,3 +1,11 @@
+Thu Aug 17 14:55:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp (init):
+
+	* orbsvcs/Naming_Service/Naming_Service.h (class TAO_Naming_Service):
+	* orbsvcs/Naming_Service/Naming_Service.cpp (init):
+	  Using ORB_var instead of ORB_ptr.
+
 Thu Aug 17 14:07:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* test/Exposed_Policies/server.cpp:

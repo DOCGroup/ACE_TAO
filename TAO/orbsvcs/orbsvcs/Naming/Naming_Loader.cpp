@@ -39,7 +39,7 @@ TAO_Naming_Loader::init (int argc, char *argv[])
 
       // This function call initializes the Naming Service
       CORBA::Object_var object =
-        this->create_object (orb, argc, argv, ACE_TRY_ENV);
+        this->create_object (orb.in (), argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
     }
