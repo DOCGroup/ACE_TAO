@@ -1,3 +1,7 @@
+Sat Jun 26 19:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp: changed TAO try macros to ACE try macros.
+
 Sat Jun 26 18:38:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/{IIOP,UIOP}_Connect.cpp:
