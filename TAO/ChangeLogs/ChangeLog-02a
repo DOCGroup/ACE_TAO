@@ -139,7 +139,7 @@ Tue Jul  2 16:12:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Jul  2 15:46:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This checkin is to prevent a problem that occurs unders ceratin
+	This checkin is to prevent a problem that occurs unders certain
         circumstances as described in [Bug 1230]
         http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1241
 
