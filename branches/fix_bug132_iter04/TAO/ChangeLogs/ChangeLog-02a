@@ -1,3 +1,9 @@
+Sat Apr 14 17:04:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp (send_synchronous_message_i):
+          The message was left in the queue even if a problem was detected
+          in the write() operation.
+
 Sat Apr 14 17:01:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:

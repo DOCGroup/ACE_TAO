@@ -434,7 +434,12 @@ TAO_Transport::send_synchronous_message_i (TAO_Stub *stub,
 
   int n = this->drain_queue_i ();
   if (n == -1)
-    return -1; // Error while sending...
+    {
+      synch_message.remove_from_list (this->head_, this->tail_);
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return -1; // Error while sending...
+    }
   else if (n == 1)
     {
       ACE_ASSERT (synch_message.all_data_sent ());
@@ -446,7 +451,11 @@ TAO_Transport::send_synchronous_message_i (TAO_Stub *stub,
   ACE_ASSERT (n == 0); // Some data sent, but data remains.
 
   if (synch_message.all_data_sent ())
-    return 1;
+    {
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return 1;
+    }
 
   // @todo: Check for timeouts!
   // if (max_wait_time != 0 && errno == ETIME) return -1;
