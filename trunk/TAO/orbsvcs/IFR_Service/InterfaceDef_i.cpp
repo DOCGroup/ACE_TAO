@@ -86,7 +86,6 @@ TAO_InterfaceDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   ifd.version = this->version (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  int index = 0;
   CORBA::ULong i = 0;
   ACE_TString section_name;
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
@@ -136,8 +135,6 @@ TAO_InterfaceDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
       ifd.operations[i] = op.make_description (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
-
-  index = 0;
 
   // Attributes
   ACE_Configuration_Section_Key attrs_key;

@@ -163,7 +163,7 @@ TAO_ConstantDef_i::value (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
 
   void *ref = 0;
-  size_t length = 0;
+  u_int length = 0;
 
   this->repo_->config ()->get_binary_value (
                               this->section_key_,

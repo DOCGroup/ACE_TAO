@@ -103,8 +103,6 @@ TAO_Contained_i::id (const char *id,
     {
       // Repository id already exists.
       ACE_THROW (CORBA::BAD_PARAM (2, CORBA::COMPLETED_NO));
-
-      return;
     }
 
   // Get the old id.
@@ -172,8 +170,6 @@ TAO_Contained_i::name (const char *name,
   if (exists)
     {
       ACE_THROW (CORBA::BAD_PARAM (3, CORBA::COMPLETED_NO));
-
-      return;
     }
 
   // Reset the local name.
@@ -410,8 +406,6 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
       if (my_repo.in () != new_container)
         {
           ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
-
-          return;
         }
     }
   else
@@ -428,8 +422,6 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
       if (my_repo.in () != your_repo.in ())
         {
           ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
-
-          return;
         }
     }
 
@@ -735,7 +727,6 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           else
             {
               ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
-              return;
             }
         }
         case IR::dk_Operation:
@@ -799,7 +790,6 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           else
             {
               ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
-              return;
             }
         }
         case IR::dk_Value:
