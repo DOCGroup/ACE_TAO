@@ -53,7 +53,7 @@ fill_ace_qos_flowspec_default (ACE_QoS *pQos,
                                   18400,
                                   0,
                                   0,
-                                  SERVICETYPE_GUARANTEED, 
+                                  ACE_SERVICETYPE_GUARANTEED, 
                                   // SERVICETYPE_CONTROLLEDLOAD  
                                   // doesnt work here for a yet unknown
                                   // reason.
@@ -63,14 +63,14 @@ fill_ace_qos_flowspec_default (ACE_QoS *pQos,
                                   1	// Priority. ACE specific. Not used on NT.
                                   );
 	
-  ACE_Flow_Spec ace_default_notraffic (QOS_NOT_SPECIFIED,
-                                       QOS_NOT_SPECIFIED,
-                                       QOS_NOT_SPECIFIED,
-                                       QOS_NOT_SPECIFIED,
-                                       QOS_NOT_SPECIFIED,
-                                       SERVICETYPE_NOTRAFFIC,
-                                       QOS_NOT_SPECIFIED,
-                                       QOS_NOT_SPECIFIED,
+  ACE_Flow_Spec ace_default_notraffic (ACE_QOS_NOT_SPECIFIED,
+                                       ACE_QOS_NOT_SPECIFIED,
+                                       ACE_QOS_NOT_SPECIFIED,
+                                       ACE_QOS_NOT_SPECIFIED,
+                                       ACE_QOS_NOT_SPECIFIED,
+                                       ACE_SERVICETYPE_NOTRAFFIC,
+                                       ACE_QOS_NOT_SPECIFIED,
+                                       ACE_QOS_NOT_SPECIFIED,
                                        25,  // TTL. ACE specific. Not used on NT.
                                        1);  // Priority. ACE specific. Not used on NT.
   if (pQosOptions->bReceiver)
@@ -139,7 +139,7 @@ FillQoSParams (ACE_QoS_Params &qos_params,
   qos_params.caller_data (0);
   qos_params.socket_qos (qos);
   qos_params.group_socket_qos (0);
-  qos_params.flags (JL_SENDER_ONLY);
+  qos_params.flags (ACE_JL_SENDER_ONLY);
 
   return 0;
 }
@@ -226,12 +226,12 @@ main (int argc, char * argv[])
                              1,
                              0,
                              AF_INET,
-                             FROM_PROTOCOL_INFO,
+                             ACE_FROM_PROTOCOL_INFO,
                              &protocol_info,
                              0,
-                             WSA_FLAG_OVERLAPPED 
-                             | WSA_FLAG_MULTIPOINT_C_LEAF 
-                             | WSA_FLAG_MULTIPOINT_D_LEAF) == -1)
+                             ACE_OVERLAPPED_SOCKET_FLAG 
+                             | ACE_FLAG_MULTIPOINT_C_LEAF 
+                             | ACE_FLAG_MULTIPOINT_D_LEAF) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in subscribe\n"),
                       -1);
@@ -244,7 +244,7 @@ main (int argc, char * argv[])
   u_long dwBytes;
 
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-                     SIO_MULTICAST_SCOPE, // IO control code.
+                     ACE_SIO_MULTICAST_SCOPE, // IO control code.
                      &nIP_TTL, // In buffer.
                      sizeof (nIP_TTL), // Length of in buffer.
                      achInBuf, // Out buffer.
@@ -261,7 +261,7 @@ main (int argc, char * argv[])
   int bFlag = FALSE;
 
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-                     SIO_MULTIPOINT_LOOPBACK, // IO control code.
+                     ACE_SIO_MULTIPOINT_LOOPBACK, // IO control code.
                      &bFlag, // In buffer.
                      sizeof (bFlag), // Length of in buffer.
                      achInBuf, // Out buffer.
@@ -296,7 +296,7 @@ main (int argc, char * argv[])
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-	                 SIO_SET_QOS,
+	                 ACE_SIO_SET_QOS,
                      ace_qos, // ACE_QoS.
 					 &dwBytes) == -1) // bytes returned.
     ACE_ERROR ((LM_ERROR,
@@ -351,7 +351,7 @@ FindServiceProvider(int iProtocol,
     ACE_DEBUG ((LM_DEBUG,
                 "enum_protocols () : should not have suceeded\n"));
 
-  else if (WSAENOBUFS != (dwErr = ACE_OS::set_errno_to_wsa_last_error ()))
+  else if (ACE_ENOBUFS != (dwErr = ACE_OS::set_errno_to_wsa_last_error ()))
     // enum_protocols () failed for some reason not relating to buffer size 
     ACE_DEBUG ((LM_DEBUG,
                 "enum_protocols () : failed for a reason other than "
@@ -409,9 +409,9 @@ FindServiceProvider(int iProtocol,
                       // look for 
                       if (bQos && bMulticast)
                         {
-                          if ((XP1_QOS_SUPPORTED == ((XP1_QOS_SUPPORTED
+                          if ((ACE_XP1_QOS_SUPPORTED == ((ACE_XP1_QOS_SUPPORTED
                                                       & protocol_buffer[i].dwServiceFlags1)))
-                              && (XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT &
+                              && (ACE_XP1_SUPPORT_MULTIPOINT == (ACE_XP1_SUPPORT_MULTIPOINT &
                                                              protocol_buffer[i].dwServiceFlags1)))
                             {
                               *pProtocolInfo = protocol_buffer[i];
@@ -421,7 +421,7 @@ FindServiceProvider(int iProtocol,
                         }
                       else if (bQos)
                         {
-                          if (XP1_QOS_SUPPORTED == (XP1_QOS_SUPPORTED
+                          if (ACE_XP1_QOS_SUPPORTED == (ACE_XP1_QOS_SUPPORTED
                                                     & protocol_buffer[i].dwServiceFlags1))
                             {
                               *pProtocolInfo = protocol_buffer[i];
@@ -431,9 +431,9 @@ FindServiceProvider(int iProtocol,
                         }
                       else if (bMulticast)
                         {
-                          if ((XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT &   
+                          if ((ACE_XP1_SUPPORT_MULTIPOINT == (ACE_XP1_SUPPORT_MULTIPOINT &   
                                                           protocol_buffer[i].dwServiceFlags1)) 
-                              && (XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED & 
+                              && (ACE_XP1_QOS_SUPPORTED != (ACE_XP1_QOS_SUPPORTED & 
                                                         protocol_buffer[i].dwServiceFlags1)))
                             {
                               *pProtocolInfo = protocol_buffer[i];
@@ -441,7 +441,7 @@ FindServiceProvider(int iProtocol,
                               break;
                             }
                         }
-                      else if ((XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED 
+                      else if ((ACE_XP1_QOS_SUPPORTED != (ACE_XP1_QOS_SUPPORTED 
                                                       & protocol_buffer[i].dwServiceFlags1)))
                         {
                           *pProtocolInfo = protocol_buffer[i];
