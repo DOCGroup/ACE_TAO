@@ -1,3 +1,14 @@
+Mon Oct 25 23:20:53 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/HTBP/README:
+          Added some text that had been in TAO/orbsvcs/orbsvcs/HTIOP but
+          is better located here.
+
+        * bin/MakeProjectCreator/config/htbp.mpb:
+        * bin/MakeProjectCreator/config/htiop.mpb:
+          Base projects used to add libACE_HTBP.so or libTAO_HTIOP.so to
+          projects.
+
 Mon Oct 25 21:27:03 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/ace.mwc:

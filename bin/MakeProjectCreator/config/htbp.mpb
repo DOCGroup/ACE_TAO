@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $ID: $
+
+project : acelib {
+  after  += HTBP
+  libs   += ACE_HTBP
+}
