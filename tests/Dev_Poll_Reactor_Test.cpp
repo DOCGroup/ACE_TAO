@@ -366,10 +366,10 @@ class TestConnector : public CONNECTOR
 public:
 
   virtual int connect_svc_handler (
-    Client *& handler,
-    const CONNECTOR::ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &remote_addr,
+    CONNECTOR::handler_type *& handler,
+    const CONNECTOR::addr_type &remote_addr,
     ACE_Time_Value *timeout,
-    const CONNECTOR::ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &local_addr,
+    const CONNECTOR::addr_type &local_addr,
     int reuse_addr,
     int flags,
     int perms)
@@ -423,10 +423,10 @@ public:
 
 // ----------------------------------------------------
 
-extern "C" void *
+ACE_THR_FUNC_RETURN
 server_worker (void *p)
 {
-  unsigned short port = *(ACE_static_cast (unsigned short *, p));
+  const unsigned short port = *(static_cast<unsigned short *> (p));
 
   ACE_INET_Addr addr;
 
