@@ -1,3 +1,10 @@
+Fri Aug 29 11:07:43 1997 James C Hu  <jxh@lambada.cs.wustl.edu>
+
+        * server/*.{cpp,h}:  Changes to make JAWS comply with ACE
+	  coding standards.  In particular, broke up CGI method in
+	  HTTP_Request, remove dependency on static object in
+	  HTTP_Config, and answered all questions from Doug.
+
 Tue Aug 26 21:34:11 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* clients/Caching/ID_Generator.h: Made some minor changes to
