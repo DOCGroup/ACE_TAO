@@ -11,7 +11,6 @@
 
 
 template <typename STRING_TYPE>
-char const *
 TAO::TypeCode::Case<STRING_TYPE>::~Case (void)
 {
   if (this->type_)

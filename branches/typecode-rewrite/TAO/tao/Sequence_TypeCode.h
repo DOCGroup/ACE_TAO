@@ -38,8 +38,9 @@ namespace TAO
      * @c sequence and array types.
      */
     template <class RefCountPolicy>
-    class Sequence : public CORBA::TypeCode
-      : private RefCountPolicy
+    class Sequence
+      : public CORBA::TypeCode
+      , private RefCountPolicy
     {
     public:
 

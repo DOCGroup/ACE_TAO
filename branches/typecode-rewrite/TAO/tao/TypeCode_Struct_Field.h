@@ -100,7 +100,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c Struct_Field.
        */
-      CORBA::TypeCode_ptr * type;
+      CORBA::TypeCode_ptr const * type;
 
     };
 

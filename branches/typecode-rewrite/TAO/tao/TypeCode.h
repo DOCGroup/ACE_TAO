@@ -483,7 +483,7 @@ namespace TAO
 {
   extern TAO_Export bool operator<< (TAO_OutputCDR & cdr,
                                      CORBA::TypeCode const * x);
-  extern TAO_Export bool operator>> (TAO_InputCDR& cdr,
+  extern TAO_Export bool operator>> (TAO_InputCDR & cdr,
                                      CORBA::TypeCode *&x);
 
   /// Return the unaliased content @c TypeCode of the given

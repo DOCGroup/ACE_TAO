@@ -58,7 +58,7 @@ namespace TAO
 
       /// Constructor.
       Case (char const * name,
-            CORBA::TypeCode_ptr * tc);
+            CORBA::TypeCode_ptr const * tc);
 
       /// Destructor.
       virtual ~Case (void);
@@ -91,7 +91,8 @@ namespace TAO
       /// Check for equivalence of the @c case attributes contained by
       /// this class and the corresponding member attributes at index
       /// "@a index" in the given @c TypeCode @a tc.
-      bool equivalent (CORBA::TypeCode_ptr tc
+      bool equivalent (CORBA::ULong index,
+                       CORBA::TypeCode_ptr tc
                        ACE_ENV_ARG_DECL) const;
 
     protected:
@@ -134,7 +135,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c Case.
        */
-      CORBA::TypeCode_ptr * const type_;
+      CORBA::TypeCode_ptr const * const type_;
 
     };
 

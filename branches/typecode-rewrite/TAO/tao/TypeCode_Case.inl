@@ -6,10 +6,10 @@
 
 
 template <typename STRING_TYPE>
-ACE_INLINE char const *
+ACE_INLINE
 TAO::TypeCode::Case<STRING_TYPE>::Case (
   char const * member_name,
-  CORBA::TypeCode_ptr * member_type)
+  CORBA::TypeCode_ptr const * member_type)
   : name_ (member_name)
   , type_ (member_type)
 {
