@@ -282,45 +282,91 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
     }
 
   // handle special case to avoid compiler errors
-  switch (node->pt ())
+  switch (this->ctx_->sub_state ())
     {
-    case AST_PredefinedType::PT_char:
-      switch (this->ctx_->sub_state ())
-        {
-        case TAO_CodeGen::TAO_CDR_INPUT:
-          *os << " ((char *)_tao_array.inout (), ";
-          break;
-        case TAO_CodeGen::TAO_CDR_OUTPUT:
-          *os << " ((const char *)_tao_array.in (), ";
-          break;
-        default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_ci::"
-                             "visit_predefined_type - "
-                             "bad substate in context\n"),
-                            -1);
-        }
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << " ((";
+      break;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << " ((const ";
       break;
     default:
-      switch (this->ctx_->sub_state ())
-        {
-        case TAO_CodeGen::TAO_CDR_INPUT:
-          *os << " (_tao_array.inout (), ";
-          break;
-        case TAO_CodeGen::TAO_CDR_OUTPUT:
-          *os << " (_tao_array.in (), ";
-          break;
-        default:
-          // error
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_ci::"
-                             "visit_predefined_type - "
-                             "bad substate in context\n"),
-                            -1);
-        }
-      break;
+      // error
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_array_cdr_op_ci::"
+                         "visit_predefined_type - "
+                         "bad substate in context\n"),
+                        -1);
     }
+
+  switch (node->pt ())
+    {
+    case AST_PredefinedType::PT_long:
+      *os << "ACE_CDR::Long *)";
+      break;
+    case AST_PredefinedType::PT_ulong:
+      *os << "ACE_CDR::ULong *)";
+      break;
+    case AST_PredefinedType::PT_short:
+      *os << "ACE_CDR::Short *)";
+      break;
+    case AST_PredefinedType::PT_ushort:
+      *os << "ACE_CDR::UShort *)";
+      break;
+    case AST_PredefinedType::PT_octet:
+      *os << "ACE_CDR::Octet *)";
+      break;
+    case AST_PredefinedType::PT_char:
+      *os << "ACE_CDR::Char *)";
+      break;
+    case AST_PredefinedType::PT_wchar:
+      *os << "ACE_CDR::WChar *)";
+      break;
+    case AST_PredefinedType::PT_float:
+      *os << "ACE_CDR::Float *)";
+      break;
+    case AST_PredefinedType::PT_double:
+      *os << "ACE_CDR::Double *)";
+      break;
+    case AST_PredefinedType::PT_longlong:
+      *os << "ACE_CDR::LongLong *)";
+      break;
+    case AST_PredefinedType::PT_ulonglong:
+      *os << "ACE_CDR::ULongLong *)";
+      break;
+    case AST_PredefinedType::PT_longdouble:
+      *os << "ACE_CDR::LongDouble *)";
+      break;
+    case AST_PredefinedType::PT_boolean:
+      *os << "ACE_CDR::Boolean *)";
+      break;
+    default:
+      // error
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_array_cdr_op_ci::"
+                         "visit_predefined_type - "
+                         "bad primitive type for optimized code gen\n"),
+                        -1);
+    }
+
+  // handle special case to avoid compiler errors
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << " _tao_array.out (), ";
+      break;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "_tao_array.in (), ";
+      break;
+    default:
+      // error
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_array_cdr_op_ci::"
+                         "visit_predefined_type - "
+                         "bad substate in context\n"),
+                        -1);
+    }
+
   // generate a product of all the dimensions. This will be the total length of
   // the "unfolded" single dimensional array.
   for (i = 0; i < array->n_dims (); i++)
