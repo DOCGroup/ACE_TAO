@@ -1,3 +1,8 @@
+Wed Feb  2 14:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.ciao.GNU:
+          New rules file to set the correct SOVERSION and SONAME values
+
 Wed Feb  2 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Port_Activator_T.cpp:
