@@ -1,3 +1,9 @@
+Mon May  3 09:56:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/INET_Addr.cpp (get_host_name): Make sure to check if
+ 	  get_host_name() fails and do something useful in this case.
+  	  Thanks to Frank O'Dwyer <fod@brd.ie> for reporting this.
+
 Mon May 03 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/ACE.cpp: disabled BOOL APIENTRY DllMain(HANDLE hModule,
