@@ -30,7 +30,7 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Pluggable.h"
-#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
 
 // Forward decls.
 class TAO_SHMIOP_Handler_Base;
@@ -155,7 +155,7 @@ private:
   TAO_SHMIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
   
-  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
+  TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
 
@@ -165,7 +165,7 @@ private:
   CORBA::Boolean lite_flag_;
   // Are we using lite?
   
-  TAO_Pluggable_Connector_Params params_;
+  TAO_Pluggable_Reply_Params params_;
   // The reply data that is sent back by the server
 };
 

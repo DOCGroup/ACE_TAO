@@ -23,9 +23,10 @@
 
 #include "tao/Pluggable.h"
 
-// BALA Temporrary inclusion
-#include "tao/GIOP_Utils.h"
 #include "tao/operation_details.h"
+#include "tao/GIOP_Message_State.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -157,7 +158,7 @@ private:
   TAO_IIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
 
-  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
+  TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
   
@@ -167,7 +168,7 @@ private:
   CORBA::Boolean lite_flag_;
   // Are we using lite?
   
-  TAO_Pluggable_Connector_Params params_;
+  TAO_Pluggable_Reply_Params params_;
   // The reply data that is sent back by the server
 };
 

@@ -24,7 +24,7 @@
 
 #include "tao/Request.h"
 
-#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
 // This should not be here. Please see below for reasons
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,6 +37,7 @@
 
 class TAO_Stub;
 class TAO_InputCDR;
+
 
 class TAO_Export TAO_Reply_Dispatcher
 {

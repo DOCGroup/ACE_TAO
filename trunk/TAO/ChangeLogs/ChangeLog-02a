@@ -1,3 +1,70 @@
+Sun Mar 19 19:22:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Accept_State.cpp:
+	* tao/GIOP_Message_Accept_State.h:
+	* tao/GIOP_Message_Accept_State.i:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Acceptors.h:
+	* tao/GIOP_Message_Acceptors.i:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Connectors.cpp:
+	* tao/GIOP_Message_Connectors.h:
+	* tao/GIOP_Message_Connectors.i:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_Lite.i:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Utils.cpp:
+	* tao/GIOP_Utils.h:
+	* tao/GIOP_Utils.i: 
+	  Addressed most of Carlos's suggestion on Coding style and some
+	  design issues. Have left a few @@ answers for some of his
+	  questions. Some of his questions have a reply, that I will be
+	  implementing them shortly.  
+
+	* tao/target_specification.h:
+	* tao/target_specification.cpp:
+	* tao/target_specification.i: 
+	  Added these files to the repository. They now will replace these
+	  three files that would be retired from the repository.
+
+	* tao/target_identifier.h:
+	* tao/target_identifier.cpp:
+	* tao/target_identifier.i: 
+	  Files retired from the repository.
+	 
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.i: 
+	  Added these new files to the repository. Moved the definition of
+	  GIOP_Message_State class to this file from GIOP_Utils.h
+
+	* tao/Invocation.cpp:
+	* tao/Invocation.h: 
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Transport.h:
+	* tao/Reply_Dispatcher.h:
+	* tao/SHMIOP_Connect.cpp:
+	* tao/SHMIOP_Connect.h:
+	* tao/SHMIOP_Profile.h:
+	* tao/SHMIOP_Transport.h:
+	* tao/Transport_Mux_Strategy.h:
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Connect.cpp:	
+	  Changes that had to be done because of the above. The changes
+	  include change of method names, reducing unnecessary header file
+	  inclusions. 
+
+	* tao/Makefile: 
+	  Updated the makefile with new files.  I should also update the
+	  Makefiles in the different directories now. That would be the
+	  next. 
+
 Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         First, some miscellaneous changes:

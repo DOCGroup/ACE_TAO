@@ -188,6 +188,8 @@ TAO_GIOP_Message_Lite::
   return state->is_complete ();
 }
 
+
+
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
   write_message_header (const TAO_Operation_Details &opdetails,
@@ -276,7 +278,7 @@ TAO_GIOP_Message_Lite::
 int
 TAO_GIOP_Message_Lite::
   parse_reply (TAO_Message_State_Factory &mesg_state,
-               TAO_Pluggable_Connector_Params &params)
+               TAO_Pluggable_Reply_Params &params)
 {
   // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = 
@@ -374,10 +376,10 @@ TAO_GIOP_Message_Lite::
 
 int
 TAO_GIOP_Message_Lite::
-  process_connector_messages (TAO_Transport *transport,
-                              TAO_ORB_Core *orb_core,
-                              TAO_InputCDR &input,
-                              CORBA::Octet message_type)
+  process_client_message (TAO_Transport *transport,
+                          TAO_ORB_Core *orb_core,
+                          TAO_InputCDR &input,
+                          CORBA::Octet message_type)
 {
 
   switch (message_type)
@@ -386,14 +388,14 @@ TAO_GIOP_Message_Lite::
       // Should be taken care by the state specific invocations. They
       // could raise an exception or write things in the output CDR
       // stream
-      this->process_connector_request (transport,
-                                       orb_core,
-                                       input);
+      this->process_client_request (transport,
+                                    orb_core,
+                                    input);
       break;
     case TAO_GIOP_LOCATEREQUEST:
-      this->process_connector_locate (transport,
-                                      orb_core,
-                                      input);
+      this->process_client_locate (transport,
+                                   orb_core,
+                                   input);
             
       break;
     case TAO_GIOP_MESSAGERROR:
@@ -473,11 +475,41 @@ TAO_GIOP_Message_Lite::
 }                        
 
 
+CORBA::Boolean
+TAO_GIOP_Message_Lite::
+  write_locate_request_header (CORBA::ULong request_id,
+                               TAO_Target_Specification &spec,
+                               TAO_OutputCDR &msg)
+{
+  msg << request_id;
+
+  // In this case we cannot recognise anything other than the Object
+  // key as the address disposition variable. But we do a sanity check
+  // anyway.
+  const TAO_ObjectKey *key = spec.object_key ();
+  if (key)
+    {
+      // Put in the object key
+      msg << *key;
+    }
+    else
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+      return 0;
+    }
+
+
+  return 1;
+}
+
+
 int
 TAO_GIOP_Message_Lite::
-  process_connector_request (TAO_Transport *transport, 
-                             TAO_ORB_Core* orb_core,
-                             TAO_InputCDR &input)
+  process_client_request (TAO_Transport *transport, 
+                          TAO_ORB_Core* orb_core,
+                          TAO_InputCDR &input)
 {
    // Get the revision info
   TAO_GIOP_Version version (TAO_DEF_GIOP_MAJOR,
@@ -709,9 +741,9 @@ TAO_GIOP_Message_Lite::
 
 int
 TAO_GIOP_Message_Lite::
-  process_connector_locate (TAO_Transport *transport,
-                            TAO_ORB_Core* orb_core,
-                            TAO_InputCDR &input)
+  process_client_locate (TAO_Transport *transport,
+                         TAO_ORB_Core* orb_core,
+                         TAO_InputCDR &input)
 {
   // Get the revision info
   TAO_GIOP_Version version (TAO_DEF_GIOP_MAJOR,

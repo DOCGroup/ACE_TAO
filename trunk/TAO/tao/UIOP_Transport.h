@@ -25,10 +25,8 @@
 
 #include "tao/Pluggable.h"
 
+#include "tao/GIOP_Message_State.h"
 
-//#include "tao/Pluggable_Messaging.h"
-#include "tao/GIOP_Utils.h"
-//#include "tao/target_identifier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -166,7 +164,7 @@ private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
 
-  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
+  TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
 
@@ -176,7 +174,7 @@ private:
   CORBA::Boolean lite_flag_;
   // We using GIOP lite?
   
-  TAO_Pluggable_Connector_Params params_;
+  TAO_Pluggable_Reply_Params params_;
   // The reply data that is sent back by the server
 };
 

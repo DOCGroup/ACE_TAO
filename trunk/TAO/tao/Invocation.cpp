@@ -14,7 +14,8 @@
 
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
-#include "tao/target_identifier.h"
+#include "tao/GIOP_Utils.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
