@@ -1,3 +1,11 @@
+Wed Feb 24 14:57:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ASYS_ONLY_WIDE_STRING): New UNICODE macros to convert
+	  char* to wchar* when UNICODE is defined but not on CE.
+
+	* ace/Service_Config.cpp (parse_args): Convert getopt.optarg using
+	  ASYS_ONLY_WIDE_STRING.
+
 Wed Feb 24 13:54:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-minimal.h: changed #include protection to
