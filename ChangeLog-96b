@@ -1,3 +1,9 @@
+Wed Dec  4 09:09:56 1996  David L. Levine  <levine@cs.wustl.edu>
+	* ace/config-vxworks*.h: added ACE_LACKS_MPROTECT
+
+	* include/makeinclude/platform_vxworks*: removed INCLDIRS and
+ 	  added indlib.o to GreenHills LIBS
+
 Wed Dec  4 00:27:07 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/config-win32-msvc*.0.h: Added NOMINMAX.
