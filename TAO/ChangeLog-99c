@@ -1,3 +1,9 @@
+Wed Aug 11 10:40:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Added an ACE_DEBUG message to an ACE_CATCHANY block that I
+	  missed yesterday.
+
 Wed Aug 11 10:21:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Simple/client.cpp:
