@@ -1,8 +1,22 @@
 // $Id$
+project(*Performance_IDL): loadbalancing {
+
+  custom_only = 1
+
+  IDL_Files {
+    Test.idl
+  }
+}
+
 project(*Performance_Server): loadbalancing, strategies {
-  includes += $(TAO_ROOT)/orbsvcs
+  after += *Performance_IDL
+
+  IDL_Files {
+  }
 
   Source_Files {
+    TestC.cpp
+    TestS.cpp
     server.cpp
     Roundtrip.cpp
     ORBInitializer.cpp
@@ -12,6 +26,11 @@ project(*Performance_Server): loadbalancing, strategies {
 }
 
 project(*Performance_Client): loadbalancing, strategies {
+  after += *Performance_IDL
+
+  IDL_Files {
+  }  
+
   Source_Files {
     TestC.cpp
     client.cpp

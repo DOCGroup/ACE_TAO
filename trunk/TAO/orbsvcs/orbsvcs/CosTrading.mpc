@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosTrading) : orbsvcslib, core, utils {
-  sharedname   = TAO_CosTrading
-  dynamicflags = TAO_TRADING_BUILD_DLL
+project(CosTrading_IDL) : orbsvcslib, core {
+
+  custom_only = 1
 
   idlflags    += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
 
@@ -11,6 +11,16 @@ project(CosTrading) : orbsvcslib, core, utils {
     CosTrading.idl
     CosTradingRepos.idl
     CosTradingDynamic.idl
+  }
+}
+
+
+project(CosTrading) : orbsvcslib, core, utils {
+  after += CosTrading_IDL
+  sharedname   = TAO_CosTrading
+  dynamicflags = TAO_TRADING_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
