@@ -61,6 +61,26 @@
         string for you.  
 
 
+[CE Toolkit issues]
+  [SH3 compiler]
+     * The SH3 compiler does not generate string literals when they
+       are used inside a function and when a precompiled header is
+       also used. This problem can be seen when a variable inside a
+       function is defined by initializing it to a string literal. Two
+       solutions are available:  
+
+          - Use a global variable, if you want to initialize it to a
+            string literal, or  
+          - Do not use precompiled headers if you initialize a
+            variable, defined inside a function, with a string
+            literal. 
+
+     * The SH3 compiler generates a fatal internal error, when
+       __declspec(dllimport) is used for a class with a virtual
+       function in it. To avoid the internal error, change the
+       imported class to not use any virtual functions.  
+
+
 [ACE File list]
   Here is a trace of ACE files about their status on CE.
   [Legend]
