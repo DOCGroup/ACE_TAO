@@ -1,3 +1,10 @@
+Thu Jun 14 16:21:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/config-all.h (ACE_UNUSED_ARG):
+
+	Changed the way we define ACE_UNUSED_ARG to be more compatible
+	with picky compilers.
+
 Thu Jun 14 16:10:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/Makefile:
