@@ -9,16 +9,21 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 die "Error: Missing command line argument" if ($#ARGV < 0);
 
-$name = $ARGV[0];
-$ucname = uc $name;
+$depend = 0;
+while ($#ARGV >= 0) {
+  if (!($ARGV[0] =~ m/-/)) {
+      $name = $ARGV[0];
+      $ucname = uc $name;
+      shift;
+  } elsif ($ARGV[0] eq "-depends") {
+      $depend = 1;
+      shift;
+      $dependname = uc $ARGV[0];
+      shift;
+  }
+}
 
-## -NC- stands for normal case, the name as it is
-## -UC- stands for the name all upper case
-map { s/-NC-/$name/g; s/-UC-/$ucname/g; } @data=<DATA>;
-
-print @data;
-
-__DATA__
+$prologue="
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
@@ -28,12 +33,34 @@ __DATA__
 #ifndef -UC-_EXPORT_H
 #define -UC-_EXPORT_H
 
-#include "ace/config-all.h"
+#include \"ace/config-all.h\"
+";
 
+
+if ($depend == 1)
+{
+    $has_dll="
+#if defined ($dependname)
+# if !defined (-UC-_HAS_DLL)
+# define -UC-_HAS_DLL 0
+# endif /* ! -UC-_HAS_DLL */
+#else
+# if !defined (-UC-_HAS_DLL)
+# define -UC-_HAS_DLL 1
+# endif /* ! -UC-_HAS_DLL */
+#endif
+";
+}
+else
+{
+    $has_dll="
 #if !defined (-UC-_HAS_DLL)
 #define -UC-_HAS_DLL 1
 #endif /* ! -UC-_HAS_DLL */
+";
+}
 
+$epilogue="
 #if defined (-UC-_HAS_DLL)
 #  if (-UC-_HAS_DLL == 1)
 #    if defined (-UC-_BUILD_DLL)
@@ -59,3 +86,13 @@ __DATA__
 #endif     /* -UC-_EXPORT_H */
 
 // End of auto generated file.
+";
+
+foreach $export ($prologue, $has_dll, $epilogue)
+{
+## -NC- stands for normal case, the name as it is
+## -UC- stands for the name all upper case
+    map { s/-NC-/$name/g; s/-UC-/$ucname/g; } $export;
+
+    print $export;
+};
