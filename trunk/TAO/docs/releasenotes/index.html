@@ -356,8 +356,10 @@ mechanisms for keeping track of supported transport protocols are the
 Factories that produce the right types of connector, acceptors, and
 transports.  <P>
 
-<li> <B>Multiple Profile</b> - This provides a means to implement
-    unique bridging strategies.  
+<li> <B>Multiple Profile</b> - Support for more than one profile per
+object.  This is important since there may be several different ways to 
+access an object.  Each profile for an object may encode information
+pertaining to QoS, network and transport protocols, addresses or routes.
 <!-- Fred, I don't understand this -- can you please explain what -->
 <!-- multiple profiles are in more detail? -->
 <p>
