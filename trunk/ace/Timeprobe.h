@@ -96,7 +96,17 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
         ACE_TIMEPROBE_SINGLETON;
 #  endif /* ACE_TSS_TIMEPROBES */
 
+#if defined (_MSC_VER)
+// Disable warning of using Microsoft Extension.
+#pragma warning(disable:4231) 
+#endif /* _MSC_VER */
+
 ACE_SINGLETON_DECLARATION (ACE_TIMEPROBE_SINGLETON_DEFINE);
+
+#if defined (_MSC_VER)
+// Default back the warning of using Microsoft Extension.
+#pragma warning(default:4231) 
+#endif /* _MSC_VER */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
 
