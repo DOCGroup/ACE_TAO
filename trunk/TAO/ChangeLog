@@ -1,3 +1,11 @@
+Thu Feb 26 17:39:51 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
+          Removed checking for duplicate service context id explicitly while adding
+          new service contexts which could degrade the performance in the common
+          execution path.
+
 Thu Feb 26 10:10:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * tao/ClientRequestInfo.cpp:
@@ -13,26 +21,26 @@ Thu Feb 26 10:10:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
         * tao/ORB_Table.cpp:
         * tao/ORB_Table.h:
           Added set_default and not_default methods for specifying which
-          orb should be the default (first orb in the table) and specifying 
-          which orb should not be the default.  
-          Changed the bind method to set the new ORB as the default (first in 
+          orb should be the default (first orb in the table) and specifying
+          which orb should not be the default.
+          Changed the bind method to set the new ORB as the default (first in
           the table) if the current default ORB does not want to be default.
           Added accessor methods for the TAO_ORBCore and the underlying table.
 
         * tao/Transport.cpp:
         * tao/Transport.h:
           Added variables for keeping track of the size of the current received
-          buffer and number of bytes sent for the send call.  
+          buffer and number of bytes sent for the send call.
           Added accessors to these tracking variables.
 
 
-          These are changes for working with the OVATION distributed 
+          These are changes for working with the OVATION distributed
           debugger.
 
 Thu Feb 26 02:48:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-        
+
           When marshaling an interface member, changed geneation to
           use CORBA::Object::marshal(), which checks for a nil
           object reference, instead of calling the virtual marshal()
@@ -44,7 +52,7 @@ Thu Feb 26 01:59:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_}IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Set the return token value to 0 if, when parsing a union
           branch, we find that it is an illegal recursive type.
           This prevents a crash on subsequent processing. Thanks to
