@@ -661,8 +661,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
               preconnections =
                 ACE_CString ("iiop://") +
-                ACE_CString (preconnections) +
-                ACE_CString ("/");
+                ACE_CString (preconnections);
 
               ACE_DEBUG ((LM_WARNING,
                           "(%P|%t) \nWARNING: The following preconnection "
