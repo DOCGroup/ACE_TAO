@@ -67,6 +67,10 @@
 #   include /**/ <sys/types.h>
 # endif  /* ACE_LACKS_SYS_TYPES_H */
 
+# if !defined (ACE_LACKS_PARAM_H)
+#  include /**/ <sys/param.h>
+# endif /* ACE_LACKS_PARAM_H */
+
 # include "ace/ACE_export.h"
 
 // Pick up MAXPATHLEN without need of OS.h.
