@@ -567,12 +567,12 @@ TAO_OperationDef_i::make_description (
   ACE_CHECK_RETURN (od);
 
   IR::ContextIdSeq_var cid_seq = this->contexts (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   od.contexts = cid_seq.in ();
 
   IR::ParDescriptionSeq_var pd_seq = this->params (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   od.parameters = pd_seq.in ();
 
