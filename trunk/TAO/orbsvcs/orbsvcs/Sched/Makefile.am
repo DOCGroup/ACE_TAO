@@ -23,6 +23,8 @@ libTAO_Sched_la_LDADD = \
 libTAO_Sched_la_SOURCES = \
         Config_Scheduler.cpp \
         DynSched.cpp \
+        Reconfig_Scheduler.cpp \
+        Reconfig_Sched_Utils.cpp \
         SchedEntry.cpp \
         Scheduler.cpp \
         Scheduler_Generic.cpp \
@@ -31,6 +33,8 @@ libTAO_Sched_la_SOURCES = \
 noinst_HEADERS = \
         Config_Scheduler.h \
         DynSched.h \
+        Reconfig_Scheduler.h \
+        Reconfig_Sched_Utils.h \
         SchedEntry.h \
         Scheduler.h \
         Scheduler_Generic.h \
@@ -41,4 +45,3 @@ noinst_HEADERS = \
 clean-local:
 	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
-

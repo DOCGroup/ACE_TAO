@@ -4,7 +4,7 @@
 #include "Reconfig_Scheduler.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Reconfig_Scheduler.i"
+#include "Reconfig_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(orbsvcs, Reconfig_Scheduler, "$Id$")
@@ -84,7 +84,7 @@ actual_rt_info ()
 
 // Mutator for actual RT_Info pointer.
 
-void 
+void
 TAO_Reconfig_Scheduler_Entry::
 actual_rt_info (RtecScheduler::RT_Info *rt_info)
 {
@@ -311,7 +311,7 @@ effective_exec_multiplier ()
 
 // Mutator for effective execution time of corresponding RT_Info.
 
-void 
+void
 TAO_Reconfig_Scheduler_Entry::
 effective_exec_multiplier (CORBA::Long l)
 {
@@ -326,7 +326,7 @@ effective_exec_multiplier (CORBA::Long l)
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_Reconfig_Sched_Entry_Visitor
     (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -353,7 +353,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "TAO_Reconfig_Sched_Entry_Visitor::"
-                         "visit: error from unconditional action.\n"), -1)
+                         "visit: error from unconditional action.\n"), -1);
     }
 
   // Call precondition hook method, and only proceed if the
@@ -364,7 +364,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "TAO_Reconfig_Sched_Entry_Visitor::"
-                         "visit: error from precondition evaluation.\n"), -1)
+                         "visit: error from precondition evaluation.\n"), -1);
     }
 
   if (result == 0)
@@ -375,7 +375,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 	{
           ACE_ERROR_RETURN ((LM_ERROR,
                              "TAO_Reconfig_Sched_Entry_Visitor::"
-                             "visit: error from prefix action.\n"), -1)
+                             "visit: error from prefix action.\n"), -1);
 	}
 
       // Get the dependency set for the current entry.
@@ -421,7 +421,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
           if (result < 0)
             {
               ACE_ERROR_RETURN (("TAO_Reconfig_Sched_Entry_Visitor::"
-                                 "visit: error from pre-recursion action.\n"), -1)
+                                 "visit: error from pre-recursion action.\n"), -1);
             }
 
            // If the pre-recursion action returned 0, visit the successor.
@@ -436,7 +436,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
       if (this->postfix_action (rse) < 0)
 	{
           ACE_ERROR_RETURN (("TAO_Reconfig_Sched_Entry_Visitor::"
-                             "visit: error from postfix action.\n"), -1)
+                             "visit: error from postfix action.\n"), -1);
 	}
     }
 
@@ -520,7 +520,7 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Reset_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Reset_Visitor
   (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -584,7 +584,7 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_DFS_Visitor
   (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -668,7 +668,7 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_SCC_Visitor
   (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -814,7 +814,7 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Propagation_Visitor
   (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -908,12 +908,12 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
         {
           if (rse.actual_rt_info ()->threads == 0)
           {
-            if (rse.actual_rt_info ()->info_type == 
+            if (rse.actual_rt_info ()->info_type ==
                 RtecScheduler::REMOTE_DEPENDANT)
               {
                 ++this->unresolved_remotes_;
 
-                ACE_DEBUG ((LM_ERROR, 
+                ACE_DEBUG ((LM_ERROR,
                             "RT_Info \"%s\" has unresolved "
                             "remote dependencies.\n",
                             rse.actual_rt_info ()->entry_point));
@@ -922,7 +922,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
               {
                 ++this->unresolved_locals_;
 
-                ACE_DEBUG ((LM_ERROR, 
+                ACE_DEBUG ((LM_ERROR,
                             "RT_Info \"%s\" has unresolved "
                             "local dependencies.\n",
                             rse.actual_rt_info ()->entry_point));
@@ -933,7 +933,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
             // Specification error: any RT_Info that specifies threads
             // must also specify a period.
             ++this->thread_specification_errors_;
-            ACE_DEBUG ((LM_ERROR, 
+            ACE_DEBUG ((LM_ERROR,
                         "RT_Info \"%s\" specifies %ld "
                         "threads, but no period.\n",
                         rse.actual_rt_info ()->entry_point,
@@ -981,7 +981,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
       long new_exec_multiplier = 0;
       long old_exec_multiplier = 0;
-     
+
       if (successor.effective_period () < entry.effective_period ())
         {
           // Store the previous execution multiplier.
@@ -989,15 +989,15 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
           // Divide down the new execution multiplier.
           long new_exec_multiplier =
-            ACE_static_cast (long, 
-                             old_exec_multiplier * 
+            ACE_static_cast (long,
+                             old_exec_multiplier *
                              successor.effective_period () /
                              entry.effective_period ());
 
           // Adjust for round-off error.
-          if (old_exec_multiplier > 
+          if (old_exec_multiplier >
               ACE_static_cast (long,
-                               new_exec_multiplier * 
+                               new_exec_multiplier *
                                entry.effective_period () /
                                successor.effective_period ()))
             {
@@ -1006,7 +1006,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
           // Set the successor's effective period and execution multiplier.
           successor.effective_period (entry.effective_period ());
-          successor.effective_exec_multiplier (entry.effective_exec_multiplier () + 
+          successor.effective_exec_multiplier (entry.effective_exec_multiplier () +
                                                new_exec_multiplier);
         }
       else
@@ -1016,15 +1016,15 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
           // Divide down the new execution multiplier.
           long new_exec_multiplier =
-            ACE_static_cast (long, 
-                             old_exec_multiplier * 
+            ACE_static_cast (long,
+                             old_exec_multiplier *
                              entry.effective_period () /
                              successor.effective_period ());
 
           // Adjust for round-off error.
-          if (old_exec_multiplier > 
+          if (old_exec_multiplier >
               ACE_static_cast (long,
-                               new_exec_multiplier * 
+                               new_exec_multiplier *
                                successor.effective_period () /
                                entry.effective_period ()))
             {
@@ -1032,7 +1032,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
             }
 
           // Just set the successor's execution multiplier (the period is unchanged).
-          successor.effective_exec_multiplier (successor.effective_exec_multiplier () + 
+          successor.effective_exec_multiplier (successor.effective_exec_multiplier () +
                                                new_exec_multiplier);
         }
     }
@@ -1047,7 +1047,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Priority_Visitor ()
   : previous_entry_ (0),
@@ -1064,7 +1064,7 @@ TAO_RSE_Priority_Visitor ()
 // assigns a priority and subpriority value to each
 // entry.  Priorities are assigned in increasing value
 // order, with lower numbers corresponding to higher
-// priorities.  
+// priorities.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 visit (TAO_Reconfig_Scheduler_Entry &rse)
@@ -1108,7 +1108,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
           ++priority_;
           os_priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     os_priority_,
-                                                    ACE_SCOPE_PROCESS)
+                                                    ACE_SCOPE_PROCESS);
 	}
     }
 
@@ -1125,7 +1125,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 
 // Constructor.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Utilization_Visitor ()
   : critical_utilization_ (0.0),
@@ -1145,7 +1145,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
   double entry_period = rse.effective_period ();
   double entry_time = rse.actual_rt_info ()->worst_case_execution_time;
-  double entry_mult = rse.effective_exec_multiplier ()
+  double entry_mult = rse.effective_exec_multiplier ();
 
   if (RECONFIG_SCHED_STRATEGY::is_critical (rse))
     {
@@ -1194,7 +1194,7 @@ TAO_MUF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void 
   // Convert the passed pointers.
   TAO_Reconfig_Scheduler_Entry **first =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **, s);
-  TAO_Reconfig_Scheduler_Entry **second = 
+  TAO_Reconfig_Scheduler_Entry **second =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **, t);
 
   // Check the converted pointers.
@@ -1206,8 +1206,8 @@ TAO_MUF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void 
     {
       return -1;
     }
- 
-  int result = 
+
+  int result =
     TAO_MUF_Reconfig_Sched_Strategy::priority_diff (*((*first)->actual_rt_info ()),
                                                     *((*second)->actual_rt_info ()));
 
@@ -1301,4 +1301,3 @@ TAO_MUF_Reconfig_Sched_Strategy::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
           rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
          ? 1 : 0;
 }
-
