@@ -7,7 +7,9 @@
 # include "Default_Protocols_Hooks.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Default_Protocols_Hooks, "$Id$");
+ACE_RCSID (tao,
+           Default_Protocols_Hooks,
+           "$Id$")
 
 /// constructor
 TAO_Default_Protocols_Hooks::TAO_Default_Protocols_Hooks (void)

@@ -1,3 +1,12 @@
+Fri Jan 26 22:24:56 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Default_Protocols_Hooks.cpp (ACE_RCSID):
+	* tao/RT_Protocols_Hooks.cpp (ACE_RCSID):
+
+	  Removed trailing semi-colon.  The ACE_RCSID macro already places
+	  trailing semi-colons in the expanded text.  This change fixes a
+	  warning about the extra semi-colon.
+
 Fri Jan 26 22:13:16 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp (run):
