@@ -2,6 +2,8 @@
 #
 # Copyright 2003 Addison-Wesley Inc. All Rights Reserved.
 
+MAKEFILE = Makefile.static
+
 BIN = HA_Configurable_Server_Static
 
 SRC = HA_Configurable_Server_Static.cpp HA_Status_Static.cpp
