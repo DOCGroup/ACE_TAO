@@ -1,3 +1,18 @@
+Sat Feb  5 20:49:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ltcf-c.sh:
+	* ltcf-cxx.sh:
+	* ltconfig:
+	* ltmain.sh:
+
+	  Updated from latest libtool multi-language CVS branch.
+
+	* m4/compiler.m4 (LDFLAGS):
+
+	  Remove "-xildoff" from the Sun C++ linker flags.  It doesn't
+	  seem to be needed since the compiler is smart enough to know
+	  when to use it.
+
 Fri Feb  4 23:12:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added code to
