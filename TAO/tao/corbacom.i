@@ -1,27 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    corbacom.i
-//
-// = DESCRIPTION
-//    CORBA C/C++/COM mapping for Win32
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//
-// ============================================================================
-
 // String utility support
 
 ACE_INLINE TAO_Export CORBA::String
 CORBA::string_alloc (CORBA::ULong len)
 {
-  // allocate 1 + strlen to accomodate the null terminating character
+  // Allocate 1 + strlen to accomodate the null terminating character.
   return new CORBA::Char[size_t (len + 1)];
 }
 
@@ -63,8 +47,7 @@ CORBA::String_var::String_var (char *p)
 {
   // NOTE: According to the CORBA spec this string must *not* be
   // copied, but it is non-compliant to use it/release it in the
-  // calling code.
-  // argument is consumed. p should never be NULL
+  // calling code.  argument is consumed. p should never be NULL
 }
 
 ACE_INLINE
@@ -82,14 +65,14 @@ CORBA::String_var::String_var (const CORBA::String_var& r)
 ACE_INLINE CORBA::Char &
 CORBA::String_var::operator[] (CORBA::ULong index)
 {
-  // we need to verify bounds else raise some exception
+  // We need to verify bounds else raise some exception.
   return this->ptr_[index];
 }
 
 ACE_INLINE CORBA::Char
 CORBA::String_var::operator[] (CORBA::ULong index) const
 {
-  // we need to verify bounds else raise some exception
+  // We need to verify bounds else raise some exception.
   return this->ptr_[index];
 }
 

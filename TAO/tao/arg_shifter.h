@@ -19,9 +19,10 @@
 #define TAO_ARG_SHIFTER_H
 
 class Arg_Shifter
+{
   // = TITLE
-  //    Happy ADT to shift known args to the back of the argv vector,
-  //    so deeper levels of argument parsing can locate the yet
+  //    This ADT shifts known args to the back of the argv vector, so
+  //    deeper levels of argument parsing can locate the yet
   //    unprocessed arguments at the beginning of the vector.
   //
   // = DESCRIPTION
@@ -32,12 +33,10 @@ class Arg_Shifter
   //    arguments in the temp vector, Arg_Shifter has placed all the
   //    unknown arguments in their original order at the front of
   //    argv.
-{
 public:
-
   Arg_Shifter (int &argc, char **argv, char **temp = 0);
-  // Sumbit to the Arg_Shifter the vector over which to iterate, also
-  // providing the temporary array if the client doesn't want the
+  // Initialize the Arg_Shifter to the vector over which to iterate,
+  // also providing the temporary array if the client doesn't want the
   // arg_shifter to dynamically allocate its own. If internal dynamic
   // allocation fails, the Arg_Shifter will set all the indices to the
   // end of the vector, forbidding iteration. Following iteration over
@@ -46,7 +45,7 @@ public:
   
   ~Arg_Shifter (void);
   
-  char* get_current (void) const;
+  char *get_current (void) const;
   // Get the current head of the vector.
 
   int consume_arg (int number = 1);
