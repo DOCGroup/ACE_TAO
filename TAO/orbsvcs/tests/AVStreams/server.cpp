@@ -31,18 +31,21 @@ int
 Video_Server_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
                                           CORBA::Environment &env)
 {
+  return -1;
 }
 
 int 
 Video_Server_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,  
                                            CORBA::Environment &env)
 {
+  return -1;
 }
 
 int 
 Video_Server_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,  
                                              CORBA::Environment &env)
 {
+  return -1;
 }
 
 CORBA::Boolean 
