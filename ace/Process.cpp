@@ -212,7 +212,7 @@ ACE_Process::~ACE_Process (void)
 }
 
 pid_t
-ACE_Process::start (ACE_Process_Options &options)
+ACE_Process::spawn (ACE_Process_Options &options)
 {
 #if defined (ACE_WIN32)
   BOOL fork_result = 
@@ -605,6 +605,12 @@ ACE_Process_Options::inherit_environment (void)
 #endif /* ACE_WIN32 */
 
 int
+ACE_Process_Options::setenv (char *[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR, "ACE_Process_Options::setenv not implemented.\n"), -1);
+}
+
+int
 ACE_Process_Options::setenv (const char *format, ...)
 {
   char stack_buf[1024];
@@ -739,7 +745,13 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   return 0; // Success.
 }
 
-void
+int
+ACE_Process_Options::command_line (char *[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR, "ACE_Process_Options::command_line not implemented.\n"), -1);
+}
+
+int
 ACE_Process_Options::command_line (const char *format, ...)
 {
   // Store all ... args in argp.
@@ -751,6 +763,8 @@ ACE_Process_Options::command_line (const char *format, ...)
 
   // Useless macro.
   va_end (argp);
+
+  return 0;
 }
 
 char * const *

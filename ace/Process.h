@@ -64,17 +64,24 @@ public:
   // So options->setenv ("FOO","one + two = %s", "three") will result
   // in "FOO=one + two = three".
 
+  int setenv (char *envp[]);
+  // Same as above with argv format.  <envp> must be null terminated.
+
   void working_directory (const TCHAR *wd);
   // Set the working directory for the process.  strlen of <wd> must
   // be <= MAXPATHLEN.
 
-  void command_line (const char *format, ...);
+  int command_line (const char *format, ...);
   // Set the command-line arguments.  <format> can use any printf
   // formats.  The first token in <format> should be the path to the
   // application.  This can either be a full path, relative path, or
   // just an executable name.  If an executable name is used, we rely
   // on the platform's support for searching paths.  Since we need a
-  // path to run a process, this method *must* be called!
+  // path to run a process, this method *must* be called!  Returns 0
+  // on success, -1 on failure.
+
+  int command_line (char *argv[]);
+  // Same as above in argv format.  <argv> must be null terminated.
 
   // ************************************************************
   // = These operations are used by ACE_Process to retrieve options
@@ -234,7 +241,7 @@ public:
   ~ACE_Process (void);
   // Destructor.
 
-  pid_t start (ACE_Process_Options &options);
+  pid_t spawn (ACE_Process_Options &options);
   // Launch the process described by <options>.
 
   int wait (void);
