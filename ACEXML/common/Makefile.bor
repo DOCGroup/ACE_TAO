@@ -20,11 +20,14 @@ OBJFILES = \
         $(OBJDIR)\Validator.obj \
         $(OBJDIR)\XMLFilterImpl.obj
 
-CFLAGS = $(ACE_CFLAGS) \
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        -DACEXML_BUILD_DLL \
         -I..
 
 CPPDIR = .;..
 
-LIBFILES = $(ACE_LIB)
+LIBFILES = \
+        $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
