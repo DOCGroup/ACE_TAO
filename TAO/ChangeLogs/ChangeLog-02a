@@ -1,3 +1,14 @@
+Fri Sep  1 14:18:35 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/PortableServer/Object_Adapter.h:
+          Add missing include.  It went undetected because platforms that
+          define ACE_TEMPLATES_REQUIRE_SOURCE got it automagically
+          included.
+
+        * tao/DomainC.h:
+          Some extern declaration should only be made if __ACE_INLINE__ is
+          not defined.
+
 Fri Sep  1 11:26:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DomainC.h:
