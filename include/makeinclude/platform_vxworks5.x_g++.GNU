@@ -188,8 +188,9 @@ endif # ! ACE_CC_VERSION
 ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
   ACE_HAS_GNUG_PRE_2_8 := 0
   CFLAGS += -DACE_VXWORKS=0x540
-  ifndef exceptions
+  ifneq (1,$(exceptions))
     #### With exceptions, this is applied in wrapper_macros.GNU.
+    #### Without, we do it here.
     CFLAGS += -Wno-uninitialized
   endif # ! exceptions
 endif # egcs
@@ -206,3 +207,10 @@ LINK.cc.override = $(LD)
 #### To extract the symbol table from each executable, uncomment the POSTLINK
 #### definition below.
 ## POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) $(BINXSYM_NAME) < $@ > $@.sym
+
+ifeq (1,$(exceptions))
+  #### The VxWorks libraries don't support exceptions.  And, exceptions
+  #### give the (Tornado II) compiler fits, e.g., with
+  #### ACE_wrappers/TAO/tao/IORManipulation.cpp.
+  CONFIGURATION_ERROR: exception_handling_is_not_supported_on_VxWorks!
+endif # exceptions
