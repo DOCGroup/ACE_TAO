@@ -162,7 +162,7 @@ public:
   // different ORB protocols are in use) there is no default
   // implementation.
 
-  virtual CORBA::Boolean _is_equivalent (CORBA::LocalObject_ptr other_obj,
+  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
                                          CORBA_Environment &ACE_TRY_ENV =
                                              TAO_default_environment ())
     ACE_THROW_SPEC (());

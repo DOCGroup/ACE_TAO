@@ -93,7 +93,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   SHMIOP_Connect \
   IORC \
   IORS \
-  IORManipulation 
+  IORManipulation
 
 PLUGGABLE_MESSAGING_FILES = \
 Pluggable_Messaging \
@@ -135,6 +135,7 @@ ORB_CORE_FILES = \
   WrongTransactionC \
   Environment \
   Object \
+  LocalObject \
   ObjectIDList \
   ORB \
   corbafwd \
@@ -160,7 +161,6 @@ ORB_CORE_FILES = \
   Invocation \
   operation_details \
   Interceptor \
-  InterceptorS \
   InterceptorC \
   Asynch_Invocation \
   ORB_Core \

@@ -6,6 +6,25 @@
 
 	* Rename TAO/TAO_IDL/util/utl_error.cpp to utl_err.cpp.
 
+Mon Apr 24 14:41:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/tao/LocalObject.cpp:
+	* TAO/tao/LocalObject.h: Fixed _is_equivalent's signature.
+
+	* TAO/tao/Makefile:
+	* TAO/tao/Makefile.am:
+	* TAO/tao/Makefile.bor: Added LocalObject.
+
+	* TAO/tao/Object.h:
+	* TAO/tao/Object.i: Fixed some inlining problems on old gcc.
+
+	* TAO/tests/Interceptors/client.cpp:
+	* TAO/tests/Interceptors/server.cpp:
+	* TAO/tests/Interceptors/interceptors.cpp:
+	* TAO/tests/Interceptors/interceptors.h: Fixed gcc specific
+	  problems (like not able to use a var in place of ptr.)
+
+
 Mon Apr 24 03:40:36 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	Unfinished changelog entry.

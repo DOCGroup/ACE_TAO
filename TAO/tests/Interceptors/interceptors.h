@@ -26,7 +26,9 @@ public:
   virtual void _remove_ref (void);
   // Decrement the reference count.
 
-  virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   // Canonical name of the interceptor.
 
   virtual void preinvoke (CORBA::ULong request_id,
@@ -36,7 +38,8 @@ public:
                           IOP::ServiceContextList & sc,
                           CORBA::NVList_ptr &args,
                           PortableInterceptor::Cookies & ck,
-                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void postinvoke (CORBA::ULong request_id,
                            CORBA::Boolean response_expected,
@@ -45,14 +48,16 @@ public:
                            IOP::ServiceContextList & sc,
                            CORBA::NVList_ptr &args,
                            PortableInterceptor::Cookies & ck,
-                           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void exception_occurred (CORBA::ULong request_id,
                                    CORBA::Boolean response_expected,
                                    CORBA::Object_ptr objref,
                                    const char * operation_name,
                                    PortableInterceptor::Cookies & ck,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   const char *myname_;
@@ -77,7 +82,8 @@ public:
   virtual void _remove_ref (void);
   // Decrement the reference count.
 
-  virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
   virtual void preinvoke (CORBA::ULong request_id,
@@ -87,7 +93,8 @@ public:
                           IOP::ServiceContextList & sc,
                           CORBA::NVList_ptr &args,
                           PortableInterceptor::Cookies & ck,
-                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void postinvoke (CORBA::ULong request_id,
                            CORBA::Boolean response_expected,
@@ -96,14 +103,16 @@ public:
                            IOP::ServiceContextList & sc,
                            CORBA::NVList_ptr &args,
                            PortableInterceptor::Cookies & ck,
-                           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void exception_occurred (CORBA::ULong request_id,
                                    CORBA::Boolean response_expected,
                                    CORBA::Object_ptr objref,
                                    const char * operation_name,
                                    PortableInterceptor::Cookies & ck,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   const char *myname_;

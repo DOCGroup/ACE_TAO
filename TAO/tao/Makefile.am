@@ -102,7 +102,6 @@ ORB_CORE_FILES = \
   GIOP_Server_Request.cpp \
   Invocation.cpp \
   Interceptor.cpp \
-  InterceptorS.cpp \
   InterceptorC.cpp \
   Asynch_Invocation.cpp \
   ORB_Core.cpp \
@@ -175,32 +174,32 @@ libTAO_la_SOURCES = \
 ##
 ## This flag accepts an argument of the form `current[:revision[:age]]'. So,
 ## passing `-version-info 3:12:1' sets current to 3, revision to 12, and age
-## to 1. 
+## to 1.
 ## If either revision or age are omitted, they default to 0. Also note that
-## age must be less than or equal to the current interface number. 
+## age must be less than or equal to the current interface number.
 ##
 ## Here are a set of rules to help you update your library version
-## information: 
+## information:
 ##
-##     1.Start with version information of `0:0:0' for each libtool library. 
+##     1.Start with version information of `0:0:0' for each libtool library.
 ##     2.Update the version information only immediately before a public
 ##       release of your software. More frequent updates are unnecessary, and
-##       only guarantee that the current interface number gets larger faster. 
+##       only guarantee that the current interface number gets larger faster.
 ##     3.If the library source code has changed at all since the last update,
-##       then increment revision (`c:r:a' becomes `c:r+1:a'). 
+##       then increment revision (`c:r:a' becomes `c:r+1:a').
 ##     4.If any interfaces have been added, removed, or changed since the last
-##       update, increment current, and set revision to 0. 
+##       update, increment current, and set revision to 0.
 ##     5.If any interfaces have been added since the last public release, then
-##       increment age. 
+##       increment age.
 ##     6.If any interfaces have been removed since the last public release,
-##       then set age to 0. 
+##       then set age to 0.
 ##
 ## Never try to set the interface numbers so that they correspond to the
 ## release number of your package. This is an abuse that only fosters
 ## misunderstanding of the purpose of library versions. Instead, use the
 ## `-release' flag (see section 6.4 Managing release information), but be
 ## warned that every release of your package will not be binary compatibility
-## with any other release. 
+## with any other release.
 
 ## The below "-version-info" isn't being used the way libtool intends
 ## it to be used but we do it that way to make the version numbers
@@ -225,7 +224,7 @@ TEMPLATE_FILES = \
   TimeBaseS_T.cpp \
   varout.cpp
 else
-TEMPLATE_FILES = 
+TEMPLATE_FILES =
 endif
 
 IDL_HEADERS = \
@@ -503,4 +502,3 @@ EXTRA_DIST = \
 clean-local:
 	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
-
