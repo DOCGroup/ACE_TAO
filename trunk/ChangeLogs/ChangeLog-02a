@@ -1,3 +1,8 @@
+Thu Apr 19 16:18:33 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.h: Doxygen-ized some function arguments; other
+          minor doc cleanups.
+
 Thu Apr 19 11:08:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ACE-INSTALL.html: Point out that ACE supports Solaris 8.
