@@ -879,8 +879,8 @@ TAO_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_Object_Adapter_Factory::init (int argc,
-                                  ACE_TCHAR* argv[])
+TAO_Object_Adapter_Factory::init (int /* argc */,
+                                  ACE_TCHAR* /* argv */ [])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
