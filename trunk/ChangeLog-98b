@@ -1,3 +1,10 @@
+Sat Sep 12 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Timer_Hash.cpp: Removed the #pragma template instantiation
+	  for ACE_Timer_Node_T<ACE_Event_Handler *> because it is already
+	  instantiated in Timer_Queue.cpp.  Thanks to Sergio for noticing
+	  this.
+
 Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Dirent.cpp: Renamed the methods to be more "abstract" by
@@ -10,20 +17,20 @@ Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h (ACE_OS): Added wrappers for qsort() and bsearch().
 
-	* ace/README: Reformatted this file and also changed 
-	  ACE_REQUIRES_FUNC_DEFINITIONS     
+	* ace/README: Reformatted this file and also changed
+	  ACE_REQUIRES_FUNC_DEFINITIONS
 	  ACE_NEEDS_READV
 	  ACE_NEEDS_SCHED_H
 	  ACE_NEEDS_SYSTIME_H
-	  ACE_NEEDS_WRITEV   
+	  ACE_NEEDS_WRITEV
 
-	  to 
+	  to
 
-	  ACE_NEEDS_FUNC_DEFINITIONS     
+	  ACE_NEEDS_FUNC_DEFINITIONS
 	  ACE_LACKS_READV
 	  ACE_LACKS_SCHED_H
 	  ACE_LACKS_SYSTIME_H
-	  ACE_LACKS_WRITEV   
+	  ACE_LACKS_WRITEV
 
 	  respectively.
 
@@ -36,13 +43,13 @@ Sat Sep 12 13:13:39 EDT 1998  James CE Johnson <jcej@lads.com>
 
           docs/tutorials/003/Makefile
           Removed dependency stuff since installations may vary
-    
+
           docs/tutorials/003/client.cpp
           docs/tutorials/003/page01.html
           docs/tutorials/004/Makefile
           docs/tutorials/004/client.cpp
           docs/tutorials/004/page01.html
-    
+
           Converted to new style with embedded comments instead of
           line-numbered comments.
 
@@ -97,7 +104,7 @@ Fri Sep 11 08:54:41 EDT 1998  James CE Johnson <jcej@lads.com>
 
 Thu Sep 10 16:53:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Upgradable_RW_Test.cpp: 
+	* tests/Upgradable_RW_Test.cpp:
 	  Some templates were instantiated twice if threads were enabled.
 
 Thu Sep 10 13:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
