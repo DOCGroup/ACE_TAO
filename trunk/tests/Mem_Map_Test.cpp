@@ -93,7 +93,7 @@ create_test_file (int size, int num_lines)
 int
 main (int, char **argv)
 {
-  ACE_START_TEST ("Mem_Map_Test.cpp");
+  ACE_START_TEST ("Mem_Map_Test");
 
   // First create a test file to work on
   if (create_test_file (FILE_SIZE, NUM_LINES) != 0)

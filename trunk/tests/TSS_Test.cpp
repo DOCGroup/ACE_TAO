@@ -198,7 +198,7 @@ template class ACE_TSS<Errno>;
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("TSS_Test.cpp");
+  ACE_START_TEST ("TSS_Test");
   
 #if defined (ACE_MT_SAFE)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());

@@ -105,7 +105,7 @@ spawn (void)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Mutex_Test.cpp");
+  ACE_START_TEST ("Mutex_Test");
 
   spawn ();
 

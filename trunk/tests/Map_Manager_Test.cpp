@@ -33,7 +33,7 @@ typedef ACE_Map_Entry <KEY, VALUE> ENTRY;
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Map_Manager_Test.cpp");
+  ACE_START_TEST ("Map_Manager_Test");
 
   const int ITERATIONS = 5;
   MAP_MANAGER map;
