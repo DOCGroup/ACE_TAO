@@ -45,7 +45,7 @@ handle_client (ACE_LSOCK_Stream &stream)
 int 
 main (int argc, char *argv[])
 {                                                                
-  char *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+  const char *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
   // Create a server.
   ACE_OS::unlink (rendezvous);
   ACE_UNIX_Addr addr (rendezvous);
