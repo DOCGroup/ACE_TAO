@@ -1,3 +1,13 @@
+Wed Oct 06 16:42:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Reactor/Misc/Misc.dsw:
+	* examples/Reactor/Misc/demuxing.dsp: Added the demuxing test
+	  project file.
+
+	* examples/Reactor/Misc/test_demuxing.cpp: MS Windows only
+	  supports a limited set of signals.  Made sure we use them in the
+	  examples.
+
 Wed Oct 06 16:20:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/CDR_File_Test.cpp (run_test): when reading, ensure
