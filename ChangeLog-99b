@@ -1,3 +1,19 @@
+Thu Nov 11 18:41:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Configuration.h:
+	* ace/Configuration.cpp:
+
+	  "path_" variable was allocated with strdup(), but deallocated
+	  with delete().  free() should be used instead.
+
+	  Added missing class members to member initializer lists.
+
+	  Changed name of export() to _export().  "export" is a C++
+	  keyword, and shouldn't be used as function name.  The import()
+	  method was changed to _import() for sake of being consistent.
+
+	  Removed duplicate template instantiations.
+
 Thu Nov 11 17:09:19 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Configuration.h:
