@@ -5597,13 +5597,13 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_MAIN main
 # endif /* ! ACE_MAIN */
 
-# if defined (ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
+# if defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
 #   if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 #     define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #   endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-# endif /* ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+# endif /* ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-# if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
+# if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
 // Rename "main ()" on platforms that don't allow it to be called "main ()".
 // Also, create an ACE_Object_Manager static instance in "main ()".
 #   include "ace/Object_Manager.h"
@@ -5661,7 +5661,7 @@ ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
 int \
 ace_main_i
 #   endif   /* ACE_PSOSIM */
-# endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+# endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_WINCE)
 #   include "ace/Object_Manager.h"
