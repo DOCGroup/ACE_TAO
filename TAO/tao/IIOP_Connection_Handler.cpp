@@ -119,6 +119,10 @@ TAO_IIOP_Connection_Handler::open (void*)
                   client, this->peer ().get_handle ()));
     }
 
+  // Set the id in the transport now that we're active.
+  // Use C-style cast b/c otherwise we get warnings on lots of compilers
+  this->transport ()->id ( (int) this->get_handle ());
+
   return 0;
 }
 
@@ -143,6 +147,7 @@ TAO_IIOP_Connection_Handler::activate (long flags,
                  THR_BOUND));
 
   // Set the id in the transport now that we're active.
+  // Use C-style cast b/c otherwise we get warnings on lots of compilers
   this->transport ()->id ((int) this->get_handle ());
 
   return TAO_IIOP_SVC_HANDLER::activate (flags,
@@ -192,7 +197,7 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->pending_upcalls_;
-  if (this->pending_upcalls_ == 0)
+  if (this->pending_upcalls_ <= 0)
     {
       if (this->is_registered ())
         {
@@ -343,7 +348,8 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     }
 
   // The upcall is done. Bump down the reference count
-  --this->pending_upcalls_;
+  if (--this->pending_upcalls_ <= 0)
+    result = -1;
 
   if (result == -1)
     return result;
