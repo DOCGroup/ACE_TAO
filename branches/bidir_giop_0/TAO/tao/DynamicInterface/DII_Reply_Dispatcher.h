@@ -30,6 +30,8 @@
 #include "dynamicinterface_export.h"
 #include "tao/Reply_Dispatcher.h"
 
+class TAO_ORB_Core;
+
 class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
   : public TAO_Reply_Dispatcher
 {
@@ -40,7 +42,8 @@ class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
   //    Reply dispatcher for DII deferred requests.
   //
 public:
-  TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req);
+  TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req,
+                                     TAO_ORB_Core *orb_core);
  // Constructor.
 
   virtual ~TAO_DII_Deferred_Reply_Dispatcher (void);
@@ -56,11 +59,8 @@ public:
   // Sets the transport for this invocation.
 
   // = The Reply_Dispatcher methods
-  virtual int dispatch_reply (CORBA::ULong reply_status,
-                              const TAO_GIOP_Version& version,
-                              IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State* message_state);
-  virtual TAO_GIOP_Message_State *message_state (void);
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &param);
+
   virtual void dispatcher_bound (TAO_Transport*);
   virtual void connection_closed (void);
 
@@ -76,7 +76,7 @@ private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
 
-  TAO_GIOP_Message_State *message_state_;
+  TAO_InputCDR reply_cdr_;
   // CDR stream for reading the input.
   // @@ Carlos : message_state should go away. All we need is the reply
   //    cdr. Is that right? (Alex).
