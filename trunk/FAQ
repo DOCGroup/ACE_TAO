@@ -1328,7 +1328,7 @@ UNIX system calls directly (regardless of whether you use ACE or not).
    	to maintain software.  Sockets and TLI are *incredibly*
    	error-prone and tedious to use, in addition to being
    	non-portable.  I've got a paper that discusses this in detail
-	at URL http://www.cs.wustl.edu/~schmidt/COOTS-95.ps.gz.
+	at URL http://www.cs.wustl.edu/~schmidt/PDF/COOTS-95.pdf
 	
 3. Incorporation with higher-level patterns and programming methods -- 
 
@@ -1584,7 +1584,7 @@ plus many more.
 You can find out more info about the ACE/CORBA integration and the
 performance issues associated with it in the following paper:
 
-http://www.cs.wustl.edu/~schmidt/COOTS-96.ps.gz
+http://www.cs.wustl.edu/~schmidt/PDF/COOTS-96.pdf
 
 ----------------------------------------
 
@@ -1639,10 +1639,10 @@ design:
 	1. $ACE_ROOT/apps/Gateway/Gateway/Channel.cpp --
 	   This Gateway application example shows the C++ code.
 
-	2. http://www.cs.wustl.edu/~schmidt/TAPOS-95.ps.gz --
+	2. http://www.cs.wustl.edu/~schmidt/PDF/TAPOS-00.pdf --
 	   This paper describes the underlying patterns.
 
-	3. http://www.cs.wustl.edu/~schmidt/OONP-tutorial4.ps.gz 
+	3. http://www.cs.wustl.edu/~schmidt/PDF/OONP-tutorial4.pdf
 	   -- This tutorial explains the source code and 
 	   the patterns.
 

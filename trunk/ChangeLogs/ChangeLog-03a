@@ -1,3 +1,9 @@
+Sun Jul 14 20:14:16 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* FAQ: Fixed the use of "*.ps.gz" files.  Thanks to 
+	  Carol Hunsicker <carol.hunsicker@lmco.com> for pointing this
+ 	  out.
+
 Sun Jul 14 01:55:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Message_Block.i (reset_allocators): Reset the allocators in

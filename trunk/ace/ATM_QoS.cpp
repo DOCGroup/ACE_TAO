@@ -196,8 +196,8 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
                 15,
                 ACE_DEFAULT_THREAD_PRIORITY );
 
-  qos_.sending_flowspec( send_fspec );
-  qos_.receiving_flowspec( recv_fspec );
+  qos_.sending_flowspec (send_fspec);
+  qos_.receiving_flowspec (recv_fspec);
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (pktSize);
