@@ -280,9 +280,15 @@ Mpeg_Server::run ()
 	/*
 	fprintf(stderr, "Server forked a AudioServer process.\n");
 	*/
-	if (Mpeg_Global::live_video) LeaveLiveVideo();
-        AudioServer(cfd, dfd,this->rttag_, max_pkt_size);
-	fprintf(stderr, "Weird: audio server returned.\n");
+	if (Mpeg_Global::live_video) 
+          LeaveLiveVideo ();
+
+        AudioServer (cfd, 
+                     dfd, 
+                     this->rttag_, 
+                     max_pkt_size);
+	fprintf (stderr, 
+                 "Weird: audio server returned.\n");
       }
       exit(1);
     }
