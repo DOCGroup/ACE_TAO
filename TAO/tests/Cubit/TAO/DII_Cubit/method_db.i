@@ -7,11 +7,10 @@
 
 static void
 is_a_skel (CORBA::ServerRequest &req,
-           CORBA::Object_ptr    obj,
+           void */* obj */,
+           void */* context */,
            CORBA::Environment   &env)
 {
-  ACE_UNUSED_ARG (obj);
-  
   CORBA::NVList_ptr nvlist;
   CORBA::NamedValue_ptr nv;
   CORBA::Any temp_value (CORBA::_tc_string);
@@ -21,7 +20,7 @@ is_a_skel (CORBA::ServerRequest &req,
 
   req.params (nvlist, env);
 
-  if (env.exception () != 0) 
+  if (env.exception () != 0)
     {
       dexc (env, "is_a_skel, get params");
       return;
@@ -42,7 +41,7 @@ is_a_skel (CORBA::ServerRequest &req,
   dexc (env, "_is_a, result");
 }
 
-static const TAO_operation_db_entry cubit_operations[] = 
+static const TAO_operation_db_entry cubit_operations[] =
 {
   { "_is_a", &is_a_skel },
   { "cube_octet", &_skel_Cubit::_cube_octet_skel },
@@ -53,5 +52,3 @@ static const TAO_operation_db_entry cubit_operations[] =
   { "please_exit", &_skel_Cubit::_please_exit_skel },
   { 0, 0 }
 };
-   
-
