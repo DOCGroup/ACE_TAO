@@ -272,9 +272,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -315,11 +315,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
+ Trader/Constraint_Nodes.h \
  Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -336,26 +336,26 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
  Trader/Trader_Constraint_Visitors.h Trader/Trader.h \
  Trader/Interpreter_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Trader_Utils.h
 
 .obj/Constraint_Nodes.o .obj/Constraint_Nodes.so .shobj/Constraint_Nodes.o .shobj/Constraint_Nodes.so: Trader/Constraint_Nodes.cpp \
@@ -543,9 +543,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -586,12 +586,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
+ Trader/Constraint_Nodes.h
 
 .obj/Constraint_Visitors.o .obj/Constraint_Visitors.so .shobj/Constraint_Visitors.o .shobj/Constraint_Visitors.so: Trader/Constraint_Visitors.cpp \
  Trader/Constraint_Visitors.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -805,7 +805,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -814,12 +814,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  Trader/Constraint_Nodes.h Trader/Interpreter_Utils_T.h \
  Trader/Interpreter_Utils_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils_T.h \
+ Trader/Constraint_Visitors.h \
  $(TAO_ROOT)/tao/DynamicAny/DynSequence_i.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -1014,9 +1014,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -1057,11 +1057,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
+ Trader/Constraint_Nodes.h \
  Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1078,17 +1078,17 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i
 
 .obj/Constraint_y.o .obj/Constraint_y.so .shobj/Constraint_y.o .shobj/Constraint_y.so: Trader/Constraint_y.cpp \
  $(ACE_ROOT)/ace/OS.h \
@@ -1275,9 +1275,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -1318,11 +1318,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
+ Trader/Constraint_Nodes.h \
  Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1339,17 +1339,17 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i
 
 .obj/Offer_Database.o .obj/Offer_Database.so .shobj/Offer_Database.o .shobj/Offer_Database.so: Trader/Offer_Database.cpp Trader/Offer_Database.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1567,7 +1567,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1576,9 +1576,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1595,24 +1595,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Offer_Iterators.h Trader/Trader_Utils.h \
  Trader/Offer_Database.cpp
 
@@ -1832,7 +1832,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1841,9 +1841,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1860,24 +1860,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i
 
 .obj/Offer_Iterators_T.o .obj/Offer_Iterators_T.so .shobj/Offer_Iterators_T.o .shobj/Offer_Iterators_T.so: Trader/Offer_Iterators_T.cpp \
  Trader/Offer_Iterators_T.h \
@@ -2097,7 +2097,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2106,9 +2106,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2125,24 +2125,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Offer_Database.h Trader/Offer_Database.cpp \
  Trader/Offer_Iterators_T.cpp
 
@@ -2363,7 +2363,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2372,9 +2372,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2391,24 +2391,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i
 
 .obj/Trader.o .obj/Trader.so .shobj/Trader.o .shobj/Trader.so: Trader/Trader.cpp Trader/Trader.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2626,7 +2626,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2635,9 +2635,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2654,32 +2654,32 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Offer_Iterators_T.h Trader/Offer_Iterators.h \
  Trader/Trader_Utils.h Trader/Offer_Database.h \
  Trader/Offer_Database.cpp Trader/Offer_Iterators_T.cpp \
  Trader/Trader_Interfaces.h Trader/Constraint_Interpreter.h \
  Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
+ Trader/Interpreter_Utils.h \
+ Trader/Constraint_Nodes.h \
  Trader/Interpreter.h Trader/Trader_T.h Trader/Trader_T.cpp \
  Trader/Trader_Interfaces.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
@@ -2906,7 +2906,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2915,9 +2915,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2934,28 +2934,28 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Constraint_Interpreter.h Trader/Constraint_Nodes.h \
  Trader/Constraint_Tokens.h Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
+ Trader/Interpreter_Utils.h \
+ Trader/Constraint_Nodes.h \
  Trader/Interpreter.h Trader/Offer_Iterators_T.h \
  Trader/Offer_Iterators.h Trader/Offer_Database.h \
  Trader/Offer_Database.cpp Trader/Offer_Iterators_T.cpp \
@@ -2970,7 +2970,7 @@ realclean: clean
  Trader/Trader_Constraint_Visitors.h \
  $(ACE_ROOT)/ace/pre.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3184,7 +3184,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3193,12 +3193,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  Trader/Trader.h Trader/Interpreter_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3215,24 +3215,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Trader_Utils.h
 
 .obj/Trader_T.o .obj/Trader_T.so .shobj/Trader_T.o .shobj/Trader_T.so: Trader/Trader_T.cpp Trader/Trader_T.h \
@@ -3451,7 +3451,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3460,9 +3460,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3479,31 +3479,31 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
  Trader/Offer_Database.h Trader/Offer_Iterators.h \
  Trader/Trader_Utils.h Trader/Offer_Database.cpp Trader/Trader_T.cpp \
  Trader/Trader_Interfaces.h Trader/Constraint_Interpreter.h \
  Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
+ Trader/Interpreter_Utils.h \
+ Trader/Constraint_Nodes.h \
  Trader/Interpreter.h Trader/Offer_Iterators_T.h \
  Trader/Offer_Iterators_T.cpp Trader/Trader_Interfaces.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
@@ -3728,7 +3728,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3737,9 +3737,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3756,24 +3756,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i
 
 .obj/Interpreter.o .obj/Interpreter.so .shobj/Interpreter.o .shobj/Interpreter.so: Trader/Interpreter.cpp Trader/Interpreter.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3959,9 +3959,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -4002,10 +4002,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
+ Trader/Constraint_Nodes.h
 
 .obj/Interpreter_Utils_T.o .obj/Interpreter_Utils_T.so .shobj/Interpreter_Utils_T.o .shobj/Interpreter_Utils_T.so: Trader/Interpreter_Utils_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.h \
+ Trader/Interpreter_Utils_T.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4188,9 +4188,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Interpreter_Utils_T.cpp \
+ Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -4223,7 +4223,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4232,8 +4232,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  $(TAO_ROOT)/tao/DynamicAny/DynSequence_i.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -4459,7 +4459,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h
+ Trader/trading_export.h
 
 .obj/Trading_Loader.o .obj/Trading_Loader.so .shobj/Trading_Loader.o .shobj/Trading_Loader.so: Trader/Trading_Loader.cpp Trader/Trading_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -4613,8 +4613,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ IOR_Multicast.h \
+ svc_utils_export.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -4683,8 +4683,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Trader.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -4699,7 +4699,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
+ Trader/trading_export.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4708,9 +4708,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ CosTradingS.h \
+ CosTradingC.h \
+ CosTradingC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -4723,25 +4723,25 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
+ CosTradingS_T.h \
+ CosTradingS_T.i \
+ CosTradingS_T.cpp \
+ CosTradingS.i \
+ CosTradingReposS.h \
+ CosTradingReposC.h \
+ CosTradingReposC.i \
+ CosTradingReposS_T.h \
+ CosTradingReposS_T.i \
+ CosTradingReposS_T.cpp \
+ CosTradingReposS.i \
+ CosTradingDynamicS.h \
+ CosTradingDynamicC.h \
+ CosTradingDynamicC.i \
+ CosTradingDynamicS_T.h \
+ CosTradingDynamicS_T.i \
+ CosTradingDynamicS_T.cpp \
+ CosTradingDynamicS.i \
+ Trader/Service_Type_Repository.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \

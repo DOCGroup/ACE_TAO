@@ -72,12 +72,12 @@ realclean: clean
 
 
 .obj/RTEventLogFactory_i.o .obj/RTEventLogFactory_i.so .shobj/RTEventLogFactory_i.o .shobj/RTEventLogFactory_i.so: Log/RTEventLogFactory_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS.h \
+ Log/RTEventLogFactory_i.h \
+ RTEventLogAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ RtecEventChannelAdminS.h \
+ RtecEventCommS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -225,7 +225,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -280,8 +280,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -298,55 +298,55 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/rteventlog_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.i \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommC.h \
+ RtecEventCommC.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecBaseS.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ DsLogAdminS.h \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ RTEventLogAdminC.h \
+ Log/rteventlog_export.h \
+ RTEventLogAdminC.i \
+ RTEventLogAdminS_T.h \
+ RTEventLogAdminS_T.i \
+ RTEventLogAdminS_T.cpp \
+ RTEventLogAdminS.i \
+ Log/LogMgr_i.h \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -387,85 +387,85 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/RTEventLog_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/RTEventLogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxySupplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxySupplier.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.h \
+ Log/LogNotification.h \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ RtecSchedulerS.h \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ RtecSchedulerC.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ Log/RTEventLog_i.h \
+ Event/EC_Event_Channel.h \
+ Event/EC_Factory.h \
+ Event/EC_Factory.i \
+ Event/EC_Defaults.h \
+ Event/EC_Event_Channel.i \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ Log/RTEventLogNotification.h \
+ Event/EC_ConsumerAdmin.h \
+ Event/EC_ProxySupplier.h \
+ Event/EC_Filter.h \
+ Event/EC_Filter.i \
+ Event/EC_ProxySupplier.i \
+ ESF/ESF_Peer_Admin.h \
+ ESF/ESF_Proxy_Admin.h \
+ ESF/ESF_Proxy_Collection.h \
+ ESF/ESF_Proxy_Collection.i \
+ ESF/ESF_Proxy_Collection.cpp \
+ ESF/ESF_Worker.h \
+ ESF/ESF_Worker.i \
+ ESF/ESF_Worker.cpp \
+ ESF/ESF_Proxy_Admin.i \
+ ESF/ESF_Proxy_Admin.cpp \
+ ESF/ESF_Shutdown_Proxy.h \
+ ESF/ESF_Shutdown_Proxy.i \
+ ESF/ESF_Shutdown_Proxy.cpp \
+ ESF/ESF_Peer_Admin.i \
+ ESF/ESF_Peer_Admin.cpp \
+ ESF/ESF_Peer_Workers.h \
+ ESF/ESF_Peer_Workers.i \
+ ESF/ESF_Peer_Workers.cpp \
+ Event/EC_ConsumerAdmin.i \
+ Event/EC_Default_Factory.h \
+ Event/EC_Default_Factory.i \
+ Event/EC_ProxyConsumer.h \
+ Event/EC_ProxyConsumer.i \
+ Event_Utilities.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ Event_Utilities.i \
+ Sched/Config_Scheduler.h \
+ Sched/Scheduler_Generic.h \
+ Sched/Scheduler.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
+ Sched/Scheduler.i \
+ Sched/Scheduler_Generic.i \
+ Sched/Config_Scheduler.i \
+ Event/Module_Factory.h \
+ Event/old_event_export.h \
+ Event/Event_Channel.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ Scheduler_Factory.h \
+ Scheduler_Factory.i \
+ Event/Local_ESTypes.h \
+ Event/Local_ESTypes.i \
+ Event/Timer_Module.h \
+ Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Exit.h \
@@ -497,10 +497,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
+ Event/RT_Task.i \
+ Event/Timer_Module.i \
+ Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
@@ -517,15 +517,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i
+ Event/Event_Manip.h \
+ Event/Event_Manip.i \
+ Event/Event_Channel.i
 
 .obj/RTEventLog_i.o .obj/RTEventLog_i.so .shobj/RTEventLog_i.o .shobj/RTEventLog_i.so: Log/RTEventLog_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/RTEventLog_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
+ Log/RTEventLog_i.h \
+ DsLogAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -673,7 +673,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -728,8 +728,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -746,56 +746,56 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/rteventlog_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ RTEventLogAdminS.h \
+ RtecEventChannelAdminS.h \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.i \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommC.h \
+ RtecEventCommC.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecBaseS.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ RTEventLogAdminC.h \
+ Log/rteventlog_export.h \
+ RTEventLogAdminC.i \
+ RTEventLogAdminS_T.h \
+ RTEventLogAdminS_T.i \
+ RTEventLogAdminS_T.cpp \
+ RTEventLogAdminS.i \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -836,85 +836,85 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Dispatching.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Dispatching.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxySupplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxySupplier.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_QOS_Info.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_QOS_Info.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Timeout_Filter.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Timeout_Generator.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h \
+ Log/LogNotification.h \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ Event/EC_Event_Channel.h \
+ Event/EC_Factory.h \
+ Event/EC_Factory.i \
+ Event/EC_Defaults.h \
+ Event/EC_Event_Channel.i \
+ Log/LogMgr_i.h \
+ Event_Utilities.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ Event_Utilities.i \
+ Event/EC_Default_Factory.h \
+ Event/EC_Default_Factory.i \
+ Event/EC_Dispatching.h \
+ Event/EC_Dispatching.i \
+ Event/EC_ConsumerAdmin.h \
+ Event/EC_ProxySupplier.h \
+ Event/EC_Filter.h \
+ Event/EC_Filter.i \
+ Event/EC_ProxySupplier.i \
+ ESF/ESF_Peer_Admin.h \
+ ESF/ESF_Proxy_Admin.h \
+ ESF/ESF_Proxy_Collection.h \
+ ESF/ESF_Proxy_Collection.i \
+ ESF/ESF_Proxy_Collection.cpp \
+ ESF/ESF_Worker.h \
+ ESF/ESF_Worker.i \
+ ESF/ESF_Worker.cpp \
+ ESF/ESF_Proxy_Admin.i \
+ ESF/ESF_Proxy_Admin.cpp \
+ ESF/ESF_Shutdown_Proxy.h \
+ ESF/ESF_Shutdown_Proxy.i \
+ ESF/ESF_Shutdown_Proxy.cpp \
+ ESF/ESF_Peer_Admin.i \
+ ESF/ESF_Peer_Admin.cpp \
+ ESF/ESF_Peer_Workers.h \
+ ESF/ESF_Peer_Workers.i \
+ ESF/ESF_Peer_Workers.cpp \
+ Event/EC_ConsumerAdmin.i \
+ Event/EC_SupplierAdmin.h \
+ Event/EC_ProxyConsumer.h \
+ Event/EC_ProxyConsumer.i \
+ Event/EC_SupplierAdmin.i \
+ Event/EC_Timeout_Generator.h \
+ Event/EC_Timeout_Filter.h \
+ Event/EC_QOS_Info.h \
+ Event/EC_QOS_Info.i \
+ Event/EC_Timeout_Filter.i \
+ Event/EC_Timeout_Generator.i \
+ Event/EC_ObserverStrategy.h \
  $(ACE_ROOT)/ace/RB_Tree.h \
  $(ACE_ROOT)/ace/RB_Tree.i \
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerControl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerControl.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_SupplierControl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_SupplierControl.i \
+ Event/EC_ObserverStrategy.i \
+ Event/EC_ConsumerControl.h \
+ Event/EC_ConsumerControl.i \
+ Event/EC_SupplierControl.h \
+ Event/EC_SupplierControl.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/RTEventLogNotification.o .obj/RTEventLogNotification.so .shobj/RTEventLogNotification.o .shobj/RTEventLogNotification.so: Log/RTEventLogNotification.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
+ Log/LogNotification.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1062,7 +1062,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1117,8 +1117,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1135,98 +1135,98 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/RTEventLogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxySupplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxySupplier.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ Log/RTEventLogNotification.h \
+ Event/EC_ConsumerAdmin.h \
+ Event/EC_ProxySupplier.h \
+ RtecEventChannelAdminS.h \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.i \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommC.h \
+ RtecEventCommC.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecBaseS.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/EC_Filter.h \
+ Event/EC_Filter.i \
+ Event/EC_ProxySupplier.i \
+ ESF/ESF_Peer_Admin.h \
+ ESF/ESF_Proxy_Admin.h \
+ ESF/ESF_Proxy_Collection.h \
+ ESF/ESF_Proxy_Collection.i \
+ ESF/ESF_Proxy_Collection.cpp \
+ ESF/ESF_Worker.h \
+ ESF/ESF_Worker.i \
+ ESF/ESF_Worker.cpp \
+ ESF/ESF_Proxy_Admin.i \
+ ESF/ESF_Proxy_Admin.cpp \
+ ESF/ESF_Shutdown_Proxy.h \
+ ESF/ESF_Shutdown_Proxy.i \
+ ESF/ESF_Shutdown_Proxy.cpp \
+ ESF/ESF_Peer_Admin.i \
+ ESF/ESF_Peer_Admin.cpp \
+ ESF/ESF_Peer_Workers.h \
+ ESF/ESF_Peer_Workers.i \
+ ESF/ESF_Peer_Workers.cpp \
+ Event/EC_ConsumerAdmin.i \
+ Event/EC_Event_Channel.h \
+ Event/EC_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/rteventlog_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RTEventLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
+ Event/EC_Factory.i \
+ Event/EC_Defaults.h \
+ Event/EC_Event_Channel.i \
+ RTEventLogAdminS.h \
+ RTEventLogAdminC.h \
+ Log/rteventlog_export.h \
+ RTEventLogAdminC.i \
+ RTEventLogAdminS_T.h \
+ RTEventLogAdminS_T.i \
+ RTEventLogAdminS_T.cpp \
+ RTEventLogAdminS.i \
+ Event/EC_Default_Factory.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
@@ -1244,31 +1244,31 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ Event/EC_Default_Factory.i \
+ Event/EC_ProxyConsumer.h \
+ Event/EC_ProxyConsumer.i \
+ Time_Utilities.h \
+ Time_Utilities.i \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Dispatching.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Dispatching.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter_Builder.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter_Builder.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_QOS_Info.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_QOS_Info.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerControl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerControl.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.cpp
+ Event_Utilities.h \
+ Event_Service_Constants.h \
+ Event_Utilities.i \
+ Event/EC_Dispatching.h \
+ Event/EC_Dispatching.i \
+ Event/EC_Filter_Builder.h \
+ Event/EC_Filter_Builder.i \
+ Event/EC_QOS_Info.h \
+ Event/EC_QOS_Info.i \
+ Event/EC_Scheduling_Strategy.h \
+ Event/EC_Scheduling_Strategy.i \
+ Event/EC_ConsumerControl.h \
+ Event/EC_ConsumerControl.i \
+ ESF/ESF_RefCount_Guard.h \
+ ESF/ESF_RefCount_Guard.i \
+ ESF/ESF_RefCount_Guard.cpp \
+ ESF/ESF_Proxy_RefCount_Guard.h \
+ ESF/ESF_Proxy_RefCount_Guard.i \
+ ESF/ESF_Proxy_RefCount_Guard.cpp
 
 .obj/RTEventLogAdminS.o .obj/RTEventLogAdminS.so .shobj/RTEventLogAdminS.o .shobj/RTEventLogAdminS.so: RTEventLogAdminS.cpp RTEventLogAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
