@@ -88,6 +88,21 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
+
+  virtual int visit_component (be_component *node);
+  // visit a component node
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit a forward declared component node
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit an eventtype node
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit a forward declared eventtype node
+
+  virtual int visit_home (be_home *node);
+  // visit a component home
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_REQUEST_INFO_ARGLIST_H_ */

@@ -61,15 +61,18 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the Any <<= and >>= operator declarations.
-  os->indent ();
-  *os << "// Any operators for interface " << node->name () << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
-      << "_ptr);" << be_nl;
+      << "_ptr); // copying" << be_nl;
+  *os << be_global->stub_export_macro () << " void"
+      << " operator<<= (CORBA::Any &, " << node->name ()
+      << "_ptr *); // non-copying" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
-      << node->name () << " *&);\n";
+      << node->name () << " *&);";
 
   node->cli_hdr_any_op_gen (1);
   return 0;

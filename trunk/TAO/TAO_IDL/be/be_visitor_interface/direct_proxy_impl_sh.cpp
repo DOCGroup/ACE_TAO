@@ -68,7 +68,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   *os << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
 
   // Dtor
-  *os << "virtual ~" << node->direct_proxy_impl_name () << " (void) { }" << be_nl << be_nl;
+  *os << "virtual ~" << node->direct_proxy_impl_name () << " (void) {}";
 
   if (this->visit_scope (node) == -1)
     {
@@ -141,5 +141,12 @@ be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
     }
 
   return 0;
+}
+
+int be_visitor_interface_direct_proxy_impl_sh::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
 }
 

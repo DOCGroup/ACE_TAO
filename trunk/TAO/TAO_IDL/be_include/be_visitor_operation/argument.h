@@ -51,7 +51,6 @@ public:
 
   virtual int visit_argument (be_argument *node);
   // visit argument
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGUMENT_H_ */

@@ -53,6 +53,10 @@ int be_visitor_args_vardecl_ss::visit_argument (be_argument *node)
                         -1);
     }
 
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl;
+
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
   if (bt->accept (this) == -1)
@@ -86,27 +90,23 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
       *os << bt->name () << " " << arg->local_name () << ";" << be_nl
           << bt->name () << "_forany _tao_forany_"
           << arg->local_name () << " (" << be_idt << be_idt_nl
           << arg->local_name () << be_uidt_nl
-          << ");\n" << be_uidt;
+          << ");" << be_uidt;
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       if (node->size_type () == be_type::VARIABLE)
         {
           *os << bt->name () << "_var " << arg->local_name ()
-              << ";\n\n";
+              << ";";
         }
       else
         {
           *os << bt->name () << " " << arg->local_name ()
-              << ";\n\n";
+              << ";";
         }
 
       break;
@@ -135,9 +135,7 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
-      os->indent ();
-
-      *os << bt->name () << " " << arg->local_name () << ";\n";
+      *os << bt->name () << " " << arg->local_name () << ";";
 
       break;
     }
@@ -164,16 +162,12 @@ int be_visitor_args_vardecl_ss::visit_interface (be_interface *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
+      *os << bt->name () << "_var " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
+          << arg->local_name () << ";";
 
       break;
     }
@@ -200,16 +194,12 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
+      *os << bt->name () << "_var " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
+          << arg->local_name () << ";";
 
       break;
     }
@@ -237,16 +227,12 @@ int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
+      *os << bt->name () << "_var " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
+          << arg->local_name () << ";";
 
       break;
     }
@@ -273,16 +259,12 @@ int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
+      *os << bt->name () << "_var " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
+          << arg->local_name () << ";";
 
       break;
     }
@@ -313,16 +295,12 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          os->indent ();
-
-          *os << bt->name () << " " << arg->local_name () << ";\n";
+          *os << bt->name () << " " << arg->local_name () << ";";
 
           break;
         case AST_Argument::dir_OUT:
-          os->indent ();
-
           *os << bt->name () << "_var "
-              << arg->local_name () << ";\n";
+              << arg->local_name () << ";";
 
           break;
         }
@@ -334,17 +312,12 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          os->indent ();
-
           *os << bt->name () << "_var " << arg->local_name ()
-
-              << ";\n";
+              << ";";
           break;
         case AST_Argument::dir_OUT:
-          os->indent ();
-
           *os << bt->name () << "_var "
-              << arg->local_name () << ";\n";
+              << arg->local_name () << ";";
 
           break;
         }
@@ -356,8 +329,6 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          os->indent ();
-
           *os << bt->name () << " " << arg->local_name ();
 
           // @@@ (JP) This is a hack for VC7, which gets an internal
@@ -369,7 +340,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
               *os << " = 0";
             }
 
-          *os << ";\n";
+          *os << ";";
 
           break;
         }
@@ -397,14 +368,10 @@ int be_visitor_args_vardecl_ss::visit_sequence (be_sequence *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << " " << arg->local_name () << ";\n";
+      *os << bt->name () << " " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       *os << bt->name () << "_var "
           << arg->local_name () << ";" << be_nl;
 
@@ -423,28 +390,24 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
       if (node->width () == (long) sizeof (char))
         {
-          *os << "CORBA::String_var " << arg->local_name () << ";\n";
+          *os << "CORBA::String_var " << arg->local_name () << ";";
         }
       else
         {
-          *os << "CORBA::WString_var " << arg->local_name () << ";\n";
+          *os << "CORBA::WString_var " << arg->local_name () << ";";
         }
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       if (node->width () == (long )sizeof (char))
         {
-          *os << "CORBA::String_var " << arg->local_name () << ";\n";
+          *os << "CORBA::String_var " << arg->local_name () << ";";
         }
       else
         {
-          *os << "CORBA::WString_var " << arg->local_name () << ";\n";
+          *os << "CORBA::WString_var " << arg->local_name () << ";";
         }
 
       break;
@@ -472,22 +435,18 @@ int be_visitor_args_vardecl_ss::visit_structure (be_structure *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << " " << arg->local_name () << ";\n";
+      *os << bt->name () << " " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       if (node->size_type () == be_type::VARIABLE)
         {
           *os << bt->name () << "_var "
-              << arg->local_name () << ";\n";
+              << arg->local_name () << ";";
         }
       else
         {
-          *os << bt->name () << " " << arg->local_name () << ";\n";
+          *os << bt->name () << " " << arg->local_name () << ";";
         }
 
       break;
@@ -515,23 +474,19 @@ int be_visitor_args_vardecl_ss::visit_union (be_union *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      os->indent ();
-
-      *os << bt->name () << " " << arg->local_name () << ";\n";
+      *os << bt->name () << " " << arg->local_name () << ";";
 
       break;
     case AST_Argument::dir_OUT:
-      os->indent ();
-
       if (node->size_type () == be_type::VARIABLE)
         {
           *os << bt->name () << "_var "
-              << arg->local_name () << ";\n";
+              << arg->local_name () << ";";
 
         }
       else
         {
-          *os << bt->name () << " " << arg->local_name () << ";\n";
+          *os << bt->name () << " " << arg->local_name () << ";";
         }
 
       break;
@@ -556,3 +511,37 @@ int be_visitor_args_vardecl_ss::visit_typedef (be_typedef *node)
   this->ctx_->alias (0);
   return 0;
 }
+
+int
+be_visitor_args_vardecl_ss::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_args_vardecl_ss::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_args_vardecl_ss::visit_eventtype (
+    be_eventtype *node
+  )
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_args_vardecl_ss::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+

@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_root.h"
 #include "ast_extern.h"
 #include "utl_string.h"
+#include "utl_identifier.h"
 #include "drv_extern.h"
 #include "ace/Process.h"
 #include "../tao/Version.h"
@@ -99,7 +100,7 @@ extern TAO_IDL_BE_Export void BE_abort (void);
 // Initialize the BE. The protocol requires only that this routine
 // return an instance of AST_Generator (or a subclass thereof).
 AST_Generator *
-BE_init (void)
+BE_gen (void)
 {
   tao_cg = TAO_CODEGEN::instance ();
 
@@ -109,6 +110,20 @@ BE_init (void)
                   0);
 
   return g;
+}
+
+void
+BE_init (void)
+{
+  Identifier id ("void");
+  UTL_ScopedName n (&id,
+                    0);
+  AST_Decl *d = 
+    idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                          AST_Expression::EV_void
+                                        );
+  be_global->void_type (AST_PredefinedType::narrow_from_decl (d));
+  id.destroy ();
 }
 
 // Print out a version string for the BE.
@@ -229,7 +244,7 @@ DRV_drive (const char *s)
   DRV_pre_proc (s);
 
   // Initialize BE.
-  AST_Generator *gen = BE_init ();
+  AST_Generator *gen = BE_gen ();
 
   if (gen == 0)
     {
@@ -247,6 +262,8 @@ DRV_drive (const char *s)
 
   // Initialize FE.
   FE_init ();
+  // Initialize BE.
+  BE_init ();
 
   // Parse.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)

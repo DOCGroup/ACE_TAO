@@ -46,15 +46,16 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // generate the CDR << and >> operators
-  os->indent ();
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
-      << node->name () << " &);\n";
+      << node->name () << " &);";
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

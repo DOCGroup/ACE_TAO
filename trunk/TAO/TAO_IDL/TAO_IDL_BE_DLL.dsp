@@ -142,6 +142,14 @@ SOURCE=.\be\be_enum_val.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_eventtype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_eventtype_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_exception.cpp
 # End Source File
 # Begin Source File
@@ -302,6 +310,10 @@ SOURCE=.\be\be_visitor_attribute.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_ccm_pre_proc.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_component.cpp
 # End Source File
 # Begin Source File
@@ -323,6 +335,14 @@ SOURCE=.\be\be_visitor_decl.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_enum.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_eventtype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_eventtype_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -447,6 +467,14 @@ SOURCE=.\be_include\be_enum.h
 # Begin Source File
 
 SOURCE=.\be_include\be_enum_val.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_eventtype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_eventtype_fwd.h
 # End Source File
 # Begin Source File
 
@@ -606,6 +634,10 @@ SOURCE=.\be_include\be_visitor_attribute.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_ccm_pre_proc.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_component.h
 # End Source File
 # Begin Source File
@@ -627,6 +659,14 @@ SOURCE=.\be_include\be_visitor_decl.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_enum.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_eventtype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_eventtype_fwd.h
 # End Source File
 # Begin Source File
 

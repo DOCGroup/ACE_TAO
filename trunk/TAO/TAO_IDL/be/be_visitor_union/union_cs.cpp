@@ -88,16 +88,12 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Now generate the operations on the union such as the copy constructor
   // and the assignment operator.
 
-  *os << "// *************************************************************"
-      << be_nl;
-  *os << "// Operations for union " << node->name () << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
-  *os << "// *************************************************************\n\n";
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the copy constructor and the assignment operator here.
-  os->indent ();
-  *os << node->name () << "::" << node->local_name () << " (void)" << be_nl
+  *os << be_nl << be_nl
+      << node->name () << "::" << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
       << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
       << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
@@ -174,15 +170,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_uidt_nl << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "// destructor" << be_nl
-      << node->name () << "::~" << node->local_name ()
+  *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "// finalize" << be_nl
+      << "// Finalize." << be_nl
       << "this->_reset (this->disc_, 1);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  if (!node->is_local ())
+  if (be_global->any_support ())
     {
       *os << "void "
           << node->name ()
@@ -200,8 +195,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
 
   // Assignment operator.
-  os->indent ();
-  *os << "// assignment operator" << be_nl;
   *os << node->name () << " &" << be_nl;
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &u)" << be_nl;
@@ -250,7 +243,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
   os->indent ();
-  *os << "// reset method to reset old values of a union" << be_nl;
+  *os << "// Reset method to reset old values of a union." << be_nl;
   *os << "void " << node->name () << "::_reset (" << bt->name ()
       << ", CORBA::Boolean /*finalize*/)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -281,7 +274,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl << "}" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   if (!node->is_local () && be_global->tc_support ())
     {

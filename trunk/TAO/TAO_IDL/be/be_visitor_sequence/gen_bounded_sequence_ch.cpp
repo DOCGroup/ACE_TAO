@@ -60,19 +60,20 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
 
-  *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro () 
+      << " " << class_name << be_idt_nl
       << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "// = Initialization and termination methods." << be_nl;
+      << "public:" << be_idt_nl;
 
   // default Constructor
   *os << class_name << " (void);" << be_nl;
@@ -162,11 +163,11 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "CORBA::Boolean release = 0" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl;
 
-  *os << "};" << be_nl;
+  *os << "};";
 
-  os->gen_endif (); // endif macro
+  os->gen_endif ();
 
-  // generate #endif for AHETI
+  // generate #endif for AHETI.
   os->gen_endif_AHETI();
 
   return 0;

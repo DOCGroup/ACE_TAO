@@ -24,4 +24,9 @@
 
 #include "be_visitor_decl.h"
 
-#endif
+#include "be_visitor_component_fwd/component_fwd_ch.h"
+#include "be_visitor_component_fwd/any_op_ch.h"
+#include "be_visitor_component_fwd/cdr_op_ch.h"
+#include "be_visitor_component_fwd/cdr_op_ci.h"
+
+#endif /* TAO_BE_VISITOR_COMPONENT_FWD_H */

@@ -40,7 +40,9 @@ int
 be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
 {
   // Already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_cdr_op_gen () || node->imported ())
+  if (node->cli_stub_cdr_op_gen () 
+      || node->imported ()
+      || ! node->is_defined ())
     {
       return 0;
     }
@@ -56,6 +58,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  node->cli_stub_cdr_op_gen (I_TRUE);
 
   if (this->visit_scope (node) == -1)
     {
@@ -66,7 +69,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //  Set the sub state as generating code for the output operator.
@@ -110,6 +113,50 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       visitor.visit_valuetype (node);
     }
 
-  node->cli_stub_cdr_op_gen (I_TRUE);
   return 0;
 }
+
+// @@@ (JP) The following three methods are a hack to get CDR
+// operators generated for anonymous array and sequence 
+// valuetype members. This should be done like it is in structs,
+// but part of that mechanism is used by valuetypes for 
+// generating code to marshal the state. Someday this should
+// be untangled and made consistent.
+
+int
+be_visitor_valuetype_cdr_op_cs::visit_field (be_field *node)
+{
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
+  if (bt == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_field - "
+                         "Bad field type\n"),
+                        -1);
+    }
+
+  // Save the node.
+  this->ctx_->node (node);
+
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cdr_op_ci::"
+                         "visit_field - "
+                         "codegen for field type failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_valuetype_cdr_op_cs::visit_sequence (be_sequence *node)
+{
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor_sequence_cdr_op_cs visitor (&ctx);
+  return node->accept (&visitor);
+}
+

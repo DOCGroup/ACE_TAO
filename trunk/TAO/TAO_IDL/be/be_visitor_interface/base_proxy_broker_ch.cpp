@@ -72,3 +72,11 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (
 
   return 0;
 }
+
+int be_visitor_interface_base_proxy_broker_ch::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+

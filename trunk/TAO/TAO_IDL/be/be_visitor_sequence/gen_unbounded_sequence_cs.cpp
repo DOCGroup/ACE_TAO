@@ -97,15 +97,15 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// "__FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
-  os->indent ();
 
   // allocate_buffer
-  *os << "void" << be_nl
+  *os << be_nl << be_nl 
+      << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
 
@@ -114,65 +114,67 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
   *os << "* tmp = 0;" << be_nl
       << "tmp = " << class_name << "::allocbuf (length);" << be_nl
       << be_nl
-      << "if (this->buffer_ != 0)" << be_nl
+      << "if (this->buffer_ != 0)" << be_idt_nl
       << "{" << be_idt_nl;
 
   bt->accept (&visitor);
 
-  *os <<" *old = ACE_reinterpret_cast (";
+  *os <<" *old =" << be_idt_nl
+      << "ACE_reinterpret_cast (";
 
   bt->accept (&visitor);
 
-  *os << " *,this->buffer_);" << be_nl
-      << be_nl
-      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl;
+  *os << " *, this->buffer_);" << be_uidt_nl << be_nl
+      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (pt->node_type () == AST_Decl::NT_array)
     {
       bt->accept (&visitor);
 
-      *os << "_var::copy (tmp[i], old[i]);" << be_uidt_nl;
+      *os << "_var::copy (tmp[i], old[i]);";
     }
   else
     {
-      *os << "tmp[i] = old[i];" << be_uidt_nl;
+      *os << "tmp[i] = old[i];";
     }
 
-  *os << be_nl
+  *os << be_uidt_nl << "}" << be_uidt_nl << be_nl
       << "if (this->release_)" << be_idt_nl
-      << class_name << "::freebuf (old);" << be_uidt_nl << be_uidt_nl
-      << "}" << be_nl
+      << "{" << be_idt_nl
+      << class_name << "::freebuf (old);" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "this->buffer_ = tmp;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+      << "}" << be_nl << be_nl;
 
   // deallocate_buffer
   *os << "void" << be_nl
       << full_class_name << "::_deallocate_buffer (void)" << be_nl
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl
-      << be_nl;
+      << "{" << be_idt_nl
+      << "return;" << be_uidt_nl 
+      << "}" << be_uidt_nl << be_nl;
 
   bt->accept (&visitor);
 
-  *os <<" *tmp = ACE_reinterpret_cast (";
+  *os <<" *tmp =" << be_idt_nl
+      << "ACE_reinterpret_cast (";
 
   bt->accept (&visitor);
 
-  *os << " *,this->buffer_);" << be_nl
-      << be_nl
+  *os << " *, this->buffer_);" << be_uidt_nl
       << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "} " << be_nl
       << be_nl;
 
   // destructor
-  *os << full_class_name << "::~" << class_name << " (void) // Dtor." << be_nl
+  *os << full_class_name << "::~" << class_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "this->_deallocate_buffer ();" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+      << "}";
 
   os->gen_endif (); // endif macro
 

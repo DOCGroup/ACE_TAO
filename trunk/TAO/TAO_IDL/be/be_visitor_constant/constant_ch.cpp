@@ -48,13 +48,14 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // If we are defined in the outermost scope, then the value is assigned
   // to us here itself, else it will be in the *.cpp file.
 
-//  if (be_global->gen_inline_constants ())
+  *os << be_nl << be_nl;
+
   if (! node->is_nested ()
       || node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
@@ -87,16 +88,9 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
 
       *os << " " << node->local_name ();
-
-      if (!node->is_nested ())
-        {
-          // We were defined at the outermost scope. So we put the value
-          // in the header itself.
-          *os << " = " << node->constant_value ();
-        }
     }
 
-  *os << ";" << be_nl << be_nl;
+  *os << ";";
 
   node->cli_hdr_gen (I_TRUE);
   return 0;

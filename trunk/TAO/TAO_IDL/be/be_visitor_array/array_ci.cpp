@@ -220,11 +220,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
         }
     }
 
-  // Generate the var implementation in the inline file.
-
-  os->indent ();
-
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
@@ -268,7 +264,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // assignment operator
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -284,13 +281,14 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // assignment operator from _var
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
   *os << fname << "::operator= (const " << fname
       << " &p)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "if (this != &p)" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << nodename << "_free (this->ptr_);" << be_nl;
+  *os << nodename << "_free (this->ptr_);" << be_nl << be_nl;
   *os << "// Deep copy." << be_nl;
   *os << "this->ptr_ =" << be_idt_nl
       << nodename << "_dup (" << be_idt << be_idt_nl
@@ -304,7 +302,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operators ()
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << fname << "::operator " << nodename
       << "_slice * const &() const" << be_nl;
   *os << "{" << be_idt_nl;
@@ -313,7 +311,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
 
   if (node->size_type () == AST_Type::VARIABLE)
     {
-      *os << "ACE_INLINE " << be_nl;
+      *os << "ACE_INLINE" << be_nl;
       *os << fname << "::operator " << nodename
           << "_slice *&() // cast " << be_nl;
       *os << "{" << be_idt_nl;
@@ -322,7 +320,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
     }
 
   // two operator []s instead of ->
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_nl;
@@ -340,7 +338,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
 
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -348,7 +346,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // copy (in case we are a sequence element)
-  *os << "ACE_INLINE void" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << "void" << be_nl;
   *os << fname << "::copy (" << be_idt << be_idt_nl
       << nodename << "_slice *_tao_to," << be_nl
       << "const " << nodename << "_slice *_tao_from" << be_uidt_nl
@@ -358,7 +357,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // in, inout, out, and _retn
-  *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << "const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return ACE_const_cast (" << be_idt << be_idt_nl
@@ -368,13 +368,15 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
       << ");" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
+  *os << "ACE_INLINE" << be_nl;
+
   if (node->size_type () == AST_Type::FIXED)
     {
-      *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+      *os << nodename << "_slice *" << be_nl;
     }
   else
     {
-      *os << "ACE_INLINE " << nodename << "_slice * &" << be_nl;
+      *os << nodename << "_slice * &" << be_nl;
     }
 
   *os << fname << "::inout (void)" << be_nl;
@@ -382,7 +384,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << nodename << "_slice * &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice * &" << be_nl;
   *os << fname << "::out (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << nodename << "_free (this->ptr_);" << be_nl;
@@ -390,7 +393,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *" << be_nl;
   *os << fname << "::_retn (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << nodename << "_slice *tmp = this->ptr_;" << be_nl;
@@ -399,11 +403,12 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // the additional ptr () member function
-  *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *" << be_nl;
   *os << fname << "::ptr (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}";
 
   return 0;
 }
@@ -475,11 +480,7 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
         }
     }
 
-  // Generate the out implementation in the inline file.
-
-  os->indent ();
-
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
@@ -515,7 +516,8 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   *os << "{}" << be_nl << be_nl;
 
   // assignment operator from _out &
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
   *os << fname << "::operator= (const " << fname
       << " &p)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -527,7 +529,8 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   // assignment from _var is not allowed
 
   // assignment operator from _ptr
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -536,7 +539,7 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operator ()
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << fname << "::operator " << nodename
       << "_slice *&() // cast" << be_nl;
   *os << "{" << be_idt_nl;
@@ -544,18 +547,20 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // ptr function
-  *os << "ACE_INLINE " << nodename << "_slice *&" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *&" << be_nl;
   *os << fname << "::ptr (void) // ptr" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   // operator [] instead of ->
-  *os << "ACE_INLINE " << nodename << "_slice &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_[index];" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}";
 
   return 0;
 }
@@ -636,7 +641,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
 
   os->indent (); // start with whatever was our current indent level
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
@@ -682,14 +687,15 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   // destructor
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::~" << lname << " (void)" << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "// don't do anything" << be_uidt_nl;
+  *os << "{" << be_nl;
   *os << "}" << be_nl << be_nl;
 
   // assignment operator
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
-  *os << fname << "::operator= (" << nodename
-      << "_slice *p)" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
+  *os << fname << "::operator= (" << be_idt << be_idt_nl
+      << nodename << "_slice *p" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "// Is what we own the same that is being assigned to us?"
       << be_nl;
@@ -703,13 +709,15 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // assignment operator from _forany
-  *os << "ACE_INLINE " << fname << " &" << be_nl;
-  *os << fname << "::operator= (const " << fname
-      << " &p)" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
+  *os << fname << "::operator= (" << be_idt << be_idt_nl
+      << "const " << fname << " &p" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "if (this != &p)" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << nodename << "_free (this->ptr_);" << be_nl;
+  *os << nodename << "_free (this->ptr_);" << be_nl << be_nl;
   *os << "// Deep copy." << be_nl;
   *os << "this->ptr_ =" << be_idt_nl
       << nodename << "_dup (" << be_idt << be_idt_nl
@@ -724,14 +732,14 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operators ()
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << fname << "::operator " << nodename
       << "_slice * const &() const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << fname << "::operator " << nodename
       << "_slice *&()" << be_nl;
   *os << "{" << be_idt_nl;
@@ -739,7 +747,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // two operator []s instead of ->
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_idt_nl;
@@ -759,7 +767,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
 
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << be_nl;
+  *os << "ACE_INLINE" << be_nl;
   *os << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -767,7 +775,8 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   // in, inout, out, and _retn
-  *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << "const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return ACE_const_cast (" << be_idt << be_idt_nl
@@ -776,37 +785,42 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
       << ");" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *" << be_nl;
   *os << fname << "::inout (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << nodename << "_slice * &" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice * &" << be_nl;
   *os << fname << "::out (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *" << be_nl;
   *os << fname << "::_retn (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   // the additional ptr () member function
-  *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *" << be_nl;
   *os << fname << "::ptr (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   // the additional nocopy member function
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl;
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean" << be_nl;
   *os << fname << "::nocopy (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->nocopy_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}";
 
   return 0;
 }

@@ -18,8 +18,6 @@
 //
 // ============================================================================
 
-#include "be_visitor_typecode/typecode_defn.h"
-
 ACE_RCSID (be_visitor_interface,
            interface_cs,
            "$Id$")
@@ -59,7 +57,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Initialize the static narrrowing helper variable.
@@ -136,11 +134,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "ACE_static_cast (" << node->full_name ()
       << " **, src);" << be_uidt_nl
       << "return *tmp;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   if (node->has_mixed_parentage ())
     {
-      *os << "void" << be_nl
+      *os << be_nl << be_nl 
+          << "void" << be_nl
           << "CORBA::release (" << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::AbstractBase_ptr abs = p;" << be_nl
@@ -152,7 +151,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "CORBA::Object_ptr obj = p;" << be_nl
           << "return CORBA::is_nil (obj);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
     }
 
   // Generate the _var class.
@@ -222,28 +221,31 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
     }
 
-  *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   if (node->is_local ())
     {
-      *os << node->name () << "::" << node->local_name () 
+      *os << be_nl << be_nl 
+          << node->name () << "::" << node->local_name () 
           << " (void)" << be_nl
-          << "{}" << be_nl << be_nl;
+          << "{}";
     }
 
   if (! node->is_abstract () && ! node->is_local ())
     {
        // Generate the destructor and default constructor.
-      *os << node->name () << "::" << node->local_name ()
+      *os << be_nl << be_nl 
+          << node->name () << "::" << node->local_name ()
           << " (int collocated)" << be_nl
           << "{" << be_idt_nl
           << "this->" << node->flat_name ()
           << "_setup_collocation (collocated);" << be_uidt_nl
-          << be_uidt << "}" << be_nl << be_nl;
+          << be_uidt << "}";
 
       // Collocation setup method.
-      *os << "void" << be_nl
+      *os << be_nl << be_nl 
+          << "void" << be_nl
           << node->name () << "::" << node->flat_name ()
           << "_setup_collocation (int collocated)" << be_nl
           << "{" << be_idt_nl
@@ -290,23 +292,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
             }
         }
 
-      *os << be_uidt_nl << "}" << be_nl << be_nl;
+      *os << be_uidt_nl << "}";
     }
 
-  *os << node->name () << "::~" << node->local_name ()
+  *os << be_nl << be_nl << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  // Then generate the code for the static methods
-  // Local interfaces don't have any operators.
-  if (! node->is_local ())
+  if (be_global->any_support ())
     {
       *os << "void " << be_nl
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
           << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_nl
+          << node->local_name () << " *, _tao_void_pointer);" << be_nl
           << "CORBA::release (tmp);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -439,18 +439,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // Generate the is_a method (not supported on local objects).
   if (! node->is_local ())
     {
-      os->indent ();
-
       *os << "CORBA::Boolean" << be_nl
           << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
           << "const char *value" << be_nl
           << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ")" << be_uidt_nl
-          << "{\n";
-
-      os->incr_indent ();
-
-      *os << "if (" << be_idt << be_idt_nl;
+          << "{" << be_idt_nl
+          << "if (" << be_idt << be_idt_nl;
 
       int status =
         node->traverse_inheritance_graph (be_interface::is_a_helper,
@@ -461,7 +456,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
                              "visit_interface - "
-                             "_is_a method codegen failed\n"), -1);
+                             "_is_a method codegen failed\n"), 
+                            -1);
         }
 
       if (node->is_abstract () || node->has_mixed_parentage ())
@@ -509,12 +505,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
 
       *os << "}" << be_uidt << be_uidt_nl
-          << "}\n\n";
+          << "}" << be_nl << be_nl;
     }
 
   // Generating _tao_QueryInterface method.
-  os->indent ();
-
   *os << "void *" << node->full_name ()
       << "::_tao_QueryInterface (ptr_arith_t type)" << be_nl
       << "{" << be_idt_nl
@@ -580,7 +574,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return \"" << node->repoID ()
       << "\";" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << "}";
 
   // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
@@ -595,7 +589,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       // Smart Proxy classes.
-      if (! node->is_local ())
+      if (! node->is_local () && be_global->gen_smart_proxies ())
         {
           be_visitor_context ctx (*this->ctx_);
 
@@ -712,7 +706,6 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       << "return " << bt->nested_type_name (this->ctx_->scope ())
       << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
-
 
   if (! node->is_local ())
     {

@@ -10,19 +10,20 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
+ACE_RCSID (ast, 
            ast_union_fwd, 
            "$Id$")
 
 AST_UnionFwd::AST_UnionFwd (void)
-  : pd_full_definition (0)
 {
 }
 
-AST_UnionFwd::AST_UnionFwd (UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_union_fwd,
-              n),
-    pd_full_definition (0)
+AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
+                            UTL_ScopedName *n)
+  : AST_StructureFwd (dummy,
+                      n),
+    AST_Decl (AST_Decl::NT_union_fwd,
+              n)
 {
 }
 
@@ -46,31 +47,12 @@ AST_UnionFwd::ast_accept (ast_visitor *visitor)
   return visitor->visit_union_fwd (this);
 }
 
-// Data accessors.
-
-AST_Union *
-AST_UnionFwd::full_definition (void)
-{
-  return this->pd_full_definition;
-}
-
-void
-AST_UnionFwd::set_full_definition (AST_Union *nfd)
-{
-  this->pd_full_definition = nfd;
-}
-
-idl_bool
-AST_UnionFwd::is_defined (void)
-{
-  return (this->pd_full_definition != 0);
-}
-
 void
 AST_UnionFwd::destroy (void)
 {
+  this->AST_StructureFwd::destroy ();
 }
 
 // Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_UnionFwd, AST_Type)
+IMPL_NARROW_METHODS1 (AST_UnionFwd, AST_StructureFwd)
 IMPL_NARROW_FROM_DECL (AST_UnionFwd)

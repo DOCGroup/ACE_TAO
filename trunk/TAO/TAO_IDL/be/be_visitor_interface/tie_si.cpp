@@ -42,12 +42,13 @@ be_visitor_interface_tie_si::~be_visitor_interface_tie_si (void)
 int
 be_visitor_interface_tie_si::visit_interface (be_interface *node)
 {
-  if (node->srv_inline_gen () || node->imported () || node->is_abstract ())
+  if (node->srv_inline_gen () 
+      || node->imported () 
+      || node->is_abstract ())
     {
       return 0;
     }
 
-  TAO_OutStream *os;
   static char fulltiename [NAMEBUFSIZE];
   static char localtiename [NAMEBUFSIZE];
   static char localskelname [NAMEBUFSIZE];
@@ -61,8 +62,6 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   ACE_OS::memset (localskelname, 
                   '\0',
                    NAMEBUFSIZE);
-
-  os = this->ctx_->stream ();
 
   // Generate the skeleton class name which will be used to determine the TIE
   // class name.
@@ -91,18 +90,15 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
                        node->local_name ());
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (node->is_nested ())
     {
-      *os << "#if defined (ACE_HAS_USING_KEYWORD)\n\n";
+      *os << "#if defined (ACE_HAS_USING_KEYWORD)" << be_nl << be_nl;
     }
-
-  os->indent ();
-
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl << be_nl;
 
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_nl
@@ -139,7 +135,10 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::~" << localtiename << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "if (this->rel_) delete this->ptr_;" << be_uidt_nl
+      << "if (this->rel_)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "delete this->ptr_;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "template <class T> ACE_INLINE T *" << be_nl
@@ -151,7 +150,10 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << "template <class T> ACE_INLINE void" << be_nl
       << fulltiename << "<T>::_tied_object (T &obj)" << be_nl
       << "{" << be_idt_nl
-      << "if (this->rel_) delete this->ptr_;" << be_nl
+      << "if (this->rel_)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "delete this->ptr_;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "this->ptr_ = &obj;" << be_nl
       << "this->rel_ = 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -160,7 +162,10 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << fulltiename << "<T>::_tied_object (T *obj, "
       << "CORBA::Boolean release)" << be_nl
       << "{" << be_idt_nl
-      << "if (this->rel_) delete this->ptr_;" << be_nl
+      << "if (this->rel_)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "delete this->ptr_;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "this->ptr_ = obj;" << be_nl
       << "this->rel_ = release;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -183,11 +188,12 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
-      << "return PortableServer::POA::_duplicate (this->poa_.in ());\n"
-      << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return PortableServer::POA::_duplicate (this->poa_.in ());" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "return this->" << localskelname
       << "::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   int status =
     node->traverse_inheritance_graph (
@@ -206,10 +212,16 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   if (node->is_nested ())
     {
-      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n\n";
+      *os << "\n\n#endif /* ACE_HAS_USING_KEYWORD */";
     }
 
   return 0;
+}
+
+int
+be_visitor_interface_tie_si::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
 }
 
 int
@@ -236,7 +248,7 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
 
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_sh::"
+                         "be_visitor_interface_tie_si::"
                          "method_helper\n"), 
                         -1);
     }

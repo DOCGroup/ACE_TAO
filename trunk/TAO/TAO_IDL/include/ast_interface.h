@@ -91,12 +91,11 @@ public:
 
   virtual ~AST_Interface (void);
 
-  // This serves for both interfaces, value types and components.
+  // This serves for interfaces, value types, components, and eventtypes.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s);
 
-  // This serves only for interfaces, but it is called
-  // from the corresponding AST_ValueType function().
+  // Overridden for valuetypes, components, and eventtypes.
   virtual void redefine (AST_Interface *from);
 
   AST_Interface **inherits (void) const;

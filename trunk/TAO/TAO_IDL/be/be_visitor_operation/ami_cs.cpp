@@ -68,10 +68,12 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the return type mapping. Return type is simply void.
-  *os << "void" << be_nl;
+  *os << be_nl << be_nl
+      << "void" << be_nl;
 
   // Generate the operation name.
 
@@ -200,10 +202,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
         }
 
       // No return values.
-      *os << "return;";
+      *os << be_nl << "return;";
     } // end of if (!native)
 
-  *os << be_uidt_nl << "}\n\n";
+  *os << be_uidt_nl << "}";
 
   return 0;
 }
@@ -388,8 +390,8 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     {
       *os << be_nl
           << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();"
-          << be_nl
-          << "if (!(\n" << be_idt << be_idt << be_idt;
+          << be_nl << be_nl 
+          << "if (!(" << be_idt << be_idt_nl;
 
       // Marshal each in and inout argument.
       ctx = *this->ctx_;
@@ -409,7 +411,7 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
           );
         }
 
-      *os << be_uidt << be_uidt_nl
+      *os << be_uidt_nl
           << "))" << be_nl;
 
       // If marshaling fails, raise exception.
@@ -429,9 +431,9 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
       *os << be_uidt;
     }
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "int _invoke_status =" << be_idt_nl
-      << "_tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt;
+      << "_tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);";
 
   *os << be_uidt_nl;
 
@@ -450,8 +452,8 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
       << "{" << be_nl
       << "  _tao_call.restart_flag (1);" << be_nl
       << "  continue;" <<be_nl
-      << "}"<< be_uidt_nl
-      << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
+      << "}"<< be_uidt_nl << be_nl
+      << "if (_invoke_status != TAO_INVOKE_OK)" << be_idt_nl
       << "{" << be_idt_nl;
 
   int status = 
@@ -469,9 +471,9 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl
-      << "break;" << be_nl
-      << be_uidt_nl << "}" << be_nl;
+      << "}" << be_uidt_nl << be_nl
+      << "break;" << be_uidt_nl 
+      << "}" << be_nl;
 
   // Return type is void and we are going to worry about OUT or INOUT
   // parameters. Return from here.

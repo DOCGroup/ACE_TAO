@@ -166,9 +166,9 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
     }
 
   // set the discriminant to the appropriate label
-  *os << "// make a deep copy" << be_nl;
+  *os << "// Make a deep copy." << be_nl;
   *os << "this->u_." << ub->local_name ()
-      << "_  = " << be_idt_nl
+      << "_ = " << be_idt_nl
       << fname << "_dup (u.u_."
       << ub->local_name () << "_);" << be_uidt << be_uidt_nl;
 
@@ -196,8 +196,7 @@ be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *)
 
   // set the discriminant to the appropriate label
   // valid label
-  *os << "// set the value" << be_nl
-      << "this->u_." << ub->local_name () << "_ = " << be_idt_nl
+  *os << "this->u_." << ub->local_name () << "_ = " << be_idt_nl
       << "u.u_."
       << ub->local_name () << "_;" << be_uidt << be_uidt_nl;
 
@@ -623,8 +622,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     case AST_PredefinedType::PT_void:
       break;
     default:
-      *os << "// set the value" << be_nl
-          << "this->u_." << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << "u.u_." << ub->local_name () << "_;" << be_uidt_nl;
 
       break;

@@ -64,14 +64,15 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_macro (node->flat_name (), "");
 
   if (node->is_abstract ())
     {
-      *os << "ACE_INLINE" << be_nl
+      *os << be_nl << be_nl
+          << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name () 
           << " (void)" << be_idt_nl
           << ": CORBA_AbstractBase ()" << be_uidt_nl
@@ -92,7 +93,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << ")" << be_nl
           << ": CORBA_AbstractBase (objref, _tao_collocated, servant)"
           << be_uidt_nl
-          << "{}" << be_nl;
+          << "{}";
     }
   else
     {
@@ -101,6 +102,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     }
 
   os->gen_endif ();
-
+  node->cli_inline_gen (I_TRUE);
   return 0;
 }

@@ -67,7 +67,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //  Set the sub state as generating code for the output operator.
@@ -137,7 +137,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl 
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   node->cli_inline_cdr_op_gen (1);
   return 0;

@@ -42,7 +42,9 @@ be_valuetype_fwd::be_valuetype_fwd (AST_Interface *dummy,
     AST_InterfaceFwd (dummy,
                       n),
     AST_Decl (AST_Decl::NT_valuetype_fwd,
-              n)
+              n),
+    COMMON_Base (dummy->is_local (),
+                 dummy->is_abstract ())
 {
 }
 

@@ -148,14 +148,21 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_SUPPORTS_FWD_ERROR:
       // More intelligible message printed by error routine.
       return "";
+    case UTL_Error::EIDL_PRIMARY_KEY_ERROR:
+      // More intelligible message printed by error routine.
+      return "";
     case UTL_Error::EIDL_CONSTANT_EXPECTED:
       return "constant expected: ";
     case UTL_Error::EIDL_INTERFACE_EXPECTED:
       return "interface expected: ";
     case UTL_Error::EIDL_VALUETYPE_EXPECTED:
       return "value type expected: ";
+    case UTL_Error::EIDL_CONCRETE_VT_EXPECTED:
+      return "concrete value type expected: ";
     case UTL_Error::EIDL_ABSTRACT_EXPECTED:
       return "abstract type expected: ";
+    case UTL_Error::EIDL_EVENTTYPE_EXPECTED:
+      return "event type expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
@@ -280,11 +287,11 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_ValueTypeDeclSeen:
     return "Malformed value type declaration";
   case IDL_GlobalData::PS_ComponentDeclSeen:
-    return "Malformed value type declaration";
+    return "Malformed component declaration";
   case IDL_GlobalData::PS_HomeDeclSeen:
     return "Malformed home declaration";
   case IDL_GlobalData::PS_EventDeclSeen:
-    return "Malformed value type declaration";
+    return "Malformed event type declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
   case IDL_GlobalData::PS_AttrDeclSeen:
@@ -351,6 +358,18 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following value type '}' closer";
   case IDL_GlobalData::PS_ValueTypeBodySeen:
     return "Illegal syntax following value type body statement(s)";
+  case IDL_GlobalData::PS_EventTypeSeen:
+    return "Missing interface identifier following EVENTTYPE keyword";
+  case IDL_GlobalData::PS_EventTypeForwardSeen:
+    return "Missing ';' following forward event type declaration";
+  case IDL_GlobalData::PS_EventTypeIDSeen:
+    return "Missing '{' or illegal syntax following event type identifier";
+  case IDL_GlobalData::PS_EventTypeSqSeen:
+    return "Illegal syntax following event type '{' opener";
+  case IDL_GlobalData::PS_EventTypeQsSeen:
+    return "Illegal syntax following event type '}' closer";
+  case IDL_GlobalData::PS_EventTypeBodySeen:
+    return "Illegal syntax following event type body statement(s)";
   case IDL_GlobalData::PS_ComponentSeen:
     return "Missing component identifier following COMPONENT keyword";
   case IDL_GlobalData::PS_ComponentForwardSeen:
@@ -526,6 +545,10 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax after operation parameter list";
   case IDL_GlobalData::PS_OpRaiseCompleted:
     return "Illegal syntax after optional RAISES in operation declaration";
+  case IDL_GlobalData::PS_OpGetRaiseCompleted:
+    return "Illegal syntax after optional GETRAISES in operation declaration";
+  case IDL_GlobalData::PS_OpSetRaiseCompleted:
+    return "Illegal syntax after optional SETRAISES in operation declaration";
   case IDL_GlobalData::PS_OpContextCompleted:
     return "Illegal syntax after optional CONTEXT in operation declaration";
   case IDL_GlobalData::PS_OpCompleted:
@@ -548,6 +571,18 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax after RAISES '(' opener";
   case IDL_GlobalData::PS_OpRaiseQsSeen:
     return "Illegal syntax after RAISES ')' closer";
+  case IDL_GlobalData::PS_OpGetRaiseSeen:
+    return "Illegal syntax or missing '(' after GETRAISES keyword";
+  case IDL_GlobalData::PS_OpGetRaiseSqSeen:
+    return "Illegal syntax after GETRAISES '(' opener";
+  case IDL_GlobalData::PS_OpGetRaiseQsSeen:
+    return "Illegal syntax after GETRAISES ')' closer";
+  case IDL_GlobalData::PS_OpSetRaiseSeen:
+    return "Illegal syntax or missing '(' after SETRAISES keyword";
+  case IDL_GlobalData::PS_OpSetRaiseSqSeen:
+    return "Illegal syntax after SETRAISES '(' opener";
+  case IDL_GlobalData::PS_OpSetRaiseQsSeen:
+    return "Illegal syntax after SETRAISES ')' closer";
   case IDL_GlobalData::PS_OpContextSeen:
     return "Illegal syntax or missing '(' after CONTEXT keyword";
   case IDL_GlobalData::PS_OpContextSqSeen:
@@ -955,8 +990,8 @@ void
 UTL_Error::interface_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_INTERFACE_EXPECTED,
-                    d->line (),
-                    d->file_name ());
+                    idl_global->lineno (),
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -970,8 +1005,23 @@ void
 UTL_Error::valuetype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_VALUETYPE_EXPECTED,
-                    d->line (),
-                    d->file_name ());
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a situation where a concrete value type was expected but we got
+// something else instead. This most likely is a case where a valuetype
+// inherits from something other than a concrete valuetype.
+void 
+UTL_Error::concrete_valuetype_expected (AST_Decl *d)
+{
+  idl_error_header (EIDL_CONCRETE_VT_EXPECTED,
+                    idl_global->lineno (),
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -986,11 +1036,44 @@ void
 UTL_Error::abstract_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_ABSTRACT_EXPECTED,
-                    d->line (),
-                    d->file_name ());
+                    idl_global->lineno (),
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a situation where an abstract type was expected but we got
+// something else instead. This is the case in an inheritance
+// list where a concrete type appears after an abstract type, or
+// where a valuetype inherits more than one concrete valuetype.
+void 
+UTL_Error::eventtype_expected (AST_Decl *d)
+{
+  idl_error_header (EIDL_EVENTTYPE_EXPECTED,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a situation where a valuetype used as a primary key for a
+// component home does not inherit directly or indirectly from
+// Components::primaryKeyBase.
+void 
+UTL_Error::primary_key_error (AST_Decl *d)
+{
+  idl_error_header (EIDL_PRIMARY_KEY_ERROR,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "primary key "));
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "does not have Components::primaryKeyBase as an ancestor\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 

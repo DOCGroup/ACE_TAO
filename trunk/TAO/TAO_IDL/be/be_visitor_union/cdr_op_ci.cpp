@@ -63,7 +63,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //  Set the sub state as generating code for the output operator.
@@ -104,7 +104,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       << "}" << be_uidt_nl << be_nl
       << "CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -123,8 +123,8 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   // an enum, this does no harm.
   if (node->default_index () == -1)
     {
-      *os << "default:" << be_nl;
-      *os << "break;";
+      *os << be_nl << "default:" << be_idt_nl;
+      *os << "break;"<< be_uidt;
     }
 
   *os << be_uidt_nl << "}" << be_nl << be_nl
@@ -203,7 +203,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   *os << be_uidt_nl 
       << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   node->cli_inline_cdr_op_gen (1);
   return 0;

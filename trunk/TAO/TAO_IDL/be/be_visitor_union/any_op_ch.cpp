@@ -41,16 +41,15 @@ int
 be_visitor_union_any_op_ch::visit_union (be_union *node)
 {
   if (node->cli_hdr_any_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the Any <<= and >>= operator declarations.
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, const " << node->name ()
@@ -63,7 +62,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       << node->name () << " *&); // deprecated\n";
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, const "
-      << node->name () << " *&);\n";
+      << node->name () << " *&);";
 
   if (this->visit_scope (node) == -1)
     {

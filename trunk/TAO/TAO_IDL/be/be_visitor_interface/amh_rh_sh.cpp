@@ -37,7 +37,6 @@ int
 be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  os->indent ();
 
   // Generate the skeleton class name, use the AMH-node name as a
   // basis, this is AMH_<InterfaceName>ResponseHandler...
@@ -52,6 +51,9 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
       rh_skel_class_name = "POA_TAO_";
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   rh_skel_class_name += rh_base_class_name.c_str ();
 
   *os << "class " << rh_skel_class_name.c_str () << ";" << be_nl;
@@ -59,7 +61,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   // Generate the _ptr declaration.
   *os << "typedef " << rh_skel_class_name.c_str () << " *"
       << rh_skel_class_name.c_str()
-      << "_ptr;" << be_nl;
+      << "_ptr;" << be_nl << be_nl;
 
   ACE_CString inherit_client_parent = node->client_enclosing_scope ();
   inherit_client_parent +=  rh_base_class_name;
@@ -75,11 +77,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt_nl << "{" << be_nl
       << "public:" << be_idt_nl
       << rh_skel_class_name.c_str () << " (TAO_ServerRequest &sr);" << be_nl
-      << "virtual ~" << rh_skel_class_name.c_str () << " (void);\n"
-      << be_nl;
-
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+      << "virtual ~" << rh_skel_class_name.c_str () << " (void);";
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)

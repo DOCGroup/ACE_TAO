@@ -46,7 +46,6 @@ public:
 
   virtual int visit_operation (be_operation *node);
   // visit operation node.
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_SMART_PROXY_CH_H_ */

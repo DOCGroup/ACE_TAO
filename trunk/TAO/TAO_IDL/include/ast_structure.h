@@ -98,6 +98,13 @@ public:
 
   virtual ~AST_Structure (void);
 
+  // This serves for both structs and unions.
+  static void fwd_redefinition_helper (AST_Structure *&i,
+                                       UTL_Scope *s);
+
+  // Overridden for unions.
+  virtual void redefine (AST_Structure *from);
+
   // Narrowing.
   DEF_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope);
   DEF_NARROW_FROM_DECL(AST_Structure);
@@ -122,6 +129,14 @@ public:
   virtual int contains_wstring (void);
   // Do we contain a wstring at some nesting level?
 
+  // Is this struct or union defined? This predicate returns FALSE when a
+  // forward declaration is not defined yet, and TRUE in
+  // all other cases.
+  idl_bool is_defined (void)
+  {
+    return this->size_type () != AST_Type::SIZE_UNKNOWN;
+  }
+
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
@@ -132,16 +147,6 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
-
-protected:
-  ACE_Unbounded_Queue<AST_Field *> fields_;
-  // Container for this struct's field nodes. Excludes nodes included
-  // in member_count, i.e., enum values of an enum declared inside
-  // the struct.
-
-private:
   friend int tao_yyparse (void);
   // Scope Management Protocol.
 
@@ -155,6 +160,16 @@ private:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
+
+protected:
+  ACE_Unbounded_Queue<AST_Field *> fields_;
+  // Container for this struct's field nodes. Excludes nodes included
+  // in member_count, i.e., enum values of an enum declared inside
+  // the struct.
+
+private:
   int compute_member_count (void);
   // Count the number of members.
 

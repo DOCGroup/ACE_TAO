@@ -47,16 +47,19 @@ be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate CDR << and >> operators.
-  os->indent ();
-  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::ULong _tao_temp = _tao_enumval;" << be_nl
       << "return strm << _tao_temp;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::ULong _tao_temp = 0;" << be_nl
@@ -67,7 +70,7 @@ be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
       << ", _tao_temp);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return _tao_result;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   node->cli_inline_cdr_op_gen (1);
   return 0;

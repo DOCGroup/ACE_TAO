@@ -55,9 +55,11 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
     {
       // For those constants not defined in the outermost scope,
       // or in a module, they get assigned to their values in the source file.
-      os->indent ();
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
 
-      *os << "const ";
+      *os << be_nl << be_nl
+          << "const ";
       
       if (node->et () == AST_Expression::EV_enum)
         {
@@ -70,7 +72,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
        
       *os << " "
           << node->name () << " = " << node->constant_value ()
-          << ";\n\n";
+          << ";";
     }
 
   node->cli_stub_gen (I_TRUE);

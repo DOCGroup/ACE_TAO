@@ -83,15 +83,14 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
-  os->indent ();
 
   // allocate_buffer
-  *os << "void " << be_nl
+  *os << be_nl << be_nl << "void " << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong /* length */)" 
       << be_nl
       << "// allocate a buffer of the requested length. "
@@ -109,7 +108,9 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
       << "// deallocate the buffer" << be_nl
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl;
+      << "{" << be_idt_nl
+      << "return;" << be_uidt_nl
+      << "}" <<  be_uidt_nl << be_nl;
 
   bt->accept (&visitor);
 

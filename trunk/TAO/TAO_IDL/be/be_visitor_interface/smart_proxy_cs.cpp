@@ -83,10 +83,10 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << node->flat_name () << "_Default_Proxy_Factory (void)"
           << be_nl << be_uidt << be_uidt
           << "{" << be_nl
-          << "}\n\n";
+          << "}";
 
-      os->indent ();
-      *os << node->full_name () << "_ptr" << be_nl << be_uidt << be_uidt;
+      *os << be_nl << be_nl 
+          << node->full_name () << "_ptr" << be_nl << be_uidt << be_uidt;
       *os << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -100,11 +100,11 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "return proxy;" << be_uidt << be_uidt_nl
-          << "}\n\n";
+          << "return proxy;" << be_uidt_nl
+          << "}";
 
-      os->indent ();
-      *os << scope->full_name ();
+      *os << be_nl << be_nl 
+          << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
@@ -206,29 +206,29 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN ("
           << "TAO_SYNCH_RECURSIVE_MUTEX, ace_mon," << be_idt_nl
-          << "this->lock_, 0));" <<be_uidt_nl<<be_nl
-          << "// To take care of those <unchecked_narrow> methods where we "<<be_nl
-          << "// want to override the smart proxy factory if there exists one."<<be_nl
-          << "if (this->disable_factory_ == 1)"<<be_idt_nl
-          << "{"<<be_idt_nl
-          << "this->disable_factory_ = 0;"<<be_nl
-          << "return proxy;"<<be_uidt_nl
-          << "}"<<be_uidt_nl<<be_nl
-          << "// Verify that an <proxy_factory_> is available else make one."<<be_nl
+          << "this->lock_, 0));" << be_uidt_nl << be_nl
+          << "// To take care of those <unchecked_narrow> methods where we " << be_nl
+          << "// want to override the smart proxy factory if there exists one." << be_nl
+          << "if (this->disable_factory_ == 1)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->disable_factory_ = 0;" << be_nl
+          << "return proxy;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "// Verify that an <proxy_factory_> is available else make one." << be_nl
           << "if ("
           <<"this->proxy_factory_ == 0)" << be_idt_nl
           << "ACE_NEW_RETURN ("
-          << "this->proxy_factory_," << be_idt <<be_idt_nl
+          << "this->proxy_factory_," << be_idt << be_idt_nl
           << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory (0), "<< be_nl
+          << "_Default_Proxy_Factory (0), " << be_nl
           << " 0);" << be_uidt_nl << be_uidt_nl << be_uidt_nl
           << "return "
           << "this->proxy_factory_->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
-          << "}\n\n";
+          << "}";
 
-      os->indent ();
-      *os << scope->full_name ();
+      *os << be_nl << be_nl
+          << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
@@ -337,3 +337,11 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int be_visitor_interface_smart_proxy_cs::visit_component (
+    be_interface *node
+  )
+{
+  return this->visit_interface (node);
+}
+

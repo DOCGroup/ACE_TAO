@@ -3,6 +3,7 @@
 #include "ast_home.h"
 #include "ast_component.h"
 #include "ast_valuetype.h"
+#include "ast_operation.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -84,7 +85,35 @@ AST_Home::finders (void)
 void
 AST_Home::destroy (void)
 {
-  this->AST_Interface::destroy ();
+  // Can't call AST_Interface->destroy() because all the 
+  // home's decls are also added to the explicit interface.
+
+  // Also, the factory and finder queues contain operation
+  // nodes which are simply reused by adding a return type
+  // and/or an argument.
+/*
+  AST_Operation **tmp = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (this->pd_factories);
+       ! i.done ();
+       i.advance ())
+    {
+      i.next (tmp);
+      (*tmp)->destroy ();
+      delete (*tmp);
+      (*tmp) = 0;
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> j (this->pd_finders);
+       ! j.done ();
+       j.advance ())
+    {
+      j.next (tmp);
+      (*tmp)->destroy ();
+      delete (*tmp);
+      (*tmp) = 0;
+    }
+*/
 }
 
 void

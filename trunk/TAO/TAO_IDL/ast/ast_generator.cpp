@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_root.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
+#include "ast_eventtype.h"
+#include "ast_eventtype_fwd.h"
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
@@ -306,6 +308,70 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
   return retval;
 }
 
+AST_EventType *
+AST_Generator::create_eventtype (UTL_ScopedName *n,
+                                 AST_Interface **inherits,
+                                 long n_inherits,
+                                 AST_ValueType *inherits_concrete,
+                                 AST_Interface **inherits_flat,
+                                 long n_inherits_flat,
+                                 AST_Interface **supports,
+                                 long n_supports,
+                                 AST_Interface *supports_concrete,
+                                 idl_bool abstract,
+                                 idl_bool truncatable)
+{
+  AST_EventType *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_EventType (n,
+                                 inherits,
+                                 n_inherits,
+                                 inherits_concrete,
+                                 inherits_flat,
+                                 n_inherits_flat,
+                                 supports,
+                                 n_supports,
+                                 supports_concrete,
+                                 abstract,
+                                 truncatable),
+                  0);
+
+  // The following helps with OBV_ namespace generation.
+  AST_Module *m = AST_Module::narrow_from_scope (retval->defined_in ());
+
+  if (m != 0)
+    {
+      m->set_has_nested_valuetype ();
+    }
+
+  return retval;
+}
+
+AST_EventTypeFwd *
+AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
+                                     idl_bool abstract)
+{
+  AST_EventType *dummy = this->create_eventtype (n,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 abstract,
+                                                 I_FALSE);
+
+  AST_EventTypeFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_EventTypeFwd (dummy,
+                                    n),
+                  0);
+
+  return retval;
+}
+
 AST_Component *
 AST_Generator::create_component (UTL_ScopedName *n,
                                  AST_Component *base_component,
@@ -404,9 +470,13 @@ AST_Generator::create_structure (UTL_ScopedName *n,
 AST_StructureFwd *
 AST_Generator::create_structure_fwd (UTL_ScopedName *n)
 {
+  AST_Structure *dummy = this->create_structure  (n,
+                                                  0,
+                                                  0);
   AST_StructureFwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_StructureFwd (n),
+                  AST_StructureFwd (dummy,
+                                    n),
                   0);
 
   return retval;
@@ -515,9 +585,14 @@ AST_Generator::create_union (AST_ConcreteType *dt,
 AST_UnionFwd *
 AST_Generator::create_union_fwd (UTL_ScopedName *n)
 {
+  AST_Union *dummy = this->create_union (0,
+                                         n,
+                                         0,
+                                         0);
   AST_UnionFwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_UnionFwd (n),
+                  AST_UnionFwd (dummy,
+                                n),
                   0);
 
   return retval;

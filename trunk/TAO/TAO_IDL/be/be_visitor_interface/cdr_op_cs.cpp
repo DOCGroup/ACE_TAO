@@ -59,7 +59,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //  Set the sub state as generating code for the output operator.
@@ -75,6 +75,10 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << "CORBA::AbstractBase_ptr";
     }
+  else if (node->node_type () == AST_Decl::NT_component)
+    {
+      *os << "Components::CCMObject_ptr";
+    }
   else
     {
       *os << "CORBA::Object_ptr";
@@ -82,7 +86,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << " _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "return (strm << _tao_corba_obj);" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
@@ -97,14 +101,19 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_var obj;" << be_nl << be_nl;
+      *os << "CORBA::AbstractBase_var obj;";
+    }
+  else if (node->node_type () == AST_Decl::NT_component)
+    {
+      *os << "Components::CCMObject_var obj;";
     }
   else
     {
-      *os << "CORBA::Object_var obj;" << be_nl << be_nl;
+      *os << "CORBA::Object_var obj;";
     }
 
-  *os << "if ((strm >> obj.inout ()) == 0)" << be_idt_nl
+  *os << be_nl << be_nl
+      << "if ((strm >> obj.inout ()) == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -150,7 +159,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
       << "return 0;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}";
 
   node->cli_stub_cdr_op_gen (1);
   return 0;

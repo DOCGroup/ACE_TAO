@@ -183,9 +183,13 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
   // Save the array node for further use.
   this->ctx_->node (node);
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << fname << "_forany &_tao_array" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -200,13 +204,11 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}\n\n";
-
-  //  Set the sub state as generating code for the input operator.
-  os->indent ();
+  *os << "}" << be_nl << be_nl;
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << fname << "_forany &_tao_array" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -221,7 +223,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   node->cli_inline_cdr_op_gen (1);
   return 0;
@@ -594,7 +596,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << be_nl << "for (CORBA::ULong i" << i 
               << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << " && _tao_marshal_flag; i" << i
-              << "++)" << be_idt_nl;
+              << "++)" << be_idt_nl
+              << "{" << be_idt;
         }
       else
         {
@@ -610,7 +613,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "{" << be_idt_nl;
+      *os << be_nl;
 
       // Handle the array of array case, where we need to pass the
       // forany type.
@@ -627,7 +630,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
             }
 
           *os << ", tmp.in ());" << be_nl;
-          *os << bt->name () << "_free (tmp.inout ());" << be_uidt_nl;
+          *os << bt->name () << "_free (tmp.inout ());";
         }
       else
         {
@@ -679,14 +682,12 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 break;
             }
 
-          *os << ");" << be_uidt_nl;
+          *os << ");";
         }
-
-      *os << "}" << be_nl;
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "{" << be_idt_nl;
+      *os << be_nl;
 
       // Handle the array of array case, where we need to pass the
       // forany type.
@@ -702,7 +703,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
           *os << "));" << be_nl;
           *os << bt->name () << "_forany tmp (tmp_var.inout ());" << be_nl;
-          *os << "_tao_marshal_flag = (strm << tmp);" << be_uidt_nl;
+          *os << "_tao_marshal_flag = (strm << tmp);";
         }
       else
         {
@@ -754,10 +755,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 break;
             }
 
-          *os << ");" << be_uidt_nl;
+          *os << ");";
         }
-
-      *os << "}" << be_nl;
 
       break;
     default:
@@ -771,11 +770,10 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
   for (i = 0; i < ndims; ++i)
     {
       // Decrement indentation as many times as the number of dimensions.
-      *os << be_uidt;
+      *os << be_uidt_nl << "}" << be_uidt;
     }
 
-  *os << be_nl;
-  *os << "return _tao_marshal_flag;" << be_uidt_nl;
+  *os << be_nl << be_nl << "return _tao_marshal_flag;" << be_uidt_nl;
 
   return 0;
 }

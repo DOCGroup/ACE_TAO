@@ -217,7 +217,7 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
 
           if (!this->void_return_type ())
             {
-              *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+              *os << be_nl << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                   << arg->local_name () << ".ptr ()," << be_nl
                   << "CORBA::Any," << be_nl;
 
@@ -237,7 +237,7 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
                   << "CORBA::Any";
             }
 
-          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+          *os << be_uidt_nl << ");" << be_uidt_nl;
 
           break;
         default:
@@ -277,7 +277,7 @@ be_visitor_args_pre_invoke_cs::visit_sequence (be_sequence *node)
 
       if (!this->void_return_type ())
         {
-          *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          *os << be_nl << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
               << arg->local_name () << ".ptr ()," << be_nl
               << bt->name () << "," << be_nl;
 
@@ -297,7 +297,7 @@ be_visitor_args_pre_invoke_cs::visit_sequence (be_sequence *node)
               << bt->name ();
         }
 
-      *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+      *os << be_uidt_nl << ");" << be_uidt_nl;
 
       break;
     default:
@@ -340,7 +340,7 @@ be_visitor_args_pre_invoke_cs::visit_structure (be_structure *node)
 
           if (!this->void_return_type ())
             {
-              *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+              *os << be_nl << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                   << arg->local_name () << ".ptr ()," << be_nl
                   << bt->name () << "," << be_nl;
 
@@ -360,7 +360,7 @@ be_visitor_args_pre_invoke_cs::visit_structure (be_structure *node)
                   << bt->name ();
             }
 
-          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+          *os << be_uidt_nl << ");" << be_uidt_nl;
 
           break;
         default:
@@ -398,7 +398,7 @@ be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
 
           if (!this->void_return_type ())
             {
-              *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+              *os << be_nl << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                   << arg->local_name () << ".ptr ()," << be_nl
                   << bt->name () << "," << be_nl;
 
@@ -418,7 +418,7 @@ be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
                   << bt->name ();
             }
 
-          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+          *os << be_uidt_nl << ");" << be_uidt_nl;
 
           break;
         default:
@@ -446,3 +446,46 @@ be_visitor_args_pre_invoke_cs::visit_typedef (be_typedef *node)
   this->ctx_->alias (0);
   return 0;
 }
+
+int
+be_visitor_args_pre_invoke_cs::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_args_pre_invoke_cs::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_args_pre_invoke_cs::visit_eventtype (
+    be_eventtype *node
+  )
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_args_pre_invoke_cs::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_args_pre_invoke_cs::visit_home (
+    be_home *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+
+

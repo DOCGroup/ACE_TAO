@@ -91,7 +91,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Global functions to allow non-defined forward declared interfaces
@@ -112,7 +112,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::remove_ref (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   // Generate methods for _var class.
   if (node->gen_var_impl () == -1)
@@ -134,7 +134,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // The _downcast method    // %! use ACE_xxx_cast here ?
@@ -247,17 +247,20 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << "return rval;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "void" << be_nl
-      << node->name () 
-      << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-      << "{" << be_idt_nl
-      << node->local_name () << " *tmp =" << be_idt_nl
-      << "ACE_static_cast (" << be_idt << be_idt_nl
-      << node->local_name () << " *," << be_nl
-      << "_tao_void_pointer" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "delete tmp;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+  if (be_global->any_support ())
+    {
+      *os << "void" << be_nl
+          << node->name () 
+          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+          << "{" << be_idt_nl
+          << node->local_name () << " *tmp =" << be_idt_nl
+          << "ACE_static_cast (" << be_idt << be_idt_nl
+          << node->local_name () << " *," << be_nl
+          << "_tao_void_pointer" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "delete tmp;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
 
 
   // Nothing to marshal if abstract valuetype.
@@ -352,15 +355,16 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
       << "return retval;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   if (node->supports_abstract ())
     {
-      *os << "CORBA::ValueBase *" << be_nl
+      *os << be_nl << be_nl
+          << "CORBA::ValueBase *" << be_nl
           << node->name () << "::_tao_to_value (void)" << be_nl
           << "{" << be_idt_nl
           << "return this;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
     }
 
   // Generate code for the elements of the valuetype.

@@ -135,8 +135,6 @@ AST_Interface::~AST_Interface (void)
 {
 }
 
-// Public operations.
-
 void
 AST_Interface::be_replace_operation (AST_Decl *old_op,
                                      AST_Decl *new_op)
@@ -151,7 +149,7 @@ AST_Interface::be_replace_operation (AST_Decl *old_op,
 void
 AST_Interface::be_add_operation (AST_Operation *op)
 {
-  this->fe_add_operation (op);
+  (void) this->fe_add_operation (op);
 }
 
 // Add an AST_Constant node (a constant declaration) to this scope.
@@ -1023,7 +1021,7 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
   o << "}";
 }
 
-// This serves for both interfaces, valuetypes and components.
+// This serves for interfaces, valuetypes, components and eventtypes.
 void
 AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s)
@@ -1058,7 +1056,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       // forward declaration.
       if (nt == AST_Decl::NT_interface_fwd
           || nt == AST_Decl::NT_valuetype_fwd
-          || nt == AST_Decl::NT_component_fwd)
+          || nt == AST_Decl::NT_component_fwd
+          || nt == AST_Decl::NT_eventtype_fwd)
         {
           AST_InterfaceFwd *fwd_def =
             AST_InterfaceFwd::narrow_from_decl (d);
@@ -1068,7 +1067,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       // In all other cases, the lookup will find an interface node.
       else if (nt == AST_Decl::NT_interface
                || nt == AST_Decl::NT_valuetype
-               || nt == AST_Decl::NT_component)
+               || nt == AST_Decl::NT_component
+               || nt == AST_Decl::NT_eventtype)
         {
           fd = AST_Interface::narrow_from_decl (d);
         }
@@ -1220,8 +1220,8 @@ AST_Interface::insert_non_dup (AST_Interface *t)
   return 1;
 }
 
-// This serves only for interfaces. AST_ValueType has its
-// own redefine() function which calls this one.
+// This serves only for interfaces. It is overridden for valuetypes,
+// components and eventtypes.
 void
 AST_Interface::redefine (AST_Interface *from)
 {

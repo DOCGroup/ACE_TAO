@@ -63,6 +63,9 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       );
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // STEP 2: generate the return type mapping (same as in the header file)
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
@@ -98,7 +101,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
                         -1);
     }
 
-  *os << "{" << be_idt << be_nl;
+  *os << be_nl << "{" << be_idt << be_nl;
 
   if (!be_global->exception_support ())
     {
@@ -121,14 +124,12 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
       if (!this->void_return_type (bt))
         {
-          os->indent ();
-          *os << "ACE_UNUSED_ARG (_tao_retval);" << be_nl;
+          *os << be_nl << "ACE_UNUSED_ARG (_tao_retval);";
         }
     }
 
-  //  os->indent ();
-
-  *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+  *os << be_nl 
+      << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "_collocated_tao_target_->_stubobj ()"
       << "->servant_orb_var ()->orb_core ()"
@@ -137,7 +138,23 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << "CORBA::Object_var forward_to;" << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "_collocated_tao_target_->_object_key ()," << be_nl
-      << "\"" << node->original_local_name () << "\"," << be_nl
+      << "\"";
+      
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
+    {
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "_set_";
+        }
+      else
+        {
+          *os << "_get_";
+        }
+    }
+
+  *os << node->original_local_name () << "\"," << be_nl
       << "forward_to.out ()";
 
   if (!be_global->exception_support ())
@@ -214,7 +231,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       return -1;
     }
 
-  *os << "}\n\n";
+  *os << "}";
 
   return 0;
 }

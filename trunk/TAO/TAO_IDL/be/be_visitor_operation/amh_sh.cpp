@@ -110,7 +110,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
       *os << be_uidt_nl << "))" << be_uidt;
     }
 
-  *os << " = 0;" << be_nl << be_nl;
+  *os << " = 0;";
   return 0;
 }
 
@@ -168,9 +168,8 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
     const char *skel_prefix
   )
 {
-  os->indent ();
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "static void " << skel_prefix
       << node->local_name ()
@@ -179,7 +178,7 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
       << "void *_tao_obj," << be_nl
       << "void *_tao_servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
+      << ");" << be_uidt_nl << be_nl;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -204,7 +203,6 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
     }
 
   // Step 1 : Generate return type: always void
-  os->indent ();
   *os << "virtual void ";
 
   // Step 2: Generate the method name

@@ -68,14 +68,14 @@ be_visitor_operation_interceptors_arglist::visit_operation (
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
           {
-            *os << " ACE_ENV_ARG_PARAMETER";
+            *os << be_nl << "ACE_ENV_ARG_PARAMETER";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
           {
            // Last argument - is always CORBA::Environment.
-            *os << " ACE_ENV_ARG_DECL_NOT_USED";
+            *os << be_nl << "ACE_ENV_ARG_DECL_NOT_USED";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
@@ -84,7 +84,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (
               // @@ Do it for all cases i.e arg count > = 0
 
               // Last argument - is always CORBA::Environment.
-              *os << " ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl;
+              *os << be_nl << "ACE_ENV_ARG_DECL_WITH_DEFAULTS";
               break;
             }
         default:
@@ -136,7 +136,7 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
         // If we are not the last node in the list of arguments, generate a comma
         // else decide if we are generating code to support true exceptions - in
         // which case there will not be any CORBA::Environment parameter.
-        *os << "," << be_nl;
+        *os << ",";
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
@@ -203,6 +203,10 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
 
   ctx.scope (intf);
   int status = 0;
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl;
 
   switch (this->ctx_->state ())
     {

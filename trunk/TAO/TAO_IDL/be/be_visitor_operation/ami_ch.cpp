@@ -51,8 +51,12 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // Every operation is declared virtual in the client code.
-  *os << "virtual ";
+  *os << be_nl << be_nl
+      << "virtual ";
 
   // STEP I: Return type is void.
   *os << "void ";

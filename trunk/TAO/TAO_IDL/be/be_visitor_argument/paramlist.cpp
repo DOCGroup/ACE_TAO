@@ -46,8 +46,6 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
   // Save the argument node.
   this->ctx_->node (node);
 
-  os->indent ();
-
   // We do not put "out" arguments into the arglist.
   if (this->direction () ==  AST_Argument::dir_OUT)
     {

@@ -49,12 +49,18 @@ be_visitor_operation_argument::post_process (be_decl *bd)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
-    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       if (!this->last_node (bd))
         {
           *os << "," << be_nl;
+        }
+
+      break;
+    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+      if (!this->last_node (bd))
+        {
+          *os << ",";
         }
 
       break;
@@ -94,11 +100,11 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
           // whether the operation node has parameters.
           if (node->argument_count () > 0)
             {
-              *os << " ACE_ENV_ARG_PARAMETER";
+              *os << be_nl << "ACE_ENV_ARG_PARAMETER";
             }
           else
             {
-              *os << "ACE_ENV_SINGLE_ARG_PARAMETER";
+              *os << be_nl << "ACE_ENV_SINGLE_ARG_PARAMETER";
             }
 
           break;

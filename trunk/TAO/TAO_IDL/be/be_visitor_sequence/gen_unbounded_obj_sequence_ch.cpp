@@ -58,17 +58,18 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
 
-  *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro () 
+      << " " << class_name << be_idt_nl
       << ": public TAO_Unbounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "// = Initialization and termination methods." << be_nl;
+      << "public:" << be_idt_nl;
 
   // default constructor
   *os << class_name << " (void);" << be_nl;
@@ -176,12 +177,12 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "virtual void _shrink_buffer (" << be_idt << be_idt_nl
       << "CORBA::ULong nl," << be_nl
       << "CORBA::ULong ol" << be_uidt_nl
-      << ");";
+      << ");" << be_uidt;
 
   if (! (is_pseudo_object || nt == AST_Decl::NT_valuetype))
     {
       // Pseudo objects do not require these methods.
-      *os << be_uidt_nl << be_nl
+      *os << be_nl << be_nl
           << "virtual void _downcast (" << be_idt << be_idt_nl
           << "void* target," << be_nl
           << "CORBA_Object *src" << be_nl
@@ -191,12 +192,12 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }
 
-  *os << be_uidt << be_uidt_nl << "};" << be_nl;
+  *os << be_uidt_nl << "};";
 
-  os->gen_endif (); // endif macro
+  os->gen_endif ();
 
-  // generate #endif for AHETI
-  os->gen_endif_AHETI();
+  // generate #endif for AHETI.
+  os->gen_endif_AHETI ();
 
   return 0;
 }

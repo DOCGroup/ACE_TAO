@@ -15,7 +15,8 @@ class TAO_IDL_FE_Export AST_StructureFwd : public virtual AST_Type
 public:
   AST_StructureFwd (void);
 
-  AST_StructureFwd (UTL_ScopedName *n);
+  AST_StructureFwd (AST_Structure *dummy,
+                    UTL_ScopedName *n);
 
   virtual ~AST_StructureFwd (void);
 

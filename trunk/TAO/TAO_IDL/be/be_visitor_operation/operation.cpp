@@ -217,7 +217,15 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
       env_decl = "ACE_ENV_ARG_DECL";
     }
 
-  *os << be_nl;
+  TAO_CodeGen::CG_STATE cgs = this->ctx_->state ();
+
+  if (node->argument_count () > 0
+      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH
+      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH
+      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS)
+    {
+      *os << be_nl;
+    }
 
   switch (this->ctx_->state ())
     {
@@ -291,7 +299,8 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
 
   if (is_void)
     {
-      *os << ");\n";
+      *os << ");";
+
       return 0;
     }
 
@@ -312,7 +321,8 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
                         -1);
     }
 
-  *os << ");\n";
+  *os << ");";
+
   return 0;
 }
 
@@ -393,14 +403,18 @@ be_visitor_operation::gen_stub_operation_body (
       target = "this";
     }
 
+  *os << be_nl << "{" << be_idt_nl;
+
+  const char *env = this->gen_environment_var ();
+
+  if (ACE_OS::strcmp ("", env) != 0)
+    {
+      *os << env << be_nl;
+    }
+
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
   // last argument - is always ACE_ENV_ARG_PARAMETER
-  *os << "{" << be_idt_nl;
-  *os << this->gen_environment_var () << "\n";
-
-  // Generate any pre stub info if and only if none of our parameters is of
-  // the native type.
   if (!node->has_native ())
     {
       // native type does not exist.
@@ -433,6 +447,11 @@ be_visitor_operation::gen_stub_operation_body (
                          "visit_operation - "
                          "codegen for return var decl failed\n"),
                         -1);
+    }
+
+  if (node->void_return_type () == 0)
+    {
+      *os << be_nl;
     }
 
   if (node->has_native ()) // native exists => no stub
@@ -473,11 +492,7 @@ be_visitor_operation::gen_stub_operation_body (
           );
         }
 
-      *os << be_uidt;
-
-      os->indent ();
-
-      *os << "}" << be_uidt_nl << be_nl;
+      *os << be_uidt_nl << "}" << be_uidt_nl;
 
       // Do any pre marshal and invoke processing with return type. This
       // includes allocating memory, initialization.
@@ -540,6 +555,8 @@ be_visitor_operation::gen_stub_operation_body (
               nt = t->node_type ();
             }
 
+          *os << be_nl << be_nl;
+
           // Now generate the normal successful return statement.
           if (return_type->size_type () == AST_Type::VARIABLE
               || nt == AST_Decl::NT_array)
@@ -553,7 +570,7 @@ be_visitor_operation::gen_stub_operation_body (
         }
     } // end of if (!native)
 
-  *os << be_uidt_nl << "}\n\n";
+  *os << be_uidt_nl << "}";
 
   return 0;
 }
@@ -563,24 +580,18 @@ be_visitor_operation::gen_pre_stub_info (
     be_operation *node
   )
 {
-  // Check if this operation raises any exceptions. In that case, we must
-  // generate a list of exception typecodes. This is not valid for
-  // attributes.
-  if (!this->ctx_->attribute ())
-    {
-      be_visitor_context ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
-      be_visitor_operation_exceptlist_cs visitor (&ctx);
+  be_visitor_context ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
+  be_visitor_operation_exceptlist_cs visitor (&ctx);
 
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) "
-                             "be_visitor_operation_cs::"
-                             "gen_pre_stub_info - "
-                             "Exceptionlist generation error\n"),
-                            -1);
-        }
+  if (node->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) "
+                         "be_visitor_operation_cs::"
+                         "gen_pre_stub_info - "
+                         "Exceptionlist generation error\n"),
+                        -1);
     }
 
   return 0;
@@ -844,7 +855,7 @@ be_visitor_operation::gen_marshal_and_invoke (
                             -1);
         }
 
-      *os << be_uidt_nl << be_nl;
+      *os << be_uidt_nl;
       *os << "}" << be_uidt_nl << be_nl;
     }
   else
@@ -924,8 +935,7 @@ be_visitor_operation::gen_marshal_and_invoke (
       << ")" << be_uidt_nl
       << be_nl
       << "continue;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << be_nl;
+      << "}" << be_uidt;
 
   // If we reach here, we are ready to proceed.
   // the code below this is for twoway operations only.
@@ -980,10 +990,10 @@ be_visitor_operation::gen_marshal_and_invoke (
       // Check if there was a user exception, else demarshal the
       // return val (if any) and parameters (if any) that came with
       // the response message.
-      *os << be_nl
+      *os << be_nl << be_nl
           << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();"
           << be_nl << be_nl
-          << "if (!(" << be_idt << be_idt_nl;
+          << "if (!(" << be_idt << be_idt;
 
       if (!this->void_return_type (bt))
         {
@@ -1261,7 +1271,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
   *os << be_nl << "break;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << "}" << be_uidt;
 
   return 0;
 }

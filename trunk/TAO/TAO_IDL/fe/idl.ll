@@ -110,37 +110,6 @@ inline char *__yytext()
 #define ace_yytext yytext
 #endif /* 0 */
 
-static int scan_obv_token (int token)
-{
-    if (idl_global->obv_support ())
-      {
-        return token;
-      }
-
-    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-    const TAO_IDL_CPP_Keyword_Entry *entry =
-      cpp_key_tbl.lookup (ace_yytext,
-                          ACE_OS::strlen (ace_yytext));
-    if (entry)
-      yylval.strval = ACE_OS::strdup (entry->mapping_);
-    else
-      yylval.strval = ACE_OS::strdup (ace_yytext);
-    return IDENTIFIER;
-}
-
-static int scan_ccm_token (int token)
-{
-  if (idl_global->component_support ())
-    {
-      return token;
-    }
-  else
-    {
-      yylval.strval = ACE_OS::strdup (ace_yytext);
-      return IDENTIFIER;
-    }
-}
-
 %}
 
 /* SO we don't choke on files that use \r\n */
@@ -184,31 +153,31 @@ octet		return IDL_OCTET;
 void		return IDL_VOID;
 native          return IDL_NATIVE;
 local           return IDL_LOCAL;
-abstract        return scan_obv_token (IDL_ABSTRACT);
-custom          return scan_obv_token (IDL_CUSTOM);
-factory         return scan_obv_token (IDL_FACTORY);
-private         return scan_obv_token (IDL_PRIVATE);
-public          return scan_obv_token (IDL_PUBLIC);
-supports        return scan_obv_token (IDL_SUPPORTS);
-truncatable     return scan_obv_token (IDL_TRUNCATABLE);
-valuetype       return scan_obv_token (IDL_VALUETYPE);
-component       return scan_ccm_token (IDL_COMPONENT);
-consumes        return scan_ccm_token (IDL_CONSUMES);
-emits           return scan_ccm_token (IDL_EMITS);
-eventtype       return scan_ccm_token (IDL_EVENTTYPE);
-finder          return scan_ccm_token (IDL_FINDER);
-getraises       return scan_ccm_token (IDL_GETRAISES);
-home            return scan_ccm_token (IDL_HOME);
-import          return scan_ccm_token (IDL_IMPORT);
-multiple        return scan_ccm_token (IDL_MULTIPLE);
-primarykey      return scan_ccm_token (IDL_PRIMARYKEY);
-provides        return scan_ccm_token (IDL_PROVIDES);
-publishes       return scan_ccm_token (IDL_PUBLISHES);
-setraises       return scan_ccm_token (IDL_SETRAISES);
-typeid          return scan_ccm_token (IDL_TYPEID);
-typeprefix      return scan_ccm_token (IDL_TYPEPREFIX);
-uses            return scan_ccm_token (IDL_USES);
-manages         return scan_ccm_token (IDL_MANAGES);
+abstract        return IDL_ABSTRACT;
+custom          return IDL_CUSTOM;
+factory         return IDL_FACTORY;
+private         return IDL_PRIVATE;
+public          return IDL_PUBLIC;
+supports        return IDL_SUPPORTS;
+truncatable     return IDL_TRUNCATABLE;
+valuetype       return IDL_VALUETYPE;
+component       return IDL_COMPONENT;
+consumes        return IDL_CONSUMES;
+emits           return IDL_EMITS;
+eventtype       return IDL_EVENTTYPE;
+finder          return IDL_FINDER;
+getraises       return IDL_GETRAISES;
+home            return IDL_HOME;
+import          return IDL_IMPORT;
+multiple        return IDL_MULTIPLE;
+primarykey      return IDL_PRIMARYKEY;
+provides        return IDL_PROVIDES;
+publishes       return IDL_PUBLISHES;
+setraises       return IDL_SETRAISES;
+typeid          return IDL_TYPEID;
+typeprefix      return IDL_TYPEPREFIX;
+uses            return IDL_USES;
+manages         return IDL_MANAGES;
 
 TRUE		return IDL_TRUETOK;
 FALSE		return IDL_FALSETOK;

@@ -298,6 +298,18 @@ AST_Operation::be_add_argument (AST_Argument *arg)
   return arg;
 }
 
+int
+AST_Operation::be_insert_exception (AST_Exception *ex)
+{
+  UTL_ExceptList *new_list = 0;
+  ACE_NEW_RETURN (new_list,
+                  UTL_ExceptList (ex,
+                                  this->pd_exceptions),
+                  -1);
+  this->pd_exceptions = new_list;
+  return 0;
+}
+
 // Add these exceptions (identified by name) to this scope.
 // This looks up each name to resolve it to the name of a known
 // exception, and then adds the referenced exception to the list
@@ -318,8 +330,8 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
     {
       nl_n = nl_i.item ();
 
-      d = lookup_by_name (nl_n,
-                          I_TRUE);
+      d = this->lookup_by_name (nl_n,
+                                I_TRUE);
 
       if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {

@@ -259,3 +259,37 @@ int be_visitor_args_request_info_result::visit_typedef (be_typedef *)
 
   return 0;
 }
+
+int
+be_visitor_args_request_info_result::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_args_request_info_result::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_args_request_info_result::visit_eventtype (
+    be_eventtype *node
+  )
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_args_request_info_result::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+

@@ -493,13 +493,6 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_MODULE_CI:
-      {
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
-        be_visitor_interface_fwd_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
       {
         ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI);
@@ -523,6 +516,7 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
       }
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_CI:
     case TAO_CodeGen::TAO_MODULE_CS:
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
@@ -683,10 +677,10 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_MODULE_CI:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CI);
-        be_visitor_valuetype_fwd_ci visitor (&ctx);
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_ANY_OP_CH);
+        be_visitor_valuetype_fwd_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -705,8 +699,8 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
         break;
       }
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
-    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_CI:
     case TAO_CodeGen::TAO_MODULE_CS:
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
@@ -729,6 +723,431 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module::"
                          "visit_valuetype_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_module::visit_eventtype (be_eventtype *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_CH);
+        be_visitor_eventtype_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CI:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_CI);
+        be_visitor_eventtype_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_CS);
+        be_visitor_eventtype_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_CDR_OP_CH);
+        be_visitor_eventtype_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_CDR_OP_CI);
+        be_visitor_eventtype_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_CDR_OP_CS);
+        be_visitor_eventtype_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_ANY_OP_CH);
+        be_visitor_eventtype_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_ANY_OP_CS);
+        be_visitor_eventtype_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_SH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_SH);
+        be_visitor_eventtype_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_SI:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_SI);
+        be_visitor_eventtype_si visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_SS:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_SS);
+        be_visitor_eventtype_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
+      return 0;    // nothing to do.
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_eventtype - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_eventtype - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_module::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_FWD_CH);
+        be_visitor_eventtype_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_FWD_ANY_OP_CH);
+        be_visitor_eventtype_fwd_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_FWD_CDR_OP_CH);
+        be_visitor_eventtype_fwd_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
+      {
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_FWD_CDR_OP_CI);
+        be_visitor_eventtype_fwd_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_CI:
+    case TAO_CodeGen::TAO_MODULE_CS:
+    case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_SI:
+    case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_eventtype_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_eventtype_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int 
+be_visitor_module::visit_component (be_component *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_CH);
+        be_visitor_component_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CI:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_CI);
+        be_visitor_component_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_CS);
+        be_visitor_component_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_CDR_OP_CH);
+        be_visitor_component_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_CDR_OP_CI);
+        be_visitor_component_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_CDR_OP_CS);
+        be_visitor_component_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_ANY_OP_CH);
+        be_visitor_component_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_ANY_OP_CS);
+        be_visitor_component_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_SH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_SH);
+        be_visitor_component_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_SI:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_SI);
+        be_visitor_component_si visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_SS:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_SS);
+        be_visitor_component_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_IH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_IH);
+        be_visitor_component_ih visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_IS:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_IS);
+        be_visitor_component_is visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_component - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_component - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int 
+be_visitor_module::visit_component_fwd (be_component_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_FWD_CH);
+        be_visitor_component_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_FWD_CDR_OP_CH);
+        be_visitor_component_fwd_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
+      {
+        ctx.state (TAO_CodeGen::TAO_COMPONENT_FWD_CDR_OP_CI);
+        be_visitor_component_fwd_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_CI:
+    case TAO_CodeGen::TAO_MODULE_CS:
+    case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_SI:
+    case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_component_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_component_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int 
+be_visitor_module::visit_home (be_home *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      {
+        be_visitor_home_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_CI:
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_CS:
+    case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_SI:
+    case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_structure - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_home - "
                          "failed to accept visitor\n"),  
                         -1);
     }

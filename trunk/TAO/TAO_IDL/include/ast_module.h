@@ -144,6 +144,10 @@ private:
 
   virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
 
+  virtual AST_EventType *fe_add_eventtype (AST_EventType *i);
+
+  virtual AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
+
   virtual AST_Component *fe_add_component (AST_Component *i);
 
   virtual AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);

@@ -93,6 +93,9 @@ public:
   // Destructor.
   virtual ~AST_Union (void);
 
+  // This also calls the base class version.
+  virtual void redefine (AST_Structure *from);
+
   virtual idl_bool in_recursion (AST_Type *node = 0);
   // Are we or the parameter node involved in some kind of recursion?
 

@@ -30,12 +30,11 @@
 #include "be_union_fwd.h"
 #include "be_typedef.h"
 #include "be_predefined_type.h"
+#include "be_component.h"
 #include "be_helper.h"
 #include "be_extern.h"
-#include "be_argument.h"
 #include "utl_identifier.h"
 
-#include "be_visitor_interface.h"
 #include "be_visitor_interface.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_constant.h"
@@ -47,6 +46,7 @@
 #include "be_visitor_union.h"
 #include "be_visitor_union_fwd.h"
 #include "be_visitor_operation.h"
+#include "be_visitor_typecode.h"
 #include "be_visitor_context.h"
 
 #include "be_visitor_interface/interface.cpp"
@@ -69,7 +69,6 @@
 #include "be_visitor_interface/smart_proxy_cs.cpp"
 #include "be_visitor_interface/ami_interface_ch.cpp"
 #include "be_visitor_interface/interceptors_cs.cpp"
-#include "be_visitor_interface/interceptors_sh.cpp"
 #include "be_visitor_interface/interceptors_ss.cpp"
 
 // Proxy Brokers

@@ -18,7 +18,6 @@
 //
 // ============================================================================
 
-
 #include "be_valuetype.h"
 #include "be_visitor.h"
 #include "be_extern.h"
@@ -178,7 +177,7 @@ be_valuetype::gen_var_defn (char *local_name)
 
   TAO_OutStream *ch = tao_cg->client_header ();
 
-  *ch << "// TAO_IDL - Generated from" << be_nl
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the var definition (always in the client header).
@@ -246,7 +245,7 @@ be_valuetype::gen_var_defn (char *local_name)
   *ch << "private:" << be_idt_nl;
   *ch << local_name << "* ptr_;" << be_uidt_nl;
 
-  *ch << "};" << be_nl << be_nl;
+  *ch << "};";
 
   return 0;
 }
@@ -295,7 +294,7 @@ be_valuetype::gen_var_impl (char *local_name,
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  *cs << "// TAO_IDL - Generated from" << be_nl
+  *cs << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *cs << "// *************************************************************"
@@ -464,7 +463,7 @@ be_valuetype::gen_var_impl (char *local_name,
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::remove_ref (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   return 0;
 }
@@ -487,7 +486,7 @@ be_valuetype::gen_out_defn (char *)
 
   ch = tao_cg->client_header ();
 
-  *ch << "// TAO_IDL - Generated from" << be_nl
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the out definition (always in the client header).
@@ -531,7 +530,7 @@ be_valuetype::gen_out_defn (char *)
   *ch << be_uidt_nl;
   *ch << "private:" << be_idt_nl;
   *ch << this->local_name () << "* &ptr_;" << be_uidt_nl;
-  *ch << "};" << be_nl << be_nl;
+  *ch << "};";
 
   return 0;
 }
@@ -565,7 +564,7 @@ be_valuetype::gen_out_impl (char *,
 
   cs = tao_cg->client_stubs ();
 
-  *cs << "// TAO_IDL - Generated from" << be_nl
+  *cs << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the var implementation in the inline file
@@ -665,8 +664,7 @@ be_valuetype::gen_out_impl (char *,
 
   *cs << "}" << be_nl << be_nl;
 
-  *cs << "// *************************************************************"
-      << be_nl << be_nl;
+  *cs << "// *************************************************************";
 
   return 0;
 }
@@ -679,7 +677,7 @@ be_valuetype::gen_helper_header (char*,
 
   os = tao_cg->client_header ();
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -693,7 +691,7 @@ be_valuetype::gen_helper_header (char*,
 
   *os <<  be_uidt_nl
       << "}" << be_nl
-      << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl;
+      << "TAO_NAMESPACE_CLOSE";
 
   return 0;
 }
@@ -710,10 +708,10 @@ be_valuetype::gen_helper_inline (char*,
   // is not getting generated... Actually this is a much bigger
   // problem. Just hacking  it up for the timebeing..
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "#if defined (__ACE_INLINE__)" << be_nl
+  *os << "#if defined (__ACE_INLINE__)" << be_nl << be_nl
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
@@ -723,8 +721,8 @@ be_valuetype::gen_helper_inline (char*,
       << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl
-      << "TAO_NAMESPACE_CLOSE" << be_nl
-      << "#endif /*__ACE_INLINE__*/"<< be_nl;
+      << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl 
+      << "#endif /*__ACE_INLINE__*/";
 
   return 0;
 }
@@ -738,7 +736,7 @@ be_valuetype::gen_helper_stubs (char* ,
 
   os = tao_cg->client_stubs ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
@@ -757,7 +755,7 @@ be_valuetype::gen_helper_stubs (char* ,
       << "{" << be_idt_nl
       << "vt->_remove_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   return 0;
 }

@@ -23,6 +23,10 @@
 #include "be_scope.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
+#include "be_valuetype.h"
+#include "be_component.h"
+#include "be_eventtype.h"
+#include "be_home.h"
 #include "be_module.h"
 #include "be_root.h"
 #include "be_exception.h"
@@ -248,6 +252,14 @@ be_decl::scope (void)
         return be_factory::narrow_from_decl (d);
      case AST_Decl::NT_sequence:
         return be_sequence::narrow_from_decl (d);
+     case AST_Decl::NT_valuetype:
+        return be_valuetype::narrow_from_decl (d);
+     case AST_Decl::NT_component:
+        return be_component::narrow_from_decl (d);
+     case AST_Decl::NT_eventtype:
+        return be_eventtype::narrow_from_decl (d);
+     case AST_Decl::NT_home:
+        return be_home::narrow_from_decl (d);
      default:
         return (be_scope *)0;
    }

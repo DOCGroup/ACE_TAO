@@ -64,7 +64,9 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
                         -1);
     }
 
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "template <class T> ACE_INLINE\n";
 
   // Generate the return type mapping (same as in the header file).
@@ -99,7 +101,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << "{" << be_idt_nl;
+  *os << be_nl << "{" << be_idt_nl;
 
   be_predefined_type *pdt = be_predefined_type::narrow_from_decl (bt);
 
@@ -108,7 +110,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
       *os << "return ";
     }
 
-  *os << "this->ptr_->" << node->local_name () << " (" << be_idt << "\n";
+  *os << "this->ptr_->" << node->local_name () << " (" << be_idt;
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
@@ -125,7 +127,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
 
   *os << be_uidt_nl;
   *os << ");" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}";
 
   return 0;
 }

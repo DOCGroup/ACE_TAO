@@ -83,6 +83,17 @@ public:
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
 
+  virtual int visit_component (be_component *node);
+  // visit a component node
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit a forward declared component node
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit an eventtype node
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit a forward declared eventtype node
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_UPCALL_SS_H_ */

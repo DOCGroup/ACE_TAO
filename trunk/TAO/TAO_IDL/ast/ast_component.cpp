@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ast_component.h"
+#include "ast_attribute.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -27,14 +28,14 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_TRUE,
+                   I_FALSE,
                    I_FALSE),
     AST_Type (AST_Decl::NT_component,
               n),
     AST_Decl (AST_Decl::NT_component,
               n),
     UTL_Scope (AST_Decl::NT_component),
-    COMMON_Base (I_TRUE,
+    COMMON_Base (I_FALSE,
                  I_FALSE),
     pd_base_component (base_component)
 {
@@ -91,7 +92,7 @@ AST_Component::provides (void)
   return this->pd_provides;
 }
 
-ACE_Unbounded_Queue<AST_Component::uses_description> &
+ACE_Unbounded_Queue<AST_Component::port_description> &
 AST_Component::uses (void)
 {
   return this->pd_uses;

@@ -48,15 +48,15 @@ be_visitor_sequence_cs::gen_bounded_wstr_sequence (be_sequence *node)
                        class_name);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
-  os->indent ();
 
   // allocate_buffer
-  *os << "void" << be_nl
+  *os << be_nl << be_nl 
+      << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong /* length */)"
       << be_nl
       << "{" << be_idt_nl
@@ -73,7 +73,9 @@ be_visitor_sequence_cs::gen_bounded_wstr_sequence (be_sequence *node)
       << full_class_name << "::_deallocate_buffer (void)" << be_nl
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
+      << "{" << be_idt_nl
       << "return;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "CORBA::WChar **tmp =" << be_idt_nl
       << "ACE_reinterpret_cast (CORBA::WChar **, this->buffer_);"
       << be_uidt_nl

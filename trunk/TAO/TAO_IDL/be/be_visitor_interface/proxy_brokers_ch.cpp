@@ -33,7 +33,7 @@ be_visitor_interface_proxy_brokers_ch::visit_interface (be_interface *node)
   *os << "// The Proxy Brokers are used by each interface to get" << be_nl
       << "// the right proxy for performing a call. In the new " << be_nl
       << "// collocation scheme, the proxy to be used can vary on" << be_nl
-      << "// a call by call basis." << be_nl << be_nl;
+      << "// a call by call basis." << be_nl;
 
   // Code Generation for the proxy brokers base class.
   be_visitor_context ctx (*this->ctx_);
@@ -64,3 +64,11 @@ be_visitor_interface_proxy_brokers_ch::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int be_visitor_interface_proxy_brokers_ch::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+

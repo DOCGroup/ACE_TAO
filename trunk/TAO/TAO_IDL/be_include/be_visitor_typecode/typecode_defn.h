@@ -75,6 +75,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface
 
+  virtual int visit_component (be_component *node);
+  // visit component
+
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined types
 
@@ -96,6 +99,8 @@ public:
   virtual int visit_valuetype (be_valuetype *node);
   // visit a valuetype
   
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit a valuetype
 
 
   // = visit methods for the scope elements

@@ -71,29 +71,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 /* Declarations */
 
 %{
-#include "utl_strlist.h"
-#include "utl_namelist.h"
-#include "fe_interface_header.h"
-#include "utl_exprlist.h"
-#include "utl_labellist.h"
-#include "utl_decllist.h"
+#include "ast_argument.h"
+#include "ast_array.h"
+#include "ast_attribute.h"
 #include "ast_field.h"
 #include "ast_expression.h"
-#include "ast_argument.h"
 #include "ast_operation.h"
-#include "global_extern.h"
-#include "utl_identifier.h"
-#include "utl_err.h"
 #include "ast_generator.h"
 #include "ast_module.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
+#include "ast_eventtype.h"
+#include "ast_eventtype_fwd.h"
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
-#include "utl_string.h"
 #include "ast_constant.h"
-#include "fe_declarator.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
 #include "ast_structure_fwd.h"
@@ -104,7 +97,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_string.h"
 #include "ast_factory.h"
 #include "ast_exception.h"
-#include "ast_array.h"
+#include "fe_declarator.h"
+#include "fe_interface_header.h"
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "utl_string.h"
+#include "utl_strlist.h"
+#include "utl_namelist.h"
+#include "utl_exprlist.h"
+#include "utl_labellist.h"
+#include "utl_decllist.h"
+#include "global_extern.h"
 #include "nr_extern.h"
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
@@ -136,6 +139,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
+  FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
   FE_HomeHeader                 *hhval;         /* Home header          */
   AST_Expression                *exval;         /* Expression value     */
@@ -263,7 +267,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <slval>   string_literals
 
 %type <nlval>   at_least_one_scoped_name scoped_names inheritance_spec
-%type <nlval>   opt_raises supports_spec
+%type <nlval>   opt_raises opt_getraises opt_setraises supports_spec
 
 %type <elval>   at_least_one_array_dim array_dims
 
@@ -279,6 +283,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <chval>   component_header
 
 %type <hhval>   home_header
+
+%type <ehval>   event_rest_of_header
 
 %type <exval>   expression const_expr or_expr xor_expr and_expr shift_expr
 %type <exval>   add_expr mult_expr unary_expr primary_expr literal
@@ -298,9 +304,11 @@ AST_Decl *tao_enum_constant_decl = 0;
 
 %type <deval>   declarator simple_declarator complex_declarator
 
-%type <bval>    opt_readonly opt_truncatable opt_multiple
+%type <bval>    opt_truncatable opt_multiple
 
 %type <idval>   interface_decl value_decl union_decl struct_decl id
+%type <idval>   event_header event_plain_header event_custom_header
+%type <idval>   event_abs_header
 
 %type <ival>    type_dcl
 %%
@@ -3271,11 +3279,20 @@ array_dim :
         }
         ;
 
-attribute :
-        opt_readonly
+attribute 
+        : attribute_readonly
+        | attribute_readwrite
+        ;
+
+attribute_readonly :
+        IDL_READONLY
+        {
+// attribute_readonly : IDL_READONLY
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrROSeen);
+        }
         IDL_ATTRIBUTE
         {
-// attribute : opt_readonly IDL_ATTRIBUTE
+//      IDL_ATTRIBUTE
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
         param_type_spec
@@ -3286,20 +3303,26 @@ attribute :
         at_least_one_simple_declarator
         {
 //      at_least_one_simple_declarator
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclsSeen);
+        }
+        opt_raises
+        {
+//      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Attribute *a = 0;
           FE_Declarator *d = 0;
-          idl_global->set_parse_state (IDL_GlobalData::PS_AttrCompleted);
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           /*
            * Create nodes representing attributes and add them to the
            * enclosing scope.
            */
           if (s != 0 
-              && $4 != 0 
-              && $6 != 0) 
+              && $5 != 0 
+              && $7 != 0) 
             {
-              for (UTL_DecllistActiveIterator l ($6); 
+              for (UTL_DecllistActiveIterator l ($7); 
                    !l.is_done (); 
                    l.next ()) 
                 {
@@ -3310,7 +3333,7 @@ attribute :
                       continue;
                     }
 
-                  AST_Type *tp = d->compose ($4);
+                  AST_Type *tp = d->compose ($5);
 
                   if (tp == 0)
                     {
@@ -3319,32 +3342,102 @@ attribute :
 
                   a = 
                     idl_global->gen ()->create_attribute (
-                                            $1,
+                                            I_TRUE,
                                             tp,
                                             (UTL_IdList *) d->name ()->copy (),
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
-                  /*
-                   * Add one attribute to the enclosing scope.
-                   */
+
+                  if ($9 != 0)
+                    {
+                      (void) a->fe_add_get_exceptions ($9);
+                    }
+
                   (void) s->fe_add_attribute (a);
                 }
             }
         }
         ;
 
-opt_readonly
-        : IDL_READONLY
+attribute_readwrite :
+        IDL_ATTRIBUTE
         {
-// opt_readonly : IDL_READONLY
-          idl_global->set_parse_state (IDL_GlobalData::PS_AttrROSeen);
-          $$ = I_TRUE;
+// attribute_readonly : IDL_ATTRIBUTE
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
-        | /* EMPTY */
+        param_type_spec
         {
-/*     |  EMPTY */
-          $$ = I_FALSE;
+//      param_type_spec
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrTypeSeen);
+        }
+        at_least_one_simple_declarator
+        {
+//      at_least_one_simple_declarator
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclsSeen);
+        }
+        opt_getraises
+        {
+//      opt_getraises
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseCompleted);
+        }
+        opt_setraises
+        {
+//      opt_setraises
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Attribute *a = 0;
+          FE_Declarator *d = 0;
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseCompleted);
+
+          /*
+           * Create nodes representing attributes and add them to the
+           * enclosing scope.
+           */
+          if (s != 0 
+              && $3 != 0 
+              && $5 != 0) 
+            {
+              for (UTL_DecllistActiveIterator l ($5); 
+                   !l.is_done (); 
+                   l.next ()) 
+                {
+                  d = l.item ();
+
+                  if (d == 0)
+                    {
+                      continue;
+                    }
+
+                  AST_Type *tp = d->compose ($3);
+
+                  if (tp == 0)
+                    {
+                      continue;
+                    }
+
+                  a = 
+                    idl_global->gen ()->create_attribute (
+                                            I_FALSE,
+                                            tp,
+                                            (UTL_IdList *) d->name ()->copy (),
+                                            s->is_local (),
+                                            s->is_abstract ()
+                                          );
+
+                  if ($7 != 0)
+                    {
+                      (void) a->fe_add_get_exceptions ($9);
+                    }
+
+                  if ($9 != 0)
+                    {
+                      (void) a->fe_add_set_exceptions ($9);
+                    }
+
+                  (void) s->fe_add_attribute (a);
+                }
+            }
         }
         ;
 
@@ -3850,6 +3943,56 @@ opt_raises
         }
         ;
 
+opt_getraises
+        : IDL_GETRAISES
+        {
+// opt_getraises : IDL_GETRAISES
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseSeen);
+        }
+          '('
+        {
+//      '('
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseSqSeen);
+        }
+          at_least_one_scoped_name
+          ')'
+        {
+//      at_least_one_scoped_name ')'
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseQsSeen);
+          $$ = $5;
+        }
+        | /* EMPTY */
+        {
+          $$ = 0;
+/*      |  EMPTY */
+        }
+        ;
+
+opt_setraises
+        : IDL_SETRAISES
+        {
+// opt_setraises : IDL_SETRAISES
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseSeen);
+        }
+          '('
+        {
+//      '('
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseSqSeen);
+        }
+          at_least_one_scoped_name
+          ')'
+        {
+//      at_least_one_scoped_name ')'
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseQsSeen);
+          $$ = $5;
+        }
+        | /* EMPTY */
+        {
+          $$ = 0;
+/*      |  EMPTY */
+        }
+        ;
+
 opt_context
         : IDL_CONTEXT
         {
@@ -4185,10 +4328,27 @@ provides_decl :
           
           if (c != 0)
             {
-              AST_Component::port_description pd;
-              pd.id = $3;
-              pd.impl = $2;
-              c->provides ().enqueue_tail (pd);
+              AST_Decl *d = s->lookup_by_name ($2,
+                                               I_TRUE);
+
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error ($2);
+                }
+              else if (d->node_type () != AST_Decl::NT_interface)
+                {
+                  idl_global->err ()->interface_expected (d);
+                }
+              else
+                {
+                  AST_Type *interface_type =
+                    AST_Interface::narrow_from_decl (d);
+
+                  AST_Component::port_description pd;
+                  pd.id = $3;
+                  pd.impl = interface_type;
+                  c->provides ().enqueue_tail (pd);
+                }
             }  
         }
         ;
@@ -4244,16 +4404,31 @@ uses_decl :
         {
 // uses_decl : IDL_USES opt_multiple interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Component *c = AST_Component::narrow_from_scope (s);
-          
-          if (c != 0)
+          AST_Decl *d = s->lookup_by_name ($3,
+                                           I_TRUE);
+
+          if (d == 0)
             {
-              AST_Component::uses_description ud;
-              ud.id = $4;
-              ud.impl = $3;
-              ud.is_multiple = $2;
-              c->uses ().enqueue_tail (ud);
-            }  
+              idl_global->err ()->lookup_error ($3);
+            }
+          else if (d->node_type () != AST_Decl::NT_interface)
+            {
+              idl_global->err ()->interface_expected (d);
+            }
+          else
+            {
+              AST_Type *interface_type = AST_Type::narrow_from_decl (d);
+              AST_Component *c = AST_Component::narrow_from_scope (s);
+          
+              if (c != 0)
+                {
+                  AST_Component::port_description ud;
+                  ud.id = $4;
+                  ud.impl = interface_type;
+                  ud.is_multiple = $2;
+                  c->uses ().enqueue_tail (ud);
+                }
+            }
         }
         ;
 
@@ -4284,20 +4459,23 @@ emits_decl :
             {
               idl_global->err ()->lookup_error ($2);
             }
-          else if (d->node_type () != AST_Decl::NT_valuetype)
+          else if (d->node_type () != AST_Decl::NT_eventtype)
             {
-              idl_global->err ()->valuetype_expected (d);
+              idl_global->err ()->eventtype_expected (d);
             }
-
-          AST_Component *c = AST_Component::narrow_from_scope (s);
-          
-          if (c != 0)
+          else
             {
-              AST_Component::port_description pd;
-              pd.id = $3;
-              pd.impl = $2;
-              c->emits ().enqueue_tail (pd);
-            }  
+              AST_Type *event_type = AST_Type::narrow_from_decl (d);
+              AST_Component *c = AST_Component::narrow_from_scope (s);
+          
+              if (c != 0)
+                {
+                  AST_Component::port_description pd;
+                  pd.id = $3;
+                  pd.impl = event_type;
+                  c->emits ().enqueue_tail (pd);
+                }
+            }
         }
         ;
 
@@ -4315,20 +4493,23 @@ publishes_decl :
             {
               idl_global->err ()->lookup_error ($2);
             }
-          else if (d->node_type () != AST_Decl::NT_valuetype)
+          else if (d->node_type () != AST_Decl::NT_eventtype)
             {
-              idl_global->err ()->valuetype_expected (d);
+              idl_global->err ()->eventtype_expected (d);
             }
-
-          AST_Component *c = AST_Component::narrow_from_scope (s);
-          
-          if (c != 0)
+          else
             {
-              AST_Component::port_description pd;
-              pd.id = $3;
-              pd.impl = $2;
-              c->publishes ().enqueue_tail (pd);
-            }  
+              AST_Type *event_type = AST_Type::narrow_from_decl (d);
+              AST_Component *c = AST_Component::narrow_from_scope (s);
+          
+              if (c != 0)
+                {
+                  AST_Component::port_description pd;
+                  pd.id = $3;
+                  pd.impl = event_type;
+                  c->publishes ().enqueue_tail (pd);
+                }
+            }
         }
         ;
 
@@ -4346,20 +4527,23 @@ consumes_decl :
             {
               idl_global->err ()->lookup_error ($2);
             }
-          else if (d->node_type () != AST_Decl::NT_valuetype)
+          else if (d->node_type () != AST_Decl::NT_eventtype)
             {
-              idl_global->err ()->valuetype_expected (d);
+              idl_global->err ()->eventtype_expected (d);
             }
-
-          AST_Component *c = AST_Component::narrow_from_scope (s);
-          
-          if (c != 0)
+          else
             {
-              AST_Component::port_description pd;
-              pd.id = $3;
-              pd.impl = $2;
-              c->consumes ().enqueue_tail (pd);
-            }  
+              AST_Type *event_type = AST_Type::narrow_from_decl (d);
+              AST_Component *c = AST_Component::narrow_from_scope (s);
+          
+              if (c != 0)
+                {
+                  AST_Component::port_description pd;
+                  pd.id = $3;
+                  pd.impl = event_type;
+                  c->consumes ().enqueue_tail (pd);
+                }
+            }
         }
         ;
 
@@ -4392,7 +4576,7 @@ home_decl :
               (void) s->fe_add_home (h);
 
               // This FE_HomeHeader class isn't destroyed with the AST.
-             $1->name ()->destroy ();
+              $1->name ()->destroy ();
               delete $1;
               $1 = 0;
             }
@@ -4403,6 +4587,13 @@ home_decl :
           idl_global->scopes ().push (h);
         }
         home_body
+        {
+//      home_body
+          /*
+           * Done with this component - pop it off the scopes stack.
+           */
+          idl_global->scopes ().pop ();
+        }
         ;
 
 home_header :
@@ -4554,17 +4745,14 @@ factory_decl :
           if (s != 0) 
             {
               AST_Home *home = AST_Home::narrow_from_scope (s);
-              AST_Component *rt = home->managed_component ();
-
               o = 
                 idl_global->gen ()->create_operation (
-                                        rt,
+                                        home->managed_component (),
                                         AST_Operation::OP_noflags,
                                         &n,
-                                        I_TRUE,
+                                        I_FALSE,
                                         I_FALSE
                                       );
-              (void) s->fe_add_operation (o);
               home->factories ().enqueue_tail (o);
             }
 
@@ -4584,7 +4772,22 @@ factory_decl :
         opt_raises
         {
 //      opt_raises
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
+
+          /*
+           * Add exceptions and context to the operation.
+           */
+          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
+            {
+              o = AST_Operation::narrow_from_scope (s);
+
+              if ($6 != 0 && o != 0)
+                {
+                  (void) o->fe_add_exceptions ($6);
+                }
+            }
 
           /*
            * Done with this operation. Pop its scope from the scopes stack.
@@ -4611,17 +4814,14 @@ finder_decl :
           if (s != 0) 
             {
               AST_Home *home = AST_Home::narrow_from_scope (s);
-              AST_Component *rt = home->managed_component ();
-
               o = 
                 idl_global->gen ()->create_operation (
-                                        rt,
+                                        home->managed_component (),
                                         AST_Operation::OP_noflags,
                                         &n,
-                                        I_TRUE,
+                                        I_FALSE,
                                         I_FALSE
                                       );
-              (void) s->fe_add_operation (o);
               home->finders ().enqueue_tail (o);
             }
 
@@ -4641,7 +4841,22 @@ finder_decl :
         opt_raises
         {
 //      opt_raises
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
+
+          /*
+           * Add exceptions and context to the operation.
+           */
+          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
+            {
+              o = AST_Operation::narrow_from_scope (s);
+
+              if ($6 != 0 && o != 0)
+                {
+                  (void) o->fe_add_exceptions ($6);
+                }
+            }
 
           /*
            * Done with this operation. Pop its scope from the scopes stack.
@@ -4664,56 +4879,252 @@ event_forward_decl
 event_concrete_forward_decl :
         IDL_EVENTTYPE
         id
+        {
+// event_concrete_forward_decl : IDL_EVENTTYPE id
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName n ($2, 
+                            0);
+          AST_EventTypeFwd *f = 0;
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeForwardSeen);
+
+          /*
+           * Create a node representing a forward declaration of an
+           * eventtype. Store it in the enclosing scope
+           */
+          if (s != 0) 
+            {
+              f = idl_global->gen ()->create_eventtype_fwd (&n,
+                                                            I_FALSE);
+              (void) s->fe_add_valuetype_fwd (f);
+            }
+        }
         ;        
         
 event_abs_forward_decl :
         IDL_ABSTRACT
         IDL_EVENTTYPE
         id
+        {
+// event_abs_forward_decl : IDL_ABSTRACT IDL_EVENTTYPE id
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName n ($3, 
+                            0);
+          AST_EventTypeFwd *f = 0;
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeForwardSeen);
+
+          /*
+           * Create a node representing a forward declaration of an
+           * eventtype. Store it in the enclosing scope
+           */
+          if (s != 0) 
+            {
+              f = idl_global->gen ()->create_eventtype_fwd (&n,
+                                                            I_TRUE);
+              (void) s->fe_add_valuetype_fwd (f);
+            }
+        }
         ;
 
 event_abs_decl :
         event_abs_header
         event_rest_of_header
+        {
+// event_abs_decl : event_abs_header event_rest_of_header
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_EventType *e = 0;
+          AST_Interface *i = 0;
+
+          if (s != 0 && $1 != 0) 
+            {
+              UTL_ScopedName sn ($1,
+                                 0);
+              e = 
+                idl_global->gen ()->create_eventtype (
+                    &sn,
+                    $2->inherits (),
+                    $2->n_inherits (),
+                    $2->inherits_concrete (),
+                    $2->inherits_flat (),
+                    $2->n_inherits_flat (),
+                    $2->supports (),
+                    $2->n_supports (),
+                    $2->supports_concrete (),
+                    I_TRUE,
+                    I_FALSE
+                  );
+              i = AST_Interface::narrow_from_decl (e);
+              AST_Interface::fwd_redefinition_helper (i, 
+                                                      s);
+              /*
+               * Add the eventetype to its definition scope
+               */
+              e = AST_EventType::narrow_from_decl (i);
+              (void) s->fe_add_eventtype (e);
+            }
+
+          /*
+           * Push it on the scope stack.
+           */
+          idl_global->scopes ().push (e);
+        }
         '{'
+        {
+//      '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeSqSeen);
+        }
         exports
+        {
+//      exports
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeBodySeen);
+        }
         '}'
+        {
+//      '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeQsSeen);
+
+          /*
+           * Done with this eventtype - pop it off the scopes stack.
+           */
+          idl_global->scopes ().pop ();
+        }
         ;
 
 event_abs_header :
         IDL_ABSTRACT
         IDL_EVENTTYPE
         id
+        {
+// event_abs_header : IDL_ABSTRACT IDL_EVENTTYPE id
+          $$ = $3;
+        }
         ;
 
 event_custom_header :
         IDL_CUSTOM
         IDL_EVENTTYPE
         id
+        {
+//      id
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
+
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("error in %s line %d\n"),
+                      idl_global->filename ()->get_string (),
+                      idl_global->lineno ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
+                      ACE_TEXT (" custom yet\n")));
+          $$ = 0;
+        }
         ;
 
-event_plain_header :
+event_plain_header : 
         IDL_EVENTTYPE
         id
+        {
+//      id
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
+
+          $$ = $2;
+        }
         ;   
         
 event_rest_of_header :     
         opt_truncatable
         inheritance_spec
+        {
+// event_rest_of_header : opt_truncatable inheritance_spec
+          idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
+        }
         supports_spec
+        {
+//      supports_spec
+          idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
+
+          ACE_NEW_RETURN ($$,
+                          FE_EventHeader (0,
+                                          $2,
+                                          $4,
+                                          $1),
+                          1);
+        }
         ;
 
 event_decl :
         event_header
         event_rest_of_header
+        {
+// event_decl : event_header event_rest_of_header
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_EventType *e = 0;
+          AST_Interface *i = 0;
+
+          if (s != 0 && $1 != 0) 
+            {
+              UTL_ScopedName sn ($1,
+                                 0);
+              e = 
+                idl_global->gen ()->create_eventtype (
+                    &sn,
+                    $2->inherits (),
+                    $2->n_inherits (),
+                    $2->inherits_concrete (),
+                    $2->inherits_flat (),
+                    $2->n_inherits_flat (),
+                    $2->supports (),
+                    $2->n_supports (),
+                    $2->supports_concrete (),
+                    I_FALSE,
+                    $2->truncatable ()
+                  );
+              i = AST_Interface::narrow_from_decl (e);
+              AST_Interface::fwd_redefinition_helper (i, 
+                                                      s);
+              /*
+               * Add the eventetype to its definition scope
+               */
+              e = AST_EventType::narrow_from_decl (i);
+              (void) s->fe_add_eventtype (e);
+            }
+
+          /*
+           * Push it on the scope stack.
+           */
+          idl_global->scopes ().push (e);
+        }
         '{'
+        {
+//      '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeSqSeen);
+        }
         value_elements
+        {
+//      value_elements
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeBodySeen);
+        }
         '}'
+        {
+//      '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeQsSeen);
+
+          /*
+           * Done with this eventtype - pop it off the scopes stack.
+           */
+          idl_global->scopes ().pop ();
+        }
         ;
 
 event_header
         : event_custom_header
+        {
+// event_header : event_custom_header
+          $$ = $1;
+        }
         | event_plain_header
+        {
+// event_header : event_plain_header
+          $$ = $1;
+        }
         ;
 
 %%

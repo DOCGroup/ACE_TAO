@@ -18,8 +18,6 @@
 //
 // ============================================================================
 
-#include "be_visitor_typecode/typecode_decl.h"
-
 ACE_RCSID (be_visitor_interface,
            interface_ch,
            "$Id$")
@@ -50,22 +48,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // == STEP 1:  generate the class name and class names we inherit ==
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the ifdefined macro for  the _ptr type.
   os->gen_ifdef_macro (node->flat_name (),
                        "_ptr");
 
-
   // The following two are required to be under the ifdef macro to avoid
   // multiple declarations.
 
   // Forward declaration.
-  *os << "class " << node->local_name () << ";" << be_nl;
+  *os << be_nl << be_nl << "class " << node->local_name () << ";";
   // Generate the _ptr declaration.
-  *os << "typedef " << node->local_name () << " *"
-      << node->local_name () << "_ptr;" << be_nl;
+  *os << be_nl << "typedef " << node->local_name () << " *"
+      << node->local_name () << "_ptr;";
 
   os->gen_endif ();
 
@@ -109,25 +106,25 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       return 0;
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Now the interface definition itself.
   os->gen_ifdef_macro (node->flat_name ());
 
   if (!node->is_local () && !node->is_abstract ())
     {
-      // Forward class declaration
-      *os << "// Forward Classes Declaration." << be_nl
+      // Forward class declarations.
+      *os << be_nl << be_nl
           << "class " << node->base_proxy_impl_name () << ";" << be_nl
           << "class " << node->remote_proxy_impl_name () << ";" << be_nl
           << "class " << node->base_proxy_broker_name () << ";" << be_nl
-          << "class " << node->remote_proxy_broker_name () << ";"
-          << be_nl << be_nl;
+          << "class " << node->remote_proxy_broker_name () << ";";
     }
 
   // Now generate the class definition.
-  *os << "class " << be_global->stub_export_macro ()
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro ()
       << " " << node->local_name () << be_idt_nl
       << ": " ;
 
@@ -165,7 +162,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           *os << "," << be_nl;
         }
     }
-  else if (node->is_abstract ())
+
+  if (node->is_abstract ())
     {
       *os << "public virtual CORBA::AbstractBase" << be_uidt_nl;
     }
@@ -242,14 +240,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "static foo_ptr _downcast (CORBA::AbstractBase_ptr abs);"
+      *os << "static " << node->local_name () 
+          << "_ptr _downcast (CORBA::AbstractBase_ptr abs);"
           << be_nl << be_nl;
     }
 
-  // No Any operator for local interfaces.
-  if (! node->is_local () && be_global->any_support ())
+  if (be_global->any_support ())
     {
-      *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
+      *os << "static void _tao_any_destructor (void *);";
     }
 
   // Generate code for the interface definition by traversing thru the
@@ -265,7 +263,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
@@ -321,7 +319,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       *os << "// These methods travese the inheritance tree and set the"
           << be_nl
-          << "// parents piece of the given class in the right mode"
+          << "// parents piece of the given class in the right mode."
           << be_nl
           << "virtual void " << node->flat_name ()
           << "_setup_collocation (int collocated);" << be_nl << be_nl;
@@ -385,12 +383,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   ctx = *this->ctx_;
 
   *os << be_uidt_nl;
-  *os << "};" << be_nl << be_nl;
+  *os << "};";
 
   // Don't support smart proxies for local interfaces.
   // @@@ (JP) This is TODO for abstract interfaces.
   if (! node->is_local () && ! node->is_abstract ())
     {
+      *os << be_nl << be_nl;
+
       // Smart Proxy related classes.
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
       be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);

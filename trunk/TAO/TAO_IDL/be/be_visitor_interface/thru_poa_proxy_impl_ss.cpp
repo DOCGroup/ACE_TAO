@@ -31,9 +31,9 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                 ThruPOA Proxy  Implementation\n"
-      << "//\n\n";
+      << "//";
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Ctor Implementation
@@ -43,8 +43,7 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (
 
   // Generate the code for the ThruPOA Proxy Impl.
   // operations
-  *os << "// ThruPOA Implementation of the IDL interface methods"
-      << be_nl << be_nl;
+  *os << "// ThruPOA Implementation of the IDL interface methods";
 
   if (this->visit_scope (node) == -1)
     {
@@ -57,8 +56,7 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (
 
   *os << "//\n"
       << "//           End ThruPOA Proxy Implementation\n"
-      << "///////////////////////////////////////////////////////////////////////"
-      << "\n\n";
+      << "///////////////////////////////////////////////////////////////////////";
 
   return 0;
 
@@ -128,4 +126,12 @@ be_visitor_interface_thru_poa_proxy_impl_ss::gen_abstract_ops_helper (
 
   return 0;
 }
+
+int be_visitor_interface_thru_poa_proxy_impl_ss::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
 

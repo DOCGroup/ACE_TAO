@@ -146,6 +146,14 @@ SOURCE=.\ast\ast_enum_val.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_eventtype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_eventtype_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_exception.cpp
 # End Source File
 # Begin Source File
@@ -403,6 +411,14 @@ SOURCE=.\include\ast_enum.h
 # Begin Source File
 
 SOURCE=.\include\ast_enum_val.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_eventtype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_eventtype_fwd.h
 # End Source File
 # Begin Source File
 

@@ -648,7 +648,6 @@ be_visitor_interface::visit_exception (be_exception *node)
 int
 be_visitor_interface::visit_operation (be_operation *node)
 {
-
   // Instantiate a visitor context with a copy of our context. This info
   // will be modified ased on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);

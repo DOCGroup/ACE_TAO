@@ -128,9 +128,11 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << fname << " _tao_union_tmp;" << be_nl
-          << fname << "_forany " << be_idt_nl
-          << "_tao_union_helper (_tao_union_tmp);" << be_uidt_nl
-          << "result = strm >> _tao_union_helper;" << be_nl
+          << fname << "_forany _tao_union_helper (" 
+          << be_idt << be_idt_nl
+          << "_tao_union_tmp" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "result = strm >> _tao_union_helper;" << be_nl << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union." << f->local_name ()
@@ -141,9 +143,10 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << fname << "_forany " << be_idt_nl
-          << "_tao_union_tmp (_tao_union."
-          << f->local_name () << " ());" << be_uidt_nl
+      *os << fname << "_forany _tao_union_tmp (" << be_idt << be_idt_nl
+          << "_tao_union."
+          << f->local_name () << " ()" << be_uidt_nl
+          <<");" << be_uidt_nl
           << "result = strm << _tao_union_tmp;";
       return 0;
 
@@ -511,7 +514,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
         {
           *os << "CORBA::Object_var _tao_union_tmp;" << be_nl;
 
-          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
+          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
@@ -523,7 +526,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
 
           //@@TODO - case for ValueBase.
 
-          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
+          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
@@ -534,7 +537,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
           *os << "CORBA::Char _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_char _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
-              << "result = strm >> _tao_union_helper;" << be_nl
+              << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name ()
@@ -545,7 +548,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
           *os << "CORBA::WChar _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_wchar _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
-              << "result = strm >> _tao_union_helper;" << be_nl
+              << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name ()
@@ -556,7 +559,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
           *os << "CORBA::Octet _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_octet _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
-              << "result = strm >> _tao_union_helper;" << be_nl
+              << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name ()
@@ -567,7 +570,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
           *os << "CORBA::Boolean _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_boolean _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
-              << "result = strm >> _tao_union_helper;" << be_nl
+              << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name ()
@@ -576,7 +579,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
       else
         {
           *os << node->name () << " _tao_union_tmp;" << be_nl
-              << "result = strm >> _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name ()
@@ -677,7 +680,7 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
           }
 
         *os << " _tao_union_tmp;" << be_nl
-            << "result = strm >> _tao_union_tmp;" << be_nl
+            << "result = strm >> _tao_union_tmp;" << be_nl << be_nl
             << "if (result)" << be_idt_nl
             << "{" << be_idt_nl
             << "_tao_union."
@@ -761,7 +764,7 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
           *os << "CORBA::WString_var _tao_union_tmp;" << be_nl;
         }
 
-      *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
+      *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
@@ -814,7 +817,7 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << node->name () << " _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp;" << be_nl
+          << "result = strm >> _tao_union_tmp;" << be_nl << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union." << f->local_name ()
@@ -910,13 +913,13 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << node->name () << " _tao_union_tmp"
           << ";" << be_nl
-          << "result = strm >> _tao_union_tmp;" << be_nl
+          << "result = strm >> _tao_union_tmp;" << be_nl << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union." << f->local_name ()
           << " (_tao_union_tmp);" << be_nl
           << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt;
+          << "}" << be_uidt_nl;
 
       return 0;
 
