@@ -39,6 +39,15 @@ Command line arguments:
                              Naming Service.
                              The default is "NotifyEventChannel".
 
+"-Notify_TPReactor [threads]": Tells the Notify Service that the ORB
+                               will use a TP reactor and specifies the
+                               number of worker threads to utilize.
+  
+
+Note that the svc.conf file must instruct the oRB to use a TP reactor
+e.g. static Resource_Factory "-ORBReactorType tp -ORBReactorMaskSignals 0"
+Please look up the ORB configuration options to get more information
+on this.
 
 Running the Service:
 -------------------
@@ -79,7 +88,15 @@ The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the fo
 "-LookupThreads [thread_count]"      : How many lookup threads.
 "-MTListenerEval"                    : Enable MT proxy supplier (listener) filter evaluation.  
 "-ListenerThreads"                   : How many threads for listener filter evaluation.
-
+"-Notify_TPReactor [threads]"        : Tells the service that the ORB
+                                       is using a TP reactor and
+                                       specifies the number of worker
+                                       threads to deploy.   
+                                       Note that you might have to
+                                       specify  the TP reactor in the 
+                                       svc.conf file.
+                                       (see the ORB configutrations
+                                       for details on this)
 e.g. svc.conf
 static Notify_Default_Event_Manager_Objects_Factory "-MTSourceEval -MTDispatching -DispatchingThreads 2"
 
