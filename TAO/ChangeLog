@@ -1,3 +1,12 @@
+Tue May 06 14:46:20 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/LoadBalancer/LoadManager_Static.dsp:
+        * orbsvcs/LoadBalancer/LoadManager.dsp:
+        * orbsvcs/LoadBalancer/LoadMonitor.dsp:
+        * orbsvcs/LoadBalancer/LoadMonitor_Static.dsp:
+
+          Added TAO_Valuetype library to fix build errors.
+
 Tue May  6 07:41:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Param_Test/Makefile: Updated dependencies.
@@ -6,7 +15,7 @@ Tue May  6 07:35:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Content_Server/AMI_Observer/Makefile:
         * examples/Content_Server/AMI_Iterator/Makefile: Updated
-	  dependecies. 
+	  dependecies.
 
 Tue May 06 11:46:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
