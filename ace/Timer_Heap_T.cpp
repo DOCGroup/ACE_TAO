@@ -224,7 +224,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Timer_Heap::is_empty");
-  return this->cur_size_ == 0;  
+  return this->cur_size_ == 0;
 }
 
 
@@ -467,7 +467,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *e
   // to reacquire it.
   // NOTE: we rely on the fact that we will get the same timer id we just
   // freed.
-  int timerId = this->timer_id ();
+# if !defined (ACE_NDEBUG)
+  int timerId =
+# endif /* ACE_NDEBUG */
+    this->timer_id ();
 
   ACE_ASSERT(timerId == expired->get_timer_id ());   // Just to be safe...
 
