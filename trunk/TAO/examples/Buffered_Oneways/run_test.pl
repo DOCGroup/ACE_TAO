@@ -56,7 +56,7 @@ if ($client == -1) {
 print STDOUT "\nExplicit queue flushing (and server shutdown)\n\n";
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       "-f 5 -b -1 -c -1 -t -1 -x");
+                       "-f 5 -b -1 -c 100 -t -1 -x");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
