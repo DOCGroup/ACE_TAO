@@ -1,3 +1,8 @@
+Fri Mar 30 07:31:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/QoS/QoS_Session.h:
+          Fixed export macro
+
 Thu Mar 29 20:14:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * ace/SOCK.h:
@@ -37,14 +42,14 @@ Thu Mar 29 19:12:38 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Mar 29 16:16:07 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Token.cpp (renew): A conditional expression used an && rather
-	  and ||, which was causing problems with ACE_Token.  Thanks to
- 	  Carsten Madsen <com@navicon.dk> for reporting this.
+        * ace/Token.cpp (renew): A conditional expression used an && rather
+          and ||, which was causing problems with ACE_Token.  Thanks to
+          Carsten Madsen <com@navicon.dk> for reporting this.
 
-	* ace/Message_Queue_T.cpp: If any of the various ACE_Message_Queue_Ex
-	  enqueue*() methods fail then make sure to release the message
- 	  blocks!  Thanks to Boris Kolpackov <bosk@ipmce.ru> for reporting
- 	  this.
+        * ace/Message_Queue_T.cpp: If any of the various ACE_Message_Queue_Ex
+          enqueue*() methods fail then make sure to release the message
+          blocks!  Thanks to Boris Kolpackov <bosk@ipmce.ru> for reporting
+          this.
 
 Wed Mar 28 21:39:26 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -66,21 +71,21 @@ Wed Mar 28 21:39:26 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Added all the ACE_TEXT_* API macros needed above.
 
-          Thanks to Nick Pratt <npratt@microstrategy.com> for 
+          Thanks to Nick Pratt <npratt@microstrategy.com> for
           reporting the first of these errors.
 
 Wed Mar 28 22:07:03 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw: Fixed project dependencies between DLL_Test and
-	  DLL_Test_Impl.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be>
-	  for reporting this.
+        * tests/tests.dsw: Fixed project dependencies between DLL_Test and
+          DLL_Test_Impl.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be>
+          for reporting this.
 
 Wed Mar 28 20:33:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/ACE.cpp: Further improved the implementation of
-	  handle_ready() by simply calling poll() with the timeout
- 	  pointer.  Thanks to Przemyslaw Marciniak <pmarciniak@lucent.com>
- 	  for reporting this.
+        * ace/ACE.cpp: Further improved the implementation of
+          handle_ready() by simply calling poll() with the timeout
+          pointer.  Thanks to Przemyslaw Marciniak <pmarciniak@lucent.com>
+          for reporting this.
 
 Wed Mar 28 17:45:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -91,17 +96,17 @@ Wed Mar 28 17:45:22 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Mar 28 16:40:24 2001  Luther Baker  <luther@cs.wustl.edu>
 
-	* ace/config-all.h
+        * ace/config-all.h
 
-	  Removed ACE_WIN32 support for ACE_HAS_POSIX_SEM just because
-	  ACE_HAS_PACE. This can be defined for ACE_WIN32 after we
- 	  write more WIN32 emulation.
+          Removed ACE_WIN32 support for ACE_HAS_POSIX_SEM just because
+          ACE_HAS_PACE. This can be defined for ACE_WIN32 after we
+          write more WIN32 emulation.
 
-	* ace/OS.h
-	* ace/OS.i
-	* ace/OS.cpp
+        * ace/OS.h
+        * ace/OS.i
+        * ace/OS.cpp
 
-	  PACE updates.
+          PACE updates.
 
 Wed Mar 28 11:37:09 2001  Fuzz Master D <brunsch@uci.edu>
 
@@ -1154,8 +1159,8 @@ Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 =======
           As Ossama pointed out, the ACE_CHECK test was seeing problems in
 <<<<<<< ChangeLog
- 	  the tao_idl files since it has uses of ACE_TRY_ENV inside
- 	  quotes.  Made sure not to detect problems in this case.
+          the tao_idl files since it has uses of ACE_TRY_ENV inside
+          quotes.  Made sure not to detect problems in this case.
 >>>>>>> 4.1785
 
           As Ossama pointed out, the ACE_CHECK test was seeing
@@ -1176,7 +1181,7 @@ Mon Mar  5 18:58:32 2001  Fuzz Master D <brunsch@uci.edu>
 =======
           Fixed some false positives in the resolve_initial_reference test
 <<<<<<< ChangeLog
- 	  and also added an ACE_CHECK test by Carlos's request.
+          and also added an ACE_CHECK test by Carlos's request.
 >>>>>>> 4.1785
 =======
           and also added an ACE_CHECK test by Carlos's request.
