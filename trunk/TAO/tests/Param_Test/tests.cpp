@@ -3233,7 +3233,7 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref,
                            CORBA::Environment &env)
 {
   Param_Test::AnySeq_var out (this->out_.out ());
-  this->ret_ = objref->test_anyseq (this->in_,
+  this->ret_ = objref->test_anyseq (this->in_.in (),
                                     this->inout_,
                                     out,
                                     env);
@@ -3346,11 +3346,11 @@ Test_AnySeq::print_values (void)
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
               "IN sequence\n"));
-  this->print_sequence (this->in_);
+  this->print_sequence (this->in_.in ());
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
               "INOUT sequence\n"));
-  this->print_sequence (this->inout_);
+  this->print_sequence (this->inout_.in ());
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
               "OUT sequence\n"));
