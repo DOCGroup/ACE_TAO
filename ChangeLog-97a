@@ -1,3 +1,8 @@
+Fri May 09 16:37:48 1997  David L. Levine  <levine@cs.wustl.edu>
+        
+	* tests/Priority_Task_Test.cpp: on Linux only, don't set FIFO policy
+	  or non-zero policy if not superuser.
+
 Fri May  9 13:07:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* include/makeinclude/platform_aix4.2.GNU (LLIBS): Changed
