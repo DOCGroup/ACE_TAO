@@ -70,9 +70,8 @@ struct Queue_Wrapper
 #if defined (ACE_HAS_THREADS)
 
 static int
-single_thread_performance_test (int queue_type = 0)
+single_thread_performance_test (void)
 {
-  ACE_UNUSED_ARG (queue_type);
   const char test_message[] =
     "ACE_Message_Queue_Ex Test Message";
   const ACE_TCHAR *message =
@@ -215,7 +214,7 @@ sender (void *arg)
 
 static
 int
-performance_test (int queue_type = 0)
+performance_test (void)
 {
   Queue_Wrapper queue_wrapper;
   const ACE_TCHAR *message =
@@ -239,8 +238,7 @@ performance_test (int queue_type = 0)
 
   queue_wrapper.send_block_ = send_block;
 
-  if (queue_type == 0)
-    ACE_NEW_RETURN (queue_wrapper.q_,
+  ACE_NEW_RETURN (queue_wrapper.q_,
                     SYNCH_QUEUE,
                     -1);
 
@@ -331,20 +329,8 @@ main (int argc, ACE_TCHAR *argv[])
   if (status == 0)
     single_thread_performance_test ();
 
-# if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
-  // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
-  if (status == 0)
-    single_thread_performance_test (1);
-# endif /* VXWORKS */
-
   if (status == 0)
     performance_test ();
-
-# if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
-  // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
-  if (status == 0)
-    performance_test (1);
-# endif /* VXWORKS */
 #endif /* ACE_HAS_THREADS */
 
   if (status != 0)
