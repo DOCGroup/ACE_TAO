@@ -229,11 +229,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
       ADAPTERSTAT adapter;
       ACE_OS::memset (&ncb, 0, sizeof (ncb));
-# if defined (__BORLANDC__) || defined (__MINGW32__)
       ACE_OS::strcpy (ACE_reinterpret_cast (char*, ncb.ncb_callname), "*");
-# else
-      ACE_OS::strcpy (ACE_static_cast (char*, ncb.ncb_callname), "*");
-# endif /* __BORLANDC__ || __MINGW32__ */
       ncb.ncb_command     = NCBASTAT;
       ncb.ncb_lana_num    = lenum.lana[i];
       ncb.ncb_buffer      = ACE_reinterpret_cast (unsigned char*, &adapter);
