@@ -3,6 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "Distributable_Thread.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/RT_Current.h"
 
 //#include "ThreadAction.h"
 
@@ -19,6 +20,16 @@ TAO_DTId_Hash::operator () (const IdType &id) const
 TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
   : orb_ (orb)
 {
+  // Create the RT_Current.
+  RTCORBA::Current_ptr current;
+  ACE_NEW_THROW_EX (current,
+                    TAO_RT_Current (orb),
+                    CORBA::NO_MEMORY (
+				      CORBA::SystemException::_tao_minor_code (
+				       TAO_DEFAULT_MINOR_CODE,
+				       ENOMEM),
+				      CORBA::COMPLETED_NO));
+  this->rt_current_ = current;
 }
 
 
@@ -49,8 +60,8 @@ TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "TAO_RTScheduler_Current::begin_scheduling_segment\n"));
+//   ACE_DEBUG ((LM_DEBUG,
+// 	      "TAO_RTScheduler_Current::begin_scheduling_segment\n"));
 
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
@@ -103,8 +114,8 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG,
-		      "TAO_RTScheduler_Current::end_scheduling_segment\n"));
+  // ACE_DEBUG ((LM_DEBUG,
+  //	      "TAO_RTScheduler_Current::end_scheduling_segment\n"));
 
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
@@ -213,7 +224,7 @@ RTCORBA::Priority
 TAO_RTScheduler_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->rt_current_->the_priority ();
+  return this->rt_current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void 
@@ -221,7 +232,8 @@ TAO_RTScheduler_Current::the_priority (RTCORBA::Priority the_priority
 				       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->rt_current_->the_priority(the_priority);
+  this->rt_current_->the_priority(the_priority
+				  ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_RTScheduler_Current_i*
@@ -276,8 +288,8 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
    previous_current_ (0),
    dt_hash_ (dt_hash)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
+//   ACE_DEBUG ((LM_DEBUG,
+// 	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
   
 
   CORBA::Object_ptr scheduler_obj = this->orb_->object_ref_table ().resolve_initial_references ("RTScheduler"
@@ -307,8 +319,8 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
+//   ACE_DEBUG ((LM_DEBUG,
+// 	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
   
   CORBA::Object_ptr scheduler_obj = orb->object_ref_table ().resolve_initial_references ("RTScheduler"
 											 ACE_ENV_ARG_PARAMETER);
@@ -342,10 +354,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 		      this->guid_.get_buffer (),
 		      this->guid_.length ());
       
-      ACE_DEBUG ((LM_DEBUG,
-		  "The Guid is %d %d\n",
-		  guid,
-		  guid_counter.value_i ()));
+//       ACE_DEBUG ((LM_DEBUG,
+// 		  "The Guid is %d %d\n",
+// 		  guid,
+// 		  guid_counter.value_i ()));
       
       // Inform the scheduler of the new scheduling segment.
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
