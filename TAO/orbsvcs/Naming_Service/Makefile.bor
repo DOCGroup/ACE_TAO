@@ -1,5 +1,0 @@
-# Makefile for building the Naming Service executables
-
-MAKEFILES = Naming_Service.bor NT_Naming_Service.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
