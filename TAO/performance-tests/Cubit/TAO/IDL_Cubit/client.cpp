@@ -15,15 +15,11 @@ ACE_RCSID(IDL_Cubit, client, "$Id$")
 // This function runs the client test.
 
 int
-main (int argc, char **argv)
+main (int argc, char *argv[])
 {
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                              priority,
+                                              ACE_THR_PRI_FIFO_DEF,
                                               ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
@@ -48,8 +44,6 @@ main (int argc, char **argv)
   int retval = cubit_client.run ();
 
   ACE_TIMEPROBE_PRINT;
-
-//  ACE_END_TEST;
 
   return retval;
 }

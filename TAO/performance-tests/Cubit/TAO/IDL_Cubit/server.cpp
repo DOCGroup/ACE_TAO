@@ -17,13 +17,11 @@ ACE_RCSID(IDL_Cubit, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  int priority = ACE_THR_PRI_FIFO_DEF;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -68,8 +66,6 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
-
-  //  ACE_END_TEST;
 
   return 0;
 }
