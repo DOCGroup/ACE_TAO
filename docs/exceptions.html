@@ -92,7 +92,7 @@ try macros.
 
       <ol>
         <li><p>Any function that takes a
-            <code>CORBA_Environment</code> variable.</p>
+            <code>CORBA_Environment</code> argument.</p>
         </li>
 
         <li><p><code>ACE_NEW_THROW_EX</code>.  Notice that you
@@ -104,17 +104,15 @@ try macros.
             macros.</p>
         </li>
 
+        <li><P><code>ACE_GUARD_THROW_EX</code>,
+            <code>ACE_READ_GURAD_THROW_EX</code>, and
+            <code>ACE_WRITE_THROW_EX</code>.
+
         <li><p><code>ACE_TRY</code> blocks.  Follow every
             <code>ACE_ENDTRY</code> with appropriate ACE_CHECK*
             macros.</p>
         <li>
       </ol>
-
-      Notice that you should always
-      follow the outter most <code>ACE_ENDTRY</code> with
-      <code>ACE_CHECK</code> or <code>ACE_CHECK_RETURN</code> because
-      there might be uncaught exception.
-      </p>
 
       <P>You should pass <code>ACE_TRY_ENV</code> to these
       functions.
@@ -397,7 +395,7 @@ by no mean complete.
       <code>ACE_NEW_THROW_RETURN</code>,
       <code>ACE_TRY_NEW_THROW</code> with
       <code>ACE_NEW_THROW_EX</code> and appropriate
-      <code>ACE_CHECK*</code> macros.
+      <code>ACE_CHECK*</code> macros. aformention</P>
 
   <li><p>Replace <code>TAO_CHECK_ENV</code> and
       <code>TAO_CHECK_ENV_EX</code> with <code>ACE_TRY_CHECK</code>
