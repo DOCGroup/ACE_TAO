@@ -101,7 +101,7 @@ protected:
 
 private:
 
-  // Endpoints should not be copied.
+  /// Endpoints should not be copied.
   ACE_UNIMPLEMENTED_FUNC (TAO_Endpoint (const TAO_Endpoint&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Endpoint&))
 
