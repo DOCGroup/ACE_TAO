@@ -16,10 +16,14 @@
 !include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
 !include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
 
+!ifdef NAME
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).dll
+!endif
 
 all: $(TARGET)
+	@echo Do nothing >NUL
 
+!ifdef TARGET
 $(TARGET): $(OBJFILES) $(RESOURCE)
 	@$(MAKE_BINDIR)
 	$(LD) @&&!
@@ -31,6 +35,7 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 !
 !ifndef	DEBUG
 	@del $(TARGET:.dll=.tds)
+!endif
 !endif
 
 !include <$(ACE_ROOT)\include\makeinclude\clean.bor>

@@ -3,7 +3,9 @@
 # Makefile for building	the ACE	SSL library with Borland C++Builder
 #
 
+!ifdef SSL_ROOT
 NAME = ACE_SSL
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\SSL_Context.obj \
