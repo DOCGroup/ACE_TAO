@@ -7,7 +7,7 @@ X = NOT SUPPORTED
 
 FILE                    linux   lynxos  sunos   win32
 .............................................................
-aio.h
+<aio.h>
  aio_cancel()                                   X
  aio_error()                                    X
  aio_fsync()                                    X
@@ -17,10 +17,10 @@ aio.h
  aio_write()                                    X
  lio_listen()                                   X
 .............................................................
-assert.h
+<assert.h>
  assert()                                       N
 .............................................................
-ctype.h
+<ctype.h>
  isalnum()                                      N
  isalpha()                                      N
  iscntrl()                                      N
@@ -34,27 +34,27 @@ ctype.h
  isxdigit()                                     N
  tolower()                                      N
 .............................................................
-dirent.inl
+<dirent.h>
  closedir()                                     E
  opendir()                                      E
  readdir()                                      E
  readdir_r()                                    X
  rewinddir()                                    X
 .............................................................
-fcntl.inl
+<fcntl.h>
  creat()                                        X
 .............................................................
-grp.inl
+<grp.h>
  getgrgid()                                     X
  getgrdid_r()                                   X
  getgrname()                                    X
  getgrname_r()                                  X
 .............................................................
-locale.inl
+<locale.h>
  localeconv()                                   N
  setlocale()                                    N
 .............................................................
-math.inl
+<math.h>
  acos()                                         N
  asin()                                         N
  atan()                                         N
@@ -77,4 +77,16 @@ math.inl
  fabs()                                         N
  floor()                                        N
  fmod()                                         N
+.............................................................
+<mman.h>
+ mlock()                                        X
+ mlockall()                                     X
+ mmap()                                         E
+ mprotect()                                     E
+ msync()                                        E
+ munlock()                                      X
+ munlockall()                                   X
+ munmap()                                       E
+ shm_open()                                     X
+ shm_unlink()                                   E
 .............................................................
