@@ -1,3 +1,10 @@
+Wed Jun  3 02:24:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Instead of defining _MT for users if
+	  it's not defined, spit out an error message and stop the
+	  compilation.  Thanks to Barney Dalton
+	  <barneyd@cyllene.uwa.edu.au> for suggesting this.
+
 Tue Jun 02 20:03:51 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-1[01].x-hpc++.h: Added ACE_HAS_USING_KEYWORD for
