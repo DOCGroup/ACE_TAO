@@ -682,9 +682,9 @@ enum MCAST_SERVICEID
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_BUFFERING_CONSTRAINT_POLICY */
 
-// AMI support is disabled by default, irrespective of whether TAO is
-// configured for minimum CORBA.
-//To explicitly enable AMI support uncomment the following
+// AMI support is disabled by default.  If enabled, it requires
+// CORBA_MESSAGING support.
+// To explicitly enable AMI support uncomment the following
 // #define TAO_HAS_AMI 1
 // To explicitly disable AMI support uncomment the following
 // #define TAO_HAS_AMI 0
@@ -692,11 +692,18 @@ enum MCAST_SERVICEID
 // Default AMI settings
 #if !defined (TAO_HAS_AMI)
 #  define TAO_HAS_AMI 0
+#else
+#  if (TAO_HAS_AMI == 1) && \
+      (TAO_HAS_CORBA_MESSAGING == 0)
+#  error "tao/orbconf.h: You need CORBA_MESSAGING for AMI support"
+#  endif /* TAO_HAS_AMI == 1 &&
+            TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI */
 
 // AMI_POLLER support is disabled by default if TAO is not configured
 // for AMI.  If TAO is configured for AMI, then AMI_POLLER will be
-// enabled by default.
+// enabled by default.  If enabled, it requires CORBA_MESSAGING
+// support.
 // To explicitly enable AMI_POLLER support uncomment the following
 // #define TAO_HAS_AMI_POLLER 1
 // To explicitly disable AMI_POLLER support uncomment the following
@@ -709,11 +716,18 @@ enum MCAST_SERVICEID
 #  else
 #    define TAO_HAS_AMI_POLLER 0
 #  endif  /* TAO_HAS_AMI == 1 */
+#else
+#  if (TAO_HAS_AMI_POLLER == 1) && \
+      (TAO_HAS_CORBA_MESSAGING == 0)
+#  error "tao/orbconf.h: You need CORBA_MESSAGING for AMI support"
+#  endif /* TAO_HAS_AMI_POLLER == 1 &&
+            TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI_POLLER */
 
-// AMI_CALLBACK support is disabled by default if TAO is not configured
-// for AMI.  If TAO is configured for AMI, then AMI_CALLBACK will be
-// enabled by default.
+// AMI_CALLBACK support is disabled by default if TAO is not
+// configured for AMI.  If TAO is configured for AMI, then
+// AMI_CALLBACK will be enabled by default. If enabled, it requires
+// CORBA_MESSAGING support.
 // To explicitly enable AMI_CALLBACK support uncomment the following
 // #define TAO_HAS_AMI_CALLBACK 1
 // To explicitly disable AMI_CALLBACK support uncomment the following
@@ -726,6 +740,12 @@ enum MCAST_SERVICEID
 #  else
 #    define TAO_HAS_AMI_CALLBACK 0
 #  endif  /* TAO_HAS_AMI == 1 */
+#else
+#  if (TAO_HAS_AMI_CALLBACK == 1) && \
+      (TAO_HAS_CORBA_MESSAGING == 0)
+#  error "tao/orbconf.h: You need CORBA_MESSAGING for AMI support"
+#  endif /* TAO_HAS_AMI_CALLBACK == 1 &&
+            TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI_CALLBACK */
 
 // INTERFACE_REPOSITORY support is disabled by default, irrespective
