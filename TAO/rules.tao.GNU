@@ -205,10 +205,9 @@ endif
 # minor and beta) to run, but applications with dependencies on libraries
 # with different minor or major or beta versions to fail.
 #
-TAO_MAJOR_VERSION := $(shell echo `perl -ne  'if (/TAO_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${TAO_ROOT}/tao/Version.h`)
-TAO_MINOR_VERSION := $(shell echo `perl -ne  'if (/TAO_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${TAO_ROOT}/tao/Version.h`)
-TAO_BETA_VERSION := $(shell echo `perl -ne  'if (/TAO_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${TAO_ROOT}/tao/Version.h`)
-
+TAO_MAJOR_VERSION := $(shell awk '/TAO_MAJOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
+TAO_MINOR_VERSION := $(shell awk '/TAO_MINOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
+TAO_BETA_VERSION := $(shell awk '/TAO_BETA_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 # Version number of the libraries
 #
 ifneq ($(SOVERSION),)
