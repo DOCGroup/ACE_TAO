@@ -1,3 +1,22 @@
+Wed Dec  5 12:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/SString.cpp:
+	  Add missing template instantiations, only a problem when
+	  inlining was disabled.
+
+	* tests/Hash_Map_Manager_Test.cpp:
+	  Rename global variable 'alloc' to 'ace_test_allocator', the
+	  former conflicts with STL symbols under Linux.
+
+	* tests/Map_Test.cpp:
+	  Rename the value_type and expanded_value global typedefs to have
+	  an ace_ prefix.  Though only used in this test they conflict
+	  with some STL symbols by the same name.
+
+	* tests/DLList_Test.cpp:
+	  Remove unused global variable 'alloc' looks like a cut&paste
+	  carry-over.
+
 Wed Dec 05 10:08:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* rpc++/*:
