@@ -1,3 +1,9 @@
+Tue Sep 11 15:46:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/File_IO/client.cpp:
+	* tests/File_IO/server.cpp: Reduced the number of threads a bit
+	  for Sun CC  alone. Bug 957 is in action again. 
+
 Mon Sep 10 20:00:25 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/MCAST_Parser.cpp: 
