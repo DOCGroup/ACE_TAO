@@ -28,9 +28,9 @@ class TAO_ORBSVCS_Export TAO_Persistent_Context_Index
   //
 public:
 
-  typedef ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
     TAO_Persistent_Index_IntId> INDEX;
-  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
+  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
     TAO_Persistent_IntId> CONTEXT;
 
   // = Initialization and termination methods.
