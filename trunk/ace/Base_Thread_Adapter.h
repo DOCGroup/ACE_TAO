@@ -21,6 +21,10 @@
 #include "ace/ACE_export.h"
 #include "ace/OS_Log_Msg_Attributes.h"
 
+#ifdef ACE_USES_GPROF
+#include "os_include/sys/os_time.h"
+#endif // ACE_USES_GPROF
+
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 #if defined (ACE_PSOS)
@@ -93,6 +97,12 @@ public:
   /// routine.
   ACE_THR_C_FUNC entry_point (void);
 
+#ifdef ACE_USES_GPROF
+  /// Accessor to the itimer_
+  /// followed http://sam.zoy.org/writings/programming/gprof.html
+  struct itimerval* timerval (void);
+#endif // ACE_USES_PROF
+
   /// Invoke the close_log_msg_hook, if it is present
   static void close_log_msg (void);
 
@@ -150,6 +160,10 @@ protected:
 
   /// The ACE_Log_Msg attributes.
   ACE_OS_Log_Msg_Attributes log_msg_attributes_;
+  /// That is usefull for gprof, define itimerval
+#ifdef ACE_USES_GPROF
+  struct itimerval itimer_;
+#endif // ACE_USES_GPROF
 
   /// Friend declaration to avoid compiler warning:  only defines a private
   /// destructor and has no friends.
