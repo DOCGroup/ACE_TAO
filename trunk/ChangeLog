@@ -1,3 +1,15 @@
+Wed Sep 20 08:24:34 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am (INLINE_FILES):
+
+	  Corrected `CDR_Base.i' to `CDR_Base.inl'.
+
+Wed Sep 20 08:12:20 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/CDR_Test.cpp:
+
+	  Included missing `ace/SString.h' header.
+
 Tue Sep 19 17:12:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.h:
