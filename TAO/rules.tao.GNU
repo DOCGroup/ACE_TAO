@@ -53,6 +53,9 @@ ifeq ($(minimum_corba),1)
   ifndef corba_messaging
     corba_messaging = 0
   endif # ! corba_messaging
+  ifndef ami
+    ami = 0
+  endif # ! ami
   CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA=1
 else  # minimum_corba
   override minimum_corba = 0
