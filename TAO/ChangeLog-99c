@@ -1,5 +1,10 @@
 Mon Feb 22 19:18:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* $TAO/examples/POA/RootPoa/RootPoa.cpp:
+	Fixed a anoying warning due to an unchecked exception
+
+	* examples/Simple/Simple_util.cpp :
+
 	* examples/Simple/bank/Makefile :
 	Updated dependencies
 
