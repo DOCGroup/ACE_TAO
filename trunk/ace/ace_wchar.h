@@ -251,6 +251,7 @@ private:
 #define ACE_TEXT_GetTempPath              ::GetTempPathW
 #define ACE_TEXT_GetUserName              ::GetUserNameW
 #define ACE_TEXT_LoadLibrary              ::LoadLibraryW
+#define ACE_TEXT_MoveFileEx               ::MoveFileExW
 #define ACE_TEXT_OpenSCManager            ::OpenSCManagerW
 #define ACE_TEXT_OpenService              ::OpenServiceW
 #define ACE_TEXT_RegConnectRegistry       ::RegConnectRegistryW
@@ -286,6 +287,7 @@ private:
 #define ACE_TEXT_GetTempPath              ::GetTempPathA
 #define ACE_TEXT_GetUserName              ::GetUserNameA
 #define ACE_TEXT_LoadLibrary              ::LoadLibraryA
+#define ACE_TEXT_MoveFileEx               ::MoveFileExA
 #define ACE_TEXT_OpenSCManager            ::OpenSCManagerA
 #define ACE_TEXT_OpenService              ::OpenServiceA
 #define ACE_TEXT_RegConnectRegistry       ::RegConnectRegistryA

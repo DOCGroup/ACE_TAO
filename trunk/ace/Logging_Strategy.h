@@ -50,7 +50,7 @@ public:
   ACE_Logging_Strategy (void);
   // Constructor.
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Dynamic linking initialization hook.
 
   virtual int fini (void);
@@ -61,17 +61,17 @@ public:
   // size exceeds <max_size_>, the current logfile is closed, saved to
   // logfile.old, and a new logfile is reopened.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse svc.conf arguments.
 
 private:
-  void tokenize (char *flag_string);
+  void tokenize (ACE_TCHAR *flag_string);
   // Tokenize to set all the flags
 
   u_long flags_;
   // Flags we keep track of.
 
-  char *filename_;
+  ACE_TCHAR *filename_;
   // File name we're logging to.
 
   int wipeout_logfile_;

@@ -1229,19 +1229,17 @@ ACE_OS::rename (const ACE_TCHAR *old_name,
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (flags);
-  // *** this looks wrong... should be???
-  //  if (MoveFile (old_name, new_name) != 0)
-  //    ACE_FAIL_RETURN (-1);
-  //  return 0;
-  ACE_OSCALL_RETURN (::MoveFile (new_name, old_name), int, -1);
-# elif defined (ACE_WIN32)&& defined (ACE_HAS_WINNT4)
+  if (MoveFile (old_name, new_name) != 0)
+    ACE_FAIL_RETURN (-1);
+  return 0;
+# elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
   // <new_name> it is removed before the file is renamed/moved. The
   // MOVEFILE_COPY_ALLOWED is specified to allow such a rename across drives.
   if (flags == -1)
     flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
-  if (::MoveFileEx(old_name, new_name, flags) == 0)
+  if (ACE_TEXT_MoveFileEx(old_name, new_name, flags) == 0)
     ACE_FAIL_RETURN (-1);
   return 0;
 # elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
