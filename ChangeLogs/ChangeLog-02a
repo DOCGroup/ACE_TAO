@@ -1,23 +1,29 @@
+Wed Feb 23 19:37:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Dynamic_Priority_Test.cpp:
+          More stuff that is not used unless ACE_HAS_TIMED_MESSAGE_BLOCKS
+          is defined.
+
 Wed Feb 23 18:58:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.i (lock): Make sure that ACE_File_Lock::set_handle()
-	  sets this->removed_ = 0.  Thanks to Sanwoo Jin
- 	  <swjinjin@sei.co.kr> for reporting this.
+        * ace/Synch.i (lock): Make sure that ACE_File_Lock::set_handle()
+          sets this->removed_ = 0.  Thanks to Sanwoo Jin
+          <swjinjin@sei.co.kr> for reporting this.
 
-	* tests/FlReactor_Test.cpp (main): Minor reformatting.
+        * tests/FlReactor_Test.cpp (main): Minor reformatting.
 
-	* ace/config-win32-borland.h: When you define _DEBUG the orbsvcs
-	  dll exports all "inline" functions, and this seems to be too
- 	  much for BCB4 linker.  Thaddeus L. Olczyk
- 	  <olczyk@interaccess.com> reported this problem and Christopher
- 	  Kohlhoff <chris@kohlhoff.com> provided the fix.
+        * ace/config-win32-borland.h: When you define _DEBUG the orbsvcs
+          dll exports all "inline" functions, and this seems to be too
+          much for BCB4 linker.  Thaddeus L. Olczyk
+          <olczyk@interaccess.com> reported this problem and Christopher
+          Kohlhoff <chris@kohlhoff.com> provided the fix.
 
-	* ace/OS,
-  	  ace/Synch: Added a new parameter to flock_destroy() and
- 	  ACE_File_Lock::remove() that controls whether the lockfile is
- 	  removed when the filelock is destroyed.  By default, this is
- 	  "enabled" so the existing semantics don't change.  Thanks to
- 	  Sanwoo Jin <swjinjin@sei.co.kr> for suggesting this.
+        * ace/OS,
+          ace/Synch: Added a new parameter to flock_destroy() and
+          ACE_File_Lock::remove() that controls whether the lockfile is
+          removed when the filelock is destroyed.  By default, this is
+          "enabled" so the existing semantics don't change.  Thanks to
+          Sanwoo Jin <swjinjin@sei.co.kr> for suggesting this.
 
 Wed Feb 23 16:54:31 2000  Steve Huston  <shuston@riverace.com>
 
