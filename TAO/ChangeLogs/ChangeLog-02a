@@ -1,4 +1,4 @@
-Fri Mar 01 09:10:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Mar 01 13:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Makefile.bor:
         * orbsvcs/orbsvcs/RTEvent.bor:
@@ -26,6 +26,13 @@ Fri Mar 01 09:10:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Oneway_Buffering/admin.bor:
         * tests/Oneway_Buffering/client.bor:
         * tests/Oneway_Buffering/server.bor:
+        * tests/Policies/Makefile.bor:
+        * tests/Reliable_Oneways/client.bor:
+        * tests/Reliable_Oneways/server.bor:
+        * tests/Timed_Buffered_Oneways/client.bor:
+        * tests/Timed_Buffered_Oneways/server.bor:
+        * tests/Timeout/client.bor:
+        * tests/Timeout/server.bor:
           Added TAO_Messaging library
 
 Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
