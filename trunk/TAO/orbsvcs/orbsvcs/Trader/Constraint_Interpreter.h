@@ -151,12 +151,6 @@ public:
   int num_offers (void);
   // Return the number of offers remaining in the ordering.
 
-private:
-
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
-  // Disallow copying.
-
   struct Preference_Info
   {
     CORBA::Boolean evaluated_;
@@ -173,6 +167,12 @@ private:
   };
 
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
+
+private:
+
+  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
+  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  // Disallow copying.
 
   Ordered_Offers offers_;
   // The ordered list of offers.

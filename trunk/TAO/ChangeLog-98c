@@ -1,3 +1,11 @@
+Fri Aug 28 17:57:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h: 
+	  Moved some declarations out of the private section of
+	  TAO_Preference_Interpreter because that made some IRIX compilers
+	  really mad. Thanks to Margherita Vittone Wiersma
+	  <vittone@fndaub.fnal.gov> for reporting this problem.
+
 Fri Aug 28 13:49:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* rules.tao.GNU (TAO_IDL): Added suffixes Ser.* and Cli.* in
