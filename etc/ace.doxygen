@@ -48,7 +48,9 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = docs ace
+INPUT                 = docs \
+                        ace \
+                        ace/os_include
 FILE_PATTERNS         = *.h *.cpp *.inl *.i *.txt
 RECURSIVE             = NO
 EXCLUDE               = ace/config.h
@@ -122,7 +124,7 @@ PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
 			ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
-			ACE_THROW_SPEC
+                        ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references
