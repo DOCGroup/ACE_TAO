@@ -198,46 +198,6 @@ private:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
 };
 
-/**
- * @class TAO_ServantBase_var
- *
- * @brief Auto pointer for reference counting servants.
- *
- * For the convenience of automatically managing servant
- * reference counts, the PortableServer namespace also provides
- * the ServantBase_var class. This class behaves similarly to
- * _var classes for object references (see Section 20.3.1).
- */
-class TAO_PortableServer_Export TAO_ServantBase_var
-{
-public:
-  TAO_ServantBase_var (void);
-
-  TAO_ServantBase_var (TAO_ServantBase *p);
-
-  TAO_ServantBase_var (const TAO_ServantBase_var &b);
-
-  ~TAO_ServantBase_var (void);
-
-  TAO_ServantBase_var &operator= (TAO_ServantBase *p);
-
-  TAO_ServantBase_var &operator= (const TAO_ServantBase_var &b);
-
-  TAO_ServantBase *operator-> () const;
-
-  TAO_ServantBase *in (void) const;
-
-  TAO_ServantBase *&inout (void);
-
-  TAO_ServantBase *&out (void);
-
-  TAO_ServantBase *_retn (void);
-
-private:
-
-  TAO_ServantBase *ptr_;
-};
-
 class TAO_PortableServer_Export TAO_Servant_Hash
 {
 public:

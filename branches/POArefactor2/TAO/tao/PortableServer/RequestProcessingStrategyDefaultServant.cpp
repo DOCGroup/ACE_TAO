@@ -13,6 +13,7 @@
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
