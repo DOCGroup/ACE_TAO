@@ -1,0 +1,34 @@
+#!/bin/csh -f
+echo $*
+if ($#argv < 3) then
+	echo "Usage: sclt <Total Data Size> <Max msg size> <destination> <TitleOfThisTest> <seq type> <destination-port>"
+	exit 1
+endif
+#
+@ msize=1024
+@ limit= ($argv[2] * 1024)
+#echo $limit
+#echo $msize 
+test -d $4 || mkdir $4
+echo "Iteration#" 1 ": client -pbtrace -pbinit TTCP_IIOP_test iiop://$3:$6/TTCP_IIOP_test -S" $1 "-D -f m -s -t -l" $msize "-h" $3 "-x -L" $4 "-q" $5 -b 65536
+client -pbtrace -pbinit TTCP_IIOP_test iiop://$3:$6/TTCP_IIOP_test -S $1 -f m -l $msize -h $3 -L $4 -q $5
+set flag=0
+while ($msize <= $limit)
+  if ($flag == 0) goto label
+	echo "Iteration#" 1 ": client -pbtrace -pbinit TTCP_IIOP_test iiop://$3:$6/TTCP_IIOP_test -S" $1 "-D -f m -l" $msize "-h" $3 "-x -L" $4 "-q" $5 -b 65536
+	client -pbtrace -pbinit TTCP_IIOP_test iiop://$3:$6/TTCP_IIOP_test -S $1 -f m -l $msize -h $3 -L $4 -q $5
+ label:
+  set flag=1
+  sleep 5
+  foreach i (2)
+	echo "Iteration#" $i ": client -pbtrace -pbinit TTCP_IIOP_test iiop://$3:$6/TTCP_IIOP_test -S" $1 "-D -f m -s -t -l" $msize "-h" $3 "-x -L " $4 "-q" $5 -b 65536
+	client -pbtrace -pbinit TTCP_IIOP_test iiop://$3:$6/TTCP_IIOP_test -S $1 -f m -l $msize -h $3 -L $4 -q $5
+  end
+	echo "---------------------------"
+	@ msize = ($msize * 2)
+	sleep 5
+end 
+
+echo " "
+echo "Done at:" 
+date
