@@ -1,3 +1,12 @@
+Fri Sep 17 22:49:30 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/IORManipulation/IORTest.cpp (main):
+
+	  ACE_CATCH blocks now print exception information, not just a
+	  "caught exception" message.  This is useful for debugging.
+
+	  Updated to use ACE_DEBUG macros instead of printf().
+
 Fri Sep 17 16:51:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
