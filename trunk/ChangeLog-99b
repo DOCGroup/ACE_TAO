@@ -1,8 +1,14 @@
+Mon Mar 08 12:27:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Service_Config.cpp (handle_signal): added ACE_UNUSED_ARG (sig)
+          if ACE_NDEBUG is defined, to avoid compilation warning about
+          unused argument with debug=0.
+
 Mon Mar 08 11:58:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Task.cpp (activate): Made sure we don't mess with the passed
-	  in grp_id if the task was not previously actived.  Thanks to
-	  XuYifeng <wj@puclic.hz.zj.cn> for noticing this.
+        * ace/Task.cpp (activate): Made sure we don't mess with the passed
+          in grp_id if the task was not previously actived.  Thanks to
+          XuYifeng <wj@puclic.hz.zj.cn> for noticing this.
 
 Fri Mar 05 14:15:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
