@@ -671,6 +671,7 @@ start_servants ()
 int
 main (int argc, char *argv[])
 {
+#if defined (ACE_HAS_THREADS)
   if (initialize (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Error in Initialization\n"), 1);
   if(start_servants () != 0)
@@ -680,5 +681,8 @@ main (int argc, char *argv[])
 
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
+#else
+  ACE_DEBUG ((LM_DEBUG, "Test not run.  This platform doesn't seem to have threads.\n"));
+#endif /* ACE_HAS_THREADS */
   return 0;
 }
