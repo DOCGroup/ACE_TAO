@@ -628,6 +628,16 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // destroyed yet or not.
   this->root_->_add_ref ();
 
+  // Lock access for the duration of this transaction.
+  TAO_POA_Guard poa_guard (*this->root_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  this->root_->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Release the POA_Manager_var since we got here without error.  The
   // TAO_POA object takes ownership of the POA_Manager object
   // (actually it shares the ownership with its peers).
@@ -905,6 +915,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
 
       return servant;
     }
+
   return 0;
 }
 

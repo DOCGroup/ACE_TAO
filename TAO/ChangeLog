@@ -1,3 +1,25 @@
+Wed Jul 23 14:45:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Object_Adapter.cpp (open):
+	* tao/PortableServer/POA.cpp (TAO_POA, create_POA_i):
+	  (establish_components):
+
+	  Re-applied Carlos' fix for a deadlock in the IORInterceptor
+	  support code.  It now works due to some corrections made by
+	  Irfan.  [Bug 1414]
+
+	* tao/RTScheduling/Request_Interceptor.cpp (receive_request):
+
+	  Fixed a memory leak.
+
+	  Fixed emulated exception usage.
+
+	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):
+
+	  Fixed format specifier mismatch warning in fscanf() call.  The
+	  being scanned is an "unsigned int".  As such, the format
+	  specifier should be "%u", not "%d".
+
 Wed Jul 23 16:25:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Kokyu/Makefile:
@@ -6,7 +28,7 @@ Wed Jul 23 16:25:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  list of libraries.
 
 	* orbsvcs/examples/RtEC/Kokyu/Service.cpp:
-	
+
 	  Removed the capability to run in config mode. Running in config
 	  mode used to generate a Schedule.h file, which needs to be
 	  included and compiled to enable running in "non-config"
@@ -14,7 +36,7 @@ Wed Jul 23 16:25:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  schedule on each run (based on the RT_Infos registered with it)
 	  and the EC_Kokyu dispatcher gets the schedule info dynamically
 	  from the scheduler and sets up the dispatch lanes.
-	
+
 Wed Jul 23 16:18:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* README:
@@ -28,10 +50,10 @@ Wed Jul 23 15:26:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	  macro because of nested pseudo-try blocks.  This should fix
 	  compilation problems on non-exception builds.
 
-	* tests/RTScheduling/Scheduler.h (CTOR): Fixed signature so that 
+	* tests/RTScheduling/Scheduler.h (CTOR): Fixed signature so that
 	  it's consistent with non-exception builds.
 
-	* tests/RTScheduling/DT_Spawn/Thread_Action.h (_cxx_do): 
+	* tests/RTScheduling/DT_Spawn/Thread_Action.h (_cxx_do):
 
 	  Changed to use proper ACE_CHECK macro rather than
 	  ACE_TRY_CHECK.  This should get rid of compilation problems on
@@ -640,11 +662,9 @@ Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_expression.h:
         * TAO_IDL/include/ast_generator.h:
 
-          Fixed a bug where unsigned long long constants were
-          truncated if the literal rhs was greater than
-`         ULONG_MAX. Thanks to Scott Clarke <sclarke@ideorlando.org>
-          for reporting the bug.
-
+          Fixed a bug where unsigned long long constants were truncated if
+	  the literal rhs was greater than ULONG_MAX. Thanks to Scott
+	  Clarke <sclarke@ideorlando.org>for reporting the bug.
 
 Mon Jul 21 19:33:24 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
