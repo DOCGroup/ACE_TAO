@@ -563,13 +563,15 @@ TAO_Stub::do_dynamic_call (const char *opname,
               char *begin = call.inp_stream ().rd_ptr ();
               CORBA::Any *any = result->value ();
               CORBA::TypeCode::traverse_status retval = 
-                call.inp_stream ().skip (any->type_, ACE_TRY_ENV);
+                call.inp_stream ().skip (any->type_, 
+                                         ACE_TRY_ENV);
               ACE_CHECK;
 
               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                 {
                   char *end = call.inp_stream ().rd_ptr ();
-                  any->cdr_ = new ACE_Message_Block (begin, end - begin);
+                  any->cdr_ = new ACE_Message_Block (begin, 
+                                                     end - begin);
                   any->cdr_->wr_ptr (end - begin);
                 }
 #if 0
