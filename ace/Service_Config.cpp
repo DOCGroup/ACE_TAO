@@ -487,9 +487,10 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 
   LPCTSTR key = logger_key;
 
-  if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY))
+  if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
     // Only use the static <logger_key_> if the caller doesn't
-    // override it in the parameter list.
+    // override it in the parameter list or if the key supplied is
+    // equal to the default static logger key.
     key = ACE_Service_Config::logger_key_;
 
   if (ACE_LOG_MSG->open (program_name,

@@ -22,17 +22,26 @@
 class ACE_Export ACE_Service_Repository
 {
   // = TITLE
-  //     A container for all services offered by a Service
-  //     Configurator-based application.  This allows an
-  //     administrative entity to centrally manage and control the
-  //     behavior of application services.
+  //     Contains all the services offered by a Service
+  //     Configurator-based application.
   //
   // = DESCRIPTION
-  //     This class contains a vector of <ACE_Service_Types> *'s.
+  //     This class contains a vector of <ACE_Service_Types> *'s and
+  //     allows an administrative entity to centrally manage and
+  //     control the behavior of application services.  Note that if
+  //     services are removed from the middle of the repository the
+  //     order won't necessarily be maintained since the <remove>
+  //     method performs compaction.  However, the common case is not
+  //     to remove services, so typically they are deleted in the
+  //     reverse order that they were added originally.
 public:
   friend class ACE_Service_Repository_Iterator;
 
-  enum {DEFAULT_SIZE = 50};
+  enum 
+  {
+    DEFAULT_SIZE = 50
+  };
+
   // = Initialization and termination methods.
   ACE_Service_Repository (void);
   // Initialize the repository.
@@ -40,27 +49,30 @@ public:
   ACE_Service_Repository (int size);
   // Initialize the repository.
 
+  int open (int size = DEFAULT_SIZE);
+  // Initialize the repository.
+
+  ~ACE_Service_Repository (void);
+  // Close down the repository and free up dynamically allocated
+  // resources.
+
+  int close (void);
+  // Close down the repository and free up dynamically allocated
+  // resources.
+
+  int fini (void);
+  // Finalize all the services by calling <fini> and deleteing
+  // dynamically allocated services.
+
   static ACE_Service_Repository *instance (int size = ACE_Service_Repository::DEFAULT_SIZE);
   // Get pointer to a process-wide <ACE_Service_Repository>.
 
   static ACE_Service_Repository *instance (ACE_Service_Repository *);
   // Set pointer to a process-wide <ACE_Service_Repository> and return
-  // existing pointer.  
+  // existing pointer.
 
   static void close_singleton (void);
-  // Delete the dynamically allocated Singleton
-
-  int open (int size = DEFAULT_SIZE);
-  // Initialize the repository.
-
-  ~ACE_Service_Repository (void);
-  // Terminate the repository.
-
-  int fini (void);
-  // Finalize (call fini() and possibly delete) all the services.
-
-  int close (void);
-  // Terminate the repository.
+  // Delete the dynamically allocated Singleton.
 
   // = Search structure operations (all acquire locks as necessary). 
 
@@ -113,14 +125,13 @@ private:
   // Current number of services.
 
   int total_size_;
-  // Maximum number of service.
+  // Maximum number of services.
 
   static ACE_Service_Repository *svc_rep_;
   // Pointer to a process-wide <ACE_Service_Repository>.
 
   static int delete_svc_rep_;
   // Must delete the <svc_rep_> if non-0.
-
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex lock_; 
@@ -130,16 +141,20 @@ private:
 
 class ACE_Export ACE_Service_Repository_Iterator
 {
-public:
   // = TITLE
   //     Iterate through the <ACE_Service_Repository>.
-
-  // = Initialization method.
+  //
+  // = DESCRIPTION
+  //     Make sure not to delete entries as the iteration is going on
+  //     since this class is not designed as a "robust" iterator.
+public:
+  // = Initialization and termination methods.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr, 
 				   int ignored_suspended = 1);
+  // Constructor.
 
   ~ACE_Service_Repository_Iterator (void);
-  // dtor.
+  // Destructor.
 
   // = Iteration methods.
 
