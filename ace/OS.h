@@ -3436,7 +3436,7 @@ typedef DWORD ACE_exitcode;
 
 // Reliance on CRT - I don't really like this.
 
-#   define O_NDELAY    0
+#   define O_NDELAY    1
 #   if !defined (MAXPATHLEN)
 #     define MAXPATHLEN  _MAX_PATH
 #   endif /* !MAXPATHLEN */
