@@ -1,6 +1,6 @@
 Mon May  5 16:37:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * TAOACE_Static.dsp:
+        * TAOACE_Static.dsw:
         * tao/TAO_Static.dsp:
 
           Added the new projects below and updated dependencies.
