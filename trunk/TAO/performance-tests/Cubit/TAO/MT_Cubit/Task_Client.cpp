@@ -62,7 +62,7 @@ Task_State::parse_args (int argc,char *argv[])
   while ((c = opts ()) != -1)
     switch (c) {
     case 'g':
-      granularity_ = ACE_OS::atoi (opts.optarg);
+      granularity_ = ACE_OS::atoi (opts.opt_arg ());
       if (granularity_ < 1)
         granularity_ = 1;
       break;
@@ -80,10 +80,10 @@ Task_State::parse_args (int argc,char *argv[])
       break;
     case 'u':
       use_utilization_test_ = 1;
-      loop_count_ = ACE_OS::atoi (opts.optarg);
+      loop_count_ = ACE_OS::atoi (opts.opt_arg ());
       break;
     case 'f':
-      ior_file_ = ACE_OS::strdup (opts.optarg);
+      ior_file_ = ACE_OS::strdup (opts.opt_arg ());
       break;
     case 'o':
       oneway_ = 1;
@@ -96,7 +96,7 @@ Task_State::parse_args (int argc,char *argv[])
       break;
     case 'd':
       {
-        int datatype = ACE_OS::atoi (opts.optarg);
+        int datatype = ACE_OS::atoi (opts.opt_arg ());
         switch (datatype)
           {
           case CB_OCTET:
@@ -124,10 +124,10 @@ Task_State::parse_args (int argc,char *argv[])
       }
       continue;
     case 'n':                   // loop count
-      loop_count_ = (u_int) ACE_OS::atoi (opts.optarg);
+      loop_count_ = (u_int) ACE_OS::atoi (opts.opt_arg ());
       continue;
     case 't':
-      thread_count_ = (u_int) ACE_OS::atoi (opts.optarg);
+      thread_count_ = (u_int) ACE_OS::atoi (opts.opt_arg ());
       continue;
     case '?':
     default:

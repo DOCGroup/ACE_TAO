@@ -58,12 +58,12 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file_base = get_opts.optarg;
+        ior_output_file_base = get_opts.opt_arg ();
         break;
       case 't':
         if (nthreads < MAX_THREADS)
           {
-            priorities[nthreads] = ACE_OS::atoi (get_opts.optarg);
+            priorities[nthreads] = ACE_OS::atoi (get_opts.opt_arg ());
             nthreads++;
           }
         break;

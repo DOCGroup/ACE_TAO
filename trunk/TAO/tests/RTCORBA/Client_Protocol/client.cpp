@@ -20,13 +20,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 's':
-        ior1 = get_opts.optarg;
+        ior1 = get_opts.opt_arg ();
         break;
       case 'c':
-        ior2 = get_opts.optarg;
+        ior2 = get_opts.opt_arg ();
         break;
       case 'p':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)

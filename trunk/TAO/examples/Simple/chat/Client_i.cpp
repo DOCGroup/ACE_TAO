@@ -50,11 +50,11 @@ Client_i::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'n':  // get the users nickname
-        this->nickname_ = get_opts.optarg;
+        this->nickname_ = get_opts.opt_arg ();
         break;
 
       case 'f':  // get the file name to write to
-        this->ior_file_name_ = get_opts.optarg;
+        this->ior_file_name_ = get_opts.opt_arg ();
         break;
 
       default: // display help for use of the serve

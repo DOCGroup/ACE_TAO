@@ -38,15 +38,15 @@ main (int argc, char *argv[])
         switch (c)
           {
           case 'k':
-            ior = options.optarg;
+            ior = options.opt_arg ();
             break;
 
           case 't':
-            timeout = ACE_OS::atoi (options.optarg);
+            timeout = ACE_OS::atoi (options.opt_arg ());
             break;
 
           case 'i':
-            iterations = ACE_OS::atoi (options.optarg);
+            iterations = ACE_OS::atoi (options.opt_arg ());
             break;
 
           default:

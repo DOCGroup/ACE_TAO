@@ -34,7 +34,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.optarg);
+        ior = ACE_OS::strdup (get_opts.opt_arg ());
       break;
       case '?':
       default:

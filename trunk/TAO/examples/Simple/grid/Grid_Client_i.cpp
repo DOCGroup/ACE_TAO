@@ -37,20 +37,20 @@ Grid_Client_i::parse_args (int argc,
       {
       case 'p': // A horizontal position of the grid where
                 // the value is stored
-        setx_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        setx_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'q': // A vertical position of the grid where a
                 // value is stored
-        sety_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        sety_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'w':
-        width_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        width_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'h':
-        height_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'v':
-        value_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        value_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       }
 

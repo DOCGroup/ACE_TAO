@@ -147,26 +147,26 @@ TAO_Naming_Server::parse_args (int argc,
         break;
       case 'o': // outputs the naming service ior to a file.
         this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.optarg, "w");
+          ACE_OS::fopen (get_opts.opt_arg (), "w");
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.opt_arg ()), -1);
         break;
       case 'p':
-        this->pid_file_name_ = get_opts.optarg;
+        this->pid_file_name_ = get_opts.opt_arg ();
         break;
       case 'f':
-        this->persistence_file_name_ = get_opts.optarg;
+        this->persistence_file_name_ = get_opts.opt_arg ();
         break;
       case 's':
-        size = ACE_OS::atoi (get_opts.optarg);
+        size = ACE_OS::atoi (get_opts.opt_arg ());
         if (size >= 0)
           this->context_size_ = size;
         break;
       case 'b':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%ld",
                            &address);
         if (result == 0 || result == EOF)
@@ -176,7 +176,7 @@ TAO_Naming_Server::parse_args (int argc,
         this->base_address_ = (void *) address;
         break;
       case 'm':
-        this->multicast_ = ACE_OS::atoi(get_opts.optarg);
+        this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
         break;
       case '?':
       default:

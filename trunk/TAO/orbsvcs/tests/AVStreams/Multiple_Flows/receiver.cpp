@@ -146,10 +146,10 @@ Receiver::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.optarg;
+          this->filename_ = opts.opt_arg ();
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.optarg);
+          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;

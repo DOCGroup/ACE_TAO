@@ -35,16 +35,16 @@ TAO_LoadBalancer::parse_args (int argc,
       switch (c)
         {
         case 'i':
-          this->repository_id_ = get_opts.optarg;
+          this->repository_id_ = get_opts.opt_arg ();
           break;
         case 'o':
-          this->load_balancer_file_ = get_opts.optarg;
+          this->load_balancer_file_ = get_opts.opt_arg ();
           break;
 
         case 's':
-          if (ACE_OS::strcasecmp (get_opts.optarg, "rr") == 0)
+          if (ACE_OS::strcasecmp (get_opts.opt_arg (), "rr") == 0)
             this->strategy_ = 0;
-          else if (ACE_OS::strcasecmp (get_opts.optarg, "md") == 0)
+          else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "md") == 0)
             this->strategy_ = 1;
           else
             ACE_DEBUG ((LM_DEBUG,

@@ -30,14 +30,14 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':  // Set the IOR output filename.
-        this->ior_output_file_ = get_opts.optarg;
+        this->ior_output_file_ = get_opts.opt_arg ();
         break;
       case 'p': // Make the IFR persistent
         this->persistent_ = 1;
         this->using_registry_ = 0;
         break;
       case 'b':
-        this->persistent_file_ = get_opts.optarg;
+        this->persistent_file_ = get_opts.opt_arg ();
         break;
       case 'm':
 #if defined (ACE_HAS_THREADS)

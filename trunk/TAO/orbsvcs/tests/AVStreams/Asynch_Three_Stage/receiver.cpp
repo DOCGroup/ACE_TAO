@@ -151,13 +151,13 @@ Receiver::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->output_file_name_ = opts.optarg;
+          this->output_file_name_ = opts.opt_arg ();
           break;
         case 's':
-          this->sender_name_ = opts.optarg;
+          this->sender_name_ = opts.opt_arg ();
           break;
         case 'r':
-          this->receiver_name_ = opts.optarg;
+          this->receiver_name_ = opts.opt_arg ();
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,

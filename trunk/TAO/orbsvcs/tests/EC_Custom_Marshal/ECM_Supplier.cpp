@@ -328,25 +328,25 @@ ECMS_Driver::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 's':
-          this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
+          this->n_suppliers_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'n':
-          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_count_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 't':
-          this->event_period_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_period_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'b':
-          this->event_size_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_size_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
 
             this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -355,7 +355,7 @@ ECMS_Driver::parse_args (int argc, char *argv [])
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.optarg;
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
 
         case '?':

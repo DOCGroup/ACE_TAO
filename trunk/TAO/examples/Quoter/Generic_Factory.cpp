@@ -249,7 +249,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
     switch (opt)
       {
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opt.optarg);
+        this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'l':
         this->use_LifeCycle_Service_ = 1;

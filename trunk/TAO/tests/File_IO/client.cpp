@@ -47,10 +47,10 @@ parse_args (int argc, char **argv)
         TAO_debug_level++;
         break;
       case 'k':
-        iorfile = get_opts.optarg;
+        iorfile = get_opts.opt_arg ();
         break;
       case 'f':
-        filename = get_opts.optarg;
+        filename = get_opts.opt_arg ();
         break;
       case '?':
       default:

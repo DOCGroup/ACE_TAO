@@ -29,10 +29,10 @@ parse_args (int argc, char *argv[])
       case 'e':
         break;
       case 'f':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
       case 'n':
-        niterations = ACE_OS::atoi (get_opts.optarg);
+        niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

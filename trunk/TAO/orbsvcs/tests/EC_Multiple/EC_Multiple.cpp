@@ -1131,23 +1131,23 @@ Test_ECG::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'l':
-          this->lcl_name_ = get_opt.optarg;
+          this->lcl_name_ = get_opt.opt_arg ();
           break;
 
         case 'r':
-          this->rmt_name_ = get_opt.optarg;
+          this->rmt_name_ = get_opt.opt_arg ();
           break;
 
         case 's':
-          if (ACE_OS::strcasecmp (get_opt.optarg, "global") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "global") == 0)
             {
               this->scheduling_type_ = Test_ECG::ss_global;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "local") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "local") == 0)
             {
               this->scheduling_type_ = Test_ECG::ss_local;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "runtime") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "runtime") == 0)
             {
               this->scheduling_type_ = Test_ECG::ss_runtime;
             }
@@ -1156,7 +1156,7 @@ Test_ECG::parse_args (int argc, char *argv [])
               ACE_DEBUG ((LM_DEBUG,
                           "Unknown scheduling type <%s> "
                           "defaulting to local\n",
-                          get_opt.optarg));
+                          get_opt.opt_arg ()));
               this->scheduling_type_ = Test_ECG::ss_local;
             }
           break;
@@ -1168,7 +1168,7 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'i':
           {
             char* aux = 0;
-            char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+            char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
             this->consumer_disconnects_ = ACE_OS::atoi (arg);
             arg = ACE_OS::strtok_r (0, ",", &aux);
             this->supplier_disconnects_ = ACE_OS::atoi (arg);
@@ -1178,7 +1178,7 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'h':
           {
             char* aux = 0;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
 
             this->hp_suppliers_ = ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -1203,7 +1203,7 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'w':
           {
             char* aux = 0;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
 
             this->lp_suppliers_ = ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -1226,10 +1226,10 @@ Test_ECG::parse_args (int argc, char *argv [])
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.optarg;
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
         case 'd':
-          this->schedule_file_ = get_opt.optarg;
+          this->schedule_file_ = get_opt.opt_arg ();
           break;
 
         case '?':

@@ -524,17 +524,17 @@ ECT_Throughput::parse_args (int argc, char *argv [])
           break;
 
         case 'm':
-          if (ACE_OS::strcasecmp (get_opt.optarg, "rt") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "rt") == 0)
             {
               this->new_ec_ = 0;
               this->reactive_ec_ = 0;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "st") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "st") == 0)
             {
               this->new_ec_ = 0;
               this->reactive_ec_ = 1;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "new") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "new") == 0)
             {
               this->new_ec_ = 1;
               this->reactive_ec_ = 1;
@@ -544,40 +544,40 @@ ECT_Throughput::parse_args (int argc, char *argv [])
               ACE_DEBUG ((LM_DEBUG,
                           "Unknown mode <%s> "
                           "default is rt\n",
-                          get_opt.optarg));
+                          get_opt.opt_arg ()));
               this->new_ec_ = 0;
               this->reactive_ec_ = 0;
             }
           break;
 
         case 'c':
-          this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
+          this->n_consumers_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 's':
-          this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
+          this->n_suppliers_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'u':
-          this->burst_count_ = ACE_OS::atoi (get_opt.optarg);
+          this->burst_count_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'n':
-          this->burst_size_ = ACE_OS::atoi (get_opt.optarg);
+          this->burst_size_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'b':
-          this->event_size_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_size_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 't':
-          this->burst_pause_ = ACE_OS::atoi (get_opt.optarg);
+          this->burst_pause_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
 
             this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -590,7 +590,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
         case 'l':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
 
             this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -601,11 +601,11 @@ ECT_Throughput::parse_args (int argc, char *argv [])
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.optarg;
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
 
         case 'w':
-          this->ec_concurrency_hwm_ = ACE_OS::atoi (get_opt.optarg);
+          this->ec_concurrency_hwm_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':

@@ -282,7 +282,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 's':
-        payload_size = ACE_OS::atoi (get_opts.optarg);
+        payload_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'p':
@@ -290,16 +290,16 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case 't':
         {
-          char *tmp = get_opts.optarg;
+          char *tmp = get_opts.opt_arg ();
 
           if (!ACE_OS::strcmp (tmp, "none"))
             sync_scope = Messaging::SYNC_NONE;
@@ -318,7 +318,7 @@ parse_args (int argc, char *argv[])
 
       case 'l':
         {
-          char *tmp = get_opts.optarg;
+          char *tmp = get_opts.opt_arg ();
 
           if (!ACE_OS::strcmp (tmp, "orb"))
             level = ORB_LEVEL;
@@ -332,11 +332,11 @@ parse_args (int argc, char *argv[])
         }
 
       case 'm':
-        buffering_queue_size = ACE_OS::atoi (get_opts.optarg);
+        buffering_queue_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        work = ACE_OS::atoi (get_opts.optarg);
+        work = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

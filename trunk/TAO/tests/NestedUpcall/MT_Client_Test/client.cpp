@@ -98,28 +98,28 @@ MT_Client::parse_args (void)
       case 'f': // read the IOR from the file.
         if ((this->client_number_ % 2) == 0)
         {
-          result = this->read_ior (get_opts.optarg);
+          result = this->read_ior (get_opts.opt_arg ());
           // read IOR for MT Object
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to read ior from %s : %p\n",
-                               get_opts.optarg),
+                               get_opts.opt_arg ()),
                               -1);
         }
         break;
       case 'g': // read the IOR from the file.
         if ((this->client_number_ % 2) == 1)
         {
-          result = this->read_ior (get_opts.optarg);
+          result = this->read_ior (get_opts.opt_arg ());
           // read IOR for Object A
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to read ior from %s : %p\n",
-                               get_opts.optarg),
+                               get_opts.opt_arg ()),
                               -1);
         }
         break;
-      case 'i': this->iterations_ = ACE_OS::atoi (get_opts.optarg);
+      case 'i': this->iterations_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'h':
       case 'n':

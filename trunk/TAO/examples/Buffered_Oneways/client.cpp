@@ -56,31 +56,31 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = get_opts.opt_arg ();
         break;
 
       case 'f':
-        flush_count = ::atoi (get_opts.optarg);
+        flush_count = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'c':
-        message_count = ::atoi (get_opts.optarg);
+        message_count = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        message_bytes = ::atoi (get_opts.optarg);
+        message_bytes = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.optarg);
+        iterations = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'z':
-        interval = ::atoi (get_opts.optarg);
+        interval = ::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        timeout = ::atoi (get_opts.optarg);
+        timeout = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

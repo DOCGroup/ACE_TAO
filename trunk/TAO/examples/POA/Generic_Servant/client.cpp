@@ -40,11 +40,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = ACE_OS::strdup (get_opts.optarg);
+        IOR = ACE_OS::strdup (get_opts.opt_arg ());
         break;
 
       case 'f':
-        IOR_file = get_opts.optarg;
+        IOR_file = get_opts.opt_arg ();
         break;
 
       case 'o':
@@ -56,11 +56,11 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.optarg);
+        iterations = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'T':
-        timeout = ACE_static_cast (CORBA::ULong, ::atoi (get_opts.optarg));
+        timeout = ACE_static_cast (CORBA::ULong, ::atoi (get_opts.opt_arg ()));
         break;
 
       case 'x':

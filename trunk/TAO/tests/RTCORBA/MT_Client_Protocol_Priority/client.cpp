@@ -61,13 +61,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'n':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'o':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
       case 'a':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%hd",
                            &priority1);
         if (result == 0 || result == EOF)
@@ -76,7 +76,7 @@ parse_args (int argc, char *argv[])
                             -1);
         break;
       case 'b':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%hd",
                            &priority2);
         if (result == 0 || result == EOF)
@@ -85,7 +85,7 @@ parse_args (int argc, char *argv[])
                             -1);
         break;
       case 'e':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%u",
                            &protocol1);
         if (result == 0 || result == EOF)
@@ -94,7 +94,7 @@ parse_args (int argc, char *argv[])
                             -1);
         break;
       case 'f':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%u",
                            &protocol2);
         if (result == 0 || result == EOF)

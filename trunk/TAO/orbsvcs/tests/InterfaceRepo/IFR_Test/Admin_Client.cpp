@@ -159,13 +159,13 @@ Admin_Client::parse_args (int argc,
         this->debug_ = 1;
         break;
       case 'i':   // iterations
-        result = ACE_OS::atoi (opts.optarg);
+        result = ACE_OS::atoi (opts.opt_arg ());
         if (result > 0)
           this->iterations_ = result;
         break;
       case 't':   // test selection
         this->all_tests_ = 0;
-        name = opts.optarg;
+        name = opts.opt_arg ();
 
         for (i = 0; i < NUMBER_OF_TESTS; ++i)
           {

@@ -37,14 +37,14 @@ Identity_Server::parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'i': // ior of the <Object_Group_Factory> object.
-        this->group_factory_ior_ = get_opts.optarg;
+        this->group_factory_ior_ = get_opts.opt_arg ();
         break;
       case 'a': // number of objects to create/register with the random group.
-        random_objects_ = ACE_OS::atoi (get_opts.optarg);
+        random_objects_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'o': // number of objects to create/register with round
                 //robin group.
-        rr_objects_ = ACE_OS::atoi (get_opts.optarg);
+        rr_objects_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

@@ -1001,7 +1001,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
       switch (opt)
         {
         case 'f':
-          this->input_file_name_ = get_opt.optarg;
+          this->input_file_name_ = get_opt.opt_arg ();
 
           if (!this->input_file_name_ || ACE_OS::strlen (this->input_file_name_) > 0)
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
@@ -1016,7 +1016,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           break;
 
         case 'm':
-          temp = ACE_OS::atoi (get_opt.optarg);
+          temp = ACE_OS::atoi (get_opt.opt_arg ());
           if (temp > 0)
             {
               this->total_messages_ = (u_int) temp;
@@ -1032,7 +1032,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           break;
 
         case 'b':
-          temp = ACE_OS::atoi (get_opt.optarg);
+          temp = ACE_OS::atoi (get_opt.opt_arg ());
           if (temp > 0)
             {
               this->break_count_ = (u_int) temp;
@@ -1048,7 +1048,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           break;
 
         case 'n':
-          temp = ACE_OS::atoi (get_opt.optarg);
+          temp = ACE_OS::atoi (get_opt.opt_arg ());
           if (temp >= 0)
             {
               this->nav_pause_ =
@@ -1066,7 +1066,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
 
 
         case 'w':
-          temp = ACE_OS::atoi (get_opt.optarg);
+          temp = ACE_OS::atoi (get_opt.opt_arg ());
           if (temp >= 0)
             {
               this->weap_pause_ =
@@ -1109,7 +1109,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
         }
     }
 
-  if (argc != get_opt.optind)
+  if (argc != get_opt.opt_ind ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s: too many arguments\n"
                        "Usage: %s %s\n",

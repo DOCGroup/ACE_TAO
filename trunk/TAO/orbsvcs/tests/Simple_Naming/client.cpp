@@ -109,7 +109,7 @@ CosNaming_Client::parse_args (void)
       case 'm':
         if (this->test_ == 0)
           {
-            int size = ACE_OS::atoi (get_opts.optarg);
+            int size = ACE_OS::atoi (get_opts.opt_arg ());
             if (size <= 0)
               size = 10;
 
@@ -147,12 +147,12 @@ CosNaming_Client::parse_args (void)
         if (this->test_ == 0)
           {
             FILE * ior_output_file =
-              ACE_OS::fopen (get_opts.optarg, "w");
+              ACE_OS::fopen (get_opts.opt_arg (), "w");
 
             if (ior_output_file == 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Unable to open %s for writing: %p\n",
-                                 get_opts.optarg), -1);
+                                 get_opts.opt_arg ()), -1);
 
             ACE_NEW_RETURN (this->test_,
                             Persistent_Test_Begin (this->orbmgr_.orb (),
@@ -164,7 +164,7 @@ CosNaming_Client::parse_args (void)
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
                           Persistent_Test_End (this->orbmgr_.orb (),
-                                               get_opts.optarg),
+                                               get_opts.opt_arg ()),
                           -1);
         break;
       default:

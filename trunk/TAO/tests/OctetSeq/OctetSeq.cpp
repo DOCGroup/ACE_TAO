@@ -185,16 +185,16 @@ main (int argc, char *argv[])
           switch (opt)
             {
             case 'n':
-              n = ACE_OS::atoi (get_opt.optarg);
+              n = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'l':
-              lo = ACE_OS::atoi (get_opt.optarg);
+              lo = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'h':
-              hi = ACE_OS::atoi (get_opt.optarg);
+              hi = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 's':
-              s = ACE_OS::atoi (get_opt.optarg);
+              s = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'q':
               quiet = 1;

@@ -18,7 +18,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
       case '?':
       default:

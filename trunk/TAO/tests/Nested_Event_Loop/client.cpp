@@ -31,15 +31,15 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = get_opts.opt_arg ();
         break;
 
       case 'i':
-        event_loop_iterations = ::atoi (get_opts.optarg);
+        event_loop_iterations = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        event_loop_depth = ::atoi (get_opts.optarg);
+        event_loop_depth = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

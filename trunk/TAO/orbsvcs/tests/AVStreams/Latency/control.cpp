@@ -28,27 +28,27 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'f':
-        ping_ior = get_opts.optarg;
+        ping_ior = get_opts.opt_arg ();
         break;
 
       case 'g':
-        pong_ior = get_opts.optarg;
+        pong_ior = get_opts.opt_arg ();
         break;
 
       case 'r':
-        ping_address = get_opts.optarg;
+        ping_address = get_opts.opt_arg ();
         break;
 
       case 's':
-        pong_address = get_opts.optarg;
+        pong_address = get_opts.opt_arg ();
         break;
 
       case 't':
-        milliseconds = ACE_OS::atoi (get_opts.optarg);
+        milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'p':
-        protocol = get_opts.optarg;
+        protocol = get_opts.opt_arg ();
         break;
 
       case 'd':

@@ -427,16 +427,16 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "opening a connection to the NamingService\n"
                       "resolving the CosName %s\n",
-                      get_opt.optarg));
+                      get_opt.opt_arg ()));
           break;
         case 'f':
           {
             //  Read the file into a CORBA::String_var.
             ACE_DEBUG ((LM_DEBUG,
                         "reading the file %s\n",
-                        get_opt.optarg));
+                        get_opt.opt_arg ()));
 
-            ifstream ifstr (get_opt.optarg);
+            ifstream ifstr (get_opt.opt_arg ());
 
             if (!ifstr.good ())
               {

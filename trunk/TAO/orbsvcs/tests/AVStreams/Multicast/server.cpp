@@ -156,14 +156,14 @@ Server::parse_args (int argc,char **argv)
       switch (c)
         {
         case 'f':
-          this->fp_ = ACE_OS::fopen (opts.optarg,"w");
+          this->fp_ = ACE_OS::fopen (opts.opt_arg (),"w");
           if (this->fp_ != 0)
             {
               ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
             }
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.optarg);
+          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename"),-1);

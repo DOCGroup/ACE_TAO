@@ -110,15 +110,15 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.opt_arg ()), -1);
         break;
         // Find the ORB in the Service Repository.
       case 'n':
-        this->orb_ = get_opts.optarg;
+        this->orb_ = get_opts.opt_arg ();
         break;
       case '?':  // display help for use of the server.
       default:

@@ -69,13 +69,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.optarg);
+        ior = ACE_OS::strdup (get_opts.opt_arg ());
       break;
       case 'n':
-        niterations = ACE_OS::atoi (get_opts.optarg);
+        niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'r':
-        register_smart_proxy = ACE_OS::atoi (get_opts.optarg);
+        register_smart_proxy = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

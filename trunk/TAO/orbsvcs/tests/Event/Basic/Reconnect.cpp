@@ -45,7 +45,7 @@ EC_Reconnect::parse_args (int& argc, char* argv[])
           this->allow_supplier_reconnect_ = 1;
           break;
         case 'd':
-          this->disconnections_ = ACE_OS::atoi (get_opt.optarg);
+          this->disconnections_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':

@@ -35,10 +35,10 @@ Quoter_Server::parse_args (void)
     switch (c)
       {
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
+        this->debug_level_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'n': // number of Quoter objects we export
-        this->num_of_objs_ = ACE_OS::atoi (get_opts.optarg);
+        this->num_of_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

@@ -51,23 +51,23 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = get_opts.opt_arg ();
         break;
 
       case 'c':
-        number_of_client_threads = ::atoi (get_opts.optarg);
+        number_of_client_threads = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'e':
-        number_of_event_loop_threads = ::atoi (get_opts.optarg);
+        number_of_event_loop_threads = ::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        event_loop_timeout = ::atoi (get_opts.optarg);
+        event_loop_timeout = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        remote_work = ::atoi (get_opts.optarg);
+        remote_work = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

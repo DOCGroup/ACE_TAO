@@ -93,11 +93,11 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           switch (opt)
             {
             case 'o':
-              ior_file = get_opt.optarg;
+              ior_file = get_opt.opt_arg ();
               break;
 
             case 'n':
-              service_name = get_opt.optarg;
+              service_name = get_opt.opt_arg ();
               break;
 
             case 'x':

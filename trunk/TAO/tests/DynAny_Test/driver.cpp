@@ -115,17 +115,17 @@ Driver::parse_args (int argc, char* argv[])
     switch (c)
       {
       case 't':
-        if (!ACE_OS::strcmp (get_opts.optarg, "dynany"))
+        if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynany"))
           this->test_type_ = TEST_DYNANY;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "dynarray"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynarray"))
           this->test_type_ = TEST_DYNARRAY;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "dynenum"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynenum"))
           this->test_type_ = TEST_DYNENUM;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "dynsequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynsequence"))
           this->test_type_ = TEST_DYNSEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "dynstruct"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynstruct"))
           this->test_type_ = TEST_DYNSTRUCT;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "dynunion"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynunion"))
           this->test_type_ = TEST_DYNUNION;
         break;
 

@@ -29,11 +29,11 @@ main (int argc, char *argv[])
         switch (c)
           {
           case 'k':
-            balancer_ior = options.optarg;
+            balancer_ior = options.opt_arg ();
             break;
 
           case 'o':
-            ior_output = options.optarg;
+            ior_output = options.opt_arg ();
             break;
           default:
             ACE_ERROR_RETURN ((LM_ERROR,

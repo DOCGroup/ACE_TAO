@@ -414,7 +414,7 @@ Logging_Supplier::get_options (int argc, char *argv [])
       switch (opt)
         {
         case 'm':
-          temp = ACE_OS::atoi (get_opt.optarg);
+          temp = ACE_OS::atoi (get_opt.opt_arg ());
           if (temp > 0)
             {
               this->total_messages_ = (u_int) temp;
@@ -429,7 +429,7 @@ Logging_Supplier::get_options (int argc, char *argv [])
                                1);
           break;
         case 'f':
-          this->input_file_name_ = get_opt.optarg;
+          this->input_file_name_ = get_opt.opt_arg ();
 
           if (!this->input_file_name_ || ACE_OS::strlen (this->input_file_name_) > 0)
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
@@ -443,7 +443,7 @@ Logging_Supplier::get_options (int argc, char *argv [])
             }
           break;
         case 'd':
-          this->schedule_file_name_ = get_opt.optarg;
+          this->schedule_file_name_ = get_opt.opt_arg ();
 
           if (!this->schedule_file_name_ || ACE_OS::strlen (this->schedule_file_name_) > 0)
             ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
@@ -469,7 +469,7 @@ Logging_Supplier::get_options (int argc, char *argv [])
         }
     }
 
-  if (argc != get_opt.optind)
+  if (argc != get_opt.opt_ind ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s: too many arguments\n"
                        "Usage: %s %s\n",

@@ -21,19 +21,19 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'p':
-        period = ACE_OS::atoi (get_opts.optarg);
+        period = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case 't':
-        kill_on = ACE_OS::atoi (get_opts.optarg);
+        kill_on = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

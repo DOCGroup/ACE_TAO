@@ -23,19 +23,19 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.optarg;
+        ior_output_file = get_opts.opt_arg ();
         break;
 
       case 's':
-        static_threads = ACE_OS::atoi (get_opts.optarg);
+        static_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        dynamic_threads = ACE_OS::atoi (get_opts.optarg);
+        dynamic_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        nap_time = ACE_OS::atoi (get_opts.optarg);
+        nap_time = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

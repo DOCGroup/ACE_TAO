@@ -265,7 +265,7 @@ get_options (int argc, char *argv [])
       }
   }
 
-  if (argc != get_opt.optind)
+  if (argc != get_opt.opt_ind ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s: too many arguments\n"
                        "Usage: %s %s\n",
