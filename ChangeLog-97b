@@ -7,6 +7,9 @@ Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Also, added documentation of ACE_Object_Manager interface to
 	  Object_Manager.h and Managed_Object.h.
 
+	* ace/CORBA_Handler.cpp,Dump.cpp,OS.cpp: use ACE_MT with
+	  preallocated locks.
+
 Sat Sep 20 11:47:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp: 
