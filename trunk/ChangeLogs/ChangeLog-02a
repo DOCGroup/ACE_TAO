@@ -1,3 +1,11 @@
+Fri Feb  4 19:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Process.h:
+        * ace/Porcess.cpp:
+          The method command_line_argv () now returns a LPTSTR const * 
+          instead of a char * const *.  This enables it to compile under
+          UNICODE.  Thanks to Steve Huston for pointing this out.
+
 Fri Feb  4 16:46:42 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/run_tests.sh: Added . to PATH to be sure that tests which

@@ -684,7 +684,7 @@ ACE_Process_Options::env_buf (void)
 #endif /* !ACE_HAS_WINCE */
 }
 
-char * const *
+LPTSTR const *
 ACE_Process_Options::command_line_argv (void)
 {
   if (command_line_argv_calculated_ == 0)
