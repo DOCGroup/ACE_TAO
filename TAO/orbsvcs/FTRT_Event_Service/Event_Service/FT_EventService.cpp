@@ -27,6 +27,7 @@ FT_EventService::FT_EventService()
 , sched_impl_(0)
 , membership_(TAO_FTEC_Event_Channel::NONE)
 , num_threads_(1)
+, task_(orb_)
 {
 }
 
@@ -44,15 +45,16 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     ACE_Argv_Type_Converter command(argc, argv);
 
     // Initialize ORB.
-    CORBA::ORB_var orb =
-      CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+    orb_ = CORBA::ORB_init (command.get_argc(), 
+                            command.get_ASCII_argv(), 
+                            "" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
       return 1;
 
     CORBA::Object_var root_poa_object =
-      orb->resolve_initial_references("RootPOA"
+      orb_->resolve_initial_references("RootPOA"
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     if (CORBA::is_nil (root_poa_object.in ()))
@@ -72,7 +74,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     ACE_TRY_CHECK;
 
     CORBA::Object_var naming_obj =
-      orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -92,17 +94,17 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 
     // Activate the Event channel implementation
 
-    TAO_FTEC_Event_Channel ec(orb, root_poa);
+    TAO_FTEC_Event_Channel ec(orb_, root_poa);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
       ec.activate(membership_
         ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (report_factory(orb.in(), ec_ior.in())==-1)
+    if (report_factory(orb_.in(), ec_ior.in())==-1)
       return -1;
 
-    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
   }
   ACE_CATCHANY
   {
@@ -119,6 +121,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 int
 FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
 {
+  /// get the membership from the environment variable
   char* member = ACE_OS::getenv("FTEC_MEMBERSHIP");
 
   membership_ = TAO_FTEC_Event_Channel::NONE;
@@ -283,4 +286,10 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
     return 0;
 }
 
+void FT_EventService::become_primary()
+{
+  if (this->num_threads_ > 1) {
+    task_.activate(THR_NEW_LWP | THR_JOINABLE, num_threads_-1);
+  }
+}
 
