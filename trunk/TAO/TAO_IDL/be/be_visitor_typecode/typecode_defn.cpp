@@ -262,7 +262,12 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
 int
 be_visitor_typecode_defn::visit_type (be_type *node)
 {
-  if (be_global->gen_anyop_files ())
+  AST_Decl::NodeType nt = node->base_node_type ();
+
+  // Exceptions depend on their typcodes, so if we
+  // generate the typecode in the *A.cpp file, we also
+  // pull in the Any operators, which we may not need.
+  if (be_global->gen_anyop_files () && nt != AST_Decl::NT_except)
     {
       // Switch streams, ctx will be reassigned when this
       // pass is done.
