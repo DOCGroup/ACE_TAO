@@ -1,3 +1,10 @@
+Sat Feb 24 09:51:45 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Pass the -Config options to each script, this helps the
+          $ACE_ROOT/bin/run_test.pl script that needs to disable some
+          tests in certain configurations.
+
 Sat Feb 24 08:21:48 2001  David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
