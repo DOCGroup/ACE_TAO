@@ -148,12 +148,12 @@ public class ImageApp extends Applet
     if (this.configFile_ == null)
       this.configFile_ = getParameter ("configFile");
     if (this.configFile_ == null)
-      this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ImageProcessing/framework/filter.conf";
+      this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/framework/filter.conf";
 
     if (this.filterContext_ == null)
       this.filterContext_ = getParameter ("filterContext");
     if (this.filterContext_ == null)
-      this.filterContext_ = "http://www.cs.wustl.edu/~pjain/java/ImageProcessing/";
+      this.filterContext_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/";
 
     URL url;
     String configInfo= null;
