@@ -21,6 +21,7 @@
 
 #include "Trader.h"
 #include "Offer_Database.h"
+#include "tao/DynSequence_i.h"
 
   // *************************************************************
   // TAO_Trader
@@ -234,30 +235,22 @@ private:
   // TAO_Sequence_Extracter
   // *************************************************************
 
-template <class SEQ_TYPE>
-class TAO_Sequence_Extracter : private TAO_Sequence_Extracter_Base
-// = TITLE
-//  Happy hack to extract sequence data out of user defined sequence
-//  that may have x number of typedef aliases.
+template <class ELEMENT_TYPE>
+class TAO_Element_Equal
 {
- public:
-
-  TAO_Sequence_Extracter (CORBA::TypeCode* type_code)
-    : typecode_ (CORBA::TypeCode::_duplicate (type_code)) {}
-
-  CORBA::Boolean extract (const CORBA::Any&, SEQ_TYPE*&);
-  // Extract the underlying sequence value into a newly allocated
-  // sequence of type SEQ_TYPE. The any assumes ownership of the
-  // sequence, so don't release it.
-
- private:
-
-  CORBA::TypeCode_var typecode_;
+  // = TITLE
+  //   Function object for determining if the sequence element at the
+  //   current position of the dynamic sequence any parameter is equal to
+  //   the element parameter.
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   const ELEMENT_TYPE& element);
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
 };
 
-
-template <class SEQ, class OPERAND_TYPE>
-CORBA::Boolean TAO_find (const SEQ& sequence, const OPERAND_TYPE operand);
+template <class OPERAND_TYPE>
+CORBA::Boolean TAO_find (const Any& sequence, const OPERAND_TYPE operand);
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_T.cpp"

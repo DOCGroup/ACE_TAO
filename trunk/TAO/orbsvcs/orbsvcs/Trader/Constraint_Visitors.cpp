@@ -15,7 +15,7 @@
 
 #include "Constraint_Visitors.h"
 #include "Constraint_Nodes.h"
-#include "Trader_T.h"
+//#include "Trader_T.h"
 
 ACE_RCSID(Trader, Constraint_Visitors, "$Id$")
 
@@ -566,89 +566,50 @@ sequence_does_contain (CORBA::Any* sequence,
     {
     case CORBA::tk_short:
       {
-	CosTradingSequences::ShortSeq* short_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>
-          extracter (CosTradingSequences::_tc_ShortSeq);
-
         CORBA::Long value = element;
-	if (extracter.extract (*sequence, short_seq))
-	  return_value = ::TAO_find (*short_seq, value);
+        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::Short, value));
       }
     break;
     case CORBA::tk_ushort:
       {
-	CosTradingSequences::UShortSeq* ushort_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>
-          extracter (CosTradingSequences::_tc_UShortSeq);
-
         CORBA::ULong value = element;
-	if (extracter.extract (*sequence, ushort_seq))
-	  return_value = ::TAO_find (*ushort_seq, value);
+        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::UShort, value));
       }
       break;
     case CORBA::tk_long:
       {
-	CosTradingSequences::LongSeq* long_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::LongSeq>
-          extracter (CosTradingSequences::_tc_LongSeq);
-
         CORBA::Long value = element;
-	if (extracter.extract (*sequence, long_seq))
-	  return_value = ::TAO_find (*long_seq, value);
+        return_value = ::TAO_find (*sequence, value);
       }
       break;
     case CORBA::tk_ulong:
       {
-	CosTradingSequences::ULongSeq* ulong_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::ULongSeq>
-          extracter (CosTradingSequences::_tc_ULongSeq);
-
-	if (extracter.extract (*sequence, ulong_seq))
-	  return_value = ::TAO_find (*ulong_seq, (CORBA::ULong) element);
+        CORBA::ULong value = element;
+        return_value = ::TAO_find (*sequence, value);
       }
       break;
     case CORBA::tk_float:
       {
-	CosTradingSequences::FloatSeq* float_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>
-          extracter (CosTradingSequences::_tc_FloatSeq);
-
         CORBA::Double value = element;
-	if (extracter.extract (*sequence, float_seq))
-	  return_value = ::TAO_find (*float_seq, value);
+        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::Float, value));
       }
       break;
     case CORBA::tk_double:
       {
-	CosTradingSequences::DoubleSeq* double_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>
-          extracter (CosTradingSequences::_tc_DoubleSeq);
-
         CORBA::Double value = element;
-	if (extracter.extract (*sequence, double_seq))
-	  return_value = ::TAO_find (*double_seq, value);
+        return_value = ::TAO_find (*sequence, value);
       }
       break;
     case CORBA::tk_boolean:
       {
-	CosTradingSequences::BooleanSeq* boolean_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>
-          extracter (CosTradingSequences::_tc_BooleanSeq);
-
         CORBA::Boolean value = element;
-	if (extracter.extract (*sequence, boolean_seq))
-	  return_value = ::TAO_find (*boolean_seq, value);
+        return_value = ::TAO_find (*sequence, value);
       }
       break;
     case CORBA::tk_string:
       {
-	CosTradingSequences::StringSeq* string_seq;
-        TAO_Sequence_Extracter<CosTradingSequences::StringSeq>
-          extracter (CosTradingSequences::_tc_StringSeq);
-
         const char* value = element;
-	if (extracter.extract (*sequence, string_seq))
-	  return_value = ::TAO_find_string (*string_seq, value);
+        return_value = ::TAO_find (*sequence, value);
       }
       break;
     default:
@@ -658,9 +619,138 @@ sequence_does_contain (CORBA::Any* sequence,
   return return_value;
 }
 
-  // *************************************************************
-  // TAO_Constraint_Evaluator
-  // *************************************************************
+int
+TAO_Element_Equal<CORBA::Short>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::Short element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::Short value = dyn_any.get_short (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::UShort>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::UShort element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::UShort value = dyn_any.get_ushort (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::Long>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::Long element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::Long value = dyn_any.get_long (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::ULong>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::ULong element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::ULong value = dyn_any.get_ulong (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::Float>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::Float element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::Short value = dyn_any.get_float (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::Double>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::Double element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::Double value = dyn_any.get_short (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::Boolean>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::Boolean element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      CORBA::Boolean value = dyn_any.get_short (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (value == element);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<const char*>::
+operator () (TAO_DynSequence_i& dyn_any,
+             const char* element) const
+{
+  int return_value = 0;
+  TAO_TRY
+    {
+      const char* value = dyn_any.get_string (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return_value = (ACE_OS::strcmp (value, element) == 0);
+    }
+  TAO_CATCHANY {} TAO_ENDTRY;
+  return return_value;
+}
+
+
+// *************************************************************
+// TAO_Constraint_Validator
+// *************************************************************
 
 TAO_Constraint_Validator::
 TAO_Constraint_Validator
@@ -1136,40 +1226,40 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 template class ACE_Node<TAO_Literal_Constraint>;
 template class ACE_Unbounded_Queue<TAO_Literal_Constraint>;
 template class ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>;
-template class TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::LongSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::ULongSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>;
-template class TAO_Sequence_Extracter<CosTradingSequences::StringSeq>;
-template CORBA::Boolean TAO_find (const CosTradingSequences::DoubleSeq&, const CORBA::Double);
-template CORBA::Boolean TAO_find (const CosTradingSequences::FloatSeq&, const CORBA::Double);
-template CORBA::Boolean TAO_find (const CosTradingSequences::BooleanSeq&, const CORBA::Boolean);
-template CORBA::Boolean TAO_find (const CosTradingSequences::ULongSeq&, const CORBA::ULong);
-template CORBA::Boolean TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long);
-template CORBA::Boolean TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long);
-template CORBA::Boolean TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong);
-template CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char* const);
+template class TAO_Element_Equal<CORBA::Float>;
+template class TAO_Element_Equal<CORBA::Double>;
+template class TAO_Element_Equal<CORBA::Long>;
+template class TAO_Element_Equal<CORBA::ULong>;
+template class TAO_Element_Equal<CORBA::Boolean>;
+template class TAO_Element_Equal<CORBA::Short>;
+template class TAO_Element_Equal<CORBA::UShort>;
+template class TAO_Element_Equal<const char*>;
+template CORBA::Boolean TAO_find (const Any&, CORBA::Float);
+template CORBA::Boolean TAO_find (const Any&, CORBA::Double);
+template CORBA::Boolean TAO_find (const Any&, CORBA::Boolean);
+template CORBA::Boolean TAO_find (const Any&, CORBA::ULong);
+template CORBA::Boolean TAO_find (const Any&, CORBA::Long);
+template CORBA::Boolean TAO_find (const Any&, CORBA::Short);
+template CORBA::Boolean TAO_find (const Any&, CORBA::UShort);
+template CORBA::Boolean TAO_find (const Any&, const char*);   
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<TAO_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::LongSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ULongSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>
-#pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::StringSeq>
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::DoubleSeq&, const CORBA::Double)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::FloatSeq&, const CORBA::Double)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::BooleanSeq&, const CORBA::Boolean)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::ULongSeq&, const CORBA::ULong)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char* const)
+#pragma instantiate TAO_Element_Equal<CORBA::Float>
+#pragma instantiate TAO_Element_Equal<CORBA::Double>
+#pragma instantiate TAO_Element_Equal<CORBA::Long>
+#pragma instantiate TAO_Element_Equal<CORBA::ULong>
+#pragma instantiate TAO_Element_Equal<CORBA::Boolean>
+#pragma instantiate TAO_Element_Equal<CORBA::Short>
+#pragma instantiate TAO_Element_Equal<CORBA::UShort>
+#pragma instantiate TAO_Element_Equal<const char*>
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Float);  
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Double); 
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Boolean);
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::ULong);  
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Long);   
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Short);  
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::UShort); 
+#pragma instantiate CORBA::Boolean TAO_find (const Any&, const char*);   
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

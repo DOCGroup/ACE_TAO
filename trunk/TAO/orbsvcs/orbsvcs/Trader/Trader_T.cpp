@@ -300,94 +300,38 @@ TAO_Link_Attributes<IF>::max_link_follow_policy (CORBA::Environment &env)
   // TAO_Sequence_Extracter
   // *************************************************************
 
-template <class SEQ_TYPE> CORBA::Boolean
-TAO_Sequence_Extracter<SEQ_TYPE>::
-extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
+template <class OPERAND_TYPE> CORBA::Boolean
+TAO_find (const Any& sequence, const OPERAND_TYPE element)
 {
   CORBA::Boolean return_value = 0;
+  TAO_Element_Equal<OPERAND_TYPE> functor;
+  TAO_DynSequence_i dyn_seq (sequence);
 
-#if 0
   TAO_TRY
     {
-      CORBA::TypeCode_var any_type = any_value.type ();
-      CORBA::TCKind kind_1 =
-        TAO_Sequence_Extracter_Base::sequence_type (any_type.in (), TAO_TRY_ENV);
+      CORBA::ULong length = dyn_seq.length (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      CORBA::TCKind kind_2 =
-        TAO_Sequence_Extracter_Base::sequence_type (this->typecode_.in (),
-                                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Ensure the sequence type of each sequence is the same.
-      if (kind_1 != CORBA::tk_void &&
-          kind_2 != CORBA::tk_void &&
-          kind_1 == kind_2)
+      
+      for (CORBA::ULong i = 0; i < length && ! return_value; i++)
         {
-          if (any_value.any_owns_data ())
+          if (functor (dyn_seq, element))
             {
-              seq = (SEQ_TYPE*) any_value.value ();
+              ACE_DEBUG ((LM_DEBUG, "TAO_find::success\n"));
               return_value = 1;
-            }
-          else
-            {
-              ACE_NEW_RETURN (seq, SEQ_TYPE, return_value);
-              TAO_InputCDR stream ((ACE_Message_Block*) any_value.value ());
-
-              CORBA::Boolean decode_succeded =
-                (stream.decode (this->typecode_.in (), seq, 0, TAO_TRY_ENV) ==
-                 CORBA::TypeCode::TRAVERSE_CONTINUE);
-              TAO_CHECK_ENV;
-
-              if (decode_succeded)
-                {
-                  CORBA::TypeCode_var type = any_value.type ();
-                  ((CORBA::Any *) &any_value)->replace (type.in (),
-                                                        seq,
-                                                        1,
-                                                        TAO_TRY_ENV);
-                  TAO_CHECK_ENV;
-                  return_value = 1;
-                }
-              else
-                delete seq;
             }
         }
     }
-  TAO_CATCHANY
-    {
-      if (seq != 0)
-        delete seq;
-    }
-  TAO_ENDTRY;
-#else
-  if (any_value >>= seq)
-    return_value = 1;
-#endif /* 0 */
+  TAO_CATCHANY {} TAO_ENDTRY;
 
   return return_value;
 }
 
-
-template <class SEQ, class OPERAND_TYPE> CORBA::Boolean
-TAO_find (const SEQ& sequence, const OPERAND_TYPE element)
+template <class ELEMENT_TYPE> int
+TAO_Element_Equal<ELEMENT_TYPE>::
+operator () (TAO_DynSequence_i& dyn_any,
+             const ELEMENT_TYPE& element)
 {
-  int length = sequence.length();
-  CORBA::Boolean return_value = 0;
-
-  for (int i = 0; i < length; i++)
-    {
-      OPERAND_TYPE sequence_element = sequence[i];
-      if (sequence_element == element)
-        {
-          return_value = 1;
-          break;
-        }
-    }
-
-  return (CORBA::Boolean) return_value;
+  return 1;
 }
-
-
 
 #endif /* TAO_TRADER_C */
