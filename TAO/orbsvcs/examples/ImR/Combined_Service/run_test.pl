@@ -52,7 +52,7 @@ sub do_test
     unlink $combined_ior;
 
     my $start_time = time();
-
+print STDERR "Starting comb -f $start_conf\n";
     # First we start all the servers, including the test server
     $COMB->Arguments("-f $start_conf");
     my $ret = $COMB->Spawn();
@@ -63,6 +63,7 @@ sub do_test
 
     ## Wait a little bit for everything to get started
     sleep(2);
+print STDERR "Starting test_server -orbuseimr 1 $imr_initref\n";
 
     $SERV->Arguments("-orbuseimr 1 $imr_initref");
     my $ret = $SERV->Spawn();
@@ -73,13 +74,13 @@ sub do_test
 
     ## Wait a little bit for everything to get started
     sleep(2);
+print STDERR "Starting client\n";
 
     # The client should pass the simple test
     $CLI->Arguments("$test_initref/TestObject1");
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 1.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
@@ -88,9 +89,9 @@ sub do_test
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 2.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
+print STDERR "Starting imr\n";
 
     # The server was autoregistered without any start information. We
     # need to update the registration with a command line so that the
@@ -99,7 +100,6 @@ sub do_test
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Updating TestObject1 cmdline.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
@@ -108,7 +108,6 @@ sub do_test
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Listing ImR Servers.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
@@ -117,7 +116,6 @@ sub do_test
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Shutting down test server.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
@@ -126,9 +124,9 @@ sub do_test
     $ret = $IMRUTIL->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Listing ImR Servers.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
+print STDERR "Starting client\n";
 
     # The client should pass the simple test again, because the Activator will
     # restart test_server
@@ -136,7 +134,6 @@ sub do_test
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 3.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
@@ -146,7 +143,6 @@ sub do_test
     $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         print "ERROR : spawning test client 4.\n";
-        $COMB->TerminateWaitKill(5);
         return $ret;
     }
 
@@ -169,6 +165,9 @@ sub do_test
 
 my $ret = do_test();
 
-#unlink $;
+if ($ret != 0) {
+  $COMB->TerminateWaitKill(5);
+  $SERV->TerminateWaitKill(5);
+}
 
 exit $ret;
