@@ -1,3 +1,16 @@
+Mon May 17 13:22:18 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_stdio.h (tempnam): Had to remove the default 'dir' value
+	  on the wchar variant because it conflicts with the char version
+	  when defaults are taken into account.
+
+	* ace/OS_NS_stdio.inl (tempnam): For the wchar_t variant, have to
+	  copy the narrow-char name to a wide-char string and free() the
+	  original.
+	  (fopen (wchar_t *...)): ACE_TEXT_ALWAYS_CHAR doesn't convert a
+	  string if ACE_USES_WCHAR setting already matches ACE_TCHAR. Thus, to
+	  force a convert of wchar_t to char, use ACE_Wide_To_Ascii directly.
+
 Mon May 17 11:58:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/WIN32_Asynch_IO.cpp (writev): If the passed-in chain of

@@ -383,7 +383,7 @@ namespace ACE_OS {
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *tempnam (const wchar_t *dir = 0,
+  wchar_t *tempnam (const wchar_t *dir,
                     const wchar_t *pfx = 0);
 #endif /* ACE_HAS_WCHAR */
 
