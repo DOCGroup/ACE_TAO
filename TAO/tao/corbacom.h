@@ -210,11 +210,11 @@ public:
   typedef u_int ULong;
 #  endif	/* SIZEOF_LONG != 4 */
 
+  // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64
+  // bit integers are "LongLong".
   typedef Long &Long_out; // out type for long
   typedef ULong &ULong_out; // out type for unsigned long
 
-  // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64 bit
-  // integers are "LongLong".
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
@@ -229,10 +229,10 @@ public:
   typedef unsigned __int64 ULongLong;
 #  else
 
-  // If "long long" isn't native, programs can't use these data types in
-  // normal arithmetic expressions.  If any particular application can
-  // cope with the loss of range it can define conversion operators
-  // itself.
+  // If "long long" isn't native, programs can't use these data types
+  // in normal arithmetic expressions.  If any particular application
+  // can cope with the loss of range it can define conversion
+  // operators itself.
 
 #    define	NONNATIVE_LONGLONG
 #    if	defined (TAO_WORDS_BIGENDIAN)
@@ -284,6 +284,24 @@ public:
   static void string_free (Char *);
 
   class String_var
+<<<<<<< corbacom.h
+    // = TITLE
+    //   String var class. Provides automatic deallocation of storage
+    //   for the string once it goes out of scope.
+    {
+    public:
+      String_var (void);
+      // default constructor
+
+      String_var (char *p);
+      // constructor, owns p
+
+      String_var (const char *p);
+      // constructor. Makes a copy of p
+
+      String_var (const String_var &s);
+      // copy constructor
+=======
   {
     // = TITLE
     // String var class. Provides automatic deallocation of storage for the
@@ -325,8 +343,13 @@ public:
     char operator[] (ULong index) const;
     // allows only accessing thru an index
 
-    // =in, out, out, and _retn operations.
+    // = in, out, out, and _retn operations.
     // ORBOS/97-05-15, Appendix C.2
+
+    private:
+      char *ptr_;
+      // instance
+    };
 
     const char *in (void) const;
     // for in parameter
@@ -408,41 +431,42 @@ public:
   static void wstring_free (WChar *const);
 
   // various CORBA defined classes 
+
   typedef CORBA_Any         Any;
   typedef CORBA_Any_var     Any_var;
   typedef CORBA_Any_out     Any_out;
   typedef Any               *Any_ptr;
 
-  typedef CORBA_BOA         BOA;
-  typedef BOA               *BOA_ptr;
+  typedef CORBA_BOA BOA;
+  typedef BOA *BOA_ptr;
   // These will go away when we have a POA, but we can write good code
   // now.
-  typedef BOA               POA;
-  typedef POA               *POA_ptr;
+  typedef BOA POA;
+  typedef POA *POA_ptr;
 
   typedef CORBA_Environment Environment;
-  typedef Environment       *Environment_ptr;
+  typedef Environment *Environment_ptr;
 
-  typedef CORBA_Exception   Exception;
-  typedef Exception         *Exception_ptr;
+  typedef CORBA_Exception Exception;
+  typedef Exception *Exception_ptr;
 
-  typedef CORBA_NamedValue  NamedValue;
-  typedef NamedValue        *NamedValue_ptr;
+  typedef CORBA_NamedValue NamedValue;
+  typedef NamedValue *NamedValue_ptr;
 
-  typedef CORBA_NVList      NVList;
-  typedef NVList            *NVList_ptr;
+  typedef CORBA_NVList NVList;
+  typedef NVList *NVList_ptr;
 
-  typedef CORBA_Object      Object;
-  typedef CORBA_Object            *Object_ptr;
+  typedef CORBA_Object Object;
+  typedef CORBA_Object *Object_ptr;
 
-  typedef CORBA_Principal   Principal;
-  typedef CORBA_Principal         *Principal_ptr;
+  typedef CORBA_Principal Principal;
+  typedef CORBA_Principal *Principal_ptr;
 
-  typedef CORBA_ORB         ORB;
-  typedef ORB               *ORB_ptr;
+  typedef CORBA_ORB ORB;
+  typedef ORB *ORB_ptr;
 
-  typedef CORBA_Request     Request;
-  typedef Request           *Request_ptr;
+  typedef CORBA_Request Request;
+  typedef Request *Request_ptr;
 
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
@@ -450,8 +474,8 @@ public:
   typedef CORBA_SystemException
   SystemException;
 
-  typedef CORBA_TypeCode    TypeCode;
-  typedef TypeCode          *TypeCode_ptr;
+  typedef CORBA_TypeCode TypeCode;
+  typedef TypeCode *TypeCode_ptr;
 
   typedef CORBA_UserException  UserException;
   
@@ -641,8 +665,8 @@ public:
   SYSEX(DATA_CONVERSION);
 #undef	SYSEX
 
-  static TypeCode_ptr         _tc_Bounds;
-  static TypeCode_ptr         _tc_BadKind;
+  static TypeCode_ptr _tc_Bounds;
+  static TypeCode_ptr _tc_BadKind;
 
   static ORB_ptr ORB_init (int &argc,
 			   char *const *argv,
