@@ -1,3 +1,17 @@
+Fri May 28 23:11:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp:
+	  Instead of constructing a CORBA::Environment on the stack for
+	  each upcall we use the one allocated on TSS storage. This saves
+	  a little time since each Environment has its one mutex that
+	  needs to be initialized in that case.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+	  The server and client try to put themselves on the real-time
+	  scheduling class, if they cannot make it they just print a
+	  warning.
+
 Fri May 28 16:21:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ORB.cpp:
