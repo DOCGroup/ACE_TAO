@@ -7300,33 +7300,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbolname)
 }
 #endif /* ACE_HAS_WINCE */
 
-ACE_INLINE void
-ACE_OS::exit (int status)
-{
-  // ACE_TRACE ("ACE_OS::exit");
-
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
-  // Shut down the ACE_Object_Manager.  With
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
-  // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  ACE_Object_Manager_fini ();
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
-
-#if !defined (ACE_HAS_WINCE)
-# if defined (ACE_WIN32)
-  ::ExitProcess ((UINT) status);
-# elif defined (ACE_PSOSIM)
-  ::u_exit (status);
-# else
-  ::exit (status);
-# endif /* ACE_WIN32 */
-#else
-  // @@ This is not exactly the same as ExitProcess.  But this is the
-  // closest one I can get.
-  ::TerminateProcess (::GetCurrentProcess (), status);
-#endif /* ACE_HAS_WINCE */
-}
-
 ACE_INLINE int
 ACE_OS::step (const char *str, char *expbuf)
 {
@@ -10445,19 +10418,6 @@ fflush (FILE *fp)
 // under WinCE.  Most of them doesn't do what they are expected
 // to do under regular environments.
 //          **** Warning ****
-
-ACE_INLINE void
-exit (int status)
-{
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
-  // Shut down the ACE_Object_Manager.  With
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
-  // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  ACE_Object_Manager_fini ();
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
-
-  ACE_OS::exit (status);
-}
 
 ACE_INLINE int
 printf (const char *format, ...)

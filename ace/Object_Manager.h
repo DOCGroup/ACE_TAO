@@ -17,9 +17,6 @@
 #ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H
 
-// Declaration to avoid circular include problems.
-void ACE_Object_Manager_fini (void);
-
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
