@@ -1,3 +1,9 @@
+Wed Dec 18 15:24:13 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Proactor.cpp (ACE_Proactor): Initialize completion_port_ to
+	  0.  This is the only way that CreateIoCompletionPort works first
+	  time in.  ACE_INVALID_HANDLE makes it break.
+
 Tue Dec 18 7:58:07 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Proactor.i (get_handle): Changed this to return
