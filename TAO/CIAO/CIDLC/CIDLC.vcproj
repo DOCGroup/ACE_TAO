@@ -139,7 +139,14 @@
 			<File
 				RelativePath=".\RepositoryIdGenerator.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
