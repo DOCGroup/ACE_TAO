@@ -1,3 +1,10 @@
+Sun May 17 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Reader_Writer_Test.cpp: Reduced the number of iterations
+	  on WinCE.
+
+	* ace/OS.i: Added ACE_OS::time () implementation for CE.
+
 Sun May 17 21:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/childbirth_time.cpp: changed type of

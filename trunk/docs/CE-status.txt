@@ -199,7 +199,7 @@
         For each test, Section [EM] describes the status of the test
         on x86 emulator.  Section [SH] describes the status of the
         test under SH series machines.  (I use an HP 360LX as my
-        testbed.  We don't have MIPS machine.)
+        testbed.) [MIPS] information is unavailable at the moment.
 
     [N] Aio_Platform_Test
            Asynch I/O is not supported on CE.
@@ -212,41 +212,73 @@
     [X] Basic_Types_Test
            [EM] Runs successfully
            [SH] Runs successfully
-    [F] Buffer_Stream_Test
+    [X] Buffer_Stream_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [F] Conn_Test
+           [EM] Runs successfully
+           [SH] Hang halfway.
     [X] Enum_Interfaces_Test
-          Sort of working right.  (Report get_ip_interface error ;-)
+          Sort of working right.
+           [EM] Report get_ip_interface error
+           [SH] Report get_ip_interface error
     [N] Env_Value_Test
     [X] Future_Test
            This test seems to run to completion without error but the
            display hangs before printing out the ending message.
+           [EM]
+           [SH]
     [X] Handle_Set_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Hash_Map_Manager_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [N] IOStream_Test
            ???
     [N] MM_Shared_Memory_Test
            ???
     [F] MT_Reactor_Timer_Test
-           ???
+           [EM] Runs successfully
+           [SH]
     [F] MT_SOCK_Test
-           Hang
+           [EM] Runs successfully
+           [SH] 
     [X] Map_Manager_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [F] Mem_Map_Test
+           [EM]
+           [SH]
     [X] Message_Block_Test
            inline functions in auto-generated ctors.
+           [EM] Runs successfully
+           [SH] Runs successfully
     [F] Message_Queue_Notifications_Test
            Hang at termination.
+           [EM] Runs successfully
+           [SH]
     [X] Message_Queue_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [.] Naming_Test
            Registry is not added into CE yet.
     [F] Notify_Performance_Test
+           [EM] Runs successfully
+           [SH]
     [X] OrdMultiSet_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [N] Pipe_Test
            This test will have to rewriten in ACE.
     [X] Priority_Buffer_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [N] Priority_Reactor_Test
            Not supported yet.
     [X] Priority_Task_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [N] Process_Mutex_Test
            Don't know how to start a process as a console application.
     [N] Process_Strategy_Test
@@ -255,41 +287,75 @@
            Exceptions are not support on CE.
     [F] Reactor_Notify_Test
            Hang at "starting limited notifications test."
+           [EM] Runs successfully
+           [SH]
     [F] Reactor_Performance_Test
+           [EM] Runs successfully
+           [SH]
     [X] Reactor_Timer_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [F] Reactors_Test
            Hang after done_count reaches 0.  Reactors were not shutting down.
+           [EM]
+           [SH]
     [X] Reader_Writer_Test
-           Seems working.  Need to redo the test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Recursive_Mutex_Test
            The test succeeded after reducing the iteration from 100 to
            50.  It appears that windows' CEdit buffer overflowed from
            the exccessive amount of output from this test.
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] SOCK_Connector_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] SOCK_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [N] SPIPE_Test
            SPIPE is not supported yet.
     [X] SString_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [N] SV_Shared_Memory_Test
     [X] Semaphore_Test
-           Test runs fine but gets Access Violation at program exit
+           [EM] Runs successfully
+           [SH] Runs successfully
     [.] Service_Config_Test
            I don't have confidence on this test....
     [X] Sigset_Ops_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Simple_Message_Block_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] TSS_Test
            TlsGetValue appearently acts differently from most Win32
            platforms.  If we check the return value and the error
            code, then, ACE_OS::key_getspecific will never succeed.
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Task_Test
-           Test runs successfully but hang after the ending messge.
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Thread_Manager_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Thread_Mutex_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Thread_Pool_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [.] Time_Service_Test
     [X] Time_Value_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Timer_Queue_Test
-           Hang midway.
+           [EM] Runs successfully
+           [SH] Runs successfully
     [.] Tokens_Test
     [N] UPIPE_SAP_Test
 
