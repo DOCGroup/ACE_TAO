@@ -1622,8 +1622,9 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
   // If the POA has the UNIQUE_ID policy and the specified servant is
   // active, the Object Id associated with that servant is returned.
   PortableServer::ObjectId_var id;
+  PortableServer::ObjectId_out id_out (id);
   if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
-      this->active_object_map ().find (servant, id.out ()) != -1)
+      this->active_object_map ().find (servant, id_out) != -1)
     {
       return id._retn ();
     }
@@ -1704,13 +1705,14 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // If the object reference was not created by this POA, the
       // WrongAdapter exception is raised.
       PortableServer::ObjectId_var id;
+      PortableServer::ObjectId_out id_out (id);
       TAO_POA::String poa_name;
       CORBA::Boolean persistent = CORBA::B_FALSE;
       ACE_Time_Value poa_creation_time;
 
       int result = this->parse_key (key.in (),
                                     poa_name,
-                                    id.out (),
+                                    id_out,
                                     persistent,
                                     poa_creation_time);
       if (result != 0 ||
@@ -1766,13 +1768,14 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // is raised.
   TAO_ObjectKey_var key = reference->key (env);
   PortableServer::ObjectId_var id;
+  PortableServer::ObjectId_out id_out (id);
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
   ACE_Time_Value poa_creation_time;
 
   int result = this->parse_key (key.in (),
                                 poa_name,
-                                id.out (),
+                                id_out,
                                 persistent,
                                 poa_creation_time);
   if (result != 0 ||
@@ -1958,9 +1961,10 @@ TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
                            CORBA::Environment &env)
 {
   PortableServer::ObjectId_var id;
+  PortableServer::ObjectId_out id_out (id);
 
   TAO_POA *poa = this->locate_poa_i (key,
-                                     id.out (),
+                                     id_out,
                                      env);
   if (env.exception () != 0)
     return -1;
@@ -2202,13 +2206,14 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                              CORBA::Environment &env)
 {
   PortableServer::ObjectId_var id;
+  PortableServer::ObjectId_out id_out (id);
   TAO_POA *poa = 0;
   // const char *operation = req.operation ();
   const char *operation = req.op_name ();
 
   PortableServer::Servant servant = this->locate_poa_and_servant_i (key,
                                                                     operation,
-                                                                    id.out (),
+                                                                    id_out,
                                                                     poa,
                                                                     env);
   if (env.exception () != 0 || servant == 0)
