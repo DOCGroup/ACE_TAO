@@ -104,3 +104,10 @@ ACE_Thread_Manager::task (void)
   else
     return td->task ();
 }
+
+ACE_INLINE int
+ACE_Thread_Manager::open (size_t)
+{
+  // Currently no-op.
+  return 0;
+}
