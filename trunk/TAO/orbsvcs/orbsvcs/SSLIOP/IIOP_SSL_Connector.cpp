@@ -116,17 +116,15 @@ TAO_IIOP_SSL_Connector::close (void)
 }
 
 int
-TAO_IIOP_SSL_Connector::connect (
+TAO_IIOP_SSL_Connector::make_connect (
   TAO_GIOP_Invocation *invocation,
-  TAO_Transport_Descriptor_Interface *desc
-  ACE_ENV_ARG_DECL_NOT_USED)
+  TAO_Transport_Descriptor_Interface *desc)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for IIOP connection.\n")));
 
-  TAO_Transport *&transport = invocation->transport ();
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
@@ -162,94 +160,94 @@ TAO_IIOP_SSL_Connector::connect (
 
   int result = 0;
   TAO_IIOP_SSL_Connection_Handler *svc_handler = 0;
-  TAO_Transport *base_transport = 0;
 
-  // Check the Cache first for connections
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
-                                                                              base_transport) == 0)
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
+                ACE_TEXT ("making a new connection \n")));
+
+  // Purge connections (if necessary)
+  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+
+  // @@ This needs to change in the next round when we implement a
+  // policy that will not allow new connections when a connection
+  // is busy.
+  if (max_wait_time != 0)
     {
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                    ACE_TEXT ("got an existing transport with id %d \n"),
-                    base_transport->id ()));
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
+
+      // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options);
     }
   else
     {
-      if (TAO_debug_level > 4)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                    ACE_TEXT ("making a new connection \n")));
-
-      // Purge connections (if necessary)
-      this->orb_core ()->lane_resources ().transport_cache ().purge ();
-
-      // @@ This needs to change in the next round when we implement a
-      // policy that will not allow new connections when a connection
-      // is busy.
-      if (max_wait_time != 0)
-        {
-          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                           *max_wait_time);
-
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address,
-                                                  synch_options);
-        }
-      else
-        {
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address);
-        }
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                    ACE_TEXT ("The result is <%d> \n"), result));
-
-      if (result == -1)
-        {
-          // Give users a clue to the problem.
-          if (TAO_debug_level)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                          ACE_TEXT ("%s:%d failed (%p)\n"),
-                          __FILE__,
-                          __LINE__,
-                          iiop_endpoint->host (),
-                          iiop_endpoint->port (),
-                          ACE_TEXT ("errno")));
-            }
-          return -1;
-        }
-
-      base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
-
-      // Add the handler to Cache.
-      //
-      // Note that the IIOP-only transport descriptor is used!
-      int retval =
-        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                                 base_transport);
-
-      if (retval != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                      ACE_TEXT ("could not add the new connection to ")
-                      ACE_TEXT ("Cache \n")));
-        }
+      // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address);
     }
 
-  // No need to _duplicate and release since base_transport
-  // is going out of scope.  transport now has control of base_transport.
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
+                ACE_TEXT ("The result is <%d> \n"), result));
+
+  if (result == -1)
+    {
+      // Give users a clue to the problem.
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s:%d failed (%p)\n"),
+                      __FILE__,
+                      __LINE__,
+                      iiop_endpoint->host (),
+                      iiop_endpoint->port (),
+                      ACE_TEXT ("errno")));
+        }
+      return -1;
+    }
+
+  TAO_Transport *base_transport =
+    TAO_Transport::_duplicate (svc_handler->transport ());
+
+  // Add the handler to Cache.
+  //
+  // Note that the IIOP-only transport descriptor is used!
+  int retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                             base_transport);
+
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
+                  ACE_TEXT ("could not add the new connection to ")
+                  ACE_TEXT ("Cache \n")));
+    }
+
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so.
+  retval =  base_transport->wait_strategy ()->register_handler ();
+
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                  ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+    }
+
+  // Handover the transport pointer to the Invocation class.
+  TAO_Transport *&transport = invocation->transport ();
+
   transport = base_transport;
+
   return 0;
 }

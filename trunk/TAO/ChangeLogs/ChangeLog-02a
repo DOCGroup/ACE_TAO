@@ -1,3 +1,21 @@
+Mon Apr 15 08:05:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h: Included
+	  security_export.h for the file to compile fine. 
+	* orbsvcs/orbsvcs/Makefile.Security: Fixed the dependency yet
+	  again :(.
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+	  Added the handler in reactor after the transport has been
+	  cached. 
+	
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h: Added the handler
+	  in reactor after the transport has been cached in
+	  connect. Removed portions of the code that looked up connection
+	  from cache since this code has been moved to the common base
+	  class. 
+	
 Mon Apr 15 07:37:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
