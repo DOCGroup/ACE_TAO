@@ -20,6 +20,13 @@ use vars qw(@ISA);
 @ISA = qw(WorkspaceCreator);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my($max_line_length) = 32767; ## Borland Make's maximum line length
+my(@targets) = ('clean', 'realclean', 'install');
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -95,18 +102,24 @@ sub write_comps {
   my(%targnum)  = ();
   my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
   my($crlf)     = $self->crlf();
+  my(@ltargets) = @targets;
 
   print $fh "!include <\$(ACE_ROOT)\\include\\makeinclude\\make_flags.bor>$crlf";
 
-  ## Print out the "all" target
-  print $fh $crlf . 'all:';
+  ## Construct the "all" target
+  my($all) = $crlf . 'all:';
   foreach my $project (@list) {
-    print $fh " $$pjs{$project}->[0]";
+    $all .= " $$pjs{$project}->[0]";
   }
-  print $fh $crlf;
+  if (length($all) < $max_line_length) {
+    print $fh $all, $crlf;
+  }
+  else {
+    unshift(@ltargets, 'all');
+  }
 
   ## Print out all other targets here
-  foreach my $target ('clean', 'realclean', 'install') {
+  foreach my $target (@ltargets) {
     print $fh $crlf .
               "$target\:$crlf";
     $self->write_project_targets($fh, $target, \@list);
