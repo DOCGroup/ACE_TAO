@@ -204,8 +204,7 @@ ACE_Time_Value::set (double d)
 
 // Initializes a timespec_t.  Note that this approach loses precision
 // since it converts the nano-seconds into micro-seconds.  But then
-// again, do any real systems have nano-second timer precision
-// anyway?!
+// again, do any real systems have nano-second timer precision?!
 
 ACE_INLINE void
 ACE_Time_Value::set (const timespec_t &tv)
@@ -949,7 +948,7 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
 # elif defined (ACE_PSOS) && ! defined (ACE_PSOS_DIAB_MIPS)
   ACE_UNUSED_ARG (clockid);
   ACE_PSOS_Time_t pt;
-  int result = ACE_PSOS_Time_t::get_system_time(pt);
+  int result = ACE_PSOS_Time_t::get_system_time (pt);
   *ts = ACE_static_cast (struct timespec, pt);
   return result;
 #else
@@ -997,7 +996,8 @@ ACE_OS::gettimeofday (void)
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
 # elif defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
   // Assumes that struct timespec is same size as struct timeval,
-  // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
+  // which assumes that time_t is a long: it currently (VxWorks
+  // 5.2/5.3) is.
   struct timespec ts;
 
   ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
@@ -6900,11 +6900,22 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 ACE_INLINE int
 ACE_OS::sigtimedwait (const sigset_t *set,
                       siginfo_t *info,
-                      const struct timespec *timeout)
+                      const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_OS::sigtimedwait");
 #if defined (ACE_HAS_SIGTIMEDWAIT)
-  ACE_OSCALL_RETURN (::sigtimedwait (set, info, timeout),
+  timespec_t ts;
+  timespec_t *tsp;
+
+  if (timeout != 0)
+    {
+      ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+      tsp = &ts;
+    }
+  else
+    tsp = 0;
+
+  ACE_OSCALL_RETURN (::sigtimedwait (set, info, tsp),
                      int, -1);
 #else
     ACE_UNUSED_ARG (set);
