@@ -1,10 +1,17 @@
+Wed Mar  3 07:08:11 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          When dealing with template's, we need to take into account the
+          possibility of windows absoulte paths (eg. c:\foo\gnu.mpd).
+
 Tue Mar  2 20:03:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_unistd.h (rmdir):
-	* ace/OS_NS_unistd.inl (rmdir):
+        * ace/OS_NS_unistd.h (rmdir):
+        * ace/OS_NS_unistd.inl (rmdir):
 
-	  Added ACE_OS::rmdir() implementation submitted by Andrew
-	  T. Finnell <andrew@activesol.net>.  [Bug 1409]
+          Added ACE_OS::rmdir() implementation submitted by Andrew
+          T. Finnell <andrew@activesol.net>.  [Bug 1409]
 
 Wed Mar  3 03:23:35 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
