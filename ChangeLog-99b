@@ -1,3 +1,8 @@
+Sat Apr 24 07:24:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reverse_Lock_Test.cpp: removed ACE_Guard<ACE_SYNCH_MUTEX>
+          instantiation because it's in Synch.cpp.
+
 Fri Apr 23 17:53:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:

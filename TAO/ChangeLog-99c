@@ -1,24 +1,30 @@
+Sat Apr 24 07:21:24 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Global.cpp (get_high_priority):
+          on VxWorks, fixed access of default_priority.  It's in the
+          Globals singleton.
+
 Fri Apr 23 18:11:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB.cpp:
-	  Modified file_string_to_object() to use ACE::fopen
-	  instead of ACE::open. Formerly it was crashing when
-	  called from the MSVC debugger, due to a recent change
-	  made to plug a memory leak. This change (suggested by
-	  Carlos) will not support cool filename-within-file
-	  recursive behavior (past the file descriptor limit), but
-	  has the advantage of working with NT and causing no
-	  leaks on Unix.
+        * tao/ORB.cpp:
+          Modified file_string_to_object() to use ACE::fopen
+          instead of ACE::open. Formerly it was crashing when
+          called from the MSVC debugger, due to a recent change
+          made to plug a memory leak. This change (suggested by
+          Carlos) will not support cool filename-within-file
+          recursive behavior (past the file descriptor limit), but
+          has the advantage of working with NT and causing no
+          leaks on Unix.
 
 Fri Apr 23 16:09:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Added EC_Default_Factory to the project files.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added EC_Default_Factory to the project files.
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	  Added include file that is required on NT, but not on Unix,
-	  beats me.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          Added include file that is required on NT, but not on Unix,
+          beats me.
 
 Fri Apr 23 16:17:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
