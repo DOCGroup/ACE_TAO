@@ -1,3 +1,9 @@
+Mon Sep 21 10:22:17 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Select_Reactor_T.cpp (handle_error): Check handles for all
+	  errors (not just EBADF) on Win32, in addition to MVS.  Thanks
+	  to Xu Yifeng <xuyifeng@www.kali.com.cn> for this fix.
+
 Mon Sep 21 01:27:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (find_or_create_svc_handler_i): g++ cannot
