@@ -17,7 +17,7 @@
 module BasicSP
 {
   component EventChannel {
-    publishes TimeOut timeOut20;
+    publishes TimeOut timeOut;
   };
 
   home EventChannelHome manages EventChannel

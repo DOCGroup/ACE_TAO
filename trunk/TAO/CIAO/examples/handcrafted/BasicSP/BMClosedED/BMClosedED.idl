@@ -5,10 +5,10 @@ module BasicSP
 {
   component BMClosedED
     {
-      provides  ReadData dataOut;
-      uses      ReadData dataIn;
-      publishes DataAvailable outDataAvailable;
-      consumes  DataAvailable inDataAvailable;
+      provides  ReadData dataout;
+      uses      ReadData datain;
+      publishes DataAvailable out_avail;
+      consumes  DataAvailable in_avail;
     };
 
   home BMClosedEDHome manages BMClosedED

@@ -1,3 +1,21 @@
+Wed May 14 15:50:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt.cpp:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+	* examples/handcrafted/BasicSP/EC/EC.idl: Implementation for the
+	  BMClosedED component.
+
+
 Tue May 13 23:26:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/BasicSP_svnt.cpp:
