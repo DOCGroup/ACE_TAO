@@ -94,6 +94,12 @@
 shared_libs = 1
 static_libs = 0
 
+#### Let platform just look at whether or not exceptions is defined.
+#### With the following override, it doesn't have to check for 0.
+ifeq ($(exceptions),0)
+  override exceptions =
+endif # exceptions
+
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 #----------------------------------------------------------------------------
@@ -149,6 +155,10 @@ else
   CFLAGS  += $(DCFLAGS)
   CCFLAGS += $(DCCFLAGS)
 endif # debug
+
+ifdef exceptions
+  CCFLAGS += -DACE_HAS_EXCEPTIONS
+endif # exceptions
 
 ifeq ($(profile),0)
   override profile =
