@@ -125,7 +125,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       output_dir_ (0),
       any_support_ (I_TRUE),
       tc_support_ (I_TRUE),
-      compiled_marshaling_ (I_FALSE),
+      compiled_marshaling_ (I_TRUE),
       gen_impl_files_ (I_FALSE),
       gen_copy_ctor_ (I_FALSE),
       gen_assign_op_ (I_FALSE),

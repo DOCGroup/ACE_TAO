@@ -90,6 +90,7 @@ Airplane_Client_i::get_planes (size_t count)
     {
       TAO_TRY
         {
+          TAO_TRY_ENV.clear ();
           CORBA::String_var response =
             this->server_->get_plane (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -98,8 +99,8 @@ Airplane_Client_i::get_planes (size_t count)
         }
       TAO_CATCHANY
         {
+          ACE_ERROR ((LM_ERROR, "Plane %d exception:\n", i));
           TAO_TRY_ENV.print_exception ("get_planes");
-          return;
         }
       TAO_ENDTRY;
     }
