@@ -1,3 +1,23 @@
+Thu Jan 29 12:30:52 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * step-by-step.html:
+        * Receiver/Receiver.mpc:
+        * Receiver/Receiver_exec.cpp:
+        * Receiver/Receiver_exec.h:
+        * Sender/Sender.mpc:
+        * Sender/Sender_exec.cpp:
+        * Sender/Sender_exec.h:
+        * descriptors/default.cad:
+        * descriptors/multi-receivers-default.cad:
+        * descriptors/run_test_multirecv.pl:
+
+	  Following changes have been added to resolve the EI.idl problem.
+	  1. All *EI.idl are removed.
+	  2. All provided facets are implemented by the way of
+	  "composition".
+	  3. Added one more deployment scenario which has 2 instances of
+	  the Receiver.
+
 Thu Jan 29 11:00:50 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:

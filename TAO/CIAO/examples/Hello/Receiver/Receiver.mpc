@@ -50,11 +50,9 @@ project(Hello_Base_Receiver_exec) : ciao_component {
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
-    ReceiverEI.idl
   }
 
   Source_Files {
-    ReceiverEIC.cpp
     Receiver_exec.cpp
   }
 }
