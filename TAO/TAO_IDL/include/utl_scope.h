@@ -291,8 +291,8 @@ protected:
   void add_to_local_types (AST_Decl *e);
 
   // Has this node been referenced here already?
-  idl_bool referenced (AST_Decl *e,
-                       Identifier *id = 0);
+  virtual idl_bool referenced (AST_Decl *e,
+                               Identifier *id = 0);
 
   // Look up a scoped name in the inherited interfaces of an
   // interface.

@@ -108,6 +108,11 @@ public:
   int be_add_interface (AST_Interface *i,
                         AST_Interface *ix = 0);
 
+  // Has this node been referenced here already?
+  // Override of method in UTL_Scope.
+  virtual idl_bool referenced (AST_Decl *e,
+                               Identifier *id = 0);
+
   // Add decls from previous opening of this module to the
   // 'previous' set of this module, along with the argument's
   // own 'previous' set.

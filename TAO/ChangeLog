@@ -1,3 +1,14 @@
+Thu Aug 26 13:48:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/utl_scope.h:
+        
+          Specialized the referenced() method for modules to
+          catch redefinitions in a reopened module. Thanks to
+          Boris Kolpackov <boris@dre.vanderbilt.edu> for reporting
+          this bug. This fixed closes [BUGID:1695].
+
 Thu Aug 26 12:37:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include):
