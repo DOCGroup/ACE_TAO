@@ -580,7 +580,7 @@ private:
 #   define ACE_UNUSED_ARG(a) (a)
 # endif /* ghs */
 
-# if defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__) || defined (__KCC)
+# if defined (__sgi) || defined (DEC_CXX) || defined(__BORLANDC__) || defined (__KCC)
 #   define ACE_NOTREACHED(a)
 # else
 #   define ACE_NOTREACHED(a) a
