@@ -13,6 +13,8 @@
 #include "CurrentC.i"
 #endif /* !defined INLINE */
 
+ACE_RCSID(tao, CurrentC, "$Id$")
+
 CORBA_Current_ptr CORBA_Current::_duplicate (CORBA_Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))

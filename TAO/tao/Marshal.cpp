@@ -27,6 +27,8 @@
 # include "tao/Marshal.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Marshal, "$Id$")
+
 TAO_Marshal_Factory* TAO_Marshal::DEFAULT_MARSHAL_FACTORY = 0;
 
 void

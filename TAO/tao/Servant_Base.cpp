@@ -3,6 +3,8 @@
 #include "tao/corba.h"
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(tao, Servant_Base, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Servant_Base_Timeprobe_Description[] =

@@ -13,6 +13,7 @@
 #include "Object_KeyC.i"
 #endif // !defined INLINE
 
+ACE_RCSID(tao, Object_KeyC, "$Id$")
 
 #if !defined (_TAO__TAO_SEQ_OCTET_CS_)
 #define _TAO__TAO_SEQ_OCTET_CS_

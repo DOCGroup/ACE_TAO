@@ -11,6 +11,8 @@
 # include "tao/Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Server_Request, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Server_Request_Timeprobe_Description[] =

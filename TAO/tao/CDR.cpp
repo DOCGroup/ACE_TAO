@@ -37,6 +37,8 @@
 # include "tao/CDR.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, CDR, "$Id$")
+
 int
 CDR::grow (ACE_Message_Block *mb, size_t minsize)
 {

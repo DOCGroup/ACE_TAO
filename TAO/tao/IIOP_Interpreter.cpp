@@ -6,6 +6,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, IIOP_Interpreter, "$Id$")
+
 TAO_IIOP_Interpreter::Table_Element
 TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 {

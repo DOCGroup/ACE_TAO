@@ -9,6 +9,8 @@
 #include "tao/Sequence_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, Sequence_T, "$Id$")
+
 template <class T>
 TAO_Unbounded_Sequence<T>::
 TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<T> &rhs)

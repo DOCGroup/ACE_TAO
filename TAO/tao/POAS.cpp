@@ -13,6 +13,8 @@
 #include "POAS.i"
 #endif // !defined INLINE
 
+ACE_RCSID(tao, POAS, "$Id$")
+
 static const TAO_operation_db_entry PortableServer_ThreadPolicy_operations [] = {
   {"_get_value", &POA_PortableServer::ThreadPolicy::_get_value_skel},
   {"copy", &POA_PortableServer::ThreadPolicy::copy_skel},

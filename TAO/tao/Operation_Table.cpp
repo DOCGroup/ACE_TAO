@@ -1,6 +1,8 @@
 // $Id$
 #include "tao/corba.h"
 
+ACE_RCSID(tao, Operation_Table, "$Id$")
+
 // destructor
 TAO_Operation_Table::~TAO_Operation_Table (void)
 {

@@ -6,6 +6,8 @@
 # include "tao/Request.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Request, "$Id$")
+
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
 {
