@@ -1,3 +1,7 @@
+Wed Jul 22 17:55:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/token_test.cpp: A new test.
+
 Wed Jul 22 17:50:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/OS.h: Defiend ACE_SIG_AIO to be SIGRTMIN. This is the only
