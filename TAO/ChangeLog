@@ -15,6 +15,8 @@ Thu Sep 26 18:23:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	  return the previous opening, and the prefix will not be applied to
 	  the current opening. To determine if the above conditions hold, the
 	  current scope's name and the first typeprefix argument are compared.
+	  Thanks to Nanbor <nanbor@cse.wustl.edu> for pointing out the
+	  problem.
 
         * TAO_IDL/util/utl_idlist.cpp:
 
