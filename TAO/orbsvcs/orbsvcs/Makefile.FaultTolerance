@@ -9,8 +9,11 @@ endif # ! TAO_ROOT
 
 MAKEFILE = Makefile.FaultTolerance
 LIBNAME  = libTAO_FaultTolerance
+
+ifeq ($(corba_messaging),1)
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
+endif # corba_messaging
 
 VPATH=.:FaultTolerance
 
