@@ -1165,106 +1165,75 @@ sub get_project_info {
 }
 
 
-sub generate_circular_tree {
-  my($self)     = shift;
-  my($circular) = shift;
-  my($prepend)  = shift;
-  my($into)     = shift;
-  my($current)  = shift;
-  my($aref)     = $self->{'project_info'}->{$current};
-
-  if (defined $aref) {
-    my($name, $deps) = @$aref;
-
-    if (defined $deps && $deps ne '') {
-      my($darr) = $self->create_array($deps);
-
-      if (!defined $$circular{$into}) {
-        $$circular{$into} = {};
-      }
-
-      foreach my $dep (@$darr) {
-        my($base) = basename($dep);
-        my($full) = (defined $$prepend{$base} ?
-                       "$$prepend{$base}/" : '') . $base;
-        if (!defined $$circular{$into}->{$full}) {
-          $$circular{$into}->{$full} = 1;
-          $self->generate_circular_tree($circular, $prepend, $into, $full);
-        }
-      }
-    }
+sub get_first_level_directory {
+  my($self) = shift;
+  my($file) = shift;
+  my($dir)  = undef;
+  if (($file =~ tr/\///) > 0) {
+    $dir = $file;
+    $dir =~ s/^([^\/]+\/).*/$1/;
+    $dir =~ s/\/+$//;
   }
+  else {
+    $dir = '.';
+  }
+  return $dir;
 }
 
 
-sub sort_dependencies {
-  my($self)     = shift;
-  my($projects) = shift;
-  my($pjs)      = shift;
-  my($prepref)  = shift;
-  my(@list)     = @$projects;
-  my(%prepend)  = ();
+sub sort_within_group {
+  my($self)    = shift;
+  my($list)    = shift;
+  my($pjs)     = shift;
+  my($start)   = shift;
+  my($end)     = shift;
+  my($deps)    = undef;
+  my($ccount)  = 0;
+  my($cmax)    = ($end - $start) + 1;
 
-  foreach my $project (@list) {
-    my($dname) = dirname($project);
-    if ($dname ne '.') {
-      $prepend{basename($project)} = $dname;
-    }
+  ## If we go more than twice the number of elements in this group
+  ## factorial, then there is a circular dependency.
+  my($f) = $cmax - 1;
+  while($f > 1) {
+    $cmax *= $f--;
   }
-
-  if (defined $prepref) {
-    %$prepref = %prepend;
-  }
-
-  ## This will help us catch circular dependencies
-  my(%circular) = ();
+  $cmax = ($cmax * 2) + 1;
 
   ## Put the projects in the order specified
   ## by the project dpendencies.
-  for(my $i = 0; $i <= $#list; ++$i) {
-    my($project) = $list[$i];
-    my($name) = $$pjs{$project}->[0];
-    my($deps) = $self->get_validated_ordering($project);
+  for(my $i = $start; $i <= $end; ++$i) {
+    ## Detect circular dependencies
+    if ($ccount > $cmax) {
+      $self->warning('Circular dependency detected while processing the ' .
+                     ($self->{'current_input'} eq '' ?
+                       'default' : $self->{'current_input'}) . ' workspace');
+      return;
+    }
 
+    $deps = $self->get_validated_ordering($$list[$i]);
     if ($deps ne '') {
+      my($baseproj) = basename($$list[$i]);
       my($darr) = $self->create_array($deps);
-
-      ## Set up the circular entry
-      $self->generate_circular_tree(\%circular, \%prepend, $project, $project);
 
       my($moved) = 0;
       foreach my $dep (@$darr) {
         my($base) = basename($dep);
-        my($full) = (defined $prepend{$base} ?
-                       "$prepend{$base}/" : '') . $base;
-        if ($project ne $full) {
+        if ($baseproj ne $base) {
           ## See if the dependency is listed after this project
-          for(my $j = $i + 1; $j <= $#list; ++$j) {
-            if ($list[$j] eq $full) {
-              if (defined $circular{$full} &&
-                  defined $circular{$full}->{$list[$j]}) {
-                ## Don't warn about circular dependencies if we are
-                ## generating implicit project dependencies.  The
-                ## dependencies in question may have been generated and
-                ## that's not the users fault.
-                if (!$self->generate_implicit_project_dependencies()) {
-                  $self->warning('Circular dependency between ' .
-                                 "$list[$j] and $project.");
-                }
+          for(my $j = $i + 1; $j <= $end; ++$j) {
+            if (basename($$list[$j]) eq $base) {
+              ## If so, move it in front of the current project.
+              ## The original code, which had splices, didn't always
+              ## work correctly (especially on AIX for some reason).
+              my($save) = $$list[$j];
+              for(my $k = $j; $k > $i; --$k) {
+                $$list[$k] = $$list[$k - 1];
               }
-              else {
-                ## If so, move it in front of the current project.
-                ## The original code, which had splices, didn't always
-                ## work correctly (especially on AIX for some reason).
-                for(my $k = $j; $k > $i; --$k) {
-                  $list[$k] = $list[$k - 1];
-                }
-                $list[$i] = $full;
+              $$list[$i] = $save;
 
-                ## Mark that an entry has been moved
-                $moved = 1;
-                $j--;
-              }
+              ## Mark that an entry has been moved
+              $moved = 1;
+              $j--;
             }
           }
         }
@@ -1273,7 +1242,134 @@ sub sort_dependencies {
         $i--;
       }
     }
+    ++$ccount;
   }
+}
+
+
+sub sort_by_groups {
+  my($self)    = shift;
+  my($list)    = shift;
+  my($grindex) = shift;
+  my(@groups)  = @$grindex;
+  my($ccount)  = 0;
+  my($cmax)    = $#groups;
+
+  ## If we go more than twice $#groups factorial, then there is
+  ## a circular dependency.
+  my($f) = $cmax - 1;
+  while($f > 1) {
+    $cmax *= $f--;
+  }
+  $cmax = ($cmax * 2) + 1;
+
+  for(my $gi = 0; $gi <= $#groups; ++$gi) {
+    ## Detect circular dependencies
+    if ($ccount > $cmax) {
+      $self->warning('Circular dependency detected while processing the ' .
+                     ($self->{'current_input'} eq '' ?
+                       'default' : $self->{'current_input'}) . ' workspace');
+      return;
+    }
+
+    ## Build up the group dependencies
+    my(%gdeps) = ();
+    for(my $i = $groups[$gi]->[0]; $i <= $groups[$gi]->[1]; ++$i) {
+      my($deps) = $self->get_validated_ordering($$list[$i]);
+      if ($deps ne '') {
+        my($darr) = $self->create_array($deps);
+        foreach my $dep (@$darr) {
+          $gdeps{$dep} = 1;
+        }
+      }
+    }
+
+    ## Search the rest of the groups for any of the group dependencies
+    my($moved) = 0;
+    for(my $gj = $gi + 1; $gj <= $#groups; ++$gj) {
+      for(my $i = $groups[$gj]->[0]; $i <= $groups[$gj]->[1]; ++$i) {
+        if (defined $gdeps{basename($$list[$i])}) {
+          ## Move this group ($gj) in front of the current group ($gi)
+          my(@save) = ();
+          for(my $j = $groups[$gi]->[1] + 1; $j <= $groups[$gj]->[1]; ++$j) {
+            push(@save, $$list[$j]);
+          }
+          my($offset) = $groups[$gj]->[1] - $groups[$gi]->[1];
+          for(my $j = $groups[$gi]->[1]; $j >= $groups[$gi]->[0]; --$j) {
+            $$list[$j + $offset] = $$list[$j];
+          }
+          for(my $j = 0; $j <= $#save; ++$j) {
+            $$list[$groups[$gi]->[0] + $j] = $save[$j];
+          }
+
+          ## Update the group indices
+          my($shiftamt) = ($groups[$gi]->[1] - $groups[$gi]->[0]) + 1;
+          for(my $j = $gi + 1; $j <= $gj; ++$j) {
+            $groups[$j]->[0] -= $shiftamt;
+            $groups[$j]->[1] -= $shiftamt;
+          }
+          my(@grsave) = @{$groups[$gi]};
+          $grsave[0] += $offset;
+          $grsave[1] += $offset;
+          for(my $j = $gi; $j < $gj; ++$j) {
+            $groups[$j] = $groups[$j + 1];
+          }
+          $groups[$gj] = \@grsave;
+
+          ## Signify that we have moved a group
+          $moved = 1;
+          last;
+        }
+      }
+      if ($moved) {
+        ## Start over from the first group
+        $gi = -1;
+        last;
+      }
+    }
+    ++$ccount;
+  }
+}
+
+
+sub sort_dependencies {
+  my($self)     = shift;
+  my($projects) = shift;
+  my($pjs)      = shift;
+  my(@list)     = sort @$projects;
+
+  ## Put the projects in the order specified
+  ## by the project dpendencies.  We only need to do
+  ## this if there is more than one element in the array.
+  if ($#list > 0) {
+    ## First determine the individual groups
+    my(@grindex)  = ();
+    my($previous) = [0, undef];
+    for(my $li = 0; $li <= $#list; ++$li) {
+      my($dir) = $self->get_first_level_directory($list[$li]);
+      if (!defined $previous->[1]) {
+        $previous = [$li, $dir];
+      }
+      elsif ($previous->[1] ne $dir) {
+        push(@grindex, [$previous->[0], $li - 1]);
+        $previous = [$li, $dir];
+      }
+    }
+     push(@grindex, [$previous->[0], $#list]);
+
+    ## Next, sort the individual groups
+    foreach my $gr (@grindex) {
+      if ($$gr[0] != $$gr[1]) {
+        $self->sort_within_group(\@list, $pjs, @$gr);
+      }
+    }
+
+    ## Now sort the groups as single entities
+    if ($#grindex > 0) {
+      $self->sort_by_groups(\@list, \@grindex);
+    }
+  }
+
   return @list;
 }
 
@@ -1283,8 +1379,7 @@ sub number_target_deps {
   my($projects) = shift;
   my($pjs)      = shift;
   my($targets)  = shift;
-  my(%prepend)  = ();
-  my(@list)     = $self->sort_dependencies($projects, $pjs, \%prepend);
+  my(@list)     = $self->sort_dependencies($projects, $pjs);
 
   ## This block of code must be done after the list of dependencies
   ## has been sorted in order to get the correct project numbers.
@@ -1303,10 +1398,8 @@ sub number_target_deps {
         ## duplicates).
         foreach my $dep (@$darr) {
           my($base) = basename($dep);
-          my($full) = (defined $prepend{$base} ?
-                         "$prepend{$base}/" : '') . $base;
           for(my $j = 0; $j < $i; ++$j) {
-            if ($list[$j] eq $full) {
+            if (basename($list[$j]) eq $base) {
               $targetnumbers{$j} = 1;
             }
           }
