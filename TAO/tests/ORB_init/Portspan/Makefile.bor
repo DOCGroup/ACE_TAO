@@ -8,8 +8,8 @@ NAME = server
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
-        $(OBJDIR)\SimpleI.obj \
         $(OBJDIR)\SimpleC.obj \
+        $(OBJDIR)\SimpleI.obj \
         $(OBJDIR)\SimpleS.obj \
         $(OBJDIR)\server.obj
 
@@ -36,6 +36,6 @@ IDLDIR = .
 # IDL Build rules
 #
 
-$(IDLDIR)\SimpleS.cpp $(IDLDIR)\SimpleS.cpp: $(IDLDIR)\Simple.idl
+$(IDLDIR)\SimpleS.cpp $(IDLDIR)\SimpleC.cpp: $(IDLDIR)\Simple.idl
 	$(TAO_IDL) $**
 
