@@ -178,10 +178,6 @@ public:
   // this is the granularity of the timing of the CORBA requests. A
   // value of 5 represents that we will take time every 5 requests,
   // instead of the default of every request (1).
-  
-  u_int context_switch_;
-  // stores the total number of context switches incurred by the
-  // program while making CORBA requests
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
@@ -216,8 +212,7 @@ private:
 
   void put_latency (double *jitter,
                     double latency,
-                    u_int thread_id,
-		    u_int context_switch);
+                    u_int thread_id);
   // Records the latencies in the <Task_State>.
 
   int parse_args (int, char **);
