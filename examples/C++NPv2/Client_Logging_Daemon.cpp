@@ -189,6 +189,7 @@ int CLD_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
   iovec iov[ACE_IOV_MAX];
   size_t iov_size;
   int result = 0;
+
   for (iov_size = 0; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = blocks[iov_size]->rd_ptr ();
     iov[iov_size].iov_len = blocks[iov_size]->length ();
@@ -199,7 +200,10 @@ int CLD_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
       break;
     }
 
-  while (iov_size > 0) blocks[--iov_size]->release ();
+  while (iov_size > 0) {
+    blocks[--iov_size]->release (); blocks[iov_size] = 0;
+  }
+  count = iov_size;
   return result;
 }
 
