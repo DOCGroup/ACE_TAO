@@ -312,6 +312,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTKokyuEvent"=.\RTKokyuEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "RTOLDEvent"=.\RTOLDEvent.dsp - Package Owner=<4>
 
 Package=<5>
