@@ -47,17 +47,6 @@ cleanup (int = 0)
   ACE_OS::exit (0);
 }
 
-// Set up the program name used in error messages.
-
-static void
-set_program_name (char name[])
-{
-  if ((name = strrchr (name, '/')) == 0)
-    program_name = name;
-  else
-    program_name = name + 1;
-}
-
 // Parse the command-line arguments and set options.
 
 static void
@@ -86,33 +75,37 @@ parse_args (int argc, char *argv[])
   }
 }
 
-// Vector of pointers to derived classes that inherit from IO_Test base class.
+// Vector of pointers to derived classes that inherit from IO_Test
+// base class.
 
 static IO_Test *test_vector[100];
 
 static void
 run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 {
-  // If HP/UX didn't suck so badly we could initialize in the global scope...
-  test_vector[0] = new Stdio_Test ("Stdio_Test", tm);
-  test_vector[1] = new Block_Fread_Fwrite_Test ("Block_Fread_Fwrite_Test", tm);
-  test_vector[2] = new Block_Read_Write_Test ("Block_Read_Write_Test", tm);
-  test_vector[3] = new Mmap1_Test ("Mmap1_Test", tm);
-  test_vector[4] = new Mmap2_Test ("Mmap2_Test", tm);
-  // test_vector[5] = new Slow_Read_Write_Test ("Slow"Read_Write_Test", tm)
-  test_vector[5] = (IO_Test *) 0;
+  // If HP/UX didn't suck so badly we could initialize in the global
+  // scope...
+  int i = 0;
 
-  for (int i = 0; test_vector[i] != 0; i++)
+  ACE_NEW (test_vector[i++], Stdio_Test ("Stdio_Test", tm));
+  ACE_NEW (test_vector[i++], Block_Fread_Fwrite_Test ("Block_Fread_Fwrite_Test", tm));
+  ACE_NEW (test_vector[i++], Block_Read_Write_Test ("Block_Read_Write_Test", tm));
+  ACE_NEW (test_vector[i++], Mmap1_Test ("Mmap1_Test", tm));
+  ACE_NEW (test_vector[i++], Mmap2_Test ("Mmap2_Test", tm));
+  ACE_NEW (test_vector[i++], Slow_Read_Write_Test ("Slow_Read_Write_Test", tm));
+
+  test_vector[i] = (IO_Test *) 0;
+
+  for (i = 0; test_vector[i] != 0; i++)
     {
       if (ACE_OS::ftruncate (fileno (output_fp), 0) == -1)
-	::perror ("ftruncate");
+	ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "ftruncate"));
 
       cerr << "--------------------\n" 
 	   << "starting " << test_vector[i]->name () << " for " << iterations
 	   << " iteration(s):\n";
 
-      if (test_vector[i]->run_test (iterations, input_fp, output_fp) == -1)
-	::perror (test_vector[i]->name ());
+      test_vector[i]->run_test (iterations, input_fp, output_fp);
 
       ACE_Profile_Timer::ACE_Elapsed_Time et;
       tm.elapsed_time (et);
@@ -130,27 +123,28 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 int
 main (int argc, char *argv[])
 {
-  FILE *input_fp;
-  FILE *output_fp;
-
-  set_program_name (argv[0]);
+  program_name = ACE::basename (argv[0]);
   parse_args (argc, argv);
 
   ACE_Sig_Action sa ((ACE_SignalHandler) cleanup, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  if ((input_fp = ACE_OS::fopen (input_filename, "r")) == 0)
-    ACE_OS::perror (input_filename), ACE_OS::exit (1);
+  FILE *input_fp = ACE_OS::fopen (input_filename, "r");
+  FILE *output_fp = ACE_OS::fopen (output_filename, "w+");
+
+  if (input_fp == 0)
+    ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "input_filename"), -1);
+
+  if (output_fp == 0)
+    ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "output_filename"), -1);
 
   ACE_OS::unlink (output_filename);
 
-  if ((output_fp = ACE_OS::fopen (output_filename, "w+")) == 0)
-    ACE_OS::perror (output_filename), ACE_OS::exit (1);
-
   run_tests (iteration_count, input_fp, output_fp);
 
-  if (ACE_OS::fclose (input_fp) == -1 || ACE_OS::fclose (output_fp) == -1)
-    ACE_OS::perror ("fclose"), ACE_OS::exit (1);
+  if (ACE_OS::fclose (input_fp) == -1 
+      || ACE_OS::fclose (output_fp) == -1)
+    ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "fclose"), -1);
 
   cleanup ();
   return 0;
