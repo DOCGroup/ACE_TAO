@@ -1,3 +1,15 @@
+Wed May 26 17:37:40 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/ORB.cpp : Used delete [] in resolve_initial_references ()
+ 	  instead of delete. Changed the signatures of add/find IORs in 
+	  the IOR table to use consts.
+	* tao/ORB.h : Changed the function declarations for the above.
+	* tao/IOR_LookupTable.cpp : Removed the private members ObjectID
+	  and IOR table. Added comments for the class description. Used
+	  consts in the function declarations wherever appropriate.
+	* tao/IOR_LookupTable.h : Changed the function declarations for
+	  the above.
+
 Wed May 26 15:50:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POAManager:
