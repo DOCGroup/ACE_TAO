@@ -1,3 +1,16 @@
+Thu May 15 00:26:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor: Added a typedef for ACE_Reactor_Token to
+ 	  ACE_Null_Mutex for situations where ACE_MT_SAFE is *disabled*.
+  	  This makes the code more consistent.
+
+	* ace/Reactor: Added an interface that makes it possible to
+ 	  acquire a reference to the <ACE_Reactor_Token> that is used to
+ 	  serialize the internal Reactor's processing logic.  This can be
+ 	  useful for situations where you need to avoid deadlock
+ 	  efficiently when <ACE_Event_Handlers> are used in multiple
+ 	  threads.  Thanks to Detlef for pointing out the utility of this.
+
 Wed May 14 21:52:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/UPIPE_Stream.cpp (control): We need to "cast away const" so
