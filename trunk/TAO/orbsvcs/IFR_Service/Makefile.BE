@@ -20,8 +20,8 @@ VPATH = .
 MAKEFILE=Makefile.BE
 
 LIBNAME = libTAO_IFR_BE_DLL
-LIB = $(LIBNAME).a
-SHLIB = $(LIBNAME).$(SOEXT)
+LIB_UNCHECKED = $(LIBNAME).a
+SHLIB_UNCHECKED = $(LIBNAME).$(SOEXT)
 
 FILES = be_global \
         be_produce \
@@ -42,6 +42,12 @@ LSRC = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(interface_repo),1)
+  LIB = $(LIB_UNCHECKED)
+  SHLIB = $(SHLIB_UNCHECKED)
+endif # interface_repo
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
