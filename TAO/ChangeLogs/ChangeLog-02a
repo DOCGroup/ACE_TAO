@@ -1,3 +1,9 @@
+Sat Jun 10 15:48:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MProfile/client.dsp:
+        * tests/MProfile/server.dsp:
+          Fixed configuration for the Release build.
+
 Sat Jun 10 14:23:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
