@@ -5,6 +5,9 @@ Sun Feb 09 21:44:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
 	  for suggesting this.
 
+	* ace/Timer_List.cpp (constructor): added initializer for
+	  timer_id_ to prevent unitialized memory read report from Purify.
+
 	* tests/IOStream_Test.cpp,Makefile: added IOStream_Test,
 	  complements of James CE Johnson <jcej@lads.com>.  Very cool!
 
