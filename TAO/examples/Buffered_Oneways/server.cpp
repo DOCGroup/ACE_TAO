@@ -106,7 +106,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
-
   return 0;
 }

@@ -68,11 +68,11 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 private:
-  PortableServer::POA_var poa_;
-  // The default poa
-
   TAO::BufferingConstraint buffering_constraint_;
   // The attribute
+
+  PortableServer::POA_var poa_;
+  // The default poa
 };
 
 #if defined(_MSC_VER)
