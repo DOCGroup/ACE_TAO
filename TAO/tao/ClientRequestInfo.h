@@ -167,6 +167,7 @@ public:
    * an extension used internally by TAO.
    */
   //@{
+
   /// Change the exception status.
   void exception (CORBA::Exception *exception);
 
@@ -184,6 +185,7 @@ public:
   //@}
 
 protected:
+
   /// Helper method to get the request and response service contexts.
   IOP::ServiceContext *get_service_context_i (
       TAO_Service_Context &service_context_list,

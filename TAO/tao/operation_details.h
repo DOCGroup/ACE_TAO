@@ -12,16 +12,18 @@
 
 #ifndef TAO_OPERATION_DETAILS_H
 #define TAO_OPERATION_DETAILS_H
+
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "tao/Service_Context.h"
-#include "tao/target_specification.h"
+#include "Service_Context.h"
+#include "target_specification.h"
 
 
 // @@ Bala: Why is this not part of the RequestHeader?!
@@ -31,15 +33,16 @@
  * @brief Class with operation details
  *
  * This class stores some of the "operation" details that would be
- * required     by the invocation classes. this class is in its
- * infancy now but I expect     this one to grow as we come with
+ * required by the invocation classes.  This class is in its
+ * infancy now but I expect this one to grow as we come with
  * different varieties of use cases.
  */
 
 class TAO_Export TAO_Operation_Details
 {
 public:
-  ///Ctor
+
+  ///Constructor
   TAO_Operation_Details (const char *name,
                          CORBA::ULong len,
                          CORBA::Boolean argument_flag);
@@ -50,7 +53,7 @@ public:
   /// Length of the operation name
   CORBA::ULong opname_len (void) const;
 
-  /// Return the        flag that indicates whether the operation has any
+  /// Return the flag that indicates whether the operation has any
   /// arguments
   CORBA::Boolean argument_flag (void) const;
 
@@ -76,22 +79,22 @@ public:
   void request_id (CORBA::ULong id);
 
   /// Modify request id's for a BiDirectional setup
-  void modify_request_id (int flag);
+  void modify_request_id (int originator);
 
-  /// Get for request id
+  /// Return the request ID associated with the operation
   CORBA::ULong request_id (void);
   CORBA::ULong request_id (void) const;
 
-  /// Get method        for the addressing mode
+  /// Accessor method for the addressing mode
   TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
   TAO_Target_Specification::TAO_Target_Address
   addressing_mode (void)  const;
 
   /// Set method for the addressing mode
-  void
-  addressing_mode (CORBA::Short addr);
+  void addressing_mode (CORBA::Short addr);
 
 private:
+
   /// Name of the operation being invoked.
   const char *opname_;
 
@@ -102,7 +105,7 @@ private:
   CORBA::ULong request_id_;
 
   /**
-   * Flag that indicates whether the operation has any arguments. If
+   * Flag that indicates whether the operation has any arguments.  If
    * there are any arguments the flag will have a value of 1, 0
    * otherwise.
    */
@@ -130,8 +133,9 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/operation_details.i"
+# include "operation_details.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /*TAO_OPERATION_DETAILS_H*/
+
+#endif  /* TAO_OPERATION_DETAILS_H */

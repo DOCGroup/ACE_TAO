@@ -32,6 +32,9 @@
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/Service_Context.h"
+
+//#include "PortableServerC.h"
+
 #include "portableserver_export.h"
 
 #if defined(_MSC_VER)
@@ -48,7 +51,7 @@ class TAO_PortableServer_Export TAO_ServerRequestInfo
   : public virtual PortableInterceptor::ServerRequestInfo,
     public virtual CORBA::LocalObject
 {
- public:
+public:
   TAO_ServerRequestInfo (TAO_ServerRequest &server_request);
 
   virtual CORBA::ULong request_id (
@@ -195,8 +198,9 @@ protected:
 
   CORBA::Object_var forward_reference_;
 
-  CORBA::OctetSeq_var object_id_;
-  CORBA::OctetSeq_var adapter_id_;
+  //  PortableServer::Current_var poa_current_;
+  //  CORBA::OctetSeq_var adapter_id_;
+
   CORBA::Exception *caught_exception_;
 
   PortableInterceptor::ReplyStatus reply_status_;
