@@ -49,12 +49,9 @@ $MODULE='ACE_wrappers';
     ( 'tests , run_tests.sh',
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
-      'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
-      'TAO/tests/MT_Client , run_test.pl',
       'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
-      'TAO/orbsvcs/tests/Property , run_test.pl' );
+      'TAO/orbsvcs/tests/Property , run_test.pl',
+      'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl');
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$';
@@ -75,28 +72,24 @@ $MAKEFLAGS = $ARGV[4];
 
 $disable_file = $LOGDIR . '/.disable';
 
-sub mywarn {
-  local @msg = @_;
-  open(MAIL, "|mail $ADMIN")
-    || die "cannot open email pipe on error: $msg\n";
-  print MAIL 'The following message is brought to you by: ', "\n";
-  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
-  print MAIL "\n";
-  local $m;
-  foreach $m (@msg) { 
-    print MAIL $m, "\n";
-  }
-  print MAIL "\nPlease check log files for more info\n";
-  close(MAIL)
-    || die "cannot close email pipe on error: $msg\n";
-}
-
 sub mydie {
-  mywarn @_;
-  print HIST 'FAILED', "\n";
-  unlink $disable_file
-    || die "cannot unlink disable file";
-  exit 0;
+    local @msg = @_;
+    open(MAIL, "|mail $ADMIN")
+	|| die "cannot open email pipe on error: $msg\n";
+    print MAIL 'The following error is brought to you by: ', "\n";
+    print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
+    print MAIL "\n";
+    local $m;
+    foreach $m (@msg) { 
+	print MAIL $m, "\n";
+    }
+    print MAIL "\nPlease check log files for more info\n";
+    close(MAIL)
+	|| die "cannot close email pipe on error: $msg\n";
+    print HIST 'FAILED', "\n";
+    unlink $disable_file
+        || die "cannot unlink disable file";
+    exit 0;
 }
 
 ### MAIN FUNCTION
@@ -180,7 +173,6 @@ $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
 $ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 
 @failures = ();
-@warnings = ();
 $MAKEFLAGS .= " shared_libs_only=1";
 foreach $i (@BUILD_LIST) {
     $date = localtime;
@@ -190,7 +182,6 @@ foreach $i (@BUILD_LIST) {
 
     local $current_dir = $i;
     local $last_error = "";
-    local $last_warning = "";
     while (<MAKE>) {
 	print LOG $_;
 	chop;
@@ -204,12 +195,6 @@ foreach $i (@BUILD_LIST) {
 		push @failures, "Error while compiling in $current_dir \n";
 		$last_error = $current_dir;
 	    }
-	}
-	if (m/Warning:/ || m/warning:/) {
-	  if ($last_warning ne $current_dir) {
-	    push @warnings, "Warning while compiling in $current_dir\n";
-	    $last_warning = $current_dir;
-	  }
 	}
     }
     if (close(MAKE) == 0) {
@@ -259,10 +244,6 @@ if ($#failures >= 0) {
     mydie @failures;
 }
 
-if ($#warnings >= 0) {
-  mywarn @warnings;
-}
-
 close(LOG)
     || mydie "cannot close LOGFILE";
 
@@ -272,5 +253,3 @@ close(HIST)
 
 unlink $disable_file
     || mydie "cannot unlink disable file";
-
-exit 0;

@@ -96,72 +96,6 @@ private:
   // the lock
 };
 
-template <class ACE_LOCKING_MECHANISM>
-class ACE_Reverse_Lock : public ACE_Lock
-{
-  // = TITLE
-  //     A reverse (or anti) lock.
-  //
-  // = DESCRIPTION
-  //     This is an interesting adapter class that changes a lock into
-  //     a reverse lock, i.e., acquire() on this class calls release()
-  //     on the lock, and release() on this class calls acquire() on
-  //     the lock.
-  //
-  //  	 One motivation for this class is when we temporarily want to
-  //  	 release a lock (which we have already acquired) but then
-  //  	 reaquire it soon after.  An alternative design would be to
-  //  	 add a Anti_Guard or Reverse_Guard class which would release()
-  //  	 on construction and acquire() destruction.  However, there
-  //  	 are *many* varieties of the Guard class and this design
-  //  	 choice would lead to at least 6 new classes.  One new
-  //  	 ACE_Reverse_Lock class seemed more reasonable.
-public:
-  typedef ACE_LOCKING_MECHANISM ACE_LOCK;
-
-  // = Initialization/Finalization methods.
-
-  ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock);
-  // Constructor. All locking requests will be forwarded to <lock>.
-
-  virtual ~ACE_Reverse_Lock (void);
-  // Destructor. If <lock_> was not passed in by the user, it will be
-  // deleted.
-
-  // = Lock accessors.
-  virtual int acquire (void);
-  // Release the lock.
-
-  virtual int tryacquire (void);
-  // Release the lock.
-
-  virtual int release (void);
-  // Acquire the lock.
-
-  virtual int acquire_read (void);
-  // Release the lock.
-
-  virtual int acquire_write (void);
-  // Release the lock.
-
-  virtual int tryacquire_read (void);
-  // Release the lock.
-
-  virtual int tryacquire_write (void);
-  // Release the lock.
-
-  virtual int remove (void);
-  // Explicitly destroy the lock.
-
-private:
-  ACE_LOCKING_MECHANISM *lock_;
-  // The concrete locking mechanism that all the methods delegate to.
-
-  int delete_lock_;
-  // This flag keep track of whether we are responsible for deleting
-  // the lock
-};
-
 template <class ACE_LOCK, class TYPE>
 class ACE_Test_and_Set : public ACE_Event_Handler
 {
@@ -438,6 +372,8 @@ class ACE_Guard
   //     <remove> methods.
 public:
 
+#if defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE)
+
   // = Initialization and termination methods.
   ACE_Guard (ACE_LOCK &l);
 
@@ -466,6 +402,62 @@ public:
 
   int remove (void);
   // Explicitly remove the lock.
+
+#else
+
+  // = Initialization and termination methods.
+  ACE_Guard (ACE_LOCK &l): lock_ (&l)
+  {
+    this->acquire ();
+  }
+
+  ACE_Guard (ACE_LOCK &l, int block): lock_ (&l)
+    {
+      if (block)
+        this->acquire ();
+      else
+        this->tryacquire ();
+    }
+  // Implicitly and automatically acquire (or try to acquire) the
+  // lock.
+
+  ~ACE_Guard (void)
+  {
+    int error = errno;
+    this->release ();
+    errno = error;
+  }
+  // Implicitly release the lock.
+
+  // = Lock accessors.
+
+  int acquire (void) { return this->owner_ = this->lock_->acquire (); }
+  // Explicitly acquire the lock.
+
+  int tryacquire (void) { return this->owner_ = this->lock_->tryacquire (); }
+  // Conditionally acquire the lock (i.e., won't block).
+
+  int release (void)
+    {
+      if (this->owner_ != -1)
+        {
+          this->owner_ = -1;
+          return this->lock_->release ();
+        }
+      else
+        return 0;
+    }
+  // Explicitly release the lock, but only if it is held!
+
+  // = Utility methods.
+  int locked (void) { return this->owner_ != -1; }
+  // 1 if locked, 0 if couldn't acquire the lock
+  // (errno will contain the reason for this).
+
+  int remove (void) { return this->lock_->remove (); }
+  // Explicitly remove the lock.
+
+#endif /* defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE) */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -869,7 +861,7 @@ public:
   typedef ACE_Null_Mutex RECURSIVE_MUTEX;
   typedef ACE_Null_Mutex RW_MUTEX;
   typedef ACE_Null_Condition CONDITION;
-  typedef ACE_Null_Semaphore SEMAPHORE;
+  typedef ACE_Null_Mutex SEMAPHORE;
   typedef ACE_Null_Mutex NULL_SEMAPHORE;
 };
 
@@ -891,7 +883,7 @@ public:
   typedef ACE_RW_Thread_Mutex RW_MUTEX;
   typedef ACE_Condition_Thread_Mutex CONDITION;
   typedef ACE_Thread_Semaphore SEMAPHORE;
-  typedef ACE_Null_Semaphore NULL_SEMAPHORE;
+  typedef ACE_Null_Mutex NULL_SEMAPHORE;
 };
 
 #endif /* ACE_HAS_THREADS */
@@ -922,7 +914,7 @@ public:
 #define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
 #define ACE_SYNCH_CONDITION ACE_Condition_Thread_Mutex
 #define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
-#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Semaphore
+#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Mutex
 
 #else /* ACE_HAS_THREADS */
 
@@ -931,7 +923,7 @@ public:
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_CONDITION ACE_Null_Condition
-#define ACE_SYNCH_SEMAPHORE ACE_Null_Semaphore
+#define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
 #define ACE_SYNCH_NULL_SEMAPHORE ACE_Null_Mutex
 
 #endif /* ACE_HAS_THREADS */

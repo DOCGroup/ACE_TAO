@@ -229,7 +229,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         break;
       case 'k':
         ACE_Service_Config::logger_key_ =
-          ASYS_ONLY_WIDE_STRING (getopt.optarg);
+          ACE_WIDE_STRING (getopt.optarg);
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
@@ -608,8 +608,6 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
 
-  ace_yy_delete_parse_buffer ();
-
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
 
@@ -637,12 +635,7 @@ ACE_Service_Config::handle_signal (int sig,
                                    siginfo_t *,
                                    ucontext_t *)
 {
-#if defined (ACE_NDEBUG)
-  ACE_UNUSED_ARG (sig);
-#else  /* ! ACE_NDEBUG */
   ACE_ASSERT (ACE_Service_Config::signum_ == sig);
-#endif /* ! ACE_NDEBUG */
-
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
 
@@ -717,9 +710,14 @@ ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
 
-  // Delete the service repository. All the objects inside the service
-  // repository have already been finalized .
+  // ACE_Service_Config must be deleted before the Singletons are
+  // closed so that an object's fini() method may reference a valid
+  // ACE_Reactor.
   ACE_Service_Config::close_svcs ();
+
+  // The Singletons can be used independently of the services.
+  // Therefore, this call must go out here.
+  ACE_Service_Config::close_singletons ();
 
   // Delete the list fo svc.conf files
   delete ACE_Service_Config::svc_conf_file_queue_;
@@ -728,9 +726,6 @@ ACE_Service_Config::close (void)
   // Delete the dynamically allocated static_svcs instance.
   delete ACE_Service_Config::static_svcs_;
   ACE_Service_Config::static_svcs_ = 0;
-
-  // We've prepared a buffer that we no longer need. Delete it.
-  ace_yy_delete_parse_buffer ();
 
   return 0;
 }
@@ -755,11 +750,6 @@ ACE_Service_Config::fini_svcs (void)
     ACE_Log_Msg::disable_debug_messages ();
 
   int result = ACE_Service_Repository::instance ()->fini ();
-
-  // Since the fini() method of the objects inside the service
-  // repository may reference the ACE singletons, they must be
-  // destroyed after the objects have been finalized.
-  ACE_Service_Config::close_singletons ();
 
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();

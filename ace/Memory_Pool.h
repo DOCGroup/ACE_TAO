@@ -354,7 +354,6 @@ public:
 
   LPSECURITY_ATTRIBUTES sa_;
   // Pointer to a security attributes object.  Only used on NT.
-
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -468,7 +467,6 @@ protected:
 
   LPSECURITY_ATTRIBUTES sa_;
   // Security attributes object, only used on NT.
-
 };
 
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool

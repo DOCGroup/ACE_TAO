@@ -12,6 +12,9 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   Filter builder to the basic filters.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -32,9 +35,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Filter;
-class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Implement a builder for the fundamental filters.
@@ -45,20 +47,17 @@ class TAO_ORBSVCS_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Buil
   //   are constructed using this class.
   //
 public:
-  TAO_EC_Basic_Filter_Builder (TAO_EC_Event_Channel* ec);
+  TAO_EC_Basic_Filter_Builder (void);
   // constructor.
 
   virtual ~TAO_EC_Basic_Filter_Builder (void);
   // destructor...
 
   // = The TAO_EC_Filter_Builder methods...
-  TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos,
-                        CORBA::Environment &env) const;
+  TAO_EC_Filter* build (RtecEventChannelAdmin::ConsumerQOS& qos) const;
 
 private:
-  TAO_EC_Filter* recursive_build (TAO_EC_ProxyPushSupplier *supplier,
-                                  RtecEventChannelAdmin::ConsumerQOS& qos,
+  TAO_EC_Filter* recursive_build (RtecEventChannelAdmin::ConsumerQOS& qos,
                                   CORBA::ULong& pos) const;
   // Recursively build the filter tree.
 
@@ -66,10 +65,6 @@ private:
                                CORBA::ULong pos) const;
   // Count the number of children of the current node, i.e. until a
   // conjunction or disjunction starts.
-
-private:
-  TAO_EC_Event_Channel* event_channel_;
-  // The event channel.
 };
 
 #if defined (__ACE_INLINE__)

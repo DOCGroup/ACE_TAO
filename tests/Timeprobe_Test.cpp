@@ -84,22 +84,6 @@ work (int time)
   ACE_OS::sleep (time);
 }
 
-#if !defined (ACE_HAS_PURIFY)
-// Test creation of ACE_Singletons during static object construction.
-// Timeprobes can do that, when they're enabled.  Purify would notice
-// the memory in use at program termination.
-static int
-create_singleton ()
-{
-  int *i = ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>::instance ();
-  *i = 3;
-
-  return *i;
-}
-
-int static_singleton_creator = create_singleton ();
-#endif /* ! ACE_HAS_PURIFY */
-
 int
 main (int, ASYS_TCHAR *[])
 {
@@ -121,11 +105,3 @@ main (int, ASYS_TCHAR *[])
 
   return 0;
 }
-
-#if !defined (ACE_HAS_PURIFY)
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>;
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#   pragma instantiate ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ! ACE_HAS_PURIFY */

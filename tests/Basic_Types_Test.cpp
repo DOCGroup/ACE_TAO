@@ -16,24 +16,9 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
-// Don't use the ACE version accessors in class ACE, so that we can
-// support this test cleanly with the OS component, only.
-#include "ace/Version.h"
-
-#if defined (ACE_HAS_MINIMAL_ACE_OS)
-  // Redefine these macros to allow the test to print out useful info.
-# undef ACE_DEBUG
-# define ACE_DEBUG(x) ACE_OS::fprintf x
-# define LM_DEBUG stdout
-# undef ACE_ERROR
-# define ACE_ERROR(x) ACE_OS::fprintf x
-# define LM_ERROR stderr
-# define ACE_START_TEST(x) ACE_OS::printf (x ASYS_TEXT ("\n"))
-# define ACE_END_TEST
-#else  /* ! ACE_HAS_MINIMAL_ACE_OS */
-# include "test_config.h"
-#endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+#include "test_config.h"
+#include "ace/Log_Msg.h"
+#include "ace/Basic_Types.h"
 
 ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 
@@ -41,9 +26,6 @@ ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-
-typedef void* (*a_function_pointer) (void*);
 
 static
 u_int
@@ -69,9 +51,9 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("Basic_Types_Test"));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE_MAJOR_VERSION,
-              ACE_MINOR_VERSION,
-              ACE_BETA_VERSION));
+              ACE::major_version (),
+              ACE::minor_version(),
+              ACE::beta_version()));
 
   u_int errors = 0;
 
@@ -99,9 +81,6 @@ main (int, ASYS_TCHAR *[])
                    sizeof (long long),
 #endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
                    ACE_SIZEOF_LONG_LONG);
-  errors += check (ASYS_TEXT ("sizeof 64-bit literal: %u%s"),
-                   sizeof ACE_UINT64_LITERAL (1),
-                   8);
   errors += check (ASYS_TEXT ("ACE_SIZEOF_VOID_P: %u%s"),
                    sizeof (void *), ACE_SIZEOF_VOID_P);
   errors += check (ASYS_TEXT ("ACE_SIZEOF_FLOAT: %u%s"),
@@ -147,17 +126,6 @@ main (int, ASYS_TCHAR *[])
   errors += check (ASYS_TEXT ("sizeof (ACE_UINT64) is %u%s"),
                    sizeof (ACE_UINT64), 8);
 
-  // ACE assumes sizeof (long) == sizeof (void*)
-  if (sizeof (long) == sizeof (void *))
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sizeof (long) == sizeof (void*)\n")));
-  else
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) != sizeof (void*)\n")));
-
-  // ACE assumes sizeof (long) >= sizeof (a_function_pointer)
-  if (sizeof (long) >= sizeof (a_function_pointer))
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sizeof (long) >= sizeof (a_function_pointer)\n")));
-  else
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) < sizeof (a_function_pointer)\n")));
 
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("little endian\n")));
@@ -174,11 +142,11 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (_SC_PAGESIZE)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sysconf page size: %d\n"),
-              (int) ACE_OS::sysconf (_SC_PAGESIZE)));
+              (int) sysconf (_SC_PAGESIZE)));
 #endif /* _SC_PAGESIZE */
 #if defined (_SC_CLK_TCK)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("clock ticks/sec = %d\n"),
-              (int) ACE_OS::sysconf (_SC_CLK_TCK)));
+              (int) sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
 
 

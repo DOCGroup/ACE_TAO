@@ -1,9 +1,9 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Local targets
-#       GNU version
-#       Requires GNU make
+#	Local targets
+#	GNU version
+#	Requires GNU make
 #----------------------------------------------------------------------------
 
 ifndef OBJDIRS
@@ -11,14 +11,14 @@ ifndef OBJDIRS
 endif # OBJDIRS
 
 #### TEMPLATE_REPOSITORY can be set in individual platform files
-#### to create template repository directories.  See
+#### to create template repository directories.	 See
 #### platform_sunos5_sunc++.GNU for an example.
 OBJDIRS += $(TEMPLATE_REPOSITORY)
 
 all.local: build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
-#       C/C++ compilation targets
+#	C/C++ compilation targets
 #----------------------------------------------------------------------------
 
 build.local: $(BUILD)
@@ -27,41 +27,36 @@ build.local: $(BUILD)
 .SUFFIXES:
 .SUFFIXES: .cpp .cc .C .idl $(SUFFIXES)
 
-ifndef TAO_ROOT
 # and here's how to compile C++ files from the IDL file.
 # only ONE of these rules will be run at make-time,
 
-# The rules are only used if TAO_ROOT is not defined to avoid
-# conflicts with a similar rule in TAO. 
-
 %S.cpp: %.idl
-	$(IDL) --version $(IDLFLAGS) $<
+	$(IDL) $(IDLFLAGS) $<
 
 %C.cpp: %.idl
-	$(IDL) --version $(IDLFLAGS) $<
+	$(IDL) $(IDLFLAGS) $<
 
 %.hh: %.idl
-	$(IDL) --version $(IDLFLAGS) $<
-endif # TAO_ROOT
+	$(IDL) $(IDLFLAGS) $<
 
 # C++ related targets
 
-$(VDIR)%.o: %.c
+$(VDIR)%.o:	%.c
 	$(COMPILE.c) -o $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp
+$(VDIR)%.o:	%.cpp
 	$(COMPILE.cc) -o $@ $<
 	${MVCMD}
 
-#$(VDIR)%.o: %.C
+#$(VDIR)%.o:	%.C
 #	$(COMPILE.cc) -o $@ $<
 
-#$(VDIR)%.o: %.cc
+#$(VDIR)%.o:	%.cc
 #	$(COMPILE.cc) -o $@ $<
 
 # If SOLINK is defined, then the .so file is built from the .o file via
-# separate rules in the same directory.  Otherwise, the .so and .o are
+# separate rules in the same directory.	 Otherwise, the .so and .o are
 # built via the same rule.  SOLINK is required for the repository under
 # gcc.
 ifndef SOLINK
@@ -76,19 +71,19 @@ else
 $(VSHDIR)%.$(SOEXT): %.cpp
 	$(SOBUILD)
 endif
-$(VSHDIR)%.o: %.cpp
+$(VSHDIR)%.o:	%.cpp
 	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.o: %.cc
+$(VSHDIR)%.o:	%.cc
 	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.o
+$(VSHDIR)%.$(SOEXT):	$(VSHDIR)%.o
 	$(SOLINK)
 endif
 
 #----------------------------------------------------------------------------
-#       Library generation targets
+#	Library generation targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(VLIB)
+.PRECIOUS:	$(VLIB)
 
 #### show_statics shows static objects in locally-created object files.
 #### It assumes that the object files were built using g++.
@@ -105,20 +100,16 @@ show_uninit:
 	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
 
 #----------------------------------------------------------------------------
-#       Installation targets
+#	Installation targets
 #----------------------------------------------------------------------------
 
-install.local: $(INSTALL)
+install.local:	$(INSTALL)
 
 deinstall.local:
 	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
-
-ifeq (,$(LN_S))
-  LN_S = ln -s
-endif # ! LN_S
 
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
@@ -139,7 +130,7 @@ $(INSMAN)/mann/% :
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
-			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
+			ln -s $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
 		fi ; \
 	fi
 ifdef MVSLIB
@@ -149,25 +140,25 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			ln -s $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
 
 #----------------------------------------------------------------------------
-#       Cleanup targets
+#	Cleanup targets
 #----------------------------------------------------------------------------
 
 clean.local:
-	-$(RM) *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
-	  gcctemp.c gcctemp so_locations
+	-$(RM) -f *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-$(RM) -rf $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
+		   gcctemp.c gcctemp so_locations
 
 realclean.local: clean.local
-	-$(RM) $(BIN) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2) $(BIN2:%=%_debug) $(BIN2:%=%_profile) $(BIN2:%=%_optimize) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
+	-$(RM) -f $(BIN:%=%) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%)
 
 #----------------------------------------------------------------------------
-#       Dependency generation target
+#	Dependency generation target
 #----------------------------------------------------------------------------
 
 ifndef MAKEFILE
@@ -185,34 +176,32 @@ ifndef SOEXT
 endif # SOEXT
 
 depend.local: $(MAKEFILE)
-	@$(RM) $(MAKEFILE).old
+	@$(RM) -f $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
 	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@cat $(MAKEFILE) | \
 	sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
 	    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
-	    -e '/$$(ACE_ROOT)\/ace\/config[^\.]*\.h/d' \
 	    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
 	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
-	@cat $(MAKEFILE).new >$(MAKEFILE)
-	@$(RM) $(MAKEFILE).new
+	@mv $(MAKEFILE).new $(MAKEFILE)
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
 	then	echo "Makefile dependencies unchanged." ;\
 	else \
 		echo "Makefile dependencies updated." ;\
 	fi ;\
-	$(RM) $(MAKEFILE).old ;
+	$(RM) -f $(MAKEFILE).old ;
 
 #----------------------------------------------------------------------------
-#       RCS info target
+#	RCS info target
 #----------------------------------------------------------------------------
 
 rcs_info.local:
 	@rcs info
 
 #----------------------------------------------------------------------------
-#       Variant targets and conditional macros
+#	Variant targets and conditional macros
 #----------------------------------------------------------------------------
 
 build.objdirs: $(OBJDIRS)

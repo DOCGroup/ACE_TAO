@@ -7,8 +7,8 @@
 
 #### The "release" and "releaseall" targets can be used to create
 #### the ACE and ACE+TAO kits.  By default, each creates a new beta
-#### release.  To create a new minor or major release, add REL=minor
-#### or REL=major, respectively, to the make invocation.
+#### release.  To create a new minor or major release, add "REL=minor"
+#### or "REL=major", respectively, to the make invocation.
 ####
 #### NOTE: the REL modifier applies to _both_ ACE and TAO in
 #### releaseall!
@@ -19,11 +19,7 @@
 ####   % make release
 ####
 #### To see what make release* would do without actually doing it, add
-#### CHECK=-n to the invocation.
-####
-#### By default, make release* will regenerate the contents of the man
-#### directory.  To suppress that, add GENERATE_MAN_PAGES= to your
-#### make release or make releaseall invocation.
+#### "CHECK=-n" to the invocation.
 
 #----------------------------------------------------------------------------
 #       Local macros
@@ -48,7 +44,7 @@ CLONE   = Makefile \
           include \
           netsvcs \
           performance-tests \
-          TAO \
+	  TAO \
           tests
 
 #----------------------------------------------------------------------------
@@ -72,67 +68,61 @@ clone:
                 (clone -s $(ACE_ROOT)/$$dir $$dir) \
         done
 
-CONTROLLED_FILES = \
-        ACE-INSTALL.html \
-        ACE-install.sh \
-        ASNMP \
-        BIBLIOGRAPHY \
-        COPYING \
-        ChangeLog \
-        ChangeLog-98a \
-        ChangeLog-98b \
-        ChangeLog-97b \
-        ChangeLog-97a \
-        ChangeLog-96b \
-        ChangeLog-96a \
-        ChangeLog-95 \
-        ChangeLog-94 \
-        ChangeLog-93 \
-        FAQ \
-        Makefile \
-        PROBLEM-REPORT-FORM \
-        README \
-        VERSION \
-        ace \
-        apps \
-        bin \
-        docs \
-        etc \
-        examples \
-        include \
-        netsvcs \
-        os-patches \
-        performance-tests \
-        tests \
-        WindozeCE
+CONTROLLED_FILES = ACE-INSTALL.html \
+                ACE-install.sh \
+                ASNMP \
+                BIBLIOGRAPHY \
+		BUG-REPORT-FORM \
+                COPYING \
+                ChangeLog \
+		ChangeLog-98a \
+		ChangeLog-98b \
+		ChangeLog-97b \
+                ChangeLog-97a \
+                ChangeLog-96b \
+                ChangeLog-96a \
+                ChangeLog-95 \
+                ChangeLog-94 \
+                ChangeLog-93 \
+                FAQ \
+                Makefile \
+                README \
+                VERSION \
+                ace \
+                apps \
+                bin \
+		docs \
+                etc \
+                examples \
+                include \
+                netsvcs \
+                os-patches \
+                performance-tests \
+                tests \
+                WindozeCE
 
-RELEASE_FILES = \
-        $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
-        ACE_wrappers/ACE-INSTALL \
-        ACE_wrappers/man
+RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
+                ACE_wrappers/ACE-INSTALL \
+                ACE_wrappers/man
 
-ALL_RELEASE_FILES = \
-        $(RELEASE_FILES) \
-        ACE_wrappers/TAO
+ALL_RELEASE_FILES = $(RELEASE_FILES) \
+                    ACE_wrappers/TAO
 
 RELEASE_LIB_FILES = \
-        ACE_wrappers/VERSION \
-        ACE_wrappers/ace \
-        ACE_wrappers/bin \
-        ACE_wrappers/etc \
-        ACE_wrappers/include \
-        ACE_wrappers/netsvcs \
-        ACE_wrappers/tests
+                ACE_wrappers/VERSION \
+                ACE_wrappers/ace \
+                ACE_wrappers/include \
+                ACE_wrappers/netsvcs \
+                ACE_wrappers/tests
 
 .PHONY: release releasetao releaseall
 
 REL = beta
 CHECK =
-GENERATE_MAN_PAGES = $(ACE_ROOT)/bin/generate_man_pages
 
 #### The release target creates the ACE (only) kit.
 release: ACE-INSTALL
-	@$(GENERATE_MAN_PAGES)
+	@$(ACE_ROOT)/bin/generate_man_pages
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
            -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
            -l "$(RELEASE_LIB_FILES)"

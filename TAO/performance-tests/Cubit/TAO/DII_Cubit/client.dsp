@@ -17,12 +17,13 @@ CFG=DII_Cubit Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "DII_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "DII_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "DII_Cubit Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "DII_Cubit Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -76,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAOd.lib aced.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
@@ -103,6 +104,10 @@ SOURCE=..\IDL_Cubit\cubitS.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\client.h
+# End Source File
 # Begin Source File
 
 SOURCE=..\IDL_Cubit\cubitC.h

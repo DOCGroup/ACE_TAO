@@ -140,13 +140,12 @@ ACE_Allocator::close_singleton (void)
 {
   ACE_TRACE ("ACE_Allocator::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, 
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Allocator::delete_allocator_)
     {
-      // This should never be executed....  See the
-      // ACE_Allocator::instance (void) method for an explanation.
+      // This should never be executed.  See ACE_Allocator::instance (void).
       delete ACE_Allocator::allocator_;
       ACE_Allocator::allocator_ = 0;
       ACE_Allocator::delete_allocator_ = 0;
@@ -156,11 +155,6 @@ ACE_Allocator::close_singleton (void)
 ACE_Allocator::~ACE_Allocator (void)
 {
   ACE_TRACE ("ACE_Allocator::~ACE_Allocator");
-}
-
-ACE_Allocator::ACE_Allocator (void)
-{
-  ACE_TRACE ("ACE_Allocator::ACE_Allocator");
 }
 
 void

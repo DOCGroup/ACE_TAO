@@ -91,8 +91,7 @@ Worker_Task::svc (void)
   // The <ACE_Task::svc_run()> method automatically adds us to the
   // process-wide <ACE_Thread_Manager> when the thread begins.
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) starting svc() method\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) starting svc() method\n")));
 
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
@@ -122,8 +121,7 @@ Worker_Task::svc (void)
 
           ACE_ASSERT (count == current_count);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%t) enqueueing %d duplicates\n"),
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) enqueueing %d duplicates\n"),
                       current_count));
 
           ACE_Message_Block *dup;
@@ -131,9 +129,7 @@ Worker_Task::svc (void)
           // Enqueue <current_count> duplicates with msg_priority == 1.
           for (i = current_count; i > 0; i--)
             {
-              ACE_ALLOCATOR_RETURN (dup,
-                                    mb->duplicate (),
-                                    -1);
+              ACE_ALLOCATOR_RETURN (dup, mb->duplicate (), -1);
               // Set the priority to be greater than "normal"
               // messages.  Therefore, all of these messages should go
               // to the "front" of the queue, i.e., ahead of all the
@@ -147,8 +143,7 @@ Worker_Task::svc (void)
                            (ACE_Time_Value *) &ACE_Time_Value::zero) != -1);
             }
 
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%t) dequeueing %d duplicates\n"),
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) dequeueing %d duplicates\n"),
                       current_count));
 
           // Dequeue the same <current_count> duplicates.
@@ -191,9 +186,7 @@ Worker_Task::Worker_Task (void)
 {
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("activate failed")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("activate failed")));
 }
 
 static int
@@ -228,9 +221,7 @@ produce (Worker_Task &worker_task,
       if (worker_task.put (mb,
                            // Don't block indefinitely if we flow control...
                            (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT (" (%t) %p\n"),
-                    ASYS_TEXT ("put")));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
     }
 
   // Send a shutdown message to the waiting threads and exit.
@@ -238,21 +229,15 @@ produce (Worker_Task &worker_task,
               ASYS_TEXT ("\n(%t) sending shutdown message\n")));
 
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block (0,
-                                     ACE_Message_Block::MB_DATA,
-                                     0,
-                                     0,
-                                     alloc_strategy,
-                                     &lock_adapter_),
+                  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
+                                     0, 0, alloc_strategy, &lock_adapter_),
                   -1);
 
   if (worker_task.put (mb) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT (" (%t) %p\n"),
-                ASYS_TEXT ("put")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n(%t) end producer\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n(%t) end producer\n")));
+
   return 0;
 }
 
@@ -261,6 +246,7 @@ typedef ASYS_TCHAR MEMORY_CHUNK[ACE_MALLOC_ALIGN * ACE_ALLOC_SIZE];
 ACE_Cached_Allocator<MEMORY_CHUNK,
                      ACE_SYNCH_MUTEX>
                      mem_allocator (ACE_ALLOC_AMOUNT);
+
 struct
 {
   ACE_Allocator *strategy_;
@@ -339,11 +325,9 @@ main (int, ASYS_TCHAR *[])
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("Elapsed time using %s allocation strategy: %f sec\n"),
-                alloc_struct[i].name_,
-                alloc_struct[i].et_.real_time));
+                alloc_struct[i].name_, alloc_struct[i].et_.real_time));
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Exiting...\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) Exiting...\n")));
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));

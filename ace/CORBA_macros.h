@@ -30,8 +30,6 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
-
 // All these macros assume the CORBA::Environment variable used to pass
 // in/out the exception is call ACE_TRY_ENV.  Below is the name we use
 // in TAO (The ACE ORB.)  Most other ORB's have their own naming
@@ -66,9 +64,6 @@
 # endif /* ACE_CORBA_HAS_EXCEPTIONS */
 #endif /* ACE_HAS_EXCEPTIONS */
 
-#define ACE_DECLARE_NEW_CORBA_ENV \
-  CORBA::Environment ACE_TRY_ENV
-
 #if defined (ACE_CORBA_HAS_EXCEPTIONS)
 // -----------------------------------------------------------------
 # define ACE_ADOPT_CORBA_ENV(ENV) ACE_UNUSED_ARG(ENV)
@@ -78,9 +73,6 @@
 # define ACE_CHECK
 // Used then the function requires a return value.
 # define ACE_CHECK_RETURN(RETV)
-
-// ACE_THROW_INT should not be used by the user.
-# define ACE_THROW_INT(EXCEPTION) throw EXCEPTION
 
 // Throwing an exception is easy. These two macros should _NOT_ be
 // used within try blocks.
@@ -166,9 +158,6 @@
 # define ACE_CHECK_RETURN(RETV) \
     if (ACE_TRY_ENV . exception () != 0) \
       return RETV
-
-// ACE_THROW_INT should not be used by the user.
-# define ACE_THROW_INT(EXCEPTION) ACE_TRY_ENV.exception (new EXCEPTION)
 
 // Throwing exceptions will inevitably cause an return from the current
 // function.  These two macros should _NOT_ be used within try blocks.
@@ -310,88 +299,5 @@
     } while (0)
 
 #endif /* ! ACE_CORBA_HAS_EXCEPTIONS */
-
-// ACE_HAS_EXCEPTIONS is not the same as ACE_NEW_THROWS_EXCEPTIONS.
-#if defined(ACE_NEW_THROWS_EXCEPTIONS)
-
-#   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
-     } while (0)
-// The following ACE_NEW_THROW* macros are to be depricated soon.
-// -------------------- Start Depricated --------------------
-#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
-     } while (0)
-#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
-     do { try { POINTER = new CONSTRUCTOR; } \
-        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
-     } while (0)
-#   define ACE_NEW_TRY_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-  do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
-     } while (0)
-// -------------------- End Depricated --------------------
-
-#else
-
-#   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
-     } while (0)
-// The following ACE_NEW_THROW* macros are to be depricated soon.
-// -------------------- Start Depricated --------------------
-#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
-     } while (0)
-#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
-     do { POINTER = new CONSTRUCTOR; \
-        if (POINTER == 0)\
-        { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
-     } while (0)
-#   define ACE_NEW_TRY_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
-     } while (0)
-// -------------------- End Depricated --------------------
-
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
-
-# define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
-
-# define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
-
-# define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
-
-// The following ACE_GUARD_THROW* macros are to be depricated soon.
-// -------------------- Start Depricated --------------------
-# define ACE_GUARD_THROW(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
-# define ACE_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,EXCEPTION,RETURN) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
-// -------------------- End Deprication --------------------
-
-// ============================================================
-
-// Print out a TAO exception.  This is not CORBA compliant.
-# define ACE_PRINT_TAO_EXCEPTION(EX,INFO) \
-  EX.print_exception (INFO)
-
-// Print out a CORBA exception.  There is not portable way to
-// dump a CORBA exception.  If you are using other ORB implementation,
-// redefine the macro to get what you want.
-# if !defined ACE_PRINT_EXCEPTION
-#   define ACE_PRINT_EXCEPTION(EX,INFO) ACE_PRINT_TAO_EXCEPTION(EX,INFO)
-# endif /* ACE_PRINT_EXCEPTION */
 
 #endif /* ACE_CORBA_MACROS_H */

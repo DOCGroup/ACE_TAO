@@ -42,7 +42,11 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 // Number of client (user) threads
+#if (!defined (ACE_WIN32) || (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0))
+static int opt_nconnections = 20;
+#else /* ACE_WIN32 || (ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0) */
 static int opt_nconnections = 5;
+#endif /* ACE_WIN32 || (ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0) */
 
 // Number of data exchanges
 static int opt_nloops = 200;
@@ -52,9 +56,6 @@ static int opt_wfmo_reactor = 0;
 
 // Use the Select_Reactor
 static int opt_select_reactor = 0;
-
-// Extra debug messages
-static int opt_debug = 0;
 
 int Read_Handler::waiting_ = 0;
 
@@ -89,38 +90,25 @@ int
 Read_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
+
   char buf[BUFSIZ];
 
-  while (1)
-    {
-      ssize_t result = this->peer ().recv (buf, sizeof (buf) - 1);
+  ssize_t result = this->peer ().recv (buf, sizeof (buf));
 
-      if (result > 0)
-        {
-          if (opt_debug)
-            {
-              buf[result] = 0;
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%t) Read_Handler::handle_input: %s\n"),
-                          buf));
-            }
-        }
-      else if (result < 0)
-        {
-          if (errno == EWOULDBLOCK)
-            return 0;
-          else
-            // This will cause handle_close to get called.
-            return -1;
-        }
-      else // result == 0
-        {
-          // This will cause handle_close to get called.
-          return -1;
-        }
+  if (result <= 0)
+    {
+      if (result < 0 && errno == EWOULDBLOCK)
+        return 0;
+
+      if (result != 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%t) %p\n"),
+                    ASYS_TEXT ("Read_Handler::handle_input")));
+      // This will cause handle_close to get called.
+      return -1;
     }
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 // Handle connection shutdown.
@@ -185,24 +173,27 @@ client (void *arg)
   int i;
 
   // Automagic memory cleanup.
+  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers;
   Write_Handler **temp_writers;
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
+  writers = temp_writers;
 
+  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> failed_svc_handlers;
   ASYS_TCHAR *temp_failed;
   ACE_NEW_RETURN (temp_failed,
                   ASYS_TCHAR[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> failed_svc_handlers (temp_failed);
+  failed_svc_handlers = temp_failed;
 
   // Automagic memory cleanup.
+  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses;
   ACE_INET_Addr *temp_addresses;
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
                   0);
-  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses (temp_addresses);
+  addresses = temp_addresses;
 
   // Initialize array.
   for (i = 0; i < opt_nconnections; i++)
@@ -314,7 +305,7 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Reactor_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("dswc:l:"), 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -330,9 +321,6 @@ main (int argc, ASYS_TCHAR *argv[])
       case 'l':
         opt_nloops = ACE_OS::atoi (getopt.optarg);
         break;
-      case 'd':
-        opt_debug = 1;
-        break;
       }
 
   // Sets up the correct reactor (based on platform and options).
@@ -345,10 +333,7 @@ main (int argc, ASYS_TCHAR *argv[])
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
-    {
-      auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
-      impl = auto_impl;
-    }
+    impl = auto_ptr<ACE_Reactor_Impl> (ACE_Reactor::instance ()->implementation ());
 
   Read_Handler::set_countdown (opt_nconnections);
 
@@ -379,11 +364,9 @@ main (int argc, ASYS_TCHAR *argv[])
                 ASYS_TEXT ("(%t) %p\n"),
                 ASYS_TEXT ("thread create failed")));
 
-  ACE_Time_Value run_limit (10);
-
   ACE_Profile_Timer timer;
   timer.start ();
-  ACE_Reactor::instance()->run_event_loop (run_limit);
+  ACE_Reactor::instance()->run_event_loop ();
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;

@@ -26,8 +26,7 @@ Test_Consumer::Test_Consumer (ECT_Driver *driver,
 void
 Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                         const char* name,
-                        int type_start,
-                        int type_count,
+                        int event_a, int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment& TAO_IN_ENV)
 {
@@ -54,10 +53,8 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
   qos.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info);
-  for (int i = 0; i != type_count; ++i)
-    {
-      qos.insert_type (type_start + i, rt_info);
-    }
+  qos.insert_type (event_a, rt_info);
+  qos.insert_type (event_b, rt_info);
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -90,7 +87,7 @@ Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate the servant
-  PortableServer::POA_var poa =
+  PortableServer::POA_var poa = 
     this->_default_POA (TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
   PortableServer::ObjectId_var id =
@@ -103,20 +100,20 @@ Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
 void
 Test_Consumer::dump_results (const char* name)
 {
-  this->throughput_.dump_results ("ECT_Consumers", name);
-  this->latency_.dump_results ("ECT_Consumers", name);
-}
-
-void
-Test_Consumer::accumulate (ECT_Driver::Throughput_Stats& stats) const
-{
-  stats.accumulate (this->throughput_);
-}
-
-void
-Test_Consumer::accumulate (ECT_Driver::Latency_Stats& stats) const
-{
-  stats.accumulate (this->latency_);
+  ACE_Time_Value tv;
+  this->timer_.elapsed_time (tv);
+  double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
+  double eps = this->recv_count_ * f;
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "ECT_Consumer (%s):\n"
+              "    Total time: %d.%08.8d (secs.usecs)\n"
+              "    Total events: %d\n"
+              "    Events per second: %.3f\n",
+              name,
+              tv.sec (), tv.usec (),
+              this->recv_count_,
+              eps));
 }
 
 void
@@ -125,8 +122,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 {
   if (events.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ECT_Consumer (%P|%t) no events\n"));
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
 
@@ -134,18 +130,16 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 
   // We start the timer as soon as we receive the first event...
   if (this->recv_count_ == 0)
-    this->throughput_.start ();
-
-  this->throughput_.sample ();
+    this->timer_.start ();
 
   this->recv_count_ += events.length ();
 
   if (TAO_debug_level > 0
-      && this->recv_count_ % 100 == 0)
+      && this->recv_count_ % 1000 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ECT_Consumer (%P|%t): %d events received\n",
-                  this->recv_count_));
+		  this->recv_count_));
     }
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
@@ -154,6 +148,11 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
     {
       const RtecEventComm::Event& e = events[i];
 
+      if (e.data.payload.mb () == 0)
+        {
+          // ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
+          // continue;
+        }
       if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           this->shutdown_count_++;
@@ -161,7 +160,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
             {
               // We stop the timer as soon as we realize it is time to
               // do so.
-              this->throughput_.stop ();
+              this->timer_.stop ();
               this->driver_->shutdown_consumer (this->cookie_, TAO_IN_ENV);
             }
         }
@@ -170,10 +169,21 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           ACE_hrtime_t creation;
           ORBSVCS_Time::TimeT_to_hrtime (creation,
                                          e.header.creation_time);
+          
+          ACE_hrtime_t ec_recv;
+          ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
+                                         e.header.ec_recv_time);
+
+          ACE_hrtime_t ec_send;
+          ORBSVCS_Time::TimeT_to_hrtime (ec_send,
+                                         e.header.ec_send_time);
 
           const ACE_hrtime_t now = ACE_OS::gethrtime ();
           const ACE_hrtime_t elapsed = now - creation;
-          this->latency_.sample (elapsed);
+          this->driver_->end_to_end (elapsed);
+          this->driver_->supplier_to_ec (ec_recv - creation);
+          this->driver_->inside_ec (ec_send - ec_recv);
+          this->driver_->ec_to_consumer (now - ec_send);
         }
     }
 }

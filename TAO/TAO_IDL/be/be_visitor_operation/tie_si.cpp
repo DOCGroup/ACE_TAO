@@ -150,7 +150,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   if (node->argument_count () > 0)
     *os << ",\n";
   os->indent ();
-  *os << "ACE_TRY_ENV" << be_uidt_nl
+  *os << "_tao_environment" << be_uidt_nl
       << ");" << be_uidt_nl
       << "}\n\n";
 

@@ -18,11 +18,17 @@
 
 #define ACE_BUILD_DLL
 
+#include "ace/ACE.h"
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
+# include /**/ <sys/rtpriocntl.h>
+# include /**/ <sys/tspriocntl.h>
+#endif /* ACE_HAS_PRIOCNTL && defined (ACE_HAS_STHREADS) */
 
 ACE_RCSID(ace, Sched_Params, "$Id$")
 
@@ -49,9 +55,9 @@ ACE_Sched_Params::priority_min (const Policy policy,
                                     P_MYID /* ignored */,
                                     PC_GETCID,
                                     (char *) &pcinfo) == -1)
-        // Just hope that priority range wasn't configured from -1
-        // .. 1
-        return -1;
+	// Just hope that priority range wasn't configured from -1
+	// .. 1
+	return -1;
 
       // OK, now we've got the class ID in pcinfo.pc_cid.  In
       // addition, the maximum configured time-share priority is in

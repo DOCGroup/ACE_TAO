@@ -235,7 +235,7 @@ JAWS_IO_Handler::release (void)
 JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory (void)
 {
 }
-
+ 
 JAWS_IO_Handler *
 JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
 {
@@ -246,7 +246,7 @@ JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
 
   return handler;
 }
-
+ 
 void
 JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
@@ -254,7 +254,7 @@ JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 
   if (handler != 0)
     {
-      //cerr << "(" << thr_self () << ") locking for destruction: " << handler << endl;
+cerr << "(" << thr_self () << ") locking for destruction: " << handler << endl;
       handler->lock ();
       delete handler->message_block ();
       handler->message_block (0);
@@ -285,21 +285,21 @@ JAWS_Asynch_IO_Handler::handler (void)
 void
 JAWS_Asynch_IO_Handler::acquire (void)
 {
-  //cerr << "(" << thr_self () << ") acquire handler: " << this << endl;
+cerr << "(" << thr_self () << ") acquire handler: " << this << endl;
   this->count_.acquire_read ();
 }
 
 void
 JAWS_Asynch_IO_Handler::lock (void)
 {
-  //cerr << "(" << thr_self () << ") locking handler: " << this << endl;
+cerr << "(" << thr_self () << ") locking handler: " << this << endl;
   this->count_.acquire_write ();
 }
 
 void
 JAWS_Asynch_IO_Handler::release (void)
 {
-  //cerr << "(" << thr_self () << ") release handler: " << this << endl;
+cerr << "(" << thr_self () << ") release handler: " << this << endl;
   this->count_.release ();
 }
 
@@ -334,15 +334,14 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
   this->handler ()->message_block ()->copy (mb.rd_ptr (), mb.length ());
 #endif
 
-  ACE_Asynch_Accept_Result_Impl *fake_result
-    = ACE_Proactor::instance ()->create_asynch_accept_result
-      (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
-       h, mb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
-       this->ioh_, ACE_INVALID_HANDLE, 0);
+  ACE_Asynch_Accept::Result fake_result
+    (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
+     h, mb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
+     this->ioh_, ACE_INVALID_HANDLE);
 
   this->handler ()->handler_ = this;
 
-  fake_result->complete (0, 1, 0);
+  fake_result.complete (0, 1, 0);
 }
 
 void

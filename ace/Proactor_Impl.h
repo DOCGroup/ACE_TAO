@@ -52,19 +52,70 @@ public:
   // This method adds the <handle> to the I/O completion port. This
   // function is a no-op function for Unix systems.
 
+  // = Timer management.
+  virtual long schedule_timer (ACE_Handler &handler,
+			       const void *act,
+			       const ACE_Time_Value &time) = 0;
+  // Schedule a <handler> that will expire after <time>.  If it
+  // expires then <act> is passed in as the value to the <handler>'s
+  // <handle_timeout> callback method.  This method returns a
+  // <timer_id>. This <timer_id> can be used to cancel a timer before
+  // it expires.  The cancellation ensures that <timer_ids> are unique
+  // up to values of greater than 2 billion timers.  As long as timers
+  // don't stay around longer than this there should be no problems
+  // with accidentally deleting the wrong timer.  Returns -1 on
+  // failure (which is guaranteed never to be a valid <timer_id>.
+
+  virtual long schedule_repeating_timer (ACE_Handler &handler,
+					 const void *act,
+					 const ACE_Time_Value &interval) = 0;
+
+  // Same as above except <interval> it is used to reschedule the
+  // <handler> automatically.
+
+  virtual long schedule_timer (ACE_Handler &handler,
+			       const void *act,
+			       const ACE_Time_Value &time,
+			       const ACE_Time_Value &interval) = 0;
+  // This combines the above two methods into one. Mostly for backward
+  // compatibility.
+
+  virtual int cancel_timer (ACE_Handler &handler,
+			    int dont_call_handle_close) = 0;
+  // Cancel all timers associated with this <handler>.  Returns number
+  // of timers cancelled.
+
+  virtual int cancel_timer (long timer_id,
+			    const void **act,
+			    int dont_call_handle_close) = 0;
+  // Cancel the single <ACE_Handler> that matches the <timer_id> value
+  // (which was returned from the <schedule> method).  If <act> is
+  // non-NULL then it will be set to point to the ``magic cookie''
+  // argument passed in when the <Handler> was registered.  This makes
+  // it possible to free up the memory and avoid memory leaks.
+  // Returns 1 if cancellation succeeded and 0 if the <timer_id>
+  // wasn't found.
+
   virtual int handle_events (ACE_Time_Value &wait_time) = 0;
   // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return 0.  Return 1 on success i.e., when a
-  // completion is dispatched, non-zero (-1) on errors and errno is
-  // set accordingly.
-  
+  // any events occur, return.  Return 0 on success, non-zero (-1) on
+  // timeouts/errors and errno is set accordingly.
+
   virtual int handle_events (void) = 0;
   // Block indefinitely until at least one event is dispatched.
-  // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return 0.  Return 1 on success i.e., when a
-  // completion is dispatched, non-zero (-1) on errors and errno is
-  // set accordingly.
- 
+  // Return 0 on success, non-zero (-1) on timeouts/errors and errno
+  // is set accordingly.
+
+#if 0
+  virtual int post_completion (ACE_Asynch_Result *result) = 0;
+  // Post a result to the completion port of the Proactor.  If errors
+  // occur, the result will be deleted by this method.  If successful,
+  // the result will be deleted by the Proactor when the result is
+  // removed from the completion port.  Therefore, the result should
+  // have been dynamically allocated and should be orphaned by the
+  // user once this method is called.
+#endif /* 0 */
+
   virtual int wake_up_dispatch_threads (void) = 0;
   // Add wakeup dispatch threads (reinit).
 
@@ -85,7 +136,7 @@ public:
   // methods.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void) = 0;
-  // Create the correct implementation class for doing Asynch_Read_Stream. 
+    // Create the correct implementation class for doing Asynch_Read_Stream. 
 
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void) = 0;
   // Create the correct implementation class for doing Asynch_Write_Stream. 
@@ -113,9 +164,8 @@ public:
                                                                                 ACE_Message_Block &message_block,
                                                                                 u_long bytes_to_read,
                                                                                 const void* act,
-                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                int priority = 0,
-                                                                                int signal_number = ACE_SIGRTMIN) = 0;
+                                                                                ACE_HANDLE event,
+                                                                                int priority = 0) = 0;
   // Create the correct implementation class for ACE_Asynch_Read_Stream::Result class. 
   
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
@@ -123,9 +173,8 @@ public:
                                                                                   ACE_Message_Block &message_block,
                                                                                   u_long bytes_to_write,
                                                                                   const void* act,
-                                                                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                  int priority = 0,
-                                                                                  int signal_number = ACE_SIGRTMIN) = 0;
+                                                                                  ACE_HANDLE event,
+                                                                                  int priority = 0) = 0;
   // Create the correct implementation class for ACE_Asynch_Write_Stream::Result.
     
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
@@ -135,9 +184,8 @@ public:
                                                                             const void* act,
                                                                             u_long offset,
                                                                             u_long offset_high,
-                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                            int priority = 0,
-                                                                            int signal_number = ACE_SIGRTMIN) = 0;
+                                                                            ACE_HANDLE event,
+                                                                            int priority = 0) = 0;
   // Create the correct implementation class for ACE_Asynch_Read_File::Result.  
   
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
@@ -147,9 +195,8 @@ public:
                                                                               const void* act,
                                                                               u_long offset,
                                                                               u_long offset_high,
-                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                              int priority = 0,
-                                                                              int signal_number = ACE_SIGRTMIN) = 0;
+                                                                              ACE_HANDLE event,
+                                                                              int priority = 0) = 0;
     // Create the correct implementation class for ACE_Asynch_Write_File::Result.
   
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
@@ -158,9 +205,8 @@ public:
                                                                       ACE_Message_Block &message_block,
                                                                       u_long bytes_to_read,
                                                                       const void* act,
-                                                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                      int priority = 0,
-                                                                      int signal_number = ACE_SIGRTMIN) = 0;
+                                                                      ACE_HANDLE event,
+                                                                      int priority = 0) = 0;
   // Create the correct implementation class for ACE_Asynch_Accept::Result.
   
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
@@ -173,26 +219,9 @@ public:
                                                                                     u_long bytes_per_send,
                                                                                     u_long flags,
                                                                                     const void *act,
-                                                                                    ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                    int priority = 0,
-                                                                                    int signal_number = ACE_SIGRTMIN) = 0;
+                                                                                    ACE_HANDLE event,
+                                                                                    int priority = 0) = 0;
   // Create the correct implementation class for ACE_Asynch_Transmit_File::Result.
-
-  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
-                                                       const void *act,
-                                                       const ACE_Time_Value &tv,
-                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                       int priority = 0,
-                                                       int signal_number = 0) = 0;
-  // Create the correct implementation object for the Timer
-  // result. POSIX_SIG_Proactor will create a Timer object with a
-  // meaningful signal number, if you leave the signal number as 0.
-
-  virtual int post_wakeup_completions (int how_many) = 0;
-  // Post <how_many> completions to the completion port so that all
-  // threads can wake up. This is used in conjunction with the
-  // <run_event_loop>. 
 };
-
 #endif /* (ACE_WIN32 && ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
 #endif /* ACE_PROACTOR_IMPL_H */

@@ -26,7 +26,19 @@ TAO_EC_Filter::matches (const RtecEventComm::EventHeader& rhs,
   if (rhs.type == 0 || lhs.type == 0)
     return rhs.source == lhs.source;
 
-  return (rhs.type == lhs.type && rhs.source == lhs.source);
+  return (rhs.type == lhs.type && rhs.source == lhs.type);
+}
+
+// ****************************************************************
+
+ACE_INLINE int
+TAO_EC_Filter::Header_Compare::
+    operator () (const RtecEventComm::EventHeader& lhs,
+                 const RtecEventComm::EventHeader& rhs) const
+{
+  if (lhs.source == rhs.source)
+    return lhs.type < rhs.type;
+  return lhs.source < rhs.source;
 }
 
 // ****************************************************************

@@ -102,28 +102,6 @@ ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *&svc_handler,
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *&svc_handler,
-                                                 SVC_HANDLER *&sh_copy,
-                                                 const PR_AD &remote_addr,
-                                                 ACE_Time_Value *timeout,
-                                                 const PR_AD &local_addr,
-                                                 int reuse_addr,
-                                                 int flags,
-                                                 int perms)
-{
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connect_svc_handler");
-
-  sh_copy = svc_handler;
-  return this->connector_.connect (svc_handler->peer (),
-                                   remote_addr,
-                                   timeout,
-                                   local_addr,
-                                   reuse_addr,
-                                   flags,
-                                   perms);
-}
-
-template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
@@ -260,11 +238,8 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
     {
       // Error, entry not found in map.
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p %d not found in map\n"),
-                         ASYS_TEXT ("find"),
-                         handle),
-                        -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p %d not found in map\n"),
+                        ASYS_TEXT ("find"), handle), -1);
     }
 
   // Try to remove from ACE_Timer_Queue but if it's not there we
@@ -363,46 +338,6 @@ ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
                                      int flags,
                                      int perms)
 {
-  return this->connect_i (sh,
-                          0,
-                          remote_addr,
-                          synch_options,
-                          local_addr,
-                          reuse_addr,
-                          flags,
-                          perms);
-}
-
-template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
-                                     SH *&sh_copy,
-                                     const PR_AD &remote_addr,
-                                     const ACE_Synch_Options &synch_options,
-                                     const PR_AD &local_addr,
-                                     int reuse_addr,
-                                     int flags,
-                                     int perms)
-{
-  return this->connect_i (sh,
-                          &sh_copy,
-                          remote_addr,
-                          synch_options,
-                          local_addr,
-                          reuse_addr,
-                          flags,
-                          perms);
-}
-
-template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
-                                       SH **sh_copy,
-                                       const PR_AD &remote_addr,
-                                       const ACE_Synch_Options &synch_options,
-                                       const PR_AD &local_addr,
-                                       int reuse_addr,
-                                       int flags,
-                                       int perms)
-{
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connect");
 
   SH* new_sh = sh;
@@ -420,27 +355,14 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
   else
     timeout = (ACE_Time_Value *) synch_options.time_value ();
 
-  int result;
-  if (sh_copy == 0)
-    result = this->connect_svc_handler (new_sh,
-                                        remote_addr,
-                                        timeout,
-                                        local_addr,
-                                        reuse_addr,
-                                        flags,
-                                        perms);
-  else
-    result = this->connect_svc_handler (new_sh,
-                                        *sh_copy,
-                                        remote_addr,
-                                        timeout,
-                                        local_addr,
-                                        reuse_addr,
-                                        flags,
-                                        perms);
-
   // Delegate to connection strategy.
-  if (result == -1)
+  if (this->connect_svc_handler (new_sh,
+                                 remote_addr,
+                                 timeout,
+                                 local_addr,
+                                 reuse_addr,
+                                 flags,
+                                 perms) == -1)
     {
       if (use_reactor && errno == EWOULDBLOCK)
         {
@@ -615,7 +537,7 @@ ACE_Connector<SH, PR_CO_2>::close (void)
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_close");
 
@@ -626,6 +548,10 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       // Timer_Queue).
       this->closing_ = 1;
 
+      // Remove all timer objects associated with <this> object from
+      // the <Reactor>'s Timer_Queue.
+      this->reactor ()->cancel_timer (this);
+
       MAP_ITERATOR mi (this->handler_map_);
 
       // Iterate through the map and shut down all the pending handlers.
@@ -634,6 +560,9 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
            mi.next (me) != 0;
            mi.advance ())
         {
+          this->reactor ()->remove_handler (me->ext_id_,
+                                            mask | ACE_Event_Handler::DONT_CALL);
+
           AST *ast = 0;
           this->cleanup_AST (me->ext_id_, ast);
 
@@ -866,27 +795,6 @@ ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler
    int perms)
 {
   return this->connect_strategy_->connect_svc_handler (sh,
-                                                       remote_addr,
-                                                       timeout,
-                                                       local_addr,
-                                                       reuse_addr,
-                                                       flags,
-                                                       perms);
-}
-
-template <class SH, PR_CO_1> int
-ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler
-  (SVC_HANDLER *&sh,
-   SVC_HANDLER *&sh_copy,
-   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-   ACE_Time_Value *timeout,
-   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-   int reuse_addr,
-   int flags,
-   int perms)
-{
-  return this->connect_strategy_->connect_svc_handler (sh,
-                                                       sh_copy,
                                                        remote_addr,
                                                        timeout,
                                                        local_addr,

@@ -75,17 +75,17 @@ class ACE_Log_Msg_Manager
   //      Synchronize output operations.
 {
 public:
-  static ACE_Recursive_Thread_Mutex *get_lock (void);
+  static ACE_Thread_Mutex *get_lock (void);
 
   static void close (void);
 
 private:
-  static ACE_Recursive_Thread_Mutex *lock_;
+  static ACE_Thread_Mutex *lock_;
 };
 
-ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
+ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
-ACE_Recursive_Thread_Mutex *
+ACE_Thread_Mutex *
 ACE_Log_Msg_Manager::get_lock (void)
 {
   // This function is called by the first thread to create an ACE_Log_Msg
@@ -96,7 +96,7 @@ ACE_Log_Msg_Manager::get_lock (void)
     {
       ACE_NO_HEAP_CHECK;
 
-      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Recursive_Thread_Mutex, 0);
+      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
 
       // Allocate the ACE_Log_Msg IPC instance.
       ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
@@ -248,27 +248,28 @@ ACE_Log_Msg::instance (void)
 }
 #undef ACE_NEW_RETURN_I
 
-// Sets the flag in the default priority mask used to initialize
-// ACE_Log_Msg instances, as well as the current per-thread instance.
-
 void
-ACE_Log_Msg::enable_debug_messages (ACE_Log_Priority priority)
+ACE_Log_Msg::disable_debug_messages()
+  // Clears the LM_DEBUG flag from the default priority mask used to
+  // initialize ACE_Log_Msg instances, as well as the current instance.
 {
-  ACE_SET_BITS (ACE_Log_Msg::default_priority_mask_, priority);
-  ACE_Log_Msg *i = ACE_Log_Msg::instance ();
-  i->priority_mask (i->priority_mask () | priority);
+  default_priority_mask_ &= ~LM_DEBUG;
+  ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
+  currentInstance->priority_mask(currentInstance->priority_mask()
+                                 & ~LM_DEBUG);
 }
 
-// Clears the flag in the default priority mask used to initialize
-// ACE_Log_Msg instances, as well as the current per-thread instance.
-
 void
-ACE_Log_Msg::disable_debug_messages (ACE_Log_Priority priority)
+ACE_Log_Msg::enable_debug_messages()
+  // Sets the LM_DEBUG flag in the default priority mask used to
+  // initialize ACE_Log_Msg instances, as well as the current instance.
 {
-  ACE_CLR_BITS (ACE_Log_Msg::default_priority_mask_, priority);
-  ACE_Log_Msg *i = ACE_Log_Msg::instance ();
-  i->priority_mask (i->priority_mask () & ~priority);
+  default_priority_mask_ |= LM_DEBUG;
+  ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
+  currentInstance->priority_mask(currentInstance->priority_mask()
+                                 | LM_DEBUG);
 }
+
 
 // Name of the local host.
 const ASYS_TCHAR *ACE_Log_Msg::local_host_ = 0;
@@ -285,7 +286,7 @@ pid_t ACE_Log_Msg::pid_ = -1;
 // Current offset of msg_[].
 int ACE_Log_Msg::msg_off_ = 0;
 
-// Default per-thread priority mask
+// Default priority mask
 // By default, all priorities are enabled.
 u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
                                            | LM_TRACE
@@ -298,10 +299,6 @@ u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
                                            | LM_CRITICAL
                                            | LM_ALERT
                                            | LM_EMERGENCY;
-
-// Default per-process priority mask
-// By default, no priorities are enabled.
-u_long ACE_Log_Msg::process_priority_mask_ = 0;
 
 void
 ACE_Log_Msg::close (void)
@@ -344,7 +341,7 @@ ACE_Log_Msg::flags (void)
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), 0));
 
   result = ACE_Log_Msg::flags_;
   return result;
@@ -354,7 +351,7 @@ void
 ACE_Log_Msg::set_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::set_flags");
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
 
   ACE_SET_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -363,7 +360,7 @@ void
 ACE_Log_Msg::clr_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::clr_flags");
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
 
   ACE_CLR_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -380,35 +377,23 @@ ACE_Log_Msg::acquire (void)
 }
 
 u_long
-ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
+ACE_Log_Msg::priority_mask (u_long n_mask)
 {
-  u_long o_mask;
-
-  if (mask_type == THREAD) {
-    o_mask = this->priority_mask_;
-    this->priority_mask_ = n_mask;
-  }
-  else {
-    o_mask = ACE_Log_Msg::process_priority_mask_;
-        ACE_Log_Msg::process_priority_mask_ = n_mask;
-  }
-
+  u_long o_mask = this->priority_mask_;
+  this->priority_mask_ = n_mask;
   return o_mask;
 }
 
 u_long
-ACE_Log_Msg::priority_mask (MASK_TYPE mask_type)
+ACE_Log_Msg::priority_mask (void)
 {
-  return mask_type == THREAD  ?  this->priority_mask_
-                              :  ACE_Log_Msg::process_priority_mask_;
+  return this->priority_mask_;
 }
 
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority)
 {
-  return ACE_BIT_ENABLED (this->priority_mask_ |
-                            ACE_Log_Msg::process_priority_mask_,
-                          log_priority);
+  return ACE_BIT_ENABLED (this->priority_mask_, log_priority);
 }
 
 int
@@ -442,7 +427,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
                      *ACE_Log_Msg_Manager::get_lock ()));
   ++instance_count_;
 }
@@ -457,7 +442,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   // If ACE_Log_Msg_Manager::close () is called, the lock will
   // be deleted.
   {
-    ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
+    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
                        *ACE_Log_Msg_Manager::get_lock ()));
     instance_count = --instance_count_;
   }
@@ -502,7 +487,7 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
                    LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
   if (prog_name)
     {
@@ -1062,7 +1047,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #endif /* ACE_WIN32 */
 
       // Make sure that the lock is held during all this.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::STDERR)
@@ -1196,7 +1181,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntrace_depth_ = %d\n"), this->trace_depth_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\trace_active_ = %d\n"), this->trace_active_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tracing_enabled_ = %d\n"), this->tracing_enabled_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npriority_mask_ = %x\n"), this->priority_mask_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npriority_mask_ = %d\n"), this->priority_mask_));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\thr_state_ = %d\n"),
                 this->thr_desc_->state ()));

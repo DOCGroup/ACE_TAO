@@ -98,8 +98,9 @@ char *
 Param_Test_i::test_unbounded_string (const char *s1,
                                      char *&s2,
                                      CORBA::String_out s3,
-                                     CORBA::Environment &)
+                                     CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
   char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
@@ -132,8 +133,9 @@ Param_Test::Fixed_Struct
 Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
                                  Param_Test::Fixed_Struct &s2,
                                  Param_Test::Fixed_Struct_out s3,
-                                 CORBA::Environment &)
+                                 CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   s2 = s1;
   s3 = s1;
   return s1;
@@ -217,8 +219,9 @@ Param_Test::StrSeq *
 Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
                            Param_Test::StrSeq &s2,
                            Param_Test::StrSeq_out s3,
-                           CORBA::Environment &)
+                           CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::StrSeq
@@ -432,8 +435,9 @@ Param_Test::AnySeq *
 Param_Test_i::test_anyseq (const Param_Test::AnySeq &s1,
                            Param_Test::AnySeq &s2,
                            Param_Test::AnySeq_out s3,
-                           CORBA::Environment &)
+                           CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::AnySeq
@@ -455,8 +459,9 @@ Param_Test::Var_Struct *
 Param_Test_i::test_var_struct (const Param_Test::Var_Struct &s1,
                                Param_Test::Var_Struct &s2,
                                Param_Test::Var_Struct_out s3,
-                               CORBA::Environment &)
+                               CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::Var_Struct
@@ -476,8 +481,9 @@ Param_Test::Nested_Struct *
 Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
                                   Param_Test::Nested_Struct &s2,
                                   Param_Test::Nested_Struct_out s3,
-                                  CORBA::Environment &)
+                                  CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::Nested_Struct
@@ -496,8 +502,9 @@ Param_Test::Objref_Struct *
 Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
                                   Param_Test::Objref_Struct &s2,
                                   Param_Test::Objref_Struct_out s3,
-                                  CORBA::Environment &)
+                                  CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::Objref_Struct
@@ -514,9 +521,9 @@ Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
 
 // make a Coffee object
 Coffee_ptr
-Param_Test_i::make_coffee (CORBA::Environment &ACE_TRY_ENV)
+Param_Test_i::make_coffee (CORBA::Environment &env)
 {
-  return this->obj_._this (ACE_TRY_ENV);
+  return this->obj_._this (env);
 }
 
 // test for object references
@@ -524,19 +531,19 @@ Coffee_ptr
 Param_Test_i::test_objref (Coffee_ptr o1,
                            Coffee_ptr &o2,
                            Coffee_out o3,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &env)
 {
   Coffee_ptr ret = Coffee::_nil ();
 
-  ACE_TRY
+  TAO_TRY
     {
-      Coffee_var myobj = obj_._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      Coffee_var myobj = obj_._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (!CORBA::is_nil (o2))
         CORBA::release (o2);
 
-      if (myobj->_is_equivalent (o1, ACE_TRY_ENV))
+      if (myobj->_is_equivalent (o1, env))
         {
           o2 = Coffee::_duplicate (myobj.in ());
           o3 = Coffee::_duplicate (myobj.in ());
@@ -548,17 +555,17 @@ Param_Test_i::test_objref (Coffee_ptr o1,
           o3 = Coffee::_nil ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
-      // env.exception (TAO_TRY_ENV.exception ());
+      TAO_TRY_ENV.print_exception ("System Exception");
+      env.exception (TAO_TRY_ENV.exception ());
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
-      // env.exception (TAO_TRY_ENV.exception ());
+      TAO_TRY_ENV.print_exception ("User Exception");
+      env.exception (TAO_TRY_ENV.exception ());
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return ret;
 }
@@ -568,7 +575,7 @@ CORBA::TypeCode_ptr
 Param_Test_i::test_typecode (CORBA::TypeCode_ptr t1,
                              CORBA::TypeCode_ptr &t2,
                              CORBA::TypeCode_out t3,
-                             CORBA::Environment &/*env*/)
+                             CORBA::Environment &env)
 {
   // we simply assign t1 to the others
   CORBA::TypeCode_ptr retval = CORBA::TypeCode::_duplicate (t1);
@@ -582,33 +589,19 @@ CORBA::Any *
 Param_Test_i::test_any (const CORBA::Any &a1,
                         CORBA::Any &a2,
                         CORBA::Any_out a3,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &env)
 {
   CORBA::Any *ret;
   CORBA::Short short_in;
   char *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
-  Param_Test::Short_Seq_ptr ub_short_sequence;
   Param_Test::Bounded_Short_Seq_ptr bd_short_sequence;
   Param_Test::Fixed_Struct *fixed_structure;
-  Param_Test::Big_Union *big_union;
 
   a2 = a1;
   a3 = new CORBA::Any (a1);
   ret = new CORBA::Any (a1);
-
-
-  if (TAO_debug_level > 0)
-    {
-      CORBA::TypeCode_var tc = a1.type ();
-      int kind = tc->kind (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Received any contents are <%d>\n",
-                  kind));
-    }
 
   // debug the incoming Any
   if (a1 >>= short_in)
@@ -649,20 +642,6 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       a2 <<= Param_Test::Fixed_Array_forany (array);
       *ret <<= Param_Test::Fixed_Array_forany (array);
     }
-  else if (a1 >>= ub_short_sequence)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Received Unbounded Short_Seq:"));
-          for (size_t i = 0; i < ub_short_sequence->length (); i++)
-            ACE_DEBUG ((LM_DEBUG, " %d", (*ub_short_sequence)[i]));
-          ACE_DEBUG ((LM_DEBUG, "\n"));
-        }
-      for (size_t i = 0; i < ub_short_sequence->length (); i++)
-        (*ub_short_sequence)[i] = i * i;
-      a2   <<= *ub_short_sequence;
-      *ret <<= *ub_short_sequence;
-    }
   else if (a1 >>= bd_short_sequence)
     {
       if (TAO_debug_level > 0)
@@ -682,32 +661,6 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
     }
-  else if (a1 >>= big_union)
-    {
-      Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
-      a1 >>= bu_in;
-
-      // Insert copies....
-      a2 <<= *bu_in;
-      *a3 <<= *bu_in;
-      *ret <<= *bu_in;
-
-      // Extract the value to compare...
-      a2 >>= bu_inout;
-      *a3 >>= bu_out;
-      *ret >>= bu_ret;
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Received Big Union\n"
-                    "  in %d\n"
-                    "  inout %d\n"
-                    "  out %d\n"
-                    "  ret %d\n",
-                    bu_in->the_long (),
-                    bu_inout->the_long (),
-                    bu_out->the_long (),
-                    bu_ret->the_long () ));
-    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "Received UNKNOWN type\n"));
@@ -721,9 +674,10 @@ Param_Test::Fixed_Array_slice *
 Param_Test_i::test_fixed_array (const Param_Test::Fixed_Array a1,
                                 Param_Test::Fixed_Array a2,
                                 Param_Test::Fixed_Array_out a3,
-                                CORBA::Environment &)
+                                CORBA::Environment &env)
 {
   Param_Test::Fixed_Array_slice *ret;
+  ACE_UNUSED_ARG (env);
 
   Param_Test::Fixed_Array_copy (a2, a1);
   Param_Test::Fixed_Array_copy (a3, a1);
@@ -736,9 +690,10 @@ Param_Test::Var_Array_slice *
 Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
                               Param_Test::Var_Array a2,
                               Param_Test::Var_Array_out a3,
-                              CORBA::Environment &)
+                              CORBA::Environment &env)
 {
   Param_Test::Var_Array_slice *ret;
+  ACE_UNUSED_ARG (env);
 
   Param_Test::Var_Array_copy (a2, a1);
   a3 = Param_Test::Var_Array_dup (a1);
@@ -750,7 +705,7 @@ CORBA::ULong
 Param_Test_i::test_exception (CORBA::ULong s1,
 			      CORBA::ULong& s2,
 			      CORBA::ULong_out s3,
-			      CORBA::Environment &ACE_TRY_ENV)
+			      CORBA::Environment &env)
 {
   int d = this->test_exception_count_ % 3;
   this->test_exception_count_++;
@@ -761,50 +716,15 @@ Param_Test_i::test_exception (CORBA::ULong s1,
       return s1 * 4;
     }
   else if (d == 1)
-      ACE_THROW_RETURN (Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"), s1), 0);
-  ACE_THROW_RETURN (Param_Test::BadBoy (), 0);
+    {
+      env.exception (new Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"),
+					    s1));
+      return 0;
+    }
+  env.exception (new Param_Test::BadBoy);
+  return 0;
 }
 
-Param_Test::Big_Union*
-Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
-			      Param_Test::Big_Union& u2,
-			      Param_Test::Big_Union_out u3,
-			      CORBA::Environment &)
-{
-  Param_Test::Big_Union_var ret (new Param_Test::Big_Union (u1));
-  u2 = u1;
-  u3 = new Param_Test::Big_Union (u1);
-  return ret._retn ();
-}
-
-CORBA::Any*
-Param_Test_i::test_complex_any (const CORBA::Any &a1,
-                                CORBA::Any &a2,
-                                CORBA::Any_out a3,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  CORBA::Any_var ret (new CORBA::Any (a1));
-  a2 = a1;
-  a3 = new CORBA::Any (a1);
-  return ret._retn ();
-}
-
-#if 0
-Param_Test::Multdim_Array_slice *
-Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
-                                  Param_Test::Multdim_Array a2,
-                                  Param_Test::Multdim_Array_out a3,
-                                  CORBA::Environment &)
-{
-  Param_Test::Multdim_Array_slice *ret;
-
-  Param_Test::Multdim_Array_copy (a2, a1);
-  Param_Test::Multdim_Array_copy (a3, a1);
-  ret = Param_Test::Multdim_Array_dup (a1);
-  return ret;
-}
-
-#endif
 void
 Param_Test_i::shutdown (CORBA::Environment &)
 {

@@ -157,7 +157,7 @@ int mib_load_ScrollBar(mib_Widget *thisw, mib_Buffer *fin)
   if (!mib_read_line(fin, res, val))
     return 0;
 
-  if (ACE_OS::strcmp (res,"EndWidget"))
+  if (strcmp(res,"EndWidget"))
     return 0;
 
   return 1;

@@ -100,10 +100,6 @@ void TAO_ORBSVCS_Export dump_event (const RtecEventComm::Event &event);
 // ************************************************************
 
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_ORBSVCS_Export ACE_RTU_Manager
 // = TITLE
 //   ACE RTU Manager
@@ -188,7 +184,7 @@ public:
   // enumerations defined below.
   // By default we activate the threads on construction, but it is
   // possible to create the EC first and activate the threads later.
-  // A factory for the modules can be provided, by default it uses
+  // A factory for the modules can be provided, by default it uses 
   // TAO_EC_Default_Module_Factory
   // If an scheduler is not provided it uses the singleton in
   // ACE_Scheduler_Factory.
@@ -266,7 +262,7 @@ public:
                       const ACE_Command_Base *act,
                       RtecScheduler::OS_Priority preemption_priority,
                       const RtecScheduler::Time& delta,
-                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero ());
+                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
   // Schedule a timer at the appropriate priority for <preemption_priority>.
   // Returns the preemption priority used on success, -1 on failure.
 
@@ -1248,8 +1244,7 @@ class ACE_EventChannel;
 
 // = Event Channel interfaces.
 
-class TAO_ORBSVCS_Export ACE_Push_Supplier_Proxy : public POA_RtecEventChannelAdmin::ProxyPushConsumer, public PortableServer::RefCountServantBase
-//
+class TAO_ORBSVCS_Export ACE_Push_Supplier_Proxy : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 // = TITLE
 //    Push Supplier Proxy.
 //
@@ -1282,6 +1277,9 @@ public:
   // Disconnect the supplier from the channel.
 
   // = Operations for the Event Channel.
+
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr get_ref (CORBA::Environment &);
+  // Allow transformations to RtecEventChannelAdmin::ProxyPushConsumer.
 
   int connected (void);
   // Returns 1 if the proxy has been connected to a "remote" client.
@@ -1325,8 +1323,7 @@ private:
 
 // ************************************************************
 
-class TAO_ORBSVCS_Export ACE_Push_Consumer_Proxy : public POA_RtecEventChannelAdmin::ProxyPushSupplier, public PortableServer::RefCountServantBase
-//
+class TAO_ORBSVCS_Export ACE_Push_Consumer_Proxy : public POA_RtecEventChannelAdmin::ProxyPushSupplier
 // = TITLE
 //     Push Consumer Proxy.
 //
@@ -1372,6 +1369,9 @@ public:
   void shutdown (void);
   // Actively disconnect from the consumer.
 
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr get_ref (CORBA::Environment &);
+  // Allow transformations to RtecEventChannelAdmin::ProxyPushSupplier.
+
   ACE_ES_Consumer_Correlation &correlation (void);
   // Access the consumer-specific Consumer_Correlation.
 
@@ -1397,9 +1397,5 @@ private:
 #if defined (__ACE_INLINE__)
 #include "Event_Channel.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #endif /* ACE_EVENT_CHANNEL_H */

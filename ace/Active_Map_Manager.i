@@ -1,87 +1,109 @@
 // $Id$
 
-ACE_INLINE
+ACE_INLINE 
 ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (void)
+  : index_ (~0),
+    generation_ (0)
 {
   // If you change ~0, please change ACE_Map_Manager::free_list_id()
   // accordingly.
-  this->key_data_.slot_index_ = ~0;
-  this->key_data_.slot_generation_ = 0;
 }
 
-ACE_INLINE
-ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (ACE_UINT32 slot_index,
-                                                        ACE_UINT32 slot_generation)
+ACE_INLINE 
+ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (u_long index, 
+                                                        u_long generation)
+  : index_ (index),
+    generation_ (generation)
 {
-  this->key_data_.slot_index_ = slot_index;
-  this->key_data_.slot_generation_ = slot_generation;
 }
 
-ACE_INLINE ACE_UINT32
-ACE_Active_Map_Manager_Key::slot_index (void) const
+ACE_INLINE u_long 
+ACE_Active_Map_Manager_Key::index (void) const
 {
-  return this->key_data_.slot_index_;
+  return this->index_;
 }
-
-ACE_INLINE ACE_UINT32
-ACE_Active_Map_Manager_Key::slot_generation (void) const
+  
+ACE_INLINE u_long 
+ACE_Active_Map_Manager_Key::generation (void) const
 {
-  return this->key_data_.slot_generation_;
+  return this->generation_;
 }
 
-ACE_INLINE int
+ACE_INLINE int 
 ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) const
 {
-  return
-    this->key_data_.slot_index_ == rhs.key_data_.slot_index_ &&
-    this->key_data_.slot_generation_ == rhs.key_data_.slot_generation_;
+  return 
+    this->index_ == rhs.index_ &&
+    this->generation_ == rhs.generation_;
 }
 
-ACE_INLINE int
+ACE_INLINE int 
 ACE_Active_Map_Manager_Key::operator!= (const ACE_Active_Map_Manager_Key &rhs) const
 {
   return !this->operator== (rhs);
 }
 
-ACE_INLINE void
-ACE_Active_Map_Manager_Key::slot_index (ACE_UINT32 i)
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::index (u_long i)
 {
-  this->key_data_.slot_index_ = i;
+  this->index_ = i;
+}
+  
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::generation (u_long g)
+{
+  this->generation_ = g;
 }
 
-ACE_INLINE void
-ACE_Active_Map_Manager_Key::slot_generation (ACE_UINT32 g)
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::increment_generation_count (void)
 {
-  this->key_data_.slot_generation_ = g;
-}
-
-ACE_INLINE void
-ACE_Active_Map_Manager_Key::increment_slot_generation_count (void)
-{
-  ++this->key_data_.slot_generation_;
+  ++this->generation_;
 }
 
 /* static */
 ACE_INLINE size_t
 ACE_Active_Map_Manager_Key::size (void)
 {
-  return sizeof (ACE_UINT32) + sizeof (ACE_UINT32);
+  return sizeof (u_long) + sizeof (u_long);
 }
 
-ACE_INLINE void
-ACE_Active_Map_Manager_Key::decode (const void *data)
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::decode (const void *d)
 {
-  // Copy the information from the user buffer into the key.
-  ACE_OS::memcpy (&this->key_data_,
+  // Cast so that we can do pointer arithmetic.
+  const char *data = (const char *) d;
+
+  // Grab the index first.
+  ACE_OS::memcpy (&this->index_,
                   data,
-                  sizeof this->key_data_);
+                  sizeof this->index_);
+
+  // Move along...
+  data += sizeof this->index_;
+
+  // Grab the generation second.
+  ACE_OS::memcpy (&this->generation_,
+                  data,
+                  sizeof this->generation_);
 }
 
-ACE_INLINE void
-ACE_Active_Map_Manager_Key::encode (void *data) const
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::encode (void *d) const
 {
-  // Copy the key data to the user buffer.
+  // Cast so that we can do pointer arithmetic.
+  char *data = (char *) d;
+
+  // Grab the index first.
   ACE_OS::memcpy (data,
-                  &this->key_data_,
-                  sizeof this->key_data_);
+                  &this->index_,
+                  sizeof this->index_);
+
+  // Move along...
+  data += sizeof this->index_;
+
+  // Grab the generation second.
+  ACE_OS::memcpy (data,
+                  &this->generation_,
+                  sizeof this->generation_);
 }

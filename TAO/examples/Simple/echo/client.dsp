@@ -93,7 +93,7 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Echo_Client_i.cpp
+SOURCE=.\Client_i.cpp
 # End Source File
 # Begin Source File
 
@@ -103,17 +103,13 @@ SOURCE=.\EchoC.cpp
 
 SOURCE=.\EchoS.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=..\Simple_util.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Echo_Client_i.h
+SOURCE=.\Client_i.h
 # End Source File
 # Begin Source File
 
@@ -127,10 +123,6 @@ SOURCE=.\EchoS.h
 
 SOURCE=.\EchoS_T.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\Simple_util.h
-# End Source File
 # End Group
 # Begin Group "IDL Files"
 
@@ -141,7 +133,6 @@ SOURCE=.\Echo.idl
 
 !IF  "$(CFG)" == "Simple Echo Client - Win32 Release"
 
-USERDEP__ECHO_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Echo.idl
 InputName=Echo

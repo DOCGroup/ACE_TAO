@@ -19,6 +19,7 @@
 #include "ace/ACE.h"
 
 #include "ace/Log_Priority.h"
+#include "ace/SString.h"
 
 #ifndef ACE_LOG_RECORD_H
 #define ACE_LOG_RECORD_H

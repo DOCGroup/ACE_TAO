@@ -29,6 +29,7 @@
 // Template instantiation definitions
 // #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
 #define ACE_TEMPLATES_REQUIRE_SOURCE
+#define ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE
 
 #include <signal.h>          //JINLU
 #include <pna.h>             //JINLU
@@ -191,8 +192,6 @@
 #define ACE_PSOS_LACKS_PHILE
 #define ACE_PSOS_LACKS_PREPC
 #define ACE_PSOS_CANT_USE_SYS_TYPES
-#define ACE_PSOS_HAS_TIME
-
 
 //#define ACE_PSOS_SNARFS_HEADER_INFO
 

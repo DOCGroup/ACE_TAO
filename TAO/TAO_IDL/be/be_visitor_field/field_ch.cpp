@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_field.h"
 
@@ -70,7 +70,7 @@ be_visitor_field_ch::visit_field (be_field *node)
                          "codegen for field type failed\n"
                          ), -1);
     }
-  // now output the field name.
+  // now output the field name. 
   *os << " " << node->local_name () << ";\n";
   return 0;
 }
@@ -237,52 +237,6 @@ be_visitor_field_ch::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
-// visit valuetype type
-int
-be_visitor_field_ch::visit_valuetype (be_valuetype *node)
-{
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  // if not a typedef and we are defined in the use scope, we must be defined
-  os->indent ();
-  *os <<  bt->nested_type_name (this->ctx_->scope (), "")
-      << "_var";
-  return 0;
-}
-
-// visit valuetype forward type
-int
-be_visitor_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
-{
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  // if not a typedef and we are defined in the use scope, we must be defined
-  os->indent ();
-  *os << bt->nested_type_name (this->ctx_->scope (), "")
-      << "_var";
-  return 0;
-}
-
-#endif /* IDL_HAS_VALUETYPE */
-
 // visit predefined type
 int
 be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
@@ -300,15 +254,7 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
   // if not a typedef and we are defined in the use scope, we must be defined
   os->indent (); // start from current indentation level
   if (node->pt () == AST_PredefinedType::PT_pseudo) // is a psuedo obj
-    {
-      // check if we are dealing with a CORBA::Object
-      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
-        {
-          *os << "TAO_Object_Field_T<CORBA::Object>";
-        }
-      else
-        *os << bt->nested_type_name (this->ctx_->scope (), "_var");
-    }
+    *os << bt->nested_type_name (this->ctx_->scope (), "_var");
   else
     *os << bt->nested_type_name (this->ctx_->scope ());
   return 0;

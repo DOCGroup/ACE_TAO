@@ -34,11 +34,6 @@ typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
 
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
-  // = TITLE
-  //   The IIOP-specific bridge class for the concrete acceptor.
-  //
-  // = DESCRIPTION
-  //   @@ Fred, please fill in here.
 public:
   // TAO_IIOP_Acceptor (ACE_INET_Addr &addr);
   // Create Acceptor object using addr.
@@ -53,18 +48,15 @@ public:
   // create profile object for this Acceptor using the SAP
   // (service access point, Host and Port) and object_key.
 
-  virtual ACE_Event_Handler *acceptor (void);
+  virtual ACE_Event_Handler* acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 
-  virtual int close (void);
-  // Closes the acceptor
-
 private:
+
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
-  // the concrete acceptor, as a pointer to it's base class.
 
   CORBA::ULong tag_;
-  //  the IOP specific tag.
+
 };
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */

@@ -101,9 +101,9 @@ Results::print_stats (void)
 
 void
 Results::print_exception (const char *call_name,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
-  //ACE_PRINT_EXCEPTION (call_name);
+  env.print_exception (call_name);
 }
 
 void

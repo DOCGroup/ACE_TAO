@@ -22,9 +22,6 @@
 #include "ace/Get_Opt.h"
 #include "ntsvc.h"
 
-// Default for the -i (install) option
-#define DEFAULT_SERVICE_INIT_STARTUP     SERVICE_AUTO_START
-
 class Process
 {
 public:
@@ -77,7 +74,7 @@ Process::print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_INFO,
               "Usage: %s"
-              " -in -r -s -k -tn -d\n"
+              " -in -r -s -k -tn -d\n%a"
               "  -i: Install this program as an NT service, with specified startup\n"
               "  -r: Remove this program from the Service Manager\n"
               "  -s: Start the service\n"
@@ -86,7 +83,7 @@ Process::print_usage_and_die (void)
               "  -d: Debug; run as a regular application\n",
               progname,
               0));
-  ACE_OS::exit(1);
+  /* NOTREACHED */
 }
 
 void 
@@ -101,8 +98,6 @@ Process::parse_args (int argc, char* argv[])
     case 'i':
       opt_install = 1;
       opt_startup = ACE_OS::atoi (get_opt.optarg);
-      if (opt_startup <= 0)
-         print_usage_and_die ();
       break;
     case 'r':
       opt_remove = 1;
@@ -116,24 +111,12 @@ Process::parse_args (int argc, char* argv[])
     case 't':
       opt_type = 1;
       opt_startup = ACE_OS::atoi (get_opt.optarg);
-      if (opt_startup <= 0)
-         print_usage_and_die ();
       break;
     case 'd':
       opt_debug = 1;
       break;
     default:
-      // -i can also be given without a value - if so, it defaults
-      // to defined value.
-      if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], "-i") == 0)
-      {
-        opt_install = 1;
-        opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
-      }
-      else
-      {
-        print_usage_and_die ();
-      }
+      print_usage_and_die ();
       break;
   }
 }
@@ -160,7 +143,12 @@ Process::run (int argc, char* argv[])
   parse_args (argc, argv);
 
   if (opt_install && !opt_remove)
-    return SERVICE::instance ()->insert (opt_startup);
+    {
+      if (opt_startup > 0)
+        return SERVICE::instance ()->insert (opt_startup);
+      else
+        return SERVICE::instance ()->insert ();
+    }
 
   if (opt_remove && !opt_install)
     return SERVICE::instance ()->remove ();

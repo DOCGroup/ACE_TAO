@@ -100,11 +100,10 @@ public:
   };
 
   // = Initialization and termination.
-  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
+  ACE_Message_Block (void);
   // Create an empty message.
 
-  ACE_Message_Block (ACE_Data_Block *,
-                     ACE_Allocator *message_block_allocator = 0);
+  ACE_Message_Block (ACE_Data_Block *);
   // Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *.
 
   ACE_Message_Block (const char *data,
@@ -124,8 +123,7 @@ public:
                      u_long priority = 0,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
                      const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
-                     ACE_Allocator *data_block_allocator = 0,
-                     ACE_Allocator *message_block_allocator = 0);
+                     ACE_Allocator *data_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -139,13 +137,6 @@ public:
   // The <data_block_allocator> is use to allocate the data blocks
   // while the <allocator_strategy> is used to allocate the buffers
   // contained by those.
-  // The <message_block_allocator> is used to allocate new
-  // <Message_Block> objects when a duplicate method is called.  If
-  // a <message_block_allocator> is given, this <Message_Block> and
-  // future <Message_Block> objects created by duplicate will be free'ed
-  // into this allocator when they are released.  Note: if you use this
-  // allocator, the <Message_Block> you created should have been created
-  // using this allocator because it will be released to the same allocator.
 
   int init (const char *data,
             size_t size = 0);
@@ -163,8 +154,7 @@ public:
             u_long priority = 0,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
             const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
-            ACE_Allocator *data_block_allocator = 0,
-            ACE_Allocator *message_block_allocator = 0);
+            ACE_Allocator *data_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -181,9 +171,6 @@ public:
 
   virtual ~ACE_Message_Block (void);
   // Delete all the resources held in the message.
-  //
-  // Note that release() is designed to release the continuation
-  // chain; the destructor is not. See release() for details.
 
   // = Message Type accessors and mutators.
 
@@ -250,24 +237,6 @@ public:
   // ACE_Data_Block's reference count goes to 0, it is deleted.
   // In all cases, this ACE_Message_Block is deleted - it must have come
   // from the heap, or there will be trouble.
-  //
-  // release() is designed to release the continuation chain; the
-  // destructor is not.  If we make the destructor release the
-  // continuation chain by calling release() or delete on the message
-  // blocks in the continuation chain, the following code will not
-  // work since the message block in the continuation chain is not off
-  // the heap:
-  //
-  //  ACE_Message_Block mb1 (1024);
-  //  ACE_Message_Block mb2 (1024);
-  //
-  //  mb1.cont (&mb2);
-  //
-  // And hence, call release() on a dynamically allocated message
-  // block. This will release all the message blocks in the
-  // continuation chain.  If you call delete or let the message block
-  // fall off the stack, cleanup of the message blocks in the
-  // continuation chain becomes the responsibility of the user.
 
   static ACE_Message_Block *release (ACE_Message_Block *mb);
   // This behaves like the non-static method <release>, except that it
@@ -323,23 +292,17 @@ public:
   void length (size_t n);
   // Set the length of the message
 
-  // = Set/get <Message_Block> size info.
-  size_t total_size (void) const;
-  // Get the total number of bytes in all <Message_Block>s, including
-  // chained <Message_Block>s.
-
+  // = Message size is the total amount of space alloted.
   size_t size (void) const;
-  // Get the number of bytes in the top-level <Message_Block> (i.e.,
-  // does not consider the bytes in chained <Message_Block>s).
-
+  // Get the total amount of space in the message.
   int size (size_t length);
-  // Set the number of bytes in the top-level <Message_Block>,
-  // reallocating space if necessary.  However, the <rd_ptr_> and
-  // <wr_ptr_> remain at the original offsets into the buffer, even if
-  // it is reallocated.  Returns 0 if successful, else -1.
+  // Set the total amount of space in the message, reallocating space
+  // if necessary.  However, the <rd_ptr_> and <wr_ptr_> remain at the
+  // original offsets into the buffer, even if it is reallocated.
+  // Returns 0 if successful, else -1.
 
   size_t space (void) const;
-  // Get the number of bytes in the top-level <Message_Block>.
+  // Get the amount of space remaining in the message.
 
   void crunch (void);
   // Normalizes data in message block to align with the base.
@@ -374,16 +337,13 @@ public:
   ACE_Lock *locking_strategy (ACE_Lock *);
   // Set a new locking strategy and return the hold one.
 
-  int reference_count (void) const;
-  // Get the current reference count.
-
   void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:
+private:
   // = Internal initialization methods.
   ACE_Message_Block (size_t size,
                      ACE_Message_Type type,
@@ -396,8 +356,7 @@ protected:
                      const ACE_Time_Value & execution_time,
                      const ACE_Time_Value & deadline_time,
                      ACE_Data_Block *db,
-                     ACE_Allocator *data_block_allocator,
-                     ACE_Allocator *message_block_allocator);
+                     ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
   int release_i (ACE_Lock *lock);
@@ -415,8 +374,7 @@ protected:
               const ACE_Time_Value & execution_time,
               const ACE_Time_Value & deadline_time,
               ACE_Data_Block *db,
-              ACE_Allocator *data_block_allocator,
-              ACE_Allocator *message_block_allocator);
+              ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
   size_t rd_ptr_;
@@ -448,11 +406,6 @@ protected:
   // Pointer to the reference counted data structure that contains the
   // actual memory buffer.
 
-  ACE_Allocator *message_block_allocator_;
-  // The allocator used to destroy ourselves when release is called
-  // and create new message blocks on duplicate.
-
-private:
   // = Disallow these operations for now (use <clone> instead).
   ACE_Message_Block &operator= (const ACE_Message_Block &);
   ACE_Message_Block (const ACE_Message_Block &);
@@ -557,7 +510,7 @@ public:
   ACE_Allocator *data_block_allocator (void) const;
   // Get the allocator used to create this object
 
-protected:
+private:
   ACE_Data_Block *release_i (void);
   // Internal release implementation
 
@@ -606,7 +559,6 @@ protected:
   ACE_Allocator *data_block_allocator_;
   // The allocator use to destroy ourselves.
 
-private:
   // = Disallow these operations.
   ACE_Data_Block &operator= (const ACE_Data_Block &);
   ACE_Data_Block (const ACE_Data_Block &);

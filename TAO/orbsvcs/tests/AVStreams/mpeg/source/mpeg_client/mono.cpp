@@ -86,11 +86,11 @@ MonoDitherImage(register unsigned char *lum, unsigned char *cr,
   register int next2;
 
   if(curr == NULL) {
-    curr = (int *)ACE_OS::malloc(sizeof(int) * (w + 2));
+    curr = (int *)malloc(sizeof(int) * (w + 2));
     curr += 1;
   }
   if(next == NULL) {
-    next = (int *)ACE_OS::malloc(sizeof(int) * (w + 2));
+    next = (int *)malloc(sizeof(int) * (w + 2));
     next += 1;
   }
 

@@ -36,8 +36,7 @@ TAO_Object_Field_T<T>::_downcast (CORBA_Object* base_ptr,
   CORBA::release (this->ptr_);
   this->ptr_ = 0;
   this->ptr_ = T::_narrow (base_ptr, env);
-  if (env.exception () != 0) 
-    return;
+  if (env.exception () != 0) return;
 }
 
 template<class T> CORBA_Object*

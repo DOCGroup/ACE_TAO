@@ -4,22 +4,24 @@
 // ============================================================================
 //
 // = DESCRIPTION
-//   This is a helper class for the throughput tests of the Event
-//   Channel.
+//   This test to measure how many events per minute can the EC
+//   process, it also serves as an example how how to encode complex
+//   data types in a octet sequence.
 //
 // ============================================================================
 
 #ifndef ECT_SUPPLIER_H
 #define ECT_SUPPLIER_H
 
-#include "ECT_Driver.h"
+#include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
-#include "ace/Task.h"
+#include "ECT_Driver.h"
 
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
 {
@@ -41,8 +43,8 @@ public:
                 int burst_size,
                 int event_size,
                 int burst_pause,
-                int type_start,
-                int type_count,
+                int event_a,
+                int event_b,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
   // This method connects the supplier to the EC.
@@ -63,9 +65,6 @@ public:
   void dump_results (const char* name);
   // Dump the results...
 
-  void accumulate (ECT_Driver::Throughput_Stats& stats) const;
-  // Add our statistics to <stats>
-
 private:
   ECT_Driver *driver_;
   // Class we forward to.
@@ -83,15 +82,15 @@ private:
   // We also connect to the EC as a consumer so we can receive the
   // timeout events.
 
-  ECT_Driver::Throughput_Stats throughput_;
+  ACE_High_Res_Timer timer_;
   // Measure the elapsed time spent while sending the events.
 
   int burst_count_;
   int burst_size_;
   int event_size_;
   int burst_pause_;
-  int type_start_;
-  int type_count_;
+  int event_a_;
+  int event_b_;
   // The test data.
 };
 

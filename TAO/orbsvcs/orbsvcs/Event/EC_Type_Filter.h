@@ -12,6 +12,10 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   A per-consumer filter that only accept events whose type/source
+//   match.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -31,7 +35,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_Type_Filter : public TAO_EC_Filter
+class TAO_EC_Type_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   A filter based on event type/source
@@ -40,10 +44,12 @@ class TAO_ORBSVCS_Export TAO_EC_Type_Filter : public TAO_EC_Filter
   //   This filter only accept events with a predefined type/source,
   //   both the source and the type can be wildcards.
   //
+  // = MEMORY MANAGMENT
+  //
 public:
   TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header);
   // Constructor.
-
+  
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
@@ -60,16 +66,13 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info,
-                                CORBA::Environment &ACE_TRY_ENV);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter
                               (const TAO_EC_Type_Filter&))
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter& operator=
-                              (const TAO_EC_Type_Filter&))
+                              (const TAO_EC_Type_Filter&))  
 
 private:
   RtecEventComm::EventHeader header_;

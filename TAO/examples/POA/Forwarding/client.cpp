@@ -93,8 +93,7 @@ parse_args (int argc, char **argv)
 
 int do_calls (Foo_ptr foo_ptr)
 {
-  //  CORBA::Environment env;
-  ACE_DECLARE_NEW_CORBA_ENV;
+  CORBA::Environment env;
 
   CORBA::Long result = 0;
   
@@ -103,17 +102,24 @@ int do_calls (Foo_ptr foo_ptr)
       // About half way through
       if (i % 3 == 0)
         {
-          foo_ptr->forward (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (-1);
+          foo_ptr->forward (env);
+	  
+          // If exception
+          if (env.exception () != 0)
+            {
+              env.print_exception ("Foo::forward");
+              return -1;
+            }
         }
       else
         {
           // Invoke the doit() method of the foo reference.
-          result = foo_ptr->doit (ACE_TRY_ENV);
+          result = foo_ptr->doit (env);
+	  
           // If exception
-          if (ACE_TRY_ENV.exception () != 0)
+          if (env.exception () != 0)
           {
-            ACE_TRY_ENV.print_exception ("calling doit");
+            env.print_exception ("calling doit");
           }
           else
             // Print the result of doit () method of the foo
@@ -140,30 +146,51 @@ main (int argc, char **argv)
 {
   // @@ Michael, this function is too long.  Can you please break it
   // up into multiple smaller functions.
-  //CORBA::Environment env;
-  ACE_DECLARE_NEW_CORBA_ENV;
-
+  CORBA::Environment env;
+  
   // Initialize the ORB
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("CORBA::ORB_init");
+      return -1;
+    }
+  
   // Initialize options based on command-line arguments.
   int parse_args_result = parse_args (argc, argv);
   if (parse_args_result != 0)
     return parse_args_result;
   
   // Get an object reference from the argument string.
-  CORBA::Object_var object = orb->string_to_object (server_IOR_, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var object = orb->string_to_object (server_IOR_, env);
 
-  // Try to narrow the object reference to a Foo reference.
-  Foo_var foo_var = Foo::_narrow (object.in (), ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("CORBA::ORB::string_to_object");
+      return -1;
+    }
   
+  // Try to narrow the object reference to a Foo reference.
+  Foo_var foo_var = Foo::_narrow (object.in (), env);
+  
+  if (env.exception () != 0)
+    {
+      env.print_exception ("Foo::_narrow");
+      return -1;
+    }
   
   CORBA::String_var original_location =
-    orb->object_to_string (foo_var.in (), ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (foo_var.in (), env);
+
+  if (env.exception () == 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "original location = %s \n",
+                original_location.in ()));
+  else
+    {
+      env.print_exception ("ORB::object_to_string");
+      return -1;
+    }
 
   if (do_calls (foo_var.in()) == -1)
     return -1;

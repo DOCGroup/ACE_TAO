@@ -24,10 +24,7 @@
 // SunOS 5.6 has AIO calls.
 #define ACE_HAS_AIO_CALLS
 
-// Sunos 5.6's aio_* with RT signals is broken.  
-#define ACE_POSIX_AIOCB_PROACTOR
-
-// SunOS 5.6 has a buggy select
-#define ACE_HAS_LIMITED_SELECT
-
+// To match the LynxOS's definition of the aiocb structure.
+#define AIO_SYSRETURN aio_resultp.aio_return
+#define AIO_SYSERRNO aio_resultp.aio_errno
 #endif /* ACE_CONFIG_H */

@@ -25,11 +25,6 @@ if [ -x /bin/uname -a `uname -s` = 'HP-UX' ]; then
   export SHLIB_PATH
 fi
 
-if [ -x /bin/uname -a `uname -s` = 'AIX' ]; then
-  LIBPATH=$ACE_ROOT/ace:${LIBPATH:-/usr/lib:/lib}
-  export LIBPATH
-fi
-
 ####
 #### Process command line arguments.
 ####
@@ -81,7 +76,7 @@ run()
   fi
 
   if [ -f log/$1.log ]; then
-    sh ./run_tests.check log/$1.log
+    ./run_tests.check log/$1.log
   else
     echo "No log file (log/$1.log) is present"
   fi
@@ -107,10 +102,6 @@ if [ ! "$chorus" ]; then
   start_test_resources=`ipcs | egrep $user`
 fi # ! chorus
 
-ACE_BUILD_COMPONENTS=`$ACE_ROOT/bin/ace_components --ace`
-OTHER=`echo $ACE_BUILD_COMPONENTS | egrep ' Other '`
-TOKEN=`echo $ACE_BUILD_COMPONENTS | egrep ' Token '`
-
 echo "Starting ACE version $ace_version tests . . ."
 
 mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
@@ -126,10 +117,8 @@ run Time_Value_Test                     # tests Time_Value
 run High_Res_Timer_Test                 # tests High_Res_Timer
 run SString_Test                        # tests ACE_CString and ACE_SString
 run Collection_Test                     # tests ACE Collection classes
-test $chorus || test $LynxOS || test $Unicos || run DLL_Test # tests ACE_DLL class
 # Naming_Test: UNICOS fails due to feature not supported
-test $OTHER && \
-  (test $chorus || test $LynxOS || test $Unicos || run Naming_Test) # tests ACE_Naming_Context, ACE_WString
+test $chorus || test $LynxOS || test $Unicos || run Naming_Test # tests ACE_Naming_Context, ACE_WString
 
 run Handle_Set_Test                     # tests ACE_Handle_Set
 run OrdMultiSet_Test                    # tests ACE_Ordered_MultiSet
@@ -158,11 +147,11 @@ run Reactors_Test                       # tests ACE_Task, ACE_Mutex, ACE_Reactor
 run Reactor_Exceptions_Test             # tests ACE_Reactor and C++ exceptions
 run Reactor_Notify_Test                 # tests ACE_Reactor's notify() method, ACE_Task
 run Reactor_Timer_Test                  # tests ACE_Event_Handler, ACE_Reactor
-# test $OTHER && run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
-test $chorus || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
+# run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
+test $chorus || test $LynxOS || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
 run Notify_Performance_Test             # tests ACE_Event_Handler, ACE_Reactor
 run Reader_Writer_Test                  # tests ACE_Thread_Manager, ACE_Mutex
-test $chorus || run Priority_Reactor_Test # tests ACE_Priority_Reactor, ACE_Acceptor/ACE_Connector...
+test $chorus || test $LynxOS || run Priority_Reactor_Test # tests ACE_Priority_Reactor, ACE_Acceptor/ACE_Connector...
 test $chorus || run SOCK_Test           # tests ACE_Thread_Manager, ACE_SOCK_SAP
 test $chorus || run MT_SOCK_Test        # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector
 
@@ -175,14 +164,13 @@ run Buffer_Stream_Test                  # tests ACE_Service_Config, ACE_Stream (
 run Priority_Buffer_Test                # tests ACE_Service_Config, ACE_Message_Queue
 run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynamic_Message_Queue
 run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursive_Thread_Mutex
-run Reverse_Lock_Test                   # tests ACE_Reverse_Lock
 
 # Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 if [ -f ../netsvcs/servers/main ]; then
-  test $TOKEN && (test $chorus || test $Unicos || run Time_Service_Test) # tests libnetsvcs
+  test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test # tests libnetsvcs
 fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
-test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
+test $chorus || test $LynxOS || test $Unicos || run Tokens_Test # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Map_Test                            # tests ACE_Map + Forward and Reverse Map Iterators.
@@ -201,7 +189,6 @@ run IOStream_Test                       # tests ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
 test $chorus || run Upgradable_RW_Test  # tests ACE_RW locks
 test $chorus || run Conn_Test           # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector, ACE_SOCK_SAP
-run New_Fail_Test                       # tests correct ACE_NEW[_RETURN]
 
 echo "Finished ACE version $ace_version tests."
 

@@ -24,8 +24,10 @@ CCFLAGS = -I$(ACE_ROOT)/ASNMP/
 LSRC   = $(addsuffix .cpp,$(BIN))
 LDLIBS := -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR))
 
+BUILD = $(VBIN)
+
 # For make depend:
-PSRC = -I..
+SRC = -I..
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

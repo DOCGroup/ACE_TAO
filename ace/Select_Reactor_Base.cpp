@@ -294,12 +294,6 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                  this->select_reactor_.wait_set_,
                                  ACE_Reactor::CLR_MASK);
 
-  // And suspend_set.
-  this->select_reactor_.bit_ops (handle,
-                                 mask,
-                                 this->select_reactor_.suspend_set_,
-                                 ACE_Reactor::CLR_MASK);
-
   // Note the fact that we've changed the state of the <wait_set_>,
   // which is used by the dispatching loop to determine whether it can
   // keep going or if it needs to reconsult select().
@@ -640,12 +634,6 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
             case ACE_Event_Handler::EXCEPT_MASK:
               result = buffer.eh_->handle_exception (ACE_INVALID_HANDLE);
               break;
-            case ACE_Event_Handler::QOS_MASK:
-              result = buffer.eh_->handle_qos (ACE_INVALID_HANDLE);
-              break;
-            case ACE_Event_Handler::GROUP_QOS_MASK:
-              result = buffer.eh_->handle_group_qos (ACE_INVALID_HANDLE);
-              break;
             default:
               // Should we bail out if we get an invalid mask?
               ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
@@ -705,21 +693,17 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
   ACE_FDS_PTMF ptmf  = &ACE_Handle_Set::set_bit;
   u_long omask = ACE_Event_Handler::NULL_MASK;
 
-  // Find the old reactor masks.  This automatically does the work of
-  // the GET_MASK operation.
-  if (handle_set.rd_mask_.is_set (handle))
-    ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
-  if (handle_set.wr_mask_.is_set (handle))
-    ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
-  if (handle_set.ex_mask_.is_set (handle))
-    ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
-
   switch (ops)
     {
     case ACE_Reactor::GET_MASK:
-      // The work for this operation is done in all cases at the
-      // begining of the function.
+      if (handle_set.rd_mask_.is_set (handle))
+        ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
+      if (handle_set.wr_mask_.is_set (handle))
+        ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
+      if (handle_set.ex_mask_.is_set (handle))
+        ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
       break;
+
     case ACE_Reactor::CLR_MASK:
       ptmf = &ACE_Handle_Set::clr_bit;
       /* FALLTHRU */
@@ -741,6 +725,7 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
         {
           (handle_set.rd_mask_.*ptmf) (handle);
+          ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
         }
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.rd_mask_.clr_bit (handle);
@@ -752,6 +737,7 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
                               ACE_Event_Handler::CONNECT_MASK))
         {
           (handle_set.wr_mask_.*ptmf) (handle);
+          ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
         }
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.wr_mask_.clr_bit (handle);
@@ -765,6 +751,7 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           )
         {
           (handle_set.ex_mask_.*ptmf) (handle);
+          ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
         }
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.ex_mask_.clr_bit (handle);

@@ -2,14 +2,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class T> ACE_INLINE int
-ACE_Noop_Key_Generator<T>::operator() (T &)
-{
-  return -1;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T> ACE_INLINE
 ACE_Incremental_Key_Generator<T>::ACE_Incremental_Key_Generator (void)
   : t_ (0)
@@ -56,7 +48,7 @@ ACE_Iterator<T>::ACE_Iterator (const ACE_Iterator<T> &rhs)
   : implementation_ (rhs.implementation_->clone ())
 {
 }
-
+  
 template <class T> ACE_INLINE
 ACE_Iterator<T>::~ACE_Iterator (void)
 {
@@ -71,13 +63,13 @@ ACE_Iterator<T>::operator= (const ACE_Iterator<T> &rhs)
   return *this;
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE int 
 ACE_Iterator<T>::operator== (const ACE_Iterator<T> &rhs) const
 {
   return this->implementation_->compare (*rhs.implementation_);
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE int 
 ACE_Iterator<T>::operator!= (const ACE_Iterator<T> &rhs) const
 {
   return !this->operator== (rhs);
@@ -96,7 +88,7 @@ ACE_Iterator<T>::operator++ (void)
   return *this;
 }
 
-template <class T> ACE_INLINE ACE_Iterator<T>
+template <class T> ACE_INLINE ACE_Iterator<T> 
 ACE_Iterator<T>::operator++ (int)
 {
   ACE_Iterator<T> tmp = *this;
@@ -111,7 +103,7 @@ ACE_Iterator<T>::operator-- (void)
   return *this;
 }
 
-template <class T> ACE_INLINE ACE_Iterator<T>
+template <class T> ACE_INLINE ACE_Iterator<T> 
 ACE_Iterator<T>::operator-- (int)
 {
   ACE_Iterator<T> tmp = *this;
@@ -138,7 +130,7 @@ ACE_Reverse_Iterator<T>::ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rh
   : implementation_ (rhs.implementation_->clone ())
 {
 }
-
+  
 template <class T> ACE_INLINE
 ACE_Reverse_Iterator<T>::~ACE_Reverse_Iterator (void)
 {
@@ -153,13 +145,13 @@ ACE_Reverse_Iterator<T>::operator= (const ACE_Reverse_Iterator<T> &rhs)
   return *this;
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE int 
 ACE_Reverse_Iterator<T>::operator== (const ACE_Reverse_Iterator<T> &rhs) const
 {
   return this->implementation_->compare (*rhs.implementation_);
 }
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE int 
 ACE_Reverse_Iterator<T>::operator!= (const ACE_Reverse_Iterator<T> &rhs) const
 {
   return !this->operator== (rhs);
@@ -178,7 +170,7 @@ ACE_Reverse_Iterator<T>::operator++ (void)
   return *this;
 }
 
-template <class T> ACE_INLINE ACE_Reverse_Iterator<T>
+template <class T> ACE_INLINE ACE_Reverse_Iterator<T> 
 ACE_Reverse_Iterator<T>::operator++ (int)
 {
   ACE_Reverse_Iterator<T> tmp = *this;
@@ -193,7 +185,7 @@ ACE_Reverse_Iterator<T>::operator-- (void)
   return *this;
 }
 
-template <class T> ACE_INLINE ACE_Reverse_Iterator<T>
+template <class T> ACE_INLINE ACE_Reverse_Iterator<T> 
 ACE_Reverse_Iterator<T>::operator-- (int)
 {
   ACE_Reverse_Iterator<T> tmp = *this;
@@ -209,12 +201,12 @@ ACE_Reverse_Iterator<T>::impl (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE> ACE_INLINE
+template <class KEY, class VALUE> ACE_INLINE 
 ACE_Map<KEY, VALUE>::ACE_Map (void)
 {
 }
 
-template <class KEY, class VALUE> ACE_INLINE
+template <class KEY, class VALUE> ACE_INLINE 
 ACE_Map<KEY, VALUE>::~ACE_Map (void)
 {
 }
@@ -266,7 +258,7 @@ ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone (void) const
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE int
 ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs
+  const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs 
     = ACE_dynamic_cast_3_ref (const ACE_Map_Impl_Iterator_Adapter, T, IMPLEMENTATION, ENTRY, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -321,7 +313,7 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone (void) co
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE int
 ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs
+  const ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs 
     = ACE_dynamic_cast_3_ref (const ACE_Map_Impl_Reverse_Iterator_Adapter, T, IMPLEMENTATION, ENTRY, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -355,10 +347,10 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::impl (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::ACE_Map_Impl (ACE_Allocator *alloc)
   : implementation_ (alloc)
-{
+{  
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE
@@ -378,47 +370,47 @@ template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class RE
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::open (size_t length,
                                                 ACE_Allocator *alloc)
 {
-  return this->implementation_.open (length,
+  return this->implementation_.open (length, 
                                      alloc);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::close (void)
 {
   return this->implementation_.close ();
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind (const KEY &key,
                                                 const VALUE &value)
 {
-  return this->implementation_.bind (key,
+  return this->implementation_.bind (key, 
                                      value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_modify_key (const VALUE &value,
                                                            KEY &key)
 {
-  return this->implementation_.bind_modify_key (value,
+  return this->implementation_.bind_modify_key (value, 
                                                 key);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_create_key (const VALUE &value,
                                                            KEY &key)
 {
-  return this->implementation_.bind_create_key (value,
+  return this->implementation_.bind_create_key (value, 
                                                 key);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_create_key (const VALUE &value)
 {
   return this->implementation_.bind_create_key (value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::recover_key (const KEY &modified_key,
                                                        KEY &original_key)
 {
@@ -426,88 +418,88 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rec
                                             original_key);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (const KEY &key,
                                                   const VALUE &value)
 {
-  return this->implementation_.rebind (key,
+  return this->implementation_.rebind (key, 
                                        value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (const KEY &key,
                                                   const VALUE &value,
                                                   VALUE &old_value)
 {
-  return this->implementation_.rebind (key,
-                                       value,
+  return this->implementation_.rebind (key, 
+                                       value, 
                                        old_value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (const KEY &key,
                                                   const VALUE &value,
-                                                  KEY &old_key,
+                                                  KEY &old_key, 
                                                   VALUE &old_value)
 {
   return this->implementation_.rebind (key,
-                                       value,
+                                       value, 
                                        old_key,
                                        old_value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::trybind (const KEY &key,
                                                    VALUE &value)
 {
-  return this->implementation_.trybind (key,
+  return this->implementation_.trybind (key, 
                                         value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (const KEY &key,
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (const KEY &key, 
                                                 VALUE &value)
 {
   return this->implementation_.find (key,
                                      value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (const KEY &key)
 {
   return this->implementation_.find (key);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (const KEY &key)
 {
   return this->implementation_.unbind (key);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (const KEY &key,
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE int 
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (const KEY &key, 
                                                   VALUE &value)
 {
-  return this->implementation_.unbind (key,
+  return this->implementation_.unbind (key, 
                                        value);
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE size_t
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE size_t 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::current_size (void)
 {
   return this->implementation_.current_size ();
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE size_t
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE size_t 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::total_size (void)
 {
   return this->implementation_.total_size ();
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE void
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE void 
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::dump (void) const
 {
-  this->implementation_.dump ();
+  this->implementation_.dump ();  
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
@@ -563,7 +555,7 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::clone (void) const
 template <class T, class VALUE> ACE_INLINE int
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> &rhs
+  const ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> &rhs 
     = ACE_dynamic_cast_2_ref (const ACE_Active_Map_Manager_Iterator_Adapter, T, VALUE, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -572,10 +564,9 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_I
 template <class T, class VALUE> ACE_INLINE T
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).int_id_.first (),
-            (*implementation_).int_id_.second ());
+  ACE_Active_Map_Manager<VALUE>::ENTRY &entry = *this->implementation_;
+  return T (entry.int_id_.first (),
+            entry.int_id_.second ());
 }
 
 template <class T, class VALUE> ACE_INLINE void
@@ -619,7 +610,7 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::clone (void) const
 template <class T, class VALUE> ACE_INLINE int
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> &rhs
+  const ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> &rhs 
     = ACE_dynamic_cast_2_ref (const ACE_Active_Map_Manager_Reverse_Iterator_Adapter, T, VALUE, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -628,10 +619,9 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Re
 template <class T, class VALUE> ACE_INLINE T
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).int_id_.first (),
-            (*implementation_).int_id_.second ());
+  ACE_Active_Map_Manager<VALUE>::ENTRY &entry = *this->implementation_;
+  return T (entry.int_id_.first (),
+            entry.int_id_.second ());
 }
 
 template <class T, class VALUE> ACE_INLINE void
@@ -654,10 +644,10 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::impl (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc)
   : implementation_ (alloc)
-{
+{  
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE
@@ -677,38 +667,38 @@ template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::open (size_t length,
                                                                ACE_Allocator *alloc)
 {
-  return this->implementation_.open (length,
+  return this->implementation_.open (length, 
                                      alloc);
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::close (void)
 {
   return this->implementation_.close ();
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind (const KEY &,
                                                                const VALUE &)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_modify_key (const VALUE &value,
                                                                           KEY &key)
 {
   // Reserve a slot and create an active key.
   expanded_value *internal_value = 0;
   ACE_Active_Map_Manager_Key active_key;
-  int result = this->implementation_.bind (active_key,
+  int result = this->implementation_.bind (active_key, 
                                            internal_value);
   if (result == 0)
     {
       // Encode the active key and the existing user key into key part
       // of <expanded_value>.
       result = this->key_adapter_.encode (key,
-                                          active_key,
+                                          active_key, 
                                           internal_value->first ());
       if (result == 0)
         {
@@ -727,20 +717,20 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_modify_key (const 
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const VALUE &value,
                                                                           KEY &key)
 {
   // Reserve a slot and create an active key.
   expanded_value *internal_value = 0;
   ACE_Active_Map_Manager_Key active_key;
-  int result = this->implementation_.bind (active_key,
+  int result = this->implementation_.bind (active_key, 
                                            internal_value);
   if (result == 0)
     {
       // Encode the active key into key part of <expanded_value>.
       result = this->key_adapter_.encode (internal_value->first (),
-                                          active_key,
+                                          active_key, 
                                           internal_value->first ());
       if (result == 0)
         {
@@ -759,13 +749,13 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const 
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const VALUE &value)
 {
   // Reserve a slot and create an active key.
   expanded_value *internal_value = 0;
   ACE_Active_Map_Manager_Key active_key;
-  int result = this->implementation_.bind (active_key,
+  int result = this->implementation_.bind (active_key, 
                                            internal_value);
   if (result == 0)
     {
@@ -788,7 +778,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const 
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::recover_key (const KEY &modified_key,
                                                                       KEY &original_key)
 {
@@ -798,7 +788,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::recover_key (const KEY 
                                     original_key);
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
                                                                ACE_Pair<KEY, VALUE> *&internal_value)
 {
@@ -809,21 +799,21 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
   if (result == 0)
     {
       // Find recovered active key in map.
-      result = this->implementation_.find (active_key,
+      result = this->implementation_.find (active_key, 
                                            internal_value);
     }
-
+  
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key, 
                                                                VALUE &value)
 {
   expanded_value *internal_value = 0;
-  int result = this->find (key,
+  int result = this->find (key, 
                            internal_value);
-
+              
   if (result == 0)
     {
       // Copy value.
@@ -833,22 +823,22 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key)
 {
   expanded_value *internal_value = 0;
-  return this->find (key,
+  return this->find (key, 
                      internal_value);
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
                                                                  const VALUE &value)
 {
   expanded_value *internal_value = 0;
-  int result = this->find (key,
+  int result = this->find (key, 
                            internal_value);
-
+              
   if (result == 0)
     {
       // Reset value.
@@ -858,15 +848,15 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
                                                                  const VALUE &value,
                                                                  VALUE &old_value)
 {
   expanded_value *internal_value = 0;
-  int result = this->find (key,
+  int result = this->find (key, 
                            internal_value);
-
+              
   if (result == 0)
     {
       // Copy old value.
@@ -879,16 +869,16 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
                                                                  const VALUE &value,
-                                                                 KEY &old_key,
+                                                                 KEY &old_key, 
                                                                  VALUE &old_value)
 {
   expanded_value *internal_value = 0;
-  int result = this->find (key,
+  int result = this->find (key, 
                            internal_value);
-
+              
   if (result == 0)
     {
       // Copy old key and value.
@@ -902,14 +892,14 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::trybind (const KEY &,
                                                                   VALUE &)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
                                                                  ACE_Pair<KEY, VALUE> *&internal_value)
 {
@@ -920,29 +910,29 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
   if (result == 0)
     {
       // Unbind recovered active key from map.
-      result = this->implementation_.unbind (active_key,
+      result = this->implementation_.unbind (active_key, 
                                              internal_value);
     }
-
+  
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key)
 {
   expanded_value *internal_value = 0;
-  return this->unbind (key,
+  return this->unbind (key, 
                        internal_value);
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int 
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key, 
                                                                  VALUE &value)
 {
   expanded_value *internal_value = 0;
-  int result = this->unbind (key,
+  int result = this->unbind (key, 
                              internal_value);
-
+              
   if (result == 0)
     {
       // Copy value.
@@ -952,22 +942,22 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE size_t
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE size_t 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::current_size (void)
 {
   return this->implementation_.current_size ();
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE size_t
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE size_t 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::total_size (void)
 {
   return this->implementation_.total_size ();
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE void
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE void 
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::dump (void) const
 {
-  this->implementation_.dump ();
+  this->implementation_.dump ();  
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
@@ -1029,7 +1019,7 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE int
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs
+  const ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs 
     = ACE_dynamic_cast_5_ref (const ACE_Hash_Map_Manager_Ex_Iterator_Adapter, T, KEY, VALUE, HASH_KEY, COMPARE_KEYS, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -1038,10 +1028,9 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE T
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  return T (entry.ext_id_,
+            entry.int_id_);
 }
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE void
@@ -1085,7 +1074,7 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE int
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs
+  const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs 
     = ACE_dynamic_cast_5_ref (const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter, T, KEY, VALUE, HASH_KEY, COMPARE_KEYS, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -1094,10 +1083,9 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE T
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  return T (entry.ext_id_,
+            entry.int_id_);
 }
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE void
@@ -1120,10 +1108,10 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc)
   : implementation_ (alloc)
-{
+{  
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE
@@ -1143,58 +1131,58 @@ template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::open (size_t length,
                                                                                           ACE_Allocator *alloc)
 {
-  return this->implementation_.open (length,
+  return this->implementation_.open (length, 
                                      alloc);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::close (void)
 {
   return this->implementation_.close ();
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind (const KEY &key,
                                                                                           const VALUE &value)
 {
-  return this->implementation_.bind (key,
+  return this->implementation_.bind (key, 
                                      value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_modify_key (const VALUE &value,
                                                                                                      KEY &key)
 {
-  return this->implementation_.bind (key,
+  return this->implementation_.bind (key, 
                                      value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_create_key (const VALUE &value,
                                                                                                      KEY &key)
 {
   // Invoke the user specified key generation functor.
   int result = this->key_generator_ (key);
-
+  
   if (result == 0)
     {
       // Try to add.
-      result = this->implementation_.bind (key,
+      result = this->implementation_.bind (key, 
                                            value);
     }
 
   return result;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_create_key (const VALUE &value)
 {
   KEY key;
-  return this->bind_create_key (value,
+  return this->bind_create_key (value, 
                                 key);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::recover_key (const KEY &modified_key,
                                                                                                  KEY &original_key)
 {
@@ -1202,88 +1190,88 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
   return 0;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (const KEY &key,
                                                                                             const VALUE &value)
 {
-  return this->implementation_.rebind (key,
+  return this->implementation_.rebind (key, 
                                        value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (const KEY &key,
                                                                                             const VALUE &value,
                                                                                             VALUE &old_value)
 {
-  return this->implementation_.rebind (key,
-                                       value,
+  return this->implementation_.rebind (key, 
+                                       value, 
                                        old_value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (const KEY &key,
                                                                                             const VALUE &value,
-                                                                                            KEY &old_key,
+                                                                                            KEY &old_key, 
                                                                                             VALUE &old_value)
 {
   return this->implementation_.rebind (key,
-                                       value,
+                                       value, 
                                        old_key,
                                        old_value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::trybind (const KEY &key,
                                                                                              VALUE &value)
 {
-  return this->implementation_.trybind (key,
+  return this->implementation_.trybind (key, 
                                         value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (const KEY &key,
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (const KEY &key, 
                                                                                           VALUE &value)
 {
   return this->implementation_.find (key,
                                      value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (const KEY &key)
 {
   return this->implementation_.find (key);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (const KEY &key)
 {
   return this->implementation_.unbind (key);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (const KEY &key,
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE int 
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (const KEY &key, 
                                                                                             VALUE &value)
 {
-  return this->implementation_.unbind (key,
+  return this->implementation_.unbind (key, 
                                        value);
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE size_t
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE size_t 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::current_size (void)
 {
   return this->implementation_.current_size ();
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE size_t
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE size_t 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::total_size (void)
 {
   return this->implementation_.total_size ();
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE void
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE void 
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::dump (void) const
 {
-  this->implementation_.dump ();
+  this->implementation_.dump ();  
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
@@ -1345,7 +1333,7 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::clone (void) const
 template <class T, class KEY, class VALUE> ACE_INLINE int
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> &rhs
+  const ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> &rhs 
     = ACE_dynamic_cast_3_ref (const ACE_Map_Manager_Iterator_Adapter, T, KEY, VALUE, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -1354,10 +1342,9 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Imp
 template <class T, class KEY, class VALUE> ACE_INLINE T
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  return T (entry.ext_id_,
+            entry.int_id_);
 }
 
 template <class T, class KEY, class VALUE> ACE_INLINE void
@@ -1401,7 +1388,7 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::clone (void) const
 template <class T, class KEY, class VALUE> ACE_INLINE int
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs_base) const
 {
-  const ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> &rhs
+  const ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> &rhs 
     = ACE_dynamic_cast_3_ref (const ACE_Map_Manager_Reverse_Iterator_Adapter, T, KEY, VALUE, rhs_base);
 
   return this->implementation_ == rhs.implementation_;
@@ -1410,10 +1397,9 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reve
 template <class T, class KEY, class VALUE> ACE_INLINE T
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  return T (entry.ext_id_,
+            entry.int_id_);
 }
 
 template <class T, class KEY, class VALUE> ACE_INLINE void
@@ -1436,10 +1422,10 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::impl (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::ACE_Map_Manager_Adapter (ACE_Allocator *alloc)
   : implementation_ (alloc)
-{
+{  
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE
@@ -1459,50 +1445,50 @@ template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::open (size_t length,
                                                           ACE_Allocator *alloc)
 {
-  return this->implementation_.open (length,
+  return this->implementation_.open (length, 
                                      alloc);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::close (void)
 {
   return this->implementation_.close ();
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind (const KEY &key,
                                                           const VALUE &value)
 {
-  return this->implementation_.bind (key,
+  return this->implementation_.bind (key, 
                                      value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_modify_key (const VALUE &value,
                                                                      KEY &key)
 {
-  return this->implementation_.bind (key,
+  return this->implementation_.bind (key, 
                                      value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE &value,
                                                                      KEY &key)
 {
   // Invoke the user specified key generation functor.
   int result = this->key_generator_ (key);
-
+  
   if (result == 0)
     {
       // Try to add.
-      result = this->implementation_.bind (key,
+      result = this->implementation_.bind (key, 
                                            value);
     }
 
   return result;
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE &value)
 {
   KEY key;
@@ -1510,7 +1496,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE
                                 key);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::recover_key (const KEY &modified_key,
                                                                  KEY &original_key)
 {
@@ -1518,88 +1504,88 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::recover_key (const KEY &modi
   return 0;
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
                                                             const VALUE &value)
 {
-  return this->implementation_.rebind (key,
+  return this->implementation_.rebind (key, 
                                        value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
                                                             const VALUE &value,
                                                             VALUE &old_value)
 {
-  return this->implementation_.rebind (key,
-                                       value,
+  return this->implementation_.rebind (key, 
+                                       value, 
                                        old_value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
                                                             const VALUE &value,
-                                                            KEY &old_key,
+                                                            KEY &old_key, 
                                                             VALUE &old_value)
 {
   return this->implementation_.rebind (key,
-                                       value,
+                                       value, 
                                        old_key,
                                        old_value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::trybind (const KEY &key,
                                                              VALUE &value)
 {
-  return this->implementation_.trybind (key,
+  return this->implementation_.trybind (key, 
                                         value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (const KEY &key,
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (const KEY &key, 
                                                           VALUE &value)
 {
   return this->implementation_.find (key,
                                      value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (const KEY &key)
 {
   return this->implementation_.find (key);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (const KEY &key)
 {
   return this->implementation_.unbind (key);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (const KEY &key,
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE int 
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (const KEY &key, 
                                                             VALUE &value)
 {
-  return this->implementation_.unbind (key,
+  return this->implementation_.unbind (key, 
                                        value);
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE size_t
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE size_t 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::current_size (void)
 {
   return this->implementation_.current_size ();
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE size_t
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE size_t 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::total_size (void)
 {
   return this->implementation_.total_size ();
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE void
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE void 
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::dump (void) const
 {
-  this->implementation_.dump ();
+  this->implementation_.dump ();  
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *

@@ -3,10 +3,6 @@
 #ifndef ACE_CONFIG_WINCE_H
 #define ACE_CONFIG_WINCE_H
 
-#if !defined (ACE_HAS_WINCE)
-#define ACE_HAS_WINCE 1
-#endif
-
 // Only DLL version is supported on CE.
 #if defined (ACE_HAS_DLL)
 # undef ACE_HAS_DLL
@@ -20,10 +16,10 @@
 #define ACE_HAS_WINNT4 0
 
 // You must use MFC with ACE on CE.
-//  #if defined (ACE_HAS_MFC)
-//  # undef ACE_HAS_MFC
-//  #endif /* ACE_HAS_MFC */
-//  #define ACE_HAS_MFC 1
+#if defined (ACE_HAS_MFC)
+# undef ACE_HAS_MFC
+#endif /* ACE_HAS_MFC */
+#define ACE_HAS_MFC 1
 
 // So is UNICODE.
 #if defined (ACE_HAS_UNICODE)
@@ -41,12 +37,8 @@
 #endif /* ACE_HAS_STRICT */
 #define ACE_HAS_STRICT 1
 
-#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
-
-// We need to rename program entry name "main" with ace_ce_main here
-// so that we can call it from CE's bridge class.
-#define ACE_MAIN ace_ce_main
-#define ACE_MAIN_OBJECT_MANAGER
+// Non-static object manager does not quite work with CE (yet.)
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0
 
 // SH3 cross-compiler can't handle inline functions correctly (along with other bugs.)
 #if defined (SH3) && defined (DEBUG)

@@ -83,57 +83,29 @@ ACE_NT_Service::handle_control (DWORD control_code)
   switch(control_code) {
   case SERVICE_CONTROL_SHUTDOWN:
   case SERVICE_CONTROL_STOP:
-    stop_requested(control_code);
+    report_status(SERVICE_STOP_PENDING);
+    /* how to cancel? */
     break;
 
   case SERVICE_CONTROL_PAUSE:
-    pause_requested(control_code);
+    report_status(SERVICE_PAUSE_PENDING);
+    this->suspend();
+    report_status(SERVICE_PAUSED);
     break;
 
   case SERVICE_CONTROL_CONTINUE:
-    continue_requested(control_code);
+    report_status(SERVICE_CONTINUE_PENDING);
+    this->resume();
+    report_status(SERVICE_RUNNING);
     break;
 
   case SERVICE_CONTROL_INTERROGATE:
-    interrogate_requested(control_code);
+    report_status(0);
     break;
   }
 
   return;
 
-}
-
-
-void
-ACE_NT_Service::stop_requested (DWORD)
-{
-  this->report_status (SERVICE_STOP_PENDING);
-  /* how to cancel? */
-}
-
-
-void
-ACE_NT_Service::pause_requested (DWORD)
-{
-  this->report_status (SERVICE_PAUSE_PENDING);
-  this->suspend ();
-  report_status (SERVICE_PAUSED);
-}
-
-
-void
-ACE_NT_Service::continue_requested (DWORD)
-{
-  this->report_status (SERVICE_CONTINUE_PENDING);
-  this->resume ();
-  report_status (SERVICE_RUNNING);
-}
-
-
-void
-ACE_NT_Service::interrogate_requested (DWORD)
-{
-  this->report_status (0);
 }
 
 
@@ -173,7 +145,7 @@ TCHAR this_exe[MAXPATHLEN];
       if (GetModuleFileName(0, this_exe, sizeof(this_exe)) == 0)
         return -1;
       exe_path = this_exe;
-    }
+    }	
 
   SC_HANDLE sc_mgr = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
   if (sc_mgr == 0)
@@ -355,67 +327,19 @@ DWORD
 ACE_NT_Service::state (ACE_Time_Value *wait_hint)
 {
 
-DWORD curr_state;
-
-  if (this->state (&curr_state, wait_hint) == -1)
-    return 0;
-  return curr_state;
-
-}
-
-
-int
-ACE_NT_Service::state (DWORD *pstate, ACE_Time_Value *wait_hint)
-{
-
   SC_HANDLE svc = this->svc_sc_handle();
   if (svc == 0)
-    return -1;
+    return 0;
 
-  if (QueryServiceStatus (svc, &this->svc_status_) == 0)
-    return -1;
-
+  QueryServiceStatus (svc, &this->svc_status_);
   if (wait_hint != 0)
     {
       wait_hint->msec(this->svc_status_.dwWaitHint);
     }
 
-  *pstate = this->svc_status_.dwCurrentState;
-
-  return 0;
+  return this->svc_status_.dwCurrentState;
 
 }
-
-
-
-// test_access
-//
-// Open a new handle, ignoring any handle open in svc_sc_handle_.  This
-// function's results are returned without leaving the handle open.
-int
-ACE_NT_Service::test_access (DWORD desired_access)
-{
-
-  int status = -1;     // Guilty until proven innocent
-
-  SC_HANDLE sc_mgr = OpenSCManager(0, 0, GENERIC_READ);
-  if (sc_mgr != 0)
-    {
-      SC_HANDLE handle = OpenService(sc_mgr,
-                                     this->name(),
-                                     desired_access);
-      CloseServiceHandle(sc_mgr);
-      if (handle != 0)
-        {
-          status = 0;
-          CloseServiceHandle (handle);
-        }
-    }
-
-  return status;
-
-}
-
 
 
 // report_status

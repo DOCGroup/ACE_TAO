@@ -9,16 +9,13 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-#include <osreldate.h>
-// Make sure we source in the OS version.
-
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if (__FreeBSD_version < 220000)
+#if (__FreeBSD__ < 3)
 #error Threads are not supported.
-#endif /* __FreeBSD_version < 220000 */
+#endif /* __FreeBSD < 3 */
 
 #define ACE_SIZEOF_LONG_DOUBLE 12
 
@@ -40,9 +37,8 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_CHARPTR_DL
-//#define ACE_USES_ASM_SYMBOL_IN_DLSYM
+#define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #define ACE_LACKS_SIGSET
-#define ACE_NEEDS_SCHED_H
 
 // Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
@@ -57,7 +53,7 @@ enum schedparam_policy {
 };
 
 // This won't be necessary after it is fixed in the system include headers.
-extern "C" { char * cuserid (char *s); }
+char * cuserid (char *s);
 
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
@@ -78,11 +74,8 @@ extern "C" { char * cuserid (char *s); }
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
-#if (__FreeBSD_version >= 300000)
-#define ACE_HAS_SIGINFO_T
-#endif /* __FreeBSD_version >= 300000 */
-
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+#define ACE_HAS_SIGINFO_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_SI_ADDR

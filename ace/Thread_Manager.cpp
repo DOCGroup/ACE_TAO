@@ -135,7 +135,7 @@ ACE_Thread_Descriptor::terminate ()
          // Threads created with THR_DAEMON shouldn't exist here, but
          // just to be safe, let's put it here.
 
-         if (ACE_BIT_DISABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_JOINING))
+         if (ACE_BIT_ENABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_JOINING))
            {
              if (ACE_BIT_DISABLED (this->flags_, THR_DETACHED | THR_DAEMON)
                  || ACE_BIT_ENABLED (this->flags_, THR_JOINABLE))
@@ -421,7 +421,6 @@ ACE_Thread_Exit::cleanup (void *instance, void *)
 // NOTE: this preprocessor directive should match the one in
 // ACE_Task_Base::svc_run () below.  This prevents the two statics
 // from being defined.
-
 ACE_Thread_Exit *
 ACE_Thread_Exit::instance (void)
 {
@@ -1259,38 +1258,6 @@ ACE_Thread_Manager::testcancel (ACE_thread_t t_id)
   return this->check_state (ACE_THR_CANCELLED, t_id);
 }
 
-// Thread information query functions.
-
-int
-ACE_Thread_Manager::hthread_within (ACE_hthread_t handle)
-{
-  ACE_TRACE ("ACE_Thread_Manager::hthread_within");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_monx, this->lock_, -1));
-
-  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-       !iter.done ();
-       iter.advance ())
-    if (ACE_OS::thr_cmp(iter.next ()->thr_handle_, handle))
-      return 1;
-
-  return 0;
-}
-
-int
-ACE_Thread_Manager::thread_within (ACE_thread_t tid)
-{
-  ACE_TRACE ("ACE_Thread_Manager::thread_within");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_monx, this->lock_, -1));
-
-  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-       !iter.done ();
-       iter.advance ())
-    if (ACE_OS::thr_equal (iter.next ()->thr_id_, tid))
-      return 1;
-
-  return 0;
-}
-
 // Get group ids for a particular thread id.
 
 int
@@ -2029,8 +1996,8 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
        iter.advance ())
     {
       if (iter.next ()->grp_id_ == grp_id
-          && this->find_task (iter.next ()->task_, i) == 0
-          && iter.next ()->task_ != 0)
+          && this->find_task (iter.next ()->task_, i) ==
+          0)
         tasks_count++;
 
       i++;
@@ -2057,60 +2024,6 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
   return threads_count;
 }
 
-// Returns in task_list a list of ACE_Tasks registered with ACE_Thread_Manager.
-
-int
-ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
-                                   size_t n)
-{
-  ACE_TRACE ("ACE_Thread_Manager::task_all_list");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-  ACE_Task_Base **task_list_iterator = task_list;
-  size_t task_list_count = 0;
-
-  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-       !iter.done ();
-       iter.advance ())
-    {
-      if (task_list_count >= n)
-        break;
-
-      if ( iter.next ()->task_ )
-        {
-          task_list_iterator[task_list_count] = iter.next ()->task_;
-          task_list_count++;
-        }
-    }
-
-  return task_list_count;
-}
-
-// Returns in thread_list a list of all thread ids
-
-int
-ACE_Thread_Manager::thread_all_list ( ACE_thread_t thread_list[],
-                                      size_t n)
-{
-  ACE_TRACE ("ACE_Thread_Manager::thread_all_list");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-  size_t thread_count = 0;
-
-  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-       !iter.done ();
-       iter.advance ())
-    {
-      if (thread_count >= n)
-        break;
-
-      thread_list[thread_count] = iter.next ()->thr_id_;
-      thread_count ++;
-    }
-
-  return thread_count;
-}
-
 // Returns in task_list a list of ACE_Tasks in a group.
 
 int
@@ -2123,6 +2036,7 @@ ACE_Thread_Manager::task_list (int grp_id,
 
   ACE_Task_Base **task_list_iterator = task_list;
   size_t task_list_count = 0;
+
   size_t i = 0;
 
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
@@ -2142,7 +2056,8 @@ ACE_Thread_Manager::task_list (int grp_id,
       i++;
     }
 
-  return task_list_count;
+
+  return 0;
 }
 
 // Returns in thread_list a list of thread ids in an ACE_Task.
@@ -2167,11 +2082,10 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
       if (iter.next ()->task_ == task)
         {
           thread_list[thread_count] = iter.next ()->thr_id_;
-          thread_count++;
+          thread_count ++;
         }
     }
-
-  return thread_count;
+  return 0;
 }
 
 // Returns in thread_list a list of thread handles in an ACE_Task.
@@ -2181,7 +2095,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
                                   ACE_hthread_t hthread_list[],
                                   size_t n)
 {
-  ACE_TRACE ("ACE_Thread_Manager::hthread_list");
+  ACE_TRACE ("ACE_Thread_Manager::thread_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   size_t hthread_count = 0;
@@ -2196,67 +2110,11 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
       if (iter.next ()->task_ == task)
         {
           hthread_list[hthread_count] = iter.next ()->thr_handle_;
-          hthread_count++;
+          hthread_count ++;
         }
     }
 
-  return hthread_count;
-}
-
-int
-ACE_Thread_Manager::thread_grp_list (int grp_id,
-                                     ACE_thread_t thread_list[],
-                                     size_t n)
-{
-  ACE_TRACE ("ACE_Thread_Manager::thread_grp_list");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-  size_t thread_count = 0;
-
-  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-       !iter.done ();
-       iter.advance ())
-    {
-      if (thread_count >= n)
-        break;
-
-      if (iter.next ()->grp_id_ == grp_id)
-        {
-          thread_list[thread_count] = iter.next ()->thr_id_;
-          thread_count++;
-        }
-    }
-
-  return thread_count;
-}
-
-// Returns in thread_list a list of thread handles in an ACE_Task.
-
-int
-ACE_Thread_Manager::hthread_grp_list (int grp_id,
-                                      ACE_hthread_t hthread_list[],
-                                      size_t n)
-{
-  ACE_TRACE ("ACE_Thread_Manager::hthread_list");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-  size_t hthread_count = 0;
-
-  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-       !iter.done ();
-       iter.advance ())
-    {
-      if (hthread_count >= n)
-        break;
-
-      if (iter.next ()->grp_id_ == grp_id)
-        {
-          hthread_list[hthread_count] = iter.next ()->thr_handle_;
-          hthread_count++;
-        }
-    }
-
-  return hthread_count;
+  return 0;
 }
 
 int

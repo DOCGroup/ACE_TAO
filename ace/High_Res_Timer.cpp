@@ -23,12 +23,48 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 # include "ace/Synch.h"
 # include "ace/Object_Manager.h"
 
+# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+
+u_long
+ACE_High_Res_Timer::get_registry_scale_factor (void)
+{
+  HKEY hk;
+  unsigned long speed;
+  unsigned long speed_size = sizeof speed;
+  unsigned long speed_type = REG_DWORD;
+
+  long rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE,
+                            ACE_TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"),
+                            NULL,
+                            KEY_READ,
+                            &hk);
+
+  if (rc != ERROR_SUCCESS)
+    // Couldn't find key
+    return 1;
+
+  rc = ::RegQueryValueEx (hk,
+                          ACE_TEXT ("~MHz"),
+                          0,
+                          &speed_type,
+                          (LPBYTE) &speed,
+                          &speed_size);
+
+  ::RegCloseKey (hk);
+
+  if (rc != ERROR_SUCCESS)
+    // Couldn't get the value
+    return 1;
+
+  return speed;
+}
+# endif /*ACE_WIN32 && ! ACE_HAS_WINCE */
+
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this
   // value.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
-  
 #else  /* ! (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
              ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
@@ -40,12 +76,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
              ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
 
-// This is used to tell if the global_scale_factor_ has been
-// set, and if high resolution timers are supported.
-/* static */
-int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
-
-
 ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor ()
 {
@@ -55,7 +85,7 @@ ACE_High_Res_Timer::global_scale_factor ()
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      defined (ghs) || defined (__GNUG__) || defined (__KCC))
   // Check if the global scale factor needs to be set, and do if so.
-  if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
+  if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
     {
       // Grab ACE's static object lock.  This doesn't have anything to
       // do with static objects; it's just a convenient lock to use.
@@ -63,26 +93,16 @@ ACE_High_Res_Timer::global_scale_factor ()
                                 *ACE_Static_Object_Lock::instance (), 0));
 
       // Double check
-      if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
+      if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
         {
 #         if defined (ACE_WIN32)
-            LARGE_INTEGER freq;
-            if (::QueryPerformanceFrequency (&freq))
-              // We have a high-res timer
-              ACE_High_Res_Timer::global_scale_factor 
-                (ACE_static_cast (unsigned int, 
-                                  freq.QuadPart / ACE_ONE_SECOND_IN_USECS));
-            else
-              // High-Res timers not supported
-              ACE_High_Res_Timer::global_scale_factor_status_ = -1;  
-
-            return ACE_High_Res_Timer::global_scale_factor_;
-
+            ACE_High_Res_Timer::global_scale_factor (
+              ACE_High_Res_Timer::get_registry_scale_factor ());
 #         elif defined (linux) && (__alpha__)
-            // Get the BogoMIPS from /proc.  It works fine on Alpha,
-            // only.  For other CPUs, it will be necessary to
-            // interpret the BogoMips, as described in the BogoMips
-            // mini-HOWTO.
+            // Get the BogoMIPS from /proc.  It works fine on
+            // Alpha and Pentium Pro.  For other CPUs, it will
+            // be necessary to interpret the BogoMips, as described
+            // in the BogoMips mini-HOWTO.
             FILE *cpuinfo;
             if ((cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r")))
               {
@@ -108,14 +128,12 @@ ACE_High_Res_Timer::global_scale_factor ()
             ACE_High_Res_Timer::calibrate ();
         }
     }
-
-  ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 #endif /* (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
            ACE_HAS_ALPHA_TIMER) && \
           ! ACE_HAS_HIGH_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
-  return ACE_High_Res_Timer::global_scale_factor_;
+  return global_scale_factor_;
 }
 
 ACE_High_Res_Timer::ACE_High_Res_Timer (void)
@@ -160,7 +178,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 
   // The addition of 5 below rounds instead of truncates.
   const ACE_UINT32 scale_factor =
-    (ticks.whole () / actual_sleep.whole () + 5) /
+    (ticks.whole () / actual_sleep.whole ()  +  5) /
     10u /* usec/100 usec */;
   ACE_High_Res_Timer::global_scale_factor (scale_factor);
 
@@ -177,20 +195,20 @@ ACE_High_Res_Timer::dump (void) const
              global_scale_factor ()));
 #if defined (ACE_LACKS_LONGLONG_T)
   ACE_DEBUG ((LM_DEBUG,
-             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
-             ASYS_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
-             ASYS_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
-             ASYS_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
+                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
+                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
+                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
              start_.hi (), start_.lo (),
              end_.hi (), end_.lo (),
              total_.hi (), total_.lo (),
              start_incr_.hi (), start_incr_.lo ()));
 #else  /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG,
-             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
-             ASYS_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
-             ASYS_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
-             ASYS_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
+                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
+                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
+                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
              ACE_CU64_TO_CU32 (start_ >> 32),
              ACE_CU64_TO_CU32 (start_ & 0xfffffffful),
              ACE_CU64_TO_CU32 (end_ >> 32),

@@ -1,33 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Wrappers for methods that have been moved to ACE_OS.
-
-ASYS_INLINE ssize_t
-ACE::read_n (ACE_HANDLE handle,
-             void *buf,
-             size_t len)
-{
-  ACE_TRACE ("ACE::read_n");
-  return ACE_OS::read_n (handle, buf, len);
-}
-
-ASYS_INLINE ssize_t
-ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
-{
-  ACE_TRACE ("ACE::send_n");
-  return ACE_OS::send_n (handle, buf, len);
-}
-
-ASYS_INLINE ssize_t
-ACE::write_n (ACE_HANDLE handle,
-              const void *buf,
-              size_t len)
-{
-  ACE_TRACE ("ACE::write_n");
-  return ACE_OS::write_n (handle, buf, len);
-}
-
 // Miscellaneous static methods used throughout ACE.
 
 ASYS_INLINE ssize_t
@@ -35,7 +8,7 @@ ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
 {
   ACE_TRACE ("ACE::send");
 
-#if defined (ACE_WIN32) || defined (ACE_PSOS)
+#if defined (ACE_WIN32)
   return ACE_OS::send (handle, (const char *) buf, len);
 #else
   return ACE_OS::write (handle, (const char *) buf, len);
@@ -53,7 +26,7 @@ ASYS_INLINE ssize_t
 ACE::recv (ACE_HANDLE handle, void *buf, size_t len)
 {
   ACE_TRACE ("ACE::recv");
-#if defined (ACE_WIN32) || defined (ACE_PSOS)
+#if defined (ACE_WIN32)
     return ACE_OS::recv (handle, (char *) buf, len);
 #else
     return ACE_OS::read (handle, (char *) buf, len);
@@ -71,24 +44,30 @@ ACE::recv (ACE_HANDLE handle, void *buf, size_t len, int flags)
 ASYS_INLINE char *
 ACE::strecpy (char *s, const char *t)
 {
-  return ACE_OS::strecpy (s, t);
+  ACE_TRACE ("ACE::strecpy");
+  register char *dscan = s;
+  register const char *sscan = t;
+
+  while ((*dscan++ = *sscan++) != '\0')
+    continue;
+
+  return dscan;
 }
 
 #if defined (ACE_HAS_UNICODE)
 ASYS_INLINE wchar_t *
 ACE::strecpy (wchar_t *s, const wchar_t *t)
 {
-  return ACE_OS::strecpy (s, t);
+  ACE_TRACE ("ACE::strecpy");
+  register wchar_t *dscan = s;
+  register const wchar_t *sscan = t;
+
+  while ((*dscan++ = *sscan++) != '\0')
+    continue;
+
+  return dscan;
 }
 #endif /* ACE_HAS_UNICODE */
-
-ASYS_INLINE void
-ACE::unique_name (const void *object,
-                  LPTSTR name,
-                  size_t length)
-{
-  ACE_OS::unique_name (object, name, length);
-}
 
 // Return flags currently associated with handle.
 
@@ -121,13 +100,13 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ASYS_INLINE char
+ASYS_INLINE char 
 ACE::nibble2hex (u_int n)
 {
   return ACE::hex_chars_[n & 0x0f];
 }
 
-ASYS_INLINE u_char
+ASYS_INLINE u_char 
 ACE::hex2byte (char c)
 {
   if (isdigit (c))

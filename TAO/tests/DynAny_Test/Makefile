@@ -59,7 +59,10 @@ CPPFLAGS += -I$(TAO_ROOT)
 basic_test:	$(addprefix $(VDIR),$(BASIC_TEST_OBJS))
 		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
+clean:		
+                -/bin/rm -rf $(VDIR)/*.o $(BIN) obj.* core Templates.DB .make.state
+
 realclean:	clean
-		-$(RM) da_testsC.* da_testsS.* da_testsS_T.*
+		-/bin/rm -rf da_testsC.* da_testsS.* da_testsS_T.*
 
 

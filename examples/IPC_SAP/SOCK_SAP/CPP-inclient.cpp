@@ -105,9 +105,7 @@ private:
   char oneway_;
   // Are we running oneway or twoway?
 
-  // Please leave the ; inside the parenthesis to avoid Green Hills
-  // (and probably other) compiler warning about extra ;.
-  ACE_MT (ACE_Barrier *barrier_;)
+  ACE_MT (ACE_Barrier *barrier_);
   // Barrier used to synchronize the start of all the threads.
 };
 
@@ -121,19 +119,17 @@ Options::Options (void)
     message_buf_ (0),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
-    oneway_ (1) // Make oneway calls the default.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , barrier_ (0)
-#endif /* ACE_MT_SAFE */
+    oneway_ (1), // Make oneway calls the default.
+    barrier_ (0)
 {
 }
 
 Options::~Options (void)
 {
-  ACE_MT (delete this->barrier_);
+  delete this->barrier_;
   delete [] this->message_buf_;
 }
-
+  
 // Options Singleton.
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
@@ -161,9 +157,9 @@ Options::init (void)
                   this->message_len_ - sizeof (ACE_UINT32));
 
   // Allocate the barrier with the correct count.
-  ACE_MT (ACE_NEW_RETURN (this->barrier_,
-                          ACE_Barrier (this->threads_),
-                          -1));
+  ACE_NEW_RETURN (this->barrier_,
+                  ACE_Barrier (this->threads_),
+                  -1);
   return 0;
 }
 
@@ -302,9 +298,9 @@ Options::shared_client_test (u_short port,
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) waiting...\n"));
-
+              
   // Wait for all other threads to finish initialization.
-  ACE_MT (this->barrier_->wait ());
+  this->barrier_->wait ();
   return buf;
 }
 // Static function entry point to the oneway client service.
@@ -438,9 +434,9 @@ Options::twoway_client_test (void *)
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
-              iteration,
-              real_time / double (iteration),
+	      ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+	      iteration,
+	      real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
 
   // Close the connection.
@@ -475,7 +471,7 @@ run_client (void)
   else
     ACE_Thread_Manager::instance ()->wait ();
 #else
-  *(OPTIONS::instance ()->thr_func) ();
+  client (0);
 #endif /* ACE_HAS_THREADS */
   return 0;
 }

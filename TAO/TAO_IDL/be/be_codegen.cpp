@@ -178,12 +178,6 @@ TAO_CodeGen::start_client_header (const char *fname)
       else
         *this->client_header_ << ">\n";
 
-      // Some compilers don't optimize the #ifndef header include
-      // protection, but do optimize based on #pragma once.
-      *this->client_header_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                            << "# pragma once\n"
-                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
-
       // Other include files
 
       if (idl_global->export_include () != 0)
@@ -287,7 +281,6 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_client_inline_fname (1) << "\"\n";
   *this->client_stubs_ << "#endif /* !defined INLINE */\n\n";
-
   return 0;
 }
 
@@ -400,12 +393,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       *this->server_header_ << "#include \"" <<
         idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
 
-      // Some compilers don't optimize the #ifndef header include
-      // protection, but do optimize based on #pragma once.
-      *this->server_header_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                            << "# pragma once\n"
-                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
-
       *this->server_header_ << "#if defined(_MSC_VER)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
@@ -513,7 +500,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   *this->server_skeletons_ << "#include \"" <<
     idl_global->be_get_server_inline_fname (1) << "\"\n";
   *this->server_skeletons_ << "#endif /* !defined INLINE */\n\n";
-
   return 0;
 }
 
@@ -589,8 +575,8 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       *this->server_template_skeletons_ << "#include \"" <<
         idl_global->be_get_server_template_inline_fname (1) << "\"\n";
       *this->server_template_skeletons_ << "#endif /* !defined INLINE */\n\n";
-
       return 0;
+
     }
 }
 
@@ -725,10 +711,9 @@ TAO_CodeGen::start_implementation_header (const char *fname)
                                            implementation_hdr);
             }
 
-      *this->implementation_header_
-        << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-        << "#pragma once\n"
-        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+      *this->implementation_header_ << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+                            << "#pragma once\n"
+                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
       const char* server_hdr =
         IDL_GlobalData::be_get_server_hdr_fname (1);

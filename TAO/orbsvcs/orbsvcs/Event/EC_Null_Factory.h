@@ -12,6 +12,10 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   A factory for a simple event channel: no filtering or any
+//   real-time features.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -33,7 +37,7 @@
 
 class TAO_EC_SupplierFiltering;
 
-class TAO_ORBSVCS_Export TAO_EC_Null_Factory : public TAO_EC_Factory
+class TAO_EC_Null_Factory : public TAO_EC_Factory
 {
   // = TITLE
   //   The factory for a simple event channel.
@@ -46,9 +50,11 @@ class TAO_ORBSVCS_Export TAO_EC_Null_Factory : public TAO_EC_Factory
   //   This object creates a single instance of the Supplier
   //
   // = MEMORY MANAGMENT
+  //   A single event channel instance can be used with an instance of
+  //   this class.
   //
 public:
-  TAO_EC_Null_Factory (void);
+  TAO_EC_Null_Factory (PortableServer::POA_ptr poa);
   // Constructor
 
   virtual ~TAO_EC_Null_Factory (void);
@@ -63,10 +69,6 @@ public:
       create_filter_builder (TAO_EC_Event_Channel*);
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*);
-  virtual TAO_EC_Supplier_Filter_Builder*
-      create_supplier_filter_builder (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*);
   virtual TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel*);
   virtual void
@@ -83,22 +85,14 @@ public:
       create_proxy_push_consumer (TAO_EC_Event_Channel*);
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
-  virtual TAO_EC_Timeout_Generator*
-      create_timeout_generator (TAO_EC_Event_Channel*);
+  virtual TAO_EC_Timer_Module*
+      create_timer_module (TAO_EC_Event_Channel*);
   virtual void
-      destroy_timeout_generator (TAO_EC_Timeout_Generator*);
-  virtual TAO_EC_ObserverStrategy*
-      create_observer_strategy (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_observer_strategy (TAO_EC_ObserverStrategy*);
-  virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*);
-  virtual TAO_EC_ProxyPushSupplier_Set*
-      create_proxy_push_supplier_set (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
+      destroy_timer_module (TAO_EC_Timer_Module*);
+  virtual PortableServer::POA_ptr
+       consumer_poa (CORBA::Environment& env);
+  virtual PortableServer::POA_ptr
+       supplier_poa (CORBA::Environment& env);
 
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
@@ -109,6 +103,13 @@ public:
   virtual void destroy_consumer_admin_lock (ACE_Lock*);
   virtual ACE_Lock* create_supplier_admin_lock (void);
   virtual void destroy_supplier_admin_lock (ACE_Lock*);
+
+private:
+  PortableServer::POA_var poa_;
+  // The POA
+
+  TAO_EC_SupplierFiltering* supplier_filtering_;
+  // The filtering strategy
 };
 
 #if defined (__ACE_INLINE__)

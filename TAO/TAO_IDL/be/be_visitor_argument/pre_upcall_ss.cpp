@@ -92,7 +92,7 @@ int be_visitor_args_pre_upcall_ss::visit_interface (be_interface *node)
       os->indent ();
       *os << arg->local_name () << " = " << node->name ()
           << "::_narrow (_tao_base_var_" << arg->local_name ()
-          << ".in (), ACE_TRY_ENV);\n";
+          << ".in (), _tao_environment);\n";
       break;
     case AST_Argument::dir_OUT:
       break;
@@ -113,7 +113,7 @@ int be_visitor_args_pre_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
       os->indent ();
       *os << arg->local_name () << " = " << node->name ()
           << "::_narrow (_tao_base_var_" << arg->local_name ()
-          << ".in (), ACE_TRY_ENv);\n";
+          << ".in (), _tao_environment);\n";
       break;
     case AST_Argument::dir_OUT:
       break;

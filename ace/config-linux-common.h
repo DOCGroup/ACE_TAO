@@ -16,11 +16,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// Needed to make some prototypes visible.
-#if ! defined (_GNU_SOURCE)
-#define _GNU_SOURCE
-#endif /* ! _GNU_SOURCE */
-
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 // It's there on all libc 5 systems I checked.
 #include <features.h>
@@ -55,7 +50,7 @@
   // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
   //        on Alpha.  I assume that they're necessary on Intel as well,
   //        but that may depend on the version of glibc that is used.
-//# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
+# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_SYSTIME_H
   // The strtok_r declaration is protected in string.h.
@@ -71,11 +66,10 @@
 #   define ACE_LACKS_SIGINFO_H
 #   define ACE_HAS_UCONTEXT_T
 # endif /* __GLIBC__ 2.1+ */
-#else  /* ! __GLIBC__ */
-    // Fixes a problem with some non-glibc versions of Linux...
-#   define ACE_LACKS_MADVISE
+#else /* ! __GLIB__ */
+  // Fixes a problem with some non-glibc versions of Linux...
 #   define ACE_LACKS_MSG_ACCRIGHTS
-#endif /* ! __GLIBC__ */
+#endif /* __GLIBC__ */
 
 
 // Then the compiler specific parts
@@ -146,7 +140,8 @@
 
 #define ACE_LACKS_STRRECVFD
 
-//#define ACE_LACKS_MSYNC
+#define ACE_LACKS_MSYNC
+#define ACE_LACKS_MADVISE
 #define ACE_HAS_PROCFS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
