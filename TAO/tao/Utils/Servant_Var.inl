@@ -46,7 +46,7 @@ operator=(Servant_Var<T> const & rhs)
 }
 
 template <class T>
-ACE_INLINE TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
+ACE_INLINE ACE_TYPENAME TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
 operator=(T * p)
 {
   TAO::Utils::Servant_Var<T> tmp(p);
@@ -93,7 +93,7 @@ Servant_Var(Servant_Var<Y> const & rhs)
 }
 
 template <class T> template <class Y>
-ACE_INLINE TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
+ACE_INLINE ACE_TYPENAME TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
 operator=(Servant_Var<Y> const & rhs)
 {
   TAO::Utils::Servant_Var<T> tmp(rhs);
@@ -102,7 +102,7 @@ operator=(Servant_Var<Y> const & rhs)
 }
 
 template <class T> template <class Y>
-ACE_INLINE TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
+ACE_INLINE ACE_TYPENAME TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
 operator=(Y * p)
 {
   TAO::Utils::Servant_Var<T> tmp(p);
@@ -180,8 +180,8 @@ _retn()
 
 template <class X, class Y>
 ACE_INLINE bool
-operator==(TAO::Utils::Servant_Var<X> const & x,
-           TAO::Utils::Servant_Var<Y> const & y)
+operator==(ACE_TYPENAME TAO::Utils::Servant_Var<X> const & x,
+           ACE_TYPENAME TAO::Utils::Servant_Var<Y> const & y)
 {
   return x.in() == y.in();
 }
@@ -190,8 +190,8 @@ operator==(TAO::Utils::Servant_Var<X> const & x,
 // $Id$
 template <class X, class Y>
 ACE_INLINE bool
-operator!=(TAO::Utils::Servant_Var<X> const & x,
-           TAO::Utils::Servant_Var<Y> const & y)
+operator!=(ACE_TYPENAME TAO::Utils::Servant_Var<X> const & x,
+           ACE_TYPENAME TAO::Utils::Servant_Var<Y> const & y)
 {
   return x.in() != y.in();
 }

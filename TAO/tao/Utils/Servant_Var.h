@@ -18,6 +18,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
+#include "tao/Environment.h"
+
 namespace TAO
 {
   namespace Utils
@@ -156,9 +159,9 @@ namespace TAO
 #include "Servant_Var.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-// Don't use the pragma madness, the compiler(s?) that require it have
-// not been supported for a long time (and they could not deal with
-// namespace anyway!)
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Servant_Var.cpp")
+#endif
 
 #include "ace/post.h"
 #endif /*TAO_UTILS_SERVANT_VAR_H*/
