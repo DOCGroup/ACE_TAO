@@ -357,8 +357,10 @@ int be_interface::gen_client_stubs (void)
   *cs << "return " << this->name () << "::_nil ();\n";
   cs->decr_indent ();
   *cs << nl;
+#if 0 // also the cause of all evil
   *cs << "obj->Release (); " <<
     "// need this since QueryIntf bumped our refcount" << nl;
+#endif
   *cs << "new_obj = new " << name () << " (istub); " <<
     "// construct obj ref using the stub object" << nl;
   *cs << "return new_obj;\n";

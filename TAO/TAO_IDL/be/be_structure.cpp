@@ -318,7 +318,7 @@ be_structure::gen_var_defn (void)
     }
 
   // generate an additional member function that returns the underlying pointer
-  *ch << local_name () << " *ptr(void) const;\n";
+  *ch << local_name () << " *ptr (void) const;\n";
 
   *ch << "\n";
   ch->decr_indent ();
@@ -544,17 +544,17 @@ be_structure::gen_var_impl (void)
       ci->decr_indent ();
       *ci << "}\n\n";
 
-      // the additional ptr () member function
-      ci->indent ();
-      *ci << "ACE_INLINE " << name () << " *" << nl;
-      *ci << fname << "::ptr (void) const" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
-
     }
+
+  // the additional ptr () member function
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << " *" << nl;
+  *ci << fname << "::ptr (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
 
   return 0;
 }
