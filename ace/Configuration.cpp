@@ -173,7 +173,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
 
-  for (ACE_TCHAR *temp = 0; parser.next (); current_section = key_out)
+  for (ACE_TCHAR *temp = 0; temp = parser.next (); current_section = key_out)
     // Open the section
     if (open_section (current_section,
                       temp,
@@ -1686,7 +1686,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       // Free the old value
       entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
-      ACE_TCHAR* pers_value = 
+      ACE_TCHAR* pers_value =
         (ACE_TCHAR*) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_Value_IntId new_value_int (pers_value);
@@ -1695,10 +1695,10 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = 
+      ACE_TCHAR* pers_name =
         (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ACE_TCHAR* pers_value = 
+      ACE_TCHAR* pers_value =
         (ACE_TCHAR*) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_ExtId item_name (pers_name);
@@ -1746,7 +1746,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = 
+      ACE_TCHAR* pers_name =
         (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_Configuration_ExtId item_name (pers_name);
@@ -1799,7 +1799,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = 
+      ACE_TCHAR* pers_name =
         (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
@@ -1828,7 +1828,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = 
+      ACE_TCHAR* pers_name =
         (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
@@ -2040,9 +2040,9 @@ ACE_Configuration::import_config_as_strings (const ACE_TCHAR* filename)
   while (ACE_OS::fgets (buffer, sizeof buffer, in))
     {
       // Check for a comment and blank line
-      if (buffer[0] == ACE_LIB_TEXT (';') 
+      if (buffer[0] == ACE_LIB_TEXT (';')
           || buffer[0] == ACE_LIB_TEXT ('#')
-          || buffer[0] == ACE_LIB_TEXT ('\r') 
+          || buffer[0] == ACE_LIB_TEXT ('\r')
           || buffer[0] == ACE_LIB_TEXT ('\n'))
         continue;
 
@@ -2118,8 +2118,8 @@ const ACE_TCHAR *
 ACE_Configuration::skip_whitespace (const ACE_TCHAR *src)
 {
   const ACE_TCHAR *cp;
-  
-  for (cp = src; 
+
+  for (cp = src;
        (*cp != '\0') && ((*cp == ' ') || (*cp == '\t'));
        cp++)
     continue;
