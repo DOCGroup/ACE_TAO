@@ -1,3 +1,9 @@
+Mon Oct 26 16:01:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/DynAny_Test: Made the run_tests.pl script have
+	  755 permission.  Thanks to Jim Penny
+	  <jpenny@universal-fasteners.com> for reporting this.
+
 Mon Oct 26 14:22:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* examples/POA/DSI/README
