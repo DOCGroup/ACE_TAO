@@ -1,8 +1,16 @@
+
+Fri Jan 29 18:07:28 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp: 
+	Removed unused variables
+
+
 Fri Jan 29 18:04:25 1999  Fred Kuhns <fredk@cs,wustl.edu>
 
   * Fixed an old style ref to IIOP::MY_MINOR and IIOP::MY_MAJOR
     to TAO_IIOP_Profile::DEF_IIOP_MAJOR, TAO_IIOP_Profile::DEF_IIOP_MINOR
     in utils/catior/catior.cpp
+
 
 Fri Jan 29 15:55:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
