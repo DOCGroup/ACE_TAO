@@ -23,7 +23,7 @@ public:
   Client (void);
   // ctor
 
-  void set (Test_ptr server, int niterations, int id);
+  void set (Test_ptr server, int niterations, int id, CORBA::ORB_ptr);
   // Set the test attributes.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -36,6 +36,8 @@ public:
   virtual int svc (void);
 
 private:
+  CORBA::ORB_ptr orb_;
+
   Test_var server_;
   // The server.
 
@@ -165,7 +167,7 @@ main (int argc, char *argv[])
         orb->orb_core ()->priority_mapping ();
       for (int i = 0; i != nthreads; ++i)
         {
-          client[i].set (server.in (), niterations, i);
+          client[i].set (server.in (), niterations, i, orb.in ());
 
           CORBA::Short native_priority = 0;
           pm->to_native (priorities[i], native_priority);
@@ -197,12 +199,6 @@ main (int argc, char *argv[])
         }
       throughput.dump_results ("Aggregated", gsf);
 
-      CORBA::Short native_priority = 0;
-      pm->to_native (priorities[0], native_priority);
-      ACE_OS::sched_params (ACE_Sched_Params (policy,
-                                              native_priority,
-                                              ACE_SCOPE_PROCESS));
-
       if (do_shutdown)
         {
           server->shutdown (ACE_TRY_ENV);
@@ -229,11 +225,13 @@ Client::Client (void)
 void
 Client::set (Test_ptr server,
              int niterations,
-             int id)
+             int id,
+             CORBA::ORB_ptr orb)
 {
   this->server_ = Test::_duplicate (server);
   this->niterations_ = niterations;
   this->id_ = id;
+  orb_ = orb;
 }
 
 int
@@ -244,7 +242,54 @@ Client::svc (void)
 
   ACE_TRY_NEW_ENV
     {
+      // Set the Client Priority Policy for invocations.
+
+      // Obtain PolicyCurrent.
+      CORBA::Object_var policy_current_object =
+        orb_->resolve_initial_references ("PolicyCurrent");
+
+      CORBA::PolicyCurrent_var policy_current =
+        CORBA::PolicyCurrent::_narrow (policy_current_object.in (),
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (policy_current.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get PolicyCurrent.\n"),
+                          -1);
+
+      // Create Client Priority Policy with mode==USE_THREAD_PRIORITY.
+      // @@ ps may need to be dynamically allocated for the
+      // non-copying form of Any insertion.
+      TAO::PrioritySpecification ps;
+      ps.mode = TAO::USE_THREAD_PRIORITY;
+      CORBA::Any value;
+      value <<= ps;
+      CORBA::Policy_var policy =
+        orb_->create_policy (TAO::CLIENT_PRIORITY_POLICY_TYPE,
+                            value,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Set the policy using PolicyCurrent.
+      CORBA::PolicyList policy_list;
+      policy_list.length (1);
+      policy_list[0] = policy;
+
+      policy_current->set_policy_overrides (policy_list,
+                                            CORBA::ADD_OVERRIDE,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Clean up the resources.
+      policy->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // @@ We should use "validate_connection" for this
+      // Use a loop here before TSS connectors are implemented to
+      // increase the likelihood that each thread will have its own
+      // connection.  (This is not an issue when all threads&endpoints
+      // are of different priorities).
       for (int j = 0; j < 100; ++j)
         {
           server_->_non_existent (ACE_TRY_ENV);
@@ -261,6 +306,7 @@ Client::svc (void)
           // Invoke method.
           server_->test_method (this->id_,
                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();

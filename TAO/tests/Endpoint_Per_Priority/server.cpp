@@ -14,7 +14,7 @@ int nthreads = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:w:");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,6 +33,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
+                           "-n <number of threads>"
                            "\n",
                            argv [0]),
                           -1);
