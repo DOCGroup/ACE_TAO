@@ -1,3 +1,21 @@
+Sat Oct 26 21:49:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.cpp (wait):
+	* ace/Process.i (wait): Changed to always update this->exit_code_
+	  when waiting on a child process to allow <exit_code> method to
+	  function properly.  Removed the use of the macro
+	  ACE_OSCALL_RETURN on ACE_OS::waitpid since ACE_OS::waitpid is
+	  already signal safe.
+
+	* ace/Process.h: Changed the type of this->exit_code_ from int to
+	  ACE_exitcode.  Updated documentation for mutator method
+	  <exit_code> to better reflect the intention for using this
+	  method.
+
+	  Thanks to Artashes Ghazaryan <arty@unicad.am> and Jaroslaw
+	  Nozderko <jaroslaw.nozderko@polkomtel.com.pl> for reporting the
+	  problem.
+
 Sat Oct 26 11:42:04 UTC 2002  John Aughey  <jha@aughey.com>
 
         * ace/INET_Addr.cpp: Changed default behavior to set 0

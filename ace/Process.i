@@ -35,13 +35,18 @@ ACE_INLINE pid_t
 ACE_Process::wait (ACE_exitcode *status,
                    int wait_options)
 {
-  return ACE_OS::wait (this->getpid (),
-                       status,
-                       wait_options
+  pid_t retv =
+    ACE_OS::wait (this->getpid (),
+                  &this->exit_code_,
+                  wait_options
 #if defined (ACE_WIN32)
-                       , process_info_.hProcess
+                  , process_info_.hProcess
 #endif /* ACE_WIN32 */
-                       );
+                  );
+  if (status != 0)
+    *status = this->exit_code_;
+
+  return retv;
 }
 
 ACE_INLINE int
@@ -62,14 +67,14 @@ ACE_Process::terminate (void)
     return -1;
 }
 
-ACE_INLINE int
+ACE_INLINE ACE_exitcode
 ACE_Process::exit_code (void) const
 {
   return this->exit_code_;
 }
 
 ACE_INLINE void
-ACE_Process::exit_code (int code)
+ACE_Process::exit_code (ACE_exitcode code)
 {
   this->exit_code_ = code;
 }

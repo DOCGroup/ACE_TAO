@@ -512,11 +512,17 @@ public:
   int running (void) const;
 
   /// Return the Process' exit code
-  int exit_code (void) const;
+  ACE_exitcode exit_code (void) const;
 
-  /// Set the Process' exit code (completely unrelated to whether the
-  /// Process has actually exited)!
-  void exit_code (int code);
+  /**
+   * Set the Process' exit code (completely unrelated to whether the
+   * Process has actually exited)!  A parent process can use this
+   * method before spawning the child process to set the exit_code to
+   * some value that it knows the chile process will not return and
+   * use it to identify if the parent process has retrieve the exit
+   * status of child process correctly.
+   */
+  void exit_code (ACE_exitcode code);
 
   /// Close all the handles in the set obtained from the
   /// @arg ACE_Process_Options::dup_handles object used to spawn
@@ -539,7 +545,7 @@ protected:
   /// Process id of the child.
   pid_t child_id_;
 #endif /* ACE_WIN32 */
-  int exit_code_;
+  ACE_exitcode exit_code_;
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;
