@@ -22,8 +22,7 @@ interface ttcp_sequence
   typedef sequence<octet> OctetSeq;
   typedef sequence<BinStruct> StructSeq;
 
-
-  // Routines to send sequences of various data types
+  // = Routines to send sequences of various data types.
   oneway void sendShortSeq (in  ShortSeq ttcp_seq);
   oneway void sendLongSeq (in  LongSeq ttcp_seq);
   oneway void sendDoubleSeq (in  DoubleSeq ttcp_seq);
@@ -31,6 +30,7 @@ interface ttcp_sequence
   oneway void sendOctetSeq (in  OctetSeq ttcp_seq);
   oneway void sendStructSeq (in  StructSeq ttcp_seq);
 
+  // = Control the timers.
   oneway void start_timer ();
   oneway void stop_timer ();
 };
