@@ -1,3 +1,19 @@
+Thu Mar 11 13:43:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp: 
+	  Enabled compiled marshaling by default (again).
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
+	  Fixed generated code to handle location forwarding.
+
+	* tao/Invocation.cpp: 
+	  Minor cosmetic fixes.
+
+	* orbsvcs/tests/ImplRepo/airplane_client_i.cpp: 
+	  We don't abort on the first exception, instead we keep
+	  trying. We also clear the environment before making a
+	  request.
+
 Wed Mar 10 16:43:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h: 

@@ -380,7 +380,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   ACE_TRY
     {
       inp_stream.decode (CORBA::_tc_Object,
-                         &(object_ptr),
+                         &object_ptr,
                          0,
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
