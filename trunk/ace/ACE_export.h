@@ -50,8 +50,12 @@
 #define ACE_NAMESPACE_STORAGE_CLASS extern ACE_EXPORT_MACRO
 #endif
 
-#if (defined (_MSC_VER) || defined (__MINGW32__) || defined (CYGWIN32)) && defined (__ACE_INLINE__)
-#  define ACE_NAMESPACE_INLINE_FUNCTION inline
+#if defined (__ACE_INLINE__)
+#  if defined (_MSC_VER) || defined (__MINGW32__) || defined (CYGWIN32)
+#    define ACE_NAMESPACE_INLINE_FUNCTION inline
+#  else
+#    define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS inline
+#  endif
 #else
 #  define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS
 #endif
