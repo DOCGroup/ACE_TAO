@@ -197,6 +197,25 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               this->orb_->object_to_string (this->stream_endpoint_b_,
                                             env)));
   TAO_CHECK_ENV_RETURN (env, 1);
+
+  // Tell the 2 VDev's about one another
+  this->vdev_a_->set_peer (this->_this (env),
+                           this->vdev_b_.in (),
+                           the_qos,
+                           the_flows,
+                           env);
+
+  TAO_CHECK_ENV_RETURN (env, 1);
+
+  this->vdev_b_->set_peer (this->_this (env),
+                           this->vdev_a_.in (),
+                           the_qos,
+                           the_flows,
+                           env);
+
+  TAO_CHECK_ENV_RETURN (env, 1);
+
+
   // Now connect the streams together. This will
   // establish the connection
   this->stream_endpoint_a_->connect (this->stream_endpoint_b_,
@@ -521,6 +540,8 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                     const AVStreams::flowSpec &the_spec,  
                     CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) TAO_VDev::set_peer: called"));
   this->streamctrl_ = the_ctrl;
   this->peer_ = the_peer_dev;
   return 0;
