@@ -1,3 +1,15 @@
+Tue Jul 20 19:32:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Fixed memory leaks in output_cdr_dblock_allocator method.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
+	  Fixed configuration for IDL cubit, we must use locks in the POA
+	  to avoid dead-locks on shutdown.  Added a new file with the old
+	  configuration so experiments can still be executed using a well
+	  known configuration.
+
 Tue Jul 20 19:16:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ObjectIDList.{h,i}:

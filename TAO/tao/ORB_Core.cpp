@@ -1426,7 +1426,7 @@ TAO_Leader_Follower::get_next_follower (void)
 
   // We *must* remove it when we signal it so the same condition is
   // not signalled for both wake up as a follower and as the next
-  // leader. 
+  // leader.
   // The follower may not be there if the reply is received while the
   // consumer is not yet waiting for it (i.e. it send the request but
   // has not blocked to receive the reply yet)
@@ -1522,27 +1522,27 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
                              "no more TSS keys"),
                           0);
 
-      if (tss->output_cdr_buffer_allocator_ == 0)
+      if (tss->output_cdr_dblock_allocator_ == 0)
         {
-          tss->output_cdr_buffer_allocator_ = this->resource_factory ()->output_cdr_buffer_allocator ();
+          tss->output_cdr_dblock_allocator_ = this->resource_factory ()->output_cdr_dblock_allocator ();
           tss->owns_resources_ = 1;
         }
-      return tss->output_cdr_buffer_allocator_;
+      return tss->output_cdr_dblock_allocator_;
     }
 
 #if 0
-  if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
+  if (this->orb_resources_.output_cdr_dblock_allocator_ == 0)
     {
       // Double checked locking
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
+      if (this->orb_resources_.output_cdr_dblock_allocator_ == 0)
         {
-          this->orb_resources_.output_cdr_buffer_allocator_ =
-            this->resource_factory ()->output_cdr_buffer_allocator ();
+          this->orb_resources_.output_cdr_dblock_allocator_ =
+            this->resource_factory ()->output_cdr_dblock_allocator ();
           this->orb_resources_.owns_resources_ = 1;
         }
     }
-  return this->orb_resources_.output_cdr_buffer_allocator_;
+  return this->orb_resources_.output_cdr_dblock_allocator_;
 #endif /* 0 */
 }
 
