@@ -178,15 +178,22 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // the _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
   os->indent ();
-  *os << "TAO_NAMESPACE_STORAGE_CLASS " << node->nested_type_name (scope, "_slice") << " *";
+  char *storage_class = 0;
+
+  if (scope->node_type () != AST_Decl::NT_module)
+    storage_class = "static ";
+  else
+    storage_class = "TAO_NAMESPACE_STORAGE_CLASS ";
+
+  *os << storage_class << node->nested_type_name (scope, "_slice") << " *";
   *os << node->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-  *os << "TAO_NAMESPACE_STORAGE_CLASS " << node->nested_type_name (scope, "_slice") << " *";
+  *os << storage_class << node->nested_type_name (scope, "_slice") << " *";
   *os << node->nested_type_name (scope, "_dup") << " (const ";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
-  *os << "TAO_NAMESPACE_STORAGE_CLASS void " << node->nested_type_name (scope, "_copy") << " (";
+  *os << storage_class << "void " << node->nested_type_name (scope, "_copy") << " (";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_to, const ";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_from);" << be_nl;
-  *os << "TAO_NAMESPACE_STORAGE_CLASS void " << node->nested_type_name (scope, "_free") << " (";
+  *os << storage_class << "void " << node->nested_type_name (scope, "_free") << " (";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
 
   // is this a typedefined array? if so, then let the typedef deal with
