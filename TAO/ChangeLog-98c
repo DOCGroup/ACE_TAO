@@ -1,32 +1,38 @@
+Tue Jan 05 07:57:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/bank/Client_i.cpp (withdraw): added in ()
+          dereference of except->reason.  Thanks to Andy for figuring
+          out how to get this to compile now.
+
 Tue Jan 05 04:51:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp:
-	* tao/ORB_Core.{h,cpp}:
-	* tao/default_server.{h,cpp}:
-	* tao/default_client.{h,cpp}: Added definitions for static service
-	  objects and enabled TAO to use static services if
-	  TAO_USES_STATIC_SERVICE is defined.  This will allow platforms
-	  that doesn't support dynamic linking to change TAO's behavior at
-	  run-time.
+        * tao/TAO_Internal.cpp:
+        * tao/ORB_Core.{h,cpp}:
+        * tao/default_server.{h,cpp}:
+        * tao/default_client.{h,cpp}: Added definitions for static service
+          objects and enabled TAO to use static services if
+          TAO_USES_STATIC_SERVICE is defined.  This will allow platforms
+          that doesn't support dynamic linking to change TAO's behavior at
+          run-time.
 
 Mon Jan 04 17:48:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp (for_suppliers):
- 	  Fixed typos.
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp (for_suppliers):
+          Fixed typos.
 
 Mon Jan  4 16:52:08 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added the following project files for Time Service on NT.
-	* orbsvcs/Time_Service/Time_Service.dsw
-	* orbsvcs/Time_Service/Time_Service_Clerk.dsp
-	* orbsvcs/Time_Service/Time_Service_Server.dsp
+        Added the following project files for Time Service on NT.
+        * orbsvcs/Time_Service/Time_Service.dsw
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp
+        * orbsvcs/Time_Service/Time_Service_Server.dsp
 
-	* orbsvcs/tests/Time/Time_Service_Test.dsw
-	* orbsvcs/tests/Time/Time_Service_Test.dsp
+        * orbsvcs/tests/Time/Time_Service_Test.dsw
+        * orbsvcs/tests/Time/Time_Service_Test.dsp
 
-	* orbsvcs/tests/Time/Client_i.cpp: Changed the TAO_CATCHANY to
-	  TAO_CATCH (SystemException, sysex). The former somehow wasn't
-	  catching CORBA::NO_IMPLEMENT on NT.
+        * orbsvcs/tests/Time/Client_i.cpp: Changed the TAO_CATCHANY to
+          TAO_CATCH (SystemException, sysex). The former somehow wasn't
+          catching CORBA::NO_IMPLEMENT on NT.
 
 
 Mon Jan  4 16:30:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
