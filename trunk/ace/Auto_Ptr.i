@@ -3,6 +3,8 @@
 
 // Auto_Ptr.i
 
+#include "Synch_T.h"
+
 template<class X> ACE_INLINE
 ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &rhs)
   : p_ (rhs.release ())
@@ -142,14 +144,14 @@ ACE_Auto_Array_Ptr<X>::operator->() const
   return this->get ();
 }
 
-template <class X, class ACE_LOCK> ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
+template <class X, class ACE_LOCK> ACE_INLINE ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
 {
   // Yes set ref count to zero.
   return new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> (p);
 }
 
-template <class X, class ACE_LOCK> ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
+template <class X, class ACE_LOCK> ACE_INLINE ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::attach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>*& rep)
 {
   ACE_ASSERT (rep != 0);
@@ -161,7 +163,7 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::attach (ACE_Refcounted_Auto_Ptr_Rep<X,
   return rep;
 }
 
-template <class X, class ACE_LOCK> void
+template <class X, class ACE_LOCK> ACE_INLINE void
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::detach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>*& rep)
 {
   ACE_ASSERT (rep != 0);
@@ -175,7 +177,7 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::detach (ACE_Refcounted_Auto_Ptr_Rep<X,
     delete rep;
 }
 
-template <class X, class ACE_LOCK> void
+template <class X, class ACE_LOCK> ACE_INLINE void
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::assign (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>*& rep, ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>* new_rep)
 {
   ACE_ASSERT (rep != 0);
@@ -194,14 +196,14 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::assign (ACE_Refcounted_Auto_Ptr_Rep<X,
     delete old;
 }
 
-template <class X, class ACE_LOCK>
+template <class X, class ACE_LOCK> ACE_INLINE
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr_Rep (X *p)
   : ptr_ (p),
     ref_count_ (0)
 {
 }
 
-template <class X, class ACE_LOCK>
+template <class X, class ACE_LOCK> ACE_INLINE
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::~ACE_Refcounted_Auto_Ptr_Rep (void)
 {
 }
