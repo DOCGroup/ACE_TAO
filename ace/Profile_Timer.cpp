@@ -4,7 +4,7 @@
 #include "ace/Profile_Timer.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Profile_Timer.i"
+# include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Profile_Timer)
@@ -244,7 +244,13 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   ACE_hrtime_t delta_t; /* nanoseconds */
   timer_.elapsed_time (delta_t);
 
+#if defined (ACE_LACKS_FLOATING_POINT)
+  // If delta_t isn't large, then et.real_time will be 0.  Sorry, no
+  // floating point.
+  et.real_time = delta_t / ACE_ONE_SECOND_IN_NSECS;
+#else  /* ! ACE_LACKS_FLOATING_POINT */
   et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
+#endif /* ! ACE_LACKS_FLOATING_POINT */
   et.user_time = 0;
   et.system_time = 0;
 
