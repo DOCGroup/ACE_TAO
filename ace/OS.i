@@ -7440,7 +7440,8 @@ ACE_OS::mmap (void *addr,
                                          ACE_OS::default_win32_security_attributes (sa),
                                          prot,
                                          0,
-                                         len);
+                                         len,
+                                         0);
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
 
