@@ -8,7 +8,7 @@
 ACE_RCSID(Misc, test_get_opt, "$Id$")
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("ab:cd:ef:gh:"));
   int c;

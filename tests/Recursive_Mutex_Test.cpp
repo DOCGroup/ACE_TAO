@@ -75,7 +75,7 @@ worker (void *arg)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Recursive_Mutex_Test"));
 

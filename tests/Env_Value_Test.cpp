@@ -37,14 +37,14 @@ int
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
 // arguments.  And on platforms that lack fork (), we can't use spawn.
 
-main (int argc, ACE_TCHAR* [])
+ACE_TMAIN (int argc, ACE_TCHAR* [])
 {
   ACE_UNUSED_ARG (argc);
 
   ACE_OS::putenv (ACE_TEXT ("TEST_VALUE_POSITIVE=10.2"));
   ACE_OS::putenv (ACE_TEXT ("TEST_VALUE_NEGATIVE=-10.2"));
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
-main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
+ACE_TMAIN (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
 {
   if (argc == 1)
     {

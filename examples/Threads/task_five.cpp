@@ -160,7 +160,7 @@ work (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   size_t stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : default_stack_size;
   const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;

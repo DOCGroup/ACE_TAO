@@ -1,3 +1,40 @@
+Wed Mar  6 14:43:34 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Reverted my previous "fix" to the argv argument type.
+
+	  Mon Jan 21 23:27:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  A program entry poing <code>main</code> can take any of the
+          three forms:
+
+          int main (int argc, char *argv[])
+          int wmain (int argc, wchar_t *argv[])
+          int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+
+          Of them, the entry point <code>main</code> always gives you
+          the command line arguemnt in char strings form.  The entry
+          point <code>wmain</code> currently can only be used under
+          Win32 and it returns the command line arguments in wchar
+          strings format.  Defining the <code>ACE_TMAIN</code> as the
+          program entry point is the more portable form.  The command
+          line arguments are given in char strings in most cases,
+          or wchar strings when <code>ACE_USES_WCHAR</code> is defined.
+          See <code>$ACE_ROOT/docs/wchar.txt</code> for more information
+          on ACE support on wchar.
+
+	* docs/ACE-guidelines.html: Added a new guideline explaining which
+	  main entry point to use, as above.
+
+	* bin/main2TMAIN.pl: Script to replace entry points of the form
+
+  	    main (int, ACE_TCHAR *[])
+
+	  to
+
+	    ACE_TMAIN (int, ACE_TCHAR *[])
+
+	* *.cpp: Changed to use the new ACE_TMAIN.
+
 Tue Mar 06 14:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MEM_Stream_Test.cpp:

@@ -29,7 +29,7 @@ typedef ACE_Vector<DATA>::Iterator ITERATOR;
 const size_t TOP = 100;
 const size_t LEFT = 10;
 
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Vector_Test"));
 

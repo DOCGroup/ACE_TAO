@@ -27,7 +27,7 @@
 ACE_RCSID(Blobby, blobby, "$Id$")
 
 int
-main (int argc, ACE_TCHAR *argv[]) 
+ACE_TMAIN (int argc, ACE_TCHAR *argv[]) 
 {
   // Options is a singleton
   Options *options = Options::instance ();

@@ -69,7 +69,7 @@ try_ace_new_noreturn (void)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
   int status = 0;

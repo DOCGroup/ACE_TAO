@@ -61,7 +61,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   parse_arguments (argc, argv);
 

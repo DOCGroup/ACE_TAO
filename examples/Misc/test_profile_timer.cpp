@@ -8,7 +8,7 @@ ACE_RCSID(Misc, test_profile_timer, "$Id$")
 static const int DEFAULT_ITERATIONS = 100000000;
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
   int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;

@@ -156,7 +156,7 @@ producer (void *args)
 // size of each line.
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Priority_Buffer_Test"));
 

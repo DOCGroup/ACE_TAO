@@ -117,7 +117,7 @@ template class Tester<ACE_MT_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Tester<ACE_MT_SYNCH> tester;
 
@@ -156,7 +156,7 @@ main (int, ACE_TCHAR *[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "ACE doesn't support support threads on this platform (yet)\n"),

@@ -70,7 +70,7 @@ exithook (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const size_t MAX_DEPTH = argc == 1 ? 10 : ACE_OS::atoi (argv[1]);
 
@@ -79,7 +79,7 @@ main (int argc, ACE_TCHAR *argv[])
   if (argc > 2)
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
 
-  ACE_Trace _ (ACE_TEXT("int main (int argc, ACE_TCHAR *argv[])"),
+  ACE_Trace _ (ACE_TEXT("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"),
                __LINE__,
                ACE_TEXT(__FILE__));
 

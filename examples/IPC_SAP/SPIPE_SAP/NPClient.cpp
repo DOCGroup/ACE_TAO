@@ -16,7 +16,7 @@ const int DEFAULT_SIZE = 8;
 const int DEFAULT_COUNT = 10000;
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int  size = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_SIZE;
   int  iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_COUNT;

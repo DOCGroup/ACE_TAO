@@ -53,7 +53,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   program_name = argv[0];
 
@@ -113,7 +113,7 @@ main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform must support sendmsg/recvmsg to run this test\n"),

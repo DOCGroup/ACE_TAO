@@ -64,7 +64,7 @@ tester (Tester_Args *args)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Barrier_Test"));
 

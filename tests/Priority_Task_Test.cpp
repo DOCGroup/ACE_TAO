@@ -156,7 +156,7 @@ Priority_Task::svc (void)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Priority_Task_Test"));
 

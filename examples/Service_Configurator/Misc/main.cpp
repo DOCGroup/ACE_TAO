@@ -31,7 +31,7 @@ ACE_RCSID(Misc, main, "$Id$")
 ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 
 int
-main (int, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   // Set up an argument vector that we can add entries to!
   ACE_ARGV args;

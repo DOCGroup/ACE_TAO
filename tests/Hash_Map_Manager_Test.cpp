@@ -249,7 +249,7 @@ run_test (void)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Hash_Map_Manager_Test"));
 

@@ -693,7 +693,7 @@ run_performance_test (u_int min_load,
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dynamic_Priority_Test"));
 

@@ -550,7 +550,7 @@ get_options (int argc, ACE_TCHAR *argv [])
 ///////////////////////////////////////////////////////////////////////////////
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (get_options (argc, argv))
     ACE_OS::exit (-1);

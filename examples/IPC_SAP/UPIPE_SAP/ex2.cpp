@@ -149,7 +149,7 @@ consumer (void *)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   size = argc > 1 ? ACE_OS::atoi (argv[1]) : 32;
   iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 16;
@@ -168,7 +168,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"),

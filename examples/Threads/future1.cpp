@@ -288,7 +288,7 @@ Scheduler::work (u_long newparam,
 static size_t n_loops = 100;
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Scheduler *andres, *peter, *helmut, *matias;
 
@@ -426,7 +426,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

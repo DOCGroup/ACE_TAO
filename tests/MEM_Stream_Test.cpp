@@ -402,7 +402,7 @@ test_concurrent (const ACE_TCHAR *prog,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   u_short port = 0;
 
@@ -506,7 +506,7 @@ template class ACE_Thread_Strategy<Echo_Handler>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
 

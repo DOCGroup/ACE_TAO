@@ -11,7 +11,7 @@ ACE_RCSID(SPIPE_SAP, client, "$Id$")
 #include "shared.h"
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR, "usage: %s string [rendezvous]\n", argv[0]), 1);
@@ -37,7 +37,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

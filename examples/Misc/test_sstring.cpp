@@ -6,7 +6,7 @@
 ACE_RCSID(Misc, test_sstring, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_CString s1 ("hello");
   ACE_CString s2 ("world");

@@ -249,7 +249,7 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Manager_Test"));
   int status = 0;

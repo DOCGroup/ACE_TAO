@@ -140,7 +140,7 @@ static Thread_Mutex_Derived thread_mutex_derived;
 static Mutex_Base *mutex_base = &thread_mutex_derived;
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
   int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;
@@ -224,7 +224,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

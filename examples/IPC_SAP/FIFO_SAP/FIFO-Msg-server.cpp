@@ -8,7 +8,7 @@ ACE_RCSID(FIFO_SAP, FIFO_Msg_server, "$Id$")
 #if defined (ACE_HAS_STREAM_PIPES)
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::unlink (ACE_DEFAULT_RENDEZVOUS);
   ACE_FIFO_Recv_Msg server (ACE_DEFAULT_RENDEZVOUS);
@@ -36,7 +36,7 @@ main (int, ACE_TCHAR *[])
 }
 #else
 #include <stdio.h>
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

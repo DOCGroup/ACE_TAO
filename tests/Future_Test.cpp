@@ -411,7 +411,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Future_Test"));
 

@@ -174,7 +174,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Naming_Test"));
   ACE_TCHAR temp_file [BUFSIZ];

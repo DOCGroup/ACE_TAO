@@ -140,7 +140,7 @@ acceptor (void *args)
 #endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || (ACE_WIN32&&NT4)*/
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("UPIPE_SAP_Test"));
 

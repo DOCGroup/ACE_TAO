@@ -199,7 +199,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
@@ -217,7 +217,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "error: %s must be run on a platform that support IP multicast\n",

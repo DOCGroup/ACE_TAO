@@ -50,7 +50,7 @@ tester (Tester_Args *args)
 static const int DEFAULT_ITERATIONS = 5;
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
@@ -74,7 +74,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

@@ -2,7 +2,7 @@
 
 #include "ACEXML/common/NamespaceSupport.h"
 
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACEXML_NamespaceSupport xmlns;
 

@@ -203,7 +203,7 @@ test_performance (size_t max_handles,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Handle_Set_Test"));
 

@@ -293,7 +293,7 @@ run_test (int& test_number, int ordering)
 }
 
 int
-main (int, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Get_Opt_Test"));
   ACE_UNUSED_ARG (argv);

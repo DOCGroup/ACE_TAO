@@ -7,7 +7,7 @@
 
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACEXML_DefaultHandler *handler = 0;
   {

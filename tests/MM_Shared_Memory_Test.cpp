@@ -188,7 +188,7 @@ spawn (void)
 #endif /* !ACE_LACKS_MMAP */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MM_Shared_Memory_Test"));
 

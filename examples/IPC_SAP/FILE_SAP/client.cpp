@@ -8,7 +8,7 @@
 ACE_RCSID(FILE_SAP, client, "$Id$")
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 3 || argc > 3)
     ACE_ERROR_RETURN ((LM_ERROR,

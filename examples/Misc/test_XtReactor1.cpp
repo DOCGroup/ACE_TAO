@@ -114,7 +114,7 @@ ActivateCB (Widget, XtPointer, XtPointer)
 }
 
 int
-main (int argc, ACE_TCHAR**argv)
+ACE_TMAIN (int argc, ACE_TCHAR**argv)
 {
   // The worlds most useless user interface
   Widget top_level = XtVaAppInitialize (NULL,
@@ -166,7 +166,7 @@ main (int argc, ACE_TCHAR**argv)
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "XT not configured for this platform\n"),

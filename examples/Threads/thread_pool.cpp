@@ -226,7 +226,7 @@ producer (Thread_Pool &thread_pool)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
   n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : n_iterations;
@@ -257,7 +257,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "threads not supported on this platform\n"));
