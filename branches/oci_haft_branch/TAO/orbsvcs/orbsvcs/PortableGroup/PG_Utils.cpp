@@ -141,7 +141,7 @@ namespace TAO
       return 0;
 
     // the version info
-    cdr << tg.component_version;
+    cdr << tg.group_version;
 
     if (!cdr.good_bit ())
       return 0;

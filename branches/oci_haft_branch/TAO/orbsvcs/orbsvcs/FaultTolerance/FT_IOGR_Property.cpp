@@ -272,7 +272,7 @@ TAO_FT_IOGR_Property::encode_properties (
 
   // the version info
   CORBA::Boolean status =
-    cdr << this->ft_group_tagged_component_->component_version;
+    cdr << this->ft_group_tagged_component_->group_version;
 
   // the domain id
   status = status &&
