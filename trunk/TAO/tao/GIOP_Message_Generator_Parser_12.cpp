@@ -1,29 +1,31 @@
 // $Id$
 
-#include "tao/GIOP_Message_Generator_Parser_12.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/GIOP_Message_State.h"
+#include "GIOP_Message_Generator_Parser_12.h"
+#include "GIOP_Utils.h"
+#include "GIOP_Message_State.h"
 
-#include "tao/GIOP_Message_Locate_Header.h"
+#include "GIOP_Message_Locate_Header.h"
 
-#include "tao/operation_details.h"
-#include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/debug.h"
-#include "tao/OctetSeqC.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/TAOC.h"
-#include "tao/Service_Context.h"
-#include "tao/Pluggable.h"
-#include "tao/ORB_Core.h"
+#include "operation_details.h"
+#include "CDR.h"
+#include "Any.h"
+#include "debug.h"
+#include "OctetSeqC.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "TAO_Server_Request.h"
+#include "TAOC.h"
+#include "Service_Context.h"
+#include "Pluggable.h"
+#include "ORB_Core.h"
 #include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser_12.inl"
+# include "GIOP_Message_Generator_Parser_12.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Message_Gen_Parser_12, "$Id$")
+ACE_RCSID (tao,
+           GIOP_Message_Gen_Parser_12,
+           "$Id$")
 
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
@@ -306,8 +308,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
         }
     }
 
-  ACE_CString operation_name;
-
   if (input.char_translator () == 0)
     {
       CORBA::ULong length = 0;
@@ -318,10 +318,13 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
           // Do not include NULL character at the end.
           // @@ This is not getting demarshaled using the codeset
           //    translators!
-          operation_name.set (input.rd_ptr (),
-                              length - 1,
-                              0);
-          request.operation (operation_name);
+
+          // Notice that there are no memory allocations involved
+          // here!
+
+          request.operation (input.rd_ptr (),
+                             length - 1,
+                             0 /* TAO_ServerRequest does NOT own string */);
           hdr_status = input.skip_bytes (length);
         }
     }
@@ -334,8 +337,10 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
       //    ISO8859-1.
       CORBA::String_var tmp;
       hdr_status = hdr_status && input.read_string (tmp.inout ());
-      operation_name.set (tmp._retn (), 1);
-      request.operation (operation_name);
+
+      request.operation (tmp._retn (),
+                         0,
+                         1 /* TAO_ServerRequest owns string */);
     }
 
   // Tear out the service context ... we currently ignore it, but it

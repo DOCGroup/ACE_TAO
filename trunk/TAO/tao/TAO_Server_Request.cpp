@@ -2,27 +2,29 @@
 
 // Implementation of the Dynamic Server Skeleton Interface  (for GIOP)
 
-#include "tao/TAO_Server_Request.h"
-#include "tao/CDR.h"
-#include "tao/Environment.h"
-#include "tao/Principal.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "tao/Timeprobe.h"
-#include "tao/debug.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/Pluggable_Messaging.h"
+#include "TAO_Server_Request.h"
+#include "CDR.h"
+#include "Environment.h"
+#include "Principal.h"
+#include "ORB_Core.h"
+#include "ORB.h"
+#include "Timeprobe.h"
+#include "debug.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "Pluggable_Messaging.h"
 
 // @@ Should not be included. But, for the timebeing.
-#include "tao/GIOP_Utils.h"
+#include "GIOP_Utils.h"
 
 #include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/TAO_Server_Request.i"
+# include "TAO_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, TAO_Server_Request, "$Id$")
+ACE_RCSID (tao,
+           TAO_Server_Request,
+           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -51,6 +53,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                                       TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core)
   : mesg_base_ (mesg_base),
+    operation_ (),
     incoming_ (&input),
     outgoing_ (&output),
     transport_(TAO_Transport::_duplicate (transport)),
@@ -80,7 +83,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                                       CORBA::Boolean response_expected,
                                       CORBA::Boolean deferred_reply,
                                       TAO_ObjectKey &object_key,
-                                      const ACE_CString &operation,
+                                      const char *operation,
                                       TAO_OutputCDR &output,
                                       TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core,
@@ -267,11 +270,14 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
         }
 
       // Create a new output CDR stream
-      char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
-      (void) ACE_OS::memset (repbuf,
-                             '\0',
-                             sizeof repbuf);
+      // Only inititialize the buffer if we're compiling with Purify.
+      // Otherwise, there is no real need to do so, especially since
+      // we can avoid the initialization overhead at run-time if we
+      // are not compiling with Purify support.
+      char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
+#else
+      char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */
 
       TAO_OutputCDR output (repbuf,

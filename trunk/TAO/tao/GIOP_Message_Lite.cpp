@@ -1165,8 +1165,6 @@ TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
       input.skip_bytes (key_length);
     }
 
-   ACE_CString operation_name;
-
   if (input.char_translator () == 0)
     {
       CORBA::ULong length = 0;
@@ -1177,10 +1175,14 @@ TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
           // Do not include NULL character at the end.
           // @@ This is not getting demarshaled using the codeset
           //    translators!
-          operation_name.set (input.rd_ptr (),
-                              length - 1,
-                              0);
-          request.operation (operation_name);
+
+          // Notice that there are no memory allocations involved
+          // here!
+
+          request.operation (input.rd_ptr (),
+                             length - 1,
+                             0 /* TAO_ServerRequest does NOT own string */);
+
           hdr_status = input.skip_bytes (length);
         }
     }
@@ -1193,8 +1195,10 @@ TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
       //    ISO8859-1.
       CORBA::String_var tmp;
       hdr_status = hdr_status && input.read_string (tmp.inout ());
-      operation_name.set (tmp._retn (), 1);
-      request.operation (operation_name);
+
+      request.operation (tmp._retn (),
+                         0,
+                         1 /* TAO_ServerRequest owns string */);
     }
 
   return hdr_status ? 0 : -1;
