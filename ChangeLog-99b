@@ -6,13 +6,38 @@ Fri Jul  2 19:50:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Jul  2 19:37:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Future_Test.cpp:
+        * tests/Future_Test.cpp:
 	  The timeout variable was declared in one scope but used in
 	  another one.  Added another timeout variable to keep it happy.
 
 	* tests/Message_Queue_Test.cpp:
 	  A pointer was initialize using "0x" i think it was a typo and
 	  should be "0".
+
+Fri Jul 02 18:28:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux11.h: Added ACE_HAS_BROKEN_T_ERROR.
+          Enable threads by default, unless site config explicitly turns it
+          off by setting ACE_HAS_THREADS to 0. Thanks to Brian Wallis
+          <Brian.Wallis@sr.com.au> for motivating this change.
+
+        * ace/config-hpux-11.x-hpc++.h: Added
+          ACE_HAS_STD_TEMPLATE_SPECIALIZATION.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: If on 11.00 and the
+          user requests a build w/o threads, set ACE_HAS_THREADS to 0 to
+          override the config default (see config-hpux11.h, above).
+
+Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+  
+  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
+	  Strategy Connector can automagically as well as explicitly cache
+ 	  and purge connection from its connection cache using different
+ 	  caching strategies.
+	
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
+	  "purge_connections ()" which allows explicit purging of
+ 	  connnections from the connection cache.
 
 Fri Jul  2 13:54:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -89,7 +114,7 @@ Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  "purge_connections ()" which allows explicit purging of
  	  connnections from the connection cache.
 
-Fri Jul 01 11:50:21 1999  Steve Huston  <shuston@riverace.com>
+Fri Jul 02 11:50:21 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_lib.dsp: Added Pharlap ETS configurations for Debug and
           Release.
