@@ -1,3 +1,15 @@
+Fri Nov 19 06:55:32 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          If there is no exe or lib target, don't include one of the *.bor
+          from include/makeinclude and create a dummy 'all' target.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added $(EXEEXT) to the end of the TAO_IDL_DEP assignment to
+          support windows builds.
+
 Fri Nov 19 09:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:

@@ -174,15 +174,14 @@ BASE_BINDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 <%else%>
-<%if(dllout)%>
-BINDIR = <%dllout%>
-<%else%>
-<%if(libout)%>
-BINDIR = <%libout%>
-<%endif%>
-<%endif%>
+<%if(sharedname || staticname)%>
+BINDIR = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+<%else%>
+all:
+	@-rem
+<%endif%>
 <%endif%>
 <%if(header_files || template_files || inline_files || idl_files || pidl_files)%>
 
