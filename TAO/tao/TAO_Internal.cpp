@@ -9,6 +9,12 @@
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
 
+#if defined (TAO_USES_STATIC_SERVICE) || defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+ACE_STATIC_SVC_REQUIRE (TAO_Resource_Factory)
+ACE_STATIC_SVC_REQUIRE (TAO_Default_Server_Strategy_Factory)
+ACE_STATIC_SVC_REQUIRE (TAO_Default_Client_Strategy_Factory)
+#endif /* TAO_USES_STATIC_SERVICE */
+
 int TAO_Internal::service_open_count_ = 0;
 
 int
@@ -30,7 +36,7 @@ TAO_Internal::open_services (int& argc, char** argv)
 
   if (TAO_Internal::service_open_count_++ == 0)
 #if defined (TAO_USES_STATIC_SERVICE)
-    return ACE_Service_Config::open (argc, argv, 0);
+    return ACE_Service_Config::open (argc, argv, ACE_DEFAULT_LOGGER_KEY, 0);
 #else
     return ACE_Service_Config::open (argc, argv);
 #endif /* TAO_USES_STATIC_SERVICE */
