@@ -1,3 +1,10 @@
+Thu Jul 20 18:55:39 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/unistd.h:
+	* pace/posix/unistd.inl:
+
+	  More PACE_HANDLE (dup, dup2)
+
 Thu Jul 20 14:47:20 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:

@@ -91,7 +91,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE int pace_dup (PACE_HANDLE fildes);
+  PACE_INLINE PACE_HANDLE pace_dup (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -100,7 +100,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE int pace_dup2 (PACE_HANDLE fildes, int fildes2);
+  PACE_INLINE PACE_HANDLE pace_dup2 (PACE_HANDLE fildes, int fildes2);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
