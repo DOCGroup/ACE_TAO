@@ -108,12 +108,12 @@ main (int argc, char *argv[])
       the_name[0].id = CORBA::string_dup (name);
       if (rebind)
         {
-          root_nc->rebind (the_name, obj, ACE_TRY_ENV);
+          root_nc->rebind (the_name, obj.in (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else
         {
-          root_nc->bind (the_name, obj, ACE_TRY_ENV);
+          root_nc->bind (the_name, obj.in (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
     }
