@@ -50,41 +50,41 @@ Options::parse_args (int argc, char *argv[])
   ACE_Get_Opt get_opt (argc, argv, "p:");
 
   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
-       {
-       case 'p':
-	 this->port_ = ACE_OS::atoi (get_opt.optarg);
-	 break;
-       default:
-	 break;
-       }
+    switch (c)
+      {
+      case 'p':
+        this->port_ = ACE_OS::atoi (get_opt.optarg);
+        break;
+      default:
+        break;
+      }
 }
 
 // ----------------------------------------
 
 // Our Reactor Singleton.
 typedef ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>
-	REACTOR;
+REACTOR;
 
 // Our Options Singleton.
 typedef ACE_Singleton<Options, ACE_Null_Mutex>
-	OPTIONS;
+OPTIONS;
 
 // Our ACE_Test_and_Set Singleton.
 typedef ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>
-	QUIT_HANDLER;
+QUIT_HANDLER;
 
 // ----------------------------------------
 
 class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-  // = TITLE
-  //     Receive client message from the remote clients.
-  //
-  // = DESCRIPTION
-  //     This class demonstrates how to receive messages from remote
-  //     clients using the notification mechanisms in the
-  //     <ACE_Reactor>.  In addition, it also illustrates how to
-  //     utilize the <ACE_Reactor> timer mechanisms, as well.
+// = TITLE
+//     Receive client message from the remote clients.
+//
+// = DESCRIPTION
+//     This class demonstrates how to receive messages from remote
+//     clients using the notification mechanisms in the
+//     <ACE_Reactor>.  In addition, it also illustrates how to
+//     utilize the <ACE_Reactor> timer mechanisms, as well.
 {
 public:
   // = Initialization and termination methods.
@@ -106,7 +106,7 @@ private:
 
 // Specialize a Logging Acceptor.
 typedef ACE_Acceptor <Logging_Handler, ACE_SOCK_ACCEPTOR>
-	Logging_Acceptor;
+Logging_Acceptor;
 
 // Default constructor.
 
@@ -141,12 +141,12 @@ Logging_Handler::handle_input (ACE_HANDLE)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-			"client logger", this->peer_name_), -1);
+                         "client logger", this->peer_name_), -1);
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%P|%t) closing log daemon at host %s (fd = %d)\n",
-			this->peer_name_, this->get_handle ()), -1);
+                         this->peer_name_, this->get_handle ()), -1);
       /* NOTREACHED */
     case sizeof (size_t):
       {
@@ -157,7 +157,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
 
 	if (n != len)
 	  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-			    "client logger", this->peer_name_), -1);
+                             "client logger", this->peer_name_), -1);
 	/* NOTREACHED */
 
 	lp.decode ();
@@ -174,7 +174,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
       }
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-			"client logger", this->peer_name_), -1);
+                         "client logger", this->peer_name_), -1);
       /* NOTREACHED */
     }
 
@@ -194,8 +194,7 @@ Logging_Handler::open (void *)
 		       addr.get_host_name (),
 		       MAXHOSTNAMELEN + 1);
 
-      if (REACTOR::instance ()->register_handler
-	  (this, ACE_Event_Handler::READ_MASK) == -1)
+      if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "(%P|%t) can't register with reactor\n"), -1);
       else if (REACTOR::instance ()->schedule_timer
@@ -227,11 +226,6 @@ main (int argc, char *argv[])
       (ACE_INET_Addr (OPTIONS::instance ()->port ()),
        REACTOR::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
-  else if (REACTOR::instance ()->register_handler
-	   (&peer_acceptor, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "registering service with ACE_Reactor\n"), -1);
 
   // Register QUIT_HANDLER to receive SIGINT commands.  When received,
   // QUIT_HANDLER becomes "set" and thus, the event loop below will
