@@ -196,12 +196,6 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
-extern "C"
-{
-  int getopt (int, char *const *, const char *);
-  int putenv (const char *);
-}
-
 #if _POSIX_VERSION >= 199009L
 // The following are patches for LynxOS 4.0.0, which we'll add as soon
 // as we know the right incantations to avoid breaking earlier
