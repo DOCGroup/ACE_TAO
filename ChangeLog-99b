@@ -1,3 +1,11 @@
+Mon Apr 12 14:24:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU (realclean.local):
+          added BIN2, LIB2, SHLIB2, and SHLIBA2 to support
+          subsetting.  It allows realclean to remove old BIN,
+          LIB, SHLIB, and SHLIBA targets after remove the
+          ace_components information file.
+
 Mon Apr 12 13:01:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/gethrtime.cpp (ACE_gethrtime),Makefile: added support for
