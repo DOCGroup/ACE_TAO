@@ -79,7 +79,6 @@
              
              
 
-    <processcollocation>
       <homeplacement id="a_SatelliteHome">
         <componentfileref idref="com-Satellite"/>
           <componentinstantiation id="a_Satellite">
@@ -89,8 +88,7 @@
           </registercomponent>
         </componentinstantiation>
       </homeplacement>
-     <destination>CAOCHost</destination>
-    </processcollocation>
+
              
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
