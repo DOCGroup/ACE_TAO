@@ -1,3 +1,12 @@
+Wed May 10 16:17:31 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Added basic information about TAO's pending CORBA Security
+	  Service implementation.
+
+	  Updated point of contact for Pluggable Protocols, namely me.
+
 Wed May 10 15:57:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
