@@ -1,6 +1,11 @@
+Sat Feb 28 15:56:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added more dsps that must be build first
+
 Fri Feb 27 12:33:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Event_Handler.cpp (add_reference and remove_reference): 
+	* ace\Event_Handler.cpp (add_reference and remove_reference):
 
 	  Previously, add_reference() and remove_reference() were called
 	  on a event handler only if the reference counting policy was
@@ -27,15 +32,15 @@ Fri Feb 27 12:33:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Reference counting in the following files was made simple
 	  because of above change:
-	
+
 	  - ace/Select_Reactor_Base.cpp
 	  - ace/Select_Reactor_T.cpp
 	  - ace/Timer_Queue_T.cpp
 	  - ace/WFMO_Reactor.cpp
-	
+
 	  The tests/Reference_Counted_Event_Handler_Test.cpp test was
 	  extended to check this change.
-	
+
 	  Thanks to Dom Monteiro <d.monteiro@netia.net> and Liat
 	  (vliat1@hotmail.com) for pointing out this problem.
 
