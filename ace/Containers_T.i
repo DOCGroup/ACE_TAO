@@ -358,7 +358,7 @@ ACE_Array<T>::ACE_Array (size_t size,
 
 // The copy constructor (performs initialization).
 
-template <class T>
+template <class T> ACE_INLINE
 ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
    : ACE_Array_Base<T> (s)
 {
@@ -366,7 +366,7 @@ ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
 
 // Assignment operator (performs assignment).
 
-template <class T> void
+template <class T> ACE_INLINE void
 ACE_Array<T>::operator= (const ACE_Array<T> &s)
 {
   // Check for "self-assignment".
