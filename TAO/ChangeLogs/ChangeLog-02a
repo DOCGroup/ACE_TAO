@@ -1,3 +1,11 @@
+Tue Nov 21 19:20:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicInterface/Server_Request.cpp:
+
+	  Updated the raising of system exceptions by arguements(),
+	  set_result() and set_exception() to conform to changes in 
+	  CORBA 2.4.
+
 Tue Nov 21 16:26:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Table.cpp (bind):
