@@ -32,6 +32,9 @@ Wed Oct 29 10:32:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/purify.solaris2: added another _thrp_exit UMR.
 
+        * include/makeinclude/wrapper_macros.GNU: added login (LOGNAME)
+          and compiler (CXX) to Purify/Quantify cache names.
+
 Wed Oct 29 08:40:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.32, released Wed Oct 29 08:40:38 1997.
