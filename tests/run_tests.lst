@@ -2,6 +2,7 @@ ARGV_Test
 Basic_Types_Test
 chorus/Env_Value_Test
 Capabilities_Test
+Config_Test
 Atomic_Op_Test
 Auto_IncDec_Test
 Object_Manager_Test

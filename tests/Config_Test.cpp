@@ -348,7 +348,6 @@ run_tests (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Test passed\n"));
-
   return 0;
 }
 
@@ -437,9 +436,10 @@ Config_Test::get_section_string (ACE_Configuration_Section_Key& SectionKey,
       ACE_OS::strncpy (pszVariable,
                        StringValue.c_str (),
                        nMaxLength);
-      ACE_OS::printf ("%s = %s\n",
-                      pszName,
-                      pszVariable);
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("%s = %s\n"),
+                  pszName,
+                  pszVariable));
     }
 }
 
@@ -462,9 +462,10 @@ Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
       ACE_OS::strncpy (pszString,
                        StringValue.c_str (),
                        30);
-      ACE_OS::printf ("%s = %s\n",
-                      pszName,
-                      pszString);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%s = %s\n"),
+                  pszName,
+                  pszString));
     }
 
   // convert to integer
@@ -499,9 +500,10 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
         if (islower (*pSrc))
           *pSrc = tolower (*pSrc);
 
-      ACE_OS::printf ("%s = %s\n",
-                      pszName,
-                      pszString);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%s = %s\n"),
+                  pszName,
+                  pszString));
 
       if (ACE_OS::strcmp (pszString,
                           "TRUE") == 0)
