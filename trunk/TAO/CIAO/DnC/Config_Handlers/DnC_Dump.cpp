@@ -26,12 +26,13 @@ namespace Deployment
       ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
       indent_.append("   ");
 
-      CORBA::Any val;
-      val <<= desc;
-      desc_map[caption] <<= desc;
+      //      CORBA::Any val;
+      //      val <<= &desc;
+      desc_map[caption] <<= &desc;
     }
 
-    ~Dump_Obj() {
+    ~Dump_Obj()
+    {
       indent_.erase(indent_.size() - 3, 3);
       desc_map.erase(desc_map.find(desc_.c_str()));
     }
