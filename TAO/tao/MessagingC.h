@@ -2816,21 +2816,6 @@ TAO_Export CORBA::Boolean operator>> (
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
-
-#if !defined _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_
-#define _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_
-
-TAO_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const Messaging::ExceptionHolder::_tao_seq_Octet &
-  );
-TAO_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    Messaging::ExceptionHolder::_tao_seq_Octet &
-  );
-
-#endif /* _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_ */
-
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
 
