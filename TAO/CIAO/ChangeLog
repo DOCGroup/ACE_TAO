@@ -1,8 +1,12 @@
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/*: Adapted the CIDL compiler to work with the new CCF
-	library.  Basically the same code is generated with small bugs
-	fixed.
+        * examples/OEP/BasicSP/EC/EC_exec.{cpp,h}: Changed the exception
+	specification for the new_EC method (explicit home operations
+	don't throw CCMException.)
+
+        * CIDLC/*: Adapted the CIDL compiler to work with the new CCF
+        library.  Basically the same code is generated with small bugs
+        fixed.
 
 Wed Jul 30 07:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
