@@ -2,6 +2,7 @@
 #define ACE_ATOMIC_OP_T_C
 
 #include "ace/Atomic_Op_T.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

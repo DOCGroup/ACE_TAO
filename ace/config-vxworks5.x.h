@@ -50,6 +50,7 @@
   // Processor type, if necessary.  Green Hills defines "ppc".
 # if defined (ppc)
 #   define ACE_HAS_POWERPC_TIMER
+#   define ACE_LACKS_CLEARERR
 # elif defined (i386) || defined (__i386__)
     // If running an Intel, assume that it's a Pentium so that
     // ACE_OS::gethrtime () can use the RDTSC instruction.  If

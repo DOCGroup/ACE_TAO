@@ -97,8 +97,8 @@ ACE_THR_FUNC_RETURN
 ACE_Thread_Adapter::invoke_i (void)
 {
   // Extract the arguments.
-  ACE_THR_FUNC_INTERNAL func = ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
-                                                     this->user_func_);
+  ACE_THR_FUNC func = ACE_reinterpret_cast (ACE_THR_FUNC,
+                                            this->user_func_);
   void *arg = this->arg_;
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)

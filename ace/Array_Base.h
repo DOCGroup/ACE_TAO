@@ -23,8 +23,7 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/OS.h"
-
-class ACE_Allocator;
+#include "ace/Malloc_Base.h"
 
 // Forward declaration.
 template <class T> class ACE_Array_Iterator;
