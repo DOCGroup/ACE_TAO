@@ -8,7 +8,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "sequence.hpp"
+#include "bounded_value_sequence.hpp"
 
 struct Foo
 {
@@ -20,14 +20,14 @@ CORBA::ULong const TEST_FOO_MAX = 64;
 
 int main(int,char*[])
 {
-  typedef TAO::bounded_sequence<int,TEST_INT_MAX> int_sequence;
+  typedef TAO::bounded_value_sequence<int,TEST_INT_MAX> int_sequence;
 
   int_sequence a;
   int_sequence b(a);
 
   a = b;
 
-  typedef TAO::bounded_sequence<Foo,TEST_FOO_MAX> Foo_sequence;
+  typedef TAO::bounded_value_sequence<Foo,TEST_FOO_MAX> Foo_sequence;
 
   Foo_sequence c;
   Foo_sequence d(c);
@@ -40,5 +40,5 @@ int main(int,char*[])
 // of all member function and thus tests the full class.  This should
 // work across all platforms, even on platforms that do not *require*
 // explicit instantiation of templates.
-template class TAO::bounded_sequence<int,TEST_INT_MAX>;
-template class TAO::bounded_sequence<Foo,TEST_FOO_MAX>;
+template class TAO::bounded_value_sequence<int,TEST_INT_MAX>;
+template class TAO::bounded_value_sequence<Foo,TEST_FOO_MAX>;

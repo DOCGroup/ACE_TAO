@@ -1,3 +1,84 @@
+Tue Sep 21 20:15:01 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
+	  Refactor the code to decompose the problem a little better.
+	  Basically it all boils down to creating
+
+	  1) A set of traits to handle buffer allocation.  This
+	     encapsulates the bounded vs. unbounded aspect of a sequence.
+
+	  2) Another set trait to handle element initialization,
+	     copying and destruction.  This encapsulates the value
+	     vs. reference aspect of a sequence.
+
+          In the process I created smaller files to hold each class.
+	  The traits have an extra <bool> template parameter, whose
+	  motivation would hopefully become clear in a second.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+	  Move the implementation of bounded sequences of by-value types
+	  to this file.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	  Unit test for bounded_value_sequence.
+
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+	  Move the implementation of unbounded sequences of by-value types
+	  to this file.
+
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+	  Unit test for unbounded_value_sequence.
+
+	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+	  Refactor common code shared by bounded_value_sequence_ut.cpp and
+	  unbounded_value_sequence_ut.cpp
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+	  Specialize the allocation traits in a form suitable for
+	  testing.  The unit tests make the traits raise exceptions in
+	  certain tests, and they can count how many times certain
+	  functions are called.
+
+	* tests/Sequence_Unit_Tests/testing_range_checking.hpp:
+	  Specializes the range_checking traits to raise an exception when
+	  an out-of-range access is attempted.
+	
+	* tests/Sequence_Unit_Tests/testing_exception.hpp:
+	  Exception raised by the testing traits.
+
+	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
+	  New file, implements the allocation traits for bounded and
+	  unbounded sequences.
+
+	* tests/Sequence_Unit_Tests/value_traits.hpp:
+	  Implement the element manipulation traits for by-value types.
+
+	* tests/Sequence_Unit_Tests/range_checking.hpp:
+	  New file, implements yet another trait to control what are the
+	  effects of accessing an index out of range.  The default
+	  implementation is a no-op, but applications can specialize the
+	  class to throw exceptions, call abort, phone your mom and call
+	  you names, whatever.
+
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  Removed some projects, add new ones.
+
+	* tests/Sequence_Unit_Tests/Bounded_Primitive_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Primitive_Types.cpp:
+	  Removed, replaced by {bounded,unbounded}_value_sequence_ut.cpp
+
+	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+	  Updated to use TAO::{bounded,unbounded}_value_sequence
+	  vs. TAO::{bounded,unbounded}_sequence.
+
+	* tests/Sequence_Unit_Tests/sequence.hpp:
+	  Removed, replaced by {bounded,unbounded}_value_sequence.hpp
+
+	* tests/Sequence_Unit_Tests/sequence_traits.hpp:
+	  Removed, the traits have been broken up in multiple files.
+
 Tue Sep 21 20:31:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
