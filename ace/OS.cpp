@@ -1287,8 +1287,10 @@ ACE_thread_key_t ACE_TSS_Emulation::total_keys_ = 0;
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX] = { 0 };
 
+#if !defined (VXWORKS)
 void **
 ACE_TSS_Emulation::tss_collection_ [ACE_TSS_THREADS_MAX] = { 0 };
+#endif /* VXWORKS */
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
