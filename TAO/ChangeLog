@@ -1,3 +1,15 @@
+Wed Dec 24 08:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableInterceptor.pidl:
+
+	  Added an extra include IOP_IOR.pidl
+	
+	* tests/Timed_Buffered_Oneways/client.pp:
+
+	  #included tao/TAOA.h. 
+
+	  They should fix compile errors in a number of g++ builds.
+
 Wed Dec 24 13:44:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptorC.{h,cpp}:
