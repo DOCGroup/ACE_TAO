@@ -20,8 +20,14 @@ public:
   int pull (ACE_Message_Block &mb);
   // Method that initiates the work.
 
-  virtual int hook (ACE_Message_Block &mb) = 0;
+  int push (ACE_Message_Block &mb);
+  // Method that notifies work is available.
+
+  virtual int pull_hook (ACE_Message_Block &mb) = 0;
   // Required method that finishes the work.
+
+  virtual int push_hook (ACE_Message_Block &mb) = 0;
+  // Required method that accepts available work.
 
 
   virtual int init (int, char *[]);
@@ -32,8 +38,11 @@ protected:
   void insert (JAWS_Protocol_Pipeline *pp);
   void append (JAWS_Protocol_Pipeline *pp);
 
-  virtual JAWS_Protocol_Pipeline * pipeline (JAWS_Protocol_Pipeline *pp = 0);
+  virtual JAWS_Protocol_Pipeline * prev_pipe (JAWS_Protocol_Pipeline *pp = 0);
   // Virtual accessor to the preceding pipeline component
+
+  virtual JAWS_Protocol_Pipeline * next_pipe (JAWS_Protocol_Pipeline *pp = 0);
+  // Virtual accessor to the succeding pipeline component
 
 };
 
@@ -54,16 +63,24 @@ public:
   void add (JAWS_Protocol_Pipeline *component);
   // Insert a pipeline component into the pipeline chain
 
-  virtual int hook (ACE_Message_Block &mb) = 0;
+  virtual int pull_hook (ACE_Message_Block &mb) = 0;
   // Required method that finishes the work.
 
+  virtual int push_hook (ACE_Message_Block &mb) = 0;
+  // Required method that accepts available work.
+
 private:
-  virtual JAWS_Protocol_Pipeline * pipeline (JAWS_Protocol_Pipeline * = 0);
-  // Accessor to the preceding pipeline component
+  virtual JAWS_Protocol_Pipeline * prev_pipe (JAWS_Protocol_Pipeline *pp = 0);
+  // Virtual accessor to the preceding pipeline component
+
+  virtual JAWS_Protocol_Pipeline * next_pipe (JAWS_Protocol_Pipeline *pp = 0);
+  // Virtual accessor to the succeding pipeline component
 
 protected:
-  JAWS_Protocol_Pipeline *pipeline_;
+  JAWS_Protocol_Pipeline *prev_pipe_;
   // The preceeding element in the pipeline chain.
+  JAWS_Protocol_Pipeline *next_pipe_;
+  // The succeeding element in the pipeline chain.
 };
 
 
