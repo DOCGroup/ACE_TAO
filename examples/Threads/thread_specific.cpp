@@ -120,8 +120,15 @@ worker (void *c)
         // Use the guard to serialize access to printf...
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
-        ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
-                        handle,
+#if defined(linux)
+        // @@ Normally the platform specific way to print a thread ID
+        // is encapsulated in Log_Msg.cpp, but for this small example
+        // we cannot (or do not want to) use ACE_Log_Msg.
+        ACE_OS::printf ("(%lu)", (unsigned long)handle);
+#else
+        ACE_OS::printf ("(%u)", handle);
+#endif /* ! linux */
+        ACE_OS::printf (" errno = %d, lineno = %d, flags = %d\n",
                         tss_error->error (),
                         tss_error->line (),
                         tss_error->flags ());
