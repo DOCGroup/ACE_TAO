@@ -1,3 +1,16 @@
+Fri Oct 06 12:14:35 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynArray_i.h:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynSequence_i.h:
+	* tao/DynamicAny/DynStruct_i.cpp:
+	* tao/DynamicAny/DynStruct_i.h:
+	* tao/DynamicAny/DynUnion_i.cpp:
+	* tao/DynamicAny/DynUnion_i.h:
+
+	  Changed Throw clause in the to_any method.
+
 Fri Oct  6 11:56:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FT_CORBA.idl: Made some of the policy

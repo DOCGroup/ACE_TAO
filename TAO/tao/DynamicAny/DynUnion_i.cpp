@@ -575,8 +575,7 @@ TAO_DynUnion_i::from_any (const CORBA_Any& any,
 CORBA::Any_ptr
 TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW_SPEC ((
-                       CORBA::SystemException,
-                       DynamicAny::DynAny::TypeMismatch
+                       CORBA::SystemException
       ))
 {
   // Both Dynanys must have been initialied.
