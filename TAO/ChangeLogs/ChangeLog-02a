@@ -1,3 +1,16 @@
+Sat Apr  6 12:27:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/POA_BiDir/Makefile:
+	* examples/POA/POA_BiDir/Makefile.bor:
+	* examples/POA/POA_BiDir/POA_BiDir.cpp:
+	* examples/POA/POA_BiDir/POA_BiDir.dsp:
+	* examples/POA/POA_BiDir/POA_BiDir.dsw:
+	* examples/POA/POA_BiDir/README:
+	* examples/POA/POA_BiDir/run_test.pl*: A new test that tests
+	  multiple POA's with one of the POA's assigned BiDirGIOP
+	  policy. 
+
+
 Sat Apr  6 12:10:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Policy_Validator.cpp: Added a check to make sure that we
