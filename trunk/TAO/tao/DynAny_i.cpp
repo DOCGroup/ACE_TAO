@@ -1171,7 +1171,7 @@ TAO_DynAny_i::unalias (CORBA_TypeCode_ptr tc,
       CORBA_TypeCode_var temp = tc->content_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::tk_null);
 
-      tck = TAO_DynAny_i::unalias (temp,
+      tck = TAO_DynAny_i::unalias (temp.in (),
                                    ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::tk_null);
     }

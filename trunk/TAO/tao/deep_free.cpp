@@ -278,28 +278,28 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
         break;
 
         case CORBA::tk_struct:
-          retval = TAO_Marshal_Struct::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Struct::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_union:
-          retval = TAO_Marshal_Union::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Union::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_string:
-          retval = TAO_Marshal_String::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_String::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_sequence:
-          retval = TAO_Marshal_Sequence::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Sequence::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_array:
-          retval = TAO_Marshal_Array::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Array::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_alias:
-          retval = TAO_Marshal_Alias::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Alias::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_except:
-          retval = TAO_Marshal_Except::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_Except::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         case CORBA::tk_wstring:
-          retval = TAO_Marshal_WString::deep_free (param, source, dest, ACE_TRY_ENV);
+          retval = TAO_Marshal_WString::deep_free (param.in (), source, dest, ACE_TRY_ENV);
           break;
         default:
           retval = CORBA::TypeCode::TRAVERSE_STOP;

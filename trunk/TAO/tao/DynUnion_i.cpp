@@ -86,7 +86,7 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA_TypeCode_ptr tc)
 
           // Get a typecode into the discriminator holder.
           this->discriminator_ =
-            TAO_DynAny_i::create_dyn_any (disc_tc,
+            TAO_DynAny_i::create_dyn_any (disc_tc.in (),
                                           ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -146,7 +146,7 @@ TAO_DynUnion_i::discriminator_kind (CORBA::Environment& ACE_TRY_ENV)
   CORBA_TypeCode_var tc = this->type_->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
-  CORBA::TCKind retval = TAO_DynAny_i::unalias (tc,
+  CORBA::TCKind retval = TAO_DynAny_i::unalias (tc.in (),
                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
@@ -790,7 +790,7 @@ TAO_DynUnion_i::insert_long (CORBA::Long value,
           if (try_kind == CORBA::tk_long)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -920,7 +920,7 @@ TAO_DynUnion_i::insert_ulong (CORBA::ULong value,
           if (try_kind == CORBA::tk_ulong)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
