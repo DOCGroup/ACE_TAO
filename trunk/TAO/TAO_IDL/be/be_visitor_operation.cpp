@@ -1016,7 +1016,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // STEP 3G: check if we are oneway in which case, we are done
   if (node->flags () == AST_Operation::OP_oneway)
     {
-      // we are done. Nothing else to do
+      // we are done. Nothing else to do, except closing the funciton body. 
+      os->decr_indent ();
+      *os << "}\n\n";
       return 0;
     }
 
