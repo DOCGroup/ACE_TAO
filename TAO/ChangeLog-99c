@@ -1,3 +1,12 @@
+Sun Jun 27 18:30:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	  Added all the necessary ACE_CHECK stuff.
+	  DynUnion_i.cpp is left to do.
+
 Sun Jun 27 17:56:19 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp,
