@@ -166,10 +166,10 @@ else  # ! CROSS-COMPILE
   CPPFLAGS += -Iinclude -Ibe_include -Ife -DCPP_LOCATION=\"$(CXX)\" \
               -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
-  clean:
+  clean: realclean.old
 	rm -f tao_idl
 
-  realclean:
+  realclean: realclean.old
 	rm -f tao_idl TAGS
 endif # ! CROSS-COMPILE
 
@@ -179,6 +179,25 @@ tags:
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
 
+
+#----------------------------------------------------------------------------
+#	Cleanup
+#----------------------------------------------------------------------------
+# This section can be removed eventually.  It's purpose is to clean out
+# builds that were created with nested version of this TAO_IDL Makefile.
+
+realclean.old:
+	@for dir in driver fe ast util narrow be;\
+	do \
+		(echo " ========> Making $(@:.nested=): `pwd`"; \
+		 $(MAKE) -C $$dir realclean; \
+		 echo "<========     End $(@:.nested=): `pwd`") ; \
+	done
+
+
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
