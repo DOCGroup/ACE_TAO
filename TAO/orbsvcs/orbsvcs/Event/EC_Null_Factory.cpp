@@ -120,7 +120,12 @@ TAO_EC_Null_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 TAO_EC_Timeout_Generator*
 TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
-  return new TAO_EC_Reactive_Timeout_Generator (0);
+  int argc = 0;
+  char **argv = 0;
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc, argv, "");
+  ACE_Reactor *reactor = orb->orb_core ()->reactor ();
+  return new TAO_EC_Reactive_Timeout_Generator (reactor);
 }
 
 void
