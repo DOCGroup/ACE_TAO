@@ -3861,7 +3861,7 @@ AC_CHECK_FUNC(setreuid, dnl
      ace_cv_lib_has_setreuid_prototype,
      [
       ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen=-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+      ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+setreuid], time.h,
         [
@@ -5065,7 +5065,7 @@ fi dnl $ac_cv_header_sys_uio_h = yes && $ac_cv_func_writev = yes
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-ACE_CACHE_CHECK(for (struct sockaddr *) msg_name field,
+ACE_CACHE_CHECK(for (struct sockaddr *) msg_name field in msghdr,
   ace_cv_lib_sockaddr_msg_name,[
     AC_TRY_COMPILE(
       [
@@ -5076,9 +5076,18 @@ ACE_CACHE_CHECK(for (struct sockaddr *) msg_name field,
       ],
       [
        msghdr ace_msghdr;
-       sockaddr name;
+       struct sockaddr *addr = 0;
 
-       ace_msghdr.msg_name = (struct sockaddr *)name;
+       /*
+        * Note that some platforms declare msg_name to be a void*,
+        * in which case this assignment will work.
+        * Should we _not_ define ACE_HAS_SOCKADDR_MSG_NAME in that
+        * case?  I tend to think it is more appropriate to define
+        * ACE_HAS_SOCKADDR_MSG_NAME rather than cast addr to a char*,
+        * as is done in ACE when the macro is not defined.
+        *      -Ossama
+        */
+       ace_msghdr.msg_name = (struct sockaddr *)addr;
       ],
       [
        ace_cv_lib_sockaddr_msg_name=yes
@@ -5092,66 +5101,80 @@ ACE_CACHE_CHECK(for (struct sockaddr *) msg_name field,
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-ACE_CACHE_CHECK(if setsockopt() takes a char* fourth argument,
-  ace_cv_lib_posix_setsockopt_charp_4,[
-    AC_TRY_COMPILE(
-      [
+ACE_CACHE_CHECK([if setsockopt() takes a void* fourth argument],
+  [ace_cv_lib_posix_setsockopt_voidp_4],
+  [
+   AC_TRY_COMPILE(
+     [
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
 #include <sys/socket.h>
-      ],
-      [
-       int s = 0;
-       int level = 0;
-       int optname = 0;
-       char* optval = 0;
-#if defined(ACE_HAS_SIZET_SOCKET_LEN)
-       size_t* optlen = 0;
-#else
-       int* optlen = 0;
-#endif
-       setsockopt(s, level, optname, optval, optlen);
-      ],
-      [
-       ace_cv_lib_posix_setsockopt_charp_4=yes
-      ],
-      [
-       ace_cv_lib_posix_setsockopt_charp_4=no
-      ])
-  ], AC_DEFINE(ACE_HAS_CHARPTR_SOCKOPT),)
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+     ],
+     [
+      int s = 0;
+      int level = 0;
+      int optname = 0;
+      void* optval = 0;
 
-ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
-[
-ACE_CACHE_CHECK(if setsockopt() takes a void* fourth argument,
-  ace_cv_lib_posix_setsockopt_voidp_4,[
-    AC_TRY_COMPILE(
-      [
+#if defined (ACE_HAS_SOCKLEN_T)
+      socklen_t optlen = 0;
+#elif defined (ACE_HAS_SIZET_SOCKET_LEN)
+      size_t optlen = 0;
+#else
+      int optlen = 0;
+#endif
+
+      setsockopt (s, level, optname, optval, optlen);
+     ],
+     [
+      ace_cv_lib_posix_setsockopt_voidp_4=yes
+     ],
+     [
+      ace_cv_lib_posix_setsockopt_voidp_4=no
+     ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_VOIDPTR_SOCKOPT)
+  ],
+  [
+   ACE_CACHE_CHECK([if setsockopt() takes a char* fourth argument],
+     [ace_cv_lib_posix_setsockopt_charp_4],
+     [
+      AC_TRY_COMPILE(
+        [
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
 #include <sys/socket.h>
-      ],
-      [
-       int s = 0;
-       int level = 0;
-       int optname = 0;
-       void* optval = 0;
-#if defined(ACE_HAS_SIZET_SOCKET_LEN)
-       size_t* optlen = 0;
+        ],
+        [
+         int s = 0;
+         int level = 0;
+         int optname = 0;
+         char* optval = 0;
+
+#if defined (ACE_HAS_SOCKLEN_T)
+         socklen_t optlen = 0;
+#elif defined (ACE_HAS_SIZET_SOCKET_LEN)
+         size_t optlen = 0;
 #else
-       int* optlen = 0;
+         int optlen = 0;
 #endif
-       setsockopt(s, level, optname, optval, optlen);
-      ],
-      [
-       ace_cv_lib_posix_setsockopt_voidp_4=yes
-      ],
-      [
-       ace_cv_lib_posix_setsockopt_voidp_4=no
-      ])
-  ], AC_DEFINE(ACE_HAS_VOIDPTR_SOCKOPT),)
+
+         setsockopt (s, level, optname, optval, optlen);
+        ],
+        [
+         ace_cv_lib_posix_setsockopt_charp_4=yes
+        ],
+        [
+         ace_cv_lib_posix_setsockopt_charp_4=no
+         ])
+     ],
+     [
+      AC_DEFINE(ACE_HAS_CHARPTR_SOCKOPT)
+     ],)
+  ])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
