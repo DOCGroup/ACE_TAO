@@ -35,7 +35,8 @@ CPP_SRCS += \
   Linear_Network_Priority_Mapping \
   Network_Priority_Mapping \
   Network_Priority_Mapping_Manager \
-  Private_Transport_Descriptor \
+  RT_Transport_Descriptor \
+  RT_Transport_Descriptor_Property \
   RTCORBA \
   RTCORBAC \
   RT_Current \
@@ -2080,63 +2081,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/LocalObject.i \
   Network_Priority_Mapping_Manager.i
 
-.obj/Private_Transport_Descriptor.o .obj/Private_Transport_Descriptor.so .shobj/Private_Transport_Descriptor.o .shobj/Private_Transport_Descriptor.so: Private_Transport_Descriptor.cpp \
-  Private_Transport_Descriptor.h \
-  $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  rtcorba_export.h \
-  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
-  $(TAO_ROOT)/tao/corbafwd.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/CDR_Base.inl \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/corbafwd.i \
-  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
-  Private_Transport_Descriptor.inl \
-  $(TAO_ROOT)/tao/Endpoint.h \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(TAO_ROOT)/tao/Endpoint.i
-
 .obj/RTCORBA.o .obj/RTCORBA.so .shobj/RTCORBA.o .shobj/RTCORBA.so: RTCORBA.cpp RTCORBA.h \
   $(ACE_ROOT)/ace/pre.h \
   rtcorba_export.h \
@@ -4024,8 +3968,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/Endpoint.i \
-  RT_Stub.h Private_Transport_Descriptor.h \
-  Private_Transport_Descriptor.inl \
+  RT_Stub.h \
   $(TAO_ROOT)/tao/Base_Transport_Property.h \
   $(TAO_ROOT)/tao/Base_Transport_Property.inl \
   RT_Endpoint_Utils.h RT_Protocols_Hooks.h \
