@@ -16,6 +16,76 @@ Sat Apr 24 23:43:13 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
           Added the following handlers belonging to the
           Target Data Model.
 
+Sat Apr 24 23:13:56 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	  struct ComponentPackageReference: Added two new fields called
+	  requiredUUID and requiredName of type string (Issue 6047).
+
+	* DnC/Config_Handler/SPE_Handler.h:
+	* DnC/Config_Handler/SPE_Handler.cpp:
+	* DnC/Config_Handler/ACD_Handler.h:
+	* DnC/Config_Handler/ACD_Handler.cpp:
+	* DnC/Config_Handler/APM_Handler.h:
+	* DnC/Config_Handler/APM_Handler.cpp:
+	* DnC/Config_Handler/MID_Handler.h:
+	* DnC/Config_Handler/MID_Handler.cpp:
+	  Enclosed these into the CIAO namespace
+	
+	  Removed needless copies by having the parent (caller) provide
+	  the memory for the child (callee) to populate it.
+
+	  Other cosmetic changes, fixing typos.
+
+	* DnC/Config_Handler/PC_Handler.cpp:
+	* DnC/Config_Handler/PCI_Handler.cpp:
+	  Fixed undefined variables.
+
+	* DnC/Config_Handler/CAD_Handler.h:
+	* DnC/Config_Handler/CAD_Handler.cpp:
+	  XML handlers for the ComponentAssemblyDescription artifact of
+	  the Component Data Model.
+
+	* DnC/Config_Handler/SID_Handler.h:
+	* DnC/Config_Handler/SID_Handler.cpp:
+	  XML handlers for the ComponentPackageReference artifact of
+	  the Component Data Model.
+
+	* DnC/Config_Handler/CPR_Handler.h:
+	* DnC/Config_Handler/CPR_Handler.cpp:
+	  XML handlers for the ComponentPackageReference artifact of
+	  the Component Data Model.
+
+	* DnC/Config_Handler/SPR_Handler.h:
+	* DnC/Config_Handler/SPR_Handler.cpp:
+	  XML handlers for the SubcomponentPropertyReference artifact of
+	  the Component Data Model.
+
+	* DnC/Config_Handler/CompImplDesc_Handler.h:
+	* DnC/Config_Handler/CompImplDesc_Handler.cpp:
+	  XML handlers for the ComponentImplementationDescription artifact of
+	  the Component Data Model.
+
+	* DnC/Config_Handler/DP_Handler.cpp:
+          Renamed included file CID_Handler.h to CompIntfDesc_Handler.h
+	  since there was a name clash.
+	
+	* DnC/Config_Handler/Config_Handlers.mpc:
+	  Fixed the CONFIG_HANDLER_BUILD_DLL typo
+	  Added ACD_Handler.cpp
+	  Added APM_Handler.cpp
+	  Added CAD_Handler.cpp
+	  Added MID_Handler.cpp
+	  Added SPE_Handler.cpp
+	  Added CompImplDesc_Handler.cpp
+	  Added CompPkgDesc_Handler.cpp
+	  Added PC_Handler.cpp
+	  Added PCI_Handler.cpp
+	  Added SID_Handler.cpp
+	  Added CPR_Handler.cpp
+	  Added SPR_Handler.cpp
+	  Reincluded DP_Handler.cpp
+
 Sat Apr 24 22:25:55 2004  George Edwards <g.edwards@vanderbilt.edu>
 
         Added files:
@@ -32,7 +102,8 @@ Sat Apr 24 21:22:48 2004  George Edwards <g.edwards@vanderbilt.edu>
         * DnC/Config_Handlers/CompPkgDesc_Handler.h:
         * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
 
-          Added new handlers for PackageConfiguration and ComponentPackageDescription.
+          Added new handlers for PackageConfiguration and
+	  ComponentPackageDescription. 
 
 Sat Apr 24 16:02:03 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
