@@ -1,3 +1,9 @@
+Wed May 17 09:02:45 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/CDR_Array_Test.cpp:
+          Workaround problems with old versions of g++, in some cases it
+          gets confused with sizeof(T) inside a template.
+
 Wed May 17 10:54:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* examples/ConfigViewer/ConfigTreeCtrl.cpp:

@@ -189,7 +189,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
   char* dstbuf;
   {
     const int stotal =
-      total*sizeof(T) + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+      total * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
 
     ACE_NEW(srcbuf, char[stotal]);
     if (srcbuf == 0)
@@ -213,13 +213,13 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       for (t = total - 3; t <= total; t++)
         {
           int delta;
-          if (sizeof(long) <= sizeof(T))
+          if (sizeof(long) <= H::size ())
             {
               delta = 1;
             }
           else
             {
-              delta = (int) (sizeof(long)/sizeof(T));
+              delta = (int) (sizeof(long) / H::size ());
             }
 
           // We want to test all the posible source/destination buffer
@@ -264,9 +264,9 @@ CDR_Test<T, H>::checkval (int i)
       T v;
       unsigned char* s = ACE_reinterpret_cast(unsigned char*, (&v));
       unsigned int j;
-      for (j = 0; j < sizeof(T); j++)
+      for (j = 0; j < H::size (); j++)
         {
-          s[j] = (unsigned char) ((j + i*sizeof(T)) % 256);
+          s[j] = (unsigned char) ((j + i * H::size ()) % 256);
         }
 
       return v;
@@ -296,7 +296,7 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
     ACE_reinterpret_cast(const unsigned char*, &t);
 
   const unsigned char* q;
-  for (q = p; q < p + sizeof(T); ++q)
+  for (q = p; q < p + H::size (); ++q)
     {
       int k = *q;
       *s++ = digits[ k >> 4 ];
@@ -369,7 +369,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                  total));
     }
 
-  char* src = ACE_ptr_align_binary(srcbuf, sizeof(T));
+  char* src = ACE_ptr_align_binary(srcbuf, H::size ());
   T* idata = ACE_reinterpret_cast(T*, src);
   idata += src_offset;
   src = ACE_reinterpret_cast(char*, idata);
@@ -393,7 +393,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        int size = sizeof(T)*(dst_offset + total);
+        int size = H::size () * (dst_offset + total);
         ACE_OutputCDR os (dstbuf, size);
 
         // This is intrusive...
@@ -485,7 +485,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        int size = (total + dst_offset)*sizeof(T);
+        int size = (total + dst_offset) * H::size ();
         ACE_InputCDR is (toread, size, opposite_byte_order);
 
         // This is intrusive...
@@ -643,6 +643,10 @@ struct DoubleHelper
     {
       ACE_CDR::swap_8 (src, dst);
     }
+  static size_t size ()
+    {
+      return sizeof(ACE_CDR::Double);
+    }
 };
 
 struct FloatHelper
@@ -670,6 +674,10 @@ struct FloatHelper
   static void swap (const char *src, char *dst)
     {
       ACE_CDR::swap_4 (src, dst);
+    }
+  static size_t size ()
+    {
+      return sizeof(ACE_CDR::Float);
     }
 };
 
@@ -699,6 +707,10 @@ struct ShortHelper
     {
       ACE_CDR::swap_2 (src, dst);
     }
+  static size_t size ()
+    {
+      return sizeof(ACE_CDR::Short);
+    }
 };
 
 struct LongHelper
@@ -726,6 +738,10 @@ struct LongHelper
   static void swap (const char *src, char *dst)
     {
       ACE_CDR::swap_4 (src, dst);
+    }
+  static size_t size ()
+    {
+      return sizeof(ACE_CDR::Long);
     }
 };
 
@@ -756,6 +772,10 @@ struct LongLongHelper
     {
       ACE_CDR::swap_8 (src, dst);
     }
+  static size_t size ()
+    {
+      return sizeof(ACE_CDR::LongLong);
+    }
 };
 
 struct CharHelper
@@ -783,6 +803,10 @@ struct CharHelper
   static void swap (const char *src, char *dst)
     {
       *dst = *src;
+    }
+  static size_t size ()
+    {
+      return sizeof(ACE_CDR::Char);
     }
 };
 
