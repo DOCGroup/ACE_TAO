@@ -40,6 +40,7 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -13701,27 +13702,7 @@ SOURCE=.\Malloc_T.cpp
 # Begin Source File
 
 SOURCE=.\Managed_Object.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -13743,25 +13724,7 @@ SOURCE=.\Module.cpp
 # Begin Source File
 
 SOURCE=.\Select_Reactor_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
