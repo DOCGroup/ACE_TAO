@@ -2,6 +2,7 @@
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
 
 static FILE *output_file = 0;
 // File handle of the file into which received data is written.
@@ -9,46 +10,13 @@ static FILE *output_file = 0;
 static const char *output_file_name = "output";
 // File name of the file into which received data is written.
 
-int stats [BUFSIZ];
-int stats_index = 0;
+static const char* stats_file_name = "Stats.dat";
+
+int stats [1000010];
+long stats_index = 0;
 
 int start = 1;
 ACE_Time_Value start_time;
-
-double stats_avg ()
-{
-  double sum = 0;
-  for (int i=0; i < stats_index; i++)
-    {
-      sum += stats [i];
-    }
-  return sum/stats_index;
-}
-
-void dump_stats (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-	      "Dumping Stats....."));
-
-  FILE* stats_file = ACE_OS::fopen ("Stats.dat", "w");
-  if (stats_file == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  "Stats.dat cannot be opened \n"));
-    }
-
-  // first dump what the caller has to say.
-  ACE_OS::fprintf (stats_file, "Average Inter-Frame Arrival Time = %f msec\n",stats_avg ());
-
-  for (int i = 0; i < stats_index; i++)
-    ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
-  
-  ACE_OS::fclose (stats_file);  
-
-  ACE_DEBUG ((LM_DEBUG,
-	      "Done\n"));
-
-}
 
 int
 Receiver_StreamEndPoint::get_callback (const char *,
@@ -61,7 +29,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
 }
 
 Receiver_Callback::Receiver_Callback (void)
-  : frame_count_ (1)
+  : frame_count_ (0)
 {
 }
 
@@ -74,12 +42,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // Upcall from the AVStreams when there is data to be received from
   // the sender.
   //
-  ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame for frame %d\n",
-              this->frame_count_++));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Receiver_Callback::receive_frame for frame %d\n",
+		this->frame_count_++));
   
-
-
   if (start)
     {
       start_time = ACE_OS::gettimeofday ();
@@ -116,6 +83,41 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   return 0;
 }
 
+void
+Receiver_Callback::dump_samples (const char* file)
+{
+  ACE_DEBUG ((LM_DEBUG,
+	      "Dumping Stats.....\n"));
+  
+  FILE* stats_file = ACE_OS::fopen (file, "w");
+
+  if (stats_file == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  "Stats.dat cannot be opened \n"));
+    }
+  
+  for (int i = 0; i < stats_index; i++)
+    {
+      stats_.sample ((ACE_UINT64)stats [i]);
+    }
+
+  stats_.dump_results ("Inter Frame Arrival Time Statistics ",
+		       stats_file,
+		       1);
+  //  ACE_High_Res_Timer::global_scale_factor ());
+  
+  for (int i = 0; i < stats_index; i++)
+    {
+      ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
+    }
+  
+  ACE_OS::fclose (stats_file);  
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "Done\n"));
+}
+
 int
 Receiver_Callback::handle_destroy (void)
 {
@@ -123,7 +125,7 @@ Receiver_Callback::handle_destroy (void)
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
 
-  dump_stats ();
+  dump_samples (stats_file_name);
 
   ACE_TRY_NEW_ENV
     {
@@ -199,6 +201,7 @@ Receiver::init (int,
   return 0;
 }
 
+
 int
 parse_args (int argc,
             char **argv)
@@ -206,7 +209,7 @@ parse_args (int argc,
   // Parse the command line arguments
   ACE_Get_Opt opts (argc,
                     argv,
-                    "f:");
+                    "f:s:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -216,6 +219,9 @@ parse_args (int argc,
         case 'f':
           output_file_name = opts.opt_arg ();
           break;
+	case 's':
+	  stats_file_name = opts.opt_arg ();
+	  break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: receiver -f filename"),

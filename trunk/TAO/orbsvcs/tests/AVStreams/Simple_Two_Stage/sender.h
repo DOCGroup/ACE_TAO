@@ -129,4 +129,7 @@ private:
 
   int num_local_sec_addrs_;
   int num_peer_sec_addrs_;
+
+  long max_frame_count_;
+
 };
