@@ -1,3 +1,16 @@
+Tue Mar 19 21:01:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+          Fixed generation of extra comma when generating throw spec
+          for an AMI exception holder.
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+
+          Fixed indentation disagreement when generating throw spec for
+          a valuetype operation, compared with generating a throw spec 
+          for an interface opertion.
+
 Tue Mar 19 09:46:09 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.h:
