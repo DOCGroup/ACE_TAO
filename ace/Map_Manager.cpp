@@ -4,7 +4,6 @@
 #define ACE_MAP_MANAGER_C
 
 #define ACE_BUILD_DLL
-#include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Service_Config.h"
 #include "ace/Map_Manager.h"
@@ -611,9 +610,14 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator_Base (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, int head)
   : map_man_ (&mm),
-    next_ (-1)
+    next_ (-1),
+    guard_ (this->map_man_->lock_)
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator_Base");
+
+  if (this->guard_.locked () == 0) 
+    return;
+
   if (head == 0)
     this->next_ = this->map_man_->cur_size_;
 }
@@ -622,7 +626,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm)
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next");
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   if (this->map_man_->search_structure_ != 0
       // Note that this->next_ is never negative at this point...
@@ -640,7 +643,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done");
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   return this->map_man_->search_structure_ == 0
     // Note that this->next_ is never negative at this point...
@@ -653,7 +655,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i");
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   for (++this->next_;
        ACE_static_cast(size_t, this->next_) < this->map_man_->cur_size_
@@ -667,7 +668,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i");
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   for (--this->next_;
        this->next_ >= 0
@@ -754,7 +754,8 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
 
-  this->reverse_i ();
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  this->forward_i ();
   return retv;
 }
 
@@ -763,11 +764,9 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
-  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
 
-  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->forward_i ();
-  return retv;
+  this->reverse_i ();
+  return *this;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -775,8 +774,10 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
+
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
-  return *this;
+  return retv;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
@@ -810,10 +811,9 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)");
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
 
   this->reverse_i ();
-  return retv;
+  return *this;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -821,8 +821,10 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
+
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
-  return *this;
+  return retv;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -830,10 +832,9 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
 
   this->forward_i ();
-  return retv;
+  return *this;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -841,8 +842,10 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
+
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->forward_i ();
-  return *this;
+  return retv;
 }
 
 #endif /* ACE_MAP_MANAGER_C */

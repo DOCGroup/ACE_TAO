@@ -18,6 +18,7 @@
 #define ACE_HASH_MAP_MANAGER_H
 
 #include "ace/OS.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -394,6 +395,9 @@ protected:
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next_;
   // Keeps track of how far we've advanced in a linked list in each
   // table slot.
+
+  ACE_Read_Guard<ACE_LOCK> guard_; 
+  // Read guard for the life time of the iterator.
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -427,10 +431,10 @@ public:
   // Postfix advance.
 
   ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- (void);
-  // Prefix advance.
+  // Prefix reverse.
 
   ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
-  // Postfix advance.
+  // Postfix reverse.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -461,16 +465,16 @@ public:
   // = STL styled iteration, compare, and reference functions.
 
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ (void);
-  // Postfix advance.
+  // Prefix reverse.
 
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (int);
-  // Prefix advance.
+  // Postfix reverse.
 
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- (void);
-  // Postfix advance.
+  // Prefix advance.
 
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
-  // Prefix advance.
+  // Postfix advance.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
