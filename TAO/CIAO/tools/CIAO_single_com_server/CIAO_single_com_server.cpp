@@ -78,6 +78,9 @@ install_homes (CIAO::Session_Container &container,
                CORBA::ORB_ptr orb
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
+  if (component_list_ == 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
   FILE* config_file =
     ACE_OS::fopen (component_list_, "r");
 
@@ -136,16 +139,16 @@ install_homes (CIAO::Session_Container &container,
 int
 main (int argc, char *argv[])
 {
-  if (parse_args (argc, argv) != 0)
-    return -1;
-
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK
+      ACE_TRY_CHECK;
+
+      if (parse_args (argc, argv) != 0)
+        return -1;
 
       // Get reference to Root POA.
       CORBA::Object_var obj

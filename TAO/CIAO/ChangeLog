@@ -1,3 +1,9 @@
+Mon Dec 16 10:56:46 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/CIAO_single_com_server/CIAO_single_com_server.cpp: Fixed
+	  command line argument parsing problem.  We now process the
+	  command line argument for ORB correctly.
+
 Sun Dec 15 23:54:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/CIAO_single_com_server/*: Added a new prototype component
