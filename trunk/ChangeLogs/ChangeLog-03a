@@ -1,3 +1,17 @@
+Fri Aug 30 17:34:00 2002  Justin Michel <michel_j@ociweb.com>
+
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Wheel_T.cpp:
+        * tests/Timer_Queue_Test.cpp:
+
+        Reimplemented timer list to be compatible with Itanium. It no longer
+        uses a Node* as the timer_id, so the cancel operation is now much
+        more expensive. On the plus side I was able to make a few optimizations
+        that improve the speed of the schedule operations. 
+        I also made a small optimization to the timer wheel, and updated 
+        the test slightly.
+
 Fri Aug 30 15:53:18 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/Makefile: Move the addition of SSL options/flags up to
