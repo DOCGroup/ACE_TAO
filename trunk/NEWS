@@ -31,6 +31,9 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
   Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
   Wed Aug 25 14:49:11 2004  Rich Seibel <seibel_r@ociweb.com>
 
+. Changed ACE::crc32() family of functions to NOT fold in the length
+  of the string/buffer/iovec into the CRC.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.1 and ACE-5.4.2
 ====================================================
 

@@ -538,15 +538,15 @@ namespace ACE
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the string
   /// (not for a file).
-  extern ACE_Export u_long crc32 (const char *str);
+  extern ACE_Export ACE_UINT32 crc32 (const char *str);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the given
   /// buffer (the length is included in the CRC).
-  extern ACE_Export u_long crc32 (const char *buf, ACE_UINT32 len);
+  extern ACE_Export ACE_UINT32 crc32 (const char *buf, ACE_UINT32 len);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the
   /// @ len iovec buffers.
-  extern ACE_Export u_long crc32 (iovec *iov, int len);
+  extern ACE_Export ACE_UINT32 crc32 (iovec *iov, int len);
 
   /// Euclid's greatest common divisor algorithm.
   extern ACE_Export u_long gcd (u_long x, u_long y);
