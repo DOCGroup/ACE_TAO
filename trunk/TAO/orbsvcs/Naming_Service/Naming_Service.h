@@ -52,9 +52,15 @@ protected:
   int parse_args (int argc, char *argv[]);
   // parses the arguments.
 
-  TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
+  CORBA::ORB_var orb_;
+  // The ORB.
 
+  PortableServer::POA_var root_poa_;
+  // The Root POA.
+
+  PortableServer::POA_var ns_poa_;
+  // The Naming Service POA.
+  
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.
 

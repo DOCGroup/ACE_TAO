@@ -2050,6 +2050,13 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
   return 0;
 }
 
+void 
+CORBA_ORB::_tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
+                                             int delete_callback)
+{
+  this->lookup_table_.register_callback (callback, delete_callback);
+}
+
 // *************************************************************
 // Inline operators for TAO_opaque encoding and decoding
 // *************************************************************

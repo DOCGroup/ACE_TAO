@@ -47,6 +47,7 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
   //   specification.
 public:
   static const char object_key_delimiter;
+  virtual const char get_object_key_delimiter (void);
   // The object key delimiter that IIOP uses or expects.
 
   static const char *prefix (void);

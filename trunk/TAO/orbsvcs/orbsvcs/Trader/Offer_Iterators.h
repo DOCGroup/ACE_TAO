@@ -20,6 +20,13 @@
 
 #include "Trader_Utils.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
   // *************************************************************
   // TAO_Offer_Iterator
   // *************************************************************
@@ -278,5 +285,9 @@ class TAO_Offer_Id_Iterator :
 
   TAO_String_Queue ids_;
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_OFFER_ITERATOR */

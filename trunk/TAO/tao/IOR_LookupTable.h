@@ -29,6 +29,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_Export TAO_IOR_LookupTable_Callback
+{
+public:
+  virtual int find_ior (const ACE_CString &object_name,
+                        ACE_CString &ior);
+};
+
 class TAO_Export TAO_IOR_LookupTable
 {
   //   Represents a table for the IOR lookups, given the object keys. A
@@ -62,6 +69,10 @@ public:
   // Locate <object_name> and pass out parameter via <ior>.  If the IOR is
   // found, return 0. Return -1 if not found.
 
+  void register_callback (TAO_IOR_LookupTable_Callback *callback, 
+                          int delete_callback = 0);
+  // Registers a callback class with the lookup table.
+
   CORBA_ORB_ObjectIdList_ptr list_initial_services (
               CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Returns a sequence of ObjectIds that lists which objects have
@@ -74,6 +85,12 @@ public:
 private:
   TAO_IOR_Map table_;
   // Maintains the table of object_names -> IORs.
+
+  TAO_IOR_LookupTable_Callback *callback_;
+  // The callback class that table can also use to find IORs.
+  
+  int delete_callback_;
+  // If true, means delete the callback_.
 };
 
 #endif /* TAO_IOR_LOOKUPTABLE_H */

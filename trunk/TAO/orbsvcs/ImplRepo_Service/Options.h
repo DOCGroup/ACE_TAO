@@ -23,6 +23,8 @@
 
 #include "ace/Singleton.h"
 
+class ACE_Configuration;
+
 class Options
 {
   // = TITLE
@@ -34,6 +36,9 @@ class Options
 public:
   Options ();
   // Default Constructor
+
+  ~Options();
+  // dtor
 
   int parse_args (int argc, ASYS_TCHAR *argv[]);
   // Parse the command-line arguments and initialize the options.
@@ -47,6 +52,9 @@ public:
   FILE *output_file (void) const;
   // Returns the file where the IOR should be stored.
 
+  ACE_Configuration* config();
+  // Returns the configuration implementation object
+
 private:
   unsigned int debug_;
   // Debug information
@@ -54,6 +62,8 @@ private:
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.
 
+  ACE_Configuration* config_;
+  // the persistent configuration object
 };
 
 // Typedef an Options Singleton. 

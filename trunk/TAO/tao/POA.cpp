@@ -11,6 +11,60 @@
 #include "tao/Exception.h"
 #include "tao/debug.h"
 
+// ImplRepo stuff
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+# include "tao/ImplRepoC.h"
+# include "tao/ImplRepoS.h"
+# include "tao/Acceptor_Registry.h"
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+class ServerObject_i
+: public POA_ImplementationRepository::ServerObject, 
+  public PortableServer::RefCountServantBase
+{
+  // = TITLE
+  //    IMR Server Object Implementation
+  //
+  // = DESCRIPTION
+  //    Implementation Repository uses this to communicate with the IMR
+  //    registered server.
+public:
+  ServerObject_i (CORBA::ORB_ptr orb) 
+    : orb_ (orb) {}
+
+  virtual void ping (CORBA::Environment &)
+    ACE_THROW_SPEC (())
+    {
+    }
+
+  virtual void shutdown (CORBA::Environment &)
+    ACE_THROW_SPEC (())
+    {
+      this->orb_->shutdown ();
+    }
+private:
+  CORBA::ORB_ptr orb_;
+};
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+
 // Forwarding Servant class
 #include "tao/Forwarding_Servant.h"
 
@@ -22,7 +76,7 @@ ACE_RCSID(tao, POA, "$Id$")
 
 #if !defined (TAO_NO_IOR_TABLE)
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
-// Its an array of octets representing ^t^a^o/0 in octal.
+// It's an array of octets representing ^t^a^o/0 in octal.
 CORBA::Octet
 TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   024, // octal for ^t
@@ -52,6 +106,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     servant_activator_ (),
     servant_locator_ (),
     default_servant_ (),
+    server_object_ (0),
+    use_imr_ (1),
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -114,6 +170,18 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
   this->active_object_map_ = new_active_object_map.release ();
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  if (this->policies_.lifespan () == PortableServer::PERSISTENT)
+    {
+      int temp = this->use_imr_;
+      this->use_imr_ = 0;
+      this->imr_notify_startup (ACE_TRY_ENV);
+      ACE_CHECK;
+      this->use_imr_ = temp;  
+    }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 TAO_POA::~TAO_POA (void)
@@ -418,6 +486,37 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                             ACE_TRY_ENV);
       ACE_CHECK;
     }
+
+  
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  if (this->policies_.lifespan () == PortableServer::PERSISTENT)
+  {
+    this->imr_notify_shutdown ();
+      // Delete the servant, if there is one.
+
+    if (this->server_object_)
+      {
+        PortableServer::POA_var root_poa = this->server_object_->_default_POA ();
+
+        if (CORBA::is_nil (root_poa))
+          {
+            // No root POA.  This seems bad.
+            ACE_ERROR ((LM_ERROR, "Server_Object's Default POA is bad\n"));
+          }
+        else
+          {
+            PortableServer::ObjectId_var id = 
+              root_poa->servant_to_id (this->server_object_, ACE_TRY_ENV);
+            ACE_CHECK;
+
+            root_poa->deactivate_object (id, ACE_TRY_ENV);
+            ACE_CHECK;
+
+            this->server_object_->_remove_ref ();
+          }
+      }
+  }
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // When a POA is destroyed, any requests that have started execution
   // continue to completion. Any requests that have not started
@@ -1148,11 +1247,11 @@ TAO_POA::create_reference_i (const char *intf,
   TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
   // Ask the ORB to create you a reference
-  return this->orb_core_.orb ()->key_to_object (key.in (),
-                                                intf,
-                                                0,
-                                                1,
-                                                ACE_TRY_ENV);
+  return this->key_to_object (key.in (),
+                              intf,
+                              0,
+                              1,
+                              ACE_TRY_ENV);
 }
 
 CORBA::Object_ptr
@@ -1215,11 +1314,11 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
   // Ask the ORB to create you a reference
-  return this->orb_core_.orb ()->key_to_object (key.in (),
-                                                intf,
-                                                servant,
-                                                1,
-                                                ACE_TRY_ENV);
+  return this->key_to_object (key.in (),
+                              intf,
+                              servant,
+                              1,
+                              ACE_TRY_ENV);
 }
 
 PortableServer::ObjectId *
@@ -1376,11 +1475,11 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   TAO_ObjectKey_var key = this->create_object_key (id.in ());
 
   // Ask the ORB to create you a reference
-  return this->orb_core_.orb ()->key_to_object (key.in (),
-                                                servant->_interface_repository_id (),
-                                                servant,
-                                                1,
-                                                ACE_TRY_ENV);
+  return this->key_to_object (key.in (),
+                              servant->_interface_repository_id (),
+                              servant,
+                              1,
+                              ACE_TRY_ENV);
 }
 
 PortableServer::Servant
@@ -1653,11 +1752,11 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
       TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
       // Ask the ORB to create you a reference
-      return this->orb_core_.orb ()->key_to_object (key.in (),
-                                                    servant->_interface_repository_id (),
-                                                    servant,
-                                                    1,
-                                                    ACE_TRY_ENV);
+      return this->key_to_object (key.in (),
+                                  servant->_interface_repository_id (),
+                                  servant,
+                                  1,
+                                  ACE_TRY_ENV);
     }
   else
     // If the Object Id value is not active in the POA, an
@@ -3515,6 +3614,174 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+CORBA::Object_ptr 
+TAO_POA::key_to_object (const TAO_ObjectKey &key,
+                        const char *type_id,
+                        TAO_ServantBase *servant,
+                        CORBA::Boolean collocated,
+                        CORBA_Environment &ACE_TRY_ENV)
+{
+  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  if (this->use_imr_ 
+      && this->policies_.lifespan () == PortableServer::PERSISTENT)
+    {
+      // Check to see if we alter the IOR.
+      CORBA::Object_var imr = this->orb_core ().implrepo_service ();
+
+      if (CORBA::is_nil (imr.in ()) 
+          || !imr->_stubobj () 
+          || !imr->_stubobj ()->profile_in_use ())
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "Invalid Implementation Repository IOR, skipping IMRification\n"));
+
+          goto orbkey;
+        }
+
+      CORBA::String_var imr_str = imr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (obj);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "IMR IOR = \n%s\n", imr_str));
+
+      char *pos = ACE_OS::strstr (imr_str.inout (), "://");
+
+      pos = ACE_OS::strchr (pos + 3, imr->_stubobj ()->profile_in_use ()->get_object_key_delimiter ());
+
+      if (pos)
+        *(pos + 1) = 0;  // Crop the string
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR, "Could not parse IMR IOR, skipping IMRification\n"));
+
+          goto orbkey;
+        }
+
+      ACE_CString ior (imr_str.in ());
+
+      // Add the key
+      
+      CORBA::String_var key_str;
+      TAO_POA::encode_sequence_to_string (key_str.inout (), key);
+
+      ior += key_str.in ();
+      
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "IMR-ified IOR = \n%s\n", ior.c_str ()));
+
+      return this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (obj);
+
+      return obj;
+    }
+
+orbkey:
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  obj = this->orb_core_.orb()->key_to_object (key, 
+                                              type_id, 
+                                              servant, 
+                                              collocated, 
+                                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (obj);
+
+  return obj;
+}
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+void 
+TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
+{
+  CORBA::Object_var imr = this->orb_core ().implrepo_service ();
+
+  if (CORBA::is_nil (imr.in ()))
+    return;
+
+  ACE_NEW_THROW_EX (this->server_object_,
+                    ServerObject_i (this->orb_core_.orb ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
+  ImplementationRepository::ServerObject_ptr svr = 
+    this->server_object_->_this (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
+    {
+      ACE_ERROR ((LM_ERROR, "Invalid ServerObject, bailing out.\n"));
+      return;
+    }
+
+  CORBA::String_var svr_str = 
+    svr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  char *pos = ACE_OS::strstr (svr_str.inout (), "://");
+
+  pos = ACE_OS::strchr (pos + 3, 
+                        svr->_stubobj ()->profile_in_use ()->get_object_key_delimiter ());
+
+  if (pos)
+    *(pos + 1) = 0;  // Crop the string
+  else
+    {
+      ACE_ERROR ((LM_ERROR, 
+                 "Could not parse ServerObject IOR, bailing out.\n"));
+      return;
+    }
+
+  ACE_CString ior (svr_str.in ());
+
+  CORBA::String_var curr_addr (svr_str);
+
+  ImplementationRepository::Administration_var imr_admin =
+    ImplementationRepository::Administration::_narrow (imr.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  imr_admin->server_is_running (this->the_name (),
+                               curr_addr.in (),
+                               svr,
+                               ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void 
+TAO_POA::imr_notify_shutdown (void)
+{
+  // Notify the Implementation Repository about shutting down.
+  CORBA::Object_var imr = this->orb_core ().implrepo_service ();
+
+  // Check to see if there was an imr returned.  If none, return ourselves.
+  if (CORBA::is_nil (imr.in ()))
+    return; 
+
+  ACE_TRY_NEW_ENV
+    {
+      // Get the IMR's administrative object and call shutting_down on it
+      ImplementationRepository::Administration_var imr_admin =
+        ImplementationRepository::Administration::_narrow (imr.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      imr_admin->server_is_shutting_down (this->the_name (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
+      // Ignore exceptions
+    }
+  ACE_ENDTRY;
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<PortableServer::ObjectId>;

@@ -11,9 +11,7 @@ const char SERVER_NAME[] = "airplane_server";
 
 Airplane_Server_i::Airplane_Server_i (void)
   : server_impl_ (0),
-    ior_output_file_ (0),
-    ir_helper_ (0),
-    use_ir_ (0)
+    ior_output_file_ (0)
 {
   // Nothing
 }
@@ -21,7 +19,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 int
 Airplane_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:i");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -29,9 +27,6 @@ Airplane_Server_i::parse_args (void)
       {
       case 'd':  // debug flag.
         TAO_debug_level++;
-        break;
-      case 'i':  // Use the IR
-        this->use_ir_ = 1;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
@@ -45,7 +40,6 @@ Airplane_Server_i::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-                           " [-i]"
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
@@ -136,7 +130,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       ACE_TRY_CHECK;
 
       ACE_NEW_RETURN (this->server_impl_, 
-                      Airplane_i (this->use_ir_), 
+                      Airplane_i, 
                       -1);
 
       PortableServer::ObjectId_var server_id =
@@ -152,18 +146,10 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Register our poa_name with INS also, so we can get simplified
+      // requests.
+      this->orb_->_tao_add_to_IOR_table (poa_name, server_obj.in ());
 
-      if (this->use_ir_ == 1)
-        {
-          ACE_NEW_RETURN (this->ir_helper_, IR_Helper (SERVER_NAME,
-                                                       this->airplane_poa_.in (),
-                                                       this->orb_.in (),
-                                                       TAO_debug_level),
-                          -1);
-          this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      
       // Create an IOR from the server object.
       CORBA::String_var server_str =
         this->orb_->object_to_string (server_obj.in (),
@@ -196,20 +182,8 @@ Airplane_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-      if (this->use_ir_ == 1)
-        {
-          this->ir_helper_->notify_startup (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
       this->orb_->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (this->use_ir_ == 1)
-        {
-          this->ir_helper_->notify_shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
     }
   ACE_CATCHANY
     {
@@ -227,18 +201,17 @@ Airplane_Server_i::~Airplane_Server_i (void)
 {
   ACE_TRY_NEW_ENV
     {
-      if (!CORBA::is_nil (this->airplane_poa_.in ()))
-        {
-          this->airplane_poa_->destroy (1, 1, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+    if (!CORBA::is_nil (this->airplane_poa_.in ()))
+      {
+        this->airplane_poa_->destroy (1, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
     }
   ACE_CATCHANY
     {
-      // ignore exceptions
+      // ignore exceptions.
     }
   ACE_ENDTRY;
 
-  delete this->ir_helper_;
   delete this->server_impl_;
 }

@@ -56,6 +56,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
+    implrepo_service_ (CORBA::Object::_nil ()),
+    use_implrepo_ (0),
     orb_ (),
     root_poa_ (0),
     root_poa_reference_ (),
@@ -881,6 +883,14 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBUseIMR")))
+        {
+          // Use IR or not.
+          this->use_implrepo_ = ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
 
       ////////////////////////////////////////////////////////////////
       // catch all the remaining -ORB args                          //
@@ -1176,6 +1186,8 @@ TAO_ORB_Core::fini (void)
 {
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
+
+  CORBA::release (this->implrepo_service_);
 
   if (TAO_debug_level >= 3)
     {
@@ -2058,6 +2070,37 @@ TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
   return 0;
 #endif /* TAO_HAS_RT_CORBA */
 }
+
+const CORBA::Object_ptr 
+TAO_ORB_Core::implrepo_service (void)
+{
+  if (!this->use_implrepo_)
+    return CORBA::Object::_nil ();
+
+  if (CORBA::is_nil (this->implrepo_service_))
+    {
+
+      ACE_TRY_NEW_ENV
+        {
+          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService", ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
+
+          // @@ Worry about assigning a different IOR? (brunsch)
+	  this->implrepo_service_ = temp._retn ();
+        }
+      ACE_CATCHANY
+        {
+          // Just make sure that we have a null pointer.  Ignore the exception anyway.
+          this->implrepo_service_ = CORBA::Object::_nil ();
+        }
+      ACE_ENDTRY;
+    }
+
+  return CORBA::Object::_duplicate (this->implrepo_service_);
+}
+
 
 // ****************************************************************
 

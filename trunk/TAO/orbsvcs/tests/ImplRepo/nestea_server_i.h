@@ -23,7 +23,6 @@
 
 #include "tao/corba.h"
 #include "nestea_i.h"
-#include "orbsvcs/IR_Helper.h"
 
 class Nestea_Server_i
 {
@@ -72,12 +71,6 @@ private:
 
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.
-
-  IR_Helper *ir_helper_;
-  // Helper class for using the IR.
-
-  int use_ir_;
-  // Flag for whether or not to use the IR.
 };
 
 #endif /* NESTEA_SERVER_I_H */

@@ -633,6 +633,10 @@ public:
                               CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
+  void _tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
+                                         int delete_callback);
+  // Registers a new callback class with the table
+
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV,
                                      const char *adapter_name =
                                          TAO_DEFAULT_ROOTPOA_NAME,
