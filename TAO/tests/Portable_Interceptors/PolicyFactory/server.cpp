@@ -51,7 +51,7 @@ main (int argc, char *argv[])
       const CORBA::PolicyType ptype =
         p->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-      // Snaity check.
+      // Sanity check.
       if (ptype != Test::POLICY_TYPE)
         ACE_TRY_THROW (CORBA::INTERNAL ());
         
