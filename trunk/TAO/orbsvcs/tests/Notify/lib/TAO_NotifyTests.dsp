@@ -377,7 +377,7 @@ InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\Release\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\orbsvcs -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
