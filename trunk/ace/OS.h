@@ -21,8 +21,6 @@
 
 #include "ace/config-all.h"
 
-#define ACE_MAX_USERID L_cuserid
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -406,6 +404,8 @@ typedef long      id_t;
 // Win32 (in the moment).
 # if defined (ACE_WIN32)
 
+#define ACE_MAX_USERID 32
+
 // This is necessary to work around bugs with Win32 non-blocking
 // connects...
 #   if !defined (ACE_NON_BLOCKING_BUG_DELAY)
@@ -429,6 +429,7 @@ private:
 #   endif /* _DEBUG */
 # else /* !ACE_WIN32 */
 #   define ACE_NO_HEAP_CHECK
+#define ACE_MAX_USERID L_cuserid
 # endif /* ACE_WIN32 */
 
 // Turn a number into a string.
