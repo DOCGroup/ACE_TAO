@@ -25998,10 +25998,6 @@ SOURCE=.\Service_Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Service_Record.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Service_Repository.h
 # End Source File
 # Begin Source File
@@ -26691,10 +26687,6 @@ SOURCE=.\Service_Manager.i
 # Begin Source File
 
 SOURCE=.\Service_Object.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Service_Record.i
 # End Source File
 # Begin Source File
 
