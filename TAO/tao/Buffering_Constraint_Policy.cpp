@@ -18,8 +18,23 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
   : TAO::BufferingConstraintPolicy (),
+    CORBA::LocalObject (),
     buffering_constraint_ (rhs.buffering_constraint_)
 {
+}
+
+void
+TAO_Buffering_Constraint_Policy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_Buffering_Constraint_Policy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
 }
 
 CORBA::PolicyType

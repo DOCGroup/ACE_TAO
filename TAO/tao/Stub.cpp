@@ -16,15 +16,20 @@
 #include "tao/NVList.h"
 #include "tao/Invocation.h"
 #include "tao/Asynch_Invocation.h"
+#include "tao/DII_Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/debug.h"
 #include "tao/Sync_Strategies.h"
-#include "ace/Auto_Ptr.h"
-
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/debug.h"
+
+#if (TAO_HAS_RT_CORBA == 1)
+# include "tao/RT_Policy_i.h"
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
@@ -36,6 +41,17 @@ TAO_Stub::TAO_Stub (char *repository_id,
                     const TAO_MProfile &profiles,
                     TAO_ORB_Core* orb_core)
   : type_id (repository_id),
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+    priority_model_policy_ (0),
+    is_priority_model_policy_parsed_ (0),
+    priority_banded_connection_policy_ (0),
+    is_priority_banded_policy_parsed_ (0),
+    client_protocol_policy_ (0),
+    is_client_protocol_policy_parsed_ (0),
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
     profile_in_use_ (0),
@@ -67,8 +83,12 @@ TAO_Stub::TAO_Stub (char *repository_id,
       this->orb_core_ = TAO_ORB_Core_instance ();
     }
 
-  // Duplicate the ORB. This will help us keep the ORB around until
-  // the CORBA::Object we represent dies.
+  // Duplicate the ORB_Core, otherwise the allocators and other
+  // resources that this class references (directly or indirectly)
+  // could be destroyed before it is time.
+  (void) this->orb_core_->_incr_refcnt ();
+
+  // Cache the ORB pointer to respond faster to certain queries.
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
   this->profile_lock_ptr_ =
@@ -109,6 +129,7 @@ TAO_Stub::~TAO_Stub (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+  this->orb_core_->_decr_refcnt ();
 }
 
 void
@@ -155,7 +176,17 @@ TAO_Stub::hash (CORBA::ULong max,
   // we rely on the profile object that its address info
   if (profile_in_use_)
     return profile_in_use_->hash (max, ACE_TRY_ENV);
-  ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("(%P|%t) hash called on a null profile!\n")), 0);
+
+  if (TAO_debug_level > 3)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) hash called on a null profile\n")));
+
+  ACE_THROW_RETURN (CORBA::INTERNAL (
+    CORBA_SystemException::_tao_minor_code (
+       TAO_DEFAULT_MINOR_CODE,
+       0),
+    CORBA::COMPLETED_NO),
+    0);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -280,7 +311,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
                            CORBA::NVList_ptr args,
                            CORBA::NamedValue_ptr result,
                            CORBA::Flags,
-                           CORBA::ExceptionList &exceptions,
+                           CORBA::ExceptionList_ptr exceptions,
                            int lazy_evaluation,
                            CORBA::Environment &ACE_TRY_ENV)
 {
@@ -333,8 +364,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
           // Make the call ... blocking for the response.
           int status =
-            call.invoke (exceptions,
-                         ACE_TRY_ENV);
+            call.invoke (exceptions, ACE_TRY_ENV);
           ACE_CHECK;
 
           if (status == TAO_INVOKE_RESTART)
@@ -500,20 +530,199 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 // ****************************************************************
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+  #if (TAO_HAS_RT_CORBA == 1)
+
+// @@ Angelo, would it make sense to parse the whole list once for all
+// policy types we are interested in, rather than keep parsing for
+// each type?  Then we can also keep just one flag, i.e.,
+// are_policies_parse_, rather than one for each policy ...
+
+CORBA::Policy *
+TAO_Stub::parse_policy (CORBA::PolicyType ptype)
+{
+  CORBA::Policy *policy = 0;
+
+  CORBA::PolicyList *policy_list
+    = this->base_profiles_.policy_list ();
+
+  CORBA::ULong length = policy_list->length ();
+  CORBA::ULong index = 0;
+  while (index < length
+         &&
+         ((*policy_list)[index]->policy_type () != ptype ))
+    {
+      ++index;
+    }
+  if (index < length)
+    {
+      policy = (*policy_list)[index].in ();
+    }
+  return policy;
+}
+
+TAO_PriorityModelPolicy *
+TAO_Stub::exposed_priority_model (void)
+{
+  if (this->is_priority_model_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->priority_model_policy_))
+        this-> priority_model_policy_->_add_ref ();
+
+      return this->priority_model_policy_;
+    }
+
+  // The policy list has not been parsed
+  // yet.
+
+  this->is_priority_model_policy_parsed_ = 1;
+
+  CORBA::Policy *policy =
+    this->parse_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
+
+  if (!CORBA::is_nil (policy))
+    {
+      RTCORBA::PriorityModelPolicy *pm_policy = 0;
+      // @@ Angelo, I think there is a memory leak here.  <narrow>
+      // method creates/adds ref to object... Same applies to other methods...
+      pm_policy =
+        RTCORBA::PriorityModelPolicy::_narrow (policy);
+
+      if (!CORBA::is_nil (pm_policy))
+        {
+          this->priority_model_policy_ =
+            ACE_static_cast (TAO_PriorityModelPolicy *,
+                             pm_policy);
+
+          this->priority_model_policy_->_add_ref ();
+        }
+    }
+
+  return this->priority_model_policy_;
+}
+
+TAO_PriorityBandedConnectionPolicy *
+TAO_Stub::exposed_priority_banded_connection (void)
+{
+  if (this->is_priority_banded_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->priority_banded_connection_policy_))
+        this->priority_banded_connection_policy_->_add_ref ();
+
+      return this->priority_banded_connection_policy_;
+    }
+
+  this->is_priority_banded_policy_parsed_ = 1;
+
+  CORBA::Policy *policy =
+    this->parse_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
+
+  if (!CORBA::is_nil (policy))
+    {
+      RTCORBA::PriorityBandedConnectionPolicy *pbc_policy = 0;
+
+      pbc_policy =
+        RTCORBA::PriorityBandedConnectionPolicy::_narrow (pbc_policy);
+
+      if (!CORBA::is_nil (pbc_policy))
+        {
+          this->priority_banded_connection_policy_ =
+            ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
+                             pbc_policy);
+
+          this->priority_banded_connection_policy_->_add_ref ();
+        }
+    }
+
+  return this->priority_banded_connection_policy_;
+}
+
+TAO_ClientProtocolPolicy *
+TAO_Stub::exposed_client_protocol (void)
+{
+  if (this->is_client_protocol_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->client_protocol_policy_))
+        this->client_protocol_policy_->_add_ref ();
+
+      return this->client_protocol_policy_;
+    }
+
+  this->is_client_protocol_policy_parsed_ = 1;
+
+  CORBA::Policy *policy =
+    this->parse_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE);
+
+  if (!CORBA::is_nil (policy))
+    {
+      RTCORBA::ClientProtocolPolicy *cp_policy = 0;
+
+      cp_policy =
+        RTCORBA::ClientProtocolPolicy::_narrow (cp_policy);
+
+      if (!CORBA::is_nil (cp_policy))
+        {
+          this->client_protocol_policy_ =
+            ACE_static_cast (TAO_ClientProtocolPolicy *,
+                             cp_policy);
+
+          this->client_protocol_policy_->_add_ref ();
+        }
+    }
+
+  return this->client_protocol_policy_;
+}
+
+ #endif /* TAO_HAS_RT_CORBA == 1 */
 
 CORBA::Policy_ptr
-TAO_Stub::get_policy (
-    CORBA::PolicyType type,
-    CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::get_policy (CORBA::PolicyType type,
+                      CORBA::Environment &ACE_TRY_ENV)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure requested policy type is appropriate
+  // for this scope.
+  if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+      || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
+    ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                      CORBA::Policy::_nil ());
+
+  // If we are dealing with a client exposed policy, check if any
+  // value came in the IOR/reconcile IOR value and overrides.
+  if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+    return this->exposed_priority_model ();
+
+  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
+    return this->effective_priority_banded_connection (ACE_TRY_ENV);
+
+  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
+    return this->effective_client_protocol (ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   if (this->policies_ == 0)
     return CORBA::Policy::_nil ();
 
-  return this->policies_->get_policy (type,
-                                      ACE_TRY_ENV);
+  // Some policies can only be set locally on the client, while others
+  // can only be exported in the IOR by the server, and yet others can
+  // be set by both by client and server.  Furthermore, reconciliation
+  // between client-set values and the ones exported in the IOR is
+  // policy-specific.  Therefore, with the current state of things, it
+  // isn't possible to write generic code for <get_policy> that will
+  // work for any policy type.
+  // Currently, we take specific action
+  // for each of the known client-exposed policies (above), and simply
+  // look up effective override for any other policy type (below).
+  // Later, if there is a need/desire for generic code, it can be
+  // done by pushing the smarts into the policies
+  // implementations, and will involve modifying PolicyC* and friends,
+  // e.g., to add methods for policy specific reconciliation, etc.
+
+  return this->get_client_policy (type,
+                                  ACE_TRY_ENV);
 }
 
 CORBA::Policy_ptr
@@ -522,6 +731,18 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure requested policy type is appropriate
+  // for this scope.
+  if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+      || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+      || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+    ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                      CORBA::Policy::_nil ());
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::Policy_var result;
   if (this->policies_ != 0)
@@ -565,11 +786,35 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
 }
 
 TAO_Stub *
-TAO_Stub::set_policy_overrides (
-    const CORBA::PolicyList & policies,
-    CORBA::SetOverrideType set_add,
-    CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
+                                CORBA::SetOverrideType set_add,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure requested policies are allowed to be
+  // set at this scope.
+  for (CORBA::ULong i = 0; i < policies.length ();  ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      if (CORBA::is_nil (policy))
+        continue;
+
+      CORBA::ULong slot = policy->policy_type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (slot == RTCORBA::THREADPOOL_POLICY_TYPE
+          || slot == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+          || slot == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                          0);
+    }
+
+  // We are not required to check for consistency of <policies> with
+  // overrides at other levels or with policies exported in the IOR.
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   // Notice the use of an explicit constructor....
   auto_ptr<TAO_Policy_Manager_Impl> policy_manager (new TAO_Policy_Manager_Impl);
 
@@ -615,6 +860,23 @@ CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure policies of interest are allowed
+  // at this scope.
+  for (CORBA::ULong i = 0; i < types.length ();  ++i)
+    {
+      CORBA::ULong type = types[i];
+
+      if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+          || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+          || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                          0);
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   if (this->policies_ == 0)
     return 0;
 
@@ -886,6 +1148,197 @@ TAO_Stub::buffering_constraint (void)
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+TAO_PrivateConnectionPolicy *
+TAO_Stub::private_connection (void)
+{
+  TAO_PrivateConnectionPolicy *result = 0;
+
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+  if (this->policies_ != 0)
+    result = this->policies_->private_connection ();
+
+  // No need to lock, the object is in TSS storage....
+  if (result == 0)
+    {
+      TAO_Policy_Current &policy_current =
+        this->orb_core_->policy_current ();
+      result = policy_current.private_connection ();
+    }
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->private_connection ();
+    }
+
+  if (result == 0)
+    result = this->orb_core_->default_private_connection ();
+
+  return result;
+}
+
+TAO_ClientProtocolPolicy *
+TAO_Stub::client_protocol (void)
+{
+  TAO_ClientProtocolPolicy *result = 0;
+
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+  if (this->policies_ != 0)
+    result = this->policies_->client_protocol ();
+
+  // No need to lock, the object is in TSS storage....
+  if (result == 0)
+    {
+      TAO_Policy_Current &policy_current =
+        this->orb_core_->policy_current ();
+      result = policy_current.client_protocol ();
+    }
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->client_protocol ();
+    }
+
+  if (result == 0)
+    result = this->orb_core_->default_client_protocol ();
+
+  return result;
+}
+
+TAO_PriorityBandedConnectionPolicy *
+TAO_Stub::priority_banded_connection (void)
+{
+  TAO_PriorityBandedConnectionPolicy *result = 0;
+
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+  if (this->policies_ != 0)
+    result = this->policies_->priority_banded_connection ();
+
+  // No need to lock, the object is in TSS storage....
+  if (result == 0)
+    {
+      TAO_Policy_Current &policy_current =
+        this->orb_core_->policy_current ();
+      result = policy_current.priority_banded_connection ();
+    }
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->priority_banded_connection ();
+    }
+
+  if (result == 0)
+    result = this->orb_core_->default_priority_banded_connection ();
+
+  return result;
+}
+
+TAO_PriorityBandedConnectionPolicy *
+TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get effective override.
+  TAO_PriorityBandedConnectionPolicy *override =
+    this->priority_banded_connection ();
+
+  // Get the value from the ior.
+  TAO_PriorityBandedConnectionPolicy *exposed =
+    this->exposed_priority_banded_connection ();
+
+  // Reconcile client-exposed and locally set values.
+  if (exposed == 0)
+    return override;
+
+  if (override == 0)
+    return exposed;
+
+  // Both override and exposed have been set.
+  // See if either of them has empty priority bands.
+  CORBA::Object_var auto_release_exp = exposed;
+  CORBA::Object_var auto_release_ov = override;
+
+  if (exposed->priority_bands_rep ().length () == 0)
+    {
+      auto_release_ov._retn ();
+      return override;
+    }
+
+  if (override->priority_bands_rep ().length () == 0)
+    {
+      auto_release_exp._retn ();
+      return exposed;
+    }
+
+  // Both override and exposed have been set and neither has empty
+  // priority bands.  This is illegal (ptc/99-05-03, sec. 4.12.1).
+  ACE_THROW_RETURN (CORBA::INV_POLICY (),
+                    0);
+}
+
+TAO_ClientProtocolPolicy *
+TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get effective override.
+  TAO_ClientProtocolPolicy *override =
+    this->client_protocol ();
+
+  // Get the value from the ior.
+  TAO_ClientProtocolPolicy *exposed =
+    this->exposed_client_protocol ();
+
+  // Reconcile client-exposed and locally set values.
+  if (exposed == 0)
+    return override;
+
+  if (override == 0)
+    return exposed;
+
+  // Both override and exposed have been set.
+  // See if either of them has empty priority bands.
+  CORBA::Object_var auto_release_exp = exposed;
+  CORBA::Object_var auto_release_ov = override;
+
+  if (exposed->protocols_rep ().length () == 0)
+    {
+      auto_release_ov._retn ();
+      return override;
+    }
+
+  if (override->protocols_rep ().length () == 0)
+    {
+      auto_release_exp._retn ();
+      return exposed;
+    }
+
+  // Both override and exposed have been set and neither has empty
+  // protocols.  This is illegal (ptc/99-05-03, sec. 4.15.4).
+  ACE_THROW_RETURN (CORBA::INV_POLICY (),
+                    0);
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -18,10 +18,23 @@
 #include "tao/IORS.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
+#include "tao/NVList.h"
 
 ACE_RCSID(tao, IORC, "$Id$")
 
+// default constructor
+TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
+{}
 
+// destructor
+TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
+{}
+
+void TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *x)
+{
+  TAO_IOR_Manipulation *tmp = ACE_static_cast (TAO_IOR_Manipulation*,x);
+  CORBA::release (tmp);
+}
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
     CORBA::Object_ptr obj,
@@ -29,37 +42,61 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
   )
 {
   if (CORBA::is_nil (obj))
-    return TAO_IOP::TAO_IOR_Manipulation::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (TAO_IOP::TAO_IOR_Manipulation::_nil ());
-  if (check)
-    return TAO_IOP::TAO_IOR_Manipulation::_nil ();
-  void* servant = 0;
-  if (!obj->_is_collocated ()
-      || !obj->_servant()
-      || (servant = obj->_servant ()->_downcast ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0")) == 0)
-      // This can only be colocated
-      ACE_THROW_RETURN (CORBA::MARSHAL (), TAO_IOP::TAO_IOR_Manipulation::_nil ());
+    return TAO_IOR_Manipulation::_nil ();
+  if (! obj->_is_local ())
+    {
+      CORBA::Boolean is_a = obj->_is_a ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV);
+      ACE_CHECK_RETURN (TAO_IOR_Manipulation::_nil ());
+      if (is_a == 0)
+        return TAO_IOR_Manipulation::_nil ();
+    }
+  return TAO_IOR_Manipulation::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
 
-  TAO_IOP::TAO_IOR_Manipulation_ptr retval =
-    TAO_IOP::TAO_IOR_Manipulation::_nil ();
+TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &
+  )
+{
+  if (CORBA::is_nil (obj))
+    return TAO_IOR_Manipulation::_nil ();
+  if (! obj->_is_local ())
+    {
+      TAO_Stub* stub = obj->_stubobj ();
+      if (stub)
+        stub->_incr_refcnt ();
+      TAO_IOR_Manipulation_ptr default_proxy = TAO_IOR_Manipulation::_nil ();
 
-  ACE_NEW_RETURN (
-      retval,
-      POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (
-          ACE_reinterpret_cast (POA_TAO_IOP::TAO_IOR_Manipulation_ptr,
-                                servant),
-          0
-        ),
-      TAO_IOP::TAO_IOR_Manipulation::_nil ()
-    );
-
-  return retval;
+      if (obj->_is_collocated () && _TAO_collocation_TAO_IOP_TAO_IOR_Manipulation_Stub_Factory_function_pointer != 0)
+        {
+          default_proxy = _TAO_collocation_TAO_IOP_TAO_IOR_Manipulation_Stub_Factory_function_pointer (obj);
+        }
+      if (CORBA::is_nil (default_proxy))
+        ACE_NEW_RETURN (default_proxy, TAO_IOR_Manipulation (stub), TAO_IOR_Manipulation::_nil ());
+      #if (TAO_HAS_SMART_PROXIES == 1)
+        return TAO_TAO_IOP_TAO_IOR_Manipulation_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
+      #else 
+        return default_proxy;
+      #endif /*TAO_HAS_SMART_PROXIES == 1*/
+    }
+  else 
+    return
+      ACE_reinterpret_cast
+        (
+          TAO_IOR_Manipulation_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &TAO_IOR_Manipulation::_narrow
+                  )
+              )
+        );
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOP::TAO_IOR_Manipulation_ptr obj)
+TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_add_ref ();
@@ -68,7 +105,7 @@ TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOP::TAO_IOR_Manipulation_ptr obj
 
 // default constructor
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::EmptyProfileList (void)
-  : CORBA_UserException (TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList)
+  : CORBA_UserException (::TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList)
 {
 }
 
@@ -77,15 +114,21 @@ TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::~EmptyProfileList (void)
 {
 }
 
+void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_any_destructor (void *x)
+{
+  EmptyProfileList *tmp = ACE_static_cast (EmptyProfileList*,x);
+  delete tmp;
+}
+
 // copy constructor
-TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::EmptyProfileList (const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::EmptyProfileList (const ::TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
 {
   }
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList&
-TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::operator= (const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::operator= (const ::TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_excp)
 {
 
   this->CORBA_UserException::operator= (_tao_excp);
@@ -93,11 +136,11 @@ TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::operator= (const TAO_IOP::TAO_I
 }
 
 // narrow
-TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList_ptr
+TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList_ptr, exc);
+    return ACE_dynamic_cast (EmptyProfileList *, exc);
   else
     return 0;
 }
@@ -108,16 +151,20 @@ void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_raise ()
   TAO_RAISE(*this);
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_encode (TAO_OutputCDR &cdr,
-                                                                   CORBA::Environment &ACE_TRY_ENV) const
+
+void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_encode (
+    TAO_OutputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV) const
 {
   if (cdr << *this)
     return;
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_decode (TAO_InputCDR &cdr,
-                                                                   CORBA::Environment &ACE_TRY_ENV)
+
+void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_decode (
+    TAO_InputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV)
 {
   if (cdr >> *this)
     return;
@@ -128,11 +175,7 @@ void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_decode (TAO_InputCDR 
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc (void)
 {
   CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
-                  0);
-
+  ACE_NEW_RETURN (retval, ::TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList, 0);
   return retval;
 }
 
@@ -148,7 +191,7 @@ CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList = &_tc_T
 
 // default constructor
 TAO_IOP::TAO_IOR_Manipulation::NotFound::NotFound (void)
-  : CORBA_UserException (TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound)
+  : CORBA_UserException (::TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound)
 {
 }
 
@@ -157,15 +200,21 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound::~NotFound (void)
 {
 }
 
+void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_any_destructor (void *x)
+{
+  NotFound *tmp = ACE_static_cast (NotFound*,x);
+  delete tmp;
+}
+
 // copy constructor
-TAO_IOP::TAO_IOR_Manipulation::NotFound::NotFound (const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::NotFound::NotFound (const ::TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
 {
   }
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::NotFound&
-TAO_IOP::TAO_IOR_Manipulation::NotFound::operator= (const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::NotFound::operator= (const ::TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_excp)
 {
 
   this->CORBA_UserException::operator= (_tao_excp);
@@ -177,7 +226,7 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound *
 TAO_IOP::TAO_IOR_Manipulation::NotFound::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::NotFound *, exc);
+    return ACE_dynamic_cast (NotFound *, exc);
   else
     return 0;
 }
@@ -188,16 +237,20 @@ void TAO_IOP::TAO_IOR_Manipulation::NotFound::_raise ()
   TAO_RAISE(*this);
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_encode (TAO_OutputCDR &cdr,
-                                                           CORBA::Environment &ACE_TRY_ENV) const
+
+void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_encode (
+    TAO_OutputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV) const
 {
   if (cdr << *this)
     return;
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_decode (TAO_InputCDR &cdr,
-                                                           CORBA::Environment &ACE_TRY_ENV)
+
+void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_decode (
+    TAO_InputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV)
 {
   if (cdr >> *this)
     return;
@@ -208,11 +261,7 @@ void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_decode (TAO_InputCDR &cdr,
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::NotFound::_alloc (void)
 {
   CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  TAO_IOP::TAO_IOR_Manipulation::NotFound,
-                  0);
-
+  ACE_NEW_RETURN (retval, ::TAO_IOP::TAO_IOR_Manipulation::NotFound, 0);
   return retval;
 }
 
@@ -228,7 +277,7 @@ CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound = &_tc_TAO_tc_TA
 
 // default constructor
 TAO_IOP::TAO_IOR_Manipulation::Duplicate::Duplicate (void)
-  : CORBA_UserException (TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate)
+  : CORBA_UserException (::TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate)
 {
 }
 
@@ -237,15 +286,21 @@ TAO_IOP::TAO_IOR_Manipulation::Duplicate::~Duplicate (void)
 {
 }
 
+void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_any_destructor (void *x)
+{
+  Duplicate *tmp = ACE_static_cast (Duplicate*,x);
+  delete tmp;
+}
+
 // copy constructor
-TAO_IOP::TAO_IOR_Manipulation::Duplicate::Duplicate (const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::Duplicate::Duplicate (const ::TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
 {
   }
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::Duplicate&
-TAO_IOP::TAO_IOR_Manipulation::Duplicate::operator= (const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::Duplicate::operator= (const ::TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_excp)
 {
 
   this->CORBA_UserException::operator= (_tao_excp);
@@ -253,11 +308,11 @@ TAO_IOP::TAO_IOR_Manipulation::Duplicate::operator= (const TAO_IOP::TAO_IOR_Mani
 }
 
 // narrow
-TAO_IOP::TAO_IOR_Manipulation::Duplicate_ptr
+TAO_IOP::TAO_IOR_Manipulation::Duplicate *
 TAO_IOP::TAO_IOR_Manipulation::Duplicate::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::Duplicate_ptr, exc);
+    return ACE_dynamic_cast (Duplicate *, exc);
   else
     return 0;
 }
@@ -268,16 +323,20 @@ void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_raise ()
   TAO_RAISE(*this);
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_encode (TAO_OutputCDR &cdr,
-                                                            CORBA::Environment &ACE_TRY_ENV) const
+
+void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_encode (
+    TAO_OutputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV) const
 {
   if (cdr << *this)
     return;
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_decode (TAO_InputCDR &cdr,
-                                                            CORBA::Environment &ACE_TRY_ENV)
+
+void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_decode (
+    TAO_InputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV)
 {
   if (cdr >> *this)
     return;
@@ -288,11 +347,7 @@ void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_decode (TAO_InputCDR &cdr,
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Duplicate::_alloc (void)
 {
   CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  TAO_IOP::TAO_IOR_Manipulation::Duplicate,
-                  0);
-
+  ACE_NEW_RETURN (retval, ::TAO_IOP::TAO_IOR_Manipulation::Duplicate, 0);
   return retval;
 }
 
@@ -308,7 +363,7 @@ CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate = &_tc_TAO_tc_T
 
 // default constructor
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::Invalid_IOR (void)
-  : CORBA_UserException (TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR)
+  : CORBA_UserException (::TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR)
 {
 }
 
@@ -317,15 +372,21 @@ TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::~Invalid_IOR (void)
 {
 }
 
+void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_any_destructor (void *x)
+{
+  Invalid_IOR *tmp = ACE_static_cast (Invalid_IOR*,x);
+  delete tmp;
+}
+
 // copy constructor
-TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::Invalid_IOR (const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::Invalid_IOR (const ::TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
 {
   }
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR&
-TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::operator= (const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_excp)
+TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::operator= (const ::TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_excp)
 {
 
   this->CORBA_UserException::operator= (_tao_excp);
@@ -333,11 +394,11 @@ TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::operator= (const TAO_IOP::TAO_IOR_Ma
 }
 
 // narrow
-TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR_ptr
+TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR_ptr, exc);
+    return ACE_dynamic_cast (Invalid_IOR *, exc);
   else
     return 0;
 }
@@ -348,16 +409,20 @@ void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_raise ()
   TAO_RAISE(*this);
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_encode (TAO_OutputCDR &cdr,
-                                                              CORBA::Environment &ACE_TRY_ENV) const
+
+void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_encode (
+    TAO_OutputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV) const
 {
   if (cdr << *this)
     return;
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_decode (TAO_InputCDR &cdr,
-                                                              CORBA::Environment &ACE_TRY_ENV)
+
+void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_decode (
+    TAO_InputCDR &cdr,
+    CORBA::Environment &ACE_TRY_ENV)
 {
   if (cdr >> *this)
     return;
@@ -368,11 +433,7 @@ void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_decode (TAO_InputCDR &cdr,
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_alloc (void)
 {
   CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR,
-                  0);
-
+  ACE_NEW_RETURN (retval, ::TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR, 0);
   return retval;
 }
 
@@ -387,6 +448,88 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_Invalid_IOR (CORB
 CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR = &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_Invalid_IOR;
 
 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
+
+  // The Base_Sequence functions, please see tao/Sequence.h
+  void
+  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_allocate_buffer (CORBA::ULong length)
+  {
+    CORBA::Object **tmp = 0;
+    tmp = _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::allocbuf (length);
+    
+    if (this->buffer_ != 0)
+    {
+      CORBA::Object **old = ACE_reinterpret_cast (CORBA::Object**, this->buffer_);
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        if (!this->release_)
+          tmp[i] = CORBA::Object::_duplicate (old[i]);
+        else
+          tmp[i] = old[i];
+        
+      if (this->release_)
+        delete[] old;
+      
+    }
+    this->buffer_ = tmp;
+  }
+  
+  void
+  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_deallocate_buffer (void)
+  {
+    if (this->buffer_ == 0 || this->release_ == 0)
+      return;
+    CORBA::Object **tmp = ACE_reinterpret_cast (CORBA::Object**, this->buffer_);
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = CORBA::Object::_nil ();
+    }
+    _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::freebuf (tmp);
+    this->buffer_ = 0;
+  }
+  
+  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::~_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void)
+  {
+    this->_deallocate_buffer ();
+  }
+  
+  void
+  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+  {
+    CORBA::Object **tmp = ACE_reinterpret_cast (CORBA::Object**, this->buffer_);
+    
+    for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = CORBA::Object::_nil ();
+    }
+  }
+  void 
+  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_downcast (
+      void* target,
+      CORBA_Object *src,
+      CORBA_Environment &ACE_TRY_ENV
+    )
+  {
+    CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, target);
+    *tmp = CORBA::Object::_narrow (src, ACE_TRY_ENV);
+  }
+
+  CORBA_Object*
+  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_upcast (void *src) const
+  {
+    CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, src);
+    return *tmp;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
 
@@ -397,19 +540,39 @@ CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR = &_tc_TAO_tc
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (void)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (CORBA::ULong max) // uses max size
-  :
-  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var> (max)
+  : 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ (max)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (CORBA::ULong max, CORBA::ULong length, CORBA::Object_ptr *buffer, CORBA::Boolean release)
-  :
-  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var> (max, length, buffer, release)
+  : 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ (max, length, buffer, release)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (const IORList &seq) // copy ctor
-  :
-  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var> (seq)
+  : 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ (seq)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::~IORList (void) // dtor
 {}
+void TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor (void *x)
+{
+  IORList *tmp = ACE_static_cast (IORList*,x);
+  delete tmp;
+}
 
 
 #endif /* end #if !defined */
@@ -428,11 +591,678 @@ static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_IORList[] =
       29, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
       7, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63740000),  // name = Object
 
-    0,
+    0U,
 
 };
 static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_IORList (CORBA::tk_alias, sizeof (_oc_TAO_IOP_TAO_IOR_Manipulation_IORList), (char *) &_oc_TAO_IOP_TAO_IOR_Manipulation_IORList, 0, sizeof (TAO_IOP::TAO_IOR_Manipulation::IORList));
 CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_IORList = &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_IORList;
+
+CORBA::Object_ptr TAO_IOP::TAO_IOR_Manipulation::merge_iors (
+    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+    TAO_IOP::TAO_IOR_Manipulation::Duplicate,
+    TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
+  ))
+{
+  
+  static TAO_Exception_Data _tao_TAO_IOP_TAO_IOR_Manipulation_merge_iors_exceptiondata [] = 
+  {
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc},
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate, TAO_IOP::TAO_IOR_Manipulation::Duplicate::_alloc},
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_alloc}
+  };
+
+  CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
+  CORBA::Object_var _tao_safe_retval (_tao_retval);
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "merge_iors",
+      10,
+      istub->orb_core ()
+    );
+  /* 
+#if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS 
+
+      for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        /*        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "merge_iors",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+                )
+          );
+          TAO_INTERCEPTOR_CHECK_RETURN (0);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+        if (!(
+              (_tao_out << iors)
+          ))
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
+
+        int foobar =
+          _tao_call.invoke (_tao_TAO_IOP_TAO_IOR_Manipulation_merge_iors_exceptiondata, 3, ACE_TRY_ENV);
+                //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        if (foobar == TAO_INVOKE_RESTART)
+          continue;
+        if (foobar != TAO_INVOKE_OK)
+        {
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_safe_retval.inout ())
+          ))
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        /*        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "merge_iors",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+          //TAO_INTERCEPTOR_CHECK_RETURN (0);
+        break;
+        
+      }
+/*
+#if (TAO_HAS_INTERCEPTORS == 1)
+     
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "merge_iors",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_safe_retval._retn ();
+}
+
+CORBA::Object_ptr TAO_IOP::TAO_IOR_Manipulation::add_profiles (
+    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr ior2,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+    TAO_IOP::TAO_IOR_Manipulation::Duplicate,
+    TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
+  ))
+{
+  
+  static TAO_Exception_Data _tao_TAO_IOP_TAO_IOR_Manipulation_add_profiles_exceptiondata [] = 
+  {
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc},
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate, TAO_IOP::TAO_IOR_Manipulation::Duplicate::_alloc},
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_alloc}
+  };
+
+  CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
+  CORBA::Object_var _tao_safe_retval (_tao_retval);
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "add_profiles",
+      12,
+      istub->orb_core ()
+    );
+
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS 
+
+      for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "add_profiles",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+                )
+          );
+          TAO_INTERCEPTOR_CHECK_RETURN (0);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+        if (!(
+              (_tao_out << ior1) &&
+              (_tao_out << ior2)
+          ))
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
+
+        int _invoke_status =
+          _tao_call.invoke (_tao_TAO_IOP_TAO_IOR_Manipulation_add_profiles_exceptiondata, 3, ACE_TRY_ENV);
+                //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        if (_invoke_status == TAO_INVOKE_RESTART)
+          continue;
+        if (_invoke_status != TAO_INVOKE_OK)
+        {
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_safe_retval.inout ())
+          ))
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "add_profiles",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+        break;
+        
+      }
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+      
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "add_profiles",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_safe_retval._retn ();
+}
+
+CORBA::Object_ptr TAO_IOP::TAO_IOR_Manipulation::remove_profiles (
+    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr ior2,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR,
+    TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+    TAO_IOP::TAO_IOR_Manipulation::NotFound
+  ))
+{
+  
+  static TAO_Exception_Data _tao_TAO_IOP_TAO_IOR_Manipulation_remove_profiles_exceptiondata [] = 
+  {
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_alloc},
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc},
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound, TAO_IOP::TAO_IOR_Manipulation::NotFound::_alloc}
+  };
+
+  CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
+  CORBA::Object_var _tao_safe_retval (_tao_retval);
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "remove_profiles",
+      15,
+      istub->orb_core ()
+    );
+
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS 
+
+      for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "remove_profiles",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+        if (!(
+              (_tao_out << ior1) &&
+              (_tao_out << ior2)
+          ))
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
+
+        int _invoke_status =
+          _tao_call.invoke (_tao_TAO_IOP_TAO_IOR_Manipulation_remove_profiles_exceptiondata, 3, ACE_TRY_ENV);
+                //TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        if (_invoke_status == TAO_INVOKE_RESTART)
+          continue;
+        if (_invoke_status != TAO_INVOKE_OK)
+        {
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_safe_retval.inout ())
+          ))
+          ////TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "remove_profiles",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+          TAO_INTERCEPTOR_CHECK_RETURN (0);
+        break;
+        
+      }
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+      
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "remove_profiles",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_safe_retval._retn ();
+}
+
+CORBA::ULong TAO_IOP::TAO_IOR_Manipulation::is_in_ior (
+    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr ior2,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    TAO_IOP::TAO_IOR_Manipulation::NotFound
+  ))
+{
+  
+  static TAO_Exception_Data _tao_TAO_IOP_TAO_IOR_Manipulation_is_in_ior_exceptiondata [] = 
+  {
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound, TAO_IOP::TAO_IOR_Manipulation::NotFound::_alloc}
+  };
+
+  CORBA::ULong _tao_retval = 0;
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "is_in_ior",
+      9,
+      istub->orb_core ()
+    );
+
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS 
+
+      for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        //TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_in_ior",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        // TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+        if (!(
+              (_tao_out << ior1) &&
+              (_tao_out << ior2)
+          ))
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+
+        int _invoke_status =
+          _tao_call.invoke (_tao_TAO_IOP_TAO_IOR_Manipulation_is_in_ior_exceptiondata, 1, ACE_TRY_ENV);
+                // TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        if (_invoke_status == TAO_INVOKE_RESTART)
+          continue;
+        if (_invoke_status != TAO_INVOKE_OK)
+        {
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_retval)
+          ))
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_in_ior",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        break;
+        
+      }
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+      
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "is_in_ior",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_retval;
+}
+
+CORBA::ULong TAO_IOP::TAO_IOR_Manipulation::get_profile_count (
+    CORBA::Object_ptr ior,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
+  ))
+{
+  
+  static TAO_Exception_Data _tao_TAO_IOP_TAO_IOR_Manipulation_get_profile_count_exceptiondata [] = 
+  {
+    {TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc}
+  };
+
+  CORBA::ULong _tao_retval = 0;
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "get_profile_count",
+      17,
+      istub->orb_core ()
+    );
+
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS 
+
+      for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        // TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "get_profile_count",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        // TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+        if (!(
+              (_tao_out << ior)
+          ))
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+
+        int _invoke_status =
+          _tao_call.invoke (_tao_TAO_IOP_TAO_IOR_Manipulation_get_profile_count_exceptiondata, 1, ACE_TRY_ENV);
+                //TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        if (_invoke_status == TAO_INVOKE_RESTART)
+          continue;
+        if (_invoke_status != TAO_INVOKE_OK)
+        {
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_retval)
+          ))
+          //TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+
+        /*TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "get_profile_count",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        break;
+        
+      }
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+      
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "get_profile_count",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_retval;
+}
 
 CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
@@ -444,6 +1274,22 @@ CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, C
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
+void *TAO_IOP::TAO_IOR_Manipulation::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Manipulation)::_narrow))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+    
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
 const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
 {
   return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
@@ -452,31 +1298,31 @@ const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation:1.0
-  21, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x0),  // name = TAO_IOR_Manipulation
+  37, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation:1.0
+  21, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x0),  // name = TAO_IOR_Manipulation
 };
 static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation (CORBA::tk_objref, sizeof (_oc_TAO_IOP_TAO_IOR_Manipulation), (char *) &_oc_TAO_IOP_TAO_IOR_Manipulation, 0, sizeof (TAO_IOP::TAO_IOR_Manipulation));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (TAO_IOP)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TAO_IOR_Manipulation, &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation)
 TAO_NAMESPACE_END
+TAO_IOP::TAO_IOR_Manipulation_ptr (*_TAO_collocation_TAO_IOP_TAO_IOR_Manipulation_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 void operator<<= (CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation_ptr _tao_elem)
 {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          TAO_IOP::_tc_TAO_IOR_Manipulation,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
-}
-
-void TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *x)
-{
-  TAO_IOP::TAO_IOR_Manipulation *tmp = ACE_static_cast(TAO_IOP::TAO_IOR_Manipulation*,x);
-  CORBA::release (tmp);
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        TAO_IOP::_tc_TAO_IOR_Manipulation, 
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        TAO_IOP::TAO_IOR_Manipulation::_duplicate (_tao_elem),
+        TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor
+      );
+  }
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation_ptr &_tao_elem)
@@ -490,17 +1336,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
         return 0;
       }
     ACE_TRY_CHECK;
-
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = TAO_IOP::TAO_IOR_Manipulation::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           TAO_IOP::_tc_TAO_IOR_Manipulation,
           1,
@@ -522,50 +1363,52 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>
+    template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_any_destructor (void *x)
-{
-  TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *tmp = ACE_static_cast(TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList*,x);
-  delete tmp;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_any_destructor
-      );
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *&_tao_elem)
 {
+  return _tao_any >>= ACE_const_cast(
+      const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *&_tao_elem)
+{
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -576,82 +1419,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList, 0);
+      TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *tmp;
+      ACE_NEW_RETURN (tmp, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *_tao_elem)
+      CORBA::String_var interface_repository_id;
+      if (!(stream >> interface_repository_id.out ()))
+        return 0;
+      if (ACE_OS::strcmp (
+          interface_repository_id.in (),
+          "IDL:TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0"))
+        return 0;
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             TAO_IOP::TAO_IOR_Manipulation::_tc_EmptyProfileList,
             1,
-            ACE_reinterpret_cast (void *, _tao_elem),
+            tmp,
             TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_any_destructor
           );
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete _tao_elem;
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *&,_tao_elem);
-}
-
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_any_destructor (void *x)
-{
-  TAO_IOP::TAO_IOR_Manipulation::NotFound *tmp = ACE_static_cast(TAO_IOP::TAO_IOR_Manipulation::NotFound*,x);
-  delete tmp;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::NotFound *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_any_destructor
-      );
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::NotFound *&_tao_elem)
 {
+  return _tao_any >>= ACE_const_cast(
+      const TAO_IOP::TAO_IOR_Manipulation::NotFound*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::NotFound *&_tao_elem)
+{
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -662,82 +1507,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, TAO_IOP::TAO_IOR_Manipulation::NotFound, 0);
+      TAO_IOP::TAO_IOR_Manipulation::NotFound *tmp;
+      ACE_NEW_RETURN (tmp, TAO_IOP::TAO_IOR_Manipulation::NotFound, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *_tao_elem)
+      CORBA::String_var interface_repository_id;
+      if (!(stream >> interface_repository_id.out ()))
+        return 0;
+      if (ACE_OS::strcmp (
+          interface_repository_id.in (),
+          "IDL:TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0"))
+        return 0;
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             TAO_IOP::TAO_IOR_Manipulation::_tc_NotFound,
             1,
-            ACE_reinterpret_cast (void *, _tao_elem),
+            tmp,
             TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_any_destructor
           );
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete _tao_elem;
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::NotFound *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(TAO_IOP::TAO_IOR_Manipulation::NotFound *&,_tao_elem);
-}
-
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_any_destructor (void *x)
-{
-  TAO_IOP::TAO_IOR_Manipulation::Duplicate *tmp = ACE_static_cast(TAO_IOP::TAO_IOR_Manipulation::Duplicate*,x);
-  delete tmp;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::Duplicate *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_any_destructor
-      );
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::Duplicate *&_tao_elem)
 {
+  return _tao_any >>= ACE_const_cast(
+      const TAO_IOP::TAO_IOR_Manipulation::Duplicate*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Duplicate *&_tao_elem)
+{
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -748,82 +1595,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, TAO_IOP::TAO_IOR_Manipulation::Duplicate, 0);
+      TAO_IOP::TAO_IOR_Manipulation::Duplicate *tmp;
+      ACE_NEW_RETURN (tmp, TAO_IOP::TAO_IOR_Manipulation::Duplicate, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *_tao_elem)
+      CORBA::String_var interface_repository_id;
+      if (!(stream >> interface_repository_id.out ()))
+        return 0;
+      if (ACE_OS::strcmp (
+          interface_repository_id.in (),
+          "IDL:TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0"))
+        return 0;
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             TAO_IOP::TAO_IOR_Manipulation::_tc_Duplicate,
             1,
-            ACE_reinterpret_cast (void *, _tao_elem),
+            tmp,
             TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_any_destructor
           );
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete _tao_elem;
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Duplicate *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(TAO_IOP::TAO_IOR_Manipulation::Duplicate *&,_tao_elem);
-}
-
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_any_destructor (void *x)
-{
-  TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *tmp = ACE_static_cast(TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR*,x);
-  delete tmp;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_any_destructor
-      );
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *&_tao_elem)
 {
+  return _tao_any >>= ACE_const_cast(
+      const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *&_tao_elem)
+{
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -834,41 +1683,41 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR, 0);
+      TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *tmp;
+      ACE_NEW_RETURN (tmp, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *_tao_elem)
+      CORBA::String_var interface_repository_id;
+      if (!(stream >> interface_repository_id.out ()))
+        return 0;
+      if (ACE_OS::strcmp (
+          interface_repository_id.in (),
+          "IDL:TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0"))
+        return 0;
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR,
             1,
-            ACE_reinterpret_cast (void *, _tao_elem),
+            tmp,
             TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_any_destructor
           );
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete _tao_elem;
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *&,_tao_elem);
 }
 
 void operator<<= (
@@ -876,90 +1725,88 @@ void operator<<= (
     const TAO_IOP::TAO_IOR_Manipulation::IORList &_tao_elem
   ) // copying
 {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
-}
-
-void TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor (void *x)
-{
-  TAO_IOP::TAO_IOR_Manipulation::IORList *tmp = ACE_static_cast(TAO_IOP::TAO_IOR_Manipulation::IORList*,x);
-  delete tmp;
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::IORList *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor
-      );
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem)
 {
+  return _tao_any >>= ACE_const_cast(
+      const TAO_IOP::TAO_IOR_Manipulation::IORList*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem)
+{
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO_IOP::TAO_IOR_Manipulation::_tc_IORList, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (TAO_IOP::TAO_IOR_Manipulation::IORList *)_tao_any.value ();
+      _tao_elem = ACE_static_cast(
+          const TAO_IOP::TAO_IOR_Manipulation::IORList*,
+          _tao_any.value ()
+        );
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, TAO_IOP::TAO_IOR_Manipulation::IORList, 0);
+      TAO_IOP::TAO_IOR_Manipulation::IORList *tmp;
+      ACE_NEW_RETURN (tmp, TAO_IOP::TAO_IOR_Manipulation::IORList, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
             1,
-            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_static_cast (void *, tmp),
             TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor
           );
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete _tao_elem;
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(TAO_IOP::TAO_IOR_Manipulation::IORList *&,_tao_elem);
 }
 
 CORBA::Boolean operator<< (
@@ -972,7 +1819,9 @@ CORBA::Boolean operator<< (
     // encode all elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    {
       _tao_marshal_flag = (strm << _tao_sequence[i].in ());
+    }
     return _tao_marshal_flag;
   }
   return 0; // error
@@ -988,11 +1837,17 @@ CORBA::Boolean operator>> (
   {
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
+    // If length is 0 we return true.
+    if (0 >= _tao_seq_len) 
+      return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    {
       _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
+    }
     return _tao_marshal_flag;
   }
   return 0; // error
 }
+

@@ -157,7 +157,7 @@ TAO_SHMIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
                                orb_core) == 0)
                                ACE_THROW (CORBA::MARSHAL ());*/
   if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_REQUEST, 
+      (TAO_PLUGGABLE_MESSAGE_REQUEST,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
@@ -171,14 +171,14 @@ TAO_SHMIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // See this is GIOP way of doing this..But anyway SHMIOP will be tied
-  // up with GIOP. 
+  // up with GIOP.
   if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST, 
+      (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   if (this->client_mesg_factory_->write_message_header (opdetails,
-                                                        TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,   
+                                                        TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,
                                                         spec,
                                                         output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -226,6 +226,7 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) SHMIOP_Transport::handle_client_input -")
                     ACE_TEXT (" nil message state\n")));
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -239,6 +240,7 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
                     ACE_TEXT ("SHMIOP_Transport::handle_client_input, handle_input")));
+      this->tms_->connection_closed ();
       return -1;
     }
   if (result == 0)
@@ -248,7 +250,7 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
 
   result = this->client_mesg_factory_->parse_reply (*message_state,
                                                     this->params_);
-                                                    
+
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -256,6 +258,7 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
                     ACE_TEXT ("SHMIOP_Transport::handle_client_input, parse reply")));
       message_state->reset ();
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -274,6 +277,7 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
                     ACE_TEXT ("handle_client_input - ")
                     ACE_TEXT ("dispatch reply failed\n")));
       message_state->reset ();
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -350,12 +354,12 @@ TAO_SHMIOP_Client_Transport::messaging_init (CORBA::Octet major,
           if (TAO_debug_level > 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%N|%l|%p|%t) No matching major version number \n")), 
+                                 ACE_TEXT ("(%N|%l|%p|%t) No matching major version number \n")),
                                 0);
             }
         }
     }
-  
+
   return 1;
 }
 
@@ -366,12 +370,12 @@ TAO_SHMIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetai
 {
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-    CORBA::Boolean retval = 
+    CORBA::Boolean retval =
       this->client_mesg_factory_->write_message_header (opdetails,
-                                                        TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,  
+                                                        TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,
                                                         spec,
                                                         msg);
-  
+
   return retval;
 }
 
@@ -401,7 +405,8 @@ TAO_SHMIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time)
+                            const ACE_Time_Value *max_wait_time,
+			    size_t *)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SHMIOP_TRANSPORT_SEND_START);
   return this->handler_->peer ().send (message_block,

@@ -108,6 +108,7 @@ TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_
 
 TAO_SHMIOP_Server_Connection_Handler::~TAO_SHMIOP_Server_Connection_Handler (void)
 {
+  delete this->acceptor_factory_;
 }
 
 int
@@ -255,13 +256,21 @@ TAO_SHMIOP_Server_Connection_Handler::svc (void)
          && result >= 0)
     {
       result = handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
+
       if (result == -1 && errno == ETIME)
         {
           // Ignore timeouts, they are only used to wake up and
           // shutdown.
           result = 0;
+
+          // Reset errno to make sure we don't trip over an old value
+          // of errno in case it is not reset when the recv() call
+          // fails if the socket has been closed.
+          errno = 0;
         }
+
       current_timeout = timeout;
+
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) SHMIOP_Server_Connection_Handler::svc - ")
@@ -444,8 +453,10 @@ TAO_SHMIOP_Client_Connection_Handler::close (u_long)
 int
 TAO_SHMIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  // Call the waiter to handle the input.
-  return this->transport ()->wait_strategy ()->handle_input ();
+  int r = this->transport ()->handle_client_input ();
+  if (r == -1)
+    return -1;
+  return 0;
 }
 
 int

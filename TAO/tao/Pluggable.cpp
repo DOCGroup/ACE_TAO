@@ -2,16 +2,14 @@
 // $Id$
 
 #include "tao/Pluggable.h"
-#include "tao/Stub.h"
+#include "tao/MProfile.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
-#include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
 
-#include "ace/ACE.h"
 #include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
@@ -24,12 +22,12 @@ ACE_RCSID(tao, Pluggable, "$Id$")
 // ****************************************************************
 
 // Constructor.
-TAO_Transport::TAO_Transport (CORBA::ULong tag,
-                              TAO_ORB_Core *orb_core)
-  : tag_ (tag),
-    orb_core_ (orb_core),
-    buffering_queue_ (0),
-    buffering_timer_id_ (0)
+  TAO_Transport::TAO_Transport (CORBA::ULong tag,
+                                TAO_ORB_Core *orb_core)
+    : tag_ (tag),
+      orb_core_ (orb_core),
+      buffering_queue_ (0),
+      buffering_timer_id_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -68,34 +66,44 @@ TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
   ACE_ASSERT (result != -1);
 
   // Actual network send.
+  size_t bytes_transferred = 0;
   result = this->send (queued_message,
-                       max_wait_time);
+                       max_wait_time,
+                       &bytes_transferred);
 
-  // Cannot send.
+  // Cannot send completely: timed out.
+  if (result == -1 &&
+      errno == ETIME)
+    {
+      if (bytes_transferred > 0)
+        {
+          // If successful in sending some of the data, reset the
+          // queue appropriately.
+          this->reset_queued_message (queued_message,
+                                      bytes_transferred);
+
+          // Indicate some success.
+          return bytes_transferred;
+        }
+
+      // Since we queue up the message, this is not an error.  We can
+      // try next time around.
+      return 1;
+    }
+
+  // EOF or other errors.
   if (result == -1 ||
       result == 0)
     {
-      // Timeout.
-      if (errno == ETIME)
-        {
-          // Since we queue up the message, this is not an error.  We
-          // can try next time around.
-          return 1;
-        }
-      // Non-timeout error.
-      else
-        {
-          this->dequeue_all ();
-          return -1;
-        }
+      this->dequeue_all ();
+      return -1;
     }
 
-  // If successful in sending some or all of the data, reset the queue
-  // appropriately.
+  // If successful in sending data, reset the queue appropriately.
   this->reset_queued_message (queued_message,
-                              result);
+                              bytes_transferred);
 
-  // Indicate success.
+  // Everything was successfully delivered.
   return result;
 }
 
@@ -132,12 +140,14 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
       while (current_message_block != 0 &&
              bytes_delivered != 0)
         {
-          size_t current_message_block_length = current_message_block->length ();
+          size_t current_message_block_length =
+            current_message_block->length ();
 
           int completely_delivered_current_message_block =
             bytes_delivered >= current_message_block_length;
 
-          size_t adjustment_size = ACE_MIN (current_message_block_length, bytes_delivered);
+          size_t adjustment_size =
+            ACE_MIN (current_message_block_length, bytes_delivered);
 
           // Reset according to send size.
           current_message_block->rd_ptr (adjustment_size);
@@ -145,7 +155,8 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
           // If queued message, adjust the queue.
           if (queued_message)
             // Hand adjust <message_length>.
-            this->buffering_queue_->message_length (this->buffering_queue_->message_length () - adjustment_size);
+            this->buffering_queue_->message_length (
+              this->buffering_queue_->message_length () - adjustment_size);
 
           // Adjust <bytes_delivered>.
           bytes_delivered -= adjustment_size;
@@ -210,12 +221,6 @@ TAO_Transport::idle_after_reply (void)
   return this->tms ()->idle_after_reply ();
 }
 
-// int
-// TAO_Transport::reply_received (const CORBA::ULong request_id)
-// {
-//   return this->tms ()->reply_received (request_id);
-// }
-
 ACE_SYNCH_CONDITION *
 TAO_Transport::leader_follower_condition_variable (void)
 {
@@ -227,7 +232,7 @@ TAO_Transport::start_request (TAO_ORB_Core *,
                               TAO_Target_Specification & /*spec */,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
 }
@@ -238,7 +243,7 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
                              TAO_Operation_Details & /* */,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
 }
@@ -348,11 +353,11 @@ TAO_Connector::make_mprofile (const char *string,
   if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_MPROFILE_CREATION_ERROR,
-          0),
-        CORBA::COMPLETED_NO),
-      -1);
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_MPROFILE_CREATION_ERROR,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        -1);
       // Error while setting the MProfile size!
     }
 
@@ -405,11 +410,11 @@ TAO_Connector::make_mprofile (const char *string,
           if (mprofile.give_profile (profile) == -1)
             {
               ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                CORBA_SystemException::_tao_minor_code (
-                  TAO_MPROFILE_CREATION_ERROR,
-                  0),
-                CORBA::COMPLETED_NO),
-              -1);
+                                  CORBA_SystemException::_tao_minor_code (
+                                     TAO_MPROFILE_CREATION_ERROR,
+                                     0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }

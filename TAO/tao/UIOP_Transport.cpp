@@ -235,6 +235,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) UIOP_Transport::handle_client_input -"
                     " nil message state\n"));
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -248,6 +249,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - %p\n",
                     "UIOP_Transport::handle_client_input, handle_input"));
+      this->tms_->connection_closed ();
       return -1;
     }
   if (result == 0)
@@ -264,6 +266,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */,
                     "TAO (%P|%t) - %p\n",
                     "UIOP_Transport::handle_client_input, parse reply"));
       message_state->reset ();
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -282,6 +285,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */,
                     "handle_client_input - "
                     "dispatch reply failed\n"));
       message_state->reset ();
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -307,7 +311,7 @@ TAO_UIOP_Client_Transport::register_handler (void)
   ACE_Reactor *r = this->orb_core ()->reactor ();
   if (r == this->handler ()->reactor ())
     return 0;
-  
+
   return r->register_handler (this->handler (),
                               ACE_Event_Handler::READ_MASK);
 }
@@ -412,13 +416,15 @@ TAO_UIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time,
+			  size_t *bytes_transferred)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
   return ACE::send_n (this->handle (),
                       message_block,
-                      max_wait_time);
+                      max_wait_time,
+		      bytes_transferred);
 }
 
 ssize_t

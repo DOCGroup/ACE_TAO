@@ -10,7 +10,7 @@
 #include "ImplRepoC.h"
 #include "tao/Stub.h"
 #include "tao/NVList.h"
-#include "tao/Interceptor.h"
+#include "tao/PortableInterceptor.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 
@@ -87,23 +87,23 @@ void ImplementationRepository::ServerObject::ping (
       4,
       istub->orb_core ()
     );
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-    TAO_ClientRequestInterceptor_Adapter
+  /*
+#if (TAO_HAS_INTERCEPTORS == 1) // commented this out for now : Kirthika
+      TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
-    PortableInterceptor::Cookies _tao_cookies;
+      PortableInterceptor::Cookies _tao_cookies;
     CORBA::NVList_var _tao_interceptor_args;
     if (_tao_vfr.valid ())
       {
         istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
         ACE_CHECK;
       }
-
+  
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    { */
+//#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -156,7 +156,7 @@ void ImplementationRepository::ServerObject::ping (
 
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-
+      
     }
   ACE_CATCHANY
     {
@@ -168,11 +168,11 @@ void ImplementationRepository::ServerObject::ping (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+        ACE_RETHROW; 
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+//#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -198,8 +198,9 @@ void ImplementationRepository::ServerObject::shutdown (
       8,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
+  
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -210,11 +211,11 @@ void ImplementationRepository::ServerObject::shutdown (
         istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
         ACE_CHECK;
       }
-
+  
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/ 
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -267,7 +268,7 @@ void ImplementationRepository::ServerObject::shutdown (
 
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-
+      
     }
   ACE_CATCHANY
     {
@@ -279,11 +280,11 @@ void ImplementationRepository::ServerObject::shutdown (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+        ACE_RETHROW; 
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1298,7 +1299,7 @@ void ImplementationRepository::Administration::activate_server (
       15,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -1312,9 +1313,9 @@ void ImplementationRepository::Administration::activate_server (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -1387,8 +1388,8 @@ void ImplementationRepository::Administration::activate_server (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1422,7 +1423,7 @@ void ImplementationRepository::Administration::register_server (
       15,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -1436,9 +1437,9 @@ void ImplementationRepository::Administration::register_server (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -1512,8 +1513,8 @@ void ImplementationRepository::Administration::register_server (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1541,7 +1542,7 @@ void ImplementationRepository::Administration::reregister_server (
       17,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -1555,9 +1556,9 @@ void ImplementationRepository::Administration::reregister_server (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -1631,8 +1632,8 @@ void ImplementationRepository::Administration::reregister_server (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1665,7 +1666,7 @@ void ImplementationRepository::Administration::remove_server (
       13,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -1679,9 +1680,9 @@ void ImplementationRepository::Administration::remove_server (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -1754,8 +1755,8 @@ void ImplementationRepository::Administration::remove_server (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1788,7 +1789,7 @@ void ImplementationRepository::Administration::shutdown_server (
       15,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -1802,9 +1803,9 @@ void ImplementationRepository::Administration::shutdown_server (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -1877,8 +1878,8 @@ void ImplementationRepository::Administration::shutdown_server (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1913,7 +1914,7 @@ char * ImplementationRepository::Administration::server_is_running (
       17,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -1927,9 +1928,9 @@ char * ImplementationRepository::Administration::server_is_running (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -2011,8 +2012,8 @@ char * ImplementationRepository::Administration::server_is_running (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK_RETURN (0);*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -2045,7 +2046,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
       23,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -2059,9 +2060,9 @@ void ImplementationRepository::Administration::server_is_shutting_down (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -2134,8 +2135,8 @@ void ImplementationRepository::Administration::server_is_shutting_down (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -2170,7 +2171,7 @@ void ImplementationRepository::Administration::find (
       4,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -2184,9 +2185,9 @@ void ImplementationRepository::Administration::find (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -2263,8 +2264,8 @@ void ImplementationRepository::Administration::find (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -2294,7 +2295,7 @@ void ImplementationRepository::Administration::list (
       4,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -2308,9 +2309,9 @@ void ImplementationRepository::Administration::list (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -2388,8 +2389,8 @@ void ImplementationRepository::Administration::list (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -2750,7 +2751,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
       6,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -2764,9 +2765,9 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -2847,8 +2848,8 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN  (_tao_retval);
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK_RETURN  (_tao_retval);*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -2874,7 +2875,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
       7,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
@@ -2888,9 +2889,9 @@ void ImplementationRepository::ServerInformationIterator::destroy (
       }
 
     ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
+    {*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
+  /*
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
@@ -2958,8 +2959,8 @@ void ImplementationRepository::ServerInformationIterator::destroy (
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+  ACE_CHECK;*/
+  //#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 

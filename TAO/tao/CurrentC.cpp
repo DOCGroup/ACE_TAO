@@ -38,28 +38,54 @@ CORBA_Current_ptr CORBA_Current::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Current::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/CORBA/Current:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_Current::_nil ());
-  if (check)
+  if (! obj->_is_local ())
+    {
+      CORBA::Boolean is_a = obj->_is_a ("IDL:CORBA_Current:1.0", ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_Current::_nil ());
+      if (is_a == 0)
+        return CORBA_Current::_nil ();
+    }
+  return CORBA_Current::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
+
+CORBA_Current_ptr CORBA_Current::_unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &
+  )
+{
+  if (CORBA::is_nil (obj))
     return CORBA_Current::_nil ();
-  void *servant = 0;
-  if (!obj->_is_collocated ()
-         || !obj->_servant()
-         || (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Current:1.0")) == 0
-      )
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_Current::_nil ());
-  CORBA_Current_ptr retval = CORBA_Current::_nil ();
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_Current (
-          ACE_reinterpret_cast (POA_CORBA::Current_ptr,
-                                servant),
-          0
-        ),
-      CORBA_Current::_nil ()
-    );
-  return retval;
+  if (! obj->_is_local ())
+    {
+      TAO_Stub* stub = obj->_stubobj ();
+      if (stub)
+        stub->_incr_refcnt ();
+      CORBA_Current_ptr default_proxy = CORBA_Current::_nil ();
+
+      if (obj->_is_collocated () && _TAO_collocation_CORBA_Current_Stub_Factory_function_pointer != 0)
+        {
+          default_proxy = _TAO_collocation_CORBA_Current_Stub_Factory_function_pointer (obj);
+        }
+      if (CORBA::is_nil (default_proxy))
+        ACE_NEW_RETURN (default_proxy, CORBA_Current (stub), CORBA_Current::_nil ());
+      
+      return default_proxy;
+
+    }
+  else 
+    return
+      ACE_reinterpret_cast
+        (
+          CORBA_Current_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &CORBA_Current::_narrow
+                  )
+              )
+        );
 }
 
 CORBA_Current_ptr CORBA_Current::_nil (void)
@@ -89,6 +115,9 @@ const char* CORBA_Current::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/Current:1.0";
 }
 
+CORBA_Current_ptr (*_TAO_collocation_CORBA_Current_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::Current_ptr _tao_elem)
 {
   TAO_OutputCDR stream;
@@ -117,11 +146,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Current_ptr &_tao
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = CORBA::Current::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_Current,
           1,

@@ -174,51 +174,61 @@ const char* CORBA_DomainManager::_interface_repository_id (void) const
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
+CORBA_ConstructionPolicy_ptr CORBA_ConstructionPolicy::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ConstructionPolicy::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ConstructionPolicy::_nil ());
-  if (check)
-    return CORBA::ConstructionPolicy::_nil ();
-  void* servant = 0;
-  TAO_Stub* stub = obj->_stubobj ();
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/ConstructionPolicy:1.0");
-
-  CORBA::ConstructionPolicy_ptr retval =
-    CORBA::ConstructionPolicy::_nil ();
-
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  if (servant == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::ConstructionPolicy::_nil ());
-#else
-  stub->_incr_refcnt ();
-  if (servant == 0)
+    return CORBA_ConstructionPolicy::_nil ();
+  if (! obj->_is_local ())
     {
-      ACE_NEW_RETURN (retval,
-                      CORBA::ConstructionPolicy (stub),
-                      CORBA::ConstructionPolicy::_nil ());
-
-      return retval;
+      CORBA::Boolean is_a = obj->_is_a ("IDL:CORBA_ConstructionPolicy:1.0", ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_ConstructionPolicy::_nil ());
+      if (is_a == 0)
+        return CORBA_ConstructionPolicy::_nil ();
     }
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_ConstructionPolicy (
-          ACE_reinterpret_cast (POA_CORBA::ConstructionPolicy_ptr,
-                                servant),
-          stub
-        ),
-      CORBA::ConstructionPolicy::_nil ()
-    );
+  return CORBA_ConstructionPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
 
-  return retval;
+CORBA_ConstructionPolicy_ptr CORBA_ConstructionPolicy::_unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &
+  )
+{
+  if (CORBA::is_nil (obj))
+    return CORBA_ConstructionPolicy::_nil ();
+  if (! obj->_is_local ())
+    {
+      TAO_Stub* stub = obj->_stubobj ();
+      if (stub)
+        stub->_incr_refcnt ();
+      CORBA_ConstructionPolicy_ptr default_proxy = CORBA_ConstructionPolicy::_nil ();
+
+      if (obj->_is_collocated () && _TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer != 0)
+        {
+          default_proxy = _TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer (obj);
+        }
+      if (CORBA::is_nil (default_proxy))
+        ACE_NEW_RETURN (default_proxy, CORBA_ConstructionPolicy (stub), CORBA_ConstructionPolicy::_nil ());
+
+      return default_proxy;
+
+    }
+  else 
+    return
+      ACE_reinterpret_cast
+        (
+          CORBA_ConstructionPolicy_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &CORBA_ConstructionPolicy::_narrow
+                  )
+              )
+        );
 }
 
 CORBA::ConstructionPolicy_ptr
@@ -381,11 +391,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManager_ptr
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = CORBA::DomainManager::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_DomainManager,
           1,
@@ -412,6 +419,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManager_ptr
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 void
 CORBA_ConstructionPolicy::_tao_any_destructor (void *x)
 {
@@ -452,11 +462,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolic
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = CORBA::ConstructionPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ConstructionPolicy,
           1,

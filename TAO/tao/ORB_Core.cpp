@@ -115,7 +115,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
-    svc_config_argv_ (0)
+    svc_config_argv_ (0),
+    refcount_ (1)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -1481,7 +1482,10 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                                   TAO_POA_Manager);
             }
 
-          TAO_POA_Policies root_poa_policies;
+          TAO_POA_Policies root_poa_policies (*this,
+                                              ACE_TRY_ENV);
+          ACE_CHECK;
+
           if (policies == 0)
             {
               // RootPOA policies defined in spec
@@ -1563,6 +1567,7 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
+                                  CORBA::PolicyList *policy_list,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->open (ACE_TRY_ENV);
@@ -1582,18 +1587,45 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   TAO_MProfile mp (pfile_count);
 
   if (this->acceptor_registry ()->make_mprofile (key, mp) == -1)
+  {
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
-                           TAO_MPROFILE_CREATION_ERROR,
-                           0),
-                        CORBA::COMPLETED_NO),
+                          TAO_MPROFILE_CREATION_ERROR, 0 ),
+                        CORBA::COMPLETED_NO ),
                       0);
+  }
+
+  //  Add the Polices contained in "policy_list" to each profile
+  //  so that those policies will be exposed to the client in the IOR.
+  //  In particular each CORBA::Policy has to be converted in to
+  //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
+  //  should be embedded inside a Messaging::PolicyValueSeq which became
+  //  in turns the "body" of the IOP::TaggedComponent. This conversion
+  //  is a responsability of the CORBA::Profile class.
+  //  (See orbos\98-05-05.pdf Section 5.4)
+
+  if (policy_list->length () != 0)
+    {
+      // Set the "iterator" to the beginning of MProfile.
+      mp.rewind ();
+      TAO_Profile * profile;
+
+      for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
+        {
+          // Get the ith profile
+          profile = mp.get_next ();
+          profile->the_stub (stub);
+          profile->policies (policy_list);
+        }
+    }
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id._retn (), mp, this),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
+
+  stub->base_profiles ().policy_list (policy_list);
 
   return stub;
 }
@@ -1635,27 +1667,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
-  TAO_Leader_Follower &leader_follower = this->leader_follower ();
-  TAO_LF_Event_Loop_Thread_Helper event_loop_thread_helper (leader_follower);
-
-  int result = event_loop_thread_helper.set_event_loop_thread (tv);
-  if (result != 0)
-    {
-      if (errno == ETIME)
-        return 0;
-      else
-        return result;
-    }
-
-  ACE_Reactor *r = this->reactor ();
-
-  // @@ Do we really need to do this?
-  // Set the owning thread of the Reactor to the one which we're
-  // currently in.  This is necessary b/c it's possible that the
-  // application is calling us from a thread other than that in which
-  // the Reactor's CTOR (which sets the owner) was called.
-  r->owner (ACE_Thread::self ());
-
   // This method should only be called by servers, so now we set up
   // for listening!
 
@@ -1665,50 +1676,74 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (ret == -1)
     return -1;
 
-  result = 1;
+  int result = 1;
   // 1 to detect that nothing went wrong
 
   // Loop handling client requests until the ORB is shutdown.
 
-  // @@ We could use the leader-follower lock to check for the state
-  //    of this variable or use the lock <create_event_loop_lock> in
-  //    the server strategy factory.
-  //    We don't need to do this because we use the Reactor
-  //    mechanisms to shutdown in a thread-safe way.
+  // We could use the leader-follower lock to check for the state
+  // if this variable or use the lock <create_event_loop_lock> in
+  // the server strategy factory.
+  // We don't need to do this because we use the Reactor
+  // mechanisms to shutdown in a thread-safe way.
   while (this->has_shutdown () == 0)
     {
+      // Every time we perform an interation we have to become the
+      // leader again, because it is possible that a client has
+      // acquired the leader role...
+
+      TAO_Leader_Follower &leader_follower =
+        this->leader_follower ();
+      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower);
+
+      result = helper.set_event_loop_thread (tv);
+      if (result != 0)
+        {
+          if (errno == ETIME)
+            return 0;
+          else
+            return result;
+        }
+
+      ACE_Reactor *r = this->reactor ();
+
+      // Set the owning thread of the Reactor to the one which we're
+      // currently in.  This is necessary b/c it's possible that the
+      // application is calling us from a thread other than that in which
+      // the Reactor's CTOR (which sets the owner) was called.
+      r->owner (ACE_Thread::self ());
+
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
-      switch (r->handle_events (tv))
-        {
-        case 0:
-          // Make sure that a timed out occured.  If so, we return to
-          // caller.
-          if (tv != 0 && *tv == ACE_Time_Value::zero)
-            result = 0;
-          break;
-          /* NOTREACHED */
-        case -1: // Something else has gone wrong, so return to caller.
-          result = -1;
-          break;
-          /* NOTREACHED */
-        default:
-          // Some handlers were dispatched, so keep on processing
-          // requests until we're told to shutdown .
-          break;
-          /* NOTREACHED */
-        }
-      if (result == 0 || result == -1)
-        break;
+      result = r->handle_events (tv);
 
-      // In perform_work, we only run the loop once.
+      if (result == -1)
+        {
+          // An error, terminate the loop
+          break;
+        }
+      if (result == 0
+          && tv != 0
+          && *tv == ACE_Time_Value::zero)
+        {
+          // A timeout, terminate the loop...
+          break;
+        }
       if (perform_work)
-        break;
+        {
+          // This is running on behalf of a perform_work() call,
+          // The loop should run only once.
+          break;
+        }
+      // Otherwise just continue..
     }
 
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - end of run/perform_work %d\n"), result));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - "
+                          "end of run/perform_work %d\n"),
+                result));
 
   return result;
 }
@@ -1765,15 +1800,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
                        *ACE_Static_Object_Lock::instance ()));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
-
-  // Destroy the ORB_Core.
-  if (this->fini () != 0)
-    {
-      ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_MAYBE));
-    }
 }
-
 
 // Set up listening endpoints.
 
@@ -2158,6 +2185,67 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+TAO_ThreadpoolPolicy *
+TAO_ORB_Core::threadpool (void)
+{
+  TAO_ThreadpoolPolicy *result = 0;
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  TAO_Policy_Manager *policy_manager =
+    this->policy_manager ();
+  if (policy_manager != 0)
+    result = policy_manager->threadpool ();
+
+  if (result == 0)
+    result = this->default_threadpool ();
+
+  return result;
+}
+
+TAO_PriorityModelPolicy *
+TAO_ORB_Core::priority_model (void)
+{
+  TAO_PriorityModelPolicy *result = 0;
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  TAO_Policy_Manager *policy_manager =
+    this->policy_manager ();
+  if (policy_manager != 0)
+    result = policy_manager->priority_model ();
+
+  if (result == 0)
+    result = this->default_priority_model ();
+
+  return result;
+}
+
+TAO_ServerProtocolPolicy *
+TAO_ORB_Core::server_protocol (void)
+{
+  TAO_ServerProtocolPolicy *result = 0;
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  TAO_Policy_Manager *policy_manager =
+    this->policy_manager ();
+  if (policy_manager != 0)
+    result = policy_manager->server_protocol ();
+
+  if (result == 0)
+    result = this->default_server_protocol ();
+
+  return result;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
@@ -2240,7 +2328,7 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
        i = this->begin ())
     {
       // Destroy the ORB_Core
-      (*i).int_id_->fini ();
+      (*i).int_id_->_decr_refcnt ();
     }
   this->table_.close ();
 
@@ -2272,6 +2360,7 @@ TAO_ORB_Table::bind (const char *orb_id,
       this->first_orb_ = orb_core;
     }
   ACE_CString id (orb_id);
+  orb_core->_incr_refcnt ();
   return this->table_.bind (id, orb_core);
 }
 
@@ -2292,6 +2381,7 @@ TAO_ORB_Table::unbind (const char *orb_id)
   int result = this->table_.unbind (id, orb_core);
   if (result == 0)
     {
+      orb_core->_decr_refcnt ();
       if (orb_core == this->first_orb_)
         {
           Iterator begin = this->begin ();

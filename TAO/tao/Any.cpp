@@ -21,7 +21,7 @@ ACE_RCSID(tao, Any, "$Id$")
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
-  return CORBA::TypeCode::_duplicate (this->type_);
+  return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
 
 // Will replace if the typecode arg is an alias for the existing one -
@@ -37,7 +37,6 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
 
   if (equiv)
     {
-      CORBA::release (this->type_);
       this->type_ = CORBA::TypeCode::_duplicate (tc);
     }
   else
@@ -158,9 +157,9 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
     value_ (0),
     destructor_ (0)
 {
-  if (src.type_ != 0)
+  if (!CORBA::is_nil (src.type_.in ()))
     this->type_ =
-      CORBA::TypeCode::_duplicate (src.type_);
+      CORBA::TypeCode::_duplicate (src.type_.in ());
   else
     this->type_ =
       CORBA::TypeCode::_duplicate (CORBA::_tc_null);
@@ -192,16 +191,11 @@ CORBA_Any::operator= (const CORBA_Any &src)
   // If we own any previous data, deallocate it.
   this->free_value ();
 
-  if (this->type_ != 0)
-    {
-      CORBA::release (this->type_);
-    }
-
   // Now copy the contents of the source to ourselves.
-  if (src.type_ != 0)
+  if (!CORBA::is_nil (src.type_.in ()))
     {
       this->type_ =
-        CORBA::TypeCode::_duplicate (src.type_);
+        CORBA::TypeCode::_duplicate (src.type_.in ());
     }
   else
     {
@@ -228,9 +222,6 @@ CORBA_Any::~CORBA_Any (void)
   this->cdr_ = 0;
 
   this->free_value ();
-
-  if (this->type_)
-    CORBA::release (this->type_);
 }
 
 // TAO proprietary methods, used in the implementation of the >>= and
@@ -249,11 +240,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
 
   this->free_value ();
 
-  // Duplicate tc and then release this->type_, just in case tc and
-  // type_ are the same thing.
-  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
-  CORBA::release (this->type_);
-  this->type_ = tmp;
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   this->byte_order_ = byte_order;
   ACE_NEW (this->cdr_, ACE_Message_Block);
@@ -281,11 +268,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   this->any_owns_data_ = any_owns_data;
   this->value_ = value;
 
-  // Duplicate tc and then release this->type_, just in case tc and
-  // type_ are the same thing.
-  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
-  CORBA::release (this->type_);
-  this->type_ = tmp;
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   this->byte_order_ = byte_order;
   ACE_NEW (this->cdr_, ACE_Message_Block);
@@ -307,11 +290,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   this->any_owns_data_ = any_owns_data;
   this->value_ = value;
 
-  // Duplicate tc and then release this->type_, just in case tc and
-  // type_ are the same thing.
-  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
-  CORBA::release (this->type_);
-  this->type_ = tmp;
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   this->destructor_ = destructor;
 }
@@ -344,7 +323,7 @@ CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
   TAO_InputCDR in (this->cdr_,
                    this->byte_order_,
                    orb_core);
-  TAO_Marshal_Object::perform_append (this->type_,
+  TAO_Marshal_Object::perform_append (this->type_.in (),
                                       &in,
                                       &cdr,
                                       ACE_TRY_ENV);
@@ -366,7 +345,9 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
 
   // Skip over the next aregument.
   CORBA::TypeCode::traverse_status status =
-    TAO_Marshal_Object::perform_skip (this->type_, &cdr, ACE_TRY_ENV);
+    TAO_Marshal_Object::perform_skip (this->type_.in (),
+                                      &cdr,
+                                      ACE_TRY_ENV);
   ACE_CHECK;
 
   if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -386,7 +367,7 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
   ACE_OS::memcpy (mb.rd_ptr (), begin, size);
 
   // Stick it into the Any. It gets duplicated there.
-  this->_tao_replace (this->type_,
+  this->_tao_replace (this->type_.in (),
                       cdr.byte_order (),
                       &mb);
 }
@@ -1383,7 +1364,7 @@ CORBA_Any::operator>>= (to_string s) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+        CORBA::TypeCode::_duplicate (this->type_.in ());
 
       while (kind == CORBA::tk_alias)
         {
@@ -1445,7 +1426,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+        CORBA::TypeCode::_duplicate (this->type_.in ());
 
       while (kind == CORBA::tk_alias)
         {
@@ -1507,7 +1488,7 @@ CORBA_Any::operator>>= (to_object obj) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+        CORBA::TypeCode::_duplicate (this->type_.in ());
       while (kind == CORBA::tk_alias)
         {
           tcvar = tcvar->content_type (ACE_TRY_ENV);
@@ -1588,14 +1569,16 @@ CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr,
             const CORBA::Any &x)
 {
-  if (!(cdr << x.type ()))
+  CORBA::TypeCode_var tc = x.type ();
+
+  if (!(cdr << tc.in ()))
     return 0;
 
   ACE_TRY_NEW_ENV
     {
       TAO_InputCDR input (x._tao_get_cdr (),
                           x._tao_byte_order ());
-      TAO_Marshal_Object::perform_append (x.type (),
+      TAO_Marshal_Object::perform_append (tc.in (),
                                           &input,
                                           &cdr,
                                           ACE_TRY_ENV);
