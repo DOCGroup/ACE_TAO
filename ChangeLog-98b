@@ -1,3 +1,10 @@
+Thu Aug 20 03:10:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.i:
+	* ace/Thread_Manager.cpp (at_exit,thr_self): Moved all at_exit
+	  methods into the .i file.  All at_exit methods and thr_self
+	  don't really need to hold Thread_Manager's lock.
+
 Wed Aug 19 20:34:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/README:
