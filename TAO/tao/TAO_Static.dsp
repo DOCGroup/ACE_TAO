@@ -463,6 +463,10 @@ SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Leader_Follower_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event.h
 # End Source File
 # Begin Source File
@@ -1844,6 +1848,10 @@ SOURCE=.\IORInfo.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
