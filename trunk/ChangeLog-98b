@@ -1,7 +1,7 @@
 Tue Jan 05 13:15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.i (open): Be sure to pass down the
-	  <ignore_static_svcs> argument down to the real open method.
+        * ace/Service_Config.i (open): Be sure to pass down the
+          <ignore_static_svcs> argument down to the real open method.
 
 Tue Jan 05 08:08:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -10,6 +10,10 @@ Tue Jan 05 08:08:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1-4.0.h: added 10 ms ACE_TIMER_SKEW, so that
           MT_Reactor_Timer_Test passes.
+
+        * ace/config-lynxos.h: added 10 ms ACE_TIMER_SKEW, so that
+          MT_Reactor_Timer_Test comes closer to passing.  It now
+          chokes on the wait () near the end.
 
 Tue Jan  5 00:59:04 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
