@@ -42,7 +42,7 @@ ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
   // one has not been set, just return ACE_OS::gettimeofday.
   if (ACE_High_Res_Timer::global_scale_factor_ == 1)
     {
-      ACE_Time_Value tv = ACE_OS::gettimeofday (op);
+      ACE_Time_Value tv = ACE_OS::gettimeofday ();
       // Return the time in microseconds because the global_scale_factor_
       // is 1.
       return tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
