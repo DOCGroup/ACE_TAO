@@ -13,8 +13,10 @@
 //
 // ============================================================================
 
-#include "client.h"
 #include "ace/Sched_Params.h"
+#include "server.h"
+#include "client.h"
+#include "Globals.h"
 
 #if defined (NO_ACE_QUANTIFY)
 #include "quantify.h"
@@ -144,6 +146,78 @@ output_latency (Task_State *ts)
 }
 
 int
+start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
+{
+  //  ACE_ARGV  tmp_args (this->argv_); 
+  char high_thread_args[BUFSIZ];   
+
+  static char hostname[BUFSIZ]; 
+
+  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)         
+    {                                                   
+      perror ("gethostname");                           
+      return -1;                                        
+    }                                                   
+
+  ACE_OS::sprintf (high_thread_args,
+                   "-ORBport %d "
+                   "-ORBhost %s "
+                   "-ORBobjrefstyle URL "
+                   "-ORBsndsock 32768 "
+                   "-ORBrcvsock 32768 ",
+                   ACE_DEFAULT_SERVER_PORT,
+                   hostname);
+
+  Cubit_Task *high_priority_task;
+
+  ACE_NEW_RETURN (high_priority_task,
+		  Cubit_Task ((const char *)high_thread_args,
+			      (const char *)"internet",
+			      (u_int) 1,
+			      &thread_manager,
+			      (u_int) 0), //task id 0.
+		  -1);
+  
+#if defined (VXWORKS)
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
+#elif defined (ACE_WIN32)
+  ACE_Sched_Priority priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                                                ACE_SCOPE_THREAD);
+#else
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
+#endif /* VXWORKS */
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating servant 0 with high priority %d\n",
+              priority));
+
+  // Make the high priority task an active object.
+   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
+                                     1,
+                                     0,
+                                     priority) == -1)
+     {
+       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                   "\thigh_priority_task->activate failed"));
+     }
+
+   ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
+   while (!GLOBALS::instance ()->ready_)
+     GLOBALS::instance ()->ready_cnd_.wait ();
+   ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+
+   ACE_DEBUG ((LM_DEBUG, "<< Before start_barrier.wait()\n"));
+         GLOBALS::instance ()->barrier_->wait ();
+   ACE_DEBUG ((LM_DEBUG, ">> After start_barrier.wait()\n"));
+
+   ts->one_ior_ = high_priority_task->get_servant_ior (0);
+   ACE_DEBUG ((LM_DEBUG, "ts->one_ior_ = \"%s\"\n", ts->one_ior_));
+
+   return 0;
+}
+
+int
 do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                             Task_State *ts)
 {
@@ -177,6 +251,21 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   double total_latency_high = 0.0;
   double total_util_task_duration = 0.0;
 
+  GLOBALS::instance ()->num_of_objs = 1;
+
+  ACE_Thread_Manager server_thread_manager;
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ts->argc_=%d\n", ts->argc_));
+
+  GLOBALS::instance ()->use_name_service = 0;
+
+  for (j = 0; j < ts->argc_; j++)
+    if (strcmp (ts->argv_[j], "-u") == 0)
+      {
+	start_servant (ts, server_thread_manager);
+	break;
+      }
+  
   // Create the clients.
   Client high_priority_client (thread_manager, ts, 0);
 
@@ -254,8 +343,8 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                                      0,
                                      0,
                                      0,
-                                     0,
-                                     (ACE_thread_t*)task_id) == -1)
+                                     0) == -1)
+    // (ACE_thread_t*)task_id) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p; priority is %d\n",
                 "activate failed",
@@ -395,7 +484,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
         }
     } /* end of for () */
 
-  if (ts->use_utilization_test_ == 1)
+  if (ts->use_utilization_test_ == 1) 
     // activate the utilization thread only if specified.  See
     // description of this variable in header file.
     {
@@ -453,6 +542,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   // Wait for all the client threads to exit (except the utilization
   // thread).
   thread_manager->wait ();
+  //server_thread_manager.wait ();
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
@@ -508,8 +598,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
     }
 
   // if running the utilization test, don't report latency nor jitter.
-  if (ts->use_utilization_test_ == 0 &&
-      ts->run_server_utilization_test_ == 0)
+  if (ts->use_utilization_test_ == 0)
     {
 #if defined (VXWORKS)
       ACE_DEBUG ((LM_DEBUG, "Test done.\n"
@@ -568,9 +657,11 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) UTILIZATION task performed \t%u computations\n"
                   "(%t) CLIENT task performed \t\t%u CORBA calls\n"
+                  "(%t) Utilization test time is \t\t%f seconds\n"
                   "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
                   util_thread.get_number_of_computations (),
                   ts->loop_count_,
+		  ts->util_test_time_,
                   util_thread.get_number_of_computations () / ts->loop_count_,
                   (util_thread.get_number_of_computations () % ts->loop_count_) * 100 / ts->loop_count_
                   ));
@@ -763,7 +854,7 @@ main (int argc, char *argv[])
 #endif
 
   initialize ();
-
+ACE_DEBUG ((LM_DEBUG, "argv[1]=%s\n", argv[1]));
   Task_State ts (argc, argv);
 
   // preliminary argument processing
