@@ -4,10 +4,6 @@
 
 #include "ace/OS_NS_stdio.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Deployment_Configuration.inl"
-#endif /* __ACE_INLINE__ */
-
 const int NAME_BUFSIZE = 1024;
 
 CIAO::Deployment_Configuration::Deployment_Configuration (CORBA::ORB_ptr o)
@@ -106,7 +102,7 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
-  return ::Deployment::NodeManager::_duplicate 
+  return ::Deployment::NodeManager::_duplicate
     (entry->int_id_.node_manager_.in ());
 }
 
