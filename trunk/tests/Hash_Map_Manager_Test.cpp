@@ -205,7 +205,7 @@ run_test (void)
   // Remove all the entries.
   if (hash.unbind_all () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("unbind_all failed\n")),
+                       ACE_TEXT ("unbind_all failed\n")),
                        -1);
 
   // Redo the <bind> operations.
@@ -213,9 +213,9 @@ run_test (void)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p failed for %s \n"),
-                         ASYS_TEXT ("bind"),
-                         ASYS_MULTIBYTE_STRING (string_table[i].key_)), -1);
+                         ACE_TEXT ("%p failed for %s \n"),
+                         ACE_TEXT ("bind"),
+                         string_table[i].key_), -1);
 
   alloc.dump ();
   return 0;
