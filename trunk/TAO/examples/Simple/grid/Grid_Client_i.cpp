@@ -8,6 +8,12 @@
 
 // Constructor.
 Grid_Client_i::Grid_Client_i (void)
+  : height_ (0),
+    width_ (0),
+    setx_ (0),
+    sety_ (0),
+    value_ (0)
+   
 {
   //no-op
 }
@@ -25,12 +31,10 @@ Grid_Client_i::parse_args (int argc,
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, "w:h:p:q:v:");
 
-  // @@ Bala, please check your style more carefully.
-  int c= 0;
+    int c = 0;
   int result = 0;
 
-  // @@ Bala, please check your style more carefully.
-  while ((c= get_opts ()) != -1)
+  while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'p': // A horizontal position of the grid where 
@@ -51,7 +55,7 @@ Grid_Client_i::parse_args (int argc,
         value_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       }
-  // @@ Bala, please check your style more carefully.
+  
   if (setx_ == 0 )
     setx_ = Grid::DEFAULT_LOCATION;
   if (sety_ == 0 )
@@ -75,10 +79,10 @@ Grid_Client_i::run (int argc,
   TAO_TRY 
     {
       // Make the Grid.
-      // @@ Bala, please check your style more carefully.
-      Grid_ptr grid = client->make_grid ( width_,
-                                           height_,
-                                           TAO_TRY_ENV);
+      
+      Grid_ptr grid = client->make_grid (width_,
+                                         height_,
+                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, 
