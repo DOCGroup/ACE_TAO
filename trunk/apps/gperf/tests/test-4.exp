@@ -126,7 +126,7 @@ in_word_set (str, len)
             return 0;
           else
             {
-              int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              unsigned int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
               struct resword  *base = &wordlist[-lookup[offset]];
               struct resword  *ptr = base + -lookup[offset + 1];
 
