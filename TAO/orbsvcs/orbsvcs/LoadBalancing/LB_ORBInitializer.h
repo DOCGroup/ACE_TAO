@@ -92,7 +92,7 @@ private:
   /// The CosLoadBalancing::LoadAlert servant to be used at this
   /// location.
   /**
-   * This is the servant supplied with TAO's Load Balancer.  It is
+   * This is the servant supplied by TAO's Load Balancer.  It is
    * used out of convencience.
    */
   TAO_LB_LoadAlert load_alert_;
