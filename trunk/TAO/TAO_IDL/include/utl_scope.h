@@ -349,6 +349,7 @@ private:
 private:
   friend int tao_yyparse (void);
   friend class AST_Enum;
+  friend class IDL_GlobalData;
 
   // Scope Management Protocol.
   virtual AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
