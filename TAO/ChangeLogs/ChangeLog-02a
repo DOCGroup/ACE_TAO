@@ -1,3 +1,20 @@
+Tue Aug 15 19:05:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/RT_Policy_i.cpp: 
+	* tao/RT_Policy_i.h:
+	  Fixed minor bug in the decoding of the policy
+	  <TAO_ClientProtocolPolicy>.
+	  
+	  Added methods for GIOP Properties encoding (i.e. 
+	  _tao_encode and _tao_decode).
+
+	* tao/Stub.cpp
+	* tao/Mprofile.i
+	* tao/Profile.cpp
+	* tao/POA.cpp
+	  Removed some ACE_DEBUG used for testing some RT-CORBA
+	  features.
+
 Tue Aug 15 16:49:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher): The
