@@ -86,11 +86,11 @@ Step 3:
   You then need to instruct the Assembly_Manager to deploy a specific
   component assembly descriptor.  For example:
 
-    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad
+    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad -o IDfile
 
   or
 
-    %CIAO_ROOT%/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad
+    %CIAO_ROOT%/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad -o IDfile
 
 Step 4:
 =======
@@ -121,10 +121,15 @@ Step 4:
 Step 5:
 =======
 
-  Once you are done with the test.  Press <enter> in the shell window
-  running Assembly_Deployer that you started in Step 3.  This will
+  Once you are done with the test.  Use the following command to
   tear_down the application, kill all ComponentServer's, and terminate
   both the Assembly_Deployer and Assembly_Manager process.
+
+    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -d IDfile
+
+  or
+
+    %CIAO_ROOT%/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -d IDfile
 
   Repeat Step 2-5 using different configurations and assembly
   descriptors.
