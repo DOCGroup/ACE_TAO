@@ -648,9 +648,16 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #elif defined (VXWORKS) || defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name,
-                                                        LPDWORD (&maxnamelen)),
-                                          ace_result_), int, -1);
+  if (::gethostname (name, maxnamelen) == 0)
+  {
+    return 0;
+  }
+  else
+  {
+    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name,
+                                            LPDWORD (&maxnamelen)),
+                                            ace_result_), int, -1);
+  }
 #elif defined (CHORUS)
   if (::gethostname (name, maxnamelen) == -1)
     return -1;
