@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be/be_codegen.cpp:302
 
 
 #include "DynamicAny.h"
@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be/be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynAny.
 
@@ -87,7 +87,7 @@ TAO::Objref_Traits<DynamicAny::DynAny>::marshal (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::InvalidValue::InvalidValue (void)
   : CORBA::UserException (
@@ -171,7 +171,7 @@ void DynamicAny::DynAny::InvalidValue::_tao_decode (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (void)
   : CORBA::UserException (
@@ -352,7 +352,7 @@ DynamicAny::DynAny::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynFixed.
 
@@ -489,7 +489,7 @@ DynamicAny::DynFixed::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynEnum.
 
@@ -626,12 +626,12 @@ DynamicAny::DynEnum::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:68
 
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ_CS_
@@ -675,12 +675,12 @@ DynamicAny::NameValuePairSeq::~NameValuePairSeq (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:68
 
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_
@@ -724,7 +724,7 @@ DynamicAny::NameDynAnyPairSeq::~NameDynAnyPairSeq (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynStruct.
 
@@ -861,7 +861,7 @@ DynamicAny::DynStruct::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynUnion.
 
@@ -998,7 +998,7 @@ DynamicAny::DynUnion::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_ANYSEQ_CS_)
 #define _DYNAMICANY_ANYSEQ_CS_
@@ -1042,7 +1042,7 @@ DynamicAny::AnySeq::~AnySeq (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_DYNANYSEQ_CS_)
 #define _DYNAMICANY_DYNANYSEQ_CS_
@@ -1089,7 +1089,7 @@ DynamicAny::DynAnySeq::~DynAnySeq (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynSequence.
 
@@ -1226,7 +1226,7 @@ DynamicAny::DynSequence::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynArray.
 
@@ -1363,7 +1363,7 @@ DynamicAny::DynArray::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynValue.
 
@@ -1500,7 +1500,7 @@ DynamicAny::DynValue::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for DynamicAny::DynAnyFactory.
 
@@ -1536,7 +1536,7 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::marshal (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (void)
   : CORBA::UserException (
@@ -1717,7 +1717,7 @@ DynamicAny::DynAnyFactory::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/cdr_op_cs.cpp:61
+// be/be_visitor_structure/cdr_op_cs.cpp:61
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1740,7 +1740,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_cs.cpp:96
+// be/be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_
 #define _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_
@@ -1812,7 +1812,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_cs.cpp:96
+// be/be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_DynamicAny_AnySeq_CPP_
 #define _TAO_CDR_OP_DynamicAny_AnySeq_CPP_
@@ -1884,7 +1884,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be/be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
