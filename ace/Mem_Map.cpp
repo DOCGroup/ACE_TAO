@@ -61,6 +61,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
+  // @@ Alberto, can you please check this method?  It's changed a lot
+  // since your patches and I'm not sure if it runs on Chorus now.
   long result = ACE_OS::filesize (this->handle_);
 
   if (result == -1)
@@ -82,7 +84,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   int extend_backing_store = 0;
   if (len_request != -1)
     {
-      if (file_len < ACE_static_cast (size_t, len_request))
+      if (file_len < ACE_static_cast (size_t,
+                                      len_request))
         extend_backing_store = 1;
 
       // Set length to len_request
@@ -93,16 +96,23 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     this->length_ = file_len;
 
   if (extend_backing_store
-    // Extend the backing store.
+      // Extend the backing store.
+#if !defined (CHORUS)
       && ACE_OS::pwrite (this->handle_,
                          "",
                          1,
-                         this->length_ > 0 ? this->length_ - 1 : 0) == -1)
+                         this->length_ > 0 
+                         ? this->length_ - 1 
+                         : 0) == -1)
+#else
+      && ACE_OS::ftruncate (this->handle_,
+                            this->length_) == -1)
+#endif /* !CHORUS */
     return -1;
   
 #if defined (__Lynx__)
   // Set flag that indicates whether PROT_WRITE has been enabled.
-  write_enabled_ = prot & PROT_WRITE  ?  1  :  0;
+  write_enabled_ = ACE_BIT_ENABLED (prot, PROT_WRITE);
 #endif /* __Lynx__ */
 
   this->base_addr_ = ACE_OS::mmap (this->base_addr_,
@@ -113,7 +123,6 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                                    off_t (ACE::round_to_allocation_granularity (pos)),
                                    &this->file_mapping_,
                                    sa);
-
   return this->base_addr_ == MAP_FAILED ? -1 : 0;
 }
 
@@ -158,10 +167,19 @@ ACE_Mem_Map::map (LPCTSTR file_name,
   ACE_TRACE ("ACE_Mem_Map::map");
   this->length_ = 0;
 
-  if (this->open (file_name, flags, mode, sa) == -1)
+  if (this->open (file_name,
+                  flags,
+                  mode,
+                  sa) == -1)
     return -1;
   else
-    return this->map_it (this->handle (), len, prot, share, addr, pos, sa);
+    return this->map_it (this->handle (),
+                         len,
+                         prot,
+                         share,
+                         addr,
+                         pos,
+                         sa);
 }
 
 ACE_Mem_Map::ACE_Mem_Map (void)
@@ -193,8 +211,18 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
     close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
-  if (this->map (file_name, len, flags, mode, prot, share, addr, pos, sa) < 0)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+  if (this->map (file_name,
+                 len,
+                 flags,
+                 mode,
+                 prot,
+                 share,
+                 addr,
+                 pos,
+                 sa) < 0)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
 }
 
 // Map a file from an open file descriptor HANDLE.  This function will
@@ -215,10 +243,19 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
-  ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
-
-  if (this->map (handle, len, prot, share, addr, pos, sa) < 0)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+  ACE_OS::memset (this->filename_,
+                  0,
+                  sizeof this->filename_);
+  if (this->map (handle,
+                 len,
+                 prot,
+                 share,
+                 addr,
+                 pos,
+                 sa) < 0)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
 }
 
 // Close down and remove the file from the file system.
