@@ -256,25 +256,13 @@ CORBA_Object::_non_existent (CORBA::Environment &env)
 
   if (x != 0)
     {
-      const char *id;
-
-      id = CORBA::_tc_OBJECT_NOT_EXIST->id (env);
-      if (env.exception () == 0
-          && ACE_OS::strcmp (id, x->_id ()) == 0)
-        {
-          env.clear ();
-          return CORBA::B_TRUE;
-        }
-
-      // reporting a "real" exception ...
-
-      return CORBA::B_FALSE;
+      if (CORBA::OBJECT_NOT_EXIST::_narrow (x) != 0)
+	{
+	  env.clear ();
+	  return CORBA::B_TRUE;
+	}
     }
-  else
-    {
-      env.clear ();
-      return CORBA::B_FALSE;
-    }
+  return CORBA::B_FALSE;
 }
 
 // Quickly hash an object reference's representation data.  Used to

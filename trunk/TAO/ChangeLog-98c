@@ -1,3 +1,9 @@
+Mon Jul 13 17:37:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Object.cpp: 
+	  Fixed some problems in the implementation of _non_existent(),
+	  thanks to Dave Meyer <dmeyer@std.saic.com>
+
 Mon Jul 13 16:20:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corba.h: 
