@@ -211,7 +211,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::unbind_i (const ACE_WString &name)
 {
   ACE_TRACE ("ACE_Local_Name_Space::unbind");
 
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
   ACE_NS_String ns_name (name);
   ACE_NS_Internal ns_internal;
   if (this->name_space_map_->unbind (ns_name, ns_internal, this->allocator_) != 0)
@@ -233,7 +233,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::bind (const ACE_WString &name,
 					    const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::bind");
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   return this->shared_bind (name, value, type, 0);
 }
@@ -244,7 +244,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::rebind (const ACE_WString &name,
 					      const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   return this->shared_bind (name, value, type, 1);
 }
@@ -273,7 +273,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve_i (const ACE_WString &name,
 						       char *&type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::resolve");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   ACE_NS_String ns_name (name);
   ACE_NS_Internal ns_internal;
@@ -337,8 +337,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::~ACE_Local_Name_Space (void)
 {
   ACE_TRACE ("ACE_Local_Name_Space::~ACE_Local_Name_Space");
 
-  // Remove the map
+  // Remove the map.
   delete this->allocator_;
+  delete this->lock_;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -378,15 +379,29 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
   ACE_OS::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
   ACE_OS::strcat (this->context_file_, this->name_options_->database ());
 
-  //  ACE_DEBUG ((LM_DEBUG, "contextfile is %s\n", this->context_file_));
-
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
 
+  TCHAR lock_name_for_local_name_space [MAXNAMELEN];
+  TCHAR lock_name_for_backing_store [MAXNAMELEN];
+  LPCTSTR prefix = ACE::basename (this->context_file_,
+				  ACE_DIRECTORY_SEPARATOR_CHAR);
+
+  ACE_OS::strcpy (lock_name_for_local_name_space , prefix);
+  ACE_OS::strcat (lock_name_for_local_name_space, "_name_space");
+
+  ACE_OS::strcpy (lock_name_for_backing_store, prefix);
+  ACE_OS::strcat (lock_name_for_backing_store, "_backing_store");
+
   // Create the allocator with the appropriate options.
-  ACE_NEW_RETURN (this->allocator_, ALLOCATOR (this->context_file_, 0, &options), -1);
+  ACE_NEW_RETURN (this->allocator_, 
+		  ALLOCATOR (this->context_file_, 
+			     lock_name_for_backing_store,
+			     &options), -1);
 
   if (ACE_LOG_MSG->op_status ())
     ACE_ERROR_RETURN ((LM_ERROR, "Allocator::Allocator\n"), -1);    
+
+  ACE_NEW_RETURN (this->lock_, LOCK (lock_name_for_local_name_space), -1);
   
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
@@ -404,31 +419,33 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
     }
 
   // This is the hard part since we have to avoid potential race
-  // conditions...
+  // conditions...  We will use the double check here
   else
     {
-      size_t map_size = sizeof *this->name_space_map_;
-      ns_map = this->allocator_->malloc (map_size);
+      ACE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
-      // Initialize the map into its memory location (e.g., shared memory).
-      ACE_NEW_RETURN (this->name_space_map_,
-		      (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_),
-		      -1);
-
-      // Don't allow duplicates (atomically return existing int_id, if
-      // there is one).
-      if (this->allocator_->trybind (ACE_NAME_SERVER_MAP, ns_map) == 1)
+      // This is the easy case since if we find the Name Server Map
+      // Manager we know it's already initialized.
+      if (this->allocator_->find (ACE_NAME_SERVER_MAP, ns_map) == 0)
 	{
-	  // We're not the first one in, so free up the map and assign
-	  // the map to the pointer that was allocated by the caller
-	  // that was the first time in!
-	  this->name_space_map_->close (this->allocator_);
-
-	  // Note that we can't free <map> since that was overwritten
-	  // in the call to bind()!
-	  this->allocator_->free ((void *) this->name_space_map_);
 	  this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
+	  ACE_DEBUG ((LM_DEBUG, "name_space_map_ = %d, ns_map = %d\n",
+		      this->name_space_map_, ns_map));
 	}
+      else
+	{
+	  size_t map_size = sizeof *this->name_space_map_;
+	  ns_map = this->allocator_->malloc (map_size);
+
+	  // Initialize the map into its memory location (e.g., shared memory).
+	  ACE_NEW_RETURN (this->name_space_map_,
+			  (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_),
+			  -1);
+
+	  if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR, "create_manager\n"), -1);
+	}
+
       ACE_DEBUG ((LM_DEBUG, "name_space_map_ = %d, ns_map = %d\n",
 		  this->name_space_map_, ns_map));
     }
@@ -436,12 +453,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
   return 0;
 }
 
+
 template <ACE_MEM_POOL_1, class LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
 							const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -474,7 +492,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values (ACE_PWSTRING_SET &set,
 						   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -507,7 +525,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
 							const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -569,7 +587,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries (ACE_BINDING_SET 
                                                           const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -597,7 +615,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries (ACE_BINDING_SET 
 					                  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_value_entries");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -624,7 +642,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &
 							 const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_type_entries");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -703,6 +721,3 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
 }
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */
-
-
-

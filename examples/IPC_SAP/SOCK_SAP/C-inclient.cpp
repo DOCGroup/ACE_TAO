@@ -21,27 +21,27 @@ main (int argc, char *argv[])
   int r_bytes;
   int n;
                                                                     
-  /* Create a local endpoint of communication */
+  // Create a local endpoint of communication.
   if ((s_handle = ACE_OS::socket (PF_INET, SOCK_STREAM, 0)) == ACE_INVALID_HANDLE)
     ACE_OS::perror ("socket"), ACE_OS::exit (1);
                                                                     
-  /* Determine IP address of the server */
+  // Determine IP address of the server.
   if ((hp = ACE_OS::gethostbyname (host)) == 0) 
     ACE_OS::perror ("gethostbyname"), ACE_OS::exit (1);                             
                                                                     
-  /* Set up the address information to contact the server */
+  // Set up the address information to contact the server.
   ACE_OS::memset ((void *) &saddr, 0, sizeof saddr);
   saddr.sin_family = AF_INET;                                          
   saddr.sin_port = port_num;
   ACE_OS::memcpy (&saddr.sin_addr, hp->h_addr, hp->h_length);
 
-  /* Establish connection with remote server */
+  // Establish connection with remote server.
   if (ACE_OS::connect (s_handle, (struct sockaddr *) &saddr, 
 		       sizeof saddr) == -1) 
     ACE_OS::perror ("connect"), ACE_OS::exit (1);
                                                                     
-  /* Send data to server (correctly handles 
-     "incomplete writes" due to flow control) */
+  // Send data to server (correctly handles "incomplete writes" due to
+  // flow control).
                                                                     
   while ((r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0)
     for (w_bytes = 0; w_bytes < r_bytes; w_bytes += n)
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
   if (ACE_OS::recv (s_handle, buf, 1) == 1)
     ACE_OS::write (ACE_STDOUT, buf, 1);
     
-  /* Explicitly close the connection */
+  // Explicitly close the connection.
   if (ACE_OS::closesocket (s_handle) == -1)
     ACE_OS::perror ("close"), ACE_OS::exit (1);
 

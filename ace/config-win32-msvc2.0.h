@@ -220,4 +220,6 @@ inline void *operator new (unsigned int, void *p) { return p; }
 // Compiler/Platform supports the "using" keyword.
 // #define ACE_HAS_USING_KEYWORD
 
+#define ACE_LACKS_COND_T
+#define ACE_LACKS_RWLOCK_T
 #endif /* ACE_CONFIG_H */

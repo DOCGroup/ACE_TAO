@@ -16,8 +16,35 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Mutex)
+
+ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
+  : ts_obj_ (object),
+    func_ (f)
+{
+  // ACE_TRACE ("ACE_TSS_Adapter::ACE_TSS_Adapter");
+}
+
+void
+ACE_TSS_Adapter::cleanup (void)
+{
+  // ACE_TRACE ("ACE_TSS_Adapter::~ACE_TSS_Adapter");
+  (*this->func_)(this->ts_obj_);  // call cleanup routine for ts_obj_
+}
+
+extern "C" void
+ACE_TSS_C_cleanup (void *object)
+{
+  // ACE_TRACE ("ACE_TSS_C_cleanup");
+  if (object != 0)
+    {
+      ACE_TSS_Adapter *tss_adapter = (ACE_TSS_Adapter *) object;
+      // Perform cleanup on the real TS object.
+      tss_adapter->cleanup ();    
+      // Delete the adapter object.
+      delete tss_adapter;        
+    }
+}
 
 void
 ACE_Process_Mutex::dump (void) const
@@ -297,8 +324,6 @@ ACE_Mutex::~ACE_Mutex (void)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::~ACE_Mutex"));
 }
 
-#if defined (ACE_HAS_THREADS)
-
 ACE_Event::ACE_Event (int manual_reset, 
 		      int initial_state,
 		      int type, 
@@ -405,6 +430,8 @@ ACE_Auto_Event::dump (void) const
 {
   ACE_Event::dump ();
 }
+
+#if defined (ACE_HAS_THREADS)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)

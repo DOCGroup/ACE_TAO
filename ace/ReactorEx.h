@@ -61,11 +61,10 @@ private:
 
 class ACE_Export ACE_ReactorEx_Notify : public ACE_Event_Handler
   // = TITLE
-  // Unblock the <ACE_ReactorEx> from its event loop, passing it an
-  // optional <ACE_Event_Handler> to dispatch.
+  //     Unblock the <ACE_ReactorEx> from its event loop, passing it an
+  //     optional <ACE_Event_Handler> to dispatch.
   //
   // = DESCRIPTION
-  //
   //     This implementation is necessary for cases where the
   //     <ACE_ReactorEx> is run in a multi-threaded program.  In this
   //     case, we need to be able to unblock WaitForMultipleObjects()
@@ -130,61 +129,73 @@ public:
   virtual ~ACE_ReactorEx (void);
   // Close down the ReactorEx and release all of its resources.
   
-  // = Event loop drivers.  Main event loop driver that blocks for
-  // -how_long- before returning (will return earlier if I/O or signal
-  // events occur).  Note that -how_long- can be 0, in which case this
-  // method blocks until I/O events or signals occur.  Returns 0 if
-  // timed out, 1 if an event occurred, and -1 if an error occured.
-  // -how_long- is decremented to reflect how much time the call to
-  // handle_events took.  For instance, if a time value of 3 seconds
-  // is passed to handle_events and an event occurs after 2 seconds,
-  // -how_long- will equal 1 second.  This can be used if an
-  // application wishes to handle events for some fixed amount of
-  // time.  If wait_all is TRUE, then handle_events will only dispatch
-  // the handlers if *all* handles become active.  If a timeout
-  // occurs, then no handlers will be dispatched.  If
-  // <wait_all_callback> is NULL then we dispatch the <handle_signal>
-  // method on each and every HANDLE in the dispatch array.
-  // Otherwise, we just call back the <handle_signal> method of the
-  // <wait_all_callback> object, after first assigning the siginfo_t
-  // <si_handles_> argument to point to the array of signaled handles.
-  virtual int handle_events (ACE_Time_Value *how_long = 0,
+  // = Event loop drivers.  
+
+  virtual int handle_events (ACE_Time_Value *max_wait_time = 0,
 			     int wait_all = 0,
-			     ACE_Event_Handler *wait_all_callback = 0);
-  virtual int handle_events (ACE_Time_Value &how_long,
+			     ACE_Event_Handler *wait_all_callback = 0,
+			     int alertable = 0);
+  // This event loop driver blocks for up to <max_wait_time> for I/O
+  // or signaled events occur.  Note that <max_wait_time> can be 0, in
+  // which case this method blocks until I/O events or signaled events
+  // occur.  Returns 0 if timed out, 1 if an event occurred, and -1 if
+  // an error occured.  <max_wait_time> is decremented to reflect how
+  // much time this call took.  For instance, if a time value of 3
+  // seconds is passed to handle_events and an event occurs after 2
+  // seconds, <max_wait_time> will equal 1 second.  This can be used
+  // if an application wishes to handle events for some fixed amount
+  // of time.
+  // 
+  // If <wait_all> is TRUE, then handle_events will only dispatch the
+  // handlers if *all* handles become active.  If a timeout occurs,
+  // then no handlers will be dispatched.  If <wait_all_callback> is 0
+  // then we dispatch the <handle_signal> method on each and every
+  // registered HANDLE.  Otherwise, we just call back the
+  // <handle_signal> method of the <wait_all_callback> object, after
+  // first assigning the siginfo_t <si_handles_> argument to point to
+  // the array of signaled handles.
+  // 
+  // If <alertable> is true, then <WaitForMultipleObjectsEx> is used
+  // as the demultiplexing call, otherwise <WaitForMultipleObjects> is
+  // used.
+
+  virtual int handle_events (ACE_Time_Value &max_wait_time,
 			     int wait_all = 0,
-			     ACE_Event_Handler *wait_all_callback = 0);
+			     ACE_Event_Handler *wait_all_callback = 0,
+			     int alertable = 0);
+  // This method is just like the one above, except the <max_wait_time>
+  // value is a reference and must therefore never be NULL.
 
   // = Register and remove Handlers. 
   virtual int register_handler (ACE_Event_Handler *eh, 
 				ACE_HANDLE handle = ACE_INVALID_HANDLE);
-  // Register an Event_Handler -eh-.  If handle == ACE_INVALID_HANDLE
-  // the ReactorEx will call eh->get_handle() to extract the
-  // underlying I/O handle).
+  // Register an Event_Handler <eh>.  If handle == ACE_INVALID_HANDLE
+  // the <ReactorEx> will call the <get_handle> method of <eh> to
+  // extract the underlying I/O handle.
  
   virtual int remove_handler (ACE_Event_Handler *eh,
 			      ACE_Reactor_Mask mask = 0);
-  // Removes -eh- from the ReactorEx.  Note that the ReactorEx will
-  // call eh->get_handle() to extract the underlying I/O handle.  If
-  // -mask- == ACE_Event_Handler::DONT_CALL then the -handle_close-
-  // method of the -eh- is not invoked.
+  // Removes <eh> from the ReactorEx.  Note that the ReactorEx will
+  // call the <get_handle> method of <eh> to extract the underlying
+  // I/O handle.  If <mask> == ACE_Event_Handler::DONT_CALL then the
+  // <handle_close> method of the <eh> is not invoked.
 
   int notify (ACE_Event_Handler * = 0, 
 	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK);
   // Wakeup <ACE_ReactorEx> if currently blocked in
-  // WaitForMultipleObjects().
+  // <WaitForMultipleObjects>.
 
   // = Timer management. 
   virtual int schedule_timer (ACE_Event_Handler *eh,
 			      const void *arg,
 			      const ACE_Time_Value &delta,
 			      const ACE_Time_Value &interval = ACE_Time_Value::zero);  
-  // Schedule an Event Handler -eh- that will expire after -delta-
-  // amount of time.  If it expires then -arg- is passed in as the
-  // value to eh->handle_timeout.  If -interval- is != to
-  // ACE_Time_Value::zero then it is used to reschedule -eh-
+  // Schedule an Event Handler <eh> that will expire after <delta>
+  // amount of time.  If it expires then <arg> is passed in as the
+  // value to <handle_timeout> method call on <eh>.  If <interval> is
+  // != to ACE_Time_Value::zero then it is used to reschedule <eh>
   // automatically.  This method returns a timer handle that uniquely
-  // identifies the -eh- in an internal list.  This timer handle can
+  // identifies the <eh> in an internal list.  This timer handle can
   // be used to cancel an Event_Handler before it expires.  The
   // cancellation ensures that timer_ids are unique up to values of
   // greater than 2 billion timers.  As long as timers don't stay
@@ -193,10 +204,10 @@ public:
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler);
   // Cancel all Event_Handlers that match the address of
-  // -event_handler-.
+  // <event_handler>.
 
   virtual int cancel_timer (int timer_id, const void **arg = 0);
-  // Cancel the single Event_Handler that matches the -timer_id- value
+  // Cancel the single Event_Handler that matches the <timer_id> value
   // (which was returned from the schedule method).  If arg is
   // non-NULL then it will be set to point to the ``magic cookie''
   // argument passed in when the Event_Handler was registered.  This
@@ -210,7 +221,7 @@ public:
 
 protected:
   int dispatch (size_t index);
-  // Dispatches any active handles from handles_[-index-] to
+  // Dispatches any active handles from handles_[<index>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
 

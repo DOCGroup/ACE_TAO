@@ -177,12 +177,8 @@ struct ip_mreq
 // Compile using multi-thread libraries.
 #define ACE_MT_SAFE
 
-#if !defined (m88k)
-// Platform supports Solaris threads.
-#define ACE_HAS_STHREADS
-#else
 #define ACE_HAS_PTHREADS
-#endif	/* m88k */
+#define ACE_LACKS_RWLOCK_T
 
 // Platform supports threads.
 #define ACE_HAS_THREADS

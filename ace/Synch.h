@@ -490,7 +490,35 @@ protected:
   ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &) {}
 };
 
-#if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
+class ACE_TSS_Adapter
+  // = TITLE
+  //     This class encapsulates a TSS object and its associated
+  //     C++ destructor function.  It is used by the ACE_TSS...
+  //     methods (in Synch_T.cpp) in order to allow an extern
+  //     "C" cleanup routine to be used.  Needed by the "frigging"
+  //     MVS C++ compiler.
+  //
+  // = DESCRIPTION
+  //     Objects of this class are stored in thread specific
+  //     storage. ts_obj_ points to the "real" object and
+  //     func_ is a pointer to the C++ cleanup function for ts_obj_.
+  //
+{
+public:
+  ACE_TSS_Adapter (void *object, ACE_THR_DEST f);
+  // Initialize the adapter.
+  
+  void cleanup (void);
+  // Perform the cleanup operation.
+
+//private:
+
+  void *ts_obj_;	  
+  // The real TS object.
+
+  ACE_THR_DEST func_;     
+  // The real cleanup routine for ts_obj;
+};		
 
 class ACE_Export ACE_Event
   // = TITLE
@@ -609,6 +637,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks
 };
+
+#if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
 
 class ACE_Export ACE_Thread_Mutex
   // = TITLE

@@ -337,9 +337,9 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *mb)
   // Event_List and ask the ACE_Reactor to inform us (via
   // handle_output()) when it is possible to try again. 
 
-  ssize_t n;
+  ssize_t n = this->send (mb);
 
-  if ((n = this->send (mb)) == -1)
+  if (n == -1)
     {
       // Things have gone wrong, let's try to close down and set up a new reconnection.
       this->state (IO_Handler::FAILED);
@@ -366,13 +366,13 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *mb)
     return n;
 }
 
-int
+ssize_t
 Consumer_Handler::send (ACE_Message_Block *mb)
 {
-  ssize_t n;    
-  size_t len = mb->length ();
+  ssize_t len = mb->length ();
+  ssize_t n = this->peer ().send (mb->rd_ptr (), len);
 
-  if ((n = this->peer ().send (mb->rd_ptr (), len)) <= 0)
+  if (n <= 0)
     return errno == EWOULDBLOCK ? 0 : n;
   else if (n < len)
     // Re-adjust pointer to skip over the part we did send.
@@ -395,8 +395,7 @@ int
 Consumer_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *mb = 0;
-  int           status = 0;
-  
+
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) in handle_output on handle %d\n", 
 	      this->get_handle ()));
@@ -486,9 +485,8 @@ int
 Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 { 
   Event *event;
-  size_t len;
+  ssize_t len;
   ssize_t n = 0;
-  ssize_t m = 0;
   size_t offset = 0;
 
   if (this->msg_frag_ == 0)
@@ -538,9 +536,11 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
   // At this point there is a complete, valid header in msg_frag_
   len = sizeof event->buf_ + HEADER_SIZE - this->msg_frag_->length ();
 
+  ssize_t m = this->peer ().recv (event->buf_ + offset, len);
+
   // Try to receive the remainder of the event
 
-  switch (m = this->peer ().recv (event->buf_ + offset, len))
+  switch (m)
     {
     case -1:
       if (errno == EWOULDBLOCK) 

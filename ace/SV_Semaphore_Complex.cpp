@@ -103,12 +103,11 @@ ACE_SV_Semaphore_Complex::open (key_t k,
       // Get the value of the process counter. If it equals 0, then no
       // one has initialized the ACE_SV_Semaphore yet.
         
-      int semval;
+      int semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1);
   
-      if ((semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1)) < 0)
+      if (semval == -1)
 	return this->init ();
-  
-      if (semval == 0)
+      else if (semval == 0)
 	{
 	  // We should initialize by doing a SETALL, but that would
 	  // clear the adjust value that we set when we locked the

@@ -109,7 +109,11 @@
 // DJT modified 6/5/96 
 // ACE supports POSIX Pthreads.
 //#define ACE_HAS_DCETHREADS
+
 #define ACE_HAS_PTHREADS
+
+#define ACE_LACKS_RWLOCK_T
+
 // DJT 6/6/96 added
 // IEEE Std 1003.1c-1995, POSIX System Application Program Interface
 #define ACE_HAS_PTHREADS_1003_DOT_1C

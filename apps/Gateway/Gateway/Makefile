@@ -9,7 +9,7 @@
 #----------------------------------------------------------------------------
 
 BIN   	= gatewayd
-#LIB   	= libGateway.a
+LIB   	= libGateway.a
 SHLIB	= libGateway.so
 
 FILES	= Event_Channel \

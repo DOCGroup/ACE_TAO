@@ -121,26 +121,26 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::name_2_key");
   
-  if (name == 0 || !isalpha (*name))
+  if (name == 0)
     {
       errno = EINVAL;
       return ACE_INVALID_SEM_KEY;
     }
-  
-  // The key is the character value of the first LUSED chars from name
-  // placed in proto.
-
-  u_long proto = 0;
-
-  for (int i = 0; i < LUSED; ++i)
+  else
     {
-      if (*name == '\0')
-	break;
-      proto <<= 8;
-      proto |= *name++ & 0xff;
-    }
+      // Basically "hash" the values in the <name>.  This won't
+      // necessarily guarantee uniqueness of all keys.
 
-  return (key_t) proto;
+      u_long proto = 0;
+
+      for (int i = 0; name[i] != '\0'; ++i)
+	{
+	  proto <<= 8;
+	  proto |= *name++ & 0xff;
+	}
+
+      return (key_t) proto;
+    }
 }
 
 // Open or create a ACE_SV_Semaphore.  We return 1 if all is OK, else

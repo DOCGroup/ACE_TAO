@@ -696,6 +696,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  size = PTHREAD_STACK_MIN;
 #endif /* PTHREAD_STACK_MIN */
 
+#if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
 	if (::pthread_attr_setstacksize (&attr, size) != 0)
 	  {
 #if defined (ACE_HAS_SETKIND_NP)
@@ -706,6 +707,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	    return -1;
 	  }
       }
+#endif /* !ACE_LACKS_THREAD_STACK_SIZE */
 
 #if !defined (ACE_LACKS_THREAD_STACK_ADDR)
     if (stack != 0)
@@ -919,17 +921,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
   	{
   	  CWinThread *cwin_thread = 
-  	    ::AfxBeginThread (ACE_THR_C_FUNC (&ace_thread_adapter)),
+  	    ::AfxBeginThread ((AFX_THREADPROC) &ace_thread_adapter),
  			      thread_args, priority, 0, flags | THR_SUSPENDED);
  	  // Have to duplicate the handle because
  	  // CWinThread::~CWinThread() closes the original handle.
- 	  *thr_handle = ::DuplicateHandle (::GetCurrentProcess (), 
- 					   cwin_thread->m_hThread,
- 					   ::GetCurrentProcess (),
- 					   thr_handle,
- 					   0, 
- 					   TRUE,
- 					   DUPLICATE_SAME_ACCESS);
+ 	  (void) ::DuplicateHandle (::GetCurrentProcess (), 
+				    cwin_thread->m_hThread,
+				    ::GetCurrentProcess (),
+				    thr_handle,
+				    0, 
+				    TRUE,
+				    DUPLICATE_SAME_ACCESS);
  
   	  *thr_id = cwin_thread->m_nThreadID;
 
@@ -1115,7 +1117,11 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 
 int 
 ACE_OS::thr_keycreate (ACE_thread_key_t *key, 
+#if defined (ACE_HAS_THR_C_DEST)
+		       ACE_THR_C_DEST dest,
+#else
 		       ACE_THR_DEST dest,
+#endif /* ACE_HAS_THR_C_DEST */
 		       void *inst)
 {
 // ACE_TRACE ("ACE_OS::thr_keycreate");
@@ -1392,62 +1398,59 @@ int sys_nerr = ERRMAX + 1;
 
 #include /**/ <usrLib.h>   /* for ::sp() */
 
-// This global function can be used from the VxWorks shell to
-// pass arguments to a C main () function.
-// usage: -> spa main, "arg1", "arg2"
-// All arguments must be quoted, even numbers.
+// This global function can be used from the VxWorks shell to pass
+// arguments to a C main () function.  usage: -> spa main, "arg1",
+// "arg2" All arguments must be quoted, even numbers.
 int
 spa (FUNCPTR entry, ...)
 {
-   static const unsigned int MAX_ARGS = 10;
-   static char *argv[MAX_ARGS];
-   va_list pvar;
-   int argc;
+  static const unsigned int MAX_ARGS = 10;
+  static char *argv[MAX_ARGS];
+  va_list pvar;
+  int argc;
 
-   // Hardcode a program name because the real one isn't available
-   // through the VxWorks shell.
-   argv[0] = "spa ():t";
+  // Hardcode a program name because the real one isn't available
+  // through the VxWorks shell.
+  argv[0] = "spa ():t";
 
-   // Peel off arguments to spa () and put into argv.  va_arg ()
-   // isn't necessarily supposed to return 0 when done, though
-   // since the VxWorks shell uses a fixed number (10) of arguments,
-   // it might 0 the unused ones.
-   // This function could be used to increase that limit, but then
-   // it couldn't depend on the trailing 0.  So, the number of arguments
-   // would have to be passed.
-   va_start (pvar, entry);
-   for (argc = 1; argc <= MAX_ARGS; ++argc)
-     {
-       argv[argc] = va_arg (pvar, char *);
-       if (argv[argc] == 0)
-         break;
-     }
+  // Peel off arguments to spa () and put into argv.  va_arg () isn't
+  // necessarily supposed to return 0 when done, though since the
+  // VxWorks shell uses a fixed number (10) of arguments, it might 0
+  // the unused ones.  This function could be used to increase that
+  // limit, but then it couldn't depend on the trailing 0.  So, the
+  // number of arguments would have to be passed.
+  va_start (pvar, entry);
 
-   if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
-     {
-       // try to read another arg, and warn user if the limit was exceeded
-       if (va_arg (pvar, char *) != 0)
-         fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                  MAX_ARGS);
-     }
-   else
-     {
-       // fill unused argv slots with 0 to get rid of leftovers
-       // from previous invocations
-              for ( int i = argc; i <= MAX_ARGS; ++i)
-                {
-                  argv[i] = 0;
-                }
-     }
+  for (argc = 1; argc <= MAX_ARGS; ++argc)
+    {
+      argv[argc] = va_arg (pvar, char *);
 
-   int ret = ::sp (entry, argc, (int) argv, 0, 0, 0, 0, 0, 0, 0);
-   va_end (pvar);
+      if (argv[argc] == 0)
+	break;
+    }
 
-   // ::sp () returns the taskID on success:  return 0 instead
-   // if successful
-   return ret > 0 ? 0 : ret;
+  if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
+    {
+      // try to read another arg, and warn user if the limit was exceeded
+      if (va_arg (pvar, char *) != 0)
+	fprintf (stderr, "spa(): number of arguments limited to %d\n",
+		 MAX_ARGS);
+    }
+  else
+    {
+      // fill unused argv slots with 0 to get rid of leftovers
+      // from previous invocations
+      for (int i = argc; i <= MAX_ARGS; ++i)
+	argv[i] = 0;
+    }
+
+  int ret = ::sp (entry, argc, (int) argv, 0, 0, 0, 0, 0, 0, 0);
+  va_end (pvar);
+
+  // ::sp () returns the taskID on success: return 0 instead if
+  // successful
+  return ret > 0 ? 0 : ret;
 }
-
 #endif /* VXWORKS */
 
 #if !defined (ACE_HAS_SIGINFO_T)

@@ -347,7 +347,7 @@ ACE_Name_Options::ACE_Name_Options (void)
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     namespace_dir_  (ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR)),
     process_name_ (0),
-    database_ (0),
+    database_ (ACE_OS::strdup (ACE_DEFAULT_LOCALNAME)),
     base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
   ACE_TRACE ("ACE_Name_Options::ACE_Name_Options");

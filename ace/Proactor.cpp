@@ -245,14 +245,14 @@ ACE_Proactor::schedule_timer (ACE_Event_Handler *handler,
 #define ACE_TIMEOUT_OCCURRED 258
 
 int
-ACE_Proactor::handle_events (ACE_Time_Value *how_long)
+ACE_Proactor::handle_events (ACE_Time_Value *max_wait_time)
 {
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
   // called.
-  ACE_Countdown_Time countdown (how_long);
+  ACE_Countdown_Time countdown (max_wait_time);
 
-  how_long = timer_queue_->calculate_timeout (how_long);
+  max_wait_time = timer_queue_->calculate_timeout (max_wait_time);
 
   ACE_Overlapped_IO *overlapped = 0;
   u_long bytes_transferred = 0;
@@ -260,7 +260,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   int error = 0;
 #if defined (ACE_WIN32)
   ACE_HANDLE io_handle = ACE_INVALID_HANDLE;
-  int timeout = how_long == 0 ? INFINITE : how_long->msec ();
+  int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
 
   BOOL result = 0;
  

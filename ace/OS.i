@@ -743,9 +743,15 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   int result = -1;
 
 #if defined (ACE_HAS_SETKIND_NP)
+#if defined (ACE_HAS_DCETHREADS)
+  if (::pthread_mutexattr_create (&attributes) == 0
+      && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
+      && ::pthread_mutex_init (m, attributes) == 0)
+#else
   if (::pthread_mutexattr_init (&attributes) == 0
       && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
       && ::pthread_mutex_init (m, &attributes) == 0)
+#endif /* ACE_HAS_DCETHREADS */
 #else
     if (::pthread_mutexattr_init (&attributes) == 0
 #if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
@@ -1074,8 +1080,13 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   int result = -1;
 
 #if defined (ACE_HAS_SETKIND_NP)
+#if defined  (ACE_HAS_DCETHREADS)
+  if (::pthread_condattr_create (&attributes) == 0
+      && ::pthread_cond_init (cv, attributes) == 0
+#else
   if (::pthread_condattr_init (&attributes) == 0
       && ::pthread_cond_init (cv, &attributes) == 0
+#endif /* ACE_HAS_DCETHREADS */
 #if defined (ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP)
       && ::pthread_condattr_setkind_np (&attributes, type) == 0
 #endif /* ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
@@ -1275,7 +1286,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_WTHREADS)
-
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
@@ -1391,41 +1401,71 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_WTHREADS)
-  cv->waiters_++;
-  
-  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
-    return -1;
-  
-  DWORD result;
-  
+  // Handle the easy case first.
   if (timeout == 0)
-    // Wait forever.
-    result = ::WaitForSingleObject (cv->sema_, INFINITE);
-  else if (timeout->sec () == 0 && timeout->usec () == 0)
-    // Do a "poll".
-    result = ::WaitForSingleObject (cv->sema_, 0);
+    return ACE_OS::cond_wait (cv, external_mutex);
+
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
+  cv->waiters_++;
+
+  int result = 0;
+  int error = 0;
+  int msec_timeout;
+
+  if (timeout->sec () == 0 && timeout->usec () == 0)
+    msec_timeout = 0; // Do a "poll."
   else
     {
-      // Wait for upto <relative_time> number of milliseconds.  Note
-      // that we must convert between absolute time (which is passed
-      // as a parameter) and relative time (which is what
+      // Note that we must convert between absolute time (which is
+      // passed as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
       ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-      result = ::WaitForSingleObject (cv->sema_, relative_time.msec ());
+      msec_timeout = relative_time.msec ();
     }
   
-  ACE_OS::thread_mutex_lock (external_mutex);
-  
-  cv->waiters_--;
+  // We keep the lock held just long enough to increment the count of
+  // waiters by one.  Note that we can't keep it held across the call
+  // to WaitForSingleObject since that will deadlock other calls to
+  // ACE_OS::cond_signal().
+  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
+    return -1;
 
-  if (result == WAIT_OBJECT_0)
-    return 0;
-  else
+  // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+  result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+
+  if (result != WAIT_OBJECT_0)
+    // This is a hack, we need to find an appropriate mapping...
+    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+  else 
     {
-      errno = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-      // This is a hack, we need to find an appropriate mapping...
-      return -1;
+      // If we are broadcasting, then we need to be smarter about
+      // locking since there can now be multiple threadsd in the
+      // crtical section.  If we are signaling, however, we don't have
+      // to worry since there will just be 1 thread here.
+      if (cv->was_broadcast_)
+	{
+	  if (ACE_OS::thread_mutex_lock (cv->waiters_lock_) != -1)
+	    {
+	      // By making the waiter responsible for decrementing its count we
+	      // don't have to worry about having an internal mutex.  Thanks to
+	      // Karlheinz for recognizing this optimization.
+	      cv->waiters_--;
+	      // Release the signaler/broadcaster if we're the last waiter.	
+	      if (cv->waiters_ == 0)
+		::SetEvent (cv->waiters_done_);
+	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
+	    }
+	}
+      else
+	cv->waiters_--;
     }
+  // We must always regain the external mutex, even when errors
+  // occur because that's the guarantee that we give to our
+  // callers.
+  ACE_OS::thread_mutex_lock (external_mutex);
+  errno = error;
+  return result;
 #endif /* ACE_HAS_WTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -1439,29 +1479,58 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_wait");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_WTHREADS)
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
   cv->waiters_++;
-
-  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
-    return -1;
 
   int result = 0;
   int error = 0;
 
-  if (ACE_OS::sema_wait (&cv->sema_) != 0)
+  // We keep the lock held just long enough to increment the count of
+  // waiters by one.  Note that we can't keep it held across the call
+  // to ACE_OS::sema_wait() since that will deadlock other calls to
+  // ACE_OS::cond_signal().
+  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
+    return -1;
+
+  // Wait to be awakened by a ACE_OS::cond_signal() or
+  // ACE_OS::cond_broadcast().
+  result = ::WaitForSingleObject (cv->sema_, INFINITE);
+
+  if (result != WAIT_OBJECT_0)
+    // This is a hack, we need to find an appropriate mapping...
+    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+  else 
     {
-      result = -1;
-      error = errno;
+      // If we are broadcasting, then we need to be smarter about
+      // locking since there can now be multiple threadsd in the
+      // crtical section.  If we are signaling, however, we don't have
+      // to worry since there will just be 1 thread here.
+      if (cv->was_broadcast_)
+	{
+	  if (ACE_OS::thread_mutex_lock (cv->waiters_lock_) != -1)
+	    {
+	      // By making the waiter responsible for decrementing its count we
+	      // don't have to worry about having an internal mutex.  Thanks to
+	      // Karlheinz for recognizing this optimization.
+	      cv->waiters_--;
+	      // Release the signaler/broadcaster if we're the last waiter.	
+	      if (cv->waiters_ == 0)
+		::SetEvent (cv->waiters_done_);
+	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
+	    }
+	}
+      else
+	cv->waiters_--;
     }
-
-  // We must always regain the mutex, even when errors occur.
+  // We must always regain the external mutex, even when errors
+  // occur because that's the guarantee that we give to our
+  // callers.
   ACE_OS::thread_mutex_lock (external_mutex);
-
-  cv->waiters_--;
 
   // Reset errno in case mutex_lock() also fails...
   errno = error;
   return result;
-
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -3467,7 +3536,7 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm), 
 				       ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
-#if defined (ACE_HAS_IRIX62_THREADS)
+#if defined (ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
  			               ace_result_),int, -1);
 #else
@@ -3592,7 +3661,9 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 {
   // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_THREAD_SELF)
+#if defined (ACE_HAS_DCETHREADS)
+  self = ::pthread_self ();
+#elif defined (ACE_HAS_THREAD_SELF)
   self = ::thread_self ();
 #elif defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_SETKIND_NP)
   self = ::pthread_self ();
@@ -3662,8 +3733,9 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
   struct sched_param param;
   int result;
+  int policy = 0;
 
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param), result), int, -1, result);
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, &policy, &param), result), int, -1, result);
   prio = param.sched_priority;
   return result;
   ACE_NOTSUP_RETURN (-1);

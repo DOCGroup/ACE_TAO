@@ -29,7 +29,10 @@ static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_
 static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ace_sig_handlers_dispatch);
 #else
 static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
+
+#if !defined (HPUX)
 static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ACE_Sig_Handlers::dispatch);
+#endif /* HPUX */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 #if defined (ACE_MT_SAFE)
@@ -331,9 +334,9 @@ ACE_Sig_Adapter::handle_signal (int signum,
 // ----------------------------------------
 // The following classes are local to this file.
 
-// HPUX sucks big time!
+// There are bugs with HP/UX's C++ compiler that prevents this stuff
+// from compiling...
 #if !defined (HPUX)
-// This needs to be fixed...
 #define ACE_MAX_SIGNAL_HANDLERS size_t (20)
 
 // Keeps track of the id that uniquely identifies each registered
