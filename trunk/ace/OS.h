@@ -1913,6 +1913,11 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 
 # if defined (ACE_HAS_POSIX_SEM)
 #   include /**/ <semaphore.h>
+
+#   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
+#     define SEM_FAILED ((sem_t *) 0)
+#   endif  /* !SEM_FAILED */
+
 typedef struct
 {
   sem_t *sema_;
