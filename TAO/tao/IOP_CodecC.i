@@ -26,142 +26,24 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::Codec::InvalidTypeForEncoding>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::Codec::InvalidTypeForEncoding>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::Codec::FormatMismatch>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::Codec::FormatMismatch>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::Codec::TypeMismatch>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::Codec::TypeMismatch>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_IOP_CODEC___CI_)
 #define _IOP_CODEC___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::CodecFactory::UnknownEncoding>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<IOP::CodecFactory::UnknownEncoding>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_IOP_CODECFACTORY___CI_)
 #define _IOP_CODECFACTORY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (

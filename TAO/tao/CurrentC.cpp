@@ -84,7 +84,7 @@ TAO::Objref_Traits<CORBA::Current>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -114,14 +114,14 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 CORBA::Boolean
 CORBA::Current::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (
@@ -165,16 +165,16 @@ static const CORBA::Long _oc_CORBA_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4375), 
-  ACE_NTOHL (0x7272656e), 
-  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4375),
+  ACE_NTOHL (0x7272656e),
+  ACE_NTOHL (0x743a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/Current:1.0
     8,
-  ACE_NTOHL (0x43757272), 
+  ACE_NTOHL (0x43757272),
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -202,7 +202,7 @@ namespace CORBA
         CORBA::Current,
         TAO::Objref_Traits<CORBA::Current>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::Current,
@@ -216,12 +216,11 @@ namespace CORBA
         CORBA::Current, \
         TAO::Objref_Traits<CORBA::Current> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Current, \
         TAO::Objref_Traits<CORBA::Current> \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

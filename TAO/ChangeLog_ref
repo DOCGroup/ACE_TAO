@@ -1,3 +1,16 @@
+Mon Sep  1 11:08:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CurrentC.h: Removed inclusion of Object_T.h.
+	
+	* tao/CurrentC.cpp (_is_a): Fixed a unused variable warning. 
+
+	* tao/Object_T.cpp: #include'd Stub.h
+
+	* tao/Invocation_Base.cpp: Rearranged initialization list to
+	  prevent warnings from gcc.
+
+	* tao/IOP_CodecC.*: Regenerated the handcrafted files. 
+
 Mon Sep  1 10:43:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface): 

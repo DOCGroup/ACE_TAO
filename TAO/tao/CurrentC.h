@@ -39,7 +39,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_T.h"
 #include "tao/Objref_VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -65,7 +64,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
@@ -78,22 +77,22 @@ namespace TAO
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:601
 
 #if !defined (_CORBA_CURRENT__VAR_OUT_CH_)
 #define _CORBA_CURRENT__VAR_OUT_CH_
-  
+
   class Current;
   typedef Current *Current_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         Current
       >
     Current_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Current
@@ -101,60 +100,60 @@ namespace CORBA
     Current_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_CURRENT_CH_)
 #define _CORBA_CURRENT_CH_
-  
+
   class TAO_Export Current
     : public virtual CORBA::Object
   {
   public:
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
-    
+
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
-    
+
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Current_ptr _nil (void)
       {
         return (Current_ptr)0;
       }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:185
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     Current (void);
     virtual ~Current (void);
-  
+
   private:
     Current (const Current &);
     void operator= (const Current &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
 
 // TAO_IDL - Generated from
@@ -197,4 +196,3 @@ namespace TAO
 
 #include "ace/post.h"
 #endif /* ifndef */
-

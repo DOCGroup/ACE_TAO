@@ -50,3 +50,5 @@
 . Different versions of GIOP
 
 . What about AMH
+
+. local interfaces and the generation of Arg_Traits
