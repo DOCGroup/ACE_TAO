@@ -14,6 +14,10 @@
 # define VXWORKS
 #endif /* ! VXWORKS */
 
+#if ! defined (ACE_VXWORKS)
+# define ACE_VXWORKS 0x551
+#endif /* ! ACE_VXWORKS */
+
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -84,6 +88,9 @@
 
   // Diab doesn't support VxWorks' iostream libraries.
 # define ACE_LACKS_IOSTREAM_TOTALLY
+# define ACE_LACKS_ACE_IOSTREAM
+
+# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 # error unsupported compiler on VxWorks
@@ -95,7 +102,6 @@
 
 // OS-specific configuration
 
-#define ACE_LACKS_REALPATH
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_NONCONST_READV
 #define ACE_LACKS_UNIX_SYSLOG
