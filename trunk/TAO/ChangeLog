@@ -1,3 +1,9 @@
+Mon Apr 14 11:52:30 2003  Dave Smith  <dts@prismtechnologies.com>
+
+	* orbsvcs/PSS/PSDL_Datastore.cpp:
+	  For HPUX11, replaced the call to the ACE_NEW_RETURN macro with
+	  its expansion, as the call seems to confuse the compiler 
+
 2003-04-14    <dts@axwell>
 
 	* orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
