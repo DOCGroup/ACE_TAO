@@ -2,7 +2,8 @@ Fri Mar  7 14:17:10 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Param_Test/svc.conf.xml: I neglected add the change for
           setting the native wchar codeset id to the xml form of the
-          service config. This should address the errors with the wstring data.
+          service config. This should address the errors with the wstring
+	  data.
 
 Fri Mar  7 10:58:32 2003  Ossama Othman  <ossama@uci.edu>
 
