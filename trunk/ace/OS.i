@@ -5147,7 +5147,7 @@ ACE_OS::socket (int domain,
 
   return ACE_OS::socket (domain,
 			 type,
-			 proto),
+			 proto);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
