@@ -975,7 +975,7 @@ ACE_WString::operator+= (const ACE_WString &s)
 ACE_WString &
 ACE_WString::operator += (const ACE_WSTRING_TYPE *s)
 {
-  ACE_TRACE ("ACE_WString::operator+=");
+  ACE_TRACE ("ACE_WString::operator +=");
 
   size_t len = ACE_WString::strlen(s);
 
