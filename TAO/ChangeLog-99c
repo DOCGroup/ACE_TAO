@@ -1,3 +1,9 @@
+Fri Feb 12 17:30:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+          I missed a couple.
+
 Fri Feb 12 17:12:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
