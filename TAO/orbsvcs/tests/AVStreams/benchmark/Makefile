@@ -1,12 +1,12 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Top-level Makefile for Benchmarking of AVStreams of TAO.
+#       Top-level Makefile for Benchmarking of AVStreams of TAO.
 #
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 LIBS     += -lorbsvcs -lTAO
@@ -23,7 +23,7 @@ endif
 
 FILES = client server child child_process
 DEFS    = $(addsuffix .h,$(FILES))
-LSRC	= $(addsuffix .cpp,$(FILES))
+LSRC    = $(addsuffix .cpp,$(FILES))
 
 BIN2 = server client child_process
 
@@ -35,7 +35,7 @@ ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
 endif # AV
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -48,7 +48,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
+            -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 
 server:$(addprefix $(VDIR),$(SERVER_OBJS))
@@ -60,6 +61,9 @@ client:$(addprefix $(VDIR),$(CLIENT_OBJS))
 child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
