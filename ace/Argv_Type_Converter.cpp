@@ -185,11 +185,17 @@ ACE_Argv_Type_Converter::cleanup (void)
 {
   for (int i = this->saved_argc_; i < this->before_pass_argc_; ++i)
     {
-      delete [] this->char_argv_[i];
-      delete [] this->wchar_argv_[i];
-
-      this->char_argv_[i] = 0;
-      this->wchar_argv_[i] = 0;
+      //  Check whether it's ours to delete.
+      if (original_type_ == 1) 
+        {
+          delete [] this->char_argv_[i];
+          this->char_argv_[i] = 0;
+        }
+      else 
+        {
+          delete [] this->wchar_argv_[i];
+          this->wchar_argv_[i] = 0;
+        }
     }
 
   this->before_pass_argc_ = this->saved_argc_;
