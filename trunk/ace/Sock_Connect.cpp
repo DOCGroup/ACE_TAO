@@ -41,6 +41,10 @@ extern "C" {
 #include /**/ <Iphlpapi.h>
 #endif  // ACE_HAS_WINCE
 
+#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
+# include "ace/OS_NS_stdio.h"
+#endif
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_HAS_THREADS)
 #    include "ace/Object_Manager.h"
