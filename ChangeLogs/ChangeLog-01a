@@ -1054,7 +1054,7 @@ Sat Jun  2 13:05:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
           accept() fails.  A check is done to make sure address reuse is
           set. So this fix will only work in case where it is set.  Thanks
           to Dominic Hughes <dominic@aersoft.ie> for this fix and to Irfan
-          for recognizing that it ought to be added to ACE_Accpt_Strategy.
+          for recognizing that it ought to be added to ACE_Accept_Strategy.
 
         * ace/Strategies_T.cpp (open): Fixed the strategy acceptor so that it
           uses non-blocking semantics to handle certain failure cases
