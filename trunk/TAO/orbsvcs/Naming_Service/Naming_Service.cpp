@@ -91,7 +91,7 @@ TAO_Naming_Service::parse_args (int argc,
             for (i = count_argv; i != argc; ++i)
               argv [i] = argv [i+2];
           }
-          
+
           // Decrement the value of this->argc_ to reflect the removal
           // of '-t' option.
           argc = argc-2;
@@ -111,21 +111,19 @@ TAO_Naming_Service::parse_args (int argc,
 int
 TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 {
-  int result;
-
   if (time_ == 0)
     {
-      result = this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
   else
     {
       ACE_Time_Value tv (time_);
-      result = this->orb_->run (tv, ACE_TRY_ENV);
+      this->orb_->run (tv, ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
 
-  return result;
+  return 0;
 }
 
 // Destructor.

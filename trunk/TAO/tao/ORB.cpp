@@ -227,41 +227,41 @@ CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
   this->orb_core_ = 0;
 }
 
-int
+void
 CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->run (0, ACE_TRY_ENV);
+  this->run (0, ACE_TRY_ENV);
 }
 
-int
+void
 CORBA_ORB::run (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->run (&tv, ACE_TRY_ENV);
+  this->run (&tv, ACE_TRY_ENV);
 }
 
-int
+void
 CORBA_ORB::run (ACE_Time_Value *tv,
                 CORBA::Environment &ACE_TRY_ENV)
 {
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  return this->orb_core ()->run (tv, 0, ACE_TRY_ENV);
+  this->orb_core ()->run (tv, 0, ACE_TRY_ENV);
 }
 
-int
+void
 CORBA_ORB::perform_work (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->perform_work (0, ACE_TRY_ENV);
+  this->perform_work (0, ACE_TRY_ENV);
 }
 
-int
+void
 CORBA_ORB::perform_work (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->perform_work (&tv, ACE_TRY_ENV);
+  this->perform_work (&tv, ACE_TRY_ENV);
 }
 
-int
+void
 CORBA_ORB::perform_work (ACE_Time_Value *tv,
                          CORBA::Environment &ACE_TRY_ENV)
 {
@@ -269,7 +269,7 @@ CORBA_ORB::perform_work (ACE_Time_Value *tv,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  return this->orb_core ()->run (tv, 1, ACE_TRY_ENV);
+  this->orb_core ()->run (tv, 1, ACE_TRY_ENV);
 }
 
 CORBA::Boolean

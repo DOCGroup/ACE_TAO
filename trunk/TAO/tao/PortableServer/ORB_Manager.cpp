@@ -273,14 +273,9 @@ TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV,
   this->poa_manager_->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  int status = this->orb_->run (tv, ACE_TRY_ENV);
+  this->orb_->run (tv, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
-                       ACE_TEXT ("run")),
-                      -1);
   return 0;
 }
 
@@ -291,14 +286,9 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv,
   this->poa_manager_->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  int status = this->orb_->run (tv, ACE_TRY_ENV);
+  this->orb_->run (tv, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
-                       ACE_TEXT ("run")),
-                      -1);
   return 0;
 }
 
@@ -323,14 +313,9 @@ TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV)
   this->poa_manager_->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  int status = this->orb_->run (ACE_TRY_ENV);
+  this->orb_->run (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
-                       ACE_TEXT ("run")),
-                      -1);
   return 0;
 }
 

@@ -22,6 +22,7 @@ public:
     ACE_THROW_SPEC (());
 
   void request (Test::TimeStamp,
+                const Test::Payload &,
                 CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

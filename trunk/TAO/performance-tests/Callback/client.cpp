@@ -149,20 +149,25 @@ main (int argc, char *argv [])
       Task task (server.in (), iterations);
       task.activate ();
 
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
       while (!callback_i.done () || !task.done ())
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+      ACE_hrtime_t end = ACE_OS::gethrtime ();
 
       ACE_Thread_Manager::instance ()->wait ();
 
       // Calibrate the high resolution timer *before* starting the
       // test.
+      ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
+
       ACE_Sample_History &history =
         callback_i.sample_history ();
       if (do_dump_history)
@@ -174,12 +179,19 @@ main (int argc, char *argv [])
       history.collect_basic_stats (stats);
       stats.dump_results ("Latency", gsf);
 
+      ACE_hrtime_t elapsed_microseconds = (end - start) / gsf;
+      double elapsed_seconds =
+        ACE_CU64_TO_CU32(elapsed_microseconds) / 1000000.0;
+      double throughput =
+        double(iterations) / elapsed_seconds;
+
+      ACE_DEBUG ((LM_DEBUG, "Throughtput: %f\n", throughput));
+
       server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::ObjectId_var id;
-
-      id = root_poa->servant_to_id (&callback_i, ACE_TRY_ENV);
+      PortableServer::ObjectId_var id =
+        root_poa->servant_to_id (&callback_i, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       root_poa->deactivate_object (id.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -251,12 +263,13 @@ Task::done (void)
 int
 Task::svc (void)
 {
+  Test::Payload payload(1024); payload.length(1024);
   ACE_TRY_NEW_ENV
     {
       for (;;)
         {
           Test::TimeStamp creation = ACE_OS::gethrtime ();
-          this->server_->request (creation, ACE_TRY_ENV);
+          this->server_->request (creation, payload, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // ACE_Time_Value tv (0, 5000);

@@ -14,7 +14,7 @@ write_ior_to_file (const char *ior)
 
   if (output_file == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "Cannot open output files for writing IOR: %s\n",
                          ior_output_file),
                         -1);
@@ -42,9 +42,9 @@ main (int argc, char *argv[])
 {
 	ACE_TRY_NEW_ENV
 	  {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            "", 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            "",
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), 
+        PortableServer::POA::_narrow (poa_object.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -65,12 +65,12 @@ main (int argc, char *argv[])
 
       inventory_i servant_impl;
 
-      warehouse::inventory_var servant = 
+      warehouse::inventory_var servant =
         servant_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (servant.in (), 
+        orb->object_to_string (servant.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -78,9 +78,9 @@ main (int argc, char *argv[])
 
       if (write_result != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             "%p\n", 
-                             "write_ior_to_file"), 
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "write_ior_to_file"),
                             -1);
         }
 
@@ -88,13 +88,8 @@ main (int argc, char *argv[])
                   "IOR is: <%s>\n",
                   ior.in ()));
 
-      if (orb->run () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             "%p\n", 
-                             "CORBA::ORB::run"), 
-                            -1);
-        }
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       root_poa->destroy (1,
                          1,
@@ -111,4 +106,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

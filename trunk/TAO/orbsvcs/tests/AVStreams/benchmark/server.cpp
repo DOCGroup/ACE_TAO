@@ -36,10 +36,10 @@ Server::init (int argc, char** argv, CORBA::Environment& ACE_TRY_ENV)
         = this->poa_->the_POAManager ();
 
       mgr->activate ();
-      
-      int result = SERVER_GLOBALS::instance ()->parse_args (argc, 
+
+      int result = SERVER_GLOBALS::instance ()->parse_args (argc,
                                                             argv);
-      
+
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
 
@@ -49,7 +49,7 @@ Server::init (int argc, char** argv, CORBA::Environment& ACE_TRY_ENV)
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
-      
+
       switch (SERVER_GLOBALS::instance ()->strategy_)
         {
         case REACTIVE_STRATEGY:
@@ -68,7 +68,7 @@ Server::init (int argc, char** argv, CORBA::Environment& ACE_TRY_ENV)
                             -1);
         }
 
-      
+
       // Register the mmdevice with the naming service.
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
@@ -132,15 +132,15 @@ main (int argc, char **argv)
 
   //TAO_debug_level++;
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-   
+
   CORBA::Object_var obj
     = orb->resolve_initial_references ("RootPOA");
-  
+
   PortableServer::POA_var poa
     = PortableServer::POA::_narrow (obj.in ());
-  
+
   Server server (orb.in (), poa.in ());
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -149,7 +149,7 @@ main (int argc, char **argv)
 
       if (server.init (argc, argv, ACE_TRY_ENV) == -1)
         return 1;
-      
+
       server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

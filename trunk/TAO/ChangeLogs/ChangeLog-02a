@@ -1,3 +1,122 @@
+Tue Feb 13 09:17:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          The spec says that ORB::run() and ORB::perform_work() return
+          void.  If there are errors an exception is raised.  Having both
+          exceptions and error codes only results in confusing and broken
+          code.
+
+        * tao/PortableServer/ORB_Manager.cpp:
+        * examples/Borland/ORBThread.cpp:
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_AMI/server.cpp:
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Buffered_Oneways/server.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * examples/Callback_Quoter/Supplier_i.cpp:
+        * examples/Event_Comm/Consumer_Handler.cpp:
+        * examples/POA/Adapter_Activator/server.cpp:
+        * examples/POA/DSI/server.cpp:
+        * examples/POA/Default_Servant/server.cpp:
+        * examples/POA/Explicit_Activation/server.cpp:
+        * examples/POA/Forwarding/server.cpp:
+        * examples/POA/Loader/Server_Manager.cpp:
+        * examples/POA/On_Demand_Activation/server.cpp:
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp:
+        * examples/POA/Reference_Counted_Servant/server.cpp:
+        * examples/POA/TIE/server.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * orbsvcs/Logging_Service/Logging_Service.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.cpp:
+        * orbsvcs/examples/Security/Send_File/server.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/Event/Performance/Latency.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+        * orbsvcs/tests/ior_corbaname/server.cpp:
+        * performance-tests/Callback/Callback_i.cpp:
+        * performance-tests/Callback/Callback_i.h:
+        * performance-tests/Callback/Server_i.cpp:
+        * performance-tests/Callback/Server_i.h:
+        * performance-tests/Callback/callback.idl:
+        * performance-tests/Callback/client.cpp:
+        * performance-tests/Latency/client.conf:
+        * performance-tests/Latency/st_client.conf:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+        * performance-tests/Thruput/TAO/server.cpp:
+        * tests/AMI/server.cpp:
+        * tests/AMI_Timeouts/client.cpp:
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/BiDirectional/client.cpp:
+        * tests/BiDirectional_NestedUpcall/server.cpp:
+        * tests/DSI_Gateway/gateway.cpp:
+        * tests/DSI_Gateway/server.cpp:
+        * tests/Faults/middle.cpp:
+        * tests/Faults/ping.cpp:
+        * tests/Faults/pong.cpp:
+        * tests/Faults/server.cpp:
+        * tests/Forwarding/server.cpp:
+        * tests/InterOp-Naming/Server_i.cpp:
+        * tests/Leader_Followers/client.cpp:
+        * tests/Leader_Followers/server.cpp:
+        * tests/LongUpcalls/AMI_Manager.cpp:
+        * tests/LongUpcalls/ami_client.cpp:
+        * tests/LongUpcalls/ami_server.cpp:
+        * tests/LongUpcalls/blocking_server.cpp:
+        * tests/MProfile/server.cpp:
+        * tests/MProfile_Forwarding/Manager.cpp:
+        * tests/MProfile_Forwarding/server.cpp:
+        * tests/MT_Client/server.cpp:
+        * tests/MT_Server/server.cpp:
+        * tests/Native_Exceptions/server.cpp:
+        * tests/NestedUpcall/Simple/server.cpp:
+        * tests/Nested_Event_Loop/server.cpp:
+        * tests/OctetSeq/server.cpp:
+        * tests/Param_Test/server.cpp:
+        * tests/Single_Read/server.cpp:
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Strategies/server.cpp:
+        * tests/Timed_Buffered_Oneways/server.cpp:
+        * tests/Timeout/client.cpp:
+        * tests/Timeout/server.cpp:
+        * tests/ior_corbaloc/server.cpp:
+          Don't check for return code from ORB::run()
+
+        * tests/ior_corbaloc/Makefile:
+          Reorder libraries, -lTAO_CosNaming should appear *before*
+          -lTAO.
+
 Tue Feb 13 09:16:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Forwarder.cpp:

@@ -66,7 +66,8 @@ send_echo (CORBA::ORB_ptr orb,
       // Sleep so the server can send the reply...
       ACE_Time_Value tv (max_timeout / 1000,
                          (max_timeout % 1000) * 1000);
-      orb->run (tv);
+      orb->run (tv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
 }

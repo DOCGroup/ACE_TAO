@@ -439,8 +439,8 @@ Test_ECG::run (int argc, char* argv[])
 
       if (this->rmt_name_ != 0)
         {
-          if (orb->run (&tv) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+          orb->run (&tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
       ACE_DEBUG ((LM_DEBUG, "starting....\n"));
@@ -472,8 +472,8 @@ Test_ECG::run (int argc, char* argv[])
       if (this->rmt_name_ != 0)
         {
           tv.set (5, 0);
-          if (orb->run (&tv) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+          orb->run (&tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           RtecEventChannelAdmin::EventChannel_var remote_ec =
             this->get_ec (naming_context.in (),
@@ -508,8 +508,8 @@ Test_ECG::run (int argc, char* argv[])
           ACE_DEBUG ((LM_DEBUG, "connected proxy\n"));
 
           tv.set (5, 0);
-          if (orb->run (&tv) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+          orb->run (&tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           RtecEventChannelAdmin::Observer_ptr observer =
             this->ecg_._this (ACE_TRY_ENV);
@@ -560,8 +560,8 @@ Test_ECG::run (int argc, char* argv[])
       ec_impl.activate ();
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      if (orb->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->test_stop_ = ACE_OS::gethrtime ();
 
@@ -630,9 +630,8 @@ Test_ECG::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
-      if (orb->run (&tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
-
+      orb->run (&tv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {

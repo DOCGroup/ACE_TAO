@@ -239,10 +239,18 @@ Manager::set_properties (CORBA::Environment &ACE_TRY_ENV)
 int
 Manager::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->orb_->run (ACE_TRY_ENV) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Error in run \n"),
-                       -1);
+  ACE_TRY
+    {
+      this->orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Error in run \n"),
+                        -1);
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
