@@ -1587,7 +1587,7 @@ Tue Nov 23 17:44:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/PollableC.cpp:
         * tao/Object.cpp:
           Changed code around calls to
-          TAO_GIOP_Invoccation::prepare_header(). It is part
+          TAO_GIOP_Invocation::prepare_header(). It is part
           of the changes relating to the request header required
           by reliable oneways. I had overlooked these calls.
           Thanks to Irfan for uncovering the tip of this iceberg.
