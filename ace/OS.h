@@ -41,7 +41,7 @@
   // An example is a reinterpret cast to a local pointer variable in a
   // const member function.
 # define ACE_CAST_CONST const
-#endif
+#endif /* ACE_CAST_CONST */
 
 // Deal with MSVC++ insanity for CORBA...
 #if defined (ACE_HAS_BROKEN_NAMESPACES)
@@ -317,7 +317,7 @@
 #else
 #define ASYS_TCHAR char
 #define ASYS_TEXT(STRING)   STRING
-#endif
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
@@ -406,7 +406,7 @@ private:
 #define ACE_NOTREACHED(a)
 #else
 #define ACE_NOTREACHED(a) a
-#endif
+#endif /* defined (__sgi) || defined (ghs) || defined (DEC_CXX) */
 
 #if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
 // It just evaporated ;-) Not pleasant.
@@ -3106,7 +3106,7 @@ extern int t_errno;
 #if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
 #if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 extern "C" {
-#endif
+#endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
 #if defined (ACE_HAS_TIUSER_H)
 #include /**/ <tiuser.h>
 #else
