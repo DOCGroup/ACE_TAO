@@ -121,7 +121,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // update the deployment plan IDL data structure.
       traverse_package (pc, plan, ref_map, primary_ref_map);
 
-      Deployment::DnC_Dump::dump (plan);
+      //Deployment::DnC_Dump::dump (plan);
 
       // Pass the parsed plan to the Execution Manager to start the
       // Deployment Process.
