@@ -22,7 +22,6 @@ ACE_Event_Handler_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
   return 0;
 }
 
-
 int
 ACE_Event_Handler_Handle_Timeout_Upcall::cancellation (TIMER_QUEUE &timer_queue,
 						       ACE_Event_Handler *handler)
