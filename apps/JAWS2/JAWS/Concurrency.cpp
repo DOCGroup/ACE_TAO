@@ -75,7 +75,7 @@ JAWS_Concurrency_Base::svc (void)
       return -1;
     }
 
-  db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+  db = dynamic_cast<JAWS_Data_Block *> (mb);
 
   this->svc_loop (db);
 

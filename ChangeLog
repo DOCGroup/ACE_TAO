@@ -21,6 +21,23 @@ Thu Jan 20 18:18:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/RMCast/RMCast_IO_UDP.cpp:
 	* ace/RMCast/RMCast_Partial_Message.cpp:
 	* ace/RMCast/RMCast_Reassembly.cpp:
+	* apps/JAWS/server/IO.cpp:
+	* apps/JAWS/server/JAWS_Pipeline_Handler.cpp:
+	* apps/JAWS2/HTTP_10_Parse.cpp:
+	* apps/JAWS2/HTTP_10_Write.cpp:
+	* apps/JAWS2/JAWS/Assoc_Array.cpp:
+	* apps/JAWS2/JAWS/Concurrency.cpp:
+	* apps/JAWS2/JAWS/IO.cpp:
+	* apps/JAWS2/JAWS/Pipeline_Tasks.cpp:
+	* apps/JAWS3/http/HTTP_States.h:
+	* apps/JAWS3/jaws3/Asynch_IO.cpp:
+	* apps/drwho/CM_Client.cpp:
+	* apps/drwho/CM_Server.cpp:
+	* apps/drwho/server.cpp:
+	* apps/gperf/src/Hash_Table.cpp:
+	* apps/gperf/src/Key_List.cpp:
+	* apps/gperf/src/List_Node.cpp:
+	* apps/mkcsregdb/mkcsregdb.cpp:
 	* examples/APG/Config/HA_Status.cpp:
 	* examples/APG/Logging/Callback-2.h:
 	* examples/APG/Misc_IPC/UDP_Broadcast.cpp:

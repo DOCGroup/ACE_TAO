@@ -69,7 +69,7 @@ List_Node::List_Node (char *k, int len)
   : link (0),
     next (0),
     key (k),
-    rest (option[TYPE] ? k + len + 1 : ACE_const_cast(char*, "")),
+    rest (option[TYPE] ? k + len + 1 : const_cast<char*> ("")),
     length (len),
     slot (0)
 {
