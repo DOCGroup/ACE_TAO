@@ -483,7 +483,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
           
           if (adms)
           {
-            mq = new ACE_ES_QUEUE (*adms);
+            mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*adms);
           }
 
         #elif defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
@@ -492,7 +492,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
 
           if (alms)
           {
-            mq = new ACE_ES_QUEUE (*alms);
+            mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*alms);
           }
 
         #else

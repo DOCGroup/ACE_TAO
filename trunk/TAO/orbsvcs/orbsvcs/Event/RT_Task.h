@@ -79,17 +79,7 @@ public:
 // ************************************************************
 
 typedef ACE_Task<ACE_SYNCH> ACE_ES_TASK;
-
-// quick hack to test dynamic queue performance (to be replaced soon)
-#if defined (TAO_USES_STRATEGY_SCHEDULER)
-  #if defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_EDF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
-    typedef ACE_Dynamic_Message_Queue<ACE_SYNCH> ACE_ES_QUEUE;
-  #else
-    typedef ACE_Message_Queue<ACE_SYNCH> ACE_ES_QUEUE;
-  #endif
-#else
-  typedef ACE_Message_Queue<ACE_SYNCH> ACE_ES_QUEUE;
-#endif
+typedef ACE_Message_Queue<ACE_SYNCH> ACE_ES_QUEUE;
 
 class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
 {
