@@ -1,3 +1,21 @@
+Mon Aug  4 17:03:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Bound_Ptr.i:
+          Added #include of Guard_T.h.
+
+        * apps/mkcsregdb/mkcsregdb.cpp:
+          Added #include of Log_Msg.h.
+
+        * examples/Export/dll.h:
+          Added #include of Null_Mutex.h.
+
+        * examples/Reactor/Proactor/post_completions.cpp:
+          Added #include of Thread_Mutex.h and changed ACE_Thread_Mutex to
+          ACE_SYNCH_MUTEX.
+
+        * examples/Smart_Pointers/Gadget_Part.h.
+          Added #include Synch_Traits.h and Thread_Mutex.h.
+
 Mon Aug  4 13:56:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Synch_T.h:
