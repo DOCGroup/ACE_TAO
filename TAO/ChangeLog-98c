@@ -1,3 +1,12 @@
+1998-11-22  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+	  Changed ACE_NEW_RETURN to ACE_NEW_THROW_RETURN in order to
+	  support exceptions
+
+	* orbsvcs/tests/Concurrency/test.basic: 
+	  Changed the exception to reflect new exception type
+	
 Sat Nov 21 19:30:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/{client,server}.cpp: Added
