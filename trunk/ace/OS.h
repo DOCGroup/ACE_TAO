@@ -3102,27 +3102,6 @@ private:
 // depending on whether ANSI/ISO exception handling semantics are
 // being used). 
 
-#if 0
-#define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
-     else if (ACE_LOG_MSG->op_status () == -1) { \
-     int ace_error = ACE_LOG_MSG->errnum (); \
-     delete POINTER; POINTER = 0; \
-     ACE_LOG_MSG->op_status (-1); \
-     errno = ace_error; return; \
-   } } while (0)
-#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-     else if (ACE_LOG_MSG->op_status () == -1) { \
-     int ace_error = ACE_LOG_MSG->errnum (); \
-     delete POINTER; POINTER = 0; \
-     ACE_LOG_MSG->op_status (-1); \
-     errno = ace_error; return RET_VAL; \
-   } } while (0)
-#endif /* 0 */
-
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \

@@ -254,10 +254,14 @@ class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 public:
   // = Intialization and termination methods.
 
-  ACE_Process_Strategy (int n_processes = 1);
+  ACE_Process_Strategy (size_t n_processes = 1,
+			ACE_Event_Handler *acceptor = 0,
+			ACE_Reactor * = 0);
   // Initialize the strategy.
 
-  virtual int open (int n_processes = 1);
+  virtual int open (size_t n_processes = 1,
+		    ACE_Event_Handler *acceptor = 0,
+		    ACE_Reactor * = 0);
   // Initialize the strategy.
   
   virtual ~ACE_Process_Strategy (void);
@@ -279,8 +283,18 @@ public:
 protected:
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> inherited;
 
-  int n_processes_;
+  size_t n_processes_;
   // Number of processes to spawn.
+  
+  ACE_Event_Handler *acceptor_;
+  // This is the <Acceptor> in the parent is listening on.  We need to
+  // make sure that we remove it from the Reactor and close it down in
+  // the child.
+
+  ACE_Reactor *reactor_;
+  // This is the <Reactor> the child is using in conjunction with the
+  // <Acceptor>.  We need to remove the <Acceptor> from this <Reactor>
+  // in the child.
 };
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>

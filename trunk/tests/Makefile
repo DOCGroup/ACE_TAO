@@ -22,6 +22,7 @@ BIN = 	Barrier_Test \
 	Mutex_Test \
 	Naming_Test \
 	Process_Mutex_Test \
+	Process_Strategy_Test \
 	Priority_Buffer_Test \
 	Priority_Task_Test \
 	Pipe_Test \

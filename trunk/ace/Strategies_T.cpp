@@ -178,7 +178,7 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
-						    void *arg)
+							     void *arg)
 {
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler");
   // Delegate control to the application-specific service
@@ -249,7 +249,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy (void)
 
 template <class SVC_HANDLER> int
 ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
-					       void *arg)
+							void *arg)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler");
   // Call up to our parent to do the SVC_HANDLER initialization.
@@ -327,7 +327,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (voi
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
 
   if (this->acceptor_.close () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "close"));
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> void
@@ -382,19 +382,25 @@ ACE_Process_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER> int
-ACE_Process_Strategy<SVC_HANDLER>::open (int n_processes)
+ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
+					 ACE_Event_Handler *acceptor,
+					 ACE_Reactor *reactor)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::open");
   this->n_processes_ = n_processes;
+  this->acceptor_ = acceptor;
+  this->reactor_ = reactor;
 
   return 0;
 }
 
 template <class SVC_HANDLER> 
-ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (int n_processes)
+ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
+							 ACE_Event_Handler *acceptor,
+							 ACE_Reactor *reactor)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
-  this->open (n_processes);
+  this->open (n_processes, acceptor, reactor);
 }
 
 template <class SVC_HANDLER> 
@@ -408,17 +414,29 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 							 void *arg)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler");
-  switch (ACE_OS::fork ())
+
+  switch (ACE_OS::fork ("child"))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fork"), -1);
       /* NOTREACHED */
     case 0: // In child process.
+
+      // Close down the SOCK_Acceptor's handle since we don't need to
+      // keep it open.
+      if (this->acceptor_ != 0)
+	// Ignore the return value here...
+	(void) this->reactor_->remove_handler (this->acceptor_, 
+					       ACE_Event_Handler::ACCEPT_MASK);
+
       // Call up to our ancestor in the inheritance to do the
       // SVC_HANDLER initialization.  
       return this->inherited::activate_svc_handler (svc_handler, arg);
       /* NOTREACHED */
     default: // In parent process.
+      // We need to close down the <SVC_HANDLER> here because it's
+      // running in the child. 
+      svc_handler->destroy ();
       return 0;
     }
 }

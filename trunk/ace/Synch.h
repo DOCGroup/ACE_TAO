@@ -130,12 +130,12 @@ public:
   // Conditionally acquire a read lock (i.e., won't block).
 
   ACE_HANDLE get_handle (void);
-  // Get underlying <ACE_HANDLE>.
+  // Get underlying <ACE_HANDLE> for the file.
 
   void set_handle (ACE_HANDLE);
   // Set underlying <ACE_HANDLE>.  Note that this method assumes
   // ownership of the <handle> and will close it down in <remove>.  If
-  // you want the <handle> stays open when <remove> is called make
+  // you want the <handle> to stay open when <remove> is called make
   // sure to call <dup> on the <handle> before closing it.
 
   void dump (void) const;

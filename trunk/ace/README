@@ -82,6 +82,7 @@ ACE_HAS_PTHREAD_DSTATE_PTR		pthread_attr_setdetachstate() takes pointer to 2nd a
 ACE_HAS_PTHREAD_EQUAL			Platform has pthread_equal().
 ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR	pthread_getspecific() takes a data pointer for 2nd arg.
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP	Platform has pthread_mutexattr_setkind_np().
+ACE_HAS_PTHREAD_SIGMASK			Platform has pthread_sigmask() defined.
 ACE_HAS_PTHREAD_T			Platform has pthread_t defined.
 ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  

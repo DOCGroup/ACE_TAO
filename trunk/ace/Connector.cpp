@@ -282,6 +282,13 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
 
   PR_AD raddr;
 
+#if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
+  // Win32 has a timing problem - if you check to see if the
+  // connection has completed too fast, it will fail - so wait a bit
+  // to let it catch up.
+  ACE_OS::sleep (0);
+#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
+
   // Check to see if we're connected.
   if (ast->svc_handler ()->peer ().get_remote_addr (raddr) != -1)
       this->activate_svc_handler (ast->svc_handler ());
@@ -376,6 +383,7 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
 					const ACE_Synch_Options &synch_options)
 {
+  int error = errno;
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::create_AST");
   AST *ast;
 
@@ -406,13 +414,16 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
 	    goto fail3;
 
 	  ast->cancellation_id (cancellation_id);
+	  // Reset this because something might have gone wrong
+	  // elsewhere...
+          errno = error;
 	  return 0;
 	}
       else
 	{
 	  // Reset this because something might have gone wrong
 	  // elsewhere...
-	  errno = EWOULDBLOCK;
+          errno = error; // EWOULDBLOCK
 	  return 0; // Ok, everything worked just fine...
 	}
     }

@@ -3978,19 +3978,13 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm), 
 				       ace_result_),
 		     int, -1);
-#elif defined (ACE_HAS_PTHREADS_1003_DOT_1C)
-  // PTHREADS_1003_DOT_1C is NOT a subcase of DCETHREADS!
+#elif defined (ACE_HAS_PTHREAD_SIGMASK)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm), 
 				       ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
-#if defined (ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
- 			               ace_result_),int, -1);
-#else
   // as far as I can tell, this is now pthread_sigaction() -- jwr
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigaction (how, nsm, osm),
 				       ace_result_), int, -1);
-#endif /* ACE_HAS_IRIX62_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (osm);
   ACE_UNUSED_ARG (nsm);
