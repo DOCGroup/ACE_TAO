@@ -67,7 +67,7 @@ void ace_yy_push_buffer (FILE *file);
 
 /// Create and push a new lexer buffer on to the buffer stack for use
 /// when scanning the given directive.
-void ace_yy_push_buffer (const char *directive);
+void ace_yy_push_buffer (const ACE_TCHAR *directive);
 
 /// Pop the current lexer buffer off of the buffer stack and
 /// deallocate it.
