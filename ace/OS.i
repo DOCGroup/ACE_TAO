@@ -5569,6 +5569,8 @@ ACE_OS::execv (const char *path, char *const argv[])
   ACE_UNUSED_ARG (argv);
 	
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_POSIX_PROTO)
+  ACE_OSCALL_RETURN (::execv (path, (const char **) argv), int, -1);
 #else
   ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
 #endif /* ACE_WIN32 */
@@ -5584,6 +5586,8 @@ ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
   ACE_UNUSED_ARG (envp);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_POSIX_PROTO)
+  ACE_OSCALL_RETURN (::execve (path, (const char **) argv, (char **) envp), int, -1);
 #else
   ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
 #endif /* ACE_WIN32 */
@@ -5598,6 +5602,8 @@ ACE_OS::execvp (const char *file, char *const argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_POSIX_PROTO)
+  ACE_OSCALL_RETURN (::execvp (file, (const char **) argv), int, -1);
 #else
   ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
 #endif /* ACE_WIN32 */
