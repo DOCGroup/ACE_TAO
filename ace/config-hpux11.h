@@ -100,6 +100,12 @@
 
 // Platform supports SVR4 extended signals
 #define ACE_HAS_SIGINFO_T
+
+// Platform doesn't detect a signal out of range unless it's way out of range.
+#define ACE_HAS_SIGISMEMBER_BUG
+
+#define ACE_HAS_UALARM
+
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
 
@@ -187,6 +193,8 @@
 #define ACE_HAS_TIUSER_H_BROKEN_EXTERN_C
 // Platform provides ACE_TLI function prototypes.
 #define ACE_HAS_TLI_PROTOTYPES
+// HP-UX 11.00 (at least at initial releases) has some busted macro defs
+#define ACE_HAS_BROKEN_XTI_MACROS
 
 /////////////////////////////////////////////////////////////////////////
 //
@@ -221,8 +229,3 @@
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
-#define ACE_HAS_SIGISMEMBER_BUG
-#define ACE_HAS_BROKEN_XTI_MACROS
-
-#define ACE_HAS_UALARM
