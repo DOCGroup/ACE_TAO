@@ -1,3 +1,8 @@
+Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-freebsd.h:
+          Added #define ACE_LACKS_STDINT_H.
+
 Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
     * Kokyu/Kokyu.mpc:
