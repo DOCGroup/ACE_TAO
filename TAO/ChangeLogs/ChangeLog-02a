@@ -1,3 +1,10 @@
+Sun Aug 06 17:01:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Static.dsp:
+
+	  Added new files (e.g. TAO_Export.h, TAO_Singleton_Manager.*,
+	  TAO_Singleton.*, DLL_ORB.*) to list of sources.
+
 Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton.cpp:
