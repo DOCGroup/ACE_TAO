@@ -125,11 +125,10 @@ void
 TAO_Muxed_TMS::connection_closed (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-
   // @@ This should be done using a mutex, the table
 
   REQUEST_DISPATCHER_TABLE::ITERATOR end =
-    this->dispatcher_table_.begin ();
+    this->dispatcher_table_.end ();
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
        i != end;
