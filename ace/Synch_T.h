@@ -288,7 +288,7 @@ public:
   typedef ACE_Null_Mutex RW_MUTEX;
   // "Do-nothing" RW Mutex type.
   
-  typedef ACE_Null_Condition_Mutex CONDITION;
+  typedef ACE_Null_Condition CONDITION;
   // "Do-nothing" Condition type.
 
   typedef ACE_Null_Mutex SEMAPHORE;
@@ -296,9 +296,9 @@ public:
 };
 #else /* Necessary to support broken cfront-based C++ compilers... */
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Mutex,
+#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition, ACE_Null_Mutex
 #else
-#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition_Mutex
+#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
@@ -737,7 +737,7 @@ public:
 #define ACE_SYNCH_SEMAPHORE ACE_MT_SYNCH::SEMAPHORE
 #else /* Necessary to support broken cfront-based C++ compilers... */
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-#define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Thread_Semaphore
+#define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex, ACE_Thread_Semaphore
 #else
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */

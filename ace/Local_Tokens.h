@@ -61,7 +61,7 @@ public:
   typedef ACE_Thread_Mutex MUTEX;
   typedef ACE_Thread_Mutex_Guard GUARD;
 #else
-  typedef ACE_Null_Condition_Mutex COND_VAR;
+  typedef ACE_Null_Condition COND_VAR;
   typedef ACE_Null_Mutex MUTEX;
   typedef ACE_Null_Mutex_Guard GUARD;
 #endif /* ACE_HAS_THREADS */
