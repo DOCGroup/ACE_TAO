@@ -1,3 +1,10 @@
+Thu May 27 23:15:53 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_new_naming):
+	Modified to add the object reference to the root naming context to
+	the orb's ior lookup table, so that Naming Service can be located
+	through iioploc IORs.
+
 Thu May 27 22:00:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Any.cpp:
@@ -105,7 +112,7 @@ Thu May 27 21:02:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Moved all the code to generate CDR extraction and insertion
 	  operators to the _ci files (and classes), they were in the _cs
 	  files due to an historic accident.
-	  This was no big deal, but I needed to move the CDR operators for 
+	  This was no big deal, but I needed to move the CDR operators for
 	  sequences generated into the *C.cpp files, so I needed to
 	  separate the code for the C.i file from the code to the C.cpp
 	  file.
@@ -158,7 +165,7 @@ Thu May 27 18:14:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* docs/Options.html:
 
 	  Added the new `-ORBendpoint' option to the CORBA::ORB option
-	  table, and added a note to the `-ORBhost' and `-ORBport' options 
+	  table, and added a note to the `-ORBhost' and `-ORBport' options
 	  explaining that the `-ORBendpoint' option supercedes them.
 
 	  Updated the `-ORBpreconnect' option description to reflect the
@@ -166,11 +173,11 @@ Thu May 27 18:14:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Thu May 27 14:27:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/[IU]IOP_Connector.cpp (preconnect): 
+	* tao/[IU]IOP_Connector.cpp (preconnect):
 
 	  Fixed bug where memory was being freed even if no memory was
 	  allocated.
-	
+
 	  Added debugging output for successful and unsuccessful
 	  preconnections.
 
@@ -184,14 +191,14 @@ Thu May 27 12:28:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	    protocol://V.v@addr1,...,W.w@addrN/object_key
 
-	  The version prefix (e.g. "V.v@") is optional.  All endpoints and 
+	  The version prefix (e.g. "V.v@") is optional.  All endpoints and
 	  preconnects specified with the "-ORBendpoint" and
 	  "-ORBpreconnect" command line options should be of the above
 	  form (without the object key).
 
 	  NOTE: The UIOP URL style object reference uses a vertical bar
 	  "|" to delimit where the object key begins.  This is needed to
-	  avoid any ambiguities caused by the fact that UIOP endpoints can 
+	  avoid any ambiguities caused by the fact that UIOP endpoints can
 	  have forward slashes "/" in them.  The use of the vertical bar
 	  "|" as an object key delimiter for UIOP may change in the
 	  future.
@@ -214,7 +221,7 @@ Thu May 27 12:28:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Added "object_key_delimiter ()" method.  This method is used
 	  when parsing URL style IORs during MProfile creation.
-	
+
 	* tao/ORB_Core.cpp (init):
 
 	  Fixed the "-ORBpreconnect" option so that the preconnect strings
