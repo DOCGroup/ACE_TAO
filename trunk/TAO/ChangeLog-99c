@@ -1,3 +1,12 @@
+Tue Jun  1 13:56:09 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	Replaced ACE_U_LongLong * ACE_UINT64 with 
+	ACE_U_LongLong * ACE_UINT32 in the following files :
+
+	* o* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp
+
 Tue Jun 01 12:33:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO.cpp (init_child_poa and init): Added new methods that
