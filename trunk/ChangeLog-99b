@@ -1,3 +1,8 @@
+Sun Apr 11 17:06:53 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Fixed
+	the warnings on Linux (config-linux.h).
+
 Sun Apr 11 16:09:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Made
