@@ -8,6 +8,8 @@
 #include "EDF_Scheduler.h"
 #include "Task_Stats.h"
 
+#include <dsui.h>
+
 ACE_RCSID(MT_Server, server, "server.cpp,v 1.3 2003/10/14 05:57:01 jwillemsen Exp")
 
 const char *ior_output_file = "test1.ior";
@@ -78,6 +80,9 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
+
+  ds_control ds_cntrl ("DT_Oneway", "dt_oneway_enable.dsui");
+
   EDF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;
   long flags;

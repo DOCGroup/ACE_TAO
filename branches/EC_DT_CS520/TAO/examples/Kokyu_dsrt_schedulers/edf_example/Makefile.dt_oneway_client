@@ -119,8 +119,9 @@ $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
 endif
 
-realclean: clean 
+realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+	-$(RM) $(DT_ONEWAY_DSUI)
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif

@@ -92,6 +92,9 @@ int
 main (int argc, char *argv[])
 {
   ds_control ds_cntrl ("DT_Oneway", "dt_oneway_enable.dsui");
+  ACE_High_Res_Timer non_dsui_timer;
+  non_dsui_timer.calibrate ();
+  non_dsui_timer.start();
 
   /* MEASURE: Program start time */
   DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
@@ -192,9 +195,9 @@ main (int argc, char *argv[])
             {
               disp_impl_type = Kokyu::DSRT_OS_BASED;
             }
-          
+
           ACE_NEW_RETURN (scheduler,
-                          EDF_Scheduler (orb.in (), 
+                          EDF_Scheduler (orb.in (),
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
@@ -219,13 +222,13 @@ main (int argc, char *argv[])
       int importance=0;
 
       ORBSVCS_Time::Time_Value_to_TimeT (deadline,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (50,0) );
 
-      Worker worker1 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
-                      scheduler, 
+      Worker worker1 (orb.in (),
+                      server.in (),
+                      current.in (),
+                      scheduler,
                       deadline,
                       importance,
                       30,
@@ -247,7 +250,7 @@ main (int argc, char *argv[])
       // Get thread id
       // DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_WAIT_DONE, 1, strlen(msg), msg);
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t): wait for worker threads done in main thread\n"));
 
       if (do_shutdown)
@@ -268,7 +271,7 @@ main (int argc, char *argv[])
             }
 
             ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
-	    
+
 	    /* MEASURE: Call to shutdown server */
 	    // char* msg = "(%t): wait for worker threads done in main thread\n";
 	    // Get thread id
@@ -290,7 +293,7 @@ main (int argc, char *argv[])
         }
 
       scheduler->shutdown ();
-     
+
       /* MEASURE: Scheduler stop time */
       DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
@@ -305,6 +308,12 @@ main (int argc, char *argv[])
 
   /* MEASURE: Program stop time */
   DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+
+  non_dsui_timer.stop();
+  ACE_Time_Value dsui_ovhd_time;
+  non_dsui_timer.elapsed_time (dsui_ovhd_time);
+
+  ACE_DEBUG ((LM_DEBUG, "Elapsed time: %lu\n", ((double)dsui_ovhd_time.msec() / 1000)));
   return 0;
 }
 
@@ -373,7 +382,7 @@ Worker::svc (void)
       sched_param.deadline = deadline_;
       sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
       CORBA::Policy_var implicit_sched_param = sched_param_policy;
-      
+
       /* MEASURE: Start of scheduling segment */
       DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));

@@ -1,4 +1,4 @@
-/* $Id$ */
+//* $Id$ */
 // Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp
 
 #include "Kokyu_dsrt.h"
@@ -10,6 +10,10 @@
 #if ! defined (__ACE_INLINE__)
 #include "Kokyu_dsrt.i"
 #endif /* __ACE_INLINE__ */
+
+#include "kokyu_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
 
 ACE_RCSID(Kokyu, Kokyu, "Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp")
 
@@ -28,6 +32,7 @@ template <class DSRT_Scheduler_Traits>
 int
 DSRT_Dispatcher<DSRT_Scheduler_Traits>::schedule (Guid_t guid, const DSRT_QoSDescriptor& qos)
 {
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, SCHEDULE, 0, 0, NULL);
   return dispatcher_impl_->schedule (guid, qos);
 }
 
@@ -79,23 +84,23 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   switch (config_info.impl_type_)
     {
     case DSRT_OS_BASED:
-      ACE_NEW_RETURN (tmp, 
+      ACE_NEW_RETURN (tmp,
                       DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
-                      config_info.sched_policy_, 
-                      config_info.sched_scope_), 
+                      config_info.sched_policy_,
+                      config_info.sched_scope_),
                       nil_ptr);
       break;
 
     case DSRT_CV_BASED:
     default:
-      ACE_NEW_RETURN (tmp, 
+      ACE_NEW_RETURN (tmp,
                       DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
-                      config_info.sched_policy_, 
-                      config_info.sched_scope_), 
+                      config_info.sched_policy_,
+                      config_info.sched_scope_),
                       nil_ptr);
       break;
     }
-    
+
   ACE_ASSERT (tmp != 0);
   ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, nil_ptr);
   DSRT_Dispatcher_Auto_Ptr disp_auto_ptr(disp);

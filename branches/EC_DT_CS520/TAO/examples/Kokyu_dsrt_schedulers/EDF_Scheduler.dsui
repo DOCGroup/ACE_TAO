@@ -1,0 +1,14 @@
+DSTRM_EVENT     EDF_SCHED       4       LEAVE_SERVER_DISPATCH_SCHEDULE  12      "Record the exiting dispatcher time on the server side"        print_string
+DSTRM_EVENT     EDF_SCHED       4       ENTER_SERVER_DISPATCH_SCHEDULE  11      "Record the entering dispatcher time on the server side"        print_string
+DSTRM_EVENT     EDF_SCHED       4       LEAVE_SERVER_SCHED_TIME 10       "Record the exiting scheduler time on the server side" print_string
+DSTRM_EVENT     EDF_SCHED       4       ENTER_SERVER_SCHED_TIME 9       "Record the entering scheduler time on the server side" print_string
+DSTRM_EVENT     EDF_SCHED       4       LEAVE_CLIENT_SCHED_TIME 8       "Record the leaving scheduler time on the client side"  print_string
+DSTRM_EVENT     EDF_SCHED       4       LEAVE_KOKYU_DISPATCH_UPDATE_SCHEDULE     7      "Leaving dispatcher time on the client side"   print_string
+DSTRM_EVENT     EDF_SCHED       4       CALL_KOKYU_DISPATCH_UPDATE_SCHEDULE     6       "Entering dispatcher time on the client side"   print_string
+DSTRM_EVENT     EDF_SCHED       4       ENTER_CLIENT_SCHED_TIME        5       "Point which records the entering scheduler time on the client side"    print_string
+DSTRM_EVENT	EDF_SCHED	4	DISPATCHER_SHUTDOWN	4	"Kokyu DSRT Dispatcher shutdown"	print_string
+DSTRM_EVENT	EDF_SCHED	4	CREATE_SCHED_PARAM	3	"Create Scheduling parameter"	print_string
+DSTRM_EVENT	EDF_SCHED	4	BEGIN_SCHED_SEGMENT	2	"Start Schedule segment"	print_string
+DSTRM_EVENT	EDF_SCHED	4	END_SCHED_SEGMENT	1	"End Schedule segment"		print_string
+DSTRM_EVENT	EDF_SCHED	4	KOKYU_SCHED_START	0	"Start Kokyu Schedule call"	print_string
+
