@@ -72,8 +72,9 @@ private:
  * this to work properly.
  *
  * This class can be configured flexibly with different types of
- * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
- * ACE_Process_Mutex constructor API.   
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex, 
+ * @a ACE_Thread_Semaphore, @a ACE_Process_Mutex, and @a 
+ * ACE_Process_Semaphore constructor API.   
  *
  * @sa ACE_Dynamic_Cached_Allocator
  */
