@@ -61,7 +61,8 @@ CORBA_DynAny_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DynAny_var::CORBA_DynAny_var (const CORBA_DynAny_var &p) // copy constructor
-  : ptr_ (CORBA_DynAny::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DynAny::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -264,7 +265,8 @@ CORBA_DynEnum_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DynEnum_var::CORBA_DynEnum_var (const CORBA_DynEnum_var &p) // copy constructor
-  : ptr_ (CORBA_DynEnum::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DynEnum::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -979,7 +981,8 @@ CORBA_DynStruct_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DynStruct_var::CORBA_DynStruct_var (const CORBA_DynStruct_var &p) // copy constructor
-  : ptr_ (CORBA_DynStruct::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DynStruct::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1166,7 +1169,8 @@ CORBA_DynUnion_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DynUnion_var::CORBA_DynUnion_var (const CORBA_DynUnion_var &p) // copy constructor
-  : ptr_ (CORBA_DynUnion::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DynUnion::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1536,7 +1540,8 @@ CORBA_DynSequence_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DynSequence_var::CORBA_DynSequence_var (const CORBA_DynSequence_var &p) // copy constructor
-  : ptr_ (CORBA_DynSequence::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DynSequence::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1723,7 +1728,8 @@ CORBA_DynArray_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DynArray_var::CORBA_DynArray_var (const CORBA_DynArray_var &p) // copy constructor
-  : ptr_ (CORBA_DynArray::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DynArray::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

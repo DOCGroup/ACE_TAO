@@ -3666,6 +3666,10 @@ SOURCE=.\ValueFactory_Map.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\varbase.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Wait_Strategy.h
 # End Source File
 # Begin Source File
@@ -3723,6 +3727,10 @@ SOURCE=.\CONV_FRAMES.i
 # Begin Source File
 
 SOURCE=.\corbafwd.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentC.i
 # End Source File
 # Begin Source File
 
@@ -3911,6 +3919,10 @@ SOURCE=.\Policy_Manager.i
 # Begin Source File
 
 SOURCE=.\PolicyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableC.i
 # End Source File
 # Begin Source File
 

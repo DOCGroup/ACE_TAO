@@ -39,7 +39,8 @@ PortableServer::POA_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (const PortableServer::POA_var &p) // copy constructor
-  : ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -432,7 +433,8 @@ PortableServer::ThreadPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ThreadPolicy_var::ThreadPolicy_var (const PortableServer::ThreadPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::ThreadPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::ThreadPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -626,7 +628,8 @@ PortableServer::LifespanPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::LifespanPolicy_var::LifespanPolicy_var (const PortableServer::LifespanPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::LifespanPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::LifespanPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -819,7 +822,8 @@ PortableServer::IdUniquenessPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_var::IdUniquenessPolicy_var (const PortableServer::IdUniquenessPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::IdUniquenessPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::IdUniquenessPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1012,7 +1016,8 @@ PortableServer::IdAssignmentPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_var::IdAssignmentPolicy_var (const PortableServer::IdAssignmentPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::IdAssignmentPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::IdAssignmentPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1207,7 +1212,8 @@ PortableServer::ImplicitActivationPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_var::ImplicitActivationPolicy_var (const PortableServer::ImplicitActivationPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::ImplicitActivationPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::ImplicitActivationPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1400,7 +1406,8 @@ PortableServer::ServantRetentionPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_var::ServantRetentionPolicy_var (const PortableServer::ServantRetentionPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::ServantRetentionPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::ServantRetentionPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1593,7 +1600,8 @@ PortableServer::RequestProcessingPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_var::RequestProcessingPolicy_var (const PortableServer::RequestProcessingPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::RequestProcessingPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::RequestProcessingPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1788,7 +1796,8 @@ PortableServer::POAManager_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::POAManager_var::POAManager_var (const PortableServer::POAManager_var &p) // copy constructor
-  : ptr_ (PortableServer::POAManager::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::POAManager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1983,7 +1992,8 @@ PortableServer::AdapterActivator_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::AdapterActivator_var::AdapterActivator_var (const PortableServer::AdapterActivator_var &p) // copy constructor
-  : ptr_ (PortableServer::AdapterActivator::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::AdapterActivator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2176,7 +2186,8 @@ PortableServer::ServantManager_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantManager_var::ServantManager_var (const PortableServer::ServantManager_var &p) // copy constructor
-  : ptr_ (PortableServer::ServantManager::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::ServantManager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2369,7 +2380,8 @@ PortableServer::ServantActivator_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantActivator_var::ServantActivator_var (const PortableServer::ServantActivator_var &p) // copy constructor
-  : ptr_ (PortableServer::ServantActivator::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::ServantActivator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2562,7 +2574,8 @@ PortableServer::ServantLocator_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantLocator_var::ServantLocator_var (const PortableServer::ServantLocator_var &p) // copy constructor
-  : ptr_ (PortableServer::ServantLocator::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::ServantLocator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2751,7 +2764,8 @@ PortableServer::POA_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (const PortableServer::POA_var &p) // copy constructor
-  : ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2944,7 +2958,8 @@ PortableServer::Current_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::Current_var::Current_var (const PortableServer::Current_var &p) // copy constructor
-  : ptr_ (PortableServer::Current::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (PortableServer::Current::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

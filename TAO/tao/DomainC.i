@@ -46,7 +46,8 @@ CORBA_DomainManager_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DomainManager_var::CORBA_DomainManager_var (const CORBA::DomainManager_var &p) // copy constructor
-  : ptr_ (CORBA::DomainManager::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA::DomainManager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -227,7 +228,8 @@ CORBA_ConstructionPolicy_var::ptr (void) const
 
 ACE_INLINE
 CORBA_ConstructionPolicy_var::CORBA_ConstructionPolicy_var (const CORBA_ConstructionPolicy_var &p) // copy constructor
-  : ptr_ (CORBA_ConstructionPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_ConstructionPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

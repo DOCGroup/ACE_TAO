@@ -56,7 +56,7 @@ typedef CORBA_PollableSet *CORBA_PollableSet_ptr;
 #if !defined (_CORBA_POLLABLESET___VAR_CH_)
 #define _CORBA_POLLABLESET___VAR_CH_
 
-class TAO_Export CORBA_PollableSet_var
+class TAO_Export CORBA_PollableSet_var : public TAO_Base_var
 {
 public:
   CORBA_PollableSet_var (void); // default constructor
@@ -79,6 +79,9 @@ public:
 
 private:
   CORBA_PollableSet_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_PollableSet_var (const TAO_Base_var &rhs);
+  CORBA_PollableSet_var &operator= (const TAO_Base_var &rhs);
 };
 
 
@@ -121,7 +124,7 @@ typedef CORBA_Pollable *CORBA_Pollable_ptr;
 #if !defined (_CORBA_POLLABLE___VAR_CH_)
 #define _CORBA_POLLABLE___VAR_CH_
 
-class TAO_Export CORBA_Pollable_var
+class TAO_Export CORBA_Pollable_var : public TAO_Base_var
 {
 public:
   CORBA_Pollable_var (void); // default constructor
@@ -144,6 +147,9 @@ public:
 
 private:
   CORBA_Pollable_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_Pollable_var (const TAO_Base_var &rhs);
+  CORBA_Pollable_var &operator= (const TAO_Base_var &rhs);
 };
 
 
@@ -247,7 +253,7 @@ typedef CORBA_DIIPollable *CORBA_DIIPollable_ptr;
 #if !defined (_CORBA_DIIPOLLABLE___VAR_CH_)
 #define _CORBA_DIIPOLLABLE___VAR_CH_
 
-class TAO_Export CORBA_DIIPollable_var
+class TAO_Export CORBA_DIIPollable_var : public TAO_Base_var
 {
 public:
   CORBA_DIIPollable_var (void); // default constructor
@@ -270,6 +276,9 @@ public:
 
 private:
   CORBA_DIIPollable_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DIIPollable_var (const TAO_Base_var &rhs);
+  CORBA_DIIPollable_var &operator= (const TAO_Base_var &rhs);
 };
 
 
@@ -356,7 +365,7 @@ typedef CORBA_PollableSet *CORBA_PollableSet_ptr;
 #if !defined (_CORBA_POLLABLESET___VAR_CH_)
 #define _CORBA_POLLABLESET___VAR_CH_
 
-class TAO_Export CORBA_PollableSet_var
+class TAO_Export CORBA_PollableSet_var : public TAO_Base_var
 {
 public:
   CORBA_PollableSet_var (void); // default constructor
@@ -379,6 +388,9 @@ public:
 
 private:
   CORBA_PollableSet_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_PollableSet_var (const TAO_Base_var &rhs);
+  CORBA_PollableSet_var &operator= (const TAO_Base_var &rhs);
 };
 
 

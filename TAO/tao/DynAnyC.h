@@ -55,7 +55,7 @@
 class CORBA_DynAny;
 typedef CORBA_DynAny *CORBA_DynAny_ptr;
 
-class TAO_Export CORBA_DynAny_var
+class TAO_Export CORBA_DynAny_var : public TAO_Base_var
 {
 public:
   CORBA_DynAny_var (void); // default constructor
@@ -79,6 +79,9 @@ public:
 
 private:
   CORBA_DynAny_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DynAny_var (const TAO_Base_var &rhs);
+  CORBA_DynAny_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DynAny_out
@@ -437,7 +440,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynAny;
 class CORBA_DynEnum;
 typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
 
-class TAO_Export CORBA_DynEnum_var
+class TAO_Export CORBA_DynEnum_var : public TAO_Base_var
 {
 public:
   CORBA_DynEnum_var (void); // default constructor
@@ -460,6 +463,9 @@ public:
 
 private:
   CORBA_DynEnum_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DynEnum_var (const TAO_Base_var &rhs);
+  CORBA_DynEnum_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DynEnum_out
@@ -723,7 +729,7 @@ private:
 class CORBA_DynStruct;
 typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
 
-class TAO_Export CORBA_DynStruct_var
+class TAO_Export CORBA_DynStruct_var : public TAO_Base_var
 {
 public:
   CORBA_DynStruct_var (void); // default constructor
@@ -746,6 +752,9 @@ public:
 
 private:
   CORBA_DynStruct_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DynStruct_var (const TAO_Base_var &rhs);
+  CORBA_DynStruct_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DynStruct_out
@@ -822,7 +831,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynStruct;
 class CORBA_DynUnion;
 typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
 
-class TAO_Export CORBA_DynUnion_var
+class TAO_Export CORBA_DynUnion_var : public TAO_Base_var
 {
 public:
   CORBA_DynUnion_var (void); // default constructor
@@ -845,6 +854,9 @@ public:
 
 private:
   CORBA_DynUnion_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DynUnion_var (const TAO_Base_var &rhs);
+  CORBA_DynUnion_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DynUnion_out
@@ -1210,7 +1222,7 @@ extern  CORBA::TypeCode_ptr  _tc_AnySeq;
 class CORBA_DynSequence;
 typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
 
-class TAO_Export CORBA_DynSequence_var
+class TAO_Export CORBA_DynSequence_var : public TAO_Base_var
 {
 public:
   CORBA_DynSequence_var (void); // default constructor
@@ -1233,6 +1245,9 @@ public:
 
 private:
   CORBA_DynSequence_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DynSequence_var (const TAO_Base_var &rhs);
+  CORBA_DynSequence_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DynSequence_out
@@ -1310,7 +1325,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynSequence;
 class CORBA_DynArray;
 typedef CORBA_DynArray *CORBA_DynArray_ptr;
 
-class TAO_Export CORBA_DynArray_var
+class TAO_Export CORBA_DynArray_var : public TAO_Base_var
 {
 public:
   CORBA_DynArray_var (void); // default constructor
@@ -1333,6 +1348,9 @@ public:
 
 private:
   CORBA_DynArray_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DynArray_var (const TAO_Base_var &rhs);
+  CORBA_DynArray_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DynArray_out

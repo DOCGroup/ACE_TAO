@@ -137,7 +137,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REBINDPOLICY___VAR_CH_)
 #define _MESSAGING_REBINDPOLICY___VAR_CH_
 
-  class TAO_Export RebindPolicy_var
+  class TAO_Export RebindPolicy_var : public TAO_Base_var
   {
   public:
     RebindPolicy_var (void); // default constructor
@@ -160,6 +160,9 @@ TAO_NAMESPACE  Messaging
 
   private:
     RebindPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RebindPolicy_var (const TAO_Base_var &rhs);
+    RebindPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -260,7 +263,7 @@ class TAO_Export RebindPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___VAR_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___VAR_CH_
 
-  class TAO_Export SyncScopePolicy_var
+  class TAO_Export SyncScopePolicy_var : public TAO_Base_var
   {
   public:
     SyncScopePolicy_var (void); // default constructor
@@ -283,6 +286,9 @@ class TAO_Export RebindPolicy: public virtual CORBA::Policy
 
   private:
     SyncScopePolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    SyncScopePolicy_var (const TAO_Base_var &rhs);
+    SyncScopePolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -433,7 +439,7 @@ class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___VAR_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY___VAR_CH_
 
-  class TAO_Export RequestPriorityPolicy_var
+  class TAO_Export RequestPriorityPolicy_var : public TAO_Base_var
   {
   public:
     RequestPriorityPolicy_var (void); // default constructor
@@ -456,6 +462,9 @@ class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
 
   private:
     RequestPriorityPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RequestPriorityPolicy_var (const TAO_Base_var &rhs);
+    RequestPriorityPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -552,7 +561,7 @@ class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___VAR_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___VAR_CH_
 
-  class TAO_Export ReplyPriorityPolicy_var
+  class TAO_Export ReplyPriorityPolicy_var : public TAO_Base_var
   {
   public:
     ReplyPriorityPolicy_var (void); // default constructor
@@ -575,6 +584,9 @@ class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
 
   private:
     ReplyPriorityPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ReplyPriorityPolicy_var (const TAO_Base_var &rhs);
+    ReplyPriorityPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -675,7 +687,7 @@ class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY___VAR_CH_
 
-  class TAO_Export RequestStartTimePolicy_var
+  class TAO_Export RequestStartTimePolicy_var : public TAO_Base_var
   {
   public:
     RequestStartTimePolicy_var (void); // default constructor
@@ -698,6 +710,9 @@ class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
 
   private:
     RequestStartTimePolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RequestStartTimePolicy_var (const TAO_Base_var &rhs);
+    RequestStartTimePolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -798,7 +813,7 @@ class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY___VAR_CH_
 
-  class TAO_Export RequestEndTimePolicy_var
+  class TAO_Export RequestEndTimePolicy_var : public TAO_Base_var
   {
   public:
     RequestEndTimePolicy_var (void); // default constructor
@@ -821,6 +836,9 @@ class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
 
   private:
     RequestEndTimePolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RequestEndTimePolicy_var (const TAO_Base_var &rhs);
+    RequestEndTimePolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -921,7 +939,7 @@ class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY___VAR_CH_
 
-  class TAO_Export ReplyStartTimePolicy_var
+  class TAO_Export ReplyStartTimePolicy_var : public TAO_Base_var
   {
   public:
     ReplyStartTimePolicy_var (void); // default constructor
@@ -944,6 +962,9 @@ class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
 
   private:
     ReplyStartTimePolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ReplyStartTimePolicy_var (const TAO_Base_var &rhs);
+    ReplyStartTimePolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -1044,7 +1065,7 @@ class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY___VAR_CH_
 
-  class TAO_Export ReplyEndTimePolicy_var
+  class TAO_Export ReplyEndTimePolicy_var : public TAO_Base_var
   {
   public:
     ReplyEndTimePolicy_var (void); // default constructor
@@ -1067,6 +1088,9 @@ class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
 
   private:
     ReplyEndTimePolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ReplyEndTimePolicy_var (const TAO_Base_var &rhs);
+    ReplyEndTimePolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -1167,7 +1191,7 @@ class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___VAR_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___VAR_CH_
 
-  class TAO_Export RelativeRequestTimeoutPolicy_var
+  class TAO_Export RelativeRequestTimeoutPolicy_var : public TAO_Base_var
   {
   public:
     RelativeRequestTimeoutPolicy_var (void); // default constructor
@@ -1190,6 +1214,9 @@ class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
 
   private:
     RelativeRequestTimeoutPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RelativeRequestTimeoutPolicy_var (const TAO_Base_var &rhs);
+    RelativeRequestTimeoutPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -1290,7 +1317,7 @@ class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_
 
-  class TAO_Export RelativeRoundtripTimeoutPolicy_var
+  class TAO_Export RelativeRoundtripTimeoutPolicy_var : public TAO_Base_var
   {
   public:
     RelativeRoundtripTimeoutPolicy_var (void); // default constructor
@@ -1313,6 +1340,9 @@ class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
 
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RelativeRoundtripTimeoutPolicy_var (const TAO_Base_var &rhs);
+    RelativeRoundtripTimeoutPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -1463,7 +1493,7 @@ class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_ROUTINGPOLICY___VAR_CH_)
 #define _MESSAGING_ROUTINGPOLICY___VAR_CH_
 
-  class TAO_Export RoutingPolicy_var
+  class TAO_Export RoutingPolicy_var : public TAO_Base_var
   {
   public:
     RoutingPolicy_var (void); // default constructor
@@ -1486,6 +1516,9 @@ class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
 
   private:
     RoutingPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RoutingPolicy_var (const TAO_Base_var &rhs);
+    RoutingPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -1586,7 +1619,7 @@ class TAO_Export RoutingPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_MAXHOPSPOLICY___VAR_CH_)
 #define _MESSAGING_MAXHOPSPOLICY___VAR_CH_
 
-  class TAO_Export MaxHopsPolicy_var
+  class TAO_Export MaxHopsPolicy_var : public TAO_Base_var
   {
   public:
     MaxHopsPolicy_var (void); // default constructor
@@ -1609,6 +1642,9 @@ class TAO_Export RoutingPolicy: public virtual CORBA::Policy
 
   private:
     MaxHopsPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    MaxHopsPolicy_var (const TAO_Base_var &rhs);
+    MaxHopsPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -1709,7 +1745,7 @@ class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___VAR_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY___VAR_CH_
 
-  class TAO_Export QueueOrderPolicy_var
+  class TAO_Export QueueOrderPolicy_var : public TAO_Base_var
   {
   public:
     QueueOrderPolicy_var (void); // default constructor
@@ -1732,6 +1768,9 @@ class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
 
   private:
     QueueOrderPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    QueueOrderPolicy_var (const TAO_Base_var &rhs);
+    QueueOrderPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -2417,7 +2456,7 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYHANDLER___VAR_CH_)
 #define _MESSAGING_REPLYHANDLER___VAR_CH_
 
-  class TAO_Export ReplyHandler_var
+  class TAO_Export ReplyHandler_var : public TAO_Base_var
   {
   public:
     ReplyHandler_var (void); // default constructor
@@ -2440,6 +2479,9 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 
   private:
     ReplyHandler_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ReplyHandler_var (const TAO_Base_var &rhs);
+    ReplyHandler_var &operator= (const TAO_Base_var &rhs);
   };
 
 

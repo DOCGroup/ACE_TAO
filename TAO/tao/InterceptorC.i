@@ -41,7 +41,8 @@ PortableInterceptor::Cookie_var::ptr (void) const
 
 ACE_INLINE
 PortableInterceptor::Cookie_var::Cookie_var (const ::PortableInterceptor::Cookie_var &p) // copy constructor
-  : ptr_ (Cookie::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (Cookie::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -573,7 +574,8 @@ PortableInterceptor::Interceptor_var::ptr (void) const
 
 ACE_INLINE
 PortableInterceptor::Interceptor_var::Interceptor_var (const ::PortableInterceptor::Interceptor_var &p) // copy constructor
-  : ptr_ (Interceptor::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (Interceptor::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -755,7 +757,8 @@ PortableInterceptor::ServerRequestInterceptor_var::ptr (void) const
 
 ACE_INLINE
 PortableInterceptor::ServerRequestInterceptor_var::ServerRequestInterceptor_var (const ::PortableInterceptor::ServerRequestInterceptor_var &p) // copy constructor
-  : ptr_ (ServerRequestInterceptor::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ServerRequestInterceptor::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -937,7 +940,8 @@ PortableInterceptor::ClientRequestInterceptor_var::ptr (void) const
 
 ACE_INLINE
 PortableInterceptor::ClientRequestInterceptor_var::ClientRequestInterceptor_var (const ::PortableInterceptor::ClientRequestInterceptor_var &p) // copy constructor
-  : ptr_ (ClientRequestInterceptor::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ClientRequestInterceptor::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

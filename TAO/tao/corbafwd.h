@@ -37,6 +37,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/try_macros.h"
+#include "tao/varbase.h"
 
 #if !defined (TAO_HAS_DLL)
 // On Windows NT, the default is to build TAO as a DLL library.
