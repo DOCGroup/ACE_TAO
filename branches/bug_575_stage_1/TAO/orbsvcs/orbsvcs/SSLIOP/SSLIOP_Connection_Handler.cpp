@@ -255,7 +255,7 @@ TAO_SSLIOP_Connection_Handler::fetch_handle (void)
 
 
 int
-TAO_IIOP_Connection_Handler::resume_handler (void)
+TAO_SSLIOP_Connection_Handler::resume_handler (void)
 {
   return TAO_RESUMES_CONNECTION_HANDLER;
 }
@@ -354,47 +354,6 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
     retval = -1;
 
   return retval;
-}
-
-
-
-int
-TAO_SSLIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                               ACE_Time_Value *max_wait_time)
-{
-
-
-  // Set up the SSLIOP::Current object.
-  TAO_SSL_State_Guard ssl_state_guard (this,
-                                       this->orb_core (),
-                                       result);
-  if (result == -1)
-    return -1;
-
-  this->pending_upcalls_++;
-
-  // Call the transport read the message
-  result = this->transport ()->read_process_message (max_wait_time);
-
-  // Now the message has been read
-  if (result == -1 && TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("SSLIOP_Connection_Handler::read_message \n")));
-
-    }
-
-  // The upcall is done. Bump down the reference count
-  if (--this->pending_upcalls_ <= 0)
-    result = -1;
-
-  if (result == 0 || result == -1)
-    {
-      return result;
-    }
-
-  return 0;
 }
 
 
