@@ -1,3 +1,8 @@
+Mon Jul 21 12:06:16 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/object.cpp: removed the #include of object.i since it will
+	always be #included in object.h
+
 Thu Jul 17 16:54:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.6, released Thu Jul 17 16:54:38 1997.
