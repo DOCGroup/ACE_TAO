@@ -1004,7 +1004,7 @@ Command_Handler::play (int auto_exp,
   int cmdstarted = 0;
   int stuffsamples = 0;
   
- fprintf (stderr, "CTR: PLAY . . .\n");
+  fprintf (stderr, "CTR: PLAY . . .\n");
  
   this->stop_playing ();
 
@@ -1436,8 +1436,9 @@ Command_Handler::stop_playing (void)
               CORBA::Boolean result =
                 this->audio_control_->stop (shared->cmdsn,
                                             TAO_TRY_ENV);
+              cerr << "audio_control_->stop result is " << result << endl;
               if (result == (CORBA::B_FALSE))
-                return -1;
+                  return -1;
               TAO_CHECK_ENV;
             }
           if (CORBA::is_nil (this->video_control_.in ()) == CORBA::B_FALSE)
