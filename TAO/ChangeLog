@@ -1,3 +1,33 @@
+Tue Nov 30 11:42:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Arg_Traits.h:
+        
+          New file, containing template specializations of the
+          stub and skeleton arg traits classes for CORBA::Any.
+          These specializations were formerly in generated code.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added check for an Any used as an operation parameter, and
+          code to include the new file above if one is seen. This
+          was the only predefined type for which arg traits class
+          specializations were generated, so the
+          visit_predefined_type() method was removed from the
+          arg traits visitor, defaulting execution to the base
+          class method which is a no-op. Thanks to Greg Bostrum
+          <greg.bostrom@hp.com> for reporting a problem with code
+          generation in the Notification Service when multiple IDL
+          file are passed to the IDL compiler on a single command
+          line. After processing each file, all nodes in the AST
+          are destroyed except for the predefined types, and now,
+          at least for the arg traits, all predefined types are
+          handled the same.
+
 Tue Nov 30 11:15:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:

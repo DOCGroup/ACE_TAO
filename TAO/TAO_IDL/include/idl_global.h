@@ -328,6 +328,7 @@ public:
     ACE_UINT64 ub_string_arg_seen_;
     ACE_UINT64 var_array_arg_seen_;
     ACE_UINT64 var_size_arg_seen_;
+    ACE_UINT64 any_arg_seen_;
   } decls_seen_masks;
 
   // Constructor

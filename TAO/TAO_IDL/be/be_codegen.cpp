@@ -1856,6 +1856,12 @@ TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
       "tao/Var_Size_Argument_T.h",
       stream
     );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.any_arg_seen_,
+      "tao/Any_Arg_Traits.h",
+      stream
+    );
 }
 
 void
