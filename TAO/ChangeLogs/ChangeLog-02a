@@ -1,3 +1,10 @@
+Tue Jun 25 16:29:44 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/: Elimilated the 10 second wait for platforms were
+	  multiple priorities are supported.
+
+	  - Policy_Combinations/run_test.pl
+
 Tue Jun 25 15:30:03 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Persistent_ID/server.cpp (destroy_POA): Fixed couple
