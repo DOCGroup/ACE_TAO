@@ -655,7 +655,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     }
     
   // Establish the connection and get back a Client_Connection_Handler
-  if (con->connect ((handler_, server_addr) == -1))
+  if (con->connect (handler_, server_addr) == -1)
     // @@ Need to figure out which exception to set...this one is
     // pretty vague.
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));

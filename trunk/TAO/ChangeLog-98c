@@ -1,3 +1,8 @@
+Thu Oct  9 11:33:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/giop.cpp: 
+	  There was a minor sintax error.
+
 Tue Oct 07 09:34:35 1997    <brian.r.mendel@boeing.com>
 
         * tao/Orb_Core.h{cpp}: Added ACE_Svc_Export label to global
