@@ -1,0 +1,146 @@
+Fixed Priority Scheduler
+========================
+
+Table of contents
+-----------------
+1. Introduction
+2. Conf file parameters
+3. Running the example.
+
+1. Introduction
+
+This scheduler uses the OS scheduler to schedule the Distributable
+Threads (DTs) in the system. The DTs are scheduled according to their
+importance. The scheduler maps the importance of the DT to native
+thread priorities so the OS scheduler can schedule the DTs.
+
+In this experiment we show how dynamic scheduling is donw using the
+Dynamic Scheduling framework with the Fixed Priority Scheduler as the
+pluggable scheduler. At any given instance the DT of highest priority
+is running on a given host.
+
+The experiment consists of the following participants:
+Job: A CORBA servant object that performs CPU intensive work. The
+amount of work depends on a load factor that is conveyed to the object
+per invocation as an argument.
+
+DT_Task: The distributable thread is a scheduling segment spanning one
+or more hosts.
+
+test: The test consists of a collection of Job’s and DTs hosted in
+a single process. The test reads a configuration file that can be used
+to initialize DTs and Jobs.
+
+Starter: The starter initiates the start of DTs on each host that the
+test is running on. This is to ensure that the experiment starts at
+the same time on all hosts.
+
+2. Conf file parameters
+--------------------
+
+
+POA OPTIONS
+==========
+To specify POA options the format is:
+
+-POACount [count] -POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
+
+e.g.
+-POACount 2 -POA poa1 -PriorityModel CLIENT 10 -Bands 2 -Band 1 20 -Band 30 85 -Lanes 2 -Lane 10 1 0 -Lane 80 1 0
+
+specifes a POA with:
+
+POA Count - Specifies the number of POAs that need to be activated. The following characteristics of each POA needs to be specified.
+
+Name - poa1
+
+Priority model - client propogated, def. priority = 10
+
+Bands - 2 Bands with Band values as follows -
+	Band 1 :  low priority = 1, high priority = 20
+	Band 2 :  low priority = 30, high priority = 85
+
+Lanes - 2 Lanes with Lane values as follows -
+	Lane 1 : priority = 10, 1 static thread, 0 dynamic threads
+	Lane 2 : priority = 80, 1 static thread, 0 dynamic threads
+
+
+
+-TaskCount [count]
+-JobCount [count]
+
+Distributable Thread Task Options
+=================================
+
+The format to specify a DT Task is:
+
+-DT_Count <count> -DT_Task Importance <imp> -Start_Time <time> -Iter <local_work> -Load <remote_work> -JobName <name>
+
+where,
+-DT_Count = Total number of DT_Tasks
+-DT_Task = Specifies a Distributable Thread
+-Importance = The priority of the DT
+-Start_Time = Time at which the DT enters the system
+-Iter = The number of secs of work to be done on the local host. For a
+distributed DT it defines the number of secs of local work to be done
+before and after a remote method call is made.
+-Load = The number of secs of work to be done on the remote host when
+a two-way method call is made by a distributed DT
+-JobName <name> = Name of the Job object that this DT will make a
+remote method call on to do some 'Load' number of secs of work on the
+remote host
+
+e.g.
+-DT_Count 1  -DT_Task -Importance 5 -Start_Time 0 -Iter 3 -Load 5 -JobName job_1
+
+specifes a DT Task in which,
+Importance = 5
+Start Time = 0
+Iter = 3
+Load = 5
+JobName = job_1
+
+Job Options
+===========
+The format for specify a Job is:
+-Job <name> <poa_name>
+
+where, poa_name is the POA that this object is activated in.
+
+e.g.
+-Job job_10 poa1
+
+specifies a Job with,
+
+Name - job_10
+POA Name - poa1
+
+Misc
+=====
+
+-OutFile <filename>
+
+This specifies the data file in which the schedule of the DT"s running on the host will be output.
+
+-LogFile <filenmae>
+
+This speficies the log file
+
+
+3. Running the example
+----------------------
+
+a) The activated Jobs and Synch objects are registered with a Naming service, so we need an NS running
+e.g. ./Naming_Service -o naming_ior
+
+b) Start one or more instances of ./test depending on the test configuration that you have designed.
+
+e.g. ./test -ORBInitRef NameService=file://naming_ior -ORBSvcConf svc.conf.whatever -ORBDebugLevel 1
+
+c) Execute the Starter that initiates the creation of DTs on all the hosts that the experiment is running
+
+eg. ./Starter -ORBInitRef NameService=file://naming.ior
+
+c) Once all the instances exit, the test will generate schedule files as specified by the user with the -OutFile option file
+
+
