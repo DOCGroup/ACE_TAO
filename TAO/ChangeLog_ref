@@ -1,3 +1,17 @@
+Wed Oct  8 23:50:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/RTCORBA/RTCORBAC.i: Regenrated the code, since the _narrow
+	  () for all the local interfaces were busted. The funny part was
+	  that the IDL compiler generated good code. Regerating the code
+	  help me fix the problems.
+
+	* tao/RTCORBA/rtcorba_typedefs.h: New file that has most of the
+	  forward declarations used in RTCORBAC.h. Hacking the generated
+	  code was ridiculous. I think the hand crafting is now to a
+	  minimum. 
+
 Wed Oct  8 18:28:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp: Fixed the argument types for
