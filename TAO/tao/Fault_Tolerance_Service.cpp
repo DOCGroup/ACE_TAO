@@ -27,7 +27,7 @@ TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
   if (this->ft_service_callback_ == 0)
     {
       TAO_Services_Activate *service =
-        ACE_Dynamic_Service <TAO_Services_Activate>::instance ("FT_Service_Activate");
+        ACE_Dynamic_Service <TAO_Services_Activate>::instance ("FT_ClientService_Activate");
 
       // Activate the callback
       if (service)
