@@ -1,14 +1,19 @@
 Wed Mar 10 13:31:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/config-linux-common.h:
-	Commented out ACE_HAS_DLFCN_H_BROKEN_EXTERN_C, ACE_LACKS_MSYNC and
-	ACE_LACKS_MADVISE.  They are no longer needed for recent revisions
-	of glibc 2.x.  Thanks to <nbecker@fred.net> for pointing this out.
+        * ace/config-linux-common.h:
+        Commented out ACE_HAS_DLFCN_H_BROKEN_EXTERN_C, ACE_LACKS_MSYNC and
+        ACE_LACKS_MADVISE.  They are no longer needed for recent revisions
+        of glibc 2.x.  Thanks to <nbecker@fred.net> for pointing this out.
 
 Wed Mar 10 11:05:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread.h,ace/Thread_Manager.h (exit): added comment
           that exit () should not be called by main thread.
+
+        * ace/OS.h: added an ACE_OS_thread_key_t typedef on WIN32
+          with ACE_HAS_TSS_EMULATION.  Thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for reporting that
+          it was missing.
 
 Wed Mar 10 10:57:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
