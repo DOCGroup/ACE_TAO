@@ -1,3 +1,12 @@
+Fri Jan 28 07:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/Event_Server/Event_Server/Event.mpc:
+        * examples/ASX/Event_Server/Transceiver/Transceiver.mpc:
+        * examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc:
+          New MPC files. Thanks to Thomas Lockhart
+          <Thomas dot Lockhart at jpl dot nasa dot gov> for contributing
+          these.
+
 Fri Jan 28 05:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Name_Request_Reply.h:
