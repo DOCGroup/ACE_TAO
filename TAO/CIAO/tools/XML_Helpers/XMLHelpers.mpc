@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(XML_Helpers): taolib_with_idl, acexml, rtcorba {
+project(XML_Helpers): taolib_with_idl, rtcorba, acexml {
   sharedname    = CIAO_XML_Helpers
   idlflags     += -Sc -Wb,export_include=XML_Helpers_Export.h \
                   -Wb,export_macro=CIAO_XML_HELPERS_Export
   dynamicflags += CIAO_XML_HELPERS_BUILD_DLL
 
   IDL_Files {
-    RTConfiguration.idl
+   RTConfiguration.idl
   }
 
   Source_Files {
@@ -22,7 +22,7 @@ project(XML_Helpers): taolib_with_idl, acexml, rtcorba {
   }
 }
 
-project(Helper_Test): taoexe, acexml, rtcorba {
+project(Helper_Test): rtcorba, taoserver, acexml{
   libs += CIAO_XML_Helpers
   after += XML_Helpers
 
