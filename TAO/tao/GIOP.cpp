@@ -1522,28 +1522,26 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
   out_stream << request_id;
 
   // Sync scope - ignored by server if request is not oneway.
-  switch (response_flags)
-    {
-      case 0:
-      case 1:
-        // No response required.
-        out_stream << CORBA::Any::from_octet (0);
-        break;
-      case 2:
-        // Return before dispatching servant.
-        // We're also setting the high bit here. This
-        // is a temporary fix until the rest of GIOP
-        // 1.2 is implemented in TAO.
-        out_stream << CORBA::Any::from_octet (129);
-        break;
-      case 3:
-        // Return after dispatching servant.
-        out_stream << CORBA::Any::from_octet (3);
-        break;
-      default:
-        // Until more flags are defined by the OMG.
-        return 0;
-    }
+  if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+      response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+      response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+      response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+    // No response required.
+    out_stream << CORBA::Any::from_octet (0);
+
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+    // Return before dispatching servant.  We're also setting the high
+    // bit here. This is a temporary fix until the rest of GIOP 1.2 is
+    // implemented in TAO.
+    out_stream << CORBA::Any::from_octet (129);
+
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
+    // Return after dispatching servant.
+    out_stream << CORBA::Any::from_octet (3);
+
+  else
+    // Until more flags are defined by the OMG.
+    return 0;
 
   out_stream << key;
   out_stream << opname;

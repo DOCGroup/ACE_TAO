@@ -41,6 +41,10 @@ module Messaging
   const SyncScope SYNC_WITH_SERVER    = 2;
   const SyncScope SYNC_WITH_TARGET    = 3;
 
+  // = TAO specific.
+  const SyncScope SYNC_EAGER_BUFFERING   = SYNC_NONE;
+  const SyncScope SYNC_DELAYED_BUFFERING = -1;
+
   typedef short RoutingType;
   const RoutingType ROUTE_NONE              = 0;
   const RoutingType ROUTE_FORWARD           = 1;

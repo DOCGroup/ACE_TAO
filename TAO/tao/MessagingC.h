@@ -84,6 +84,11 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
 
+  // = TAO specific.
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_EAGER_BUFFERING;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_DELAYED_BUFFERING;
+
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RoutingType;
