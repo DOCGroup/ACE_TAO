@@ -53,7 +53,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
     TAO::TRAVERSE_CONTINUE; // status of encode operation
 
   CORBA::TCKind const k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP)
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   switch (k)
     {
