@@ -1,3 +1,13 @@
+Fri Aug 23 17:21:23 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be_be_visitor_constant/constant_cs.cpp:
+
+          Changed again, to handle the case where a constant
+          is defined inside an interface or valuetype. In such
+          cases, we still can't use the constant in a switch
+          expression, but we can for all other cases.
+
 Fri Aug 23 17:03:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* */*.conf.xml: Converted all *.conf files to *.conf.xml files and
