@@ -304,20 +304,20 @@ FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
 
   // create the first cosec
   cosec[0] = this->create_channel (channel_id[0],
-                                  this->factory_,
-                                  ACE_TRY_ENV);
+                                   this->factory_.in (),
+                                   ACE_TRY_ENV);
   ACE_CHECK;
 
  // create the second cosec
   cosec[1] = this->create_channel (channel_id[1],
-                                  this->factory_,
-                                  ACE_TRY_ENV);
+                                   this->factory_.in (),
+                                   ACE_TRY_ENV);
   ACE_CHECK;
 
   // create the third cosec
   cosec[2] = this->create_channel (channel_id[2],
-                                  this->factory_,
-                                  ACE_TRY_ENV);
+                                   this->factory_.in (),
+                                   ACE_TRY_ENV);
   ACE_CHECK;
 
   // see it we can destroy this one..
@@ -326,13 +326,13 @@ FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // see if we can find it?
-  this->find_channel_id (cosec[2],
+  this->find_channel_id (cosec[2].in (),
                          ACE_TRY_ENV);
   ACE_CHECK;
 
   // see if we can create it again?
   cosec[2] = this->create_channel (channel_id[2],
-                                   this->factory_,
+                                   this->factory_.in (),
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -343,47 +343,47 @@ FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
 
   // see if it can detect duplicates.
   this->create_channel (channel_id[2],
-                        this->factory_,
+                        this->factory_.in (),
                         ACE_TRY_ENV);
   ACE_CHECK;
 
   // see if it can give us the id?
-  this->find_channel_id (cosec[0],
+  this->find_channel_id (cosec[0].in (),
                          ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->find_channel_id (cosec[1],
+  this->find_channel_id (cosec[1].in (),
                          ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->find_channel_id (cosec[2],
+  this->find_channel_id (cosec[2].in (),
                          ACE_TRY_ENV);
   ACE_CHECK;
 
   // check if we can get the channels from the id.
   this->find_channel (channel_id[0],
-                     ACE_TRY_ENV);
+                      ACE_TRY_ENV);
   ACE_CHECK;
 
   this->find_channel (channel_id[1],
-                     ACE_TRY_ENV);
+                      ACE_TRY_ENV);
   ACE_CHECK;
 
   this->find_channel (channel_id[2],
-                     ACE_TRY_ENV);
+                      ACE_TRY_ENV);
   ACE_CHECK;
 
   //destroy them all.
   this->destroy_channel (channel_id[0],
-                        ACE_TRY_ENV);
+                         ACE_TRY_ENV);
   ACE_CHECK;
 
   this->destroy_channel (channel_id[1],
-                        ACE_TRY_ENV);
+                         ACE_TRY_ENV);
   ACE_CHECK;
 
   this->destroy_channel (channel_id[2],
-                        ACE_TRY_ENV);
+                         ACE_TRY_ENV);
   ACE_CHECK;
 
   // end of testing.

@@ -256,7 +256,7 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
         continue;
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
-        this->master_->channel (i)->event_channel_;
+        this->master_->channel (i)->event_channel_.in ();
 
       this->gwys_[i].init (rmt_ec,
                            this->event_channel_.in (),
@@ -298,7 +298,7 @@ EC_Observer::run_cleanup (CORBA::Environment& ACE_TRY_ENV)
         continue;
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
-        this->master_->channel (j)->event_channel_;
+        this->master_->channel (j)->event_channel_.in ();
       rmt_ec->remove_observer (this->gwys_[j].observer_handle (),
                                ACE_TRY_ENV);
       ACE_CHECK;
