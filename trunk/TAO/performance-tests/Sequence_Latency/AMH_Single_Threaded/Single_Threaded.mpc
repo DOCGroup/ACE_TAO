@@ -8,7 +8,7 @@ project(*AMH sequence server): amh, server, strategies, valuetype {
   }
 }
 
-project(*AMH sequence client): amh, client, strategies, valuetype {
+project(*AMH sequence client): amh, taoexe, strategies, valuetype {
   Source_Files {
     TestC.cpp
     client.cpp

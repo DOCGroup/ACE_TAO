@@ -1,93 +1,107 @@
+Mon Jul 19 06:25:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
+        * performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+        * tests/Bug_1627_Regression/test.mpc:
+
+          Switch the usage of the client base project for taoexe.  The
+          client base project was not useful and caused warnings from MPC.
+
 Mon Jul 19 01:09:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Security/CSI_Utils.cpp:
-	* orbsvcs/orbsvcs/Security/CSI_Utils.h:
-	* orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.cpp:
-	* orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.h:
-	* orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.cpp:
-	* orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.h:
-	* orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp:
-	* orbsvcs/orbsvcs/Security/SL3_PolicyFactory.h:
-	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.cpp:
-	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
+        * orbsvcs/orbsvcs/Security/CSI_Utils.cpp:
+        * orbsvcs/orbsvcs/Security/CSI_Utils.h:
+        * orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.h:
+        * orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.h:
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.h:
+        * orbsvcs/orbsvcs/Security/SL3_SecurityManager.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
 
-	  New CSIv2 source files.  More to follow ...
+          New CSIv2 source files.  More to follow ...
 
-	* orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
 
-	  Added new CSIv2 source files to the Security project.
+          Added new CSIv2 source files to the Security project.
 
 Mon Jul 19 00:57:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/ATLAS.idl:
-	* orbsvcs/orbsvcs/CSI.idl:
-	* orbsvcs/orbsvcs/CSIIOP.idl:
-	* orbsvcs/orbsvcs/GSSUP.idl:
-	* orbsvcs/orbsvcs/SL3CSI.idl:
-	* orbsvcs/orbsvcs/SL3TCPIP.idl:
-	* orbsvcs/orbsvcs/SL3TLS.idl:
-	* orbsvcs/orbsvcs/SecurityLevel3.idl:
+        * orbsvcs/orbsvcs/ATLAS.idl:
+        * orbsvcs/orbsvcs/CSI.idl:
+        * orbsvcs/orbsvcs/CSIIOP.idl:
+        * orbsvcs/orbsvcs/GSSUP.idl:
+        * orbsvcs/orbsvcs/SL3CSI.idl:
+        * orbsvcs/orbsvcs/SL3TCPIP.idl:
+        * orbsvcs/orbsvcs/SL3TLS.idl:
+        * orbsvcs/orbsvcs/SecurityLevel3.idl:
 
-	  New CSIv2 IDL source files.
+          New CSIv2 IDL source files.
 
 Sun Jul 18 21:09:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/PolicyFactory/server.cpp (main):
+        * tests/Portable_Interceptors/PolicyFactory/server.cpp (main):
 
-	  Fixed unused variable warning in non-debug builds where
-	  ACE_NTRACE is defined.
+          Fixed unused variable warning in non-debug builds where
+          ACE_NTRACE is defined.
 
 Sun Jul 18 08:54:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PolicyFactory_Registry.cpp (factory_exists):
-	* tao/PolicyFactory_Registry.h (factory_exists):
+        * tao/PolicyFactory_Registry.cpp (factory_exists):
+        * tao/PolicyFactory_Registry.h (factory_exists):
 
-	  New method that allows the caller to determine if a
-	  PolicyFactory corresponding to the given PolicyType exists in
-	  the registry.  Part of the create_POA() policy fix described
-	  below.
+          New method that allows the caller to determine if a
+          PolicyFactory corresponding to the given PolicyType exists in
+          the registry.  Part of the create_POA() policy fix described
+          below.
 
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
-	  (destroy_interceptors):
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+          (destroy_interceptors):
 
-	  Prevent exceptions from being propagated to the caller.  The
-	  exception specification on this method is empty since this
-	  method performs resource cleanup.  Fixes a memory leak that
-	  would occur if an exception was thrown in an
-	  IORInterceptor::destroy() call, and an abort caused by a call to
-	  the unexpected exception handler.
+          Prevent exceptions from being propagated to the caller.  The
+          exception specification on this method is empty since this
+          method performs resource cleanup.  Fixes a memory leak that
+          would occur if an exception was thrown in an
+          IORInterceptor::destroy() call, and an abort caused by a call to
+          the unexpected exception handler.
 
-	* tao/PortableServer/Default_Policy_Validator.cpp
-	  (legal_policy_impl):
+        * tao/PortableServer/Default_Policy_Validator.cpp
+          (legal_policy_impl):
 
-	  Consider a PolicyType with a corresponding registered
-	  PolicyFactory to be legal.  This addresses the problem where the
-	  POA would not accept user defined policies that have a
-	  corresponding PolicyFactory registered with the ORB, e.g. the
-	  CSIv2 SecurityLevel3::ObjectCredentialsPolicy, when calling
-	  PortableServer::POA::create_POA().
+          Consider a PolicyType with a corresponding registered
+          PolicyFactory to be legal.  This addresses the problem where the
+          POA would not accept user defined policies that have a
+          corresponding PolicyFactory registered with the ORB, e.g. the
+          CSIv2 SecurityLevel3::ObjectCredentialsPolicy, when calling
+          PortableServer::POA::create_POA().
 
-	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:
-	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h:
-	* tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
-	* tests/Portable_Interceptors/PolicyFactory/Policy.cpp:
-	* tests/Portable_Interceptors/PolicyFactory/Policy.h:
-	* tests/Portable_Interceptors/PolicyFactory/PolicyFactory.cpp:
-	* tests/Portable_Interceptors/PolicyFactory/PolicyFactory.h:
-	* tests/Portable_Interceptors/PolicyFactory/README:
-	* tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.h:
-	* tests/Portable_Interceptors/PolicyFactory/run_test.pl:
-	* tests/Portable_Interceptors/PolicyFactory/server.cpp:
-	* tests/Portable_Interceptors/PolicyFactory/test.idl:
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h:
+        * tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
+        * tests/Portable_Interceptors/PolicyFactory/Policy.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/Policy.h:
+        * tests/Portable_Interceptors/PolicyFactory/PolicyFactory.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/PolicyFactory.h:
+        * tests/Portable_Interceptors/PolicyFactory/README:
+        * tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/PolicyFactory/run_test.pl:
+        * tests/Portable_Interceptors/PolicyFactory/server.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/test.idl:
 
-	  New regression test to verify properly functioning
-	  PortableInterceptor::PolicyFactory support.
+          New regression test to verify properly functioning
+          PortableInterceptor::PolicyFactory support.
 
 Sun Jul 18 00:59:21 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/QtTests/server.cpp:
-	Someone defined index macro under QNXNTO! Had to undefine it locally.
+        * tests/QtTests/server.cpp:
+        Someone defined index macro under QNXNTO! Had to undefine it locally.
 
 Sat Jul 17 12:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -108,49 +122,49 @@ Sun Jul 11 20:15:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jul 10 12:43:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
-	* tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
 
-	  Fixed a improper use of Object_var which showed up as test
-	  failures in the deffered synchronous tests.
+          Fixed a improper use of Object_var which showed up as test
+          failures in the deffered synchronous tests.
 
 Sat Jul 10 10:23:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO-INSTALL.html:
+        * TAO-INSTALL.html:
 
-  	  Added information for users who build from anon cvs repository.
+          Added information for users who build from anon cvs repository.
 
 Fri Jul  9 20:32:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Invocation_Adapter.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
 
-	  More warning fixes.
+          More warning fixes.
 
 Fri Jul  9 07:29:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
-	* tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
 
-	  Fixed warnings in the daily builds. Thanks to Johnny for letting
-	  me know about this. This should also fix the problems in DSI
-	  tests.
+          Fixed warnings in the daily builds. Thanks to Johnny for letting
+          me know about this. This should also fix the problems in DSI
+          tests.
 
 Thu Jul  8 17:48:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Invocation_Adapter.cpp:
-	* tao/Invocation_Adapter.h:
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
 
-	  Corrected the memory leak fix in this checkin
- 	  "Fri Jun 11 15:30:57 2004  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>".
+          Corrected the memory leak fix in this checkin
+          "Fri Jun 11 15:30:57 2004  Balachandran Natarajan
+          <bala@dre.vanderbilt.edu>".
 
-	  This should fix the failure with Bug_1482_Regression tests in
-	  our daily builds. Coincidentally this should also fix the
-	  problem that Keith O'Hara reported while trying to run FT_App
-	  tests.
+          This should fix the failure with Bug_1482_Regression tests in
+          our daily builds. Coincidentally this should also fix the
+          problem that Keith O'Hara reported while trying to run FT_App
+          tests.
 
 Thu Jul  8 18:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -262,17 +276,17 @@ Fri Jul  2 13:20:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jul  2 16:11:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
-	  Fixed the usage of auto_ptr to fix compile errors in the HPUX
-	  builds. Thanks to Don Hinton for pointing out the way to fix
-	  this.
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+          Fixed the usage of auto_ptr to fix compile errors in the HPUX
+          builds. Thanks to Don Hinton for pointing out the way to fix
+          this.
 
 Thu Jul  1 21:18:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
 
-	  Corrected typo in documentation.  Thanks to Thomas Lockhart for
-	  supplying a patch.
+          Corrected typo in documentation.  Thanks to Thomas Lockhart for
+          supplying a patch.
 
 Thu Jul  1 20:01:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -308,9 +322,9 @@ Thu Jul  1 08:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul  1 00:18:07 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* TAO_IDL/include/utl_string.h:
-	Fixed small compilation error related to lack of size_t in
-	included headers.
+        * TAO_IDL/include/utl_string.h:
+        Fixed small compilation error related to lack of size_t in
+        included headers.
 
 Wed Jun 30 11:55:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -362,9 +376,9 @@ Tue Jun 29 11:13:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jun 28 23:48:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Xt_Stopwatch/Stopwatch_display.cpp (ACE_RCSID):
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp (ACE_RCSID):
 
-	  Corrected typo in ACE_RCSID macro call.
+          Corrected typo in ACE_RCSID macro call.
 
 Mon Jun 28 10:31:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -396,36 +410,36 @@ Mon Jun 28 08:12:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 27 21:49:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
-	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
-	* tests/Xt_Stopwatch/server.cpp:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp:
+        * tests/Xt_Stopwatch/server.cpp:
 
           Added missing includes.
 
 Sun Jun 27 11:20:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tao/PortableServer/AMH_Response_Handler.cpp:
-	  Rearranged the code in the TAO_AMH_Response_Handler destructor
- 	  to solve problems with the SGI compiler.  Thanks to Simu Ruelle
- 	  <simu.dcnruelle@wanadoo.fr> for motivating this.
+        * tao/PortableServer/AMH_Response_Handler.cpp:
+          Rearranged the code in the TAO_AMH_Response_Handler destructor
+          to solve problems with the SGI compiler.  Thanks to Simu Ruelle
+          <simu.dcnruelle@wanadoo.fr> for motivating this.
 
 Sun Jun 27 09:39:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
-	  Missed to checkin the fix applied in this entry "Fri Jun 25
-	  06:12:49 2004  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>".
+          Missed to checkin the fix applied in this entry "Fri Jun 25
+          06:12:49 2004  Balachandran Natarajan
+          <bala@dre.vanderbilt.edu>".
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Set TAO_USE_DOTTED_DECIMAL_ADDRESSES 1 on win32. Users find
-	  broken DNS surprising on Win32.
+          Set TAO_USE_DOTTED_DECIMAL_ADDRESSES 1 on win32. Users find
+          broken DNS surprising on Win32.
 
-	  If the user sets a value through their config.h, the change
-	  should have no effect. Thanks to Boris for the suggestion and
-	  Valery Salamakha for motivating this fix.
+          If the user sets a value through their config.h, the change
+          should have no effect. Thanks to Boris for the suggestion and
+          Valery Salamakha for motivating this fix.
 
 Fri Jun 25 14:45:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -456,24 +470,24 @@ Fri Jun 25 11:43:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jun 25 06:12:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Invocation_Adapter.cpp (TAO):
+        * tao/Invocation_Adapter.cpp (TAO):
 
-	  Removed wrong comments in the file.
+          Removed wrong comments in the file.
 
-	* tao/IIOP_Connector.cpp (make_connection):
-	* tao/Strategies/SCIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp (make_connection):
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
 
-	  Fixed an error in the above method. While trying to wait for
-	  connection completion, we never passed in the max_wait_time,
-	  assuming that the reactor would take care of it. The reactor did
-	  take care of unblocking after the specified time, but it never
-	  knows whether it was timeout on the handler or a timeout to
-	  drive the reactor. This never set the errno which we in TAO
-	  check to see whether it was timeout. This lead to a problem
-	  where timeouts where being seen as transient exceptions. Thanks
-	  to Milan Cvetkvic <milan dot cvetkovic at mpathix dot com> for
-	  reporting this problem.
+          Fixed an error in the above method. While trying to wait for
+          connection completion, we never passed in the max_wait_time,
+          assuming that the reactor would take care of it. The reactor did
+          take care of unblocking after the specified time, but it never
+          knows whether it was timeout on the handler or a timeout to
+          drive the reactor. This never set the errno which we in TAO
+          check to see whether it was timeout. This lead to a problem
+          where timeouts where being seen as transient exceptions. Thanks
+          to Milan Cvetkvic <milan dot cvetkovic at mpathix dot com> for
+          reporting this problem.
 
 Fri Jun 25 08:40:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -499,14 +513,14 @@ Fri Jun 25 07:38:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 24 18:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols:
+        * performance-tests/Protocols:
 
-	  Broke test up into sender, distributor, and receiver components
-	  rather than client and server.  One can still get the old
-	  behavior by going directly from the sender to the receiver. Both
-	  receiver and distributor implement the same
-	  interface. distributor simply forwards all calls to the
-	  receiver.
+          Broke test up into sender, distributor, and receiver components
+          rather than client and server.  One can still get the old
+          behavior by going directly from the sender to the receiver. Both
+          receiver and distributor implement the same
+          interface. distributor simply forwards all calls to the
+          receiver.
 
 Thu Jun 24 14:29:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -567,10 +581,10 @@ Thu Jun 24 06:31:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 23 14:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols:
+        * performance-tests/Protocols:
 
-	  Several things were cleaned up and latency and throughput
-	  testing were added.
+          Several things were cleaned up and latency and throughput
+          testing were added.
 
 Wed Jun 23 14:29:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -635,19 +649,19 @@ Wed Jun 23 06:52:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 22 19:51:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Removed some of the TAO_ENV* macros. They were supposed to be
-	  deprecated from time immemorial and it was finally time to bid
-	  adieu.
+          Removed some of the TAO_ENV* macros. They were supposed to be
+          deprecated from time immemorial and it was finally time to bid
+          adieu.
 
-	* tao/Any_Unknown_IDL_Type.cpp:
-	* tao/ORBInitializer_Registry.h:
-	* tao/ORB_Core.cpp:
-	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/ORBInitializer_Registry.h:
+        * tao/ORB_Core.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
 
-	  Strange, our code had a bunch of TAO_ENV* in the cpp
-	  files. Changed them to the ACE_ENV* equivalents.
+          Strange, our code had a bunch of TAO_ENV* in the cpp
+          files. Changed them to the ACE_ENV* equivalents.
 
 Tue Jun 22 11:45:07 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -679,15 +693,15 @@ Tue Jun 22 08:40:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jun 22 08:04:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Exception.cpp:
-	* tao/orbconf.h:
+        * tao/Exception.cpp:
+        * tao/orbconf.h:
 
-	  Removed # define's for  TAO_NAMESPACE_BEGIN, TAO_NAMESPACE_END,
-	  TAO_NAMESPACE_TYPE,  and TAO_NAMESPACE_DEFINE.
+          Removed # define's for  TAO_NAMESPACE_BEGIN, TAO_NAMESPACE_END,
+          TAO_NAMESPACE_TYPE,  and TAO_NAMESPACE_DEFINE.
 
-	* orbsvcs/orbsvcs/Notify/Notify_Extensions.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.cpp:
 
-	  Changed usage of the above macros to vanilla c++ keywords.
+          Changed usage of the above macros to vanilla c++ keywords.
 
 Tue Jun 22 12:44:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -713,17 +727,17 @@ Tue Jun 22 07:18:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 21 23:25:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
 
-	  Added "avoids += minimum_corba" entry.  The RTEC_Perf library
-	  these projects depend on cannot be built when minimum CORBA
-	  support is enabled so don't build thse projects in the minimum
-	  CORBA case either.
+          Added "avoids += minimum_corba" entry.  The RTEC_Perf library
+          these projects depend on cannot be built when minimum CORBA
+          support is enabled so don't build thse projects in the minimum
+          CORBA case either.
 
 Mon Jun 21 09:04:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -779,47 +793,47 @@ Mon Jun 21 06:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 20 18:34:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Typecode_Constants.cpp:
+        * tao/Typecode_Constants.cpp:
 
-	  Removed all the use of stupid namespace macros. Moved TC_opaque
-	  and TC_completion_status inside the TAO namespace. They are
-	  proprietary to TAO and shouldn't have been in the global
-	  namespace in the first place.
+          Removed all the use of stupid namespace macros. Moved TC_opaque
+          and TC_completion_status inside the TAO namespace. They are
+          proprietary to TAO and shouldn't have been in the global
+          namespace in the first place.
 
- 	* tao/Exception.cpp:
-	* tao/Marshal.h:
-	* tao/append.cpp:
+        * tao/Exception.cpp:
+        * tao/Marshal.h:
+        * tao/append.cpp:
 
-	  Added TAO namespace scoping to the extern declarations in these
-	  places for the typecodes mentioned above.
+          Added TAO namespace scoping to the extern declarations in these
+          places for the typecodes mentioned above.
 
 Sun Jun 20 12:45:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Advanced/ch_3/Advanced_ch_3.mpc:
-	* tests/Oneway_Buffering/Oneway_Buffering.mpc:
-	* tests/Policies/Policies.mpc:
-	* tests/Timeout/Timeout.mpc:
+        * examples/Advanced/ch_3/Advanced_ch_3.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Policies/Policies.mpc:
+        * tests/Timeout/Timeout.mpc:
 
-	  Added missing "requires += corba_messaging" to projects that
-	  need it.  The clients require CORBA::Object methods only
-	  available when CORBA messaging support is enabled.
+          Added missing "requires += corba_messaging" to projects that
+          need it.  The clients require CORBA::Object methods only
+          available when CORBA messaging support is enabled.
 
 Sun Jun 20 12:17:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
+        * orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
 
-	  Removed "avoids += minimum_corba".  It is now inherited via the
-	  ftrtevent base project.
+          Removed "avoids += minimum_corba".  It is now inherited via the
+          ftrtevent base project.
 
-	* performance-tests/Protocols/client.cpp (run):
+        * performance-tests/Protocols/client.cpp (run):
 
-	  Fixed another emulated exception problem compile-time problem.
-	  ACE_ENV_SINGLE_ARG_PARAMETER in this case, not
-	  ACE_ENV_ARG_PARAMETER.
+          Fixed another emulated exception problem compile-time problem.
+          ACE_ENV_SINGLE_ARG_PARAMETER in this case, not
+          ACE_ENV_ARG_PARAMETER.
 
-	* performance-tests/Protocols/server.cpp (end_test):
+        * performance-tests/Protocols/server.cpp (end_test):
 
-	  Fixed "unused parameter warning in emulated exception builds.
+          Fixed "unused parameter warning in emulated exception builds.
 
 Sun Jun 20 20:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -851,14 +865,14 @@ Sun Jun 20 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 20 10:22:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* docs/TAO-metrics.html:
+        * docs/TAO-metrics.html:
 
-	  Updated links.
+          Updated links.
 
-	* docs/orbsvcs.html:
+        * docs/orbsvcs.html:
 
-	  This file was woefully out of date. Updated this file with new
-	  information.
+          This file was woefully out of date. Updated this file with new
+          information.
 
 Sun Jun 20 15:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -868,54 +882,54 @@ Sun Jun 20 15:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 20 09:10:37 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-  	* docs/index.html: Added libraries.html.
+        * docs/index.html: Added libraries.html.
 
-	* docs/libraries.html: Updated the documentation to be more consistent.
+        * docs/libraries.html: Updated the documentation to be more consistent.
 
 Sun Jun 20 00:34:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* docs/LocalObject.html:
-	* docs/Tags.html:
+        * docs/LocalObject.html:
+        * docs/Tags.html:
 
-	  Updated documentation.
+          Updated documentation.
 
-	* docs/libraries.html:
+        * docs/libraries.html:
 
-	  New documentation for different libraries in $TAO_ROOT/tao.
+          New documentation for different libraries in $TAO_ROOT/tao.
 
 Sat Jun 19 21:56:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
-	* performance-tests/Protocols/client.cpp (run):
-	* performance-tests/Protocols/server.cpp (start_test):
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
+        * performance-tests/Protocols/client.cpp (run):
+        * performance-tests/Protocols/server.cpp (start_test):
 
-	  Fixed emulated exception compile-time errors and warnings.
+          Fixed emulated exception compile-time errors and warnings.
 
 Sat Jun 19 12:20:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO-INSTALL.html:
+        * TAO-INSTALL.html:
 
-	  Updated the file with relevant and latest information.
+          Updated the file with relevant and latest information.
 
-	* docs/minimumTAO.html:
+        * docs/minimumTAO.html:
 
-	  Moved the minimumTAO file from ACE_wrappers/docs, since it has
-	  no place there.
+          Moved the minimumTAO file from ACE_wrappers/docs, since it has
+          no place there.
 
 Sat Jun 19 09:43:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
+        * orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
 
-	  This project requires CORBA messaging support.
+          This project requires CORBA messaging support.
 
 Sat Jun 19 09:05:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
 
-	  Added missing "avoids += minimum_corba".  These services require
-	  functionality that is disabled when minimum CORBA support is
-	  enabled.
+          Added missing "avoids += minimum_corba".  These services require
+          functionality that is disabled when minimum CORBA support is
+          enabled.
 
 Sat Jun 19 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1051,43 +1065,43 @@ Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 16 19:11:16 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols/server.cpp:
+        * performance-tests/Protocols/server.cpp:
 
-	  Added ability to measure inter-arrival times of incoming frames.
-	  Also tracks which invocations were received and which were
-	  missed.
+          Added ability to measure inter-arrival times of incoming frames.
+          Also tracks which invocations were received and which were
+          missed.
 
-	* performance-tests/Protocols/client.cpp:
+        * performance-tests/Protocols/client.cpp:
 
-	  Added ability to select protocol for test messages.  All setup
-	  and teardown messages will be using TCP while the test messages
-	  will use the specified protocol.
+          Added ability to select protocol for test messages.  All setup
+          and teardown messages will be using TCP while the test messages
+          will use the specified protocol.
 
-	* performance-tests/Protocols/test.idl:
+        * performance-tests/Protocols/test.idl:
 
-	  Separated setup, teardown, and shutdown of the test.
+          Separated setup, teardown, and shutdown of the test.
 
 Wed Jun 16 15:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols/client.cpp (run):
+        * performance-tests/Protocols/client.cpp (run):
 
-	  Small fix.
+          Small fix.
 
 Wed Jun 16 13:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols/client.cpp:
-	* performance-tests/Protocols/server.cpp:
-	* performance-tests/Protocols/test.idl:
+        * performance-tests/Protocols/client.cpp:
+        * performance-tests/Protocols/server.cpp:
+        * performance-tests/Protocols/test.idl:
 
-	  Added ability to send messages of arbitrary size.
+          Added ability to send messages of arbitrary size.
 
 Wed Jun 16 11:25:49 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Diffserv/server.cpp:
-	* performance-tests/Protocols/client.cpp:
-	* performance-tests/Protocols/server.cpp:
+        * tests/RTCORBA/Diffserv/server.cpp:
+        * performance-tests/Protocols/client.cpp:
+        * performance-tests/Protocols/server.cpp:
 
-	  Minor fixes.  Thanks to Johnny for pointing them out.
+          Minor fixes.  Thanks to Johnny for pointing them out.
 
 Wed Jun 16 11:52:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1096,43 +1110,43 @@ Wed Jun 16 11:52:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 13 00:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
-	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
 
-	  Fixed improper assignment of a non-boolean value to a bool
-	  member.
+          Fixed improper assignment of a non-boolean value to a bool
+          member.
 
 Tue Jun 15 20:53:28 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples/PluggableUDP/tests/Basic/server.cpp:
+        * examples/PluggableUDP/tests/Basic/server.cpp:
 
-	  Added missing header file.
+          Added missing header file.
 
-	* examples/PluggableUDP/tests/Basic/run_test.pl:
+        * examples/PluggableUDP/tests/Basic/run_test.pl:
 
-	  Added -ORBdebuglevel option.
+          Added -ORBdebuglevel option.
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
 
-	   Fixed options help error.
+           Fixed options help error.
 
 Tue Jun 15 20:28:30 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
 
-	  Added missing include files.
+          Added missing include files.
 
-	* performance-tests/Protocols/server.cpp:
-	* performance-tests/Protocols/client.cpp:
+        * performance-tests/Protocols/server.cpp:
+        * performance-tests/Protocols/client.cpp:
 
-	  Minor fix.
+          Minor fix.
 
 Tue Jun 15 16:13:30 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols:
+        * performance-tests/Protocols:
 
-	  New test for measuring the performance of protocols under
-	  varying network conditions.
+          New test for measuring the performance of protocols under
+          varying network conditions.
 
 Mon Jun 14 19:34:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1313,8 +1327,8 @@ Sun Jun 13 14:12:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Disabled generation of implementation class for abstract
           interfaces, since there is no skeleton class to inherit from.
-	  Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for reporting
-	  this bug.  Fixes bugid 1849.
+          Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for reporting
+          this bug.  Fixes bugid 1849.
 
 Sun Jun 13 17:23:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1377,12 +1391,12 @@ Fri Jun 12 12:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jun 11 22:11:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Array_VarOut_T.inl (operator[]):
-	* tao/Fixed_Array_Argument_T.inl:
+        * tao/Array_VarOut_T.inl (operator[]):
+        * tao/Fixed_Array_Argument_T.inl:
 
-	  More cases where MSVC++ 6 brain damage requires a
-	  reinterpret_cast<> or C-style "sledgehammer" cast instead of the
-	  proper const_cast<>.
+          More cases where MSVC++ 6 brain damage requires a
+          reinterpret_cast<> or C-style "sledgehammer" cast instead of the
+          proper const_cast<>.
 
 Fri Jun 11 23:46:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -1396,8 +1410,8 @@ Fri Jun 11 23:46:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
        * utils/IOR-parser/ior-handler.h:
        * utils/IOR-parser/ior-parser.cpp:
 
-	  Removed these files from the repo. The utility is outdated and
-	  is superceeded by catior utility.
+          Removed these files from the repo. The utility is outdated and
+          is superceeded by catior utility.
 
 Fri Jun 11 21:47:12 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -1408,9 +1422,9 @@ Fri Jun 11 21:47:12 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Fri Jun 11 15:30:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.cpp:
 
-	  Fixed a memory leak from forwarded object references.
+          Fixed a memory leak from forwarded object references.
 
 Fri Jun 11 12:11:16 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 

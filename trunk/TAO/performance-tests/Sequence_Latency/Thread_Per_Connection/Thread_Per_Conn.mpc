@@ -8,7 +8,7 @@ project(* seq server): server, strategies {
   }
 }
 
-project(* seq client): client, strategies {
+project(* seq client): taoexe, strategies {
   Source_Files {
     TestC.cpp
     Client_Task.cpp
