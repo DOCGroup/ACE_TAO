@@ -47,8 +47,5 @@
 #include "be_visitor_interface/ami_handler_fwd_ci.h"
 #include "be_visitor_interface/ami_handler_stub_ch.h"
 #include "be_visitor_interface/ami_handler_stub_cs.h"
-#include "be_visitor_interface/ami_exception_holder_ch.h"
-#include "be_visitor_interface/ami_exception_holder_ci.h"
-#include "be_visitor_interface/ami_exception_holder_cs.h"
 
 #endif /* _BE_VISITOR_INTERFACE_H */
