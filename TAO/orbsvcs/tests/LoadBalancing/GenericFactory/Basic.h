@@ -1,10 +1,11 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 #ifndef BASIC_H
 #define BASIC_H
 
+// @@ Jai, you don't need this header for non-library code.
 #include "ace/pre.h"
 
 #include "TestS.h"
@@ -20,6 +21,13 @@
 /// Implement the Test::Basic interface
 class Basic
   : public virtual POA_Test::Basic
+// @@ Jai, do you really want to enable reference counting in this
+//    servant?  There is nothing wrong in doing so but the code in
+//    server.cpp assumes that the server is not reference counted.
+//
+//    If you're going to leave reference counting enabled, add a
+//    protected destructor to force proper memory management through
+//    the reference counting mechanism.
   , public virtual PortableServer::RefCountServantBase
 {
 public:
@@ -42,5 +50,6 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
+// @@ Jai, you don't need this header for non-library code.
 #include "ace/post.h"
 #endif /* BASIC_H */
