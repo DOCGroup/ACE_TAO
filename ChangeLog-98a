@@ -6,6 +6,9 @@ Thu Mar 26 12:54:57 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: added support
           for x86 targets.
 
+        * ace/Basic_Types.h: sizeof (long double) is 8 on ghs/VxWorks/i386,
+          not 12.
+
 Wed Mar 25 10:10:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_{chorus,vxworks5.x}_ghs.GNU:
