@@ -1,5 +1,12 @@
 Fri Jun 13 03:13:51 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
+	* ace/config-win32-common.h: Added a "pragma comment" directive to
+ 	  direct MSVC to link in mswsock.lib automatically.  Thanks to
+ 	  Bill Tang <btang@magellan.com> for reminding this.
+
+	* ace/ace.{mak,mdp}: Removed explicit inclusion of mswsock.lib.
+  	  Thanks to Bill Tang <btang@magellan.com> for reminding this.
+
 	* examples/OS/Process/Process.{mdp,mak}: For some reasons, I got
  	  an "unknown link error, please refer to documentation for
  	  appropriate technical supports" when building this example on NT
