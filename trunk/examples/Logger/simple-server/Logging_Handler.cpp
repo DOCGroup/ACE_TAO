@@ -11,7 +11,9 @@ Logging_Handler::Logging_Handler (void)
 
 Logging_Handler::~Logging_Handler (void)
 {
+  // Make sure there are no timers.
   REACTOR::instance ()->cancel_timer (this);
+
   this->cli_stream_.close ();
 }
 
@@ -26,7 +28,7 @@ Logging_Handler::peer (void)
 
 int
 Logging_Handler::handle_timeout (const ACE_Time_Value &,
-				const void *arg)
+                                 const void *arg)
 {
   ACE_ASSERT (arg == this);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling timeout from this = %u\n", this));
@@ -51,12 +53,12 @@ Logging_Handler::handle_input (ACE_HANDLE)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-			"client logger", this->host_name_), -1);      
+                         "client logger", this->host_name_), -1);      
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR, 
 			 "(%P|%t) closing log daemon at host %s (fd = %d)\n",
-			this->host_name_, this->get_handle ()), -1);
+                         this->host_name_, this->get_handle ()), -1);
       /* NOTREACHED */
     case sizeof (size_t):
       {
@@ -66,7 +68,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
 	n = this->cli_stream_.recv_n ((void *) &lp, len);
 	if (n != (ssize_t) len)
 	  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-			    "client logger", this->host_name_), -1);
+                             "client logger", this->host_name_), -1);
 	/* NOTREACHED */
 	  
 	lp.decode ();
@@ -78,12 +80,12 @@ Logging_Handler::handle_input (ACE_HANDLE)
 	  }
 	else
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
-		     lp.length (), n));
+                      lp.length (), n));
 	break;
       }
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-			"client logger", this->host_name_), -1);
+                         "client logger", this->host_name_), -1);
       /* NOTREACHED */
     }
 
@@ -111,15 +113,14 @@ Logging_Handler::open (void)
 		       addr.get_host_name (), 
 		       MAXHOSTNAMELEN + 1);
 
-      if (REACTOR::instance ()->register_handler 
-	  (this, ACE_Event_Handler::READ_MASK) == -1)
+      if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "(%P|%t) can't register with reactor\n"), 
-			   -1);
+                          -1);
       else if (REACTOR::instance ()->schedule_timer
-	  (this, (const void *) this, 
-	   ACE_Time_Value (2), 
-	   ACE_Time_Value (2)) == -1)
+               (this, (const void *) this, 
+                ACE_Time_Value (2), 
+                ACE_Time_Value (2)) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "can'(%P|%t) t register with reactor\n"), 
 			  -1);
@@ -137,9 +138,8 @@ Logging_Handler::open (void)
 int
 Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
-  // Must be allocated dynamically!
-  if (mask == ACE_Event_Handler::READ_MASK)
-    delete this;
+  // Must have been allocated dynamically
+  delete this;
   return 0;
 }
 
@@ -148,6 +148,5 @@ Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 int
 Logging_Handler::close (void)
 {
-  return this->handle_close (ACE_INVALID_HANDLE, 
-			     ACE_Event_Handler::READ_MASK);
+  return this->handle_close ();
 }

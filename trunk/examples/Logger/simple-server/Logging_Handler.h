@@ -46,7 +46,8 @@ protected:
   // = Demultiplexing hooks.
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg); 
 
   // = Really should be private...
