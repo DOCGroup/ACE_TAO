@@ -1,6 +1,16 @@
 // -*- C++ -*-
-//
-// $Id$
+
+//=============================================================================
+/**
+ * @file   ORT_test_IORInterceptor.h
+ *
+ * $Id$
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ * @author Priyanka Gontla <gontla_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef ORT_TEST_IORINTERCEPTOR_H
 #define ORT_TEST_IORINTERCEPTOR_H
@@ -75,6 +85,7 @@ private:
   CORBA::Long establish_count_;
 
   CORBA::Long components_establish_count_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -1,5 +1,7 @@
 #
-# Makefile for building the ORT server
+# Borland Makefile for building the ORT server
+#
+# $Id$
 #
 
 NAME = server
@@ -10,26 +12,26 @@ OBJFILES = \
         $(OBJDIR)\ORT_testS.obj \
         $(OBJDIR)\ORT_testC.obj \
         $(OBJDIR)\ORT_test_i.obj \
-        $(OBJDIR)\ORT_test_IORInterceptor_ORBInitializer.obj \
         $(OBJDIR)\ORT_test_IORInterceptor.obj \
+        $(OBJDIR)\ObjectReferenceFactoryC.obj \
+        $(OBJDIR)\ObjectReferenceFactory.obj \
+        $(OBJDIR)\ServerRequestInterceptor.obj \
+        $(OBJDIR)\ServerORBInitializer.obj \
         $(OBJDIR)\server.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
-	$(TAO_IORTABLE_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
-	$(TAO_NAMING_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-	$(TAO_IORTABLE_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
-	$(TAO_NAMING_LIB)
 
 IDLFILES = \
-        $(IDLDIR)\ORT_test.idl
+        $(IDLDIR)\ORT_test.idl \
+        $(IDLDIR)\ObjectReferenceFactory.idl
 
 CPPDIR = .
 
@@ -43,3 +45,6 @@ IDLDIR = .
 
 $(IDLDIR)\ORT_testS.cpp $(IDLDIR)\ORT_testC.cpp: $(IDLDIR)\ORT_test.idl
 	$(TAO_IDL) $**
+
+$(IDLDIR)\ObjectReferenceFactoryC.cpp: $(IDLDIR)\ObjectReferenceFactory.idl
+	$(TAO_IDL) -Gv -DCORBA3 $**

@@ -1,12 +1,13 @@
-// $Id$
-
 #include "ORT_test_i.h"
-#include "ORT_test_IORInterceptor_ORBInitializer.h"
-#include "tao/PortableInterceptorC.h"
-
-#include "tao/ORB_Core.h"
+#include "ServerORBInitializer.h"
 
 #include "ace/Get_Opt.h"
+
+
+ACE_RCSID (ORT,
+           server,
+           "$Id$")
+
 
 const char *ior_output_file = 0;
 
@@ -20,7 +21,8 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.optarg;
+        ior_output_file = get_opts.opt_arg ();
+        ACE_DEBUG ((LM_DEBUG, "FILE ==== %s\n", ior_output_file));
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,24 +42,22 @@ int main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      PortableInterceptor::ORBInitializer_ptr orb_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr tmp;
 
-      ACE_NEW_RETURN (orb_initializer,
-                      ORT_test_IORInterceptor_ORBInitializer,
+      ACE_NEW_RETURN (tmp,
+                      ServerORBInitializer,
                       -1); // No CORBA exceptions yet!
 
-      PortableInterceptor::ORBInitializer_var orb_initializer_var =
-        orb_initializer;
+      PortableInterceptor::ORBInitializer_var orb_initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer_var.in ()
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
+                                            "ORT Test ORB"
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -90,29 +90,6 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // First lets check if the new -ORBId, -ORBServerId options are
-      // working correctly.
-      // @@ NON-PORTABLE!!!!!!!!!
-      const char * orb_id = orb->orb_core ()->orbid ();
-      ACE_TRY_CHECK;
-
-      if (ACE_OS::strcmp (orb_id, "ORT_test_ORB") != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "-ORBId option not working correctly"));
-          return -1;
-        }
-
-      // @@ NON-PORTABLE!!!!!!!
-      const char * server_id = orb->orb_core ()->server_id ();
-
-      if (ACE_OS::strcmp (server_id, "ORT_test_server") != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "-ORBServerId option not working correctly"));
-          return -1;
-        }
-
       CORBA::PolicyList policies (0);
       policies.length (0);
 
@@ -125,53 +102,44 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       PortableServer::POA_var second_poa =
-        root_poa->create_POA ("SECOND_POA",
-                              poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+        first_poa->create_POA ("SECOND_POA",
+                               poa_manager.in (),
+                               policies
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var third_poa =
-        first_poa->create_POA ("THIRD_POA",
-                              poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::POA_var fourth_poa =
-        second_poa->create_POA ("FOURTH_POA",
+        second_poa->create_POA ("THIRD_POA",
                                 poa_manager.in (),
                                 policies
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ORT_test_i ort_test_impl (orb.in ());
-
-      // Activate
-      obj = ort_test_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Narrow it down.
-      ObjectReferenceTemplate::ORT_test_var ort_test =
-        ObjectReferenceTemplate::ORT_test::_narrow (obj.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Check for nil reference
-      if (CORBA::is_nil (ort_test.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain reference to ",
-                           "ObjectReferenceTemplate::ort_test ",
-                           "object.\n"),
-                          -1);
-
-      // Convert the object reference to a string format.
-      CORBA::String_var ior =
-        orb->object_to_string (ort_test.in ()
+      PortableServer::POA_var fourth_poa =
+        third_poa->create_POA ("FOURTH_POA",
+                               poa_manager.in (),
+                               policies
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // If the ior_output_file exists, output the IOR to it.
+      ORT_test_i ort_test_impl (orb.in ());
+
+      PortableServer::ObjectId_var oid =
+        fourth_poa->activate_object (&ort_test_impl
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      obj = fourth_poa->servant_to_reference (&ort_test_impl
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Convert the object reference to a string format.
+      CORBA::String_var ior =
+        orb->object_to_string (obj.in ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Dump it to a file.
       if (ior_output_file != 0)
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
@@ -187,11 +155,14 @@ int main (int argc, char *argv[])
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ORT example server:");
+                           "ORT test server:");
       return -1;
     }
   ACE_ENDTRY;
