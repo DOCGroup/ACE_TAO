@@ -1,3 +1,9 @@
+Tue Jul 27 12:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{h,cpp}:
+        * tao/Synch_Invocation.cpp:
+          Renamed queue_message to format_queue_message
+
 Tue Jul 27 12:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,cpp}:
