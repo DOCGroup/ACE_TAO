@@ -1,15 +1,18 @@
-Thu Apr 23 13:54:33 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Malloc.i (free): added ACE_UNUSED_ARG (ptr) if ACE_NDEBUG.
-
 Thu Apr 23 11:21:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-        * ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
-          can be a proper base class by making the destructor virtual and
-          putting the methods into the protected section.  Thanks to Garry
-          Brother <gmbroth@romulus.ncsc.mil> for this.
+	* apps/Gateway/Gateway/gatewayd.cpp,
+	  apps/Gateway/Peer/peerd.cpp: Added a check to see if the
+	  svc.conf file exists before trying to parse the arguments.
+  	  Thanks to Dani Flexer <danif@ivory-sw.com> for reporting this.
 
-Thu Apr 23 06:38:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* apps/Gateway/Peer/Options.cpp (parse_args): Added the "C:"
+ 	  qualifier to the get_opt string.  Thanks to Dani Flexer
+ 	  <danif@ivory-sw.com> for reporting this.
+
+	* ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
+ 	  can be a proper base class by making the destructor virtual and
+ 	  putting the methods into the protected section.  Thanks to Garry
+ 	  Brother <gmbroth@romulus.ncsc.mil> for this.
 
         * ace/XtReactor.cpp: Commented out most of the logic if we're
           running on Win32 because (1) it doesn't work correctly since
@@ -20,7 +23,9 @@ Thu Apr 23 06:38:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
           this.
 
-Thu Apr 23 06:11:27 1998  David L. Levine  <levine@cs.wustl.edu>
+Thu Apr 23 13:54:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Malloc.i (free): added ACE_UNUSED_ARG (ptr) if ACE_NDEBUG.
 
         * include/makeinclude/platform_chorus.GNU: include dtool/htgt-cf.rf
           from $(MERGEDIR) instead of $(CLASSIXDIR).  Thanks to
