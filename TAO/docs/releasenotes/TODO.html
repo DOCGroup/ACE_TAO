@@ -109,10 +109,20 @@ class Foo {
 	    exception and then returning and more flexibility wrt the
 	    argument name.
 	  </LI>
-
 	</UL>
+	<BR>[STATUS] Carlos is working on this.
+
+      <LI>Add compiled marshalling
+	<BR>[STATUS] Andy is working on this.
       </LI>
 
+      <LI>Implement the new DynAny types.
+	<BR>[STATUS] Jeff is working on this.
+      </LI>
+      
+      <LI>Implement an Implementation Repository for TAO.
+	<BR>[STATUS] Darrell is working on this.
+      </LI>
     </UL>
 
     <CENTER><HR></CENTER>
@@ -130,10 +140,6 @@ class Foo {
       <LI><B>EC:</B> Improve configuration support in the EC, give an
 	example of a single threaded EC, support different dispatching
 	strategies, etc.
-      </LI>
-
-      <LI>Add compiled marshalling
-	<BR>[STATUS] Andy is working on this.
       </LI>
 
       <LI>Add support for multiple Profiles in the ORB (completing the
@@ -203,6 +209,8 @@ class Foo {
       
       <LI>Are nested upcalls in different concurrency models, like
 	thread-per-connection working?
+	<BR>[STATUS] Irfan reports that this works correctly with
+	<CODE>thread-per-connection</PRE>
       </LI>
 
       <LI>Add an option to the IDL-compiler (e.g. -rp) meaning
@@ -448,10 +456,6 @@ class Foo {
 	their representation) is broken.
       </LI>
 
-      <LI>We must support DynAny.
-	<BR>[STATUS] Jeff is working on this.
-      </LI>
-
       <LI>We must support a IFR.
       </LI>
 
@@ -484,6 +488,14 @@ class Foo {
       
       <LI>The IDL compiler could generate a static method to access
 	the interface repository ID of a class.
+      </LI>
+
+      <LI>The IDL compiler should support
+	<PRE>#include <orb.idl></PRE> properly.  IMHO it should not
+	add any <PRE>#include</PRE> to the generated code and the
+	<CODE>orb.idl</CODE> file should contain all the declarations,
+	except for the pseudo objects that are better supported by the
+	compiler itself.
       </LI>
     </OL>
 
