@@ -66,7 +66,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   {
     return -1;
   }
-  
+
   if (rcv_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_RCVBUF,
@@ -99,7 +99,7 @@ TAO_Connection_Handler::svc_i (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - TAO_Connection_Handler::svc_i begin\n")));
+                ACE_TEXT ("TAO (%P|%t) - Connection_Handler::svc_i begin\n")));
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting

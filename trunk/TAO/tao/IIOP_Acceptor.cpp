@@ -471,9 +471,9 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot open acceptor")));
+                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
+                        ACE_TEXT ("- %p, "),
+                        ACE_TEXT ("cannot open acceptor\n")));
           return -1;
         }
     }
@@ -513,9 +513,9 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
                         ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
-                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("- %p\n"),
                         requested_port, last_port, ACE_TEXT("")));
           return -1;
         }
@@ -527,12 +527,11 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // gets set in the addr.
   if (this->base_acceptor_.acceptor ().get_local_addr (address) != 0)
     {
-      // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot get local addr")));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
+                    ACE_TEXT ("- %p"),
+                    ACE_TEXT ("cannot get local addr\n")));
       return -1;
     }
 
@@ -554,7 +553,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
+                      ACE_LIB_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i - ")
                       ACE_LIB_TEXT ("listening on: <%s:%u>\n"),
                       ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
@@ -627,10 +626,10 @@ TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
+                    ACE_TEXT ("TAO (%P|%t) ")
                     ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot determine hostname")));
+                    ACE_TEXT ("- %p, "),
+                    ACE_TEXT ("cannot determine hostname\n")));
       return -1;
     }
 

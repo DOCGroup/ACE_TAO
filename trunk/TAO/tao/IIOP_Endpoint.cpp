@@ -85,16 +85,25 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
   if (use_dotted_decimal_addresses
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
+      if (use_dotted_decimal_addresses == 0 && TAO_debug_level > 5)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) ")
+                      ACE_TEXT ("IIOP_Endpoint::set ")
+                      ACE_TEXT ("- %p "),
+                      ACE_TEXT ("cannot determine hostname\n")));
+        }
+
       const char *tmp = addr.get_host_addr ();
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) ")
                           ACE_TEXT ("IIOP_Endpoint::set ")
-                          ACE_TEXT ("- %p\n\n"),
-                          ACE_TEXT ("cannot determine hostname")));
+                          ACE_TEXT ("- %p "),
+                          ACE_TEXT ("cannot determine hostname and hostaddr\n")));
             }
           return -1;
         }
