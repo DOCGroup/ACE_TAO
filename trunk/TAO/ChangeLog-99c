@@ -1,3 +1,9 @@
+Wed Mar 17 12:28:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	  Fixed a cut-and-paste error. Thanks to Greg Holtmeyer 
+	  <Greg.Holtmeyer@MW.Boeing.com> for pointing this out.
+
 Wed Mar 17 11:32:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Param_Test/objref.cpp

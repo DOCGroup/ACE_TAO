@@ -667,7 +667,7 @@ Cubit_Client::cube_many_sequence (int, int l)
 
   // Cube the sequence
   {
-    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_SEQUENCE_START);
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_MANY_SEQUENCE_START);
 
     this->cubit_->cube_many_sequence (input, vout, this->env_);
   }
@@ -770,7 +770,7 @@ Cubit_Client::cube_rti_data (int, int numUpdates, int numAttrs)
     }
 
   {
-    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_RTI_DATA_START);
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_RTI_DATA_START);
 
     this->cubit_->cube_rti_data (input, vout, this->env_);
   }
