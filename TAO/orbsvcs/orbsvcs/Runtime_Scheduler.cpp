@@ -291,7 +291,7 @@ ACE_Runtime_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
     ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
-                      (RtecScheduler::Preemption_Priority_t) -1);
+              (RtecScheduler::Preemption_Priority_t) -1);
   else
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
 }
@@ -299,16 +299,14 @@ ACE_Runtime_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs
-					 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   RtecScheduler::NOT_SCHEDULED))
+                  RtecScheduler::NOT_SCHEDULED))
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
-    ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
-		      (RtecScheduler::Preemption_Priority_t) -1);
+    ACE_THROW (RtecScheduler::NOT_SCHEDULED());
   //TODO: fill the Config_Info_Set with the runtime Config_Infos
   //for now, this function is unimplemented
   return;
 }
-
