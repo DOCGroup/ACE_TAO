@@ -2275,6 +2275,7 @@ struct ACE_OS_Export ACE_mutexattr_t
 typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
 typedef int ACE_recursive_thread_mutex_t;
+typedef int ACE_recursive_mutex_state;
 #   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
 typedef int ACE_sema_t;
 #   endif /* !ACE_HAS_POSIX_SEM && !ACE_PSOS */
