@@ -50,13 +50,18 @@ public:
   operator T * const & () const;
   operator T *& ();
 
-  T * in (void) const;
-  T *& inout (void);
-  T *& out (void);
-  T * _retn (void);
+  typedef T *   _in_type;
+  typedef T *&  _inout_type;
+  typedef T *&  _out_type;
+  typedef T *   _retn_type;
+
+  _in_type      in (void) const;
+  _inout_type   inout (void);
+  _out_type     out (void);
+  _retn_type    _retn (void);
 
   // TAO extension.
-  T * ptr (void) const;
+  _retn_type    ptr (void) const;
 
 protected:
   T * ptr_;
