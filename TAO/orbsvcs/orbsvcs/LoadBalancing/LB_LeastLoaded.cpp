@@ -278,26 +278,28 @@ TAO_LB_LeastLoaded::analyze_loads (
                             load
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-//           ACE_DEBUG ((LM_DEBUG,
-//                       "EFFECTIVE_LOAD == %f\n"
-//                       "CRITICAL       == %f\n"
-//                       "REJECT         == %f\n"
-//                       "DAMPENING      == %f\n",
-//                       load.value,
-//                       this->critical_threshold_,
-//                       this->reject_threshold_,
-//                       this->dampening_));
-
+/*
+           ACE_DEBUG ((LM_DEBUG,
+                       "EFFECTIVE_LOAD == %f\n"
+                       "CRITICAL       == %f\n"
+                       "REJECT         == %f\n"
+                       "DAMPENING      == %f\n",
+                       load.value,
+                       this->critical_threshold_,
+                       this->reject_threshold_,
+                       this->dampening_));
+*/
           // Perform load rebalancing only if the critical threshold
           // was  set.
           if (this->critical_threshold_ != 0)
             {
               if (load.value > this->critical_threshold_)
                 {
-//                   ACE_DEBUG ((LM_DEBUG,
-//                               "%P --- ALERTING LOCATION %u\n",
-//                               i));
+/*                        
+                   ACE_DEBUG ((LM_DEBUG,
+                               "%P --- ALERTING LOCATION %u\n",
+                               i));
+*/
 
                   // The location is overloaded.  Perform load
                   // shedding by informing the LoadAlert object
@@ -373,20 +375,20 @@ TAO_LB_LeastLoaded::get_location (
                             load
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-//           ACE_DEBUG ((LM_DEBUG,
-//                       "LOC = %u"
-//                       "\tC = %d"
-//                       "\treject = %f"
-//                       "\tload = %f\n"
-//                       "\tmin_load = %f\n",
-//                       i,
-//                       (this->reject_threshold_ == 0
-//                        || load.value < this->reject_threshold_),
-//                       this->reject_threshold_,
-//                       load.value,
-//                       min_load));
-
+/*
+           ACE_DEBUG ((LM_DEBUG,
+                       "LOC = %u"
+                       "\tC = %d"
+                       "\treject = %f"
+                       "\tload = %f\n"
+                       "\tmin_load = %f\n",
+                       i,
+                       (this->reject_threshold_ == 0
+                        || load.value < this->reject_threshold_),
+                       this->reject_threshold_,
+                       load.value,
+                       min_load));
+*/
           if ((this->reject_threshold_ == 0
                || load.value < this->reject_threshold_)
               && load.value < min_load)
@@ -505,14 +507,15 @@ TAO_LB_LeastLoaded::get_location (
   if (found_load)
     {
       if (found_location)
+      {
+        //ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
         location = locations[location_index];
+      }
       else if (this->reject_threshold_ != 0)
         ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);
 
 //       ACE_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
     }
-
-//   ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
 
   return found_location;
 }
@@ -606,20 +609,21 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
   this->tolerance_          = tolerance;
   this->dampening_          = dampening;
   this->per_balance_load_   = per_balance_load;
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               "--------------------------------\n"
-//               "critical_threshold = %f\n"
-//               "reject_threshold   = %f\n"
-//               "tolerance          = %f\n"
-//               "dampening          = %f\n"
-//               "per_balance_load   = %f\n"
-//               "--------------------------------\n",
-//               critical_threshold,
-//               reject_threshold,
-//               tolerance,
-//               dampening,
-//               per_balance_load));
+/*
+   ACE_DEBUG ((LM_DEBUG,
+               "--------------------------------\n"
+               "critical_threshold = %f\n"
+               "reject_threshold   = %f\n"
+               "tolerance          = %f\n"
+               "dampening          = %f\n"
+               "per_balance_load   = %f\n"
+               "--------------------------------\n",
+               critical_threshold,
+               reject_threshold,
+               tolerance,
+               dampening,
+               per_balance_load));
+*/               
 }
 
 void
