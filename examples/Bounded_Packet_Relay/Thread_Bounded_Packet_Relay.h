@@ -262,7 +262,6 @@ public:
   // Helper method: clears all timers.
 
 protected:
-
   Bounded_Packet_Relay<ACE_MT_SYNCH> &relay_;
   // Stores a reference to the relay object on which to invoke
   // the appropritate calls when the timer expires.
@@ -301,7 +300,6 @@ public:
   // Cancellation hook.
 
 private:
-
   u_long send_count_;
   // Count of the number of messages to send from the
   // relay object to the output device object.
@@ -333,7 +331,6 @@ public:
 
   virtual int cancelled (void);
   // Cancellation hook.
-
 };
 
 class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <Thread_Timer_Queue>
@@ -348,13 +345,10 @@ class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <T
   //    called from the base class to print a menu specific to the
   //    thread implementation of the timer queue.
 public:
-
   // = Trait for commands issued from this driver
-
   typedef Command<User_Input_Task, User_Input_Task::ACTION> COMMAND;
 
   // = Initialization and termination methods.
-
   Thread_Bounded_Packet_Relay_Driver (void);
   // Constructor.
 
@@ -371,7 +365,6 @@ public:
   // Run the driver.
 
 private:
-
   User_Input_Task input_task_;
   // User input task, subclassed from ACE_Task.
 };
