@@ -1,3 +1,9 @@
+Thu Dec 20 09:03:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+	* Makefile.bor:
+          Only build ace and its tests because the rest is not fully
+          unicode compliant
+
 Wed Dec 19 22:28:00 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/WFMO_Reactor.cpp (upcall): Corrected syntax error.
@@ -19,8 +25,8 @@ Wed Dec 19 11:10:35 2001  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 Wed Dec 19 10:02:53 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Makefile.bor: 
-	  Made changes for Borland ace-only builds as per 
+	* Makefile.bor:
+	  Made changes for Borland ace-only builds as per
 	  Johnny Willemsen <johnny.willemsen@meco.nl>.
 
 Wed Dec 19 09:39:03 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
