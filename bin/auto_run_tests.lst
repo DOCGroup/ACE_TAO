@@ -121,7 +121,8 @@ TAO/examples/Simple/grid/run_test.pl
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
 TAO/examples/Simple/time/run_test.pl
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
-TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC
+TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
+TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
 
 # BROKEN TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
 # BROKEN TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
