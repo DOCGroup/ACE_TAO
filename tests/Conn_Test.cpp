@@ -563,7 +563,7 @@ main (int, char *[])
   // Create a server address.
   ACE_INET_Addr server_addr;
 
-  // Bind listener to any port and then find out what the port was.
+  // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "open"));
