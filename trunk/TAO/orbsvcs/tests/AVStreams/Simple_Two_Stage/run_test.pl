@@ -20,32 +20,13 @@ $outfile = PerlACE::LocalFile ("output");
 $debug = 0;
 
 # generate test stream data
-$input = "test_input";
-while ( -e $input ) {
-    $input = $input."X";
-}
-open( INPUT, "> $input" ) || die( "can't create input file: $input" );
-for($i =0; $i < 1000 ; $i++ ) {
-    print INPUT <<EOFINPUT;
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-EOFINPUT
-}
-close(INPUT);
+$input = PerlACE::generate_test_file("test_input", 102400);
 
 unlink $nsior;
 
-for ($i = 0; $i <= $#ARGV; $i++) 
+for ($i = 0; $i <= $#ARGV; $i++)
 {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") 
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
         print STDERR "\nusage:  run_test\n";
 
@@ -64,12 +45,12 @@ for ($i = 0; $i <= $#ARGV; $i++)
 
 	exit;
     }
-    elsif ($ARGV[$i] eq "-p") 
+    elsif ($ARGV[$i] eq "-p")
     {
 	@protocols = split (',', $ARGV[$i + 1]);
 	$i++;
     }
-    elsif ($ARGV[$i] eq "-d") 
+    elsif ($ARGV[$i] eq "-d")
     {
 	$debug = $ARGV[$i + 1];
 	$i++;
@@ -82,10 +63,10 @@ print STDERR "Starting Naming Service\n";
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($nsior, 100) == -1) 
+if (PerlACE::waitforfile_timed ($nsior, 100) == -1)
 {
     print STDERR "ERROR: cannot find naming service IOR file\n";
-    $NS->Kill (); 
+    $NS->Kill ();
     exit 1;
 }
 
@@ -103,25 +84,25 @@ for $protocol (@protocols)
 
     $SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -ORBDebugLevel ".$debug." -f ".$output_file);
     $CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -ORBDebugLevel ".$debug." -p ".$protocol." -f $input");
-    
+
     print STDERR "Using ".$protocol."\n";
     print STDERR "Starting Receiver\n";
-    
+
     $SV->Spawn ();
-    
+
     sleep $sleeptime;
-    
+
     print STDERR "Starting Sender\n";
-    
+
     $sender = $CL->SpawnWaitKill (200);
-    
+
     if ($sender != 0) {
 	print STDERR "ERROR: sender returned $sender\n";
 	$status = 1;
     }
-    
+
     $receiver = $SV->TerminateWaitKill (200);
-    
+
     if ($receiver != 0) {
 	print STDERR "ERROR: receiver returned $receiver\n";
 	$status = 1;

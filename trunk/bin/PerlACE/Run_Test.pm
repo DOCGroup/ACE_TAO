@@ -101,6 +101,31 @@ sub check_n_cleanup_files
   }
 }
 
+sub generate_test_file
+{
+  my $file = shift;
+  my $size = shift;
+
+  while ( -e $file ) {
+    $file = $file."X";
+  }
+
+  my $data = "abcdefghijklmnopqrstuvwxyz";
+  $data = $data.uc($data)."0123456789";
+
+  open( INPUT, "> $file" ) || die( "can't create input file: $file" );
+  for($i=62; $i < $size ; $i += 62 ) {
+    print INPUT $data;
+  }
+  $i -= 62;
+  if ($i < $size) {
+    print INPUT substr($data, 0, $size-$i);
+  }
+  close(INPUT);
+
+  return $file;
+}
+
 $sleeptime = 5;
 
 1;
