@@ -346,13 +346,18 @@ public:
 
   /// Determine the next event to timeout.  Returns <max> if there are
   /// no pending timers or if all pending timers are longer than max.
+  /// This method acquires a lock internally since it modifies internal state. 
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
 
   /**
    * Determine the next event to timeout.  Returns <max> if there are
    * no pending timers or if all pending timers are longer than max.
    * <the_timeout> should be a pointer to storage for the timeout value,
-   * and this value is also returned.
+   * and this value is also returned.  This method does not acquire a
+   * lock internally since it doesn't modify internal state.  If you 
+   * need to call this method when the queue is being modified
+   * concurrently, however, you should make sure to acquire the <mutex()>
+   * externally before making the call.
    */
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
                                              ACE_Time_Value *the_timeout);

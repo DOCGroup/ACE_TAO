@@ -57,14 +57,6 @@ ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Queue_Iterator_T
 {
 }
 
-// Determines the minimum amount of time that the Reactor must wait
-// before timing out.  This is computed as the smaller of (1) the
-// amount the caller requested when calling handle_events() and (2)
-// the earliest time registered in the Timer Queue (if any).  Must be
-// called with an external lock held since it returns a pointer to a
-// Time_Value type stored in the Timer_Queue type itself.  If some
-// external lock isn't held we'll have reentrancy problems!
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Time_Value *
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
