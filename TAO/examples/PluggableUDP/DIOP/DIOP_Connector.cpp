@@ -41,8 +41,8 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // @@ Michael: For DIOP we should be able to get rid of the connection
   //             caching.
-  // @@ Frank: Not disabled yet...
 
+  /*
 
   /// Our connect creation strategy
   TAO_DIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
@@ -66,6 +66,9 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
                                      concurrency_strategy);
+
+  */
+  return 0;
 }
 
 int
@@ -92,10 +95,12 @@ TAO_DIOP_Connector::close (void)
 
   // @@ Michael: For DIOP we should be able to get rid of the connection
   //             caching.
-  // @@ Frank: Not yet...
+  /*
   delete this->base_connector_.concurrency_strategy ();
   delete this->base_connector_.creation_strategy ();
   return this->base_connector_.close ();
+  */
+  return 0;
 }
 
 int
