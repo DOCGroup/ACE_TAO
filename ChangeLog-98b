@@ -1,3 +1,50 @@
+Sun Sep 13 18:36:11 EDT 1998   James CE Johnson  <jcej@.lads.com>
+
+        * docs/tutorials/006/notify.cpp
+          No longer applicable.  This used spawn() to create the
+          thread but the new version uses an ACE_Task<> derivative.
+        
+        * docs/tutorials/006/Makefile
+          Removed dependency info.
+        
+        * docs/tutorials/007/thread_pool.cpp
+          Removed THR_DETACHED from activate() call.  I need a
+          better understanding of when to include this flag...
+        
+        * docs/tutorials/index.html
+          Setting up new Message_Queue entry points.
+        
+        * docs/tutorials/010/Makefile
+          docs/tutorials/010/block.h
+          docs/tutorials/010/message_queue.cpp
+          docs/tutorials/010/page01.html
+          docs/tutorials/010/page02.html
+          docs/tutorials/010/page03.html
+          docs/tutorials/010/page04.html
+          docs/tutorials/010/page05.html
+          docs/tutorials/010/page06.html
+          docs/tutorials/010/page07.html
+          docs/tutorials/010/task.cpp
+          docs/tutorials/010/task.h
+        
+          A tutorial showing a simple use of the ACE_Message_Queue.
+        
+        * docs/tutorials/011/Makefile
+          docs/tutorials/011/block.h
+          docs/tutorials/011/data.h
+          docs/tutorials/011/message_queue.cpp
+          docs/tutorials/011/page01.html
+          docs/tutorials/011/page02.html
+          docs/tutorials/011/page03.html
+          docs/tutorials/011/page04.html
+          docs/tutorials/011/page05.html
+          docs/tutorials/011/page06.html
+          docs/tutorials/011/task.cpp
+          docs/tutorials/011/task.h
+        
+          Extension of 010 adds queue-ing of non-trivial data.
+        
+
 Sun Sep 13 16:29:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.h: 
