@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
+//    TAO/orbsvcs/tests/AVStreams/Component_Switching
 //
 // = FILENAME
 //    Connection_Manager.h
@@ -17,6 +17,9 @@
 //    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 //
 // ============================================================================
+
+#ifdef CONNECTION_MANAGER_H
+#define CONNECTION_MANAGER_H
 
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -129,3 +132,5 @@ protected:
   // Receiver context.
   CosNaming::NamingContext_var receiver_context_;
 };
+
+#endif /*CONNECTION_MANAGER_H*/
