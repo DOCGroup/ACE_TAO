@@ -1,3 +1,34 @@
+Wed Oct 29 17:31:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/LoadBalancing/Makefile:
+        * orbsvcs/examples/LoadBalancing/ORBInitializer.cpp:
+        * orbsvcs/examples/LoadBalancing/ORBInitializer.h:
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.h:
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/examples/LoadBalancing/client.cpp:
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.cpp:
+        * orbsvcs/examples/LoadBalancing/Stock.cpp:
+        * orbsvcs/examples/LoadBalancing/Stock.h:
+        * orbsvcs/examples/LoadBalancing/StockFactory.h:
+        * orbsvcs/examples/LoadBalancing/StockFactory.cpp:
+        * orbsvcs/examples/LoadBalancing/Test.idl:
+        * orbsvcs/examples/LoadBalancing/run_test.pl:
+
+          Added a new directory "Load Balancing" under
+          TAO/orbsvcs/examples.
+
+          This directory contains an example of the adaptive load
+          balancing strategy built in TAO's Load Balancing Service
+          named the Cygnus Load Balancing/Monitoring Service.
+
+          The server objects, which the LB service is trying to load
+          balance is a StockFactory object. Clients make lot
+          of requests to StockFactory objects, which inturn
+          call a Stock object to return the stock price of
+          a particular Stock symbol.
+
 Wed Oct 29 15:03:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Invocation_Adapter.cpp (invoke_oneway):
@@ -8,7 +39,7 @@ Wed Oct 29 15:03:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 14:14:15 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Makefile: Added Kokyu subdirectory. 
+	* orbsvcs/examples/RtEC/Makefile: Added Kokyu subdirectory.
 
 Wed Oct 29 12:57:51 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
