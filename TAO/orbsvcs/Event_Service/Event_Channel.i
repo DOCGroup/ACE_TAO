@@ -54,7 +54,8 @@ ACE_Push_Supplier_Proxy::source_id (void)
 ACE_INLINE RtecEventChannelAdmin::ProxyPushSupplier_ptr
 ACE_Push_Consumer_Proxy::get_ref (void)
 {
-  return RtecEventChannelAdmin::ProxyPushSupplier::_duplicate(me_);
+  CORBA::Environment env;
+  return this->_this (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerQOS &
@@ -110,13 +111,15 @@ ACE_Push_Consumer_Proxy::correlation (void)
 ACE_INLINE RtecEventChannelAdmin::ConsumerAdmin_ptr
 ACE_ES_Consumer_Module::get_ref (void)
 {
-  return RtecEventChannelAdmin::ConsumerAdmin::_duplicate(me_);
+  CORBA::Environment env;
+  return this->_this (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
 ACE_ES_Supplier_Module::get_ref (void)
 {
-  return RtecEventChannelAdmin::SupplierAdmin::_duplicate(me_);
+  CORBA::Environment env;
+  return this->_this (env);
 }
 
 // **************************************************
@@ -124,7 +127,8 @@ ACE_ES_Supplier_Module::get_ref (void)
 ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr 
 ACE_EventChannel::get_ref (void)
 {
-  return RtecEventChannelAdmin::EventChannel::_duplicate(me_);
+  CORBA::Environment env;
+  return this->_this (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr

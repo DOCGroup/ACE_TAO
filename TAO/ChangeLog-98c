@@ -1,3 +1,10 @@
+Fri Jan 23 17:08:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Event_Channel.h: 
+	* orbsvcs/Event_Service/Event_Channel.i: 
+	  Fixed problem with Event Channel, it was using _this
+	  unproperly.
+
 Fri Jan 23 16:49:19 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Param_Test/{server.cpp,param_test_i.h,param_test_i.cpp}:
