@@ -25,20 +25,38 @@ int main(int,char*[])
   int_sequence a;
   int_sequence b(a);
 
+  int_sequence c(0, int_sequence::allocbuf());
+
   a = b;
+
+  a.length(c.maximum());
+  if (a.release())
+  {
+    b.length(a.length());
+  }
+
+  a[0] = 0;
+  b[0] = a[0];
+
+  int_sequence const & d = a;
+  c[0] = d[0];
+
+  b.replace(0, int_sequence::allocbuf());
+
+  int const * x = d.get_buffer();
+  if (x != 0)
+  {
+    int_sequence::freebuf(a.get_buffer(true));
+  }
+  x = b.get_buffer();
+
+  int_sequence e(c);
 
   typedef TAO::bounded_value_sequence<Foo,TEST_FOO_MAX> Foo_sequence;
 
-  Foo_sequence c;
-  Foo_sequence d(c);
-  d = c;
+  Foo_sequence u;
+  Foo_sequence v(u);
+  u = v;
 
   return 0;
 }
-
-// We use explicit template instantiation to force the instantiation
-// of all member function and thus tests the full class.  This should
-// work across all platforms, even on platforms that do not *require*
-// explicit instantiation of templates.
-template class TAO::bounded_value_sequence<int,TEST_INT_MAX>;
-template class TAO::bounded_value_sequence<Foo,TEST_FOO_MAX>;

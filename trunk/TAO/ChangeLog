@@ -1,3 +1,11 @@
+Wed Sep 22 20:41:44 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+	  To avoid compilation warnings on Tru64_Compaq_C++ we do not use
+	  explicit template intantiation, instead we just use all the
+	  functions.
+
 Wed Sep 22 20:25:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
