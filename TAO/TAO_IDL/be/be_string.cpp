@@ -45,8 +45,6 @@ be_string::be_string (AST_Decl::NodeType nt,
               n,
               I_TRUE)
 {
-  // Always the case.
-  this->size_type (AST_Type::VARIABLE);
 }
 
 // Overriden method.
