@@ -7,8 +7,6 @@ Wed Aug 18 21:02:34 2004  Dale Wilson  <wilson_d@ociweb.com>
           Revert TSS leak fix (temporarily, I hope)
           until I can find and eliminate the hang.
 
-
-
 Wed Aug 18 15:07:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * bin/msvc_static_compile.pl:
@@ -29,15 +27,19 @@ Wed Aug 18 13:29:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
         Added support for building VC8 projects.
 
 Wed Aug 18 08:50:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
-        * ace/Asynch_Connector.h
-        * ace/Asynch_Connector.cpp
-          Thanks to Douglas for his assistance. This change introduces a class-static
-          "local_default" for use as the default parameter for the second attribute of
-          ACE_Asynch_Connector<>::connect(). This "simplifies" the nested templated
-          class for the Solaris Lynxos GCC295 cross compiler which was faulting due to
-          the complexity of this definition. This change does not appreachiably modify
-          the signature of the member function, just stops clients from having to
-          create their own local default parameter.
+
+        * ace/Asynch_Connector.h:
+        * ace/Asynch_Connector.cpp:
+
+          Thanks to Douglas for his assistance. This change introduces a
+	  class-static "local_default" for use as the default parameter
+	  for the second attribute of
+	  ACE_Asynch_Connector<>::connect(). This "simplifies" the nested
+	  templated class for the Solaris Lynxos GCC295 cross compiler
+	  which was faulting due to the complexity of this
+	  definition. This change does not appreachiably modify the
+	  signature of the member function, just stops clients from having
+	  to create their own local default parameter.
 
 Wed Aug 18 01:05:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
