@@ -4,9 +4,10 @@
 
 template <class RefCountPolicy>
 ACE_INLINE
-TAO::TypeCode::Array<RefCountPolicy::Array (CORBA::TCKind kind,
-                                            CORBA::ULong length,
-                                            CORBA::TypeCode_ptr * content_type)
+TAO::TypeCode::Sequence<RefCountPolicy>::Sequence (
+  CORBA::TCKind kind,
+  CORBA::TypeCode_ptr * content_type,
+  CORBA::ULong length)
   : kind_ (kind)
   , content_type_ (content_type)
   , length_ (length)
