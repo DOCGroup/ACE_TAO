@@ -20281,7 +20281,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_IRObject::_narrow (
+      CORBA_IRObject::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -20384,7 +20384,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_Contained::_narrow (
+      IR_Contained::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21022,7 +21022,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_Container::_narrow (
+      IR_Container::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21071,7 +21071,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_IDLType::_narrow (
+      IR_IDLType::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21197,7 +21197,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_Repository::_narrow (
+      IR_Repository::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21246,7 +21246,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ComponentRepository::_narrow (
+      IR_ComponentRepository::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21295,7 +21295,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ModuleDef::_narrow (
+      IR_ModuleDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21372,7 +21372,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ConstantDef::_narrow (
+      IR_ConstantDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21453,7 +21453,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_TypedefDef::_narrow (
+      IR_TypedefDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21532,7 +21532,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_StructDef::_narrow (
+      IR_StructDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21581,7 +21581,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_UnionDef::_narrow (
+      IR_UnionDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21630,7 +21630,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_EnumDef::_narrow (
+      IR_EnumDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21679,7 +21679,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_AliasDef::_narrow (
+      IR_AliasDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21728,7 +21728,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_NativeDef::_narrow (
+      IR_NativeDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21777,7 +21777,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_PrimitiveDef::_narrow (
+      IR_PrimitiveDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21826,7 +21826,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_StringDef::_narrow (
+      IR_StringDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21875,7 +21875,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_WstringDef::_narrow (
+      IR_WstringDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21924,7 +21924,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_FixedDef::_narrow (
+      IR_FixedDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -21973,7 +21973,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_SequenceDef::_narrow (
+      IR_SequenceDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22022,7 +22022,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ArrayDef::_narrow (
+      IR_ArrayDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22071,7 +22071,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ExceptionDef::_narrow (
+      IR_ExceptionDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22197,7 +22197,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_AttributeDef::_narrow (
+      IR_AttributeDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22374,7 +22374,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_OperationDef::_narrow (
+      IR_OperationDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22506,7 +22506,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_InterfaceDef::_narrow (
+      IR_InterfaceDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22644,7 +22644,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ValueMemberDef::_narrow (
+      IR_ValueMemberDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22693,7 +22693,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ValueDef::_narrow (
+      IR_ValueDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22792,7 +22792,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ValueBoxDef::_narrow (
+      IR_ValueBoxDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22841,7 +22841,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ProvidesDef::_narrow (
+      IR_ProvidesDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -22920,7 +22920,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_UsesDef::_narrow (
+      IR_UsesDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23031,7 +23031,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_EventDef::_narrow (
+      IR_EventDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23110,7 +23110,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_EmitsDef::_narrow (
+      IR_EmitsDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23159,7 +23159,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_PublishesDef::_narrow (
+      IR_PublishesDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23208,7 +23208,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ConsumesDef::_narrow (
+      IR_ConsumesDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23257,7 +23257,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_ComponentDef::_narrow (
+      IR_ComponentDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23352,7 +23352,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_PrimaryKeyDef::_narrow (
+      IR_PrimaryKeyDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23431,7 +23431,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_FactoryDef::_narrow (
+      IR_FactoryDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23480,7 +23480,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_FinderDef::_narrow (
+      IR_FinderDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23529,7 +23529,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      IR_HomeDef::_narrow (
+      IR_HomeDef::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -23622,7 +23622,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_TypeCodeFactory::_narrow (
+      CORBA_TypeCodeFactory::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );

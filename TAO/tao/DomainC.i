@@ -587,7 +587,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_DomainManager::_narrow (
+      CORBA_DomainManager::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -638,7 +638,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ConstructionPolicy::_narrow (
+      CORBA_ConstructionPolicy::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );

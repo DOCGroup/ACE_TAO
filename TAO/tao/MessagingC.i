@@ -4221,7 +4221,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      Messaging::ReplyHandler::_narrow (
+      Messaging::ReplyHandler::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );

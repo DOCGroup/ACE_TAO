@@ -3155,12 +3155,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = ImplementationRepository::ServerObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           ImplementationRepository::_tc_ServerObject,
           1,
@@ -3680,12 +3676,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = ImplementationRepository::Administration::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           ImplementationRepository::_tc_Administration,
           1,
@@ -3989,12 +3981,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
       );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    if (stream >> _tao_elem)
     {
-      _tao_elem = ImplementationRepository::ServerInformationIterator::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           ImplementationRepository::_tc_ServerInformationIterator,
           1,

@@ -1885,7 +1885,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      ImplementationRepository::ServerObject::_narrow (
+      ImplementationRepository::ServerObject::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -2187,7 +2187,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      ImplementationRepository::Administration::_narrow (
+      ImplementationRepository::Administration::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -2236,7 +2236,7 @@ operator>> (
       return 0;
     // narrow to the right type
     _tao_objref =
-      ImplementationRepository::ServerInformationIterator::_narrow (
+      ImplementationRepository::ServerInformationIterator::_unchecked_narrow (
           obj.in (),
           ACE_TRY_ENV
         );

@@ -1922,7 +1922,7 @@ void Messaging::ExceptionHolder::_tao_seq_Octet::_tao_any_destructor (void *x)
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
 
-                void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
+void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
   {
     TAO_OutputCDR stream;
     stream << _tao_elem;
@@ -1933,7 +1933,7 @@ void Messaging::ExceptionHolder::_tao_seq_Octet::_tao_any_destructor (void *x)
       );
   }
 
-  void operator<<= (CORBA::Any &_tao_any, Messaging::PriorityRange *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, Messaging::PriorityRange *_tao_elem) // non copying
   {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
@@ -1947,7 +1947,7 @@ void Messaging::ExceptionHolder::_tao_seq_Octet::_tao_any_destructor (void *x)
       );
   }
 
-  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange *&_tao_elem)
   {
     return _tao_any >>= ACE_const_cast(const Messaging::PriorityRange*&,_tao_elem);
   }
@@ -2290,20 +2290,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      CORBA::Object_var _tao_obj_var;
-      if (stream >> _tao_obj_var.out ())
-      {
-        _tao_elem = Messaging::ReplyHandler::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-        ACE_TRY_CHECK;
+      if (stream >> _tao_elem)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Messaging::_tc_ReplyHandler,
+              1,
+              _tao_elem,
+              Messaging::ReplyHandler::_tao_any_destructor
+            );
 
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_ReplyHandler,
-            1,
-            _tao_elem,
-            Messaging::ReplyHandler::_tao_any_destructor
-          );
-        return 1;
-      }
+          return 1;
+        }
     }
     ACE_CATCHANY
     {
