@@ -260,6 +260,10 @@ Sat Jan  1 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/run_test.pl:
           Added .out to the program names generated in the VxWorks script
 
+Sat Jan  1 00:00:00 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* Happy New Year!!!
+
 Fri Dec 31 15:23:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Service_Config.cpp:
