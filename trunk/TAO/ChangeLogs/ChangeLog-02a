@@ -1,20 +1,33 @@
+Tue May  9 09:33:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile:
+        * tests/InterOp-Naming/Makefile:
+        * tests/InterOp-Naming/Server_i.h:
+        * tests/InterOp-Naming/INS_test_client.cpp:
+          Removed the NameService features from the INS test.  First we
+          test those features in many other places (implicitly), second a
+          test should test only one thing, not 20, and third this
+          eliminates all dependencies from orbsvcs in the tests directory,
+          which is good because now we can automatically test a smaller
+          subset of the ORB.
+
 Tue May  9 08:31:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	  Filled in empty methods create_string_tc,
-	  create_wstring_tc, create_array_tc and
-	  create_sequence_tc.
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+          Filled in empty methods create_string_tc,
+          create_wstring_tc, create_array_tc and
+          create_sequence_tc.
 
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
-	  Cosmetic changes.
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
+          Cosmetic changes.
 
 Tue May  9 08:23:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Interface.pidl:
-	  Replaced CORBA 2.3 version with components-ready version
-	  from CORBA Components volume III.
+        * tao/Interface.pidl:
+          Replaced CORBA 2.3 version with components-ready version
+          from CORBA Components volume III.
 
 Mon May 08 22:58:14 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -22,8 +35,8 @@ Mon May 08 22:58:14 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon May  8 15:25:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
-	  compile error with single threaded builds.  
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
+          compile error with single threaded builds.
 
 Mon May  8 09:42:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -296,7 +309,7 @@ Tue May  2 16:38:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue May  2 12:05:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * orbsvcs/orbsvcs/Event/EC_Gatew<ay.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
           Fixed nasty bug in the event channel gateways.  The local
           consumer proxy map was not recomputed correctly, because I was
           invoking Map_Manager::close() to reset the map.  This method
