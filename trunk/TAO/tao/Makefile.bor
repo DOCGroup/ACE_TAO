@@ -4,7 +4,13 @@
 
 NAME = TAO
 
-DIRS = DynamicAny DynamicInterface PortableServer IORTable IORManipulation
+DIRS = \
+        PortableServer \
+        DynamicAny \
+        DynamicInterface \
+        IORTable \
+        IORManipulation \
+        Strategies
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
@@ -34,7 +40,6 @@ OBJFILES = \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
-	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DLL_Parser.obj \
 	$(OBJDIR)\DomainC.obj \
@@ -72,7 +77,6 @@ OBJFILES = \
 	$(OBJDIR)\IOPS.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\Leader_Follower.obj \
-	$(OBJDIR)\Linear_Priority_Mapping.obj \
 	$(OBJDIR)\LocalObject.obj \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
@@ -123,7 +127,6 @@ OBJFILES = \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
-	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
@@ -140,13 +143,6 @@ OBJFILES = \
 	$(OBJDIR)\Sequence.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Services.obj \
-	$(OBJDIR)\SHMIOP_Acceptor.obj \
-	$(OBJDIR)\SHMIOP_Connect.obj \
-	$(OBJDIR)\SHMIOP_Connector.obj \
-	$(OBJDIR)\SHMIOP_Endpoint.obj \
-	$(OBJDIR)\SHMIOP_Factory.obj \
-	$(OBJDIR)\SHMIOP_Profile.obj \
-	$(OBJDIR)\SHMIOP_Transport.obj \
 	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\skip.obj \
 	$(OBJDIR)\Smart_Proxies.obj \
@@ -166,15 +162,6 @@ OBJFILES = \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
-	$(OBJDIR)\UIOP_Acceptor.obj \
-	$(OBJDIR)\UIOP_Connect.obj \
-	$(OBJDIR)\UIOP_Connector.obj \
-	$(OBJDIR)\uiop_endpoints.obj \
-	$(OBJDIR)\UIOP_Endpoint.obj \
-	$(OBJDIR)\UIOP_Factory.obj \
-	$(OBJDIR)\UIOP_Lite_Factory.obj \
-	$(OBJDIR)\UIOP_Profile.obj \
-	$(OBJDIR)\UIOP_Transport.obj \
 	$(OBJDIR)\Connection_handler.obj \
 	$(OBJDIR)\Connection_Cache_Manager.obj \
 	$(OBJDIR)\Base_Connection_Property.obj \
