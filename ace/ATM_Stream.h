@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,12 +17,12 @@
 #ifndef ACE_ATM_STREAM_H
 #define ACE_ATM_STREAM_H
 
-#include "ace/ATM_Addr.h"
-#include "ace/ATM_Params.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ATM_Addr.h"
+#include "ace/ATM_Params.h"
 
 #if defined (ACE_HAS_ATM)
 
@@ -66,12 +65,12 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 int *flags = 0) const;
-  // Recv an n byte buffer from the connected transport mechanism
+  // Recv an n byte buffer from the connected transport mechanism.
 
   ssize_t send_n (const void *buf,
                   size_t n,
                   int flags) const;
-  // Send exactly n bytes to the connected transport mechanism
+  // Send exactly n bytes to the connected transport mechanism.
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;
@@ -84,7 +83,7 @@ public:
 
 private:
   ATM_Stream stream_;
-  // Typedef'd to the appropriate stream mechanism above
+  // Typedef'd to the appropriate stream mechanism above.
 };
 
 #if defined (__ACE_INLINE__)
@@ -93,3 +92,4 @@ private:
 
 #endif /* ACE_HAS_ATM */
 #endif /* ACE_ATM_STREAM_H */
+

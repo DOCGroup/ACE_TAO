@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -29,10 +28,16 @@
 #include "ace/TLI.h"
 typedef struct t_info Param_Info;
 typedef struct netbuf Param_Udata;
-#else
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+#include "ace/SOCK.h"
+#define ACE_XTI_ATM_DEVICE ""
 typedef int Param_Info;
 typedef int Param_Udata;
-#endif
+#else
+#define ACE_XTI_ATM_DEVICE ""
+typedef int Param_Info;
+typedef int Param_Udata;
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 
 class ACE_Export ACE_ATM_Params
 {
@@ -45,14 +50,20 @@ public:
                   Param_Info *info = 0,
                   Param_Udata *udata = 0,
                   int oflag = O_RDWR,
-                  int protocol_family = PF_INET,
-                  int protocol = 0,
-                  int type = 0,
+                  int protocol_family = AF_ATM,
+                  int protocol = ATMPROTO_AAL5,
+                  int type = SOCK_RAW,
+                  ACE_Protocol_Info *protocol_info = 0,
+                  ACE_SOCK_GROUP g = 0,
+                  u_long flags 
+                    = ACE_FLAG_MULTIPOINT_C_ROOT 
+                    | ACE_FLAG_MULTIPOINT_D_ROOT, // connector by default
                   int reuse_addr = 0);
   // Initialize the data members.  This class combines options from
-  //  ACE_SOCK_Connector (<protocol_family> and <protocol>) and
-  //  ACE_TLI_Connector (<device>, <info>, <rw_flag>, <oflag>, and <udata>)
-  //  so that either mechanism can be used transparently for ATM.
+  // ACE_SOCK_Connector (<protocol_family>, <protocol>, <type>, 
+  // <protocol_info>, <group>, and <flags>) and
+  // ACE_TLI_Connector (<device>, <info>, <rw_flag>, <oflag>, and <udata>)
+  // so that either mechanism can be used transparently for ATM.
 
   ~ACE_ATM_Params ();
 
@@ -67,6 +78,18 @@ public:
   int get_type (void) const;
   void set_type (int);
   // Get/set type.
+
+  ACE_Protocol_Info *get_protocol_info( void );
+  void set_protocol_info( ACE_Protocol_Info *);
+  // Get/set protocol info.
+
+  ACE_SOCK_GROUP get_sock_group( void );
+  void set_sock_group( ACE_SOCK_GROUP );
+  // Get/set socket group.
+
+  u_long get_flags( void );
+  void set_flags( u_long );
+  // Get/set socket flags.
 
   int get_reuse_addr (void) const;
   void set_reuse_addr (int);
@@ -107,9 +130,17 @@ private:
   int type_;
   // Type for opening sockets.
 
+  ACE_Protocol_Info *protocol_info_;
+  // Information about the protocol.
+
+  ACE_SOCK_GROUP group_;
+  // Socket group used (for sockets only).
+
+  u_long flags_;
+  // Flags for sockets (for sockets only).
+
   int reuse_addr_;
   // Flag for reusing address for opening sockets.
-
 
   const char *device_;
   // Device name for XTI/ATM connections.
@@ -132,5 +163,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-
 #endif /* ACE_ATM_PARAMS_H */
+

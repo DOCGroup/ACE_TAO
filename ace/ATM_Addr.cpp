@@ -5,6 +5,10 @@
 #define ACE_BUILD_DLL
 #include "ace/ATM_Addr.h"
 
+#if defined (ACE_HAS_FORE_ATM_WS2)
+#include "forews2.h"
+#endif /* ACE_HAS_FORE_ATM_WS2 */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Addr.i"
 #endif /* __ACE_INLINE__ */
@@ -72,6 +76,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATM_Addr *sap,
   this->set (sap, selector);
 }
 
+
 ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[],
                             unsigned char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
@@ -114,6 +119,7 @@ ACE_ATM_Addr::init (unsigned char selector)
                   BHLI_MAGIC,
                   sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
+  ACE_OS::memset(( void *)&atm_addr_, 0, sizeof atm_addr_ );
   atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = ( char )selector;
   atm_addr_.satm_family = AF_ATM;
   atm_addr_.satm_number.AddressType = ATM_NSAP;
@@ -122,7 +128,7 @@ ACE_ATM_Addr::init (unsigned char selector)
   atm_addr_.satm_blli.Layer3Protocol = SAP_FIELD_ABSENT;
   atm_addr_.satm_bhli.HighLayerInfoType = SAP_FIELD_ABSENT;
 
-  // N2K the correspondence (Ruibiao)
+  // Need to know the correspondence.
   //atm_addr_.sap.t_atm_sap_appl.SVE_tag = (int8_t) T_ATM_PRESENT;
   //atm_addr_.sap.t_atm_sap_appl.ID_type = (u_int8_t) T_ATM_USER_APP_ID;
   //ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
@@ -180,6 +186,7 @@ ACE_ATM_Addr::set (const ASYS_TCHAR address[],
                    unsigned char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
+  int ret;
 
   this->init (selector);
 
@@ -187,7 +194,10 @@ ACE_ATM_Addr::set (const ASYS_TCHAR address[],
   atm_addr_.sap.t_atm_sap_addr.SVE_tag_addr =
     (int8_t) T_ATM_PRESENT;
 #endif /* ACE_HAS_FORE_ATM_XTI */
-  return this->string_to_addr (address);
+
+  ret = this -> string_to_addr( address );
+  this -> set_selector( selector );
+  return ret;
 }
 
 // Transform the string into the current addressing format.
@@ -225,9 +235,11 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
                       nsap->atmnsap,
                       ATMNSAP_ADDR_LEN);
     }
-  else
+  else {
+      errno = EINVAL;
+      return -1;
+    }
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  // WinSock2 part (Ruibiao)
    DWORD dwValue;
    HANDLE hLookup;
    WSAQUERYSETW qsRestrictions;
@@ -235,11 +247,11 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
    WCHAR  tmpWStr[100];
 
    MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sap, -1, tmpWStr, 100);  
-   
+
    csaBuffer.LocalAddr.iSockaddrLength = sizeof (struct sockaddr_atm);
-   csaBuffer.LocalAddr.lpSockaddr = (struct sockaddr *)atm_addr_;
+   csaBuffer.LocalAddr.lpSockaddr = (struct sockaddr *)&atm_addr_;
    csaBuffer.RemoteAddr.iSockaddrLength = sizeof (struct sockaddr_atm);
-   csaBuffer.RemoteAddr.lpSockaddr = (struct sockaddr *) atm_addr;
+   csaBuffer.RemoteAddr.lpSockaddr = (struct sockaddr *)&atm_addr_;
 
    qsRestrictions.dwSize                  = sizeof (WSAQUERYSETW);
    qsRestrictions.lpszServiceInstanceName = NULL;
@@ -256,27 +268,35 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
    qsRestrictions.lpcsaBuffer             = &csaBuffer;
    qsRestrictions.lpBlob                  = NULL; //&blob;
 
-   if (WSALookupServiceBeginW(&qsRestrictions, LUP_RETURN_ALL, &hLookup) == SOCKET_ERROR) {
-       ACE_OS::printf("Error: WSALookupServiceBeginW failed! %d\n",WSAGetLastError());
+   if ( ::WSALookupServiceBeginW(&qsRestrictions, LUP_RETURN_ALL, &hLookup) 
+        == SOCKET_ERROR) {
+     ACE_OS::printf( "Error: WSALookupServiceBeginW failed! %d\n",
+                     ::WSAGetLastError());
 	   return -1;
    }                
 
    dwValue = sizeof (WSAQUERYSETW);
 
-   if (WSALookupServiceNextW ( hLookup, 0, &dwValue, &qsRestrictions) == SOCKET_ERROR) {
-	   ACE_OS::printf ("Error: WSALookupServiceNextW failed! %d\n", WSAGetLastError());
-	   return -1;
+   if ( ::WSALookupServiceNextW( hLookup, 0, &dwValue, &qsRestrictions) 
+        == SOCKET_ERROR) {
+     if ( WSAGetLastError() != WSA_E_NO_MORE ) {
+       ACE_OS::printf( "Error: WSALookupServiceNextW failed! %d\n", 
+                       ::WSAGetLastError());
+	     return -1;
+     }
    }
 
    if (WSALookupServiceEnd (hLookup) == SOCKET_ERROR) {
-	  ACE_OS::printf("Error : WSALookupServiceEnd failed! %d \n", WSAGetLastError());
-#else
-  ACE_UNUSED_ARG (sap);
-#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
-    {
+     ACE_OS::printf( "Error : WSALookupServiceEnd failed! %d \n", 
+                     ::WSAGetLastError());
       errno = EINVAL;
       return -1;
-    }
+   }
+#else
+  ACE_UNUSED_ARG (sap);
+  
+  return 0;
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   return 0;
@@ -311,16 +331,20 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
 
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  //WinSock2 part
   ASYS_TCHAR buffer[MAXNAMELEN + 1];
   int i;
 
   if ( addrlen < ATM_ADDR_SIZE + 1 ) 
-	return -1;
+	  return -1;
 
-  for ( i = 0; i < ATM_ADDR_SIZE; i++ )
-	ACE_OS::sprintf( buffer, ASYS_TEXT( "%02x." ), atm_addr_.satm_number.Addr[ i ]);
-  buffer[ ATM_ADDR_SIZE ] = '\0';
+  for ( i = 0; i < ATM_ADDR_SIZE; i++ ) {
+    buffer[ i * 3 ] = '\0';
+	  ACE_OS::sprintf( buffer, ASYS_TEXT( "%s%02x." ), 
+                     buffer, 
+                     atm_addr_.satm_number.Addr[ i ]);
+  }
+
+  buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
   ACE_OS::strcpy( addr, buffer );
 
   return 0;
@@ -410,8 +434,8 @@ ACE_ATM_Addr::dump (void) const
 //     {
 //       ACE_OS::t_error ("t_getinfo");
 //       return 0;
-//     }
- 
+//     } 
+
 //   buf = (char *) ACE_OS::malloc (info.options);
 
 //   if (buf == 0)
@@ -563,3 +587,4 @@ ACE_ATM_Addr::dump (void) const
 //   return 0;
 // #endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 // }
+

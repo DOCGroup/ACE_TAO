@@ -46,11 +46,11 @@ public:
   // Default constructor.
 
   ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
-                     const ACE_Addr &remote_sap,
+                     const ACE_ATM_Addr &remote_sap,
                      ACE_ATM_Params params = ACE_ATM_Params(),
                      ACE_ATM_QoS options = ACE_ATM_QoS(),
                      ACE_Time_Value *timeout = 0,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "", 0 ),
                      int reuse_addr = 0,
 #if defined (ACE_WIN32)
                      int flags = 0,
@@ -69,16 +69,16 @@ public:
   // *timeout > {0, 0} then this is the amount of time to wait before
   // timing out.  If the time expires before the connection is made
   // <errno == ETIME>.  The <local_sap> is the value of local address
-  // to bind to.  If it's the default value of <ACE_Addr::sap_any> then
+  // to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
   // the user is letting the OS do the binding.  If <reuse_addr> == 1
   // then the <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   connect (ACE_ATM_Stream &new_stream,
-           const ACE_Addr &remote_sap,
+           const ACE_ATM_Addr &remote_sap,
            ACE_ATM_Params params = ACE_ATM_Params(),
            ACE_ATM_QoS options = ACE_ATM_QoS(),
            ACE_Time_Value *timeout = 0,
-           const ACE_Addr &local_sap = ACE_Addr::sap_any,
+           const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "", 0 ),
            int reuse_addr = 0,
 #if defined (ACE_WIN32)
            int flags = 0,
@@ -97,12 +97,12 @@ public:
   // *timeout > {0, 0} then this is the amount of time to wait before
   // timing out.  If the time expires before the connection is made
   // <errno == ETIME>.  The <local_sap> is the value of local address
-  // to bind to.  If it's the default value of <ACE_Addr::sap_any> then
+  // to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
   // the user is letting the OS do the binding.  If <reuse_addr> == 1
   // then the <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   int complete (ACE_ATM_Stream &new_stream,
-                ACE_Addr *remote_sap,
+                ACE_ATM_Addr *remote_sap,
                 ACE_Time_Value *tv);
   // Try to complete a non-blocking connection.
   // If connection completion is successful then <new_stream> contains
@@ -142,3 +142,4 @@ private:
 
 #endif /* ACE_HAS_ATM */
 #endif /* ACE_ATM_CONNECTOR_H */
+

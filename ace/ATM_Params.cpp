@@ -20,3 +20,4 @@ ACE_ATM_Params::dump (void) const
 }
 
 #endif /* ACE_HAS_ATM */
+

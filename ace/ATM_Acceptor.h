@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,14 +17,14 @@
 #ifndef ACE_ATM_ACCEPTOR_H
 #define ACE_ATM_ACCEPTOR_H
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Time_Value.h"
 #include "ace/ATM_Stream.h"
 #include "ace/ATM_Params.h"
 #include "ace/ATM_QoS.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ATM)
 
@@ -45,6 +44,7 @@ class ACE_Export ACE_ATM_Acceptor
   // = DESCRIPTION
   //     This class wraps up the ACE_SOCK_Acceptor and ACE_TLI_Acceptor
   //     to make the mechanism for the ATM protocol transparent.
+
 public:
   // = Initialization and termination methods.
   ACE_ATM_Acceptor (void);
@@ -74,9 +74,13 @@ public:
               int reset_new_handle = 0,
               ACE_ATM_Params params = ACE_ATM_Params(),
               ACE_ATM_QoS qos = ACE_ATM_QoS());
+
   // Accept a new data transfer connection.  A <timeout> of 0 means
   // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
   // means "restart if interrupted."
+
+  int get_local_addr( ACE_ATM_Addr &local_addr );
+  // Get the local address currently listening on
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;
@@ -98,3 +102,4 @@ private:
 
 #endif /* ACE_HAS_ATM */
 #endif /* ACE_ATM_ACCEPTOR_H */
+

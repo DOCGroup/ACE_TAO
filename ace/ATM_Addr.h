@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -18,18 +17,16 @@
 #define ACE_ATM_ADDR_H
 
 #include "ace/ACE.h"
+#include "ace/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
-
 #if defined (ACE_HAS_FORE_ATM_XTI)
 typedef ATMSAPAddress ATM_Addr;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-#include <winsock2.h>
-#include <ws2atm.h>
+#define FORE_NAME_SPACE NS_ALL
 typedef struct sockaddr_atm ATM_Addr;
 #else
 typedef int ATM_Addr;
@@ -81,7 +78,7 @@ public:
 
   int set (const ATM_Addr *,
            unsigned char selector = DEFAULT_SELECTOR);
-  // Initializes an <ACE_ATM_Addr> from an ATMSAPAddress
+  // Initializes an <ACE_ATM_Addr> from an ATMSAPAddress/sockaddr_atm
   // structure. This is vendor specific (FORE systems). May need to
   // change when other vendors are supported.
 
@@ -136,8 +133,9 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
+	// Declare the dynamic allocation hooks.
 
 //   char *construct_options (ACE_HANDLE fd,
 //                            int qos_kb,
@@ -156,3 +154,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_ATM_ADDR_H */
+
