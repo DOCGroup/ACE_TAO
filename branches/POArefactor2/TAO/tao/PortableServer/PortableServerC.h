@@ -978,6 +978,8 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
     virtual ::PortableServer::AdapterActivator_ptr the_activator (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -995,10 +997,12 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
+#if (TAO_HAS_MINIMUM_POA == 0)
     virtual ::PortableServer::ServantManager_ptr get_servant_manager (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -1018,6 +1022,7 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
