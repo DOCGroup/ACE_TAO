@@ -1,3 +1,23 @@
+Sun Dec  7 16:02:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Sequence_Latency/DII/client.dsp:
+	* performance-tests/Sequence_Latency/DII/server.dsp:
+	* performance-tests/Sequence_Latency/Deferred/client.dsp:
+	* performance-tests/Sequence_Latency/Deferred/client.dsp:
+	* performance-tests/Sequence_Latency/AMH/Single_Threaded/client.dsp:
+	* performance-tests/Sequence_Latency/AMH/Single_Threaded/server.dsp:
+	* performance-tests/Sequence_Latency/AMI/client.dsp:
+	* performance-tests/Sequence_Latency/AMI/server.dsp:
+	* performance-tests/RTCorba/Thread_Pool/client.dsp:
+	* performance-tests/RTCorba/Thread_Pool/server.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+	  Fixed release configuration
+
 Sun Dec  7 09:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_IOR.pidl:
@@ -10,11 +30,11 @@ Sun Dec  7 09:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Regenerated the code, since we had all the sequence<octet> code
 	  with has other implications in terms of footprint and
-	  compilation times. 
+	  compilation times.
 
 	* tao/diffs/OctetSeq.diff:
 
-	  Religious update of the diff file, which is very minimal. 
+	  Religious update of the diff file, which is very minimal.
 
 Sun Dec  7 08:49:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
