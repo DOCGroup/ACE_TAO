@@ -417,7 +417,8 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
 CORBA::Any_ptr
 TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+                       CORBA::SystemException,
+                       DynamicAny::DynAny::TypeMismatch
       ))
 {
   TAO_OutputCDR out_cdr;
