@@ -43,7 +43,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 		     options.env_buf (), // environment variables
 		     options.working_directory (),
 		     options.startup_info (),
-		     &process_info_);
+		     &this->process_info_);
 
   if (fork_result) // If success.
     return this->getpid ();
@@ -146,8 +146,8 @@ ACE_Process::wait (const ACE_Time_Value &tv)
 
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
+#if !defined (ACE_HAS_WINCE)
   : inherit_environment_ (ie),
-    creation_flags_ (0),
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
     handle_inheritence_ (TRUE),
@@ -161,12 +161,17 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     set_handles_called_ (0),
     environment_buf_index_ (0),
     environment_argv_index_ (0),
+#else
+  :
+#endif /* !ACE_HAS_WINCE */
+    creation_flags_ (0),
     command_line_buf_ (0),
     command_line_argv_calculated_ (0)
 {
   ACE_NEW (command_line_buf_, TCHAR[cobl]);
   command_line_buf_[0] = '\0';
 
+#if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
@@ -177,9 +182,13 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 		  sizeof this->startup_info_);
   this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
+#endif /* !ACE_HAS_WINCE */
 }
 
+#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
+// Notice that CE version is an empty function and is placed
+// in Process.i for efficiency.
 void
 ACE_Process_Options::inherit_environment (void)
 {
@@ -357,25 +366,6 @@ ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
   return 0;
 }
 
-ACE_Process_Options::~ACE_Process_Options (void)
-{
-  if (set_handles_called_)
-    {
-#if defined (ACE_WIN32)
-      ACE_OS::close (startup_info_.hStdInput);
-      ACE_OS::close (startup_info_.hStdOutput);
-      ACE_OS::close (startup_info_.hStdError);
-#else /* ACE_WIN32 */
-      ACE_OS::close (stdin_);
-      ACE_OS::close (stdout_);
-      ACE_OS::close (stderr_);
-#endif /* ACE_WIN32 */
-      set_handles_called_ = 0;
-    }
-
-  delete [] command_line_buf_;
-}
-
 int
 ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 				  ACE_HANDLE std_out,
@@ -428,6 +418,28 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 
   return 0; // Success.
 }
+#endif /* !ACE_HAS_WINCE */
+
+ACE_Process_Options::~ACE_Process_Options (void)
+{
+#if !defined (ACE_HAS_WINCE)
+  if (set_handles_called_)
+    {
+#if defined (ACE_WIN32)
+      ACE_OS::close (startup_info_.hStdInput);
+      ACE_OS::close (startup_info_.hStdOutput);
+      ACE_OS::close (startup_info_.hStdError);
+#else /* ACE_WIN32 */
+      ACE_OS::close (stdin_);
+      ACE_OS::close (stdout_);
+      ACE_OS::close (stderr_);
+#endif /* ACE_WIN32 */
+      set_handles_called_ = 0;
+    }
+#endif /* !ACE_HAS_WINCE */
+
+  delete [] command_line_buf_;
+}
 
 int
 ACE_Process_Options::command_line (LPTSTR argv[])
@@ -466,8 +478,12 @@ ACE_Process_Options::command_line (LPCTSTR format, ...)
 LPTSTR 
 ACE_Process_Options::env_buf (void)
 {
+#if !defined (ACE_HAS_WINCE)
   if (environment_buf_[0] == '\0')
     return 0;
   else
     return environment_buf_;
+#else
+  return 0;
+#endif /* !ACE_HAS_WINCE */
 }

@@ -897,6 +897,61 @@ DEP_CPP_DUMP_=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Dynamic.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_DYNAM=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Dynamic.h"\
+	".\Dynamic.i"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\sys_conf.h"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event_Handler.cpp
 
 !IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
@@ -2238,6 +2293,145 @@ DEP_CPP_MALLO=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Mem_Map.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_MEM_M=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\sys_conf.h"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Memory_Pool.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_MEMOR=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Atomic_Op.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Containers.cpp"\
+	".\Containers.h"\
+	".\Containers.i"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\sys_conf.h"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Message_Block.cpp
 
 !IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
@@ -3192,6 +3386,165 @@ DEP_CPP_OS_CP=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Process.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_PROCE=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ARGV.h"\
+	".\ARGV.i"\
+	".\Atomic_Op.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Containers.cpp"\
+	".\Containers.h"\
+	".\Containers.i"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\Process.h"\
+	".\Process.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\sys_conf.h"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Process_Manager.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_PROCES=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Atomic_Op.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\Process.h"\
+	".\Process.i"\
+	".\Process_Manager.h"\
+	".\Process_Manager.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\sys_conf.h"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile_Timer.cpp
 
 !IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
@@ -3367,6 +3720,61 @@ DEP_CPP_REACT=\
 	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched_Params.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_SCHED=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\Sched_Params.h"\
+	".\Sched_Params.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\sys_conf.h"\
+	".\Trace.h"\
+	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -5223,6 +5631,60 @@ DEP_CPP_SYNCH=\
 	".\Version.h"\
 	".\ws2tcpip.h"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Options.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_SYNCH_=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\inc_user_config.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\Synch_Options.h"\
+	".\sys_conf.h"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
