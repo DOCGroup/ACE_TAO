@@ -13,7 +13,7 @@ static const char prefix_[] = "iiop";
 TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
   :  major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR),
-     use_ssl_ (0)
+     use_ssl_ (1)
 {
 }
 
@@ -59,9 +59,9 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
-                              "-UseSSL") == 0)
+                              "-SSLDisable") == 0)
         {
-          this->use_ssl_ = 1;
+          this->use_ssl_ = 0;
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -113,7 +113,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLVerifyMode") == 0)
+                                   "-SSLAuthenticate") == 0)
         {
           curarg++;
           if (curarg < argc)
