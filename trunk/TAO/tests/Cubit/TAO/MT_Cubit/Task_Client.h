@@ -41,7 +41,7 @@
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.
 // @@ Sergio, can you please use the ACE_timer_t type for this instead
-// of #define'ing double?!  
+// of #define'ing double?!
 #if defined (ACE_LACKS_FLOATING_POINT)
 #define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
@@ -137,7 +137,7 @@ public:
   // Lock to protect access to this object.
 
   // = Command line arguments.
-  int argc_;
+  u_int argc_;
   char **argv_;
 
   u_int thread_per_rate_;
@@ -225,7 +225,7 @@ char *one_ior_;
   // mutex for the condition variable.
 
   ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
-  // condition variable for the low priority threads to wait 
+  // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 
   u_int remote_invocations_;
