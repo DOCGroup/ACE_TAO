@@ -1,5 +1,10 @@
 Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/test_config.h: Don't close the ofstream before opening the
+	  log stream in ACE_APPEND_LOG on Win32.  It it not necessary
+	  because Win32 doesn't have fork anyway and it somehow confuses
+	  Win32 (becuase no file was openen at that point.)
+
 	* performance-tests/Makefile: Temporarily removed Synch-Benchmark
 	  from the targets.  It should be added back once the work is
 	  done. 
