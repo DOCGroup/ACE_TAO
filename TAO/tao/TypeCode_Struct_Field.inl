@@ -16,6 +16,7 @@ TAO::TypeCode::Struct_Field<STRING_TYPE>::get_name (void) const
 // conversions.
 // -----------------------------------------------------------------
 
+template<>
 ACE_INLINE char const *
 TAO::TypeCode::Struct_Field<CORBA::String_var>::get_name (void) const
 {
