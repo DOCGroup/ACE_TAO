@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -82,7 +82,7 @@ ACE_RCSID(ast, ast_constant, "$Id$")
 static const char *
 exprtype_to_string (AST_Expression::ExprType et)
 {
-  switch (et) 
+  switch (et)
     {
     case AST_Expression::EV_short:
       return "short";
@@ -129,7 +129,7 @@ exprtype_to_string (AST_Expression::ExprType et)
 
 // Default constructor.
 AST_Constant::AST_Constant (void)
-  : pd_constant_value (0), 
+  : pd_constant_value (0),
     pd_et (AST_Expression::EV_none),
     ifr_added_ (0)
 {
@@ -137,29 +137,29 @@ AST_Constant::AST_Constant (void)
 
 // Used in constructing AST_EnumVal nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
-			                      AST_Decl::NodeType nt,
-			                      AST_Expression *v,
-			                      UTL_ScopedName *n,
-			                      UTL_StrList *p)
-  : AST_Decl (nt, 
-              n, 
+                                              AST_Decl::NodeType nt,
+                                              AST_Expression *v,
+                                              UTL_ScopedName *n,
+                                              UTL_StrList *p)
+  : AST_Decl (nt,
+              n,
               p),
-	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
-	  pd_et (t),
+          pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+          pd_et (t),
     ifr_added_ (0)
 {
 }
 
 // Used when constructing AST_Constant nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
-			                      AST_Expression *v,
-			                      UTL_ScopedName *n,
-			                      UTL_StrList *p)
-  : AST_Decl (AST_Decl::NT_const, 
-              n, 
+                                              AST_Expression *v,
+                                              UTL_ScopedName *n,
+                                              UTL_StrList *p)
+  : AST_Decl (AST_Decl::NT_const,
+              n,
               p),
-	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
-	  pd_et (t),
+          pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+          pd_et (t),
     ifr_added_ (0)
 {
 }
@@ -177,7 +177,7 @@ AST_Constant::~AST_Constant (void)
 
 // Dump this AST_Constant node to the ostream o.
 void
-AST_Constant::dump (ostream &o)
+AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
   o << "const " << exprtype_to_string (pd_et) << " ";
   this->local_name ()->dump (o);
@@ -205,13 +205,13 @@ AST_Constant::et (void)
   return this->pd_et;
 }
 
-idl_bool 
+idl_bool
 AST_Constant::ifr_added (void)
 {
   return this->ifr_added_;
 }
 
-void 
+void
 AST_Constant::ifr_added (idl_bool val)
 {
   this->ifr_added_ = val;

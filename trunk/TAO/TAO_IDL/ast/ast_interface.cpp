@@ -95,11 +95,11 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
                              UTL_StrList *p,
                              idl_bool local,
                              idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_interface, 
-              n, 
+  : AST_Decl (AST_Decl::NT_interface,
+              n,
               p),
     UTL_Scope (AST_Decl::NT_interface),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
     is_valuetype_ (0),
     pd_inherits (ih),
@@ -115,7 +115,7 @@ AST_Interface::~AST_Interface (void)
 
 // Public operations.
 
-idl_bool 
+idl_bool
 AST_Interface::is_valuetype (void)
 {
   return this->is_valuetype_;
@@ -127,21 +127,21 @@ AST_Interface::set_valuetype (void)
   this->is_valuetype_ = 1;
 }
 
-idl_bool 
+idl_bool
 AST_Interface::is_abstract_valuetype (void)
 {
   return this->is_valuetype_ && this->is_abstract_;
 }
 
-void 
+void
 AST_Interface::set_abstract_valuetype (void)
 {
   this->is_valuetype_ = 1;
   this->is_abstract_ = 1;
 }
 
-void 
-AST_Interface::be_replace_operation (AST_Decl *old_op,                                                                                    
+void
+AST_Interface::be_replace_operation (AST_Decl *old_op,
                                      AST_Decl *new_op)
 {
   replace_scope (old_op,
@@ -151,7 +151,7 @@ AST_Interface::be_replace_operation (AST_Decl *old_op,
                       new_op);
 }
 
-void 
+void
 AST_Interface::be_add_operation (AST_Operation *op)
 {
   fe_add_operation (op);
@@ -766,7 +766,7 @@ AST_Interface::fe_add_native (AST_Native *t)
 
 // Dump this AST_Interface node to the ostream o.
 void
-AST_Interface::dump (ostream &o)
+AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_valuetype ())
     {
@@ -827,7 +827,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
-  AST_Decl *d = s->lookup_by_name_local (i->local_name (), 
+  AST_Decl *d = s->lookup_by_name_local (i->local_name (),
                                          0);
 
   AST_Interface *fd = 0;
@@ -839,7 +839,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       // forward declaration.
       if (d->node_type () == AST_Decl::NT_interface_fwd)
         {
-          AST_InterfaceFwd *fwd_def = 
+          AST_InterfaceFwd *fwd_def =
             AST_InterfaceFwd::narrow_from_decl (d);
 
           fd = fwd_def->full_definition ();
@@ -877,7 +877,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               if (i->is_local () != fd->is_local ()
 #             ifdef IDL_HAS_VALUETYPE
                   || i->is_valuetype () != fd->is_valuetype ()
-                  || i->is_abstract_valuetype () != 
+                  || i->is_abstract_valuetype () !=
                        fd->is_abstract_valuetype ()
                   || i->is_abstract () != fd->is_abstract ()
 #             endif /* IDL_HAS_VALUETYPE */
@@ -927,7 +927,7 @@ AST_Interface::redefine (AST_Interface *from,
     }
   else
     {
-      // If we are being defined from a forward declaration in 
+      // If we are being defined from a forward declaration in
       // the same scope (i.e., the same opening of the enclosing
       // module), the two pragma lists will share the same pointer.
       // In this case, addition would lead to infinite recursion.

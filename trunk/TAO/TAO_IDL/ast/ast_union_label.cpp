@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -78,14 +78,14 @@ ACE_RCSID(ast, ast_union_label, "$Id$")
 
 AST_UnionLabel::AST_UnionLabel (void)
   : pd_label_kind (UL_default),
-	  pd_label_val (0)
+          pd_label_val (0)
 {
 }
 
-AST_UnionLabel::AST_UnionLabel (UnionLabel lk, 
+AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
                                 AST_Expression *lv)
   : pd_label_kind (lk),
-	  pd_label_val (lv)
+          pd_label_val (lv)
 {
     if (lv != 0)
       {
@@ -101,7 +101,7 @@ AST_UnionLabel::~AST_UnionLabel (void)
 
 // Dump this AST_UnionLabel node to the ostream o.
 void
-AST_UnionLabel::dump (ostream &o)
+AST_UnionLabel::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->pd_label_kind == UL_default)
     {
@@ -132,4 +132,3 @@ AST_UnionLabel::label_val (void)
 {
   return this->pd_label_val;
 }
-

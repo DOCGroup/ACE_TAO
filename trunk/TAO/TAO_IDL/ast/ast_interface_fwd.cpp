@@ -83,8 +83,8 @@ AST_InterfaceFwd::AST_InterfaceFwd (void)
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n,
                                     UTL_StrList *p)
-  : AST_Decl (AST_Decl::NT_interface_fwd, 
-              n, 
+  : AST_Decl (AST_Decl::NT_interface_fwd,
+              n,
               p)
 {
   // Create a dummy placeholder for the forward declared interface. This
@@ -99,7 +99,7 @@ AST_InterfaceFwd::~AST_InterfaceFwd (void)
 
 // Private operations.
 
-idl_bool 
+idl_bool
 AST_InterfaceFwd::is_local (void)
 {
   return this->full_definition ()->is_local ();
@@ -110,13 +110,13 @@ idl_bool AST_InterfaceFwd::is_valuetype (void)
   return this->full_definition ()->is_valuetype ();
 }
 
-idl_bool 
+idl_bool
 AST_InterfaceFwd::is_abstract_valuetype (void)
 {
   return this->full_definition ()->is_abstract_valuetype ();
 }
 
-void 
+void
 AST_InterfaceFwd::set_abstract_valuetype (void)
 {
   this->full_definition ()->set_abstract_valuetype ();
@@ -126,7 +126,7 @@ AST_InterfaceFwd::set_abstract_valuetype (void)
 
 // Dump this AST_InterfaceFwd node to the ostream o.
 void
-AST_InterfaceFwd::dump (ostream &o)
+AST_InterfaceFwd::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_valuetype ())
     {

@@ -72,7 +72,7 @@ ACE_RCSID(ast, ast_enum, "$Id$")
 // Constructor(s) and destructor,
 
 AST_Enum::AST_Enum (void)
-	: pd_enum_counter (0),
+        : pd_enum_counter (0),
     member_count_ (-1)
 {
 }
@@ -81,13 +81,13 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
                     UTL_StrList *p,
                     idl_bool local,
                     idl_bool abstract)
- : AST_Decl (AST_Decl::NT_enum, 
-             n, 
+ : AST_Decl (AST_Decl::NT_enum,
+             n,
              p),
-	 UTL_Scope (AST_Decl::NT_enum),
-   COMMON_Base (local, 
+         UTL_Scope (AST_Decl::NT_enum),
+   COMMON_Base (local,
                 abstract),
-	 pd_enum_counter (0),
+         pd_enum_counter (0),
    member_count_ (-1)
 {
 }
@@ -150,16 +150,16 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
 
   UTL_ScopeActiveIterator *iter = 0;
   ACE_NEW_RETURN (iter,
-                  UTL_ScopeActiveIterator (this, 
+                  UTL_ScopeActiveIterator (this,
                                            IK_decls),
                   0);
 
-  while (!iter->is_done ()) 
+  while (!iter->is_done ())
     {
       i = iter->item ();
       item = AST_EnumVal::narrow_from_decl (i);
 
-      if (item->constant_value () == v) 
+      if (item->constant_value () == v)
         {
           delete iter;
           return item;
@@ -187,7 +187,7 @@ AST_Enum::next_enum_val (void)
 // Modify scoped name of an enumval so that it is scoped inside the scope
 // in which the enum is defined and not inside the enum itself
 static UTL_ScopedName *
-munge_name_for_enumval (UTL_ScopedName *n, 
+munge_name_for_enumval (UTL_ScopedName *n,
                         Identifier *last_component)
 {
   long len = n->length ();
@@ -200,7 +200,7 @@ munge_name_for_enumval (UTL_ScopedName *n,
 
   // We want to stop cdr'ing down the list when the head of the
   // list is at the name for the scope in which the enum is defined.
-  while (len > 3) 
+  while (len > 3)
     {
       len--;
       n = (UTL_ScopedName *) n->tail ();
@@ -232,16 +232,16 @@ AST_Enum::compute_member_count (void)
     {
       // Instantiate a scope iterator.
       ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
+                      UTL_ScopeActiveIterator (this,
                                                UTL_Scope::IK_decls),
                       -1);
 
       while (!(si->is_done ()))
-	      {
-	        // Get the next AST decl node.
+              {
+                // Get the next AST decl node.
           this->member_count_++;
           si->next ();
-        } 
+        }
 
       delete si;
     }
@@ -256,46 +256,46 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
   AST_EnumVal *t1 = 0;
 
-  if (t != 0) 
+  if (t != 0)
     {
       unsigned long tmp =
         t->constant_value ()->coerce (AST_Expression::EV_ulong)->u.ulval;
 
       t1 = idl_global->gen ()->create_enum_val (tmp,
-                                                t->name (), 
+                                                t->name (),
                                                 t->pragmas ());
 
-      t->set_name (munge_name_for_enumval (t->name (), 
+      t->set_name (munge_name_for_enumval (t->name (),
                                            t->local_name ()));
 
-      t1->set_name (munge_name_for_enumval (t1->name (), 
+      t1->set_name (munge_name_for_enumval (t1->name (),
                                             t1->local_name ()));
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -305,8 +305,8 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   this->add_to_scope (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   // Add it to enclosing scope.
@@ -319,11 +319,11 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
 // Dump this AST_Enum to the ostream o
 void
-AST_Enum::dump (ostream &o)
+AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 {
   UTL_ScopeActiveIterator *i = 0;
   ACE_NEW (i,
-           UTL_ScopeActiveIterator (this, 
+           UTL_ScopeActiveIterator (this,
                                     IK_decls));
 
   AST_Decl *d = 0;
