@@ -1,3 +1,14 @@
+Fri May 07 14:40:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_cxx.GNU: added, to support
+          uniform use of cxx across different OS versions.
+
+        * ace/config-osf1-4.0.h: conditionally #define DIGITAL_UNIX,
+          to support definition in CFLAGS.
+
+        * ace/config-osf1.h: added, to support easy migration to
+          DU 5.0.
+
 Fri May 07 11:00:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: OK on RedHat 6.0 Linux.
