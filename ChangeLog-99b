@@ -1,5 +1,9 @@
 Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS: Added several more uses of ACE_Errno_Guard, which has
+ 	  been enhanced to support assignment.  Thanks to Irfan for
+ 	  suggesting this.
+
 	* tests/Svc_Handler_Test.cpp: Added a simple test for the new
  	  buffering feature in ACE_Svc_Handler.
 
