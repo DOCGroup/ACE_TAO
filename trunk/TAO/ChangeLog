@@ -1,3 +1,12 @@
+Wed Oct 29 11:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+
+          Added 'const' qualifier to operation name parameter in the
+          constructor, to correlate with the signature of the base
+          class constructor.
+
 Wed Oct 29 11:14:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:

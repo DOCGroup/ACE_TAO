@@ -47,7 +47,7 @@ namespace TAO
         CORBA::AbstractBase_ptr target,
         Argument **args,
         int arg_number,
-        char *operation,
+        const char *operation,
         int op_len,
         Collocation_Proxy_Broker *cpb,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
