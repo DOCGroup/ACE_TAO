@@ -55,6 +55,14 @@ ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
                                options),
                   -1);
 
+  if (this->shm_malloc_->bad () != 0)
+    {
+      this->shm_malloc_->remove (); // Cleanup OS resources
+      delete this->shm_malloc_;
+      this->shm_malloc_ = 0;
+      return -1;
+    }
+
   return 0;
 }
 
