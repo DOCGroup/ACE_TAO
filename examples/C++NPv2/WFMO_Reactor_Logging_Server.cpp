@@ -24,7 +24,7 @@ public:
                                | ENABLE_ECHO_INPUT
                                | ENABLE_PROCESSED_INPUT);
     if (reactor ()->register_handler
-          (this, quit_seen_.handle ()) == -1)
+          (this, quit_seen_.handle ()) == -1
         || ACE_Event_Handler::register_stdin_handler
              (this, r, ACE_Thread_Manager::instance ()) == -1)
       r->end_reactor_event_loop ();
