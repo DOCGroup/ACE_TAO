@@ -135,6 +135,41 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             Distinguish between invalid target priorities and where
             the original == target.
 
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+	* tao/RTPortableServer/RT_Collocation_Resolver.h:
+	* tao/RTPortableServer/RT_Collocation_Resolver.i:
+
+          This class decides/resolves whether an object is collocated
+          with the servant.  The following check are done:
+
+          First we do the good ol' basic check: make sure that the
+          servant is in the same ORB that created this object.
+
+          Then we lookup the thread pool used by the POA where the
+          servant is located.  At the same time we figure out which
+          thread pool the calling thread belongs to by looking at it's
+          TSS resources.          
+          
+          If the POA's thread pool and the calling thread's thread
+          pool don't match, then the object is not collocated.  
+
+          If they do match and they don't have lanes, we are
+          collocated.  Note that this includes the default thread
+          pool.
+
+          Then we inspect the priority model policy of the target POA.
+          If it is CLIENT_PROPAGATED, then the object is not
+          collocated.  
+
+          Note that the priority model policy cannot be NOT_SPECIFIED
+          because NOT_SPECIFIED is not allowed with thread pool with
+          lanes.
+
+          If it is SERVER_DECLARED, then we lookup the servant's
+          priority.  If that matches the current thread's priority,
+          then the object is not collocated.  Otherwise, it is not
+          collocated.
+
 	* tao/RTPortableServer/RT_POA_Initializer.cpp
 	  (init_rt_default_policies): Removed: it was merging the ORB
 	  level policies with the default POA policies at initialization
@@ -142,10 +177,15 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  policies with the user provided policies when a POA is being
 	  created.
           
-        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp (create):
-          No need to setup the POA Extension Initializer.  Setup the
-          servant dispatcher and the policy validator on the Object
-          Adapter after creating it.
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+
+          - (create): No need to setup the POA Extension Initializer.
+            Setup the servant dispatcher and the policy validator on
+            the Object Adapter after creating it.
+
+          - (Constructor): Set the name of the collocation resolver to
+            be RT_Collocation_Resolver and add it to the service
+            configurator.
 
         * tao/RTPortableServer/RT_POA_Initializer.cpp:
 
@@ -161,7 +201,7 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tao/RTPortableServer/TAO_RTPortableServer.dsp:
         * tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
 
-          Removed RT_POA_Initializer.
+          Removed RT_POA_Initializer.  Added RT_Collocation_Resolver.
 
 	* tao/RTCORBA/Thread_Pool.cpp:
 
@@ -201,8 +241,8 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (destroy_threadpool_i): We now shutdown the reactors in
             the thread pool, wait for the threads in the pool to exit,
             finalize the resources in the pool, and only then delete
-            the thread pool.
-            
+            the thread pool.          
+
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
 	  protocols that the ORB knows about in the default server
@@ -375,7 +415,26 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             endpoint_selector_factory_, protocols_hooks_,
             client_factory_, server_factory_):
 
-            Simplified the creation of these factories.
+            Simplified the creation of these factories.  Now there is
+            no need to include these files:
+
+            Default_Stub_Factory.h
+            Default_Endpoint_Selector_Factory.h
+            Default_Protocols_Hooks.h
+
+         - (collocation_strategy): When trying to select the
+           collocation strategy to use for a method call on an object,
+           it is no longer sufficient to check the <is_collocated>
+           flag on the object.   The decision is left to the
+           collocation resolver, which get interesting in the
+           collocated case.
+
+         - (is_collocated): Don't ask only the current thread lane
+           resources to see if the mprofile matches the acceptors;
+           instead ask all the thread lane resources in the ORB.  The
+           functionality is shifted over to the
+           Thread_Lane_Resources_Manager which knows how many lanes
+           there are in this ORB.
 
          - (TAO_ORB_Core_TSS_Resources): Removed <transport_cache_>,
            <reactor_registry_>, and <reactor_registry_cookie_t>; added
@@ -526,9 +585,10 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/Transport_Cache_Manager.cpp (open): Removed.
 
 	* tao/TAO_Internal.cpp (open_services_i): Insert the
-	  Default_Thread_Lane_Resources_Manager_Factory into the service
-	  configurator.  Also, cast RT_ORB_Loader to ACE_Service_Object
-	  instead of TAO_Object_Loader.
+	  Default_Thread_Lane_Resources_Manager_Factory and the
+	  Default_Collocation_Resolver into the service configurator.
+	  Also, cast RT_ORB_Loader to ACE_Service_Object instead of
+	  TAO_Object_Loader.
 
 	* tao/default_resource.cpp:
 	* tao/Resource_Factory.cpp:
@@ -547,40 +607,41 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  No need to pass ORB_Core::create_stub() a pointer to the
 	  ORB_Core.
 
-        * tao/TAO.dsp: 
-        * tao/TAO_Static.dsp: 
+	* tao/Collocation_Resolver.cpp:
+	* tao/Collocation_Resolver.h:
+	* tao/Collocation_Resolver.i:
+	* tao/Default_Collocation_Resolver.cpp:
+	* tao/Default_Collocation_Resolver.h:
+	* tao/Default_Collocation_Resolver.i:
 
-	  - Removed these files:
+          This class decides/resolves whether an object is collocated
+          with the servant.  The default resolver simply does what was
+          done before which is to check the <is_collocated_> flag on
+          the object.  The RT resolver is more interesting.
 
-	    Reactor_Registry
-	    Single_Reactor
-            POA_Extension_Initializer
-	    TimeBaseS
-	    CONV_FRAMES
-	    Connector_Impl
-	    TAO_Singleton
-	
-	  - Added these files:
-
-	    Default_Thread_Lane_Resources_Manager
-	    Thread_Lane_Resources
-	    Thread_Lane_Resources_Manager.cpp
-	
 	* tao/Makefile: 
 	* tao/Makefile.bor: 
 	* tao/Makefile.am: 
+        * tao/TAO.dsp: 
+        * tao/TAO_Static.dsp: 
 
 	  - Added new files:
 	   
 	    Thread_Lane_Resources 
 	    Thread_Lane_Resources_Manager 
 	    Default_Thread_Lane_Resources_Manager
+            Collocation_Resolver
+            Default_Collocation_Resolver
 
 	  - Removed these files:
 
 	    Reactor_Registry
 	    Single_Reactor
             POA_Extension_Initializer
+
+	* tao/Makefile: 
+	* tao/Makefile.bor: 
+	* tao/Makefile.am: 
 
 	  - Removed the following *S_T.* files.  Since the *S.* are
 	    not needed, these will also not be needed:
@@ -591,6 +652,16 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    PollableS_T 
 	    TAOS_T 
 	    TimeBaseS_T
+
+        * tao/TAO.dsp: 
+        * tao/TAO_Static.dsp: 
+
+	  - Removed these files:
+
+	    TimeBaseS
+	    CONV_FRAMES
+	    Connector_Impl
+	    TAO_Singleton
 
 	* tao/PortableServer/POA.cpp: 
 
@@ -611,24 +682,34 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (thread_pool): No-op accessor added.  This change is more
             relevant for the RT POA.
 
-	* tao/PortableServer/Object_Adapter.cpp (open): 
+          - (friend): Added TAO_RT_Collocation_Resolver as a friend so
+            that it can call lookup_servant_i().  This is safe because
+            Servant_Upcall has the lock held.
 
-	  - Make sure that the default resources are open when the
+	* tao/PortableServer/Object_Adapter.cpp:
+
+          - (open): 
+
+            Make sure that the default resources are open when the
 	    RootPOA is created.
 
-	  - Make sure that the correct default Server Protocol Policy
+	    Make sure that the correct default Server Protocol Policy
 	    is set after we open the default resources.  Previously
 	    all the protocols supported were included in the default
 	    Server Protocol Policy.  This should be restricted to only
 	    the protocols opened by default (such as IIOP) and any
 	    other asked for by the user (such as SHMIOP).
 
-          - Before a POA is created (including the RootPOA), any
+            Before a POA is created (including the RootPOA), any
             relevant policies at the ORB level should be merged with
             the policies passed to create_POA() by the user.
             
-          - No need to access the POA Initializer.
+            No need to access the POA Initializer.
             TAO_RT_Object_Adapter_Factory will set things up for us.
+
+          - (Servant_Upcall::lookup_POA): New method added to simply
+            lookup the POA. This method is needed for looking up the
+            POA when making collocation decisions.
 
 	* tao/PortableServer/POA_Cached_Policies.cpp
 	  (TAO_POA_Cached_Policies): Changed the default value of
@@ -662,6 +743,15 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  Removed Reactor_Per_Priority.
 	
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+
+          Passed environment variable to
+          TAO_ORB_Core::collocation_strategy().
+
 	* tests/RTCORBA/Policy_Combinations: New test added that
           combines and tests several RT policies in different ways.
 
@@ -774,6 +864,51 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             other protocol specific options (basically everything
             other than the endpoint address) through the -ORBEndpoint
             option.
+
+	* tests/RTCORBA/Collocation: This is a new test for
+            collocation when using thread pools and lanes.  There are
+            multiple servants in this test:
+
+            (a) One servant is in the Root POA which is service by the default
+                thread pool.
+
+            (b) Another servant is in a POA which is serviced by a
+                thread pool without lanes.  Since a thread pool
+                without lanes is really a thread pool with one lane,
+                all requests will be handled by this one lane.
+                Therefore, setting the priority model policy was not
+                necessary for this POA.
+
+            (c) There are two servants is in a POA which is serviced
+                by a thread pool with lanes, with the
+                CLIENT_PROPAGATED policy.  Depending on the priority
+                of the caller, either one of the lanes processes the
+                request.
+
+            (d) There are two more servants is in a POA which is
+                serviced by a thread pool with lanes, with the
+                SERVER_DECLARED policy.  One servant is registered to
+                match one lane and the other servant matches the other
+                lane.
+
+             All six servants are put into a global array.  The main
+             thread starts off the testing by calling start() on each
+             servant in the array.  The implementation of start()
+             calls method() on each servant in the array.  Since the
+             upcalls will be handled by the lane corresponding to each
+             servant, all six lanes ends up calling into one another.
+
+             The main thread then changes its priority and calls
+             start() on each servant in the array.  This makes sure to
+             exercise the second lane in the thread pool with lanes
+             and the CLIENT_PROPAGATED priority.
+
+             The test also converts the objects into strings and back
+             to make sure that collocation works as expected for
+             imported objects.
+
+             This test has enough asserts to make sure that the
+             correct thread is making the upcall.
 
 	* tests/RTCORBA/Banded_Connections:
 
@@ -915,7 +1050,8 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tests/RTCORBA/Makefile.bor: 
 
 	  Added new tests ORB_init, Policy_Combinations,
-	  Destroy_Thread_Pool, Persistent_IOR, and Linear_Priority.
+	  Destroy_Thread_Pool, Persistent_IOR, Collocation, and
+	  Linear_Priority.
 
         * tests/RTCORBA/Banded_Connections/Makefile:
         * tests/RTCORBA/Banded_Connections/client.bor:
