@@ -118,7 +118,7 @@ worker (Event_Handler *event_handler)
 }
 
 int
-main (void)
+main (int, char *[])
 {
   ACE_ReactorEx reactorEx;
   Event_Handler handler (reactorEx);
