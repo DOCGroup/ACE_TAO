@@ -4,17 +4,21 @@
 // ============================================================================
 //
 // = LIBRARY
+//    TAO
 //
 // = FILENAME
+//    IIOP_Connector.h
 //
 // = DESCRIPTION
+//    IIOP specific connector processing
 //
 // = AUTHOR
+//    Fred Kuhns
 //
 // ============================================================================
 
-#ifndef IIOP_CONNECTOR_H
-#  define IIOP_CONNECTOR_H
+#ifndef TAO_IIOP_CONNECTOR_H
+#  define TAO_IIOP_CONNECTOR_H
 #include <tao/GIOP.h>
 class TAO_Connector;
 class TAO_Client_Connection_Handler;
@@ -49,4 +53,4 @@ private:
 
 };
 
-#endif  /* IIOP_CONNECTOR_H */
+#endif  /* TAO_IIOP_CONNECTOR_H */
