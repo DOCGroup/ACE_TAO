@@ -5,6 +5,9 @@ Tue Aug  5 15:51:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Minor cosmetic changes.
 
         * orbsvcs/tests/InterfaceRepo/Makefile:
+
+          Added the new test to the directory list.
+
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/InterfaceRepo_IDL3_Test.mpc:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/README:
