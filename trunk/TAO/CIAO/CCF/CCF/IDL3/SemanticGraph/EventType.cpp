@@ -87,7 +87,7 @@ namespace CCF
         {
           TypeInfo ti (typeid (EventTypeFactory));
           ti.add_base (
-            Access::PUBLIC, true, EventTypeFactory::static_type_info ());
+            Access::PUBLIC, true, ValueTypeFactory::static_type_info ());
           return ti;
         }
 

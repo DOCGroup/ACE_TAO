@@ -1,3 +1,14 @@
+Tue Sep 21 13:00:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/IDL3/IDL3.vcproj:
+        
+          Added new files create by Boris for eventtype factory support.
+          
+        * CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
+        
+          Fixed search-and-replace error in EventTypeFactory constructor
+          that had it inheriting from itself.
+
 Tue Sep 21 11:08:20 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SemanticGraph/ValueType.cpp:
