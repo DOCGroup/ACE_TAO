@@ -1,8 +1,15 @@
+Wed May 12 00:06:26 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+
+          Made changes to handle HREF tags.
+
 Tue May 11 22:58:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changes to support multiplex uses ports in components.
           Thanks to Bala Natarajan <bala@dre.vanderbilt.edu> for
           writing the hand-crafted version of the servant glue
@@ -11,7 +18,7 @@ Tue May 11 22:58:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue May 11 22:55:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/BasicSP.mpc:
-        
+
           Fixed IDL compiler command line options so the stub and
           skeleton export macros will get generated correctly regardless
           of the order of execution of the stub and skeleton project

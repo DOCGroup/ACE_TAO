@@ -108,10 +108,12 @@ namespace CIAO
                                   Deployment::Bridge& domain_bridge);
 
       /// process the node attribute
-      void process_domain_interconnect (Deployment::Interconnect& domain_ic);
+      void process_domain_interconnect (DOMNodeIterator* iter,
+                                        Deployment::Interconnect& domain_ic);
 
       /// process the node attribute
-      void process_domain_sr (Deployment::SharedResource& domain_sr);
+      void process_domain_sr (DOMNodeIterator* iter,
+                              Deployment::SharedResource& domain_sr);
 
       /// process the Node name attribute
       void process_node_name (const XMLCh* name,
@@ -150,22 +152,6 @@ namespace CIAO
 
       /// create a document
       DOMDocument* create_document (const char *url);
-
-      /// parse the node in a HREF format
-      void parse_node_href_doc (DOMDocument* doc, unsigned long filter,
-                                Deployment::Node& domain_node);
-
-      /// parse the shared resource in a HREF format
-      void parse_sr_href_doc (DOMDocument* doc, unsigned long filter,
-                              Deployment::SharedResource& domain_sr);
-
-      /// parse the interconnect in a HREF format
-      void parse_ic_href_doc (DOMDocument* doc, unsigned long filter,
-                              Deployment::Interconnect& domain_ic);
-
-      /// parse the shared resource in a HREF format
-      void parse_bridge_href_doc (DOMDocument* doc, unsigned long filter,
-                                  Deployment::Bridge& domain_bridge);
 
       /// parse the resource in a HREF format
       void parse_resource_href_doc (DOMDocument* doc, unsigned long filter,
