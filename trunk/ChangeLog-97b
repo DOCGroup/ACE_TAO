@@ -1,3 +1,23 @@
+Wed Oct 15 22:47:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/ACE.h: 
+	* ace/ACE.cpp: 
+	  Added an implementation of the ISO 8802-3 standard 32 bits CRC,
+	  but for strings only. The implementation was taken from the
+	  FreeBSD code.
+
+	* ace/SV_Semaphore_Simple.cpp: 
+	  Improved the hashing algorithm to assign a "unique" key for
+	  semaphore keys using an string.
+	  This solves a problem detected by Mark L. Boriack
+	  (Mark.L.Boriack@cpmx.saic.com): under OSF/1 the were too many
+	  collitions with the default arguments for ACE_Process_Mutex.
+	  Note that this is only a problem if no name is given to it.
+
+	* ace/Log_Msg.cpp: 
+	  ACE_Log_Msg_message_queue_ was not initialized in platforms
+	  without threads.
+
 Wed Oct 15 11:07:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Fixed the flock_trywrlock() and flock_tryrdlock() so

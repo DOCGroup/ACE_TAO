@@ -474,6 +474,10 @@ public:
   // Computes the hash value of <str> using the ``Hash PJW'' routine
   // (works for UNICODE strings).
 
+  static u_long crc32 (const char* str);
+  // Computes the ISO 8802-3 standard 32 bits CRC for the string
+  // (not for a file).
+
   static u_long is_prime (const u_long n,
                           const u_long min_factor,
                           const u_long max_factor);

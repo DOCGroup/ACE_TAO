@@ -236,6 +236,11 @@ ACE_Log_Msg::instance (void)
 #  error "Platform must support thread-specific storage if threads are used..."
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else
+  // We don't have threads, we cannot call
+  // ACE_Log_Msg_Manager::get_lock() to initialize the message queue,
+  // we do it here.
+  ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
+
   // Singleton implementation.
   static ACE_Log_Msg log_msg;
 
