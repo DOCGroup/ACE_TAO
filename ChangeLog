@@ -1,3 +1,9 @@
+Tue Jan 30 11:26:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Proactor/post_completions.cpp: Added a count
+          to be sure that all expected completions are delivered, and
+          print error message if not.
+
 Tue Jan 30 10:47:52 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_Base.cpp
