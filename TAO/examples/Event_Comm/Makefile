@@ -26,11 +26,15 @@ IDL_SRC	= Event_CommS.cpp Event_CommC.cpp
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CONSUMER_OBJS = Consumer_Handler.o \
+CONSUMER_OBJS = Event_CommC.o \
+                Event_CommS.o \
+	        Consumer_Handler.o \
 		Consumer_Input_Handler.o \
 	        Event_Comm_i.o
 
-SUPPLIER_OBJS = Supplier_Input_Handler.o \
+SUPPLIER_OBJS = Event_CommC.o \
+		Event_CommS.o \
+		Supplier_Input_Handler.o \
 	        Event_Comm_i.o
 
 NOTIFIER_OBJS = Notifier_Handler.o \
@@ -61,8 +65,8 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: cubitC.cpp cubitS.cpp cubitC.h cubitS.h
-#$(IDL_SRC): cubit.idl
+.PRECIOUS: Event_CommC.cpp Event_CommS.cpp Event_CommC.h Event_CommS.h
+#$(IDL_SRC): event.idl
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
 supplier: $(addprefix $(VDIR),$(SUPPLIER_OBJS))
@@ -75,7 +79,7 @@ notifier: $(addprefix $(VDIR),$(NOTIFIER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
+	-/bin/rm -rf Event_CommS.* Event_CommC.* Event_CommS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
