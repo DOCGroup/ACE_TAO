@@ -249,7 +249,7 @@ catior (char* str
             continue;
           }
 
-        if (tag == TAO_TAG_IIOP_PROFILE)
+        if (tag == IOP::TAG_INTERNET_IOP)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_iiop_profile (stream);
