@@ -485,7 +485,6 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           return;
         }
       ACE_ENDTRY;
-      ACE_CHECK
 
       // hand it to the next lower layer
       TAO_SVC_HANDLER *this_ptr = this;
@@ -551,7 +550,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                         request_id,
                                         ACE_TRY_ENV) == -1)
                 error_encountered = 1;
-              ACE_CHECK;
+              ACE_CHECK_RETURN (-1);
               break;
 
             case TAO_GIOP::LocateRequest:
@@ -561,7 +560,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                        request_id,
                                        ACE_TRY_ENV) == -1)
                 error_encountered = 1;
-              ACE_CHECK;
+              ACE_CHECK_RETURN (-1);
               break;
 
             case TAO_GIOP::EndOfFile:
@@ -626,7 +625,6 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
     }
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (response_required)
     {
