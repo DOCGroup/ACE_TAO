@@ -1,82 +1,89 @@
+Wed Jul 07 13:07:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU: removed check for whether we should add
+          -Wno-uninitialized with g++.  We were no longer using
+          it anyways, and the check was causing a warning if the
+          compiler wasn't on the user's PATH.
+
 Wed Jul  7 12:59:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	  Fixed the timeout computations so it works in platforms without
-	  native 64 bit ints.
+        * tao/Invocation.cpp:
+          Fixed the timeout computations so it works in platforms without
+          native 64 bit ints.
 
-	* tao/ORB.cpp:
-	  It was not compiling in platforms without native C++
-	  exceptions.
+        * tao/ORB.cpp:
+          It was not compiling in platforms without native C++
+          exceptions.
 
 Wed Jul  7 12:49:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
-	* orbsvcs/tests/Concurrency/CC_client.cpp:
-	* orbsvcs/tests/Concurrency/CC_command.cpp:
-	* orbsvcs/tests/Concurrency/CC_naming_service.cpp:
-	* orbsvcs/tests/Concurrency/CC_test_utils.cpp:
-	* orbsvcs/tests/Concurrency/CC_tests.cpp:
-	  The concurrency service compiles now, and does not use any of
-	  the old TAO_TRY macros.  It is still disabled because it is so
-	  rarely used.
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+          The concurrency service compiles now, and does not use any of
+          the old TAO_TRY macros.  It is still disabled because it is so
+          rarely used.
 
-	* tests/NestedUpcall/Simple/Makefile:
-	  Updated dependencies
+        * tests/NestedUpcall/Simple/Makefile:
+          Updated dependencies
 
 Wed Jul 07 12:41:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/compiler.html: Added documentation on how to control the
-	  generation of collocation stubs of different strategies.
+        * docs/compiler.html: Added documentation on how to control the
+          generation of collocation stubs of different strategies.
 
 Wed Jul 07 09:47:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
-	  (~Cubit_Factory_i): Removed the deactivation of the servant in
-	  ~Cubit_Factory_i. The deactivation was actually already
-	  performed when ORB::shutdown was called. When the deactivation
-	  was happening again in ~Cubit_Factory_i, implicit activation was
-	  actually reregistering the servant, just to be immediately
-	  deactivate it.  I would not have noticed this if it weren't for
-	  the fact that on some platforms, the second deactivation occurs
-	  before the shutdown() upcall completes, causing the second
-	  deactivation to fail since the servant is still in the active
-	  object map.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
+          (~Cubit_Factory_i): Removed the deactivation of the servant in
+          ~Cubit_Factory_i. The deactivation was actually already
+          performed when ORB::shutdown was called. When the deactivation
+          was happening again in ~Cubit_Factory_i, implicit activation was
+          actually reregistering the servant, just to be immediately
+          deactivate it.  I would not have noticed this if it weren't for
+          the fact that on some platforms, the second deactivation occurs
+          before the shutdown() upcall completes, causing the second
+          deactivation to fail since the servant is still in the active
+          object map.
 
 Wed Jul  7 03:17:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html: Removed the -ORBReactorLock entry into the
-	  Resource_Factory section and replaced it with a note.  Removed
-	  the -ORBColTable entry from the Resource_Factory section.
+        * docs/Options.html: Removed the -ORBReactorLock entry into the
+          Resource_Factory section and replaced it with a note.  Removed
+          the -ORBColTable entry from the Resource_Factory section.
 
-	  Removed the -ORBColTblLockType entry from the
-	  Server_Strategy_Factory section.
+          Removed the -ORBColTblLockType entry from the
+          Server_Strategy_Factory section.
 
-	  Added the -ORBEventLoopLock entry into the
-	  Server_Strategy_Factory section.  Added the -ORBProtocolFactory
-	  entry into the Resource_Factory section.  Somebody, document us.
+          Added the -ORBEventLoopLock entry into the
+          Server_Strategy_Factory section.  Added the -ORBProtocolFactory
+          entry into the Resource_Factory section.  Somebody, document us.
 
 Tue Jul  6 22:23:01 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
-	* orbsvcs/tests/CosEC_Multiple/run_test2.pl:
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl:
-	* orbsvcs/tests/Simple_Naming/run_test.pl:
-	* orbsvcs/tests/Property/run_test.pl,
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl,
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	  Updated these scripts to use Naming_Server rather than Naming_Service
-	  to match the change described in the next bullet.
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+        * orbsvcs/tests/CosEC_Multiple/run_test2.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl,
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl,
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          Updated these scripts to use Naming_Server rather than Naming_Service
+          to match the change described in the next bullet.
 
-	* orbsvcs/Naming_Service: Renamed the executable for the Naming Service
-	  to "Naming_Server", which is more descriptive.
+        * orbsvcs/Naming_Service: Renamed the executable for the Naming Service
+          to "Naming_Server", which is more descriptive.
 
-	* orbsvcs/Naming_Service: Created a new file called Naming_Server.cpp
-	  that contains the main() function.  This makes it easy for folks
- 	  to reuse the TAO Naming Service in other ways, such as
- 	  integrating it with the Windows NT Service Config Manager.
-  	  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for suggesting this.
+        * orbsvcs/Naming_Service: Created a new file called Naming_Server.cpp
+          that contains the main() function.  This makes it easy for folks
+          to reuse the TAO Naming Service in other ways, such as
+          integrating it with the Windows NT Service Config Manager.
+          Thanks to Gul Onural <Gul_Onural@Mitel.COM> for suggesting this.
 
 Tue Jul 06 22:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -85,8 +92,8 @@ Tue Jul 06 22:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Jul  6 16:54:32 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: Fixed several
-	  'unreachable statements' warnings in <run> method.
+        * orbsvcs/Naming_Service/Naming_Service.cpp: Fixed several
+          'unreachable statements' warnings in <run> method.
 
 Tue Jul  6 16:35:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
@@ -94,30 +101,30 @@ Tue Jul  6 16:35:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
 Tue Jul  6 15:55:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/ORB_Core.cpp (init): Merged the flags '-ORBCollocation yes/no'
-	  and '-ORBGlobalCollocation yes/no'.  The collocation policy is
-	  now controlled only by the flag '-ORBCollocation
-	  yes/global/per-orb/no'.  Thanks to Irfan for suggesting this.
+        * docs/Options.html:
+        * tao/ORB_Core.cpp (init): Merged the flags '-ORBCollocation yes/no'
+          and '-ORBGlobalCollocation yes/no'.  The collocation policy is
+          now controlled only by the flag '-ORBCollocation
+          yes/global/per-orb/no'.  Thanks to Irfan for suggesting this.
 
 Tue Jul  6 15:31:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/Pluggable.h:
-	* tao/Pluggable.cpp:
-	* tao/UIOP_Transport.h:
-	* tao/UIOP_Transport.cpp:
-	* tao/Wait_Strategy.cpp:
-	  Completed the implementation of timeouts when using
-	  Block_On_Read (RW) and Block_On_Select (ST) client connection
-	  handlers. [BUG ID 12]
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Pluggable.h:
+        * tao/Pluggable.cpp:
+        * tao/UIOP_Transport.h:
+        * tao/UIOP_Transport.cpp:
+        * tao/Wait_Strategy.cpp:
+          Completed the implementation of timeouts when using
+          Block_On_Read (RW) and Block_On_Select (ST) client connection
+          handlers. [BUG ID 12]
 
-	* tests/Timeout/run_test.pl:
-	  Fine tune the test so there are more significant samples in the
-	  execution.
+        * tests/Timeout/run_test.pl:
+          Fine tune the test so there are more significant samples in the
+          execution.
 
 Tue Jul 06 15:05:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -150,8 +157,8 @@ Tue Jul 06 13:00:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           In addition, _add_ref() was not being invoked on a servant
           returned from a servant activator.  This is fixed now.
 
-	* tao/ORB.cpp (_get_collocated_servant): Factored out some common
-	  code into <_find_collocated_servant>.
+        * tao/ORB.cpp (_get_collocated_servant): Factored out some common
+          code into <_find_collocated_servant>.
 
 Tue Jul  6 12:05:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

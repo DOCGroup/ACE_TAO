@@ -26,14 +26,6 @@ ifeq ($(findstring g++,$(CXX)),g++)
     #### g++ < 2.8 complains about unused parameters in generated code.
     CCFLAGS += -Wno-unused
   endif # g++ < 2.8
-
-  # This no longer appears to be needed.
-  ifneq ($(findstring egcs-2.91,$(shell $(CXX) --version)),)
-    #### egcs 2.91.57 seems to go overboard:
-    ####   DynAny_i.cpp:565: warning: `class TAO_DynAny_i * this' might be
-    ####   used uninitialized in this function
-    #CCFLAGS += -Wno-uninitialized
-  endif # egcs 2.91.x
 endif # g++
 
 
