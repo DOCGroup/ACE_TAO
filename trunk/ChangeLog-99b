@@ -1,59 +1,11 @@
-Fri Jul  9 16:28:31 1999  Steve Huston  <shuston@riverace.com>
-
-        * tests/Cache_Map_Manager_Test.(h cpp): Moved class hash_key from
-          .cpp to a new file, Cache_Map_Manager_Test.h to satisfy IBM C++.
-
-Fri Jul  9 16:24:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* bin/run_all_win32.pl:
-	  Added experimental script to run all the tests under Win32, but
-	  it is still work in progress.
-
-Fri Jul  9 14:02:52 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/config-aix-4.x.h: Re-enabled ACE_LACKS_SETSCHED for AIX 4.3.
-          The OS defs are not aligned/matched correctly with what they mean
-          in this area, but will need to wait til after ACE 5.0 is done
-          before straightening it out.
-
-        * ace/WFMO_Reactor.cpp (ACE_WFMO_Reactor_Handler_Repository::bind_i):
-          Set errno to EMFILE if the max number of handles is registered,
-          instead of leaving a stale errno for the user to figure out.
-
-        * tests/MT_Reactor_Timer_Test.h (Dispatch_Count_Handler): Changed
-          type of timers_fired_ from int to size_t so it matches type of
-          ACE_MAX_TIMERS.
-
-Fri Jul  9 14:27:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Based_Pointer_T: Factored out all but the operator-> into 
-	  a new class called ACE_Based_Pointer_Basic so that we can use
- 	  this for "basic types" like char *.  Thanks to Irfan for
- 	  pointing this out.
-
-	* ace/Based_Pointer_Repository.cpp (unbind): Fixed a
-	  bug in the unbind() loop.  Thanks to David Levine and DEC UNIX
- 	  C++ for noticing this!
-  
-	* ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
-	  of Event_Handler->reator ().  Thanks to Carlos for reporting
- 	  this.
-
-Fri Jul 09 13:11:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tests/Conn_Test.cpp (spawn_threads): ACE_OS::perror takes a
-	  wchar_t string on CE.
-
-	* tests/test_config.h (set_output): We should use non-unicode
-	  version of ACE_OS::getenv to initialize test_dir on "regular"
-	  UNICODE compilation.  Thanks to Steve for reporting this.
-
-	  Added more WinCE/UNICODE fixes.
-
 Fri Jul  9 12:16:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cache_Map_Manager_Test.cpp:
-	  SunC++4.0 compiler doesnt accept typedefs with templates and
+	* ace/Caching_Utility_T.cpp (minimum): 
+	  Modified minimum () of ACE_Recyclable_Handler_Utility class so
+	  that the minimum value is also an entry which is purgable.
+
+	* tests/Cache_Map_Manager_Test.cpp: 
+	  SunC++4.0 compiler doesnt accept typedefs with templates and 
 	  having ::, for example: HASH_MAP::iterator. One has to typedef
 	  HASH_MAP::iterator and use it to typedef something else. Fixed
 	  this problem in the above test.
