@@ -46,6 +46,7 @@ void enter_cs(int semaphore_id);
 void leave_cs(int semaphore_id);
 int creat_semaphore(void);
 void remove_semaphore(int sid);
+void remove_all_semaphores (void);
 int get_semval(int sid);
 void get_full_path(char *filename, char * buffer, int bufsize);
 void setsignal(int sig, void (func)(int));
