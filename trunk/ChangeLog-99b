@@ -6,6 +6,14 @@ Wed Jul 07 01:28:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Jul  7 00:37:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Malloc_T.cpp: All the ACE_Malloc constructors were calling
+	  open() without checking the results.  Now, if failure occurs we
+ 	  print a message.  In addition, we weren't checking in
+ 	  shared_malloc() to make sure that we'd been properly initialized
+ 	  by the constructor.  Now, if we aren't initialized correctly we
+ 	  return 0.  Thanks to Dietrich Quehl
+ 	  <Dietrich.Quehl@med.siemens.de> for reporting these problems.
+
 	* ace/Memory_Pool: Added a new feature to ACE_Shared_Memory_Pool
 	  and ACE_Shared_Memory_Pool_Options that makes it possible to
  	  tailor the size of System V shared memory segments without
