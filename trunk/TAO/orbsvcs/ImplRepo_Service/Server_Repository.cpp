@@ -338,9 +338,17 @@ Server_Repository::get_startup_info (
       parser.setErrorHandler (this->handler_);
       parser.setEntityResolver (this->handler_);
 
-      ACEXML_Env xmlenv;
-
-      parser.parse (&input, xmlenv);
+      ACEXML_TRY_NEW_ENV
+        {
+          parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_TRY_CHECK;
+        }
+      ACEXML_CATCH (ACEXML_Exception, ex)
+        {
+          ex.print();
+          return -1;
+        }
+      ACEXML_ENDTRY;
 
       ACE_CString activation_mode;
 
