@@ -66,11 +66,15 @@ public:
   virtual int wait (TAO_Connection_Handler *ch,
                     ACE_Time_Value *val) = 0;
 
+  /// Cleanup in case of failed connect.
   /*
    * Do any left over memory management or related things after
-   * the connect failed.
+   * the connect failed. The argument @c is_successful indicates
+   * whether the connection handler had undergone a sucessful state
+   * transitions or not.
    */
-  virtual int post_failed_connect (TAO_Connection_Handler *ch);
+  virtual int post_failed_connect (TAO_Connection_Handler *ch,
+                                   int is_successful = 1);
 
 protected:
 

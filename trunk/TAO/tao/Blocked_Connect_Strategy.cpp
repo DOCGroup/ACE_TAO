@@ -45,18 +45,3 @@ TAO_Blocked_Connect_Strategy::wait (TAO_Connection_Handler *,
   // We cannot wait for connection completion
   return -1;
 }
-
-int
-TAO_Blocked_Connect_Strategy::post_failed_connect (TAO_Connection_Handler *ch)
-{
-  // We need to do this here else we will leak memory. We cannot call
-  // close_connection () for the following reasons
-  // . in blocked connect the event_handlers get_handle () will return
-  //   an ACE_INVALID_HANDLE
-  // . We cannot relax the conditions since the conditions are right
-  //   for other natural cases ie. LF
-  // Hence the blocked startegy will have to take of things itself.
-  ch->transport (0);
-  int ref =  ch->decr_refcount ();
-  return ref;
-}
