@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "UpgradeableContextC.h"
+#include "Context_Impl_T.h"
 #include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,6 +35,8 @@ namespace CIAO
             typename COMP, 
             typename COMP_VAR>
   class Upgradeable_Context_Impl : public virtual BASE_CTX,
+                                   public virtual Context_Impl<
+                                   BASE_CTX, SVNT, COMP, COMP_VAR>,
                                    public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -61,15 +64,16 @@ namespace CIAO
   protected:
     SVNT *servant_;
     COMP_VAR component_;
+    typedef Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR> session_context;
   };
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Context_Impl_T.cpp"
+#include "Upgradeable_Context_Impl_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Context_Impl_T.cpp")
+#pragma implementation ("Upgradeable_Context_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
