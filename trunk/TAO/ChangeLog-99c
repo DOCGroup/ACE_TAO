@@ -1,3 +1,11 @@
+Fri Oct  8 11:28:54 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Added the new Trader files to orbsvcs - Interpreter.cpp,
+	  Trader_Constraint_Visitors.cpp, Interpreter_Utils_T.cpp
+	  , Interpreter_Utils.cpp
+
 Fri Oct  8 11:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Request.h:
@@ -17,13 +25,13 @@ Fri Oct  8 11:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Stub.cpp:
 	  New method do_deferred_call() creates a new kind of
 	  invocation called TAO_GIOP_DII_Deferred_Invocation,
-	  described below, passes along the request pointer, calls 
+	  described below, passes along the request pointer, calls
 	  invoke() and returns without blocking.
 
 	* tao/Asynch_Invocation.h:
 	* tao/Asynch_Invocation.i:
 	* tao/Asynch_Invocation.cpp:
-	  TAO_GIOP_DII_Deferred_Invocation creates a new 
+	  TAO_GIOP_DII_Deferred_Invocation creates a new
 	  kind of reply dispatcher, TAO_DII_Deferred_Reply_Dispatcher,
 	  described below, passing along the request pointer.
 
@@ -66,13 +74,13 @@ Fri Oct 08 10:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* TAO_IDL/be_include/be_interface_strategy.h:
 	  New strategy to trigger the generation of forward declarations.
 
-	* TAO_IDL/be_include/be_codegen.h: Added a new state 
+	* TAO_IDL/be_include/be_codegen.h: Added a new state
 	  and removed old AMI states.
 
 	* TAO_IDL/be_include/be_visitor_interface.h: Added a visitor
 	  for AMI interfaces to generate forward declarations.
 
-	* TAO_IDL/include/ast_module.h: Changed the behavior of the 
+	* TAO_IDL/include/ast_module.h: Changed the behavior of the
 	  be_add_interface () method to insert the new node *after*
 	  the given node and not *before* it.
 
@@ -80,9 +88,9 @@ Fri Oct 08 10:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/util/utl_scope.cpp:
 	  Changed the behavior of the add_referenced () and add_decl ()
 	  method to add the new reference/decl *after* the given
-	  decl, instead of inserting it *before* it. 
+	  decl, instead of inserting it *before* it.
 
-	* tests/AMI/ami_test.idl: Activated the the shutdown () 
+	* tests/AMI/ami_test.idl: Activated the the shutdown ()
 	  operation.
 
 Thu Oct  7 14:54:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
@@ -212,7 +220,7 @@ Wed Oct  6 10:33:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  methods, moved these to the .i file.
 
 	* tao/Reply_Dispatcher.cpp: Cosmetic changes.
-	
+
 	* tests/AMI/Makefile: Added the -Ge 1 switch to the IDL compiler.
 
 Wed Oct  6 07:23:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
