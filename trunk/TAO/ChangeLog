@@ -1,3 +1,10 @@
+Sun Nov 16 12:40:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+
+	  In receive_request_service_context (), return if we receive a
+	  shutdown call. If not the test will not shutdwon cleanly.
+
 Sun Nov 16 12:32:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/operation_details.h:
