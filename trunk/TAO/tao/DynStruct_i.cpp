@@ -302,6 +302,17 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
       ACE_Message_Block* mb = any._tao_get_cdr ();
       TAO_InputCDR cdr (mb);
 
+      // If we have an exception type, unmarshal the repository ID.
+	    CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
+                                                  ACE_TRY_ENV);
+	    ACE_TRY_CHECK;
+
+	    if (kind == CORBA::tk_except) 
+        {
+	        CORBA::String_var str;
+	        cdr >> str.out();
+	      }
+
       for (CORBA::ULong i = 0;
            i < this->da_members_.size ();
            i++)
@@ -341,6 +352,16 @@ CORBA::Any_ptr
 TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_OutputCDR out_cdr;
+
+  // If we have an exception type, marshal the repository ID.
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
+                                              ACE_TRY_ENV);
+  ACE_TRY_CHECK;
+
+  if (kind == CORBA::tk_except) 
+    {
+      out_cdr << this->type_->id ();
+    }
 
   for (CORBA::ULong i = 0;
        i < this->da_members_.size ();
