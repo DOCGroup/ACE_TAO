@@ -1,0 +1,52 @@
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/NestedUpcall
+//
+// = FILENAME
+//    Reactor.idl
+//
+// = DESCRIPTION
+//    A simple test of nested upcalls using a structure we likely all
+//    know and love.
+//
+//    Existence of this interface should not be taken as testimony that
+//    such a structure would work in ACE!  There is no such thing as an
+//    IDL interface to the Reactor (yet)!
+//
+// = AUTHORS
+//    Chris Cleeland
+//
+// ============================================================================
+
+interface Reactor;
+
+interface EventHandler 
+{
+  Long peer ();
+  // Returns an integer corresponding to the event handler's file
+  // descriptor.
+
+  UShort decrement (in Reactor r, in UShort num);
+  // Decrements <num> by invoking the <decrement> operation on <r>
+  // and returning that value, finally stopping when it gets to zero.
+};
+
+interface Reactor 
+{
+  Long register_handler (in EventHandler eh);
+  // Turns around and queries <eh> for the peer.
+
+  oneway void set_value ();
+  // do-nothing oneway to check for proper operation.
+
+  UShort decrement (in EventHandler eh, in UShort num);
+  // Decrements <num> by invoking the <decrement> operation on <eh>
+  // and returning that value, finally stopping when it gets to zero.
+
+  void stop ();
+  // Stops the reactor.
+};
+

@@ -1,0 +1,30 @@
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/Demux/CodeGen
+//
+// = FILENAME
+//    README
+//
+// = AUTHOR
+//
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+This directory contains the code generator for the Demux Test.
+
+Command line options
+
+demux -m <num ops>
+      -o <num objs>  (not useful until we add USER_ID policy to the
+                      demux server)
+      -p <num POAs>
+
+This will generate an interface definition for the Demux_Test
+interface in a file called "demux_test.idl". The code generator will
+also produce the demux_test_i.{h, cpp} files that implement the
+interface. A "demux_test_client.i" produces some client-side code that
+must be included with the client.
+
