@@ -1,25 +1,3 @@
-Tue Oct 14 02:49:02 1997    <irfan@TWOSTEP>
-
-	* tests/Notify_Performance_Test.cpp: New performance test. This
- 	  test is used to time the notification mechanisms of the
- 	  ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
- 	  tested. The notify() mechanism can also be tested with or
- 	  without data.
-
-	* tests/Reactor_Performance_Test.cpp: New performance test. This
- 	  test is used to time the dispatching mechanisms of the
- 	  ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
- 	  tested.
-
-	* ace/Svc_Handler.cpp (shutdown): Change READ_MASK | WRITE_MASK to
- 	  ALL_EVENTS_MASK.
-
-	* ace/Atomic_Op (value): Added an explicit value accessor.
-
-Tue Oct 14 01:50:34 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* ACE version 4.3.17, released Tue Oct 14 01:50:34 1997.
-
 Tue Oct 14 00:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Svc_Conf.y: Make sure that the Module has the same name as
@@ -55,6 +33,24 @@ Tue Oct 14 00:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* examples/Reactor/FIFO/client.cpp (main): Fixed the call to
  	  fifo_sender.send () so that it passes msg rather than &msg.
   	  Thanks to Sandro Doro <doros@aureus> for reporting this.
+
+Tue Oct 14 02:49:02 1997    <irfan@TWOSTEP>
+
+	* tests/Notify_Performance_Test.cpp: New performance test. This
+ 	  test is used to time the notification mechanisms of the
+ 	  ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
+ 	  tested. The notify() mechanism can also be tested with or
+ 	  without data.
+
+	* tests/Reactor_Performance_Test.cpp: New performance test. This
+ 	  test is used to time the dispatching mechanisms of the
+ 	  ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
+ 	  tested.
+
+	* ace/Svc_Handler.cpp (shutdown): Change READ_MASK | WRITE_MASK to
+ 	  ALL_EVENTS_MASK.
+
+	* ace/Atomic_Op (value): Added an explicit value accessor.
 
 Mon Oct 13 23:07:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
