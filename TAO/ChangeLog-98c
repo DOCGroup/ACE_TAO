@@ -1,3 +1,23 @@
+Fri Dec  4 16:51:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/exceptions.html: Added guidelines on throwing exceptions
+	  from within try blocks and using
+	  TAO_RETHROW_SAME_ENV_RETURN[_EX].
+
+	* tao/try_macros.h: Added TAO_TRY_THROW[_EX] which allow
+	  exceptions beting thrown within try blocks be caught.
+
+	  Rename TAO_RETHROW_RETURN[_VOID]_SYS to
+	  TAO_RETHROW_SAME_ENV_RETURN[_VOID].
+
+	* tao/IIOP_Object.cpp:
+	* tao/Invocation.cpp: Replaced TAO_RETHROW_RETURN[_VOID]_SYS with
+	  TAO_RETHROW_SAME_ENV_RETURN[_VOID].
+
+	* tao/deep_free.cpp:
+	* tao/Typecode.cpp: Changed to handle exceptions with macros in
+	  try_macros.h.
+
 Fri Dec  4 16:04:56 1998  Ossama Othman  <ossama@debian.org>
 
 	* TAO_IDL/util/utl_global.cpp(IDL_GlobalData constructor):
@@ -18,7 +38,7 @@ Fri Dec 04 12:45:01 1998  David L. Levine  <levine@cs.wustl.edu>
 Fri Dec  4 12:28:06 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/try_macros.h (TAO_TRY_VAR[_EX]): Fixed unreferenced variable
-          warnings on platforms support native exceptions.
+          warnings on platforms supporting native exceptions.
 
 Fri Dec 04 07:38:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
