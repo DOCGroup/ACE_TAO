@@ -1,3 +1,9 @@
+Thu Nov 13 19:25:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
+	  Updated comment on when should the user disable the use of
+	  -lpthread
+
 Thu Nov 13 18:18:16 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Containers.h, Containers.cpp, Hash_Map_Manager.cpp, Malloc_T.h:
