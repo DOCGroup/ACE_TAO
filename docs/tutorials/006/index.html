@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 006</TITLE>
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 006<BR>
+Creating a Thread Pool Server with Multiple Reactors</FONT></B></P></CENTER>
+
+<P>
+<HR WIDTH="100%">
+
+<P>
+In <A HREF="../005/page01.html">Tutorial 5</A> we learned how to create
+a multi-threaded server.  In that exercise, as each connection request
+was accepted, a new thread with a dedicated reactor was created to
+process the connection.  This is basically the <I>thread per request</I>
+modle that is modified to use a reactor instead of traditional read-blocking.
+<P>
+To more effectively use the reactor's functionality and more efficently
+use the systems' resources it makes sense for each thread in our pool
+to accomodate multiple connections instead of just one.  Prior to implementing
+this goal, we must first answer several questions:
+<UL>
+<LI>How will the acceptor pass a new connection to a handler thread?
+<LI>In passing the connection to a handler thread, how will the acceptor
+"interrupt" the handler thread's reactor?
+<LI>How will the acceptor thread choose the appropriate handler thread?
+<LI>What kind of global (ie -- singleton) data structures will be
+needed to keep track of active connections and handler threads?
+</UL>
+
+<P>
+This is not, of course, the complete list of questions that will arise
+as this tutorial progresses in its development.  As new questions are
+asked, they will be listed here even if the answer is not yet known.
+This ensures that we will cover all of the bases before we're done.
+
+<P>
+In order to answer these questions, we will build this tutorial
+in a different way than the previous tutorials.  The reader will be
+shown a series of short, typically one or two page, tutorials that
+will build towards the final solution.
+
+<P>
+<UL>
+<LI><A HREF="page01.html">How do message queues work?</A><br>
+<!-- Note... if "page01.html" spills over to multiple pages,
+     we should go with "page01a.html", etc.. instead of going
+     to "page02.html".  That let's us reserve the 01, 02, etc
+     for the start-point of each sub-tutorial.
+--!>
+ACE message queues will form the backbone of the communication
+between our threads.  With this tool, the acceptor thread will
+be able to inform the handler thread of new connetions.  Later,
+when we begin expanding our search into distributed objects,
+we will use a similar mechanism for an "application" thread
+to pass data to a "connection" thread for transmission to a
+remote process.
+<P>
+<LI><A HREF="page02.html">How can you interrupt a reactor?</A><br>
+Once we know how to use a message queue we will be wanting to
+use it to pass data from one connection thread (probably the
+acceptor thread) to another. Since each connection thread will
+have a reactor, we need a reliable way to "interrupt" that reactor
+so that the message queue will be read.
+In this sub-section, we use an example which allows the
+program's main thread to send data to each of the connection
+threads.  We also begin to investigate ways of keeping track
+of the various connection threads.
+<P>
+</UL>
+
+<P>
+
+<HR>
+
+<P>
+Some terms used above and throughout this tutorial:
+<DL>
+<DT>acceptor thread
+<DD>The <I>acceptor thread</I> is the program's thread of execution
+which contains a reactor loop managing the reactor to which the program's
+acceptor has been registered.  Any new connection requests will be seen
+by this thread initially.
+<DT>handler thread
+<DD>Each of the threads in the pool will contain a reactor. The actual
+connection service handlers will be registered with these reactors.
+The <I>acceptor thread</I> may have connection service handlers registered
+with it as well, but that is not recommended at this point.
+<DT>application thread
+<DD>This is a broad term which I use to refer to the primary thread
+of an application.  Typically, the application programmer will maintain
+control of this thread and not be aware of the IPC-generated threads
+at all.
+<DT>connection thread
+<DD>A generic term I use to describe either an acceptor thread or 
+handler thread.  In some simple clients, there may be only one thread
+handling both functions.
+</DL>
+<hr>
+<CENTER><P>[<A HREF="../../Tutorial">Tutorial Index</A>] 
+</center>

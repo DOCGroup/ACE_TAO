@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 001</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 001<BR>
+A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>Now we begin to look at the acceptor object.</P>
+
+<P>I will present the entire object header file first and then disect it
+as with <I>main()</I>.</P>
+
+<UL>
+<PRE>        
+1.      #include &lt;stdio.h&gt;
+        
+2.      #include &quot;ace/Reactor.h&quot;
+3.      #include &quot;ace/SOCK_Acceptor.h&quot;
+4.      #include &quot;ace/SOCK_Stream.h&quot;
+5.      #include &quot;ace/INET_Addr.h&quot;
+        
+        
+        
+6.      class Logging_Handler : public ACE_Event_Handler
+        {
+7.        public:
+        
+8.          Logging_Handler(ACE_SOCK_Stream &amp;cs) : client_stream_(cs)
+            {
+9.              if( ! (fp = fopen(&quot;logger&quot;,&quot;w+&quot;)) )
+10.                     fp = stderr;
+11.             fprintf(fp,&quot;Constructed\n&quot;);
+            }
+        
+12.         virtual int handle_exception(ACE_HANDLE handle)
+            {
+13.           fprintf(fp,&quot;Exception\n&quot;);
+14.           return(-1);
+            }
+        
+15.         virtual int handle_input(ACE_HANDLE handle)
+            {
+16.           char buf[128];
+        
+17.           if( this-&gt;client_stream_.recv(buf,sizeof buf) &lt; 1 )
+              {
+18.             fprintf(fp,&quot;Bad Read\n&quot;);
+19.             return(-1);
+              }
+20.           else
+              {
+21.             fprintf(fp,&quot;%20.20s\n&quot;,buf);
+              }
+22.           return(strlen(buf));
+            }
+        
+23.         virtual ACE_HANDLE get_handle(void) const
+            {
+24.           fprintf(fp,&quot;providing handle\n&quot;);
+25.           return this-&gt;client_stream_.get_handle();
+            }
+        
+26.         virtual int handle_close(ACE_HANDLE h, ACE_Reactor_Mask m)
+            {
+27.           fprintf(fp,&quot;closing\n&quot;);
+28.           delete this;
+29.           return(0);
+            }
+        
+30.         virtual int close(void)
+            {
+31.             return this-&gt;handle_close(ACE_INVALID_HANDLE,ACE_Event_Handler::RWE_MASK);
+32.         };
+        
+33.     protected:
+34.         ~Logging_Handler(void)
+            {
+35.             fprintf(fp,&quot;Destruction\n&quot;);
+36.         };
+        
+37.     private:
+38.       ACE_SOCK_Stream client_stream_;
+39.       FILE * fp;
+40.     };
+
+
+</PRE>
+</UL>
+
+<P>Here's a blow-by-blow account of what's being done:</P>
+
+<OL>
+<LI>Necessary for the <I>fopen</I> and such.</LI>
+
+<LI>We don't actually use a reactor in this object. If we had used the
+template to create our acceptor though, we would have to register ourselves
+with the reactor in our <I>open</I> function.</LI>
+
+<LI>This just shouldn't be here. Again, though, if we wanted to use the
+template to create the acceptor then we would probably do so after the
+object definition instead of dedicating an entire file to it. So, with
+that in mind, we would need the acceptor header or at least one like it.</LI>
+
+<LI>This contains the objects we need to create a connected socket object.
+Where we used an ACE_SOCK_Acceptor object in our acceptor we will use an
+ACE_SOCK_Stream here.</LI>
+
+<LI>This has some handy objects that allow us to get to the address components
+of our connection.</LI>
+
+<LI>Like the acceptor, we derive a new class from the <I>ACE_Event_Handler</I>.
+This gives a signature to the reactor we're registered with so that it
+can cause us to react to activity on the connection.</LI>
+
+<LI>Begin the public section of our object...</LI>
+
+<LI>We are constructed by the acceptor when a new client connection request
+is accepted. At the same time, the acceptor object creates a new <I>SOCK_Stream</I>
+on which we will communicate. That new <I>SOCK_Stream</I> is passed to
+us here so that we can initialize our<I> client_stream_</I> member object.</LI>
+
+<LI>Open a file we can write our status and log information to. Whatever
+the client sends us we will write here.</LI>
+
+<LI>Default to <I>stderr</I> if the open fails for some reason.</LI>
+
+<LI>Announce our birth.</LI>
+
+<LI>An exception on a socket generally indicates that the connection closed
+unexpectedly. There are some cases when this may not be fatal (eg -- invoking
+a reactor's <I>notify()</I> method) but for our simple tutorial, we assume
+that any exception is fatal.</LI>
+
+<LI>Log the action</LI>
+
+<LI>Return <I>-1</I> to the reactor to indicate that we should be <I>close</I>ed
+and destroyed.</LI>
+
+<LI><I>handle_input</I> is called by the reactor when there is data to
+be read from the connection. The <I>handle</I> parameter is the handle
+on which the data is present. Since we know the handle is supposed to be
+our <I>client_stream_</I> member object, we don't really need the parameter
+except as a double-check.</LI>
+
+<LI>Create a space for reading the data. We will do a simple-minded receive
+here but a real application could do any number of things.</LI>
+
+<LI>Invoke the <I>recv</I> member function of teh <I>client_stream_</I>
+object. As shown, it will get up to 128 bytes from the connection. Again,
+our simple example won't be stressing this particular limit. Another handy
+<I>SOCK_Stream</I> function is <I>recv_n</I> which will receive an exact
+amount of data even if it isn't all immediately available.</LI>
+
+<LI>We must read at least on byte. If there were none available then the
+reactor wouldn't have invoked the <I>handle_input</I> function in the first
+place. So, if we don't get anything there must be something wrong with
+the connection. Report this to the user.</LI>
+
+<LI>Return <I>-1</I> to get ourselves shut down.</LI>
+
+<LI>However, if the receive operation was successful...</LI>
+
+<LI>Format the received data and write it to the log file.</LI>
+
+<LI>Return a positive number to the reactor. Anything is ok (I think) but
+for giggles, we return the number of bytes received.</LI>
+
+<LI>Wrapper method allowing the reactor to access the connection handle.
+Again, this is necessary because the reactor can only work with file handles
+(aka &quot;file descriptors&quot;).</LI>
+
+<LI>Status message...</LI>
+
+<LI>Provide the handle when requested.</LI>
+
+<LI><I>handle_close</I> will be called by the reactor when it is time to
+shut down the connection. Among the reasons for shutdown is a <I>-1</I>
+return from any of the handlers called by the reactor.</LI>
+
+<LI>Another status message</LI>
+
+<LI>This is a terribly clever and handy thing. There is supposed to be
+some C++&nbsp;magic that will ensure an object can only be instantiated
+dynamically (ie -- via the <I>new</I> operator). Once you guarante that
+then <I>delete this</I> is possible.</LI>
+
+<LI>Return a success status to the reactor now that everything is closed
+correctly.</LI>
+
+<LI>A simple wrapper to <I>handle_close.</I>
+This is only here so that the acceptor can close us down if there is
+an error opening us up...
+</LI>
+
+<LI>Begin the protected part of our object.</LI>
+
+<LI>This helps to ensure that dynamic allocation we were talking about.</LI>
+
+<LI>Yet another status message.</LI>
+
+<LI>Begin the private section of the object.</LI>
+
+<LI>The <I>client_stream</I>_ is what we use to communicate. It can be
+any type of connection object or even, if we're not doing IPC, it could
+be a file descriptor open to a serial port or a data file.</LI>
+
+<LI>A handy file pointer where we can write the status messages and data
+from the client.</LI>
+
+<LI>All done.</LI>
+</OL>
+
+<P>Now that we know how to accept a connection request, let's move on to
+the next page where we learn how to handle the actual connection. Even
+though we just learned about this cool template thing, we will continue
+to use the &quot;hand-written&quot; acceptor developed above. As I mentioned,
+the only difference will be in the <I>open</I> function of the connection
+handler anyway.</P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<CENTER><P>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page03.html">Previous
+Page</A>] [<A HREF="page05.html">Continue
+This Tutorial</A>] </P></CENTER>
+
+</BODY>
+</HTML>
