@@ -1,3 +1,11 @@
+Wed Oct 18 15:44:14 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* OS.h:
+	* OS.i:
+	* OS.cpp:
+
+	  Modifications to sem_open debugging ACE_HAS_PACE over NT.
+
 Wed Oct 18 09:45:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.h :
