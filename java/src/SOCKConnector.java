@@ -60,4 +60,16 @@ public class SOCKConnector
     {
       sockStream.socket (new Socket (hostname, port));
     }
+
+  /**
+   * Connect to the server.
+   *@param sockStream SOCK Stream to use for the connection
+   *@param addr INETAddr instance specifying host/port
+   */
+  public void connect (SOCKStream sockStream,
+		       INETAddr addr) throws SocketException, IOException
+    {
+      sockStream.socket (new Socket (addr.getHostName(),
+				     addr.getPortNumber()));
+    }
 }
