@@ -112,9 +112,6 @@ TAO_PICurrent_Impl::TAO_PICurrent_Impl (void)
 
 TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
 {
-  size_t len = this->slot_table_.size ();
-  for (size_t i = 0; i < len; ++i)
-    delete (CORBA::Any *) this->slot_table_[i];
 }
 
 CORBA::Any *
@@ -131,7 +128,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
 
   CORBA::Any * any = 0;
 
-  if (id >= table.size () || table[id] == 0)
+  if (id >= table.size ())
     {
       // In accordance with the Portable Interceptor specification,
       // return an Any with a TCKind of tk_null.  A default
@@ -148,10 +145,8 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
       return any;
     }
 
-  const CORBA::Any *data = (CORBA::Any *) table[id];
-
   ACE_NEW_THROW_EX (any,
-                    CORBA::Any (*data), // Make a copy.
+                    CORBA::Any (table[id]), // Make a copy.
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -178,29 +173,20 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
     {
       // Deep copy
 
-      Table &table = *this->lc_slot_table_;
+      const Table &table = *this->lc_slot_table_;
 
       size_t new_size = table.size ();
-      this->slot_table_.size (new_size);
+      if (this->slot_table_.size (id >= new_size ? id + 1 : new_size) != 0)
+        ACE_THROW (CORBA::INTERNAL ());        
 
+      // Note that the number of elements to copy is bounded by the
+      // size of the source array, not the destination array.
       for (size_t i = 0; i < new_size; ++i)
         {
           if (i == id)
             continue;  // Avoid copying data twice.
 
-          const CORBA::Any *lc_data = (CORBA::Any *) table[i];
-
-          CORBA::Any *any = 0;
-          ACE_NEW_THROW_EX (any,
-                            CORBA::Any (*lc_data), // Make a copy.
-                            CORBA::NO_MEMORY (
-                              CORBA_SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-          ACE_CHECK;
-
-          this->slot_table_[i] = any;
+          this->slot_table_[i] = table[i];
         }
 
       // Break all ties with the logically copied slot table.
@@ -210,30 +196,11 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
   // If the slot table array isn't large enough, then increase its
   // size.  We're guaranteed not to exceed the number of allocated
   // slots for the reason stated above.
-  size_t old_size = this->slot_table_.size ();
-  size_t new_size = id + 1;
-  if (id >= old_size && this->slot_table_.size (new_size) != 0)
+  if (id >= this->slot_table_.size ()
+      && this->slot_table_.size (id + 1) != 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  // Initialize intermediate array elements to zero, since they
-  // haven't been initialized yet.  This ensures that garbage is not
-  // returned when accessing any of those elements at a later point in
-  // time.
-  for (size_t i = old_size; i < id; ++i)
-    this->slot_table_[i] = 0;
-
-  // Now copy the data into the slot table.
-  CORBA::Any * any = 0;
-  ACE_NEW_THROW_EX (any,
-                    CORBA::Any (data),  // Make a copy.
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  this->slot_table_[id] = any;
+  this->slot_table_[id] = CORBA::Any (data);
 
   // Mark the table as being modified.
   this->dirty_ = 1;
@@ -247,7 +214,8 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 
   if (deep_copy)
     {
-      size_t new_size = rhs.slot_table ().size ();
+      const Table &t = rhs.slot_table ();
+      size_t new_size = t.size ();
 
       this->slot_table_.size (new_size);
 
@@ -255,11 +223,7 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
       ACE_TRY
         {
           for (size_t i = 0; i < new_size; ++i)
-            {
-              this->slot_table_[i] =
-                rhs.get_slot (i ACE_ENV_ARG_PARAMETER);  // Deep copy
-              ACE_TRY_CHECK;
-            }
+            this->slot_table_[i] = t[i];  // Deep copy
         }
       ACE_CATCHANY
         {
@@ -290,7 +254,8 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 TAO_PICurrent_Guard::TAO_PICurrent_Guard (TAO_ServerRequest &server_request,
                                           CORBA::Boolean tsc_to_rsc)
   : src_ (0),
-    dest_ (0)
+    dest_ (0),
+    tsc_to_rsc_ (tsc_to_rsc)
 {
   // This constructor is used on the server side.
 
@@ -332,7 +297,34 @@ TAO_PICurrent_Guard::~TAO_PICurrent_Guard (void)
     {
       // This copy better be exception-safe!
       this->dest_->copy (*this->src_, 0);    // Logical copy
+
+      // PICurrent will potentially have to call back on the request
+      // scope current so that it can deep copy the contents of the
+      // thread scope current if the contents of the thread scope
+      // current are about to be modified.  It is necessary to do this
+      // deep copy once in order to completely isolate the request
+      // scope current from the thread scope current.  This is only
+      // necessary, if the thread scope current is modified after its
+      // contents have been *logically* copied to the request scope
+      // current.
+      //
+      // source:      TSC
+      // destination: RSC
+      if (this->tsc_to_rsc_)
+        this->src_->pi_peer (this->dest_);
     }
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Array_Base<CORBA::Any>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Array_Base<CORBA::Any>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

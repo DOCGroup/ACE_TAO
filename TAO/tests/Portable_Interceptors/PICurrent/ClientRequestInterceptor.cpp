@@ -102,7 +102,7 @@ ClientRequestInterceptor::send_request (
     {
       ACE_PRINT_EXCEPTION (ex,
                            "Exception thrown in "
-                           "receive_request_service_contexts()\n");
+                           "send_request()\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
@@ -116,7 +116,6 @@ ClientRequestInterceptor::send_request (
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Client side RSC/TSC semantics appear "
               "to be correct.\n"));
-
 }
 
 void
