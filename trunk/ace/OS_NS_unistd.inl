@@ -1053,6 +1053,31 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE void
+ACE_OS::swab (const unsigned char *src, 
+              unsigned char *dest, 
+              ssize_t length)
+{
+#if defined (ACE_LACKS_SWAB)
+  const unsigned char *from = src;
+  unsigned char *to = dest;
+  ssize_t ptr = 0;
+  for (ptr = 1; ptr < length; ptr += 2)
+    {
+      char p = from[ptr];
+      char q = from[ptr-1];
+      to[ptr-1] = p;
+      to[ptr  ] = q;
+    }
+  if (ptr == length) /* I.e., if length is odd, */
+    to[ptr-1] = 0;   /* then pad with a NUL. */
+
+#else
+  ::swab (src, dest, length);
+#endif /* ACE_LACKS_SWAB */
+
+}
+
 ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
@@ -1237,4 +1262,3 @@ ACE_OS::write (ACE_HANDLE handle,
   return ACE_OS::write (handle, buf, nbyte);
 #endif /* ACE_WIN32 */
 }
-
