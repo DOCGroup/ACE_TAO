@@ -58,7 +58,7 @@ void programMainLoop (void)
 }
 
 // Listing 3 code/ch07
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   pid_t timerId = timerTask (3, 5, foo);
   programMainLoop ();

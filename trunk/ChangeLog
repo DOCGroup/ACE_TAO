@@ -1,3 +1,8 @@
+Sun Jan 30 13:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/TMCast/Member/member.cpp:
+          Fixed compile problem in unicode build
+
 Sun Jan 30 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
