@@ -5,7 +5,7 @@ project(NavDisplay_stub): ciao_client {
   after += HUDisplay_stub
   sharedname = NavDisplay_stub
   
-  libs += NavDisplay_stub
+  libs += HUDisplay_stub
 
   idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export 
   idlflags += -Wb,stub_export_include=NavDisplay_stub_export.h 

@@ -12,7 +12,7 @@ project(RateGen_stub): ciao_client {
 
   dynamicflags   = RATEGEN_STUB_BUILD_DLL
  
-  libs += RateGen_stub
+  libs += HUDisplay_stub
 
   IDL_Files {
     RateGen.idl

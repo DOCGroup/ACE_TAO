@@ -6,7 +6,7 @@ project(GPS_stub): ciao_client {
   after += HUDisplay_stub
   sharedname = GPS_stub
   
-  libs += GPS_stub
+  libs += HUDisplay_stub
 
   idlflags += -Wb,stub_export_macro=GPS_STUB_Export 
   idlflags += -Wb,stub_export_include=GPS_stub_export.h 
