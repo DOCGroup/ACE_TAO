@@ -52,6 +52,10 @@
 #   define ACE_HAS_EXCEPTIONS
 # endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
 
+# if defined (ACE_HAS_EXCEPTIONS)
+#   define ACE_NEW_THROWS_EXCEPTIONS
+# endif /* ACE_HAS_EXCEPTIONS */
+
 #else  /* ! egcs */
   // Plain old g++.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
@@ -65,10 +69,10 @@
 
 #if defined (i386) || defined (__i386__)
   // If running an Intel, assume that it's a Pentium so that
-  // ACE_OS::gethrtime () can use the RDTSC instruction.  If
-  // running a 486 or lower, be sure to comment this out.
-  // (If not running an Intel CPU, this #define will not be seen
-  //  because of the i386 protection, so it can be ignored.)
+  // ACE_OS::gethrtime () can use the RDTSC instruction.  If running a
+  // 486 or lower, be sure to comment this out.  (If not running an
+  // Intel CPU, this #define will not be seen because of the i386
+  // protection, so it can be ignored.)
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
