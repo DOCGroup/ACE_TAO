@@ -1,3 +1,9 @@
+Tue Mar 11 11:41:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Added a MPC file generater perl
+	  script for creating new MPC definitions for single component
+	  implementations.
+
 Sun Mar 09 14:38:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/new_components.html: Added this new document to describe
