@@ -53,7 +53,7 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver,
 }
 
 void
-Sender_i::ping (CORBA::Environment &ACE_TRY_ENV)
+Sender_i::ping (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;

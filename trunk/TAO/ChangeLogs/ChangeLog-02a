@@ -1,3 +1,8 @@
+Sun Jun 24 19:38:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneways_Invoking_Twoways/Sender_i.cpp: Fixed a warning
+	  with g++ builds.
+
 Sun Jun 24 17:26:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/default_resource.cpp (init): Disabled the lock that is used
