@@ -36,13 +36,13 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
   // The string could read contains \n\0 hence using ACE_OS::read
   // which returns the no of bytes read and hence i can manipulate
   // and remove the devil from the picture i.e '\n' ! ;)
-  
+
   ssize_t strlen = ACE_OS::read (ACE_STDIN,
                                  buf,
                                  sizeof buf);
   if (buf[strlen -1] == '\n')
     buf[strlen -1] = '\0';
-  
+
   switch (tolower (buf[0]))
     {
     case Consumer_Input_Handler::REGISTER:
@@ -70,7 +70,7 @@ Consumer_Input_Handler::register_consumer ()
 {
 
   // Get the stockname the consumer is interested in.
-  char stockname[BUFSIZ];
+  static char stockname[BUFSIZ];
 
   ACE_DEBUG ((LM_DEBUG,
               "Stockname?"));
@@ -85,7 +85,7 @@ Consumer_Input_Handler::register_consumer ()
   else
     if (stockname[strlen -1] == '\n' || stockname[strlen -1] == '\r')
       stockname[strlen -1] = '\0';
-	  	  
+
 
   this->consumer_handler_->stock_name_ = stockname;
 
@@ -108,18 +108,22 @@ Consumer_Input_Handler::register_consumer ()
 
   ACE_TRY
     {
-          
+      // @@ The following code should be part of the Consumer_Handler
+      // class...
+
       // Register with the server.
       this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_,
                                                            this->consumer_handler_->threshold_value_,
                                                            this->consumer_handler_->consumer_var_.in (),
                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
-          
+
       // Note the registration.
       consumer_handler_->registered_ = 1;
       consumer_handler_->unregistered_ = 0;
-          
+
+      // @@ Up to this point..
+
       ACE_DEBUG ((LM_DEBUG,
                   "registeration done!\n"));
     }
@@ -147,7 +151,7 @@ Consumer_Input_Handler::unregister_consumer ()
   if (consumer_handler_->registered_ == 1)
     {
       this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in());
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   " Consumer Unregistered \n "));
       consumer_handler_->unregistered_ = 1;
@@ -157,7 +161,7 @@ Consumer_Input_Handler::unregister_consumer ()
     ACE_DEBUG ((LM_DEBUG,
                 " Invalid Operation: Consumer not Registered\n"));
 
-    
+
   return 0;
 }
 
@@ -197,7 +201,7 @@ Consumer_Input_Handler::quit_consumer_process ()
       ACE_DEBUG ((LM_DEBUG,
                   "Communication failed!\n"));
       this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
-     
+
       return -1;
     }
   ACE_ENDTRY;
@@ -210,4 +214,3 @@ Consumer_Input_Handler::~Consumer_Input_Handler (void)
 {
   // No-op
 }
-

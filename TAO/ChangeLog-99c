@@ -1,3 +1,18 @@
+Wed Jun 16 22:49:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Makefile:
+	* examples/Callback_Quoter/Consumer.idl:
+	* examples/Callback_Quoter/Consumer_Handler.cpp:
+	* examples/Callback_Quoter/Consumer_Handler.h:
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+	* examples/Callback_Quoter/Consumer_i.cpp:
+	* examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+	* examples/Callback_Quoter/example.stocks:
+	* examples/Callback_Quoter/run_test.pl:
+	  Added a run_test.pl to automate this test.
+	  Had to modify it so the programs will take options to work in
+	  non-interactive mode.
+
 Wed Jun 16 21:08:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
