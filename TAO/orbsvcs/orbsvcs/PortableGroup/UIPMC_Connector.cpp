@@ -117,6 +117,8 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
       return -1;
     }
+
+  return 0;
 }
 
 int
