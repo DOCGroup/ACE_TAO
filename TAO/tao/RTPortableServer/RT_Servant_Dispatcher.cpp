@@ -75,20 +75,13 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
   if (req.transport ()->tag () == IOP::TAG_INTERNET_IOP)
     {
-      const char protocol [] = "iiop";
-      const char *protocol_type = protocol;
-
-      TAO_IIOP_Transport *iiop_transport =
-        ACE_dynamic_cast (TAO_IIOP_Transport *,
-                          req.transport ());
-
       CORBA::Policy_var policy = poa.server_protocol ();
 
       int result =
         tph->update_server_protocol_properties (
           policy,
-          iiop_transport-> connection_handler_i (),
-          protocol_type);
+          req.transport (),
+          "iiop");
 
       if (result != 0)
         ACE_ERROR((LM_ERROR,
