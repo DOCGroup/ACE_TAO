@@ -248,8 +248,8 @@ sub run {
     $global = $self->{'path'} . "/config/global.mpb";
   }
   ## Always add the default include paths
-  unshift(@include, $self->{'path'} . "/config");
   unshift(@include, $self->{'path'} . "/templates");
+  unshift(@include, $self->{'path'} . "/config");
 
   if ($reldefs) {
     if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
