@@ -98,6 +98,9 @@ sub store_file ($)
     elsif ($name =~ /\.(htm|html)$/i) {
         push @files_html, ($name);
     }
+    elsif ($name =~ /\.(bor)$/i) {
+        push @files_bor, ($name);
+    }
     elsif ($name =~ /\.(dsp|vcp)$/i) {
         push @files_dsp, ($name);
     }
@@ -115,9 +118,6 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
-    }
-    elsif ($name =~ /\.bor$/i) {
-        push @files_bor, ($name);
     }
     elsif ($name =~ /\.(ncb|opt)$/i) {
         push @files_noncvs, ($name);
