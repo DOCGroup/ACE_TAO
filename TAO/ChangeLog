@@ -1,3 +1,30 @@
+Tue Apr 13 10:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Pollable.pidl:
+          Removed spaces
+
+        * tao/Policy_Forward.pidl:
+        * tao/Policy.pidl:
+        * tao/IOP_IOR.pidl:
+          Updated usage message
+
+        * tao/PollableC.{h,cpp,i}:
+        * tao/PolicyA.cpp:
+        * tao/PolicyC.{h,cpp,i}:
+        * tao/Policy_ForwardA.cpp:
+        * tao/Policy_ForwardC.{h,cpp,i}:
+          Regenerated these files
+
+        * tao/UShortSeqC.h:
+          Removed dependency of ORB.h
+
+        * tao/PolicyA.h:
+        * tao/Policy_ForwardA.h:
+          Removed
+
+        * tao/Makefile.tao:
+          Removed removed files from dependencies
+
 Tue Apr 13 10:08:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.CosNaming:
