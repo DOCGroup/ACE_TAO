@@ -176,7 +176,8 @@ template<class T>
 class ACE_Node
 {
   // = TITLE
-  //     Implementation element in a Queue.
+  //     Implementation element in a Queue, Set, and Stack.
+public:
   friend class ACE_Unbounded_Queue<T>;
   friend class ACE_Unbounded_Queue_Iterator<T>;
   friend class ACE_Unbounded_Set<T>;
@@ -184,7 +185,6 @@ class ACE_Node
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
-public:
   ~ACE_Node (void);
   // This isn't necessary, but it keeps the compiler happy.
 

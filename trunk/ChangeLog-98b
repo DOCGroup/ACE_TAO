@@ -1,5 +1,23 @@
 Thu May 14 15:28:42 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/config-kcc-common.h: Added the ACE_HAS_USING_KEYWORD to the
+ 	  config file.  Thanks to Ben Eng <ben@jetpen.com> for reporting
+ 	  this.
+
+	* examples/Service_Configurator/Misc: Updated the Timer_Service
+ 	  test to demonstrate the new service configurator feature.  It's
+ 	  AWESOME!
+
+	* ace/Svc_Conf.h,
+	  ace/Svc_Conf.l:
+	  Added a super-cool new feature that allows us to parse service
+ 	  configurator directives from a string rather than from a
+ 	  svc.conf file.
+
+	* ace/Svc_Conf.l (yywrap): Free up ace_yy_current_buffer in yywrap
+ 	  to prevent a memory leak.  Thanks to Paul Motuzenko
+ 	  <p_motuzenko@hotmail.com> for reporting this.
+
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp: Enhanced the
 	  implementation to make it easier to follow and to support the
 	  latest features of CPP-inclient.cpp.

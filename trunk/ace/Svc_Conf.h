@@ -45,6 +45,23 @@ ACE_YY_DECL;
 extern FILE *ace_yyin;
 // Name of input stream 
 
+#define ACE_YY_INPUT(buf,result,max_size) \
+  if (ace_yydirective != 0) \
+  { \
+    int c = *ace_yydirective++; \
+    result = c == '\0' ? 0 : 1; \
+    buf[0] = (char) c; \
+  } \
+  else if ( ace_yy_current_buffer->ace_yy_is_interactive ) \
+  { \
+    int c = getc( ace_yyin ); \
+    result = c == EOF ? 0 : 1; \
+    buf[0] = (char) c; \
+  } \
+  else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
+    && ferror( ace_yyin ) ) \
+    ACE_YY_FATAL_ERROR( "input in flex scanner failed" );
+
 void ace_yyerror (char *);
 // Error handling routine required by YACC or BISON 
 
@@ -53,6 +70,10 @@ extern int ace_yylineno;
 
 extern int ace_yyerrno;
 // Keeps track of the number of errors encountered so far 
+
+extern char *ace_yydirective;
+// Used to parse service configurator directives from a string rather
+// than from a svc.conf file.
 
 extern char *ace_yytext;
 // Holds the lexeme for the current token 

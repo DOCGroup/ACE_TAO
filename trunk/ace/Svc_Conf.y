@@ -6,8 +6,11 @@
 #include "ace/Module.h"
 #include "ace/Stream.h"
 
-static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type);
-static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, const char *svc_name);
+// Prototypes.
+static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
+                                    ACE_Static_Node *svc_type);
+static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
+                                    const char *svc_name);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
@@ -286,7 +289,8 @@ yyerror (char *s)
 // record.
 
 static ACE_Module_Type *
-get_module (ACE_Static_Node *str_rec, const char *svc_name)
+get_module (ACE_Static_Node *str_rec,
+            const char *svc_name)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
@@ -305,7 +309,8 @@ get_module (ACE_Static_Node *str_rec, const char *svc_name)
 }
 
 static ACE_Module_Type *
-get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
+get_module (ACE_Static_Node *str_rec,
+            ACE_Static_Node *svc_type)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();

@@ -3,16 +3,17 @@
 #include "Timer_Service.h"
 
 int
-Timer_Service::init (int argc, char *argv[])
+Timer_Service_1::init (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG, 
 	      "in Timer_Service::init, argv[0] = %s, argc == %d\n", 
 	      argv[0], argc));
 
+  // Printout the <argv> values for sanity's sake.
   for (int i = 0; i < argc; i++)
     ACE_DEBUG ((LM_DEBUG, "argv[%d] = %s\n", i, argv[i]));
 
-  int interval = Timer_Service::TIMEOUT;
+  int interval = Timer_Service_1::TIMEOUT;
 
   if (argc > 1)
     {
@@ -22,7 +23,7 @@ Timer_Service::init (int argc, char *argv[])
       interval = ACE_OS::atoi (argv[1]);
 
       if (interval == 0)
-	interval = Timer_Service::TIMEOUT;
+	interval = Timer_Service_1::TIMEOUT;
     }
 
   if (argc > 2)
@@ -32,7 +33,7 @@ Timer_Service::init (int argc, char *argv[])
       this->max_timeouts_ = ACE_OS::atoi (argv[2]);
 
       if (this->max_timeouts_ == 0)
-	this->max_timeouts_ = Timer_Service::MAX_TIMEOUTS;
+	this->max_timeouts_ = Timer_Service_1::MAX_TIMEOUTS;
     }
 
   this->cur_timeouts_ = 0;
@@ -47,21 +48,27 @@ Timer_Service::init (int argc, char *argv[])
   // Register the timer to go off in 1 second, and then to go off
   // every <interval> seconds.
   if (ACE_Reactor::instance ()->schedule_timer 
-      (this, 0, ACE_Time_Value (1), ACE_Time_Value (interval)) == -1)
+      (this,
+       0,
+       ACE_Time_Value (1),
+       ACE_Time_Value (interval)) == -1)
     return -1;
   else
     return 0;
 }
 
 int
-Timer_Service::handle_timeout (const ACE_Time_Value &tv,
-			       const void *)
+Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
+                                 const void *)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "in Timer_Service::handle_timeout sec = %d, usec = %d"
+	      "(%x) in Timer_Service::handle_timeout sec = %d, usec = %d"
 	      " cur_timeouts = %d, max_timeouts = %d\n",
-	      tv.sec (), tv.usec (),
-	      this->cur_timeouts_, this->max_timeouts_));
+              this,
+	      tv.sec (),
+              tv.usec (),
+	      this->cur_timeouts_,
+              this->max_timeouts_));
 
   this->cur_timeouts_++;
 
@@ -73,8 +80,8 @@ Timer_Service::handle_timeout (const ACE_Time_Value &tv,
 }
 
 int
-Timer_Service::handle_close (ACE_HANDLE,
-			     ACE_Reactor_Mask)
+Timer_Service_1::handle_close (ACE_HANDLE,
+                               ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "closing down the timer test\n"));
 
@@ -82,11 +89,15 @@ Timer_Service::handle_close (ACE_HANDLE,
   return 0;
 }
 
-// Define the factory function.
-ACE_SVC_FACTORY_DEFINE (Timer_Service)
-
 // Define the object that describes the service.
-ACE_STATIC_SVC_DEFINE (Timer_Service,
-		       "Timer_Service", ACE_SVC_OBJ_T, &ACE_SVC_NAME (Timer_Service),
-		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ, 0)
+ACE_STATIC_SVC_DEFINE (Timer_Service_1,
+		       "Timer_Service_1",
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (Timer_Service_2),
+		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
 
+// The following is a "Factory" used by the <ACE_Service_Config> and
+// svc.conf file to dynamically initialize the state of the Timer
+// Service.
+ACE_SVC_FACTORY_DEFINE (Timer_Service_2)
