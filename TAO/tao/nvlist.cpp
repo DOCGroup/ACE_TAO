@@ -1,10 +1,12 @@
-// @(#)nvlist.cpp	1.6 95/11/04
+// @ (#)nvlist.cpp      
+// 1.6 95/11/04
+// 
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
 // Implementation of Named Value List
 
-#include	"orb.h"
+#include        "orb.h"
 #include        <initguid.h>
 
 // COM's IUnknown support
@@ -16,20 +18,22 @@ DEFINE_GUID (IID_CORBA_NamedValue,
 ULONG __stdcall
 CORBA_NamedValue::AddRef (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
  
-  return _refcount++;
+  return refcount_++;
 }
  
 ULONG __stdcall
 CORBA_NamedValue::Release (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
- 
-  assert (this != 0);
- 
-  if (--_refcount != 0)
-    return _refcount;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+
+    ACE_ASSERT (this != 0);
+
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -37,7 +41,7 @@ CORBA_NamedValue::Release (void)
  
 HRESULT __stdcall
 CORBA_NamedValue::QueryInterface (REFIID riid,
-				  void **ppv)
+                                  void **ppv)
 {
   *ppv = 0;
  
@@ -47,7 +51,7 @@ CORBA_NamedValue::QueryInterface (REFIID riid,
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);
  
-  (void) AddRef ();
+ (void) AddRef ();
   return NOERROR;
 }
 
@@ -63,13 +67,13 @@ CORBA_release (CORBA_NamedValue_ptr nv)
 CORBA_Boolean
 CORBA_is_nil (CORBA_NamedValue_ptr nv)
 {
-  return (CORBA_Boolean)(nv == 0);
+  return (CORBA_Boolean) nv == 0;
 }
 
 CORBA_NamedValue::~CORBA_NamedValue (void)
 {
   if (_name)
-    CORBA_string_free ((CORBA_String)_name);
+    CORBA_string_free ((CORBA_String) _name);
 }
 
 // COM's IUnknown support
@@ -81,20 +85,22 @@ DEFINE_GUID (IID_CORBA_NVList,
 ULONG __stdcall
 CORBA_NVList::AddRef (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
  
-  return _refcount++;
+  return refcount_++;
 }
  
 ULONG __stdcall
 CORBA_NVList::Release (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
- 
-  assert (this != 0);
- 
-  if (--_refcount != 0)
-    return _refcount;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+
+    ACE_ASSERT (this != 0);
+
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -102,7 +108,7 @@ CORBA_NVList::Release (void)
  
 HRESULT __stdcall
 CORBA_NVList::QueryInterface (REFIID riid,
-			      void **ppv)
+                              void **ppv)
 {
   *ppv = 0;
  
@@ -112,7 +118,7 @@ CORBA_NVList::QueryInterface (REFIID riid,
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);
  
-  (void) AddRef ();
+ (void) AddRef ();
   return NOERROR;
 }
 
@@ -128,7 +134,7 @@ CORBA_release (CORBA_NVList_ptr nvl)
 CORBA_Boolean
 CORBA_is_nil (CORBA_NVList_ptr nvl)
 {
-  return (CORBA_Boolean)(nvl == 0);
+  return (CORBA_Boolean) nvl == 0;
 }
 
 CORBA_NVList::~CORBA_NVList (void)
@@ -144,13 +150,13 @@ CORBA_NVList::~CORBA_NVList (void)
 
 CORBA_NamedValue_ptr
 CORBA_NVList::add_value (const CORBA_Char *name,
-			 const CORBA_Any &value,
-			 CORBA_Flags flags,
-			 CORBA_Environment &env)
+                         const CORBA_Any &value,
+                         CORBA_Flags flags,
+                         CORBA_Environment &env)
 {
   env.clear ();
 
-  if (!(flags & (CORBA_ARG_IN | CORBA_ARG_OUT | CORBA_ARG_INOUT))) 
+  if (ACE_BIT_DISABLED (flags, CORBA_ARG_IN | CORBA_ARG_OUT | CORBA_ARG_INOUT))
     {
       env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
       return 0;
@@ -169,15 +175,15 @@ CORBA_NVList::add_value (const CORBA_Char *name,
   if (_values == 0) 
     {
       _values = (CORBA_NamedValue_ptr)
-	calloc (_len, sizeof (CORBA_NamedValue));
+        calloc (_len, sizeof (CORBA_NamedValue));
       _max = _len;
     } 
   else if (len >= _max) 
     {
       _values = (CORBA_NamedValue_ptr) ACE_OS::realloc ((char *)_values,
-							sizeof (CORBA_NamedValue) * _len);
+                                                        sizeof (CORBA_NamedValue) * _len);
       (void) ACE_OS::memset (&_values[_max], 0,
-			     sizeof (_values[_max]) * (_len - _max));
+                             sizeof (_values[_max]) * (_len - _max));
       _max = _len;
     }
   assert (_values != 0);
@@ -185,32 +191,29 @@ CORBA_NVList::add_value (const CORBA_Char *name,
   _values[len]._flags = flags;
   _values[len]._name = CORBA_string_copy (name);
 
-  if (flags & CORBA_IN_COPY_VALUE) 
-    {
-      // IN_COPY_VALUE means that the parameter is not "borrowed" by
-      // the ORB, but rather that the ORB copies its value.
-      //
-      // Initialize the newly allocated memory using a copy
-      // constructor that places the new "Any" value at just the right
-      // place, and makes a "deep copy" of the data.
-      (void) new (&_values[len]._any) CORBA_Any (value);
-    } 
+  if (ACE_BIT_ENABLED (flags, CORBA_IN_COPY_VALUE))
+    // IN_COPY_VALUE means that the parameter is not "borrowed" by
+    // the ORB, but rather that the ORB copies its value.
+    //
+    // Initialize the newly allocated memory using a copy
+    // constructor that places the new "Any" value at just the right
+    // place, and makes a "deep copy" of the data.
+    (void) new (&_values[len]._any) CORBA_Any (value);
   else 
-    {
-      // The normal behaviour for parameters is that the ORB "borrows"
-      // their memory for the duration of calls.
-      //
-      // Initialize the newly allocated "Any" using a normal
-      // constructor that places the new "Any" value at just the right
-      // place, yet doesn't copy the memory (except for duplicating
-      // the typecode).
-      //
-      // NOTE: DSI has yet to be updated so that it's OK to use such
-      // application-allocated memory.  It needs at least a "send the
-      // response now" call.
-      //
-      (void) new (&_values[len]._any) CORBA_Any (value.type (),
-						 value.value (), CORBA_B_FALSE);
-    }
+    // The normal behaviour for parameters is that the ORB "borrows"
+    // their memory for the duration of calls.
+    //
+    // Initialize the newly allocated "Any" using a normal
+    // constructor that places the new "Any" value at just the right
+    // place, yet doesn't copy the memory (except for duplicating
+    // the typecode).
+    //
+    // NOTE: DSI has yet to be updated so that it's OK to use such
+    // application-allocated memory.  It needs at least a "send the
+    // response now" call.
+    //
+    (void) new (&_values[len]._any) CORBA_Any (value.type (),
+                                               value.value (), CORBA_B_FALSE);
+
   return &_values[len];
 }

@@ -52,7 +52,7 @@ DEFS  	= $(addsuffix .h,$(OTHERS_HDRS))
 LSRC	= $(addsuffix .cpp,$(FILES))
 LSRC2	= $(addsuffix .cpp,$(TEMPLATE_FILES))
 
-LDLIBS = -lcorba
+LDLIBS = -lACE
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

@@ -22,8 +22,8 @@ extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 
 #if defined (SIG_IGN_BROKEN)
-#	undef	SIG_IGN 
-#	define	SIG_IGN ((RETSIGTYPE (*) (int))1)
+#	undef SIG_IGN 
+#	define SIG_IGN ((RETSIGTYPE (*) (int))1)
 #endif	// NeXT
 
 // COM's IUnknown support
@@ -41,14 +41,14 @@ DEFINE_GUID (IID_STUB_Object,
 ULONG __stdcall
 CORBA_ORB::Release (void)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
 
-  assert (this != 0);
+    ACE_ASSERT (this != 0);
 
-  if (--_refcount != 0)
-    return _refcount;
-
-  guard.release ();
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -62,13 +62,16 @@ CORBA_ORB::Release (void)
 // establish which is the default.
 
 CORBA_ORB_ptr
-CORBA_ORB_init (int &argc,
-		char *const *argv,
+CORBA_ORB_init (int &/* argc */,
+		char *const */* argv */,
 		char *orb_name,
 		CORBA_Environment &env)
 {
+#if defined (ACE_HAS_THREADS)
+  // @@ This use of a static is evil.  Please fix...
   static ACE_Thread_Mutex lock;
   ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock, 0);
+#endif /* ACE_HAS_THREADS */
 
   env.clear ();
 
@@ -155,7 +158,7 @@ CORBA_ORB_init (int &argc,
 
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
-  the_orb->use_omg_ior_format (CORBA_Boolean(use_ior));
+  the_orb->use_omg_ior_format (CORBA_Boolean (use_ior));
   
   return the_orb;
 }
@@ -164,15 +167,16 @@ void
 CORBA_ORB::create_list (CORBA_Long count,
                         CORBA_NVList_ptr &retval)
 {
-    assert (count <= UINT_MAX);
+  assert (count <= UINT_MAX);
 
-    retval = new CORBA_NVList;
+  retval = new CORBA_NVList;
 
-    if (count != 0) {
-	retval->_len = 0;
-	retval->_max = (u_int) count;
-	retval->_values = (CORBA_NamedValue_ptr) ACE_OS::calloc ((u_int) count,
-                                                                 sizeof (CORBA_NamedValue));
+  if (count != 0) 
+    {
+      retval->_len = 0;
+      retval->_max = (u_int) count;
+      retval->_values = (CORBA_NamedValue_ptr) ACE_OS::calloc ((u_int) count,
+							       sizeof (CORBA_NamedValue));
     }
 }
 
@@ -186,7 +190,7 @@ CORBA_ORB::create_list (CORBA_Long count,
 CORBA_ORB_ptr
 _orb (void)
 {
-  return TAO_ORB::instance();
+  return TAO_ORB::instance ();
 }
 
 CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
@@ -201,18 +205,14 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
   CORBA_BOA_ptr rp;
   CORBA_String_var id = boa_identifier;
   CORBA_String_var host = CORBA_string_dup ("");
-  CORBA_String_var demux = CORBA_string_dup ("dynamic_hash"); // default atleast for now
+  CORBA_String_var demux = CORBA_string_dup ("dynamic_hash"); // default, at least for now
   CORBA_UShort port = 5001;  // some default port -- needs to be a #defined value
   CORBA_ULong tablesize = 0; // default table size for lookup tables
-  CORBA_Boolean numeric = CORBA_B_FALSE;
   CORBA_Boolean use_threads = CORBA_B_FALSE;
-  const char *ior = 0;
   ACE_INET_Addr rendezvous;
   CORBA_Environment env;
 
-  int i = 0;
-
-  while (i < argc)
+  for (int i = 0; i < argc; )
     {
       // @@ Can you please add comments describing each of these options? --doug
       // @@ Andy, could you review these since you wrote the code --cjc
@@ -254,7 +254,8 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
-          // Specify the demultiplexing strategy to be used for object demultiplexing
+          // Specify the demultiplexing strategy to be used for object
+          // demultiplexing
 	  if (i + 1 < argc)
 	    demux = CORBA_string_dup (argv[i+1]);
 

@@ -50,8 +50,8 @@ public:
   CORBA_Principal (void);
 
 private:
-  ACE_Thread_Mutex principal_lock_;
-  u_int _refcount;
+  ACE_SYNCH_MUTEX principal_lock_;
+  u_int refcount_;
 
   virtual ~CORBA_Principal (void);
 

@@ -26,7 +26,7 @@
 
 #  include "params.h"
 #  include "connect.h"
-#  if defined(__IIOP_BUILD)
+#  if defined (__IIOP_BUILD)
 #    include "objtable.h"
 #  else
 #    include "corba/objtable.h"
@@ -38,16 +38,16 @@ class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, AC
   //      by the <TAO_Client_Factory::CONNECTOR>.
 {
 public:
-  TAO_Client_Connection_Handler(ACE_Thread_Manager* = 0);
+  TAO_Client_Connection_Handler (ACE_Thread_Manager* = 0);
   // Do-nothing constructor
 
-  virtual int open(void*);
+  virtual int open (void*);
   // Initialization hook
 
-  void in_use(CORBA_Boolean);
+  void in_use (CORBA_Boolean);
   // Set the in-use flag.
 
-  CORBA_Boolean in_use(void);
+  CORBA_Boolean in_use (void);
   // Return state of the in-use flag.
 
 private:
@@ -61,12 +61,16 @@ class TAO_Client_Factory
   //    strategies used on the client side.
 {
 public:
-  typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
-  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler> NULL_CREATION_STRATEGY;
-  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
-    ACE_SOCK_CONNECTOR, ACE_RW_Thread_Mutex> CACHED_CONNECT_STRATEGY;
+  typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR> 
+          CONNECTOR;
+  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler> 
+          NULL_CREATION_STRATEGY;
+  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, 
+                                      ACE_SOCK_CONNECTOR,
+				      ACE_SYNCH_RW_MUTEX>
+          CACHED_CONNECT_STRATEGY;
 
-#if defined(TAO_HAS_CLIENT_CONCURRENCY)
+#if defined (TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy (void);
 #endif
   
@@ -77,7 +81,7 @@ public:
   ~TAO_Client_Factory (void);
   
 private:
-#if defined(TAO_HAS_CLIENT_CONCURRENCY)
+#if defined (TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 #endif
   CONNECTOR connector_;
@@ -126,7 +130,7 @@ private:
 #endif
 };
 
-#  if defined(__ACE_INLINE__)
+#  if defined (__ACE_INLINE__)
 #    include "factories.i"
 #  endif
 

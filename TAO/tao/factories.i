@@ -1,5 +1,5 @@
 ACE_INLINE
-TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager* thrmgr)
+TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *)
   : in_use_ (0)
 {
 }

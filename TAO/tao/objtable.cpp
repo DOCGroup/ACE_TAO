@@ -127,7 +127,7 @@ TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
 
 // ****** we should really make sure that the same key doesn't exist ******
 int
-TAO_Active_Demux_ObjTable::bind (const CORBA_OctetSeq &key,
+TAO_Active_Demux_ObjTable::bind (const CORBA_OctetSeq &,
 				 CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;

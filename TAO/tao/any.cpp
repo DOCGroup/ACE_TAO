@@ -1,4 +1,4 @@
-// @(#) $Id$
+// @ (#) $Id$
 //
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -64,7 +64,7 @@ CORBA_Any::CORBA_Any (void)
   _type = _tc_CORBA_Null;
   _value = 0;
   _orb_owns_data = CORBA_B_FALSE;
-  _refcnt = 1;
+  refcount_ = 1;
 }
 
 // The more common "Any" constructor has its own copy of a
@@ -80,7 +80,7 @@ CORBA_Any::CORBA_Any (CORBA_TypeCode_ptr tc,
 {
   _type = tc;
   tc->AddRef ();
-  _refcnt = 1;
+  refcount_ = 1;
 }
 
 // Helper routine for "Any" copy constructor ...
@@ -180,7 +180,7 @@ deep_copy (CORBA_TypeCode_ptr tc,
 
     case tk_Principal:
       {
-        CORBA_Principal_ptr     src, dst;
+        CORBA_Principal_ptr src, dst;
 
         src = *(CORBA_Principal_ptr *) source;
         dst = *(CORBA_Principal_ptr *) dest = new CORBA_Principal;
@@ -192,7 +192,7 @@ deep_copy (CORBA_TypeCode_ptr tc,
 
         if (dst->id.length > 0) 
 	  {
-	    dst->id.buffer = new CORBA_Octet [ (unsigned) dst->id.length];
+	    dst->id.buffer = new CORBA_Octet [(unsigned) dst->id.length];
 	    ACE_OS::memcpy (dst->id.buffer, src->id.buffer,
 			    (size_t) dst->id.length);
 	  } 
@@ -245,7 +245,7 @@ deep_copy (CORBA_TypeCode_ptr tc,
         // general traverse fill in those buffer elements.
 
         size *= (size_t) src->length;
-        dst->buffer = new CORBA_Octet [size];
+        dst->buffer = new CORBA_Octet[size];
       }
     // FALLTHROUGH
 
@@ -323,7 +323,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 			  env);
 #endif /* replaced by our optimizations */
 
-  (void) DEEP_COPY(_type, src._value, _value, env);
+  (void) DEEP_COPY (_type, src._value, _value, env);
 }
 
 // Helper routine for "Any" destructor.
@@ -407,12 +407,13 @@ deep_free (CORBA_TypeCode_ptr tc,
 			     (CORBA_TypeCode::VisitRoutine) deep_free,
 			     0, 
 			     env);
-      delete ((CORBA_OctetSeq *) value)->buffer;
+      // @@ This better be allocated via new[].
+      delete [] ((CORBA_OctetSeq *) value)->buffer;
       break;
 
     case tk_TypeCode:
       if ((*(CORBA_TypeCode_ptr *) value) != 0) 
-	(*(CORBA_TypeCode_ptr *) value)->Release ();
+	 (*(CORBA_TypeCode_ptr *) value)->Release ();
       break;
 
     case tk_Principal:
@@ -466,12 +467,12 @@ CORBA_Any::~CORBA_Any (void)
 {
   CORBA_Environment env;
 
-  // assert (_refcnt == 0);
+  // assert (refcount_ == 0);
 
   if (_orb_owns_data) 
     {
       //      (void) deep_free (_type, _value, 0, 0, env);
-      DEEP_FREE(_type, _value, 0, env);
+      DEEP_FREE (_type, _value, 0, env);
       delete _value;
     }
 
@@ -490,7 +491,7 @@ CORBA_Any::replace (CORBA_TypeCode_ptr tc,
   if (_orb_owns_data) 
     {
       //      (void) deep_free (_type, _value, 0, 0, env);
-      DEEP_FREE(_type, _value, 0, env);
+      DEEP_FREE (_type, _value, 0, env);
       delete _value;
     }
 
@@ -515,20 +516,22 @@ ULONG
 __stdcall
 CORBA_Any::AddRef (void) 
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
 
-  return ++_refcnt;
+  return ++refcount_;
 }
 
 ULONG __stdcall
 CORBA_Any::Release (void) 
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
 
-  if (--_refcnt != 0) 
-    return _refcnt;
+    ACE_ASSERT (this != 0);
 
-  guard.release ();
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -557,7 +560,7 @@ CORBA_Any::QueryInterface (REFIID riid,
 CORBA_Any::CORBA_Any (const VARIANT &src) 
 {
   _orb_owns_data = CORBA_B_TRUE;
-  _refcnt = 1;
+  refcount_ = 1;
   _type = _tc_CORBA_Void;
   _value = 0;
 
@@ -642,7 +645,7 @@ CORBA_Any::operator = (const VARIANT &src)
   return *this;
 }
 
-CORBA_Any::operator VARIANT () 
+CORBA_Any::operator VARIANT (void) 
 {
   VARIANT retval;
 

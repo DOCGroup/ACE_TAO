@@ -63,10 +63,10 @@ private:
   CORBA_TypeCode_ptr _type;
   // Type of the Exception.
 
-  u_int _refcnt;
+  u_int refcount_;
   // Reference count to avoid copying overhead.
 
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
   // Serialize access to reference count.
 };
 

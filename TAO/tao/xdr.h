@@ -83,57 +83,27 @@ public:
 
   CORBA_Boolean put32 (CORBA_Long word) THROWS_NOTHING;
 
-  CORBA_Boolean put_byte (char c) THROWS_NOTHING
-  { return put32 (c); }
-  CORBA_Boolean put_short (CORBA_Short s) THROWS_NOTHING
-  { return put32 (s); }
-  CORBA_Boolean put_long (CORBA_Long l) THROWS_NOTHING
-  { return put32 (l); }
+  CORBA_Boolean put_byte (char c) THROWS_NOTHING;
+  CORBA_Boolean put_short (CORBA_Short s) THROWS_NOTHING;
+  CORBA_Boolean put_long (CORBA_Long l) THROWS_NOTHING;
 
   CORBA_Boolean put_longlong (const CORBA_LongLong &ll)
     THROWS_NOTHING;
 
-  inline CORBA_Boolean put_char (CORBA_Char c) THROWS_NOTHING
-  { return put_byte ((char) c); }
+  CORBA_Boolean put_char (CORBA_Char c) THROWS_NOTHING;
 
-  inline CORBA_Boolean put_wchar (wchar_t wc) THROWS_NOTHING
-  {
-    // "wchar_t" isn't always 2 bytes, such systems might need further
-    // conversion (e.g. hosts with multibyte characters native, rather
-    // than UNICODE)
+  CORBA_Boolean put_wchar (wchar_t wc) THROWS_NOTHING;
+  CORBA_Boolean put_boolean (CORBA_Boolean b) THROWS_NOTHING;
+  CORBA_Boolean put_octet (CORBA_Octet o) THROWS_NOTHING;
+  CORBA_Boolean put_ushort (CORBA_UShort s) THROWS_NOTHING;
+  CORBA_Boolean put_ulong (CORBA_ULong l) THROWS_NOTHING;
+  CORBA_Boolean	put_ulonglong (const CORBA_ULongLong &ll) THROWS_NOTHING;
+  CORBA_Boolean	put_float (float f) THROWS_NOTHING;
+  CORBA_Boolean	put_double (const double &d) THROWS_NOTHING;
+  CORBA_Boolean put_longdouble (const CORBA_LongDouble &ld) THROWS_NOTHING;
 
-    return put_short ((short)wc);
-  }
-    
-  inline CORBA_Boolean put_boolean (CORBA_Boolean b) THROWS_NOTHING
-  { return put_byte ((char) (b != CORBA_B_FALSE)); }
-
-  inline CORBA_Boolean put_octet (CORBA_Octet o) THROWS_NOTHING
-  { return put_byte ((char) o); }
-
-  inline CORBA_Boolean put_ushort (CORBA_UShort s) THROWS_NOTHING
-  { return put_short ((CORBA_Short) s); }
-
-  inline CORBA_Boolean put_ulong (CORBA_ULong l) THROWS_NOTHING
-  { return put_long ((CORBA_Long) l); }
-
-  inline CORBA_Boolean	put_ulonglong (const CORBA_ULongLong &ll)
-    THROWS_NOTHING
-  { return put_longlong ((CORBA_LongLong &) ll); }
-				    
-  inline CORBA_Boolean	put_float (float f) THROWS_NOTHING
-  { return put_long (*(CORBA_Long *) &f); }
-
-
-  inline CORBA_Boolean	put_double (const double &d) THROWS_NOTHING
-  { return put_longlong (*(CORBA_LongLong *) &d); }
-
-  CORBA_Boolean put_longdouble (const CORBA_LongDouble &ld)
-    THROWS_NOTHING;
-
-  //
   // marshaling interpreter ... 'context' really points to a stream.
-  // 
+
   static CORBA_TypeCode::traverse_status
   encoder (CORBA_TypeCode_ptr tc,
 	   const void *data,
@@ -243,11 +213,11 @@ private:
   // buffer entry read/written is index+1 ...)
 
   CORBA_Long buffer [BUFFER_LEN];
-  u_int index;
+  CORBA_Long index;
 
   // The (TCP) stream on which this writes its message fragments.
 
-  const int fd;
+  const ACE_HANDLE fd;
 
   // Used when reading fragments ... max_index controls where the end
   // of the fragment is recorded to be, and is_last_frag says if it's
@@ -283,6 +253,82 @@ XDR_stream::put32 (CORBA_Long word) THROWS_NOTHING
     } 
   else
     return CORBA_B_FALSE;
+}
+
+inline CORBA_Boolean
+XDR_stream::put_byte (char c) THROWS_NOTHING
+{ 
+  return put32 (c); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_short (CORBA_Short s) THROWS_NOTHING
+{ 
+  return put32 (s); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_long (CORBA_Long l) THROWS_NOTHING
+{ 
+  return put32 (l); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_char (CORBA_Char c) THROWS_NOTHING
+{ 
+  return put_byte ((char) c); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_wchar (wchar_t wc) THROWS_NOTHING
+{
+  // "wchar_t" isn't always 2 bytes, such systems might need further
+  // conversion (e.g. hosts with multibyte characters native, rather
+  // than UNICODE)
+
+  return put_short ((short) wc);
+}
+    
+inline CORBA_Boolean 
+XDR_stream::put_boolean (CORBA_Boolean b) THROWS_NOTHING
+{ 
+  return put_byte ((char) (b != CORBA_B_FALSE)); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_octet (CORBA_Octet o) THROWS_NOTHING
+{ 
+  return put_byte ((char) o); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_ushort (CORBA_UShort s) THROWS_NOTHING
+{ 
+  return put_short ((CORBA_Short) s); 
+}
+
+inline CORBA_Boolean 
+XDR_stream::put_ulong (CORBA_ULong l) THROWS_NOTHING
+{ 
+  return put_long ((CORBA_Long) l); 
+}
+
+inline CORBA_Boolean	
+XDR_stream::put_ulonglong (const CORBA_ULongLong &ll) THROWS_NOTHING
+{ 
+  return put_longlong ((CORBA_LongLong &) ll); 
+}
+				    
+inline CORBA_Boolean	
+XDR_stream::put_float (float f) THROWS_NOTHING
+{ 
+  return put_long (*(CORBA_Long *) &f); 
+}
+
+inline CORBA_Boolean	
+XDR_stream::put_double (const double &d) THROWS_NOTHING
+{ 
+  return put_longlong (*(CORBA_LongLong *) &d); 
 }
 
 #endif	/* TAO_XDR_H */

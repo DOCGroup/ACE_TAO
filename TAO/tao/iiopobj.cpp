@@ -1,26 +1,26 @@
-// @(#)iiopobj.cpp	1.9 95/11/04
+// @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// IIOP Bridge:		CORBA::Object operations
+// IIOP Bridge:         CORBA::Object operations
 //
 // Some CORBA::Object and other operations are specific to this IIOP
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
 #include "orb.h"
-#include	<initguid.h>
+#include        <initguid.h>
 
-#include	"stub.h"
-#include	"iiopobj.h"
+#include        "stub.h"
+#include        "iiopobj.h"
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "iiopobj.i"
 #endif
 
 IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
-  : iiop_version(src.iiop_version),
-    port(src.port)
+  : iiop_version (src.iiop_version),
+    port (src.port)
 {
   assert (src.iiop_version.major == MY_MAJOR);
   assert (src.iiop_version.minor == MY_MINOR);
@@ -31,24 +31,25 @@ IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
 
   object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
 
-  (void) ACE_OS::memcpy (object_key.buffer, src.object_key.buffer,
+ (void) ACE_OS::memcpy (object_key.buffer,
+                         src.object_key.buffer,
                          object_key.length);
 }
 
-IIOP::ProfileBody::ProfileBody(const IIOP::Version &v,
-                               const CORBA_String &h,
-                               const CORBA_UShort &p,
-                               const opaque &key)
-  : iiop_version(v),
-    port(p)
+IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
+                                const CORBA_String &h,
+                                const CORBA_UShort &p,
+                                const opaque &key)
+  : iiop_version (v),
+    port (p)
 {
-  host = ACE_OS::strdup(h);
+  host = ACE_OS::strdup (h);
   
   object_key.length = object_key.maximum = key.length;
 
   object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
 
-  (void) ACE_OS::memcpy (object_key.buffer, key.buffer,
+ (void) ACE_OS::memcpy (object_key.buffer, key.buffer,
                          object_key.length);
 }
 
@@ -58,9 +59,9 @@ IIOP::ProfileBody::ProfileBody(const IIOP::Version &v,
 
 CORBA_ULong
 IIOP_Object::hash (CORBA_ULong max,
-		   CORBA_Environment &env)
+                   CORBA_Environment &env)
 {
-  CORBA_ULong	hashval;
+  CORBA_ULong   hashval;
 
   env.clear ();
 
@@ -81,7 +82,7 @@ IIOP_Object::hash (CORBA_ULong max,
 }
 
 // Expensive comparison of objref data, to see if two objrefs
-// certainly point at the same object.  (It's quite OK for this to
+// certainly point at the same object. (It's quite OK for this to
 // return FALSE, and yet have the two objrefs really point to the same
 // object.)
 //
@@ -89,7 +90,7 @@ IIOP_Object::hash (CORBA_ULong max,
 
 CORBA_Boolean
 IIOP_Object::is_equivalent (CORBA_Object_ptr other_obj,
-			    CORBA_Environment &env)
+                            CORBA_Environment &env)
 {
   IIOP::ProfileBody *body, *body2;
   IIOP_Object *other_iiop_obj;
@@ -98,7 +99,7 @@ IIOP_Object::is_equivalent (CORBA_Object_ptr other_obj,
 
   if (CORBA_is_nil (other_obj) == CORBA_B_TRUE
       || other_obj->QueryInterface (IID_IIOP_Object,
-				    (void **) &other_iiop_obj) != NOERROR)
+                                    (void **) &other_iiop_obj) != NOERROR)
     return CORBA_B_FALSE;
   CORBA_release (other_obj);
 
@@ -107,14 +108,14 @@ IIOP_Object::is_equivalent (CORBA_Object_ptr other_obj,
   body = &profile;
   body2 = &other_iiop_obj->profile;
 
-  assert (body->object_key.length < UINT_MAX);
+  ACE_ASSERT (body->object_key.length < UINT_MAX);
 
   return body->object_key.length == body2->object_key.length
     && ACE_OS::memcmp (body->object_key.buffer,
-		       body2->object_key.buffer,
-		       (size_t) body->object_key.length) == 0
+                       body2->object_key.buffer,
+                       (size_t) body->object_key.length) == 0
     && body->port == body2->port
-    && ACE_OS::strcmp ((char *)body->host, (char *)body2->host) == 0
+    && ACE_OS::strcmp ((char *) body->host, (char *) body2->host) == 0
     && body->iiop_version.minor == body2->iiop_version.minor
     && body->iiop_version.major == body2->iiop_version.major;
 }
@@ -144,20 +145,22 @@ DEFINE_GUID (IID_CORBA_Object,
 ULONG __stdcall
 IIOP_Object::AddRef (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
 
-  return ++_refcount;
+  return ++refcount_;
 }
 
 ULONG __stdcall
 IIOP_Object::Release (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
 
-  if (--_refcount != 0)
-    return _refcount;
+    ACE_ASSERT (this != 0);
 
-  guard.release();
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -171,11 +174,11 @@ IIOP_Object::Release (void)
 // IIOP_OBJECT ... this one
 //
 // CORBA_Object ... contained within this; it delegates back
-//	to this one as its "parent"
+//      to this one as its "parent"
 
 HRESULT __stdcall
 IIOP_Object::QueryInterface (REFIID riid,
-			     void **ppv)
+                             void **ppv)
 {
   *ppv = 0;
 
@@ -189,12 +192,12 @@ IIOP_Object::QueryInterface (REFIID riid,
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);
 
-  (void) AddRef ();
+ (void) AddRef ();
   return NOERROR;
 }
 
 //TAO extensions
-CORBA_String IIOP_Object::_get_name(CORBA_Environment &env)
+CORBA_String IIOP_Object::_get_name (CORBA_Environment &)
 {
-  return (CORBA_String)this->profile.object_key.buffer;
+  return (CORBA_String) this->profile.object_key.buffer;
 }

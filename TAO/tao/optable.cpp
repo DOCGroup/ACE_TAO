@@ -139,8 +139,8 @@ TAO_Active_Demux_OpTable_Entry::~TAO_Active_Demux_OpTable_Entry (void)
 }
 
 TAO_Operation_Table_Parameters::TAO_Operation_Table_Parameters (void)
-  : type_ (TAO_Operation_Table_Parameters::TAO_DYNAMIC_HASH),
-    strategy_ (0)
+  : strategy_ (0),
+    type_ (TAO_Operation_Table_Parameters::TAO_DYNAMIC_HASH)
 {
 }
 
