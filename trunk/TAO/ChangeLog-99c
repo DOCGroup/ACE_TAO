@@ -1,3 +1,11 @@
+Thu Jul 15 19:40:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/da_test.idl:
+	* TAO/tests/DynAny_Test/data.h:
+	* TAO/tests/DynAny_Test/data.cpp:
+	* TAO/tests/DynAny_Test/test_dynstruct.cpp:
+	  VxWorks caught me trying to use CORBA::LongLong.
+
 Thu Jul 15 19:09:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/param_test_i.h:
