@@ -26,7 +26,6 @@ BIN =	Atomic_Op_Test \
 	Message_Block_Test \
 	Message_Queue_Test \
 	Message_Queue_Notifications_Test \
-	Mutex_Test \
 	Naming_Test \
 	Notify_Performance_Test \
 	Process_Mutex_Test \
@@ -52,6 +51,7 @@ BIN =	Atomic_Op_Test \
 	SV_Shared_Memory_Test \
 	Task_Test \
 	Thread_Manager_Test \
+	Thread_Mutex_Test \
 	Thread_Pool_Test \
 	Time_Service_Test \
 	Time_Value_Test \

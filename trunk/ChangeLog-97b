@@ -10,6 +10,12 @@ Mon Nov 10 14:09:24 1997  Steve Huston  <shuston@riverace.com>
 
 Mon Nov 10 13:33:02 1997    <irfan@TWOSTEP>
 
+	* tests/Thread_Mutex_Test.cpp: Modified version of Mutex_Test that
+ 	  exclusively works on a Thread_Mutex.
+
+	* tests/Mutex_Test.cpp: Removed this test.  It have been
+ 	  superseded by Thread_Mutex_Test and Process_Mutex_Test.
+
 	* ace/OS.i (thread_mutex_trylock): Fixed the return value and
  	  errno for this system call such that it is consistent with other
  	  trylock calls.

@@ -44,8 +44,6 @@ run MM_Shared_Memory_Test
 
 run Sigset_Ops_Test                     # uses sigset*() functions
 
-run Mutex_Test                          # uses Process_Mutex
-
 run Timer_Queue_Test                    # uses Event_Handler, Timer_Queue
 
 run SOCK_Connector_Test                 # uses SOCK_Connector
@@ -84,6 +82,7 @@ run Simple_Message_Block_Test           # uses Message_Block
 run Message_Block_Test                  # uses Message_Block and Message_Queue
 run Pipe_Test                           # uses Pipe
 run Process_Mutex_Test                  # uses Process_Mutex
+run Thread_Mutex_Test                   # uses Thread_Process_Mutex
 run Process_Strategy_Test               # uses ACE_Strategy_Acceptor
 run Service_Config_Test                 # uses Service_Config
 run Priority_Task_Test                  # uses Task with priorities

@@ -62,9 +62,9 @@ ace_main; unld "Sigset_Ops_Test"
 
 #### ENOTSUP: semop.  This could easily be done with POSIX semaphores,
 ####          but ACE no longer uses them on VxWorks.
-#### ld < Mutex_Test
-#### write 2, "Mutex_Test ", 11
-#### ace_main; unld "Mutex_Test"
+#### ld < Thread_Mutex_Test
+#### write 2, "Thread_Mutex_Test ", 11
+#### ace_main; unld "Thread_Mutex_Test"
 
 ld < Timer_Queue_Test
 write 2, "Timer_Queue_Test ", 17
