@@ -1,3 +1,8 @@
+Thu Jul 02 01:50:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: Renamed TAO_POA_Locking to Synchronization.  Also
+ 	  renamed the related enums to not use the USE_ prefix.
+
 Wed Jul  1 22:42:13 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:

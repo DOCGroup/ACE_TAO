@@ -571,30 +571,30 @@ TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &env)
 //
 // **************************************************
 
-TAO_POA_Locking_Policy::TAO_POA_Locking_Policy (PortableServer::TAO_POA_LockingPolicyValue value,
-                                                PortableServer::POA_ptr poa)
+TAO_Synchronization_Policy::TAO_Synchronization_Policy (PortableServer::SynchronizationPolicyValue value,
+                                                        PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
-TAO_POA_Locking_Policy::TAO_POA_Locking_Policy (const TAO_POA_Locking_Policy &rhs)
+TAO_Synchronization_Policy::TAO_Synchronization_Policy (const TAO_Synchronization_Policy &rhs)
   : value_ (rhs.value_),
     poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
-PortableServer::TAO_POA_LockingPolicyValue
-TAO_POA_Locking_Policy::value (CORBA::Environment &env)
+PortableServer::SynchronizationPolicyValue
+TAO_Synchronization_Policy::value (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_POA_Locking_Policy::copy (CORBA::Environment &env)
+TAO_Synchronization_Policy::copy (CORBA::Environment &env)
 {
-  auto_ptr<TAO_POA_Locking_Policy> new_policy (new TAO_POA_Locking_Policy (*this));
+  auto_ptr<TAO_Synchronization_Policy> new_policy (new TAO_Synchronization_Policy (*this));
 
   CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
@@ -609,7 +609,7 @@ TAO_POA_Locking_Policy::copy (CORBA::Environment &env)
 }
 
 void
-TAO_POA_Locking_Policy::destroy (CORBA::Environment &env)
+TAO_Synchronization_Policy::destroy (CORBA::Environment &env)
 {
   // Remove self from POA
   //
@@ -629,14 +629,14 @@ TAO_POA_Locking_Policy::destroy (CORBA::Environment &env)
 }
 
 CORBA::PolicyType
-TAO_POA_Locking_Policy::policy_type (CORBA::Environment &env)
+TAO_Synchronization_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
   return 0;
 }
 
 PortableServer::POA_ptr
-TAO_POA_Locking_Policy::_default_POA (CORBA::Environment &env)
+TAO_Synchronization_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -649,7 +649,7 @@ TAO_POA_Policies::TAO_POA_Policies (void)
      implicit_activation_ (PortableServer::NO_IMPLICIT_ACTIVATION),
      servant_retention_ (PortableServer::RETAIN),
      request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
-     TAO_POA_locking_ (PortableServer::USE_DEFAULT_LOCK)
+     synchronization_ (PortableServer::DEFAULT_LOCK)
 {
 }
 
@@ -789,11 +789,11 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
       env.clear ();
     }
 
-  PortableServer::TAO_POA_LockingPolicy_var TAO_POA_locking
-    = PortableServer::TAO_POA_LockingPolicy::_narrow (policy, env);
-  if (!CORBA::is_nil (TAO_POA_locking.in ()))
+  PortableServer::SynchronizationPolicy_var synchronization
+    = PortableServer::SynchronizationPolicy::_narrow (policy, env);
+  if (!CORBA::is_nil (synchronization.in ()))
     {
-      this->TAO_POA_locking_ = TAO_POA_locking->value (env);
+      this->synchronization_ = synchronization->value (env);
       return;
     }
   else
@@ -872,12 +872,12 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
 void
 TAO_POA::create_internal_lock (void)
 {
-  if (this->policies ().TAO_POA_locking () == PortableServer::USE_DEFAULT_LOCK)
+  if (this->policies ().synchronization () == PortableServer::DEFAULT_LOCK)
     this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_poa_lock ();
-  else if (this->policies ().TAO_POA_locking () == PortableServer::USE_NULL_LOCK)
+  else if (this->policies ().synchronization () == PortableServer::NULL_LOCK)
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<ACE_Null_Mutex>);
-  else if (this->policies ().TAO_POA_locking () == PortableServer::USE_THREAD_LOCK)
+  else if (this->policies ().synchronization () == PortableServer::THREAD_LOCK)
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>);
 }
@@ -2871,19 +2871,19 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 //
 // **************************************************
 
-PortableServer::TAO_POA_LockingPolicy_ptr
-TAO_POA::create_TAO_POA_locking_policy (PortableServer::TAO_POA_LockingPolicyValue value,
+PortableServer::SynchronizationPolicy_ptr
+TAO_POA::create_synchronization_policy (PortableServer::SynchronizationPolicyValue value,
                                         CORBA::Environment &env)
 {
   PortableServer::POA_var self = this->_this (env);
   // Check for exceptions
   if (env.exception () != 0)
-    return PortableServer::TAO_POA_LockingPolicy::_nil ();
+    return PortableServer::SynchronizationPolicy::_nil ();
 
-  auto_ptr<TAO_POA_Locking_Policy> new_policy (new TAO_POA_Locking_Policy (value, self.in ()));
-  PortableServer::TAO_POA_LockingPolicy_var result = new_policy->_this (env);
+  auto_ptr<TAO_Synchronization_Policy> new_policy (new TAO_Synchronization_Policy (value, self.in ()));
+  PortableServer::SynchronizationPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::TAO_POA_LockingPolicy::_nil ();
+    return PortableServer::SynchronizationPolicy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -3316,7 +3316,7 @@ template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Object_Table_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_POA>;
 template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_POA_Locking_Policy>;
+template class ACE_Auto_Basic_Ptr<TAO_Synchronization_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Thread_Policy>;
 template class ACE_Lock_Adapter<ACE_Null_Mutex>;
@@ -3341,7 +3341,7 @@ template class auto_ptr<TAO_Lifespan_Policy>;
 template class auto_ptr<TAO_Object_Table_Iterator_Impl>;
 template class auto_ptr<TAO_POA>;
 template class auto_ptr<TAO_Request_Processing_Policy>;
-template class auto_ptr<TAO_POA_Locking_Policy>;
+template class auto_ptr<TAO_Synchronization_Policy>;
 template class auto_ptr<TAO_Servant_Retention_Policy>;
 template class auto_ptr<TAO_Thread_Policy>;
 template class ACE_Map_Entry<ACE_CString, TAO_POA *>;
@@ -3355,7 +3355,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Table_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA_Locking_Policy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Synchronization_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Thread_Policy>
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
@@ -3380,7 +3380,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate auto_ptr<TAO_Object_Table_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_POA>
 #pragma instantiate auto_ptr<TAO_Request_Processing_Policy>
-#pragma instantiate auto_ptr<TAO_POA_Locking_Policy>
+#pragma instantiate auto_ptr<TAO_Synchronization_Policy>
 #pragma instantiate auto_ptr<TAO_Servant_Retention_Policy>
 #pragma instantiate auto_ptr<TAO_Thread_Policy>
 #pragma instantiate ACE_Map_Entry<ACE_CString, TAO_POA *>
