@@ -43,6 +43,25 @@ all:
 !
 
 # This ugliness is to remove extra spaces from between the items in the list.
+DIRS_REALCLEAN_1 = $(DIRS) $(BLANK_SPACE)
+DIRS_REALCLEAN_2 = $(DIRS_REALCLEAN_1: =%)
+DIRS_REALCLEAN_3 = $(DIRS_REALCLEAN_2:%%=%)
+DIRS_REALCLEAN_4 = $(DIRS_REALCLEAN_3:%%=%)
+DIRS_REALCLEAN = $(DIRS_REALCLEAN_4:%=.RealClean )
+
+realclean: $(DIRS_REALCLEAN)
+
+# We use an extra level of make recursion to ensure the current directory is
+# automatically restored when the sub-directory is finished.
+$(DIRS_REALCLEAN):
+	@echo Cleaning directory $(<:.RealClean=)
+	@$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
+all:
+	@cd $(<:.RealClean=)
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor realclean
+!
+
+# This ugliness is to remove extra spaces from between the items in the list.
 DIRS_INSTALL_1 = $(DIRS) $(BLANK_SPACE)
 DIRS_INSTALL_2 = $(DIRS_INSTALL_1: =%)
 DIRS_INSTALL_3 = $(DIRS_INSTALL_2:%%=%)
@@ -88,6 +107,18 @@ clean: $(MAKEFILES_CLEAN)
 
 $(MAKEFILES_CLEAN):
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.Clean=) clean
+
+# This ugliness is to remove extra spaces from between the items in the list.
+MAKEFILES_REALCLEAN_1 = $(MAKEFILES) $(BLANK_SPACE)
+MAKEFILES_REALCLEAN_2 = $(MAKEFILES_REALCLEAN_1: =%)
+MAKEFILES_REALCLEAN_3 = $(MAKEFILES_REALCLEAN_2:%%=%)
+MAKEFILES_REALCLEAN_4 = $(MAKEFILES_REALCLEAN_3:%%=%)
+MAKEFILES_REALCLEAN = $(MAKEFILES_REALCLEAN_4:%=.RealClean )
+
+realclean: $(MAKEFILES_REALCLEAN)
+
+$(MAKEFILES_REALCLEAN):
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.RealClean=) realclean
 
 # This ugliness is to remove extra spaces from between the items in the list.
 MAKEFILES_INSTALL_1 = $(MAKEFILES) $(BLANK_SPACE)
