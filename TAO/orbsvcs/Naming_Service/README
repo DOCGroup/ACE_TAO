@@ -17,7 +17,7 @@ The following describes how to run the TAO Naming Service.
                          [-p pid_file_name]
                          [-s context_size]
                          [-t time]
-                         [-f persitence_file_name]
+                         [-f persistence_file_name]
                          [-b base_address]
 			 [-m (1=enable multicast responses,0=disable(default)]
 			 [-z time]
@@ -63,7 +63,7 @@ The following describes how to run the TAO Naming Service.
 	-m <0|1>
                 TAO offers a simple, very non-standard method for
                 clients to discover the initial reference for the
-                Naming Service.  However, since it can be innadequate and cause
+                Naming Service.  However, since it can be inadequate and cause
 		unexpected results if, for example, there are multiple
 		naming services running on the network, the DEFAULT
 		behavior is for the Naming Service to NOT RESPOND to
@@ -164,7 +164,7 @@ The following describes how to run the TAO Naming Service.
 
                 Example (Unix, same host):
 
-                        % TAO_ROOT/orbsvcs/Naming_Service -o ior_file
+                        % $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ior_file
                         % my_client -ORBInitRef NameService=file://ior_file
 
                         On the first line, we start the Naming
@@ -179,7 +179,7 @@ The following describes how to run the TAO Naming Service.
                 TAO implements the standard CORBA Interoperable Naming
                 Service (ING).  Therefore, most initialization options
                 provided by INS can be used to bootstrap to the Naming
-                Service (see TAO's releasenotes for the status of INS
+                Service (see TAO's release notes for the status of INS
                 implementation).
 
         3. Multicast
@@ -235,7 +235,7 @@ The following describes how to run the TAO Naming Service.
 How to use the NT_Naming_Service
 ================================
 
-To set the options for the TAO Naming Sevice, go to the Services icon
+To set the options for the TAO Naming Service, go to the Services icon
 in the Settings group under the start menu (start menu -> settings ->
 services).  There, highlight the NT_Naming_Service, which is the name
 used by the Naming Service when it is registered.  After it's
@@ -323,7 +323,7 @@ network interfaces( e.g. eth0 ).
 
 ---------------------------------------
 (Step 1)
-Check to see if you have mutlicasting enabled. In the case of Linux
+Check to see if you have multicasting enabled. In the case of Linux
 you will need to check the configuration of your kernel. RedHat users
 have multicasting enabled by default. Once you are sure that you have
 multicast enabled then move to the next step. Alternative is to start

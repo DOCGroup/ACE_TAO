@@ -1,7 +1,7 @@
                         CORBA COS Event Service
                         -----------------------
 
-The CosEvent_Service is a COS compilant Event Service.
+The CosEvent_Service is a COS compliant Event Service.
 
 The service is registered with the naming service with the name
 "CosEventService" .  It exposes the <EventChannel> interface which can be
