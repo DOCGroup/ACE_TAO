@@ -353,7 +353,7 @@ CORBA::Object_ptr
                                                       this->context_);
       PortableServer::ServantBase_var safe_servant (svt);
 
-      CORBA::Object_var obj = this->container_->install_servant (svc.in ()
+      CORBA::Object_var obj = this->container_->install_servant (svt
                                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
