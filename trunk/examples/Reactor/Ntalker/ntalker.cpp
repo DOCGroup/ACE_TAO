@@ -164,6 +164,7 @@ int
 main (int argc, char *argv[])
 {
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   parse_args (argc, argv);
 
