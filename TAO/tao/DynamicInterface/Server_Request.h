@@ -116,6 +116,9 @@ public:
   void _tao_reply_byte_order (int byte_order);
   // Set the byte order of the outgoing CDR stream.
 
+  /// Return a reference to the underlying TAO_ServerRequest object.
+  TAO_ServerRequest & _tao_server_request (void);
+
   void gateway_exception_reply (ACE_CString &raw_exception);
   // Returns a user exception through a TAO gateway without
   // knowing its type.
