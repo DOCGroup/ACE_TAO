@@ -15,13 +15,6 @@
 // String utility support; this can need to be integrated with the
 // ORB's own memory allocation subsystem.
 
-ACE_Svc_Export CORBA::String
-CORBA::string_alloc (CORBA::ULong len)
-{
-  // allocate 1 + strlen to accomodate the null terminating character
-  return new CORBA::Char [(size_t)(len + 1)];
-}
-
 CORBA::String
 CORBA::string_copy (const CORBA::Char *str)
 {
@@ -35,50 +28,9 @@ CORBA::string_copy (const CORBA::Char *str)
   return ACE_OS::strcpy (retval, str);
 }
 
-CORBA::String
-CORBA::string_dup (const CORBA::Char *str)
-{
-  return CORBA::string_copy (str);
-}
-
-ACE_Svc_Export void
-CORBA::string_free (CORBA::Char *str)
-{
-  delete [] str;
-}
-
 // ----------------------------------------------------------------------
 // String_var type
 // ----------------------------------------------------------------------
-
-CORBA::String_var::String_var (void)
-{
-  this->ptr_ = 0;
-}
-
-CORBA::String_var::~String_var (void)
-{
-  if (this->ptr_ != 0)
-    {
-      CORBA::string_free (this->ptr_);
-    }
-}
-
-CORBA::String_var::String_var (char *p)
-  : ptr_ (p)
-{
-  // argument is consumed. p should never be NULL
-}
-
-CORBA::String_var::String_var (const char *p)
-  : ptr_ (CORBA::string_dup ((char *)p))
-{
-}
-
-CORBA::String_var::String_var (const CORBA::String_var& r)
-{
-  this->ptr_ = CORBA::string_dup (r.ptr_);
-}
 
 CORBA::String_var &
 CORBA::String_var::operator= (char *p)
@@ -109,20 +61,6 @@ CORBA::String_var::operator= (const CORBA::String_var& r)
     CORBA::string_free (this->ptr_);
   this->ptr_ = CORBA::string_dup (r.ptr_);
   return *this;
-}
-
-CORBA::Char & 
-CORBA::String_var::operator[] (CORBA::ULong index)
-{
-  // we need to verify bounds else raise some exception
-  return this->ptr_[index];
-}
-
-CORBA::Char 
-CORBA::String_var::operator[] (CORBA::ULong index) const
-{
-  // we need to verify bounds else raise some exception
-  return this->ptr_[index];
 }
 
 #if	!defined (HAVE_WIDEC_H)

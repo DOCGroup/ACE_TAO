@@ -48,6 +48,8 @@
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;
+class CORBA_Any_var;
+class CORBA_Any_out;
 //typedef class CORBA_Any *CORBA_Any_ptr;
 
 class CORBA_TypeCode;
@@ -130,15 +132,42 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 struct CDR;
 
-// enum values defined in nvlist.hh, bitwise ORed.
+// enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags; 
 
+#if 0
 #if !defined(TAO_NEEDS_FULL_SEQUENCE_TEMPLATE)
 #  include "tao/sequence.h"
 #else
 template <class T>
 struct CORBA_SEQUENCE;
 #endif
+#endif
+
+template <class T>
+struct CORBA_SEQUENCE 
+{
+  // = TITLE
+  //    Utility template class.
+  //
+  // = DESCRIPTION
+#if SIZEOF_LONG == 4
+  u_long maximum;
+  u_long length;
+#else
+  // = Just assume "int" is four bytes long ...
+  u_int maximum;
+  u_int length;
+#endif /* SIZEOF_LONG */
+  T *buffer;
+
+  CORBA_SEQUENCE (void)
+    : maximum (0), length (0), buffer (0) { }
+
+  // XXX destructor should free buffer, elements!!
+  ~CORBA_SEQUENCE (void) { }
+};
+
 
 class ACE_Svc_Export CORBA 
 {
@@ -158,10 +187,16 @@ public:
   enum { B_FALSE = 0, B_TRUE = 1 };
 #  endif /* "bool" not builtin */
 
+  typedef Boolean &Boolean_out; // out type for boolean
+
   typedef u_char Octet;
+  typedef Octet  &Octet_out;  // out type for octet
 
   typedef short Short;
+  typedef Short &Short_out;   // out type for short
+
   typedef u_short UShort;
+  typedef UShort &UShort_out; // out type for unsigned short
 
   // CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
   // almost all C/C++ compilers.
@@ -174,6 +209,9 @@ public:
   typedef int Long;
   typedef u_int ULong;
 #  endif	/* SIZEOF_LONG != 4 */
+
+  typedef Long &Long_out; // out type for long
+  typedef ULong &ULong_out; // out type for unsigned long
 
   // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64 bit
   // integers are "LongLong".
@@ -206,8 +244,14 @@ public:
 #    endif /* !TAO_WORDS_BIGENDIAN */
 #  endif /* no native 64 bit integer type */
 
+  typedef LongLong &LongLong_out;  // out type for long long
+  typedef ULongLong &ULongLong_out; // out type for unsigned long long
+
   typedef float Float;
+  typedef Float &Float_out; // out type for float
+
   typedef double Double;
+  typedef Double &Double_out; // out type for double
 
   // 94-9-32 Appendix A defines a 128 bit floating point "long double"
   // data type, with greatly extended precision and four more bits of
@@ -225,7 +269,13 @@ public:
   };
 #  endif /* SIZEOF_LONG_DOUBLE != 16 */
 
+  typedef LongDouble &LongDouble_out; // out type for long doubles
+
   typedef char Char;
+  typedef Char &Char_out; // out type for char
+
+  typedef CORBA_SEQUENCE<Octet> OctetSeq;
+
   typedef Char *String;
 
   static String string_alloc (ULong len);
@@ -233,54 +283,111 @@ public:
   static String string_dup (const Char *);
   static void string_free (Char *);
 
-  typedef CORBA_SEQUENCE<Octet> OctetSeq;
-
   class String_var
-  // = TITLE
-  // String var class. Provides automatic deallocation of storage for the
-  // string once it goes out of scope. 
-    {
-    public:
-      String_var (void);
-      // default constructor
+  {
+    // = TITLE
+    // String var class. Provides automatic deallocation of storage for the
+    // string once it goes out of scope. 
+  public:
+    String_var (void);
+    // default constructor
 
-      String_var (char *p);
-      // constructor, owns p
+    String_var (char *p);
+    // constructor, owns p
 
-      String_var (const char *p);
-      // constructor. Makes a copy of p
+    String_var (const char *p);
+    // constructor. Makes a copy of p
 
-      String_var (const String_var &s);
-      // copy constructor
+    String_var (const String_var &s);
+    // copy constructor
 
-      ~String_var (void);
-      // destructor
+    ~String_var (void);
+    // destructor
 
-      String_var &operator= (char *p);
-      // assignment operator
+    String_var &operator= (char *p);
+    // assignment operator
 
-      String_var &operator= (const char *p);
-      // assignment to a const char*. Makes a copy.
+    String_var &operator= (const char *p);
+    // assignment to a const char*. Makes a copy.
 
-      String_var &operator= (const String_var &s);
-      // assignment operator
+    String_var &operator= (const String_var &s);
+    // assignment operator
 
-      operator char *() { return ptr_; }
-      // access and modify
+    operator char *();
+    // access and modify
 
-      operator const char *() const {return ptr_; };
-      // only read privileges
+    operator const char *() const;
+    // only read privileges
 
-      char &operator[] (ULong index);
-      // allows access and modification using an index
+    char &operator[] (ULong index);
+    // allows access and modification using an index
 
-      char operator[] (ULong index) const;
-      // allows only accessing thru an index
+    char operator[] (ULong index) const;
+    // allows only accessing thru an index
 
-    private:
-      char *ptr_;
-      // instance
-    };
+    // =in, out, out, and _retn operations.
+    // ORBOS/97-05-15, Appendix C.2
+
+    const char *in (void) const;
+    // for in parameter
+
+    char *&inout (void);
+    // for inout parameter
+
+    char *&out (void);
+    // for out parameter
+
+    char *_retn (void);
+    // for string of return type
+
+  private:
+    char *ptr_;
+    // instance
+  };
+
+  // ORBOS/97-05-15, Appendix C.2 defines a String_out class
+
+  class String_out
+  {
+    //=TITLE
+    // String_out
+    // =DESCRIPTION
+    // To support the memory management for "out" parameter passing mode.
+    
+  public:
+    // =operations
+
+    String_out (char *&p);
+    // construction from a reference to a string
+
+    String_out (String_var &p);
+    // construction from a var
+
+    String_out (String_out &s);
+    // copy constructor
+
+    String_out &operator= (String_out &s);
+    // assignment from a string_out
+
+    String_out &operator= (char *p);
+    // assignment from a string
+
+    String_out &operator= (const char *p);
+    // assignment from a const string
+
+    operator char *&();
+    // cast
+
+    char *& ptr (void);
+    // return underlying instance
+   
+  private:
+    char *&ptr_;
+    // instance
+
+    // assignment from _var disallowed
+    void operator= (const String_var &);
+  };
 
   // 94-9-32 Appendix A defines 16-bit UNICODE characters as
   // "WChar", and null-terminated strings of them as "WString".
@@ -294,14 +401,16 @@ public:
 #  endif /* SIZEOF _WCHAR_T < 2 */
   typedef WChar *WString;
   
+  typedef WChar &WChar_out; // out type for WChar
+
   static WString wstring_alloc (ULong len);
   static WString wstring_copy (const WChar *const);
   static void wstring_free (WChar *const);
 
   // various CORBA defined classes 
   typedef CORBA_Any         Any;
-  //  typedef CORBA_Any_var     Any_var;
-  //  XXXASG - need to do this var class
+  typedef CORBA_Any_var     Any_var;
+  typedef CORBA_Any_out     Any_out;
   typedef Any               *Any_ptr;
 
   typedef CORBA_BOA         BOA;
