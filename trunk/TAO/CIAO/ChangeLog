@@ -1,3 +1,16 @@
+Tue Nov 25 19:46:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.hpp:
+        
+          Corrected a comment.
+          
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Fixed servant code generation to output only for components
+          and homes that are used in a CIDL composition. Thanks to
+          Gary Duzan <gduzan@bbn.com> for reporting the problem.
+
 Tue Nov 25 15:39:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CompilerElements/FileSystem.hpp:

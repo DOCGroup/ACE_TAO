@@ -276,7 +276,7 @@ namespace
       if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << STRS[GLUE_NS] << endl
-           << "{" << endl;
+           << "{";
       }
 
       // @@@ (JP) Need export macro and prefixable scoped name.
@@ -286,7 +286,7 @@ namespace
          << "," << endl
          << STRS[INH_RCSB]
          << endl
-         << "{" << endl
+         << "{"
          << "public:" << endl;
 
       os << i->name ().simple () << "_Servant (" << endl
@@ -311,17 +311,16 @@ namespace
          << "virtual CORBA::Object_ptr" << endl
          << "_get_component (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";"
-         << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "protected:" << endl
          << "// Facet executor." << endl
          << i->name ().scope () << "::CCM_" << i->name ().simple ()
-         << "_var executor_;" << endl << endl;
+         << "_var executor_;" << endl;
 
       os  << "// Context object." << endl
           << "::Components::CCMContext_var ctx_;" << endl
-          << "};" << endl;
+          << "};" << endl << endl;
 
       // Close the CIAO_GLUE namespace, if we opened one.
       if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
@@ -344,13 +343,25 @@ namespace
   {
   private:
     string export_macro_;
+    Declarations const& declarations_;
 
   public:
     ContextPublicEmitter (ostream& os_,
-                          string export_macro)
+                          string export_macro,
+                          Declarations const& declarations)
       : HeaderEmitterBase (os_),
-        export_macro_ (export_macro)
+        export_macro_ (export_macro),
+        declarations_ (declarations)
     {
+    }
+    
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -360,7 +371,7 @@ namespace
       if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << STRS[GLUE_NS] << endl
-           << "{" << endl;
+           << "{";
       }
 
       os << "class " << export_macro_ << " " << c->name ().simple ()
@@ -370,60 +381,60 @@ namespace
          << endl
          << "public virtual TAO_Local_RefCounted_Object"
          << endl
-         << "{" << endl
+         << "{"
          << "public:" << endl;
 
       os << "// We will allow the servant glue code we generate to "
          << "access our state." << endl
          << "friend class " << c->name ().simple () << "_Servant;"
-         << endl << endl;
+         << endl;
 
       os << c->name ().simple () << "_Context (" << endl
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c," << endl
-         << c->name ().simple () << "_Servant *sv);" << endl << endl;
+         << c->name ().simple () << "_Servant *sv);" << endl;
 
       os << "virtual ~" << c->name ().simple () << "_Context (void);"
-         << endl << endl;
+         << endl;
 
       os << "// Operations from ::Components::CCMContext." << endl << endl;
 
       os << "virtual ::Components::Principal_ptr" << endl
          << "get_caller_principal (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual ::Components::CCMHome_ptr" << endl
          << "get_CCM_home (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl ;
 
       os << "virtual CORBA::Boolean" << endl
          << "get_rollback_only (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl << endl;
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "virtual ::Components::Transaction::UserTransaction_ptr" << endl
          << "get_user_transaction (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl << endl;
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "virtual CORBA::Boolean" << endl
          << "is_caller_in_role (" << endl
          << "const char *role" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual void" << endl
          << "set_rollback_only (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl << endl;
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "// Operations from ::Components::SessionContext interface."
          << endl << endl;
@@ -433,7 +444,7 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl << endl;
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "// Operations for " << c->name ().simple () << " receptacles"
          << " and event sources," << endl
@@ -450,7 +461,7 @@ namespace
          << "get_connection_" << d->name ().simple ()
          << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
     }
 
     virtual void
@@ -486,10 +497,24 @@ namespace
       public Traversal::PublishesDecl,
       public Traversal::EmitsDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ContextProtectedMethodEmitter (ostream& os_)
-      : HeaderEmitterBase (os_)
+    ContextProtectedMethodEmitter (ostream& os_,
+                                   Declarations const& declarations)
+      : HeaderEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -535,7 +560,7 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
+         << STRS[EXCP_NC] << "));" << endl;
     }
 
     virtual void
@@ -569,10 +594,23 @@ namespace
       public Traversal::PublishesDecl,
       public Traversal::EmitsDecl
   {
+  private:
+    Declarations const& declarations_;
   public:
-    ContextProtectedMemberEmitter (ostream& os_)
-      : HeaderEmitterBase (os_)
+    ContextProtectedMemberEmitter (ostream& os_,
+                                   Declarations const& declarations)
+      : HeaderEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -620,7 +658,7 @@ namespace
          << "servant_;" << endl << endl;
 
       os << c->name () << "_var" << endl
-         << "component_;" << endl;
+         << "component_;" << endl << endl;
 
       os << "};" << endl;
 
@@ -649,17 +687,29 @@ namespace
   {
   private:
     string export_macro_;
+    Declarations const& declarations_;
 
     OperationEmitter& operation_emitter_;
 
   public:
     ServantPublicEmitter (ostream& os_,
                           string export_macro,
+                          Declarations const& declarations,
                           OperationEmitter& operation_emitter)
       : HeaderEmitterBase (os_),
         export_macro_ (export_macro),
+        declarations_ (declarations),
         operation_emitter_ (operation_emitter)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -669,7 +719,7 @@ namespace
       if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << STRS[GLUE_NS] << endl
-           << "{" << endl;
+           << "{";
       }
 
       // @@@ (JP) Need export macro and prefixable scoped name.
@@ -678,7 +728,7 @@ namespace
          << ": public virtual POA_" << c->name ().in_file_scope ()
          << "," << endl
          << STRS[INH_RCSB] << endl
-         << "{" << endl
+         << "{"
          << "public:" << endl;
 
       os << c->name ().simple () << "_Servant (" << endl
@@ -747,7 +797,7 @@ namespace
          << "Consumer," << endl
          << STRS[INH_RCSB]
          << endl
-         << "{" << endl
+         << "{"
          << "public:" << endl;
 
       os << c->type ()->name ().simple () << "Consumer_" << c->name ().simple ()
@@ -1078,10 +1128,24 @@ namespace
                                   public Traversal::ProvidesDecl,
                                   public Traversal::ConsumesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ServantProtectedEmitter (ostream& os_)
-      : HeaderEmitterBase (os_)
+    ServantProtectedEmitter (ostream& os_,
+                             Declarations const& declarations)
+      : HeaderEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1096,21 +1160,21 @@ namespace
          << "context_;" << endl << endl;
 
       os << "::CIAO::Session_Container *" << endl
-         << "container_;" << endl << endl;
+         << "container_;" << endl;
     }
 
     virtual void
     traverse (ProvidesDeclPtr const& p)
     {
       os << p->type ()->name () << "_var" << endl
-         << "provide_" << p->name ().simple () << "_;" << endl << endl;
+         << "provide_" << p->name ().simple () << "_;" << endl;
     }
 
     virtual void
     traverse (ConsumesDeclPtr const& c)
     {
       os << c->type ()->name () << "Consumer_var" << endl
-         << "consumes_" << c->name ().simple () << "_;" << endl << endl;
+         << "consumes_" << c->name ().simple () << "_;" << endl;
     }
 
     virtual void
@@ -1138,17 +1202,29 @@ namespace
   {
   private:
     string export_macro_;
+    Declarations const& declarations_;
 
     OperationEmitter& operation_emitter_;
 
   public:
     HomeEmitter (ostream& os_,
                  string export_macro,
+                 Declarations const& declarations,
                  OperationEmitter& operation_emitter)
       : HeaderEmitterBase (os_),
         export_macro_ (export_macro),
+        declarations_ (declarations),
         operation_emitter_ (operation_emitter)
     {
+    }
+
+    virtual void
+    traverse (HomeDefPtr const& h)
+    {
+      if (declarations_.find (h))
+      {
+        Traversal::HomeDef::traverse (h);
+      }
     }
 
     virtual void
@@ -1158,22 +1234,21 @@ namespace
       if (h->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
         os << STRS[GLUE_NS] << endl
-           << "{" << endl;
+           << "{";
       }
 
-      // @@@ (JP) Need export macro and prefixable scoped name.
       os << "class " << export_macro_ << " " << h->name ().simple ()
          << "_Servant" << endl
          << ": public virtual POA_" << h->name ().in_file_scope ()
          << "," << endl
          << STRS[INH_RCSB] << endl
-         << "{" << endl
+         << "{"
          << "public:" << endl;
 
       os << h->name ().simple () << "_Servant (" << endl
          << h->name ().scope () << "::CCM_" << h->name ().simple ()
          << "_ptr exe," << endl
-         << "::CIAO::Session_Container *c);" << endl << endl;
+         << "::CIAO::Session_Container *c);" << endl;
 
       os << "virtual ~" << h->name ().simple () << "_Servant (void);"
          << endl << endl;
@@ -1198,7 +1273,7 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << "::Components::CreateFailure));" << endl << endl;
+         << "::Components::CreateFailure));" << endl ;
 
       os << "// Operations for implicit home interface." << endl << endl;
 
@@ -1207,19 +1282,19 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << "::Components::CreateFailure));" << endl << endl;
+         << "::Components::CreateFailure));" << endl;
 
       os << "// Operations for CCMHome interface." << endl << endl;
 
       os << "virtual ::CORBA::IRObject_ptr" << endl
          << "get_component_def (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual ::CORBA::IRObject_ptr" << endl
          << "get_home_def (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual void" << endl
          << "remove_component (" << endl
@@ -1313,7 +1388,7 @@ namespace
       if (declarations_.contains_suborder (m->order ()))
       {
         os << STRS[GLUE_NS] << "_" << m->name ().simple () << endl
-           << "{" << endl;
+           << "{";
       }
     }
 
@@ -1326,8 +1401,6 @@ namespace
       }
     }
   };
-
-
 }
 
 // ===========================================================
@@ -1458,19 +1531,25 @@ ServantHeaderEmitter::generate (TranslationUnitPtr const& u)
   facet_selector.add_delegate (&facet_emitter);
 
 
-  ContextPublicEmitter context_public_emitter (os, export_macro_);
+  ContextPublicEmitter context_public_emitter (os, 
+                                               export_macro_, 
+                                               declarations_);
 
-  ContextProtectedMethodEmitter context_protected_method_emitter (os);
+  ContextProtectedMethodEmitter 
+    context_protected_method_emitter (os, declarations_);
 
-  ContextProtectedMemberEmitter context_protected_member_emitter (os);
+  ContextProtectedMemberEmitter 
+    context_protected_member_emitter (os, declarations_);
 
   ServantPublicEmitter servant_public_emitter (os,
                                                export_macro_,
+                                               declarations_,
                                                operation_emitter);
+                                               
   servant_public_emitter.add_scope_delegate (&get_attribute_emitter);
   servant_public_emitter.add_scope_delegate (&set_attribute_emitter);
 
-  ServantProtectedEmitter servant_protected_emitter (os);
+  ServantProtectedEmitter servant_protected_emitter (os, declarations_);
 
   // Discriminator for operation and factory
   // This is needed to select always the most-derived type of traversal
@@ -1479,8 +1558,14 @@ ServantHeaderEmitter::generate (TranslationUnitPtr const& u)
   d.add (&operation_emitter);
   d.add (&factory_emitter);
 
-  HomeEmitter home_emitter (os, export_macro_, operation_emitter);
+  HomeEmitter home_emitter (os, 
+                            export_macro_,
+                            declarations_,
+                            operation_emitter);
+                            
   home_emitter.add_scope_delegate (&d);
+  home_emitter.add_scope_delegate (&get_attribute_emitter);
+  home_emitter.add_scope_delegate (&set_attribute_emitter);
 
   Traversal::FileScope fs;
   NamespaceEmitter m (os, declarations_);
