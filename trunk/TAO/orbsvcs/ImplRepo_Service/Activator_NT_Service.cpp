@@ -70,7 +70,7 @@ Activator_NT_Service::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = server.init (opts ACE_ENV_SINGLE_ARG_PARAMETER);
+      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
