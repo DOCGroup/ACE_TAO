@@ -74,7 +74,10 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
-                 orb_core->output_cdr_dblock_allocator ()),
+                 orb_core->output_cdr_dblock_allocator (),
+                 orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                 orb_core->to_iso8859 (),
+                 orb_core->to_unicode ()),
     orb_core_ (orb_core),
     transport_ (0)
 {
