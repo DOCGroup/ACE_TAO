@@ -3,6 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Reactor.h"
 
 const char *host = "localhost";
 static int port = 10008;

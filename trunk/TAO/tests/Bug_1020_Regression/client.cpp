@@ -6,6 +6,7 @@
 #include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID(Bug_1230_Regression, client, "$Id$")
 

@@ -5,6 +5,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID(Nested_Upcall_Crash, client, "$Id$")
 
