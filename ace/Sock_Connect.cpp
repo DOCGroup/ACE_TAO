@@ -232,6 +232,7 @@ get_windows_version()
           else if (vinfo.dwMinorVersion == 90)
             return ACE_WINDOWS_IS_WINME;
         }
+#if defined (VER_PLATFORM_WIN32_CE)
     case VER_PLATFORM_WIN32_CE:
         if (vinfo.dwMajorVersion >= 3) {
             return ACE_WINDOWS_IS_WINCE;
@@ -239,6 +240,7 @@ get_windows_version()
         else {
             return ACE_WINDOWS_IS_UNKNOWN;
         }
+#endif /* VER_PLATFORM_WIN32_CE */
       // If no match we fall throu.
     default:
       return ACE_WINDOWS_IS_UNKNOWN;

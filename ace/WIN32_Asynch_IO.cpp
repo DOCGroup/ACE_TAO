@@ -417,7 +417,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                      int priority,
                                      int signal_number)
 {
-
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   iovec  iov[ACE_IOV_MAX];
   int    iovcnt = 0;
 
@@ -541,6 +541,14 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
   }
 
   return initiate_result;
+#else
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (bytes_to_read);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 }
 
 ACE_WIN32_Asynch_Read_Stream::~ACE_WIN32_Asynch_Read_Stream (void)
@@ -834,6 +842,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                        int priority,
                                        int signal_number)
 {
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   iovec  iov[ACE_IOV_MAX];
   int    iovcnt = 0;
 
@@ -954,6 +963,14 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
   }
 
   return initiate_result;
+#else
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (bytes_to_write);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 }
 
 ACE_WIN32_Asynch_Write_Stream::~ACE_WIN32_Asynch_Write_Stream (void)
