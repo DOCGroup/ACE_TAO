@@ -1,3 +1,11 @@
+Mon Mar 24 20:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+          Changed call to AbstractBase constructor in initialization
+          list of abstract interfafce to use ACE_NESTED_CLASS,
+          similarly to non-abstract interfaces.
+
 Sun Mar 23 23:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.cpp:
