@@ -36,7 +36,10 @@
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
 #define IRIX5
-#define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_BSTRING

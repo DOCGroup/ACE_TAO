@@ -92,7 +92,10 @@
 #if (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 6))
 #define ACE_HAS_SYSENT_H
 #endif
-#define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_SVR4_GETTIMEOFDAY

@@ -91,7 +91,10 @@
 #define ACE_LACKS_GETPGID_PROTOTYPE
 
 // Compiler/platform supports alloca().
-#define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
