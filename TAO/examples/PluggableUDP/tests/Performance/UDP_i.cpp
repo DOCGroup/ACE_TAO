@@ -33,11 +33,12 @@ UDP_i::setResponseHandler (UDP_ptr udpHandler,
                            CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->responseHandler_ = UDP::_duplicate (udpHandler);
-  ACE_DEBUG ((LM_DEBUG,
-              "UDP_i::svc: Received exception\n"));
-}
+  if (CORBA::is_nil (udpHandler))
+    ACE_DEBUG ((LM_DEBUG,
+		"response handler is nil\n"));
 
+  this->responseHandler_ = UDP::_duplicate (udpHandler);
+}
 
 void
 UDP_i::invoke (const char * client_name,
