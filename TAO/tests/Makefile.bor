@@ -8,6 +8,7 @@ DIRS = \
         Bidirectional \
         Bidirectional_NestedUpcall \
 	CDR \
+	Codec \
 	Collocation \
 	Connection_Purging \
 	DSI_Gateway \
