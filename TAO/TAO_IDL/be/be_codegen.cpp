@@ -1567,6 +1567,22 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Typecode.h");
     }
 
+  // The UserException::_tao_{en,de}code() methods can throw a
+  // CORBA::MARSHAL exception make sure that system exception is fully
+  // declared/defined by including "tao/SystemException.h".  However,
+  // only include "tao/SystemException.h" if a user exception was
+  // encountered and if we're not already including it in the stub
+  // header.
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.exception_seen_)
+      && ACE_BIT_DISABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.operation_seen_))
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/SystemException.h");
+    }
+
+
   // Includes whatever Any template classes that may be needed.
   this->gen_any_file_includes ();
 
