@@ -290,65 +290,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCacheLock"), name);
           }
       }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_LIB_TEXT("-ORBConnectionLock")) == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("TAO (%P|%t) This option has been deprecated \n")
-                        ACE_LIB_TEXT ("using -ORBConnectionCacheLock instead ")));
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_LIB_TEXT("thread")) == 0)
-              this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_LIB_TEXT("null")) == 0)
-              {
-                // @@ Bug 940 :This is a sort of hack now. We need to put
-                // this in a common place once we get teh common
-                // switch that is documented in bug 940...
-                this->use_locked_data_blocks_  = 0;
-                this->cached_connection_lock_type_ = TAO_NULL_LOCK;
-              }
-            else
-              this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionLock"), name);
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_LIB_TEXT("-ORBConnectorLock")) == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("TAO (%P|%t) This option has been deprecated \n")
-                        ACE_LIB_TEXT ("using -ORBConnectionCacheLock instead \n")));
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_LIB_TEXT("thread")) == 0)
-              this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_LIB_TEXT("null")) == 0)
-              {
-                // @@ Bug 940 :This is a sort of hack now. We need to put
-                // this in a common place once we get teh common
-                // switch that is documented in bug 940...
-                this->use_locked_data_blocks_  = 0;
-                this->cached_connection_lock_type_ = TAO_NULL_LOCK;
-              }
-            else
-              this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectorLock"), name);
-          }
-      }
-
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBFlushingStrategy")) == 0)
       {
