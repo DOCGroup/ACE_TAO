@@ -1,3 +1,9 @@
+Thu Jun 18 09:23:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Fixed the inclusion of winsock
+ 	  related files. Thanks to Ernesto Guisado
+ 	  <eguisado@saincotrafico.com> for suggesting this.
+
 Wed Jun 17 22:47:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (rw_trywrlock_upgrade): moved declaration of

@@ -361,24 +361,29 @@ typedef unsigned __int64 ACE_UINT64;
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
         #if !defined (_WINSOCK2API_)
-
-                #include /**/ <winsock2.h>              /* will also include windows.h, if not present */
-                #include /**/ <mswsock.h>
-                #if defined (_MSC_VER)
-                        #pragma comment(lib, "ws2_32.lib")
-                        #pragma comment(lib, "mswsock.lib")
-                #endif /* _MSC_VER */
+                // will also include windows.h, if not present 
+                #include /**/ <winsock2.h>  
         #endif /* _WINSOCK2API */
+
+        #if !defined _MSWSOCK_       
+                #include /**/ <mswsock.h>
+        #endif /* _MSWSOCK_ */
+ 
+        #if defined (_MSC_VER)
+                #pragma comment(lib, "ws2_32.lib")
+                #pragma comment(lib, "mswsock.lib")
+        #endif /* _MSC_VER */
 
         #define ACE_WSOCK_VERSION 2, 0
 #else
         #if !defined (_WINSOCKAPI_)
-                #include /**/ <winsock.h>       /* will also include windows.h, if not present */
-
-                #if defined (_MSC_VER) && !defined (UNDER_CE)
-                        #pragma comment(lib, "wsock32.lib")
-                #endif /* _MSC_VER */
+                // will also include windows.h, if not present 
+                #include /**/ <winsock.h>       
         #endif /* _WINSOCKAPI */
+
+        #if defined (_MSC_VER) && !defined (UNDER_CE)
+                #pragma comment(lib, "wsock32.lib")
+        #endif /* _MSC_VER */
 
         // Version 1.1 of WinSock
         #define ACE_WSOCK_VERSION 1, 1
