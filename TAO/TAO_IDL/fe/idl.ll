@@ -188,7 +188,7 @@ oneway		return IDL_ONEWAY;
   return IDENTIFIER;
 }
 
-"-"?[0-9]+"."[0-9]*([eE][+-]?[0-9]+)?[lLfF]?      {
+"-"?([0-9]+"."[0-9]*)|("."[0-9]+)([eE][+-]?[0-9]+)?[lLfF]?      {
                   yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
@@ -222,7 +222,7 @@ oneway		return IDL_ONEWAY;
 		  return IDL_UINTEGER_LITERAL;
 	      	}
 
-"\""[^\"]*"\""	{
+\"([^\\\"]*|\\[ntvbrfa\\\?\'\"])*\"	{
 		  /* Skip the quotes */
 		  char *tmp = ace_yytext;
 		  tmp[strlen(tmp)-1] = '\0';
