@@ -1,3 +1,48 @@
+Wed Nov 26 16:40:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed release calls to use
+ 	the CORBA standard version rather than the non-standard TAO
+ 	Release() method.  Also moved the client's parse_args() AFTER the
+ 	ORB_init() so that -ORB parameters were parsed correctly.
+
+	* tao/params.*: Added storage for send and receive socket buffer
+ 	size to be used for all newly created sockets.  These sizes are
+ 	initialized to ACE_DEFAULT_MAX_SOCKET_BUFSIZ, and can be changed
+ 	by the user by using -ORBsndsock and -ORBrcvsock.
+
+	* tao/orbobj.h: Added documentation.
+
+	* tao/orb_core.i: Changed system-specific conditional compilation
+ 	to use the more general ACE_LACKS_TEMPLATE_SPECIALIZATION.
+
+	* tao/orb_core.cpp: Added code to make -ORBsndsock and -ORBrcvsock
+ 	options actually work.  Added -ORBpreconnect option to implement
+ 	pre-cached connections.
+
+	* tao/giop.cpp: Removed the old static inline version of
+ 	start_message().  Also changed to use send_n() to guarantee
+ 	correct blocking nature on Win32 with the WFMO Reactor.
+
+	* tao/connect.cpp: Changed set_option() calls to use the socket
+ 	buffer sizes stored in the TAO_ORB_Parameters instance.  Also
+ 	added a correct environment-clearing call before initializing a
+ 	request.
+
+	* tao/client_factory.h: Removed extraneous code.
+
+	* tao/{connect,any,giop,iiopobj,marshal,nvlist,objtable,optable,
+	       orb_core,poa,principa,stub,svrrqst,typecode}.h:
+ 	Addressed or assigned some '@@' comments.
+
+	* docs/releasenotes/orbcore.html: Added information regarding new
+ 	options, known bugs, etc.
+
+	* docs/Options.html: Added documentation for new -ORBpreconnect
+ 	option.
+
+	* TAO_IDL/be/Makefile: Added an explicit PIC=-fPIC for when g++ is
+ 	being used as the compiler.  This fixes the linker complaints.
+
 Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
 
 	* All MSVC 5.0 project files: Removed unnecessary library
