@@ -1,7 +1,15 @@
+Fri Aug 20 15:51:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references): Changed to search for
+	  the ORB's lookup table if the search in initial reference table
+	  kept in ORB param fails.  This change allows up to find the
+	  collocated service available in the local ORB.  Thanks to Sharo
+	  Randall <RASB@eci-esyst.com> for suggesting the change.
+
 Fri Aug 20 13:48:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	  Modified my earlier change to the way a return 
+	  Modified my earlier change to the way a return
 	  valuetype is declared in the stub. This clears up
 	  compile errors in TAO/esamples/OBV/Typed_Events.
 
@@ -20,7 +28,7 @@ Thu Aug 19 20:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Return types which are allocated on the heap in the stub (all
 	  variable-size data types plus arrays) would leak memory if
 	  there were an exception during invocation or demarshaling. Now
-	  all these types are eclosed in a _var between 
+	  all these types are eclosed in a _var between
 	  'ACE_NEW_RETURN (...);' and 'return ...;'. Thanks to
 	  Eugene Surovegin <ebs@glasnet.ru>, whose example showed
 	  the tip of the iceberg.
@@ -49,7 +57,7 @@ Thu Aug 19 17:25:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Thu Aug 19 16:34:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/BoundsC.i: 
+	* tao/BoundsC.i:
 	* tao/BoundsC.cpp:
 	* tao/BoundsC.h:
 	* tao/Makefile:
