@@ -1,3 +1,10 @@
+Fri Mar 02 07:25:50 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (destroy_interceptors):
+
+	  Fixed a compile-time warning that occured on native exception
+	  builds.
+
 Fri Mar  2 02:18:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI_Timeouts/timeout_i.cpp:
@@ -340,6 +347,13 @@ Thu Mar 01 09:38:28 2001  Ossama Othman  <ossama@uci.edu>
 	  Un-inlined the destructors.  They're already no-ops, and
 	  inlining them only serves to increase the footprint since
 	  inlined destructor code is placed at all exit points.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/Makefile:
+	* tao/Makefile.bor:
+
+	  Added Codec related filenames to these files.
 
 	* tests/Codec/Codec.dsw:
 	* tests/Codec/Makefile:
