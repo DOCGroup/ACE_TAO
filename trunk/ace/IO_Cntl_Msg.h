@@ -23,7 +23,7 @@ class ACE_Export ACE_IO_Cntl_Msg
   // = TITLE
   //     Data format for IOCTL messages
 public:
-  enum ACE_IO_Cntl_Cmds
+  enum
   {
     SET_LWM    = 1, // Set the low water mark.
     GET_LWM    = 2, // Get the low water mark.
@@ -32,6 +32,8 @@ public:
     MOD_LINK   = 5, // Link modules
     MOD_UNLINK = 6  // Unlink modules
   };
+
+  typedef u_short ACE_IO_Cntl_Cmds;
 
   // = Initialization method.
   ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c) { this->cmd_ = c; }
