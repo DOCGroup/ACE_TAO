@@ -57,7 +57,6 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
    int flags)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
-  this->reactor (reactor);
   this->flags_ = flags;
 
   // Must supply a valid Reactor to Acceptor::open()...
@@ -71,8 +70,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   if (this->peer_acceptor_.open (local_addr, 1) == -1)
     return -1;
 
-  return this->reactor ()->register_handler
-    (this, ACE_Event_Handler::ACCEPT_MASK);
+  int result = reactor->register_handler (this, ACE_Event_Handler::ACCEPT_MASK);
+  if (result == 0)
+    this->reactor (reactor);
+  
+  return result;
 }
 
 // Simple constructor.

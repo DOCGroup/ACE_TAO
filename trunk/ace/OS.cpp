@@ -165,8 +165,11 @@ ACE_Time_Value::normalize (void)
 int
 ACE_Countdown_Time::start (void)
 {
-  this->start_time_ = ACE_OS::gettimeofday ();
-  this->stopped_ = 0;
+  if (this->max_wait_time_ != 0)
+    {
+      this->start_time_ = ACE_OS::gettimeofday ();
+      this->stopped_ = 0;
+    }
   return 0;
 }
 
@@ -201,8 +204,7 @@ ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
   : max_wait_time_ (max_wait_time),
     stopped_ (0)
 {
-  if (max_wait_time != 0)
-    this->start ();
+  this->start ();
 }
 
 ACE_Countdown_Time::~ACE_Countdown_Time (void)
