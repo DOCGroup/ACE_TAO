@@ -1,3 +1,9 @@
+Sun Sep 01 07:57:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-win32-borland.h:
+        * ace/config-borland-common.h:
+          Improved Borland config files for Kylix support.
+
 Sun Sep 01 07:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
