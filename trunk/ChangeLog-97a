@@ -1,3 +1,17 @@
+Thu Mar 27 01:00:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Moved the ACE_LACKS_UTSNAME_T block into the right
+ 	  part of the code.  Thanks to Jonathan Biggar <jon@sems.com> for
+ 	  this fix.
+
+	* ace/Malloc.h: Added an enhancement so that the new alignment
+ 	  features will work regardless of the size of ACE_MALLOC_ALIGN.
+  	  Thanks to Fred LaBar <flabar@fallschurch.esys.com> for this fix.
+
+	* ace/Synch_Options.cpp: We now automatically set the USE_TIMEOUT
+ 	  flag if a non-0 timeout value is supplied.  Thanks to Tim
+ 	  Liddelow <tim@cst.com.au> for this suggestion.
+
 Wed Mar 26 08:47:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{ACE.cpp,Log_Msg.cppOS.cpp},
@@ -9,6 +23,13 @@ Wed Mar 26 08:47:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	* netsvcs/lib/{Client_Logging_Handler.cpp,Name_Handler.cpp,
 	               Server_Logging_Handler.cpp,TS_Service_Handler.cpp,
 	               Token_Handler.cpp}: added template specializations.
+
+Tue Mar 25 06:47:14 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved config.h to the top of OS.h so that we don't
+ 	  have to worry about not defining things in the right place.
+  	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing
+ 	  this out.
 
 Tue Mar 25 22:54:49 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
@@ -27,8 +48,6 @@ Tue Mar 25 21:26:10 1997  David L. Levine  <levine@cs.wustl.edu>
 	  <flabar@fallschurch.esys.com> and Gonzalo Diethelm
 	  <gonzo@ing.puc.cl> for reporting warnings without this on
 	  Irix 6.2 with the mipsPro compiler.
-
-Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
 	  ::taskSpawn () so that VxWorks will generate the task ID.
@@ -95,12 +114,12 @@ Mon Mar 24 14:08:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  compile without having lots of #ifdefs.
 
 	* tests/Future_Test.cpp: Added a check for platforms that lack
- 	  threads.  Thanks to Hakan Kallberg <hkg@hw1455.wdf.sap-ag.de>
+ 	  threads.  Thanks to Hakan Kallberg <hk@simulina.se>
 	  for reporting this.
 
 	* netsvcs/lib/Server_Logging_Handler.cpp: Added a check for
 	  platforms that lack threads.  Thanks to Hakan Kallberg
-	  <hkg@hw1455.wdf.sap-ag.de> for reporting this.
+	  <hk@simulina.se> for reporting this.
 
 	* examples/Threads/context_switch_time.cpp: Added an #ifdef for
  	  ACE_HAS_THREADS to this test so that it will compile on

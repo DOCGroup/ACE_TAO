@@ -39,6 +39,10 @@ ACE_Synch_Options::set (u_long options,
   ACE_TRACE ("ACE_Synch_Options::set");
   this->options_ = options;
   this->timeout_ = (ACE_Time_Value &) timeout;
+
+  if (this->timeout_ != ACE_Time_Value::zero)
+    ACE_SET_BITS (this->options_, ACE_Synch_Options::USE_TIMEOUT);
+
   this->arg_ = arg;
 }
 
