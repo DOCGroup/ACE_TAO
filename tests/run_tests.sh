@@ -73,7 +73,7 @@ run Buffer_Stream_Test		# uses Service_Config, Module (Stream,Task, Message_Queu
 run Priority_Buffer_Test	# uses Service_Config, Message_Queue
 run Recursive_Mutex_Test	# uses Service_Config, Recursive_Thread_Mutex
 
-run Time_Service_Test		# uses libnet_svcs
+run Time_Service_Test		# uses libnetsvcs
 run Tokens_Test
 
 run Map_Manager_Test            # uses Map Manager + Forward and Reverse Map Iterators.
