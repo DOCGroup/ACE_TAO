@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_predefined_type.h
 //
@@ -13,9 +13,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (_BE_PREDEFINED_TYPE_H)
@@ -42,13 +42,13 @@ public:
   // constructor
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the predefined type 
+  // Generates the client-side header information for the predefined type
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the predefined type
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the predefined type 
+  // Generates the server-side header information for the predefined type
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the predefined type
@@ -64,6 +64,12 @@ public:
 
   virtual long tc_size (void);
   // return typecode size
+
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_encap_len (void);
+  // return length of encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type);
