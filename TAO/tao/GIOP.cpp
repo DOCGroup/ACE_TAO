@@ -585,14 +585,13 @@ TAO_GIOP::read_header (TAO_Transport *transport,
   // problems than just this small loop.
 
   char *buf = input.rd_ptr ();
-
+  size_t n;
+  
   for (int t = header_size;
        t != 0;
        t -= n)
     {
-      // @@ Carlos, should this be ssize_r rather than int (please
-      // check the other uses of this call).
-      int n = transport->recv (buf, t);
+      n = transport->recv (buf, t);
       if (n == -1)
         return -1;
       else if (n == 0 && errno != EWOULDBLOCK)
