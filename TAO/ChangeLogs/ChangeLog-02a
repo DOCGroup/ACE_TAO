@@ -1,29 +1,34 @@
+Tue Oct 31 11:05:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/TAO_PortableServer.dsp:
+          Remove Forwarding_Servant from this project file too.
+
 Tue Oct 31 12:15:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/DSI_Gateway/DSI_Gateway.dsw:
-	* tests/DSI_Gateway/DSI_Gateway_Client.dsp:
-	* tests/DSI_Gateway/DSI_Gateway_Server.dsp:
-	* tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+        * tests/DSI_Gateway/DSI_Gateway.dsw:
+        * tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Service.dsp:
 
-	  Added MSVC workspace and projects for this test.
+          Added MSVC workspace and projects for this test.
 
 Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicInterface/Context.cpp:
-	* tao/DynamicInterface/Context.h:
-	* tao/DynamicInterface/Context.inl:
-	* tao/DynamicInterface/DII_Invocation.cpp:
-	* tao/DynamicInterface/DII_Invocation.h:
-	* tao/DynamicInterface/DII_Invocation.inl:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.inl:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
-	* tao/DynamicInterface/Dynamic_Implementation.cpp:
-	* tao/DynamicInterface/Dynamic_Implementation.h:
-	* tao/DynamicInterface/ExceptionList.cpp:
-	* tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/Context.inl:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation.inl:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.inl:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.h:
+        * tao/DynamicInterface/ExceptionList.cpp:
+        * tao/DynamicInterface/ExceptionList.h:
         * tao/DynamicInterface/ExceptionList.inl:
         * tao/DynamicInterface/Makefile:
         * tao/DynamicInterface/Makefile.bor:
@@ -36,16 +41,16 @@ Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/DynamicInterface/TAO_DynamicInterface.dsp:
         * tao/DynamicInterface/dynamicinterface_export.h:
 
-	  Files either moved whole from TAO/tao, created from parts of 
-	  files in TAO/tao, or created from scratch for the new 
-	  DynamicInterface library. This new library contains all the code
-	  related to DII and DSI. 
+          Files either moved whole from TAO/tao, created from parts of
+          files in TAO/tao, or created from scratch for the new
+          DynamicInterface library. This new library contains all the code
+          related to DII and DSI.
 
-	* tao/Dynamic_Adapter.cpp:
-	* tao/Dynamic_Adapter.h:
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.h:
 
-	  New files containing base class for hook methods that replace 
-	  all or part of existing TAO methods that use DII or DSI.
+          New files containing base class for hook methods that replace
+          all or part of existing TAO methods that use DII or DSI.
 
         * TAOACE.dsw:
         * tao/DomainC.cpp:
@@ -76,8 +81,8 @@ Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/operation_details.h:
         * tao/target_specification.h:
 
-	  TAO/tao files modified to be consistent with the 
-	  DynamicInterface library.
+          TAO/tao files modified to be consistent with the
+          DynamicInterface library.
 
         * tao/PortableServer/POA.cpp:
         * tao/PortableServer/POA.h:
@@ -86,8 +91,8 @@ Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/PortableServer/Servant_Base.h:
         * tao/PortableServer/TAO_PortableServer.dsp:
 
-	  TAO/tao/PortableServer files modified to be consistent
-	  with the DynamicInterface library.
+          TAO/tao/PortableServer files modified to be consistent
+          with the DynamicInterface library.
 
         * tests/DSI_Gateway/test_dsi.cpp:
         * tests/DSI_Gateway/test_dsi.h:
@@ -101,24 +106,24 @@ Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * performance-tests/Latency/deferred_synch_client.dsp:
         * performance-tests/Latency/dii_client.cpp:
 
-	  Tests and examples modified to be consistent with the
-	  DynamicInterface library.
+          Tests and examples modified to be consistent with the
+          DynamicInterface library.
 
 Tue Oct 31 11:06:52 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
-	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
 
-	  Fixed generated code to reflect Irfan's recent change
-	  to the signature of the prepare_for_upcall() method.
+          Fixed generated code to reflect Irfan's recent change
+          to the signature of the prepare_for_upcall() method.
 
 Tue Oct 31 09:09:17 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IOR_Parser.h: SystemException was being used without being
-	  defined (it was only forward declared).  Included Exception.h
-	  to fix this.  Thanks to J. Russell Noseworthy
-	  <rnosewor@objectsciences.com> for reporting this problem and
-	  providing the fix. This closes bug 708.
+        * tao/IOR_Parser.h: SystemException was being used without being
+          defined (it was only forward declared).  Included Exception.h
+          to fix this.  Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for reporting this problem and
+          providing the fix. This closes bug 708.
 
 Mon Oct 30 21:37:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
