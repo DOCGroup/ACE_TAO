@@ -1,3 +1,28 @@
+Wed Jul 25 17:41:43 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ltcf-c.sh:
+	* ltcf-cxx.sh:
+	* ltconfig:
+
+	  Removed these libtool related files.  New versions of libtool
+	  (GNU libtool >= 1.4b) no longer use them.
+
+	* config.guess:
+	* config.sub:
+	* ltmain.sh:
+
+	  Removed these files.  We no longer need to keep custom copies
+	  lieing around since libtool 1.4b includes all of our local
+	  changes (i.e. our changes have been folded into the upstream
+	  libtool sources).
+
+	* install-sh:
+	* missing:
+	* mkinstalldirs:
+
+	  Removed these files.  Automake will automatically add these when
+	  necessary.
+
 Wed Jul 25 16:29:48 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Max_Default_Port_Test.cpp: ACE-ified the code and fixed
