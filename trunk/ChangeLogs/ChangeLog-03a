@@ -1,3 +1,13 @@
+Wed Dec  5 19:58:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Logging_Strategy.cpp: Set the logger_key_ member to 0 (no key)
+          unless/until the LOGGER flag is specified (and then the default
+          key is set) or the -k option is given, which specifies a new key.
+          Always passing a logger_key, even when there's no logger to be
+          used, makes for some odd names in the syslog and NT Event Logs
+          after the change:Sat Dec  1 19:39:22 2001  Steve Huston
+          Thanks to Chris Kohlhoff for pointing this out.
+
 Wed Dec  5 15:35:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* apps/Makefile.am:
