@@ -45,7 +45,7 @@ ACE_High_Res_Timer::stop_incr (void)
 }
 
 ACE_INLINE unsigned long
-ACE_High_Res_Timer::getTime (void)
+ACE_High_Res_Timer::get_time (void) const
 {
   return (this->end_ - this->start_) / 1000;
 }

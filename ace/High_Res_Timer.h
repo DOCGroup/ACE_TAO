@@ -53,7 +53,7 @@ public:
   // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
 #endif /* ACE_HAS_POSIX_TIME */
 
-  unsigned long getTime ();
+  unsigned long get_time () const;
   // returns the elapsed (stop - start) time in microseconds
 
   void print_total (const char *message,
