@@ -32,7 +32,7 @@ class TAO_Notify_Export TAO_NS_Method_Request_Dispatch  : public TAO_NS_Method_R
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch (TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier);
+  TAO_NS_Method_Request_Dispatch (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier);
 
   /// Destructor
   ~TAO_NS_Method_Request_Dispatch ();

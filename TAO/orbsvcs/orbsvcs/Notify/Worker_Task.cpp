@@ -17,12 +17,6 @@ TAO_NS_Worker_Task::~TAO_NS_Worker_Task ()
 }
 
 void
-TAO_NS_Worker_Task::shutdown (void)
-{
-  return;
-}
-
-void
 TAO_NS_Worker_Task::init (TAO_NS_AdminProperties& /*admin_properties*/)
 {
 }

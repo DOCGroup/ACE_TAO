@@ -9,41 +9,45 @@
 ACE_RCSID(Notify, TAO_NS_SequencePushConsumer, "$id$")
 
 #include "ace/Reactor.h"
-#include "tao/ORB_Core.h"
+#include "tao/debug.h"
 #include "../QoSProperties.h"
-#include "../Properties.h"
 #include "../ProxySupplier.h"
 #include "../Worker_Task.h"
 #include "../Consumer.h"
-#include "Method_Request_Dispatch_EventBatch.h"
-#include "EventBatch.h"
+#include "../Method_Request.h"
+#include "../Timer.h"
 
 TAO_NS_SequencePushConsumer::TAO_NS_SequencePushConsumer (TAO_NS_ProxySupplier* proxy)
-  :TAO_NS_Consumer (proxy), pacing_interval_ (CosNotification::PacingInterval), timer_id_ (-1)
+  : TAO_NS_Consumer (proxy), pacing_interval_ (ACE_Time_Value::zero), timer_id_ (-1), buffering_strategy_ (0),
+    max_batch_size_ (CosNotification::MaximumBatchSize, 0), timer_ (0)
 {
 }
 
 TAO_NS_SequencePushConsumer::~TAO_NS_SequencePushConsumer ()
 {
+  delete this->buffering_strategy_;
 }
 
 void
-TAO_NS_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL_NOT_USED)
+TAO_NS_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL)
 {
   this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (push_consumer);
 
   this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
+
+  ACE_NEW_THROW_EX (this->buffering_strategy_,
+                    TAO_NS_Batch_Buffering_Strategy (this->msg_queue_, admin_properties,
+                                                     this->max_batch_size_.value ()),
+                    CORBA::NO_MEMORY ());
+
+  this->timer_ = this->proxy ()->timer ();
 }
 
 void
 TAO_NS_SequencePushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  // Get the ORB
-  CORBA::ORB_var orb = TAO_NS_PROPERTIES::instance()->orb ();
-
-  ACE_Reactor* reactor = orb->orb_core ()->reactor ();
-
-  reactor->cancel_timer (this);
+  if (this->timer_id_ != -1)
+    this->cancel_timer ();
 }
 
 void
@@ -56,55 +60,72 @@ TAO_NS_SequencePushConsumer::release (void)
 void
 TAO_NS_SequencePushConsumer::qos_changed (const TAO_NS_QoSProperties& qos_properties)
 {
-  const TAO_NS_Property_Long& maximum_batch_size = qos_properties.maximum_batch_size ();
+  this->max_batch_size_ = qos_properties.maximum_batch_size ();
 
-  if (maximum_batch_size.is_valid ())
-    this->event_batch_.batch_size (maximum_batch_size.value ());
+  if (this->max_batch_size_.is_valid ())
+    {// set the max batch size.
+      this->buffering_strategy_->batch_size (this->max_batch_size_.value ());
+    }
 
-  this->pacing_interval_ = qos_properties.pacing_interval ();
+  const TAO_NS_Property_Time &pacing_interval = qos_properties.pacing_interval ();
 
-  if (!this->pacing_interval_.is_valid ())
-    this->pacing_interval_ = 0;
+  if (pacing_interval.is_valid ())
+    {
+      this->pacing_interval_ =
+# if defined (ACE_CONFIG_WIN32_H)
+        ACE_Time_Value (ACE_static_cast (long, pacing_interval.value ()));
+# else
+      ACE_Time_Value (pacing_interval.value () / 1);
+# endif /* ACE_CONFIG_WIN32_H */
+    }
+
+  // Inform the buffering strategy of qos change.
+  this->buffering_strategy_->update_qos_properties (qos_properties);
 }
 
 void
 TAO_NS_SequencePushConsumer::schedule_timer (void)
 {
-  if (this->pacing_interval_ == 0)
-    return;
-
-  // Get the ORB
-  CORBA::ORB_var orb = TAO_NS_PROPERTIES::instance()->orb ();
-
-  ACE_Reactor* reactor = orb->orb_core ()->reactor ();
-
-  TimeBase::TimeT pacing_interval = this->pacing_interval_.value();
-
-# if defined (ACE_CONFIG_WIN32_H)
-  ACE_Time_Value interval (ACE_static_cast (long, pacing_interval));
-# else
-  ACE_Time_Value interval (pacing_interval / 1);
-# endif /* ACE_CONFIG_WIN32_H */
+  if (this->timer_)
+    this->timer_id_ = this->timer_->schedule_timer (this, 0, this->pacing_interval_);
 
   // Schedule the timer.
-  if (reactor->schedule_timer (this, 0, interval, interval) == -1)
-    this->pacing_interval_ = 0;
+  if (this->timer_id_ == -1)
+    this->pacing_interval_ = ACE_Time_Value::zero; // some error, revert to no pacing.
+}
+
+void
+TAO_NS_SequencePushConsumer::cancel_timer (void)
+{
+  if (this->timer_ && this->timer_id_ != -1)
+    {
+      timer_->cancel_timer (this->timer_id_);
+      this->timer_id_ = -1;
+    }
 }
 
 void
 TAO_NS_SequencePushConsumer::push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL_NOT_USED)
 {
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-    this->event_batch_.insert (event);
+  TAO_NS_Method_Request_Event* method_request = new TAO_NS_Method_Request_Event (event);
 
-    if (this->event_batch_.size () == 1)
-      this->schedule_timer ();
-  }
+  int msg_count = this->buffering_strategy_->enqueue (*method_request);
 
-  // If pacing is zero, there is no timer, hence dispatch immediately
-  if (this->pacing_interval_ == 0 )
-    this->handle_timeout (ACE_Time_Value::zero, 0);
+  if (msg_count == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "NS_Seq_Reactive_Task (%P|%t) - "
+                    "failed to enqueue\n"));
+      return;
+    }
+
+  if (this->pacing_interval_ == ACE_Time_Value::zero)
+    {
+      // If pacing is zero, there is no timer, hence dispatch immediately
+      this->handle_timeout (ACE_Time_Value::zero, 0);
+    }
+  else if (msg_count == 1)
+    this->schedule_timer ();
 }
 
 void
@@ -123,41 +144,31 @@ int
 TAO_NS_SequencePushConsumer::handle_timeout (const ACE_Time_Value& /*current_time*/,
                                              const void* /*act*/)
 {
-  TAO_NS_Event_Collection event_collection;
+  if (this->timer_id_ != -1)
+    this->cancel_timer ();
 
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), 0);
+  CosNotification::EventBatch event_batch;
 
-    if (this->event_batch_.size () == 0)
-      return -1; // Cancel the timer.
+  int deq_count = this->buffering_strategy_->dequeue_available (event_batch);
 
-    this->event_batch_.extract (event_collection);
-  }
+  if (deq_count > 0)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
 
-  TAO_NS_Method_Request_Dispatch_EventBatch request (event_collection, this);
+      this->push (event_batch ACE_ENV_ARG_PARAMETER);
 
-  this->proxy_->worker_task ()->exec (request);
+      if (this->pacing_interval_ != ACE_Time_Value::zero)
+        this->schedule_timer ();
+    }
 
   return 0;
 }
 
 void
-TAO_NS_SequencePushConsumer::push (const TAO_NS_Event_Collection event_collection ACE_ENV_ARG_DECL)
+TAO_NS_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch ACE_ENV_ARG_DECL)
 {
-  if (this->is_suspended_ == 1) // If we're suspended, queue for later delivery.
-    {
-      {
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-        this->event_batch_.insert (event_collection);
-      }
-    }
-
   ACE_TRY
     {
-      CosNotification::EventBatch event_batch;
-
-      TAO_NS_EventBatch::populate (event_collection, event_batch);
-
       this->push_consumer_->push_structured_events (event_batch ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

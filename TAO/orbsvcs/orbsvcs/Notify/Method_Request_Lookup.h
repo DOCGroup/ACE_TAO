@@ -33,7 +33,7 @@ class TAO_Notify_Export TAO_NS_Method_Request_Lookup : public TAO_NS_Method_Requ
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Lookup (TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map);
+  TAO_NS_Method_Request_Lookup (const TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map);
 
   /// Destructor
   ~TAO_NS_Method_Request_Lookup ();

@@ -37,7 +37,8 @@ TAO_NS_ProxyPushSupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_ProxyPushSupplier::release (void)
 {
-  this->consumer_->release ();
+  if (this->consumer_)
+    this->consumer_->release ();
 
   delete this;
   //@@ inform factory

@@ -37,20 +37,11 @@ TAO_NS_SequenceProxyPushSupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_SequenceProxyPushSupplier::release (void)
 {
-  this->consumer_->release ();
+  if (this->consumer_)
+    this->consumer_->release ();
 
   delete this;
   //@@ inform factory
-}
-
-void
-TAO_NS_SequenceProxyPushSupplier::push (TAO_NS_Event_var &event)
-{
-  TAO_NS_Method_Request_Dispatch request (event, this);
-  
-  ACE_DECLARE_NEW_CORBA_ENV;
-  
-  request.execute(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -67,7 +58,7 @@ TAO_NS_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyComm:
                     TAO_NS_SequencePushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
+  consumer->init (push_consumer, this->admin_properties_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->connect (consumer ACE_ENV_ARG_PARAMETER);

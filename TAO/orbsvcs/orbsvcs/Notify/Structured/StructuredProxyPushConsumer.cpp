@@ -32,7 +32,8 @@ TAO_NS_StructuredProxyPushConsumer::~TAO_NS_StructuredProxyPushConsumer ()
 void
 TAO_NS_StructuredProxyPushConsumer::release (void)
 {
-  this->supplier_->release ();
+  if (this->supplier_)
+    this->supplier_->release ();
 
   delete this;
   //@@ inform factory

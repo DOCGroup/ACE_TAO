@@ -48,7 +48,7 @@ public:
   TAO_NS_EventTypeSeq& subscribed_types (void);
 
   /// Check if this event passes the admin and proxy filters.
-  CORBA::Boolean check_filters (TAO_NS_Event_var &event ACE_ENV_ARG_DECL);
+  CORBA::Boolean check_filters (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL);
 
   /// Inform this proxy that the following types are being advertised.
   void types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL);

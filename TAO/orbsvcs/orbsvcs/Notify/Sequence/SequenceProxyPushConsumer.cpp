@@ -11,7 +11,6 @@ ACE_RCSID(Notify, TAO_NS_SequenceProxyPushConsumer, "$id$")
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "tao/debug.h"
 #include "SequencePushSupplier.h"
-#include "EventBatch.h"
 #include "../Admin.h"
 #include "../AdminProperties.h"
 #include "../Structured/StructuredEvent.h"
@@ -28,6 +27,9 @@ TAO_NS_SequenceProxyPushConsumer::~TAO_NS_SequenceProxyPushConsumer ()
 void
 TAO_NS_SequenceProxyPushConsumer::release (void)
 {
+  if (this->supplier_)
+    this->supplier_->release ();
+
   delete this;
   //@@ inform factory
 }

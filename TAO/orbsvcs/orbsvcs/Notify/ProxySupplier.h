@@ -55,13 +55,16 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void push (TAO_NS_Event_var &event);
+  virtual void push (const TAO_NS_Event_var &event);
 
   /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (TAO_NS_Event_var &event);
+  virtual void push_no_filtering (const TAO_NS_Event_var &event);
 
   /// Override TAO_NS_Container_T::shutdown  method
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Override, TAO_NS_Proxy::qos_changed to apply MaxEventssPerConsumer QoS.
+  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
   /// Access our Peer.
   virtual TAO_NS_Peer* peer (void);
