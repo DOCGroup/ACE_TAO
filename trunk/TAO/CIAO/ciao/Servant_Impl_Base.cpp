@@ -12,7 +12,7 @@ namespace CIAO
     : container_ (c)
   {
   }
-  
+
   Servant_Impl_Base::~Servant_Impl_Base (void)
   {
   }
@@ -25,17 +25,17 @@ namespace CIAO
     ACE_NEW (fd,
              OBV_Components::FacetDescription);
     ::Components::FacetDescription_var safe = fd;
-             
+
     fd->name (port_name);
     fd->type_id (port_ref->_interface_repository_id ());
     fd->facet_ref (port_ref);
-    
+
     if (this->facet_table_.bind (port_name, fd) == 0)
       {
         safe._retn ();
       }
   }
-                  
+
   void
   Servant_Impl_Base::add_consumer (
       const char *port_name,
@@ -46,11 +46,11 @@ namespace CIAO
     ACE_NEW (cd,
              OBV_Components::ConsumerDescription);
     ::Components::ConsumerDescription_var safe = cd;
-             
+
     cd->name (port_name);
     cd->type_id (port_ref->_interface_repository_id ());
     cd->consumer (port_ref);
-    
+
     if (this->consumer_table_.bind (port_name, cd) == 0)
       {
         safe._retn ();
@@ -58,31 +58,33 @@ namespace CIAO
   }
 
 
-  Components::StandardConfigurator* 
- Servant_Impl_Base::get_standard_configurator (){
-  //create the configurator servant
-  StandardConfigurator_Impl* config_impl;
-  ACE_NEW_RETURN (config_impl,
-                      StandardConfigurator_Impl(this),
-					  Components::StandardConfigurator::_nil ());
+  Components::StandardConfigurator*
+  Servant_Impl_Base::get_standard_configurator (
+    ACE_ENV_SINGLE_ARG_DECL)
+  {
+    //create the configurator servant
+    StandardConfigurator_Impl *config_impl = 0;
 
-  
-  Components::StandardConfigurator_var configurator =
-        config_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+    ACE_NEW_THROW_EX (config_impl,
+                      StandardConfigurator_Impl (this),
+                      CORBA::NO_MEMORY ());
 
-  return configurator._retn ();
- }
 
-  
+    Components::StandardConfigurator_var configurator =
+      config_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (Components::StandardConfigurator::_nil ());
+
+    return configurator._retn ();
+  }
+
+
   PortableServer::POA_ptr
   Servant_Impl_Base::_default_POA (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    {
+  {
 
-      return
-        PortableServer::POA::_duplicate (container_->_ciao_the_POA ());
-    }
+    return
+      PortableServer::POA::_duplicate (container_->_ciao_the_POA ());
+  }
 
 }
-
