@@ -147,14 +147,12 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                  "to <%s:%d> which should %s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
-                  iiop_endpoint->port(),
-                  r->blocked () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                "to <%s:%d> which should %s\n",
+                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                iiop_endpoint->port(),
+                r->blocked () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -216,11 +214,10 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                                  timeout))
         {
           if (TAO_debug_level > 2)
-            ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIO_Connector::"
+            ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_Connector::"
                                   "make_connection, "
                                   "wait for completion failed\n"));
         }
-
     }
 
   // In case of errors transport is zero

@@ -100,7 +100,7 @@ protected:
   int init_tcp_properties (void);
 
   /// Cancel the passed cvs handler from the connector
-  int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+  virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 protected:
 
