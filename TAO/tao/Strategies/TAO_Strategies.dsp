@@ -102,6 +102,14 @@ SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_NonReactive_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
@@ -187,6 +195,14 @@ SOURCE=.\advanced_resource.h
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -291,6 +307,14 @@ SOURCE=.\advanced_resource.i
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Base.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Handler.inl
 # End Source File
 # Begin Source File
 

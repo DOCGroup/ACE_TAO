@@ -7,21 +7,21 @@
 CFG=TAO DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO.mak" CFG="TAO DLL - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "TAO DLL - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO DLL - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -146,7 +146,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 # ADD LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -399,15 +399,15 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Lite.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -711,10 +711,6 @@ SOURCE=.\RT_Endpoint_Selector_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Endpoint_Utils.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -744,14 +740,6 @@ SOURCE=.\RT_PolicyFactory.cpp
 # Begin Source File
 
 SOURCE=.\RT_Protocols_Hooks.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -796,10 +784,6 @@ SOURCE=.\StringSeqC.cpp
 # Begin Source File
 
 SOURCE=.\Stub.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Stub_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -1179,15 +1163,15 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Handler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Lite.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -1531,10 +1515,6 @@ SOURCE=.\RT_Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Endpoint_Utils.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\RT_Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -1564,14 +1544,6 @@ SOURCE=.\RT_PolicyFactory.h
 # Begin Source File
 
 SOURCE=.\RT_Protocols_Hooks.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1628,10 +1600,6 @@ SOURCE=.\StringSeqC.h
 # Begin Source File
 
 SOURCE=.\stub.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Stub_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1955,15 +1923,15 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Handler.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Lite.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.inl
 # End Source File
 # Begin Source File
 

@@ -198,18 +198,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/RequestInfo_Util.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/DynamicC.i
+ $(TAO_ROOT)/tao/Environment.i
 
 .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -503,10 +492,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
  $(TAO_ROOT)/tao/Marshal.h \
