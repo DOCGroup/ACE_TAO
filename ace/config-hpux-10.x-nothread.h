@@ -27,6 +27,7 @@
 
 // The HP/UX compiler doesn't support volatile!!!!
 #define volatile
+#define ACE_HAS_BROKEN_ENUMS
 
 #if !defined(_HPUX_SOURCE)
 #define _HPUX_SOURCE

@@ -31,6 +31,8 @@
 // The HP/UX compiler doesn't support volatile!!!!
 #define volatile
 
+#define ACE_HAS_BROKEN_ENUMS
+
 #define _HPUX_SOURCE
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>                              /*  pthread.h doesn't include this */

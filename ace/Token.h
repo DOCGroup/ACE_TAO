@@ -168,6 +168,9 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
-
+#else
+class ACE_Export ACE_Token
+{
+};
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_TOKEN_H */
