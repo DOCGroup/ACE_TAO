@@ -1298,8 +1298,7 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
 {
-  auto_ptr<ACE_Push_Consumer_Proxy> new_consumer =
-    new ACE_Push_Consumer_Proxy (this);
+  auto_ptr<ACE_Push_Consumer_Proxy> new_consumer (new ACE_Push_Consumer_Proxy (this));
 
   // Get a new supplier proxy object.
   if (new_consumer.get () == 0)
@@ -3129,8 +3128,7 @@ ACE_ES_Supplier_Module::shutdown (void)
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
 {
-  auto_ptr<ACE_Push_Supplier_Proxy> new_supplier =
-    new ACE_Push_Supplier_Proxy (this);
+  auto_ptr<ACE_Push_Supplier_Proxy> new_supplier (new ACE_Push_Supplier_Proxy (this));
 
   if (new_supplier.get () == 0)
     TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
