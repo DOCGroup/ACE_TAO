@@ -30,7 +30,7 @@ Thu Jul  8 17:18:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  each protocol's Profile class.  However, it makes more sense to
 	  get the prefix from the protocol factory in the case that this
 	  newly added method is used, currently only in preconnect
-	  processing.
+	  processing. [Bug 4]
 	
 	* tao/ORB_Core.cpp (init):
 
