@@ -509,10 +509,16 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (void)
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
 {
-  this->exception_ = new CORBA_Any (ex);
-  if (this->exception_ == 0)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) Unable to copy CORBA::UnknownUerException due to memory exhaustion\n"));
+  ACE_NEW (this->exception_,
+           CORBA_Any (ex));
+}
+
+CORBA_UnknownUserException::CORBA_UnknownUserException (
+    const CORBA_UnknownUserException& e
+  )
+{
+  ACE_NEW (this->exception_,
+           CORBA_Any (*e.exception_));
 }
 
 CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
