@@ -10,13 +10,13 @@ TAO_NS_Method_Request_Lookup_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::execute_
 
   TAO_NS_Admin* parent = this->proxy_consumer_->supplier_admin ();
 
-  CORBA::Boolean val =  this->proxy_consumer_->check_filters ((EVENT)this->event_,
+  CORBA::Boolean val =  this->proxy_consumer_->check_filters (this->event_,
                                                              parent->filter_admin (),
                                                              parent->filter_operator ()
                                                              ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",this->proxy_consumer_ , val));
+    ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",&this->proxy_consumer_ , val));
 
   // Filter failed - do nothing.
   if (val == 0)

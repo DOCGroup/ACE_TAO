@@ -36,7 +36,7 @@ public:
   TAO_NS_Method_Request_Lookup_T (EVENT_PARAM event, PROXY_PARAM proxy);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Lookup_T ();
+  virtual ~TAO_NS_Method_Request_Lookup_T ();
 
   /// Execute the dispatch operation.
   int execute_i (ACE_ENV_SINGLE_ARG_DECL);

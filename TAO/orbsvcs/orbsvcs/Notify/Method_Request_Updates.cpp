@@ -40,7 +40,7 @@ TAO_NS_Method_Request_Updates_No_Copy::~TAO_NS_Method_Request_Updates_No_Copy ()
 }
 
 TAO_NS_Method_Request*
-TAO_NS_Method_Request_Updates_No_Copy::copy (void)
+TAO_NS_Method_Request_Updates_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_NS_Method_Request* request;
 

@@ -16,7 +16,6 @@ ACE_RCSID(RT_Notify, TAO_NS_StructuredProxyPushConsumer, "$Id$")
 #include "../AdminProperties.h"
 #include "../Method_Request_Lookup.h"
 #include "../Worker_Task.h"
-#include "c:/Program Files/Rational/Quantify/pure.h"
 
 TAO_NS_StructuredProxyPushConsumer::TAO_NS_StructuredProxyPushConsumer (void)
 {
@@ -83,18 +82,6 @@ TAO_NS_StructuredProxyPushConsumer::push_structured_event (const CosNotification
                    , CosEventComm::Disconnected
                    ))
 {
-  static int quantify_started = 0;
-
-  if (!quantify_started)
-    {
-      // Reset Quantify data recording; whatever happened in the past
-      // is not relevant to this test.
-      QuantifyClearData ();
-      quantify_started = 1;
-    }
-
-  QuantifyStartRecordingData ();
-
   // Check if we should proceed at all.
   if (this->admin_properties_->reject_new_events () == 1
       && this->admin_properties_->queue_full ())
@@ -109,9 +96,7 @@ TAO_NS_StructuredProxyPushConsumer::push_structured_event (const CosNotification
 
   TAO_NS_Method_Request_Lookup_No_Copy request (&event, this);
 
-  this->worker_task ()->execute (request ACE_ENV_ARG_DECL);
-
-  QuantifyStopRecordingData ();
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void

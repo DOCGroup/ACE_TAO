@@ -42,7 +42,6 @@ TAO_NS_Reactive_Task::shutdown (void)
 void
 TAO_NS_Reactive_Task::execute (TAO_NS_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   method_request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 

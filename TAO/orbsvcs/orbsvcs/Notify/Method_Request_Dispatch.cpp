@@ -53,7 +53,7 @@ TAO_NS_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_NS_Method_Request* request;
 
   TAO_NS_Event* event_copy = this->event_->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   TAO_NS_Event_Copy_var event_var (event_copy);
 
