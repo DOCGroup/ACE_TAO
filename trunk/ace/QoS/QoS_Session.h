@@ -15,6 +15,7 @@
 #define ACE_QOS_SESSION_H
 #include "ace/pre.h"
 
+#include "ACE_QoS_Export.h"
 #include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
