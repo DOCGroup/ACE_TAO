@@ -1,3 +1,23 @@
+Wed Aug 11 10:07:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Future.cpp:
+	* ace/Local_Tokens.cpp:
+	* ace/Log_Msg.cpp:
+	* ace/Log_Record.cpp:
+	* ace/Svc_Handler.cpp:
+	* netsvcs/lib/Token_Handler.cpp:
+	  Fixed several warnings and errors with gcc-2.95
+
+	* include/makeinclude/wrapper_macros.GNU:
+	  Add -fcheck-new to the command-line of g++ when compiling with
+	  exceptions disabled.  In that case new operators could return 0
+	  and without this option the constructor will surely be invoked
+	  on invalid data.
+
+	* bin/auto_compile:
+	  Use LOGNAME instead of USER to get the username because it is
+	  more portable.
+
 Tue Aug 10 23:47:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.h:

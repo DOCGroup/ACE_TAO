@@ -316,7 +316,7 @@ ifdef exceptions
 else  # ! exceptions
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
-    CCFLAGS += -fno-exceptions
+    CCFLAGS += -fno-exceptions -fcheck-new
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! exceptions
 

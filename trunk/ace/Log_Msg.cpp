@@ -967,7 +967,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
                                    pthread_getunique_np(&t_id));
 #  else
-                  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), t_id);
+                  ACE_OS::sprintf (bp, ASYS_TEXT ("%lu"), t_id);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
 
 #endif /* ACE_WIN32 */
