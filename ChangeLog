@@ -8,7 +8,7 @@ Thu Nov  6 17:04:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  already set to AF_INET for the ACE_INET_Addr, then the address
 	  would not be set to an IPv4-mapped IPv6 address. It is probably
 	  more desirable for the map argument to force the  address to be
-	  an IPv4  mapped IPv6 address in this case (irregardless of the
+	  an IPv4  mapped IPv6 address in this case (regardless of the
 	  current type of  the address). 
 
 Thu Nov  6 17:57:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
