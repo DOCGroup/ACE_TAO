@@ -23,7 +23,7 @@ enum Priority_Setting
 
 static const char *ior = "file://ior";
 static const char *rates_file = "rates";
-static const char *invocation_priorities_file = "empty_file";
+static const char *invocation_priorities_file = "empty-file";
 static int shutdown_server = 0;
 static int do_dump_history = 0;
 static ACE_UINT32 gsf = 0;
@@ -32,10 +32,12 @@ static int done = 0;
 static CORBA::ULong time_for_test = 10;
 static CORBA::ULong work = 10;
 static CORBA::ULong max_throughput_timeout = 5;
+static CORBA::ULong continuous_worker_priority = 0;
 static int set_priority = 1;
 static Priority_Setting priority_setting = AFTER_THREAD_CREATION;
 static int individual_continuous_worker_stats = 0;
 static int print_missed_invocations = 0;
+static int continuous_workers_are_rt = 1;
 static ACE_hrtime_t test_start;
 static ACE_Time_Value start_of_test;
 
@@ -44,7 +46,6 @@ struct Synchronizers
   Synchronizers (void)
     : worker_lock_ (),
       workers_ (1),
-      main_thread_ (),
       workers_ready_ (0),
       number_of_workers_ (0)
   {
@@ -52,7 +53,6 @@ struct Synchronizers
 
   ACE_SYNCH_MUTEX worker_lock_;
   ACE_Event workers_;
-  ACE_Event main_thread_;
   CORBA::ULong workers_ready_;
   CORBA::ULong number_of_workers_;
 };
@@ -60,7 +60,7 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:h:i:k:m:p:r:t:v:w:x:y:z:");
+  ACE_Get_Opt get_opts (argc, argv, "c:h:i:k:m:p:r:s:t:u:v:w:x:y:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -101,8 +101,18 @@ parse_args (int argc, char *argv[])
           get_opts.optarg;
         break;
 
+      case 's':
+        continuous_workers_are_rt =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case 't':
         time_for_test =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'u':
+        continuous_worker_priority =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -142,7 +152,9 @@ parse_args (int argc, char *argv[])
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
                            "\t-p <invocation priorities file> (defaults to %s)\n"
                            "\t-r <rates file> (defaults to %s)\n"
+                           "\t-s <continuous workers have real time scope and scheduling policies> (defaults to %d)\n"
                            "\t-t <time for test> (defaults to %d)\n"
+                           "\t-u <continuous worker priority> (defaults to %d)\n"
                            "\t-v <priority setting: AT_THREAD_CREATION = 0, AFTER_THREAD_CREATION = 1> (defaults to %s)\n"
                            "\t-w <work> (defaults to %d)\n"
                            "\t-x <shutdown server> (defaults to %d)\n"
@@ -157,7 +169,9 @@ parse_args (int argc, char *argv[])
                            print_missed_invocations,
                            invocation_priorities_file,
                            rates_file,
+                           continuous_workers_are_rt,
                            time_for_test,
+                           continuous_worker_priority,
                            priority_setting == 0 ? "AT_THREAD_CREATION" : "AFTER_THREAD_CREATION",
                            work,
                            shutdown_server,
@@ -170,8 +184,8 @@ parse_args (int argc, char *argv[])
 }
 
 int
-synchronize (test_ptr test,
-             Synchronizers &synchronizers)
+start_synchronization (test_ptr test,
+                       Synchronizers &synchronizers)
 {
   ACE_TRY_NEW_ENV
     {
@@ -195,23 +209,34 @@ synchronize (test_ptr test,
 
     if (synchronizers.workers_ready_ == 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n"));
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n"));
       }
 
     ++synchronizers.workers_ready_;
 
-    ACE_DEBUG ((LM_DEBUG,
-                "%d worker ready\n",
-                synchronizers.workers_ready_));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d worker ready\n",
+                  synchronizers.workers_ready_));
 
     if (synchronizers.workers_ready_ ==
         synchronizers.number_of_workers_)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n"));
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n"));
 
-        synchronizers.main_thread_.signal ();
+        start_of_test =
+          ACE_OS::gettimeofday ();
+
+        test_start =
+          ACE_OS::gethrtime ();
+
+        synchronizers.workers_.signal ();
+
+        return 0;
       }
   }
 
@@ -220,328 +245,45 @@ synchronize (test_ptr test,
   return 0;
 }
 
-class Paced_Worker :
-  public ACE_Task_Base
-{
-public:
-  Paced_Worker (ACE_Thread_Manager &thread_manager,
-                test_ptr test,
-                CORBA::Short rate,
-                CORBA::ULong iterations,
-                CORBA::Short priority,
-                RTCORBA::Current_ptr current,
-                RTCORBA::PriorityMapping &priority_mapping,
-                Synchronizers &synchronizers);
-
-  int svc (void);
-  ACE_Time_Value deadline_for_current_call (CORBA::ULong i);
-  void reset_priority (CORBA::Environment &ACE_TRY_ENV);
-
-  test_var test_;
-  int rate_;
-  Synchronizers &synchronizers_;
-  ACE_Time_Value interval_between_calls_;
-  ACE_Sample_History history_;
-  CORBA::Short priority_;
-  RTCORBA::Current_var current_;
-  RTCORBA::PriorityMapping &priority_mapping_;
-};
-
-Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
-                            test_ptr test,
-                            CORBA::Short rate,
-                            CORBA::ULong iterations,
-                            CORBA::Short priority,
-                            RTCORBA::Current_ptr current,
-                            RTCORBA::PriorityMapping &priority_mapping,
-                            Synchronizers &synchronizers)
-  : ACE_Task_Base (&thread_manager),
-    test_ (test::_duplicate (test)),
-    rate_ (rate),
-    synchronizers_ (synchronizers),
-    interval_between_calls_ (),
-    history_ (iterations),
-    priority_ (priority),
-    current_ (RTCORBA::Current::_duplicate (current)),
-    priority_mapping_ (priority_mapping)
-{
-  this->interval_between_calls_.set (1 / double (this->rate_));
-}
-
-void
-Paced_Worker::reset_priority (CORBA::Environment &ACE_TRY_ENV)
-{
-  if (set_priority)
-    {
-      this->current_->the_priority (this->priority_,
-                                    ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-  else
-    {
-      this->current_->the_priority (0,
-                                    ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-}
-
-ACE_Time_Value
-Paced_Worker::deadline_for_current_call (CORBA::ULong i)
-{
-  ACE_Time_Value deadline_for_current_call =
-    this->interval_between_calls_;
-
-  deadline_for_current_call *= i;
-
-  deadline_for_current_call += start_of_test;
-
-  return deadline_for_current_call;
-}
-
 int
-Paced_Worker::svc (void)
+end_synchronization (Synchronizers &synchronizers)
 {
-  CORBA::ULong deadlines_missed = 0;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                      mon,
+                      synchronizers.worker_lock_,
+                      -1);
 
-  ACE_TRY_NEW_ENV
-    {
-      if (priority_setting == AFTER_THREAD_CREATION)
-        {
-          this->reset_priority (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
-      CORBA::Short CORBA_priority =
-        this->current_->the_priority (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::Short native_priority = 0;
-      CORBA::Boolean result =
-        priority_mapping_.to_native (CORBA_priority,
-                                     native_priority);
-      if (!result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in converting CORBA priority %d to native priority\n",
-                           CORBA_priority),
-                          -1);
-
-      typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
-      Missed_Invocations missed_invocations (this->history_.max_samples ());
-
-      int synchronize_result =
-        synchronize (this->test_.in (),
-                     this->synchronizers_);
-      if (synchronize_result != 0)
-        return synchronize_result;
-
-      for (CORBA::ULong i = 0;
-           i != this->history_.max_samples ();
-           ++i)
-        {
-          ACE_Time_Value deadline_for_current_call =
-            this->deadline_for_current_call (i);
-
-          ACE_Time_Value time_before_call =
-            ACE_OS::gettimeofday ();
-
-          if (time_before_call > deadline_for_current_call)
-            {
-              missed_invocations[deadlines_missed] = i + 1;
-              deadlines_missed++;
-              continue;
-            }
-
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-          this->test_->method (work,
-                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_hrtime_t end = ACE_OS::gethrtime ();
-          this->history_.sample (end - start);
-
-          ACE_Time_Value time_after_call =
-            ACE_OS::gettimeofday ();
-
-          if (time_after_call > deadline_for_current_call)
-            continue;
-
-          ACE_Time_Value sleep_time =
-            deadline_for_current_call - time_after_call;
-
-          ACE_OS::sleep (sleep_time);
-        }
-
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                        mon,
-                        this->synchronizers_.worker_lock_,
-                        -1);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n************ Statistics for thread %t ************\n\n"));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Priority = %d/%d; Rate = %d/sec; Iterations = %d; "
-                  "deadlines made = %d; deadlines missed = %d; Success = %d%%\n",
-                  CORBA_priority,
-                  native_priority,
-                  this->rate_,
-                  this->history_.max_samples (),
-                  this->history_.sample_count (),
-                  deadlines_missed,
-                  this->history_.sample_count () * 100 /
-                  this->history_.max_samples ()));
-
-      if (do_dump_history)
-        {
-          this->history_.dump_samples ("HISTORY", gsf);
-        }
-
-      ACE_Basic_Stats stats;
-      this->history_.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
-
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-                                             test_end - test_start,
-                                             stats.samples_count ());
-
-      if (print_missed_invocations)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\nMissed invocations are: "));
-
-          for (CORBA::ULong j = 0;
-               j != deadlines_missed;
-               ++j)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%d ",
-                          missed_invocations[j]));
-            }
-
-          ACE_DEBUG ((LM_DEBUG, "\n"));
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-class Continuous_Worker :
-  public ACE_Task_Base
-{
-public:
-  Continuous_Worker (test_ptr test,
-                     CORBA::ULong iterations,
-                     RTCORBA::Current_ptr current,
-                     Synchronizers &synchronizers);
-
-  int svc (void);
-
-  test_var test_;
-  CORBA::ULong iterations_;
-  Synchronizers &synchronizers_;
-  RTCORBA::Current_var current_;
-  ACE_Basic_Stats collective_stats_;
-  ACE_hrtime_t time_for_test_;
-};
-
-Continuous_Worker::Continuous_Worker (test_ptr test,
-                                      CORBA::ULong iterations,
-                                      RTCORBA::Current_ptr current,
-                                      Synchronizers &synchronizers)
-  : test_ (test::_duplicate (test)),
-    iterations_ (iterations),
-    synchronizers_ (synchronizers),
-    current_ (RTCORBA::Current::_duplicate (current)),
-    time_for_test_ (0)
-{
-}
-
-int
-Continuous_Worker::svc (void)
-{
-  ACE_TRY_NEW_ENV
-    {
-      if (priority_setting == AFTER_THREAD_CREATION)
-        {
-          this->current_->the_priority (0,
-                                        ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
-      ACE_Sample_History history (this->iterations_);
-
-      int synchronize_result =
-        synchronize (this->test_.in (),
-                     this->synchronizers_);
-      if (synchronize_result != 0)
-        return synchronize_result;
-
-      for (CORBA::ULong i = 0;
-           i != history.max_samples () && !done;
-           ++i)
-        {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-          this->test_->method (work,
-                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_hrtime_t end = ACE_OS::gethrtime ();
-          history.sample (end - start);
-        }
-
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                        mon,
-                        this->synchronizers_.worker_lock_,
-                        -1);
-
-      if (individual_continuous_worker_stats)
-        {
+    if (synchronizers.workers_ready_ ==
+        synchronizers.number_of_workers_)
+      {
+        if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      "\n************ Statistics for thread %t ************\n\n"));
+                      "\n"));
 
+        synchronizers.workers_.reset ();
+      }
+
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d worker completed\n",
+                  synchronizers.workers_ready_));
+
+    --synchronizers.workers_ready_;
+
+    if (synchronizers.workers_ready_ == 0)
+      {
+        if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      "Iterations = %d\n",
-                      history.sample_count ()));
+                      "\n"));
 
-          if (do_dump_history)
-            {
-              history.dump_samples ("HISTORY", gsf);
-            }
+        synchronizers.workers_.signal ();
 
-          ACE_Basic_Stats stats;
-          history.collect_basic_stats (stats);
-          stats.dump_results ("Total", gsf);
+        return 0;
+      }
+  }
 
-          ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-                                                 test_end - test_start,
-                                                 stats.samples_count ());
-        }
-
-      history.collect_basic_stats (this->collective_stats_);
-      ACE_hrtime_t elapsed_time_for_current_thread =
-        test_end - test_start;
-      if (elapsed_time_for_current_thread > this->time_for_test_)
-        this->time_for_test_ = elapsed_time_for_current_thread;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
-      return -1;
-    }
-  ACE_ENDTRY;
+  synchronizers.workers_.wait ();
 
   return 0;
 }
@@ -610,6 +352,427 @@ max_throughput (test_ptr test,
               calls_made,
               max_throughput_timeout,
               max_rate));
+
+  return 0;
+}
+
+class Paced_Worker :
+  public ACE_Task_Base
+{
+public:
+  Paced_Worker (ACE_Thread_Manager &thread_manager,
+                test_ptr test,
+                CORBA::Short rate,
+                CORBA::ULong iterations,
+                CORBA::Short priority,
+                RTCORBA::Current_ptr current,
+                RTCORBA::PriorityMapping &priority_mapping,
+                Synchronizers &synchronizers);
+
+  int svc (void);
+  ACE_Time_Value deadline_for_current_call (CORBA::ULong i);
+  void reset_priority (CORBA::Environment &ACE_TRY_ENV);
+  void print_stats (ACE_hrtime_t test_end);
+  int setup (CORBA::Environment &ACE_TRY_ENV);
+
+  test_var test_;
+  int rate_;
+  ACE_Sample_History history_;
+  CORBA::Short priority_;
+  RTCORBA::Current_var current_;
+  RTCORBA::PriorityMapping &priority_mapping_;
+  Synchronizers &synchronizers_;
+  CORBA::Short CORBA_priority_;
+  CORBA::Short native_priority_;
+  ACE_Time_Value interval_between_calls_;
+  CORBA::ULong deadlines_missed_;
+
+  typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
+  Missed_Invocations missed_invocations_;
+};
+
+Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
+                            test_ptr test,
+                            CORBA::Short rate,
+                            CORBA::ULong iterations,
+                            CORBA::Short priority,
+                            RTCORBA::Current_ptr current,
+                            RTCORBA::PriorityMapping &priority_mapping,
+                            Synchronizers &synchronizers)
+  : ACE_Task_Base (&thread_manager),
+    test_ (test::_duplicate (test)),
+    rate_ (rate),
+    history_ (iterations),
+    priority_ (priority),
+    current_ (RTCORBA::Current::_duplicate (current)),
+    priority_mapping_ (priority_mapping),
+    synchronizers_ (synchronizers),
+    CORBA_priority_ (0),
+    native_priority_ (0),
+    interval_between_calls_ (),
+    deadlines_missed_ (0),
+    missed_invocations_ (iterations)
+{
+  this->interval_between_calls_.set (1 / double (this->rate_));
+}
+
+void
+Paced_Worker::reset_priority (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (set_priority)
+    {
+      this->current_->the_priority (this->priority_,
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  else
+    {
+      this->current_->the_priority (continuous_worker_priority,
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
+ACE_Time_Value
+Paced_Worker::deadline_for_current_call (CORBA::ULong i)
+{
+  ACE_Time_Value deadline_for_current_call =
+    this->interval_between_calls_;
+
+  deadline_for_current_call *= i;
+
+  deadline_for_current_call += start_of_test;
+
+  return deadline_for_current_call;
+}
+
+void
+Paced_Worker::print_stats (ACE_hrtime_t test_end)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             mon,
+             this->synchronizers_.worker_lock_);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n************ Statistics for thread %t ************\n\n"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Priority = %d/%d; Rate = %d/sec; Iterations = %d; "
+              "deadlines made = %d; deadlines missed = %d; Success = %d%%\n",
+              this->CORBA_priority_,
+              this->native_priority_,
+              this->rate_,
+              this->history_.max_samples (),
+              this->history_.sample_count (),
+              this->deadlines_missed_,
+              this->history_.sample_count () * 100 /
+              this->history_.max_samples ()));
+
+  if (do_dump_history)
+    {
+      this->history_.dump_samples ("HISTORY", gsf);
+    }
+
+  ACE_Basic_Stats stats;
+  this->history_.collect_basic_stats (stats);
+  stats.dump_results ("Total", gsf);
+
+  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                         test_end - test_start,
+                                         stats.samples_count ());
+
+  if (print_missed_invocations)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nMissed invocations are: "));
+
+      for (CORBA::ULong j = 0;
+           j != this->deadlines_missed_;
+           ++j)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%d ",
+                      this->missed_invocations_[j]));
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    }
+}
+
+int
+Paced_Worker::setup (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (priority_setting == AFTER_THREAD_CREATION)
+    {
+      this->reset_priority (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+    }
+
+  this->CORBA_priority_ =
+    this->current_->the_priority (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::Boolean result =
+    this->priority_mapping_.to_native (this->CORBA_priority_,
+                                       this->native_priority_);
+  if (!result)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in converting CORBA priority %d to native priority\n",
+                       this->CORBA_priority_),
+                      -1);
+
+  return
+    start_synchronization (this->test_.in (),
+                           this->synchronizers_);
+}
+
+int
+Paced_Worker::svc (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      int result =
+        this->setup (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      for (CORBA::ULong i = 0;
+           i != this->history_.max_samples ();
+           ++i)
+        {
+          ACE_Time_Value deadline_for_current_call =
+            this->deadline_for_current_call (i);
+
+          ACE_Time_Value time_before_call =
+            ACE_OS::gettimeofday ();
+
+          if (time_before_call > deadline_for_current_call)
+            {
+              this->missed_invocations_[this->deadlines_missed_] = i + 1;
+              this->deadlines_missed_++;
+              continue;
+            }
+
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+          this->test_->method (work,
+                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          ACE_hrtime_t end = ACE_OS::gethrtime ();
+          this->history_.sample (end - start);
+
+          ACE_Time_Value time_after_call =
+            ACE_OS::gettimeofday ();
+
+          if (time_after_call > deadline_for_current_call)
+            continue;
+
+          ACE_Time_Value sleep_time =
+            deadline_for_current_call - time_after_call;
+
+          ACE_OS::sleep (sleep_time);
+        }
+
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+      done = 1;
+
+      end_synchronization (this->synchronizers_);
+
+      this->print_stats (test_end);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+class Continuous_Worker :
+  public ACE_Task_Base
+{
+public:
+  Continuous_Worker (ACE_Thread_Manager &thread_manager,
+                     test_ptr test,
+                     CORBA::ULong iterations,
+                     RTCORBA::Current_ptr current,
+                     RTCORBA::PriorityMapping &priority_mapping,
+                     Synchronizers &synchronizers);
+
+  int svc (void);
+  void print_stats (ACE_Sample_History history,
+                    ACE_hrtime_t test_end);
+  int setup (CORBA::Environment &ACE_TRY_ENV);
+  void print_collective_stats (void);
+
+  test_var test_;
+  CORBA::ULong iterations_;
+  RTCORBA::Current_var current_;
+  RTCORBA::PriorityMapping &priority_mapping_;
+  Synchronizers &synchronizers_;
+  CORBA::Short CORBA_priority_;
+  CORBA::Short native_priority_;
+  ACE_Basic_Stats collective_stats_;
+  ACE_hrtime_t time_for_test_;
+};
+
+Continuous_Worker::Continuous_Worker (ACE_Thread_Manager &thread_manager,
+                                      test_ptr test,
+                                      CORBA::ULong iterations,
+                                      RTCORBA::Current_ptr current,
+                                      RTCORBA::PriorityMapping &priority_mapping,
+                                      Synchronizers &synchronizers)
+  : ACE_Task_Base (&thread_manager),
+    test_ (test::_duplicate (test)),
+    iterations_ (iterations),
+    current_ (RTCORBA::Current::_duplicate (current)),
+    priority_mapping_ (priority_mapping),
+    synchronizers_ (synchronizers),
+    CORBA_priority_ (0),
+    native_priority_ (0),
+    collective_stats_ (),
+    time_for_test_ (0)
+{
+}
+
+void
+Continuous_Worker::print_stats (ACE_Sample_History history,
+                                ACE_hrtime_t test_end)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             mon,
+             this->synchronizers_.worker_lock_);
+
+  if (individual_continuous_worker_stats)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n************ Statistics for thread %t ************\n\n"));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Iterations = %d\n",
+                  history.sample_count ()));
+
+      if (do_dump_history)
+        {
+          history.dump_samples ("HISTORY", gsf);
+        }
+
+      ACE_Basic_Stats stats;
+      history.collect_basic_stats (stats);
+      stats.dump_results ("Total", gsf);
+
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                             test_end - test_start,
+                                             stats.samples_count ());
+    }
+
+  history.collect_basic_stats (this->collective_stats_);
+  ACE_hrtime_t elapsed_time_for_current_thread =
+    test_end - test_start;
+  if (elapsed_time_for_current_thread > this->time_for_test_)
+    this->time_for_test_ = elapsed_time_for_current_thread;
+}
+
+void
+Continuous_Worker::print_collective_stats (void)
+{
+  if (continuous_workers > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n************ Statistics for continuous workers ************\n\n"));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Priority = %d/%d; Collective iterations = %d; Workers = %d; Average = %d\n",
+                  this->CORBA_priority_,
+                  this->native_priority_,
+                  this->collective_stats_.samples_count (),
+                  continuous_workers,
+                  this->collective_stats_.samples_count () /
+                  continuous_workers));
+
+      this->collective_stats_.dump_results ("Collective", gsf);
+
+      ACE_Throughput_Stats::dump_throughput ("Individual", gsf,
+                                             this->time_for_test_,
+                                             this->collective_stats_.samples_count () /
+                                             continuous_workers);
+
+      ACE_Throughput_Stats::dump_throughput ("Collective", gsf,
+                                             this->time_for_test_,
+                                             this->collective_stats_.samples_count ());
+    }
+}
+
+int
+Continuous_Worker::setup (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (priority_setting == AFTER_THREAD_CREATION)
+    {
+      this->current_->the_priority (continuous_worker_priority,
+                                    ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+    }
+
+  this->CORBA_priority_ =
+    this->current_->the_priority (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::Boolean result =
+    this->priority_mapping_.to_native (this->CORBA_priority_,
+                                       this->native_priority_);
+  if (!result)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in converting CORBA priority %d to native priority\n",
+                       this->CORBA_priority_),
+                      -1);
+
+  return
+    start_synchronization (this->test_.in (),
+                           this->synchronizers_);
+}
+
+int
+Continuous_Worker::svc (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      ACE_Sample_History history (this->iterations_);
+
+      int result =
+        this->setup (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      for (CORBA::ULong i = 0;
+           i != history.max_samples () && !done;
+           ++i)
+        {
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+          this->test_->method (work,
+                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          ACE_hrtime_t end = ACE_OS::gethrtime ();
+          history.sample (end - start);
+        }
+
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+      end_synchronization (this->synchronizers_);
+
+      this->print_stats (history,
+                         test_end);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return -1;
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -736,15 +899,24 @@ main (int argc, char *argv[])
                               synchronizers);
         }
 
-      Continuous_Worker continuous_worker (test.in (),
+      ACE_Thread_Manager continuous_workers_manager;
+      Continuous_Worker continuous_worker (continuous_workers_manager,
+                                           test.in (),
                                            max_rate * time_for_test,
                                            current.in (),
+                                           priority_mapping,
                                            synchronizers);
       long flags =
         THR_NEW_LWP |
         THR_JOINABLE;
 
-      CORBA::Short CORBA_priority = 0;
+      if (continuous_workers_are_rt)
+        flags |=
+          orb->orb_core ()->orb_params ()->scope_policy () |
+          orb->orb_core ()->orb_params ()->sched_policy ();
+
+      CORBA::Short CORBA_priority =
+        continuous_worker_priority;
       CORBA::Short native_priority;
       CORBA::Boolean convert_result =
         priority_mapping.to_native (CORBA_priority,
@@ -820,48 +992,14 @@ main (int argc, char *argv[])
             }
         }
 
-      if (synchronizers.number_of_workers_ > 0)
-        synchronizers.main_thread_.wait ();
-
-      start_of_test =
-        ACE_OS::gettimeofday ();
-
-      test_start =
-        ACE_OS::gethrtime ();
-
-      synchronizers.workers_.signal ();
-
       if (rates.size () != 0)
         {
           paced_workers_manager.wait ();
-          done = 1;
         }
 
-      ACE_Thread_Manager::instance ()->wait ();
+      continuous_workers_manager.wait ();
 
-      if (continuous_workers > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n************ Statistics for continuous workers ************\n\n"));
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "Collective iterations = %d; Workers = %d; Average = %d\n",
-                      continuous_worker.collective_stats_.samples_count (),
-                      continuous_workers,
-                      continuous_worker.collective_stats_.samples_count () /
-                      continuous_workers));
-
-          continuous_worker.collective_stats_.dump_results ("Collective", gsf);
-
-          ACE_Throughput_Stats::dump_throughput ("Collective", gsf,
-                                                 continuous_worker.time_for_test_,
-                                                 continuous_worker.collective_stats_.samples_count () /
-                                                 continuous_workers);
-
-          ACE_Throughput_Stats::dump_throughput ("Individual", gsf,
-                                                 continuous_worker.time_for_test_,
-                                                 continuous_worker.collective_stats_.samples_count ());
-        }
+      continuous_worker.print_collective_stats ();
 
       for (i = 0;
            i < rates.size ();
