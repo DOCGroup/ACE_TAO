@@ -4232,6 +4232,13 @@ typedef double ACE_timer_t;
     typedef int ACE_Rusage;
 #endif /* ACE_HAS_PRUSAGE_T */
 
+#if defined (ACE_WIN32)
+    // = typedef for the _stat data structure
+    typedef struct _stat ACE_stat;
+#else
+    typedef struct stat ACE_stat;
+#endif /* ACE_WIN32 */
+
 // We need this for MVS...
 extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
@@ -4388,6 +4395,8 @@ public:
                       FILE *fp);
   static int stat (const char *file,
                    struct stat *);
+  static int truncate (const char *filename,
+                       off_t length);
   static int fprintf (FILE *fp,
                       const char *format,
                       ...);
@@ -5200,6 +5209,8 @@ public:
                        const wchar_t *mode);
   static int stat (const wchar_t *file,
                    struct stat *);
+  static int truncate (const wchar_t *filename,
+                       off_t length);
   static wchar_t *getenv (const wchar_t *symbol);
   static int system (const wchar_t *s);
   static int hostname (wchar_t *name,
