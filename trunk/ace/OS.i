@@ -4536,6 +4536,10 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   // ACE_TRACE ("ACE_OS::gethostbyname_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #if defined (DIGITAL_UNIX)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
+
   // gethostbyname returns thread-specific storage on Digital Unix
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
 #elif defined (AIX) || defined (HPUX_10)
@@ -4567,9 +4571,9 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   ACE_UNUSED_ARG (h_errnop);
   ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
 #else
-  ACE_UNUSED_ARG (h_errnop);
-  ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
 
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
