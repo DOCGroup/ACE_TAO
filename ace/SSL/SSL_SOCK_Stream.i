@@ -40,27 +40,6 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 }
 
 ASYS_INLINE
-ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_HANDLE h,
-                                          ACE_SSL_Context *context)
-  : context_ (context == 0 ? ACE_SSL_Context::instance () : context),
-    ssl_ (::SSL_new (this->context_->context ())),
-    stream_ (h)
-{
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
-
-  if (this->ssl_ == 0)
-    ACE_ERROR ((LM_ERROR,
-		"(%P|%t) ACE_SSL - cannot allocate new SSL session:%p\n",
-		""));
-
-  ::SSL_set_verify (this->ssl_,
-                    this->context_->default_verify_mode (),
-                    0);
-
-  this->set_handle (h);
-}
-
-ASYS_INLINE
 ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
@@ -85,9 +64,26 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
 
-  return ::SSL_write (this->ssl_,
-                      ACE_static_cast (const char*, buf),
-                      n);
+  int status = ::SSL_write (this->ssl_,
+                            ACE_static_cast (const char*, buf),
+                            n);
+
+  if (status <= 0)
+    {
+      switch (::SSL_get_error (this->ssl_, n))
+        {
+        case SSL_ERROR_WANT_WRITE:
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_X509_LOOKUP:
+          errno = EWOULDBLOCK;
+          break;
+        default:
+          ERR_print_errors_fp (stderr);
+          break;
+        }
+    }
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -107,7 +103,25 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
         ACE_NOTSUP_RETURN (-1);
     }
 
-  return ::SSL_read (this->ssl_, ACE_static_cast (char *, buf), n);
+  int status = ::SSL_read (this->ssl_,
+                           ACE_static_cast (char *, buf),
+                           n);
+  if (status <= 0) 
+    {
+      switch (::SSL_get_error (this->ssl_, n))
+        {
+        case SSL_ERROR_WANT_WRITE:
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_X509_LOOKUP:
+          errno = EWOULDBLOCK;
+          break;
+        default:
+          ERR_print_errors_fp (stderr);
+          break;
+        }
+    }
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -116,9 +130,26 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  return ::SSL_write (this->ssl_,
-                      ACE_static_cast (const char *, buf),
-                      n);
+  int status = ::SSL_write (this->ssl_,
+                            ACE_static_cast (const char *, buf),
+                            n);
+
+  if (status <= 0)
+    {
+      switch (::SSL_get_error (this->ssl_, n))
+        {
+        case SSL_ERROR_WANT_WRITE:
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_X509_LOOKUP:
+          errno = EWOULDBLOCK;
+          break;
+        default:
+          ERR_print_errors_fp (stderr);
+          break;
+        }
+    }
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -127,7 +158,26 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  return ::SSL_read (this->ssl_, ACE_static_cast (char*, buf), n);
+  int status = ::SSL_read (this->ssl_,
+                           ACE_static_cast (char*, buf),
+                           n);
+
+  if (status <= 0)
+    {
+      switch (::SSL_get_error (this->ssl_, n))
+        {
+        case SSL_ERROR_WANT_WRITE:
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_X509_LOOKUP:
+          errno = EWOULDBLOCK;
+          break;
+        default:
+          ERR_print_errors_fp (stderr);
+          break;
+        }
+    }
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -184,7 +234,16 @@ ACE_SSL_SOCK_Stream::close (void)
   if (this->ssl_ == 0)
     return -1;
 
-  ::SSL_shutdown (this->ssl_);
+  // SSL_shutdown() returns 1 on successful shutdown of the SSL
+  // connection, not 0.
+  if (::SSL_shutdown (this->ssl_) != 1)
+    {
+      // Save/restore errno
+      ACE_Errno_Guard error (errno);
+      (void) this->stream_.close ();
+  
+      return -1;
+    }
 
   return this->stream_.close ();
 }

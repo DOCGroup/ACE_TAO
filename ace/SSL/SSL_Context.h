@@ -51,7 +51,7 @@ extern "C"
 class ACE_SSL_Export ACE_SSL_Data_File
 {
 public:
-  ACE_SSL_Data_File ();
+  ACE_SSL_Data_File (void);
   // Default constructor
 
   ACE_SSL_Data_File (const char *file_name,
@@ -171,6 +171,10 @@ private:
   void ssl_library_init ();
   void ssl_library_fini ();
   // @@ More to document
+
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_Context &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_Context (const ACE_SSL_Context &))
 
 private:
   // @@ Carlos, I protected this variable with an ACE_GUARD, just like

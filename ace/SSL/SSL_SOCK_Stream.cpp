@@ -249,20 +249,14 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 
       if (n < 0)
 	{
-	  switch (::SSL_get_error (this->ssl_, n))
-	    {
-	      //
-	      // No timeouts in this version.
-	      //
-
-	    case SSL_ERROR_WANT_WRITE:
-	      // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            {
+              // If blocked, try again.
 	      n = 0;
 	      continue;
-
-	    default:
-	      return -1;
-	    }
+            }
+          else
+            return -1;
 	}
       else if (n == 0)
         break;
@@ -299,20 +293,14 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
 
       if (n < 0)
 	{
-	  switch (::SSL_get_error (this->ssl_, n))
-	    {
-	      //
-	      // No timeouts in this version.
-	      //
-
-	    case SSL_ERROR_WANT_READ:
-	      // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            {
+              // If blocked, try again.
 	      n = 0;
 	      continue;
-
-	    default:
-	      return -1;
-	    }
+            }
+          else
+            return -1;
 	}
       else if (n == 0)
         break;
@@ -342,22 +330,17 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
       n = this->recv ((char*) buf + bytes_transferred,
                       len - bytes_transferred,
                       flags);
+
       if (n < 0)
 	{
-	  switch (::SSL_get_error (this->ssl_, n))
-	    {
-	      //
-	      // No timeouts in this version.
-	      //
-
-	    case SSL_ERROR_WANT_READ:
-	      // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            {
+              // If blocked, try again.
 	      n = 0;
 	      continue;
-
-	    default:
-	      return -1;
-	    }
+            }
+          else
+            return -1;
 	}
       else if (n == 0)
 	break;
@@ -386,22 +369,17 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
       n = this->send ((const char*) buf + bytes_transferred,
                       len - bytes_transferred,
                       flags);
+
       if (n < 0)
 	{
-	  switch (::SSL_get_error (this->ssl_, n))
-	    {
-	      //
-	      // No timeouts in this version.
-	      //
-
-	    case SSL_ERROR_WANT_WRITE:
-	      // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            {
+              // If blocked, try again.
 	      n = 0;
 	      continue;
-
-	    default:
-	      return -1;
-	    }
+            }
+          else
+            return -1;
 	}
       else if (n == 0)
         break;
