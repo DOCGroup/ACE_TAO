@@ -75,7 +75,7 @@ main (int argc, char *argv[])
   if (fifo_reader.get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  pid_t child_pid = ACE_OS::fork ()
+  pid_t child_pid = ACE_OS::fork ();
 
   switch (child_pid)
     {
