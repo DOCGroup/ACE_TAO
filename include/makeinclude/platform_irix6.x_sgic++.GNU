@@ -35,6 +35,11 @@ endif
 OCCFLAGS	+= -O -OPT:Olimit=0
 DCCFLAGS	+= -g
 
+# Enable 64-bit builds
+ifeq (64,$(buildbits))
+  CPPFLAGS      += -64
+endif
+
 # Enable exceptions even in the o32 bit ABI.
 CCFLAGS		+= -exceptions -DACE_HAS_EXCEPTIONS
 

@@ -20,7 +20,9 @@
 // to Bob Laferriere <laferrie@gsao.med.ge.com> for figuring it out.
 #if defined (_MIPS_SIM)             /* 6.X System */
 # include <sgidefs.h>
-# if defined (_MIPS_SIM_NABI32) && (_MIPS_SIM == _MIPS_SIM_NABI32)
+# if defined (__GNUC__) /* GNU Compiler reports long doubles as 8 bytes */
+#   define ACE_SIZEOF_LONG_DOUBLE 8
+# elif defined (_MIPS_SIM_NABI32) && (_MIPS_SIM == _MIPS_SIM_NABI32)
 #   define ACE_SIZEOF_LONG_DOUBLE 16
 # elif defined (_MIPS_SIM_ABI32) && (_MIPS_SIM == _MIPS_SIM_ABI32)
 #   define ACE_SIZEOF_LONG_DOUBLE 8

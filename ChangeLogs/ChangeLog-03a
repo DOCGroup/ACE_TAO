@@ -1,3 +1,14 @@
+Wed Nov 21 10:00:20 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-irix6.x-common.h:
+
+          Changed the size of a long double from 16 to 8 for the GNU
+          compiler.
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+
+          Add buildbits macro to allow 32 and 64 bit builds on IRIX.
+
 Wed Nov 21 12:49:08 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * performance-tests/Misc/basic_perf.cpp
@@ -30,43 +41,43 @@ Wed Nov 21 08:49:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Nov 20 12:02:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Removed this file from the distribution.  Some folks insist on
-	  attempting to build ACE/TAO with the configure script and
-	  reporting problems despite the fact we've explicitly disabled
-	  it.
+          Removed this file from the distribution.  Some folks insist on
+          attempting to build ACE/TAO with the configure script and
+          reporting problems despite the fact we've explicitly disabled
+          it.
 
 Tue Nov 20 13:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Strategies.h:
-	* ace/Strategies.cpp:
-	* ace/Strategies.i: Re-added files back into the main trunk. Got
-	  accidentally removed from the main when I was doing some work on
-	  a branch.
+        * ace/Strategies.h:
+        * ace/Strategies.cpp:
+        * ace/Strategies.i: Re-added files back into the main trunk. Got
+          accidentally removed from the main when I was doing some work on
+          a branch.
 
 Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp:
-	  This class allow application to subscribe a single socket to
-	  many multicast groups.  However, the unsubscribe operation
-	  failed to work with more than one group.  For some strange
-	  reason it was storing the first multicast group subscription in
-	  a class member and using that member in all the paths for the
-	  unsubscribe methods.
-	  We have changed the unsubscribe(const ACE_INET_Addr&,...) method
-	  to work as adversited, i.e. unsubscribe the *given* multicast
-	  address, not the stored one, as an added benefit the method is
-	  now re-entrant.  The unsubscribe(void) method works as before.
-	  The code has been re-factored to minimize duplication.
+        * ace/SOCK_Dgram_Mcast.cpp:
+          This class allow application to subscribe a single socket to
+          many multicast groups.  However, the unsubscribe operation
+          failed to work with more than one group.  For some strange
+          reason it was storing the first multicast group subscription in
+          a class member and using that member in all the paths for the
+          unsubscribe methods.
+          We have changed the unsubscribe(const ACE_INET_Addr&,...) method
+          to work as adversited, i.e. unsubscribe the *given* multicast
+          address, not the stored one, as an added benefit the method is
+          now re-entrant.  The unsubscribe(void) method works as before.
+          The code has been re-factored to minimize duplication.
 
 Mon Nov 19 11:03:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Added missing build instructions for the ACE_SSL library, and
-	  updated the list of "make" flags recognized by ACE's Makefile
-	  scheme.
+          Added missing build instructions for the ACE_SSL library, and
+          updated the list of "make" flags recognized by ACE's Makefile
+          scheme.
 
 Mon Nov 19 00:53:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -99,159 +110,159 @@ Mon Nov 19 00:53:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Fri Nov 16 07:22:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/make_release: Updated the script to copy the beta to a
-	  different location.  Have tested this by creating a dummy
-	  repository and a dummy export directory. Things worked
-	  fine. Hopefully the beta should go through without any hassle.
+        * bin/make_release: Updated the script to copy the beta to a
+          different location.  Have tested this by creating a dummy
+          repository and a dummy export directory. Things worked
+          fine. Hopefully the beta should go through without any hassle.
 
-	  The script is tied to its usage on ace.cs. Needs to be
-	  changed. Will do that after this beta goes out. Having too many
-	  changes at the same time may not be good.
+          The script is tied to its usage on ace.cs. Needs to be
+          changed. Will do that after this beta goes out. Having too many
+          changes at the same time may not be good.
 
 Thu Nov 15 20:44:40 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* etc/Svc_Conf_l.cpp.diff: Updated.  Thanks to Kitty for reporting it.
-	* etc/Svc_Conf_y.cpp.diff: Added.  We need it for uses of ACE_LIB_TEXT.
-	* ace/Makefile: Added rule to apply patch to Svc_Conf_y.cpp.
+        * etc/Svc_Conf_l.cpp.diff: Updated.  Thanks to Kitty for reporting it.
+        * etc/Svc_Conf_y.cpp.diff: Added.  We need it for uses of ACE_LIB_TEXT.
+        * ace/Makefile: Added rule to apply patch to Svc_Conf_y.cpp.
 
 Thu Nov 15 08:26:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/*.cpp: Changed all remaining uses of ACE_TEXT to ACE_LIB_TEXT
-	  to be consistent...  Thanks to Johnny Willemsen for reporting
-	  the inconsistencies and for Darrell Brunsch for clarifying what
-	  the right behavior should be.
+        * ace/*.cpp: Changed all remaining uses of ACE_TEXT to ACE_LIB_TEXT
+          to be consistent...  Thanks to Johnny Willemsen for reporting
+          the inconsistencies and for Darrell Brunsch for clarifying what
+          the right behavior should be.
 
 Wed Nov 14 07:43:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: Updated the guidelines to explain
-	  the use of ACE_TCHAR for the argv parameter to main().  Thanks
- 	  to Johnny Willemsen for reporting this.
+        * docs/ACE-guidelines.html: Updated the guidelines to explain
+          the use of ACE_TCHAR for the argv parameter to main().  Thanks
+          to Johnny Willemsen for reporting this.
 
-	* ace/OS_Dirent.inl (opendir): Replace char * const cast with
-	  ACE_TCHAR * const cast.  Thanks to Nick Pratt for reporting
- 	  this.
+        * ace/OS_Dirent.inl (opendir): Replace char * const cast with
+          ACE_TCHAR * const cast.  Thanks to Nick Pratt for reporting
+          this.
 
-	* tests/Upgradable_RW_Test.cpp (main): Fixed the test to avoid
-	  dividing by 0 and also initialized all pointers to NULL.  Thanks
- 	  to Johnny Willemsen for reporting this.  Thanks fixes BudID 650.
+        * tests/Upgradable_RW_Test.cpp (main): Fixed the test to avoid
+          dividing by 0 and also initialized all pointers to NULL.  Thanks
+           to Johnny Willemsen for reporting this.  Thanks fixes BudID 650.
 
 Tue Nov 13 15:25:04 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ACE.h (ACE): Clarified what the time_len parameter is used for.
-	  Thanks to Tompa <safdsfd@adsffda.com> for reporting this.
+        * ace/ACE.h (ACE): Clarified what the time_len parameter is used for.
+          Thanks to Tompa <safdsfd@adsffda.com> for reporting this.
 
 Sun Nov 11 09:50:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Naming_Context.cpp (info): Added an ACE_UNUSED_ARG to
-	  silence warning about "length" parameter and changed buf from
- 	  char to ACE_TCHAR.  Thanks to Johnny Willemsen for reporting
- 	  this.
+        * ace/Naming_Context.cpp (info): Added an ACE_UNUSED_ARG to
+          silence warning about "length" parameter and changed buf from
+          char to ACE_TCHAR.  Thanks to Johnny Willemsen for reporting
+          this.
 
-	* tests/Aio_Platform_Test.cpp: The argv parameter of main() should
-	  be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
- 	  reporting this.
+        * tests/Aio_Platform_Test.cpp: The argv parameter of main() should
+          be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
+          reporting this.
 
 Thu Nov 15 15:43:20 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/Naming_Context.cpp (info): Wrapped sprintf() arguments with
-	  ACE_LIB_TEXT.  Fix supplied by Johnny Willemsen.
+        * ace/Naming_Context.cpp (info): Wrapped sprintf() arguments with
+          ACE_LIB_TEXT.  Fix supplied by Johnny Willemsen.
 
 Thu Nov 15 12:43:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/wchar.txt: Added a writeup for ACE_LIB_TEXT and ACE_TEXT
-	  from "the authority."
+        * docs/wchar.txt: Added a writeup for ACE_LIB_TEXT and ACE_TEXT
+          from "the authority."
 
 Wed Nov 14 21:36:42 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/usage-bugzilla.html:
+        * docs/usage-bugzilla.html:
 
-	  Corrected link to the DOC Center's bugzilla site.
+          Corrected link to the DOC Center's bugzilla site.
 
 Wed Nov 14 23:11:59 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/Naming_Context.cpp (info): Fixed Unicode build problems
-	  by consistently using ACE_TCHAR instead of char, and by
-	  using Unicode aware string functions in ACE_OS_String
-	  instead of ACE_OS.
+        * ace/Naming_Context.cpp (info): Fixed Unicode build problems
+          by consistently using ACE_TCHAR instead of char, and by
+          using Unicode aware string functions in ACE_OS_String
+          instead of ACE_OS.
 
-	* ace/Svc_Conf_l.cpp: Default intialized ace_yy_c_buf_p to ACE_TCHAR
-	  instead of char.  Default initialized ace_yy_cp, ace_yy_bp to 0.
+        * ace/Svc_Conf_l.cpp: Default intialized ace_yy_c_buf_p to ACE_TCHAR
+          instead of char.  Default initialized ace_yy_cp, ace_yy_bp to 0.
 
-	* ace/Svc_Conf_y.cpp: Wrap string literals passed to ace_yyerror
-	  with ACE_LIB_TEXT().
+        * ace/Svc_Conf_y.cpp: Wrap string literals passed to ace_yyerror
+          with ACE_LIB_TEXT().
 
 Wed Nov 14 06:38:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/ACE-bug-process.html (HREF): Changed references from ace.cs
-	  to  deuce.doc. Thanks to Johnny Willemsen for reporting this.
+        * docs/ACE-bug-process.html (HREF): Changed references from ace.cs
+          to  deuce.doc. Thanks to Johnny Willemsen for reporting this.
 
 Tue Nov 13 15:04:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* html/Stats/index.shtml:
-	* html/Stats/detailed_performance.shtml:
-	  Improved documentation about the test location, ORB and network
-	  configuration used.  Thanks to David Yongqiang Wang
-	  <davidyw@avaya.com> for pointing out the problems.
+        * html/Stats/index.shtml:
+        * html/Stats/detailed_performance.shtml:
+          Improved documentation about the test location, ORB and network
+          configuration used.  Thanks to David Yongqiang Wang
+          <davidyw@avaya.com> for pointing out the problems.
 
 Tue Nov 13 11:46:11 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print
-	  statements that were accessing the element of the unbounded set
- 	  as an int rather than an UglyThing.  Thanks to Ossama for
- 	  pointing this out.
+        * tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print
+          statements that were accessing the element of the unbounded set
+          as an int rather than an UglyThing.  Thanks to Ossama for
+          pointing this out.
 
 Mon Nov 12 11:41:35 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
+        * ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
 
-	  In the va_arg versions of these methods, do not use
-	  send/recv_n() to as the underlying send/recv() method.  It
-	  forces unnecessary blocking.
+          In the va_arg versions of these methods, do not use
+          send/recv_n() to as the underlying send/recv() method.  It
+          forces unnecessary blocking.
 
-	  Corrected return value semantics in versions of these methods
-	  that use loop to send/receive multiple buffers.  If data was
-	  sent or received than do not return -1 on error.  Instead return
-	  the amount of bytes sent/received.  This is necessary to allow
-	  the caller to keep track of sent or received data.  [Bug 882]
+          Corrected return value semantics in versions of these methods
+          that use loop to send/receive multiple buffers.  If data was
+          sent or received than do not return -1 on error.  Instead return
+          the amount of bytes sent/received.  This is necessary to allow
+          the caller to keep track of sent or received data.  [Bug 882]
 
 Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* tests/Date_Time_Test.cpp: Remove argv variable from
-	    main() to eliminate unused variable compiler warning.
-	* tests/Arg_Shifter_Test.cpp: Same.
+        * tests/Date_Time_Test.cpp: Remove argv variable from
+            main() to eliminate unused variable compiler warning.
+        * tests/Arg_Shifter_Test.cpp: Same.
 
 Sun Nov 11 10:00:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
+        * ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
 
-	  Removed unused class members.
+          Removed unused class members.
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (sendv):
+        * ace/SSL/SSL_SOCK_Stream.cpp (sendv):
 
-	  If an error occurs but data was sent on a previous loop
-	  iteration then return the amount of bytes sent, not the error.
-	  This extends previous check for EWOULDBLOCK and ETIME.  All
-	  errors are now caught.  The caller must always know if any data
-	  was successfully sent.  [Bug 882]
+          If an error occurs but data was sent on a previous loop
+          iteration then return the amount of bytes sent, not the error.
+          This extends previous check for EWOULDBLOCK and ETIME.  All
+          errors are now caught.  The caller must always know if any data
+          was successfully sent.  [Bug 882]
 
-	  Do not continue on to the next loop iteration if the amount of
-	  data sent was less than the amount data given.  This avoids a
-	  subtle problem where "holes" in the data stream would occur if
-	  partial sends of a given buffer in the iovec array occured.
-	  [Bug 882]
+          Do not continue on to the next loop iteration if the amount of
+          data sent was less than the amount data given.  This avoids a
+          subtle problem where "holes" in the data stream would occur if
+          partial sends of a given buffer in the iovec array occured.
+          [Bug 882]
 
 Sun Nov 11 07:58:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (sendv):
+        * ace/SSL/SSL_SOCK_Stream.cpp (sendv):
 
-	  Fixed unused variable warnings.
+          Fixed unused variable warnings.
 
 Sat Nov 10 23:25:50 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added new SSLIOP "Big_Request" test to the list of regression
-	  tests to automatically run during the nightly builds.
+          Added new SSLIOP "Big_Request" test to the list of regression
+          tests to automatically run during the nightly builds.
 
 Sat Nov 10 22:13:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -286,126 +297,126 @@ Sat Nov 10 22:13:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Sat Nov 10 19:27:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 
-	  If data is still buffered within OpenSSL's internal buffer, then
-	  force the Reactor to invoke the event handler (with
-	  the appropriate mask) before waiting for more events
-	  (e.g. blocking on select()) by returning a value greater than
-	  one.  All pending data must be processed before waiting for more
-	  events to come in on the SSL handle.
+          If data is still buffered within OpenSSL's internal buffer, then
+          force the Reactor to invoke the event handler (with
+          the appropriate mask) before waiting for more events
+          (e.g. blocking on select()) by returning a value greater than
+          one.  All pending data must be processed before waiting for more
+          events to come in on the SSL handle.
 
-	* ace/SSL/SSL_SOCK_Stream.h (reactor, handler, notify):
+        * ace/SSL/SSL_SOCK_Stream.h (reactor, handler, notify):
 
-	  These methods are no longer needed.  Removed them.
+          These methods are no longer needed.  Removed them.
 
-	  (sendv):
+          (sendv):
 
-	  Added missing timeout parameter.
+          Added missing timeout parameter.
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
-	* ace/SSL/SSL_SOCK_Stream.i (notify, recv_i, send_i, close):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Stream.i (notify, recv_i, send_i, close):
 
-	  Reverted code that notify()ed the Reactor if data was still
-	  pending in OpenSSL's internal buffers.  The idea was to force
-	  the reactor to call the appropriate event handler before polling
-	  for events (e.g. blocking on select()).  However, notifications
-	  are not dispatched until after events are polled which meant
-	  that there is no point in notify()ing the Reactor.
+          Reverted code that notify()ed the Reactor if data was still
+          pending in OpenSSL's internal buffers.  The idea was to force
+          the reactor to call the appropriate event handler before polling
+          for events (e.g. blocking on select()).  However, notifications
+          are not dispatched until after events are polled which meant
+          that there is no point in notify()ing the Reactor.
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (reactor, handler):
+        * ace/SSL/SSL_SOCK_Stream.cpp (reactor, handler):
 
-	  These methods are no longer needed.  Removed them.
+          These methods are no longer needed.  Removed them.
 
-	  (sendv):
+          (sendv):
 
-	  Fixed/improved the writev() semantics and emulation in this
-	  method.  Previously, if an iov_base buffer was successfully
-	  sent, that success was not reported to the caller if subsequent
-	  sends in the emulation loop failed.  The caller would end up
-	  thinking that no part of the message was sent.  The improved
-	  semantics are now the following if the underlying send() call
-	  returns with an EWOULDBLOCK or ETIME error condition:
+          Fixed/improved the writev() semantics and emulation in this
+          method.  Previously, if an iov_base buffer was successfully
+          sent, that success was not reported to the caller if subsequent
+          sends in the emulation loop failed.  The caller would end up
+          thinking that no part of the message was sent.  The improved
+          semantics are now the following if the underlying send() call
+          returns with an EWOULDBLOCK or ETIME error condition:
 
-		- If no data was sent, then return -1.
-		- If some data was sent on a previous loop iteration then
-	          return the number of bytes successfully sent.
+                - If no data was sent, then return -1.
+                - If some data was sent on a previous loop iteration then
+                  return the number of bytes successfully sent.
 
-	  In both cases, errno is unchanged.   [Bug 882]
+          In both cases, errno is unchanged.   [Bug 882]
 
-	  Incidentally, this fixes a problem in TAO's SSLIOP pluggable
-	  protocol when sending very large requests.  Thanks to Andrew
-	  Finnell <Andrew.Finnell@esecurityinc.com> for providing an
-	  example that exhibited the problem.
+          Incidentally, this fixes a problem in TAO's SSLIOP pluggable
+          protocol when sending very large requests.  Thanks to Andrew
+          Finnell <Andrew.Finnell@esecurityinc.com> for providing an
+          example that exhibited the problem.
 
-	  Lastly, the missing timeout support has been added.  The timeout
-	  is decremented on each loop iteration.
+          Lastly, the missing timeout support has been added.  The timeout
+          is decremented on each loop iteration.
 
 Sat Nov 10 17:16:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (fopen): Removed redundant parentheses.
+        * ace/OS.cpp (fopen): Removed redundant parentheses.
 
 Sat Nov 10 09:29:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.i (pipe): Replaced the _pipe() call on Win32 with the
-	  CreatePipe() call.  Thanks to Bo Balders <bba@post.utfors.se>
- 	  for reporting this.
+        * ace/OS.i (pipe): Replaced the _pipe() call on Win32 with the
+          CreatePipe() call.  Thanks to Bo Balders <bba@post.utfors.se>
+          for reporting this.
 
-	* ace/Log_Msg.cpp (log): The "format" string was omitted.  Thanks
-	  to Martin Krumpolec for noticing this.
+        * ace/Log_Msg.cpp (log): The "format" string was omitted.  Thanks
+          to Martin Krumpolec for noticing this.
 
 Sat Nov 10 08:48:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Arg_Shifter.{h,cpp}: Added a new constructor to ACE_Arg_Shifter
-	  so that it can handle both const char ** and char ** arguments.
+        * ace/Arg_Shifter.{h,cpp}: Added a new constructor to ACE_Arg_Shifter
+          so that it can handle both const char ** and char ** arguments.
 
 Fri Nov  9 07:42:41 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Arg_Shifter.cpp: Made the argv parameter to ACE_Arg_Shifter
-	  a "const" ACE_CHAR **.
+        * ace/Arg_Shifter.cpp: Made the argv parameter to ACE_Arg_Shifter
+          a "const" ACE_CHAR **.
 
-	* tests/Arg_Shifter_Test.cpp (main): Added "const" to the
-	  args local variable to remove a warning from SunC++.
+        * tests/Arg_Shifter_Test.cpp (main): Added "const" to the
+          args local variable to remove a warning from SunC++.
 
 Fri Nov  9 11:23:01 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Collection_Test.cpp: Fixed up things that caused problems
-	on several platforms.  Added the ARRAY tests back in.
+        * tests/Collection_Test.cpp: Fixed up things that caused problems
+          on several platforms.  Added the ARRAY tests back in.
 
 Thu Nov  8 14:52:39 2001  Steve Huston  <shuston@riverace.com>
 
-	* ace/Log_Msg.h: Added a new 'M' option to print out the name of
-	  the log priority.  Thanks to Vladimir Chovanec
- 	  <Vladimir.CHOVANEC@asset.sk> for reporting this.
+        * ace/Log_Msg.h: Added a new 'M' option to print out the name of
+          the log priority.  Thanks to Vladimir Chovanec
+          <Vladimir.CHOVANEC@asset.sk> for reporting this.
 
 Thu Nov  8 10:41:44 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS_String.h: Enhanced the documentation so that it explains
-	  the differences between ACE_OS::strsncpy() and ACE_OS::strcpy()
- 	  more precisely.  Thanks to Alain Decamps for contributing this.
+        * ace/OS_String.h: Enhanced the documentation so that it explains
+          the differences between ACE_OS::strsncpy() and ACE_OS::strcpy()
+          more precisely.  Thanks to Alain Decamps for contributing this.
 
-	* ace/Naming_Context.{h,cpp}: The info() method should have ACE_TCHAR **
-	  rather than char **.  Thanks to Johnny Willemsen for reporting
- 	  this.
+        * ace/Naming_Context.{h,cpp}: The info() method should have ACE_TCHAR **
+          rather than char **.  Thanks to Johnny Willemsen for reporting
+          this.
 
-	* ace/OS.cpp: Added support for Borland's idiosyncratic _wfdopen()
-	  method.  Thanks to Johnny Willemsen for reporting this.
+        * ace/OS.cpp: Added support for Borland's idiosyncratic _wfdopen()
+          method.  Thanks to Johnny Willemsen for reporting this.
 
 Wed Nov  7 05:17:03 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue_T.{h,cpp}: Changed the typo DEFUALT_PRIORITY
-	  to DEFAULT_PRIORITY.
+        * ace/Message_Queue_T.{h,cpp}: Changed the typo DEFUALT_PRIORITY
+          to DEFAULT_PRIORITY.
 
-	* ace/OS.i: In BCB the _wtempnam() has the following signature:
-	   wchar_t *_wtempnam(wchar_t *dir, wchar_t *prefix)
+        * ace/OS.i: In BCB the _wtempnam() has the following signature:
+          wchar_t *_wtempnam(wchar_t *dir, wchar_t *prefix)
 
-	 This means that the arguments must be made non-const by a cast.  The
-	 fix is to add some defines so that with BCB and no wchar the
- 	  _tempnam is used (with the casts) and with BCB and wchar then
- 	  the _wtempnam is used with the casts.  Thanks to Johnny
- 	  Willemsen for this fix.
+          This means that the arguments must be made non-const by a cast.  The
+          fix is to add some defines so that with BCB and no wchar the
+          _tempnam is used (with the casts) and with BCB and wchar then
+          the _wtempnam is used with the casts.  Thanks to Johnny
+          Willemsen for this fix.
 
 Thu Nov  8 14:52:39 2001  Steve Huston  <shuston@riverace.comy>
 
@@ -446,96 +457,96 @@ Thu Nov  8 10:43:22 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Nov 07 13:50:39 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Task_T.h (ACE_Task): Decorated ACE_Task with ACE_Export to
-	  avoid VC7's internal compiler error.  Thanks to Darrell for
-	  submitting the change.
+        * ace/Task_T.h (ACE_Task): Decorated ACE_Task with ACE_Export to
+          avoid VC7's internal compiler error.  Thanks to Darrell for
+          submitting the change.
 
 Wed Nov  7 10:59:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_sunos5_g++.GNU: Append -D_REENTRANT
-	  to CPPFLAGS if threads=1
+        * include/makeinclude/platform_sunos5_g++.GNU: Append -D_REENTRANT
+          to CPPFLAGS if threads=1
 
 Wed Nov  7 08:09:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Changed the name CC5 build as
-	  CC51. It uses version 5.1 of the compiler anyway.
+        * bin/nightlybuilds/builds.lst: Changed the name CC5 build as
+          CC51. It uses version 5.1 of the compiler anyway.
 
 Tue Nov  6 14:39:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/SString.i (find),
-	* ace/Local_Name_Space_T.cpp (resolve_i): Fixed "off-by-one"
-	  bugs with ACE_OS::strscpy().  Thanks to Alain Decamps
- 	  <Alain.Decamps@PIDPA.be> for contributing this.
+        * ace/SString.i (find),
+        * ace/Local_Name_Space_T.cpp (resolve_i): Fixed "off-by-one"
+          bugs with ACE_OS::strscpy().  Thanks to Alain Decamps
+           <Alain.Decamps@PIDPA.be> for contributing this.
 
 Tue Nov  6 13:25:40 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Collection_Test.cpp: Committed an old change that uses an
- 	actual class as the element in the Unbounded_Set rather than an
- 	int.  I wrote this to get a better understanding of how the
-	iterator and accessors on the iterator worked.
+        * tests/Collection_Test.cpp: Committed an old change that uses an
+          actual class as the element in the Unbounded_Set rather than an
+          int.  I wrote this to get a better understanding of how the
+          iterator and accessors on the iterator worked.
 
-	* tests/SString_Test.cpp (main): Added a test for the rep() method
-	that insures that the char array returned is equivalent to the
-	string in the ACE_CString from which it's obtained.
+        * tests/SString_Test.cpp (main): Added a test for the rep() method
+          that insures that the char array returned is equivalent to the
+          string in the ACE_CString from which it's obtained.
 
 Mon Nov  5 10:12:01 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.cpp,
-	* ace/Local_Name_Space_T.cpp,
-	* ace/FILE_Addr.cpp,
-	* ace/Acceptor.cpp,
-	* ace/ACE.cpp:  Changed uses of strncpy() to ACE_OS::strsncpy().
-	  Thanks to Alain Decamps for these fixes.
+        * ace/OS.cpp,
+        * ace/Local_Name_Space_T.cpp,
+        * ace/FILE_Addr.cpp,
+        * ace/Acceptor.cpp,
+        * ace/ACE.cpp:  Changed uses of strncpy() to ACE_OS::strsncpy().
+          Thanks to Alain Decamps for these fixes.
 
 Sun Nov  4 12:11:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Reactor.cpp: Enhanced all the Reactor's event loop methods
-	  to first check and see if the Reactor's been deactivated and to
- 	  bailout immediately in this case.  Thanks to Don Hinton for
- 	  suggesting this.
+        * ace/Reactor.cpp: Enhanced all the Reactor's event loop methods
+          to first check and see if the Reactor's been deactivated and to
+          bailout immediately in this case.  Thanks to Don Hinton for
+          suggesting this.
 
-	* ace/Reactor.i: Moved the reactor_event_loop_done() method from
-	  the *.cpp file into the *.i file and made inlineable.
+        * ace/Reactor.i: Moved the reactor_event_loop_done() method from
+          the *.cpp file into the *.i file and made inlineable.
 
-	* ace/Select_Reactor_T.cpp: Be more careful about error handling in the
-	  dispatch_notification_handlers() method.  If a failure occurs,
- 	  when dispatch_notifications() is called, return -1, rather than
- 	  erroneously "incrementing" the count of the number of handlers
- 	  dispatched.  Thanks to Don Hinton for reporting this.
+        * ace/Select_Reactor_T.cpp: Be more careful about error handling in the
+          dispatch_notification_handlers() method.  If a failure occurs,
+          when dispatch_notifications() is called, return -1, rather than
+          erroneously "incrementing" the count of the number of handlers
+          dispatched.  Thanks to Don Hinton for reporting this.
 
 Sat Nov  3 11:15:43 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* The following fixes are from Joachim Achtzehnter <joachima@netacquire.com>:
+        * The following fixes are from Joachim Achtzehnter <joachima@netacquire.com>:
 
-	  In ace/config-pharlap.h we had to explicitly #undef
- 	  ACE_HAS_WCHAR after the #include "ace/config-win32.h"
- 	  directive. Without this change the resulting DLL depended on
- 	  several wide character versions of Win32 system functions, such
- 	  as _CreateMutexW. At least some of these dependencies were
- 	  caused by ace/OS.i.
+          In ace/config-pharlap.h we had to explicitly #undef
+          ACE_HAS_WCHAR after the #include "ace/config-win32.h"
+          directive. Without this change the resulting DLL depended on
+          several wide character versions of Win32 system functions, such
+          as _CreateMutexW. At least some of these dependencies were
+          caused by ace/OS.i.
 
-	  In ace/Log_Msg.cpp we had to add !defined(ACE_HAS_PHARLAP) to a
- 	  few more places in addition to the ones Bruce Trask had posted
- 	  to avoid reference to the NT Eventlog functionality.
+          In ace/Log_Msg.cpp we had to add !defined(ACE_HAS_PHARLAP) to a
+          few more places in addition to the ones Bruce Trask had posted
+          to avoid reference to the NT Eventlog functionality.
 
-	  At the top of ace/Log_Msg_NT_Event_Log.h and
- 	  ace/Log_Msg_NT_Event_Log.cpp we added !defined(ACE_HAS_PHARLAP)
- 	  to completely bypass the contents of these two files.
+          At the top of ace/Log_Msg_NT_Event_Log.h and
+          ace/Log_Msg_NT_Event_Log.cpp we added !defined(ACE_HAS_PHARLAP)
+          to completely bypass the contents of these two files.
 
-	* ace/DEV_Addr.i (addr_to_string):
-	* ace/Local_Tokens.i (name):
-	* ace/Module.i (name):
-	* ace/OS.i (asctime_r):
-	* ace/SPIPE_Addr.i (addr_to_string):
-	* ace/UNIX_Addr.i (addr_to_string):
-	* ace/SString.i (rep): Changed uses of strncpy() to ACE_OS::strsncpy().
-	  Thanks to Alain Decamps for these fixes.
+        * ace/DEV_Addr.i (addr_to_string):
+        * ace/Local_Tokens.i (name):
+        * ace/Module.i (name):
+        * ace/OS.i (asctime_r):
+        * ace/SPIPE_Addr.i (addr_to_string):
+        * ace/UNIX_Addr.i (addr_to_string):
+        * ace/SString.i (rep): Changed uses of strncpy() to ACE_OS::strsncpy().
+          Thanks to Alain Decamps for these fixes.
 
 Fri Nov  2 14:38:49 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Task.h (ACE_Task_Base): Clarify the meaning of the put()
-	  hook method.  Thanks to Tommy Svensson <tommysvensson@yahoo.com>
-	  for motivating this.
+        * ace/Task.h (ACE_Task_Base): Clarify the meaning of the put()
+          hook method.  Thanks to Tommy Svensson <tommysvensson@yahoo.com>
+          for motivating this.
 
 Mon Nov  5 14:23:12 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -685,129 +696,129 @@ Wed Oct 24 23:59:13 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Tue Oct 30 22:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_l.cpp:
 
-	  Fixed incorrect #line preprocessor directives.
+          Fixed incorrect #line preprocessor directives.
 
-	* etc/Svc_Conf_l.cpp.diff:
+        * etc/Svc_Conf_l.cpp.diff:
 
-	  Regenerated this diff so that it includes recent updates.
+          Regenerated this diff so that it includes recent updates.
 
 Mon Oct 29 20:12:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/run_test.lst:
+        * tests/run_test.lst:
 
-	  Added the Proactor test to the list of one-button tests to run.
+          Added the Proactor test to the list of one-button tests to run.
 
 Mon Oct 29 20:04:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
 
-	  More patches from Alexander Libman.  The Proactor_Test appears
-	  to finally work on Linux.
+          More patches from Alexander Libman.  The Proactor_Test appears
+          to finally work on Linux.
 
 Mon Oct 29 17:49:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Added some error checks at places where
-	  token where acquired.
+        * ace/TP_Reactor.cpp: Added some error checks at places where
+          token where acquired.
 
 Mon Oct 29 16:59:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (acquire_token): The acquire_token () called
-	  acquire with a sleep hook. It was wrong. It should just unblock
-	  the thread by sending notify. A bad cut and paste error
-	  :(. Thanks to Graeme Clark <gclark@opentext.com> for reporting
-	  this. This closes [BUGID 1077].
+        * ace/TP_Reactor.cpp (acquire_token): The acquire_token () called
+          acquire with a sleep hook. It was wrong. It should just unblock
+          the thread by sending notify. A bad cut and paste error
+          :(. Thanks to Graeme Clark <gclark@opentext.com> for reporting
+          this. This closes [BUGID 1077].
 
 Sun Oct 28 20:36:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Map_T.i (clone):
+        * ace/Map_T.i (clone):
 
-	  Fixed syntax errors.
+          Fixed syntax errors.
 
-	* ace/Svc_Handler.cpp (new):
+        * ace/Svc_Handler.cpp (new):
 
-	  Reverted Michael's change.  It incorrectly altered the semantics
-	  of the new operator, particularly when compiling with native
-	  exception support enabled.  Fixes a warning.
+          Reverted Michael's change.  It incorrectly altered the semantics
+          of the new operator, particularly when compiling with native
+          exception support enabled.  Fixes a warning.
 
 Sun Oct 28 16:44:20 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Timer_Hash_T.cpp (ACE_Timer_Hash_T):
+        * ace/Timer_Hash_T.cpp (ACE_Timer_Hash_T):
 
-	  Corrected syntax error that was introduced in the changes
-	  described below by removing extraneous trailing bracket.
+          Corrected syntax error that was introduced in the changes
+          described below by removing extraneous trailing bracket.
 
 Sun Oct 28 13:15:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* ace/ACE.i:
-	* ace/Activation_Queue.cpp:
-	* ace/Bound_Ptr.i:
-	* ace/Configuration.cpp:
-	* ace/Configuration_Import_Export.cpp:
-	* ace/Containers_T.cpp:
-	* ace/Future.cpp:
-	* ace/Handle_Gobbler.h:
-	* ace/Local_Tokens.i:
-	* ace/MEM_SAP.i:
-	* ace/Map_T.i:
-	* ace/Message_Block.cpp:
-	* ace/OS_Errno.cpp:
-	* ace/Object_Manager.cpp:
-	* ace/Obstack_T.cpp:
-	* ace/Refcounted_Auto_Ptr.i:
-	* ace/Remote_Tokens.i:
-	* ace/Strategies_T.cpp:
-	* ace/Stream.cpp:
-	* ace/Svc_Handler.cpp:
-	* ace/Synch_T.cpp:
-	* ace/TLI.cpp:
-	* ace/Timer_Hash_T.cpp:
-	* ace/Timer_Queue_T.cpp:
-	* ace/Unbounded_Queue.cpp:
-	* ace/Unbounded_Set.cpp:
+        * ace/ACE.i:
+        * ace/Activation_Queue.cpp:
+        * ace/Bound_Ptr.i:
+        * ace/Configuration.cpp:
+        * ace/Configuration_Import_Export.cpp:
+        * ace/Containers_T.cpp:
+        * ace/Future.cpp:
+        * ace/Handle_Gobbler.h:
+        * ace/Local_Tokens.i:
+        * ace/MEM_SAP.i:
+        * ace/Map_T.i:
+        * ace/Message_Block.cpp:
+        * ace/OS_Errno.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/Obstack_T.cpp:
+        * ace/Refcounted_Auto_Ptr.i:
+        * ace/Remote_Tokens.i:
+        * ace/Strategies_T.cpp:
+        * ace/Stream.cpp:
+        * ace/Svc_Handler.cpp:
+        * ace/Synch_T.cpp:
+        * ace/TLI.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Unbounded_Queue.cpp:
+        * ace/Unbounded_Set.cpp:
 
-	  Changed almost all direct usages of operator new in ACE to use
-	  ACE_NEW_RETURN (Exceptions is Dump_T.h).  In one case in
-	  Stream.cpp the semantics changed slightly if  operator new would
-	  have been overloaded, see the "@@ Michael" comment.
+          Changed almost all direct usages of operator new in ACE to use
+          ACE_NEW_RETURN (Exceptions is Dump_T.h).  In one case in
+          Stream.cpp the semantics changed slightly if  operator new would
+          have been overloaded, see the "@@ Michael" comment.
 
           When new got used with placement most of the usages  got
-	  replaced with ACE_NEW_MALLOC_RETURN. In some cases as in
-	  Malloc_T.cpp, Map_Manager.cpp, PI_Malloc.i, Array_Base.cpp
-	  special cases exist, where the macros would have incurred
-	  different semantics and performance penalties.
+          replaced with ACE_NEW_MALLOC_RETURN. In some cases as in
+          Malloc_T.cpp, Map_Manager.cpp, PI_Malloc.i, Array_Base.cpp
+          special cases exist, where the macros would have incurred
+          different semantics and performance penalties.
 
 Fri Oct 26 07:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Quoter example will not run in
-	  minimum_corba builds.
+        * bin/auto_run_tests.lst: Quoter example will not run in
+          minimum_corba builds.
 
 Wed Oct 24 08:04:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Reactor.h: Improved the documentation of the
-	  end_reactor_event_loop ().
+        * ace/Reactor.h: Improved the documentation of the
+          end_reactor_event_loop ().
 
 Tue Oct 23 10:04:25 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
 
-	  Replaced uses of a static global lock with the
-	  ACE_Static_Object_Lock singleton.
+          Replaced uses of a static global lock with the
+          ACE_Static_Object_Lock singleton.
 
-	  Fixed incorrect uses of the "%l" format specifier.  "%d" is the
-	  expected format specifier.
+          Fixed incorrect uses of the "%l" format specifier.  "%d" is the
+          expected format specifier.
 
-	  (Acceptor):
+          (Acceptor):
 
-	  Initialize the "sessions_" member in the base member initializer
-	  list.  Corrects a problem where the session number initially
-	  contained a "garbage" value.
+          Initialize the "sessions_" member in the base member initializer
+          list.  Corrects a problem where the session number initially
+          contained a "garbage" value.
 
 Mon Oct 22 17:55:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/Svc_Conf_l.cpp: Remove include of stdlib.h, fix g++/Solaris
-	  build.
+        * ace/Svc_Conf_l.cpp: Remove include of stdlib.h, fix g++/Solaris
+          build.
 
 Mon Oct 22 15:54:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -816,27 +827,27 @@ Mon Oct 22 15:54:29 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Oct 22 15:50:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Chris Hughes name to the Hall of Fame
+        * THANKS: Added Chris Hughes name to the Hall of Fame
 
 Sun Oct 21 16:44:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp (disable_signal):
+        * tests/Proactor_Test.cpp (disable_signal):
 
-	  Fixed warnings regarding a method that "hid" virtual function
-	  with the same name, in addition to unused argument warnings.
+          Fixed warnings regarding a method that "hid" virtual function
+          with the same name, in addition to unused argument warnings.
 
 Sun Oct 21 15:22:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
 
-	  Fixed warning about deprecated conversion of "const char *" to
-	  "char *" exhibited by GCC 3.0.x builds.
+          Fixed warning about deprecated conversion of "const char *" to
+          "char *" exhibited by GCC 3.0.x builds.
 
 Sun Oct 21 12:50:39 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/LSOCK.cpp: The ACE_LSOCK::recv_handle() was returning success
-	  without setting the I/O handle.  Thanks to Rick Ohnemus
- 	  <rick.ohnemus@systemware.com> for reporting this.
+        * ace/LSOCK.cpp: The ACE_LSOCK::recv_handle() was returning success
+          without setting the I/O handle.  Thanks to Rick Ohnemus
+          <rick.ohnemus@systemware.com> for reporting this.
 
 	* ace/config-freebsd-pthread.h: Changed
           #if (__FreeBSD_version > 430000) to
