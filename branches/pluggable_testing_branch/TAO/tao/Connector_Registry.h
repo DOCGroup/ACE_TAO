@@ -94,4 +94,4 @@ private:
   // list of connectors currently open.
 };
 
-#endif TAO_CONNECTOR_REGISTRY_H
+#endif /* TAO_CONNECTOR_REGISTRY_H */
