@@ -33,12 +33,12 @@ TAO::TypeCode::Enum<StringType,
   if (!success)
     return false;
 
-  Enumerator<STRING_TYPE> const * const begin = this->enumerators ();
-  Enumerator<STRING_TYPE> const * const end   = begin + this->nenumerators_;
+  Enumerator<StringType> const * const begin = this->enumerators ();
+  Enumerator<StringType> const * const end   = begin + this->nenumerators_;
 
-  for (Enumerator<STRING_TYPE> const * i = begin; i != end; ++i)
+  for (Enumerator<StringType> const * i = begin; i != end; ++i)
     {
-      Enumerator<STRING_TYPE> const & enumerator = *i;
+      Enumerator<StringType> const & enumerator = *i;
 
       if (!(cdr << enumerator.get_name ()))
         return false;
@@ -256,7 +256,7 @@ TAO::TypeCode::Enum<StringType,
   if (index >= this->nenumerators_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-  return this->enumerators_[i].get_name ();
+  return this->enumerators_[index].get_name ();
 }
 
 #endif  /* TAO_ENUM_TYPECODE_CPP */

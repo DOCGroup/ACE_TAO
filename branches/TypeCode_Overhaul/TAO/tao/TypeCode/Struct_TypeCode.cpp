@@ -33,12 +33,12 @@ TAO::TypeCode::Struct<StringType,
   if (!success)
     return false;
 
-  Field<STRING_TYPE> const * const begin = this->fields ();
-  Field<STRING_TYPE> const * const end   = begin + this->nfields_;
+  Field<StringType> const * const begin = this->fields ();
+  Field<StringType> const * const end   = begin + this->nfields_;
 
-  for (Field<STRING_TYPE> const * i = begin; i != end; ++i)
+  for (Field<StringType> const * i = begin; i != end; ++i)
     {
-      Field<STRING_TYPE> const & field = *i;
+      Field<StringType> const & field = *i;
 
       if (!(cdr << field.get_name ())
           || !(cdr << *(field.type)))
@@ -299,7 +299,7 @@ TAO::TypeCode::Struct<StringType,
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-  return this->fields_[i].get_name ();
+  return this->fields_[index].get_name ();
 }
 
 template <typename StringType, class FieldArrayType, class RefCountPolicy>
@@ -314,7 +314,7 @@ TAO::TypeCode::Struct<StringType,
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                       CORBA::TypeCode::_nil ());
 
-  return CORBA::TypeCode::_duplicate (*(this->fields_[i].type));
+  return CORBA::TypeCode::_duplicate (*(this->fields_[index].type));
 }
 
 #endif  /* TAO_STRUCT_TYPECODE_CPP */
