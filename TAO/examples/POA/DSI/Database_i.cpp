@@ -147,6 +147,9 @@ DatabaseImpl::Agent::create_entry (const char *key,
                                    const char *entry_type,
                                    const Database::NVPairSequence &initial_attributes,
                                    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Database::Unknown_Type,
+                   Database::Duplicate_Key))
 {
   // Create a new entry in the database:
   if (ACE_OS::strcmp (entry_type, "Employee") != 0 ||
@@ -201,6 +204,9 @@ Database::Entry_ptr
 DatabaseImpl::Agent::find_entry (const char *key,
                                  const char *entry_type,
                                  CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Database::Unknown_Type,
+                   Database::Not_Found))
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     {
@@ -251,6 +257,9 @@ void
 DatabaseImpl::Agent::destroy_entry (const char *key,
                                     const char *entry_type,
                                     CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Database::Unknown_Type,
+                   Database::Unknown_Key))
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     {
@@ -283,6 +292,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
 
 void
 DatabaseImpl::Agent::shutdown (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
@@ -331,12 +341,14 @@ DatabaseImpl::Employee::~Employee (void)
 
 const char *
 DatabaseImpl::Employee::name (void) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->name_;
 }
 
 void
 DatabaseImpl::Employee::name (const char* name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DATABASE::instance ()->free (this->name_);
   this->name_ = (char *) DATABASE::instance ()->malloc (ACE_OS::strlen (name) + 1);
@@ -345,12 +357,14 @@ DatabaseImpl::Employee::name (const char* name)
 
 CORBA::Long
 DatabaseImpl::Employee::id (void) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->id_;
 }
 
 void
 DatabaseImpl::Employee::id (CORBA::Long id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->id_ = id;
 }

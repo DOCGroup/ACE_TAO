@@ -37,12 +37,16 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   // Simple doit method
-  virtual CORBA::Long doit (CORBA::Environment &env);
+  virtual CORBA::Long doit (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Setup forwarding
-  virtual void forward (CORBA::Environment &env);
+  virtual void forward (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Foo::Cannot_Forward));
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   int handle_input (ACE_HANDLE);
@@ -71,12 +75,16 @@ public:
   virtual ~MySecondFooServant (void);
 
   // Simple doit method
-  virtual CORBA::Long doit (CORBA::Environment &env);
+  virtual CORBA::Long doit (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Setup forwarding
-  virtual void forward (CORBA::Environment &env);
+  virtual void forward (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Foo::Cannot_Forward));
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   // Default poa associated with this servant

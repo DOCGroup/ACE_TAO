@@ -65,12 +65,14 @@ MyFirstFooServant::_default_POA (CORBA::Environment &/*env*/)
 // Return this->value
 CORBA::Long
 MyFirstFooServant::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_++;
 }
 
 void
 MyFirstFooServant::shutdown (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown();
 }
@@ -78,6 +80,8 @@ MyFirstFooServant::shutdown (CORBA::Environment &/*env*/)
 
 void
 MyFirstFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Foo::Cannot_Forward))
 {
   ACE_DEBUG ((LM_DEBUG,
               "MyFirstFooServant::forward: being called\n"));
@@ -157,12 +161,15 @@ MySecondFooServant::~MySecondFooServant (void)
 // Return this->value
 CORBA::Long
 MySecondFooServant::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_++;
 }
 
 void
 MySecondFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Foo::Cannot_Forward))
 {
   // forward the forwarding request to the Servant Locator :-) This is
   // kind of a loop back, but it is correct only the IDL interface can
@@ -174,6 +181,7 @@ MySecondFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
 
 void
 MySecondFooServant::shutdown (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown();
 }
