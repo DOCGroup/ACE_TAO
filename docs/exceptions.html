@@ -7,7 +7,7 @@
   <body text="#000000" link="#0000ff" vlink="#cc0000" bgcolor="#ffffff">
     <h1>Using ACE try macros for CORBA programming</h1>
 
-    <P>CORBA::Environment provides a way for exception handling when
+    <P>CORBA::Environment provides a way to handle exceptions when
       native c++ exception handling is unavailable or undesirable.
       However, writing portable code for both (with and without) native
       exception handling capability is very hairy.
@@ -17,7 +17,17 @@
       solve the problem perfectly.
     </P>
 
-<h3>In a Nutshell</h3>
+<h3>What's in here?</h3>
+<ul>
+  <li><a href="#nutshell">ACE Try Macros in a Nutshell</a>
+  <li><a href="#examples">Examples</a>
+  <li><a href="#general">General Guidelines for Exception Handling</a>
+  <li><a href="#transition">Transition from TAO try macros to ACE try
+      macros</a>
+  <li><a href="#caveats">Some Caveats</a>
+</ul>
+
+<h3><a name="nutshell">ACE Try Macros in a Nutshell</h3>
 
 <P>This section explains some simple rules of writing programs for
 platforms with and without native exception support using ACE's
@@ -304,7 +314,7 @@ macros discussed here.
   </li>
 </ul>
 
-<h3>General Guidelines of Exceptions</h3>
+<h3><a name="general">General Guidelines for Exception Handling</h3>
 <ul>
   <li><p>Don't catch an exception just to rethrow it.  Exceptions cost
       you performance.
@@ -350,40 +360,7 @@ macros discussed here.
   </li>
 </ul>
 
-<H3>Caveats</H3>
-
-<P>As we already mentioned no set of macros can cover all cases
-and preserve the semantics between native C++ exceptions and the
-<CODE>CORBA::Environment</CODE> based mapping.
-Some of the problems that our macros are described below:
-<P>
-
-<UL>
-  <LI><P>Using the macros in loops can produce problems with
-      <CODE>break</CODE> and <CODE>continue</CODE> statements, for
-      example:
-      </P>
-      <PRE>
-    for (int i = 0; i < 10; ++i)
-    {
-      ACE_TRY
-        {
-          if (x[i] == 0)
-            continue; // will *not* work
-          if (x[i] == -1)
-            break; // will *not* work either
-        }
-      ACE_CATCH (CORBA::Exception, ex)
-        {
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
-      </PRE>
-  </LI>
-</UL>
-
-<H3>Transition from TAO try macros to ACE try macros</h3>
+<H3><a name="transition">Transition from TAO try macros to ACE try macros</h3>
 
 This list tries to give a comprehensive list of mapping between TAO
 try macros and ACE try macros.  It's sole purpose is to provide hints
@@ -445,6 +422,39 @@ by no mean complete.
       <code>ACE_TRY_CHECK_EX</code>.)</P>
   </li>
 </ol>
+
+<H3><a name="caveats">Caveats</H3>
+
+<P>As we already mentioned no set of macros can cover all cases
+and preserve the semantics between native C++ exceptions and the
+<CODE>CORBA::Environment</CODE> based mapping.
+Some of the problems that our macros are described below:
+<P>
+
+<UL>
+  <LI><P>Using the macros in loops can produce problems with
+      <CODE>break</CODE> and <CODE>continue</CODE> statements, for
+      example:
+      </P>
+      <PRE>
+    for (int i = 0; i < 10; ++i)
+    {
+      ACE_TRY
+        {
+          if (x[i] == 0)
+            continue; // will *not* work
+          if (x[i] == -1)
+            break; // will *not* work either
+        }
+      ACE_CATCH (CORBA::Exception, ex)
+        {
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+      </PRE>
+  </LI>
+</UL>
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
 </body></HTML>
