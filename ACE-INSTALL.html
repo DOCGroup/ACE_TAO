@@ -151,7 +151,7 @@ Note that shared libraries do not interact very well with
 	  libThreads.a, and libSPIPE.a.  This occurs since SunOS 4.x
 	  does not support these features.<P>
 
-<LI> <B> AIX </B> <P>
+<LI><B>AIX</B>P>
 
  The ACE port to AIX assumes that the user has installed the
 	  AIX patch containing the dl*() APIs.  To use these APIs, IBM
@@ -188,28 +188,22 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 
 ACE has been ported to <A
 HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
-and Alpha platforms.  With glibc 2 distributions, such as RedHat 5.0,
-you'll need at least the following additions:<p>
-
-    <ul>
-      <li>egcs 1.0.2 or later
-      <li>glibc-2.0.7-7 (from ftp://sunsite.unc.edu/pub/gnu)
-    </ul><p>
+and Alpha platforms.  If you use a RedHat 5.x distribution, it's best
+to use RedHat 5.1.  With RedHat 5.0, you'll need some <A
+HREF="os-patches/linux-patches.html">updates and possibly som
+patches</A> to get ACE working with LinuxThreads.  Some of the patches
+are necessary with Alpha CPUs and with some older kernels.  egcs 1.0.1
+can also be used, but it may need patches, described in the patches
+file, as well.<P>
 
 <strong>NOTE:</strong>: Be careful when installing egcs.  If
 you don't remove your old gcc and libg++ RPMs, it's best to
 install egcs in a different directory than /usr, such as /usr/local,
 and set your PATH and LD_LIBRARY_PATH accordingly.<p>
 
-With some glibc-2.0.6 versions, you may need to apply some <A
-HREF="os-patches/linux-patches.html">patches</A> to get ACE working with
-LinuxThreads.  Some of the patches are necessary with Alpha CPUs and
-with some older kernels.  egcs 1.0.1 can also be used, but it
-may need patches, described in the patches file, as well.<P>
-
 Some of the ACE tests fail on older, pre-glibc-2 Linux platforms.<p>
 
-<LI> <B> SCO UNIX </B><P>
+<LI><B>SCO UNIX</B><P>
 
 ACE has been ported to SCO UNIX using the GNU g++ 2.7.2 compiler.
 Arturo Montes &lt<A
@@ -218,7 +212,7 @@ maintains this code.  In addition, he also maintains a version of <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/FSU-threads.ps.gz">FSU
 pthreads</A>.<P>
 
-<LI> <B> SGI IRIX 5.x and 6.x </B> <P>
+<LI><B>SGI IRIX 5.x and 6.x</B><P>
 
 ACE used to build fine using the SGI C++ and GNU GCC compilers for
 	  IRIX 5.x.
@@ -245,7 +239,7 @@ HP sells 2 C++ compilers for HP-UX 10.x and 11.00.  If you are using 9.x,
 	  this platform at Riverace's
 	  <A HREF="http://www.riverace.com/ACE/hints_hpux.html">HP-UX Hints</A>
 	  page.
-	  
+
 </UL>
 <P>
 
@@ -592,7 +586,7 @@ one-button tests with Borland C++ Builder 3.0. This port has not
 been completed yet, so basically you are on your own here. The
 port was started by <A HREF="mailto:gonzo@ing.puc.cl">
 Gonzalo A. Diethelm</A>, so contact him for any further directions.<P>
- 
+
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
 confusion regarding MSVC 5 and its Service Pack 3.  Some ACE
 users have, in the past, had problems with SP3 that were not present in SP2.
