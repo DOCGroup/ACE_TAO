@@ -2,8 +2,8 @@ Tue Jan 26 14:38:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU: expanded
           the information on the PERL_PATH environment variable for
-          NT hosts.  Thanks to Peter <weatp@syntron.com> for reporting
-          this.
+          NT hosts.  Thanks to Peter Weat <weatp@syntron.com> for
+          reporting this.
 
 Tue Jan 26 13:40:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
