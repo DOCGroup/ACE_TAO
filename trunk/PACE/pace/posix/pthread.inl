@@ -158,22 +158,6 @@ pace_pthread_cancel (pace_pthread_t thread)
 }
 
 PACE_INLINE
-void
-pace_pthread_cleanup_push (void (*routine)(void*), void * arg)
-{
-  pthread_cleanup_push (routine, arg);
-  return;
-}
-
-PACE_INLINE
-void
-pace_pthread_cleanup_pop (int execute)
-{
-  pthread_cleanup_pop (execute);
-  return;
-}
-
-PACE_INLINE
 int
 pace_pthread_cond_broadcast (pace_pthread_cond_t * cond)
 {

@@ -77,11 +77,13 @@ extern "C" {
 
   PACE_INLINE int pace_pthread_cancel (pace_pthread_t thread);
 
-  PACE_INLINE void pace_pthread_cleanup_push (void (*routine)(void*), void * arg);
+# define pace_pthread_cleanup_push(routine, arg) \
+    pthread_cleanup_push (routine, arg)
 
-  PACE_INLINE void pace_pthread_cleanup_pop (int execute);
+# define pace_pthread_cleanup_pop(execute) \
+    pthread_cleanup_pop (execute)
 
-  # define PACE_PTHREAD_COND_INITIALIZER PTHREAD_COND_INITIALIZER
+# define PACE_PTHREAD_COND_INITIALIZER PTHREAD_COND_INITIALIZER
 
   PACE_INLINE int pace_pthread_cond_broadcast (pace_pthread_cond_t * cond);
 
@@ -180,7 +182,7 @@ extern "C" {
   PACE_INLINE int pace_pthread_once (pace_pthread_once_t * once_control,
                                      void (*void_routine) ());
 
-  # define PACE_PTHREAD_ONCE_INIT PTHREAD_ONCE_INIT
+# define PACE_PTHREAD_ONCE_INIT PTHREAD_ONCE_INIT
 
   PACE_INLINE pace_pthread_t pace_pthread_self ();
 
