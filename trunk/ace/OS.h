@@ -2758,7 +2758,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // Used for ACE_FILE_Connector
 #   if !defined (ACE_DEFAULT_TEMP_FILE)
-#     define ACE_DEFAULT_TEMP_FILE "C:\\temp\\ace-file-XXXXXX"
+#     define ACE_DEFAULT_TEMP_FILE ACE_TEXT ("C:\\temp\\ace-file-XXXXXX")
 #   endif /* ACE_DEFAULT_TEMP_FILE */
 
 // Used for logging
