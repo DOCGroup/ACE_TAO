@@ -8,7 +8,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Stats.h"
-#include "ace/Object_Manager.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
@@ -22,8 +21,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
     !defined (ACE_HAS_HI_RES_TIMER)
 
 # include "ace/Synch.h"
+# include "ace/Object_Manager.h"
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+
 u_long
 ACE_High_Res_Timer::get_registry_scale_factor (void)
 {
@@ -194,27 +195,28 @@ ACE_High_Res_Timer::dump (void) const
              global_scale_factor ()));
 #if defined (ACE_LACKS_LONGLONG_T)
   ACE_DEBUG ((LM_DEBUG,
-             ASYS_TEXT ("start_.hi (): %u; start_.lo (): %u;\n"
-                        "end_.hi (): %u; end_.lo (): %u;\n"
-                        "total_.hi (): %u; total_.lo (): %u;\n"
-                        "start_incr_.hi () %u; start_incr_.lo (): %u\n"),
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
+                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
+                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
+                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
              start_.hi (), start_.lo (),
              end_.hi (), end_.lo (),
              total_.hi (), total_.lo (),
              start_incr_.hi (), start_incr_.lo ()));
 #else  /* ! ACE_LACKS_LONGLONG_T */
-#if defined (ACE_HAS_STHREADS)
-  // Solaris needs %llu for unsigned long long.  Other platforms
-  // might, also.  ACE_DEBUG doesn't handle %llu or %lu.
-  ACE_OS::fprintf (stderr,
-             ASYS_TEXT ("start_: %llu; end_: %llu; total_: %llu; "
-                        "start_incr_: %llu\n"),
-             start_, end_, total_, start_incr_);
-#else /* ! ACE_HAS_STHREADS */
   ACE_DEBUG ((LM_DEBUG,
-             ASYS_TEXT ("start_: %u; end_: %u; total_: %u; start_incr_: %u\n"),
-             start_, end_, total_, start_incr_));
-#endif /* ! ACE_HAS_STHREADS */
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
+                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
+                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
+                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+             ACE_static_cast (ACE_UINT32, start_ >> 32),
+             ACE_static_cast (ACE_UINT32, start_ & 0xfffffffful),
+             ACE_static_cast (ACE_UINT32, end_ >> 32),
+             ACE_static_cast (ACE_UINT32, end_ & 0xfffffffful),
+             ACE_static_cast (ACE_UINT32, total_ >> 32),
+             ACE_static_cast (ACE_UINT32, total_ & 0xfffffffful),
+             ACE_static_cast (ACE_UINT32, start_incr_ >> 32),
+             ACE_static_cast (ACE_UINT32, start_incr_ & 0xfffffffful)));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
