@@ -1,3 +1,152 @@
+Sat Jan  4 18:46:19 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix5.1.h: Add a #define ACE_AIX_VERS 501 if ACE_AIX_VERS
+          isn't already defined. Helps to build with Visual Age C++ incremental
+          mode. Support for incremental mode is going away after ACE 5.3, but
+          this crutch can be used for now.
+
+        * ace/Makefile.ace: Remove SOCK_Dgram_Mcast_T from TEMPLATE_FILES. See
+          Tue Jun 25 23:22:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * ace/ace.icc: Corrected the list of source files to build ACE with.
+          In addition to updating the source list, if building with Visual
+          Age C++ 5, add the TEMPLATE_FILES to the sources that get compiled.
+          Visual Age C++ 5 incremental needs to see them all.
+
+        * examples/C++NPv1/Makefile: Add .NOTPARALLEL since some of the
+          sub-makes share object files and they can get confused.
+
+        * tests/makeicc.pl: Add additional template-getting stuff for
+          Visual Age C++ 5.
+
+        * tests/ARGV_Test.icc:
+        * tests/Aio_Platform_Test.icc:
+        * tests/Arg_Shifter_Test.icc:
+        * tests/Atomic_Op_Test.icc:
+        * tests/Auto_IncDec_Test.icc:
+        * tests/Barrier_Test.icc:
+        * tests/Basic_Types_Test.icc:
+        * tests/Bound_Ptr_Test.icc:
+        * tests/Buffer_Stream_Test.icc:
+        * tests/CDR_Array_Test.icc:
+        * tests/CDR_File_Test.icc:
+        * tests/CDR_Test.icc:
+        * tests/Cache_Map_Manager_Test.icc:
+        * tests/Cached_Accept_Conn_Test.icc:
+        * tests/Cached_Allocator_Test.icc:
+        * tests/Cached_Conn_Test.icc:
+        * tests/Capabilities_Test.icc:
+        * tests/Codecs_Test.icc:
+        * tests/Collection_Test.icc:
+        * tests/Config_Test.icc:
+        * tests/Conn_Test.icc:
+        * tests/DLL_Test.icc:
+        * tests/DLL_Test_Impl.icc:
+        * tests/DLList_Test.icc:
+        * tests/Date_Time_Test.icc:
+        * tests/Dev_Poll_Reactor_Test.icc:
+        * tests/Dirent_Test.icc:
+        * tests/Dynamic_Priority_Test.icc:
+        * tests/Enum_Interfaces_Test.icc:
+        * tests/Env_Value_Test.icc:
+        * tests/FIFO_Test.icc:
+        * tests/FlReactor_Test.icc:
+        * tests/Framework_Component_DLL.icc:
+        * tests/Framework_Component_Test.icc:
+        * tests/Future_Set_Test.icc:
+        * tests/Future_Test.icc:
+        * tests/Get_Opt_Test.icc:
+        * tests/Handle_Set_Test.icc:
+        * tests/Hash_Map_Bucket_Iterator_Test.icc:
+        * tests/Hash_Map_Manager_Test.icc:
+        * tests/High_Res_Timer_Test.icc:
+        * tests/INET_Addr_Test.icc:
+        * tests/IOStream_Test.icc:
+        * tests/Lazy_Map_Manager_Test.icc:
+        * tests/Log_Msg_Test.icc:
+        * tests/Logging_Strategy_Test.icc:
+        * tests/MEM_Stream_Test.icc:
+        * tests/MM_Shared_Memory_Test.icc:
+        * tests/MT_Reactor_Timer_Test.icc:
+        * tests/MT_Reactor_Upcall_Test.icc:
+        * tests/MT_SOCK_Test.icc:
+        * tests/Malloc_Test.icc:
+        * tests/Map_Manager_Test.icc:
+        * tests/Map_Test.icc:
+        * tests/Max_Default_Port_Test.icc:
+        * tests/Mem_Map_Test.icc:
+        * tests/Message_Block_Test.icc:
+        * tests/Message_Queue_Notifications_Test.icc:
+        * tests/Message_Queue_Test.icc:
+        * tests/Message_Queue_Test_Ex.icc:
+        * tests/Multicast_Test.icc:
+        * tests/Naming_Test.icc:
+        * tests/New_Fail_Test.icc:
+        * tests/Notify_Performance_Test.icc:
+        * tests/OS_Test.icc:
+        * tests/Object_Manager_Test.icc:
+        * tests/Obstack_Test.icc:
+        * tests/OrdMultiSet_Test.icc:
+        * tests/Pipe_Test.icc:
+        * tests/Priority_Buffer_Test.icc:
+        * tests/Priority_Reactor_Test.icc:
+        * tests/Priority_Task_Test.icc:
+        * tests/Proactor_Scatter_Gather_Test.icc:
+        * tests/Proactor_Test.icc:
+        * tests/Proactor_Timer_Test.icc:
+        * tests/Process_Manager_Test.icc:
+        * tests/Process_Mutex_Test.icc:
+        * tests/Process_Strategy_Test.icc:
+        * tests/RB_Tree_Test.icc:
+        * tests/Reactor_Dispatch_Order_Test.icc:
+        * tests/Reactor_Exceptions_Test.icc:
+        * tests/Reactor_Notify_Test.icc:
+        * tests/Reactor_Performance_Test.icc:
+        * tests/Reactor_Timer_Test.icc:
+        * tests/Reactors_Test.icc:
+        * tests/Reader_Writer_Test.icc:
+        * tests/Recursive_Condition_Test.icc:
+        * tests/Recursive_Mutex_Test.icc:
+        * tests/Refcounted_Auto_Ptr_Test.icc:
+        * tests/Reverse_Lock_Test.icc:
+        * tests/SOCK_Connector_Test.icc:
+        * tests/SOCK_Send_Recv_Test.icc:
+        * tests/SOCK_Test.icc:
+        * tests/SPIPE_Test.icc:
+        * tests/SString_Test.icc:
+        * tests/SV_Shared_Memory_Test.icc:
+        * tests/Semaphore_Test.icc:
+        * tests/Service_Config_DLL.icc:
+        * tests/Service_Config_Test.icc:
+        * tests/Signal_Test.icc:
+        * tests/Sigset_Ops_Test.icc:
+        * tests/Simple_Message_Block_Test.icc:
+        * tests/Svc_Handler_Test.icc:
+        * tests/TP_Reactor_Test.icc:
+        * tests/TSS_Test.icc:
+        * tests/Task_Test.icc:
+        * tests/Thread_Manager_Test.icc:
+        * tests/Thread_Mutex_Test.icc:
+        * tests/Thread_Pool_Reactor_Resume_Test.icc:
+        * tests/Thread_Pool_Reactor_Test.icc:
+        * tests/Thread_Pool_Test.icc:
+        * tests/Time_Service_Test.icc:
+        * tests/Time_Value_Test.icc:
+        * tests/Timeprobe_Test.icc:
+        * tests/Timer_Queue_Test.icc:
+        * tests/TkReactor_Test.icc:
+        * tests/Token_Strategy_Test.icc:
+        * tests/Tokens_Test.icc:
+        * tests/UPIPE_SAP_Test.icc:
+        * tests/Upgradable_RW_Test.icc:
+        * tests/Vector_Test.icc:
+        * tests/XtReactor_Test.icc: Mostly updated to build with Visual Age
+          C++ 5 in incremental mode. Most of the tests that use templates
+          don't build. They require explicitly including the needed template
+          source files names in the .icc file. I don't have time to add them
+          all now - if anyone uses this compiler, please contact me. No wonder
+          IBM ditched this piece of junk.
+
 Fri Jan  3 17:58:21 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_Context.cpp:
