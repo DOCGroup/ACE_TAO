@@ -15,6 +15,7 @@
 
 #include <unistd.h>
 #include <stdarg.h>
+#include <string.h>
 
 #if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
@@ -227,16 +228,19 @@ PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
 {
-#if (PACE_HAS_REENTRANT)
+  // this func will eventually get rewritten to
+  // autodetect _REENTRANT correctly
+#if (PACE_HAS_REENTRANT) || (PACE_LYNXOS) || (PACE_SUNOS)    
   // supported call
   return getlogin_r (name, namesize);
 #else
   // unsupported call (emulated)
-  // careful, emulation is not reentrant safe
-  char * retval = getlogin ();
-  if (0 == retval)
+  // careful, emulation is not 100% reentrant safe
+  char * non_reentrant_ptr_to_static_os_memory = getlogin ();
+  if (0 == non_reentrant_ptr_to_static_os_memory)
     return errno;
-  return retval;
+  strncpy (name, non_reentrant_ptr_to_static_os_memory, namesize);
+  return 1;
 #endif /* SUN_OS */
 }
 #endif /* PACE_HAS_POSIX_UGR_UOF */
