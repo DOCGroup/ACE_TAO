@@ -18,8 +18,12 @@ CLASSPATH := $(CLASSDIR):$(CLASSPATH)
 
 all:	asx os concurrency connection timers misc reactor svcconfig socksap
 
+pkg_all = $(pkg_asx_timestuff) $(pkg_asx) $(pkg_os) $(pkg_concurrency) \
+          $(pkg_connection) $(pkg_timers) $(pkg_misc) $(pkg_reactor) \
+          $(pkg_socksap) $(pkg_svcconfig)
+
 doc:
-	$(JD) $(JDOPTS) $(files) $(packages)
+	$(JD) $(JDOPTS) $(addsuffix .java,$(pkg_all)) $(packages)
 
 clean:
 	find ${JACE_WRAPPER}/classes/ACE -name '*.class' -print | xargs ${RM}
