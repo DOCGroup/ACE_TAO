@@ -28,12 +28,12 @@ namespace Deployment
    * @brief This class defines a set of overloaded "dump" methods to print
    * the contents of various IDL data types, which passed as input.
    */
-  class Config_Handler_Export DnC_Dump
+  class /*Config_Handler_Export*/ DnC_Dump
     {
 /*
  *  If the compiler has broken nested templates exclude dumping functionality.
  */
-#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
+//#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
 
     public:
       /// Dump functions for CORBA sequences
@@ -163,11 +163,11 @@ namespace Deployment
       static void dump (const ::CORBA::Any &any);
       // Helper function to print an Any
 
-#else // ACE_HAS_BROKEN_NESTED_TEMPLATES
-    public:
-      static void dump(const Deployment::DeploymentPlan &plan) { }
+//#else // ACE_HAS_BROKEN_NESTED_TEMPLATES
+//    public:
+//      static void dump(const Deployment::DeploymentPlan &plan) { }
 
-#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
+//#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
     };
 }
 

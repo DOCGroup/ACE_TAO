@@ -1,6 +1,7 @@
 //$Id$
 
 #include "NodeApplication_Impl.h"
+#include "ace/UUID.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -238,6 +239,14 @@ CIAO::NodeApplication_Impl::install (
          // Sometime I will come back to add exception rethrow.
          comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
          ACE_TRY_CHECK;
+
+         /*
+         // @@ Set up a component_UUID for this component
+         ACE_Utils::UUID_Generator uuid_gen;
+         ACE_Utils::UUID * p_uuid = uuid_gen.generateUUID ();
+         comp->component_UUID (p_uuid->to_string ()->c_str ());
+         */
+
 
          if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                         Components::CCMObject::_duplicate (comp.in ())))
@@ -624,7 +633,8 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
       }
     
     // supplier ID
-    ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    //ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CString sid = supplier_comp_name;
     ACE_CHECK;
 
     sid += "_";
@@ -632,7 +642,8 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
     sid += "_publisher";
 
     // consumer ID
-    ACE_CString cid = sink_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    //ACE_CString cid = sink_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CString cid = consumer_comp_name;
     ACE_CHECK;
 
     cid += "_";
