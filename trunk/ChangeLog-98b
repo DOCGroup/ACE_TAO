@@ -32,6 +32,12 @@ Thu Jul 23 14:05:20 1998  David L. Levine  <levine@cs.wustl.edu>
           <doug@clark.net> for investigating this and providing the
           update.
 
+        * ace/High_Res_Timer.cpp (elapsed_time (ACE_hrtime_t &nanoseconds)):
+          don't narrow useconds to 32 bits, unless ACE_LACKS_LONGLONG_T,
+          to maintain as much range as possible.  Thanks to
+          Tom Dobridge <dobridge@persimmon.com> for pointing this
+          out.
+
 Wed Jul 22 19:20:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Proactor.h (ACE_Proactor): Since <completion_strategy> is a
