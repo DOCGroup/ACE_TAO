@@ -1,0 +1,14 @@
+
+APPS = \
+        direct_logging \
+        indirect_logging
+
+all: $(APPS)
+
+$(APPS):
+        $(MAKE) -f Makefile.bor -DNAME=$@ $(DEBUGFLAG) $(STATICFLAG) \
+                $(PASCALFLAG) $(BINDIR)\$@.exe
+OBJFILES=$(OBJDIR)\$(NAME).obj
+
+!include <$(ACE_ROOT)\netsvcs\build.bor>
+

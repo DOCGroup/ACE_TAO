@@ -1,0 +1,23 @@
+
+NAME = netsvcs
+
+OBJFILES = \
+	$(OBJDIR)\TS_Server_Handler.obj \
+	$(OBJDIR)\TS_Clerk_Handler.obj \
+	$(OBJDIR)\Client_Logging_Handler.obj \
+	$(OBJDIR)\Name_Handler.obj \
+	$(OBJDIR)\Log_Message_Receiver.obj \
+	$(OBJDIR)\Server_Logging_Handler.obj \
+	$(OBJDIR)\Token_Handler.obj \
+	$(OBJDIR)\Logging_Strategy.obj \
+	$(OBJDIR)\Base_Optimizer.obj
+
+CFLAGS = -I$(ACE_ROOT) $(ACE_CFLAGS)
+CPPDIR = .
+BASE_OBJDIR = .\bor\obj
+BINDIR = $(ACE_ROOT)\bin
+LIBFILES = \
+	$(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+
