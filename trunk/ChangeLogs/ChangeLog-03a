@@ -1,3 +1,33 @@
+Fri May 18 00:36:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_Manager.cpp (unbind_all): Added a new method that
+	  unbinds all entries in the map.  Also, refactored out some code
+	  into unbind_slot().
+
+	  BTW, this functionality is somewhat redundant since one can also
+	  do the following:
+
+	  // Unbind one at a time.
+	  MAP_MANAGER::iterator end = map.end ();
+	  while (1)
+	    {
+	        MAP_MANAGER::iterator iter = map.begin ();
+		if (iter == end)
+		  break;
+		map.unbind ((*iter).ext_id_);
+	    }
+
+	    However, the following should be much faster:
+
+	    // Unbind in one swoop.
+	    map.unbind_all ();
+
+	* tests/Map_Manager_Test.cpp (test_map_manager): Added test for
+	  unbind.
+
+	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
+	  suggesting this.
+	
 Thu May 17 21:34:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/POSIX_Asynch_IO.cpp: Added an ACE_UNUSED_ARG to keep G++ 
