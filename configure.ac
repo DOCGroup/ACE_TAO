@@ -399,7 +399,7 @@ dnl Check for asynchronous IO calls (perform check *after* thread check!)
 ACE_CHECK_ASYNCH_IO
 
 dnl Check for TLS/SSL support.
-if test $ace_user_with_ssl = yes; then
+if test "$ace_user_with_ssl" = yes; then
   ACE_CHECK_TLS
 fi
 
@@ -407,6 +407,54 @@ dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
 dnl AC_SEARCH_LIBS([clock_gettime],
 dnl   [rt posix4],[AC_DEFINE(ACE_HAS_CLOCK_GETTIME)],)
+
+dnl This check was added to work around a system-supplied header
+dnl (/usr/include/netinet/ip.h) that won't compile with Visual Age C++
+dnl unless the _NO_BITFIELDS preprocessor macro is defined. The comments
+dnl there recommend use of _NO_BITFIELDS (and recode where needed to allow
+dnl that), but we won't just turn it on. Check to see if it's needed. Note
+dnl that this check is related to headers but done before we really know if
+dnl the header is present. Thus, if the bare compile fails, but succeeds
+dnl with _NO_BITFIELDS, set the flag, else leave things alone.
+
+AC_CACHE_CHECK([to see if _NO_BITFIELDS needed to compile netinet/ip.h],
+[ac_cv_needs_no_bitfields],
+[
+  ace_save_CXXFLAGS="$CXXFLAGS"
+
+  dnl Try compiling without any flags first.
+
+  AC_COMPILE_IFELSE([
+    AC_LANG_PROGRAM([
+#include <netinet/tcp.h>
+    ],
+    [
+      return 0;
+    ])
+  ],
+  [
+    ac_cv_needs_no_bitfields=no
+  ],
+  [
+    CXXFLAGS="$CXXFLAGS -D_NO_BITFIELDS"
+
+    AC_COMPILE_IFELSE([
+      AC_LANG_PROGRAM([
+#include <netinet/tcp.h>
+      ],
+      [
+        return 0;
+      ])
+    ],
+    [
+      ac_cv_needs_no_bitfields=yes
+    ],
+    [
+      ac_cv_needs_no_bitfields=no
+      CXXFLAGS="$ace_save_CXXFLAGS"
+    ])
+  ])
+])
 
 
 dnl SECTION 5: checks for header files
@@ -3536,17 +3584,28 @@ int const ACE_NUM_DESCRIPTORS = 10;
      [])
     ;;
   *)
-    AS_IF([test "$cross_compiling" = no],
-      [
-       dnl AC_CHECK_FILE cannot be run when cross-compiling.
+    dnl Check if /dev/poll character device file exists and is
+    dnl useable. Just because /dev/poll is present doesn't mean its
+    dnl useable - this is the case on HP-UX 11. /dev/poll is there, but
+    dnl getting it to work requires a set of patches.
+    AC_RUN_IFELSE([
+      AC_LANG_SOURCE([[
+#include <sys/devpoll.h>
+#include <fcntl.h>
 
-       dnl Check if /dev/poll character device file exists and is
-       dnl readable.
-       AC_CHECK_FILE([/dev/poll],
-                     [AC_DEFINE([ACE_HAS_DEV_POLL])],
-                     [])
-      ],
-      [])
+int
+main ()
+{
+  int fd = open ("/dev/poll", O_RDWR);
+  close (fd);
+  return fd == -1 ? -1 : 0;
+}
+      ]])],
+    [
+      AC_DEFINE([ACE_HAS_DEV_POLL])
+    ],
+    [],
+    [])
     ;;
 esac
 
@@ -7422,9 +7481,7 @@ AC_CONFIG_FILES([
   Makefile
   ace/Makefile
   ace/QoS/Makefile
-  ace/RMCast/Makefile
   ace/SSL/Makefile
-  ace/TMCast/Makefile
   ASNMP/Makefile
   ASNMP/asnmp/Makefile
   ASNMP/agent/Makefile

@@ -1,3 +1,27 @@
+Mon Feb 21 18:18:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Added a check for the need to add _NO_BITFIELDS to
+	  compile macros. This is needed to prevent compile errors on 
+	  Visual Age C++ on AIX. Without it, the check for need to alter
+	  TCP header file includes gets the wrong answer, then the build
+	  tries the wrong thing. This gets around having to know the
+	  TCP header issue apriori like we do with the hand config.h.
+
+	  Changed the ACE_HAS_DEV_POLL test from a check for the /dev/poll
+	  file to a run-test to be able to open it. The file is there on
+	  HP-UX, but not useable til some patches are installed.
+
+	  Fixed a missing set of quotes on $ace_user_with_ssl.
+
+	* ace/Asynch_Acceptor.cpp (ACE_Asynch_Accept::handle_accept): Don't
+	  try to restart an accept if the listen socket is closed. Together
+	  with closing the socket in the destructor, prevents errors at
+	  destructor time from trying to restart an accept.
+
+	* ace/Dev_Poll_Reactor.cpp: Include <sys/devpoll.h> if not on
+	  Linux, not only if on Solaris. Allows this to work on other
+	  /dev/poll-enabled platforms.
+
 Mon Feb 21 12:43:41 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_IO.{h cpp} (ACE_Asynch_Accept): Added an optional
@@ -27,11 +51,13 @@ Mon Feb 21 12:43:41 2005  Steve Huston  <shuston@riverace.com>
 	  adjustment based on the address family in use.
 	  Close the listen_handle_ when this object is destroyed.
 
+>>>>>>> 4.8406
 Mon Feb 21 15:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Added missing semi colon after the Identity test
 
+>>>>>>> 4.8405
 Mon Feb 21 07:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RMCast/Send_Msg/Send_Msg.mpc:
@@ -70,6 +96,7 @@ Fri Feb 18 18:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/tao_orb_tests.lst:
           Don't try to run bug_1551_regression on Irix
 
+>>>>>>> 4.8404
 Fri Feb 18 09:46:25 2005  Dale Wilson  <wilson_d@ociweb.com>
 
         * NEWS:
