@@ -1,4 +1,34 @@
-Tue Jun 30 16:32:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+Tue Jun 30 16:50:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	First round of changes for GPERF + TAO_IDL integration. Execute
+	tao_idl with -P option to enable PERFECT_HASH operation lookup
+	strategy.
+
+	IDL-Attributes are not supported yet.
+
+	* TAO_IDL/driver/drv_args.cpp: Added option -P to enable
+	PERFECT_HASH operation lookup strategy.
+
+	* TAO_IDL/be_include/be_interface.h: Added methods to generate
+	perfect hashing operation lookup table in the server skeleton
+	code.
+
+	* TAO_IDL/be_include/be_helper.h (class TAO_OutStream): Added a
+	new stream type GPERF_INPUT to indicate the outstream is for
+	gperf's input file.
+
+	* TAO_IDL/be_include/be_codegen.h (class TAO_CodeGen):  Added <enum
+	LOOKUP_STRATEGY {...}> to indicate various lookup
+	strategies. Added the member and access methods that keeps track
+	of the TAO_OutStream that corresponds to the gperf's input file.
+
+	* TAO_IDL/be_include/be.h: Included "ace/Process.h".
+
+	* TAO_IDL/be/be_interface.cpp:
+
+	* TAO_IDL/be/be_helper.cpp:
+
+	* TAO_IDL/be/be_codegen.cpp:
 
 	* tao/Operation_Table.h (TAO_Perfect_Hash_OpTable):
  	* tao/Operation_Table.cpp :
