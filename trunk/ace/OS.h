@@ -2470,10 +2470,10 @@ public:
 #undef clearerr
 #endif /* defined (clearerr) */
   static void clearerr (FILE* fp);
-#if defined (clearerr)
+#if defined (__ace_clearerr)
 #define clearerr __ace_clearerr
 #undef __ace_clearerr
-#endif /* defined (clearerr) */
+#endif /* defined (__ace_clearerr) */
 #endif /* !ACE_LACKS_CLEARERR */
 
 #if defined (ACE_HAS_WCHAR)

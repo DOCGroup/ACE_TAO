@@ -1,3 +1,12 @@
+Wed Sep 24 08:57:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/auto_run_tests.pl: Fixed incorrect usage message. This fixes
+	  [BUG 1588]. Thanks to Carlos O'Ryan for the patches.
+
+	* ace/OS.h: Fixed definition of macro clearerr to it's original
+	  value. Thanks to  Olli Savia <ops@iki.fi> for providing the
+	  patches to get it compiling on LynxOS.
+
 Mon Sep 22 23:10:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Bug_1576_Regression_Test.dsp:
