@@ -199,7 +199,7 @@ Reactor_Timer_Queue_Test_Driver::init (void)
                   CMD (thandler_, &Input_Handler::shutdown_timer),
                   -1);
 
-  ACE_Reactor::instance ()->set_timer_queue (&timer_queue_);
+  ACE_Reactor::instance ()->timer_queue (&timer_queue_);
 
   ACE_Event_Handler::register_stdin_handler (&thandler_,
                                			ACE_Reactor::instance (),

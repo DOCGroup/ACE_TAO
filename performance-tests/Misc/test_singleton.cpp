@@ -167,7 +167,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 template class ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX> *
   ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
