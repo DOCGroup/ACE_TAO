@@ -419,7 +419,7 @@ CORBA_ORB::resolve_name_service (void)
 
       ACE_DEBUG ((LM_DEBUG, 
 		  "Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n", 
-		  reply_port, 
+		  response_addr.get_port_number (), 
 		  n_bytes));
 
       char buf[BUFSIZ];
