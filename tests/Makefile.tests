@@ -189,7 +189,18 @@ endif  # shared_libs
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+
+# The linker on hpux seems to have a problem if the objects aren't linked
+# in the right order.  This is an attempt to fix that, i.e., main.o comes
+# before x_Test.o, which comes before libTest_Output, etc...
+ifeq ($(with_ld),hpux)
+VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
+
+$(BIN): %: $(VOBJS) $(VDIR)%.$(OBJEXT)
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+else
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+endif
 
 ifdef purify
   #### SIGINT is used by Thread_Manager_Test.
