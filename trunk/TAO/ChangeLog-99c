@@ -1,6 +1,6 @@
 Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/Endpoint_Per_Priority/client.cpp
+	* tests/Endpoint_Per_Priority/client.cpp:
 	  Modified client to use TAO::ClientPriorityPolicy to make sure
 	  profiles with correct priorities will be used  for invocations
 	  to preserve priorities end-to-end.
@@ -11,28 +11,28 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/Endpoint_Per_Priority/run_test.pl:
 	  Fixed the script to use the right command-line arguments.
 
-	* tao/Client_Priority_Policy.cpp
-	* tao/Client_Priority_Policy.h
-	* tao/Client_Priority_Policy.i
-	* tao/TAO.pidl
-	* tao/TAOC.cpp
-	* tao/TAOC.h
-	* tao/TAOC.i
-	* tao/TAOS.cpp
-	* tao/TAOS.h
-	* tao/TAOS.i
-	* tao/TAOS_T.cpp
-	* tao/TAOS_T.h
-	* tao/TAOS_T.i
-	* tao/Policy_Manager.cpp
-	* tao/Policy_Manager.h
-	* tao/Policy_Manager.i
-	* tao/Stub.cpp
-	* tao/Stub.h
-	* tao/ORB.cpp
-	* tao/ORB_Core.h
-	* tao/ORB_Core.i
-	* tao/Makefile
+	* tao/Client_Priority_Policy.cpp:
+	* tao/Client_Priority_Policy.h:
+	* tao/Client_Priority_Policy.i:
+	* tao/TAO.pidl:
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.i:
+	* tao/TAOS.cpp:
+	* tao/TAOS.h:
+	* tao/TAOS.i:
+	* tao/TAOS_T.cpp:
+	* tao/TAOS_T.h:
+	* tao/TAOS_T.i:
+	* tao/Policy_Manager.cpp:
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h;
+	* tao/ORB_Core.i:
+	* tao/Makefile:
 	* tao/orbconf.h :
  	  Added/modified the files above (and the two below) to provide
 	  client-side support for connections with priorities (aka Multiple
@@ -46,7 +46,7 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  of how to use the policy and multiple endpoints, see example in 
 	  tests/Endpoint_Per_Priority. 
 
-	* tao/Invocation.cpp
+	* tao/Invocation.cpp:
 	* tao/Invocation.h:
 	  Use the value of the TAO::ClientPriorityPolicy to select the
 	  profile with the right priority for this invocation.
@@ -57,7 +57,7 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/Profile.h:
 	  Minor comment fixes.  
 	
-	* tao/TAO.cpp :
+	* tao/TAO.cpp:
 	  Changed the use of CORBA::String to CORBA::String_var, which is
 	  offers better memory management and standard mapping.
 
