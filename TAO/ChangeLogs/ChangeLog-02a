@@ -1,7 +1,42 @@
+Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/run_test.pl:
+
+	  Changed the paramether passed to the server and the client.
+
+	* tests/RTCORBA/Banded_Connections/bands.nt:
+
+	  Changed the priority bands to cover all the available priority
+	  range available on win32.
+
+	* tests/RTCORBA/Banded_Connections/server.cpp:
+
+	  It was creating and activating two CORBA object using the same
+	  servant and using the UNIQUE_ID policy. This problem has been
+	  fixed by using two different servant.
+
+	* tests/RTCORBA/Banded_Connections/client.cpp:
+
+	  Fixed wront diagnostic message that was erroneously signaling an
+	  error condition in case of success.
+
+	* tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
+
+	  Changed the logic used to select the ORB endpoint that should
+	  be used to send a GIOP request in presence of priority bands.
+	  Before if the client was exposing a priority that was different
+	  from one of the server ORB endpoint's priority, an exception
+	  would have been raised even if the priority exposed by the
+	  client was within one of the bands used by the server ORB.
+	  The decision logic assume that the endpoint priority exported in
+	  the server ORB are associated with the maximum value of the
+	  relative bands.
+
+
 Sun Mar 18 21:13:36 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IORInfo.cpp (add_ior_component_to_profile):
-	* tao/Object_Ref_Table.cpp (register_initial_reference): 
+	* tao/Object_Ref_Table.cpp (register_initial_reference):
 	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
 
 	  Added missing OMG assigned exception minor codes to ACE_THROW
