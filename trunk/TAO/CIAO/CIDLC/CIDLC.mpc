@@ -19,6 +19,7 @@ project(*CIDLC) {
     Literals.cpp
     cidlc.cpp
   }
+
   specific(vc71) {
     libs += boost_regex_debug boost_filesystem_debug
   }
@@ -27,7 +28,7 @@ project(*CIDLC) {
     include ../CCF/Config.rules
   }
 
-  verbatim(gnuace, macros) {
+  verbatim(gnuace, local) {
     LIBS += $(BOOST_LD_FLAGS)	\
             -lboost_regex 	\
             -lboost_filesystem

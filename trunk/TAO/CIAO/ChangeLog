@@ -1,3 +1,9 @@
+Mon Feb 23 13:34:20 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.vcproj:
+
+	  Reversed the change.
+
 Thu Feb 19 11:07:35 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/index.html:
