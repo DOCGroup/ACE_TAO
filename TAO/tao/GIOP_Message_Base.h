@@ -58,7 +58,7 @@ public:
                      CORBA::Octet minor);
 
   /// Reset the messaging the object
-  virtual void reset (void);
+  virtual void reset (int reset_flag = 1);
 
   /// Write the RequestHeader in to the <cdr> stream. The underlying
   /// implementation of the mesaging should do the right thing.
