@@ -1,3 +1,24 @@
+Tue Feb 23 15:50:40 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Proactor.cpp: 
+	* ace/Proactor.h: 
+	* ace/Proactor_Impl.h:
+	* ace/POSIX_Proactor.h:
+	* ace/POSIX_Proactor.cpp: 
+	* ace/POSIX_Asynch_IO.h:
+	* ace/POSIX_Asynch_IO.cpp:
+	* ace/WIN32_Proactor.cpp:
+	Implemented <post_completion> for POSIX platforms. Thanks to Irfan
+	for the cool design. This API has been changed a little bit for 
+	portability. <post_completion> API now exists at
+	<ACE_Asynch_Result_Impl> class. To post completions, users will have
+	to get hold of an <ACE_Asynch_Result_Impl> class (either get it from
+	the predefined factory methods at the Proactor or derive from
+	<ACE_WIN32_Asynch_Result> or <ACE_POSIX_Asynch_Result>, then call
+	<post_completion> on it passing in the <Proactor_Impl *> which can
+	be got through <implementation> method in the <ACE_Proactor>.
+	The need for RTTI has been avioded in this design. 
+       
 Tue Feb 23 15:19:33 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.(h cpp): Added two new methods:
