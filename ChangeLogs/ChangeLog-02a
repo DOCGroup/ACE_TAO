@@ -1,3 +1,12 @@
+Mon Feb 26 15:01:55 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/DLL_Test_Impl.dsp:
+        * tests/version_tests/DLL_Test_Impl.dsp: (removed)
+
+          The generated version_tests dsp didn't work (since DLL_Test_Impl
+          creates a library).  Manually created the configurations in the
+          tests/DLL_Test_Impl.dsp version instead.
+
 Mon Feb 26 15:54:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
   
         Port to Unixware 7 (7.1.1) Using UDK CC (7.1.1.b)
@@ -5,7 +14,8 @@ Mon Feb 26 15:54:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
         * docs/tutorials/013/message_queue.cpp:
         * tests/Malloc_Test.cpp:
 
-        Fixed errors in #pragma instiate lines including removal of ';', mispellings
+        Fixed errors in #pragma instiate lines including removal of ';', 
+        mispellings
 
         * ace/config-all.h:
 
