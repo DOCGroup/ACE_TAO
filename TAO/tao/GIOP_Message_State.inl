@@ -33,29 +33,22 @@ TAO_GIOP_Message_State::reset (void)
   this->missing_data_ = 0;
 }
 
-ACE_INLINE const TAO_GIOP_Message_Version &
-TAO_GIOP_Message_State::giop_version () const
+#if 0
+ACE_INLINE int
+TAO_GIOP_Message_State::message_fragmented (void)
 {
-  return this->giop_version_;
+  if (this->more_fragments)
+    return 1;
+
+  return 0;
 }
 
-ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_State::more_fragments () const
+
+
+ACE_INLINE CORBA::Boolean
+TAO_GIOP_Message_State::header_received (void) const
 {
-  return this->more_fragments_;
+  return this->message_size != 0;
 }
 
-ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_State::message_type () const
-{
-  return this->message_type_;
-}
-
-ACE_INLINE void
-TAO_GIOP_Message_State::set_payload_size_from_buffer (const char *rd_ptr)
-{
-  // Move the read pointer
-  rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
-
-  this->message_size_ =  this->read_ulong (rd_ptr);
-}
+#endif
