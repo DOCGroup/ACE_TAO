@@ -1,3 +1,12 @@
+Wed Aug  2 14:03:28 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/ORB_destroy/run_test.pl:
+	  The ORB_destroy driver had the wrong path for the ACE perl
+	  modules.
+
+	* tests/ORB_init/run_test.pl:
+	  Cleanup to make it similar to the destroy test.
+
 Tue Aug  1 15:25:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* performance-tests/Latency/server.cpp:
