@@ -387,6 +387,9 @@ public:
   /// @@todo: Not sure whether we would need finer control while
   /// trying to access allocators ie. a method for every allocator.
   /**
+   * This method returns the allocators only from the first message
+   * block in the chain.
+   *
    * @param allocator_strategy Strategy used to allocate the
    *                           underlying buffer
    *
@@ -403,6 +406,10 @@ public:
   /// Reset all the allocators in the message block.
   /// @@todo: Not sure whether we would need finer control while
   /// trying to reset allocators ie. a method for every allocator.
+  /**
+   * This method resets the allocators in all the message blocks in
+   * the chain.
+   */
   void reset_allocators (ACE_Allocator *allocator_strategy = 0,
                          ACE_Allocator *data_block_allocator = 0,
                          ACE_Allocator *message_block_allocator = 0);
