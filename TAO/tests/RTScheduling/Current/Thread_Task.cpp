@@ -19,8 +19,8 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
   ACE_CHECK_RETURN (-1);
   
   long flags = THR_NEW_LWP | THR_JOINABLE;
-  if (this->ACE_Task <ACE_SYNCH>::activate (flags,
-					    thr_count) == -1)
+  if (this->activate (flags,
+		      thr_count) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
 	ACE_ERROR_RETURN ((LM_ERROR,
