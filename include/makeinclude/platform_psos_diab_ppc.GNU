@@ -8,8 +8,11 @@
 PSS_LIBC_DIR	= $(PSS_ROOT)/sys/libc
 PSS_SYS_DIR	= $(PSS_ROOT)/sys/os
 
+# PSOS_LIBS = -L $(PSS_LIBC_DIR) -lprepcH -lcxxsp \
+#             -L $(PSS_SYS_DIR) -lsysxx -lsys
+
 PSOS_LIBS = -L $(PSS_LIBC_DIR) -lprepcH -lcxxsp \
-            -L $(PSS_SYS_DIR) -lsysxx -lsys
+            -L $(PSS_SYS_DIR) -lsys
 
 PSS_BSP_LIB	= -L $(PSS_BSP) -lbsp
 
@@ -57,7 +60,7 @@ static_libs = 1
 
 
 # C Compiler
-CC              = dcc -tMC68060FS:psos
+CC              = dcc -tPPC860ES:psos
 # -WDCDCONFIG=psos.conf
 
 # C Debug Compiler Flags
@@ -140,11 +143,11 @@ DCCFLAGS         +=  $(DCFLAGS)
 
 # Dynamic Linker
 # DLD             = dld
-DLD             = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/ram.lnk
+DLD             = dplus -tPPC860ES:psos -Wm$(PSS_BSP)/ram.lnk
 
 # Static Linker
 # LD              = dld
-LD              = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/ram.lnk
+LD              = dplus -tPPC860ES:psos -Wm$(PSS_BSP)/ram.lnk
 
 # Static Linker Flags
 # -L<path> adds a directory path to the linker search path

@@ -99,7 +99,14 @@ test_boundaries (void)
 
   while ((handle = i1 ()) != ACE_INVALID_HANDLE)
     {
-      ACE_ASSERT (ASYS_TEXT ("this shouldn't get called since the set is empty!\n") == 0);
+#if defined (ACE_PSOS_DIAB)
+      // workaround for some compiler confusion with strings in assertions
+      const int SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS = 1;
+      ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
+#else /* ! defined (ACE_PSOS_DIAB) */
+      ACE_ASSERT (0 == ASYS_TEXT ("this shouldn't get called since "
+                                  "the set is empty!\n"));
+#endif /* defined (ACE_PSOS_DIAB) */
     }
 
   // Insert the vector of HANDLEs into the set.
@@ -118,7 +125,7 @@ test_boundaries (void)
   while ((handle = i2 ()) != ACE_INVALID_HANDLE)
     {
       int done = set.remove(handle);
-      ACE_ASSERT(done == 0);
+      ACE_ASSERT (done == 0);
       count++;
     }
 
@@ -211,4 +218,3 @@ template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
 #pragma instantiate ACE_Node<ACE_HANDLE>
 # endif
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
