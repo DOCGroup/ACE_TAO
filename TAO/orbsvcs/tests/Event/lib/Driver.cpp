@@ -394,6 +394,8 @@ EC_Driver::initialize_new_ec (ACE_ENV_SINGLE_ARG_DECL)
   TAO_EC_Event_Channel_Attributes attr (this->root_poa_.in (),
                                         this->root_poa_.in ());
 
+  this->modify_attributes (attr);
+
   TAO_EC_Event_Channel *ec =
     new TAO_EC_Event_Channel (attr);
   this->ec_impl_ = ec;
@@ -1016,6 +1018,15 @@ EC_Driver::print_usage (void)
               "  -supplier_tcount <count>\n"
               "  -supplier_tshift <shift>\n"
               ));
+}
+
+void
+EC_Driver::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
+{
+   ACE_UNUSED_ARG(attr);
+
+   // This method can be overruled by derived tests to set the event channel
+   // attributes
 }
 
 void
