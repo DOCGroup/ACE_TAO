@@ -1,3 +1,23 @@
+Fri Sep 20 13:52:23 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+
+          Fixed a problem with implicit idl dependencies.
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added the ability to override or modify idlflags on a per file
+          group basis.
+
 Thu Sep 19 22:13:13 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/HttpCharStream.cpp: Added license for the FSM in
@@ -6,27 +26,27 @@ Thu Sep 19 22:13:13 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Wed Sep 18 12:26:22 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Misc/test_trace.cpp: The call to activate() was
-	  being invoked with the parameters in the wrong order.  Thanks to
- 	  Jeff W <jeffw_1234@yahoo.com> for reporting this.
+        * examples/Misc/test_trace.cpp: The call to activate() was
+          being invoked with the parameters in the wrong order.  Thanks to
+          Jeff W <jeffw_1234@yahoo.com> for reporting this.
 
 Tue Sep 17 17:26:40 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.cpp:
+        * ace/Basic_Types.cpp:
 
-	  Cosmetic changes to clarify some preprocessor blocks.
+          Cosmetic changes to clarify some preprocessor blocks.
 
-	* ace/CDR_Base.h:
+        * ace/CDR_Base.h:
 
-	  Corrected placement of '#' character in preprocessor
-	  directives.  It belongs in the first column, not arbitrary
-	  ones.
+          Corrected placement of '#' character in preprocessor
+          directives.  It belongs in the first column, not arbitrary
+          ones.
 
 Tue Sep 17 01:35:54 UTC 2002 Don Hinton  <dhinton@ieee.org>
 
-	* ace/OS.h: Remove redundant MAXPATHLEN definition when
-	  building VxWorks.  Thanks to Rob Andzik <andzik@rtlogic.com>
-	  for pointing this out.
+        * ace/OS.h: Remove redundant MAXPATHLEN definition when
+          building VxWorks.  Thanks to Rob Andzik <andzik@rtlogic.com>
+          for pointing this out.
 
 Mon Sep 16 17:36:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -57,29 +77,29 @@ Mon Sep 16 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Sep 14 10:34:34 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added
-	  #undef ACE_LACKS_UCONTEXT_H if we're compiling for FreeBSD
- 	  version > 4.  Thanks to Christophe Juniet
- 	  <cjuniet@entreview.com> for reporting this.
+        * ace/config-freebsd-pthread.h: Added
+          #undef ACE_LACKS_UCONTEXT_H if we're compiling for FreeBSD
+          version > 4.  Thanks to Christophe Juniet
+          <cjuniet@entreview.com> for reporting this.
 
 Fri Sep 13 08:37:09 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Time_Value.h:
-	* ace/Time_Value.inl:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
 
-	  Removed copy constructor.  The default compiler-generated copy
-	  constructor will do fine since ACE_Time_Value is a POD class.
-	  This may also avoid potential confusion due to a missing
-	  explicit assignment operator.  The compiler-generated assignment
-	  operator will suffice in this case, too.
+          Removed copy constructor.  The default compiler-generated copy
+          constructor will do fine since ACE_Time_Value is a POD class.
+          This may also avoid potential confusion due to a missing
+          explicit assignment operator.  The compiler-generated assignment
+          operator will suffice in this case, too.
 
-	From Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
-	* bin/.cvsignore:
-	* tests/.cvsignore:
-	* tests/log/.cvsignore:
+        From Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
+        * bin/.cvsignore:
+        * tests/.cvsignore:
+        * tests/log/.cvsignore:
 
-	  Files to silence annoying CVS messages regarding generated files
-	  it doesn't know about.
+          Files to silence annoying CVS messages regarding generated files
+          it doesn't know about.
 
 Fri Sep 13 08:57:03 2002  Chad Elliott  <elliott_c@ociweb.com>
 

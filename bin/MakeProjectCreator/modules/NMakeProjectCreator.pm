@@ -21,6 +21,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub sort_files {
+  my($self) = shift;
+  return 0;
+}
+
+
 sub translate_value {
   my($self) = shift;
   my($key)  = shift;
@@ -35,14 +41,6 @@ sub translate_value {
     $val =~ s/\s+$//;
   }
   return $val;
-}
-
-
-sub file_sorter {
-  my($self)  = shift;
-  my($left)  = shift;
-  my($right) = shift;
-  return lc($left) cmp lc($right);
 }
 
 

@@ -120,6 +120,35 @@ sub generate {
 }
 
 
+sub parse_assignment {
+  my($self)   = shift;
+  my($line)   = shift;
+  my($values) = shift;
+  my($status) = 1;
+
+  if ($line =~ /^(\w+)\s*=\s*(.*)?/) {
+    my($name)  = lc($1);
+    my($value) = $2;
+    push(@$values, "assignment", $name, $value);
+  }
+  elsif ($line =~ /^(\w+)\s*\+=\s*(.*)?/) {
+    my($name)  = lc($1);
+    my($value) = $2;
+    push(@$values, "assign_add", $name, $value);
+  }
+  elsif ($line =~ /^(\w+)\s*\-=\s*(.*)?/) {
+    my($name)  = lc($1);
+    my($value) = $2;
+    push(@$values, "assign_sub", $name, $value);
+  }
+  else {
+    $status = 0;
+  }
+
+  return $status;
+}
+
+
 sub parse_known {
   my($self)        = shift;
   my($line)        = shift;
@@ -179,20 +208,8 @@ sub parse_known {
     $errorString = "ERROR: No $type was defined";
     $status = 0;
   }
-  elsif ($line =~ /^(\w+)\s*=\s*(.*)?/) {
-    my($name)  = lc($1);
-    my($value) = $2;
-    push(@values, "assignment", $name, $value);
-  }
-  elsif ($line =~ /^(\w+)\s*\+=\s*(.*)?/) {
-    my($name)  = lc($1);
-    my($value) = $2;
-    push(@values, "assign_add", $name, $value);
-  }
-  elsif ($line =~ /^(\w+)\s*\-=\s*(.*)?/) {
-    my($name)  = lc($1);
-    my($value) = $2;
-    push(@values, "assign_sub", $name, $value);
+  elsif ($self->parse_assignment($line, \@values)) {
+    ## If this returns true, then we've found an assignment
   }
   elsif ($line =~ /^(\w+)\s*(\([^\)]+\))?\s*{$/) {
     my($comp) = lc($1);

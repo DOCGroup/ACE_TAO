@@ -99,6 +99,8 @@ pch_source	Specifies the precompiled source file name
 ssl             Specifies that the project will use ssl
 tao		Specifies that the project will use TAO
 version         Specifies the version number for the library or executable
+flag_overrides  Used to determine flags that have been overriden on a per
+                file basis.
 
 libpaths	Specifies 1 or more locations to find libraries
 includes	Specifies 1 or more locations to find include files

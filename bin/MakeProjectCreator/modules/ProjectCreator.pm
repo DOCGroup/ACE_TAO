@@ -101,6 +101,7 @@ sub new {
   $self->{'writing_type'}          = 0;
   $self->{'want_dynamic_projects'} = $dynamic;
   $self->{'want_static_projects'}  = $static;
+  $self->{'flag_overrides'}        = {};
 
   ## Valid component names within a project along with the valid file extensions
   my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
@@ -116,9 +117,14 @@ sub new {
   my(%ec) = ('source_files' => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.C", ],
             );
 
-  $self->{'valid_components'}   = \%vc;
-  $self->{'exclude_components'} = \%ec;
-  $self->{'skeleton_endings'}   = [ "C", "S" ];
+  ## Match up assignments with the valid components
+  my(%ma) = ('source_files' => [ 'includes' ],
+             'idl_files' => [ 'idlflags' ],
+            );
+  $self->{'matching_assignments'} = \%ma;
+  $self->{'valid_components'}     = \%vc;
+  $self->{'exclude_components'}   = \%ec;
+  $self->{'skeleton_endings'}     = [ "C", "S" ];
 
   ## Allow subclasses to override the default extensions
   $self->set_component_extensions();
@@ -203,6 +209,7 @@ sub parse_line {
         }
         $self->{$typecheck}         = 0;
         $self->{'idl_defaulted'}    = 0;
+        $self->{'flag_overrides'}   = {};
         $self->{'source_defaulted'} = 0;
       }
       else {
@@ -300,9 +307,7 @@ sub parse_line {
 
       my($vc) = $self->{'valid_components'};
       if (defined $$vc{$comp}) {
-        if ($self->parse_components($ih, $comp, $name)) {
-        }
-        else {
+        if (!$self->parse_components($ih, $comp, $name)) {
           $errorString = "ERROR: Unable to process $comp";
           $status = 0;
         }
@@ -336,6 +341,7 @@ sub parse_components {
   my($comps)   = {};
   my($order)   = 0;
   my($set)     = 0;
+  my(%flags)   = ();
 
   if (defined $self->{$tag}) {
     $names = $self->{$tag};
@@ -388,8 +394,38 @@ sub parse_components {
       }
     }
     elsif (defined $current) {
-      my($array) = $$comps{$current};
-      push(@$array, $line);
+      my(@values) = ();
+      ## If this returns true, then we've found an assignment
+      if ($self->parse_assignment($line, \@values)) {
+        my($over) = {};
+        if (defined $self->{'flag_overrides'}->{$tag}) {
+          $over = $self->{'flag_overrides'}->{$tag};
+        }
+        else {
+          $self->{'flag_overrides'}->{$tag} = $over;
+        }
+
+        if ($values[0] eq 'assignment') {
+          $self->process_assignment($values[1],
+                                    $values[2], \%flags);
+        }
+        elsif ($values[0] eq 'assign_add') {
+          $self->process_assignment_add($values[1],
+                                        $values[2], \%flags);
+        }
+        elsif ($values[0] eq 'assign_sub') {
+          $self->process_assignment_sub($values[1],
+                                        $values[2], \%flags);
+        }
+      }
+      else {
+        my($over) = $self->{'flag_overrides'}->{$tag};
+        if (defined $over) {
+          $$over{$line} = \%flags;
+        }
+        my($array) = $$comps{$current};
+        push(@$array, $line);
+      }
     }
     else {
       $status = 0;
@@ -405,9 +441,15 @@ sub process_assignment {
   my($self)   = shift;
   my($name)   = shift;
   my($value)  = shift;
+  my($assign) = shift;
   my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
-  my($assign) = $self->{$tag};
 
+  ## If no hash table was passed in
+  if (!defined $assign) {
+    $assign = $self->{$tag};
+  }
+
+  ## If we haven't yet defined the hash table in this project
   if (!defined $assign) {
     $assign = {};
     $self->{$tag} = $assign;
@@ -430,15 +472,16 @@ sub process_assignment_add {
   my($self)   = shift;
   my($name)   = shift;
   my($value)  = shift;
-  my($nval)   = $self->get_assignment($name);
+  my($assign) = shift;
+  my($nval)   = $self->get_assignment($name, $assign);
   if (defined $nval) {
     $nval = "$value $nval";
   }
   else {
     $nval = $value;
   }
-  $self->process_assignment($name, $nval);
-  $self->process_duplicate_modification($name);
+  $self->process_assignment($name, $nval, $assign);
+  $self->process_duplicate_modification($name, $assign);
 }
 
 
@@ -446,7 +489,8 @@ sub process_assignment_sub {
   my($self)   = shift;
   my($name)   = shift;
   my($value)  = shift;
-  my($nval)   = $self->get_assignment($name);
+  my($assign) = shift;
+  my($nval)   = $self->get_assignment($name, $assign);
 
   if (defined $nval) {
     my($parts) = $self->create_array($nval);
@@ -456,8 +500,8 @@ sub process_assignment_sub {
         $nval .= "$part ";
       }
     }
-    $self->process_assignment($name, $nval);
-    $self->process_duplicate_modification($name);
+    $self->process_assignment($name, $nval, $assign);
+    $self->process_duplicate_modification($name, $assign);
   }
 }
 
@@ -465,13 +509,14 @@ sub process_assignment_sub {
 sub process_duplicate_modification {
   my($self)   = shift;
   my($name)   = shift;
+  my($assign) = shift;
 
   ## If we are modifying the libs, libpaths or includes assignment with
   ## either addition or subtraction, we are going to
   ## perform a little fix on the value to avoid multiple
   ## libraries and to try to insure the correct linking order
   if ($name eq "libs" || $name eq "libpaths" || $name eq "includes") {
-    my($nval) = $self->get_assignment($name);
+    my($nval) = $self->get_assignment($name, $assign);
     if (defined $nval) {
       my($parts) = $self->create_array($nval);
       my(%seen)  = ();
@@ -482,7 +527,7 @@ sub process_duplicate_modification {
           $seen{$part} = 1;
         }
       }
-      $self->process_assignment($name, $value);
+      $self->process_assignment($name, $value, $assign);
     }
   }
 }
