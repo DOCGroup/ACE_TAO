@@ -42,7 +42,7 @@ MT_Task::svc (void)
   ACE_TRY
     {
       for (CORBA::Long i = 0;
-           i != 10000;
+           i != 2000;
            ++i)
         {
           CORBA::Object_var one_ref =
