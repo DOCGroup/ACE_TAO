@@ -134,7 +134,8 @@ TAO_Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
 
 
 ACE_INLINE int
-TAO_Transport_Cache_Manager::close (ACE_Handle_Set &handle_Set)
+TAO_Transport_Cache_Manager::close (ACE_Handle_Set &reactor_registered,
+                                    TAO_EventHandlerSet &unregistered)
 {
   // The cache lock pointer should only be zero if
   // Transport_Cache_Manager::open() was never called.  Note that
@@ -148,7 +149,7 @@ TAO_Transport_Cache_Manager::close (ACE_Handle_Set &handle_Set)
                             *this->cache_lock_,
                             -1));
 
-  return this->close_i (handle_Set);
+  return this->close_i (reactor_registered, unregistered);
 }
 
 

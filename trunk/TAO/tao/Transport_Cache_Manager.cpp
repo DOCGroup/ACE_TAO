@@ -254,7 +254,8 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 
 
 int
-TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
+TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
+                                      TAO_EventHandlerSet &unregistered)
 {
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();
@@ -274,12 +275,13 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
           // rather than doing it here.  That way, the locking is correct.
           if ((*iter).int_id_.handler ()->is_registered ())
             {
-              handle_set.set_bit ((*iter).int_id_.handler ()->fetch_handle ());
+              reactor_registered.set_bit ((*iter).int_id_.handler ()->fetch_handle ());
             }
 #else
           // Get the transport to fill its associated connection's handle in
-          // the handle_set.
-          (*iter).int_id_.transport ()->provide_handle (handle_set);
+          // the handle sets.
+          (*iter).int_id_.transport ()->provide_handle (reactor_registered,
+                                                        unregistered);
 #endif
           // Inform the transport that has a reference to the entry in the
           // map that we are *gone* now. So, the transport should not use
@@ -385,6 +387,9 @@ template class ACE_Hash_Map_Manager_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Has
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>;
+template class ACE_Unbounded_Set<ACE_Event_Handler*>;
+template class ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>;
+template class ACE_Node<ACE_Event_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -399,5 +404,8 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Unbounded_Set<ACE_Event_Handler*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
+#pragma instantiate ACE_Node<ACE_Event_Handler*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
