@@ -27,28 +27,48 @@
 class ACE_Message_Block;
 class ACE_Time_Value;
 
+//! Local representation for remote peers
+/*!
+  Both senders and receivers in the multicast group need to maintain
+  explicit representations of their "peers".  For example, a sender
+  needs to know the list of all the receivers and what messages they
+  have reported as successfully received.
+  Likewise, the receiver needs to maintain separate state for each
+  remote sender, and must be able to disconnect from all of them
+  gracefully when needed.
+  The RMCast_Proxy class is an opaque representation of such a peer,
+  and hides all the networking details from the rest of the system.
+*/
 class ACE_RMCast_Export ACE_RMCast_Proxy : public ACE_RMCast_Module
 {
-  // = TITLE
-  //     Reliable Multicast Proxy
-  //
-  // = DESCRIPTION
-  //     The proxy is used to send back messages to either a single
-  //     receiver (o supplier).
-  //
 public:
-  // = Initialization and termination methods.
+  //! Constructor
   ACE_RMCast_Proxy (void);
   // Constructor
 
+  //! Destructor
   virtual ~ACE_RMCast_Proxy (void);
-  // Destructor
 
+  //! Return the highest sequence number received without any losses
+  //! before it.  Only applies to remote receiver proxies.
+  /*!
+    Please read the documentation in ACE_RMCast::Ack
+   */
   virtual ACE_UINT32 highest_in_sequence (void) const;
-  virtual ACE_UINT32 highest_received (void) const;
-  // Get the sequence numbers received by the remote proxy.
-  // Return 0 for sender proxies
 
+  //! Return the highest sequence number successfully received.
+  //! Only applies to remote receiver proxies.
+  /*!
+    Please read the documentation in ACE_RMCast::Ack
+   */
+  virtual ACE_UINT32 highest_received (void) const;
+
+  //@{
+  //! Send messages directly to the peer.
+  /*! Send a message directly to the peer, i.e. the message is not
+    sent through the multicast group and it may not be processed by
+    all the layers in the stack.
+  */
   virtual int reply_data (ACE_RMCast::Data &) = 0;
   virtual int reply_poll (ACE_RMCast::Poll &) = 0;
   virtual int reply_ack_join (ACE_RMCast::Ack_Join &) = 0;
@@ -56,16 +76,21 @@ public:
   virtual int reply_ack (ACE_RMCast::Ack &) = 0;
   virtual int reply_join (ACE_RMCast::Join &) = 0;
   virtual int reply_leave (ACE_RMCast::Leave &) = 0;
-  // Push data back to the remote proxy
+  //@}
 
-  // = The RMCast_Module methods
+  /*!
+    Proxies process the ACK sequence numbers to save the sequence
+    numbers reported from the remote peer.
+   */
   virtual int ack (ACE_RMCast::Ack &);
 
 private:
+  //@{
+  //! Cache the sequence numbers reported from the remote peer using
+  //! Ack messages
   ACE_UINT32 highest_in_sequence_;
   ACE_UINT32 highest_received_;
-  // Cache the sequence numbers reported from the remote peer using
-  // Ack messages
+  //@}
 };
 
 #if defined (__ACE_INLINE__)

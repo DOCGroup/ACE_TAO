@@ -22,6 +22,10 @@ ACE_RMCast_Reassembly (void)
 
 ACE_RMCast_Reassembly::~ACE_RMCast_Reassembly (void)
 {
+  /*!<
+     We cleanup the resources in the destructor
+     <B color=red>@@ TODO</B> Why not in the close() operation?
+  */
   for (Message_Map_Iterator i = this->messages_.begin ();
        i != this->messages_.end ();
        ++i)
@@ -87,6 +91,7 @@ ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
 
   // Push the message...
   ACE_RMCast::Data downstream_data;
+  downstream_data.source = data.source;
   downstream_data.sequence_number = data.sequence_number;
   downstream_data.total_size = message->message_body ()->length ();
   downstream_data.fragment_offset = 0;

@@ -24,19 +24,28 @@
 
 class ACE_RMCast_Partial_Message;
 
+//! Reassemble multiple data fragments into a single data message
+/*!
+  Data messages may not fit in a single MTU in the transport layer, in
+  that case the application configure a RMCast_Fragment module on the
+  sender side.  On the receiver side this layer reassemble the
+  messages sent from a <EM>single</EM> source, and passes the messages
+  up the stream.
+*/
 class ACE_RMCast_Export ACE_RMCast_Reassembly : public ACE_RMCast_Module
 {
 public:
+  //! Constructor
   ACE_RMCast_Reassembly (void);
-  // Constructor
 
+  //! Destructor
   virtual ~ACE_RMCast_Reassembly (void);
-  // Destructor
 
   // = The ACE_RMCast_Module methods
   virtual int data (ACE_RMCast::Data &data);
 
 private:
+  //! A mutex used to synchronize all the internal operations.
   ACE_SYNCH_MUTEX mutex_;
   typedef
       ACE_Hash_Map_Manager<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Null_Mutex>
@@ -45,8 +54,9 @@ private:
       ACE_Hash_Map_Iterator<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Null_Mutex>
       Message_Map_Iterator;
 
+  //! A map, indexed by sequence number, of the partially received
+  //! messages.
   Message_Map messages_;
-  // The array of partially received messages
 };
 
 #if defined (__ACE_INLINE__)

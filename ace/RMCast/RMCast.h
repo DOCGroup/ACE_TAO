@@ -28,69 +28,22 @@
 class ACE_Message_Block;
 class ACE_RMCast_Proxy;
 
+//! The RMCast namespace
+/*!
+  Several simple data structures and enums are shared by all the
+  RMCast components, this is the place where we put them by default.
+*/
 class ACE_RMCast_Export ACE_RMCast
 {
 public:
 
-  // Message formats
-
-  // From SENDER to RECEIVER
-  //
-  // POLL
-  // +---------+----------------------+
-  // | 8 bits  | MT_POLL              |
-  // +---------+----------------------+
-  //
-  // ACK_JOIN
-  // +---------+----------------------+
-  // | 8 bits  | MT_ACK_JOIN          |
-  // +---------+----------------------+
-  // | 32 bits | next_sequence_number |
-  // +---------+----------------------+
-  //
-  // ACK_LEAVE
-  // +---------+----------------------+
-  // | 8 bits  | ACK_LEAVE            |
-  // +---------+----------------------+
-  //
-  // DATA
-  // +---------+----------------------+
-  // | 8 bits  | DATA                 |
-  // +---------+----------------------+
-  // | 32 bits | sequence_number      |
-  // +---------+----------------------+
-  // | 32 bits | message_size         |
-  // +---------+----------------------+
-  // | 32 bits | fragment_offset      |
-  // +---------+----------------------+
-  // ? ? ? ? ? | 32 bits | payload_size         |
-  // ? ? ? ? ? +---------+----------------------+
-  // |         | payload              |
-  // +---------+----------------------+
-  //
-
-  // From RECEIVER to SENDER
-  //
-  // MT_JOIN
-  // +---------+----------------------+
-  // | 8 bits  | MT_JOIN              |
-  // +---------+----------------------+
-  //
-  // MT_LEAVE
-  // +---------+----------------------+
-  // | 8 bits  | MT_LEAVE             |
-  // +---------+----------------------+
-  //
-  // MT_ACK
-  // +---------+----------------------+
-  // | 8 bits  | MT_ACK               |
-  // +---------+----------------------+
-  // | 32 bits | highest_in_sequence  |
-  // +---------+----------------------+
-  // | 32 bits | highest_received     |
-  // +---------+----------------------+
-  //
-
+  //! The message types
+  /*!
+    Each message includes a type field in the header used by the
+    receiver to correctly parse it.
+    Classes with the same name as the message type describe the actual
+    format of the message.
+  */
   enum Message_Type
   {
     // Sender initiated
@@ -105,6 +58,41 @@ public:
     MT_LAST
   };
 
+  //! Simple enum used to describe the receiver state transitions
+  /*!
+    Receivers go through several states before they can fully accept
+    messages, the following comments describe those states, as well as
+    the possible transitions
+   This configuration is pesimistic, any invalid message is cause
+   enough to reclaim all the resources.  This partially addresses
+   situations where either accidentally or intentionally a sender is
+   multicasting packets to the wrong group.
+
+   <CODE>
+              NON_EXISTENT JOINING      JOINED       LEAVING<BR>
+   ----------------------------------------------------------------<BR>
+   POLL       JOINING      JOINING      JOINED       LEAVING<BR>
+              Send/Join    Send/Join    Send/Ack     Send/Leave<BR>
+  <BR>
+   ACK        NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
+              Noop         Destroy      Destroy      Destroy<BR>
+  <BR>
+   JOIN       NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
+              Noop         Destroy      Destroy      Destroy<BR>
+  <BR>
+   LEAVE      NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
+              Noop         Destroy      Destroy      Destroy<BR>
+  <BR>
+   ACK_JOIN   JOINING      JOINED       JOINED       LEAVING<BR>
+              Send/Join    Update ACT   Update ACT   Send/Leave<BR>
+  <BR>
+   ACK_LEAVE  NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
+              Noop         Destroy      Destroy      Destroy<BR>
+  <BR>
+   SEND_DATA  JOINING      JOINING      JOINED       LEAVING<BR>
+              Send/Join    Send/Join    Recv/Data    Send/Leave<BR>
+  </CODE>
+  */
   enum Receiver_State
   {
     RS_NON_EXISTENT,
@@ -113,81 +101,75 @@ public:
     RS_LEAVING
   };
 
-  // State transition (and actions) for the receivers.
-  // This configuration is pesimistic, any invalid message is cause
-  // enough to reclaim all the resources.  This partially addresses
-  // situations where either accidentally or intentionally a sender is
-  // multicasting packets to the wrong group.
-  //
-  //            NON_EXISTENT JOINING      JOINED       LEAVING
-  // ----------------------------------------------------------------
-  // POLL       JOINING      JOINING      JOINED       LEAVING
-  //            Send/Join    Send/Join    Send/Ack     Send/Leave
-  //
-  // ACK        NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT
-  //            Noop         Destroy      Destroy      Destroy
-  //
-  // JOIN       NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT
-  //            Noop         Destroy      Destroy      Destroy
-  //
-  // LEAVE      NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT
-  //            Noop         Destroy      Destroy      Destroy
-  //
-  // ACK_JOIN   JOINING      JOINED       JOINED       LEAVING
-  //            Send/Join    Update ACT   Update ACT   Send/Leave
-  //
-  // ACK_LEAVE  NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT
-  //            Noop         Destroy      Destroy      Destroy
-  //
-  // SEND_DATA  JOINING      JOINING      JOINED       LEAVING
-  //            Send/Join    Send/Join    Recv/Data    Send/Leave
-  //
 
+  //! Simle enum used to describe the state transitions for senders
+  /*!
+   State transition (and actions) for the senders.
+   This configuration is pesimistic, any invalid message is cause
+   enough to reclaim all the resources.  This partially addresses
+   situations where either accidentally or intentionally a sender is
+   multicasting packets to the wrong group.
+
+  <CODE>
+              NON_EXISTENT   JOINED<BR>
+   ------------------------------------------<BR>
+   POLL       NON_EXISTENT   NON_EXISTENT<BR>
+              Destroy        Destroy<BR>
+  <BR>
+   ACK        NON_EXISTENT   JOINED<BR>
+              Noop           Process/Ack<BR>
+  <BR>
+   JOIN       JOINED         NON_EXISTENT<BR>
+              Send/Join_Ack  Send/Join_Ack<BR>
+  <BR>
+   LEAVE      NON_EXISTENT   NON_EXISTENT<BR>
+              Send/Leave_Ack Send/Leave_Ack<BR>
+                             Destroy<BR>
+  <BR>
+   ACK_JOIN   NON_EXISTENT   NON_EXISTENT<BR>
+              Noop           Destroy<BR>
+  <BR>
+   ACK_LEAVE  NON_EXISTENT   NON_EXISTENT<BR>
+              Noop           Destroy<BR>
+  <BR>
+   SEND_DATA  NON_EXISTENT   NON_EXISTENT<BR>
+              Noop           Destroy<BR>
+  </CODE>
+  */
   enum Sender_State
   {
     SS_NON_EXISTENT,
     SS_JOINED
   };
 
-  // State transition (and actions) for the senders.
-  // This configuration is pesimistic, any invalid message is cause
-  // enough to reclaim all the resources.  This partially addresses
-  // situations where either accidentally or intentionally a sender is
-  // multicasting packets to the wrong group.
-  //
-  //            NON_EXISTENT   JOINED
-  // ------------------------------------------
-  // POLL       NON_EXISTENT   NON_EXISTENT
-  //            Destroy        Destroy
-  //
-  // ACK        NON_EXISTENT   JOINED
-  //            Noop           Process/Ack
-  //
-  // JOIN       JOINED         NON_EXISTENT
-  //            Send/Join_Ack  Send/Join_Ack
-  //
-  // LEAVE      NON_EXISTENT   NON_EXISTENT
-  //            Send/Leave_Ack Send/Leave_Ack
-  //                           Destroy
-  //
-  // ACK_JOIN   NON_EXISTENT   NON_EXISTENT
-  //            Noop           Destroy
-  //
-  // ACK_LEAVE  NON_EXISTENT   NON_EXISTENT
-  //            Noop           Destroy
-  //
-  // SEND_DATA  NON_EXISTENT   NON_EXISTENT
-  //            Noop           Destroy
-  //
-
 
   // These structures define the basic layout of the messages.
+
+  //! This is the main message sent by senders
+  /*!
+  <CODE>
+   +---------+----------------------+<BR>
+   | 8 bits  | DATA                 |<BR>
+   +---------+----------------------+<BR>
+   | 32 bits | sequence_number      |<BR>
+   +---------+----------------------+<BR>
+   | 32 bits | message_size         |<BR>
+   +---------+----------------------+<BR>
+   | 32 bits | fragment_offset      |<BR>
+   +---------+----------------------+<BR>
+   ? ? ? ? ? | 32 bits | payload_size         |<BR>
+   ? ? ? ? ? +---------+----------------------+<BR>
+   |         | payload              |<BR>
+   +---------+----------------------+<BR>
+  </CODE>
+  */
   struct Data
   {
     // Source ID is implicit in recvfrom()...
     ACE_UINT32 sequence_number;
     ACE_UINT32 total_size;
     ACE_UINT32 fragment_offset;
+
     // @@ TODO: we may want to add optional fields, such as:
     //    - Polling clients for their status
     //    - Sending the range of messages in the queue
@@ -196,41 +178,113 @@ public:
 
     ACE_Message_Block *payload;
 
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 
+  /*!
+    <CODE>
+    +---------+----------------------+<BR>
+    | 8 bits  | MT_POLL              |<BR>
+    +---------+----------------------+<BR>
+    </CODE>
+  */
   struct Poll
   {
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 
+  //! Receivers accept new members using this message
+  /*!
+    <CODE>
+    +---------+----------------------+<BR>
+    | 8 bits  | MT_ACK_JOIN          |<BR>
+    +---------+----------------------+<BR>
+    | 32 bits | next_sequence_number |<BR>
+    +---------+----------------------+<BR>
+    </CODE>
+  */
   struct Ack_Join
   {
     ACE_INT32 next_sequence_number;
 
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 
+  //! Senders acknowledge when receivers try to leave
+  /*!
+  <CODE>
+    +---------+----------------------+<BR>
+    | 8 bits  | ACK_LEAVE            |<BR>
+    +---------+----------------------+<BR>
+    </CODE>
+  */
   struct Ack_Leave
   {
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 
+  //! Provide feedback to the sender about messages received and sent
+  //! so far.
+  /*!
+   *
+   * This message is used to provide feedback information to senders.
+   * It contains two sequence numbers:
+   * - highest_in_sequence: is the sequence number of the last message
+   *   received without any lost messages before it
+   * - highest_received: is the sequence number of the last_message
+   *   successfully received, there may be some messages lost before it
+   *
+   * <CODE>
+   * +---------+----------------------+<BR>
+   * | 8 bits  | MT_ACK               |<BR>
+   * +---------+----------------------+<BR>
+   * | 32 bits | highest_in_sequence  |<BR>
+   * +---------+----------------------+<BR>
+   * | 32 bits | highest_received     |<BR>
+   * +---------+----------------------+<BR>
+   * </CODE>
+   */
   struct Ack
   {
+    //! The last message received without any losses before it.
     ACE_UINT32 highest_in_sequence;
+
+    //! The last message successfully received
     ACE_UINT32 highest_received;
 
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 
+  //! Receivers send this message to indicate they want to join
+  /*
+  <CODE>
+    +---------+----------------------+<BR>
+    | 8 bits  | MT_JOIN              |<BR>
+    +---------+----------------------+<BR>
+  </CODE>
+  */
   struct Join
   {
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 
+  //! Receivers send this message to disconnect gracefully
+  /*!
+  <CODE>
+    +---------+----------------------+<BR>
+    | 8 bits  | MT_LEAVE             |<BR>
+    +---------+----------------------+<BR>
+  </CODE>
+  */
   struct Leave
   {
+    //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;
   };
 };

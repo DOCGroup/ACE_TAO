@@ -1,3 +1,25 @@
+Wed Sep 27 08:23:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/Makefile:
+          Updated dependencies
+
+        * ace/RMCast/RMCast.h:
+        * ace/RMCast/RMCast_Module.h:
+        * ace/RMCast/RMCast_Proxy.cpp:
+        * ace/RMCast/RMCast_Proxy.h:
+        * ace/RMCast/RMCast_Reassembly.h:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+          Update comments to be doxygen friendly
+
+        * ace/RMCast/RMCast_Membership.cpp:
+          Fixed problems in Ack management, we were stopping the useful
+          Acks, not the ones that just represented repeated information.
+
+        * tests/RMCast/Makefile:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+          Add test for the ACE_RMCast_Membership class.
+
 Tue Sep 26 22:39:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Reactor/WFMO_Reactor/test_abandoned.cpp:

@@ -25,3 +25,11 @@ ACE_RMCast_Proxy::highest_received (void) const
 {
   return this->highest_received_;
 }
+
+int
+ACE_RMCast_Proxy::ack (ACE_RMCast::Ack &ack)
+{
+  this->highest_in_sequence_ = ack.highest_in_sequence;
+  this->highest_received_ = ack.highest_received;
+  return this->ACE_RMCast_Module::ack (ack);
+}
