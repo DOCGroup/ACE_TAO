@@ -1,3 +1,11 @@
+Sun Nov 19 11:02:17 2000  DOC Group CVS Access  <doccvs@ace.cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Propagated/Makefile: 
+        * tests/RTCORBA/Client_Protocol/Makefile:
+        * tests/RTCORBA/Server_Declared/Makefile:
+        * tests/RTCORBA/Server_Protocol/Makefile:
+	  Updated dependencies. (Priyanka)
+	
 Sun Nov 19 07:54:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/*/Makefile:
