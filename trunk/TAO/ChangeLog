@@ -1,3 +1,9 @@
+Fri Mar 28 11:27:12 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Servant_var.h:
+	  Fix for compilation with MS Visual C++ 6. 
+
 Thu Mar 27 18:30:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:

@@ -9,6 +9,7 @@
 #define TAO_PERF_RTEC_AUTO_DISCONNECT_H
 
 #include "Auto_Functor.h"
+#include "tao/corba.h"
 
 /**
  * @class Disconnect
