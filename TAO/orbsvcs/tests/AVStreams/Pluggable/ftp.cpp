@@ -55,7 +55,7 @@ FTP_Client_Callback::handle_timeout (void *)
         }
       if (n == 0)
         {
-          if (::feof (CLIENT::instance ()->file ()))
+          if (feof (CLIENT::instance ()->file ()))
             {
               // wait for sometime for the data to be flushed to the other side.
               this->count_++;
