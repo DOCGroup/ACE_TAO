@@ -412,7 +412,7 @@ sub check_workspace () {
     die "$0: unable to open $cvs\n";
   while (<CVS>) {
     next if m%^U %;    #### Allow others to update the repository.
-    next if m%^cvs checkout: New directory `.*' -- ignored$%;  #### empty dirs.
+    next if m%^cvs server: New directory `.*' -- ignored$%;  #### empty dirs.
 
     push (@out_of_date, $_) if "$_";
   }
