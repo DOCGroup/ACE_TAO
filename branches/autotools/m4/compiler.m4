@@ -40,7 +40,7 @@ dnl  AC_BEFORE([$0], [AM_PROG_LIBTOOL])
  if test "$GXX" = yes; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
-   if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
+   if $CXX --version | $EGREP -v '^2\.[0-7]' > /dev/null; then
 changequote([, ])dnl
      :  # Do nothing
    else
@@ -299,7 +299,7 @@ changequote([, ])dnl
          fi
 
          dnl Some flags only work with Sun C++ 4.2
-         if (CC -V 2>&1 | egrep 'Compilers 4\.2' > /dev/null); then
+         if (CC -V 2>&1 | $EGREP 'Compilers 4\.2' > /dev/null); then
            CXXFLAGS="$CXXFLAGS -features=castop"
            if test "$ace_user_enable_rtti" = yes; then
              CXXFLAGS="$CXXFLAGS -features=rtti"
@@ -307,7 +307,7 @@ changequote([, ])dnl
          fi
 
          dnl Sun C++ 5.0 weirdness
-         if (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
+         if (CC -V 2>&1 | $EGREP 'Compilers 5\.0' > /dev/null); then
            CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd -instances=explicit"
 
            dnl Inlining appears to cause link problems with early

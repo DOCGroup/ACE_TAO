@@ -347,7 +347,7 @@ EOF
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-       egrep "ACE_REAL_FUNCTION" | 
+       $EGREP "ACE_REAL_FUNCTION" | 
        (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
          rm -f conftest.$ac_ext
          ace_real_function=`cat conftest.awk`
@@ -398,7 +398,7 @@ EOF
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-       egrep "ACE_REAL_FUNCTION" |
+       $EGREP "ACE_REAL_FUNCTION" |
        eval "$AWK '{print \[$]2}'" > conftest.awk 2>&1; then
         rm -f conftest.$ac_ext
         ace_real_function=`cat conftest.awk`
@@ -435,7 +435,7 @@ dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_setrlimit_enum=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep '[ ]+setrlimit.*\(.*[^,]*enum' | \
+       $EGREP '[ ]+setrlimit.*\(.*[^,]*enum' | \
        sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
@@ -478,7 +478,7 @@ dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_rusage_who=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep '[ ]+getrusage.*\(.*[^,]*enum' | \
+       $EGREP '[ ]+getrusage.*\(.*[^,]*enum' | \
        sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
@@ -594,7 +594,7 @@ changequote(, )dnl
 dnl Here we attempt to determine the type of the second argument of
 dnl lseek64()/llseek() from its prototype.
      ace_off64_t=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep '[ ]+lseek64.*\(.*' | \
+       $EGREP '[ ]+lseek64.*\(.*' | \
        sed -e 's/^.*(.*,[ ]*\(.*\) .*,.*$/\1/'`
 changequote([, ])dnl
 
