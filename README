@@ -406,7 +406,7 @@ Dave Mayerhoefer <davem@lynx.com>
 Bert Craytor  <Bert_Craytor@peoplesoft.com>
 Joey Zhu <joey.zhu@wcom.com>
 Arthur J. Lewis <hfdh99a@prodigy.com>
-Michael R. MacFaden <mrm@acm.org>
+Michael R. MacFaden <mrm@yagosys.com>
 Eugene R. Somdahl <gene@endo.com>
 Paul Han <phan@CCGATE.HAC.COM>
 Jeff Morgan <jeff@audioactive.com>
@@ -456,7 +456,7 @@ David Brackman <dbrackman@OhioEE.com>
 Dave Moore <dave.moore@gecm.com>
 Joseph Cross <joseph.k.cross@lmco.com>
 Cherif Sleiman <sleiman@research.moore.com>
-Stefan Ericsson <Stefan.Ericsson@osd.uab.ericsson.se>
+Stefan Ericsson <uabsjen@osd.ericsson.se>
 Wei Chiang <chiang@tele.nokia.fi>
 Thanh Ma <tma@encore.com>
 Oleg Krivosheev <kriol@fnal.gov>
@@ -550,10 +550,6 @@ Steve Kay <slk1@icore.ih.lucent.com>
 Greg White <gwhite@northlink.com>
 Ki-hyun Yoon <abird@nextware.co.kr>
 Umar Syyid <usyyid@hns.com>
-Bill Fulton <fultonb@pcnet1.ascs.aro.allied.com>
-Amancio Hasty <hasty@rah.star-gate.com>
-Zoran Ivanovic <zorani@pathcom.com>
-Sree Oggu <dharani@sutmyn.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive

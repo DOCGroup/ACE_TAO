@@ -1,355 +1,16 @@
-Tue Jun 09 15:25:13 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ACE version 4.5.11 released.
-
-Tue Jun  9 14:59:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
-
-        * ace/OS.cpp:  Made it so both Borland and Microsoft use the
-          x.wProcessorArchitecture structure for system info.
-
-Tue Jun 09 14:35:28 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * tests/Tokens_Test.cpp,UPIPE_SAP_Test.cpp: only need the
-          template instantiations with Borland C++.
-
-        * bin/make_release: create version diffs, in background,
-          when creating releases.
-
-Tue Jun 09 12:50:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/ACE_Library.mak: Added Stats.cpp.
-
-Tue Jun 09 11:51:17 1998 Chris Gill  <cdgill@tango.cs.wustl.edu>
-
-        * tests/MM_Shared_Memory_Test: added a null pointer check so
-          test complains rather than crashing when shared allocator fails.
-
-Mon Jun  8 21:03:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Select_Reactor.cpp (any_ready): Fixed a more unrighteous bug
-          where we were assigning the values in the wait_set_ rather than
-          the ready_set_.  Thanks to Stefan Ericsson
-          <Stefan.Ericsson@osd.uab.ericsson.se> for reporting this bug.
-
-Mon Jun  8 19:15:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/Malloc.h:
-        * ace/Malloc_Base.h (ACE_Allocator): Moved the definition of
-          abstract class ACE_Allocator from Malloc.h to a new file called
-          Malloc_Base.h to resolve a circular dependency among a bunch of
-          header files when compiling with UNICODE and inline enabled.
-
-        * ace/SString.i: Changed to include "ace/Malloc_Base.h" to avoid
-          circular inclusion.
-
-Mon Jun 08 18:35:23 1998  Steve Huston  <shuston@riverace.com>
-
-        * ACE-INSTALL.html: Added some updated HP-UX info (and a pointer to
-          Riverace's HP-UX hints page) and removed the warning to not use
-          MSVC 5.0 SP3 - per results from ace-users discussions last week,
-          SP3 is getting used successfully.
-
-Mon Jun 08 13:22:47 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Basic_Types.h: set ACE_SIZEOF_LONG_DOUBLE to 12 if
-          LDBL_MAX_EXP is 16384 and LDBL_DIG is 18.  Thanks to
-          Sree Oggu <dharani@sutmyn.com> for reporting this, on
-          SolarisX86 with Sun C++.
-
-        * ace/Malloc.cpp (instance): cleaned up comments.
-
-Mon Jun  8 12:12:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * tests/UPIPE_SAP_Test.cpp:
-          Template instantiation was not using the ACE_SYNCH macros.
-
-Mon Jun  8 02:17:54 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
-
-        * ACE-INSTALL.html:
-        Added a comment regarding the new port to Borland C++ Builder.
-
-        * ace/ACE.bpg:
-        * ace/ACED.bpr:
-        * ace/ACED.cpp:
-        * ace/ACER.bpr:
-        * ace/ACER.cpp:
-
-
-        * ace/ACE.cpp:
-        Got rid of unused const int MAX_STRING_SZ = 4096.
-
-        * ace/Asynch_Acceptor.cpp:
-        * ace/Asynch_IO.cpp:
-        * ace/Msg_WFMO_Reactor.cpp:
-        * ace/config-win32-common.h:
-        Replaced the use of _WIN32_WINNT with ACE_HAS_WINNT4. Borland C++
-        Builder doesn't handle _WIN32_WINNT very well when building under
-        Win95.
-
-        * ace/Asynch_IO.h:
-        Now ACE_Asynch_Result inherits publicly from OVERLAPPED;
-        otherwise, Borland C++ Builder refuses to access OVERLAPPED
-        members. I'm not sure who's right or wrong here.
-
-        * ace/CORBA_Ref.h:
-        Added an #include "ace/ACE.h".
-
-        * ace/Future.h:
-        Two cosmetic changes.
-
-        * ace/LOCK_SOCK_Acceptor.cpp:
-        Added an #include /**/ "ace/LOCK_SOCK_Acceptor.h".
-
-        * ace/Log_Msg.cpp:
-        Borland C++ Builder doesn't like extern int sys_nerr, so I
-        protected against it.
-
-        * ace/OS.cpp:
-        A couple of hacks to handle FILETIMEs and SYSTEM_INFO structs,
-        which are defined a little different under Borland C++ Builder.
-
-        * ace/OS.h:
-        Added support for Borland C++ Builder.
-
-        * ace/OS.i:
-        Borland C++ Builder handles a few functions differently: close,
-        SetFilePointer, wfdopen.
-
-        * ace/Synch_T.h:
-        A comment on an #else spanned several lines and mixed // and /**/
-        styles; hard to read.
-
-        * ace/TTY_IO.cpp:
-        A switch was not properly indented and, as a result, had an extra
-        break that made Borland C++ Builder complain.
-
-        * ace/WFMO_Reactor.cpp:
-        Got rid of a couple of unused local variables called result.
-
-        * ace/config-win32-common.h:
-        Added a few defines for Borland C++ Builder. Don't know if
-        this is the proper way to do it, but there it is.
-
-        * tests/Aio_Platform_Test.bpr:
-        * tests/Atomic_Op_Test.bpr:
-        * tests/Barrier_Test.bpr:
-        * tests/Basic_Types_Test.bpr:
-        * tests/Buffer_Stream_Test.bpr:
-        * tests/Conn_Test.bpr:
-        * tests/Enum_Interfaces_Test.bpr:
-        * tests/Env_Value_Test.bpr:
-        * tests/Future_Test.bpr:
-        * tests/Handle_Set_Test.bpr:
-        * tests/Hash_Map_Manager_Test.bpr:
-        * tests/IOStream_Test.bpr:
-        * tests/MM_Shared_Memory_Test.bpr:
-        * tests/MT_Reactor_Timer_Test.bpr:
-        * tests/MT_SOCK_Test.bpr:
-        * tests/Map_Manager_Test.bpr:
-        * tests/Mem_Map_Test.bpr:
-        * tests/Message_Block_Test.bpr:
-        * tests/Message_Queue_Notifications_Test.bpr:
-        * tests/Message_Queue_Test.bpr:
-        * tests/Naming_Test.bpr:
-        * tests/Notify_Performance_Test.bpr:
-        * tests/OrdMultiSet_Test.bpr:
-        * tests/Pipe_Test.bpr:
-        * tests/Priority_Buffer_Test.bpr:
-        * tests/Priority_Reactor_Test.bpr:
-        * tests/Priority_Task_Test.bpr:
-        * tests/Process_Mutex_Test.bpr:
-        * tests/Process_Strategy_Test.bpr:
-        * tests/Reactor_Exceptions_Test.bpr:
-        * tests/Reactor_Notify_Test.bpr:
-        * tests/Reactor_Performance_Test.bpr:
-        * tests/Reactor_Timer_Test.bpr:
-        * tests/Reactors_Test.bpr:
-        * tests/Reader_Writer_Test.bpr:
-        * tests/Recursive_Mutex_Test.bpr:
-        * tests/SOCK_Connector_Test.bpr:
-        * tests/SOCK_Test.bpr:
-        * tests/SPIPE_Test.bpr:
-        * tests/SString_Test.bpr:
-        * tests/SV_Shared_Memory_Test.bpr:
-        * tests/Semaphore_Test.bpr:
-        * tests/Service_Config_Test.bpr:
-        * tests/Sigset_Ops_Test.bpr:
-        * tests/Simple_Message_Block_Test.bpr:
-        * tests/TSS_Test.bpr:
-        * tests/Task_Test.bpr:
-        * tests/Thread_Manager_Test.bpr:
-        * tests/Thread_Mutex_Test.bpr:
-        * tests/Thread_Pool_Test.bpr:
-        * tests/Time_Service_Test.bpr:
-        * tests/Time_Value_Test.bpr:
-        * tests/Timer_Queue_Test.bpr:
-        * tests/Tokens_Test.bpr:
-        * tests/UPIPE_SAP_Test.bpr:
-        * tests/tests.bpg:
-        Added these Borland C++ Builder project files.
-
-        * tests/Aio_Platform_Test.cpp:
-        * tests/Atomic_Op_Test.cpp:
-        * tests/Barrier_Test.cpp:
-        * tests/Basic_Types_Test.cpp:
-        * tests/Buffer_Stream_Test.cpp:
-        * tests/Enum_Interfaces_Test.cpp:
-        * tests/Env_Value_Test.cpp:
-        * tests/Future_Test.cpp:
-        * tests/Handle_Set_Test.cpp:
-        * tests/Hash_Map_Manager_Test.cpp:
-        * tests/IOStream_Test.cpp:
-        * tests/MM_Shared_Memory_Test.cpp:
-        * tests/MT_Reactor_Timer_Test.cpp:
-        * tests/MT_SOCK_Test.cpp:
-        * tests/Map_Manager_Test.cpp:
-        * tests/Mem_Map_Test.cpp:
-        * tests/Message_Block_Test.cpp:
-        * tests/Message_Queue_Notifications_Test.cpp:
-        * tests/Message_Queue_Test.cpp:
-        * tests/Naming_Test.cpp:
-        * tests/Notify_Performance_Test.cpp:
-        * tests/OrdMultiSet_Test.cpp:
-        * tests/Pipe_Test.cpp:
-        * tests/Priority_Buffer_Test.cpp:
-        * tests/Priority_Reactor_Test.cpp:
-        * tests/Priority_Task_Test.cpp:
-        * tests/Process_Mutex_Test.cpp:
-        * tests/Process_Strategy_Test.cpp:
-        * tests/Reactor_Exceptions_Test.cpp:
-        * tests/Reactor_Notify_Test.cpp:
-        * tests/Reactor_Performance_Test.cpp:
-        * tests/Reactor_Timer_Test.cpp:
-        * tests/Reactors_Test.cpp:
-        * tests/Reader_Writer_Test.cpp:
-        * tests/Recursive_Mutex_Test.cpp:
-        * tests/SOCK_Connector_Test.cpp:
-        * tests/SOCK_Test.cpp:
-        * tests/SPIPE_Test.cpp:
-        * tests/SString_Test.cpp:
-        * tests/SV_Shared_Memory_Test.cpp:
-        * tests/Semaphore_Test.cpp:
-        * tests/Service_Config_Test.cpp:
-        * tests/Sigset_Ops_Test.cpp:
-        * tests/Simple_Message_Block_Test.cpp:
-        * tests/TSS_Test.cpp:
-        * tests/Task_Test.cpp:
-        * tests/Thread_Manager_Test.cpp:
-        * tests/Thread_Mutex_Test.cpp:
-        * tests/Thread_Pool_Test.cpp:
-        * tests/Time_Service_Test.cpp:
-        * tests/Time_Value_Test.cpp:
-        * tests/Timer_Queue_Test.cpp:
-        * tests/Tokens_Test.cpp:
-        * tests/UPIPE_SAP_Test.cpp:
-        Added the Borland non-sense to allow the tests to link against the
-        ACE library under Borland C++ Builder. Major pain in the rear
-        end...
-
-        * tests/test_config.h:
-        Added a couple of includes for the case of Borland C++ Builder.
-
-        * tests/Hash_Map_Manager_Test.cpp:
-        Changed variable name allocator to alloc, to avoid conflicts with
-        STL allocators under Borland C++ Builder.
-
-        * tests/Reactors_Test.cpp:
-        Changed variable name tm to thr_mgr, to avoid conflicts with
-        std::tm under Borland C++ Builder.
-
-        * tests/Tokens_Test.cpp:
-        * tests/UPIPE_SAP_Test.cpp:
-        Added a few explicit template instantiations.
-
-Sun Jun 07 09:51:02 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Timeprobe_T.cpp: added #include of ace/Timeprobe.h.
-          It wouldn't compile on GreenHills without it.
-
-        * STL/bool.h: only #define bool, etc., if _MSC_VER is #defined.
-          Thanks to Stanley Leeson <STANLEY.D.LEESON@cdev.com> for
-          reporting this.
-
-        * tests/Timeprobe_Test.cpp: added #include of ace/Timeprobe.cpp
-          to pick up template instantiations, if ACE_COMPILE_TIMEPROBES
-          was not defined.  This allows the test to build on platforms
-          that have explicit template instantiation when libACE was
-          built without timeprobes enabled.
-
-Sun Jun  7 01:06:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/config-freebsd-pthread.h: Added the
-          ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS flag to work around problems
-          with pthreads on FreeBSD.  Thanks to Amancio Hasty
-          <hasty@rah.star-gate.com> for reporting this.
-
-Sat Jun  6 22:00:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-        * ace/Message_Queue.cpp: Added code so that advance() is more
-          thread-safe.
-
-        * apps/gperf/src/Options.cpp (operator): Changed ACE_OS::exit()
-          to ACE_OS::_exit() so we'll leave no trace...
-
-        * apps/gperf/src/Key_List.cpp (output_switch): Fixed another bug
-          where strcmp() should be generated instead of strncmp().
-
-        * apps/gperf/src: We no longer call the inline option "GNU" but
-          now call it "INLINE".
-
-        * apps/gperf/src/{Options.h,Key_List.cpp,Gen_Perf.cpp}: Revised
-          the LARGE_STACK_ARRAY code so that it only gets compiled if
-          we're using GCC.
-
-        * apps/gperf/src/Key_List.cpp (output_switch): Fixed a bug where
-          strcmp() was being used instead of strncmp().  Thanks to C++
-          for finding this!
-
-        * apps/gperf/src/Key_List.cpp: Removed all uses of "register"
-          since C++ compilers can do this automagically...
-
-        * apps/gperf/tests/test.cpp (main): Modified the test program to
-          use C++ rather than C (ugh!).
-
-        * ace: Added two new files: Timeprobe_T.h and Timeprobe_T.cpp in
-          order to solve problems with multiply defined symbols.  Thanks
-          to Brian Mendel, David Levine, and Irfan for tracing this down.
-
-Sat Jun  6 19:10:54 1998  Sergio Flores  <sergio@cs.wustl.edu>
-
-        * ace/config-vxworks5.x.h: changes the default thread priority
-        from 6 to 101.
-
-Sat Jun 06 16:43:01 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Timeprobe.cpp (dtor): inserted missing "[]" in delete of
-          array.
-
-Fri Jun  5 11:53:18 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
-
-        * ace/Log_Msg.{h,cpp}: Added enable_debug_messages() to do
-          the opposite of disable_debug_messages().
-
-        * ace/Parse_Node.cpp: Got rid of all the checks of the
-          Service Configurator's debug flag.  Instead, the checking
-          will occur in the Service Configurator.
-
-        * ace/Service_Config.cpp: Added to Stephen Coy's changes so
-          that debug messages are turned back on after the Service
-          Configurator is done.  That way, other code can still use
-          debug messages.
-
 Thu Jun  4 12:25:48 1998  Rajiv C. Gandhi  <gandhi@tango.cs.wustl.edu>
 
-        * apps/gperf/src/Options.h: removing the option to stack
-          allocate some large arrays as CC does not seem to like it.
+	* apps/gperf/src/Options.h: removing the option to stack
+	  allocate some large arrays as CC does not seem to like it.
 
-        * apps/gperf/src/Key_List.cpp (output_lookup_array): removing
-          the option to stack allocate some large arrays as CC does
-          not seem to like it.
 
-        * apps/gperf/src/Gen_Perf.cpp: removing the option to stack
-          allocate some large arrays as CC does not seem to like it.
+	* apps/gperf/src/Key_List.cpp (output_lookup_array): removing
+	  the option to stack allocate some large arrays as CC does 
+          not seem to like it. 
+
+
+	* apps/gperf/src/Gen_Perf.cpp: removing the option to stack
+	  allocate some large arrays as CC does not seem to like it.
 
 Thu Jun 04 05:03:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -357,24 +18,24 @@ Thu Jun 04 05:03:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Jun  3 02:24:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/config-win32-common.h: Instead of defining _MT for users if
-          it's not defined, spit out an error message and stop the
-          compilation.  Thanks to Barney Dalton
-          <barneyd@cyllene.uwa.edu.au> for suggesting this.
+	* ace/config-win32-common.h: Instead of defining _MT for users if
+	  it's not defined, spit out an error message and stop the
+	  compilation.  Thanks to Barney Dalton
+	  <barneyd@cyllene.uwa.edu.au> for suggesting this.
 
 Tue Jun 02 20:03:51 1998  Steve Huston  <shuston@riverace.com>
 
-        * ace/config-hpux-1[01].x-hpc++.h: Added ACE_HAS_USING_KEYWORD for
-          aC++ on both platforms.
+	* ace/config-hpux-1[01].x-hpc++.h: Added ACE_HAS_USING_KEYWORD for
+	  aC++ on both platforms.
 
 Tue Jun 02 12:19:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/Thread_Manager.cpp (wait_grp,wait_task):  These two were
-          still copying thread_descriptors and deleting the copies
-          directly.  This corrupted the cached thread_descriptor.
-          Changing them to use Thread_Descriptor_Base solved the problem.
-          Thanks to Zoran Ivanovic <zorani@pathcom.com> for finding
-          this.
+	* ace/Thread_Manager.cpp (wait_grp,wait_task):  These two were
+	  still copying thread_descriptors and deleting the copies
+	  directly.  This corrupted the cached thread_descriptor.
+	  Changing them to use Thread_Descriptor_Base solved the problem.
+	  Thanks to Zoran Ivanovic <zoranic@pathcom.dot.com> for finding
+	  this.
 
 Tue Jun 02 08:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
