@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN = client server
+BIN = client server st-client
 
 ifdef AMI
 BIN += ami-latency-client
@@ -24,6 +24,7 @@ endif # AMI
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o testC.o
+ST_CLIENT_OBJS = st-client.o testC.o
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 
 ifdef AMI
@@ -33,7 +34,7 @@ endif # AMI
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 
 
 ifdef AMI
 TAO_IDLFLAGS += -GC
@@ -61,6 +62,9 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+st-client: $(addprefix $(VDIR),$(ST_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ifdef AMI

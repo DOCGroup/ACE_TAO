@@ -393,8 +393,8 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
 TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
+  if (this->transport_ != 0)              
+    this->transport_->idle ();
 }
 
 void
@@ -774,8 +774,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
+  if (this->transport_ != 0)              
+    this->transport_->idle ();
 }
 
 void
@@ -798,8 +798,8 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
+  if (this->transport_ != 0)              
+    this->transport_->idle ();
 }
 
 // Send request, block until any reply comes back.

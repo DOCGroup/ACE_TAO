@@ -95,10 +95,33 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
   this->request_id_ = 0xdeadbeef; // @@ What is a good value???
   this->rd_ = 0;
 
-  return rd->dispatch_reply (reply_status,
-                             version,
-                             reply_ctx,
-                             message_state);
+  // Dispatch the reply.
+  int result = rd->dispatch_reply (reply_status,
+                                   version,
+                                   reply_ctx,
+                                   message_state);
+  
+  // Idle the transport now.
+  // if (this->transport_ != 0)
+  //  this->transport_->idle ();
+  // @@ Carlos : We can do this, in the Muxed Leader Follower
+  //    implementation. In the older implementation, since the state
+  //    variables are in the Transport, and since we are in the
+  //    handle_input right now, we cannot idle the Transport. This
+  //    means that I cannot use  asynchronous requests with Exclusive
+  //    Transport&Old Leader Follower implementation , because I dont
+  //    know when to idle the Transport. 
+  //    So I am moving this <idle> call to the destructors of
+  //    synchronous invocations and for asynchronous invocations
+  //    idle'ing is not at all called after the reply is
+  //    received. 
+  //    We can enable <idle> out here, once we get rid of the old
+  //    Leader Follower implementation. Then we can get rid of the
+  //    destructors in the Invocation classes and they dont have to
+  //    call <idle>. 
+  //    Do I make sense? (Alex).
+
+  return result;
 }
 
 TAO_GIOP_Message_State *
@@ -123,41 +146,41 @@ TAO_Exclusive_TMS::idle_after_send (void)
   return 0;
 }
   
-int
-TAO_Exclusive_TMS::idle_after_reply (void)
-{
-  if (this->transport_ != 0)
-    return this->transport_->idle ();
+// int
+// TAO_Exclusive_TMS::idle_after_reply (void)
+// {
+//   if (this->transport_ != 0)
+//     return this->transport_->idle ();
+//  
+//   return 0;
+// }
 
-  return 0;
-}
-
-int
-TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
-{
-  if (this->rd_ == 0)
-    {
-      // Reply should have been dispatched already.
-      return 1;
-    }
-  else if (this->request_id_ == request_id)
-    {
-      // Reply dispatcher is still here.
-      return 0;
-    }
-  else
-    {
-      // Error. Request id is not matching.
-      
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P | %t):TAO_Exclusive_TMS::reply_received:"
-                      "Invalid request_id \n"));
-        }
-      return -1;
-    }
-}
+// int
+// TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
+// {
+//   if (this->rd_ == 0)
+//     {
+//       // Reply should have been dispatched already.
+//       return 1;
+//     }
+//   else if (this->request_id_ == request_id)
+//     {
+//       // Reply dispatcher is still here.
+//       return 0;
+//     }
+//   else
+//     {
+//       // Error. Request id is not matching.
+//       
+//       if (TAO_debug_level > 0)
+//         {
+//           ACE_DEBUG ((LM_DEBUG,
+//                       "(%P | %t):TAO_Exclusive_TMS::reply_received:"
+//                       "Invalid request_id \n"));
+//         }
+//       return -1;
+//     }
+// }
  
 // *********************************************************************
 
@@ -237,7 +260,7 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
       return -1;
     }
 
-  // @@ Carlos : We could save the <messagee_state> somehow and then
+  // @@ Carlos : We could save the <message_state> somehow and then
   //    signal some other thread to go ahead read the incoming message
   //    if any. Is this what you were telling me before? (Alex).
 
@@ -246,6 +269,9 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                              version,
                              reply_ctx,
                              message_state);
+
+  // No need for idling Transport, it would have got idle'd soon after
+  // sending the request. 
 }
 
 TAO_GIOP_Message_State *
@@ -279,26 +305,26 @@ TAO_Muxed_TMS::idle_after_send (void)
   return 0;
 }
   
-int
-TAO_Muxed_TMS::idle_after_reply (void)
-{
-  return 0;
-}
+// int
+// TAO_Muxed_TMS::idle_after_reply (void)
+// {
+//   return 0;
+// }
 
-int
-TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
-{
-  if (this->dispatcher_table_.find (request_id) == -1)
-    {
-      // Reply should have been dispatched already.
-      return 1;
-    }
-  else
-    {
-      // Reply dispatcher is still here.
-      return 0;
-    }
-}
+// int
+// TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
+// {
+//   if (this->dispatcher_table_.find (request_id) == -1)
+//     {
+//       // Reply should have been dispatched already.
+//       return 1;
+//     }
+//   else
+//     {
+//       // Reply dispatcher is still here.
+//       return 0;
+//     }
+// }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager_Ex <CORBA::ULong,

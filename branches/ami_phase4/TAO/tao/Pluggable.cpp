@@ -246,17 +246,17 @@ TAO_Transport::idle_after_send (void)
   return this->tms ()->idle_after_send ();
 }  
 
-int
-TAO_Transport::idle_after_reply (void)
-{
-  return this->tms ()->idle_after_reply ();
-}
+// int
+// TAO_Transport::idle_after_reply (void)
+// {
+//   return this->tms ()->idle_after_reply ();
+// }
 
-int
-TAO_Transport::reply_received (const CORBA::ULong request_id)
-{
-  return this->tms ()->reply_received (request_id);
-}
+// int
+// TAO_Transport::reply_received (const CORBA::ULong request_id)
+// {
+//   return this->tms ()->reply_received (request_id);
+// }
 
 ACE_SYNCH_CONDITION *
 TAO_Transport::leader_follower_condition_variable (void)

@@ -5,27 +5,16 @@
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
-#include "testS.h"
+#include "testC.h"
 
 ACE_RCSID(Latency, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int nthreads = 1;
 int niterations = 5;
 
-int sleep_flag = 1;
-
-ACE_hrtime_t latency_base;
-
-ACE_hrtime_t throughput_base;
-
-ACE_Throughput_Stats throughput_stats;
-// Global throughput statistics.
+int sleep_flag = 0;
 
 ACE_Time_Value sleep_time (0, 10000);
-
-int done = 0;
-
 
 int
 parse_args (int argc, char *argv[])
@@ -39,9 +28,6 @@ parse_args (int argc, char *argv[])
       case 'k':
         ior = get_opts.optarg;
         break;
-        // case 'n':
-        // nthreads = ACE_OS::atoi (get_opts.optarg);
-        // break;
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
         break;
@@ -53,9 +39,8 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-                           // "-n <nthreads> "
+                           "-n <nthreads> "
                            "-i <niterations> "
-                           "-v "
                            "\n",
                            argv [0]),
                           -1);
@@ -64,43 +49,19 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-class Handler : public POA_AMI_Test_Handler
-{
-public:
-  Handler (void) {};
-  
-  void test_method (CORBA::Environment&)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P | %t) : Callback method  called\n"));
-      
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      throughput_stats.sample (now - throughput_base,
-                               now - latency_base);
-
-      done = 1;
-    };
- 
-  ~Handler (void) {};
-};
-
-class Client : public ACE_Task_Base
+class Client
 {
   // = TITLE
-  //     Run the client thread.
+  //   Run the client thread
   //
   // = DESCRIPTION
-  //     Use the ACE_Task_Base class to run the client threads.
+  //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
   Client (void);
   // ctor
-  
-  void set (Test_ptr server,
-            int niterations, 
-            CORBA::ORB_ptr orb,
-            AMI_Test_Handler_ptr reply_handler);
+
+  void set (Test_ptr server, int niterations);
   // Set the test attributes.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -118,12 +79,9 @@ private:
 
   int niterations_;
   // The number of iterations on each client thread.
-  
-  CORBA::ORB_ptr orb_;
-  // Cache the ORB pointer.
 
-  AMI_Test_Handler_ptr reply_handler_;
-  // ReplyHandler object.
+  ACE_Throughput_Stats throughput_;
+  // Keep throughput statistics on a per-thread basis
 };
 
 int
@@ -161,7 +119,7 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       CORBA::Object_var object =
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -178,64 +136,22 @@ main (int argc, char *argv[])
                             1);
         }
 
-      // ReplyHandler object.
-      Handler handler;
-      AMI_Test_Handler_var reply_handler = handler._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      Client client;
+
+      client.set (server.in (), niterations);
       
-      // Activate POA to handle the call back.
+      client.svc ();
       
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-      
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Create <nthreads> number of ACE_Task objects.
-      Client *clients;
-      ACE_NEW_RETURN (clients, Client[nthreads], 1);
-      for (int i = 0; i != nthreads; ++i)
-        {
-          // Init the client objects.
-          clients[i].set (server.in (), 
-                         niterations, 
-                         orb,
-                         reply_handler.in ());
-
-          // Activate the Tasks.
-          if (clients[i].activate (THR_NEW_LWP | THR_JOINABLE) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot activate client threads\n"),
-                              1);
-        }
-      
-      ACE_Thread_Manager::instance ()->wait ();
-
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
       ACE_Throughput_Stats throughput;
-      char buf[64];
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      for (int j = 0; j != nthreads; ++j)
-        {
-          clients[j].accumulate_into (throughput);
 
-          ACE_OS::sprintf (buf, "Thread[%d]", j);
-          clients[j].dump_stats (buf, gsf);
-        }
+      client.accumulate_into (throughput);
+
+      char buf[64];
+      ACE_OS::sprintf (buf, "Thread[%d]", 1);
+      client.dump_stats (buf, gsf);
+
       throughput.dump_results ("Aggregated", gsf);
 
       // server->shutdown (ACE_TRY_ENV);
@@ -255,22 +171,14 @@ main (int argc, char *argv[])
 // ****************************************************************
 
 Client::Client (void)
-  : niterations_ (0),
-    orb_ (0),
-    reply_handler_ (0)
 {
 }
 
 void
-Client::set (Test_ptr server, 
-             int niterations, 
-             CORBA::ORB_ptr orb,
-             AMI_Test_Handler_ptr reply_handler)
+Client::set (Test_ptr server, int niterations)
 {
   this->server_ = Test::_duplicate (server);
   this->niterations_ = niterations;
-  this->orb_ = orb;
-  this->reply_handler_ = reply_handler;
 }
 
 int
@@ -278,38 +186,38 @@ Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // @@ We should use "validate_connection" for this.
+      // @@ We should use "validate_connection" for this
       for (int j = 0; j < 100; ++j)
         {
           server_->_is_a ("IDL:Test:1.0", ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
-      // Init global throughput base.
-      throughput_base = ACE_OS::gethrtime ();
+      ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
-      for (size_t i = 0; i < this->niterations_; ++i)
+      for (int i = 0; i < this->niterations_; ++i)
         {
-          // Get timestamp.
-          latency_base = ACE_OS::gethrtime ();
-          
-          // Invoke asynchronous operation.
-          server_->sendc_test_method (this->reply_handler_,
-                                      ACE_TRY_ENV);
+          // Record current time.
+          ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
+          // Invoke method.
+          server_->test_method (ACE_TRY_ENV);
+          
+          // Sleep for 10 msecs.
           if (sleep_flag)
-            // Spend 10 msecs running the ORB.
-            this->orb_->run (sleep_time);
-          else
-            while (!done)
-              this->orb_->perform_work ();
-            
+            ACE_OS::sleep (sleep_time);
+
+          // Grab timestamp again.
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
+
           ACE_TRY_CHECK;
+          
+          // Record statistics.
+          this->throughput_.sample (now - throughput_base,
+                                    now - latency_base);
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-
-          done = 0;
         }
     }
   ACE_CATCHANY
@@ -322,13 +230,13 @@ Client::svc (void)
 }
 
 void
-Client::accumulate_into (ACE_Throughput_Stats &t) const
+Client::accumulate_into (ACE_Throughput_Stats &throughput) const
 {
-  t.accumulate (throughput_stats);
+  throughput.accumulate (this->throughput_);
 }
 
 void
 Client::dump_stats (const char* msg, ACE_UINT32 gsf)
 {
-  throughput_stats.dump_results (msg, gsf);
+  this->throughput_.dump_results (msg, gsf);
 }
