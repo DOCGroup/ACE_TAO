@@ -12,6 +12,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "testC.h"
 #include "tests/RTCORBA/Linear_Priority/readers.cpp"
+#include "fudge_priorities.cpp"
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
@@ -800,6 +801,8 @@ main (int argc, char *argv[])
         parse_args (argc, argv);
       if (result != 0)
         return result;
+
+      fudge_priorities (orb.in ());
 
       CORBA::Object_var object =
         orb->string_to_object (ior, ACE_TRY_ENV);

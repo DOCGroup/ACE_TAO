@@ -3,10 +3,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
+#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "testS.h"
 #include "tests/RTCORBA/Linear_Priority/readers.cpp"
+#include "fudge_priorities.cpp"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
 
@@ -168,6 +170,13 @@ main (int argc, char *argv[])
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      int result =
+        parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      fudge_priorities (orb.in ());
+
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA",
                                          ACE_TRY_ENV);
@@ -205,11 +214,6 @@ main (int argc, char *argv[])
       RTCORBA::Priority default_thread_priority =
         current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
 
       CORBA::ULong stacksize = 0;
       CORBA::Boolean allow_request_buffering = 0;
