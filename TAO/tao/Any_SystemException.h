@@ -79,7 +79,7 @@ namespace TAO
   protected:
     CORBA::SystemException *value_;
   };
-};
+}
 
 #include /**/ "ace/post.h"
 #endif /*TAO_ANY_SYSTEMEXCEPTION_H*/

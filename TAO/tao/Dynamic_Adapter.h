@@ -55,7 +55,7 @@ namespace CORBA
   typedef ULong Flags;
 
   class Environment;
-};
+}
 
 class TAO_GIOP_Twoway_Invocation;
 

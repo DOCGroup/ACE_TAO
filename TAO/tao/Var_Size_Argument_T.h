@@ -144,7 +144,7 @@ namespace TAO
 
     typedef Var_Size_Tag                                idl_tag;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Var_Size_Argument_T.inl"
