@@ -84,7 +84,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj,
 TAO_ObjectKey *
 CORBA::LocalObject::_key (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_ERROR((LM_ERROR, ASYS_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
+  ACE_ERROR((LM_ERROR, ACE_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
@@ -155,7 +155,7 @@ CORBA::LocalObject::_request (const CORBA::Char *,
 }
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-CORBA::InterfaceDef_ptr
+IR_InterfaceDef_ptr
 CORBA::LocalObject::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
