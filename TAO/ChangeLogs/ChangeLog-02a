@@ -1,3 +1,20 @@
+Fri Apr  6 14:55:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS.h:
+        * orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.h:
+
+          Updated files corresponding to changes in generated code in
+
+          Tue Apr  3 13:04:55 2001  Carlos O'Ryan  <coryan@uci.edu>
+          and
+          Tue Apr  3 10:54:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
 Fri Apr  6 11:38:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Options.cpp:
