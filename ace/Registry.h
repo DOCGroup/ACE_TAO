@@ -33,12 +33,6 @@
 #endif
 // You must configure the STL components in order to use this wrapper.
 
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-  using std::vector;
-  using std::basic_string;
-#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
-
 class ACE_Export ACE_Registry
   // = TITLE
   //     A Name Server implementation
@@ -53,8 +47,18 @@ class ACE_Export ACE_Registry
 {
 public:
   
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+
+  typedef std::basic_string<TCHAR> Istring;
+  // International string
+
+#else
+
   typedef basic_string<TCHAR> Istring;
   // International string
+
+#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   struct ACE_Export Name_Component 
   {
@@ -64,8 +68,18 @@ public:
   // The <id_> field is used,
   // but the <kind_> field is currently ignored
 
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+
+  typedef std::vector<Name_Component> Name;
+  // A Name is an ordered collections of components (ids)
+
+#else
+
   typedef vector<Name_Component> Name;
   // A Name is an ordered collections of components (ids)
+
+#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   static LPCTSTR STRING_SEPARATOR;
   // Separator for components in a name 
@@ -112,8 +126,18 @@ public:
     // A binding has a name and a type
   };
   
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+
+  typedef std::vector<Binding> Binding_List;
+  // A list of bindings
+
+#else
+
   typedef vector<Binding> Binding_List;
   // A list of bindings
+
+#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   class Binding_Iterator;
   // Forward declaration of iterator
