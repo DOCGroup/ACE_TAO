@@ -355,11 +355,14 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         {TAO_ENCAP_BYTE_ORDER, 0};
                         // Bounded string. Save the bounds
                         _oc_bounded_string [1] = (CORBA::Long) bound;
-                        *tcp = new CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
-                                                    8,
-                                                    ACE_reinterpret_cast(char*,_oc_bounded_string),
-                                                    0, sizeof
-                                                    (CORBA::String_var), 0);
+                        ACE_NEW_THROW_EX (*tcp,
+                                          CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
+                                                           8,
+                                                           ACE_reinterpret_cast(char*,_oc_bounded_string),
+                                                           0, sizeof
+                                                           (CORBA::String_var), 0),
+                                          CORBA::NO_MEMORY ());
+                        ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                       }
                   }
               }
@@ -455,12 +458,15 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // reducing the cost of getting typecodes.
                 if (continue_decoding)
                   {
-                    *tcp = new CORBA::TypeCode ((CORBA::TCKind) indir_kind,
+                    ACE_NEW_THROW_EX (*tcp,
+                                      CORBA::TypeCode ((CORBA::TCKind) indir_kind,
                                                 indir_len,
                                                 indir_stream.rd_ptr(),
                                                 0,
                                                 0,
-                                                parent);
+                                                parent),
+                                      CORBA::NO_MEMORY ());
+                    ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                   }
               }
             break;
@@ -487,12 +493,16 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 u_int len = (u_int) length;
 
                 // create a new typecode
-                *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
+                ACE_NEW_THROW_EX (*tcp,
+                                  CORBA::TypeCode ((CORBA::TCKind) kind,
                                             len,
                                             stream->rd_ptr (),
                                             0,
                                             0,
-                                            parent);
+                                            parent),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
                 // skip length number of bytes in the stream, else we may
                 // leave the stream in an undefined state
                 (void) stream->skip_bytes (length);

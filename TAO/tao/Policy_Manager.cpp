@@ -305,8 +305,16 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
   if (slots == 0)
     slots = this->count_;
 
-  CORBA::PolicyList_var policy_list =
-    new CORBA::PolicyList (slots);
+
+  CORBA::PolicyList *policy_list_ptr;
+
+  ACE_NEW_THROW_EX (policy_list_ptr,
+                    CORBA::PolicyList (slots),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  CORBA::PolicyList_var policy_list (policy_list_ptr);
+  
   policy_list->length (slots);
 
   CORBA::ULong n = 0;
