@@ -21,6 +21,8 @@ TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec,
     {
       this->supplier_set_ =
         this->event_channel_->create_proxy_push_supplier_set ();
+      this->supplier_set_->busy_hwm (this->event_channel_->busy_hwm ());
+      this->supplier_set_->max_write_delay (this->event_channel_->max_write_delay ());
     }
   this->default_POA_ =
     this->event_channel_->consumer_poa ();

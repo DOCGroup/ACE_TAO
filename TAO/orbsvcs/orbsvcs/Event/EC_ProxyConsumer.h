@@ -77,21 +77,25 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-			  CORBA::Environment &env);
+                          CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-			     CORBA::Environment &env);
+                             CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
-			  CORBA::Environment &env);
+                          CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
-			     CORBA::Environment &env);
+                             CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
   virtual void shutdown (CORBA::Environment&);
   // The event channel is shutting down
+
+  const RtecEventChannelAdmin::SupplierQOS& publications_i (void) const;
+  // The QoS (subscription) used to connect to the EC, assumes the
+  // locks are held, use with care!
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -99,7 +103,7 @@ public:
 
   // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
-		RtecEventComm::PushSupplier_ptr push_supplier,
+                RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos,
                 CORBA::Environment &);
   virtual void push (const RtecEventComm::EventSet& event,

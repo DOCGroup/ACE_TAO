@@ -1,3 +1,64 @@
+Sat May 22 17:50:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	  The EC attributes include parameters that control the level of
+	  concurrency in the proxy supplier sets.
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	  Added reference counting: several threads could be pushing on
+	  one consumer proxy and another thread decides to disconnect from 
+	  it.  The corresponging supplier set must be deleted only once
+	  all the threads finish using it.
+	  In many cases the implementation is trivial because there is a
+	  clear owner (ex: the ConsumerAdmin), and in others the locking
+	  is shared with the consumer proxy (Per_Supplier).
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	  The gateway was not properly synchronized. The locking in the
+	  push() method is interesting: we don't hold the lock during the
+	  complete dispatch, instead we keep track of the number of
+	  threads pushing to the gateway.
+	  If we receive an update_consumer() call during a push we post
+	  the change until all the push() call finish. Only the last
+	  update_consumer() is kept because they overwrite each other.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	  We needed an unprotected accessor to the publications, to avoid
+	  dead-locks during connect_push_consumer call.
+	  Use the new reference counting on the EC_SupplierFiltering
+	  class.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  We were holding locks during upcalls to the gateways and not
+	  setting the QoS parameters correctly.
+	  The update_consumer/update_supplier messages were backwards.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Fixed several race conditions related to connect/disconnect
+	  calls during pushes.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+	  Removed debug messages.
+
+	* orbsvcs/tests/Event/Basic/Observer.h:
+	* orbsvcs/tests/Event/Basic/Observer.cpp:
+	* orbsvcs/tests/Event/Basic/svc.conf:
+	  Fixed minor problems with the test itself.
+
 Sat May 22 17:10:11 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO version 0.3.23 released.

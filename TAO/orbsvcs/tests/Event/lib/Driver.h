@@ -169,7 +169,7 @@ public:
                               const RtecEventComm::EventSet& event,
                               CORBA::Environment& ACE_TRY_ENV);
   // One of the consumers in the test has received an event
-  
+
   virtual void consumer_shutdown (void* consumer_cookie,
                                   CORBA::Environment& ACE_TRY_ENV);
   // One of the consumers has received a shutdown event
@@ -384,6 +384,10 @@ protected:
 
   RtecEventChannelAdmin::EventChannel_var event_channel_;
   // The event channel object reference
+
+  int busy_hwm_;
+  int max_write_delay_;
+  // Control the concurrency inside the EC.
 };
 
 #if defined (__ACE_INLINE__)
