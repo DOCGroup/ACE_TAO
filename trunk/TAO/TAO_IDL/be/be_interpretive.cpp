@@ -25,7 +25,7 @@
 // individual visitors included only here
 #include "be_interpretive.h"
 
-#include "be_visitor_args.h"
+#include "be_visitor_argument.h"
 #include "be_visitor_array.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_constant.h"
