@@ -30,5 +30,9 @@
 # include /**/ <sys/shm.h>
 #endif /* !ACE_LACKS_SYS_SHM_H */
 
+#if defined (ACE_WIN32)
+struct shmaddr { };
+#endif /* ACE_WIN32 */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_SHM_H */

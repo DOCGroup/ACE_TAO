@@ -2365,16 +2365,16 @@ typedef unsigned int size_t;
 # endif /* ! ACE_PSOS_DIAB_MIPS */
 # include "ace/os_include/float.h"
 
-// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
-// also defines this value.  platform-specific config.h can
-// override this if need be.
-# if !defined (IOV_MAX)
-#  define IOV_MAX 16
-# endif /* IOV_MAX */
-
-# if !defined (ACE_IOV_MAX)
-#define ACE_IOV_MAX IOV_MAX
-# endif /* ACE_IOV_MAX */
+//// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
+//// also defines this value.  platform-specific config.h can
+//// override this if need be.
+//# if !defined (IOV_MAX)
+//#  define IOV_MAX 16
+//# endif /* IOV_MAX */
+//
+//# if !defined (ACE_IOV_MAX)
+//#define ACE_IOV_MAX IOV_MAX
+//# endif /* ACE_IOV_MAX */
 
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
   // Header information snarfed from compiler provided header files
@@ -2439,145 +2439,145 @@ typedef unsigned int size_t;
 #   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
-// This must come after signal.h is #included.
-# if defined (SCO)
-#   define SIGIO SIGPOLL
-#   include /**/x <sys/regset.h>  // Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>  todo: move to signal.h???
-
-# endif /* SCO */
+//// This must come after signal.h is #included.
+//# if defined (SCO)
+//#   define SIGIO SIGPOLL
+//#   include /**/x <sys/regset.h>  // Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>  todo: move to signal.h???
+//
+//# endif /* SCO */
 
 # if defined ACE_HAS_BYTESEX_H
 #   include /**/x <bytesex.h>
 # endif /* ACE_HAS_BYTESEX_H */
 # include "ace/Basic_Types.h"
 
-/* This should work for linux, solaris 5.6 and above, IRIX, OSF */
-# if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
-#   if ACE_SIZEOF_LONG == 8
-      typedef off_t ACE_LOFF_T;
-#   elif defined (__sgi) || defined (AIX) || defined (HPUX) \
-    || defined (__QNX__)
-      typedef off64_t ACE_LOFF_T;
-#   elif defined (__sun)
-      typedef offset_t ACE_LOFF_T;
-#   elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
-      typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
-#   else
-      typedef loff_t ACE_LOFF_T;
-#   endif
-# endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
+///* This should work for linux, solaris 5.6 and above, IRIX, OSF */
+//# if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
+//#   if ACE_SIZEOF_LONG == 8
+//      typedef off_t ACE_LOFF_T;
+//#   elif defined (__sgi) || defined (AIX) || defined (HPUX) (continuation removed)
+//    || defined (__QNX__)
+//      typedef off64_t ACE_LOFF_T;
+//#   elif defined (__sun)
+//      typedef offset_t ACE_LOFF_T;
+//#   elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
+//      typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
+//#   else
+//      typedef loff_t ACE_LOFF_T;
+//#   endif
+//# endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
 
 // Type-safe, and unsigned.
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
-# if defined (ACE_HAS_SIG_MACROS)
-#   undef sigemptyset
-#   undef sigfillset
-#   undef sigaddset
-#   undef sigdelset
-#   undef sigismember
-# endif /* ACE_HAS_SIG_MACROS */
+//# if defined (ACE_HAS_SIG_MACROS)
+//#   undef sigemptyset
+//#   undef sigfillset
+//#   undef sigaddset
+//#   undef sigdelset
+//#   undef sigismember
+//# endif /* ACE_HAS_SIG_MACROS */
 
-// This must come after signal.h is #included.  It's to counteract
-// the sigemptyset and sigfillset #defines, which only happen
-// when __OPTIMIZE__ is #defined (really!) on Linux.
-# if defined (linux) && defined (__OPTIMIZE__)
-#   undef sigemptyset
-#   undef sigfillset
-# endif /* linux && __OPTIMIZE__ */
+//// This must come after signal.h is #included.  It's to counteract
+//// the sigemptyset and sigfillset #defines, which only happen
+//// when __OPTIMIZE__ is #defined (really!) on Linux.
+//# if defined (linux) && defined (__OPTIMIZE__)
+//#   undef sigemptyset
+//#   undef sigfillset
+//# endif /* linux && __OPTIMIZE__ */
 
 // Prototypes should come after ace/Basic_Types.h since some types may
 // be used in the prototypes.
 
-#if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \
-    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
-extern "C" pid_t getpgid (pid_t pid);
-#endif  /* ACE_LACKS_GETPGID_PROTOTYPE &&
-           !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
+//#if defined (ACE_LACKS_GETPGID_PROTOTYPE) && (continuation removed)
+//    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
+//extern "C" pid_t getpgid (pid_t pid);
+//#endif  /* ACE_LACKS_GETPGID_PROTOTYPE &&
+//           !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
 
-#if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
-extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
-#endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
+//#if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
+//extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
+//#endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
 
-#if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
-extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
-#endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
+//#if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
+//extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
+//#endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
-#if !defined (_LARGEFILE64_SOURCE)
-# if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && \
-     defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-#   error Define either ACE_LACKS_LSEEK64_PROTOTYPE or ACE_LACKS_LLSEEK_PROTOTYPE, not both!
-# elif defined (ACE_LACKS_LSEEK64_PROTOTYPE)
-extern "C" ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
-# elif defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
-# endif
-#endif  /* _LARGEFILE64_SOURCE */
+//#if !defined (_LARGEFILE64_SOURCE)
+//# if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && (continuation removed)
+//     defined (ACE_LACKS_LLSEEK_PROTOTYPE)
+//#   error Define either ACE_LACKS_LSEEK64_PROTOTYPE or ACE_LACKS_LLSEEK_PROTOTYPE, not both!
+//# elif defined (ACE_LACKS_LSEEK64_PROTOTYPE)
+//extern "C" ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
+//# elif defined (ACE_LACKS_LLSEEK_PROTOTYPE)
+//extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
+//# endif
+//#endif  /* _LARGEFILE64_SOURCE */
 
-#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) < 500
-// _XOPEN_SOURCE == 500    Single Unix conformance
-// It seems that _XOPEN_SOURCE == 500 means that the prototypes are
-// already defined in the system headers.
-extern "C" ssize_t pread (int fd,
-                          void *buf,
-                          size_t nbytes,
-                          off_t offset);
+//#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) < 500
+//// _XOPEN_SOURCE == 500    Single Unix conformance
+//// It seems that _XOPEN_SOURCE == 500 means that the prototypes are
+//// already defined in the system headers.
+//extern "C" ssize_t pread (int fd,
+//                          void *buf,
+//                          size_t nbytes,
+//                          off_t offset);
+//
+//extern "C" ssize_t pwrite (int fd,
+//                           const void *buf,
+//                           size_t n,
+//                           off_t offset);
+//#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
 
-extern "C" ssize_t pwrite (int fd,
-                           const void *buf,
-                           size_t n,
-                           off_t offset);
-#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
+//# if defined (ACE_LACKS_UALARM_PROTOTYPE)
+//extern "C" u_int ualarm (u_int usecs, u_int interval);
+//# endif /* ACE_LACKS_UALARM_PROTOTYPE */
 
-# if defined (ACE_LACKS_UALARM_PROTOTYPE)
-extern "C" u_int ualarm (u_int usecs, u_int interval);
-# endif /* ACE_LACKS_UALARM_PROTOTYPE */
+//# if defined (ACE_HAS_BROKEN_SENDMSG)
+//typedef struct msghdr ACE_SENDMSG_TYPE;
+//# else
+//typedef const struct msghdr ACE_SENDMSG_TYPE;
+//# endif /* ACE_HAS_BROKEN_SENDMSG */
 
-# if defined (ACE_HAS_BROKEN_SENDMSG)
-typedef struct msghdr ACE_SENDMSG_TYPE;
-# else
-typedef const struct msghdr ACE_SENDMSG_TYPE;
-# endif /* ACE_HAS_BROKEN_SENDMSG */
-
-# if defined (ACE_HAS_BROKEN_RANDR)
-// The SunOS 5.4.X version of rand_r is inconsistent with the header
-// files...
-typedef u_int ACE_RANDR_TYPE;
-extern "C" int rand_r (ACE_RANDR_TYPE seed);
-# else
-#   if defined (HPUX_10)
-// HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
-typedef long ACE_RANDR_TYPE;
-#   else
-typedef u_int ACE_RANDR_TYPE;
-#   endif /* HPUX_10 */
-# endif /* ACE_HAS_BROKEN_RANDR */
+//# if defined (ACE_HAS_BROKEN_RANDR)
+//// The SunOS 5.4.X version of rand_r is inconsistent with the header
+//// files...
+//typedef u_int ACE_RANDR_TYPE;
+//extern "C" int rand_r (ACE_RANDR_TYPE seed);
+//# else
+//#   if defined (HPUX_10)
+//// HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
+//typedef long ACE_RANDR_TYPE;
+//#   else
+//typedef u_int ACE_RANDR_TYPE;
+//#   endif /* HPUX_10 */
+//# endif /* ACE_HAS_BROKEN_RANDR */
 
 # if defined (ACE_HAS_UTIME)
 #   include "ace/os_include/utime.h"
 # endif /* ACE_HAS_UTIME */
 
-# if !defined (ACE_HAS_MSG) && !defined (SCO)
-struct msghdr {};
-# endif /* ACE_HAS_MSG */
+//# if !defined (ACE_HAS_MSG) && !defined (SCO)
+//struct msghdr {};
+//# endif /* ACE_HAS_MSG */
 
-# if defined (ACE_HAS_MSG) && defined (ACE_LACKS_MSG_ACCRIGHTS)
-#   if !defined (msg_accrights)
-#     undef msg_control
-#     define msg_accrights msg_control
-#   endif /* ! msg_accrights */
+//# if defined (ACE_HAS_MSG) && defined (ACE_LACKS_MSG_ACCRIGHTS)
+//#   if !defined (msg_accrights)
+//#     undef msg_control
+//#     define msg_accrights msg_control
+//#   endif /* ! msg_accrights */
+//
+//#   if !defined (msg_accrightslen)
+//#     undef msg_controllen
+//#     define msg_accrightslen msg_controllen
+//#   endif /* ! msg_accrightslen */
+//# endif /* ACE_HAS_MSG && ACE_LACKS_MSG_ACCRIGHTS */
 
-#   if !defined (msg_accrightslen)
-#     undef msg_controllen
-#     define msg_accrightslen msg_controllen
-#   endif /* ! msg_accrightslen */
-# endif /* ACE_HAS_MSG && ACE_LACKS_MSG_ACCRIGHTS */
-
-# if !defined (ACE_HAS_SIG_ATOMIC_T)
-typedef int sig_atomic_t;
-# endif /* !ACE_HAS_SIG_ATOMIC_T */
+//# if !defined (ACE_HAS_SIG_ATOMIC_T)
+//typedef int sig_atomic_t;
+//# endif /* !ACE_HAS_SIG_ATOMIC_T */
 
 # if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
@@ -2753,30 +2753,30 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
 #   endif /* __MINGW32__ */
 
-// This will help until we figure out everything:
-#   define NFDBITS 32 /* only used in unused functions... */
-// These two may be used for internal flags soon:
-#   define MAP_PRIVATE 1
-#   define MAP_SHARED  2
-#   define MAP_FIXED   4
+//// This will help until we figure out everything:
+//#   define NFDBITS 32 /* only used in unused functions... */
+//// These two may be used for internal flags soon:
+//#   define MAP_PRIVATE 1
+//#   define MAP_SHARED  2
+//#   define MAP_FIXED   4
 
-#   define RUSAGE_SELF 1
+//#   define RUSAGE_SELF 1
 
-struct shmaddr { };
-struct msqid_ds {};
+//struct shmaddr { };
+//struct msqid_ds {};
 
-/// Fake the UNIX rusage structure.  Perhaps we can add more to this
-/// later on?
-struct rusage
-{
-  FILETIME ru_utime;
-  FILETIME ru_stime;
-};
+///// Fake the UNIX rusage structure.  Perhaps we can add more to this
+///// later on?
+//struct rusage
+//{
+//  FILETIME ru_utime;
+//  FILETIME ru_stime;
+//};
 
-// MMAP flags
-#   define PROT_READ PAGE_READONLY
-#   define PROT_WRITE PAGE_READWRITE
-#   define PROT_RDWR PAGE_READWRITE
+//// MMAP flags
+//#   define PROT_READ PAGE_READONLY
+//#   define PROT_WRITE PAGE_READWRITE
+//#   define PROT_RDWR PAGE_READWRITE
 /* If we can find suitable use for these flags, here they are:
 PAGE_WRITECOPY
 PAGE_EXECUTE
@@ -2959,25 +2959,25 @@ struct iovec
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 };
 
-struct msghdr
-{
-  /// Optional address
-  sockaddr * msg_name;
-
-  /// Size of address
-  int msg_namelen;
-
-  /// Scatter/gather array
-  iovec *msg_iov;
-
-  /// # elements in msg_iov
-  int msg_iovlen;
-
-  /// Access rights sent/received
-  caddr_t msg_accrights;
-
-  int msg_accrightslen;
-};
+//struct msghdr
+//{
+//  /// Optional address
+//  sockaddr * msg_name;
+//
+//  /// Size of address
+//  int msg_namelen;
+//
+//  /// Scatter/gather array
+//  iovec *msg_iov;
+//
+//  /// # elements in msg_iov
+//  int msg_iovlen;
+//
+//  /// Access rights sent/received
+//  caddr_t msg_accrights;
+//
+//  int msg_accrightslen;
+//};
 
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;

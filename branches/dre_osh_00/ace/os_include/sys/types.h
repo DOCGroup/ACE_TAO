@@ -58,5 +58,21 @@ typedef int clockid_t;
 typedef unsigned int dev_t;
 #endif /* ACE_HAS_WINCE */
 
+/* This should work for linux, solaris 5.6 and above, IRIX, OSF */
+# if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
+#   if ACE_SIZEOF_LONG == 8
+      typedef off_t ACE_LOFF_T;
+#   elif defined (__sgi) || defined (AIX) || defined (HPUX) \
+    || defined (__QNX__)
+      typedef off64_t ACE_LOFF_T;
+#   elif defined (__sun)
+      typedef offset_t ACE_LOFF_T;
+#   elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
+      typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
+#   else
+      typedef loff_t ACE_LOFF_T;
+#   endif
+# endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_TYPES_H */

@@ -30,5 +30,9 @@
 # include /**/ <string.h>
 #endif /* !ACE_LACKS_STRING_H */
 
+#if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
+extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
+#endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STRING_H */

@@ -31,5 +31,10 @@
 # include /**/ <sys/select.h>
 #endif /* !ACE_LACKS_SYS_SELECT_H */
 
+#if defined (ACE_WIN32)
+// This will help until we figure out everything:
+#   define NFDBITS 32 /* only used in unused functions... */
+#endif /* ACE_WIN32 */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_SELECT_H */
