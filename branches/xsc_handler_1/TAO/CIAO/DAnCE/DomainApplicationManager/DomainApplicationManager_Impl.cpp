@@ -344,6 +344,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::InvalidProperty))
 {
   ACE_UNUSED_ARG (start);
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::startLaunch.\n"));
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
@@ -419,6 +420,7 @@ finishLaunch (::CORBA::Boolean start
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::finishLaunch.\n"));
   ACE_TRY
     {
       // Invoke finishLaunch() operation on each cached NodeApplication object.
@@ -483,6 +485,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::start.\n"));
   ACE_TRY
     {
       // Invoke start() operation on each cached NodeApplication object.
@@ -522,6 +525,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::destroyApplication.\n"));
   ACE_TRY
     {
       // Invoke destroyManager() operation on each cached

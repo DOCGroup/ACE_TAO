@@ -184,8 +184,8 @@ module Deployment
     Containers get_containers ();
 
     // Remove all containers, components and component homes.
-    void remove ()
-      raises (::Components::RemoveFailure);
+    // Shuts down the ORB of the NodeApplication to terminate the process.
+    oneway void remove ();
   };
 
 };

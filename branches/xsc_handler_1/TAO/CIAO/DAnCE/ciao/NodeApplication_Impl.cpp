@@ -118,6 +118,8 @@ CIAO::NodeApplication_Impl::finishLaunch (
           this->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      ACE_DEBUG ((LM_DEBUG, "Launching NodeApplication finished successfully.\n\n"));
     }
   ACE_CATCHANY
     {
