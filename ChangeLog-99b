@@ -1,16 +1,8 @@
-Fri Mar 05 13:54:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Log_Msg/Log_Msg.dsw: Fixed the path to Callback.dsp.
 	  Thanks to Zoran Ivanovic <zorani@pathcom.com> for reporting
 	  this.
-
-Fri Mar  5 11:06:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Svc_Conf.y: Always print out an error message when we
- 	  increment yyerror.  Thanks to Ulf Jaehrig <jaehrig@desys.com>
- 	  for reporting this.
-
-Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/Makefile: Removed test_guard from the
 	  Makefile.  This test requires having
@@ -41,6 +33,12 @@ Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  Thanks to Andy Marchewka <AndyM@who.net> for noticing the
 	  performance differences between ACE_Thread_Mutex_Guard and (old)
 	  ACE_Guard.
+
+Fri Mar  5 11:06:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.y: Always print out an error message when we
+ 	  increment yyerror.  Thanks to Ulf Jaehrig <jaehrig@desys.com>
+ 	  for reporting this.
 
 Thu Mar  4 12:26:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
