@@ -60,8 +60,9 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_interface\n"));
 
-  be_valuetype *excep_holder = 0;
-  if (excep_holder = this->create_exception_holder (node))
+  be_valuetype *excep_holder = this->create_exception_holder (node);
+
+  if (excep_holder)
     {
       excep_holder->set_defined_in (node->defined_in ());
       (be_module::narrow_from_scope (node->defined_in ()))
@@ -77,8 +78,8 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
 
-  be_interface *reply_handler = 0;
-  if (reply_handler = this->create_reply_handler (node))
+  be_interface *reply_handler = this->create_reply_handler (node);
+  if (reply_handler)
     {
       reply_handler->set_defined_in (node->defined_in ());
       (be_module::narrow_from_scope (node->defined_in ()))
