@@ -76,7 +76,7 @@ public:
     ~Agent (void);
 
     virtual Database::Entry_ptr create_entry (const char *key,
-                                              const char *entry_type,
+                                              const Database::Identifier entry_type,
                                               const Database::NVPairSequence &initial_attributes
                                               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -84,14 +84,14 @@ public:
                        Database::Duplicate_Key));
 
     virtual Database::Entry_ptr find_entry (const char *key,
-                                            const char *entry_type
+                                            const Database::Identifier entry_type
                                             ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Not_Found));
 
     virtual void destroy_entry (const char *key,
-                                const char *entry_type
+                                const Database::Identifier entry_type
                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,

@@ -1,3 +1,17 @@
+Thu Oct 24 000:33:17 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/POA/DSI/Database_i.h:
+        * examples/RTCORBA/Activity/Activity.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+
+	  Replaced char * arguments with corresponding typedefs in cases where 
+	  the IDL compiler now generates the typedef name.
+
 Wed Oct 23 23:51:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * tests/Makefile:

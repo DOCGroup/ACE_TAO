@@ -198,7 +198,8 @@ Activity::activate_job_list (ACE_ENV_SINGLE_ARG_DECL)
       const ACE_CString &job_name = job->name ();
 
       CosNaming::Name_var name =
-        this->naming_->to_name (job_name.c_str ()
+        this->naming_->to_name (ACE_const_cast (const CosNaming::NamingContextExt::StringName,
+                                                job_name.c_str ())
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 

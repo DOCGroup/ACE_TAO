@@ -173,7 +173,8 @@ TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
       CORBA::string_dup (this->notify_factory_name_.c_str ());
 #else
     CosNaming::Name_var name =
-      this->naming_->to_name (this->notify_factory_name_.c_str ()
+      this->naming_->to_name (ACE_const_cast (const CosNaming::NamingContextExt::StringName,
+                                              this->notify_factory_name_.c_str ())
                               ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
 
@@ -214,7 +215,8 @@ TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
           CORBA::string_dup (this->notify_channel_name_.c_str ());
 #else
         name = this->naming_->to_name (
-          this->notify_channel_name_.c_str ()
+          ACE_const_cast (const CosNaming::NamingContextExt::StringName,
+                          this->notify_channel_name_.c_str ())
           ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
         ACE_CHECK_RETURN (-1);
@@ -320,7 +322,8 @@ TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::string_dup (this->notify_factory_name_.c_str ());
 #else
     CosNaming::Name_var name =
-      this->naming_->to_name (this->notify_factory_name_.c_str ()
+      this->naming_->to_name (ACE_const_cast (const CosNaming::NamingContextExt::StringName,
+                                              this->notify_factory_name_.c_str ())
                               ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
 

@@ -139,7 +139,7 @@ LB_server::create_object_group (void)
 {
   ACE_TRY_NEW_ENV
     {
-      const char *repository_id = "IDL:Test/Basic:1.0";
+      const PortableGroup::GroupDomainId repository_id = "IDL:Test/Basic:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
