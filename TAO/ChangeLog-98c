@@ -1,46 +1,48 @@
-Mon Jun 22 11:12:54 1998  David L. Levine  <levine@cs.wustl.edu>
+Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Scheduler_Factory (preemption_priority):
-          use ACE_TSS_Type_Adapter instead of specializing the
-          adaption of RtecScheduler::Preemption_Priority here.
+	* TAO_IDL/be/{be_helper.h, be_sequence.h}: see comment below,
+	  only the declarations were added.
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_{ch,cs}.h: Added 
+	  the declarations of the things mentioned below.
 
 Mon Jun 22 11:15:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * TAO_IDL/be/be_helper.cpp: Added gen_ifdef_AHETI(), gen_else_AHETI()
-          and gen_endif_AHETI() to write the proper #ifdef.
+	* TAO_IDL/be/be_helper.cpp: Added gen_ifdef_AHETI(), gen_else_AHETI()
+	  and gen_endif_AHETI() to write the proper #ifdef.
 
-        * TAO_IDL/be/be_sequence.cpp: Added instance_name() to create
-          a unique instantiation name for the instantiated templates.
-          Added object_manager_name () to create a unique object_manager
-          name.
+	* TAO_IDL/be/be_sequence.cpp: Added instance_name() to create
+	  a unique instantiation name for the instantiated templates.
+	  Added object_manager_name () to create a unique object_manager
+	  name.
 
-        * TAO_IDL/be/be_visitor_sequence.cpp: Added the new files.
+	* TAO_IDL/be/be_visitor_sequence.cpp: Added the new files.
+	
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp: Added ifdefs
+	  for generating appropriate code to handle Object Manager
+	  references.
 
-        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp: Added ifdefs
-          for generating appropriate code to handle Object Manager
-          references.
+	* TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Added 
+	  the hook-up to generate the instantiated templates. Basically
+ 	  the hook-up is the method instantiate_sequence().
 
-        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Added
-          the hook-up to generate the instantiated templates. Basically
-          the hook-up is the method instantiate_sequence().
+	* TAO_IDL/be/be_visitor_sequence/sequence_c{i,s}.cpp: Added 
+	  the ifdef distinguishing.
 
-        * TAO_IDL/be/be_visitor_sequence/sequence_c{i,s}.cpp: Added
-          the ifdef distinguishing.
-
-        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp,
-          TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp,
-          TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp,
-          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp,
-          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp,
-          TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
-          New files for code generation.
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+	  New files for code generation.
 
 Mon Jun 22 09:19:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: The typecode
-        declarations now have the appropriate export macro generated for
-        them. This is required for the DLLs. Seth Widoff pointed out this
-        requirement.
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: The typecode
+	declarations now have the appropriate export macro generated for
+	them. This is required for the DLLs. Seth Widoff pointed out this
+	requirement.
 
 Mon Jun 22 00:09:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -48,9 +50,9 @@ Mon Jun 22 00:09:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Jun 22 00:01:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/orbsvcs.dsp:  This project file no longer copies
-          the orbsvcs.dll to $TAO_ROOT/tao/.  Be sure to remove this file:
-          $TAO_ROOT/tao/orbsvcs.dll.
+	* orbsvcs/orbsvcs/orbsvcs.dsp:  This project file no longer copies
+	  the orbsvcs.dll to $TAO_ROOT/tao/.  Be sure to remove this file:
+	  $TAO_ROOT/tao/orbsvcs.dll.
 
 Sun Jun 21 23:59:06 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -58,22 +60,22 @@ Sun Jun 21 23:59:06 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Jun 21 16:29:49 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
 
-        * tao/ORB.cpp:
-        * tao/Params.cpp:
-        Wasn't initializing Params::trading_service_{ior,port}_ or
-        CORBA_ORB::trading_service_.
+	* tao/ORB.cpp:
+	* tao/Params.cpp:
+	Wasn't initializing Params::trading_service_{ior,port}_ or
+	CORBA_ORB::trading_service_.
 
 Sun Jun 21 14:36:26 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Trader/*.*:
-        Trading Service now compiles without warnings or link errors on
-        Windows NT (MSVC++).
+	* orbsvcs/orbsvcs/Trader/*.*:
+	Trading Service now compiles without warnings or link errors on
+	Windows NT (MSVC++).
 
 Sun Jun 21 08:39:38 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-        * tests/Param_Test/tests.cpp: Removed a bunch of warnings related
-        to creation of a temporary when a var or ptr type is passed as an
-        out parameter.
+	* tests/Param_Test/tests.cpp: Removed a bunch of warnings related
+	to creation of a temporary when a var or ptr type is passed as an
+	out parameter.
 
 Sat Jun 20 14:22:22 1998  David L. Levine  <levine@cs.wustl.edu>
 

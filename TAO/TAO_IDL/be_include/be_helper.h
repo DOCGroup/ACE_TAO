@@ -132,6 +132,15 @@ public:
   int gen_endif (void);
   // generate an endif statement
 
+  int gen_ifdef_AHETI (void);
+  // generate the ACE_HAS_EXPLICIT... ifdef
+
+  int gen_else_AHETI (void);
+  // generate the ACE_HAS_EXPLICIT... else
+
+  int gen_endif_AHETI (void);
+  // generate the ACE_HAS_EXPLICIT... endif
+
   // =overloaded operators
 
   TAO_OutStream &operator<< (const char *str);
