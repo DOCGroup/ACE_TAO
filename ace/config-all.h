@@ -123,7 +123,7 @@
 // EXPORT macros
 //
 // Since Win32 DLL's do not export all symbols by default, they must be
-// explicitly exported (which is done by *_Export macros).  
+// explicitly exported (which is done by *_Export macros).
 // ============================================================================
 
 // Win32 should have already defined the macros in config-win32-common.h
@@ -463,6 +463,14 @@ extern "C"
 {
   typedef void (*ACE_EXIT_HOOK) (void);
 }
+
+// ============================================================================
+// log_msg declarations
+// ============================================================================
+
+class ACE_OS_Thread_Descriptor;
+typedef void (*ACE_INIT_LOG_MSG_HOOK) (void*&);
+typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*, void*&);
 
 // ============================================================================
 // Fundamental types

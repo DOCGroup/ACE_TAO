@@ -151,6 +151,65 @@ public:
   // subclass.
 };
 
+// ****************************************************************
+
+class ACE_Export ACE_Log_Msg_Attributes
+{
+  // = TITLE
+  //   The Log_Msg attributes inherited by newly spawned threads
+  //
+  // = DESCRIPTION
+  //   When a new thread is created the TSS resources for the Log_Msg
+  //   class in the new thread may be inherited by the creator thread.
+  //   The attributes are encapsulated in this class to simplify their
+  //   manipulation and destruction.
+public:
+  ACE_Log_Msg_Attributes (void);
+  // Constructor
+
+  ~ACE_Log_Msg_Attributes (void);
+  // Destructor
+
+  static void init_hook (void *&attributes);
+  // Init hook, create a Log_Msg_Attribute object, initialize its
+  // attributes from the TSS Log_Msg and save the object in the
+  // <attributes> argument
+
+  static void inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
+                            void *&attributes);
+  // Inherit hook, the <attributes> field is a Log_Msg_Attribute
+  // object, invoke the <inherit_log_msg> method on it, then destroy
+  // it and set the <attribute> argument to 0
+
+private:
+  void inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc);
+  // Initialize the TSS Log_Msg from the attributes saved on this
+  // object
+
+  ACE_OSTREAM_TYPE *ostream_;
+  // Ostream where the new TSS Log_Msg will use.
+
+  u_long priority_mask_;
+  // Priority_mask to be used in new TSS Log_Msg.
+
+  int tracing_enabled_;
+  // Are we allowing tracing in this thread?
+
+  int restart_;
+  // Indicates whether we should restart system calls that are
+  // interrupted.
+
+  int trace_depth_;
+  // Depth of the nesting for printing traces.
+
+#   if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
+#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+};
+
+// ****************************************************************
+
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 
 // Forward declaration
