@@ -40,8 +40,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
                                   TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
-  : parent_ (0),
-    TAO_SVC_HANDLER (t, 0, 0)
+  : TAO_SVC_HANDLER (t, 0, 0),
+    parent_ (0)
 {
   // Grab the singleton...at some later point in time we can provide
   // an argumented CTOR to have per-instance parameters.
