@@ -1,3 +1,9 @@
+Fri Jul 21 18:33:04 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/constants.h (PACE_ONE_SECOND_IN_MSECS):
+
+	  Added.
+
 Fri Jul 21 18:19:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
