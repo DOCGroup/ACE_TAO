@@ -29,7 +29,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 
 const char *ior_file_name_ = "nodedaemon.ior";
 char *default_svcconf_ = 0;
