@@ -145,6 +145,14 @@ SOURCE=.\generic_objectS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\gperfC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\gperfS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\includedC.cpp
 # End Source File
 # Begin Source File
@@ -313,6 +321,14 @@ SOURCE=.\generic_objectS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\gperfC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\gperfS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\includedC.h
 # End Source File
 # Begin Source File
@@ -454,6 +470,14 @@ SOURCE=.\fwdS.i
 # Begin Source File
 
 SOURCE=.\generic_objectC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\gperfC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\gperfS.i
 # End Source File
 # Begin Source File
 
@@ -963,6 +987,53 @@ USERDEP__GENER="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\generic_object.idl
 InputName=generic_object
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\gperf.idl
+
+!IF  "$(CFG)" == "idl_test - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
+
+USERDEP__GPERF="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\gperf.idl
+InputName=gperf
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
