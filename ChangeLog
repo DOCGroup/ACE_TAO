@@ -1,7 +1,14 @@
+Thu Jan 27 16:38:03 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_IO.h: Updated comments for ACE_Asynch_Read_Stream::read
+          and ACE_Asynch_Write_Stream::write to state that the affected
+          message block's wr_ptr and rd_ptr, respectively, are updated upon
+          successful completion of the operation.
+
 Thu Jan 27 11:06:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: Strings duplicated using ACE::strnew() must
-	  be deleted using delete[] instead of delete.  Thankd to
+	  be deleted using delete[] instead of delete.  Thanks to
 	  Christopher Kohlhoff <chris@kohlhoff.com> for catching this.
 
 Thu Jan 27 09:11:52 2000  Steve Huston  <shuston@riverace.com>
