@@ -1,4 +1,4 @@
-project(Dump_Restore): acelib {
+project(Netsvcs_Dump_Restore_Lib): acelib {
   sharedname    = Dump_Restore
   dynamicflags += ACE_DUMP_RESTORE_BUILD_DLL
   Source_Files {
@@ -6,10 +6,10 @@ project(Dump_Restore): acelib {
   }
 }
 
-project(main) : aceexe {
+project(Netsvcs_Dump_Restore) : aceexe {
   exename = main
   libs    += Dump_Restore
-  after   += Dump_Restore
+  after   += Netsvcs_Dump_Restore_Lib
   Source_Files {
     main.cpp
   }

@@ -14,8 +14,9 @@ project(JAWS) : acelib {
   }
 }
 
-project(main) : aceexe {
+project(JAWS_server) : aceexe {
 
+  exename = main
   after += JAWS
   libs  += JAWS
 
