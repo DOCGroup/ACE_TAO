@@ -17,7 +17,7 @@
 #ifndef TAO_PROPERTY_EVALUATOR_H
 #define TAO_PROPERTY_EVALUATOR_H
 
-#include "stl.h"
+#include "Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
 class TAO_Property_Evaluator
@@ -127,9 +127,14 @@ public:
   const CosTrading::Property* get_property (const char* property_name);
   
 private:
-  
-  typedef map<string, int, less<string> > Lookup_Table;
-  typedef Lookup_Table::iterator Lookup_Table_Iter;
+
+  typedef ACE_Hash_Map_Manager
+    <
+    TAO_String_Hash_Key,
+    int,
+    ACE_Null_Mutex
+    >
+    Lookup_Table;
   // A mapping, upon which lookups will take O(lg n), of property
   // names to sequence indices.
   

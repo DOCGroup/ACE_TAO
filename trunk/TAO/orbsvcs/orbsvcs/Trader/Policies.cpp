@@ -22,10 +22,9 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
 			    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
 		  CosTrading::DuplicatePolicyName))
-  : trader_ (trader),
-    policies_ (REQUEST_ID + 1)
+  : trader_ (trader)
 {
-  for (int i = 0; i <= REQUEST_ID; i++)
+  for (int i = 0; i < TAO_NUM_POLICIES; i++)
     this->policies_[i] = 0;
 
   for (int j = 0; j < policies.length (); j++)
