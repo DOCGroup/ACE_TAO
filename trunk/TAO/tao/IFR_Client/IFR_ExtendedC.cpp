@@ -169,6 +169,67 @@ void CORBA_ValueDefSeq::_tao_any_destructor (void *x)
 // **************************************************************
 // Repository::create_fixed methods from IFR_BasicC.cpp
 
+#if TAO_HAS_INTERCEPTORS == 1
+
+class TAO_ClientRequestInfo_CORBA_Repository_create_fixed : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_Repository_create_fixed (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::UShort & digits,
+      const CORBA::Short & scale,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::FixedDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_Repository_create_fixed (const TAO_ClientRequestInfo_CORBA_Repository_create_fixed &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_Repository_create_fixed &);
+
+  const CORBA::UShort & digits_;
+  const CORBA::Short & scale_;
+  CORBA::FixedDef_ptr _result;
+};
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_Repository_create_fixed::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+#endif /* TAO_HAS_INTERCEPTORS */
+        
 CORBA::FixedDef_ptr _TAO_Repository_Remote_Proxy_Impl::create_fixed (
     CORBA_Object *_collocated_tao_target_,
     CORBA::UShort digits,
@@ -208,7 +269,7 @@ CORBA::FixedDef_ptr _TAO_Repository_Remote_Proxy_Impl::create_fixed (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::Repository::TAO_ClientRequestInfo_CORBA_Repository_create_fixed ri (
+      TAO_ClientRequestInfo_CORBA_Repository_create_fixed ri (
         &_tao_call,
         _collocated_tao_target_,
         digits,
@@ -343,10 +404,199 @@ CORBA::FixedDef_ptr _TAO_Repository_Remote_Proxy_Impl::create_fixed (
   return _tao_safe_retval._retn ();
 }
       
+// *******************************************************************
+// Container::create_value* methods from IFR_BaseC.cpp
+
 #if TAO_HAS_INTERCEPTORS == 1
 
+class TAO_ClientRequestInfo_CORBA_Container_create_value : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_Container_create_value (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * id,
+      const char * name,
+      const char * version,
+      const CORBA::Boolean & is_custom,
+      const CORBA::Boolean & is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      const CORBA::Boolean & is_truncatable,
+      const CORBA::ValueDefSeq & abstract_base_values,
+      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA::InitializerSeq & initializers,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::ValueDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_Container_create_value (const TAO_ClientRequestInfo_CORBA_Container_create_value &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_Container_create_value &);
+
+  const char * id_;
+  const char * name_;
+  const char * version_;
+  const CORBA::Boolean & is_custom_;
+  const CORBA::Boolean & is_abstract_;
+  CORBA::ValueDef_ptr base_value_;
+  const CORBA::Boolean & is_truncatable_;
+  const CORBA::ValueDefSeq & abstract_base_values_;
+  const CORBA::InterfaceDefSeq & supported_interfaces_;
+  const CORBA::InitializerSeq & initializers_;
+  CORBA::ValueDef_ptr _result;
+};
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_Container_create_value::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_id = parameter_list->length ();
+  parameter_list->length (length_id + 1);
+  (*parameter_list)[length_id].argument <<= id_;
+  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_name = parameter_list->length ();
+  parameter_list->length (length_name + 1);
+  (*parameter_list)[length_name].argument <<= name_;
+  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_version = parameter_list->length ();
+  parameter_list->length (length_version + 1);
+  (*parameter_list)[length_version].argument <<= version_;
+  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_is_custom = parameter_list->length ();
+  parameter_list->length (length_is_custom + 1);
+  (*parameter_list)[length_is_custom].argument <<= CORBA::Any::from_boolean (this->is_custom_);
+  (*parameter_list)[length_is_custom].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_is_abstract = parameter_list->length ();
+  parameter_list->length (length_is_abstract + 1);
+  (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
+  (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_base_value = parameter_list->length ();
+  parameter_list->length (length_base_value + 1);
+  (*parameter_list)[length_base_value].argument <<=  this->base_value_;
+  
+  (*parameter_list)[length_base_value].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_is_truncatable = parameter_list->length ();
+  parameter_list->length (length_is_truncatable + 1);
+  (*parameter_list)[length_is_truncatable].argument <<= CORBA::Any::from_boolean (this->is_truncatable_);
+  (*parameter_list)[length_is_truncatable].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_abstract_base_values = parameter_list->length ();
+  parameter_list->length (length_abstract_base_values + 1);
+  (*parameter_list)[length_abstract_base_values].argument <<=  this->abstract_base_values_;
+  
+  (*parameter_list)[length_abstract_base_values].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_supported_interfaces = parameter_list->length ();
+  parameter_list->length (length_supported_interfaces + 1);
+  (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
+  
+  (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_initializers = parameter_list->length ();
+  parameter_list->length (length_initializers + 1);
+  (*parameter_list)[length_initializers].argument <<=  this->initializers_;
+  
+  (*parameter_list)[length_initializers].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
 CORBA::Any * 
-CORBA::Repository::TAO_ClientRequestInfo_CORBA_Repository_create_fixed::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_Container_create_value::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+class TAO_ClientRequestInfo_CORBA_Container_create_value_box : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_Container_create_value_box (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * id,
+      const char * name,
+      const char * version,
+      CORBA::IDLType_ptr original_type_def,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::ValueBoxDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_Container_create_value_box (const TAO_ClientRequestInfo_CORBA_Container_create_value_box &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_Container_create_value_box &);
+
+  const char * id_;
+  const char * name_;
+  const char * version_;
+  CORBA::IDLType_ptr original_type_def_;
+  CORBA::ValueBoxDef_ptr _result;
+};
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_Container_create_value_box::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
@@ -362,9 +612,6 @@ CORBA::Repository::TAO_ClientRequestInfo_CORBA_Repository_create_fixed::result (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-        
-// *******************************************************************
-// Container::create_value* methods from IFR_BaseC.cpp
 
 CORBA::ValueDef_ptr _TAO_Container_Remote_Proxy_Impl::create_value (
     CORBA_Object *_collocated_tao_target_,
@@ -413,7 +660,7 @@ CORBA::ValueDef_ptr _TAO_Container_Remote_Proxy_Impl::create_value (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value ri (
+      TAO_ClientRequestInfo_CORBA_Container_create_value ri (
         &_tao_call,
         _collocated_tao_target_,
         id,
@@ -605,7 +852,7 @@ CORBA::ValueBoxDef_ptr _TAO_Container_Remote_Proxy_Impl::create_value_box (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value_box ri (
+      TAO_ClientRequestInfo_CORBA_Container_create_value_box ri (
         &_tao_call,
         _collocated_tao_target_,
         id,
@@ -744,10 +991,151 @@ CORBA::ValueBoxDef_ptr _TAO_Container_Remote_Proxy_Impl::create_value_box (
   return _tao_safe_retval._retn ();
 }
           
-#if TAO_HAS_INTERCEPTORS == 1
+// **********************************************************************
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+class TAO_ClientRequestInfo_CORBA_FixedDef_digits_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_FixedDef_digits_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::UShort result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_FixedDef_digits_get (const TAO_ClientRequestInfo_CORBA_FixedDef_digits_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_FixedDef_digits_get &);
+
+  CORBA::UShort _result;
+};
+
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
 
 Dynamic::ParameterList *
-CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value::arguments (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::result (CORBA::UShort result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_FixedDef_digits_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_FixedDef_digits_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::UShort & digits,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_FixedDef_digits_set (const TAO_ClientRequestInfo_CORBA_FixedDef_digits_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_FixedDef_digits_set &);
+
+  const CORBA::UShort & digits_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::UShort & digits,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    digits_ (digits)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the argument list on demand.
@@ -757,65 +1145,112 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value::arguments 
   
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
     
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_is_custom = parameter_list->length ();
-  parameter_list->length (length_is_custom + 1);
-  (*parameter_list)[length_is_custom].argument <<= CORBA::Any::from_boolean (this->is_custom_);
-  (*parameter_list)[length_is_custom].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_is_abstract = parameter_list->length ();
-  parameter_list->length (length_is_abstract + 1);
-  (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
-  (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_base_value = parameter_list->length ();
-  parameter_list->length (length_base_value + 1);
-  (*parameter_list)[length_base_value].argument <<=  this->base_value_;
-  
-  (*parameter_list)[length_base_value].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_is_truncatable = parameter_list->length ();
-  parameter_list->length (length_is_truncatable + 1);
-  (*parameter_list)[length_is_truncatable].argument <<= CORBA::Any::from_boolean (this->is_truncatable_);
-  (*parameter_list)[length_is_truncatable].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_abstract_base_values = parameter_list->length ();
-  parameter_list->length (length_abstract_base_values + 1);
-  (*parameter_list)[length_abstract_base_values].argument <<=  this->abstract_base_values_;
-  
-  (*parameter_list)[length_abstract_base_values].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_supported_interfaces = parameter_list->length ();
-  parameter_list->length (length_supported_interfaces + 1);
-  (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
-  
-  (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_initializers = parameter_list->length ();
-  parameter_list->length (length_initializers + 1);
-  (*parameter_list)[length_initializers].argument <<=  this->initializers_;
-  
-  (*parameter_list)[length_initializers].mode = Dynamic::PARAM_IN;
+  CORBA::ULong length_digits = parameter_list->length ();
+  parameter_list->length (length_digits + 1);
+  (*parameter_list)[length_digits].argument <<= digits_;
+  (*parameter_list)[length_digits].mode = Dynamic::PARAM_IN;
   
   return safe_parameter_list._retn ();
 }
 
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
 CORBA::Any * 
-CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_FixedDef_scale_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_FixedDef_scale_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::Short result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_FixedDef_scale_get (const TAO_ClientRequestInfo_CORBA_FixedDef_scale_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_FixedDef_scale_get &);
+
+  CORBA::Short _result;
+};
+
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
@@ -830,25 +1265,106 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value::result (CO
   return safe_result_any._retn ();
 }
 
+void 
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::result (CORBA::Short result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_FixedDef_scale_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_FixedDef_scale_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::Short & scale,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_FixedDef_scale_set (const TAO_ClientRequestInfo_CORBA_FixedDef_scale_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_FixedDef_scale_set &);
+
+  const CORBA::Short & scale_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::Short & scale,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    scale_ (scale)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_scale = parameter_list->length ();
+  parameter_list->length (length_scale + 1);
+  (*parameter_list)[length_scale].argument <<= scale_;
+  (*parameter_list)[length_scale].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
 CORBA::Any * 
-CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value_box::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
+  CORBA::Boolean tk_void_any = 1;
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
+  return result_any;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// **********************************************************************
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -899,7 +1415,7 @@ CORBA::UShort _TAO_FixedDef_Remote_Proxy_Impl::digits (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get ri (
+      TAO_ClientRequestInfo_CORBA_FixedDef_digits_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -1058,7 +1574,7 @@ void _TAO_FixedDef_Remote_Proxy_Impl::digits (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set ri (
+      TAO_ClientRequestInfo_CORBA_FixedDef_digits_set ri (
         &_tao_call,
         _collocated_tao_target_,
         digits,
@@ -1209,7 +1725,7 @@ CORBA::Short _TAO_FixedDef_Remote_Proxy_Impl::scale (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get ri (
+      TAO_ClientRequestInfo_CORBA_FixedDef_scale_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -1368,7 +1884,7 @@ void _TAO_FixedDef_Remote_Proxy_Impl::scale (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set ri (
+      TAO_ClientRequestInfo_CORBA_FixedDef_scale_set ri (
         &_tao_call,
         _collocated_tao_target_,
         scale,
@@ -1768,231 +2284,6 @@ void CORBA::FixedDef::scale (
 }
 
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_get::result (CORBA::UShort result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::UShort & digits,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    digits_ (digits)
-{}
-
-Dynamic::ParameterList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_digits = parameter_list->length ();
-  parameter_list->length (length_digits + 1);
-  (*parameter_list)[length_digits].argument <<= digits_;
-  (*parameter_list)[length_digits].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_digits_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_get::result (CORBA::Short result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::Short & scale,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    scale_ (scale)
-{}
-
-Dynamic::ParameterList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_scale = parameter_list->length ();
-  parameter_list->length (length_scale + 1);
-  (*parameter_list)[length_scale].argument <<= scale_;
-  (*parameter_list)[length_scale].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::FixedDef::TAO_ClientRequestInfo_CORBA_FixedDef_scale_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-#endif /* TAO_HAS_INTERCEPTORS */
-
 void CORBA::ValueMember::_tao_any_destructor (void *x)
 {
   CORBA_ValueMember *tmp = ACE_static_cast (CORBA_ValueMember*,x);
@@ -2095,6 +2386,473 @@ void CORBA_ValueMemberSeq::_tao_any_destructor (void *x)
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+class TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::TypeCode_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get &);
+
+  CORBA::TypeCode_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::result (CORBA::TypeCode_ptr result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::IDLType_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get &);
+
+  CORBA::IDLType_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::result (CORBA::IDLType_ptr result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::IDLType_ptr type_def,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set &);
+
+  CORBA::IDLType_ptr type_def_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::IDLType_ptr type_def,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    type_def_ (type_def)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_type_def = parameter_list->length ();
+  parameter_list->length (length_type_def + 1);
+  (*parameter_list)[length_type_def].argument <<=  this->type_def_;
+  
+  (*parameter_list)[length_type_def].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::Visibility result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get &);
+
+  CORBA::Visibility _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::result (CORBA::Visibility result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::Visibility & access,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set &);
+
+  const CORBA::Visibility & access_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::Visibility & access,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    access_ (access)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_access = parameter_list->length ();
+  parameter_list->length (length_access + 1);
+  (*parameter_list)[length_access].argument <<= access_;
+  (*parameter_list)[length_access].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
 //
@@ -2145,7 +2903,7 @@ CORBA::TypeCode_ptr _TAO_ValueMemberDef_Remote_Proxy_Impl::type (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -2305,7 +3063,7 @@ CORBA::IDLType_ptr _TAO_ValueMemberDef_Remote_Proxy_Impl::type_def (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -2465,7 +3223,7 @@ void _TAO_ValueMemberDef_Remote_Proxy_Impl::type_def (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set ri (
         &_tao_call,
         _collocated_tao_target_,
         type_def,
@@ -2616,7 +3374,7 @@ CORBA::Visibility _TAO_ValueMemberDef_Remote_Proxy_Impl::access (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -2775,7 +3533,7 @@ void _TAO_ValueMemberDef_Remote_Proxy_Impl::access (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set ri (
         &_tao_call,
         _collocated_tao_target_,
         access,
@@ -3193,7 +3951,44 @@ void CORBA::ValueMemberDef::access (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get (
+class TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::InterfaceDefSeq * result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get (const TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get &);
+
+  CORBA::InterfaceDefSeq * _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
     CORBA::Environment &    
@@ -3202,7 +3997,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::TAO_
 {}
 
 Dynamic::ParameterList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the argument list on demand.
@@ -3214,7 +4009,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::argu
 }
 
 Dynamic::ExceptionList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the exception list on demand.
@@ -3227,7 +4022,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::exce
 
 
 CORBA::Any * 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
@@ -3243,80 +4038,61 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::resu
 }
 
 void 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_get::result (CORBA::TypeCode_ptr result)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::result (CORBA::InterfaceDefSeq * result)
 {
   // update the result 
   this->_result = result;
 }
 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get (
+class TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::InterfaceDefSeq & supported_interfaces,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set (const TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set &);
+
+  const CORBA::InterfaceDefSeq & supported_interfaces_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_get::result (CORBA::IDLType_ptr result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::IDLType_ptr type_def,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    type_def_ (type_def)
+    supported_interfaces_ (supported_interfaces)
 {}
 
 Dynamic::ParameterList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the argument list on demand.
@@ -3326,17 +4102,17 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::
   
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
     
-  CORBA::ULong length_type_def = parameter_list->length ();
-  parameter_list->length (length_type_def + 1);
-  (*parameter_list)[length_type_def].argument <<=  this->type_def_;
+  CORBA::ULong length_supported_interfaces = parameter_list->length ();
+  parameter_list->length (length_supported_interfaces + 1);
+  (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
   
-  (*parameter_list)[length_type_def].mode = Dynamic::PARAM_IN;
+  (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
   
   return safe_parameter_list._retn ();
 }
 
 Dynamic::ExceptionList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the exception list on demand.
@@ -3349,7 +4125,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::
 
 
 CORBA::Any * 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
@@ -3361,7 +4137,44 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_type_def_set::
   return result_any;
 }
 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get (
+class TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::InitializerSeq * result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get (const TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get &);
+
+  CORBA::InitializerSeq * _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
     CORBA::Environment &    
@@ -3370,7 +4183,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::TA
 {}
 
 Dynamic::ParameterList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the argument list on demand.
@@ -3382,7 +4195,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::ar
 }
 
 Dynamic::ExceptionList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the exception list on demand.
@@ -3395,7 +4208,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::ex
 
 
 CORBA::Any * 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
@@ -3411,24 +4224,61 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::re
 }
 
 void 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_get::result (CORBA::Visibility result)
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::result (CORBA::InitializerSeq * result)
 {
   // update the result 
   this->_result = result;
 }
 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set (
+class TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::InitializerSeq & initializers,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set (const TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set &);
+
+  const CORBA::InitializerSeq & initializers_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    const CORBA::Visibility & access,
+    const CORBA::InitializerSeq & initializers,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    access_ (access)
+    initializers_ (initializers)
 {}
 
 Dynamic::ParameterList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the argument list on demand.
@@ -3437,6 +4287,1262 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::ar
   ACE_CHECK_RETURN (0);
   
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_initializers = parameter_list->length ();
+  parameter_list->length (length_initializers + 1);
+  (*parameter_list)[length_initializers].argument <<=  this->initializers_;
+  
+  (*parameter_list)[length_initializers].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::ValueDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get (const TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get &);
+
+  CORBA::ValueDef_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::result (CORBA::ValueDef_ptr result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set (const TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set &);
+
+  CORBA::ValueDef_ptr base_value_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    base_value_ (base_value)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_base_value = parameter_list->length ();
+  parameter_list->length (length_base_value + 1);
+  (*parameter_list)[length_base_value].argument <<=  this->base_value_;
+  
+  (*parameter_list)[length_base_value].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::ValueDefSeq * result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get (const TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get &);
+
+  CORBA::ValueDefSeq * _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::result (CORBA::ValueDefSeq * result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::ValueDefSeq & abstract_base_values,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set (const TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set &);
+
+  const CORBA::ValueDefSeq & abstract_base_values_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    abstract_base_values_ (abstract_base_values)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_abstract_base_values = parameter_list->length ();
+  parameter_list->length (length_abstract_base_values + 1);
+  (*parameter_list)[length_abstract_base_values].argument <<=  this->abstract_base_values_;
+  
+  (*parameter_list)[length_abstract_base_values].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::Boolean result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get (const TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get &);
+
+  CORBA::Boolean _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::result (CORBA::Boolean result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::Boolean & is_abstract,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set (const TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set &);
+
+  const CORBA::Boolean & is_abstract_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::Boolean & is_abstract,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    is_abstract_ (is_abstract)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_is_abstract = parameter_list->length ();
+  parameter_list->length (length_is_abstract + 1);
+  (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
+  (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::Boolean result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get (const TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get &);
+
+  CORBA::Boolean _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::result (CORBA::Boolean result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::Boolean & is_custom,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set (const TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set &);
+
+  const CORBA::Boolean & is_custom_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::Boolean & is_custom,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    is_custom_ (is_custom)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_is_custom = parameter_list->length ();
+  parameter_list->length (length_is_custom + 1);
+  (*parameter_list)[length_is_custom].argument <<= CORBA::Any::from_boolean (this->is_custom_);
+  (*parameter_list)[length_is_custom].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::Boolean result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get (const TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get &);
+
+  CORBA::Boolean _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::result (CORBA::Boolean result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const CORBA::Boolean & is_truncatable,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set (const TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set &);
+
+  const CORBA::Boolean & is_truncatable_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const CORBA::Boolean & is_truncatable,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    is_truncatable_ (is_truncatable)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_is_truncatable = parameter_list->length ();
+  parameter_list->length (length_is_truncatable + 1);
+  (*parameter_list)[length_is_truncatable].argument <<= CORBA::Any::from_boolean (this->is_truncatable_);
+  (*parameter_list)[length_is_truncatable].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_is_a : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_a (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * id,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::Boolean result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_is_a (const TAO_ClientRequestInfo_CORBA_ValueDef_is_a &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_is_a &);
+
+  const char * id_;
+  CORBA::Boolean _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_is_a::TAO_ClientRequestInfo_CORBA_ValueDef_is_a (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const char * id,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    id_ (id)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_a::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_id = parameter_list->length ();
+  parameter_list->length (length_id + 1);
+  (*parameter_list)[length_id].argument <<= id_;
+  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_is_a::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_is_a::result (CORBA::Boolean result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_describe_value : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_describe_value (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::ValueDef::FullValueDescription * result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_describe_value (const TAO_ClientRequestInfo_CORBA_ValueDef_describe_value &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_describe_value &);
+
+  CORBA::ValueDef::FullValueDescription * _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::result (CORBA::ValueDef::FullValueDescription * result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * id,
+      const char * name,
+      const char * version,
+      CORBA::IDLType_ptr type,
+      const CORBA::Visibility & access,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::ValueMemberDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member (const TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member &);
+
+  const char * id_;
+  const char * name_;
+  const char * version_;
+  CORBA::IDLType_ptr type_;
+  const CORBA::Visibility & access_;
+  CORBA::ValueMemberDef_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    const CORBA::Visibility & access,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    id_ (id),
+    name_ (name),
+    version_ (version),
+    type_ (type),
+    access_ (access)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_id = parameter_list->length ();
+  parameter_list->length (length_id + 1);
+  (*parameter_list)[length_id].argument <<= id_;
+  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_name = parameter_list->length ();
+  parameter_list->length (length_name + 1);
+  (*parameter_list)[length_name].argument <<= name_;
+  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_version = parameter_list->length ();
+  parameter_list->length (length_version + 1);
+  (*parameter_list)[length_version].argument <<= version_;
+  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_type = parameter_list->length ();
+  parameter_list->length (length_type + 1);
+  (*parameter_list)[length_type].argument <<=  this->type_;
+  
+  (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
     
   CORBA::ULong length_access = parameter_list->length ();
   parameter_list->length (length_access + 1);
@@ -3447,7 +5553,7 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::ar
 }
 
 Dynamic::ExceptionList *
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the exception list on demand.
@@ -3460,16 +5566,340 @@ CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::ex
 
 
 CORBA::Any * 
-CORBA::ValueMemberDef::TAO_ClientRequestInfo_CORBA_ValueMemberDef_access_set::result (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
+  CORBA::Boolean tk_void_any = 0;
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   
-  return result_any;
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::result (CORBA::ValueMemberDef_ptr result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * id,
+      const char * name,
+      const char * version,
+      CORBA::IDLType_ptr type,
+      CORBA::AttributeMode & mode,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::AttributeDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute (const TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute &);
+
+  const char * id_;
+  const char * name_;
+  const char * version_;
+  CORBA::IDLType_ptr type_;
+  const CORBA::AttributeMode & mode_;
+  CORBA::AttributeDef_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode & mode,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    id_ (id),
+    name_ (name),
+    version_ (version),
+    type_ (type),
+    mode_ (mode)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_id = parameter_list->length ();
+  parameter_list->length (length_id + 1);
+  (*parameter_list)[length_id].argument <<= id_;
+  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_name = parameter_list->length ();
+  parameter_list->length (length_name + 1);
+  (*parameter_list)[length_name].argument <<= name_;
+  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_version = parameter_list->length ();
+  parameter_list->length (length_version + 1);
+  (*parameter_list)[length_version].argument <<= version_;
+  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_type = parameter_list->length ();
+  parameter_list->length (length_type + 1);
+  (*parameter_list)[length_type].argument <<=  this->type_;
+  
+  (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_mode = parameter_list->length ();
+  parameter_list->length (length_mode + 1);
+  (*parameter_list)[length_mode].argument <<=  this->mode_;
+  
+  (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::result (CORBA::AttributeDef_ptr result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueDef_create_operation : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueDef_create_operation (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      const char * id,
+      const char * name,
+      const char * version,
+      CORBA::IDLType_ptr result,
+      CORBA::OperationMode & mode,
+      const CORBA::ParDescriptionSeq & params,
+      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA::ContextIdSeq & contexts,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::OperationDef_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueDef_create_operation (const TAO_ClientRequestInfo_CORBA_ValueDef_create_operation &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueDef_create_operation &);
+
+  const char * id_;
+  const char * name_;
+  const char * version_;
+  CORBA::IDLType_ptr result_;
+  const CORBA::OperationMode & mode_;
+  const CORBA::ParDescriptionSeq & params_;
+  const CORBA::ExceptionDefSeq & exceptions_;
+  const CORBA::ContextIdSeq & contexts_;
+  CORBA::OperationDef_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr result,
+    CORBA::OperationMode & mode,
+    const CORBA::ParDescriptionSeq & params,
+    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA::ContextIdSeq & contexts,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    id_ (id),
+    name_ (name),
+    version_ (version),
+    result_ (result),
+    mode_ (mode),
+    params_ (params),
+    exceptions_ (exceptions),
+    contexts_ (contexts)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_id = parameter_list->length ();
+  parameter_list->length (length_id + 1);
+  (*parameter_list)[length_id].argument <<= id_;
+  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_name = parameter_list->length ();
+  parameter_list->length (length_name + 1);
+  (*parameter_list)[length_name].argument <<= name_;
+  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_version = parameter_list->length ();
+  parameter_list->length (length_version + 1);
+  (*parameter_list)[length_version].argument <<= version_;
+  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_result = parameter_list->length ();
+  parameter_list->length (length_result + 1);
+  (*parameter_list)[length_result].argument <<=  this->result_;
+  
+  (*parameter_list)[length_result].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_mode = parameter_list->length ();
+  parameter_list->length (length_mode + 1);
+  (*parameter_list)[length_mode].argument <<=  this->mode_;
+  
+  (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_params = parameter_list->length ();
+  parameter_list->length (length_params + 1);
+  (*parameter_list)[length_params].argument <<=  this->params_;
+  
+  (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_exceptions = parameter_list->length ();
+  parameter_list->length (length_exceptions + 1);
+  (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
+  
+  (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
+    
+  CORBA::ULong length_contexts = parameter_list->length ();
+  parameter_list->length (length_contexts + 1);
+  (*parameter_list)[length_contexts].argument <<=  this->contexts_;
+  
+  (*parameter_list)[length_contexts].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::result (CORBA::OperationDef_ptr result)
+{
+  // update the result 
+  this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -3525,7 +5955,7 @@ CORBA::InterfaceDefSeq * _TAO_ValueDef_Remote_Proxy_Impl::supported_interfaces (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -3685,7 +6115,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::supported_interfaces (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set ri (
         &_tao_call,
         _collocated_tao_target_,
         supported_interfaces,
@@ -3838,7 +6268,7 @@ CORBA::InitializerSeq * _TAO_ValueDef_Remote_Proxy_Impl::initializers (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -3998,7 +6428,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::initializers (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set ri (
         &_tao_call,
         _collocated_tao_target_,
         initializers,
@@ -4150,7 +6580,7 @@ CORBA::ValueDef_ptr _TAO_ValueDef_Remote_Proxy_Impl::base_value (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -4310,7 +6740,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::base_value (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set ri (
         &_tao_call,
         _collocated_tao_target_,
         base_value,
@@ -4463,7 +6893,7 @@ CORBA::ValueDefSeq * _TAO_ValueDef_Remote_Proxy_Impl::abstract_base_values (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -4623,7 +7053,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::abstract_base_values (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set ri (
         &_tao_call,
         _collocated_tao_target_,
         abstract_base_values,
@@ -4774,7 +7204,7 @@ CORBA::Boolean _TAO_ValueDef_Remote_Proxy_Impl::is_abstract (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -4933,7 +7363,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::is_abstract (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set ri (
         &_tao_call,
         _collocated_tao_target_,
         is_abstract,
@@ -5084,7 +7514,7 @@ CORBA::Boolean _TAO_ValueDef_Remote_Proxy_Impl::is_custom (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -5243,7 +7673,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::is_custom (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set ri (
         &_tao_call,
         _collocated_tao_target_,
         is_custom,
@@ -5394,7 +7824,7 @@ CORBA::Boolean _TAO_ValueDef_Remote_Proxy_Impl::is_truncatable (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -5553,7 +7983,7 @@ void _TAO_ValueDef_Remote_Proxy_Impl::is_truncatable (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set ri (
         &_tao_call,
         _collocated_tao_target_,
         is_truncatable,
@@ -5705,7 +8135,7 @@ CORBA::Boolean _TAO_ValueDef_Remote_Proxy_Impl::is_a (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_a ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_is_a ri (
         &_tao_call,
         _collocated_tao_target_,
         id,
@@ -5875,7 +8305,7 @@ CORBA::ValueDef::FullValueDescription * _TAO_ValueDef_Remote_Proxy_Impl::describ
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_describe_value ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -6040,7 +8470,7 @@ CORBA::ValueMemberDef_ptr _TAO_ValueDef_Remote_Proxy_Impl::create_value_member (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member ri (
         &_tao_call,
         _collocated_tao_target_,
         id,
@@ -6224,7 +8654,7 @@ CORBA::AttributeDef_ptr _TAO_ValueDef_Remote_Proxy_Impl::create_attribute (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute ri (
         &_tao_call,
         _collocated_tao_target_,
         id,
@@ -6411,7 +8841,7 @@ CORBA::OperationDef_ptr _TAO_ValueDef_Remote_Proxy_Impl::create_operation (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation ri (
+      TAO_ClientRequestInfo_CORBA_ValueDef_create_operation ri (
         &_tao_call,
         _collocated_tao_target_,
         id,
@@ -8556,1225 +10986,201 @@ CORBA::OperationDef_ptr CORBA::ValueDef::create_operation (
 }
 
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_get::result (CORBA::InterfaceDefSeq * result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::InterfaceDefSeq & supported_interfaces,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    supported_interfaces_ (supported_interfaces)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_supported_interfaces = parameter_list->length ();
-  parameter_list->length (length_supported_interfaces + 1);
-  (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
-  
-  (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_supported_interfaces_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_get::result (CORBA::InitializerSeq * result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::InitializerSeq & initializers,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    initializers_ (initializers)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_initializers = parameter_list->length ();
-  parameter_list->length (length_initializers + 1);
-  (*parameter_list)[length_initializers].argument <<=  this->initializers_;
-  
-  (*parameter_list)[length_initializers].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_initializers_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_get::result (CORBA::ValueDef_ptr result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::ValueDef_ptr base_value,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    base_value_ (base_value)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_base_value = parameter_list->length ();
-  parameter_list->length (length_base_value + 1);
-  (*parameter_list)[length_base_value].argument <<=  this->base_value_;
-  
-  (*parameter_list)[length_base_value].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_base_value_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_get::result (CORBA::ValueDefSeq * result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::ValueDefSeq & abstract_base_values,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    abstract_base_values_ (abstract_base_values)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_abstract_base_values = parameter_list->length ();
-  parameter_list->length (length_abstract_base_values + 1);
-  (*parameter_list)[length_abstract_base_values].argument <<=  this->abstract_base_values_;
-  
-  (*parameter_list)[length_abstract_base_values].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_abstract_base_values_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_get::result (CORBA::Boolean result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::Boolean & is_abstract,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    is_abstract_ (is_abstract)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_is_abstract = parameter_list->length ();
-  parameter_list->length (length_is_abstract + 1);
-  (*parameter_list)[length_is_abstract].argument <<= CORBA::Any::from_boolean (this->is_abstract_);
-  (*parameter_list)[length_is_abstract].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_abstract_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_get::result (CORBA::Boolean result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::Boolean & is_custom,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    is_custom_ (is_custom)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_is_custom = parameter_list->length ();
-  parameter_list->length (length_is_custom + 1);
-  (*parameter_list)[length_is_custom].argument <<= CORBA::Any::from_boolean (this->is_custom_);
-  (*parameter_list)[length_is_custom].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_custom_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_get::result (CORBA::Boolean result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const CORBA::Boolean & is_truncatable,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    is_truncatable_ (is_truncatable)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_is_truncatable = parameter_list->length ();
-  parameter_list->length (length_is_truncatable + 1);
-  (*parameter_list)[length_is_truncatable].argument <<= CORBA::Any::from_boolean (this->is_truncatable_);
-  (*parameter_list)[length_is_truncatable].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_truncatable_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_a::TAO_ClientRequestInfo_CORBA_ValueDef_is_a (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const char * id,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    id_ (id)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_a::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_a::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= CORBA::Any::from_boolean (this->_result);
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_is_a::result (CORBA::Boolean result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_describe_value::result (ACE_NESTED_CLASS (CORBA::ValueDef,FullValueDescription) * result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const char * id,
-    const char * name,
-    const char * version,
-    CORBA::IDLType_ptr type,
-    const CORBA::Visibility & access,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    id_ (id),
-    name_ (name),
-    version_ (version),
-    type_ (type),
-    access_ (access)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_type = parameter_list->length ();
-  parameter_list->length (length_type + 1);
-  (*parameter_list)[length_type].argument <<=  this->type_;
-  
-  (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_access = parameter_list->length ();
-  parameter_list->length (length_access + 1);
-  (*parameter_list)[length_access].argument <<= access_;
-  (*parameter_list)[length_access].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_value_member::result (CORBA::ValueMemberDef_ptr result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const char * id,
-    const char * name,
-    const char * version,
-    CORBA::IDLType_ptr type,
-    CORBA::AttributeMode & mode,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    id_ (id),
-    name_ (name),
-    version_ (version),
-    type_ (type),
-    mode_ (mode)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_type = parameter_list->length ();
-  parameter_list->length (length_type + 1);
-  (*parameter_list)[length_type].argument <<=  this->type_;
-  
-  (*parameter_list)[length_type].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_mode = parameter_list->length ();
-  parameter_list->length (length_mode + 1);
-  (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
-  (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_attribute::result (CORBA::AttributeDef_ptr result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    const char * id,
-    const char * name,
-    const char * version,
-    CORBA::IDLType_ptr result,
-    CORBA::OperationMode & mode,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
-    const CORBA::ContextIdSeq & contexts,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    id_ (id),
-    name_ (name),
-    version_ (version),
-    result_ (result),
-    mode_ (mode),
-    params_ (params),
-    exceptions_ (exceptions),
-    contexts_ (contexts)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_result = parameter_list->length ();
-  parameter_list->length (length_result + 1);
-  (*parameter_list)[length_result].argument <<=  this->result_;
-  
-  (*parameter_list)[length_result].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_mode = parameter_list->length ();
-  parameter_list->length (length_mode + 1);
-  (*parameter_list)[length_mode].argument <<=  this->mode_;
-  
-  (*parameter_list)[length_mode].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_params = parameter_list->length ();
-  parameter_list->length (length_params + 1);
-  (*parameter_list)[length_params].argument <<=  this->params_;
-  
-  (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_exceptions = parameter_list->length ();
-  parameter_list->length (length_exceptions + 1);
-  (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
-  (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_contexts = parameter_list->length ();
-  parameter_list->length (length_contexts + 1);
-  (*parameter_list)[length_contexts].argument <<=  this->contexts_;
-  
-  (*parameter_list)[length_contexts].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueDef::TAO_ClientRequestInfo_CORBA_ValueDef_create_operation::result (CORBA::OperationDef_ptr result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-#endif /* TAO_HAS_INTERCEPTORS */
-
 void CORBA::ValueDescription::_tao_any_destructor (void *x)
 {
   CORBA_ValueDescription *tmp = ACE_static_cast (CORBA_ValueDescription*,x);
   delete tmp;
 }
 
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+class TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void result (CORBA::IDLType_ptr result);
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get (const TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get &);
+
+  CORBA::IDLType_ptr _result;
+};
+
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  return safe_result_any._retn ();
+}
+
+void 
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::result (CORBA::IDLType_ptr result)
+{
+  // update the result 
+  this->_result = result;
+}
+
+class TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set : public TAO_ClientRequestInfo
+{
+public:
+  TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set (
+      TAO_GIOP_Invocation *_tao_invocation,
+      CORBA::Object_ptr _tao_target,
+      CORBA::IDLType_ptr original_type_def,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set (const TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set &);
+  void operator= (const TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set &);
+
+  CORBA::IDLType_ptr original_type_def_;
+  
+};
+
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set (
+    TAO_GIOP_Invocation *_tao_invocation,
+    CORBA::Object_ptr _tao_target,
+    CORBA::IDLType_ptr original_type_def,
+    CORBA::Environment &    
+  )
+  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+    original_type_def_ (original_type_def)
+{}
+
+Dynamic::ParameterList *
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+    
+  CORBA::ULong length_original_type_def = parameter_list->length ();
+  parameter_list->length (length_original_type_def + 1);
+  (*parameter_list)[length_original_type_def].argument <<=  this->original_type_def_;
+  
+  (*parameter_list)[length_original_type_def].mode = Dynamic::PARAM_IN;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+
+CORBA::Any * 
+TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -9826,7 +11232,7 @@ CORBA::IDLType_ptr _TAO_ValueBoxDef_Remote_Proxy_Impl::original_type_def (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get ri (
+      TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get ri (
         &_tao_call,
         _collocated_tao_target_,
         ACE_TRY_ENV
@@ -9986,7 +11392,7 @@ void _TAO_ValueBoxDef_Remote_Proxy_Impl::original_type_def (
       int _invoke_status = TAO_INVOKE_EXCEPTION;
       
 #if TAO_HAS_INTERCEPTORS == 1
-      CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set ri (
+      TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set ri (
         &_tao_call,
         _collocated_tao_target_,
         original_type_def,
@@ -10375,121 +11781,6 @@ void CORBA::ValueBoxDef::original_type_def (
     );
 }
 
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return parameter_list;
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  CORBA::Any_var safe_result_any = result_any;
-  
-  (*result_any) <<= this->_result;
-  return safe_result_any._retn ();
-}
-
-void 
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_get::result (CORBA::IDLType_ptr result)
-{
-  // update the result 
-  this->_result = result;
-}
-
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set (
-    TAO_GIOP_Invocation *_tao_invocation,
-    CORBA::Object_ptr _tao_target,
-    CORBA::IDLType_ptr original_type_def,
-    CORBA::Environment &    
-  )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    original_type_def_ (original_type_def)
-{}
-
-Dynamic::ParameterList *
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::arguments (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the argument list on demand.
-  Dynamic::ParameterList *parameter_list =
-    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_original_type_def = parameter_list->length ();
-  parameter_list->length (length_original_type_def + 1);
-  (*parameter_list)[length_original_type_def].argument <<=  this->original_type_def_;
-  
-  (*parameter_list)[length_original_type_def].mode = Dynamic::PARAM_IN;
-  
-  return safe_parameter_list._retn ();
-}
-
-Dynamic::ExceptionList *
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::exceptions (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
-    TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return exception_list;
-}
-
-
-CORBA::Any * 
-CORBA::ValueBoxDef::TAO_ClientRequestInfo_CORBA_ValueBoxDef_original_type_def_set::result (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 1;
-  CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  
-  return result_any;
-}
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ***************************************************************
 // Any operators for sequence class moved from IFR_BaseC.cpp
