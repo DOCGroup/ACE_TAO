@@ -1,3 +1,12 @@
+Thu Feb 28 09:55:21 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Simple/time/Time_Client_i.cpp:
+
+          Fix a core dump for 64-bit Solaris and HP-UX.  The address of the
+          CORBA::Long (in the call to ctime) needed to be 8 byte aligned and
+          the reentrant version of ctime needed to be used (due to
+          problems on Solaris).
+
 Thu Mar 14 14:13:02 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/File_IO/server.cpp:
