@@ -91,9 +91,9 @@ public:
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls.
-  
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -212,7 +212,7 @@ protected:
   // with the Proactor.
   // When Op is 0, read operation is started. 1 starts write
   // operation. Thanks to Alex Libman <alibman@baltimore.com> for
-  // suggesting this.  
+  // suggesting this.
 
   ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor_;
   // It is easy to get this specific implementation proactor here,
@@ -262,7 +262,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch
   friend class ACE_POSIX_AIOCB_Asynch_Read_Stream;
   friend class ACE_POSIX_SIG_Asynch_Read_Stream;
   // Factory classes willl have special permissions.
-  
+
   friend class ACE_POSIX_Proactor;
   // The Proactor constructs the Result class for faking results.
 
@@ -276,7 +276,7 @@ public:
 
   ACE_HANDLE handle (void) const;
   // I/O handle used for reading.
-  
+
   // = Base class operations. These operations are here to kill
   //   dominance warnings. These methods call the base class methods.
 
@@ -315,7 +315,7 @@ public:
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
 
@@ -333,7 +333,7 @@ protected:
                                        int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_Stream factory.
-  
+
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
@@ -379,10 +379,10 @@ public:
 
   virtual ~ACE_POSIX_AIOCB_Asynch_Read_Stream (void);
   // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -396,7 +396,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -432,9 +432,9 @@ public:
   virtual ~ACE_POSIX_SIG_Asynch_Read_Stream (void);
   // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -448,7 +448,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -489,9 +489,9 @@ public:
 
   ACE_HANDLE handle (void) const;
   // I/O handle used for writing.
-  
+
   // = Base class operations. These operations are here to kill
-  //   dominance warnings. These methods call the base class methods. 
+  //   dominance warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -528,7 +528,7 @@ public:
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
 
@@ -594,9 +594,9 @@ public:
   virtual ~ACE_POSIX_AIOCB_Asynch_Write_Stream (void);
   // Destrcutor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -610,7 +610,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -645,9 +645,9 @@ public:
   virtual ~ACE_POSIX_SIG_Asynch_Write_Stream (void);
   // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -661,7 +661,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -729,12 +729,12 @@ public:
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
-  
+
   // = The following methods belong to
-  //   ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid 
+  //   ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid
   //   dominance warnings. These methods route their call to the
   //   ACE_POSIX_Asynch_Read_Stream_Result base class.
 
@@ -813,11 +813,11 @@ public:
 
   virtual ~ACE_POSIX_AIOCB_Asynch_Read_File (void);
   // Destructor.
-  
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -831,7 +831,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -882,9 +882,9 @@ public:
   virtual ~ACE_POSIX_SIG_Asynch_Read_File (void);
   // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -898,7 +898,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -966,7 +966,7 @@ public:
 
   ACE_HANDLE event (void) const;
   // This returns ACE_INVALID_HANDLE on POSIX4 platforms.
-  
+
   u_long offset (void) const;
   u_long offset_high (void) const;
   // This really make sense only when doing file I/O.
@@ -974,20 +974,20 @@ public:
   // @@ On POSIX4-Unix, offset_high should be supported using
   //     aiocb64.
   //
-  
+
   int priority (void) const;
   // The priority of the asynchronous operation.
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
-  
+
   // = The following methods belong to
   //   ACE_POSIX_Asynch_Write_Stream_Result. They are here to avoid
-  //   dominace warnings. These methods route their call to the 
-  //   ACE_POSIX_Asynch_Write_Stream_Result base class. 
+  //   dominace warnings. These methods route their call to the
+  //   ACE_POSIX_Asynch_Write_Stream_Result base class.
 
   u_long bytes_to_write (void) const;
   // The number of bytes which were requested at the start of the
@@ -1001,7 +1001,7 @@ public:
 
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
-  
+
 protected:
   ACE_POSIX_Asynch_Write_File_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
@@ -1055,10 +1055,10 @@ public:
 
   virtual ~ACE_POSIX_AIOCB_Asynch_Write_File (void);
   // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -1072,7 +1072,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -1124,9 +1124,9 @@ public:
   virtual ~ACE_POSIX_SIG_Asynch_Write_File (void);
   // Destrcutor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -1140,7 +1140,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -1225,14 +1225,14 @@ public:
   //
 
   int priority (void) const;
-  // The priority of the asynchronous operation. 
+  // The priority of the asynchronous operation.
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
-  
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -1310,17 +1310,17 @@ public:
   virtual ~ACE_POSIX_AIOCB_Asynch_Accept (void);
   // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
-  
+
 private:
   static void* thread_function  (void* reactor);
   // The thread function that does handle events.
@@ -1376,15 +1376,15 @@ public:
 
   virtual ~ACE_POSIX_SIG_Asynch_Accept (void);
   // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
   //   the call to the ACE_POSIX_Asynch_Operation base class.
- 
+
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 
@@ -1484,10 +1484,10 @@ public:
 
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
-  
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -1570,10 +1570,10 @@ public:
 
   virtual ~ACE_POSIX_AIOCB_Asynch_Transmit_File (void);
   // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -1587,7 +1587,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 };
@@ -1627,10 +1627,10 @@ public:
 
   virtual ~ACE_POSIX_SIG_Asynch_Transmit_File (void);
   // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -1644,7 +1644,7 @@ public:
   int cancel (void);
   //
   // @@ Not implemented. Returns 0.
-  
+
   ACE_Proactor* proactor (void) const;
   // Return the underlying proactor.
 };
