@@ -34,8 +34,8 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
       Application->Initialize ();
       Application->Title = "CORBA Chat Client";
-      Application->CreateForm (__classid (TChatClientWindow), &ChatClientWindow);
-      Application->Run ();
+      Application->CreateForm(__classid(TChatClientWindow), &ChatClientWindow);
+       Application->Run ();
     }
   catch (Exception &exception)
     {
@@ -43,7 +43,7 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     }
   catch (CORBA::Exception &exception)
     {
-      ShowMessage (String ("CORBA exception: ") + exception._id ());
+      ShowMessage (String ("CORBA exception: ") + exception._rep_id ());
     }
   catch (...)
     {
@@ -53,3 +53,5 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
   return 0;
 }
 //---------------------------------------------------------------------------
+
+
