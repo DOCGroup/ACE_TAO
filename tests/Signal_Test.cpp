@@ -171,8 +171,11 @@ asynchronous_signal_handler (void *)
 // Function that runs in the child process in its own worker thread.
 
 static void *
-worker_child (void *)
+worker_child (void *arg)
 {
+  long handle_signals_synchronously =
+    ACE_reinterpret_cast (long, arg);
+
   for (size_t i = 0; i < n_iterations; i++)
     {
       if (shut_down > 0)
@@ -198,17 +201,26 @@ worker_child (void *)
                       parent_pid));
           int result = ACE_OS::kill (parent_pid,
                                      SIGHUP);
-          ACE_ASSERT (result != -1);
+          if (result == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("(%P|%t) %p\n"),
+                          ASYS_TEXT ("kill")));
+              ACE_ASSERT (result != -1);
+            }
         }
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
-  // We need to do this to dislodge the signal handling thread if it
-  // hasn't shut down on its own accord yet.
-  int result = ACE_OS::kill (ACE_OS::getpid (),
-                             SIGINT);
-  ACE_ASSERT (result != -1);
+  if (handle_signals_synchronously)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
+      // We need to do this to dislodge the signal handling thread if
+      // it hasn't shut down on its own accord yet.
+      int result = ACE_OS::kill (ACE_OS::getpid (),
+                                 SIGINT);
+      ACE_ASSERT (result != -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) finished running child\n")));
   return 0;
