@@ -138,8 +138,9 @@ The following is a list of which C++ features that ACE and TAO can
 take advantage of if a compiler supports them:
 
 <UL>
-<LI> <B>Exceptions</B> -- The ACE library itself does not catch or
-    throw C++ exceptions.  However, you can use exceptions in code
+<LI> <B>Exceptions</B> -- The ACE library itself is ``exception
+    neutral,'' <EM>i.e.,</EM> it does not catch or throw C++
+    exceptions.  However, you can use exceptions in code 
     that uses ACE including throwing exceptions inside call back
     methods, as long as you provide the code to handle it.
     TAO can be configured to use C++ exceptions if ACE supports them,
