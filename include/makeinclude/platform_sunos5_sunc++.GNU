@@ -44,6 +44,9 @@ endif
 ifeq (,$(distrib))
   distrib = 0
 endif
+ifeq (,$(stdcpplib))
+  stdcpplib = 1
+endif
 ifeq (,$(threads))
   threads = 1
 endif
@@ -108,10 +111,15 @@ else  # ! 4.2
       #### with early releases of CC 5.0.  And, use old iostreams.
       CCFLAGS += -instances=explicit
       ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-        CCFLAGS += -library=iostream,no%Cstd
+        ifeq (1,$(stdcpplib))
+          CCFLAGS += -library=Cstd
+        else
+          CCFLAGS += -library=iostream,no%Cstd -DACE_USES_OLD_IOSTREAMS
+        endif # stdcpplib
       else
-        #### SunCC 5.1 seems to need the std cpp lib
-        CCFLAGS += -library=iostream
+        ifeq (0,$(stdcpplib))
+          CCFLAGS += -library=iostream -DACE_USES_OLD_IOSTREAMS
+        endif # stdcpplib
       endif # CC 5.0
     endif # compat4 requested
   endif # CC 5.0 or later

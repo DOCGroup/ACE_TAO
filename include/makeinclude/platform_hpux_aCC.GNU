@@ -30,6 +30,9 @@ endif
 ifeq (,$(optimize))
   optimize = 0
 endif
+ifeq (,$(stdcpplib))
+  stdcpplib = 1
+endif
 ifeq (,$(threads))
   threads = 1
 endif
@@ -39,8 +42,24 @@ HPVERS_WORDS := $(subst ., ,$(shell uname -r))
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
-CXX		= /opt/aCC/bin/aCC
-#
+CXX		= aCC
+
+# Extract the compiler version number. If it's A.03.27 (on HP-UX 11) or
+# A.01.27 (on HP-UX 10.20) then we can turn on the standard C++ library
+# usage, else we need to stick with the old one.
+CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
+CXXVERS := $(word 8, $(CXXVERS_WORDS))
+ifneq (27,$(CXXVERS))
+  stdcpplib = 0
+endif
+
+ifeq (1,$(stdcpplib))
+  CCFLAGS += -AA -DACE_HAS_STANDARD_CPP_LIBRARY
+# Compile errors using -AA and +noeh together - HP support call 3100620459
+# -- Steve Huston, April 10, 2001.
+  exceptions = 1
+endif
+
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any
 # for 10.20, but for 11.00, the default is to use threads, so explicitly
