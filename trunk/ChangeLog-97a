@@ -1,8 +1,3 @@
-Wed Jun 25 17:18:25 1997  Steve Huston  <shuston@riverace.com>
-
-	* ace/Parse_Node.cpp: Insure that ACE_Object_Node::symbol(void)
-	  returns 0 if the underlying shared library can't be loaded.
-
 Wed Jun 25 12:59:00 1997    <irfan@TWOSTEP>
 
 	* ace/Synch_T.h (ACE_SYNCH_PROCESS_MUTEX and
@@ -11,7 +6,13 @@ Wed Jun 25 12:59:00 1997    <irfan@TWOSTEP>
 	* tests/Message_Queue_Notifications_Test.cpp: New test for
  	  demonstrating notification qualities of Message_Queue.
 
+	* ace/Strategies.h: Added accessors to these classes to make them
+ 	  more usable.
+
 Wed Jun 25 10:47:34 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Parse_Node.cpp: Insure that ACE_Object_Node::symbol(void)
+	  returns 0 if the underlying shared library can't be loaded.
 
 	* ace/OS.h: Added a new type, ACE_SHLIB_HANDLE to allow dynamic
 	  linking using correct types on all platforms that support it.

@@ -41,6 +41,13 @@ public:
   virtual int notify (ACE_Event_Handler *,
 		      ACE_Reactor_Mask mask) = 0;
 
+  // Get/Set the event handler
+  ACE_Event_Handler *event_handler (void);
+  void event_handler (ACE_Event_Handler *eh);
+
+  // Get/Set the reactor mask
+  ACE_Reactor_Mask mask (void);
+  void mask (ACE_Reactor_Mask m);
 
 protected:
   ACE_Event_Handler *eh_;
@@ -65,7 +72,11 @@ public:
   virtual int notify (ACE_Event_Handler *,
 		      ACE_Reactor_Mask mask);
 
-private:
+  // Get/Set the reactor
+  ACE_Reactor *reactor (void);
+  void reactor (ACE_Reactor *r);
+  
+protected:
   ACE_Reactor *reactor_;
 };
 
@@ -78,7 +89,7 @@ class ACE_Export ACE_ReactorEx_Notification_Strategy : public ACE_Notification_S
   //     ACE_ReactorEx::notify() method.
 {
 public:
-  ACE_ReactorEx_Notification_Strategy (ACE_ReactorEx *reactorex,
+  ACE_ReactorEx_Notification_Strategy (ACE_ReactorEx *reactorEx,
 				       ACE_Event_Handler *eh,
 				       ACE_Reactor_Mask mask);
 
@@ -87,8 +98,12 @@ public:
   virtual int notify (ACE_Event_Handler *,
 		      ACE_Reactor_Mask mask);
 
-private:
-  ACE_ReactorEx *reactorex_;
+  // Get/Set the reactorEx
+  ACE_ReactorEx *reactorEx (void);
+  void reactorEx (ACE_ReactorEx *r);
+  
+protected:
+  ACE_ReactorEx *reactorEx_;
 };
 
 // This needs to come here to avoid circular dependencies.
