@@ -1,3 +1,9 @@
+Mon Apr 28 07:05:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/PortableServerC.i (demarshal_value): Added
+	  ACE_INLINE to marshal_value and demarshal_value. This should fix
+	  link errors in MSVC6.
+
 Mon Apr 28 06:52:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_IORC.cpp: Removed duplicate explicit template
