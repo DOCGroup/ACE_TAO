@@ -7,13 +7,13 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_CPP_
-#define _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_CPP_
+#ifndef _TAO_IDL_TMP_TAOS_T_CPP_
+#define _TAO_IDL_TMP_TAOS_T_CPP_
 
-#include "tao/TAOS_T.h"
+#include "TAOS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/TAOS_T.i"
+#include "TAOS_T.i"
 #endif /* !defined INLINE */
 
 

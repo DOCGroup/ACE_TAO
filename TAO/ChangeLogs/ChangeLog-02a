@@ -1,3 +1,107 @@
+Fri Apr 28 20:09:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Modified Messaging.pidl, Pollable.pidl and TAO.pidl to use local
+          interfaces, then re-generated the code using the local
+          interfaces, made whatever modifications where required and
+          stored the modifications as a patch file for future reference.
+          The change is good because it is a step to resolve [BUGID:322],
+          the memory management of local interfaces is well defined.
+          And because the change reduces the code size, for example, on
+          Linux the sizes before the change are:
+                   text    data     bss     dec     hex filename
+                  39074   11832     264   51170    c7e2 .shobj/PollableC.o
+                  17353    5812      60   23225    5ab9 .shobj/PollableS.o
+                 109438   32556    2536  144530   23492 .shobj/MessagingC.o
+                  53514   18712      88   72314   11a7a .shobj/MessagingS.o
+                  27061    7516     584   35161    8959 .shobj/TAOC.o
+                   6739    2048      32    8819    2273 .shobj/TAOS.o
+          Once the files are generated using local interfaces the numbers
+          change to:
+                   text    data     bss     dec     hex filename
+                   8647    2684      64   11395    2c83 .shobj/PollableC.o
+                    990      84      28    1102     44e .shobj/PollableS.o
+                  50581   16344    1192   68117   10a15 .shobj/MessagingC.o
+                  10532    2488      84   13104    3330 .shobj/MessagingS.o
+                  11928    3136     488   15552    3cc0 .shobj/TAOC.o
+                    990      84      28    1102     44e .shobj/TAOS.o
+
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/Buffering_Constraint_Policy.i:
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/Client_Priority_Policy.h:
+        * tao/Client_Priority_Policy.cpp:
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.cpp:
+          Reimplement the policies using the semantics for local
+          interfaces. We inherit from the stub instead of the skeleton
+          class, and there is no need to activate the object with the
+          POA.  Interestingly destroy() becomes a no-op, when the last
+          references goes away the object is destroyed without any other
+          intervention.
+
+        * tao/ORB.cpp:
+        * tao/Policy_Manager.cpp:
+        * tao/Stub.cpp:
+          Changed to use the new local interfaces, no more references to
+          the POA or activation.
+
+        * tao/corbafwd.h:
+        * tao/Exception.cpp:
+          New minor code to indicate problems while manipulating
+          policies.
+
+        * tao/Messaging.pidl:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/MessagingS.h:
+        * tao/MessagingS.i:
+        * tao/MessagingS.cpp:
+        * tao/MessagingS_T.h:
+        * tao/MessagingS_T.i:
+        * tao/MessagingS_T.cpp:
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingC.i.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingS.h.diff:
+        * tao/diffs/MessagingS.i.diff:
+        * tao/diffs/MessagingS.cpp.diff:
+        * tao/diffs/MessagingS_T.h.diff:
+        * tao/diffs/MessagingS_T.i.diff:
+        * tao/diffs/MessagingS_T.cpp.diff:
+          The new files for Messaging.pidl
+
+        * tao/Pollable.pidl:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PollableC.cpp:
+        * tao/PollableS.h:
+        * tao/PollableS.i:
+        * tao/PollableS.cpp:
+        * tao/PollableS_T.h:
+        * tao/PollableS_T.i:
+        * tao/PollableS_T.cpp:
+        * tao/diffs/PollableC.h.diff:
+        * tao/diffs/PollableC.i.diff:
+        * tao/diffs/PollableC.cpp.diff:
+          The new files for Pollable.pidl
+
+        * tao/TAO.pidl:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOS.h:
+        * tao/TAOS.i:
+        * tao/TAOS.cpp:
+        * tao/TAOS_T.h:
+        * tao/TAOS_T.i:
+        * tao/TAOS_T.cpp:
+        * tao/diffs/TAOC.h.diff:
+        * tao/diffs/TAOC.i.diff:
+        * tao/diffs/TAOC.cpp.diff:
+          The new files for TAO.pidl
+
+
 Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp (create_ior_info): 

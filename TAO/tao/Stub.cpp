@@ -634,7 +634,7 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
   // Check if we care about Client Priority policy, and store the
   // result in the variable called <set>.
   int set = 1;
-  POA_TAO::ClientPriorityPolicy *policy =
+  TAO::ClientPriorityPolicy *policy =
     this->client_priority ();
   if (policy == 0)
     set = 0;
@@ -705,7 +705,7 @@ TAO_Stub::sync_strategy (void)
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 && \
      TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-  POA_Messaging::SyncScopePolicy *policy =
+  Messaging::SyncScopePolicy *policy =
     this->sync_scope ();
 
   if (policy != 0)

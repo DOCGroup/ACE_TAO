@@ -11,17 +11,13 @@ ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
-                                                                        const TimeBase::TimeT& relative_expiry)
-  :  poa_ (PortableServer::POA::_duplicate (poa)),
-     relative_expiry_ (relative_expiry)
+TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry)
+  :  relative_expiry_ (relative_expiry)
 {
 }
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs)
-  : TAO_RefCountServantBase (rhs),
-    POA_Messaging::RelativeRoundtripTimeoutPolicy (rhs),
-    poa_ (rhs.poa_),
+  : Messaging::RelativeRoundtripTimeoutPolicy (),
     relative_expiry_ (rhs.relative_expiry_)
 {
 }
@@ -47,8 +43,7 @@ TAO_RelativeRoundtripTimeoutPolicy::policy_type (CORBA_Environment &)
 }
 
 CORBA::Policy_ptr
-TAO_RelativeRoundtripTimeoutPolicy::create (PortableServer::POA_ptr poa,
-                                            const CORBA::Any& val,
+TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val,
                                             CORBA::Environment &ACE_TRY_ENV)
 {
   // Future policy implementors: notice how the following code is
@@ -61,18 +56,12 @@ TAO_RelativeRoundtripTimeoutPolicy::create (PortableServer::POA_ptr poa,
 
   TAO_RelativeRoundtripTimeoutPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
-                    TAO_RelativeRoundtripTimeoutPolicy (poa,
-                                                        value),
+                    TAO_RelativeRoundtripTimeoutPolicy (value),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::ServantBase_var clone (tmp);
-
-  CORBA::Policy_var result = tmp->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return result._retn ();
+  return tmp;
 }
 
 TAO_RelativeRoundtripTimeoutPolicy *
@@ -97,28 +86,12 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (CORBA_Environment &ACE_TRY_ENV)
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::ServantBase_var clone (tmp);
-
-  CORBA::Policy_var result = tmp->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return result._retn ();
+  return tmp;
 }
 
 void
-TAO_RelativeRoundtripTimeoutPolicy::destroy (CORBA_Environment &ACE_TRY_ENV)
+TAO_RelativeRoundtripTimeoutPolicy::destroy (CORBA_Environment &)
 {
-  PortableServer::ObjectId_var id =
-    this->poa_->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  this->poa_->deactivate_object (id.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-PortableServer::POA_ptr
-TAO_RelativeRoundtripTimeoutPolicy::_default_POA (CORBA_Environment &)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
@@ -142,22 +115,18 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
-////////////////////////////////////////////////////////////////////////////////
+// ****************************************************************
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization,
-                                              PortableServer::POA_ptr poa)
-  : synchronization_ (synchronization),
-    poa_ (PortableServer::POA::_duplicate (poa))
+TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization)
+  : synchronization_ (synchronization)
 {
 }
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
-  : TAO_RefCountServantBase (rhs),
-    POA_Messaging::SyncScopePolicy (rhs),
-    synchronization_ (rhs.synchronization_),
-    poa_ (rhs.poa_)
+  : Messaging::SyncScopePolicy (),
+    synchronization_ (rhs.synchronization_)
 {
 }
 
@@ -168,8 +137,7 @@ TAO_Sync_Scope_Policy::policy_type (CORBA_Environment &)
 }
 
 CORBA::Policy_ptr
-TAO_Sync_Scope_Policy::create (PortableServer::POA_ptr poa,
-                               const CORBA::Any& val,
+TAO_Sync_Scope_Policy::create (const CORBA::Any& val,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   Messaging::SyncScope synchronization;
@@ -179,17 +147,11 @@ TAO_Sync_Scope_Policy::create (PortableServer::POA_ptr poa,
 
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
-                    TAO_Sync_Scope_Policy (synchronization,
-                                           poa),
+                    TAO_Sync_Scope_Policy (synchronization),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::ServantBase_var smart_servant (servant);
-
-  CORBA::Policy_var result = servant->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return result._retn ();
+  return servant;
 }
 
 TAO_Sync_Scope_Policy *
@@ -211,31 +173,12 @@ TAO_Sync_Scope_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::ServantBase_var smart_servant (servant);
-
-  CORBA::Policy_var result = servant->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return result._retn ();
+  return servant;
 }
 
 void
-TAO_Sync_Scope_Policy::destroy (CORBA_Environment &ACE_TRY_ENV)
+TAO_Sync_Scope_Policy::destroy (CORBA_Environment &)
 {
-  PortableServer::ObjectId_var id =
-    this->poa_->servant_to_id (this,
-                               ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->poa_->deactivate_object (id.in (),
-                                 ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-PortableServer::POA_ptr
-TAO_Sync_Scope_Policy::_default_POA (CORBA_Environment &)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */

@@ -22,7 +22,7 @@
 #include "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/MessagingS.h"
+#include "tao/MessagingC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -33,8 +33,7 @@
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy : public TAO_RefCountServantBase,
-                                                      public POA_Messaging::RelativeRoundtripTimeoutPolicy
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy : public Messaging::RelativeRoundtripTimeoutPolicy
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -44,15 +43,13 @@ class TAO_Export TAO_RelativeRoundtripTimeoutPolicy : public TAO_RefCountServant
   //   request.
   //
 public:
-  TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
-                                      const TimeBase::TimeT& relative_expiry);
+  TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
   // Constructor.
 
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
-                                   const CORBA::Any& val,
+  static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
@@ -70,15 +67,10 @@ public:
 
   virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
   void set_time_value (ACE_Time_Value &time_value);
   // Change the CORBA representation to the ACE representation.
 
 private:
-  PortableServer::POA_var poa_;
-  // The default poa
-
   TimeBase::TimeT relative_expiry_;
   // The attribute
 };
@@ -89,8 +81,7 @@ private:
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-class TAO_Export TAO_Sync_Scope_Policy : public TAO_RefCountServantBase,
-                                         public POA_Messaging::SyncScopePolicy
+class TAO_Export TAO_Sync_Scope_Policy : public Messaging::SyncScopePolicy
 
 {
   // = TITLE
@@ -101,15 +92,13 @@ class TAO_Export TAO_Sync_Scope_Policy : public TAO_RefCountServantBase,
   //   transport requests.
   //
 public:
-  TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization,
-                         PortableServer::POA_ptr poa);
+  TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
   // Constructor.
 
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
-                                   const CORBA::Any& val,
+  static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
@@ -128,15 +117,10 @@ public:
 
   virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
 private:
 
   Messaging::SyncScope synchronization_;
   // The attribute
-
-  PortableServer::POA_var poa_;
-  // The default poa.
 };
 
 #if defined (__ACE_INLINE__)
