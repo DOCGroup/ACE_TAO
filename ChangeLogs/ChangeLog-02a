@@ -1,3 +1,10 @@
+Mon May 13 16:43:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/parser/parser/Parser.cpp (parse_xml_prolog):
+
+          I meant to change "standalong" to "standalone" not "encoding" to
+          "encodine". Brain damage...
+
 Mon May 13 16:31:33 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/parser/parser/Parser.cpp (parse_xml_prolog):
