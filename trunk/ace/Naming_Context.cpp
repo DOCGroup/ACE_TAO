@@ -101,6 +101,9 @@ ACE_Naming_Context::close (void)
 {
   ACE_TRACE ("ACE_Naming_Context::close");
 
+  delete this->name_options_;
+  this->name_options_ = 0;
+
   delete this->name_space_;
   this->name_space_ = 0;
 
@@ -324,9 +327,6 @@ ACE_Naming_Context::~ACE_Naming_Context (void)
   ACE_TRACE ("ACE_Naming_Context::~ACE_Naming_Context");
 
   this->close ();
-
-  delete this->name_options_;
-  this->name_options_ = 0;
 }
 
 void
