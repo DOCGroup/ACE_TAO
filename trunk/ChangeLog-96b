@@ -1,3 +1,7 @@
+Sun Dec  1 12:06:46 1996  David L. Levine  <levine@cs.wustl.edu>
+	* ace/config-vxworks*.h: Removed #define ACE_HAS_STRBUF_T:
+ 	  copy and paste error
+
 Sun Dec  1 00:15:45 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Synch.h: Repositioned ACE_Semaphore such that there are no
