@@ -22,6 +22,7 @@
 ACE_RCSID(Utils, Server_Main, "$Id$")
 
 #include <ace/Argv_Type_Converter.h>
+#include <ace/Log_Msg.h>
 #include <tao/ORB.h>
 
 template <typename SERVANT>

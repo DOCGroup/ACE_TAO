@@ -13,6 +13,7 @@
 //=============================================================================
 #include "Fault_Detector_i.h"
 #include "FT_FaultDetectorFactory_i.h"
+#include <tao/debug.h>
 
 ///////////////////////////////
 // Fault_Detector_i static data

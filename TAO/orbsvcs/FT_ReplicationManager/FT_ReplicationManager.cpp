@@ -16,9 +16,11 @@
 #include "FT_Property_Validator.h"
 
 #include <ace/Get_Opt.h>
+#include <ace/OS_NS_stdio.h>
 #include <tao/Messaging/Messaging.h>
 #include <tao/IORTable/IORTable.h>
 #include <tao/debug.h>
+#include <tao/ORB_Constants.h>
 #include <orbsvcs/PortableGroup/PG_Object_Group.h>
 #include <orbsvcs/PortableGroup/PG_Property_Set.h>
 #include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>

@@ -18,7 +18,7 @@
 #include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
 
 #include <ace/Get_Opt.h>
-
+#include <ace/OS_NS_stdio.h>
 
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()
