@@ -53,6 +53,7 @@ Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Invocation.cpp
 	* tao/Invocation.h	
 	* tao/Invocation.i
+	* tao/Async_Invocation.cpp
 	* tao/SHMIOP_Acceptor.cpp
 	* tao/SHMIOP_Acceptor.h
 	* tao/SHMIOP_Connect.cpp
