@@ -215,7 +215,7 @@ Client::get_high_priority_jitter (void)
 
   // We first compute the sum of the squares of the differences
   // each latency has from the average
-  for (u_int i = 0; i < ts_->loop_count_ / ts_->granularity_; i ++)
+  for (u_int i = 0; i < number_of_samples; i ++)
     {
       double difference =
         ts_->global_jitter_array_ [0][i] - average;
@@ -289,7 +289,9 @@ Client::svc (void)
 
   // Add the argument.
   ACE_OS::strcat (tmp_buf,
-                  " -ORBobjrefstyle url ");
+                  " -ORBobjrefstyle url "
+		  " -ORBrcvsock 32768 "
+		  " -ORBsndsock 32768 ");
 
   // Convert back to argv vector style.
   ACE_ARGV tmp_args2 (tmp_buf);
@@ -424,7 +426,8 @@ Client::svc (void)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             " (%t) resolve() returned nil\n"));
-                TAO_TRY_ENV.print_exception ("Attempt to resolve() a cubit object using the name service Failed!\n");
+                TAO_TRY_ENV.print_exception ("Attempt to resolve() a cubit object"
+					     "using the name service Failed!\n");
               }
             else
               {
@@ -590,7 +593,7 @@ Client::run_tests (Cubit_ptr cb,
   double *my_jitter_array;
 
   ACE_NEW_RETURN (my_jitter_array,
-                  double [loop_count],
+                  double [loop_count*3], // magic number, for now.
                   -1);
 
   double latency = 0;
@@ -607,13 +610,14 @@ Client::run_tests (Cubit_ptr cb,
   quantify_stop_recording_data();
   quantify_clear_data ();
 #endif /* USE_QUANTIFY */
+    
+  ACE_High_Res_Timer * timer_ = 0;
 
   // Make the calls in a loop.
 
-  ACE_High_Res_Timer * timer_ = 0;
   // if i'm the high priority client, loop forever, until all low
   // priority clients are done.  This is implemented with a semaphore.
-  for (i = 0; i < loop_count || id_ == 0; i++)
+  for (i = 0; i < loop_count || (id_ == 0 && ts_->thread_count_ > 1); i++)
     {
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
@@ -632,9 +636,9 @@ Client::run_tests (Cubit_ptr cb,
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
-	  ACE_NEW_RETURN (timer_,
-			  ACE_High_Res_Timer,
-			  -1);
+ 	  ACE_NEW_RETURN (timer_,
+ 			  ACE_High_Res_Timer,
+ 			  -1);
           timer_->start ();
 #endif /* !CHORUS */
         }
@@ -856,12 +860,29 @@ Client::run_tests (Cubit_ptr cb,
           // update the latency array, correcting the index using the granularity
 #else /* ACE_LACKS_FLOATING_POINT */
           // Store the time in secs.
+
+// These comments are to temporarily fix what seems a bug in
+// the ACE_Long_Long class that is used to calc the elapsed
+// time, which appears only in VxWorks.
+// I'll leave these here to debug it later.
+// double tmp = (double)delta_t.sec ();
+// if (tmp > 100000) tmp=0.0;
+// real_time = tmp + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
+
           real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
+	  
+// if (real_time > 100000)
+//   fprintf(stderr, "real_time=%f, delta_t.sec ()=%d, delta_t.usec ()=%d\n",
+// 	  real_time,
+// 	  delta_t.sec (),
+// 	  delta_t.usec ());
+
           real_time /= ts_->granularity_;
+
           delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
           my_jitter_array [i/ts_->granularity_] = real_time * 1000;
-	  //          delete timer_;
+	  delete timer_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         }
 
@@ -869,16 +890,17 @@ Client::run_tests (Cubit_ptr cb,
       // if tryacquire() succeeded then a client must have done a
       // release () on it, thus we decrement the client counter.
       if (id_ == 0 && ts_->thread_count_ > 1)
-	if (ts_->semaphore_->tryacquire () != -1)
-	  {
-	    low_priority_client_count --;
-	    // if all clients are done then break out of loop.
-	    if (low_priority_client_count == 0)
-	      break;
-	  }
-
+	{
+	  if (ts_->semaphore_->tryacquire () != -1)
+	    {
+	      low_priority_client_count --;
+	      // if all clients are done then break out of loop.
+	      if (low_priority_client_count <= 0)
+		break;
+	    }
+	}
     }
-
+  
   if (id_ == 0)
     ts_->high_priority_loop_count_ = call_count;
 
