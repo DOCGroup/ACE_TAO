@@ -1,3 +1,9 @@
+Tue Nov  4 15:38:01 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Makefile.am (HEADER_FILES):
+
+	  Added new Timer_Queuefwd.h header to this list.
+
 Tue Nov  4 15:35:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Conn_Test.cpp:
