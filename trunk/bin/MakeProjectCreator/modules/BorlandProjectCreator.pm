@@ -52,6 +52,41 @@ sub fill_value {
     ## Sort the directories to ensure that '.' comes first
     $value = join(';', sort keys %dirnames);
   }
+  elsif ($name eq 'relwd') {
+    my($expenv) = $self->get_expand_env();
+    my($rel)    = ($expenv ? \%ENV : $self->get_relative());
+    $value = $self->getcwd();
+
+    foreach my $key (keys %$rel) {
+      ## Do not use PWD or CD if we are expanding environment variables.
+      ## They could conflict with the "real" values we're looking for.
+      if ($expenv && ($key eq 'PWD' || $key eq 'CD')) {
+        next;
+      }
+
+      ## Get the relative replacement value and convert back-slashes
+      my($val) = $$rel{$key};
+      $val =~ s/\\/\//g;
+
+      ## We only need to check for reverse replacement if the length
+      ## of the string is less than or equal to the length of our
+      ## replacement value or the string has a slash at the position
+      ## of the length of the replacement value
+      my($vlen) = length($val);
+      if (length($value) <= $vlen || substr($value, $vlen, 1) eq '/') {
+        ## Cut the string down by the length of the replacement value
+        my($lval) = substr($value, 0, $vlen);
+
+        ## Here we make an assumption that we
+        ## have a case-insensitive file system.
+        if (lc($lval) eq lc($val)) {
+          substr($value, 0, length($val) + 1) = '';
+          last;
+        }
+      }
+    }
+    $value = $self->slash_to_backslash($value);
+  }
 
   return $value;
 }
