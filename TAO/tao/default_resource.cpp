@@ -318,21 +318,6 @@ TAO_Default_Resource_Factory::get_protocol_factories (void)
   return &protocol_factories_;
 }
 
-#define IMPLEMENT_GET_METHOD(methodname,rtype,membername)\
-rtype TAO_Default_Resource_Factory::methodname(void)\
-{\
-  switch (resource_source_)\
-    {\
-    case TAO_GLOBAL:\
-      return &GLOBAL_ALLOCATED::instance ()->membername;\
-    case TAO_TSS:\
-      return &TSS_ALLOCATED::instance ()->membername;\
-    }\
-  return 0;\
-}
-
-IMPLEMENT_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
-
 TAO_Acceptor_Registry*
 TAO_Default_Resource_Factory::get_acceptor_registry (void)
 {
@@ -414,49 +399,6 @@ TAO_Default_Resource_Factory::get_reactor (void)
         }
       return TSS_ALLOCATED::instance ()->r_;
       ACE_NOTREACHED (break);
-    }
-  return 0;
-}
-
-TAO_Object_Adapter *
-TAO_Default_Resource_Factory::object_adapter (void)
-{
-  // @@ Remove this use of ORB_Core_instance() from here!!!!
-  switch (this->resource_source_)
-    {
-    case TAO_GLOBAL:
-      if (GLOBAL_ALLOCATED::instance ()->object_adapter_ == 0)
-        {
-          TAO_ORB_Core &orb_core = *TAO_ORB_Core_instance ();
-          ACE_NEW_RETURN (GLOBAL_ALLOCATED::instance ()->object_adapter_,
-                          TAO_Object_Adapter (orb_core.server_factory ()->active_object_map_creation_parameters (), orb_core),
-                          0);
-        }
-      return GLOBAL_ALLOCATED::instance ()->object_adapter_;
-      ACE_NOTREACHED (break);
-    case TAO_TSS:
-      if (TSS_ALLOCATED::instance ()->object_adapter_ == 0)
-        {
-          TAO_ORB_Core &orb_core = *TAO_ORB_Core_instance ();
-          ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->object_adapter_,
-                          TAO_Object_Adapter (orb_core.server_factory ()->active_object_map_creation_parameters (), orb_core),
-                          0);
-        }
-      return TSS_ALLOCATED::instance ()->object_adapter_;
-      ACE_NOTREACHED (break);
-    }
-  return 0;
-}
-
-TAO_POA *
-TAO_Default_Resource_Factory::get_root_poa (void)
-{
-  switch (poa_source_)
-    {
-    case TAO_GLOBAL:
-      return GLOBAL_ALLOCATED::instance ()->poa_;
-    case TAO_TSS:
-      return TSS_ALLOCATED::instance ()->poa_;
     }
   return 0;
 }
@@ -606,15 +548,11 @@ TAO_Default_Resource_Factory::create_input_cdr_data_block (size_t size)
 
 TAO_Allocated_Resources::TAO_Allocated_Resources (void)
   : r_ (0),
-    object_adapter_ (0),
-    poa_(0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
     output_cdr_dblock_allocator_ (0),
     output_cdr_buffer_allocator_ (0)
 {
-  // Make sure that the thread manager does not wait for threads
-  this->tm_.wait_on_exit (0);
 }
 
 TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
@@ -634,8 +572,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   if (this->output_cdr_buffer_allocator_ != 0)
     this->output_cdr_buffer_allocator_->remove ();
   delete this->output_cdr_buffer_allocator_;
-
-  delete this->object_adapter_;
 
   delete this->r_;
 }

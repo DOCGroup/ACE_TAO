@@ -61,12 +61,6 @@ TAO_Resource_Factory::get_reactor (void)
   return 0;
 }
 
-ACE_Thread_Manager *
-TAO_Resource_Factory::get_thr_mgr (void)
-{
-  return 0;
-}
-
 TAO_Connector_Registry *
 TAO_Resource_Factory::get_connector_registry (void)
 {
@@ -75,18 +69,6 @@ TAO_Resource_Factory::get_connector_registry (void)
 
 TAO_Acceptor_Registry *
 TAO_Resource_Factory::get_acceptor_registry (void)
-{
-  return 0;
-}
-
-TAO_POA *
-TAO_Resource_Factory::get_root_poa (void)
-{
-  return 0;
-}
-
-TAO_Object_Adapter *
-TAO_Resource_Factory::object_adapter (void)
 {
   return 0;
 }

@@ -3,28 +3,13 @@
 
 #include "ace/Dynamic_Service.h"
 
-#define TAO_TRF (this->resource_factory ())
 #define TAO_OC_RETRIEVE(member) \
   ((this->member##_ == 0) ? (this->member##_ = this->resource_factory ()->get_##member ()) : (this->member##_) )
 
-ACE_INLINE TAO_Object_Adapter *
-TAO_ORB_Core::object_adapter (void)
-{
-  return this->resource_factory ()->object_adapter ();
-}
-
 ACE_INLINE ACE_Thread_Manager *
-TAO_ORB_Core::thr_mgr (ACE_Thread_Manager *tm)
-{
-  ACE_Thread_Manager *old_thr_mgr = this->thr_mgr_;
-  this->thr_mgr_ = tm;
-  return old_thr_mgr;
-}
-
-ACE_INLINE ACE_Thread_Manager*
 TAO_ORB_Core::thr_mgr (void)
 {
-  return TAO_OC_RETRIEVE (thr_mgr);
+  return &this->tm_;
 }
 
 ACE_INLINE CORBA::ORB_ptr
@@ -34,14 +19,16 @@ TAO_ORB_Core::orb (void)
 }
 
 ACE_INLINE TAO_POA *
-TAO_ORB_Core::root_poa (const char *adapter_name,
+TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV,
+                        const char *adapter_name,
                         TAO_POA_Manager *poa_manager,
                         const TAO_POA_Policies *policies)
 {
-  if (TAO_OC_RETRIEVE (root_poa) == 0)
+  if (this->root_poa_ == 0)
     this->create_and_set_root_poa (adapter_name,
                                    poa_manager,
-                                   policies);
+                                   policies,
+                                   ACE_TRY_ENV);
 
   return this->root_poa_;
 }
@@ -133,7 +120,6 @@ TAO_ORB_Core::acceptor_registry (void)
 }
 
 #undef TAO_OC_RETRIEVE
-#undef TAO_TRF
 
 ACE_INLINE ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
