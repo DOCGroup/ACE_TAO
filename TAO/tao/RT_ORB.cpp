@@ -337,19 +337,19 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_RT_Mutex *>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, RTCORBA::Mutex_var>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_RT_Mutex *>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, RTCORBA::Mutex_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, RTCORBA::Mutex_var>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
