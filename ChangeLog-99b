@@ -1,20 +1,25 @@
+Mon Jun 28 12:48:35 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: added this script, which checks build
+          logs named *.log, of current day.
+
 Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Fixed a typo where last_error should have been
-	  lerror.  Thanks to Chris Gill for reporting this.
+        * ace/OS.i: Fixed a typo where last_error should have been
+          lerror.  Thanks to Chris Gill for reporting this.
 
-	* ace/OS.cpp (ACE_BEGINTHREADEX): Oops, mistyped "_beginthreadex()"
-	  as "_beingthreadex()".  I must be going through an existential
- 	  phase ;-).  Thanks to Chris Gill for reporting this.
+        * ace/OS.cpp (ACE_BEGINTHREADEX): Oops, mistyped "_beginthreadex()"
+          as "_beingthreadex()".  I must be going through an existential
+          phase ;-).  Thanks to Chris Gill for reporting this.
 
 Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated the discussion for Borland C++ Building 4.0
-	  and IBM's VisualAge C++ compiler to reference the appropriate
- 	  maintainers.
+        * ACE-INSTALL.html: Updated the discussion for Borland C++ Building 4.0
+          and IBM's VisualAge C++ compiler to reference the appropriate
+          maintainers.
 
-	* ace/WIN32_Proactor.cpp,
-	  ace/WIN32_Asynch_IO.cpp: Added back some initializers to keep EGCS happy. 
+        * ace/WIN32_Proactor.cpp,
+          ace/WIN32_Asynch_IO.cpp: Added back some initializers to keep EGCS happy.
 
         * ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
           around an omission within the EGCS standard library.
@@ -47,84 +52,84 @@ Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 Sun Jun 27 20:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         Added support for IBM's VisualAge C++ compiler.  Thanks to Rene
-	Matteau <matteau@ca.ibm.com> for contributing the following fixes:
+        Matteau <matteau@ca.ibm.com> for contributing the following fixes:
 
-	* ace: Added a new config-visualage.h file that automatically
-	  includes the proper configurations for IBM's VisualAge C++
- 	  compiler on Win32 and AIX.
+        * ace: Added a new config-visualage.h file that automatically
+          includes the proper configurations for IBM's VisualAge C++
+          compiler on Win32 and AIX.
 
-	* ace/OS.i: The IBM VisualAge C++ compiler's prototypes for _chdir(),
-	  _mkdir(), and _tempnam() are broken, so we must add a cast to
- 	  char *.
+        * ace/OS.i: The IBM VisualAge C++ compiler's prototypes for _chdir(),
+          _mkdir(), and _tempnam() are broken, so we must add a cast to
+          char *.
 
-	* ace/OS.cpp: Added new macros ACE_ENDTHREADEX and
-	  ACE_BEGINTHREADEX to work around a bugs with _endthreadex() and
- 	  _beginthreadex() on IBM's VisualAge C++ compiler.
-	
-	* ace/OS.cpp (ACE_Time_Value::set): Replaced this expression:
-  
+        * ace/OS.cpp: Added new macros ACE_ENDTHREADEX and
+          ACE_BEGINTHREADEX to work around a bugs with _endthreadex() and
+          _beginthreadex() on IBM's VisualAge C++ compiler.
+
+        * ace/OS.cpp (ACE_Time_Value::set): Replaced this expression:
+
           this->tv_.tv_usec = long ((_100ns.QuadPart % (10000 * 1000)) / 10);
-  
+
           with this expression:
-  
+
           this->tv_.tv_usec = long ((long (_100ns.QuadPart) % long (10000 * 1000)) / 10);
-	  
-	  to work around a bug with IBM's VisualAge C++ compiler.
 
-	* ace/OS.cpp: Replaced a hard-coded MSVC++'ism for signed long long
-	  with a use of the ACE_UINT64_LITERAL macro, which works for all
- 	  Win32 C++ compilers.
+          to work around a bug with IBM's VisualAge C++ compiler.
 
-	* ace/config-win32-visualage.h,
-	  ace/config-aix-4.x.h: Added a workaround for an IBM VisualAge
- 	  C++ bug with the WIFEXITED and WEXITSTATUS macro.
+        * ace/OS.cpp: Replaced a hard-coded MSVC++'ism for signed long long
+          with a use of the ACE_UINT64_LITERAL macro, which works for all
+          Win32 C++ compilers.
 
-	* ace/OS.h: Added workarounds for bugs with IBM's VisualAge C++ compiler
-	  as it pertains to the ACE_DES_FREE_TEMPLATE and
- 	  ACE_DES_FREE_TEMPLATE2 macros.
+        * ace/config-win32-visualage.h,
+          ace/config-aix-4.x.h: Added a workaround for an IBM VisualAge
+          C++ bug with the WIFEXITED and WEXITSTATUS macro.
 
-	* ace/Map_T.h: Added a workaround for a bug with IBM's VisualAge C++
-	  compiler.  I think this workaround should help with other C++
- 	  compilers, as well.  Also reformated the code to make it
- 	  consistent with the ACE programming guidelines.
+        * ace/OS.h: Added workarounds for bugs with IBM's VisualAge C++ compiler
+          as it pertains to the ACE_DES_FREE_TEMPLATE and
+          ACE_DES_FREE_TEMPLATE2 macros.
 
-	* ace/Hash_Purgable_Map_Manager_T.cpp: Added a workaround for a
-	  VisualAge C++ bug.
+        * ace/Map_T.h: Added a workaround for a bug with IBM's VisualAge C++
+          compiler.  I think this workaround should help with other C++
+          compilers, as well.  Also reformated the code to make it
+          consistent with the ACE programming guidelines.
 
-	* ace/config-aix-4.x.h: Added VisualAge C++ compiler support.
+        * ace/Hash_Purgable_Map_Manager_T.cpp: Added a workaround for a
+          VisualAge C++ bug.
 
-	* ace/Timer_Heap_T.cpp: We must hard code numbers like
- 	  1024 for an array size to workaround bugs with the IBM VisualAge
- 	  C++ compiler.
-  
-	* ace/Basic_Types.h: Added #defines for ACE_INT64_LITERAL.
+        * ace/config-aix-4.x.h: Added VisualAge C++ compiler support.
 
-	* ace/config-win32-common.h: #include the
- 	  config-win32-visualage.h file.
+        * ace/Timer_Heap_T.cpp: We must hard code numbers like
+          1024 for an array size to workaround bugs with the IBM VisualAge
+          C++ compiler.
 
-	* ace: Added the following files for the IBM VisualAge C++ compiler:
-  
+        * ace/Basic_Types.h: Added #defines for ACE_INT64_LITERAL.
+
+        * ace/config-win32-common.h: #include the
+          config-win32-visualage.h file.
+
+        * ace: Added the following files for the IBM VisualAge C++ compiler:
+
           ace-lib.icc - WinNT configuration file to create a static library
-	  ace-dll.icc - WinNT configuration file to create a dynamic library
-	  config-win32-visualage.h  - VisualAge C++ defines
-  
-	* tests: Added the icc.bat and makeicc.pl files, which build the
-	  tests for the IBM VisualAge C++ compiler.
+          ace-dll.icc - WinNT configuration file to create a dynamic library
+          config-win32-visualage.h  - VisualAge C++ defines
 
-	* tests: Added the *.icc project files for the IBM VisualAge C++ compiler. 
+        * tests: Added the icc.bat and makeicc.pl files, which build the
+          tests for the IBM VisualAge C++ compiler.
+
+        * tests: Added the *.icc project files for the IBM VisualAge C++ compiler.
 
 Sun Jun 27 18:17:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CORBA_macros.h:
-	  On platforms with native C++ exceptions we use ACE_UNUSED_ARG()
-	  in the throw macros to avoid warnings about the unused
-	  ACE_TRY_ENV variable.
+        * ace/CORBA_macros.h:
+          On platforms with native C++ exceptions we use ACE_UNUSED_ARG()
+          in the throw macros to avoid warnings about the unused
+          ACE_TRY_ENV variable.
 
 Sun Jun 27 14:56:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/run_tests.bat: Added the patch for running tests compiled
           with Borland C++.  Thanks to Jody Hagins <jody@atdesk.com> for
- 	  the patch.
+          the patch.
 
         * tests/Cache_Map_Manager_Test.dsp: The project file was
           mis-configured.
@@ -285,7 +290,7 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
           BCB4 bug prevents using typedef inside class for explicit
           dextructor.
 
-        * apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents 
+        * apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents
           using typedef inside class for explicit dextructor.
 
         * apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Get rid of const warning
