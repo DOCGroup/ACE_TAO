@@ -188,7 +188,7 @@ typedef u_int CORBA_Flags;
 #if defined (ghs) && defined (CHORUS)
   // This is non-compliant, but a nasty but with Green Hills C++68000 1.8.8
   // forces us into it.  TAO/tests/POA/RootPOA/RootPOA reveals the problem.
-  typedef ACE_UINT32 CORBA_Boolean;
+  typedef unsigned long CORBA_Boolean;
 #else  /* ! (ghs && CHORUS) */
   typedef u_char CORBA_Boolean;
 #endif /* ! (ghs && CHORUS) */

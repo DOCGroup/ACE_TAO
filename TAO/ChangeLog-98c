@@ -1,3 +1,9 @@
+Mon Aug 24 20:58:36 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tao/ORB.h: Changed CORBA_Boolean for CHORUS platforms to
+	  unsigned long as it was same as CORBA::ULong before.
+	  Thanks to David for this.
+	
 Mon Aug 24 18:14:58 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/CC_naming_service.{h,cpp} 
