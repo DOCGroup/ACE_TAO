@@ -17,7 +17,7 @@
 //
 // ===========================================================
 
-#include "ciao/CIAO_ComponentC.h"
+#include "ciao/CCM_ComponentC.h"
 
 #define CIAO_REGISTER_VALUE_FACTORY(ORB,FACTORY,VALUETYPE)       {\
         CORBA_ValueFactory factory = new FACTORY; \

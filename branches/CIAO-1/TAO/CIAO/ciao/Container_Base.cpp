@@ -44,7 +44,7 @@ CIAO::Session_Container::init (const char *name
 
    if (name == 0)
      {
-       this->number_ = ++serial_number_;
+       this->number_ = ++CIAO::Session_Container::serial_number_;
        ACE_OS::sprintf (buffer, "CIAO::Session_Container-%d",
                         this->number_);
      }
