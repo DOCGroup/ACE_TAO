@@ -608,6 +608,8 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
 
+  ace_yy_delete_parse_buffer ();
+
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
 
