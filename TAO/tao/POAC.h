@@ -192,6 +192,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectId;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #if !defined (_PORTABLESERVER_FORWARDREQUEST___PTR_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST___PTR_CH_
@@ -236,6 +237,8 @@ TAO_NAMESPACE PortableServer{
 
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong THREAD_POLICY_ID;
 

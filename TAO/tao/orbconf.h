@@ -294,6 +294,14 @@
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
+// With minimum CORBA, we don't have the ForwardRequest exception.
+// Therefore, we can't support the INS forwarding agent.
+#if defined (TAO_HAS_MINIMUM_CORBA)
+# if !defined (TAO_NO_IOR_TABLE)
+#  define TAO_NO_IOR_TABLE
+# endif /* TAO_NO_IOR_TABLE */
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // CORBA Messaging
 #define TAO_HAS_CORBA_MESSAGING
 
