@@ -145,6 +145,11 @@ Client::get_low_priority_latency (void)
   return l / (double) (ts_->start_count_ - 1);
 }
 
+int
+Client::get_latency (u_int thread_id) {
+  return ts_->ave_latency_ [thread_id];
+}
+
 double
 Client::get_high_priority_jitter () {
   double jitter = 0;
