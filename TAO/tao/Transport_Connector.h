@@ -117,7 +117,7 @@ protected:
   void orb_core (TAO_ORB_Core *orb_core);
 
   /// Create a connect strategy
-  void create_connect_strategy (void);
+  int create_connect_strategy (void);
 
   /// Return the TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);

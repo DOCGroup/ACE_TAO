@@ -248,13 +248,17 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
 }
 
 
-void
+int
 TAO_Connector::create_connect_strategy (void)
 {
-  // @@ todo:Not exception safe!
   if (this->active_connect_strategy_ == 0)
     {
       this->active_connect_strategy_ =
         this->orb_core_->client_factory ()->create_connect_strategy (this->orb_core_);
     }
+
+  if (this->active_connect_strategy_ == 0)
+    return -1;
+
+  return 0;
 }
