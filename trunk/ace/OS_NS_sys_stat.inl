@@ -39,7 +39,7 @@ ACE_OS::filesize (ACE_HANDLE handle)
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), long, -1);
 #else /* !ACE_WIN32 */
-  struct stat sb;
+  ACE_stat sb;
   return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
 #endif /* ACE_WIN32 */
 }
