@@ -1,3 +1,12 @@
+Mon Oct  5 23:19:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (fork): Changed to use fork1 when ACE_HAS_STHREAD is
+	  defined.  Otherwise, file descriptors get messed up and socket
+	  connections get lost after exec'ing a new program.  Generally
+	  speaking, you should not simply fork a multi-threaded program
+	  without calling exec ().  On pthread compliant platform, fork
+	  does what fork1 does on solaris thread.
+
 Mon Oct 05 21:21:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.45 released.
