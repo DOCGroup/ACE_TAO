@@ -1,3 +1,18 @@
+Wed Jan 28 13:35:11 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Param_Test/server.cpp: Changed so that the IOR is printed
+ 	ALL the time.
+
+	* tests/Param_Test/options.*: Updated to work with POA.  Got rid
+ 	of host and port arguments and added an IOR argument.
+
+	* tests/Param_Test/driver.*: Updated to work with POA.
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: Added emacs mode setting at
+ 	beginning.
+
+	* tao/optable.h: Cleaned up some formatting in header file.
+
 Wed Jan 28 13:19:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/README: 
