@@ -10,7 +10,7 @@
 //    Profile_Timer.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -101,7 +101,9 @@ private:
   // I/O handle for /proc file system.
 
 #elif defined (ACE_HAS_GETRUSAGE) 
-  void subtract (timeval &tdiff, timeval &t0, timeval &t1);
+  void subtract (timeval &tdiff,
+                 timeval &t0,
+                 timeval &t1);
   // Substract two timestructs and store their difference.
 
   timeval begin_time_;
