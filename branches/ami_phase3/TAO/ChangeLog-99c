@@ -1,5 +1,9 @@
 Tue Jun 22 11:59:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
+  	One more big step on generating AMI call back code. If I get rid
+	of the references to the ReplyHandler from the generated files,
+	I could get things to compile.
+  
 	* TAO_IDL/Makefile:
 	* TAO_IDL/be/be_codegen.cpp:
 	* TAO_IDL/be/be_interface.cpp:
@@ -19,7 +23,15 @@ Tue Jun 22 11:59:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/be_include/be_visitor_interface.h:
 	* TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
   
-	C
+  	Changes for the above.
+  
+  	* TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_cs.h:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_ch.h:
+  
+  	Added these files.
+      
 Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
