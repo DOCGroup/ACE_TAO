@@ -214,7 +214,10 @@ main (int argc, char **argv)
       thread_count = (u_int) ACE_OS::atoi (opts.optarg);
       continue;
       default:
-        ACE_DEBUG ((LM_DEBUG, "Usage: %s -t number_of_threads\n"));
+//         ACE_DEBUG ((LM_DEBUG, 
+//                     "Usage: %s -t number_of_threads\n",
+//                     argv [0]));
+        break;
       }
 
   ACE_Barrier *barrier;
