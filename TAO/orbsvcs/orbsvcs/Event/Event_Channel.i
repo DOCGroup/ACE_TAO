@@ -149,6 +149,18 @@ operator == (const RtecEventComm::Event &event1,
   return 1;
 }
 
+ACE_INLINE int
+operator != (const TAO_EC_Event& rhs, const TAO_EC_Event& lhs)
+{
+  if (rhs.empty () && lhs.empty ())
+    return 1;
+  if (rhs.empty () || lhs.empty ())
+    return 0;
+  return ! (rhs.event () == lhs.event ());
+}
+
+
+
 // ************************************************************
 
 ACE_INLINE
