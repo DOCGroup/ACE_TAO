@@ -615,9 +615,6 @@ ACE::ldfind (const ASYS_TCHAR filename[],
     }
 
   int got_suffix = 0;
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-  int custom_suffix = 0;
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
 
   // Check to see if this has an appropriate DLL suffix for the OS
   // platform.
@@ -643,9 +640,6 @@ ACE::ldfind (const ASYS_TCHAR filename[],
                       ASYS_TEXT ("Warning: improper suffix for a ")
                       ASYS_TEXT ("shared library on this platform: %s\n"),
                       s));
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-          custom_suffix = 1;
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
         }
     }
 
@@ -661,7 +655,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 
 #if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   size_t len_searchfilename = ACE_OS::strlen (searchfilename);
-  if (! custom_suffix)
+  if (! got_suffix)
     {
       searchfilename [len_searchfilename] = 'd';
       searchfilename [len_searchfilename+1] = 0;
