@@ -22,7 +22,7 @@
 #include "tao/GIOP_Message_State.h"
 
 class TAO_Transport;
-class TAO_ORB_Core *orb_core;
+class TAO_ORB_Core;
 
 enum TAO_GIOP_Message_Status
 {
