@@ -90,7 +90,6 @@ sub new {
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'global_assign'}         = {};
-  $self->{'files_written'}         = [];
   $self->{'project_info'}          = [];
   $self->{'reading_global'}        = 0;
   $self->{'reading_parent'}        = [];
@@ -1293,14 +1292,8 @@ sub write_output_file {
               print $fh $line;
             }
             close($fh);
-            foreach my $written (@{$self->{'files_written'}}) {
-              if ($written eq $name) {
-                print "WARNING: $name has been overwritten by a project " .
-                      "with a duplicate name.\n";
-                last;
-              }
-            }
-            push(@{$self->{'files_written'}}, $name);
+
+            $self->add_file_written($name);
           }
           else {
             $error = "ERROR: Unable to open $name for output.";
@@ -1360,12 +1353,6 @@ sub write_project {
 }
 
 
-sub get_files_written {
-  my($self) = shift;
-  return $self->{'files_written'};
-}
-
-
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
@@ -1401,8 +1388,7 @@ sub set_component_extensions {
 
 sub reset_values {
   my($self) = shift;
-  $self->{'files_written'}  = [];
-  $self->{'project_info'}   = [];
+  $self->{'project_info'} = [];
 }
 
 
