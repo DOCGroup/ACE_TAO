@@ -25,26 +25,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-class Signal_Catcher
-  // = TITLE
-  //     Keeps track of whether a thread has been signaled.
-{
-public:
-  Signal_Catcher (void): signaled_ (0) {}
-
-  sig_atomic_t signaled (void)
-  {
-    return this->signaled_;
-  }
-
-  void signaled (sig_atomic_t s)
-  {
-    this->signaled_ = s;
-  }
-
-private:
-  sig_atomic_t signaled_;
-};
+#include "Thread_Manager_Test.h"
 
 // Each thread keeps track of whether it has been signaled within a
 // separate TSS entry.
