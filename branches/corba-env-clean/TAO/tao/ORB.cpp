@@ -1302,7 +1302,7 @@ CORBA::ORB_init (int &argc,
                  CORBA_Environment &ACE_TRY_ENV)
 {
   // This ugly ifdef will go away once we've merged the two ORB_init's.
-#if defined (TAO_HAS_EXCEPTIONS) && !defined (TAO_LACKS_SUPPRESS_ENV)
+#if defined (TAO_HAS_EXCEPTIONS) && !defined (TAO_ENV_BKWD_COMPAT)
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 #endif
 
