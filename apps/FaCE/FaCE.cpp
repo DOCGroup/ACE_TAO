@@ -1,5 +1,4 @@
 // $Id$
-// FUZZ: disable check_for_tchar
 
 #include "FaCE.h"
 
@@ -153,7 +152,7 @@ ACE_TCHAR g_SaveFileName[MAX_LOADSTRING];      // Name of the output file
 static SHACTIVATEINFO s_sai;
 
 // Forward declarations of functions included in this code module:
-ATOM                MyRegisterClass (HINSTANCE, LPTSTR);
+ATOM                MyRegisterClass (HINSTANCE, ACE_TCHAR*);
 BOOL                InitInstance    (HINSTANCE, int);
 LRESULT CALLBACK    WndProc         (HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK    About           (HWND, UINT, WPARAM, LPARAM);
@@ -210,7 +209,7 @@ void LoadParameterHistory()
 //    It is important to call this function so that the application 
 //    will get 'well formed' small icons associated with it.
 //
-ATOM MyRegisterClass(HINSTANCE hInstance, LPTSTR szWindowClass)
+ATOM MyRegisterClass(HINSTANCE hInstance, ACE_TCHAR* szWindowClass)
 {
     WNDCLASS    wc;
 
@@ -317,7 +316,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
                 case IDM_HELP_ABOUT:
-                    DialogBox(g_hInst, (LPCTSTR)IDD_ABOUTBOX, hWnd, (DLGPROC)About);
+                    DialogBox(g_hInst, (const ACE_TCHAR*)IDD_ABOUTBOX, hWnd, (DLGPROC)About);
                     break;
 
                 case IDOK:
@@ -352,12 +351,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 case ID_TOOLS_SAVETOFILE:
                     // create a dialog box to get the file name
-                    DialogBox(g_hInst, (LPCTSTR)IDD_OUTFILE, hWnd, (DLGPROC)SaveFileName);
+                    DialogBox(g_hInst, (const ACE_TCHAR*)IDD_OUTFILE, hWnd, (DLGPROC)SaveFileName);
                     break;
 
                 case ID_SETTING_COMMANDLINE:
                     // create a dialog box to get the command line
-                    DialogBox(g_hInst, (LPCTSTR)IDD_CMDLINE, hWnd, (DLGPROC)CommandLine);
+                    DialogBox(g_hInst, (const ACE_TCHAR*)IDD_CMDLINE, hWnd, (DLGPROC)CommandLine);
                     break;
 
                 default:
@@ -557,7 +556,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
             if (tempFile != NULL)  // if file exists
             {
                 fclose(tempFile);  // close temp handler
-                int choice = DialogBox(g_hInst, (LPCTSTR)IDD_FILEEXIST, hDlg, (DLGPROC)FileExist);
+                int choice = DialogBox(g_hInst, (const ACE_TCHAR*)IDD_FILEEXIST, hDlg, (DLGPROC)FileExist);
                 switch (choice)
                 {
                 case IDOVERWRITE:  // overwrite existing file
@@ -581,7 +580,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 
             if (tempFile == NULL)
             {
-                DialogBox(g_hInst, (LPCTSTR)IDD_ERRFILE, hDlg, (DLGPROC)FileError);
+                DialogBox(g_hInst, (const ACE_TCHAR*)IDD_ERRFILE, hDlg, (DLGPROC)FileError);
             }
             else
             {
