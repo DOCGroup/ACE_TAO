@@ -16,17 +16,25 @@
 
 #include "CosNaming_i.h"
 
-NS_NamingContext::NS_NamingContext (void)
+NS_NamingContext::NS_NamingContext (size_t default_hash_table_size)
   : lock_ (0)
 {
   // Deal with faults.
-  if (context_.open () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
-
-  // Get the lock from the orb that knows what type is appropriate.
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ();
+  if (context_.open (default_hash_table_size) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "NS_NamingContext"));
 }
 
+int
+NS_NamingContext::init (void)
+{
+  // Get the lock from the ORB, which knows what type is appropriate.
+  ACE_ALLOCATOR_RETURN (this->lock_,
+                        TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock (),
+                        -1);
+  return 0;
+}
 NS_NamingContext::~NS_NamingContext (void)
 {
   delete this->lock_;
