@@ -14,7 +14,7 @@ CFG=servers - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "servers.mak" CFG="servers - Win32 Debug"
+!MESSAGE NMAKE /f "servers4.mak" CFG="servers - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -62,7 +62,7 @@ CLEAN :
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/servers.pch" /YX /Fo"$(INTDIR)/" /c 
+ /Fp"$(INTDIR)/servers4.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\Release/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -70,7 +70,7 @@ CPP_SBRS=.\.
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/servers.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/servers4.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
@@ -119,7 +119,7 @@ CLEAN :
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\lib" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\lib" /D "WIN32" /D "_DEBUG" /D\
- "_CONSOLE" /Fp"$(INTDIR)/servers.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+ "_CONSOLE" /Fp"$(INTDIR)/servers4.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -127,7 +127,7 @@ CPP_SBRS=.\.
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/servers.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/servers4.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
@@ -262,8 +262,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
 	
 NODEP_CPP_MAIN_=\
 	".\Client_Logging_Handler.h"\
@@ -282,6 +282,7 @@ NODEP_CPP_MAIN_=\
 
 DEP_CPP_MAIN_=\
 	"..\..\ace\config-win32.h"\
+	"..\lib\Base_Optimizer.cpp"\
 	"..\lib\Base_Optimizer.h"\
 	"..\lib\Client_Logging_Handler.h"\
 	"..\lib\Log_Message_Receiver.cpp"\
@@ -458,8 +459,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
+	{$(INCLUDE)}"\sys\STAT.H"\
+	{$(INCLUDE)}"\sys\TYPES.H"\
 	
 
 "$(INTDIR)\main.obj" : $(SOURCE) $(DEP_CPP_MAIN_) "$(INTDIR)"
