@@ -15,6 +15,23 @@ $conf = PerlACE::LocalFile ("client" . "$PerlACE::svcconf_ext");
 # Remove the file before starting the test.
 unlink $iorfile;
 
+sub add_path {
+  my($name)  = shift;
+  my($value) = shift;
+  if (defined $ENV{$name}) {
+    $ENV{$name} .= ':' . $value
+  }
+  else {
+    $ENV{$name} = $value;
+  }
+}
+
+# Set the library path for the client to be able to load
+# the Time_Date library.
+add_path('LD_LIBRARY_PATH', '.');
+add_path('LIBPATH', '.');
+add_path('SHLIB_PATH', '.');
+
 $SV = new PerlACE::Process ("server");
 $CL = new PerlACE::Process ("client", "-f $iorfile -ORBSvcConf $conf");
 
