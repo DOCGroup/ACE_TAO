@@ -33,14 +33,6 @@ class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
   friend class TAO_POA;
 
 public:
-  enum Processing_State
-  {
-    ACTIVE,
-    DISCARDING,
-    HOLDING,
-    INACTIVE,
-    UNKNOWN
-  };
 
   virtual void activate (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
@@ -64,7 +56,7 @@ public:
 
   virtual ~TAO_POA_Manager (void);
 
-  virtual Processing_State state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
 
@@ -100,7 +92,7 @@ protected:
 
   virtual void destroy (void);
 
-  Processing_State state_;
+  PortableServer::POAManager::State state_;
 
   int closing_down_;
 

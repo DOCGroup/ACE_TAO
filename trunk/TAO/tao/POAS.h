@@ -582,6 +582,8 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+    virtual PortableServer::POAManager::State get_state (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
+
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -627,6 +629,8 @@ public:
                              );
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+    virtual PortableServer::POAManager::State get_state (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
   private:
     POAManager_ptr servant_;
