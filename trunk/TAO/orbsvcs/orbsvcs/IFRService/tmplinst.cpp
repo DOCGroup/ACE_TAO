@@ -76,7 +76,7 @@ TAO_IFR_Generic_Utils<TAO_PublishesDef_i>::set_initializers (
 ACE_TEMPLATE_SPECIALIZATION
 void
 TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>::set_initializers (
-    const TAO_ComsumesDef_i &,
+    const TAO_ConsumesDef_i &,
     ACE_Configuration *,
     ACE_Configuration_Section_Key &
   )

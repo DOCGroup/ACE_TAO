@@ -1,3 +1,9 @@
+Mon Sep  8 18:56:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+          Fixed a typo.
+
 Mon Sep  8 12:38:22 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/RTScheduling/RTScheduler.mpc:
