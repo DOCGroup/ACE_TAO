@@ -118,7 +118,15 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
     }
 
   // Now activate the high priority client.
+#if defined (VXWORKS)
+  priority = ACE_THR_PRI_FIFO_DEF + 50;
+#else  /* ! VXWORKS */
   priority = ACE_THR_PRI_FIFO_DEF + 25;
+#endif /* ! VXWORKS */
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating 1 client with high priority of %d\n",
+              priority));
 
   if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                      1,
@@ -129,9 +137,14 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
                 "activate failed",
                 priority));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Creating 1 client with high priority of %d\n",
-              priority));
+  const ACE_pri_t max_low_client_priority = 
+    ACE_Sched_Params::previous_priority (
+      ACE_SCHED_FIFO,
+      ACE_Sched_Params::previous_priority (
+        ACE_SCHED_FIFO,
+        priority,
+        ACE_SCOPE_THREAD),
+      ACE_SCOPE_THREAD);
 
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
@@ -144,7 +157,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
               "Creating %d clients with low priority ranging from %d to %d\n",
               ts.thread_count_ - 1,
               priority,
-              priority + ts.thread_count_ - 2));
+              max_low_client_priority));
 
   for (i = ts.thread_count_ - 1; i > 0; i--)
     {
