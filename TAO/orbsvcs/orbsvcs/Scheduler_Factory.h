@@ -85,6 +85,7 @@ public:
   // Disable config runs in the Factory and sets up the precomputed
   // scheduling information.
 
+  static int server (RtecScheduler::Scheduler_ptr);
   static RtecScheduler::Scheduler_ptr server (void);
   // Return the Real-time Scheduling Service used for this run.
   // Must have been configured either using use_context() or use_data().
