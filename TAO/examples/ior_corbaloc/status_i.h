@@ -4,6 +4,7 @@
 #define STATUS_I_H
 
 #include "corbalocS.h"
+#include "ace/SString.h"
 
 class corbaloc_Status_i : public POA_corbaloc::Status
 {

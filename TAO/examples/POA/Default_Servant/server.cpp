@@ -19,6 +19,7 @@
 #include "tao/debug.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 
 ACE_RCSID(Default_Servant, server, "$Id$")
 

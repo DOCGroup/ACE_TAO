@@ -26,6 +26,7 @@
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/DLL.h"
+#include "ace/SString.h"
 
 class ServantLocator : public PortableServer::ServantLocator
 {
