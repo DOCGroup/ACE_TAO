@@ -4,6 +4,15 @@ Tue Jun 20 19:37:53 2000  Carlos O'Ryan  <coryan@uci.edu>
           Fixed the definition of ACE_RE_THROW_EX, there was a space
           between the macro name and the ( that starts its arguments.
 
+        * ace/RMCast/Makefile:
+        * ace/RMCast/RMCast_Header_Size.h:
+        * ace/RMCast/RMCast_Header_Size.i:
+        * ace/RMCast/RMCast_Header_Size.cpp:
+          A simple control message, still unused.
+
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+          Verify that all fragments report the same total size.
+
 Tue Jun 20 14:55:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.cpp: Applied patches for ACE_BEGINTHREADEX and
