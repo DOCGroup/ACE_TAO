@@ -44,7 +44,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Event_Latency_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 static const char usage [] = "[-? |\n"
-"            [-c <consumers> [4]]\n"
+"            [-c <consumers> [1]]\n"
 "            [-d directly connect all consumers/suppliers\n"
 "            [-j to collect jitter statistics]\n"
 "            [-m <count> of messages to send [10]]\n"
@@ -97,10 +97,15 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
       rt_info_ =
         server->create (my_name, TAO_TRY_ENV);
+
+      const ACE_hrtime_t wcet_ns = ACE_UINT64_LITERAL (10000000); // 1 ms
+      RtecScheduler::Time wcet;
+      ORBSVCS_Time::hrtime_to_TimeT (wcet, wcet_ns);
+
       server->set (rt_info_,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
-                   ORBSVCS_Time::zero,
-                   ORBSVCS_Time::zero,
+                   wcet,
+                   wcet,
                    ORBSVCS_Time::zero,
                    0,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
@@ -175,7 +180,7 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 
 #if defined (quantify)
   // If measuring jitter, just Quantify the supplier-consumer path.
-  if (measure_jitter)
+  if (measure_jitter_)
     {
       quantify_stop_recording_data ();
     }
@@ -406,12 +411,14 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->rt_info_ =
         server->create (name, TAO_TRY_ENV);
 
+      RtecScheduler::Period period = timeout_interval * 20000;
+
       server->set (rt_info_,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
                    ORBSVCS_Time::zero,
                    ORBSVCS_Time::zero,
                    ORBSVCS_Time::zero,
-                   timeout_interval * 10000,
+                   period,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
                    ORBSVCS_Time::zero,
                    1,
@@ -902,7 +909,7 @@ main (int argc, char *argv [])
           int supplier_timestamps = (i==0);
           ACE_NEW_RETURN (supplier [i],
                           Latency_Supplier (total_messages,
-                                            measure_jitter,
+                                            ACE_static_cast (CORBA::Long, i),
                                             supplier_timestamps),
                           -1);
           char supplier_name [BUFSIZ];
