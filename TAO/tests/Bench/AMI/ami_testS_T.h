@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:553
+// be/be_codegen.cpp:648
 
 #ifndef _TAO_IDL_AMI_TESTS_T_H_
 #define _TAO_IDL_AMI_TESTS_T_H_
@@ -45,7 +45,7 @@
 // be/be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
-namespace POA_A
+TAO_NAMESPACE  POA_A
 {
   
   // TAO_IDL - Generated from
@@ -95,6 +95,7 @@ namespace POA_A
         CORBA::Long_out out_l,
         CORBA::Long in_l,
         const char * in_str
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -105,7 +106,7 @@ namespace POA_A
     // be/be_visitor_operation/tie_sh.cpp:60
     
     CORBA::Long yadda (
-        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -116,6 +117,7 @@ namespace POA_A
     
     void yadda (
         CORBA::Long yadda
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -125,7 +127,7 @@ namespace POA_A
     // be/be_visitor_operation/tie_sh.cpp:60
     
     void shutdown (
-        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -140,11 +142,128 @@ namespace POA_A
     AMI_Test_tie (const AMI_Test_tie &);
     void operator= (const AMI_Test_tie &);
   };
-} // module A
+  
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/tie_sh.cpp:87
+  
+  // TIE class: Refer to CORBA v2.2, Section 20.34.4
+  template <class T>
+  class  AMI_AMI_TestHandler_tie : public AMI_AMI_TestHandler
+  {
+  public:
+    AMI_AMI_TestHandler_tie (T &t);
+    // the T& ctor
+    AMI_AMI_TestHandler_tie (T &t, PortableServer::POA_ptr poa);
+    // ctor taking a POA
+    AMI_AMI_TestHandler_tie (T *tp, CORBA::Boolean release = 1);
+    // ctor taking pointer and an ownership flag
+    AMI_AMI_TestHandler_tie (
+        T *tp,
+        PortableServer::POA_ptr poa,
+        CORBA::Boolean release = 1
+      );
+    // ctor with T*, ownership flag and a POA
+    ~AMI_AMI_TestHandler_tie (void);
+    // dtor
+    
+    // TIE specific functions
+    T *_tied_object (void);
+    // return the underlying object
+    void _tied_object (T &obj);
+    // set the underlying object
+    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    // set the underlying object and the ownership flag
+    CORBA::Boolean _is_owner (void);
+    // do we own it
+    void _is_owner (CORBA::Boolean b);
+    // set the ownership
+    
+    // overridden ServantBase operations
+    PortableServer::POA_ptr _default_POA (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/tie_sh.cpp:60
+    
+    void foo (
+        CORBA::Long ami_return_val,
+        CORBA::Long out_l
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/tie_sh.cpp:60
+    
+    void foo_excep (
+        A::AMI_AMI_TestExceptionHolder * excep_holder
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/tie_sh.cpp:60
+    
+    void get_yadda (
+        CORBA::Long ami_return_val
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/tie_sh.cpp:60
+    
+    void get_yadda_excep (
+        A::AMI_AMI_TestExceptionHolder * excep_holder
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/tie_sh.cpp:60
+    
+    void set_yadda (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/tie_sh.cpp:60
+    
+    void set_yadda_excep (
+        A::AMI_AMI_TestExceptionHolder * excep_holder
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+  
+  private:
+    T *ptr_;
+    PortableServer::POA_var poa_;
+    CORBA::Boolean rel_;
+    
+    // copy and assignment are not allowed
+    AMI_AMI_TestHandler_tie (const AMI_AMI_TestHandler_tie &);
+    void operator= (const AMI_AMI_TestHandler_tie &);
+  };
+}
+TAO_NAMESPACE_CLOSE // module A
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1095
+// be/be_codegen.cpp:1191
 
 #if defined (__ACE_INLINE__)
 #include "ami_testS_T.i"

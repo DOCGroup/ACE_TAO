@@ -135,6 +135,48 @@ A::AMI_AMI_TestExceptionHolder::_tao_obv_static_repository_id ()
   return "IDL:A/AMI_AMI_TestExceptionHolder:1.0";
 }
 
+
+ACE_INLINE
+A::AMI_AMI_TestHandler::AMI_AMI_TestHandler (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
+    the_TAO_AMI_AMI_TestHandler_Proxy_Broker_ (0)
+
+{
+  this->A_AMI_AMI_TestHandler_setup_collocation (_tao_collocated);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<A::AMI_AMI_TestHandler>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_INLINE
+A::AMI_AMI_TestHandler::AMI_AMI_TestHandler (
+    IOP::IOR *ior,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+    the_TAO_AMI_AMI_TestHandler_Proxy_Broker_ (0)
+
+{
+}
+
+
+
+CORBA::Boolean operator<< (TAO_OutputCDR &, const A::AMI_AMI_TestExceptionHolder *);
+CORBA::Boolean operator>> (TAO_InputCDR &, A::AMI_AMI_TestExceptionHolder *&);
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/cdr_op_ci.cpp:72
 
