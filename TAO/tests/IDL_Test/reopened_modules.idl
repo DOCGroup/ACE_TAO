@@ -22,6 +22,10 @@
 // These examples test the lookup abilities of the
 // TAO IDL compiler, with reopened modules.
 
+// Tests lookup function when modules are reopened by
+// a chain of inclusions
+#include "reopen_include2.idl"
+
 module A 
 {
   module B 
@@ -116,5 +120,83 @@ module com
     {
       com::mr::info getInfo ();
     };
+};
+
+// Modules X and Y are also included from reopene_include2.idl.
+// There were problems with the lookup of Y::Z and X::Ex.
+module Y 
+{
+   interface Z {};
+};
+
+module X
+{
+   exception Ex {};
+
+   interface BI : Y::Z 
+   {
+     void method () raises (X::Ex);
+   };
+};
+
+// Reopened from reopen_include2.idl inclusion. There
+// was a problem with the inheritance lookup.
+module XX 
+{
+  interface blah_intfc;
+
+  interface blah_intfc 
+  {
+    void op1();
+  };
+
+  interface blah0 : blah_intfc 
+  {
+    void op0();
+  };
+};
+
+// Had lookup problems with the operation args and
+// return type.
+module frag
+{
+  interface frag_iface {};
+};
+
+module frag
+{
+  typedef long ret_long;
+};
+
+interface gather
+{
+  frag::ret_long op (in frag::dub_seq inarg,
+                     inout frag::pug inoutarg,
+                     out frag::frag_iface outarg);
+};
+
+// Had problems with second opening of module using
+// types declared between the openings.
+module foo
+{
+  typedef long longdef;
+};
+
+typedef long longdef2;
+
+struct bar {short s;};
+
+module foo
+{
+  struct foo_struct
+  {
+    longdef longval;
+    longdef2 longval2;
+  };
+
+  interface obj
+  {
+    void op (in bar inarg);
+  };
 };
 
