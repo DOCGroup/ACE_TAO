@@ -32,17 +32,17 @@ class Low_Priority_Setup
 {
 public:
   /// Constructor
-  Low_Priority_Setup (int nthreads,
+  Low_Priority_Setup (int consumer_count,
                       int iterations,
                       int use_different_types,
                       CORBA::Long experiment_id,
                       CORBA::Long base_event_type,
                       int workload,
                       ACE_UINT32 gsf,
-                      int enable_threads,
+                      int nthreads,
                       int thread_priority,
                       int thread_sched_class,
-                      int send_period,
+                      int per_thread_period,
                       PortableServer::POA_ptr supplier_poa,
                       PortableServer::POA_ptr consumer_poa,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -63,9 +63,11 @@ public:
   typedef ACE_Auto_Basic_Array_Ptr<Auto_Send_Task_Stopper> Send_Task_Stopper_Array;
 
 private:
-  int nthreads_;
+  int consumer_count_;
   Client_Array clients_;
   Client_Auto_Disconnect_Array disconnect_;
+
+  int nthreads_;
   Send_Task_Array tasks_;
   Send_Task_Stopper_Array stoppers_;
   ACE_Thread_Manager thr_mgr_;

@@ -34,6 +34,7 @@ public:
    */
   Client_Pair (void);
 
+  /// Initialize the consumer/supplier pair
   /**
    * @param experiment_id For tests that run multiple experiments
    *        this number is changed on each iteration, guaranteeing
@@ -49,6 +50,23 @@ public:
    */
   void init (CORBA::Long experiment_id,
              CORBA::Long base_event_type,
+             CORBA::ULong iterations,
+             CORBA::Long workload_in_usecs,
+             ACE_UINT32 gsf,
+             PortableServer::POA_ptr supplier_poa,
+             PortableServer::POA_ptr consumer_poa);
+
+  /// Initialize the consumer/supplier pair
+  /**
+   * This variant works as the previous one, but it allows for
+   * multiple events in the supplier-side.
+   *
+   * @param source_event_range The number of events declared by the
+   *        source.
+   */
+  void init (CORBA::Long experiment_id,
+             CORBA::Long base_event_type,
+             CORBA::Long source_event_range,
              CORBA::ULong iterations,
              CORBA::Long workload_in_usecs,
              ACE_UINT32 gsf,

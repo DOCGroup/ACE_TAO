@@ -1,3 +1,85 @@
+Wed Mar 13 14:51:32 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Makefile:
+	  Update Makefiles to include the new directories (and remove old
+	  ones).
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.cpp:
+	  New class to parse and hold the client options, they were too
+	  numerous to parse on each application.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+	  Temporarly disable the use of RT-POAs.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Pair.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Pair.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.cpp:
+	  Add support for multiple event sources in the high-priority
+	  supplier.  This is useful when trying to showcase the
+	  improvements of per-supplier filtering.
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	  Use the Client_Options class.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Test.idl:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.h:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Session.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Session.h:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Session_Factory.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Session_Factory.h:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+	  New test to measure the performance of CORBA (and RT-CORBA)
+	  through callback interfaces.
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.cpp:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.pl:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_reactive.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_rtcorba.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_threaded.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.filter_null.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.filter_per_supplier.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_copy_on_read.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_copy_on_write.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_delayed.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_immediate.conf:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_acc.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_cmp.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_compared_histo.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_gnuplot.pl:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_histo.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_percentiles.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_stat.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/parameters:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/run_dispatching.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/run_filter.sh:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/run_locking.sh:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_copy_on_read.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_copy_on_write.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_delayed.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_immediate.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/run_locking.sh:
+	  Add many helper scripts and configuration files.
+
 Wed Mar 13 14:48:12 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Scalability/*:
@@ -14,7 +96,7 @@ Wed Mar 13 10:02:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           In the case where a dash is followed by a space instead of
           command line option letters, replaced the action adding
-          stdin to the IDL file list with an error message. The 
+          stdin to the IDL file list with an error message. The
           previous action was causing an endless self-spawn loop.
           This was the last item listed in [BUGID:390] that has not
           yet been fixed, so I'll close the bug entry. Thanks to

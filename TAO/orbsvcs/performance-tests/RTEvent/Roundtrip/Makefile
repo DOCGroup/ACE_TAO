@@ -59,7 +59,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -432,7 +432,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -759,7 +759,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/Low_Priority_Setup.cpp \
   $(ACE_ROOT)/ace/Basic_Stats.h \
   $(ACE_ROOT)/ace/Basic_Stats.inl \
-  ../lib/EC_Destroyer.h ../lib/EC_Destroyer.inl \
+  ../lib/EC_Destroyer.h ../lib/EC_Destroyer.inl ../lib/Client_Options.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
