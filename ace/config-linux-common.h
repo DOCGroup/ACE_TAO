@@ -46,7 +46,7 @@
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
-#elif defined (__ia64)
+#elif defined (__ia64) || defined (__x86_64__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 // Zero base address should work fine for Linux of IA-64: it just lets
 // the kernel to choose the right value.
@@ -342,7 +342,7 @@
 
 #define ACE_HAS_DIRENT
 
-#if defined (__ia64) || defined(__alpha)
+#if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
