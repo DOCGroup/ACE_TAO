@@ -1,3 +1,20 @@
+Sun Mar 09 14:38:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/new_components.html: Added this new document to describe
+	  files involved in creating a new components.
+
+	* docs/com-impl.html: Added a link to the new component
+	  implementation. document
+
+	* docs/imgs/File-Gen-Existing.png:
+	* docs/imgs/File-Gen-Future.png:
+	* docs/imgs/File_Generation_Flow.vsd: Updated the tools/files
+	  collaboration diagram to reflect the latest plan.
+
+	* examples/handcrafted/Hello/hello.mpc: Updated the MPC file to
+	  make sure it works properly.  We need to figure out a way to
+	  auto-generate a template of this file.
+
 Thu Mar 06 20:29:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  The following changes integrate the XML parsing of softpkg
