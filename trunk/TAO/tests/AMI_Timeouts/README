@@ -13,8 +13,8 @@ Use -GC on the TAO IDL compiler to generate code for AMI callbacks.
 
 Usage:
 =====
-$ server
+$ server -o ior
+$ client -k file://ior
 
-This is a server and a client in the same process space, but using
-the local loop-back interface instead of collocation.
+
 

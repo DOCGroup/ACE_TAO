@@ -8,7 +8,8 @@
 #include "tao/Leader_Follower.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "Transport.h"
+#include "tao/Transport.h"
+#include "tao/Asynch_Timeout_Handler.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher.i"
@@ -59,6 +60,17 @@ TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
 {
 }
 
+void
+TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
+{
+}
+
+void
+TAO_Asynch_Reply_Dispatcher_Base::timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler)
+{
+}
+
+
 // ************************************************************************
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
@@ -71,7 +83,8 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
   )
   :TAO_Asynch_Reply_Dispatcher_Base (orb_core),
    reply_handler_skel_ (reply_handler_skel),
-   reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
+   reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
+   timeout_handler_ (0)
 {
 }
 
@@ -86,6 +99,16 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
+  // AMI Timeout Handling Begin
+
+  if (this->timeout_handler_)
+    {
+      this->timeout_handler_->cancel ();
+      delete (this->timeout_handler_);
+    }
+
+  // AMI Timeout Handling End
+
   this->reply_status_ = params.reply_status_;
 
   // this->message_state_ = message_state;
@@ -187,6 +210,61 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 
     }
   ACE_ENDTRY;
+
+  // @@ Michael: Shouldn't we commit suicide? I added the delete this.
+  delete this;
 }
+
+// AMI Timeout Handling Begin
+
+void
+TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      // Generate a fake exception....
+      CORBA::TIMEOUT timeout_failure (
+        CORBA_SystemException::_tao_minor_code (TAO_TIMEOUT_SEND_MINOR_CODE,
+                                                errno),
+         CORBA::COMPLETED_NO);
+
+      TAO_OutputCDR out_cdr;
+
+      timeout_failure._tao_encode (out_cdr, ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+
+      // Turn into an output CDR
+      TAO_InputCDR cdr (out_cdr);
+
+      this->reply_handler_skel_ (cdr,
+                                 this->reply_handler_.in (),
+                                 TAO_AMI_REPLY_SYSTEM_EXCEPTION,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level >= 4)
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Asynch_Reply_Dispacher::reply_timed_out");
+        }
+
+    }
+  ACE_ENDTRY;
+
+  // This was dynamically allocated. Now the job is done. Commit
+  // suicide here.
+  delete this;
+}
+
+void
+TAO_Asynch_Reply_Dispatcher::timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler)
+{
+  timeout_handler_ = timeout_handler;
+}
+
+// AMI Timeout Handling End
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */

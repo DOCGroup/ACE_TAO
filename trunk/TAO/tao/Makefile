@@ -56,6 +56,7 @@ PUB_HDRS = \
   Reply_Dispatcher \
   Synch_Reply_Dispatcher \
   Asynch_Reply_Dispatcher \
+  Asynch_Timeout_Handler \
   BoundC \
   GIOPC \
   TAO_Export \
@@ -197,6 +198,7 @@ ORB_CORE_FILES = \
   Reply_Dispatcher \
   Synch_Reply_Dispatcher \
   Asynch_Reply_Dispatcher \
+  Asynch_Timeout_Handler \
   IOPC \
   IOPS \
   PollableC \

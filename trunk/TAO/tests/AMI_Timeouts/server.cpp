@@ -117,18 +117,21 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
+      /*
       TimeoutClient* client = new TimeoutClient (orb,
                                                  timeout_var.in (),
-                                                 timeoutHandler_var.in ());
+                                                 timeoutHandler_var.in (),
+                                                 &timeoutHandler_i);
 
       client->activate ();
-
+      */
+      
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      delete client;
+      //delete client;
     }
   ACE_CATCHANY
     {

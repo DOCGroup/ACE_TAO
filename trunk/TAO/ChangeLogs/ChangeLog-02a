@@ -1,3 +1,78 @@
+Mon Feb 26 03:45:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tao/Asynch_Timeout_Handler.cpp:
+        * tao/Asynch_Timeout_Handler.h:
+          Added these two files.
+          This class implements an event handler for timeouts on AMI
+          invocations. The timeout handler is registered for timeouts
+          with the ORB by the asynch invocation object.
+
+          When the reply does not arrive right in time, the timer
+          expires and the timeout handler is invoked. The timeout handler
+          knows the correct transport mux strategy and the asynch reply
+          dispatcher for the reply, which timed out.
+
+          On timeout the timeout handler unbinds the reply dispatcher from
+          the transport mux strategy and informs the reply dispatcher that 
+          the reply timed out. The asynch reply dispatcher informs the 
+          associated reply handler in the application about this by raising
+          the timeout exception. The reply dispatcher will commit suicide after
+          that. The timeout handler itself unregisters itself from the reactor
+          and commits suicide in handle_close.
+
+          Note: The timeout handler should be allocated statically in the 
+                reply dispatcher, instead - as it is now - of being allocated
+                dynamically in the asynch invocation object. Thanks Carlos.
+                But how can we know in the constructor of the reply dispatcher
+                (which is the right place to allocate it statically) whether
+                timeouts are actually enabled. If they are not enabled, we
+                might waste memory for something not needed?
+
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.h:
+          Added a new method <reply_timed_out> which is invoked by the timeout
+          handler on timeout. This method informs the application reply handler
+          about the timeout by raising the timeout exception.
+          At the end of that method the reply dispatcher commits suicide as it
+          is no longer needed - it was dynamically allocated, as the original
+          asynch invocation object has gone away before (asynchrony!).
+
+          If the reply arrives right in time the reply dispatcher unregisters
+          the timeout handler from the reactor and deletes it.
+
+        * tao/Asynch_Invocation.cpp:
+          Added code to the actual invocation path. The timeout handler is 
+          dynamically allocated and registered with the reactor for timeouts.
+          It is then handed over to the asynch reply dispatcher for later usage.
+  
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+          Added the Asynch_Timeout_Handler.{h,cpp} files to these files.
+          Dependencies in <Makefile> need to be updated.
+
+        * tests/AMI_Timeouts/client.bor:
+          Added this file as Borland specific Makefile for the client.
+
+        * tests/AMI_Timeouts/Makefile
+        * tests/AMI_Timeouts/Makefile.bor
+        * tests/AMI_Timeouts/README
+        * tests/AMI_Timeouts/client.cpp
+        * tests/AMI_Timeouts/client.dsp
+        * tests/AMI_Timeouts/run_test.pl
+        * tests/AMI_Timeouts/server.bor
+        * tests/AMI_Timeouts/server.cpp
+        * tests/AMI_Timeouts/server.dsp
+        * tests/AMI_Timeouts/svc.conf
+        * tests/AMI_Timeouts/timeout_client.cpp
+        * tests/AMI_Timeouts/timeout_client.h
+        * tests/AMI_Timeouts/timeout_i.cpp
+        * tests/AMI_Timeouts/timeout_i.h: 
+          Updated these files to reflect latest modifications on the
+          AMI Timeout test.
+
 Mon Feb 26 09:46:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/makefile.bor:

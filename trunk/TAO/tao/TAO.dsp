@@ -191,6 +191,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Timeout_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Base_Connection_Property.cpp
 # End Source File
 # Begin Source File
@@ -908,6 +912,10 @@ SOURCE=.\Asynch_Invocation.h
 # Begin Source File
 
 SOURCE=.\Asynch_Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Timeout_Handler.h
 # End Source File
 # Begin Source File
 
