@@ -92,7 +92,7 @@ public:
   void *operator new (size_t size, ACE_Allocator *allocator);
   void operator delete(void *p, ACE_Allocator *allocator);
 
-private:
+public:
   // No-op, to avoid accident use.
   void *operator new (size_t size);
   // No-op, to avoid accident use.
