@@ -269,7 +269,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_ty
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+      if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
           *os << "delete this->u_."
               << ub->local_name () << "_;" << be_nl;
