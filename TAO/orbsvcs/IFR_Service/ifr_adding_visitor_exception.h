@@ -59,7 +59,7 @@ public:
   virtual int visit_union (AST_Union *node);
   // Visit union.
 
-  virtual CORBAL::IDLType_ptr ir_current (void) const;
+  virtual CORBA::IDLType_ptr ir_current (void) const;
   // Lets the visitor one level above acess this value.
 
 private:

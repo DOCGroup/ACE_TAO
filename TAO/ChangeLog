@@ -1,3 +1,10 @@
+Sat Mar  1 10:27:55 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h
+	  (ifr_adding_visitor_exception):
+
+	  Fixed typo.  "CORBAL" -> "CORBA".
+
 Sat Mar  1 09:30:47 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
