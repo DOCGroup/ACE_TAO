@@ -2775,6 +2775,10 @@ typedef long ACE_INT32;
 #define ETIME ETIMEDOUT
 #endif /* ETIMED */
 
+#if !defined (EBUSY)
+#define EBUSY ETIME
+#endif /* EBUSY */
+
 #if !defined (_SC_TIMER_MAX)
 #define _SC_TIMER_MAX 44
 #endif /* _SC_TIMER_MAX */
