@@ -210,9 +210,11 @@ private:
   /// a sorted order.
   int fill_set_i (DESCRIPTOR_SET& sorted_set);
 
+#if 0
   /// Look through the sorted set and close the connection on
   /// the required number of items in the set.
   void close_entries (DESCRIPTOR_SET& sorted_set, int size);
+#endif
 
   /// Wait for connections if we have reached the limit on the number
   /// of muxed connections. If not (ie. if we dont use a muxed

@@ -69,25 +69,6 @@ TAO_Transport_Cache_Manager::cache_idle_transport (
 }
 
 ACE_INLINE int
-TAO_Transport_Cache_Manager::purge (void)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
-
-  DESCRIPTOR_SET sorted_set = 0;
-  int size = this->fill_set_i (sorted_set);
-
-  // Only call close_entries () if sorted_set != 0.  It takes control of
-  // sorted_set and cleans up any allocated memory.  If sorted_set == 0,
-  // then there is nothing to de-allocate.
-  if (sorted_set != 0)
-    {
-      this->close_entries (sorted_set, size);
-    }
-
-  return 0;
-}
-
-ACE_INLINE int
 TAO_Transport_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
 {
   // Double checked locking
