@@ -1,3 +1,12 @@
+Fri Mar 02 08:29:53 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/pluggable_protocols/index.html:
+	* docs/releasenotes/index.html:
+
+	  Fixed references to Doug's web site.  Just link to the local
+	  files.  There is no need to go remote.  Thanks to Darrell's
+	  "Fuzz" script for picking these up.
+
 Fri Mar 02 08:13:34 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/Makefile
