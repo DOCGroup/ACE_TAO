@@ -9,7 +9,8 @@ Thu Jul 11 18:37:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
         * ACEXML/common/HttpCharStream.cpp:
 
           Use ACE_TEXT_ALWAYS_CHAR to convert an Unicode URL to char*
-          before converting it to an address.
+          before converting it to an address. Thanks to Nanbor for
+          pointing this out.
 
         * ACEXML/common/Makefile:
         * ACEXML/common/StreamFactory.h:
