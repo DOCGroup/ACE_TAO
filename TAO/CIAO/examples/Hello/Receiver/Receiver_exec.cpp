@@ -44,7 +44,7 @@ Receiver_Impl::Receiver_exec_i::push_click_in (Hello::timeout *
 // Operations from Components::SessionComponen
 void
 Receiver_Impl::Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -61,7 +61,7 @@ Receiver_Impl::Receiver_exec_i::set_session_context (Components::SessionContext_
 }
 
 void
-Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -75,7 +75,11 @@ Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // explicitly to work around this problem.
   char *argv[1] = { "Receiver_exec"};
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+		                        argv,
+					"" 
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(),
 			       Hello::timeout_init,
@@ -112,7 +116,11 @@ Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  return new Receiver_Impl::Receiver_exec_i;
+  Components::EnterpriseComponent_ptr tmp;
+  ACE_NEW_THROW_EX (tmp,
+		    Receiver_Impl::Receiver_exec_i,
+		    CORBA::NO_MEMORY ());
+  return tmp;
 }
 
 

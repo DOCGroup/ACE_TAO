@@ -31,19 +31,19 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
 
   // Refresh position
   BasicSP::ReadData_var dat
-    = this->context_->get_connection_comp_data (ACE_ENV_ARG_PARAMETER);
+    = this->context_->get_connection_comp_data (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (dat.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
   CORBA::String_var str =
-    dat->get_data (ACE_ENV_ARG_PARAMETER);
+    dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "BMDisplay - Display data is [%s] \n",
-              str));
+              str.in ()));
 
 }
 
@@ -67,7 +67,7 @@ MyImpl::BMDisplay_exec_impl::set_session_context (Components::SessionContext_ptr
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -83,7 +83,12 @@ MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   char *argv[1] = { "BMDisplay_exec"};
 
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, 
+		                       argv, 
+				       "" 
+				       ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK;
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::DataAvailable_init,
                                BasicSP::DataAvailable);
@@ -120,7 +125,7 @@ MyImpl::BMDisplayHome_exec_impl::~BMDisplayHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMDisplayHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDisplayHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

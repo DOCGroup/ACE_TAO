@@ -181,7 +181,7 @@ MyImpl::RateGen_exec_i::active (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 MyImpl::RateGen_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -237,6 +237,7 @@ MyImpl::RateGen_exec_i::pulse (void)
 
       this->context_->push_Pulse (ev.in ()
                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -256,10 +257,14 @@ MyImpl::RateGenHome_exec_i::~RateGenHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long hertz
-                                            ACE_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return new MyImpl::RateGen_exec_i (hertz);
+  Components::EnterpriseComponent_ptr tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+		    MyImpl::RateGen_exec_i,
+		    CORBA::NO_MEMORY ());
+  return tmp;
 }
 
 ::Components::EnterpriseComponent_ptr

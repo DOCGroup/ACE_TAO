@@ -18,7 +18,7 @@ MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 // Operations from HUDisplay::BMClosedED
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMClosedED_exec_i::get_dataout (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMClosedED_exec_i::get_dataout (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
@@ -55,7 +55,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
 
   ACE_DEBUG ((LM_DEBUG,
               "BMClosedED - Display data is [%s] \n",
-               str));
+               str.in ()));
 
   if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
     {
@@ -74,7 +74,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
 // Operations from HUDisplay::position
 
 char *
-MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_.inout ());
@@ -100,7 +100,7 @@ MyImpl::BMClosedED_exec_i::set_session_context (Components::SessionContext_ptr c
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -109,7 +109,11 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   char *argv[1] = { "BMClosedED_exec"};
 
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+		                        argv,
+					""
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::DataAvailable_init,
                                BasicSP::DataAvailable);
@@ -150,7 +154,11 @@ MyImpl::BMClosedEDHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  return new MyImpl::BMClosedED_exec_i;
+  Components::EnterpriseComponent_ptr tmp;
+  ACE_NEW_THROW_EX (tmp,
+		    MyImpl::BMClosedED_exec_i,
+		    CORBA::NO_MEMORY ());
+  return tmp;
 }
 
 
