@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_IORINTERCEPTORC_H_
-#define _TAO_IDL_ORIG_IORINTERCEPTORC_H_
+#ifndef _TAO_IDL_ORIG_IORINFOC_H_
+#define _TAO_IDL_ORIG_IORINFOC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -47,7 +47,6 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PortableInterceptorC.h"
-#include "tao/IORInterceptor/IORInfoC.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -93,55 +92,55 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:613
 
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__VAR_OUT_CH_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__VAR_OUT_CH_
+#if !defined (_PORTABLEINTERCEPTOR_IORINFO__VAR_OUT_CH_)
+#define _PORTABLEINTERCEPTOR_IORINFO__VAR_OUT_CH_
   
-  class IORInterceptor;
-  typedef IORInterceptor *IORInterceptor_ptr;
+  class IORInfo;
+  typedef IORInfo *IORInfo_ptr;
   
   typedef
     TAO_Objref_Var_T<
-        IORInterceptor
+        IORInfo
       >
-    IORInterceptor_var;
+    IORInfo_var;
   
   typedef
     TAO_Objref_Out_T<
-        IORInterceptor
+        IORInfo
       >
-    IORInterceptor_out;
+    IORInfo_out;
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR_CH_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR_CH_
+#if !defined (_PORTABLEINTERCEPTOR_IORINFO_CH_)
+#define _PORTABLEINTERCEPTOR_IORINFO_CH_
   
-  class TAO_IORInterceptor_Export IORInterceptor
-    : public virtual ::PortableInterceptor::Interceptor
+  class TAO_IORInterceptor_Export IORInfo
+    : public virtual CORBA::Object
   {
   public:
-    typedef IORInterceptor_ptr _ptr_type;
-    typedef IORInterceptor_var _var_type;
+    typedef IORInfo_ptr _ptr_type;
+    typedef IORInfo_var _var_type;
     
     // The static operations.
-    static IORInterceptor_ptr _duplicate (IORInterceptor_ptr obj);
+    static IORInfo_ptr _duplicate (IORInfo_ptr obj);
     
-    static IORInterceptor_ptr _narrow (
+    static IORInfo_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    static IORInterceptor_ptr _unchecked_narrow (
+    static IORInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    static IORInterceptor_ptr _nil (void)
+    static IORInfo_ptr _nil (void)
     {
-      return (IORInterceptor_ptr)0;
+      return (IORInfo_ptr)0;
     }
     
     
@@ -149,8 +148,8 @@ namespace PortableInterceptor
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual void establish_components (
-        ::PortableInterceptor::IORInfo_ptr info
+    virtual ::CORBA::Policy_ptr get_effective_policy (
+        ::CORBA::PolicyType type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -160,8 +159,8 @@ namespace PortableInterceptor
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual void components_established (
-        ::PortableInterceptor::IORInfo_ptr info
+    virtual void add_ior_component (
+        const ::IOP::TaggedComponent & a_component
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -171,9 +170,9 @@ namespace PortableInterceptor
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual void adapter_manager_state_changed (
-        ::PortableInterceptor::AdapterManagerId id,
-        ::PortableInterceptor::AdapterState state
+    virtual void add_ior_component_to_profile (
+        const ::IOP::TaggedComponent & a_component,
+        ::IOP::ProfileId profile_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -183,9 +182,48 @@ namespace PortableInterceptor
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual void adapter_state_changed (
-        const ::PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-        ::PortableInterceptor::AdapterState state
+    virtual PortableInterceptor::AdapterManagerId manager_id (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual PortableInterceptor::AdapterState state (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::PortableInterceptor::ObjectReferenceTemplate * adapter_template (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::PortableInterceptor::ObjectReferenceFactory * current_factory (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void current_factory (
+        ::PortableInterceptor::ObjectReferenceFactory * current_factory
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -205,15 +243,15 @@ namespace PortableInterceptor
   
   protected:
     // Abstract or local interface only.
-    IORInterceptor (void);
+    IORInfo (void);
     
-    virtual ~IORInterceptor (void);
+    virtual ~IORInfo (void);
   
   private:
     // Private and unimplemented for concrete interfaces.
-    IORInterceptor (const IORInterceptor &);
+    IORInfo (const IORInfo &);
     
-    void operator= (const IORInterceptor &);
+    void operator= (const IORInfo &);
   };
 
 #endif /* end #if !defined */
@@ -230,21 +268,21 @@ namespace PortableInterceptor
 namespace TAO
 {
 
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_
+#if !defined (_PORTABLEINTERCEPTOR_IORINFO__TRAITS_CH_)
+#define _PORTABLEINTERCEPTOR_IORINFO__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IORInterceptor_Export Objref_Traits< ::PortableInterceptor::IORInterceptor>
+  struct TAO_IORInterceptor_Export Objref_Traits< ::PortableInterceptor::IORInfo>
   {
-    static ::PortableInterceptor::IORInterceptor_ptr tao_duplicate (
-        ::PortableInterceptor::IORInterceptor_ptr
+    static ::PortableInterceptor::IORInfo_ptr tao_duplicate (
+        ::PortableInterceptor::IORInfo_ptr
       );
     static void tao_release (
-        ::PortableInterceptor::IORInterceptor_ptr
+        ::PortableInterceptor::IORInfo_ptr
       );
-    static ::PortableInterceptor::IORInterceptor_ptr tao_nil (void);
+    static ::PortableInterceptor::IORInfo_ptr tao_nil (void);
     static CORBA::Boolean tao_marshal (
-        ::PortableInterceptor::IORInterceptor_ptr p,
+        ::PortableInterceptor::IORInfo_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -256,7 +294,7 @@ namespace TAO
 // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
-#include "IORInterceptorC.inl"
+#include "IORInfoC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
