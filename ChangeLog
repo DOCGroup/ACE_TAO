@@ -13,6 +13,12 @@ Thu Jun 12 15:20:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/Makefile.ace: Compile the file Template_Instantiations.cpp
 	  in normal builds.
 
+	* ace/INET_Addr.cpp: In get_port_number_from_name () set the port
+	  number to 0 for VxWorks.
+
+	  Thanks to Rob Andzik for providing these patches to get ACE+TAO
+	  compiling on  VxWorks 5.5.
+
 Wed Jun 11 16:27:41 2003  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv1/Logging_Client.cpp:
