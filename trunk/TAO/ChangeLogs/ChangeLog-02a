@@ -1,3 +1,16 @@
+Wed Dec 13 18:12:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/skip.cpp:
+	* tao/append.cpp:
+	  Optimized Any marshaling and demarshaling for sequences and
+	  arrays of basic types.
+	  Thanks to Sathish Tiptur <Sathish.Tiptur@geind.ge.com> for
+	  providing the patches.
+
+	* tao/ORB_Core.cpp:
+	  Fixed the POA loading directive, thanks to Pedro Ferreira
+	  <pedro.ferreira@inescporto.pt> for providing this patch.
+
 Wed Dec 13 17:57:28 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 

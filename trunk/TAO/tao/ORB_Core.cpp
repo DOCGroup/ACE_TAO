@@ -1436,7 +1436,7 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
     {
       // Try again, using the default directive...
       ACE_Service_Config::process_directive (
-                                             "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_POA()"
+                                             "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()"
                                              );
       factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
