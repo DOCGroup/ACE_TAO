@@ -1945,7 +1945,11 @@ typedef char TCHAR;
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
 #define ACE_LOGGER_KEY "/tmp/server_daemon"
+#ifdef __hpux
+#define ACE_DLL_SUFFIX ".sl"
+#else
 #define ACE_DLL_SUFFIX ".so"
+#endif
 #define ACE_DLL_PREFIX "lib"
 
 // The following 3 defines are used by the ACE Name Server...
