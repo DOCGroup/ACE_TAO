@@ -85,15 +85,15 @@ module LoadBalancing
   const MembershipStyle MEMB_APP_CTRL = 0;
   const MembershipStyle MEMB_INF_CTRL = 1;
 
-  typedef unsigned short LoadMonitoringStyle;
-  const LoadMonitoringStyle PULL = 0;
-  const LoadMonitoringStyle PUSH = 1;
-  //  const LoadMonitoringStyle NOT_MONITORED = 2;
+  typedef unsigned short MonitoringStyle;
+  const MonitoringStyle PULL = 0;
+  const MonitoringStyle PUSH = 1;
+  //  const MonitoringStyle NOT_MONITORED = 2;
 
-  typedef unsigned short LoadMonitoringGranularity;
-  const LoadMonitoringGranularity MEMB = 0;
-  const LoadMonitoringGranularity LOC = 1;
-  const LoadMonitoringGranularity LOC_AND_TYPE = 2;
+  typedef unsigned short MonitoringGranularity;
+  const MonitoringGranularity MEMB = 0;
+  const MonitoringGranularity LOC = 1;
+  const MonitoringGranularity LOC_AND_TYPE = 2;
 
   typedef unsigned short InitialNumberReplicas;
   typedef unsigned short MinimumNumberReplicas;

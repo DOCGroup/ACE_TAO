@@ -26,7 +26,7 @@ TAO_LoadBalancer::parse_args (int argc,
                               char *argv[],
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:s:h");
+  ACE_Get_Opt get_opts (argc, argv, "o:s:h");
 
   int c = 0;
 
@@ -34,9 +34,6 @@ TAO_LoadBalancer::parse_args (int argc,
     {
       switch (c)
         {
-//         case 'i':
-//           this->repository_id_ = get_opts.optarg;
-//           break;
         case 'o':
           this->load_balancer_file_ = get_opts.optarg;
           break;
@@ -120,6 +117,7 @@ TAO_LoadBalancer::usage (const char *cmd) const
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:  %s ")
               ACE_TEXT ("-o <ior_output_file> ")
+              ACE_TEXT ("-s <rr|md> ")
               ACE_TEXT ("-h ")
               ACE_TEXT ("\n"),
               cmd));
