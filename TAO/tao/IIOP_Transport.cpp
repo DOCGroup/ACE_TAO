@@ -131,7 +131,7 @@ TAO_IIOP_Client_Transport::
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_IIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_IIOP_Profile*,pfile);
+    ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
 
   // Obtain object key.
   const TAO_ObjectKey& key = profile->object_key ();
@@ -179,7 +179,7 @@ TAO_IIOP_Client_Transport::
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_IIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_IIOP_Profile*,pfile);
+    ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
 
   // Obtain object key.
   const TAO_ObjectKey& key = profile->object_key ();
