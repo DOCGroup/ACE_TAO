@@ -162,8 +162,8 @@ struct  string_char_baggage {
     copy (char_type* s1, const char_type* s2, size_t n) _THROW_NONE
     {
         char_type* s = s1;
-        for (size_t i = 0; i < n; ++i)
-            assign(*++s1, *++s2);
+        for (size_t i = 0; i < n; ++i, s1++, s2++)
+            assign(*s1, *s2);
         return s;
     }
 };

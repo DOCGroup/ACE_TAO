@@ -18,16 +18,49 @@
 #include <fstream.h>
 
 #if defined (ACE_WIN32)
-#define ACE_DEFAULT_TEST_FILE "C:\\temp\\ace_test_file"
-#define ACE_TEMP_FILE_NAME "C:\\temp\\ace_temp_file"
-#define ACE_LOG_DIRECTORY "C:\\temp\\log\\"
-#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\"#X
+
+#define ACE_DEFAULT_TEST_FILE_A "C:\\temp\\ace_test_file"
+#define ACE_TEMP_FILE_NAME_A "C:\\temp\\ace_temp_file"
+#define ACE_LOG_DIRECTORY_A "C:\\temp\\log\\"
+#define MAKE_PIPE_NAME_A(X) "\\\\.\\pipe\\"#X
+
+#define ACE_DEFAULT_TEST_FILE_W L"C:\\temp\\ace_test_file"
+#define ACE_TEMP_FILE_NAME_W L"C:\\temp\\ace_temp_file"
+#define ACE_LOG_DIRECTORY_W L"C:\\temp\\log\\"
+#define MAKE_PIPE_NAME_W(X) L"\\\\.\\pipe\\"#X
+
 #else
-#define ACE_DEFAULT_TEST_FILE "/tmp/ace_test_file"
-#define ACE_TEMP_FILE_NAME "/tmp/ace_temp_file"
-#define ACE_LOG_DIRECTORY "log/"
-#define MAKE_PIPE_NAME(X) X
+
+#define ACE_DEFAULT_TEST_FILE_A "/tmp/ace_test_file"
+#define ACE_TEMP_FILE_NAME_A "/tmp/ace_temp_file"
+#define ACE_LOG_DIRECTORY_A "log/"
+#define MAKE_PIPE_NAME_A(X) X
+
+#if defined (ACE_HAS_UNICODE)
+#define ACE_DEFAULT_TEST_FILE_W L"/tmp/ace_test_file"
+#define ACE_TEMP_FILE_NAME_W L"/tmp/ace_temp_file"
+#define ACE_LOG_DIRECTORY_W L"log/"
+#define MAKE_PIPE_NAME_W(X) L##X
+#else
+#define ACE_DEFAULT_TEST_FILE_W "/tmp/ace_test_file"
+#define ACE_TEMP_FILE_NAME_W "/tmp/ace_temp_file"
+#define ACE_LOG_DIRECTORY_W "log/"
+#define MAKE_PIPE_NAME_W(X) X
+#endif /* ACE_HAS_UNICODE */
+
 #endif /* ACE_WIN32 */
+
+#if defined (UNICODE)
+#define ACE_DEFAULT_TEST_FILE ACE_DEFAULT_TEST_FILE_W
+#define ACE_TEMP_FILE_NAME ACE_TEMP_FILE_NAME_W
+#define ACE_LOG_DIRECTORY ACE_LOG_DIRECTORY_W
+#define MAKE_PIPE_NAME MAKE_PIPE_NAME_W
+#else
+#define ACE_DEFAULT_TEST_FILE ACE_DEFAULT_TEST_FILE_A
+#define ACE_TEMP_FILE_NAME ACE_TEMP_FILE_NAME_A
+#define ACE_LOG_DIRECTORY ACE_LOG_DIRECTORY_A
+#define MAKE_PIPE_NAME MAKE_PIPE_NAME_A
+#endif /* UNICODE */
 
 #define ACE_START_TEST(NAME) \
   const char *program = NAME; \
@@ -103,10 +136,10 @@ ACE_Test_Output::set_output (const char *filename, int append)
 {
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
-  ACE_OS::mkdir (ACE_LOG_DIRECTORY);
+  ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
   ACE_OS::sprintf (temp, "%s%s%s", 
-		   ACE_LOG_DIRECTORY, 
-		   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
+		   ACE_LOG_DIRECTORY_A, 
+		   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
 		   ".log");
 
   int flags = ios::out;

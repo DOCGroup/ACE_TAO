@@ -66,7 +66,7 @@ spawn (void)
     case 0: // In child
       {
 	ACE_LOG_MSG->sync ("child");
-	ACE_Process_Mutex pm (name);
+	ACE_Process_Mutex pm (ACE_WIDE_STRING (name));
 	test (&pm);
 	break;
       }
@@ -82,7 +82,7 @@ spawn (void)
       }
     }
 #elif defined (ACE_HAS_THREADS)
-  ACE_Process_Mutex pm (name);
+  ACE_Process_Mutex pm (ACE_WIDE_STRING (name));
 
   if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (test),
 					     (void *) &pm,

@@ -127,14 +127,14 @@ main (int, char *[])
   if (temp_mmap.map (ACE_TEMP_FILE_NAME) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n%a", "mmap"), -1);
 
-  char temp_file_name[BUFSIZ];
+  TCHAR temp_file_name[BUFSIZ];
 
   // Create another temporary file that would hold the output of
   // reversing the first temporary file
-  ACE_OS::sprintf (temp_file_name, "%s%s", ACE_TEMP_FILE_NAME, "2");
+  ACE_OS::sprintf (temp_file_name, __TEXT ("%s%s"), ACE_TEMP_FILE_NAME, __TEXT ("2"));
   if ((temp_file_handle = ACE_OS::open (temp_file_name, 
 					O_RDWR | O_TRUNC | O_CREAT,
-					0666)) == 0)
+					0666)) == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
   
   // Now reverse the temporary file and write everything to the second

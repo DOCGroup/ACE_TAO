@@ -38,8 +38,8 @@ main (int, char *[])
   ACE_OS::sprintf (server_conf, "%s", ACE_PLATFORM "server.conf");
   ACE_OS::sprintf (clerk_conf, "%s", ACE_PLATFORM "clerk.conf");
 
-  ACE_OS::sprintf (app, ".." ACE_DIRECTORY_SEPARATOR_STR "netsvcs" ACE_DIRECTORY_SEPARATOR_STR
-		   "servers" ACE_DIRECTORY_SEPARATOR_STR "main" ACE_PLATFORM_EXE_SUFFIX);
+  ACE_OS::sprintf (app, ".." ACE_DIRECTORY_SEPARATOR_STR_A "netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A
+		   "servers" ACE_DIRECTORY_SEPARATOR_STR_A "main" ACE_PLATFORM_EXE_SUFFIX);
 
   char *s_argv[4];
   s_argv[0] = app;

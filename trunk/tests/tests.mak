@@ -4,9 +4,9 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 !IF "$(CFG)" == ""
-CFG=SV_Shared_Memory_Test - Win32 Debug
-!MESSAGE No configuration specified.  Defaulting to SV_Shared_Memory_Test -\
- Win32 Debug.
+CFG=Service_Config_Test - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to Service_Config_Test - Win32\
+ Debug.
 !ENDIF 
 
 !IF "$(CFG)" != "CPP_Test - Win32 Debug" && "$(CFG)" !=\
@@ -24,18 +24,19 @@ CFG=SV_Shared_Memory_Test - Win32 Debug
  && "$(CFG)" != "Recursive_Mutex_Test - Win32 Debug" && "$(CFG)" !=\
  "Task_Test - Win32 Debug" && "$(CFG)" != "Thread_Manager_Test - Win32 Debug" &&\
  "$(CFG)" != "TSS_Test - Win32 Debug" && "$(CFG)" !=\
- "Shared_Memory_MM_Test - Win32 Debug" && "$(CFG)" !=\
  "Thread_Pool_Test - Win32 Debug" && "$(CFG)" != "Future_Test - Win32 Debug" &&\
  "$(CFG)" != "Tokens_Test - Win32 Debug" && "$(CFG)" !=\
  "Message_Queue_Test - Win32 Debug" && "$(CFG)" !=\
  "Map_Manager_Test - Win32 Debug" && "$(CFG)" != "Pipe_Test - Win32 Debug" &&\
  "$(CFG)" != "Process_Mutex_Test - Win32 Debug" && "$(CFG)" !=\
- "SV_Shared_Memory_Test - Win32 Debug"
+ "SV_Shared_Memory_Test - Win32 Debug" && "$(CFG)" !=\
+ "MM_Shared_Memory_Test - Win32 Debug" && "$(CFG)" !=\
+ "Service_Config_Test - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tests.mak" CFG="SV_Shared_Memory_Test - Win32 Debug"
+!MESSAGE NMAKE /f "tests.mak" CFG="Service_Config_Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -78,8 +79,6 @@ CFG=SV_Shared_Memory_Test - Win32 Debug
 !MESSAGE "Thread_Manager_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "TSS_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Shared_Memory_MM_Test - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
 !MESSAGE "Thread_Pool_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "Future_Test - Win32 Debug" (based on\
@@ -94,6 +93,10 @@ CFG=SV_Shared_Memory_Test - Win32 Debug
 !MESSAGE "Process_Mutex_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "SV_Shared_Memory_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "MM_Shared_Memory_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Service_Config_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
@@ -145,6 +148,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/CPP_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -203,6 +208,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Handle_Set_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -261,6 +268,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Mem_Map_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -319,6 +328,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Mutex_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -377,6 +388,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Naming_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -435,6 +448,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Reactor_Timer_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -493,6 +508,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Reactors_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -551,6 +568,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/SString_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -609,6 +628,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Time_Value_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -667,6 +688,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Timer_Queue_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -725,6 +748,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/UPIPE_SAP_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -783,6 +808,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Priority_Buffer_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -841,6 +868,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Time_Service_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -899,6 +928,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/SPIPE_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -957,6 +988,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Buffer_Stream_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1015,6 +1048,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Barrier_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1073,6 +1108,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Reader_Writer_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1131,6 +1168,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Recursive_Mutex_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1189,6 +1228,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Task_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1247,6 +1288,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Thread_Manager_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1305,6 +1348,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/TSS_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1324,65 +1369,6 @@ LINK32_OBJS= \
 	"$(INTDIR)/TSS_Test.obj"
 
 "$(OUTDIR)\TSS_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ELSEIF  "$(CFG)" == "Shared_Memory_MM_Test - Win32 Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Shared_Memory_MM_Test\Debug"
-# PROP BASE Intermediate_Dir "Shared_Memory_MM_Test\Debug"
-# PROP BASE Target_Dir "Shared_Memory_MM_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "."
-# PROP Intermediate_Dir "Debug"
-# PROP Target_Dir "Shared_Memory_MM_Test"
-OUTDIR=.\.
-INTDIR=.\Debug
-
-ALL : "$(OUTDIR)\Shared_Memory_MM_Test.exe"
-
-CLEAN : 
-	-@erase ".\Debug\vc40.pdb"
-	-@erase ".\Debug\vc40.idb"
-	-@erase ".\Shared_Memory_MM_Test.exe"
-	-@erase ".\Debug\Shared_Memory_MM_Test.obj"
-	-@erase ".\Shared_Memory_MM_Test.ilk"
-	-@erase ".\Shared_Memory_MM_Test.pdb"
-
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
-
-"$(INTDIR)" :
-    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
-
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Shared_Memory_MM_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/Shared_Memory_MM_Test.bsc" 
-BSC32_SBRS=
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib ace.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)/Shared_Memory_MM_Test.pdb" /debug /machine:I386\
- /out:"$(OUTDIR)/Shared_Memory_MM_Test.exe" 
-LINK32_OBJS= \
-	"$(INTDIR)/Shared_Memory_MM_Test.obj"
-
-"$(OUTDIR)\Shared_Memory_MM_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -1422,6 +1408,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Thread_Pool_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1480,6 +1468,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Future_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1538,6 +1528,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Tokens_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1595,6 +1587,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Message_Queue_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1653,6 +1647,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Map_Manager_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1711,6 +1707,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Pipe_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1769,6 +1767,8 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Process_Mutex_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1828,6 +1828,8 @@ CLEAN :
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/SV_Shared_Memory_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
  
+CPP_OBJS=.\Debug/
+CPP_SBRS=
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1851,10 +1853,128 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
-!ENDIF 
+!ELSEIF  "$(CFG)" == "MM_Shared_Memory_Test - Win32 Debug"
 
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "MM_Shared_Memory_Test\Debug"
+# PROP BASE Intermediate_Dir "MM_Shared_Memory_Test\Debug"
+# PROP BASE Target_Dir "MM_Shared_Memory_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "MM_Shared_Memory_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\MM_Shared_Memory_Test.exe"
+
+CLEAN : 
+	-@erase ".\Debug\vc40.pdb"
+	-@erase ".\Debug\vc40.idb"
+	-@erase ".\MM_Shared_Memory_Test.exe"
+	-@erase ".\Debug\MM_Shared_Memory_Test.obj"
+	-@erase ".\MM_Shared_Memory_Test.ilk"
+	-@erase ".\MM_Shared_Memory_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/MM_Shared_Memory_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
+ 
 CPP_OBJS=.\Debug/
 CPP_SBRS=
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/MM_Shared_Memory_Test.bsc" 
+BSC32_SBRS=
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/MM_Shared_Memory_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/MM_Shared_Memory_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)/MM_Shared_Memory_Test.obj"
+
+"$(OUTDIR)\MM_Shared_Memory_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "Service_Config_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Service_Config_Test\Debug"
+# PROP BASE Intermediate_Dir "Service_Config_Test\Debug"
+# PROP BASE Target_Dir "Service_Config_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Service_Config_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Service_Config_Test.exe"
+
+CLEAN : 
+	-@erase ".\Debug\vc40.pdb"
+	-@erase ".\Debug\vc40.idb"
+	-@erase ".\Service_Config_Test.exe"
+	-@erase ".\Debug\Service_Config_Test.obj"
+	-@erase ".\Service_Config_Test.ilk"
+	-@erase ".\Service_Config_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/Service_Config_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Service_Config_Test.bsc" 
+BSC32_SBRS=
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Service_Config_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Service_Config_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)/Service_Config_Test.obj"
+
+"$(OUTDIR)\Service_Config_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -1882,6 +2002,9 @@ CPP_SBRS=
 # Begin Source File
 
 SOURCE=.\CPP_Test.cpp
+
+!IF  "$(CFG)" == "CPP_Test - Win32 Debug"
+
 DEP_CPP_CPP_T=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\Thread.h"\
@@ -1989,6 +2112,8 @@ DEP_CPP_CPP_T=\
 "$(INTDIR)\CPP_Test.obj" : $(SOURCE) $(DEP_CPP_CPP_T) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -1999,6 +2124,9 @@ DEP_CPP_CPP_T=\
 # Begin Source File
 
 SOURCE=.\Handle_Set_Test.cpp
+
+!IF  "$(CFG)" == "Handle_Set_Test - Win32 Debug"
+
 DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	".\test_config.h"\
@@ -2024,6 +2152,8 @@ DEP_CPP_HANDL=\
 "$(INTDIR)\Handle_Set_Test.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2034,6 +2164,9 @@ DEP_CPP_HANDL=\
 # Begin Source File
 
 SOURCE=.\Mem_Map_Test.cpp
+
+!IF  "$(CFG)" == "Mem_Map_Test - Win32 Debug"
+
 DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	".\test_config.h"\
@@ -2059,6 +2192,8 @@ DEP_CPP_MEM_M=\
 "$(INTDIR)\Mem_Map_Test.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2069,6 +2204,9 @@ DEP_CPP_MEM_M=\
 # Begin Source File
 
 SOURCE=.\Mutex_Test.cpp
+
+!IF  "$(CFG)" == "Mutex_Test - Win32 Debug"
+
 DEP_CPP_MUTEX=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
@@ -2172,6 +2310,8 @@ DEP_CPP_MUTEX=\
 "$(INTDIR)\Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_MUTEX) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2182,6 +2322,9 @@ DEP_CPP_MUTEX=\
 # Begin Source File
 
 SOURCE=.\Naming_Test.cpp
+
+!IF  "$(CFG)" == "Naming_Test - Win32 Debug"
+
 DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\Naming_Context.h"\
@@ -2291,6 +2434,8 @@ DEP_CPP_NAMIN=\
 "$(INTDIR)\Naming_Test.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2301,6 +2446,9 @@ DEP_CPP_NAMIN=\
 # Begin Source File
 
 SOURCE=.\Reactor_Timer_Test.cpp
+
+!IF  "$(CFG)" == "Reactor_Timer_Test - Win32 Debug"
+
 DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
@@ -2404,6 +2552,8 @@ DEP_CPP_REACT=\
 "$(INTDIR)\Reactor_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2414,6 +2564,9 @@ DEP_CPP_REACT=\
 # Begin Source File
 
 SOURCE=.\Reactors_Test.cpp
+
+!IF  "$(CFG)" == "Reactors_Test - Win32 Debug"
+
 DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
@@ -2528,6 +2681,8 @@ DEP_CPP_REACTO=\
 "$(INTDIR)\Reactors_Test.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2538,6 +2693,9 @@ DEP_CPP_REACTO=\
 # Begin Source File
 
 SOURCE=.\SString_Test.cpp
+
+!IF  "$(CFG)" == "SString_Test - Win32 Debug"
+
 DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	".\test_config.h"\
@@ -2561,6 +2719,8 @@ DEP_CPP_SSTRI=\
 "$(INTDIR)\SString_Test.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2571,6 +2731,9 @@ DEP_CPP_SSTRI=\
 # Begin Source File
 
 SOURCE=.\Time_Value_Test.cpp
+
+!IF  "$(CFG)" == "Time_Value_Test - Win32 Debug"
+
 DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	".\test_config.h"\
@@ -2594,6 +2757,8 @@ DEP_CPP_TIME_=\
 "$(INTDIR)\Time_Value_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2604,6 +2769,9 @@ DEP_CPP_TIME_=\
 # Begin Source File
 
 SOURCE=.\Timer_Queue_Test.cpp
+
+!IF  "$(CFG)" == "Timer_Queue_Test - Win32 Debug"
+
 DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	".\test_config.h"\
@@ -2642,6 +2810,8 @@ DEP_CPP_TIMER=\
 "$(INTDIR)\Timer_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2652,6 +2822,9 @@ DEP_CPP_TIMER=\
 # Begin Source File
 
 SOURCE=.\UPIPE_SAP_Test.cpp
+
+!IF  "$(CFG)" == "UPIPE_SAP_Test - Win32 Debug"
+
 DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\Stream.h"\
 	{$(INCLUDE)}"\ace\UPIPE_Acceptor.h"\
@@ -2783,6 +2956,8 @@ DEP_CPP_UPIPE=\
 "$(INTDIR)\UPIPE_SAP_Test.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2793,6 +2968,9 @@ DEP_CPP_UPIPE=\
 # Begin Source File
 
 SOURCE=.\Priority_Buffer_Test.cpp
+
+!IF  "$(CFG)" == "Priority_Buffer_Test - Win32 Debug"
+
 DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
@@ -2896,6 +3074,8 @@ DEP_CPP_PRIOR=\
 "$(INTDIR)\Priority_Buffer_Test.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2906,6 +3086,9 @@ DEP_CPP_PRIOR=\
 # Begin Source File
 
 SOURCE=.\Time_Service_Test.cpp
+
+!IF  "$(CFG)" == "Time_Service_Test - Win32 Debug"
+
 DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	".\test_config.h"\
@@ -2931,6 +3114,8 @@ DEP_CPP_TIME_S=\
 "$(INTDIR)\Time_Service_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_S) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -2941,6 +3126,9 @@ DEP_CPP_TIME_S=\
 # Begin Source File
 
 SOURCE=.\SPIPE_Test.cpp
+
+!IF  "$(CFG)" == "SPIPE_Test - Win32 Debug"
+
 DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\Thread.h"\
@@ -2992,6 +3180,8 @@ DEP_CPP_SPIPE=\
 "$(INTDIR)\SPIPE_Test.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3002,6 +3192,9 @@ DEP_CPP_SPIPE=\
 # Begin Source File
 
 SOURCE=.\Buffer_Stream_Test.cpp
+
+!IF  "$(CFG)" == "Buffer_Stream_Test - Win32 Debug"
+
 DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
@@ -3119,6 +3312,8 @@ DEP_CPP_BUFFE=\
 "$(INTDIR)\Buffer_Stream_Test.obj" : $(SOURCE) $(DEP_CPP_BUFFE) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3129,6 +3324,9 @@ DEP_CPP_BUFFE=\
 # Begin Source File
 
 SOURCE=.\Barrier_Test.cpp
+
+!IF  "$(CFG)" == "Barrier_Test - Win32 Debug"
+
 DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
@@ -3232,6 +3430,8 @@ DEP_CPP_BARRI=\
 "$(INTDIR)\Barrier_Test.obj" : $(SOURCE) $(DEP_CPP_BARRI) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3242,6 +3442,9 @@ DEP_CPP_BARRI=\
 # Begin Source File
 
 SOURCE=.\Reader_Writer_Test.cpp
+
+!IF  "$(CFG)" == "Reader_Writer_Test - Win32 Debug"
+
 DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Thread.h"\
@@ -3347,6 +3550,8 @@ DEP_CPP_READE=\
 "$(INTDIR)\Reader_Writer_Test.obj" : $(SOURCE) $(DEP_CPP_READE) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3357,6 +3562,9 @@ DEP_CPP_READE=\
 # Begin Source File
 
 SOURCE=.\Recursive_Mutex_Test.cpp
+
+!IF  "$(CFG)" == "Recursive_Mutex_Test - Win32 Debug"
+
 DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
@@ -3462,6 +3670,8 @@ DEP_CPP_RECUR=\
 "$(INTDIR)\Recursive_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_RECUR) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3472,6 +3682,9 @@ DEP_CPP_RECUR=\
 # Begin Source File
 
 SOURCE=.\Task_Test.cpp
+
+!IF  "$(CFG)" == "Task_Test - Win32 Debug"
+
 DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Task.h"\
@@ -3586,6 +3799,8 @@ DEP_CPP_TASK_=\
 "$(INTDIR)\Task_Test.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3596,6 +3811,9 @@ DEP_CPP_TASK_=\
 # Begin Source File
 
 SOURCE=.\Thread_Manager_Test.cpp
+
+!IF  "$(CFG)" == "Thread_Manager_Test - Win32 Debug"
+
 DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
@@ -3699,6 +3917,8 @@ DEP_CPP_THREA=\
 "$(INTDIR)\Thread_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3709,6 +3929,9 @@ DEP_CPP_THREA=\
 # Begin Source File
 
 SOURCE=.\TSS_Test.cpp
+
+!IF  "$(CFG)" == "TSS_Test - Win32 Debug"
+
 DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
@@ -3812,58 +4035,7 @@ DEP_CPP_TSS_T=\
 "$(INTDIR)\TSS_Test.obj" : $(SOURCE) $(DEP_CPP_TSS_T) "$(INTDIR)"
 
 
-# End Source File
-# End Target
-################################################################################
-# Begin Target
-
-# Name "Shared_Memory_MM_Test - Win32 Debug"
-################################################################################
-# Begin Source File
-
-SOURCE=.\Shared_Memory_MM_Test.cpp
-DEP_CPP_SHARE=\
-	{$(INCLUDE)}"\ace\Shared_Memory_MM.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	".\test_config.h"\
-	{$(INCLUDE)}"\ace\Shared_Memory.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Shared_Memory_MM.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Time_Value.i"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	
-
-"$(INTDIR)\Shared_Memory_MM_Test.obj" : $(SOURCE) $(DEP_CPP_SHARE) "$(INTDIR)"
-
+!ENDIF 
 
 # End Source File
 # End Target
@@ -3875,6 +4047,9 @@ DEP_CPP_SHARE=\
 # Begin Source File
 
 SOURCE=.\Thread_Pool_Test.cpp
+
+!IF  "$(CFG)" == "Thread_Pool_Test - Win32 Debug"
+
 DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
@@ -3989,6 +4164,8 @@ DEP_CPP_THREAD=\
 "$(INTDIR)\Thread_Pool_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -3999,6 +4176,9 @@ DEP_CPP_THREAD=\
 # Begin Source File
 
 SOURCE=.\Future_Test.cpp
+
+!IF  "$(CFG)" == "Future_Test - Win32 Debug"
+
 DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
@@ -4120,6 +4300,8 @@ DEP_CPP_FUTUR=\
 "$(INTDIR)\Future_Test.obj" : $(SOURCE) $(DEP_CPP_FUTUR) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -4130,6 +4312,9 @@ DEP_CPP_FUTUR=\
 # Begin Source File
 
 SOURCE=.\Tokens_Test.cpp
+
+!IF  "$(CFG)" == "Tokens_Test - Win32 Debug"
+
 DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\Process.h"\
@@ -4141,21 +4326,9 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Token_Invariants.h"\
 	".\test_config.h"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Time_Value.i"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Process.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Stack.h"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
@@ -4167,12 +4340,16 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Time_Value.i"\
 	{$(INCLUDE)}"\ace\Stack.i"\
 	{$(INCLUDE)}"\ace\Stack.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -4247,6 +4424,8 @@ DEP_CPP_TOKEN=\
 "$(INTDIR)\Tokens_Test.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -4257,6 +4436,9 @@ DEP_CPP_TOKEN=\
 # Begin Source File
 
 SOURCE=.\Message_Queue_Test.cpp
+
+!IF  "$(CFG)" == "Message_Queue_Test - Win32 Debug"
+
 DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
@@ -4360,6 +4542,8 @@ DEP_CPP_MESSA=\
 "$(INTDIR)\Message_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -4370,6 +4554,9 @@ DEP_CPP_MESSA=\
 # Begin Source File
 
 SOURCE=.\Map_Manager_Test.cpp
+
+!IF  "$(CFG)" == "Map_Manager_Test - Win32 Debug"
+
 DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Synch.h"\
@@ -4473,6 +4660,8 @@ DEP_CPP_MAP_M=\
 "$(INTDIR)\Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_MAP_M) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -4483,6 +4672,9 @@ DEP_CPP_MAP_M=\
 # Begin Source File
 
 SOURCE=.\Pipe_Test.cpp
+
+!IF  "$(CFG)" == "Pipe_Test - Win32 Debug"
+
 DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\Pipe.h"\
 	{$(INCLUDE)}"\ace\Process.h"\
@@ -4512,6 +4704,8 @@ DEP_CPP_PIPE_=\
 "$(INTDIR)\Pipe_Test.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -4522,6 +4716,9 @@ DEP_CPP_PIPE_=\
 # Begin Source File
 
 SOURCE=.\Process_Mutex_Test.cpp
+
+!IF  "$(CFG)" == "Process_Mutex_Test - Win32 Debug"
+
 DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Process.h"\
@@ -4562,6 +4759,8 @@ DEP_CPP_PROCE=\
 "$(INTDIR)\Process_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
 
 
+!ENDIF 
+
 # End Source File
 # End Target
 ################################################################################
@@ -4572,6 +4771,9 @@ DEP_CPP_PROCE=\
 # Begin Source File
 
 SOURCE=.\SV_Shared_Memory_Test.cpp
+
+!IF  "$(CFG)" == "SV_Shared_Memory_Test - Win32 Debug"
+
 DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Malloc.h"\
 	".\test_config.h"\
@@ -4620,6 +4822,174 @@ DEP_CPP_SV_SH=\
 	
 
 "$(INTDIR)\SV_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "MM_Shared_Memory_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\MM_Shared_Memory_Test.cpp
+DEP_CPP_MM_SH=\
+	{$(INCLUDE)}"\ace\Shared_Memory_MM.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	".\test_config.h"\
+	{$(INCLUDE)}"\ace\Shared_Memory.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Shared_Memory_MM.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Time_Value.i"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	
+
+"$(INTDIR)\MM_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_MM_SH) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Service_Config_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Service_Config_Test.cpp
+DEP_CPP_SERVI=\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	".\test_config.h"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Set.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Proactor.h"\
+	{$(INCLUDE)}"\ace\ReactorEx.h"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Time_Value.i"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Set.i"\
+	{$(INCLUDE)}"\ace\Set.cpp"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Token.h"\
+	{$(INCLUDE)}"\ace\Pipe.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Token.i"\
+	{$(INCLUDE)}"\ace\Pipe.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\Stack.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.i"\
+	{$(INCLUDE)}"\ace\Stack.i"\
+	{$(INCLUDE)}"\ace\Stack.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Proactor.i"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	
+
+"$(INTDIR)\Service_Config_Test.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
 # End Source File
