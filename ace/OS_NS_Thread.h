@@ -68,6 +68,7 @@ typedef struct
 
 # if defined (ACE_PSOS)
 
+// @@ Note, why is this specially defined for PSOS?
 // Wrapper for NT events on pSOS.
 class ACE_Export ACE_event_t
 {
@@ -84,6 +85,16 @@ protected:
 
   /// "True" if signaled.
   int is_signaled_;
+
+  /// Special bool for auto_events alone
+  /**
+   * The semantics of auto events forces us to introduce this extra
+   * variable to ensure that the thread is not woken up
+   * spuriously. Please see event_wait and event_timedwait () to see
+   * how this is used for auto_events. Theoretically this is a hack
+   * that needs revisiting after x.4
+   */
+  bool auto_event_signaled_;
 
   /// Number of waiting threads.
   u_long waiting_threads_;
