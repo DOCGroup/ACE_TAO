@@ -52,7 +52,8 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
   os->indent ();
 
-  // Generate the stub factory function pointer declaration
+  // Generate the stub factory function pointer declaration the interface is
+  // not locality constraint.
   if (!idl_global->gen_locality_constraint ())
     *os << "extern " << idl_global->stub_export_macro () << " "
         << node->full_name () << "_ptr (*_TAO_collocation_"
