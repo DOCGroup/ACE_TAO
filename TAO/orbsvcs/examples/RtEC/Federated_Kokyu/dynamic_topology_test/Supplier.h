@@ -37,7 +37,7 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //
   // = DESCRIPTION
   //   This class is a supplier of events.
-  //   It simply register for two event typesone event type
+  //   It simply registers for two event types.
   //   The class is just a helper to simplify common tasks in EC
   //   tests, such as subscribing for a range of events, disconnecting
   //   from the EC, informing the driver of shutdown messages, etc.
@@ -51,9 +51,12 @@ public:
     FAULT_TOLERANT
   };
 
-  typedef ACE_Vector<RtecEventChannelAdmin::ProxyPushConsumer_var> PushConsumer_Vector;
+  typedef RtecEventChannelAdmin::ProxyPushConsumer_var ConsumerProxy;
+  typedef RtecEventComm::EventSourceID SourceID;
+  typedef RtecEventComm::EventType EventType;
+  typedef RtecScheduler::handle_t InfoHandle;
 
-  Supplier (RtecEventComm::EventSourceID id, RtecEventComm::EventType norm_type, RtecEventComm::EventType ft_type,
+  Supplier (SourceID id, EventType norm_type, EventType ft_type,
             Service_Handler * handler = 0);
   // Constructor
 
@@ -67,14 +70,12 @@ public:
 
   virtual void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);
 
-  void set_consumer_proxy(PushConsumer_Vector consumer_proxies);
+  void set_consumer_proxy(ConsumerProxy consumer_proxies);
 
-  typedef ACE_Vector<RtecScheduler::handle_t> RT_Info_Vector;
+  void rt_info(InfoHandle supplier_rt_info);
+  InfoHandle rt_info(void);
 
-  void rt_info(RT_Info_Vector& supplier_rt_info);
-  RT_Info_Vector& rt_info(void);
-
-  RtecEventComm::EventSourceID get_id(void) const;
+  SourceID get_id(void) const;
 
   void mode(mode_t mode);
   mode_t mode(void) const;
@@ -82,15 +83,15 @@ public:
   Service_Handler * handler(void) const;
 
 protected:
-  RtecEventComm::EventSourceID id_;
-  RtecEventComm::EventType norm_type_;
-  RtecEventComm::EventType ft_type_;
+  SourceID id_;
+  EventType norm_type_;
+  EventType ft_type_;
 
-  PushConsumer_Vector consumer_proxy_;
+  ConsumerProxy consumer_proxy_;
 
   mode_t mode_;
 
-  RT_Info_Vector rt_info_;
+  InfoHandle rt_info_;
 
   Service_Handler *handler_;
 }; //class Supplier

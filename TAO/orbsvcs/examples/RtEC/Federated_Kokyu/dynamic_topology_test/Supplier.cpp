@@ -17,9 +17,9 @@
 
 ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
-Supplier::Supplier (RtecEventComm::EventSourceID id,
-                    RtecEventComm::EventType norm_type,
-                    RtecEventComm::EventType ft_type,
+Supplier::Supplier (SourceID id,
+                    EventType norm_type,
+                    EventType ft_type,
                     Service_Handler *handler)
   : id_ (id)
   , norm_type_(norm_type)
@@ -34,27 +34,18 @@ Supplier::~Supplier (void)
 }
 
 void
-Supplier::set_consumer_proxy(PushConsumer_Vector consumer_proxies)
+Supplier::set_consumer_proxy(ConsumerProxy proxy)
 {
-  this->consumer_proxy_.clear();
-
-  for(PushConsumer_Vector::Iterator iter(consumer_proxies);
-      !iter.done(); iter.advance())
-    {
-      PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
-      iter.next(proxy);
-
-      this->consumer_proxy_.push_back(*proxy);
-    }
+  this->consumer_proxy_ = proxy;
 }
 
 void
-Supplier::rt_info(RT_Info_Vector& supplier_rt_info)
+Supplier::rt_info(InfoHandle supplier_rt_info)
 {
   this->rt_info_ = supplier_rt_info;
 }
 
-Supplier::RT_Info_Vector&
+Supplier::InfoHandle
 Supplier::rt_info(void)
 {
   return this->rt_info_;
@@ -103,14 +94,8 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
-  for(PushConsumer_Vector::Iterator iter(this->consumer_proxy_);
-      !iter.done(); iter.advance())
-    {
-      PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
-      iter.next(proxy);
+  this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
 
-      (*proxy)->push (event ACE_ENV_ARG_PARAMETER);
-    }
   //DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
@@ -129,14 +114,14 @@ Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-RtecEventComm::EventSourceID
+Supplier::SourceID
 Supplier::get_id(void) const
 {
   return this->id_;
 }
 
 void
-Supplier::mode(Supplier::mode_t mode)
+Supplier::mode(mode_t mode)
 {
   ACE_DEBUG((LM_DEBUG,"Supplier (%P|%t) changing mode from %d to %d\n",this->mode_,mode));
   this->mode_ = mode;

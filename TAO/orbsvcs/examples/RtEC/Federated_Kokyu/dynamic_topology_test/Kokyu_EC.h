@@ -49,7 +49,7 @@ public:
     virtual RtEventChannelAdmin::handle_t register_supplier (
         const char * entry_point,
         RtecEventComm::EventSourceID source,
-        RtecEventComm::EventType type,
+        EventType_Vector& supp_types, //RtecEventComm::EventType type,
         RtecEventComm::PushSupplier_ptr supplier,
         RtecEventChannelAdmin::ProxyPushConsumer_out proxy_consumer
         ACE_ENV_ARG_DECL
@@ -93,7 +93,7 @@ public:
     void add_supplier_with_timeout(
                                    Supplier * supplier_impl,
                                    const char * supp_entry_point,
-                                   RtecEventComm::EventType supp_type,
+                                   EventType_Vector& supp_types, //RtecEventComm::EventType supp_type,
                                    Timeout_Consumer * timeout_consumer_impl,
                                    const char * timeout_entry_point,
                                    ACE_Time_Value period,
@@ -129,7 +129,7 @@ public:
     void add_supplier(
                       Supplier * supplier_impl,
                       const char * entry_point,
-                      RtecEventComm::EventType type
+                      EventType_Vector& supp_types //RtecEventComm::EventType type
                       ACE_ENV_ARG_DECL
                       )
       ACE_THROW_SPEC ((
@@ -149,7 +149,7 @@ public:
                                     RtecScheduler::Importance_t cons_imp,
                                     Supplier * supplier_impl,
                                     const char * supp_entry_point,
-                                    RtecEventComm::EventType supp_type
+                                    EventType_Vector& supp_types //RtecEventComm::EventType supp_type
                                     ACE_ENV_ARG_DECL
                                     )
       ACE_THROW_SPEC ((
@@ -176,7 +176,7 @@ public:
                        , RtecScheduler::SYNCHRONIZATION_FAILURE
                        ));
 
-    void add_dummy_supplier(EventType_Vector& types
+    void add_dummy_supplier(EventType_Vector& supp_types
                             ACE_ENV_ARG_DECL
                             )
       ACE_THROW_SPEC ((

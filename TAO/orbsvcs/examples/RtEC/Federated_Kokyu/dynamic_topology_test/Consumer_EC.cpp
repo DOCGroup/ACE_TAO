@@ -13,6 +13,7 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Scheduler_Factory.h"
 #include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
@@ -30,6 +31,7 @@ namespace
 {
   int config_run = 0;
   ACE_CString sched_type ="rms";
+  ACE_CString ior_output_filename;
   FILE * ior_output_file;
 }
 /*
@@ -158,6 +160,44 @@ public:
                  );
     ACE_CHECK;
 
+    //DEBUG: print out schedule
+    RtecScheduler::Scheduler_ptr scheduler = this->scheduler(ACE_ENV_SINGLE_ARG_PARAMETER);
+    //RtecEventChannelAdmin::EventChannel_ptr event_channel = this->event_channel(ACE_ENV_SINGLE_ARG_DECL);
+
+    RtecScheduler::RT_Info_Set_var infos;
+    RtecScheduler::Config_Info_Set_var configs;
+    RtecScheduler::Dependency_Set_var dependencies;
+    RtecScheduler::Scheduling_Anomaly_Set unsafe_anomalies;
+    RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
+
+    int min_os_priority =
+      ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                      ACE_SCOPE_THREAD);
+    int max_os_priority =
+      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                      ACE_SCOPE_THREAD);
+
+    scheduler->compute_scheduling (min_os_priority,
+                                   max_os_priority,
+                                   infos.out (),
+                                   dependencies.out (),
+                                   configs.out (),
+                                   anomalies.out ()
+                                   ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    std::stringstream sched_out;
+    ACE_CString ior_prefix(ior_output_filename.c_str(),ior_output_filename.length()-4); //cut off '.ior'
+    sched_out << "schedule_" << ior_prefix.c_str() << ".out";
+
+    ACE_DEBUG((LM_DEBUG,"Consumer_EC writing schedule to %s\n",sched_out.str().c_str()));
+
+    ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                          dependencies.in (),
+                                          configs.in (),
+                                          anomalies.in (),
+                                          sched_out.str().c_str());
+    ////END DEBUG
     ACE_DEBUG((LM_DEBUG,"Consumer_EC set_up_supp_and_cons() DONE\n"));
   } //set_up_supp_and_cons()
 
@@ -303,7 +343,8 @@ while ((c = get_opts ()) != -1)
   switch (c)
 {
  case 'o':
-   ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), "w");
+   ior_output_filename = get_opts.opt_arg();
+   ior_output_file = ACE_OS::fopen (ior_output_filename.c_str(), "w");
    if (ior_output_file == 0)
      ACE_ERROR_RETURN ((LM_ERROR,
                         "Unable to open %s for writing: %p\n",
@@ -324,7 +365,8 @@ while ((c = get_opts ()) != -1)
 // Indicates sucessful parsing of the command line
  if (ior_output_file == 0)
    {
-     ior_output_file = ACE_OS::fopen ("consumer_ec.ior", "w");
+     ior_output_filename = "consumer_ec.ior";
+     ior_output_file = ACE_OS::fopen (ior_output_filename.c_str(), "w");
    }
  return 0;
 }
