@@ -16,14 +16,14 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy,
                "create_smart_proxy\n"));
 
    if (CORBA::is_nil (proxy) == 0)
-     ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
+       ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
    
  }
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
-  : TAO_Test_Smart_Proxy_Base (proxy)
+  : TAO_Smart_Proxy_Base (proxy)
 {
 }
 
