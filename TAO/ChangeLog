@@ -1,3 +1,21 @@
+Fri Dec 12 11:35:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        
+          Added some explicit casting to elininate warnings by MSVC 7.1.
+          
+        * tao/Typecode.cpp:
+        
+          Added memory leak fix overlooked in
+          
+          Sat Nov 29 11:42:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          Thanks again to Harvinder Sawhney <harvinder_sawhney@agilent.com>
+          for suggesting these fixes.
+
 Fri Dec 12 08:38:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
