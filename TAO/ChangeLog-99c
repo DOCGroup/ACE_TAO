@@ -1,3 +1,16 @@
+Sat Jul 10 19:40:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:  Removed a warning
+          on EGCS about the variable <retval> being used possibly 
+          uninitialized.
+
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:  Removed a warning
+          on MSVC about a */ being found outside a comment.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:  Instead of killing the
+          servers at the end of the *_ir tests, shut them down with 
+          tao_ir.
+
 Sat Jul 10 19:20:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Simple/bank/Account_i.{h,cpp}:
