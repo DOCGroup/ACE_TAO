@@ -226,6 +226,7 @@ public:
     TAO_INTERFACE_FWD_CDR_OP_CH,
     TAO_INTERFACE_FWD_CDR_OP_CI,
     TAO_INTERFACE_FWD_CDR_OP_CS,
+    TAO_INTERFACE_FWD_ANY_OP_CH,
 
     // Emitting code for the valuetype.
     TAO_VALUETYPE_CH,

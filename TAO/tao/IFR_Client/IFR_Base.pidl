@@ -17,14 +17,40 @@
 //   the IFR as well as many of the non-interface data types used 
 //   by all other IFR interfaces.
 //
-//   The command used to generate code from this IDL file is:
+//   1. Patch this pidl file with
 //
-//     tao_idl -o orig -Ge 1 \
+//      patch < diffs/IFR_Base.pidl.diff
+//
+//   This will remove the CORBA module, rename most types foo
+//   declared in it as CORBA_foo, unalias the simple typedefs
+//   which don't have a CORBA_ analog in corbafwd.h.
+//
+//   2. Generate the code. The command used to generate code from this 
+//   IDL file is:
+//
+//     tao_idl -o orig -Ge 1 -I.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Base.pidl
+//
+//   3. Copy the generated files to the current directory.
+//
+//   4. Patch the generated files, using
+//      
+//      patch < diffs/IFR_BaseC.h.diff
+//      patch < diffs/IFR_BaseC.i.diff
+//      patch < diffs/IFR_BaseC.cpp.diff
+//
+//   If this fails for some reason, the files must be patched
+//   by hand, and the diff files regenerated with
+//
+//      diff -wbu orig/IFR_BaseC.h IRR_BaseC.h > diffs/IFR_BaseC.h.diff
+//      diff -wbu orig/IFR_BaseC.i IRR_BaseC.i > diffs/IFR_BaseC.i.diff
+//      diff -wbu orig/IFR_BaseC.cpp IRR_BaseC.cpp > diffs/IFR_BaseC.cpp.diff
+//
+//   5. Restore IFR_Base.pidl.
 //
 //   To regenerate the skeleton files IFR_BaseS.{h,i,cpp} and 
 //   IFR_BaseS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service, use the 

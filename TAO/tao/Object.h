@@ -304,6 +304,12 @@ public:
   CORBA::Object_ptr _retn (void);
   CORBA::Object_ptr ptr (void) const;
 
+  static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
+  static void release (CORBA::Object_ptr);
+  static CORBA::Object_ptr nil (void);
+  static CORBA::Object_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
+
 private:
   CORBA::Object_ptr ptr_;
 };

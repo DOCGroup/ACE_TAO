@@ -382,8 +382,6 @@ class CORBA_InterfaceDef_var;
 class CORBA_InterfaceDef_out;
 typedef CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
 
-typedef CORBA_InterfaceDef IR_InterfaceDef;
-
 class CORBA_AbstractInterfaceDef;
 class CORBA_AbstractInterfaceDef_var;
 class CORBA_AbstractInterfaceDef_out;

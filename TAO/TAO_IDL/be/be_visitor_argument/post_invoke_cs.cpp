@@ -75,7 +75,7 @@ be_visitor_args_post_invoke_cs::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_args_post_invoke_cs::visit_interface (be_interface *)
+be_visitor_args_post_invoke_cs::visit_interface (be_interface *node)
 {
   // we must narrow the out object reference to the appropriate type
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -86,10 +86,16 @@ be_visitor_args_post_invoke_cs::visit_interface (be_interface *)
     {
     case AST_Argument::dir_INOUT:
       {
-        os->indent ();
-        // assign the narrowed obj reference
-        *os << "CORBA::release (" << arg->local_name ()
-            << ");\n";
+        // Assign the narrowed obj reference.
+        if (node->is_defined ())
+          {
+            *os << "CORBA::release (" << arg->local_name () << ");" << be_nl;
+          }
+        else
+          {
+            *os << "tao_" << node->flat_name () << "_release (" 
+                << arg->local_name () << ");" << be_nl;
+          }
       }
       break;
     default:
@@ -99,7 +105,7 @@ be_visitor_args_post_invoke_cs::visit_interface (be_interface *)
 }
 
 int
-be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *)
+be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *node)
 {
   // we must narrow the out object reference to the appropriate type
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -110,10 +116,16 @@ be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *)
     {
     case AST_Argument::dir_INOUT:
       {
-        os->indent ();
-        // assign the narrowed obj reference
-        *os << "CORBA::release (" << arg->local_name ()
-            << ");\n";
+        // Assign the narrowed obj reference.
+        if (node->full_definition ()->is_defined ())
+          {
+            *os << "CORBA::release (" << arg->local_name () << ");" << be_nl;
+          }
+        else
+          {
+            *os << "tao_" << node->flat_name () << "_release (" 
+                << arg->local_name () << ");" << be_nl;
+          }
       }
       break;
     default:

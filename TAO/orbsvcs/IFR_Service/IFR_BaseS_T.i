@@ -19,50 +19,48 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
-POA_CORBA::IRObject_tie<T>::IRObject_tie (T &t)
+POA_CORBA_IRObject_tie<T>::POA_CORBA_IRObject_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IRObject_tie<T>::IRObject_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA_IRObject_tie<T>::POA_CORBA_IRObject_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IRObject_tie<T>::IRObject_tie (T *tp, CORBA::Boolean release)
+POA_CORBA_IRObject_tie<T>::POA_CORBA_IRObject_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IRObject_tie<T>::IRObject_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA_IRObject_tie<T>::POA_CORBA_IRObject_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IRObject_tie<T>::~IRObject_tie (void)
+POA_CORBA_IRObject_tie<T>::~POA_CORBA_IRObject_tie (void)
 {
   if (this->rel_) delete this->ptr_;
 }
 
 template <class T> ACE_INLINE T *
-POA_CORBA::IRObject_tie<T>::_tied_object (void)
+POA_CORBA_IRObject_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::IRObject_tie<T>::_tied_object (T &obj)
+POA_CORBA_IRObject_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = &obj;
@@ -70,7 +68,7 @@ POA_CORBA::IRObject_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::IRObject_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA_IRObject_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = obj;
@@ -78,28 +76,28 @@ POA_CORBA::IRObject_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_CORBA::IRObject_tie<T>::_is_owner (void)
+POA_CORBA_IRObject_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::IRObject_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA_IRObject_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::IRObject_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_IRObject_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->IRObject::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_IRObject::_default_POA (ACE_TRY_ENV);
 }
 
 template <class T> ACE_INLINE
-CORBA::DefinitionKind POA_CORBA::IRObject_tie<T>::def_kind  (
+CORBA::DefinitionKind POA_CORBA_IRObject_tie<T>::def_kind  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -112,7 +110,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::IRObject_tie<T>::destroy  (
+void POA_CORBA_IRObject_tie<T>::destroy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -124,51 +122,48 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
-POA_CORBA::Contained_tie<T>::Contained_tie (T &t)
+POA_CORBA_Contained_tie<T>::POA_CORBA_Contained_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Contained_tie<T>::Contained_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA_Contained_tie<T>::POA_CORBA_Contained_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Contained_tie<T>::Contained_tie (T *tp, CORBA::Boolean release)
+POA_CORBA_Contained_tie<T>::POA_CORBA_Contained_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Contained_tie<T>::Contained_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA_Contained_tie<T>::POA_CORBA_Contained_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Contained_tie<T>::~Contained_tie (void)
+POA_CORBA_Contained_tie<T>::~POA_CORBA_Contained_tie (void)
 {
   if (this->rel_) delete this->ptr_;
 }
 
 template <class T> ACE_INLINE T *
-POA_CORBA::Contained_tie<T>::_tied_object (void)
+POA_CORBA_Contained_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::Contained_tie<T>::_tied_object (T &obj)
+POA_CORBA_Contained_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = &obj;
@@ -176,7 +171,7 @@ POA_CORBA::Contained_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::Contained_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA_Contained_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = obj;
@@ -184,28 +179,28 @@ POA_CORBA::Contained_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_CORBA::Contained_tie<T>::_is_owner (void)
+POA_CORBA_Contained_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::Contained_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA_Contained_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::Contained_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_Contained_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->Contained::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_Contained::_default_POA (ACE_TRY_ENV);
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::id  (
+char * POA_CORBA_Contained_tie<T>::id  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -218,7 +213,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::id  (
+void POA_CORBA_Contained_tie<T>::id  (
     const char * id,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -233,7 +228,7 @@ id,
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::name  (
+char * POA_CORBA_Contained_tie<T>::name  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -246,7 +241,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::name  (
+void POA_CORBA_Contained_tie<T>::name  (
     const char * name,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -261,7 +256,7 @@ name,
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::version  (
+char * POA_CORBA_Contained_tie<T>::version  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -274,7 +269,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::version  (
+void POA_CORBA_Contained_tie<T>::version  (
     const char * version,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -289,7 +284,7 @@ version,
 }
 
 template <class T> ACE_INLINE
-CORBA::Container_ptr POA_CORBA::Contained_tie<T>::defined_in  (
+CORBA_Container_ptr POA_CORBA_Contained_tie<T>::defined_in  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -302,7 +297,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::absolute_name  (
+char * POA_CORBA_Contained_tie<T>::absolute_name  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -315,7 +310,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA::Repository_ptr POA_CORBA::Contained_tie<T>::containing_repository  (
+CORBA_Repository_ptr POA_CORBA_Contained_tie<T>::containing_repository  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -328,7 +323,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA::Contained::Description * POA_CORBA::Contained_tie<T>::describe  (
+CORBA_Contained::Description * POA_CORBA_Contained_tie<T>::describe  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -341,8 +336,8 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::move  (
-    CORBA::Container_ptr new_container,
+void POA_CORBA_Contained_tie<T>::move  (
+    CORBA_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -360,7 +355,7 @@ new_container,
 }
 
 template <class T> ACE_INLINE
-CORBA::DefinitionKind POA_CORBA::Contained_tie<T>::def_kind  (
+CORBA::DefinitionKind POA_CORBA_Contained_tie<T>::def_kind  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -373,7 +368,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::destroy  (
+void POA_CORBA_Contained_tie<T>::destroy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -385,51 +380,48 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
-POA_CORBA::Container_tie<T>::Container_tie (T &t)
+POA_CORBA_Container_tie<T>::POA_CORBA_Container_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Container_tie<T>::Container_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA_Container_tie<T>::POA_CORBA_Container_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Container_tie<T>::Container_tie (T *tp, CORBA::Boolean release)
+POA_CORBA_Container_tie<T>::POA_CORBA_Container_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Container_tie<T>::Container_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA_Container_tie<T>::POA_CORBA_Container_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::Container_tie<T>::~Container_tie (void)
+POA_CORBA_Container_tie<T>::~POA_CORBA_Container_tie (void)
 {
   if (this->rel_) delete this->ptr_;
 }
 
 template <class T> ACE_INLINE T *
-POA_CORBA::Container_tie<T>::_tied_object (void)
+POA_CORBA_Container_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::Container_tie<T>::_tied_object (T &obj)
+POA_CORBA_Container_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = &obj;
@@ -437,7 +429,7 @@ POA_CORBA::Container_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::Container_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA_Container_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = obj;
@@ -445,28 +437,28 @@ POA_CORBA::Container_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_CORBA::Container_tie<T>::_is_owner (void)
+POA_CORBA_Container_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::Container_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA_Container_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::Container_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_Container_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->Container::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_Container::_default_POA (ACE_TRY_ENV);
 }
 
 template <class T> ACE_INLINE
-CORBA::Contained_ptr POA_CORBA::Container_tie<T>::lookup  (
+CORBA_Contained_ptr POA_CORBA_Container_tie<T>::lookup  (
     const char * search_name,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -481,7 +473,7 @@ search_name,
 }
 
 template <class T> ACE_INLINE
-CORBA::ContainedSeq * POA_CORBA::Container_tie<T>::contents  (
+CORBA_ContainedSeq * POA_CORBA_Container_tie<T>::contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
@@ -498,7 +490,7 @@ limit_type,
 }
 
 template <class T> ACE_INLINE
-CORBA::ContainedSeq * POA_CORBA::Container_tie<T>::lookup_name  (
+CORBA_ContainedSeq * POA_CORBA_Container_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
     CORBA::DefinitionKind limit_type,
@@ -519,7 +511,7 @@ search_name,
 }
 
 template <class T> ACE_INLINE
-CORBA::Container::DescriptionSeq * POA_CORBA::Container_tie<T>::describe_contents  (
+CORBA_Container::DescriptionSeq * POA_CORBA_Container_tie<T>::describe_contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
@@ -538,7 +530,7 @@ limit_type,
 }
 
 template <class T> ACE_INLINE
-CORBA::ModuleDef_ptr POA_CORBA::Container_tie<T>::create_module  (
+CORBA_ModuleDef_ptr POA_CORBA_Container_tie<T>::create_module  (
     const char * id,
     const char * name,
     const char * version,
@@ -557,11 +549,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::ConstantDef_ptr POA_CORBA::Container_tie<T>::create_constant  (
+CORBA_ConstantDef_ptr POA_CORBA_Container_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
+    CORBA_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -580,11 +572,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::StructDef_ptr POA_CORBA::Container_tie<T>::create_struct  (
+CORBA_StructDef_ptr POA_CORBA_Container_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::StructMemberSeq & members,
+    const CORBA_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -601,12 +593,12 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::UnionDef_ptr POA_CORBA::Container_tie<T>::create_union  (
+CORBA_UnionDef_ptr POA_CORBA_Container_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr discriminator_type,
-    const CORBA::UnionMemberSeq & members,
+    CORBA_IDLType_ptr discriminator_type,
+    const CORBA_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -624,11 +616,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::EnumDef_ptr POA_CORBA::Container_tie<T>::create_enum  (
+CORBA_EnumDef_ptr POA_CORBA_Container_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::EnumMemberSeq & members,
+    const CORBA_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -645,11 +637,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::AliasDef_ptr POA_CORBA::Container_tie<T>::create_alias  (
+CORBA_AliasDef_ptr POA_CORBA_Container_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr original_type,
+    CORBA_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -666,11 +658,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::InterfaceDef_ptr POA_CORBA::Container_tie<T>::create_interface  (
+CORBA_InterfaceDef_ptr POA_CORBA_Container_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::InterfaceDefSeq & base_interfaces,
+    const CORBA_InterfaceDefSeq & base_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -687,17 +679,17 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::ValueDef_ptr POA_CORBA::Container_tie<T>::create_value  (
+CORBA_ValueDef_ptr POA_CORBA_Container_tie<T>::create_value  (
     const char * id,
     const char * name,
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    CORBA::ValueDef_ptr base_value,
+    CORBA_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq & abstract_base_values,
-    const CORBA::InterfaceDefSeq & supported_interfaces,
-    const CORBA::InitializerSeq & initializers,
+    const CORBA_ValueDefSeq & abstract_base_values,
+    const CORBA_InterfaceDefSeq & supported_interfaces,
+    const CORBA_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -720,11 +712,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::ValueBoxDef_ptr POA_CORBA::Container_tie<T>::create_value_box  (
+CORBA_ValueBoxDef_ptr POA_CORBA_Container_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr original_type_def,
+    CORBA_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -741,11 +733,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::ExceptionDef_ptr POA_CORBA::Container_tie<T>::create_exception  (
+CORBA_ExceptionDef_ptr POA_CORBA_Container_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::StructMemberSeq & members,
+    const CORBA_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -762,7 +754,7 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::NativeDef_ptr POA_CORBA::Container_tie<T>::create_native  (
+CORBA_NativeDef_ptr POA_CORBA_Container_tie<T>::create_native  (
     const char * id,
     const char * name,
     const char * version,
@@ -781,11 +773,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::AbstractInterfaceDef_ptr POA_CORBA::Container_tie<T>::create_abstract_interface  (
+CORBA_AbstractInterfaceDef_ptr POA_CORBA_Container_tie<T>::create_abstract_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::AbstractInterfaceDefSeq & base_interfaces,
+    const CORBA_AbstractInterfaceDefSeq & base_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -802,11 +794,11 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::LocalInterfaceDef_ptr POA_CORBA::Container_tie<T>::create_local_interface  (
+CORBA_LocalInterfaceDef_ptr POA_CORBA_Container_tie<T>::create_local_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::InterfaceDefSeq & base_interfaces,
+    const CORBA_InterfaceDefSeq & base_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -823,7 +815,7 @@ id,
 }
 
 template <class T> ACE_INLINE
-CORBA::DefinitionKind POA_CORBA::Container_tie<T>::def_kind  (
+CORBA::DefinitionKind POA_CORBA_Container_tie<T>::def_kind  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -836,7 +828,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::Container_tie<T>::destroy  (
+void POA_CORBA_Container_tie<T>::destroy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -848,51 +840,48 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
-POA_CORBA::IDLType_tie<T>::IDLType_tie (T &t)
+POA_CORBA_IDLType_tie<T>::POA_CORBA_IDLType_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IDLType_tie<T>::IDLType_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA_IDLType_tie<T>::POA_CORBA_IDLType_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IDLType_tie<T>::IDLType_tie (T *tp, CORBA::Boolean release)
+POA_CORBA_IDLType_tie<T>::POA_CORBA_IDLType_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IDLType_tie<T>::IDLType_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA_IDLType_tie<T>::POA_CORBA_IDLType_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::IDLType_tie<T>::~IDLType_tie (void)
+POA_CORBA_IDLType_tie<T>::~POA_CORBA_IDLType_tie (void)
 {
   if (this->rel_) delete this->ptr_;
 }
 
 template <class T> ACE_INLINE T *
-POA_CORBA::IDLType_tie<T>::_tied_object (void)
+POA_CORBA_IDLType_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::IDLType_tie<T>::_tied_object (T &obj)
+POA_CORBA_IDLType_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = &obj;
@@ -900,7 +889,7 @@ POA_CORBA::IDLType_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::IDLType_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA_IDLType_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = obj;
@@ -908,28 +897,28 @@ POA_CORBA::IDLType_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_CORBA::IDLType_tie<T>::_is_owner (void)
+POA_CORBA_IDLType_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::IDLType_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA_IDLType_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::IDLType_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_IDLType_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->IDLType::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_IDLType::_default_POA (ACE_TRY_ENV);
 }
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_CORBA::IDLType_tie<T>::type  (
+CORBA::TypeCode_ptr POA_CORBA_IDLType_tie<T>::type  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -942,7 +931,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA::DefinitionKind POA_CORBA::IDLType_tie<T>::def_kind  (
+CORBA::DefinitionKind POA_CORBA_IDLType_tie<T>::def_kind  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -955,7 +944,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::IDLType_tie<T>::destroy  (
+void POA_CORBA_IDLType_tie<T>::destroy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -967,51 +956,48 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
-POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T &t)
+POA_CORBA_TypedefDef_tie<T>::POA_CORBA_TypedefDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA_TypedefDef_tie<T>::POA_CORBA_TypedefDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA_TypedefDef_tie<T>::POA_CORBA_TypedefDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA_TypedefDef_tie<T>::POA_CORBA_TypedefDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_CORBA::TypedefDef_tie<T>::~TypedefDef_tie (void)
+POA_CORBA_TypedefDef_tie<T>::~POA_CORBA_TypedefDef_tie (void)
 {
   if (this->rel_) delete this->ptr_;
 }
 
 template <class T> ACE_INLINE T *
-POA_CORBA::TypedefDef_tie<T>::_tied_object (void)
+POA_CORBA_TypedefDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::TypedefDef_tie<T>::_tied_object (T &obj)
+POA_CORBA_TypedefDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = &obj;
@@ -1019,7 +1005,7 @@ POA_CORBA::TypedefDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::TypedefDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA_TypedefDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_) delete this->ptr_;
   this->ptr_ = obj;
@@ -1027,28 +1013,28 @@ POA_CORBA::TypedefDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_CORBA::TypedefDef_tie<T>::_is_owner (void)
+POA_CORBA_TypedefDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_CORBA::TypedefDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA_TypedefDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::TypedefDef_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_TypedefDef_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->TypedefDef::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_TypedefDef::_default_POA (ACE_TRY_ENV);
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::TypedefDef_tie<T>::id  (
+char * POA_CORBA_TypedefDef_tie<T>::id  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1061,7 +1047,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::TypedefDef_tie<T>::id  (
+void POA_CORBA_TypedefDef_tie<T>::id  (
     const char * id,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1076,7 +1062,7 @@ id,
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::TypedefDef_tie<T>::name  (
+char * POA_CORBA_TypedefDef_tie<T>::name  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1089,7 +1075,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::TypedefDef_tie<T>::name  (
+void POA_CORBA_TypedefDef_tie<T>::name  (
     const char * name,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1104,7 +1090,7 @@ name,
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::TypedefDef_tie<T>::version  (
+char * POA_CORBA_TypedefDef_tie<T>::version  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1117,7 +1103,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::TypedefDef_tie<T>::version  (
+void POA_CORBA_TypedefDef_tie<T>::version  (
     const char * version,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1132,7 +1118,7 @@ version,
 }
 
 template <class T> ACE_INLINE
-CORBA::Container_ptr POA_CORBA::TypedefDef_tie<T>::defined_in  (
+CORBA_Container_ptr POA_CORBA_TypedefDef_tie<T>::defined_in  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1145,7 +1131,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-char * POA_CORBA::TypedefDef_tie<T>::absolute_name  (
+char * POA_CORBA_TypedefDef_tie<T>::absolute_name  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1158,7 +1144,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA::Repository_ptr POA_CORBA::TypedefDef_tie<T>::containing_repository  (
+CORBA_Repository_ptr POA_CORBA_TypedefDef_tie<T>::containing_repository  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1171,7 +1157,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA::Contained::Description * POA_CORBA::TypedefDef_tie<T>::describe  (
+CORBA_Contained::Description * POA_CORBA_TypedefDef_tie<T>::describe  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1184,8 +1170,8 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::TypedefDef_tie<T>::move  (
-    CORBA::Container_ptr new_container,
+void POA_CORBA_TypedefDef_tie<T>::move  (
+    CORBA_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -1203,7 +1189,7 @@ new_container,
 }
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_CORBA::TypedefDef_tie<T>::type  (
+CORBA::TypeCode_ptr POA_CORBA_TypedefDef_tie<T>::type  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1216,7 +1202,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA::DefinitionKind POA_CORBA::TypedefDef_tie<T>::def_kind  (
+CORBA::DefinitionKind POA_CORBA_TypedefDef_tie<T>::def_kind  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1229,7 +1215,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-void POA_CORBA::TypedefDef_tie<T>::destroy  (
+void POA_CORBA_TypedefDef_tie<T>::destroy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1241,4 +1227,3 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */

@@ -463,6 +463,187 @@ CORBA::TypeCode_ptr CORBA_InvalidPolicies::_type (void) const
   return ::_tc_CORBA_InvalidPolicies;
 }
 
+// *************************************************************
+// Operations for class CORBA_Policy_var
+// *************************************************************
+
+CORBA_Policy_var::CORBA_Policy_var (void) // default constructor
+  : ptr_ (CORBA_Policy::_nil ())
+{}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+CORBA_Policy_var::CORBA_Policy_var (const ::CORBA_Policy_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (CORBA_Policy::_duplicate (p.ptr ()))
+{}
+
+CORBA_Policy_var::~CORBA_Policy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+CORBA_Policy_var &
+CORBA_Policy_var::operator= (CORBA_Policy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_Policy_var &
+CORBA_Policy_var::operator= (const ::CORBA_Policy_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::CORBA_Policy::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+CORBA_Policy_var::operator const ::CORBA_Policy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+CORBA_Policy_var::operator ::CORBA_Policy_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr &
+CORBA_Policy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr &
+CORBA_Policy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_Policy::_nil ();
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::CORBA_Policy_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA_Policy::_nil ();
+  return val;
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::duplicate (CORBA_Policy_ptr p)
+{
+  return ::CORBA_Policy::_duplicate (p);
+}
+
+void
+CORBA_Policy_var::release (CORBA_Policy_ptr p)
+{
+  CORBA::release (p);
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::nil (void)
+{
+  return ::CORBA_Policy::_nil ();
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::CORBA_Policy::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+CORBA_Policy_var::upcast (void *src)
+{
+  CORBA_Policy **tmp =
+    ACE_static_cast (CORBA_Policy **, src);
+  return *tmp;
+}
+// *************************************************************
+// Operations for class CORBA_Policy_out
+// *************************************************************
+
+CORBA_Policy_out::CORBA_Policy_out (CORBA_Policy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::CORBA_Policy::_nil ();
+}
+
+CORBA_Policy_out::CORBA_Policy_out (CORBA_Policy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_Policy::_nil ();
+}
+
+CORBA_Policy_out::CORBA_Policy_out (const ::CORBA_Policy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_Policy_out &, p).ptr_)
+{}
+
+::CORBA_Policy_out &
+CORBA_Policy_out::operator= (const ::CORBA_Policy_out &p)
+{
+  this->ptr_ = ACE_const_cast (CORBA_Policy_out&, p).ptr_;
+  return *this;
+}
+
+CORBA_Policy_out &
+CORBA_Policy_out::operator= (const ::CORBA_Policy_var &p)
+{
+  this->ptr_ = ::CORBA_Policy::_duplicate (p.ptr ());
+  return *this;
+}
+
+CORBA_Policy_out &
+CORBA_Policy_out::operator= (CORBA_Policy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_Policy_out::operator ::CORBA_Policy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr &
+CORBA_Policy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::CORBA_Policy_ptr
+CORBA_Policy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 class TAO_ClientRequestInfo_CORBA_Policy_policy_type_get : public TAO_ClientRequestInfo
@@ -1500,14 +1681,21 @@ CORBA::TypeCode_ptr _tc_CORBA_Policy =
     {
       CORBA_Policy **old = ACE_reinterpret_cast (CORBA_Policy**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = CORBA_Policy::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = CORBA_Policy::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1518,11 +1706,13 @@ CORBA::TypeCode_ptr _tc_CORBA_Policy =
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     CORBA_Policy **tmp = ACE_reinterpret_cast (CORBA_Policy**, this->buffer_);
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
       tmp[i] = CORBA_Policy::_nil ();
     }
+
     _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1538,11 +1728,12 @@ CORBA::TypeCode_ptr _tc_CORBA_Policy =
     CORBA_Policy **tmp = ACE_reinterpret_cast (CORBA_Policy**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA_Policy::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = CORBA_Policy::_nil ();
+      }
   }
+
   void 
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_downcast (
       void* target,
@@ -1822,6 +2013,187 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyTypeSeq (
 CORBA::TypeCode_ptr _tc_CORBA_PolicyTypeSeq =
   &_tc_TAO_tc_CORBA_PolicyTypeSeq;
 
+// *************************************************************
+// Operations for class CORBA_PolicyManager_var
+// *************************************************************
+
+CORBA_PolicyManager_var::CORBA_PolicyManager_var (void) // default constructor
+  : ptr_ (CORBA_PolicyManager::_nil ())
+{}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+CORBA_PolicyManager_var::CORBA_PolicyManager_var (const ::CORBA_PolicyManager_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (CORBA_PolicyManager::_duplicate (p.ptr ()))
+{}
+
+CORBA_PolicyManager_var::~CORBA_PolicyManager_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+CORBA_PolicyManager_var &
+CORBA_PolicyManager_var::operator= (CORBA_PolicyManager_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_PolicyManager_var &
+CORBA_PolicyManager_var::operator= (const ::CORBA_PolicyManager_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::CORBA_PolicyManager::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+CORBA_PolicyManager_var::operator const ::CORBA_PolicyManager_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+CORBA_PolicyManager_var::operator ::CORBA_PolicyManager_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr &
+CORBA_PolicyManager_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr &
+CORBA_PolicyManager_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_PolicyManager::_nil ();
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::CORBA_PolicyManager_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA_PolicyManager::_nil ();
+  return val;
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::duplicate (CORBA_PolicyManager_ptr p)
+{
+  return ::CORBA_PolicyManager::_duplicate (p);
+}
+
+void
+CORBA_PolicyManager_var::release (CORBA_PolicyManager_ptr p)
+{
+  CORBA::release (p);
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::nil (void)
+{
+  return ::CORBA_PolicyManager::_nil ();
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::CORBA_PolicyManager::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+CORBA_PolicyManager_var::upcast (void *src)
+{
+  CORBA_PolicyManager **tmp =
+    ACE_static_cast (CORBA_PolicyManager **, src);
+  return *tmp;
+}
+// *************************************************************
+// Operations for class CORBA_PolicyManager_out
+// *************************************************************
+
+CORBA_PolicyManager_out::CORBA_PolicyManager_out (CORBA_PolicyManager_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::CORBA_PolicyManager::_nil ();
+}
+
+CORBA_PolicyManager_out::CORBA_PolicyManager_out (CORBA_PolicyManager_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_PolicyManager::_nil ();
+}
+
+CORBA_PolicyManager_out::CORBA_PolicyManager_out (const ::CORBA_PolicyManager_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_PolicyManager_out &, p).ptr_)
+{}
+
+::CORBA_PolicyManager_out &
+CORBA_PolicyManager_out::operator= (const ::CORBA_PolicyManager_out &p)
+{
+  this->ptr_ = ACE_const_cast (CORBA_PolicyManager_out&, p).ptr_;
+  return *this;
+}
+
+CORBA_PolicyManager_out &
+CORBA_PolicyManager_out::operator= (const ::CORBA_PolicyManager_var &p)
+{
+  this->ptr_ = ::CORBA_PolicyManager::_duplicate (p.ptr ());
+  return *this;
+}
+
+CORBA_PolicyManager_out &
+CORBA_PolicyManager_out::operator= (CORBA_PolicyManager_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_PolicyManager_out::operator ::CORBA_PolicyManager_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr &
+CORBA_PolicyManager_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyManager_ptr
+CORBA_PolicyManager_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 // default constructor
 CORBA_PolicyManager::CORBA_PolicyManager ()
@@ -1889,6 +2261,188 @@ void *CORBA_PolicyManager::_tao_QueryInterface (ptr_arith_t type)
 const char* CORBA_PolicyManager::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/PolicyManager:1.0";
+}
+
+
+// *************************************************************
+// Operations for class CORBA_PolicyCurrent_var
+// *************************************************************
+
+CORBA_PolicyCurrent_var::CORBA_PolicyCurrent_var (void) // default constructor
+  : ptr_ (CORBA_PolicyCurrent::_nil ())
+{}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+CORBA_PolicyCurrent_var::CORBA_PolicyCurrent_var (const ::CORBA_PolicyCurrent_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (CORBA_PolicyCurrent::_duplicate (p.ptr ()))
+{}
+
+CORBA_PolicyCurrent_var::~CORBA_PolicyCurrent_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+CORBA_PolicyCurrent_var &
+CORBA_PolicyCurrent_var::operator= (CORBA_PolicyCurrent_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_PolicyCurrent_var &
+CORBA_PolicyCurrent_var::operator= (const ::CORBA_PolicyCurrent_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::CORBA_PolicyCurrent::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+CORBA_PolicyCurrent_var::operator const ::CORBA_PolicyCurrent_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+CORBA_PolicyCurrent_var::operator ::CORBA_PolicyCurrent_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr &
+CORBA_PolicyCurrent_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr &
+CORBA_PolicyCurrent_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_PolicyCurrent::_nil ();
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::CORBA_PolicyCurrent_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA_PolicyCurrent::_nil ();
+  return val;
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::duplicate (CORBA_PolicyCurrent_ptr p)
+{
+  return ::CORBA_PolicyCurrent::_duplicate (p);
+}
+
+void
+CORBA_PolicyCurrent_var::release (CORBA_PolicyCurrent_ptr p)
+{
+  CORBA::release (p);
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::nil (void)
+{
+  return ::CORBA_PolicyCurrent::_nil ();
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::CORBA_PolicyCurrent::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+CORBA_PolicyCurrent_var::upcast (void *src)
+{
+  CORBA_PolicyCurrent **tmp =
+    ACE_static_cast (CORBA_PolicyCurrent **, src);
+  return *tmp;
+}
+// *************************************************************
+// Operations for class CORBA_PolicyCurrent_out
+// *************************************************************
+
+CORBA_PolicyCurrent_out::CORBA_PolicyCurrent_out (CORBA_PolicyCurrent_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::CORBA_PolicyCurrent::_nil ();
+}
+
+CORBA_PolicyCurrent_out::CORBA_PolicyCurrent_out (CORBA_PolicyCurrent_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_PolicyCurrent::_nil ();
+}
+
+CORBA_PolicyCurrent_out::CORBA_PolicyCurrent_out (const ::CORBA_PolicyCurrent_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_PolicyCurrent_out &, p).ptr_)
+{}
+
+::CORBA_PolicyCurrent_out &
+CORBA_PolicyCurrent_out::operator= (const ::CORBA_PolicyCurrent_out &p)
+{
+  this->ptr_ = ACE_const_cast (CORBA_PolicyCurrent_out&, p).ptr_;
+  return *this;
+}
+
+CORBA_PolicyCurrent_out &
+CORBA_PolicyCurrent_out::operator= (const ::CORBA_PolicyCurrent_var &p)
+{
+  this->ptr_ = ::CORBA_PolicyCurrent::_duplicate (p.ptr ());
+  return *this;
+}
+
+CORBA_PolicyCurrent_out &
+CORBA_PolicyCurrent_out::operator= (CORBA_PolicyCurrent_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_PolicyCurrent_out::operator ::CORBA_PolicyCurrent_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr &
+CORBA_PolicyCurrent_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::CORBA_PolicyCurrent_ptr
+CORBA_PolicyCurrent_out::operator-> (void)
+{
+  return this->ptr_;
 }
 
 
@@ -2498,6 +3052,42 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_UShort_CPP_ */
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA_Policy_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    CORBA_Policy_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      CORBA_Policy::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

@@ -16,14 +16,40 @@
 //   time. This IDL file contains all the interfaces and other data
 //   types related to fixed types and valuetypes.
 //
-//   The command used to generate code from this IDL file is:
+//   1. Patch this pidl file with
 //
-//     tao_idl -o orig -Ge 1 \
+//      patch < diffs/IFR_Extended.pidl.diff
+//
+//   This will remove the CORBA module, rename most types foo
+//   declared in it as CORBA_foo, unalias the simple typedefs
+//   which don't have a CORBA_ analog in corbafwd.h.
+//
+//   2. Generate the code. The command used to generate code from this 
+//   IDL file is:
+//
+//     tao_idl -o orig -Ge 1 -I.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Extended.pidl
+//
+//   3. Copy the generated files to the current directory.
+//
+//   4. Patch the generated files, using
+//      
+//      patch < diffs/IFR_ExtendedC.h.diff
+//      patch < diffs/IFR_ExtendedC.i.diff
+//      patch < diffs/IFR_ExtendedC.cpp.diff
+//
+//   If this fails for some reason, the files must be patched
+//   by hand, and the diff files regenerated with
+//
+//      diff -wbu orig/IFR_ExtendedC.h IFR_ExtendedC.h > diffs/IFR_ExtendedC.h.diff
+//      diff -wbu orig/IFR_ExtendedC.i IFR_ExtendedC.i > diffs/IFR_ExtendedC.i.diff
+//      diff -wbu orig/IFR_ExtendedC.cpp IFR_ExtendedC.cpp > diffs/IFR_ExtendedC.cpp.diff
+//
+//   5. Restore IFR_Extended.pidl.
 //
 //   To regenerate the skeleton files IFR_ExtendedS.{h,i,cpp} and 
 //   IFR_ExtendedS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service,

@@ -20,346 +20,106 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_MESSAGING_REBINDPOLICY___VAR_CI_)
-#define _MESSAGING_REBINDPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RebindPolicy_var
-// *************************************************************
-
 #if (TAO_HAS_REBIND_POLICY == 1)
 
-ACE_INLINE
-Messaging::RebindPolicy_var::RebindPolicy_var (void) // default constructor
-  : ptr_ (RebindPolicy::_nil ())
-{}
+#if !defined (_MESSAGING_REBINDPOLICY___CI_)
+#define _MESSAGING_REBINDPOLICY___CI_
 
-ACE_INLINE ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::ptr (void) const
+ACE_INLINE Messaging::RebindPolicy_ptr
+tao_Messaging_RebindPolicy_duplicate (
+    Messaging::RebindPolicy_ptr p
+  )
 {
-  return this->ptr_;
+  return Messaging::RebindPolicy::_duplicate (p);
 }
 
-ACE_INLINE
-Messaging::RebindPolicy_var::RebindPolicy_var (const ::Messaging::RebindPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RebindPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::RebindPolicy_var::~RebindPolicy_var (void) // destructor
+ACE_INLINE void
+tao_Messaging_RebindPolicy_release (
+    Messaging::RebindPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RebindPolicy_var &
-Messaging::RebindPolicy_var::operator= (RebindPolicy_ptr p)
+ACE_INLINE Messaging::RebindPolicy_ptr
+tao_Messaging_RebindPolicy_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return Messaging::RebindPolicy::_nil ();
 }
 
-ACE_INLINE Messaging::RebindPolicy_var &
-Messaging::RebindPolicy_var::operator= (const ::Messaging::RebindPolicy_var &p)
+ACE_INLINE Messaging::RebindPolicy_ptr
+tao_Messaging_RebindPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RebindPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RebindPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RebindPolicy_var::operator const ::Messaging::RebindPolicy_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RebindPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RebindPolicy_var::operator ::Messaging::RebindPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr &
-Messaging::RebindPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr &
-Messaging::RebindPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RebindPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-  return val;
+  Messaging::RebindPolicy **tmp =
+    ACE_static_cast (Messaging::RebindPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REBINDPOLICY___OUT_CI_)
-#define _MESSAGING_REBINDPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RebindPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RebindPolicy_out::RebindPolicy_out (RebindPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RebindPolicy_out::RebindPolicy_out (RebindPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RebindPolicy_out::RebindPolicy_out (const ::Messaging::RebindPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RebindPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RebindPolicy_out &
-Messaging::RebindPolicy_out::operator= (const ::Messaging::RebindPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RebindPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::RebindPolicy_out &
-Messaging::RebindPolicy_out::operator= (const ::Messaging::RebindPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RebindPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::RebindPolicy_out &
-Messaging::RebindPolicy_out::operator= (RebindPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RebindPolicy_out::operator ::Messaging::RebindPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr &
-Messaging::RebindPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_SYNCSCOPEPOLICY___VAR_CI_)
-#define _MESSAGING_SYNCSCOPEPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::SyncScopePolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::SyncScopePolicy_var::SyncScopePolicy_var (void) // default constructor
-  : ptr_ (SyncScopePolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
 
 #endif /* TAO_HAS_REBIND_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-ACE_INLINE
-Messaging::SyncScopePolicy_var::SyncScopePolicy_var (const ::Messaging::SyncScopePolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (SyncScopePolicy::_duplicate (p.ptr ()))
-{}
+#if !defined (_MESSAGING_SYNCSCOPEPOLICY___CI_)
+#define _MESSAGING_SYNCSCOPEPOLICY___CI_
 
-ACE_INLINE
-Messaging::SyncScopePolicy_var::~SyncScopePolicy_var (void) // destructor
+ACE_INLINE Messaging::SyncScopePolicy_ptr
+tao_Messaging_SyncScopePolicy_duplicate (
+    Messaging::SyncScopePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::SyncScopePolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::SyncScopePolicy_var &
-Messaging::SyncScopePolicy_var::operator= (SyncScopePolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_SyncScopePolicy_release (
+    Messaging::SyncScopePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::SyncScopePolicy_var &
-Messaging::SyncScopePolicy_var::operator= (const ::Messaging::SyncScopePolicy_var &p)
+ACE_INLINE Messaging::SyncScopePolicy_ptr
+tao_Messaging_SyncScopePolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::SyncScopePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::SyncScopePolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::SyncScopePolicy_var::operator const ::Messaging::SyncScopePolicy_ptr &() const // cast
+ACE_INLINE Messaging::SyncScopePolicy_ptr
+tao_Messaging_SyncScopePolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::SyncScopePolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::SyncScopePolicy_var::operator ::Messaging::SyncScopePolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_SyncScopePolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr &
-Messaging::SyncScopePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr &
-Messaging::SyncScopePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::SyncScopePolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::SyncScopePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::SyncScopePolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_SYNCSCOPEPOLICY___OUT_CI_)
-#define _MESSAGING_SYNCSCOPEPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::SyncScopePolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::SyncScopePolicy_out::SyncScopePolicy_out (SyncScopePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::SyncScopePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::SyncScopePolicy_out::SyncScopePolicy_out (SyncScopePolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::SyncScopePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::SyncScopePolicy_out::SyncScopePolicy_out (const ::Messaging::SyncScopePolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (SyncScopePolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_out &
-Messaging::SyncScopePolicy_out::operator= (const ::Messaging::SyncScopePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (SyncScopePolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::SyncScopePolicy_out &
-Messaging::SyncScopePolicy_out::operator= (const ::Messaging::SyncScopePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::SyncScopePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::SyncScopePolicy_out &
-Messaging::SyncScopePolicy_out::operator= (SyncScopePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::SyncScopePolicy_out::operator ::Messaging::SyncScopePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr &
-Messaging::SyncScopePolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_out::operator-> (void)
-{
-  return this->ptr_;
+  Messaging::SyncScopePolicy **tmp =
+    ACE_static_cast (Messaging::SyncScopePolicy **, src);
+  return *tmp;
 }
 
 
@@ -515,1396 +275,436 @@ Messaging::PriorityRange_var::ptr (void) const
 }
 
 
-#if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___VAR_CI_)
-#define _MESSAGING_REQUESTPRIORITYPOLICY___VAR_CI_
+#if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___CI_)
+#define _MESSAGING_REQUESTPRIORITYPOLICY___CI_
 
-// *************************************************************
-// Inline operations for class Messaging::RequestPriorityPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::RequestPriorityPolicy_var::RequestPriorityPolicy_var (void) // default constructor
-  : ptr_ (RequestPriorityPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::ptr (void) const
+ACE_INLINE Messaging::RequestPriorityPolicy_ptr
+tao_Messaging_RequestPriorityPolicy_duplicate (
+    Messaging::RequestPriorityPolicy_ptr p
+  )
 {
-  return this->ptr_;
+  return Messaging::RequestPriorityPolicy::_duplicate (p);
 }
 
-ACE_INLINE
-Messaging::RequestPriorityPolicy_var::RequestPriorityPolicy_var (const ::Messaging::RequestPriorityPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RequestPriorityPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::RequestPriorityPolicy_var::~RequestPriorityPolicy_var (void) // destructor
+ACE_INLINE void
+tao_Messaging_RequestPriorityPolicy_release (
+    Messaging::RequestPriorityPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RequestPriorityPolicy_var &
-Messaging::RequestPriorityPolicy_var::operator= (RequestPriorityPolicy_ptr p)
+ACE_INLINE Messaging::RequestPriorityPolicy_ptr
+tao_Messaging_RequestPriorityPolicy_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return Messaging::RequestPriorityPolicy::_nil ();
 }
 
-ACE_INLINE Messaging::RequestPriorityPolicy_var &
-Messaging::RequestPriorityPolicy_var::operator= (const ::Messaging::RequestPriorityPolicy_var &p)
+ACE_INLINE Messaging::RequestPriorityPolicy_ptr
+tao_Messaging_RequestPriorityPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RequestPriorityPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RequestPriorityPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RequestPriorityPolicy_var::operator const ::Messaging::RequestPriorityPolicy_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RequestPriorityPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RequestPriorityPolicy_var::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr &
-Messaging::RequestPriorityPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr &
-Messaging::RequestPriorityPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RequestPriorityPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
-  return val;
+  Messaging::RequestPriorityPolicy **tmp =
+    ACE_static_cast (Messaging::RequestPriorityPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___OUT_CI_)
-#define _MESSAGING_REQUESTPRIORITYPOLICY___OUT_CI_
+#if !defined (_MESSAGING_REPLYPRIORITYPOLICY___CI_)
+#define _MESSAGING_REPLYPRIORITYPOLICY___CI_
 
-// *************************************************************
-// Inline operations for class Messaging::RequestPriorityPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RequestPriorityPolicy_out::RequestPriorityPolicy_out (RequestPriorityPolicy_ptr &p)
-  : ptr_ (p)
+ACE_INLINE Messaging::ReplyPriorityPolicy_ptr
+tao_Messaging_ReplyPriorityPolicy_duplicate (
+    Messaging::ReplyPriorityPolicy_ptr p
+  )
 {
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
+  return Messaging::ReplyPriorityPolicy::_duplicate (p);
 }
 
-ACE_INLINE
-Messaging::RequestPriorityPolicy_out::RequestPriorityPolicy_out (RequestPriorityPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_Messaging_ReplyPriorityPolicy_release (
+    Messaging::ReplyPriorityPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-Messaging::RequestPriorityPolicy_out::RequestPriorityPolicy_out (const ::Messaging::RequestPriorityPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RequestPriorityPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_out &
-Messaging::RequestPriorityPolicy_out::operator= (const ::Messaging::RequestPriorityPolicy_out &p)
+ACE_INLINE Messaging::ReplyPriorityPolicy_ptr
+tao_Messaging_ReplyPriorityPolicy_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (RequestPriorityPolicy_out&, p).ptr_;
-  return *this;
+  return Messaging::ReplyPriorityPolicy::_nil ();
 }
 
-ACE_INLINE Messaging::RequestPriorityPolicy_out &
-Messaging::RequestPriorityPolicy_out::operator= (const ::Messaging::RequestPriorityPolicy_var &p)
+ACE_INLINE Messaging::ReplyPriorityPolicy_ptr
+tao_Messaging_ReplyPriorityPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_duplicate (p.ptr ());
-  return *this;
+  return Messaging::ReplyPriorityPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE Messaging::RequestPriorityPolicy_out &
-Messaging::RequestPriorityPolicy_out::operator= (RequestPriorityPolicy_ptr p)
+ACE_INLINE CORBA::Object *
+tao_Messaging_ReplyPriorityPolicy_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RequestPriorityPolicy_out::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr &
-Messaging::RequestPriorityPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_out::operator-> (void)
-{
-  return this->ptr_;
+  Messaging::ReplyPriorityPolicy **tmp =
+    ACE_static_cast (Messaging::ReplyPriorityPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REPLYPRIORITYPOLICY___VAR_CI_)
-#define _MESSAGING_REPLYPRIORITYPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyPriorityPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_var::ReplyPriorityPolicy_var (void) // default constructor
-  : ptr_ (ReplyPriorityPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_var::ReplyPriorityPolicy_var (const ::Messaging::ReplyPriorityPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ReplyPriorityPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_var::~ReplyPriorityPolicy_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE Messaging::ReplyPriorityPolicy_var &
-Messaging::ReplyPriorityPolicy_var::operator= (ReplyPriorityPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyPriorityPolicy_var &
-Messaging::ReplyPriorityPolicy_var::operator= (const ::Messaging::ReplyPriorityPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyPriorityPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_var::operator const ::Messaging::ReplyPriorityPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_var::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr &
-Messaging::ReplyPriorityPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr &
-Messaging::ReplyPriorityPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyPriorityPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REPLYPRIORITYPOLICY___OUT_CI_)
-#define _MESSAGING_REPLYPRIORITYPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyPriorityPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_out::ReplyPriorityPolicy_out (ReplyPriorityPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_out::ReplyPriorityPolicy_out (ReplyPriorityPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_out::ReplyPriorityPolicy_out (const ::Messaging::ReplyPriorityPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ReplyPriorityPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_out &
-Messaging::ReplyPriorityPolicy_out::operator= (const ::Messaging::ReplyPriorityPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyPriorityPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyPriorityPolicy_out &
-Messaging::ReplyPriorityPolicy_out::operator= (const ::Messaging::ReplyPriorityPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyPriorityPolicy_out &
-Messaging::ReplyPriorityPolicy_out::operator= (ReplyPriorityPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ReplyPriorityPolicy_out::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr &
-Messaging::ReplyPriorityPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___VAR_CI_)
-#define _MESSAGING_REQUESTSTARTTIMEPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RequestStartTimePolicy_var
-// *************************************************************
 
 #endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
 
 #if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
 
-ACE_INLINE
-Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (void) // default constructor
-  : ptr_ (RequestStartTimePolicy::_nil ())
-{}
+#if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___CI_)
+#define _MESSAGING_REQUESTSTARTTIMEPOLICY___CI_
 
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::ptr (void) const
+ACE_INLINE Messaging::RequestStartTimePolicy_ptr
+tao_Messaging_RequestStartTimePolicy_duplicate (
+    Messaging::RequestStartTimePolicy_ptr p
+  )
 {
-  return this->ptr_;
+  return Messaging::RequestStartTimePolicy::_duplicate (p);
 }
 
-ACE_INLINE
-Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (const ::Messaging::RequestStartTimePolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RequestStartTimePolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::RequestStartTimePolicy_var::~RequestStartTimePolicy_var (void) // destructor
+ACE_INLINE void
+tao_Messaging_RequestStartTimePolicy_release (
+    Messaging::RequestStartTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RequestStartTimePolicy_var &
-Messaging::RequestStartTimePolicy_var::operator= (RequestStartTimePolicy_ptr p)
+ACE_INLINE Messaging::RequestStartTimePolicy_ptr
+tao_Messaging_RequestStartTimePolicy_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return Messaging::RequestStartTimePolicy::_nil ();
 }
 
-ACE_INLINE Messaging::RequestStartTimePolicy_var &
-Messaging::RequestStartTimePolicy_var::operator= (const ::Messaging::RequestStartTimePolicy_var &p)
+ACE_INLINE Messaging::RequestStartTimePolicy_ptr
+tao_Messaging_RequestStartTimePolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RequestStartTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RequestStartTimePolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RequestStartTimePolicy_var::operator const ::Messaging::RequestStartTimePolicy_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RequestStartTimePolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RequestStartTimePolicy_var::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr &
-Messaging::RequestStartTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr &
-Messaging::RequestStartTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RequestStartTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-  return val;
+  Messaging::RequestStartTimePolicy **tmp =
+    ACE_static_cast (Messaging::RequestStartTimePolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___OUT_CI_)
-#define _MESSAGING_REQUESTSTARTTIMEPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RequestStartTimePolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RequestStartTimePolicy_out::RequestStartTimePolicy_out (RequestStartTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RequestStartTimePolicy_out::RequestStartTimePolicy_out (RequestStartTimePolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RequestStartTimePolicy_out::RequestStartTimePolicy_out (const ::Messaging::RequestStartTimePolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RequestStartTimePolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_out &
-Messaging::RequestStartTimePolicy_out::operator= (const ::Messaging::RequestStartTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RequestStartTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::RequestStartTimePolicy_out &
-Messaging::RequestStartTimePolicy_out::operator= (const ::Messaging::RequestStartTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::RequestStartTimePolicy_out &
-Messaging::RequestStartTimePolicy_out::operator= (RequestStartTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RequestStartTimePolicy_out::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr &
-Messaging::RequestStartTimePolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___VAR_CI_)
-#define _MESSAGING_REQUESTENDTIMEPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RequestEndTimePolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::RequestEndTimePolicy_var::RequestEndTimePolicy_var (void) // default constructor
-  : ptr_ (RequestEndTimePolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RequestEndTimePolicy_var::RequestEndTimePolicy_var (const ::Messaging::RequestEndTimePolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RequestEndTimePolicy::_duplicate (p.ptr ()))
-{}
 
 #endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
 
 #if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
-ACE_INLINE
-Messaging::RequestEndTimePolicy_var::~RequestEndTimePolicy_var (void) // destructor
+#if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___CI_)
+#define _MESSAGING_REQUESTENDTIMEPOLICY___CI_
+
+ACE_INLINE Messaging::RequestEndTimePolicy_ptr
+tao_Messaging_RequestEndTimePolicy_duplicate (
+    Messaging::RequestEndTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::RequestEndTimePolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::RequestEndTimePolicy_var &
-Messaging::RequestEndTimePolicy_var::operator= (RequestEndTimePolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_RequestEndTimePolicy_release (
+    Messaging::RequestEndTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RequestEndTimePolicy_var &
-Messaging::RequestEndTimePolicy_var::operator= (const ::Messaging::RequestEndTimePolicy_var &p)
+ACE_INLINE Messaging::RequestEndTimePolicy_ptr
+tao_Messaging_RequestEndTimePolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RequestEndTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RequestEndTimePolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::RequestEndTimePolicy_var::operator const ::Messaging::RequestEndTimePolicy_ptr &() const // cast
+ACE_INLINE Messaging::RequestEndTimePolicy_ptr
+tao_Messaging_RequestEndTimePolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::RequestEndTimePolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RequestEndTimePolicy_var::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RequestEndTimePolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr &
-Messaging::RequestEndTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr &
-Messaging::RequestEndTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RequestEndTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-  return val;
+  Messaging::RequestEndTimePolicy **tmp =
+    ACE_static_cast (Messaging::RequestEndTimePolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___OUT_CI_)
-#define _MESSAGING_REQUESTENDTIMEPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RequestEndTimePolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RequestEndTimePolicy_out::RequestEndTimePolicy_out (RequestEndTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RequestEndTimePolicy_out::RequestEndTimePolicy_out (RequestEndTimePolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RequestEndTimePolicy_out::RequestEndTimePolicy_out (const ::Messaging::RequestEndTimePolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RequestEndTimePolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_out &
-Messaging::RequestEndTimePolicy_out::operator= (const ::Messaging::RequestEndTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RequestEndTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::RequestEndTimePolicy_out &
-Messaging::RequestEndTimePolicy_out::operator= (const ::Messaging::RequestEndTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::RequestEndTimePolicy_out &
-Messaging::RequestEndTimePolicy_out::operator= (RequestEndTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RequestEndTimePolicy_out::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr &
-Messaging::RequestEndTimePolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___VAR_CI_)
-#define _MESSAGING_REPLYSTARTTIMEPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyStartTimePolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_var::ReplyStartTimePolicy_var (void) // default constructor
-  : ptr_ (ReplyStartTimePolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_var::ReplyStartTimePolicy_var (const ::Messaging::ReplyStartTimePolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ReplyStartTimePolicy::_duplicate (p.ptr ()))
-{}
 
 #endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
 
 #if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
 
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_var::~ReplyStartTimePolicy_var (void) // destructor
+#if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___CI_)
+#define _MESSAGING_REPLYSTARTTIMEPOLICY___CI_
+
+ACE_INLINE Messaging::ReplyStartTimePolicy_ptr
+tao_Messaging_ReplyStartTimePolicy_duplicate (
+    Messaging::ReplyStartTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::ReplyStartTimePolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::ReplyStartTimePolicy_var &
-Messaging::ReplyStartTimePolicy_var::operator= (ReplyStartTimePolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_ReplyStartTimePolicy_release (
+    Messaging::ReplyStartTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::ReplyStartTimePolicy_var &
-Messaging::ReplyStartTimePolicy_var::operator= (const ::Messaging::ReplyStartTimePolicy_var &p)
+ACE_INLINE Messaging::ReplyStartTimePolicy_ptr
+tao_Messaging_ReplyStartTimePolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyStartTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::ReplyStartTimePolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_var::operator const ::Messaging::ReplyStartTimePolicy_ptr &() const // cast
+ACE_INLINE Messaging::ReplyStartTimePolicy_ptr
+tao_Messaging_ReplyStartTimePolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::ReplyStartTimePolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_var::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_ReplyStartTimePolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr &
-Messaging::ReplyStartTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr &
-Messaging::ReplyStartTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyStartTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-  return val;
+  Messaging::ReplyStartTimePolicy **tmp =
+    ACE_static_cast (Messaging::ReplyStartTimePolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___OUT_CI_)
-#define _MESSAGING_REPLYSTARTTIMEPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyStartTimePolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_out::ReplyStartTimePolicy_out (ReplyStartTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_out::ReplyStartTimePolicy_out (ReplyStartTimePolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_out::ReplyStartTimePolicy_out (const ::Messaging::ReplyStartTimePolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ReplyStartTimePolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_out &
-Messaging::ReplyStartTimePolicy_out::operator= (const ::Messaging::ReplyStartTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyStartTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyStartTimePolicy_out &
-Messaging::ReplyStartTimePolicy_out::operator= (const ::Messaging::ReplyStartTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyStartTimePolicy_out &
-Messaging::ReplyStartTimePolicy_out::operator= (ReplyStartTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ReplyStartTimePolicy_out::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr &
-Messaging::ReplyStartTimePolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REPLYENDTIMEPOLICY___VAR_CI_)
-#define _MESSAGING_REPLYENDTIMEPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyEndTimePolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_var::ReplyEndTimePolicy_var (void) // default constructor
-  : ptr_ (ReplyEndTimePolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_var::ReplyEndTimePolicy_var (const ::Messaging::ReplyEndTimePolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ReplyEndTimePolicy::_duplicate (p.ptr ()))
-{}
 
 #endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
 
 #if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
 
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_var::~ReplyEndTimePolicy_var (void) // destructor
+#if !defined (_MESSAGING_REPLYENDTIMEPOLICY___CI_)
+#define _MESSAGING_REPLYENDTIMEPOLICY___CI_
+
+ACE_INLINE Messaging::ReplyEndTimePolicy_ptr
+tao_Messaging_ReplyEndTimePolicy_duplicate (
+    Messaging::ReplyEndTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::ReplyEndTimePolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::ReplyEndTimePolicy_var &
-Messaging::ReplyEndTimePolicy_var::operator= (ReplyEndTimePolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_ReplyEndTimePolicy_release (
+    Messaging::ReplyEndTimePolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::ReplyEndTimePolicy_var &
-Messaging::ReplyEndTimePolicy_var::operator= (const ::Messaging::ReplyEndTimePolicy_var &p)
+ACE_INLINE Messaging::ReplyEndTimePolicy_ptr
+tao_Messaging_ReplyEndTimePolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyEndTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::ReplyEndTimePolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_var::operator const ::Messaging::ReplyEndTimePolicy_ptr &() const // cast
+ACE_INLINE Messaging::ReplyEndTimePolicy_ptr
+tao_Messaging_ReplyEndTimePolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::ReplyEndTimePolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_var::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_ReplyEndTimePolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr &
-Messaging::ReplyEndTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr &
-Messaging::ReplyEndTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyEndTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-  return val;
+  Messaging::ReplyEndTimePolicy **tmp =
+    ACE_static_cast (Messaging::ReplyEndTimePolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REPLYENDTIMEPOLICY___OUT_CI_)
-#define _MESSAGING_REPLYENDTIMEPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyEndTimePolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_out::ReplyEndTimePolicy_out (ReplyEndTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_out::ReplyEndTimePolicy_out (ReplyEndTimePolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_out::ReplyEndTimePolicy_out (const ::Messaging::ReplyEndTimePolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ReplyEndTimePolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_out &
-Messaging::ReplyEndTimePolicy_out::operator= (const ::Messaging::ReplyEndTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyEndTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyEndTimePolicy_out &
-Messaging::ReplyEndTimePolicy_out::operator= (const ::Messaging::ReplyEndTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyEndTimePolicy_out &
-Messaging::ReplyEndTimePolicy_out::operator= (ReplyEndTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ReplyEndTimePolicy_out::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr &
-Messaging::ReplyEndTimePolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___VAR_CI_)
-#define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RelativeRequestTimeoutPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_var::RelativeRequestTimeoutPolicy_var (void) // default constructor
-  : ptr_ (RelativeRequestTimeoutPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_var::RelativeRequestTimeoutPolicy_var (const ::Messaging::RelativeRequestTimeoutPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RelativeRequestTimeoutPolicy::_duplicate (p.ptr ()))
-{}
 
 #endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
 
 #if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
 
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_var::~RelativeRequestTimeoutPolicy_var (void) // destructor
+#if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___CI_)
+#define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___CI_
+
+ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_ptr
+tao_Messaging_RelativeRequestTimeoutPolicy_duplicate (
+    Messaging::RelativeRequestTimeoutPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_var &
-Messaging::RelativeRequestTimeoutPolicy_var::operator= (RelativeRequestTimeoutPolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_RelativeRequestTimeoutPolicy_release (
+    Messaging::RelativeRequestTimeoutPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_var &
-Messaging::RelativeRequestTimeoutPolicy_var::operator= (const ::Messaging::RelativeRequestTimeoutPolicy_var &p)
+ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_ptr
+tao_Messaging_RelativeRequestTimeoutPolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_var::operator const ::Messaging::RelativeRequestTimeoutPolicy_ptr &() const // cast
+ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_ptr
+tao_Messaging_RelativeRequestTimeoutPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::RelativeRequestTimeoutPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_var::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RelativeRequestTimeoutPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr &
-Messaging::RelativeRequestTimeoutPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr &
-Messaging::RelativeRequestTimeoutPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RelativeRequestTimeoutPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-  return val;
+  Messaging::RelativeRequestTimeoutPolicy **tmp =
+    ACE_static_cast (Messaging::RelativeRequestTimeoutPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___OUT_CI_)
-#define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RelativeRequestTimeoutPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_out::RelativeRequestTimeoutPolicy_out (RelativeRequestTimeoutPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_out::RelativeRequestTimeoutPolicy_out (RelativeRequestTimeoutPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_out::RelativeRequestTimeoutPolicy_out (const ::Messaging::RelativeRequestTimeoutPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RelativeRequestTimeoutPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_out &
-Messaging::RelativeRequestTimeoutPolicy_out::operator= (const ::Messaging::RelativeRequestTimeoutPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RelativeRequestTimeoutPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_out &
-Messaging::RelativeRequestTimeoutPolicy_out::operator= (const ::Messaging::RelativeRequestTimeoutPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_out &
-Messaging::RelativeRequestTimeoutPolicy_out::operator= (RelativeRequestTimeoutPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RelativeRequestTimeoutPolicy_out::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr &
-Messaging::RelativeRequestTimeoutPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CI_)
-#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RelativeRoundtripTimeoutPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_var::RelativeRoundtripTimeoutPolicy_var (void) // default constructor
-  : ptr_ (RelativeRoundtripTimeoutPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_var::RelativeRoundtripTimeoutPolicy_var (const ::Messaging::RelativeRoundtripTimeoutPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ()))
-{}
 
 #endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_var::~RelativeRoundtripTimeoutPolicy_var (void) // destructor
+#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_)
+#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_
+
+ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_ptr
+tao_Messaging_RelativeRoundtripTimeoutPolicy_duplicate (
+    Messaging::RelativeRoundtripTimeoutPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_var &
-Messaging::RelativeRoundtripTimeoutPolicy_var::operator= (RelativeRoundtripTimeoutPolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_RelativeRoundtripTimeoutPolicy_release (
+    Messaging::RelativeRoundtripTimeoutPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_var &
-Messaging::RelativeRoundtripTimeoutPolicy_var::operator= (const ::Messaging::RelativeRoundtripTimeoutPolicy_var &p)
+ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_ptr
+tao_Messaging_RelativeRoundtripTimeoutPolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_var::operator const ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() const // cast
+ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_ptr
+tao_Messaging_RelativeRoundtripTimeoutPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_var::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RelativeRoundtripTimeoutPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &
-Messaging::RelativeRoundtripTimeoutPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &
-Messaging::RelativeRoundtripTimeoutPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RelativeRoundtripTimeoutPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-  return val;
+  Messaging::RelativeRoundtripTimeoutPolicy **tmp =
+    ACE_static_cast (Messaging::RelativeRoundtripTimeoutPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CI_)
-#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RelativeRoundtripTimeoutPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_out::RelativeRoundtripTimeoutPolicy_out (RelativeRoundtripTimeoutPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_out::RelativeRoundtripTimeoutPolicy_out (RelativeRoundtripTimeoutPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_out::RelativeRoundtripTimeoutPolicy_out (const ::Messaging::RelativeRoundtripTimeoutPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RelativeRoundtripTimeoutPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_out &
-Messaging::RelativeRoundtripTimeoutPolicy_out::operator= (const ::Messaging::RelativeRoundtripTimeoutPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RelativeRoundtripTimeoutPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_out &
-Messaging::RelativeRoundtripTimeoutPolicy_out::operator= (const ::Messaging::RelativeRoundtripTimeoutPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_out &
-Messaging::RelativeRoundtripTimeoutPolicy_out::operator= (RelativeRoundtripTimeoutPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RelativeRoundtripTimeoutPolicy_out::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &
-Messaging::RelativeRoundtripTimeoutPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class Messaging::RoutingTypeRange_var
-// *************************************************************
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_ROUTING_POLICY == 1)
+
+// *************************************************************
+// Inline operations for class Messaging::RoutingTypeRange_var
+// *************************************************************
 
 ACE_INLINE
 Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void) // default constructor
@@ -2048,518 +848,158 @@ Messaging::RoutingTypeRange_var::ptr (void) const
 }
 
 
-#if !defined (_MESSAGING_ROUTINGPOLICY___VAR_CI_)
-#define _MESSAGING_ROUTINGPOLICY___VAR_CI_
+#if !defined (_MESSAGING_ROUTINGPOLICY___CI_)
+#define _MESSAGING_ROUTINGPOLICY___CI_
 
-// *************************************************************
-// Inline operations for class Messaging::RoutingPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::RoutingPolicy_var::RoutingPolicy_var (void) // default constructor
-  : ptr_ (RoutingPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::ptr (void) const
+ACE_INLINE Messaging::RoutingPolicy_ptr
+tao_Messaging_RoutingPolicy_duplicate (
+    Messaging::RoutingPolicy_ptr p
+  )
 {
-  return this->ptr_;
+  return Messaging::RoutingPolicy::_duplicate (p);
 }
 
-ACE_INLINE
-Messaging::RoutingPolicy_var::RoutingPolicy_var (const ::Messaging::RoutingPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RoutingPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::RoutingPolicy_var::~RoutingPolicy_var (void) // destructor
+ACE_INLINE void
+tao_Messaging_RoutingPolicy_release (
+    Messaging::RoutingPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::RoutingPolicy_var &
-Messaging::RoutingPolicy_var::operator= (RoutingPolicy_ptr p)
+ACE_INLINE Messaging::RoutingPolicy_ptr
+tao_Messaging_RoutingPolicy_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return Messaging::RoutingPolicy::_nil ();
 }
 
-ACE_INLINE Messaging::RoutingPolicy_var &
-Messaging::RoutingPolicy_var::operator= (const ::Messaging::RoutingPolicy_var &p)
+ACE_INLINE Messaging::RoutingPolicy_ptr
+tao_Messaging_RoutingPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RoutingPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::RoutingPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::RoutingPolicy_var::operator const ::Messaging::RoutingPolicy_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_RoutingPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::RoutingPolicy_var::operator ::Messaging::RoutingPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr &
-Messaging::RoutingPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr &
-Messaging::RoutingPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RoutingPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-  return val;
+  Messaging::RoutingPolicy **tmp =
+    ACE_static_cast (Messaging::RoutingPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_ROUTINGPOLICY___OUT_CI_)
-#define _MESSAGING_ROUTINGPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::RoutingPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::RoutingPolicy_out::RoutingPolicy_out (RoutingPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RoutingPolicy_out::RoutingPolicy_out (RoutingPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::RoutingPolicy_out::RoutingPolicy_out (const ::Messaging::RoutingPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RoutingPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::RoutingPolicy_out &
-Messaging::RoutingPolicy_out::operator= (const ::Messaging::RoutingPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RoutingPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::RoutingPolicy_out &
-Messaging::RoutingPolicy_out::operator= (const ::Messaging::RoutingPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RoutingPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::RoutingPolicy_out &
-Messaging::RoutingPolicy_out::operator= (RoutingPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::RoutingPolicy_out::operator ::Messaging::RoutingPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr &
-Messaging::RoutingPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_MAXHOPSPOLICY___VAR_CI_)
-#define _MESSAGING_MAXHOPSPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::MaxHopsPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::MaxHopsPolicy_var::MaxHopsPolicy_var (void) // default constructor
-  : ptr_ (MaxHopsPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::MaxHopsPolicy_var::MaxHopsPolicy_var (const ::Messaging::MaxHopsPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (MaxHopsPolicy::_duplicate (p.ptr ()))
-{}
 
 #endif /* TAO_HAS_ROUTING_POLICY == 1 */
 
 #if (TAO_HAS_MAX_HOPS_POLICY == 1)
 
-ACE_INLINE
-Messaging::MaxHopsPolicy_var::~MaxHopsPolicy_var (void) // destructor
+#if !defined (_MESSAGING_MAXHOPSPOLICY___CI_)
+#define _MESSAGING_MAXHOPSPOLICY___CI_
+
+ACE_INLINE Messaging::MaxHopsPolicy_ptr
+tao_Messaging_MaxHopsPolicy_duplicate (
+    Messaging::MaxHopsPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  return Messaging::MaxHopsPolicy::_duplicate (p);
 }
 
-ACE_INLINE Messaging::MaxHopsPolicy_var &
-Messaging::MaxHopsPolicy_var::operator= (MaxHopsPolicy_ptr p)
+ACE_INLINE void
+tao_Messaging_MaxHopsPolicy_release (
+    Messaging::MaxHopsPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE Messaging::MaxHopsPolicy_var &
-Messaging::MaxHopsPolicy_var::operator= (const ::Messaging::MaxHopsPolicy_var &p)
+ACE_INLINE Messaging::MaxHopsPolicy_ptr
+tao_Messaging_MaxHopsPolicy_nil (
+    void
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::MaxHopsPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return Messaging::MaxHopsPolicy::_nil ();
 }
 
-ACE_INLINE
-Messaging::MaxHopsPolicy_var::operator const ::Messaging::MaxHopsPolicy_ptr &() const // cast
+ACE_INLINE Messaging::MaxHopsPolicy_ptr
+tao_Messaging_MaxHopsPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return Messaging::MaxHopsPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE
-Messaging::MaxHopsPolicy_var::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
+ACE_INLINE CORBA::Object *
+tao_Messaging_MaxHopsPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr &
-Messaging::MaxHopsPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr &
-Messaging::MaxHopsPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::MaxHopsPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-  return val;
+  Messaging::MaxHopsPolicy **tmp =
+    ACE_static_cast (Messaging::MaxHopsPolicy **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_MAXHOPSPOLICY___OUT_CI_)
-#define _MESSAGING_MAXHOPSPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::MaxHopsPolicy_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::MaxHopsPolicy_out::MaxHopsPolicy_out (MaxHopsPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::MaxHopsPolicy_out::MaxHopsPolicy_out (MaxHopsPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-}
-
-ACE_INLINE
-Messaging::MaxHopsPolicy_out::MaxHopsPolicy_out (const ::Messaging::MaxHopsPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (MaxHopsPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_out &
-Messaging::MaxHopsPolicy_out::operator= (const ::Messaging::MaxHopsPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (MaxHopsPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::MaxHopsPolicy_out &
-Messaging::MaxHopsPolicy_out::operator= (const ::Messaging::MaxHopsPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::MaxHopsPolicy_out &
-Messaging::MaxHopsPolicy_out::operator= (MaxHopsPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::MaxHopsPolicy_out::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr &
-Messaging::MaxHopsPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_QUEUEORDERPOLICY___VAR_CI_)
-#define _MESSAGING_QUEUEORDERPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::QueueOrderPolicy_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::QueueOrderPolicy_var::QueueOrderPolicy_var (void) // default constructor
-  : ptr_ (QueueOrderPolicy::_nil ())
-{}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::QueueOrderPolicy_var::QueueOrderPolicy_var (const ::Messaging::QueueOrderPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (QueueOrderPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::QueueOrderPolicy_var::~QueueOrderPolicy_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE Messaging::QueueOrderPolicy_var &
-Messaging::QueueOrderPolicy_var::operator= (QueueOrderPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE Messaging::QueueOrderPolicy_var &
-Messaging::QueueOrderPolicy_var::operator= (const ::Messaging::QueueOrderPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::QueueOrderPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE
-Messaging::QueueOrderPolicy_var::operator const ::Messaging::QueueOrderPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::QueueOrderPolicy_var::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr &
-Messaging::QueueOrderPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr &
-Messaging::QueueOrderPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::QueueOrderPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_QUEUEORDERPOLICY___OUT_CI_)
-#define _MESSAGING_QUEUEORDERPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::QueueOrderPolicy_out
-// *************************************************************
 
 #endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
 
 #if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
 
-ACE_INLINE
-Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (QueueOrderPolicy_ptr &p)
-  : ptr_ (p)
+#if !defined (_MESSAGING_QUEUEORDERPOLICY___CI_)
+#define _MESSAGING_QUEUEORDERPOLICY___CI_
+
+ACE_INLINE Messaging::QueueOrderPolicy_ptr
+tao_Messaging_QueueOrderPolicy_duplicate (
+    Messaging::QueueOrderPolicy_ptr p
+  )
 {
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
+  return Messaging::QueueOrderPolicy::_duplicate (p);
 }
 
-ACE_INLINE
-Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (QueueOrderPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_Messaging_QueueOrderPolicy_release (
+    Messaging::QueueOrderPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (const ::Messaging::QueueOrderPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (QueueOrderPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_out &
-Messaging::QueueOrderPolicy_out::operator= (const ::Messaging::QueueOrderPolicy_out &p)
+ACE_INLINE Messaging::QueueOrderPolicy_ptr
+tao_Messaging_QueueOrderPolicy_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (QueueOrderPolicy_out&, p).ptr_;
-  return *this;
+  return Messaging::QueueOrderPolicy::_nil ();
 }
 
-ACE_INLINE Messaging::QueueOrderPolicy_out &
-Messaging::QueueOrderPolicy_out::operator= (const ::Messaging::QueueOrderPolicy_var &p)
+ACE_INLINE Messaging::QueueOrderPolicy_ptr
+tao_Messaging_QueueOrderPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_duplicate (p.ptr ());
-  return *this;
+  return Messaging::QueueOrderPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE Messaging::QueueOrderPolicy_out &
-Messaging::QueueOrderPolicy_out::operator= (QueueOrderPolicy_ptr p)
+ACE_INLINE CORBA::Object *
+tao_Messaging_QueueOrderPolicy_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::QueueOrderPolicy_out::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr &
-Messaging::QueueOrderPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_out::operator-> (void)
-{
-  return this->ptr_;
+  Messaging::QueueOrderPolicy **tmp =
+    ACE_static_cast (Messaging::QueueOrderPolicy **, src);
+  return *tmp;
 }
 
 
@@ -3287,9 +1727,6 @@ Messaging::ExceptionHolder_var::_retn (void)
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CI_)
 #define _MESSAGING_EXCEPTIONHOLDER___OUT_CI_
 
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CI_)
-#define _MESSAGING_EXCEPTIONHOLDER___VAR_CI_
-
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_out
 // *************************************************************
@@ -3362,6 +1799,49 @@ Messaging::ExceptionHolder_out::operator-> (void)
 #if !defined (_MESSAGING_REPLYHANDLER___CI_)
 #define _MESSAGING_REPLYHANDLER___CI_
 
+ACE_INLINE Messaging::ReplyHandler_ptr
+tao_Messaging_ReplyHandler_duplicate (
+    Messaging::ReplyHandler_ptr p
+  )
+{
+  return Messaging::ReplyHandler::_duplicate (p);
+}
+
+ACE_INLINE void
+tao_Messaging_ReplyHandler_release (
+    Messaging::ReplyHandler_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+ACE_INLINE Messaging::ReplyHandler_ptr
+tao_Messaging_ReplyHandler_nil (
+    void
+  )
+{
+  return Messaging::ReplyHandler::_nil ();
+}
+
+ACE_INLINE Messaging::ReplyHandler_ptr
+tao_Messaging_ReplyHandler_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return Messaging::ReplyHandler::_narrow (p, ACE_TRY_ENV);
+}
+
+ACE_INLINE CORBA::Object *
+tao_Messaging_ReplyHandler_upcast (
+    void *src
+  )
+{
+  Messaging::ReplyHandler **tmp =
+    ACE_static_cast (Messaging::ReplyHandler **, src);
+  return *tmp;
+}
+
 ACE_INLINE
 Messaging::ReplyHandler::ReplyHandler (
     TAO_Stub *objref,
@@ -3375,179 +1855,6 @@ Messaging::ReplyHandler::ReplyHandler (
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_REPLYHANDLER___VAR_CI_)
-#define _MESSAGING_REPLYHANDLER___VAR_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyHandler_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyHandler_var::ReplyHandler_var (void) // default constructor
-  : ptr_ (ReplyHandler::_nil ())
-{}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ReplyHandler_var::ReplyHandler_var (const ::Messaging::ReplyHandler_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ReplyHandler::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-Messaging::ReplyHandler_var::~ReplyHandler_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE Messaging::ReplyHandler_var &
-Messaging::ReplyHandler_var::operator= (ReplyHandler_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyHandler_var &
-Messaging::ReplyHandler_var::operator= (const ::Messaging::ReplyHandler_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyHandler::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ReplyHandler_var::operator const ::Messaging::ReplyHandler_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ReplyHandler_var::operator ::Messaging::ReplyHandler_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr &
-Messaging::ReplyHandler_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr &
-Messaging::ReplyHandler_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyHandler::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyHandler_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyHandler::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REPLYHANDLER___OUT_CI_)
-#define _MESSAGING_REPLYHANDLER___OUT_CI_
-
-// *************************************************************
-// Inline operations for class Messaging::ReplyHandler_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::ReplyHandler_out::ReplyHandler_out (ReplyHandler_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyHandler::_nil ();
-}
-
-ACE_INLINE
-Messaging::ReplyHandler_out::ReplyHandler_out (ReplyHandler_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyHandler::_nil ();
-}
-
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-Messaging::ReplyHandler_out::ReplyHandler_out (const ::Messaging::ReplyHandler_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ReplyHandler_out &, p).ptr_)
-{}
-
-ACE_INLINE ::Messaging::ReplyHandler_out &
-Messaging::ReplyHandler_out::operator= (const ::Messaging::ReplyHandler_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyHandler_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyHandler_out &
-Messaging::ReplyHandler_out::operator= (const ::Messaging::ReplyHandler_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyHandler::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE Messaging::ReplyHandler_out &
-Messaging::ReplyHandler_out::operator= (ReplyHandler_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ReplyHandler_out::operator ::Messaging::ReplyHandler_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr &
-Messaging::ReplyHandler_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
@@ -3697,53 +2004,15 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 
 }
 
-ACE_INLINE CORBA::Boolean
+CORBA::Boolean TAO_Export 
 operator<< (
     TAO_OutputCDR &,
     const Messaging::ReplyHandler_ptr
   );
-ACE_INLINE CORBA::Boolean
+CORBA::Boolean TAO_Export 
 operator>> (
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr &
   );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::ReplyHandler_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::ReplyHandler_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::ReplyHandler::_unchecked_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */

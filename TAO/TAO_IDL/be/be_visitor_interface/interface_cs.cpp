@@ -43,22 +43,36 @@ be_visitor_interface_cs::~be_visitor_interface_cs (void)
 int
 be_visitor_interface_cs::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-
   if (node->cli_stub_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   be_type *bt;
 
-  // set the right type;
+  // Set the right type.
   if (this->ctx_->alias ())
     bt = this->ctx_->alias ();
   else
     bt = node;
 
-  os = this->ctx_->stream ();
+  // Generate the _var class.
+  if (node->gen_var_impl () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for _var failed\n"), -1);
+    }
 
-  os->indent (); // start with whatever indentation level we are at
+  // Generate the _out class.
+  if (node->gen_out_impl () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for _out failed\n"), -1);
+    }
 
   be_visitor *visitor = 0;
   be_visitor_context ctx;
@@ -72,6 +86,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
   visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
@@ -81,6 +96,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                          "codegen for interceptors classes failed\n"),
                         -1);
     }
+
   delete visitor;
   visitor = 0;
 
@@ -99,8 +115,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
-      delete visitor;
 
+      delete visitor;
 
       visitor = 0;
       ctx = *this->ctx_;
@@ -116,8 +132,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
+
       delete visitor;
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
    // Generate the destructor and default constructor.
   *os << be_nl;
@@ -201,13 +220,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // Then generate the code for the static methods
   // Local interfaces don't have any operators.
   if (! node->is_local ())
-    *os << "void "
-        << node->name () << "::_tao_any_destructor (void *x)" << be_nl
-        << "{" << be_idt_nl
-        << node->local_name () << " *tmp = ACE_static_cast ("
-        << node->local_name () << "*,x);" << be_nl
-        << "CORBA::release (tmp);" << be_uidt_nl
-        << "}\n" << be_nl;
+    {
+      *os << "void "
+          << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+          << "{" << be_idt_nl
+          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << "*,x);" << be_nl
+          << "CORBA::release (tmp);" << be_uidt_nl
+          << "}\n" << be_nl;
+    }
 
   // The _narrow method
 
@@ -237,6 +258,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "::_nil ();" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl;
     }
+
   *os << "return " << bt->nested_type_name (this->ctx_->scope ())
       << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -299,6 +321,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "ACE_NEW_RETURN (default_proxy, ::" << bt->name ()
           << " (stub, 0, obj->_servant ()), " << bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ());"<< be_uidt_nl;
+
       if (be_global->gen_smart_proxies ())
         {
           *os << "  return TAO_" << node->flat_name ()
@@ -309,11 +332,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         {
           *os << "  return default_proxy;" << be_nl;
         }
+
       *os << "}" << be_uidt_nl
           << "else " << be_idt_nl;
     }
   else
-    *os << be_idt;
+    {
+      *os << be_idt;
+    }
+
   *os << "return" << be_idt_nl
       << "ACE_reinterpret_cast" << be_idt_nl
       <<"(" << be_idt_nl
@@ -352,6 +379,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       os->incr_indent ();
       *os << "if (\n";
       os->incr_indent (0);
+
       if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -377,6 +405,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "void *retv = 0;" << be_nl
       << "if ";
+
   if (node->traverse_inheritance_graph (be_interface::queryinterface_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -403,17 +432,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   os->decr_indent (0);
 
-  /*
-  *os << node->full_base_proxy_impl_name () << " &"
-      << node->full_name () << "::_proxy_impl (CORBA::Environment &ACE_TRY_ENV)" << be_nl
-      << "{" << be_idt << be_nl
-      << "return this->the"
-      << node->base_proxy_broker_name ()
-      << "_->select_proxy (this, ACE_TRY_ENV);"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl;
-  */
-
   // generate code for the elements of the interface
   if (this->visit_scope (node) == -1)
     {
@@ -424,7 +442,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
 
-  // Smart Proxy classes
+  // Smart Proxy classes.
   if (! node->is_local ())
     {
       be_visitor_context ctx (*this->ctx_);
@@ -432,15 +450,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (node->accept (visitor) == -1))
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
                              "visit_interface - "
                              "codegen for smart proxy classes failed\n"),
                             -1);
         }
+
       delete visitor;
       visitor = 0;
 
@@ -450,6 +469,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (node->accept (visitor) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -459,6 +479,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                             -1);
         }
 
+      delete visitor;
     }
 
   return 0;

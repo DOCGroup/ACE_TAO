@@ -331,6 +331,14 @@ TAO_NAMESPACE  RTCORBA
     PriorityModelPolicy_ptr _retn (void);
     PriorityModelPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static PriorityModelPolicy_ptr duplicate (PriorityModelPolicy_ptr);
+    static void release (PriorityModelPolicy_ptr);
+    static PriorityModelPolicy_ptr nil (void);
+    static PriorityModelPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     PriorityModelPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -462,6 +470,14 @@ class TAO_Export PriorityModelPolicy: public virtual CORBA::Policy
     ThreadpoolPolicy_ptr _retn (void);
     ThreadpoolPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ThreadpoolPolicy_ptr duplicate (ThreadpoolPolicy_ptr);
+    static void release (ThreadpoolPolicy_ptr);
+    static ThreadpoolPolicy_ptr nil (void);
+    static ThreadpoolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ThreadpoolPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -583,6 +599,14 @@ class TAO_Export ThreadpoolPolicy: public virtual CORBA::Policy
     ProtocolProperties_ptr _retn (void);
     ProtocolProperties_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ProtocolProperties_ptr duplicate (ProtocolProperties_ptr);
+    static void release (ProtocolProperties_ptr);
+    static ProtocolProperties_ptr nil (void);
+    static ProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -916,6 +940,14 @@ class TAO_Export ProtocolProperties : public virtual CORBA_Object,
     ServerProtocolPolicy_ptr _retn (void);
     ServerProtocolPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ServerProtocolPolicy_ptr duplicate (ServerProtocolPolicy_ptr);
+    static void release (ServerProtocolPolicy_ptr);
+    static ServerProtocolPolicy_ptr nil (void);
+    static ServerProtocolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ServerProtocolPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1039,6 +1071,14 @@ class TAO_Export ServerProtocolPolicy: public virtual CORBA::Policy
     ClientProtocolPolicy_ptr _retn (void);
     ClientProtocolPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ClientProtocolPolicy_ptr duplicate (ClientProtocolPolicy_ptr);
+    static void release (ClientProtocolPolicy_ptr);
+    static ClientProtocolPolicy_ptr nil (void);
+    static ClientProtocolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ClientProtocolPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1162,6 +1202,14 @@ class TAO_Export ClientProtocolPolicy: public virtual CORBA::Policy
     PrivateConnectionPolicy_ptr _retn (void);
     PrivateConnectionPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static PrivateConnectionPolicy_ptr duplicate (PrivateConnectionPolicy_ptr);
+    static void release (PrivateConnectionPolicy_ptr);
+    static PrivateConnectionPolicy_ptr nil (void);
+    static PrivateConnectionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     PrivateConnectionPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1275,6 +1323,14 @@ class TAO_Export PrivateConnectionPolicy: public virtual CORBA::Policy
     TCPProtocolProperties_ptr _retn (void);
     TCPProtocolProperties_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static TCPProtocolProperties_ptr duplicate (TCPProtocolProperties_ptr);
+    static void release (TCPProtocolProperties_ptr);
+    static TCPProtocolProperties_ptr nil (void);
+    static TCPProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     TCPProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1473,6 +1529,14 @@ class TAO_Export TCPProtocolProperties: public virtual ProtocolProperties
     GIOPProtocolProperties_ptr _retn (void);
     GIOPProtocolProperties_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static GIOPProtocolProperties_ptr duplicate (GIOPProtocolProperties_ptr);
+    static void release (GIOPProtocolProperties_ptr);
+    static GIOPProtocolProperties_ptr nil (void);
+    static GIOPProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     GIOPProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1586,6 +1650,14 @@ class TAO_Export GIOPProtocolProperties: public virtual ProtocolProperties
     UnixDomainProtocolProperties_ptr _retn (void);
     UnixDomainProtocolProperties_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static UnixDomainProtocolProperties_ptr duplicate (UnixDomainProtocolProperties_ptr);
+    static void release (UnixDomainProtocolProperties_ptr);
+    static UnixDomainProtocolProperties_ptr nil (void);
+    static UnixDomainProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     UnixDomainProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1733,6 +1805,14 @@ class TAO_Export UnixDomainProtocolProperties: public virtual ProtocolProperties
     SharedMemoryProtocolProperties_ptr _retn (void);
     SharedMemoryProtocolProperties_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static SharedMemoryProtocolProperties_ptr duplicate (SharedMemoryProtocolProperties_ptr);
+    static void release (SharedMemoryProtocolProperties_ptr);
+    static SharedMemoryProtocolProperties_ptr nil (void);
+    static SharedMemoryProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     SharedMemoryProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2102,6 +2182,14 @@ class TAO_Export SharedMemoryProtocolProperties: public virtual ProtocolProperti
     PriorityBandedConnectionPolicy_ptr _retn (void);
     PriorityBandedConnectionPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static PriorityBandedConnectionPolicy_ptr duplicate (PriorityBandedConnectionPolicy_ptr);
+    static void release (PriorityBandedConnectionPolicy_ptr);
+    static PriorityBandedConnectionPolicy_ptr nil (void);
+    static PriorityBandedConnectionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     PriorityBandedConnectionPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2223,6 +2311,14 @@ class TAO_Export PriorityBandedConnectionPolicy: public virtual CORBA::Policy
     Current_ptr _retn (void);
     Current_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static Current_ptr duplicate (Current_ptr);
+    static void release (Current_ptr);
+    static Current_ptr nil (void);
+    static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     Current_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2353,6 +2449,14 @@ class TAO_Export Current: public virtual CORBA::Current
     Mutex_ptr _retn (void);
     Mutex_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static Mutex_ptr duplicate (Mutex_ptr);
+    static void release (Mutex_ptr);
+    static Mutex_ptr nil (void);
+    static Mutex_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     Mutex_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2491,6 +2595,14 @@ class TAO_Export Mutex : public virtual CORBA_Object
     RTORB_ptr _retn (void);
     RTORB_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RTORB_ptr duplicate (RTORB_ptr);
+    static void release (RTORB_ptr);
+    static RTORB_ptr nil (void);
+    static RTORB_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RTORB_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2798,8 +2910,6 @@ class TAO_Export RTORB : public virtual CORBA_Object
 
 }
 TAO_NAMESPACE_CLOSE // module RTCORBA
-
-// Proxy Broker Factory function pointer declarations.
 
 TAO_Export void operator<<= (CORBA::Any &, const RTCORBA::ThreadpoolLane &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, RTCORBA::ThreadpoolLane*); // noncopying version

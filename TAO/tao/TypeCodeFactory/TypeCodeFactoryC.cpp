@@ -1,4 +1,4 @@
-// -*- C++ -*- 
+// -*- C++ -*-
 //
 // $Id$
 
@@ -17,14 +17,10 @@
 //       http://doc.ece.uci.edu/
 //
 // Information about TAO is available at:
-//                 http://www.cs.wustl.edu/~schmidt/TAO.html
+//     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-# include "TypeCodeFactory_Loader.h"
-# include "tao/Sequence_T.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+#include "TypeCodeFactory_Loader.h"
+#include "tao/Sequence_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
@@ -34,30 +30,213 @@
 #include "TypeCodeFactoryC.inl"
 #endif /* !defined INLINE */
 
-// Default constructor.
-CORBA_TypeCodeFactory::CORBA_TypeCodeFactory (void)
+// *************************************************************
+// Operations for class CORBA_TypeCodeFactory_var
+// *************************************************************
+
+CORBA_TypeCodeFactory_var::CORBA_TypeCodeFactory_var (void) // default constructor
+  : ptr_ (CORBA_TypeCodeFactory::_nil ())
 {}
 
-// Destructor.
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+CORBA_TypeCodeFactory_var::CORBA_TypeCodeFactory_var (const ::CORBA_TypeCodeFactory_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (CORBA_TypeCodeFactory::_duplicate (p.ptr ()))
+{}
+
+CORBA_TypeCodeFactory_var::~CORBA_TypeCodeFactory_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+CORBA_TypeCodeFactory_var &
+CORBA_TypeCodeFactory_var::operator= (CORBA_TypeCodeFactory_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_TypeCodeFactory_var &
+CORBA_TypeCodeFactory_var::operator= (const ::CORBA_TypeCodeFactory_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::CORBA_TypeCodeFactory::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+CORBA_TypeCodeFactory_var::operator const ::CORBA_TypeCodeFactory_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+CORBA_TypeCodeFactory_var::operator ::CORBA_TypeCodeFactory_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr &
+CORBA_TypeCodeFactory_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr &
+CORBA_TypeCodeFactory_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::CORBA_TypeCodeFactory_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+  return val;
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::duplicate (CORBA_TypeCodeFactory_ptr p)
+{
+  return ::CORBA_TypeCodeFactory::_duplicate (p);
+}
+
+void
+CORBA_TypeCodeFactory_var::release (CORBA_TypeCodeFactory_ptr p)
+{
+  CORBA::release (p);
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::nil (void)
+{
+  return ::CORBA_TypeCodeFactory::_nil ();
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::CORBA_TypeCodeFactory::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+CORBA_TypeCodeFactory_var::upcast (void *src)
+{
+  CORBA_TypeCodeFactory **tmp =
+    ACE_static_cast (CORBA_TypeCodeFactory **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class CORBA_TypeCodeFactory_out
+// *************************************************************
+
+CORBA_TypeCodeFactory_out::CORBA_TypeCodeFactory_out (CORBA_TypeCodeFactory_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+}
+
+CORBA_TypeCodeFactory_out::CORBA_TypeCodeFactory_out (CORBA_TypeCodeFactory_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+}
+
+CORBA_TypeCodeFactory_out::CORBA_TypeCodeFactory_out (const ::CORBA_TypeCodeFactory_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_TypeCodeFactory_out &, p).ptr_)
+{}
+
+::CORBA_TypeCodeFactory_out &
+CORBA_TypeCodeFactory_out::operator= (const ::CORBA_TypeCodeFactory_out &p)
+{
+  this->ptr_ = ACE_const_cast (CORBA_TypeCodeFactory_out&, p).ptr_;
+  return *this;
+}
+
+CORBA_TypeCodeFactory_out &
+CORBA_TypeCodeFactory_out::operator= (const ::CORBA_TypeCodeFactory_var &p)
+{
+  this->ptr_ = ::CORBA_TypeCodeFactory::_duplicate (p.ptr ());
+  return *this;
+}
+
+CORBA_TypeCodeFactory_out &
+CORBA_TypeCodeFactory_out::operator= (CORBA_TypeCodeFactory_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+CORBA_TypeCodeFactory_out::operator ::CORBA_TypeCodeFactory_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr &
+CORBA_TypeCodeFactory_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+// default constructor
+CORBA_TypeCodeFactory::CORBA_TypeCodeFactory ()
+{
+  }
+
+// destructor
 CORBA_TypeCodeFactory::~CORBA_TypeCodeFactory (void)
 {}
 
-CORBA::TypeCodeFactory_ptr CORBA::TypeCodeFactory::_narrow (
+CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  return CORBA::TypeCodeFactory::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return CORBA_TypeCodeFactory::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::TypeCodeFactory_ptr CORBA::TypeCodeFactory::_unchecked_narrow (
+CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_unchecked_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::TypeCodeFactory::_nil ();
-
+    return CORBA_TypeCodeFactory::_nil ();
   return
       ACE_reinterpret_cast
         (
@@ -73,16 +252,15 @@ CORBA::TypeCodeFactory_ptr CORBA::TypeCodeFactory::_unchecked_narrow (
         );
 }
 
-CORBA::TypeCodeFactory_ptr
-CORBA::TypeCodeFactory::_duplicate (CORBA::TypeCodeFactory_ptr obj)
+CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory::_duplicate (CORBA_TypeCodeFactory_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_add_ref ();
   return obj;
 }
 
-void *
-CORBA::TypeCodeFactory::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA_TypeCodeFactory::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
@@ -98,16 +276,15 @@ CORBA::TypeCodeFactory::_tao_QueryInterface (ptr_arith_t type)
   return retv;
 }
 
-const char *
-CORBA::TypeCodeFactory::_interface_repository_id (void) const
+const char* CORBA_TypeCodeFactory::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/TypeCodeFactory:1.0";
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>;
+    template class TAO_Object_Manager<CORBA_TypeCodeFactory,CORBA_TypeCodeFactory_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>
+  #  pragma instantiate TAO_Object_Manager<CORBA_TypeCodeFactory,CORBA_TypeCodeFactory_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

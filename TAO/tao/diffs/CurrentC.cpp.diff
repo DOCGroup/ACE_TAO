@@ -1,10 +1,27 @@
---- CurrentC.cpp	Sat Jun 24 02:48:51 2000
-+++ CurrentC.cpp.mod	Sat Jun 24 02:47:40 2000
-@@ -7,10 +7,10 @@
+--- orig/CurrentC.cpp	Mon Apr 16 19:17:32 2001
++++ CurrentC.cpp	Mon Apr 16 19:21:24 2001
+@@ -1,4 +1,4 @@
+-// -*- C++ -*-
++// -*- C++ -*- $Id$ */
+ //
+ // $Id$
+ 
+@@ -19,21 +19,10 @@
  // Information about TAO is available at:
- //                 http://www.cs.wustl.edu/~schmidt/TAO.html
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
  
 -#include "CurrentC.h"
+-
+-#include "tao/Stub.h"
+-#include "tao/Invocation.h"
+-#include "tao/ClientRequestInfo.h"
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+-
+-#if defined (__BORLANDC__)
+-#pragma option -w-rvl -w-rch -w-ccc -w-aus
+-#endif /* __BORLANDC__ */
 +#include "tao/CurrentC.h"
  
  #if !defined (__ACE_INLINE__)
@@ -12,8 +29,29 @@
 +#include "tao/CurrentC.i"
  #endif /* !defined INLINE */
  
+ // *************************************************************
+@@ -159,7 +148,7 @@
+   return *tmp;
+ }
+ // *************************************************************
+-// Inline operations for class CORBA_Current_out
++// Operations for class CORBA_Current_out
+ // *************************************************************
  
-@@ -78,7 +78,7 @@
+ CORBA_Current_out::CORBA_Current_out (CORBA_Current_ptr &p)
+@@ -219,9 +208,8 @@
+ 
+ 
+ // default constructor
+-CORBA_Current::CORBA_Current ()
+-{
+-  }
++CORBA_Current::CORBA_Current (void)
++{}
+ 
+ // destructor
+ CORBA_Current::~CORBA_Current (void)
+@@ -283,7 +271,7 @@
  
  const char* CORBA_Current::_interface_repository_id (void) const
  {
@@ -22,7 +60,7 @@
  }
  
  #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-@@ -87,4 +87,3 @@
+@@ -292,4 +280,3 @@
    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
    #  pragma instantiate TAO_Object_Manager<CORBA_Current,CORBA_Current_var>
  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

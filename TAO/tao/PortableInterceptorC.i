@@ -20,170 +20,50 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_INTERCEPTOR___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___CI_)
+#define _PORTABLEINTERCEPTOR_INTERCEPTOR___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::Interceptor_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::Interceptor_var::Interceptor_var (void) // default constructor
-  : ptr_ (Interceptor::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::ptr (void) const
+ACE_INLINE PortableInterceptor::Interceptor_ptr
+tao_PortableInterceptor_Interceptor_duplicate (
+    PortableInterceptor::Interceptor_ptr p
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::Interceptor::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::Interceptor_var::Interceptor_var (const ::PortableInterceptor::Interceptor_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (Interceptor::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::Interceptor_var::~Interceptor_var (void) // destructor
+ACE_INLINE void
+tao_PortableInterceptor_Interceptor_release (
+    PortableInterceptor::Interceptor_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE PortableInterceptor::Interceptor_var &
-PortableInterceptor::Interceptor_var::operator= (Interceptor_ptr p)
+ACE_INLINE PortableInterceptor::Interceptor_ptr
+tao_PortableInterceptor_Interceptor_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return PortableInterceptor::Interceptor::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::Interceptor_var &
-PortableInterceptor::Interceptor_var::operator= (const ::PortableInterceptor::Interceptor_var &p)
+ACE_INLINE PortableInterceptor::Interceptor_ptr
+tao_PortableInterceptor_Interceptor_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::Interceptor::_duplicate (p.ptr ());
-  }
-  return *this;
+  return PortableInterceptor::Interceptor::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-PortableInterceptor::Interceptor_var::operator const ::PortableInterceptor::Interceptor_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_Interceptor_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::Interceptor_var::operator ::PortableInterceptor::Interceptor_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr &
-PortableInterceptor::Interceptor_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr &
-PortableInterceptor::Interceptor_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::Interceptor::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::Interceptor_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::Interceptor::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_INTERCEPTOR___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::Interceptor_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::Interceptor_out::Interceptor_out (Interceptor_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::Interceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::Interceptor_out::Interceptor_out (Interceptor_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::Interceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::Interceptor_out::Interceptor_out (const ::PortableInterceptor::Interceptor_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (Interceptor_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_out &
-PortableInterceptor::Interceptor_out::operator= (const ::PortableInterceptor::Interceptor_out &p)
-{
-  this->ptr_ = ACE_const_cast (Interceptor_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::Interceptor_out &
-PortableInterceptor::Interceptor_out::operator= (const ::PortableInterceptor::Interceptor_var &p)
-{
-  this->ptr_ = ::PortableInterceptor::Interceptor::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::Interceptor_out &
-PortableInterceptor::Interceptor_out::operator= (Interceptor_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::Interceptor_out::operator ::PortableInterceptor::Interceptor_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr &
-PortableInterceptor::Interceptor_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_out::operator-> (void)
-{
-  return this->ptr_;
+  PortableInterceptor::Interceptor **tmp =
+    ACE_static_cast (PortableInterceptor::Interceptor **, src);
+  return *tmp;
 }
 
 
@@ -198,1530 +78,450 @@ PortableInterceptor::Interceptor_out::operator-> (void)
 // *************************************************************
 
 
-#if !defined (_PORTABLEINTERCEPTOR_CURRENT___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_CURRENT___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_CURRENT___CI_)
+#define _PORTABLEINTERCEPTOR_CURRENT___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::Current_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::Current_var::Current_var (void) // default constructor
-  : ptr_ (Current::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::ptr (void) const
+ACE_INLINE PortableInterceptor::Current_ptr
+tao_PortableInterceptor_Current_duplicate (
+    PortableInterceptor::Current_ptr p
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::Current::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::Current_var::Current_var (const ::PortableInterceptor::Current_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (Current::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::Current_var::~Current_var (void) // destructor
+ACE_INLINE void
+tao_PortableInterceptor_Current_release (
+    PortableInterceptor::Current_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE PortableInterceptor::Current_var &
-PortableInterceptor::Current_var::operator= (Current_ptr p)
+ACE_INLINE PortableInterceptor::Current_ptr
+tao_PortableInterceptor_Current_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return PortableInterceptor::Current::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::Current_var &
-PortableInterceptor::Current_var::operator= (const ::PortableInterceptor::Current_var &p)
+ACE_INLINE PortableInterceptor::Current_ptr
+tao_PortableInterceptor_Current_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::Current::_duplicate (p.ptr ());
-  }
-  return *this;
+  return PortableInterceptor::Current::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-PortableInterceptor::Current_var::operator const ::PortableInterceptor::Current_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_Current_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::Current_var::operator ::PortableInterceptor::Current_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr &
-PortableInterceptor::Current_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr &
-PortableInterceptor::Current_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::Current::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::Current_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::Current::_nil ();
-  return val;
+  PortableInterceptor::Current **tmp =
+    ACE_static_cast (PortableInterceptor::Current **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_CURRENT___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_CURRENT___OUT_CI_
+#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___CI_)
+#define _PORTABLEINTERCEPTOR_REQUESTINFO___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::Current_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::Current_out::Current_out (Current_ptr &p)
-  : ptr_ (p)
+ACE_INLINE PortableInterceptor::RequestInfo_ptr
+tao_PortableInterceptor_RequestInfo_duplicate (
+    PortableInterceptor::RequestInfo_ptr p
+  )
 {
-  this->ptr_ = ::PortableInterceptor::Current::_nil ();
+  return PortableInterceptor::RequestInfo::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::Current_out::Current_out (Current_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_PortableInterceptor_RequestInfo_release (
+    PortableInterceptor::RequestInfo_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::Current::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-PortableInterceptor::Current_out::Current_out (const ::PortableInterceptor::Current_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (Current_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::Current_out &
-PortableInterceptor::Current_out::operator= (const ::PortableInterceptor::Current_out &p)
+ACE_INLINE PortableInterceptor::RequestInfo_ptr
+tao_PortableInterceptor_RequestInfo_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (Current_out&, p).ptr_;
-  return *this;
+  return PortableInterceptor::RequestInfo::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::Current_out &
-PortableInterceptor::Current_out::operator= (const ::PortableInterceptor::Current_var &p)
+ACE_INLINE PortableInterceptor::RequestInfo_ptr
+tao_PortableInterceptor_RequestInfo_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::PortableInterceptor::Current::_duplicate (p.ptr ());
-  return *this;
+  return PortableInterceptor::RequestInfo::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE PortableInterceptor::Current_out &
-PortableInterceptor::Current_out::operator= (Current_ptr p)
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_RequestInfo_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::Current_out::operator ::PortableInterceptor::Current_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr &
-PortableInterceptor::Current_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_out::operator-> (void)
-{
-  return this->ptr_;
+  PortableInterceptor::RequestInfo **tmp =
+    ACE_static_cast (PortableInterceptor::RequestInfo **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::RequestInfo_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::RequestInfo_var (void) // default constructor
-  : ptr_ (RequestInfo::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::ptr (void) const
+ACE_INLINE PortableInterceptor::ClientRequestInfo_ptr
+tao_PortableInterceptor_ClientRequestInfo_duplicate (
+    PortableInterceptor::ClientRequestInfo_ptr p
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::ClientRequestInfo::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::RequestInfo_var (const ::PortableInterceptor::RequestInfo_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (RequestInfo::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_var::~RequestInfo_var (void) // destructor
+ACE_INLINE void
+tao_PortableInterceptor_ClientRequestInfo_release (
+    PortableInterceptor::ClientRequestInfo_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE PortableInterceptor::RequestInfo_var &
-PortableInterceptor::RequestInfo_var::operator= (RequestInfo_ptr p)
+ACE_INLINE PortableInterceptor::ClientRequestInfo_ptr
+tao_PortableInterceptor_ClientRequestInfo_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return PortableInterceptor::ClientRequestInfo::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::RequestInfo_var &
-PortableInterceptor::RequestInfo_var::operator= (const ::PortableInterceptor::RequestInfo_var &p)
+ACE_INLINE PortableInterceptor::ClientRequestInfo_ptr
+tao_PortableInterceptor_ClientRequestInfo_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::RequestInfo::_duplicate (p.ptr ());
-  }
-  return *this;
+  return PortableInterceptor::ClientRequestInfo::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-PortableInterceptor::RequestInfo_var::operator const ::PortableInterceptor::RequestInfo_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_ClientRequestInfo_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::RequestInfo_var::operator ::PortableInterceptor::RequestInfo_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr &
-PortableInterceptor::RequestInfo_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr &
-PortableInterceptor::RequestInfo_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::RequestInfo::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::RequestInfo_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::RequestInfo::_nil ();
-  return val;
+  PortableInterceptor::ClientRequestInfo **tmp =
+    ACE_static_cast (PortableInterceptor::ClientRequestInfo **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___OUT_CI_
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::RequestInfo_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::RequestInfo_out (RequestInfo_ptr &p)
-  : ptr_ (p)
+ACE_INLINE PortableInterceptor::ServerRequestInfo_ptr
+tao_PortableInterceptor_ServerRequestInfo_duplicate (
+    PortableInterceptor::ServerRequestInfo_ptr p
+  )
 {
-  this->ptr_ = ::PortableInterceptor::RequestInfo::_nil ();
+  return PortableInterceptor::ServerRequestInfo::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::RequestInfo_out (RequestInfo_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_PortableInterceptor_ServerRequestInfo_release (
+    PortableInterceptor::ServerRequestInfo_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::RequestInfo::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-PortableInterceptor::RequestInfo_out::RequestInfo_out (const ::PortableInterceptor::RequestInfo_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RequestInfo_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_out &
-PortableInterceptor::RequestInfo_out::operator= (const ::PortableInterceptor::RequestInfo_out &p)
+ACE_INLINE PortableInterceptor::ServerRequestInfo_ptr
+tao_PortableInterceptor_ServerRequestInfo_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (RequestInfo_out&, p).ptr_;
-  return *this;
+  return PortableInterceptor::ServerRequestInfo::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::RequestInfo_out &
-PortableInterceptor::RequestInfo_out::operator= (const ::PortableInterceptor::RequestInfo_var &p)
+ACE_INLINE PortableInterceptor::ServerRequestInfo_ptr
+tao_PortableInterceptor_ServerRequestInfo_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::PortableInterceptor::RequestInfo::_duplicate (p.ptr ());
-  return *this;
+  return PortableInterceptor::ServerRequestInfo::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE PortableInterceptor::RequestInfo_out &
-PortableInterceptor::RequestInfo_out::operator= (RequestInfo_ptr p)
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_ServerRequestInfo_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::RequestInfo_out::operator ::PortableInterceptor::RequestInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr &
-PortableInterceptor::RequestInfo_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_out::operator-> (void)
-{
-  return this->ptr_;
+  PortableInterceptor::ServerRequestInfo **tmp =
+    ACE_static_cast (PortableInterceptor::ServerRequestInfo **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ClientRequestInfo_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInfo_var::ClientRequestInfo_var (void) // default constructor
-  : ptr_ (ClientRequestInfo::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::ptr (void) const
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+tao_PortableInterceptor_ClientRequestInterceptor_duplicate (
+    PortableInterceptor::ClientRequestInterceptor_ptr p
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::ClientRequestInterceptor::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ClientRequestInfo_var::ClientRequestInfo_var (const ::PortableInterceptor::ClientRequestInfo_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ClientRequestInfo::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInfo_var::~ClientRequestInfo_var (void) // destructor
+ACE_INLINE void
+tao_PortableInterceptor_ClientRequestInterceptor_release (
+    PortableInterceptor::ClientRequestInterceptor_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInfo_var &
-PortableInterceptor::ClientRequestInfo_var::operator= (ClientRequestInfo_ptr p)
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+tao_PortableInterceptor_ClientRequestInterceptor_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return PortableInterceptor::ClientRequestInterceptor::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInfo_var &
-PortableInterceptor::ClientRequestInfo_var::operator= (const ::PortableInterceptor::ClientRequestInfo_var &p)
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+tao_PortableInterceptor_ClientRequestInterceptor_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::ClientRequestInfo::_duplicate (p.ptr ());
-  }
-  return *this;
+  return PortableInterceptor::ClientRequestInterceptor::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-PortableInterceptor::ClientRequestInfo_var::operator const ::PortableInterceptor::ClientRequestInfo_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_ClientRequestInterceptor_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::ClientRequestInfo_var::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr &
-PortableInterceptor::ClientRequestInfo_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr &
-PortableInterceptor::ClientRequestInfo_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ClientRequestInfo::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::ClientRequestInfo_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::ClientRequestInfo::_nil ();
-  return val;
+  PortableInterceptor::ClientRequestInterceptor **tmp =
+    ACE_static_cast (PortableInterceptor::ClientRequestInterceptor **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___OUT_CI_
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ClientRequestInfo_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInfo_out::ClientRequestInfo_out (ClientRequestInfo_ptr &p)
-  : ptr_ (p)
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+tao_PortableInterceptor_ServerRequestInterceptor_duplicate (
+    PortableInterceptor::ServerRequestInterceptor_ptr p
+  )
 {
-  this->ptr_ = ::PortableInterceptor::ClientRequestInfo::_nil ();
+  return PortableInterceptor::ServerRequestInterceptor::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ClientRequestInfo_out::ClientRequestInfo_out (ClientRequestInfo_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_PortableInterceptor_ServerRequestInterceptor_release (
+    PortableInterceptor::ServerRequestInterceptor_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ClientRequestInfo::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ClientRequestInfo_out::ClientRequestInfo_out (const ::PortableInterceptor::ClientRequestInfo_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ClientRequestInfo_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_out &
-PortableInterceptor::ClientRequestInfo_out::operator= (const ::PortableInterceptor::ClientRequestInfo_out &p)
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+tao_PortableInterceptor_ServerRequestInterceptor_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (ClientRequestInfo_out&, p).ptr_;
-  return *this;
+  return PortableInterceptor::ServerRequestInterceptor::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInfo_out &
-PortableInterceptor::ClientRequestInfo_out::operator= (const ::PortableInterceptor::ClientRequestInfo_var &p)
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+tao_PortableInterceptor_ServerRequestInterceptor_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::PortableInterceptor::ClientRequestInfo::_duplicate (p.ptr ());
-  return *this;
+  return PortableInterceptor::ServerRequestInterceptor::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE PortableInterceptor::ClientRequestInfo_out &
-PortableInterceptor::ClientRequestInfo_out::operator= (ClientRequestInfo_ptr p)
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_ServerRequestInterceptor_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ClientRequestInfo_out::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr &
-PortableInterceptor::ClientRequestInfo_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_out::operator-> (void)
-{
-  return this->ptr_;
+  PortableInterceptor::ServerRequestInterceptor **tmp =
+    ACE_static_cast (PortableInterceptor::ServerRequestInterceptor **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_IORINFO___CI_)
+#define _PORTABLEINTERCEPTOR_IORINFO___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ServerRequestInfo_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInfo_var::ServerRequestInfo_var (void) // default constructor
-  : ptr_ (ServerRequestInfo::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::ptr (void) const
+ACE_INLINE PortableInterceptor::IORInfo_ptr
+tao_PortableInterceptor_IORInfo_duplicate (
+    PortableInterceptor::IORInfo_ptr p
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::IORInfo::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ServerRequestInfo_var::ServerRequestInfo_var (const ::PortableInterceptor::ServerRequestInfo_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ServerRequestInfo::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInfo_var::~ServerRequestInfo_var (void) // destructor
+ACE_INLINE void
+tao_PortableInterceptor_IORInfo_release (
+    PortableInterceptor::IORInfo_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInfo_var &
-PortableInterceptor::ServerRequestInfo_var::operator= (ServerRequestInfo_ptr p)
+ACE_INLINE PortableInterceptor::IORInfo_ptr
+tao_PortableInterceptor_IORInfo_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return PortableInterceptor::IORInfo::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInfo_var &
-PortableInterceptor::ServerRequestInfo_var::operator= (const ::PortableInterceptor::ServerRequestInfo_var &p)
+ACE_INLINE PortableInterceptor::IORInfo_ptr
+tao_PortableInterceptor_IORInfo_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::ServerRequestInfo::_duplicate (p.ptr ());
-  }
-  return *this;
+  return PortableInterceptor::IORInfo::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-PortableInterceptor::ServerRequestInfo_var::operator const ::PortableInterceptor::ServerRequestInfo_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_IORInfo_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::ServerRequestInfo_var::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr &
-PortableInterceptor::ServerRequestInfo_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr &
-PortableInterceptor::ServerRequestInfo_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ServerRequestInfo::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::ServerRequestInfo_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::ServerRequestInfo::_nil ();
-  return val;
+  PortableInterceptor::IORInfo **tmp =
+    ACE_static_cast (PortableInterceptor::IORInfo **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___OUT_CI_
+#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_)
+#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ServerRequestInfo_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInfo_out::ServerRequestInfo_out (ServerRequestInfo_ptr &p)
-  : ptr_ (p)
+ACE_INLINE PortableInterceptor::IORInterceptor_ptr
+tao_PortableInterceptor_IORInterceptor_duplicate (
+    PortableInterceptor::IORInterceptor_ptr p
+  )
 {
-  this->ptr_ = ::PortableInterceptor::ServerRequestInfo::_nil ();
+  return PortableInterceptor::IORInterceptor::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ServerRequestInfo_out::ServerRequestInfo_out (ServerRequestInfo_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_PortableInterceptor_IORInterceptor_release (
+    PortableInterceptor::IORInterceptor_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ServerRequestInfo::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ServerRequestInfo_out::ServerRequestInfo_out (const ::PortableInterceptor::ServerRequestInfo_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ServerRequestInfo_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_out &
-PortableInterceptor::ServerRequestInfo_out::operator= (const ::PortableInterceptor::ServerRequestInfo_out &p)
+ACE_INLINE PortableInterceptor::IORInterceptor_ptr
+tao_PortableInterceptor_IORInterceptor_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (ServerRequestInfo_out&, p).ptr_;
-  return *this;
+  return PortableInterceptor::IORInterceptor::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInfo_out &
-PortableInterceptor::ServerRequestInfo_out::operator= (const ::PortableInterceptor::ServerRequestInfo_var &p)
+ACE_INLINE PortableInterceptor::IORInterceptor_ptr
+tao_PortableInterceptor_IORInterceptor_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::PortableInterceptor::ServerRequestInfo::_duplicate (p.ptr ());
-  return *this;
+  return PortableInterceptor::IORInterceptor::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE PortableInterceptor::ServerRequestInfo_out &
-PortableInterceptor::ServerRequestInfo_out::operator= (ServerRequestInfo_ptr p)
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_IORInterceptor_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ServerRequestInfo_out::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr &
-PortableInterceptor::ServerRequestInfo_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_out::operator-> (void)
-{
-  return this->ptr_;
+  PortableInterceptor::IORInterceptor **tmp =
+    ACE_static_cast (PortableInterceptor::IORInterceptor **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___CI_)
+#define _PORTABLEINTERCEPTOR_POLICYFACTORY___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ClientRequestInterceptor_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_var::ClientRequestInterceptor_var (void) // default constructor
-  : ptr_ (ClientRequestInterceptor::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_var::ClientRequestInterceptor_var (const ::PortableInterceptor::ClientRequestInterceptor_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ClientRequestInterceptor::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_var::~ClientRequestInterceptor_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_var &
-PortableInterceptor::ClientRequestInterceptor_var::operator= (ClientRequestInterceptor_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_var &
-PortableInterceptor::ClientRequestInterceptor_var::operator= (const ::PortableInterceptor::ClientRequestInterceptor_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::ClientRequestInterceptor::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ClientRequestInterceptor_var::operator const ::PortableInterceptor::ClientRequestInterceptor_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::ClientRequestInterceptor_var::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr &
-PortableInterceptor::ClientRequestInterceptor_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr &
-PortableInterceptor::ClientRequestInterceptor_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ClientRequestInterceptor::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::ClientRequestInterceptor_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::ClientRequestInterceptor::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::ClientRequestInterceptor_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_out::ClientRequestInterceptor_out (ClientRequestInterceptor_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::ClientRequestInterceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_out::ClientRequestInterceptor_out (ClientRequestInterceptor_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ClientRequestInterceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor_out::ClientRequestInterceptor_out (const ::PortableInterceptor::ClientRequestInterceptor_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ClientRequestInterceptor_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_out &
-PortableInterceptor::ClientRequestInterceptor_out::operator= (const ::PortableInterceptor::ClientRequestInterceptor_out &p)
-{
-  this->ptr_ = ACE_const_cast (ClientRequestInterceptor_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_out &
-PortableInterceptor::ClientRequestInterceptor_out::operator= (const ::PortableInterceptor::ClientRequestInterceptor_var &p)
-{
-  this->ptr_ = ::PortableInterceptor::ClientRequestInterceptor::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_out &
-PortableInterceptor::ClientRequestInterceptor_out::operator= (ClientRequestInterceptor_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ClientRequestInterceptor_out::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr &
-PortableInterceptor::ClientRequestInterceptor_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___VAR_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::ServerRequestInterceptor_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_var::ServerRequestInterceptor_var (void) // default constructor
-  : ptr_ (ServerRequestInterceptor::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_var::ServerRequestInterceptor_var (const ::PortableInterceptor::ServerRequestInterceptor_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ServerRequestInterceptor::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_var::~ServerRequestInterceptor_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_var &
-PortableInterceptor::ServerRequestInterceptor_var::operator= (ServerRequestInterceptor_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_var &
-PortableInterceptor::ServerRequestInterceptor_var::operator= (const ::PortableInterceptor::ServerRequestInterceptor_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::ServerRequestInterceptor::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ServerRequestInterceptor_var::operator const ::PortableInterceptor::ServerRequestInterceptor_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::ServerRequestInterceptor_var::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr &
-PortableInterceptor::ServerRequestInterceptor_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr &
-PortableInterceptor::ServerRequestInterceptor_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ServerRequestInterceptor::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::ServerRequestInterceptor_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::ServerRequestInterceptor::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::ServerRequestInterceptor_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_out::ServerRequestInterceptor_out (ServerRequestInterceptor_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::ServerRequestInterceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_out::ServerRequestInterceptor_out (ServerRequestInterceptor_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ServerRequestInterceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor_out::ServerRequestInterceptor_out (const ::PortableInterceptor::ServerRequestInterceptor_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ServerRequestInterceptor_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_out &
-PortableInterceptor::ServerRequestInterceptor_out::operator= (const ::PortableInterceptor::ServerRequestInterceptor_out &p)
-{
-  this->ptr_ = ACE_const_cast (ServerRequestInterceptor_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_out &
-PortableInterceptor::ServerRequestInterceptor_out::operator= (const ::PortableInterceptor::ServerRequestInterceptor_var &p)
-{
-  this->ptr_ = ::PortableInterceptor::ServerRequestInterceptor::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_out &
-PortableInterceptor::ServerRequestInterceptor_out::operator= (ServerRequestInterceptor_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ServerRequestInterceptor_out::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr &
-PortableInterceptor::ServerRequestInterceptor_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINFO___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_IORINFO___VAR_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::IORInfo_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::IORInfo_var::IORInfo_var (void) // default constructor
-  : ptr_ (IORInfo::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::IORInfo_var::IORInfo_var (const ::PortableInterceptor::IORInfo_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (IORInfo::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::IORInfo_var::~IORInfo_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::IORInfo_var &
-PortableInterceptor::IORInfo_var::operator= (IORInfo_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::IORInfo_var &
-PortableInterceptor::IORInfo_var::operator= (const ::PortableInterceptor::IORInfo_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::IORInfo::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::IORInfo_var::operator const ::PortableInterceptor::IORInfo_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::IORInfo_var::operator ::PortableInterceptor::IORInfo_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr &
-PortableInterceptor::IORInfo_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr &
-PortableInterceptor::IORInfo_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::IORInfo::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::IORInfo_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::IORInfo::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINFO___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_IORINFO___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::IORInfo_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::IORInfo_out::IORInfo_out (IORInfo_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::IORInfo::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::IORInfo_out::IORInfo_out (IORInfo_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::IORInfo::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::IORInfo_out::IORInfo_out (const ::PortableInterceptor::IORInfo_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IORInfo_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_out &
-PortableInterceptor::IORInfo_out::operator= (const ::PortableInterceptor::IORInfo_out &p)
-{
-  this->ptr_ = ACE_const_cast (IORInfo_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::IORInfo_out &
-PortableInterceptor::IORInfo_out::operator= (const ::PortableInterceptor::IORInfo_var &p)
-{
-  this->ptr_ = ::PortableInterceptor::IORInfo::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::IORInfo_out &
-PortableInterceptor::IORInfo_out::operator= (IORInfo_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::IORInfo_out::operator ::PortableInterceptor::IORInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr &
-PortableInterceptor::IORInfo_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___VAR_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::IORInterceptor_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::IORInterceptor_var::IORInterceptor_var (void) // default constructor
-  : ptr_ (IORInterceptor::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::IORInterceptor_var::IORInterceptor_var (const ::PortableInterceptor::IORInterceptor_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (IORInterceptor::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::IORInterceptor_var::~IORInterceptor_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::IORInterceptor_var &
-PortableInterceptor::IORInterceptor_var::operator= (IORInterceptor_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::IORInterceptor_var &
-PortableInterceptor::IORInterceptor_var::operator= (const ::PortableInterceptor::IORInterceptor_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::IORInterceptor::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::IORInterceptor_var::operator const ::PortableInterceptor::IORInterceptor_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::IORInterceptor_var::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr &
-PortableInterceptor::IORInterceptor_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr &
-PortableInterceptor::IORInterceptor_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::IORInterceptor::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::IORInterceptor_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::IORInterceptor::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::IORInterceptor_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::IORInterceptor_out::IORInterceptor_out (IORInterceptor_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::IORInterceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::IORInterceptor_out::IORInterceptor_out (IORInterceptor_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::IORInterceptor::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::IORInterceptor_out::IORInterceptor_out (const ::PortableInterceptor::IORInterceptor_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IORInterceptor_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_out &
-PortableInterceptor::IORInterceptor_out::operator= (const ::PortableInterceptor::IORInterceptor_out &p)
-{
-  this->ptr_ = ACE_const_cast (IORInterceptor_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::IORInterceptor_out &
-PortableInterceptor::IORInterceptor_out::operator= (const ::PortableInterceptor::IORInterceptor_var &p)
-{
-  this->ptr_ = ::PortableInterceptor::IORInterceptor::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::IORInterceptor_out &
-PortableInterceptor::IORInterceptor_out::operator= (IORInterceptor_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::IORInterceptor_out::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr &
-PortableInterceptor::IORInterceptor_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_POLICYFACTORY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::PolicyFactory_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::PolicyFactory_var::PolicyFactory_var (void) // default constructor
-  : ptr_ (PolicyFactory::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::PolicyFactory_var::PolicyFactory_var (const ::PortableInterceptor::PolicyFactory_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (PolicyFactory::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::PolicyFactory_var::~PolicyFactory_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::PolicyFactory_var &
-PortableInterceptor::PolicyFactory_var::operator= (PolicyFactory_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::PolicyFactory_var &
-PortableInterceptor::PolicyFactory_var::operator= (const ::PortableInterceptor::PolicyFactory_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::PolicyFactory::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::PolicyFactory_var::operator const ::PortableInterceptor::PolicyFactory_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::PolicyFactory_var::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr &
-PortableInterceptor::PolicyFactory_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr &
-PortableInterceptor::PolicyFactory_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::PolicyFactory::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::PolicyFactory_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::PolicyFactory::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_POLICYFACTORY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::PolicyFactory_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::PolicyFactory_out::PolicyFactory_out (PolicyFactory_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::PolicyFactory::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::PolicyFactory_out::PolicyFactory_out (PolicyFactory_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::PolicyFactory::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::PolicyFactory_out::PolicyFactory_out (const ::PortableInterceptor::PolicyFactory_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (PolicyFactory_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::PolicyFactory_out &
-PortableInterceptor::PolicyFactory_out::operator= (const ::PortableInterceptor::PolicyFactory_out &p)
-{
-  this->ptr_ = ACE_const_cast (PolicyFactory_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::PolicyFactory_out &
-PortableInterceptor::PolicyFactory_out::operator= (const ::PortableInterceptor::PolicyFactory_var &p)
+ACE_INLINE PortableInterceptor::PolicyFactory_ptr
+tao_PortableInterceptor_PolicyFactory_duplicate (
+    PortableInterceptor::PolicyFactory_ptr p
+  )
 {
-  this->ptr_ = ::PortableInterceptor::PolicyFactory::_duplicate (p.ptr ());
-  return *this;
+  return PortableInterceptor::PolicyFactory::_duplicate (p);
 }
 
-ACE_INLINE PortableInterceptor::PolicyFactory_out &
-PortableInterceptor::PolicyFactory_out::operator= (PolicyFactory_ptr p)
+ACE_INLINE void
+tao_PortableInterceptor_PolicyFactory_release (
+    PortableInterceptor::PolicyFactory_ptr p
+  )
 {
-  this->ptr_ = p;
-  return *this;
+  CORBA::release (p);
 }
 
-ACE_INLINE 
-PortableInterceptor::PolicyFactory_out::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast
+ACE_INLINE PortableInterceptor::PolicyFactory_ptr
+tao_PortableInterceptor_PolicyFactory_nil (
+    void
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::PolicyFactory::_nil ();
 }
 
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr &
-PortableInterceptor::PolicyFactory_out::ptr (void) // ptr
+ACE_INLINE PortableInterceptor::PolicyFactory_ptr
+tao_PortableInterceptor_PolicyFactory_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::PolicyFactory::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_out::operator-> (void)
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_PolicyFactory_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
+  PortableInterceptor::PolicyFactory **tmp =
+    ACE_static_cast (PortableInterceptor::PolicyFactory **, src);
+  return *tmp;
 }
 
 
@@ -1736,340 +536,100 @@ PortableInterceptor::PolicyFactory_out::operator-> (void)
 // *************************************************************
 
 
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_ORBINITINFO___VAR_CI_
+#if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___CI_)
+#define _PORTABLEINTERCEPTOR_ORBINITINFO___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ORBInitInfo_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ORBInitInfo_var::ORBInitInfo_var (void) // default constructor
-  : ptr_ (ORBInitInfo::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::ptr (void) const
+ACE_INLINE PortableInterceptor::ORBInitInfo_ptr
+tao_PortableInterceptor_ORBInitInfo_duplicate (
+    PortableInterceptor::ORBInitInfo_ptr p
+  )
 {
-  return this->ptr_;
+  return PortableInterceptor::ORBInitInfo::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ORBInitInfo_var::ORBInitInfo_var (const ::PortableInterceptor::ORBInitInfo_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ORBInitInfo::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::ORBInitInfo_var::~ORBInitInfo_var (void) // destructor
+ACE_INLINE void
+tao_PortableInterceptor_ORBInitInfo_release (
+    PortableInterceptor::ORBInitInfo_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE PortableInterceptor::ORBInitInfo_var &
-PortableInterceptor::ORBInitInfo_var::operator= (ORBInitInfo_ptr p)
+ACE_INLINE PortableInterceptor::ORBInitInfo_ptr
+tao_PortableInterceptor_ORBInitInfo_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return PortableInterceptor::ORBInitInfo::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::ORBInitInfo_var &
-PortableInterceptor::ORBInitInfo_var::operator= (const ::PortableInterceptor::ORBInitInfo_var &p)
+ACE_INLINE PortableInterceptor::ORBInitInfo_ptr
+tao_PortableInterceptor_ORBInitInfo_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::ORBInitInfo::_duplicate (p.ptr ());
-  }
-  return *this;
+  return PortableInterceptor::ORBInitInfo::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-PortableInterceptor::ORBInitInfo_var::operator const ::PortableInterceptor::ORBInitInfo_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_ORBInitInfo_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::ORBInitInfo_var::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr &
-PortableInterceptor::ORBInitInfo_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr &
-PortableInterceptor::ORBInitInfo_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ORBInitInfo::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::ORBInitInfo_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::ORBInitInfo::_nil ();
-  return val;
+  PortableInterceptor::ORBInitInfo **tmp =
+    ACE_static_cast (PortableInterceptor::ORBInitInfo **, src);
+  return *tmp;
 }
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_ORBINITINFO___OUT_CI_
+#if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_)
+#define _PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_
 
-// *************************************************************
-// Inline operations for class PortableInterceptor::ORBInitInfo_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ORBInitInfo_out::ORBInitInfo_out (ORBInitInfo_ptr &p)
-  : ptr_ (p)
+ACE_INLINE PortableInterceptor::ORBInitializer_ptr
+tao_PortableInterceptor_ORBInitializer_duplicate (
+    PortableInterceptor::ORBInitializer_ptr p
+  )
 {
-  this->ptr_ = ::PortableInterceptor::ORBInitInfo::_nil ();
+  return PortableInterceptor::ORBInitializer::_duplicate (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ORBInitInfo_out::ORBInitInfo_out (ORBInitInfo_var &p) // constructor from _var
-  : ptr_ (p.out ())
+ACE_INLINE void
+tao_PortableInterceptor_ORBInitializer_release (
+    PortableInterceptor::ORBInitializer_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ORBInitInfo::_nil ();
+  CORBA::release (p);
 }
 
-ACE_INLINE
-PortableInterceptor::ORBInitInfo_out::ORBInitInfo_out (const ::PortableInterceptor::ORBInitInfo_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ORBInitInfo_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_out &
-PortableInterceptor::ORBInitInfo_out::operator= (const ::PortableInterceptor::ORBInitInfo_out &p)
+ACE_INLINE PortableInterceptor::ORBInitializer_ptr
+tao_PortableInterceptor_ORBInitializer_nil (
+    void
+  )
 {
-  this->ptr_ = ACE_const_cast (ORBInitInfo_out&, p).ptr_;
-  return *this;
+  return PortableInterceptor::ORBInitializer::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::ORBInitInfo_out &
-PortableInterceptor::ORBInitInfo_out::operator= (const ::PortableInterceptor::ORBInitInfo_var &p)
+ACE_INLINE PortableInterceptor::ORBInitializer_ptr
+tao_PortableInterceptor_ORBInitializer_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  this->ptr_ = ::PortableInterceptor::ORBInitInfo::_duplicate (p.ptr ());
-  return *this;
+  return PortableInterceptor::ORBInitializer::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE PortableInterceptor::ORBInitInfo_out &
-PortableInterceptor::ORBInitInfo_out::operator= (ORBInitInfo_ptr p)
+ACE_INLINE CORBA::Object *
+tao_PortableInterceptor_ORBInitializer_upcast (
+    void *src
+  )
 {
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ORBInitInfo_out::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr &
-PortableInterceptor::ORBInitInfo_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___VAR_CI_)
-#define _PORTABLEINTERCEPTOR_ORBINITIALIZER___VAR_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::ORBInitializer_var
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ORBInitializer_var::ORBInitializer_var (void) // default constructor
-  : ptr_ (ORBInitializer::_nil ())
-{}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-PortableInterceptor::ORBInitializer_var::ORBInitializer_var (const ::PortableInterceptor::ORBInitializer_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (ORBInitializer::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-PortableInterceptor::ORBInitializer_var::~ORBInitializer_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE PortableInterceptor::ORBInitializer_var &
-PortableInterceptor::ORBInitializer_var::operator= (ORBInitializer_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ORBInitializer_var &
-PortableInterceptor::ORBInitializer_var::operator= (const ::PortableInterceptor::ORBInitializer_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::PortableInterceptor::ORBInitializer::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ORBInitializer_var::operator const ::PortableInterceptor::ORBInitializer_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-PortableInterceptor::ORBInitializer_var::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr &
-PortableInterceptor::ORBInitializer_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr &
-PortableInterceptor::ORBInitializer_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ORBInitializer::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::PortableInterceptor::ORBInitializer_ptr val = this->ptr_;
-  this->ptr_ = ::PortableInterceptor::ORBInitializer::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___OUT_CI_)
-#define _PORTABLEINTERCEPTOR_ORBINITIALIZER___OUT_CI_
-
-// *************************************************************
-// Inline operations for class PortableInterceptor::ORBInitializer_out
-// *************************************************************
-
-ACE_INLINE
-PortableInterceptor::ORBInitializer_out::ORBInitializer_out (ORBInitializer_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::PortableInterceptor::ORBInitializer::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::ORBInitializer_out::ORBInitializer_out (ORBInitializer_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::PortableInterceptor::ORBInitializer::_nil ();
-}
-
-ACE_INLINE
-PortableInterceptor::ORBInitializer_out::ORBInitializer_out (const ::PortableInterceptor::ORBInitializer_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ORBInitializer_out &, p).ptr_)
-{}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_out &
-PortableInterceptor::ORBInitializer_out::operator= (const ::PortableInterceptor::ORBInitializer_out &p)
-{
-  this->ptr_ = ACE_const_cast (ORBInitializer_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ORBInitializer_out &
-PortableInterceptor::ORBInitializer_out::operator= (const ::PortableInterceptor::ORBInitializer_var &p)
-{
-  this->ptr_ = ::PortableInterceptor::ORBInitializer::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE PortableInterceptor::ORBInitializer_out &
-PortableInterceptor::ORBInitializer_out::operator= (ORBInitializer_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-PortableInterceptor::ORBInitializer_out::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr &
-PortableInterceptor::ORBInitializer_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_out::operator-> (void)
-{
-  return this->ptr_;
+  PortableInterceptor::ORBInitializer **tmp =
+    ACE_static_cast (PortableInterceptor::ORBInitializer **, src);
+  return *tmp;
 }
 
 

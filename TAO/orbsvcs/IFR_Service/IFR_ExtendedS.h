@@ -19,16 +19,23 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef TAO_IDL_IFR_EXTENDEDS_H
-#define TAO_IDL_IFR_EXTENDEDS_H
+#ifndef _TAO_IDL__________ORBSVCS_IFR_SERVICE_ORIG_IFR_EXTENDEDS_H_
+#define _TAO_IDL__________ORBSVCS_IFR_SERVICE_ORIG_IFR_EXTENDEDS_H_
 
 #include "ace/pre.h"
 #include "IFR_BasicS.h"
+#include "tao/IFR_Client/IFR_ExtendedC.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Collocated_Object.h"
+#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
+#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -40,218 +47,226 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-TAO_NAMESPACE  POA_CORBA
+class POA_CORBA_FixedDef;
+typedef POA_CORBA_FixedDef *POA_CORBA_FixedDef_ptr;
+// Forward Classes Declaration
+class _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl;
+class _TAO_CORBA_FixedDef_Strategized_Proxy_Broker;
+
+class  POA_CORBA_FixedDef : public virtual POA_CORBA_IDLType
 {
-  class FixedDef;
-  typedef FixedDef *FixedDef_ptr;
-  // Forward Classes Declaration
-  class _TAO_FixedDef_ThruPOA_Proxy_Impl;
-  class _TAO_FixedDef_Strategized_Proxy_Broker;
-  
-  class  FixedDef : public virtual IDLType
-  {
-  protected:
-    FixedDef (void);
+protected:
+  POA_CORBA_FixedDef (void);
 
-  public:
-    FixedDef (const FixedDef& rhs);
-    virtual ~FixedDef (void);
+public:
+  POA_CORBA_FixedDef (const POA_CORBA_FixedDef& rhs);
+  virtual ~POA_CORBA_FixedDef (void);
 
 
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::FixedDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::UShort digits (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_digits_skel (
-        TAO_ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void digits (
-        CORBA::UShort digits,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_digits_skel (
-        TAO_ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Short scale (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_scale_skel (
-        TAO_ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void scale (
-        CORBA::Short scale,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_scale_skel (
-        TAO_ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-  };
-
-  
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  class  _TAO_FixedDef_Strategized_Proxy_Broker : public virtual ::_TAO_FixedDef_Proxy_Broker
-  {
-  public: 
-    _TAO_FixedDef_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_FixedDef_Strategized_Proxy_Broker (void);
-    
-    virtual ::_TAO_FixedDef_Proxy_Impl &select_proxy (
-      ::CORBA::FixedDef *object,
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
     );
-  
-  private:
-  
-  // Helper methods that takes care to create the proxy
-  // as soon as their use is necessary.
-    void create_proxy (
-      int strategy,
-      CORBA::Environment &ACE_TRY_ENV
+
+  virtual void* _downcast (
+      const char* logical_type_id
     );
+
+  static void _is_a_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  static void _non_existent_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  static void _interface_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual void _dispatch (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  ::CORBA_FixedDef *_this (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual const char* _interface_repository_id (void) const;
+
+  virtual CORBA::UShort digits (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  static void _get_digits_skel (
+      TAO_ServerRequest &_tao_req, 
+      void *_tao_obj, 
+      void *_tao_context, 
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual void digits (
+      CORBA::UShort digits,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  static void _set_digits_skel (
+      TAO_ServerRequest &_tao_req, 
+      void *_tao_obj, 
+      void *_tao_context, 
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual CORBA::Short scale (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  static void _get_scale_skel (
+      TAO_ServerRequest &_tao_req, 
+      void *_tao_obj, 
+      void *_tao_context, 
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  virtual void scale (
+      CORBA::Short scale,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  static void _set_scale_skel (
+      TAO_ServerRequest &_tao_req, 
+      void *_tao_obj, 
+      void *_tao_context, 
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
+  static void _get_type_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  static void _get_def_kind_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  static void destroy_skel (
+      TAO_ServerRequest &req, 
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+
+};
+
+
+///////////////////////////////////////////////////////////////////////
+//               Strategized Proxy Broker Declaration 
+//
+
+class  _TAO_CORBA_FixedDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_FixedDef_Proxy_Broker
+{
+public: 
+  _TAO_CORBA_FixedDef_Strategized_Proxy_Broker (void);
   
-  private:
-    
-    // Caches the proxy implementations. The proxy implementation
-    // are totally stateless, and those can be shared by all the
-    // instances of a given IDL interface type.
-    ::_TAO_FixedDef_Proxy_Impl
-     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
-    TAO_SYNCH_MUTEX mutex_;
-  // This funxtion is used to get an handle to the unique instance
-  // of the Strategized Proxy Broker that is available for a given
-  // interface.
+  virtual ~_TAO_CORBA_FixedDef_Strategized_Proxy_Broker (void);
   
-  public:
-    static _TAO_FixedDef_Strategized_Proxy_Broker *the_TAO_FixedDef_Strategized_Proxy_Broker (void);
-  };
+  virtual ::_TAO_CORBA_FixedDef_Proxy_Impl &select_proxy (
+    ::CORBA_FixedDef *object,
+    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+  );
+
+private:
+
+// Helper methods that takes care to create the proxy
+// as soon as their use is necessary.
+  void create_proxy (
+    int collocation_strategy,
+    CORBA::Environment &ACE_TRY_ENV
+  );
+
+private:
   
+  // Caches the proxy implementations. The proxy implementation
+  // are totally stateless, and those can be shared by all the
+  // instances of a given IDL interface type.
+  ::_TAO_CORBA_FixedDef_Proxy_Impl
+   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
+  TAO_SYNCH_MUTEX mutex_;
+// This funxtion is used to get an handle to the unique instance
+// of the Strategized Proxy Broker that is available for a given
+// interface.
+
+public:
+  static _TAO_CORBA_FixedDef_Strategized_Proxy_Broker *the_TAO_CORBA_FixedDef_Strategized_Proxy_Broker (void);
+};
+
+
+//
+//            End Strategized Proxy Broker Declaration 
+///////////////////////////////////////////////////////////////////////
+
+
 ///////////////////////////////////////////////////////////////////////
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_FixedDef_ThruPOA_Proxy_Impl : 
-  public virtual ::_TAO_FixedDef_Proxy_Impl,
+class  _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl : 
+  public virtual ::_TAO_CORBA_FixedDef_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
+  public virtual ::_TAO_CORBA_IDLType_ThruPOA_Proxy_Impl
   
 {
 public:
-  _TAO_FixedDef_ThruPOA_Proxy_Impl (void);
+  _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_FixedDef_ThruPOA_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::UShort digits (
       CORBA_Object *_collocated_tao_target_,
@@ -294,22 +309,20 @@ public:
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
-
-#if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  FixedDef_tie : public FixedDef
+class  POA_CORBA_FixedDef_tie : public POA_CORBA_FixedDef
 {
 public:
-  FixedDef_tie (T &t);
+  POA_CORBA_FixedDef_tie (T &t);
   // the T& ctor
-  FixedDef_tie (T &t, PortableServer::POA_ptr poa);
+  POA_CORBA_FixedDef_tie (T &t, PortableServer::POA_ptr poa);
   // ctor taking a POA
-  FixedDef_tie (T *tp, CORBA::Boolean release=1);
+  POA_CORBA_FixedDef_tie (T *tp, CORBA::Boolean release=1);
   // ctor taking pointer and an ownership flag
-  FixedDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+  POA_CORBA_FixedDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
   // ctor with T*, ownership flag and a POA
-  ~FixedDef_tie (void);
+  ~POA_CORBA_FixedDef_tie (void);
   // dtor
   
   // TIE specific functions
@@ -393,26 +406,25 @@ private:
   CORBA::Boolean rel_;
   
   // copy and assignment are not allowed
-  FixedDef_tie (const FixedDef_tie &);
-  void operator= (const FixedDef_tie &);
+  POA_CORBA_FixedDef_tie (const POA_CORBA_FixedDef_tie &);
+  void operator= (const POA_CORBA_FixedDef_tie &);
 };
 
-#endif /* ACE_HAS_USING_KEYWORD */
 
-class ValueMemberDef;
-typedef ValueMemberDef *ValueMemberDef_ptr;
+class POA_CORBA_ValueMemberDef;
+typedef POA_CORBA_ValueMemberDef *POA_CORBA_ValueMemberDef_ptr;
 // Forward Classes Declaration
-class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
-class _TAO_ValueMemberDef_Strategized_Proxy_Broker;
+class _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl;
+class _TAO_CORBA_ValueMemberDef_Strategized_Proxy_Broker;
 
-class  ValueMemberDef : public virtual Contained
+class  POA_CORBA_ValueMemberDef : public virtual POA_CORBA_Contained
 {
 protected:
-  ValueMemberDef (void);
+  POA_CORBA_ValueMemberDef (void);
 
 public:
-  ValueMemberDef (const ValueMemberDef& rhs);
-  virtual ~ValueMemberDef (void);
+  POA_CORBA_ValueMemberDef (const POA_CORBA_ValueMemberDef& rhs);
+  virtual ~POA_CORBA_ValueMemberDef (void);
 
 
   virtual CORBA::Boolean _is_a (
@@ -441,6 +453,14 @@ public:
         TAO_default_environment ()
     );
 
+  static void _interface_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
   virtual void _dispatch (
       TAO_ServerRequest &_tao_req,
       void *_tao_context,
@@ -448,7 +468,7 @@ public:
         TAO_default_environment ()
     );
 
-  ::CORBA::ValueMemberDef *_this (
+  ::CORBA_ValueMemberDef *_this (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -471,7 +491,7 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -488,7 +508,7 @@ public:
     );
 
   virtual void type_def (
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -640,6 +660,8 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
+
 };
 
 
@@ -647,15 +669,15 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_ValueMemberDef_Strategized_Proxy_Broker : public virtual ::_TAO_ValueMemberDef_Proxy_Broker
+class  _TAO_CORBA_ValueMemberDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_ValueMemberDef_Proxy_Broker
 {
 public: 
-  _TAO_ValueMemberDef_Strategized_Proxy_Broker (void);
+  _TAO_CORBA_ValueMemberDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_ValueMemberDef_Strategized_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ValueMemberDef_Strategized_Proxy_Broker (void);
   
-  virtual ::_TAO_ValueMemberDef_Proxy_Impl &select_proxy (
-    ::CORBA::ValueMemberDef *object,
+  virtual ::_TAO_CORBA_ValueMemberDef_Proxy_Impl &select_proxy (
+    ::CORBA_ValueMemberDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
@@ -664,7 +686,7 @@ private:
 // Helper methods that takes care to create the proxy
 // as soon as their use is necessary.
   void create_proxy (
-    int strategy,
+    int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
 
@@ -673,7 +695,7 @@ private:
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
-  ::_TAO_ValueMemberDef_Proxy_Impl
+  ::_TAO_CORBA_ValueMemberDef_Proxy_Impl
    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
@@ -682,7 +704,7 @@ private:
 // interface.
 
 public:
-  static _TAO_ValueMemberDef_Strategized_Proxy_Broker *the_TAO_ValueMemberDef_Strategized_Proxy_Broker (void);
+  static _TAO_CORBA_ValueMemberDef_Strategized_Proxy_Broker *the_TAO_CORBA_ValueMemberDef_Strategized_Proxy_Broker (void);
 };
 
 
@@ -695,16 +717,16 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_ValueMemberDef_ThruPOA_Proxy_Impl : 
-  public virtual ::_TAO_ValueMemberDef_Proxy_Impl,
+class  _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl : 
+  public virtual ::_TAO_CORBA_ValueMemberDef_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl
+  public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
   
 {
 public:
-  _TAO_ValueMemberDef_ThruPOA_Proxy_Impl (void);
+  _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ValueMemberDef_ThruPOA_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -714,7 +736,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -724,7 +746,7 @@ public:
 
   virtual void type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -755,22 +777,20 @@ public:
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
-
-#if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  ValueMemberDef_tie : public ValueMemberDef
+class  POA_CORBA_ValueMemberDef_tie : public POA_CORBA_ValueMemberDef
 {
 public:
-  ValueMemberDef_tie (T &t);
+  POA_CORBA_ValueMemberDef_tie (T &t);
   // the T& ctor
-  ValueMemberDef_tie (T &t, PortableServer::POA_ptr poa);
+  POA_CORBA_ValueMemberDef_tie (T &t, PortableServer::POA_ptr poa);
   // ctor taking a POA
-  ValueMemberDef_tie (T *tp, CORBA::Boolean release=1);
+  POA_CORBA_ValueMemberDef_tie (T *tp, CORBA::Boolean release=1);
   // ctor taking pointer and an ownership flag
-  ValueMemberDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+  POA_CORBA_ValueMemberDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
   // ctor with T*, ownership flag and a POA
-  ~ValueMemberDef_tie (void);
+  ~POA_CORBA_ValueMemberDef_tie (void);
   // dtor
   
   // TIE specific functions
@@ -798,7 +818,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::IDLType_ptr type_def (
+  CORBA_IDLType_ptr type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -807,7 +827,7 @@ public:
     ));
 
   void type_def (
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -883,7 +903,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Container_ptr defined_in (
+  CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -899,7 +919,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Repository_ptr containing_repository (
+  CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -907,7 +927,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Contained::Description * describe (
+  CORBA_Contained::Description * describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -916,7 +936,7 @@ public:
     ));
 
   void move (
-      CORBA::Container_ptr new_container,
+      CORBA_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -948,26 +968,25 @@ private:
   CORBA::Boolean rel_;
   
   // copy and assignment are not allowed
-  ValueMemberDef_tie (const ValueMemberDef_tie &);
-  void operator= (const ValueMemberDef_tie &);
+  POA_CORBA_ValueMemberDef_tie (const POA_CORBA_ValueMemberDef_tie &);
+  void operator= (const POA_CORBA_ValueMemberDef_tie &);
 };
 
-#endif /* ACE_HAS_USING_KEYWORD */
 
-class ValueDef;
-typedef ValueDef *ValueDef_ptr;
+class POA_CORBA_ValueDef;
+typedef POA_CORBA_ValueDef *POA_CORBA_ValueDef_ptr;
 // Forward Classes Declaration
-class _TAO_ValueDef_ThruPOA_Proxy_Impl;
-class _TAO_ValueDef_Strategized_Proxy_Broker;
+class _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl;
+class _TAO_CORBA_ValueDef_Strategized_Proxy_Broker;
 
-class  ValueDef : public virtual Container, public virtual Contained, public virtual IDLType
+class  POA_CORBA_ValueDef : public virtual POA_CORBA_Container, public virtual POA_CORBA_Contained, public virtual POA_CORBA_IDLType
 {
 protected:
-  ValueDef (void);
+  POA_CORBA_ValueDef (void);
 
 public:
-  ValueDef (const ValueDef& rhs);
-  virtual ~ValueDef (void);
+  POA_CORBA_ValueDef (const POA_CORBA_ValueDef& rhs);
+  virtual ~POA_CORBA_ValueDef (void);
 
 
   virtual CORBA::Boolean _is_a (
@@ -996,6 +1015,14 @@ public:
         TAO_default_environment ()
     );
 
+  static void _interface_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
   virtual void _dispatch (
       TAO_ServerRequest &_tao_req,
       void *_tao_context,
@@ -1003,14 +1030,14 @@ public:
         TAO_default_environment ()
     );
 
-  ::CORBA::ValueDef *_this (
+  ::CORBA_ValueDef *_this (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
 
   virtual const char* _interface_repository_id (void) const;
 
-  virtual CORBA::InterfaceDefSeq * supported_interfaces (
+  virtual CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1027,7 +1054,7 @@ public:
     );
 
   virtual void supported_interfaces (
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1043,7 +1070,7 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::InitializerSeq * initializers (
+  virtual CORBA_InitializerSeq * initializers (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1060,7 +1087,7 @@ public:
     );
 
   virtual void initializers (
-      const CORBA::InitializerSeq & initializers,
+      const CORBA_InitializerSeq & initializers,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1076,7 +1103,7 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::ValueDef_ptr base_value (
+  virtual CORBA_ValueDef_ptr base_value (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1093,7 +1120,7 @@ public:
     );
 
   virtual void base_value (
-      CORBA::ValueDef_ptr base_value,
+      CORBA_ValueDef_ptr base_value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1109,7 +1136,7 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::ValueDefSeq * abstract_base_values (
+  virtual CORBA_ValueDefSeq * abstract_base_values (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1126,7 +1153,7 @@ public:
     );
 
   virtual void abstract_base_values (
-      const CORBA::ValueDefSeq & abstract_base_values,
+      const CORBA_ValueDefSeq & abstract_base_values,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1258,7 +1285,7 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::ValueDef::FullValueDescription * describe_value (
+  virtual CORBA_ValueDef::FullValueDescription * describe_value (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1274,11 +1301,11 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::ValueMemberDef_ptr create_value_member (
+  virtual CORBA_ValueMemberDef_ptr create_value_member (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::Visibility access,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -1295,11 +1322,11 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::AttributeDef_ptr create_attribute (
+  virtual CORBA_AttributeDef_ptr create_attribute (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -1316,15 +1343,15 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA::OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1587,6 +1614,8 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
+
 };
 
 
@@ -1594,15 +1623,15 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_ValueDef_Strategized_Proxy_Broker : public virtual ::_TAO_ValueDef_Proxy_Broker
+class  _TAO_CORBA_ValueDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_ValueDef_Proxy_Broker
 {
 public: 
-  _TAO_ValueDef_Strategized_Proxy_Broker (void);
+  _TAO_CORBA_ValueDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_ValueDef_Strategized_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ValueDef_Strategized_Proxy_Broker (void);
   
-  virtual ::_TAO_ValueDef_Proxy_Impl &select_proxy (
-    ::CORBA::ValueDef *object,
+  virtual ::_TAO_CORBA_ValueDef_Proxy_Impl &select_proxy (
+    ::CORBA_ValueDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
@@ -1611,7 +1640,7 @@ private:
 // Helper methods that takes care to create the proxy
 // as soon as their use is necessary.
   void create_proxy (
-    int strategy,
+    int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
 
@@ -1620,7 +1649,7 @@ private:
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
-  ::_TAO_ValueDef_Proxy_Impl
+  ::_TAO_CORBA_ValueDef_Proxy_Impl
    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
@@ -1629,7 +1658,7 @@ private:
 // interface.
 
 public:
-  static _TAO_ValueDef_Strategized_Proxy_Broker *the_TAO_ValueDef_Strategized_Proxy_Broker (void);
+  static _TAO_CORBA_ValueDef_Strategized_Proxy_Broker *the_TAO_CORBA_ValueDef_Strategized_Proxy_Broker (void);
 };
 
 
@@ -1642,20 +1671,20 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_ValueDef_ThruPOA_Proxy_Impl : 
-  public virtual ::_TAO_ValueDef_Proxy_Impl,
+class  _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl : 
+  public virtual ::_TAO_CORBA_ValueDef_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl, 
-  public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl, 
-  public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
+  public virtual ::_TAO_CORBA_Container_ThruPOA_Proxy_Impl, 
+  public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl, 
+  public virtual ::_TAO_CORBA_IDLType_ThruPOA_Proxy_Impl
   
 {
 public:
-  _TAO_ValueDef_ThruPOA_Proxy_Impl (void);
+  _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ValueDef_ThruPOA_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDefSeq * supported_interfaces (
+    virtual CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1665,14 +1694,14 @@ public:
 
   virtual void supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::InitializerSeq * initializers (
+  virtual CORBA_InitializerSeq * initializers (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1682,14 +1711,14 @@ public:
 
   virtual void initializers (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::InitializerSeq & initializers,
+      const CORBA_InitializerSeq & initializers,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDef_ptr base_value (
+  virtual CORBA_ValueDef_ptr base_value (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1699,14 +1728,14 @@ public:
 
   virtual void base_value (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::ValueDef_ptr base_value,
+      CORBA_ValueDef_ptr base_value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDefSeq * abstract_base_values (
+  virtual CORBA_ValueDefSeq * abstract_base_values (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1716,7 +1745,7 @@ public:
 
   virtual void abstract_base_values (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ValueDefSeq & abstract_base_values,
+      const CORBA_ValueDefSeq & abstract_base_values,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -1783,7 +1812,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDef::FullValueDescription * describe_value (
+  virtual CORBA_ValueDef::FullValueDescription * describe_value (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1791,12 +1820,12 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueMemberDef_ptr create_value_member (
+  virtual CORBA_ValueMemberDef_ptr create_value_member (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::Visibility access,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1804,12 +1833,12 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::AttributeDef_ptr create_attribute (
+  virtual CORBA_AttributeDef_ptr create_attribute (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1817,16 +1846,16 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -1840,22 +1869,20 @@ public:
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
-
-#if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  ValueDef_tie : public ValueDef
+class  POA_CORBA_ValueDef_tie : public POA_CORBA_ValueDef
 {
 public:
-  ValueDef_tie (T &t);
+  POA_CORBA_ValueDef_tie (T &t);
   // the T& ctor
-  ValueDef_tie (T &t, PortableServer::POA_ptr poa);
+  POA_CORBA_ValueDef_tie (T &t, PortableServer::POA_ptr poa);
   // ctor taking a POA
-  ValueDef_tie (T *tp, CORBA::Boolean release=1);
+  POA_CORBA_ValueDef_tie (T *tp, CORBA::Boolean release=1);
   // ctor taking pointer and an ownership flag
-  ValueDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+  POA_CORBA_ValueDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
   // ctor with T*, ownership flag and a POA
-  ~ValueDef_tie (void);
+  ~POA_CORBA_ValueDef_tie (void);
   // dtor
   
   // TIE specific functions
@@ -1875,7 +1902,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
-  CORBA::InterfaceDefSeq * supported_interfaces (
+  CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1884,7 +1911,7 @@ public:
     ));
 
   void supported_interfaces (
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1892,7 +1919,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::InitializerSeq * initializers (
+  CORBA_InitializerSeq * initializers (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1901,7 +1928,7 @@ public:
     ));
 
   void initializers (
-      const CORBA::InitializerSeq & initializers,
+      const CORBA_InitializerSeq & initializers,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1909,7 +1936,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ValueDef_ptr base_value (
+  CORBA_ValueDef_ptr base_value (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1918,7 +1945,7 @@ public:
     ));
 
   void base_value (
-      CORBA::ValueDef_ptr base_value,
+      CORBA_ValueDef_ptr base_value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1926,7 +1953,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ValueDefSeq * abstract_base_values (
+  CORBA_ValueDefSeq * abstract_base_values (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1935,7 +1962,7 @@ public:
     ));
 
   void abstract_base_values (
-      const CORBA::ValueDefSeq & abstract_base_values,
+      const CORBA_ValueDefSeq & abstract_base_values,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2003,7 +2030,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ValueDef::FullValueDescription * describe_value (
+  CORBA_ValueDef::FullValueDescription * describe_value (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2011,11 +2038,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ValueMemberDef_ptr create_value_member (
+  CORBA_ValueMemberDef_ptr create_value_member (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::Visibility access,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -2024,11 +2051,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::AttributeDef_ptr create_attribute (
+  CORBA_AttributeDef_ptr create_attribute (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -2037,15 +2064,15 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::OperationDef_ptr create_operation (
+  CORBA_OperationDef_ptr create_operation (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2053,7 +2080,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Contained_ptr lookup (
+  CORBA_Contained_ptr lookup (
       const char * search_name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -2062,7 +2089,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ContainedSeq * contents (
+  CORBA_ContainedSeq * contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -2072,7 +2099,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ContainedSeq * lookup_name (
+  CORBA_ContainedSeq * lookup_name (
       const char * search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
@@ -2084,7 +2111,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Container::DescriptionSeq * describe_contents (
+  CORBA_Container::DescriptionSeq * describe_contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs,
@@ -2095,7 +2122,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ModuleDef_ptr create_module (
+  CORBA_ModuleDef_ptr create_module (
       const char * id,
       const char * name,
       const char * version,
@@ -2106,11 +2133,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ConstantDef_ptr create_constant (
+  CORBA_ConstantDef_ptr create_constant (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       const CORBA::Any & value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -2119,11 +2146,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::StructDef_ptr create_struct (
+  CORBA_StructDef_ptr create_struct (
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2131,12 +2158,12 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::UnionDef_ptr create_union (
+  CORBA_UnionDef_ptr create_union (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr discriminator_type,
-      const CORBA::UnionMemberSeq & members,
+      CORBA_IDLType_ptr discriminator_type,
+      const CORBA_UnionMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2144,11 +2171,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::EnumDef_ptr create_enum (
+  CORBA_EnumDef_ptr create_enum (
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::EnumMemberSeq & members,
+      const CORBA_EnumMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2156,11 +2183,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::AliasDef_ptr create_alias (
+  CORBA_AliasDef_ptr create_alias (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr original_type,
+      CORBA_IDLType_ptr original_type,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2168,11 +2195,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::InterfaceDef_ptr create_interface (
+  CORBA_InterfaceDef_ptr create_interface (
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::InterfaceDefSeq & base_interfaces,
+      const CORBA_InterfaceDefSeq & base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2180,17 +2207,17 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ValueDef_ptr create_value (
+  CORBA_ValueDef_ptr create_value (
       const char * id,
       const char * name,
       const char * version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
-      CORBA::ValueDef_ptr base_value,
+      CORBA_ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq & abstract_base_values,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
-      const CORBA::InitializerSeq & initializers,
+      const CORBA_ValueDefSeq & abstract_base_values,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
+      const CORBA_InitializerSeq & initializers,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2198,11 +2225,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ValueBoxDef_ptr create_value_box (
+  CORBA_ValueBoxDef_ptr create_value_box (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2210,11 +2237,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::ExceptionDef_ptr create_exception (
+  CORBA_ExceptionDef_ptr create_exception (
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2222,7 +2249,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::NativeDef_ptr create_native (
+  CORBA_NativeDef_ptr create_native (
       const char * id,
       const char * name,
       const char * version,
@@ -2233,11 +2260,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
+  CORBA_AbstractInterfaceDef_ptr create_abstract_interface (
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::AbstractInterfaceDefSeq & base_interfaces,
+      const CORBA_AbstractInterfaceDefSeq & base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2245,11 +2272,11 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::LocalInterfaceDef_ptr create_local_interface (
+  CORBA_LocalInterfaceDef_ptr create_local_interface (
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::InterfaceDefSeq & base_interfaces,
+      const CORBA_InterfaceDefSeq & base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2308,7 +2335,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Container_ptr defined_in (
+  CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2324,7 +2351,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Repository_ptr containing_repository (
+  CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2332,7 +2359,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Contained::Description * describe (
+  CORBA_Contained::Description * describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2341,7 +2368,7 @@ public:
     ));
 
   void move (
-      CORBA::Container_ptr new_container,
+      CORBA_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -2381,26 +2408,25 @@ private:
   CORBA::Boolean rel_;
   
   // copy and assignment are not allowed
-  ValueDef_tie (const ValueDef_tie &);
-  void operator= (const ValueDef_tie &);
+  POA_CORBA_ValueDef_tie (const POA_CORBA_ValueDef_tie &);
+  void operator= (const POA_CORBA_ValueDef_tie &);
 };
 
-#endif /* ACE_HAS_USING_KEYWORD */
 
-class ValueBoxDef;
-typedef ValueBoxDef *ValueBoxDef_ptr;
+class POA_CORBA_ValueBoxDef;
+typedef POA_CORBA_ValueBoxDef *POA_CORBA_ValueBoxDef_ptr;
 // Forward Classes Declaration
-class _TAO_ValueBoxDef_ThruPOA_Proxy_Impl;
-class _TAO_ValueBoxDef_Strategized_Proxy_Broker;
+class _TAO_CORBA_ValueBoxDef_ThruPOA_Proxy_Impl;
+class _TAO_CORBA_ValueBoxDef_Strategized_Proxy_Broker;
 
-class  ValueBoxDef : public virtual TypedefDef
+class  POA_CORBA_ValueBoxDef : public virtual POA_CORBA_TypedefDef
 {
 protected:
-  ValueBoxDef (void);
+  POA_CORBA_ValueBoxDef (void);
 
 public:
-  ValueBoxDef (const ValueBoxDef& rhs);
-  virtual ~ValueBoxDef (void);
+  POA_CORBA_ValueBoxDef (const POA_CORBA_ValueBoxDef& rhs);
+  virtual ~POA_CORBA_ValueBoxDef (void);
 
 
   virtual CORBA::Boolean _is_a (
@@ -2429,6 +2455,14 @@ public:
         TAO_default_environment ()
     );
 
+  static void _interface_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+
   virtual void _dispatch (
       TAO_ServerRequest &_tao_req,
       void *_tao_context,
@@ -2436,14 +2470,14 @@ public:
         TAO_default_environment ()
     );
 
-  ::CORBA::ValueBoxDef *_this (
+  ::CORBA_ValueBoxDef *_this (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
 
   virtual const char* _interface_repository_id (void) const;
 
-  virtual CORBA::IDLType_ptr original_type_def (
+  virtual CORBA_IDLType_ptr original_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2460,7 +2494,7 @@ public:
     );
 
   virtual void original_type_def (
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2587,6 +2621,8 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
+
 };
 
 
@@ -2594,15 +2630,15 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_ValueBoxDef_Strategized_Proxy_Broker : public virtual ::_TAO_ValueBoxDef_Proxy_Broker
+class  _TAO_CORBA_ValueBoxDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_ValueBoxDef_Proxy_Broker
 {
 public: 
-  _TAO_ValueBoxDef_Strategized_Proxy_Broker (void);
+  _TAO_CORBA_ValueBoxDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_ValueBoxDef_Strategized_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ValueBoxDef_Strategized_Proxy_Broker (void);
   
-  virtual ::_TAO_ValueBoxDef_Proxy_Impl &select_proxy (
-    ::CORBA::ValueBoxDef *object,
+  virtual ::_TAO_CORBA_ValueBoxDef_Proxy_Impl &select_proxy (
+    ::CORBA_ValueBoxDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
@@ -2611,7 +2647,7 @@ private:
 // Helper methods that takes care to create the proxy
 // as soon as their use is necessary.
   void create_proxy (
-    int strategy,
+    int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
 
@@ -2620,7 +2656,7 @@ private:
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
-  ::_TAO_ValueBoxDef_Proxy_Impl
+  ::_TAO_CORBA_ValueBoxDef_Proxy_Impl
    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
@@ -2629,7 +2665,7 @@ private:
 // interface.
 
 public:
-  static _TAO_ValueBoxDef_Strategized_Proxy_Broker *the_TAO_ValueBoxDef_Strategized_Proxy_Broker (void);
+  static _TAO_CORBA_ValueBoxDef_Strategized_Proxy_Broker *the_TAO_CORBA_ValueBoxDef_Strategized_Proxy_Broker (void);
 };
 
 
@@ -2642,18 +2678,18 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_ValueBoxDef_ThruPOA_Proxy_Impl : 
-  public virtual ::_TAO_ValueBoxDef_Proxy_Impl,
+class  _TAO_CORBA_ValueBoxDef_ThruPOA_Proxy_Impl : 
+  public virtual ::_TAO_CORBA_ValueBoxDef_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl
+  public virtual ::_TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl
   
 {
 public:
-  _TAO_ValueBoxDef_ThruPOA_Proxy_Impl (void);
+  _TAO_CORBA_ValueBoxDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ValueBoxDef_ThruPOA_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ValueBoxDef_ThruPOA_Proxy_Impl (void) { }
   
-    virtual CORBA::IDLType_ptr original_type_def (
+    virtual CORBA_IDLType_ptr original_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2663,7 +2699,7 @@ public:
 
   virtual void original_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2677,22 +2713,20 @@ public:
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
-
-#if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  ValueBoxDef_tie : public ValueBoxDef
+class  POA_CORBA_ValueBoxDef_tie : public POA_CORBA_ValueBoxDef
 {
 public:
-  ValueBoxDef_tie (T &t);
+  POA_CORBA_ValueBoxDef_tie (T &t);
   // the T& ctor
-  ValueBoxDef_tie (T &t, PortableServer::POA_ptr poa);
+  POA_CORBA_ValueBoxDef_tie (T &t, PortableServer::POA_ptr poa);
   // ctor taking a POA
-  ValueBoxDef_tie (T *tp, CORBA::Boolean release=1);
+  POA_CORBA_ValueBoxDef_tie (T *tp, CORBA::Boolean release=1);
   // ctor taking pointer and an ownership flag
-  ValueBoxDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+  POA_CORBA_ValueBoxDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
   // ctor with T*, ownership flag and a POA
-  ~ValueBoxDef_tie (void);
+  ~POA_CORBA_ValueBoxDef_tie (void);
   // dtor
   
   // TIE specific functions
@@ -2712,7 +2746,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
-  CORBA::IDLType_ptr original_type_def (
+  CORBA_IDLType_ptr original_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2721,7 +2755,7 @@ public:
     ));
 
   void original_type_def (
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2780,7 +2814,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Container_ptr defined_in (
+  CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2796,7 +2830,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Repository_ptr containing_repository (
+  CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2804,7 +2838,7 @@ public:
       CORBA::SystemException
     ));
 
-  CORBA::Contained::Description * describe (
+  CORBA_Contained::Description * describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2813,7 +2847,7 @@ public:
     ));
 
   void move (
-      CORBA::Container_ptr new_container,
+      CORBA_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -2853,14 +2887,10 @@ private:
   CORBA::Boolean rel_;
   
   // copy and assignment are not allowed
-  ValueBoxDef_tie (const ValueBoxDef_tie &);
-  void operator= (const ValueBoxDef_tie &);
+  POA_CORBA_ValueBoxDef_tie (const POA_CORBA_ValueBoxDef_tie &);
+  void operator= (const POA_CORBA_ValueBoxDef_tie &);
 };
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-}
-TAO_NAMESPACE_CLOSE
 
 #include "IFR_ExtendedS_T.h"
 

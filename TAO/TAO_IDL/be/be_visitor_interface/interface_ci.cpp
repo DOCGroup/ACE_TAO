@@ -43,7 +43,9 @@ int
 be_visitor_interface_ci::visit_interface (be_interface *node)
 {
   if (node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   // Generate inline methods for elements of our scope.
   // This will always be done here for any non-imported node,
@@ -59,50 +61,64 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   // A forward declared interface may have set this flag.
   if (node->cli_inline_gen ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->gen_ifdef_macro (node->flat_name (), "");
+
+  // Global functions to allow non-defined forward declared interfaces
+  // access to some methods in the full definition.
+  *os << "ACE_INLINE " << node->full_name () << "_ptr" << be_nl
+      << "tao_" << node->flat_name () << "_duplicate (" << be_idt << be_idt_nl
+      << node->full_name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name () << "::_duplicate (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "ACE_INLINE void" << be_nl
+      << "tao_" << node->flat_name () << "_release (" << be_idt << be_idt_nl
+      << node->full_name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "ACE_INLINE " << node->full_name () <<  "_ptr" << be_nl
+      << "tao_" << node->flat_name () << "_nil (" << be_idt << be_idt_nl
+      << "void" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "ACE_INLINE " << node->full_name () << "_ptr" << be_nl
+      << "tao_" << node->flat_name () << "_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object *p," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name () << "::_narrow (p, ACE_TRY_ENV);" 
+      << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "ACE_INLINE CORBA::Object *" << be_nl
+      << "tao_" << node->flat_name () << "_upcast (" << be_idt << be_idt_nl
+      << "void *src" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << node->full_name () << " **tmp =" << be_idt_nl
+      << "ACE_static_cast (" << node->full_name () << " **, src);" 
+      << be_uidt_nl
+      << "return *tmp;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
   // Generate the constructor from stub and servant.
-  if (! node->is_local ())
-    {
-      os->gen_ifdef_macro (node->flat_name (), "");
-      *os << "ACE_INLINE" << be_nl
-          << node->name () << "::" << node->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "TAO_Stub *objref," << be_nl
-          << "CORBA::Boolean _tao_collocated," << be_nl
-          << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
-          << ")" << be_nl
-          << ": CORBA_Object (objref, _tao_collocated, servant)" 
-          << be_uidt_nl
-          << "{" << be_idt_nl
-          << "this->" << node->flat_name () 
-          << "_setup_collocation (_tao_collocated);" << be_uidt_nl
-          << "}" << be_nl;
-      os->gen_endif ();
-    }
+  node->gen_stub_ctor (os);
 
-  // generate the ifdefined macro for  the _var type
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-  if (node->gen_var_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_ci::"
-                         "visit_interface - "
-                         "codegen for _var failed\n"), -1);
-    }
-  os->gen_endif ();
-
-  // generate the ifdefined macro for  the _out type
-  os->gen_ifdef_macro (node->flat_name (), "_out");
-  if (node->gen_out_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_ci::"
-                         "visit_interface - "
-                         "codegen for _out failed\n"), -1);
-    }
   os->gen_endif ();
 
   return 0;
