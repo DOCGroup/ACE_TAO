@@ -262,7 +262,7 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - %p\n"
+                        "TAO (%P|%t) -\n"
                         "TAO_GIOP_Message_Base::handle_input, parse_magic_bytes"));
           return -1;
         }
@@ -273,7 +273,7 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t|%N%l) - %p\n"
+                        "TAO (%P|%t|%N%l) -\n"
                           "TAO_GIOP_Message_Base::handle_input"));
           return -1;
         }
@@ -474,7 +474,7 @@ TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%N|%l|%p|%t) Error in validating")
+                      ASYS_TEXT ("(%N|%l|%P|%t) Error in validating")
                       ASYS_TEXT ("revision \n")));
           return -1;
         }
