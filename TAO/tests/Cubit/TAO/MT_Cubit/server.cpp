@@ -808,14 +808,14 @@ main (int argc, char *argv[])
       ACE_Time_Value delta_t;
       timer_.start ();
       // execute computation.
-            for (int k=0; k < 1000; k++)
+      for (int k=0; k < 1000; k++)
 	util_task->computation ();
       timer_.stop ();
       timer_.elapsed_time (delta_t);
       // Store the time in milli-seconds.
       util_task_duration = (delta_t.sec () * 
 			    ACE_ONE_SECOND_IN_USECS + 
-			    (double)delta_t.usec ())/ 1000;
+			    (double)delta_t.usec ())  / 1000;
 #endif /* !CHORUS */
     }
   // Barrier for the multiple clients to synchronize after binding to
@@ -849,12 +849,6 @@ main (int argc, char *argv[])
     
       ts.timer_.elapsed_time (total_elapsed);
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "(%t) utilization task performed %g computations\n"
-		  "(%t) each computation had a duration of %f msecs\n",
-		  util_task->get_number_of_computations (),
-		  util_task_duration/1000));    
-
       total_util_task_duration = util_task_duration * util_task->get_number_of_computations ();
     
       total_latency = (total_elapsed.sec () * 
@@ -863,6 +857,14 @@ main (int argc, char *argv[])
 			      
       total_latency_servants = total_latency - total_util_task_duration;
     
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%t) utilization task performed %g computations\n"
+		  "(%t) each computation had a duration of %f msecs\n"
+		  "(%t) elapsed time is %f msecs\n",
+		  util_task->get_number_of_computations (),
+		  util_task_duration / 1000,
+		  total_latency / 1000));    
+
       // Calc and print the CPU percentage. I add 0.5 to round to the
       // nearest integer before casting it to int.
       ACE_DEBUG ((LM_DEBUG, 
