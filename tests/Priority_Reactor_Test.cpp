@@ -40,9 +40,7 @@ static int opt_nchildren = 20;
 static int opt_nloops = 200;
 static int opt_priority_reactor = 1;
 
-
-
-class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
+class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 // = TITLE
 //   A Svc_Handler with a priority twist.
 //
@@ -75,24 +73,22 @@ typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 int Read_Handler::waiting_ = 0;
 int Read_Handler::started_ = 0;
 
-void Read_Handler::set_countdown (int nchildren)
+void 
+Read_Handler::set_countdown (int nchildren)
 {
   Read_Handler::waiting_ = nchildren;
 }
 
-int Read_Handler::open (void *)
+int 
+Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Read_Handler::open, "
-			 "cannot set non blocking mode"), -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Read_Handler::open, "
+                       "cannot set non blocking mode"), -1);
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Read_Handler::open, "
-			 "cannot register handler"), -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Read_Handler::open, "
+                       "cannot register handler"), -1);
 
   // A number larger than the actual number of priorities, so some
   // clients are misbehaved, hence pusnished.
@@ -106,7 +102,8 @@ int Read_Handler::open (void *)
   return 0;
 }
 
-int Read_Handler::handle_input (ACE_HANDLE h)
+int 
+Read_Handler::handle_input (ACE_HANDLE h)
 {
   // ACE_DEBUG((LM_DEBUG,
   // "(%P|%t) Read_Handler::handle_input(%d)\n", h));
@@ -120,29 +117,24 @@ int Read_Handler::handle_input (ACE_HANDLE h)
 	return 0;
 
       if (result != 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
-		      "Read_Handler::handle_input"));
-	}
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
+                    "Read_Handler::handle_input"));
       waiting_--;
       if (waiting_ == 0)
-	{
-	  ACE_Reactor::instance()->end_event_loop();
-	}
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p closing down\n",
-		  "Read_Handler::handle_input"));
+        ACE_Reactor::instance()->end_event_loop();
+      
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%P|%t) Read_Handler::handle_input closing down\n"));
       return -1;
     }
-
+  
   // ACE_DEBUG((LM_DEBUG,
   // "(%P|%t) read %d bytes from handle %d, priority %d\n",
   // result, h, priority ()));
   return 0;
 }
 
-
-
-class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
+class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 // = TITLE
 //   A simple writer.
 //
@@ -158,12 +150,14 @@ public:
 
 typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 
-int Write_Handler::open (void *)
+int 
+Write_Handler::open (void *)
 {
   return this->svc ();
 }
 
-int Write_Handler::svc (void)
+int 
+Write_Handler::svc (void)
 {
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
@@ -179,21 +173,23 @@ int Write_Handler::svc (void)
 }
 
 // Execute the client tests.
-void* client (void* arg)
+void * 
+client (void *arg)
 {
-  ACE_INET_Addr* server_addr = (ACE_INET_Addr*)arg;
+  ACE_INET_Addr *connection_addr = (ACE_INET_Addr*)arg;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) running client\n"));
   CONNECTOR connector;
 
-  Write_Handler* writer = 0;
+  Write_Handler *writer = 0;
 
-  connector.connect (writer, *server_addr);
+  connector.connect (writer, *connection_addr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
   return 0;
 }
 
-int main (int argc, char * argv[])
+int 
+main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Reactor_Test");
 
@@ -219,10 +215,10 @@ int main (int argc, char * argv[])
 
   if (opt_priority_reactor)
     {
-      ACE_Select_Reactor* impl_ptr;
+      ACE_Select_Reactor *impl_ptr;
       ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
       impl = impl_ptr;
-      ACE_Reactor* reactor_ptr;
+      ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr), -1);
       reactor = reactor_ptr;
       ACE_Reactor::instance (reactor_ptr);
@@ -239,13 +235,13 @@ int main (int argc, char * argv[])
   // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
 	      server_addr.get_port_number ()));
 
+  ACE_INET_Addr connection_addr (server_addr.get_port_number (), "localhost");
+      
   int i;
 
 #if defined (ACE_HAS_THREADS) 
@@ -253,15 +249,13 @@ int main (int argc, char * argv[])
     {
       if (ACE_Thread_Manager::instance ()->spawn
 	  (ACE_THR_FUNC (client),
-	   (void *) &server_addr,
+	   (void *) &connection_addr,
 	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
     }
 #elif !defined (ACE_WIN32) && !defined (VXWORKS) 
   for (i = 0; i < nchildren; ++i)
     {
-      child_data[i].server_addr = server_addr;
-
       switch (ACE_OS::fork ("child"))
 	{
 	case -1:
@@ -269,7 +263,7 @@ int main (int argc, char * argv[])
 	  exit (-1);
 	  /* NOTREACHED */
 	case 0:
-	  client (&child_data[i]);
+	  client (&connection_addr);
 	  exit (0);
 	  break;
 	  /* NOTREACHED */
