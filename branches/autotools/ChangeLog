@@ -1,3 +1,24 @@
+Tue Jan  7 22:59:05 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Enable Libtool and Automake support.
+
+	* bin/bootstrap:
+
+	  Call `libtoolize' to add libtool support files to the ACE
+	  distribution.
+
+	* m4/config_h.m4:
+
+	  Added ACE_LACKS_ACE_CODECS macro template (for the sake of
+	  completeness).
+
+	* m4/subsets.m4:
+
+	  Added support for "--enable-lib-codecs" configure script
+	  option.
+
 Wed Jan  1 10:28:27 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:

@@ -110,7 +110,7 @@ dnl Set the test language as C++
 AC_LANG([C++])
 
 dnl If we are cross compiling disable certain things in the Makefiles.
-dnl AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)dnl
+AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)dnl
 
 
 dnl This checks for a binary called gm4, gnum4 or m4, and assigns
@@ -293,7 +293,7 @@ dnl Athena widget set.
 
   AC_SUBST([XTREACTOR_TEST_XLIBS])
 
-dnl   AM_CONDITIONAL([COMPILE_XTREACTOR_TEST],[test X$xt_reactor_go = Xyes])
+dnl  AM_CONDITIONAL([COMPILE_XTREACTOR_TEST],[test X$xt_reactor_go = Xyes])
 
 dnl Restore pre-test linker flags
   LDFLAGS="$T_LDFLAGS"
@@ -365,7 +365,7 @@ dnl save_CC="$CC"
 dnl CC="$CXX"
 
 dnl Check for libtool and turn on Automake processing for Libtool
-dnl AC_PROG_LIBTOOL
+AC_PROG_LIBTOOL
 
 dnl Enable C++ support in libtool
 dnl AC_LIBTOOL_CXX
@@ -1749,7 +1749,7 @@ if test "$cross_compiling" != yes; then
   dnl   AC_DEFINE([ACE_SIZEOF_CHAR],[SIZEOF_CHAR])
   dnl fi
   AC_CHECK_SIZEOF([short])
-  if test $ac_cv_sizeof_short != 0; then
+  if test "$ac_cv_sizeof_short" != 0; then
     AC_DEFINE_UNQUOTED([ACE_SIZEOF_SHORT],[$ac_cv_sizeof_short])
   fi
   AC_CHECK_SIZEOF([int])
@@ -1813,6 +1813,8 @@ if test "$cross_compiling" != yes; then
   if test $ac_cv_sizeof_signed_char = 0; then
    AC_DEFINE([ACE_LACKS_SIGNED_CHAR])
   fi
+else
+  ace_u_long_long_typedef_set=no
 fi dnl test "$cross_compiling" != yes
 
 dnl Other checks
@@ -6321,7 +6323,7 @@ dnl since gethrtime.cpp uses assembler code specific to that compiler.
   [
    AC_DEFINE([ACE_HAS_PENTIUM])
   ],)
-dnl AM_CONDITIONAL(ACE_ON_PENTIUM, test X$ace_cv_feature_pentium = Xyes)
+AM_CONDITIONAL(ACE_ON_PENTIUM, test X$ace_cv_feature_pentium = Xyes)
 
 
 dnl
@@ -7186,6 +7188,8 @@ AC_CONFIG_FILES([
   ace-config
   ace-config.1
   aceConf.sh
+  Makefile
+  ace/Makefile
 ])
 
 AC_CONFIG_COMMANDS([default],[

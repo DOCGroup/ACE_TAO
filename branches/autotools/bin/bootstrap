@@ -139,6 +139,9 @@ if test -d m4; then
     automake --add-missing #--verbose
 #   fi
 
+#   Make sure libtool support files are available.
+    libtoolize --automake
+
 #   # Generate the man pages.
 #   # Only generate man pages if bootstrapping a release.
 #   if test $bootstrap_release = yes; then
