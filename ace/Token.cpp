@@ -55,6 +55,26 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
   ACE_TRACE ("ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry");
 }
 
+ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
+                                                         ACE_thread_t t_id,
+                                                         ACE_Condition_Attributes &attributes)
+  : next_ (0),
+    thread_id_ (t_id),
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+    cv_ (0),
+#else
+    cv_ (m, attributes),
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+    runable_ (0)
+{
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (attributes);
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+
+  ACE_TRACE ("ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry");
+}
+
 ACE_Token::ACE_Token_Queue::ACE_Token_Queue (void)
   : head_ (0),
     tail_ (0)
@@ -99,7 +119,8 @@ ACE_Token::ACE_Token (LPCTSTR name, void *any)
     in_use_ (0),
     waiters_ (0),
     nesting_level_ (0),
-    signal_all_threads_ (0)
+    signal_all_threads_ (0),
+    attributes_ (USYNC_THREAD)
 {
 //  ACE_TRACE ("ACE_Token::ACE_Token");
 }
@@ -120,8 +141,8 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 
   ACE_thread_t thr_id = ACE_Thread::self ();
 
-  ACE_Token_Queue *queue = (op_type == ACE_Token::READ_TOKEN 
-                            ? &this->readers_ 
+  ACE_Token_Queue *queue = (op_type == ACE_Token::READ_TOKEN
+                            ? &this->readers_
                             : &this->writers_);
 
 #if defined (DEBUGGING)
@@ -151,7 +172,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           // Allocate q entry on stack.  This works since we don't
           // exit this method's activation record until we've got the
           // token.
-          ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_, thr_id);
+          ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_,
+                                                     thr_id,
+                                                     this->attributes_);
           int ret = 0;
 
           if (queue->head_ == 0) // I'm first and only waiter in line...

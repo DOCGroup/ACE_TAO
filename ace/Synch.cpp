@@ -758,6 +758,28 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
                 ASYS_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
+ACE_Condition_Thread_Mutex::
+ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+                            ACE_Condition_Attributes &attributes,
+                            LPCTSTR name,
+                            void *arg)
+  : mutex_ ((ACE_Thread_Mutex &) m),
+    removed_ (0)
+{
+#if defined (ACE_HAS_FSU_PTHREADS)
+//      Initialize FSU pthreads package.
+//      If called more than once, pthread_init does nothing
+//      and so does no harm.
+   pthread_init ();
+#endif  /*  ACE_HAS_FSU_PTHREADS */
+
+// ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
+  if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
+                         name, arg) != 0)
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
+}
+
 ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex (void)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex");
