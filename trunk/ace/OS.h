@@ -22,7 +22,6 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 #include "ace/inc_user_config.h"
 
-
 #if defined (ACE_HAS_ANSI_CASTS)
 # define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
 # define ACE_const_cast(TYPE, EXPR)        const_cast<TYPE> (EXPR)
@@ -3770,8 +3769,9 @@ class ACE_Export ACE_OS
   //     The methods in this class also automatically restart when
   //     interrupts occur during system calls (assuming that the
   //     <ACE_Log_Msg::restart> flag is enabled).
-public:
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
+
+public:
 
   class ace_flock_t
   {
