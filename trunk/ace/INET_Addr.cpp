@@ -444,6 +444,8 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
             return -1;
 
           char* h = hp->h_aliases[p - hp->h_addr_list];
+          if (h == 0)
+            h = hp->h_name;
           if (ACE_OS::strlen (h) >= len)
             {
               errno = ENOSPC;
