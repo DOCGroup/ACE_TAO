@@ -122,14 +122,12 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << fname  << "_forany "
-          << "(ACE_const_cast (" << fname << "_slice *, "
-          << "_tao_aggregate." << f->local_name () << ")))";
+      *os << "(strm >> "
+          << "_tao_aggregate_" << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << fname << "_forany "
-          << "(ACE_const_cast (" << fname << "_slice *, "
-          << "_tao_aggregate." << f->local_name () << ")))";
+      *os << "(strm << "
+          << "_tao_aggregate_" << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -703,4 +701,120 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
       delete visitor;
     }
   return 0;
+}
+
+// ****************************************************************
+
+be_visitor_cdr_op_field_decl::
+    be_visitor_cdr_op_field_decl (be_visitor_context *ctx)
+  : be_visitor_scope (ctx)
+{
+}
+
+// This is a field, but the action depends on the type of the field,
+// use this visitor to detect the type of the field.
+// Notice that this is why the parent visitor (who create us) cannot
+// do the job, because it may have another purpose for some or all of
+// the visit_* methods; in other words, while running a visitor to
+// generate CDR operators for structures we cannot use that one to
+// generate the code of each field, because visit_struct already has a
+// meaning in that visitor.
+int
+be_visitor_cdr_op_field_decl::visit_field (be_field *node)
+{
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
+                         "visit_field - "
+                         "Bad field type\n"
+                         ), -1);
+    }
+
+  // @@ Shouldn't this be saved in the visitor and not the context?!
+  this->ctx_->node (node); // save the node
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
+                         "visit_field - "
+                         "codegen for field type failed\n"
+                         ), -1);
+    }
+  return 0;
+}
+
+// visit array
+int
+be_visitor_cdr_op_field_decl::visit_array (be_array *node)
+{
+  TAO_OutStream *os; // output stream
+  os = this->ctx_->stream ();
+
+  // retrieve the field node
+  be_field *f = this->ctx_->be_node_as_field ();
+  if (!f)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
+                         "visit_array - "
+                         "cannot retrieve field node\n"
+                         ), -1);
+    }
+
+  // for anonymous arrays, the type name has a _ prepended. We compute
+  // the fullname with or without the underscore and use it later on.
+  char fname [NAMEBUFSIZE];  // to hold the full and
+      
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // for anonymous arrays ...
+      // we have to generate a name for us that has an underscope
+      // prepended to our local name. This needs to be inserted after
+      // the parents's name
+          
+      if (node->is_nested ())
+        {
+          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+                           node->local_name ()->get_string ());
+        }
+      else
+        {
+          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+        }
+    }
+  else
+    {
+      // typedefed node
+      ACE_OS::sprintf (fname, "%s", node->fullname ());
+    }
+
+  // check what is the code generation substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << fname << "_forany "
+          << "_tao_aggregate_" << f->local_name () << be_idt << be_idt_nl
+          << "(ACE_const_cast (" << be_idt << be_idt_nl
+          << fname << "_slice*," << be_nl
+          << "_tao_aggregate." << f->local_name () << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      return 0;
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+    default:
+      // error
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
+                         "visit_array - "
+                         "bad sub state\n"
+                         ), -1);
+    }
+  ACE_NOTREACHED (return 0);
 }

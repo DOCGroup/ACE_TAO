@@ -1,3 +1,17 @@
+Tue Feb  9 20:38:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 
+	  Silenced pesky warning about unreached statement.
+
+	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h: 
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp: 
+	  Added new visitor to generate the variable declarations required
+	  for marshaling certain kind of fields.
+
+	* TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp: 
+	  Use the new visitor to generate field declarations.
+
 Tue Feb  9 20:43:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* $TAO_ROOT/examples/Callback_Quoter/*.cpp

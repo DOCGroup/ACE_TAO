@@ -23,6 +23,7 @@
 #include	"be.h"
 
 #include "be_visitor_exception.h"
+#include "be_visitor_field.h"
 
 ACE_RCSID(be_visitor_exception, cdr_op_cs, "$Id$")
 
@@ -73,6 +74,11 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   // do we have any members?
   if (node->nmembers () > 0)
     {
+      be_visitor_context* new_ctx =
+        new be_visitor_context (*this->ctx_);
+      be_visitor_cdr_op_field_decl field_decl (new_ctx);
+      field_decl.visit_scope (node);
+
       // some members
       *os << "// first marshal the repository ID" << be_nl
           << "if (strm << _tao_aggregate._id ())" << be_nl
@@ -122,6 +128,11 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   // do we have any members?
   if (node->nmembers () > 0)
     {
+      be_visitor_context* new_ctx =
+        new be_visitor_context (*this->ctx_);
+      be_visitor_cdr_op_field_decl field_decl (new_ctx);
+      field_decl.visit_scope (node);
+
       // some members
       *os << "// now marshal the members" << be_nl
           << "if (" << be_idt_nl;

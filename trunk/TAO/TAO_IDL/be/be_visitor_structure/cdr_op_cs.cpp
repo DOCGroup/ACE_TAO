@@ -23,6 +23,7 @@
 #include	"be.h"
 
 #include "be_visitor_structure.h"
+#include "be_visitor_field.h"
 
 ACE_RCSID(be_visitor_structure, cdr_op_cs, "$Id$")
 
@@ -69,8 +70,15 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
   *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_aggregate)" << be_nl
-      << "{" << be_idt_nl
-      << "if (" << be_idt_nl;
+      << "{" << be_idt_nl;
+
+  {
+    be_visitor_context* new_ctx =
+      new be_visitor_context (*this->ctx_);
+    be_visitor_cdr_op_field_decl field_decl (new_ctx);
+    field_decl.visit_scope (node);
+  }
+  *os << "if (" << be_idt_nl;
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
@@ -91,8 +99,15 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
   *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_aggregate)" << be_nl
-      << "{" << be_idt_nl
-      << "if (" << be_idt_nl;
+      << "{" << be_idt_nl;
+
+  {
+    be_visitor_context* new_ctx =
+      new be_visitor_context (*this->ctx_);
+    be_visitor_cdr_op_field_decl field_decl (new_ctx);
+    field_decl.visit_scope (node);
+  }
+  *os << "if (" << be_idt_nl;
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
