@@ -1022,7 +1022,9 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   // Lynx says, it is better to set this bit, to be portable.
   reaction.sa_flags &= SA_SIGACTION;
 #endif /* SA_SIGACTION */
-  reaction.sa_sigaction = null_handler;         // Null handler function.
+  // Null handler function.
+  reaction.sa_sigaction =
+    ACE_SIGNAL_C_FUNC (&ACE_POSIX_SIG_Proactor::null_handler);
   int sigaction_return = sigaction (signal_number,
                                     &reaction,
                                     0);
