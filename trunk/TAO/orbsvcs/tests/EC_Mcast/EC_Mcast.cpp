@@ -703,7 +703,7 @@ ECM_Supplier::ECM_Supplier (ECM_Local_Federation* federation)
 
 void
 ECM_Supplier::open (const char* name,
-                    RtecScheduler::Period period,
+                    RtecScheduler::Period_t period,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     RtecScheduler::Scheduler_ptr scheduler,
                     CORBA::Environment &_env)
@@ -777,7 +777,7 @@ ECM_Supplier::close (CORBA::Environment &_env)
 
 void
 ECM_Supplier::activate (const char* name,
-                        RtecScheduler::Period period,
+                        RtecScheduler::Period_t period,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         RtecScheduler::Scheduler_ptr scheduler,
                         CORBA::Environment &_env)
@@ -1027,7 +1027,7 @@ ECM_Local_Federation::~ECM_Local_Federation (void)
 
 void
 ECM_Local_Federation::open (int event_count,
-                            RtecScheduler::Period period,
+                            RtecScheduler::Period_t period,
                             RtecEventChannelAdmin::EventChannel_ptr ec,
                             RtecScheduler::Scheduler_ptr scheduler,
                             CORBA::Environment& _env)
@@ -1061,7 +1061,7 @@ ECM_Local_Federation::close (CORBA::Environment &_env)
 }
 
 void
-ECM_Local_Federation::activate (RtecScheduler::Period period,
+ECM_Local_Federation::activate (RtecScheduler::Period_t period,
                                 RtecEventChannelAdmin::EventChannel_ptr ec,
                                 RtecScheduler::Scheduler_ptr scheduler,
                                 CORBA::Environment& _env)

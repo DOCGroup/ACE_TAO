@@ -235,17 +235,17 @@ int ACE_Scheduler_Factory::dump_schedule
   {
     rt_info_format = "{%20s, %10d, %10d, %10d, "
                      "%10d, %10d, "
-                     "(RtecScheduler::Criticality) %d, "
-                     "(RtecScheduler::Importance) %d, "
+                     "(RtecScheduler::Criticality_t) %d, "
+                     "(RtecScheduler::Importance_t) %d, "
                      "%10d, %10d, %10d, %10d, %10d, "
-                     "(RtecScheduler::Info_Type) %d }";
+                     "(RtecScheduler::Info_Type_t) %d }";
   }
 
   // Default format for printing Config_Info output.
   if (config_info_format == 0)
   {
     config_info_format = "  { %10d, %10d, "
-                         "(RtecScheduler::Dispatching_Type) %d }";
+                         "(RtecScheduler::Dispatching_Type_t) %d }";
   }
 
   FILE* file = stdout;
@@ -370,9 +370,9 @@ int ACE_Scheduler_Factory::dump_schedule
 }
 
 #if defined (HPUX) && !defined (__GNUG__)
-  // aCC can't handle RtecScheduler::Preemption_Priority used as an operator
+  // aCC can't handle RtecScheduler::Preemption_Priority_t used as an operator
   // name.
-  typedef CORBA::Long RtecScheduler_Preemption_Priority;
+  typedef CORBA::Long RtecScheduler_Preemption_Priority_t;
 #endif /* HPUX && !g++ */
 
 RtecScheduler::Preemption_Priority_t
@@ -387,9 +387,9 @@ ACE_Scheduler_Factory::preemption_priority ()
       // egcs 1.0.1 raises an internal compiler error if we implicitly
       // call the type conversion operator.  So, call it explicitly.
 #if defined (HPUX) && !defined (__GNUG__)
-      const RtecScheduler::Preemption_Priority preemption_priority =
-        ACE_static_cast (RtecScheduler::Preemption_Priority,
-                         tss->operator RtecScheduler_Preemption_Priority ());
+      const RtecScheduler::Preemption_Priority_t preemption_priority =
+        ACE_static_cast (RtecScheduler::Preemption_Priority_t,
+                         tss->operator RtecScheduler_Preemption_Priority_t ());
 #else
       const RtecScheduler::Preemption_Priority_t preemption_priority =
         ACE_static_cast (RtecScheduler::Preemption_Priority_t,
@@ -425,10 +425,10 @@ ACE_Scheduler_Factory::set_preemption_priority
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>;
-template class ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >;
-template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>;
+template class ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >;
+template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
-#pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >
-#pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>
+#pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
+#pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

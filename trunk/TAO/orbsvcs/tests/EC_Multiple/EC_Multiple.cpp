@@ -1302,7 +1302,7 @@ Test_Supplier::open (const char* name,
                      int event_a,
                      int event_b,
                      int message_count,
-                     const RtecScheduler::Period& rate,
+                     const RtecScheduler::Period_t& rate,
                      RtecEventChannelAdmin::EventChannel_ptr ec,
                      CORBA::Environment &_env)
 {
@@ -1391,7 +1391,7 @@ Test_Supplier::close (CORBA::Environment &_env)
 
 void
 Test_Supplier::activate (const char* name,
-                         const RtecScheduler::Period& rate,
+                         const RtecScheduler::Period_t& rate,
                          RtecEventChannelAdmin::EventChannel_ptr ec,
                          CORBA::Environment &_env)
 {

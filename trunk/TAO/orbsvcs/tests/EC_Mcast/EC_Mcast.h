@@ -164,7 +164,7 @@ public:
   ECM_Supplier (ECM_Local_Federation* federation);
 
   void open (const char* name,
-             RtecScheduler::Period period,
+             RtecScheduler::Period_t period,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
              RtecScheduler::Scheduler_ptr scheduler,
              CORBA::Environment& _env);
@@ -174,7 +174,7 @@ public:
   // Disconnect from the EC.
 
   void activate (const char* name,
-                 RtecScheduler::Period period,
+                 RtecScheduler::Period_t period,
                  RtecEventChannelAdmin::EventChannel_ptr event_channel,
                  RtecScheduler::Scheduler_ptr scheduler,
                  CORBA::Environment& _env);
@@ -271,7 +271,7 @@ public:
   // Destructor
 
   void open (int event_count,
-             RtecScheduler::Period period,
+             RtecScheduler::Period_t period,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
              RtecScheduler::Scheduler_ptr scheduler,
              CORBA::Environment& _env);
@@ -280,7 +280,7 @@ public:
   void close (CORBA::Environment& _env);
   // Disconnect everybody from the EC
 
-  void activate (RtecScheduler::Period period,
+  void activate (RtecScheduler::Period_t period,
                  RtecEventChannelAdmin::EventChannel_ptr event_channel,
                  RtecScheduler::Scheduler_ptr scheduler,
                  CORBA::Environment& _env);
