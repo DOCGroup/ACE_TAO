@@ -1,3 +1,16 @@
+Mon Nov 24 07:03:15 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplib.mpt:
+
+          Removed the /Zi option (enable debugging information) from the
+          release targets.
+
 Mon Nov 24 05:26:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.local.GNU:
@@ -84,13 +97,13 @@ Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov 23 11:00:02 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Object.cpp (ACE_Service_Type): Added an ACE_const_cast<>
-	  to resolve a bug.  Thanks to Bala for reporting this.
+        * ace/Service_Object.cpp (ACE_Service_Type): Added an ACE_const_cast<>
+          to resolve a bug.  Thanks to Bala for reporting this.
 
 Sun Nov 23 14:17:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Tests.bor:
-	  Added Task_Ex_Test
+        * tests/Tests.bor:
+          Added Task_Ex_Test
 
 Sun Nov 23 10:06:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -99,67 +112,67 @@ Sun Nov 23 10:06:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Nov 22 15:39:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Service_Object.h:
+        * ace/Service_Object.h:
 
-	  Made <this->dll_> mutable. This should get rid of the errors in
-	  the scoreboard.
+          Made <this->dll_> mutable. This should get rid of the errors in
+          the scoreboard.
 
 Sat Nov 22 22:10:14 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* tests/Task_Ex_Test.cpp:
-	* tests/run_test.lst:
-	* tests/tests.mpc:
-	  Added test for ACE_Task_Ex
+        * tests/Task_Ex_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added test for ACE_Task_Ex
 
 Sat Nov 22 22:03:34 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/ace.mpc:
+        * ace/ace.mpc:
 
-	  Added Task_Ex_T file
+          Added Task_Ex_T file
 
 Sat Nov 22 22:00:15 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/Task_Ex_T.h:
-	* ace/Task_Ex_T.i:
-	* ace/Task_Ex_T.cpp:
+        * ace/Task_Ex_T.h:
+        * ace/Task_Ex_T.i:
+        * ace/Task_Ex_T.cpp:
 
-	  Added support for ACE_Task with Use define Message template
-	  parameter.
+          Added support for ACE_Task with Use define Message template
+          parameter.
 
 Sat Nov 22 21:07:09 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/OS_NS_Thread.h :
+        * ace/OS_NS_Thread.h :
 
-	  Added "&& !defined (ACE_DEFAULT_THREAD_KEYS)". Problems occurs
-	  on win2k/XP when OS support up to 1024 slots,  but MS-sdk
-	  defines TLS_MINIMUM_AVAILABLE as 64. Now, Win2k/XP Users can
-	  raise that number, define-ing ACE_DEFAULT_THREAD_KEYS as 1024
-	  e.g..
+          Added "&& !defined (ACE_DEFAULT_THREAD_KEYS)". Problems occurs
+          on win2k/XP when OS support up to 1024 slots,  but MS-sdk
+          defines TLS_MINIMUM_AVAILABLE as 64. Now, Win2k/XP Users can
+          raise that number, define-ing ACE_DEFAULT_THREAD_KEYS as 1024
+          e.g..
 
 Sat Nov 22 11:18:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ace/Service_Object.{h,cpp}:
+        * ace/Service_Object.{h,cpp}:
 
-	  Reverting this change "Fri Nov 21 12:13:42 2003  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since Dr. Schmidt wants to
-	  fix this the right way.
+          Reverting this change "Fri Nov 21 12:13:42 2003  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since Dr. Schmidt wants to
+          fix this the right way.
 
 Fri Nov 21 12:13:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Service_Object.{h,cpp}:
+        * ace/Service_Object.{h,cpp}:
 
-	  Reverted this change since it broke the builds.
- 	  "Thu Nov 20 18:11:32 2003  Douglas C. Schmidt
-	  <schmidt@ace.cs.wustl.edu>".  We will get a better patch soon
-	  from the user.
+          Reverted this change since it broke the builds.
+          "Thu Nov 20 18:11:32 2003  Douglas C. Schmidt
+          <schmidt@ace.cs.wustl.edu>".  We will get a better patch soon
+          from the user.
 
 Thu Nov 20 18:11:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Object.{h,cpp}: Added a new constructor for
-	  ACE_Service_Type that is passed an ACE_SHLIB_HANDLE handle.
-  	  This fixes a bug with ACE_DLL_Strategy::make_svc_handler().
-  	  Thanks to Thomas Girard <thomas.g.girard@free.fr> for reporting
- 	  this.
+        * ace/Service_Object.{h,cpp}: Added a new constructor for
+          ACE_Service_Type that is passed an ACE_SHLIB_HANDLE handle.
+          This fixes a bug with ACE_DLL_Strategy::make_svc_handler().
+          Thanks to Thomas Girard <thomas.g.girard@free.fr> for reporting
+          this.
 
 Fri Nov 21 13:26:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -300,7 +313,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Linux.  Added default value of config.h to wrapper_macros.GNU,
           and pass it to g++dep where it is used to replace the matching
           file dependency with $(ACE_PLATFORM_CONFIG) so we can pick up
-          the correct dependency automatically on each platform. 
+          the correct dependency automatically on each platform.
 
         * include/makeinclude/wrapper_macros.GNU:
         * include/makeinclude/platform_sunos5_kcc.GNU:
@@ -342,28 +355,28 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Nov 20 17:30:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/sys/os_socket.h: HP-UX supplies the socklen_t type
-	  unless some feature set less than _XOPEN_SOURCE_EXTENDED is
-	  specifically requested. However, it only actually uses the
-	  socklen_t type in supplied socket functions if
-	  _XOPEN_SOURCE_EXTENDED is specifically requested. So, for example,
-	  the compile options ACE usually uses (includes -mt) cause
-	  _HPUX_SOURCE to be set, which sets _INCLUDE_XOPEN_SOURCE_EXTENDED
-	  (causing socklen_t to be defined) but _not_ _XOPEN_SOURCE_EXTENDED
-	  (causing socket functions to use int, not socklen_t).
+        * ace/os_include/sys/os_socket.h: HP-UX supplies the socklen_t type
+          unless some feature set less than _XOPEN_SOURCE_EXTENDED is
+          specifically requested. However, it only actually uses the
+          socklen_t type in supplied socket functions if
+          _XOPEN_SOURCE_EXTENDED is specifically requested. So, for example,
+          the compile options ACE usually uses (includes -mt) cause
+          _HPUX_SOURCE to be set, which sets _INCLUDE_XOPEN_SOURCE_EXTENDED
+          (causing socklen_t to be defined) but _not_ _XOPEN_SOURCE_EXTENDED
+          (causing socket functions to use int, not socklen_t).
 
-	* ace/OS_NS_Thread.h (ACE_rwlock_t): Uncomment the two lines that
-	  set "typedef pthread_rwlock_t ACE_rwlock_t" for
-	  ACE_HAS_PTHREADS_UNIX98_EXT.
+        * ace/OS_NS_Thread.h (ACE_rwlock_t): Uncomment the two lines that
+          set "typedef pthread_rwlock_t ACE_rwlock_t" for
+          ACE_HAS_PTHREADS_UNIX98_EXT.
 
-	* ace/OS_NS_Thread.inl (rw_trywrlock_upgrade): Add "defined
-	  (ACE_HAS_PTHREADS_UNIX98_EXT)" to the platforms that return
-	  ENOTSUP for this. Avoids tripping over the code that emulates it
-	  without having the emulated lock type set up.
+        * ace/OS_NS_Thread.inl (rw_trywrlock_upgrade): Add "defined
+          (ACE_HAS_PTHREADS_UNIX98_EXT)" to the platforms that return
+          ENOTSUP for this. Avoids tripping over the code that emulates it
+          without having the emulated lock type set up.
 
-	* ace/OS_NS_sys_stat.h: Change #include "ace/os_include/sys/os_types.h"
-	  to "ace/os_include/sys/os_stat.h" to get the proper struct stat
-	  definition for the platform. Fixes compile error on HP-UX.
+        * ace/OS_NS_sys_stat.h: Change #include "ace/os_include/sys/os_types.h"
+          to "ace/os_include/sys/os_stat.h" to get the proper struct stat
+          definition for the platform. Fixes compile error on HP-UX.
 
 Thu Nov 20 09:35:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -376,10 +389,10 @@ Thu Nov 20 09:35:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 Thu Nov 20 07:51:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS_NS_sys_uio.cpp: "Short-circuit the readv_emulation() and
-	  writev_emulation() for the case where there's just a single
-	  element in the iovec.  Thanks to Edan Ayal <edanayal@yahoo.com>
-	  for contributing this.
+        * ace/OS_NS_sys_uio.cpp: "Short-circuit the readv_emulation() and
+          writev_emulation() for the case where there's just a single
+          element in the iovec.  Thanks to Edan Ayal <edanayal@yahoo.com>
+          for contributing this.
 
 Wed Nov 19 11:55:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
