@@ -23,8 +23,13 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/Time_Value.h"
 
-ACE_RCSID(TAO_Service, TAO_Service, "$Id$")
+
+ACE_RCSID (TAO_Service,
+           TAO_Service,
+           "$Id$")
+
 
 extern "C" void handler (int)
 {

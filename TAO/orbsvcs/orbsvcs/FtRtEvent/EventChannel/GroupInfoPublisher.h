@@ -18,6 +18,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

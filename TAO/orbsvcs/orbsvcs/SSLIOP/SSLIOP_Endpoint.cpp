@@ -3,6 +3,7 @@
 #include "tao/IIOP_Endpoint.h"
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 
 ACE_RCSID (SSLIOP,

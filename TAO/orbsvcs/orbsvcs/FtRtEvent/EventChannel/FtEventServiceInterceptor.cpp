@@ -1,5 +1,6 @@
 // $Id$
 #include "ace/OS_NS_string.h"
+#include "ace/SString.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
@@ -306,7 +307,7 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
 
 void
 FtEventServiceInterceptor::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr 
+  PortableInterceptor::ServerRequestInfo_ptr
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
@@ -333,7 +334,3 @@ FtEventServiceInterceptor::set_state(const FtRtecEventChannelAdmin::CachedOption
 {
   request_table_.set_state(state);
 }
-
-
-
-

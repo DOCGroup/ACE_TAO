@@ -7,11 +7,15 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_LoadMinimum,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "LB_LoadMinimum.inl"
@@ -208,11 +212,11 @@ TAO_LB_LoadMinimum::next_member (
 
   if (found_location)
     {
-/*            
+/*
        ACE_DEBUG ((LM_DEBUG,
                    "RETURNING REFERENCE FOR LOCATION \"%s\"\n",
                    location[0].id.in ()));
-*/                   
+*/
 
       return load_manager->get_member_ref (object_group,
                                            location
@@ -232,7 +236,7 @@ TAO_LB_LoadMinimum::next_member (
 /*
        ACE_DEBUG ((LM_DEBUG,
                    "CALLING RANDOM  REFERENCE FOR LOCATION \n"));
-*/                   
+*/
 
       return TAO_LB_Random::_tao_next_member (object_group,
                                               load_manager,
@@ -317,7 +321,7 @@ TAO_LB_LoadMinimum::analyze_loads (
     }
 
   avg_load.value = total_load.value / len;
-/*  
+/*
   ACE_DEBUG ((LM_DEBUG,
                       "AVERAGE LOAD == %f"
                       "\tMIN LOAD == %f\n",
@@ -333,13 +337,13 @@ TAO_LB_LoadMinimum::analyze_loads (
         {
           const PortableGroup::Location & loc = locations[j];
 
-         /* 
+         /*
           ACE_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
                        "AVERAGE       == %f\n",
                        tmp[i].value,
                        avg_load.value));
-        */ 
+        */
 
           if (tmp[j].value <= avg_load.value)
             {
@@ -377,12 +381,12 @@ TAO_LB_LoadMinimum::analyze_loads (
               }
               else if ((percent_diff > TAO_LB::LM_DEFAULT_DIFF_AVERAGE_CUTOFF)
                        && (percent_diff < 1))
-              { 
-/*                      
+              {
+/*
                 ACE_DEBUG ((LM_DEBUG,
                             "%P --- ALERTING LOCATION %u\n",
                             i));
-*/              
+*/
                 load_manager->enable_alert (loc
                                             ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK_EX (SECOND);
@@ -445,7 +449,7 @@ TAO_LB_LoadMinimum::get_location (
                             load
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-/*          
+/*
           ACE_DEBUG ((LM_DEBUG,
                       "LOC == %u"
                       "\tMIN LOAD == %f\n"
