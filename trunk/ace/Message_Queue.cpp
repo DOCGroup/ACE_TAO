@@ -864,7 +864,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_queue (const ACE_Time_Value & 
   // underlying data block will not be deleted if another
   // message block is still pointing to it.
   ACE_Message_Block *temp = (pending_list_tail_) 
-                            ? pending_list_tail_->next ();
+                            ? pending_list_tail_->next ()
                             : head_;
 
   while (temp)
