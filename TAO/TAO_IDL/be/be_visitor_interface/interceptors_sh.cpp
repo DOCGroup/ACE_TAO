@@ -62,8 +62,8 @@ int be_visitor_interface_interceptors_sh::visit_interface (be_interface *node)
 
   *os << "// Generation of interceptors related RequestInfo classes "
       << "per operation." << be_nl
-      << "// This needed to be able to store the arguments, exceptiosn, "
-      << "constexts" << be_nl
+      << "// This needed to be able to store the arguments, exceptions, "
+      << "contexts" << be_nl
       << "// and build the lists dynamically on demand so that "
       << "unnecessary time overhead" << be_nl
       << "// of building these lists when they arent used is avoided." 

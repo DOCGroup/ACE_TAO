@@ -59,7 +59,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   // Start with the current indentation level.
   os->indent ();
 
-  // Generate the ServerRequest_Info object definition per operation
+  // Generate the ServerRequestInfo object definition per operation
   // to be used by the interceptors.
   if (node->is_nested ())
     {
@@ -69,7 +69,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_" << node->flat_name ();
+  *os << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -102,7 +102,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os << "::"
-      << "TAO_ServerRequest_Info_" << node->flat_name ();
+      << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -161,7 +161,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
-  *os << ": TAO_ServerRequest_Info (_tao_operation, "
+  *os << ": TAO_ServerRequestInfo (_tao_operation, "
       << "_tao_service_context_list)";
 
   ctx = *this->ctx_;
@@ -193,7 +193,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
+  *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -275,7 +275,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
+  *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -352,7 +352,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" <<parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
+  *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
     // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -448,7 +448,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
           *os << "POA_"<< parent->full_name () << "::";
         }
 
-      *os << "TAO_ServerRequest_Info_" << node->flat_name ();
+      *os << "TAO_ServerRequestInfo_" << node->flat_name ();
 
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
