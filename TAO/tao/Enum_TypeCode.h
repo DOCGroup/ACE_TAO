@@ -30,7 +30,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template<typename StringType> class Enumerator;
+    template<typename StringType> struct Enumerator;
 
     /**
      * @class Enum
