@@ -32,6 +32,7 @@ ACE_RCSID (ACE_SSL,
 
 #endif  /* ACE_WIN32 */
 
+#include "ace/OS_NS_string.h"
 #include "ace/Proactor.h"
 
 #include <openssl/err.h>
