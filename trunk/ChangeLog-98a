@@ -14,6 +14,13 @@ Fri Mar 27 09:21:21 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/test_config.h: with Green Hills on VxWorks, rename
           main to ace_main for compatibility with run_tests.vxworks.
 
+        * ace/OS.{h,i},High_Res_Timer.* (gethrtime): added an optional
+          argument to allow specifying start/increment/stop to a timer.
+          It is currently only used on Chorus.  On Chorus, using
+          the default ACE_HRTIMER_GETTIME will use clock_gettime ()
+          instead of sysBench ().  sysBench () disables interrupts,
+          so it must be used with care.
+
 Thu Mar 26 21:18:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h,config-g++-common.h,config-freebsd*.h,

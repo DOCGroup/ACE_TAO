@@ -3,6 +3,10 @@ Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/IIOP_ORB.*,IIOP_Object.{h,cpp,corba.h: #include the .i file
           in the .h/.cpp files instead of corba.h.
 
+        * tests/Demux_Test/client.cpp: #include ace/stream.h instead of
+          system headers, and use ACE_OS::gethrtime () instead of
+          gethrtime ().
+
 Fri Mar 27 04:45:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.h: Added two pure virtual functions
