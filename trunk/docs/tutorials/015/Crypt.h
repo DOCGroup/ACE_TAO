@@ -14,9 +14,7 @@ public:
 
   typedef Protocol_Task inherited;
 
-  // Again we have the option of multiple threads and again I
-  // regret tempting folks to use it.
-  Crypt (int thr_count = 0);
+  Crypt (void);
 
   ~Crypt (void);
 

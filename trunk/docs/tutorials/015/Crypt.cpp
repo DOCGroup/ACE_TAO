@@ -6,8 +6,8 @@
 
 /* The expected constructor...
  */
-Crypt::Crypt( int _thr_count )
-        : Protocol_Task(_thr_count)
+Crypt::Crypt( void )
+        : Protocol_Task()
 {
 }
 

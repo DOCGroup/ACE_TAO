@@ -24,11 +24,8 @@ things more difficult if something has to change in their interaction.
 <font color=blue>#include</font> "<font color=green>Compressor.h</font>"
 <font color=blue>#include</font> "<font color=green>ace/SOCK_Stream.h</font>"
 
-<font color=red>/* Construct our baseclass with the proper thread count.  I really
-   should remove this option...
- */</font>
-<font color=#008888>Compressor::Compressor</font>( int _thr_count )
-        : Protocol_Task(_thr_count)
+<font color=#008888>Compressor::Compressor</font>( void )
+        : Protocol_Task()
 {
     ;
 }

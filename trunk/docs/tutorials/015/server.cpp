@@ -2,6 +2,7 @@
 // $Id$
 
 #include "Server_i.h"
+#include "ace/Select_Reactor.h"
 
 // A signal handler that will close the server object
 extern "C" void handler (int)
@@ -11,7 +12,28 @@ extern "C" void handler (int)
 
 int main (int, char **)
 {
-        // The server object that abstracts away all of difficult parts.
+        /* On Win32, the WFMO reactor is used by default.
+           Unfortunately, that causes the sockets to be put into
+           non-blocking mode which will break Recv::recv().  To
+           prevent that issue, I explicitly use the Select Reactor
+           instead.  I'll talk more about the "problem" in the Recv
+           comments.
+         */
+
+        // First, we create a Select_Reactor that will do the work.
+        // To keep things simple, I'll create it on the stack.
+    ACE_Select_Reactor mySelectReactor;
+
+        // Next, we need an ACE_Reactor that is the bridge between the 
+        // code and the real reactor.  It is given a pointer to the
+        // real reactor.
+    ACE_Reactor myReactor (&mySelectReactor);
+
+        // Finally, we set the singleton instance to use the reactor
+        // we've created.
+    ACE_Reactor::instance (&myReactor);
+
+        // The server object that abstracts away all of the difficult parts.
     Server server;
 
         // Attempt to open the server.  Like all good ACE-based

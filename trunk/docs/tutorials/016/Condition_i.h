@@ -12,7 +12,7 @@
     threads - An ACE_Condition<> that enables blocking on state
     changes in the variable The class I create here will contain those
     three things.  For the actual condition variable I've chosen an
-    integer.  You could easily turn this clas into a template
+    integer.  You could easily turn this class into a template
     parameterized on the condition variable's data type if 'int' isn't
     what you want.  */
 class Condition

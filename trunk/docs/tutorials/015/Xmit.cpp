@@ -12,7 +12,7 @@
    cause more trouble than you want to deal with.
 */
 Xmit::Xmit( ACE_SOCK_Stream & _peer )
-        : Protocol_Task(0), peer_(_peer)
+        : Protocol_Task(), peer_(_peer)
 {
 }
 

@@ -27,18 +27,16 @@ A quick look at the Protocol_Task header...
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
 <font color=red>/* A typical ACE_Task&lt;> derivative that adds a few things appropriate
-   to protocol stacks.
+   to protocol stacks.  To keep things a little simpler, we prevent
+   activation of the task and just borrow the thread of control from
+   the calling method in all cases.
 */</font>
 class Protocol_Task : public ACE_Task&lt;ACE_MT_SYNCH>
 {
 public:
   typedef ACE_Task&lt;ACE_MT_SYNCH> inherited;
 
-  <font color=red>// A choice of concurrency strategies is offered by the constructor.</font>
-  <font color=red>// In most cases it makes sense to set this to zero and let things</font>
-  <font color=red>// proceed serially.  You might have a need, however, for some of</font>
-  <font color=red>// your tasks to have their own thread.</font>
-  Protocol_Task (int thr_count);
+  Protocol_Task (void);
 
   ~Protocol_Task (void);
 
@@ -54,8 +52,8 @@ public:
   virtual int put (ACE_Message_Block *message,
                    ACE_Time_Value *timeout);
 
-  <font color=red>// If you choose to activate the task then this method will be doing</font>
-  <font color=red>// all of the work.</font>
+  <font color=red>// We're obligated to provide this signature even though we won't be </font>
+  <font color=red>// allowing this object to be activated.</font>
   virtual int svc (void);
 
 protected:
@@ -63,12 +61,6 @@ protected:
   <font color=red>// Called by put() or svc() as necessary to process a block of data.</font>
   int process (ACE_Message_Block *message,
                ACE_Time_Value *timeout);
-
-  <font color=red>// Just let us know if we're active or not.</font>
-  int is_active (void)
-  {
-    return this->thr_count () != 0;
-  }
 
   <font color=red>// Tasks on the writer (downstream) side of the stream are called</font>
   <font color=red>// upon to send() data that will ultimately go to the peer.</font>
@@ -80,8 +72,6 @@ protected:
   virtual int recv (ACE_Message_Block *message,
                     ACE_Time_Value *timeout);
 
-private:
-  int desired_thr_count_;
 };
 
 <font color=blue>#endif</font> <font color=red>/* PROTOCOL_TASK_H */</font>

@@ -12,7 +12,7 @@ class Test : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
      // Construct the condition variable with an initial value.
-    Test( Condition::value_t _value );
+    Test( int _max_threads, Condition::value_t _value );
     ~Test(void);
 
      // Open the Task with enough threads to make a useful test.
@@ -24,12 +24,13 @@ protected:
 
      // Override this method to modify the Condition in some way.
     virtual void modify(void) = 0;
+
      // Override this to test the Condition in some way.
     virtual void test(void) = 0;
 
      // How many threads to use in the test.  This is also used in the
      // modify() and test() methods of the derivatives.
-    static const int max_threads_;
+    int max_threads_;
 
      // We want to sleep for a random amount of time to simulate
      // work.  The seed is necessary for proper random number generation.
@@ -39,12 +40,9 @@ protected:
     Condition condition_;
 };
 
-// Set the number of threads.
-const int Test::max_threads_ = 5;
-
 // Initialize the condition variable.
-Test::Test( Condition::value_t _value )
-        : condition_(_value)
+Test::Test( int _max_threads, Condition::value_t _value )
+        : max_threads_(_max_threads), condition_(_value)
 {
     ;
 }
@@ -99,8 +97,8 @@ class Test_ne : public Test
 {
 public:
      // Initialize the condition variable to zero since we're counting up.
-    Test_ne(void)
-            : Test(0)
+    Test_ne( int _max_threads )
+            : Test(_max_threads,0)
         {
             ACE_DEBUG ((LM_INFO, "\n(%P|%t|%T)\tTesting condition_ != %d\n", max_threads_));
         }
@@ -129,8 +127,8 @@ public:
      // For max_threads_ == 5, we will start the condition variable at 
      // the value 9.  When the "last" thread decrements it, the value
      // will be 4 which satisfies the condition.
-    Test_ge(void)
-            : Test(max_threads_*2-1)
+    Test_ge( int _max_threads )
+            : Test(_max_threads,_max_threads*2-1)
         {
             ACE_DEBUG ((LM_INFO, "\n(%P|%t|%T)\tTesting condition_ >= %d\n", max_threads_));
         }
@@ -159,8 +157,8 @@ public:
      // I'm starting the value at 1 so that if we increment by one in
      // each thread, the "last" thread (of 5) will set the value to
      // 6.  Since I actually increment by 2, we could start somewhat lower.
-    Test_le(void)
-            : Test(1)
+    Test_le( int _max_threads )
+            : Test( _max_threads, 1 )
         {
             ACE_DEBUG ((LM_INFO, "\n(%P|%t|%T)\tTesting condition_ <= %d\n", max_threads_));
         }
@@ -188,8 +186,8 @@ class Test_fo : public Test
 public:
      // We'll be using operator*=(int) to increment the condition
      // variable, so we need to start with a non-zero value.
-    Test_fo(void)
-            : Test(1)
+    Test_fo( int _max_threads )
+            : Test( _max_threads, 1 )
         {
             ACE_DEBUG ((LM_INFO, "\n(%P|%t|%T)\tTesting condition_ == FunctionObject\n" ));
         }
@@ -209,6 +207,8 @@ public:
     public:
          // When this returns non-zero, the condition test operator
          // will unblock in each thread.
+         // Note that 32 was chosen because 2**5 == 32.  That is, the
+         // fifth thread will modify() the value to 32.
         int operator() ( Condition::value_t _value )
             {
                 return _value == 32;
@@ -229,19 +229,19 @@ public:
  */
 int main(int, char **)
 {
-    Test_ne test_ne;
+    Test_ne test_ne(5);
     test_ne.open();
     test_ne.wait();
     
-    Test_ge test_ge;
+    Test_ge test_ge(5);
     test_ge.open();
     test_ge.wait();
     
-    Test_le test_le;
+    Test_le test_le(5);
     test_le.open();
     test_le.wait();
     
-    Test_fo test_fo;
+    Test_fo test_fo(5);
     test_fo.open();
     test_fo.wait();
     

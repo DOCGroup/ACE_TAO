@@ -35,11 +35,12 @@ discussions.
 <P>
 Disclaimer:
 <br>
-Several folks have reported problems with this tutorial on Win32.  I
-have the fixes in mind but may not get them in place until 2/8 or so.
-What it amounts to is using the ACE_Select_Reactor for all platforms.
-Win32 defaults to ACE_WFMO_Reactor and that seems to be causing some
-or all of the problems.
+<ul>
+Several folks have reported problems with this tutorial on Win32.
+There are a couple of ways to solve this.  I've chosen to solve it by
+using the ACE_Select_Reactor on all platforms instead of taking the
+OS-default.
+</ul>
 <P>
 Kirthika's abstract:
 <UL>

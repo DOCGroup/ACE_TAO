@@ -1,3 +1,24 @@
+Sun Feb 14 14:09:11 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/015/server.cpp (main): Force the singleton to use 
+	the Select Reactor instead of the OS-default.  This should fix the 
+	problem this tutorial has on Win32 due to blocking vs non-blocking 
+	socket configuration.
+
+	* docs/tutorials/015/Protocol_Task.h : Removed the ability to
+	activate this task.  The code is now a little simpler and less
+	likely to behave in unpredicatable ways.
+
+	* docs/tutorials/015/* : A few typos fixed but mostly fallout from 
+	removing the ability to activate the Protocol_Task.
+
+	* docs/tutorials/016/page01.html : Added Kirthika's abstract.
+	
+	* docs/tutorials/016/condition.cpp : Made max_threads_ a
+	non-static member variable that is set by open().
+
+	* docs/tutorials/017/page01.html : Added Kirthika's abstract.
+	
 Sun Feb 14 12:47:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h: 

@@ -80,7 +80,7 @@ int <font color=#008888>Handler::open</font> (void *)
         <font color=red>// will prevent communicating with the client.  This is</font>
         <font color=red>// something you'll want to do in every event handler you create.</font>
     if (this->peer ().get_remote_addr (addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) can't get remote addr\n</font>"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot get remote addr\n</font>"), -1);
 
         <font color=red>// Announce the client</font>
     ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) connected with %s\n</font>", addr.get_host_name() ));
@@ -98,7 +98,7 @@ int <font color=#008888>Handler::open</font> (void *)
         <font color=red>// stream's open() may fail.</font>
     if( rval == -1 )
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) can't open the protocol stream.\n</font>"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot open the protocol stream.\n</font>"), -1);
     }
     
         <font color=red>// Now that we know the client is valid and that the stream is </font>
@@ -106,7 +106,7 @@ int <font color=#008888>Handler::open</font> (void *)
         <font color=red>// instance.  Here again is an opportunity for improvement if</font>
         <font color=red>// we expect to have mulitple Server object instances.</font>
     if (<font color=#008888>ACE_Reactor::instance</font>()->register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) can't register with reactor\n</font>"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot register with reactor\n</font>"), -1);
 
     return rval;
 }
@@ -151,7 +151,7 @@ int <font color=#008888>Handler::handle_input</font> (ACE_HANDLE)
         <font color=red>// will then be pushed through the protocol stream.</font>
     if( stream().get( ) == -1 )
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) can't get data from protocol stream\n</font>"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot get data from protocol stream\n</font>"), -1);
     }
     
     return 0;
@@ -164,10 +164,10 @@ int <font color=#008888>Handler::handle_input</font> (ACE_HANDLE)
    several peers, however, you're probably just wasting a thread to
    activate it.  On the other hand, if your reactor is running in a
    single thread (as in this example) then you can easily implement
-   thread-per-connectin concurrency by giving the baseclass one thread.
+   thread-per-connection concurrency by giving the baseclass one thread.
 */</font>
 <font color=#008888>Handler_Task::Handler_Task</font>(void)
-        : inherited(0)
+        : inherited()
 {
     ;
 }

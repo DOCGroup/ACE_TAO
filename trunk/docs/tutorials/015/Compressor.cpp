@@ -4,11 +4,8 @@
 #include "Compressor.h"
 #include "ace/SOCK_Stream.h"
 
-/* Construct our baseclass with the proper thread count.  I really
-   should remove this option...
- */
-Compressor::Compressor( int _thr_count )
-        : Protocol_Task(_thr_count)
+Compressor::Compressor( void )
+        : Protocol_Task()
 {
     ;
 }

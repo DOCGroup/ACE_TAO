@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-02-10 22:34 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-02-14 13:38 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    414 -rw-rw-r-- hdr
 #    419 -rw-rw-r-- bodies
-#   4303 -rw-rw-r-- page01.pre
+#   4228 -rw-rw-r-- page01.pre
 #    194 -rw-rw-r-- page02.pre
 #    318 -rw-rw-r-- page03.pre
 #    178 -rw-rw-r-- page04.pre
@@ -83,7 +83,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh29164; then
+if mkdir _sh31334; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -212,11 +212,12 @@ discussions.
 <P>
 Disclaimer:
 <br>
-Several folks have reported problems with this tutorial on Win32.  I
-have the fixes in mind but may not get them in place until 2/8 or so.
-What it amounts to is using the ACE_Select_Reactor for all platforms.
-Win32 defaults to ACE_WFMO_Reactor and that seems to be causing some
-or all of the problems.
+<ul>
+Several folks have reported problems with this tutorial on Win32.
+There are a couple of ways to solve this.  I've chosen to solve it by
+using the ACE_Select_Reactor on all platforms instead of taking the
+OS-default.
+</ul>
 <P>
 Kirthika's abstract:
 <UL>
@@ -277,19 +278,19 @@ etc.)
 X        compression objects.  I'll leave that as a thought
 X        exercise!</font>
 SHAR_EOF
-  $shar_touch -am 0210223099 'page01.pre' &&
+  $shar_touch -am 0214124599 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-77d3deec35fab659429a2eef4ab5b679  page01.pre
+a09c3ff1f21a90aab991e0f38dc00458  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 4303 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '4303,' 'current size' "$shar_count!"
+    test 4228 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '4228,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -1058,5 +1059,5 @@ SHAR_EOF
     $echo 'page09.pst:' 'original size' '617,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh29164
+rm -fr _sh31334
 exit 0

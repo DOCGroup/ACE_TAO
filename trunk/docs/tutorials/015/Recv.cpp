@@ -8,7 +8,7 @@
    initializations.
 */
 Recv::Recv( ACE_SOCK_Stream & _peer )
-        : Protocol_Task(0), peer_(_peer), error_(0)
+        : Protocol_Task(), peer_(_peer), error_(0)
 {
      // Create the tickler that get() will use to trigger recv()
      // through the baseclass.  Since we're single-threaded this is
@@ -47,7 +47,7 @@ int Recv::recv(ACE_Message_Block * message, ACE_Time_Value *timeout)
     int b = 0;
 
         /* Read from the socket one byte at a time until we see then
-           end-of-string NULL character.  Since the OS layers (at leas 
+           end-of-string NULL character.  Since the OS layers (at least
            in Unix) will provide some buffering this isn't as bad as
            it may seem at first.
 
@@ -55,7 +55,9 @@ int Recv::recv(ACE_Message_Block * message, ACE_Time_Value *timeout)
            WFMO_Reactor is used.  This is because the socket has been
            placed into non-blocking mode and only the recv() of the
            first byte will block.  The solution is to use
-           ACE_Select_Reactor and I hope to implement that soon.
+           ACE_Select_Reactor which doesn't change the socket
+           characteristics.  We did that back in main(), so we should
+           be in good shape now.
         */
     do
     {

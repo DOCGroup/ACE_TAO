@@ -24,6 +24,7 @@ simplification.
 <font color=red>// $Id$</font>
 
 <font color=blue>#include</font> "<font color=green>Server_i.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/Select_Reactor.h</font>"
 
 <font color=red>// A signal handler that will close the server object</font>
 extern "<font color=green>C</font>" void handler (int)
@@ -33,7 +34,28 @@ extern "<font color=green>C</font>" void handler (int)
 
 int main (int, char **)
 {
-        <font color=red>// The server object that abstracts away all of difficult parts.</font>
+        <font color=red>/* On Win32, the WFMO reactor is used by default.
+           Unfortunately, that causes the sockets to be put into
+           non-blocking mode which will break <font color=#008888>Recv::recv</font>().  To
+           prevent that issue, I explicitly use the Select Reactor
+           instead.  I'll talk more about the "<font color=green>problem</font>" in the Recv
+           comments.
+         */</font>
+
+        <font color=red>// First, we create a Select_Reactor that will do the work.</font>
+        <font color=red>// To keep things simple, I'll create it on the stack.</font>
+    ACE_Select_Reactor mySelectReactor;
+
+        <font color=red>// Next, we need an ACE_Reactor that is the bridge between the </font>
+        <font color=red>// code and the real reactor.  It is given a pointer to the</font>
+        <font color=red>// real reactor.</font>
+    ACE_Reactor myReactor (&mySelectReactor);
+
+        <font color=red>// Finally, we set the singleton instance to use the reactor</font>
+        <font color=red>// we've created.</font>
+    <font color=#008888>ACE_Reactor::instance</font> (&myReactor);
+
+        <font color=red>// The server object that abstracts away all of the difficult parts.</font>
     Server server;
 
         <font color=red>// Attempt to open the server.  Like all good ACE-based</font>
