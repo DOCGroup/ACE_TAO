@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -117,7 +118,7 @@ public:
 
     Profile &operator = (const Profile &src);
     // Disallow copy constructor.
-    
+
     ACE_INET_Addr object_addr_;
     // Cached instance of <ACE_INET_Addr> for use in making
     // invocations, etc.
@@ -136,17 +137,17 @@ class TAO_Export IIOP_Object : public STUB_Object
 {
 public:
   void do_call (CORBA::Environment &env,
-		const TAO_Call_Data *info,
-		...);
+                const TAO_Call_Data *info,
+                ...);
   // SII-based invocation.
 
   void do_dynamic_call (const char *opname,
-			CORBA::Boolean is_roundtrip,
-			CORBA::NVList_ptr args,
-			CORBA::NamedValue_ptr result,
-			CORBA::Flags flags,
-			CORBA::ExceptionList &exceptions,
-			CORBA::Environment &env);
+                        CORBA::Boolean is_roundtrip,
+                        CORBA::NVList_ptr args,
+                        CORBA::NamedValue_ptr result,
+                        CORBA::Flags flags,
+                        CORBA::ExceptionList &exceptions,
+                        CORBA::Environment &env);
   // DII-based invocation.
 
   // = Support for tables keyed by objrefs.
@@ -201,7 +202,7 @@ public:
   // client side.
 
   IIOP_Object (char *repository_id,
-               const ACE_INET_Addr &addr, 
+               const ACE_INET_Addr &addr,
                const char *objkey /*= "0"*/); // @@ (IRFAN) We may need to remove this def arg
   // Constructor used typically by the server side.
 
@@ -242,9 +243,8 @@ private:
   // Destructor is to be called only through Release()
 
   // = Disallow copy constructor and assignment operator
-
-  IIOP_Object (const IIOP_Object &);
-  operator = (const IIOP_Object &);
+  ACE_UNIMPLEMENTED_FUNC (IIOP_Object (const IIOP_Object &))
+  ACE_UNIMPLEMENTED_FUNC (IIOP_Object &operator = (const IIOP_Object &))
 
 #if defined (__GNUG__)
   // G++ (even 2.6.3) stupidly thinks instances can't be created.
@@ -253,4 +253,4 @@ private:
 #endif /* __GNUG__ */
 };
 
-#endif	/* TAO_IIOPOBJ_H */
+#endif  /* TAO_IIOPOBJ_H */
