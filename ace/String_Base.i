@@ -202,6 +202,24 @@ ACE_String_Base<CHAR>::c_str (void) const
   return this->rep_;
 }
 
+template <class CHAR> ACE_INLINE int
+ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::compare");
+
+  // Pick smaller of the two lengths and perform the comparison.
+  size_t smaller_length = ace_min (this->len_, s.len_);
+
+  int result = ACE_OS::memcmp (this->rep_,
+                               s.rep_,
+                               smaller_length);
+
+  if (!result)
+    result = this->len_ - s.len_;
+  return result;
+}
+
+
 // Comparison operator.
 
 template <class CHAR> ACE_INLINE int
@@ -238,23 +256,6 @@ ACE_String_Base<CHAR>::operator!= (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator!=");
   return !(*this == s);
-}
-
-template <class CHAR> ACE_INLINE int
-ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
-{
-  ACE_TRACE ("ACE_String_Base<CHAR>::compare");
-
-  // Pick smaller of the two lengths and perform the comparison.
-  size_t smaller_length = ace_min (this->len_, s.len_);
-
-  int result = ACE_OS::memcmp (this->rep_,
-                               s.rep_,
-                               smaller_length);
-
-  if (!result)
-    result = this->len_ - s.len_;
-  return result;
 }
 
 template <class CHAR> ACE_INLINE ssize_t
