@@ -1,3 +1,14 @@
+Sat Jul  3 17:44:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	  The scan_obv_token() function was bypassing the keyword
+	  table lookup before assigning. Since 'public' and 
+	  'private' are in the keyword lookup table, they were
+	  getting mapped as identifiers without the _cxx_ prepend,
+	  since they are also OBV tokens.
+
 Sat Jul  3 16:41:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
