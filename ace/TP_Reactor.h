@@ -242,14 +242,12 @@ public:
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
                               ACE_Reactor_Mask);
 
-  /* @todo The following methods are not supported. Support for
+/* @todo The following methods are not supported. Support for
    * signals is not available in the TP_Reactor. These methods will be
    * supported once signal handling is supported. We have to include
    * these two methods in the  TP_Reactor to keep some compilers
    * silent.
    */
-  using ACE_Select_Reactor::register_handler;
-
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = 0,
@@ -273,6 +271,45 @@ public:
 
   /// Calls <remove_handler> for every signal in <sigset>.
   virtual int remove_handler (const ACE_Sig_Set &sigset);
+
+  /**
+   * The following template methods have been declared here to avoid
+   * some compilers complaining that we have hidden some of the other
+   * virtual functions. We need to override functions with signal
+   * handlers and return -1 since the TP_Reactor does not support
+   * signals. The definition of the following functions is just a
+   * side-effect. The actual definitions will just call the base class
+   * method. For detailed documentation of these methods please see
+   * Select_Reactor_T.h.
+   */
+//@{
+
+  virtual int register_handler (ACE_Event_Handler *eh,
+                                ACE_Reactor_Mask mask);
+
+  virtual int register_handler (ACE_HANDLE handle,
+                                ACE_Event_Handler *eh,
+                                ACE_Reactor_Mask mask);
+
+#if defined (ACE_WIN32)
+
+
+
+  virtual int register_handler (ACE_Event_Handler *event_handler,
+                                ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
+
+#endif /* ACE_WIN32 */
+
+  virtual int register_handler (ACE_HANDLE event_handle,
+                                ACE_HANDLE io_handle,
+                                ACE_Event_Handler *event_handler,
+                                ACE_Reactor_Mask mask);
+
+  virtual int register_handler (const ACE_Handle_Set &handles,
+                                ACE_Event_Handler *eh,
+                                ACE_Reactor_Mask mask);
+
+  //@}
 
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
