@@ -1,3 +1,14 @@
+Tue Nov 26 03:15:22 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests: Added Map_Manager_Test and Message_Queue_Test to
+	  makefiles (NT and UNIX) and one-button scripts.
+
+	* tests: (Barrier_Test.cpp Buffer_Stream_Test.cpp Mutex_Test.cpp
+ 	  Priority_Buffer_Test.cpp Recursive_Mutex_Test.cpp
+ 	  Shared_Memory_MM_Test.cpp) Fixed typos mainly and other small
+ 	  changes. Also fixed logging file problems so to make logging of
+ 	  tests more accurate.
+
 Mon Nov 25 00:23:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): Came up with a remarkably clever scheme
