@@ -2,12 +2,13 @@
 
 interface Foo
 {    
+  // = TITLE
+  //   @@ Michael, please document me...
   long doit ();
 
   exception Cannot_Forward {};
 
   void forward ()
     raises (Cannot_Forward);
-
 };
 

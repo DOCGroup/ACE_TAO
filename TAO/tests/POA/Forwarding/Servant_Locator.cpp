@@ -21,7 +21,6 @@
 #include "Servant_Locator.h"
 #include "MyFooServant.h"
 
-
 MyFooServantLocator::MyFooServantLocator (CORBA::Object_ptr forward_to_ptr)
   : counter_ (0),
   forward_to_ptr_ (CORBA::Object::_duplicate (forward_to_ptr)),
@@ -29,7 +28,6 @@ MyFooServantLocator::MyFooServantLocator (CORBA::Object_ptr forward_to_ptr)
   servant (0)
 {
 }
-
 
 PortableServer::Servant
 MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
@@ -41,39 +39,39 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   ACE_UNUSED_ARG (operation);
 
   if (forwarding == 0) // do not forward
-  {
-
-    // Convert ObjectID to String.
-
-    CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
-
-    // If ObjectID string has a Foo Substring create and return a
-    // MyFooServant.
-
-    this->counter_++;
-
-    if (ACE_OS::strstr (s.in (), "Foo") != 0)
     {
-      if (servant == 0)
-      {
-        servant = new MySecondFooServant (this,
-                                          127);
 
-         // Return the servant as the cookie , used as a check when
-        // postinvoke is called on this MyFooServantLocator.
-        // cookie = servant;
-      }
-      // reuse the old servant
+      // Convert ObjectID to String.
+
+      CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+
+      // If ObjectID string has a Foo Substring create and return a
+      // MyFooServant.
+
+      this->counter_++;
+
+      if (ACE_OS::strstr (s.in (), "Foo") != 0)
+        {
+          if (servant == 0)
+            {
+              servant = new MySecondFooServant (this,
+                                                127);
+
+              // Return the servant as the cookie , used as a check when
+              // postinvoke is called on this MyFooServantLocator.
+              // cookie = servant;
+            }
+          // reuse the old servant
        
-      return servant;
+          return servant;
+        }
+      else
+        {
+          CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
+          env.exception (exception);
+          return 0;
+        }
     }
-    else
-    {
-      CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
-    }
-  }
   else // now forward, in throwing the ForwardRequest Exception
   {
     // Throw forward exception
