@@ -33,7 +33,6 @@ class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
-  // @@ (CJC) Should this be in here or in the default_client.*?
 {
 public:
   // = Intialization method.
@@ -43,6 +42,25 @@ public:
   // = <Connector> hook.
   virtual int open (void *);
   // Initialization hook.
+
+  int send_request (CDR &stream);
+  // Send the request in <stream>.  If it is a twoway invocation, then
+  // this re-enters the reactor event loop so that incoming requests
+  // can continue to be serviced.  This insures that a nested upcall,
+  // i.e., an invocation coming back from the remote during this
+  // invocation, will still be handled and deadlock averted.
+
+  // = Event Handler overloads
+
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Called when a a response from a twoway invocation is available.
+
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  // Perform appropriate closing of the connection.
+
+private:
+  u_char input_available_;
+  // Flag indicating whether or not we're waiting for 
 };
 
 class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
@@ -86,6 +104,7 @@ public:
   // response (including errors).  In case of errors, -1 is returned
   // and additional information carried in <env>.
 
+protected:
   virtual int handle_locate (CDR &msg, int &response_required,
                              CDR &response, CORBA::Environment &env);
   // Handle processing of the location request residing in <msg>,
@@ -106,7 +125,6 @@ public:
   virtual void send_response (CDR &response);
   // Send <response> to the client on the other end.
 
-protected:
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);

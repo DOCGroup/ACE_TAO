@@ -37,7 +37,7 @@ public:
   ~IIOP_ORB (void);
   // destructor
 
-  CORBA::Object_ptr string_to_object (const CORBA::String str,
+  CORBA::Object_ptr string_to_object (CORBA::String str,
                                       CORBA::Environment &env);
   // Get an object reference from the IOR string
 
