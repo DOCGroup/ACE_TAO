@@ -33,7 +33,7 @@ typedef IR_iRepo_i_ptr IR_iRepo_i_ref;
 typedef IR_Simple_i *IR_Simple_i_ptr;
 typedef IR_Simple_i_ptr IR_Simple_i_ref;
 
-class IR_iRepo_i : public POA_iementation_Repository
+class IR_iRepo_i : public POA_Implementation_Repository
 {
   // = TITLE
   //    Implementation Repository 
@@ -52,6 +52,7 @@ public:
 //                                CORBA::Environment &_tao_environment);
 
   virtual void server_is_running (const char *server,
+                                  CORBA::Object_ptr &obj,
                                   const Implementation_Repository::INET_Addr &addr,
                                   CORBA::Environment &_tao_environment);
   
@@ -92,6 +93,26 @@ private:
 
   char **argv_;
   // The command line arguments.
+};
+
+class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
+{
+  // = TITLE
+  //    Implementation Repository Adapter Activator
+  //
+  // = DESCRIPTION
+  //    Part of the Default Servant/DSI combination that forwards 
+  //    arbitrary requests.  This allows for the setting up of child POAs
+  //    with default servants.
+public:
+  // Constructor
+  IR_Adapter_Activator (PortableServer::Servant servant);
+
+  virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
+                                          const char *name,
+                                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+private:
+  PortableServer::Servant &servant_;
 };
 
 

@@ -121,6 +121,7 @@ interface Implementation_Repository
 //                             in INET_Addr addr, 
 //                             in Ping_Object ping);
   void server_is_running (in string server,
+                          inout Object obj,
                           in INET_Addr addr);
 
   // Used to notify the Implementation Repository that <server> is alive and
