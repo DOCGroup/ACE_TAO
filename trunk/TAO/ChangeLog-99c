@@ -1,3 +1,14 @@
+Fri May 21 09:20:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	  Changed character literals in the GIOP magic number to numeric
+	  constants, otherwise it does not work in EBCDIC (or machines
+	  that are not ASCII for that matter).  Thanks to Jim Rogers
+	  <jrogers@viasoft.com> for pointing out this problem.
+
+	* orbsvcs/tests/Property/Makefile:
+	  Updated dependencies
+
 Fri May 21 09:31:32 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* orbsvcs/orbsvcs/Makefile: ran "make depend".
