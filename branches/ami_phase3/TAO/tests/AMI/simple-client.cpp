@@ -98,20 +98,14 @@ main (int argc, char *argv[])
 
       CORBA::Long number = 0;
       
-      number = server->get_number (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
-      ACE_DEBUG ((LM_DEBUG,
-                  "get_number = %d\n",
-                  number));
-      
-      // server->test_method (ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
-      
-      server->sendc_get_number (the_handler.in (),
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
+      for (ssize_t ni = 0; ni < niterations; ni++)
+        {
+        
+          server->sendc_get_number (the_handler.in (),
+                                    ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
       number = server->get_number (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
