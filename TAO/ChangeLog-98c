@@ -1,6 +1,7 @@
 Sat Jan 17 19:27:12 1998    <coryan@MILONGA>
 
 	* tao/servant_base.h: 
+	* tao/servant_base.cpp: 
 	  Added the new _is_a() method on TAO_ServantBase.
 
 	* TAO_IDL/tao_idl.dsp: 
