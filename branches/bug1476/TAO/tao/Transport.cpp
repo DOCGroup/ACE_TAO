@@ -269,6 +269,7 @@ TAO_Transport::generate_request_header (
 }
 
 /// @todo Ideally the following should be inline.
+/// @todo purge_entry has a return value, use it
 int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
@@ -280,10 +281,10 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
                                                            this);
 }
 
-void
+int
 TAO_Transport::purge_entry (void)
 {
-  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 }
 
 int

@@ -297,13 +297,6 @@ public:
    */
   void provide_handler (TAO_Connection_Handler_Set &handlers);
 
-
-  /// Remove all messages from the outgoing queue.
-  /**
-   * @todo shouldn't this be automated?
-   */
-  // void dequeue_all (void);
-
   /// Register the handler with the reactor.
   /**
    * Register the handler with the reactor. This method is used by the
@@ -660,7 +653,7 @@ public:
                                   size_t &bytes_transferred,
                                   ACE_Time_Value *max_wait_time);
   /// Cache management
-  void purge_entry (void);
+  int purge_entry (void);
 
   /// Cache management
   int make_idle (void);
