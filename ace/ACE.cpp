@@ -1028,9 +1028,9 @@ ACE::send (ACE_HANDLE handle,
 	   const void *buf, 
 	   size_t n, 
 	   int flags, 
-	   const ACE_Time_Value *tv)
+	   const ACE_Time_Value *timeout)
 {
-  if (tv == 0)
+  if (timeout == 0)
     // Use the blocking send.
     return ACE::send (handle, buf, n, flags);
   else
@@ -1042,7 +1042,7 @@ ACE::send (ACE_HANDLE handle,
       ACE_Handle_Set handle_set;
       handle_set.set_bit (handle);
 
-      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, tv))
+      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, timeout))
 	{
 	case 1: // Ok to write now
 	  // We need to record whether we are already *in* nonblocking
@@ -1084,15 +1084,15 @@ ssize_t
 ACE::send (ACE_HANDLE handle, 
 	   const void *buf, 
 	   size_t n, 
-	   const ACE_Time_Value *tv)
+	   const ACE_Time_Value *timeout)
 {
-  if (tv == 0)
+  if (timeout == 0)
     // Use the blocking send.
     return ACE::send (handle, buf, n);
   else
 #if defined (ACE_WIN32)
     // Use the socket timed send();
-    return ACE::send (handle, buf, n, 0, tv);
+    return ACE::send (handle, buf, n, 0, timeout);
 #else
     {
       // On timed writes we always go into select(); only if the
@@ -1102,7 +1102,7 @@ ACE::send (ACE_HANDLE handle,
       ACE_Handle_Set handle_set;
       handle_set.set_bit (handle);
 
-      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, tv))
+      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, timeout))
 	{
 	case 1: // Ok to write now
 	  // We need to record whether we are already *in* nonblocking
@@ -1146,7 +1146,7 @@ ACE::send_n (ACE_HANDLE handle,
 	     const void *buf, 
 	     size_t n, 
 	     int flags, 
-	     const ACE_Time_Value *tv)
+	     const ACE_Time_Value *timeout)
 {
   size_t bytes_written;
 
@@ -1156,7 +1156,7 @@ ACE::send_n (ACE_HANDLE handle,
   for (bytes_written = 0; bytes_written < n; bytes_written += i)
     {
       i = ACE::send (handle, (char *) buf + bytes_written, 
-		     n - bytes_written, flags, tv);
+		     n - bytes_written, flags, timeout);
       if (i == -1)
 	break;
     }
@@ -1169,9 +1169,9 @@ ACE::recv (ACE_HANDLE handle,
 	   void *buf, 
 	   size_t n, 
 	   int flags, 
-	   const ACE_Time_Value *tv)
+	   const ACE_Time_Value *timeout)
 {
-  if (tv == 0)
+  if (timeout == 0)
     return ACE::recv (handle, buf, n, flags);
   else
     {
@@ -1179,11 +1179,12 @@ ACE::recv (ACE_HANDLE handle,
 
       handle_set.set_bit (handle);
 
+      // Wait for input to arrive or for the timeout to elapse.
       switch (ACE_OS::select (int (handle) + 1,
 			      (fd_set *) handle_set, // read_fds.
 			      (fd_set *) 0, // write_fds.
 			      (fd_set *) 0, // exception_fds.
-			      tv))
+			      timeout))
 	{
 	case -1:
 	  return -1;
@@ -1201,7 +1202,7 @@ ACE::recv_n (ACE_HANDLE handle,
 	     void *buf, 
 	     size_t n, 
 	     int flags, 
-	     const ACE_Time_Value *tv)
+	     const ACE_Time_Value *timeout)
 {
   size_t bytes_received;
 
@@ -1211,7 +1212,7 @@ ACE::recv_n (ACE_HANDLE handle,
   for (bytes_received = 0; bytes_received < n; bytes_received += i)
     {
       i = ACE::recv (handle, (char *) buf + bytes_received, 
-		     n - bytes_received, flags, tv);
+		     n - bytes_received, flags, timeout);
 
       if (i == -1 || i == 0)
 	break;
