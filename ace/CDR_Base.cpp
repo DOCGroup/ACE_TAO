@@ -508,28 +508,43 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
   if (src == 0)
     return;
 
-  size_t newsize =
-    ACE_CDR::first_size (ACE_CDR::total_length (src, 0)
-                         + ACE_CDR::MAX_ALIGNMENT);
-  dst->size (newsize);
-
-  // We must copy the contents of <src> into the new buffer, but
-  // respecting the alignment.
-  ptr_arith_t srcalign =
-    ptr_arith_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  ptr_arith_t dstalign =
-    ptr_arith_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  int offset = srcalign - dstalign;
-  if (offset < 0)
-    offset += ACE_CDR::MAX_ALIGNMENT;
-  dst->rd_ptr (offset);
-  dst->wr_ptr (dst->rd_ptr ());
-
-  for (const ACE_Message_Block* i = src;
-       i != 0;
-       i = i->cont ())
+  // If we do not have a chain of message blocks, all that is needed
+  // is an increment of the reference count.
+  if(src->cont () != 0)
     {
-      dst->copy (i->rd_ptr (), i->length ());
+      size_t newsize =
+        ACE_CDR::first_size (ACE_CDR::total_length (src, 0)
+                             + ACE_CDR::MAX_ALIGNMENT);
+      dst->size (newsize);
+
+      // We must copy the contents of <src> into the new buffer, but
+      // respecting the alignment.
+      ptr_arith_t srcalign =
+        ptr_arith_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+      ptr_arith_t dstalign =
+        ptr_arith_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+      int offset = srcalign - dstalign;
+      if (offset < 0)
+        offset += ACE_CDR::MAX_ALIGNMENT;
+      dst->rd_ptr (offset);
+      dst->wr_ptr (dst->rd_ptr ());
+
+      for (const ACE_Message_Block* i = src;
+           i != 0;
+           i = i->cont ())
+        {
+          dst->copy (i->rd_ptr (), i->length ());
+        }
+    }
+  else
+    {
+      // Just increment the refcount of the underlying datablock and
+      // assign the data block to the message block
+      dst->data_block (src->data_block()->duplicate());
+
+      // Adjust rd/wr pointers
+      dst->rd_ptr (src->rd_ptr());
+      dst->wr_ptr (src->wr_ptr());
     }
 }
 
