@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
+Project: "ACE"=".\ace\ace-vc50.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Barrier_Test"=.\tests\Barrier_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -124,6 +136,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Message_Block_Test"=.\tests\Message_Block_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Message_Queue_Notifications_Test"=.\tests\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -484,18 +508,6 @@ Package=<4>
 ###############################################################################
 
 Project: "UPIPE_SAP_Test"=.\tests\UPIPE_SAP_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ace"=".\ace\ace-vc50.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

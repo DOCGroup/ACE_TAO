@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="ace" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="ACE" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=ace - Win32 Release
+CFG=ACE - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -17,11 +17,11 @@ CFG=ace - Win32 Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ace - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ace - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ace - Win32 Unicode Debug" (based on\
+!MESSAGE "ACE - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE - Win32 Unicode Debug" (based on\
  "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ace - Win32 Unicode Release" (based on\
+!MESSAGE "ACE - Win32 Unicode Release" (based on\
  "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
@@ -32,7 +32,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "ace - Win32 Release"
+!IF  "$(CFG)" == "ACE - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -57,7 +57,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:".\ace-r.dll"
 
-!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ACE - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -83,7 +83,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 # ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"ace.dll"
 
-!ELSEIF  "$(CFG)" == "ace - Win32 Unicode Debug"
+!ELSEIF  "$(CFG)" == "ACE - Win32 Unicode Debug"
 
 # PROP BASE Use_MFC 2
 # PROP BASE Use_Debug_Libraries 1
@@ -108,7 +108,7 @@ LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 # ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:".\aceu.dll"
 
-!ELSEIF  "$(CFG)" == "ace - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE - Win32 Unicode Release"
 
 # PROP BASE Use_MFC 2
 # PROP BASE Use_Debug_Libraries 0
@@ -138,10 +138,10 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "ace - Win32 Release"
-# Name "ace - Win32 Debug"
-# Name "ace - Win32 Unicode Debug"
-# Name "ace - Win32 Unicode Release"
+# Name "ACE - Win32 Release"
+# Name "ACE - Win32 Debug"
+# Name "ACE - Win32 Unicode Debug"
+# Name "ACE - Win32 Unicode Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
