@@ -335,11 +335,12 @@ ACE_OS::uname (struct utsname *name)
 #endif /* ACE_WIN32 || VXWORKS */
 
 
+#if defined (VXWORKS)
 struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
   // ACE_TRACE ("ACE_OS::gethostbyname");
-#if defined (VXWORKS)
+
   // not thread safe!
   static hostent ret;
   static int first_addr;
@@ -360,12 +361,42 @@ ACE_OS::gethostbyname (const char *name)
   ret.h_addr_list = hostaddr;
 
   return &ret;
-#elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
-#else
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
-#endif /* ACE_HAS_NONCONST_GETBY */
 }
+
+struct hostent *
+ACE_OS::gethostbyaddr (const char *addr, int length, int type)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyaddr");
+
+  if (length != 4 || type != AF_INET)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+
+  // not thread safe!
+  static hostent ret;
+  static char name [MAXNAMELEN + 1];
+  static char *hostaddr[2];
+
+  if (::hostGetByAddr (htonl (*(unsigned long int *) addr), name) != 0)
+    {
+      // errno will have been set to S_hostLib_UNKNOWN_HOST
+      return 0;
+    }
+
+  // might not be official: just echo input arg.
+  hostaddr[0] = (char *) addr;
+  hostaddr[1] = 0;
+
+  ret.h_name = name;
+  ret.h_addrtype = AF_INET;
+  ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
+  ret.h_addr_list = hostaddr;
+
+  return &ret;
+}
+#endif /* VXWORKS */
 
 void
 ACE_OS::ace_flock_t::dump (void) const
