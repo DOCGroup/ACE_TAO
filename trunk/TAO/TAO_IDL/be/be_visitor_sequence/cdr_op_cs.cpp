@@ -124,6 +124,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << be_nl << be_nl;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;
+
   // Now encode the sequence elements.
   *os << "// Encode all elements." << be_nl;
 
@@ -232,7 +233,21 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       *os << "// Retrieve all the elements." << be_nl;
 
-      this->visit_node (bt);
+      if (bt->node_type () == AST_Decl::NT_sequence)
+        {
+          this->visit_node (node);
+        }
+      else
+        {
+          if (bt->accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_sequence_cdr_op_cs::"
+                                 "visit_sequence - "
+                                 "Base type codegen failed\n"),
+                                -1);
+            }
+        }
 
       if (expr->ev ()->u.ulval > 0)
         {
