@@ -331,7 +331,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
 
 	      this->shut_down (ACE_TRY_ENV);
-	      ACE_TRY_ENV;
+	      ACE_TRY_CHECK;
 
 	      break;
 			    
