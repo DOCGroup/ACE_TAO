@@ -45,7 +45,13 @@
 				AssemblerListingLocation=".\<%intermediate_dir%>"
 				ObjectFile=".\<%intermediate_dir%>\"
 <%if(pdb)%>
-				ProgramDataBaseFileName=".\<%intermediate_dir%>"
+<%if(sharedname)%>
+				ProgramDataBaseFileName="<%dllout%>"
+<%else%>
+<%if(exename)%>
+				ProgramDataBaseFileName="<%if(install)%><%install%><%else%>.<%endif%>"
+<%endif%>
+<%endif%>
 <%endif%>
 				WarningLevel="<%warning_level("3")%>"
 				SuppressStartupBanner="TRUE"
@@ -68,7 +74,13 @@
 				GenerateDebugInformation="TRUE"
 <%endif%>
 <%if(pdb)%>
-				ProgramDatabaseFile=".\<%intermediate_dir%>\<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%><%endif%><%if(exename)%><%exename%><%endif%><%if(type_is_static)%><%staticname%><%lib_modifier%><%endif%>.pdb"
+<%if(sharedname)%>
+				ProgramDatabaseFile="<%dllout%>\<%sharedname%><%lib_modifier%>.pdb"
+<%else%>
+<%if(exename)%>
+				ProgramDatabaseFile="<%if(install)%><%install%>\<%endif%><%exename%>.pdb"
+<%endif%>
+<%endif%>
 <%endif%>
 <%if(type_is_dynamic)%>
 				SubSystem="<%subsystem("2")%>"

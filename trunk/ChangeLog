@@ -1,3 +1,19 @@
+Wed Mar 12 10:42:40 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Fixed a problem with projects that had a slash or back slash in
+          the name.
+
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          Make sure pdb files get generated for the right types and in the
+          right locations.
+
 Wed Mar 12 09:54:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         Committing Paul Calabrese's <calabrese_p@ociweb.com> MPC related

@@ -24,5 +24,6 @@ Debug {
   compile_flags_removed = /YX
   intermediate_dir      = Debug
   lib_modifier          = d
+  pdb                   = 1
 }
 
