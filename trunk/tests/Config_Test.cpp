@@ -28,6 +28,8 @@ ACE_RCSID(tests, Config_Test, "$Id$")
 static int
 test (ACE_Configuration *config)
 {
+  ACE_TString stvalue;
+
   ACE_Configuration_Section_Key root =
     config->root_section ();
 
@@ -49,11 +51,24 @@ test (ACE_Configuration *config)
   else if (config->remove_value (testsection,
                                  ACE_TEXT ("stvalue")))
     return -4;
+  // Make sure it's really gone
+  else if (0 == config->get_string_value (testsection,
+                                          ACE_TEXT ("stvalue"),
+                                          stvalue))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test:remove_value didn't remove\n")),
+                      -4);
 
   else if (config->set_string_value (testsection,
                                      ACE_TEXT ("stvalue"),
                                      ACE_TEXT ("stvaluetest")))
     return -3;
+  else if (config->set_string_value (testsection,
+                                     ACE_TEXT ("stvalue"),
+                                     ACE_TEXT ("second stvaluetest")))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test:set_string_value twice failed\n")),
+                      -3);
 
   else if (config->set_integer_value (testsection,
                                       ACE_TEXT ("intvalue"),
@@ -77,13 +92,11 @@ test (ACE_Configuration *config)
     return -5;
 
   // Get the values and compare
-  ACE_TString stvalue;
-
   if (config->get_string_value (testsection,
                                 ACE_TEXT ("stvalue"),
                                 stvalue))
     return -6;
-  else if (stvalue != "stvaluetest")
+  else if (stvalue != "second stvaluetest")
     return -7;
 
   u_int intvalue;
@@ -115,7 +128,7 @@ test (ACE_Configuration *config)
   ACE_TString name;
   ACE_Configuration::VALUETYPE type;
   u_int index = 0;
-  int count = 0;
+  int found[3] = { 0, 0, 0 };   // One for each expected value
 
   while (!config->enumerate_values (testsection,
                                     index,
@@ -126,25 +139,31 @@ test (ACE_Configuration *config)
         {
           if (type != ACE_Configuration::STRING)
             return -12;
-          count++;
+          if (found[0] != 0)
+            return -12;
+          found[0] = 1;
         }
       else if (name == "intvalue")
         {
           if (type != ACE_Configuration::INTEGER)
             return -13;
-          count++;
+          if (found[1] != 0)
+            return -13;
+          found[1] = 1;
         }
       else if (name == "binvalue")
         {
           if (type != ACE_Configuration::BINARY)
             return -14;
-          count++;
+          if (found[2] != 0)
+            return -14;
+          found[2] = 1;
         }
       index++;
     }
 
   // Make sure we got three values.
-  if (index != 3 || count !=3)
+  if (index != 3 || !found[0] || !found[1] || !found[2])
     return -15;
 
   // Add some subsections.
@@ -170,21 +189,39 @@ test (ACE_Configuration *config)
 
   // Test enumerate sections.
   index = 0;
-  count = 0;
+  found[0] = found[1] = found[2] = 0;
   while (!config->enumerate_sections (testsection,
                                       index,
                                       name))
     {
       if (name == ACE_TEXT ("test2"))
-        count++;
+        {
+          if (found[0] != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("enumerate_sections, dupl test2\n")),
+                              -19);
+          found[0] = 1;
+        }
       else if (name == ACE_TEXT ("test3"))
-        count++;
+        {
+          if (found[1] != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("enumerate_sections, dupl test3\n")),
+                              -19);
+          found[1] = 1;
+        }
       else if (name == ACE_TEXT ("test4"))
-        count++;
+        {
+          if (found[2] != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("enumerate_sections, dupl test4\n")),
+                              -19);
+          found[2] = 1;
+        }
       index++;
     }
 
-  if (index != 3 || count != 3)
+  if (index != 3 || !found[0] || !found[1] || !found[2])
     return -19;
 
   // Remove a subsection
