@@ -157,6 +157,12 @@ TAO_Bounded_Base_Sequence::length (void) const
 ACE_INLINE void
 TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 {
+  if (this->length_ == 0)
+    {
+      this->_allocate_buffer (this->maximum_);
+      this->release_ = 1;
+    }
+
   if (length > this->maximum_)
     {
       return;
@@ -165,6 +171,7 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
     {
       this->_shrink_buffer (length, this->length_);
     }
+
   this->length_ = length;
 }
 
