@@ -61,6 +61,7 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 		ACE_wrappers/INSTALL \
 		ACE_wrappers/Makefile \
 		ACE_wrappers/README \
+		ACE_wrappers/STL \
 		ACE_wrappers/VERSION \
 		ACE_wrappers/ace \
 		ACE_wrappers/apps \
