@@ -1,3 +1,12 @@
+Tue Mar  2 13:59:33 2004  David Smith  <dts@prismtechnologies.com>
+
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_Dual_Impl_T.cpp:
+
+	Fixed compile problem with aCC 3.37.
+	Thanks to Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing
+	this out.
+
 Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
@@ -10,7 +19,7 @@ Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Mar  1 16:52:15 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h:
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp: 	
 
 	  Include the inline file.
@@ -37,7 +46,7 @@ Sun Feb 29 20:00:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  The TAO::ObjectKey_Table uses ACE_RB_Tree as the container of
 	  the object  keys for TAO. RB_Tree uses ordering functor
-	  TAO::Less_Than_ObjectKey. However, the functor was not strictly 
+	  TAO::Less_Than_ObjectKey. However, the functor was not strictly
 	  ordered. Thanks to Milan Cvetkovic <milan.cvetkovic@mpathix.com>
 	  for finding this problem. The bad ordering lead to some of the
 	  object keys being left in the tree which caused huge growth in
