@@ -1,3 +1,27 @@
+Mon Oct 16 15:38:06 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Server_Declared/Makefile
+	* tests/RTCORBA/Server_Declared/Makefile.bor
+	* tests/RTCORBA/Server_Declared/README
+	* tests/RTCORBA/Server_Declared/Server_Declared.dsw
+	* tests/RTCORBA/Server_Declared/client.bor
+	* tests/RTCORBA/Server_Declared/client.cpp
+	* tests/RTCORBA/Server_Declared/client.dsp
+	* tests/RTCORBA/Server_Declared/run_test.pl
+	* tests/RTCORBA/Server_Declared/server.bor
+	* tests/RTCORBA/Server_Declared/server.conf
+	* tests/RTCORBA/Server_Declared/server.cpp
+	* tests/RTCORBA/Server_Declared/server.dsp
+	* tests/RTCORBA/Server_Declared/test.idl
+
+	  Added a test for SERVER_DECLARED priority model.
+
+	* tests/RTCORBA/Makefile
+	* tests/RTCORBA/Makefile.bor
+	* tests/RTCORBA/README:
+
+	  Updated to include the new Server_Declared test.
+
 Mon Oct 16 14:14:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_enum.cpp:
@@ -8,7 +32,7 @@ Mon Oct 16 14:14:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Moved the method value_to_name() from be_enum to
 	  AST_Enum. The method is useful to visitors, so it
 	  needs to be available to visitors of AST_<node>
-	  as well as to visitors of be_<node>. 
+	  as well as to visitors of be_<node>.
 
 Sun Oct 15 18:58:16 2000  Marina Spivak  <marina@cs.wustl.edu>
 
