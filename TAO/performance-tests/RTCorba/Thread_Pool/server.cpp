@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "testS.h"
+#include "tests/RTCORBA/Linear_Priority/readers.cpp"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
 
@@ -76,15 +77,26 @@ static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;
 static CORBA::ULong number_of_lanes = 0;
 
+static const char *bands_file = "empty_file";
+static const char *lanes_file = "empty_file";
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:s:l:");
+  ACE_Get_Opt get_opts (argc, argv, "b:l:o:s:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'b':
+        bands_file = get_opts.optarg;
+        break;
+
+      case 'l':
+        lanes_file = get_opts.optarg;
+        break;
+
       case 'o':
         ior_output_file = get_opts.optarg;
         break;
@@ -93,7 +105,7 @@ parse_args (int argc, char *argv[])
         static_threads = ACE_OS::atoi (get_opts.optarg);
         break;
 
-      case 'l':
+      case 'n':
         number_of_lanes = ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -101,9 +113,11 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile> "
+                           "-b <bands file> "
+                           "-l <lanes file> "
+                           "-o <ior file> "
                            "-s <static threads> "
-                           "-l <lanes> "
+                           "-n <number of lanes> "
                            "\n",
                            argv [0]),
                           -1);
@@ -202,74 +216,61 @@ main (int argc, char *argv[])
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
-      RTCORBA::ThreadpoolId threadpool_id;
       CORBA::PolicyList policies;
 
+      CORBA::Boolean allow_borrowing = 0;
       if (number_of_lanes != 0)
         {
-          CORBA::Boolean allow_borrowing = 0;
-
-          RTCORBA::ThreadpoolLanes lanes;
-          lanes.length (number_of_lanes);
-
-          RTCORBA::PriorityBands bands;
-          bands.length (number_of_lanes);
-
-          CORBA::Short priority_range =
-            RTCORBA::maxPriority - RTCORBA::minPriority;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nUsing %d lanes\n",
-                      number_of_lanes));
-
-          for (CORBA::ULong i = 0;
-               i < number_of_lanes;
-               ++i)
-            {
-              CORBA::Short high_priority =
-                CORBA::Short (
-                  ACE_OS::floor ((priority_range /
-                                  double (number_of_lanes)) *
-                                 (i + 1)));
-
-              CORBA::Short low_priority =
-                CORBA::Short (
-                  ACE_OS::ceil ((priority_range /
-                                 double (number_of_lanes)) *
-                                i));
-
-              lanes[i].lane_priority = high_priority;
-              lanes[i].static_threads = static_threads;
-              lanes[i].dynamic_threads = dynamic_threads;
-
-              bands[i].high = high_priority;
-              bands[i].low = low_priority;
-
-              ACE_DEBUG ((LM_DEBUG,
-                          "%d: [%d %d] ",
-                          i + 1,
-                          low_priority,
-                          high_priority));
-            }
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n\n"));
-
-          threadpool_id =
-            rt_orb->create_threadpool_with_lanes (stacksize,
-                                                  lanes,
-                                                  allow_borrowing,
-                                                  allow_request_buffering,
-                                                  max_buffered_requests,
-                                                  max_request_buffer_size,
-                                                  ACE_TRY_ENV);
+          get_auto_priority_lanes_and_bands (number_of_lanes,
+                                             rt_orb.in (),
+                                             stacksize,
+                                             static_threads,
+                                             dynamic_threads,
+                                             allow_request_buffering,
+                                             max_buffered_requests,
+                                             max_request_buffer_size,
+                                             allow_borrowing,
+                                             policies,
+                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           policies.length (policies.length () + 1);
           policies[policies.length () - 1] =
-            rt_orb->create_priority_banded_connection_policy (bands,
-                                                              ACE_TRY_ENV);
+            rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+                                                  default_thread_priority,
+                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
+        }
+      else if (ACE_OS::strcmp (lanes_file, "empty_file") != 0)
+        {
+          result =
+            get_priority_lanes ("server",
+                                lanes_file,
+                                rt_orb.in (),
+                                stacksize,
+                                static_threads,
+                                dynamic_threads,
+                                allow_request_buffering,
+                                max_buffered_requests,
+                                max_request_buffer_size,
+                                allow_borrowing,
+                                policies,
+                                ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (result != 0)
+            return result;
+
+          result =
+            get_priority_bands ("server",
+                                bands_file,
+                                rt_orb.in (),
+                                policies,
+                                ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (result != 0)
+            return result;
 
           policies.length (policies.length () + 1);
           policies[policies.length () - 1] =
@@ -280,7 +281,7 @@ main (int argc, char *argv[])
         }
       else
         {
-          threadpool_id =
+          RTCORBA::ThreadpoolId threadpool_id =
             rt_orb->create_threadpool (stacksize,
                                        static_threads,
                                        dynamic_threads,
@@ -290,6 +291,12 @@ main (int argc, char *argv[])
                                        max_request_buffer_size,
                                        ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
+          policies.length (policies.length () + 1);
+          policies[policies.length () - 1] =
+            rt_orb->create_threadpool_policy (threadpool_id,
+                                              ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
       policies.length (policies.length () + 1);
@@ -297,12 +304,6 @@ main (int argc, char *argv[])
         root_poa->create_implicit_activation_policy
         (PortableServer::IMPLICIT_ACTIVATION,
          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      policies.length (policies.length () + 1);
-      policies[policies.length () - 1] =
-        rt_orb->create_threadpool_policy (threadpool_id,
-                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =

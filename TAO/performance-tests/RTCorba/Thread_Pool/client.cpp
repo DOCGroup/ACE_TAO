@@ -11,6 +11,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "testC.h"
+#include "tests/RTCORBA/Linear_Priority/readers.cpp"
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
@@ -19,6 +20,7 @@ static int shutdown_server = 0;
 static int do_dump_history = 0;
 static ACE_UINT32 gsf = 0;
 static const char *rates_file = "rates";
+static const char *invocation_priorities_file = "empty_file";
 static CORBA::ULong continuous_workers = 0;
 static int done = 0;
 static CORBA::ULong time_for_test = 10;
@@ -51,22 +53,38 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:i:m:z:");
+  ACE_Get_Opt get_opts (argc, argv, "c:hi:k:m:p:r:t:w:xy:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'c':
+        continuous_workers =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case 'h':
         do_dump_history = 1;
         break;
 
-      case 'x':
-        shutdown_server = 1;
+      case 'i':
+        individual_continuous_worker_stats =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'k':
         ior =
+          get_opts.optarg;
+        break;
+
+      case 'm':
+        print_missed_invocations =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'p':
+        invocation_priorities_file =
           get_opts.optarg;
         break;
 
@@ -75,8 +93,8 @@ parse_args (int argc, char *argv[])
           get_opts.optarg;
         break;
 
-      case 'c':
-        continuous_workers =
+      case 't':
+        time_for_test =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -85,23 +103,12 @@ parse_args (int argc, char *argv[])
           ACE_OS::atoi (get_opts.optarg);
         break;
 
-      case 't':
-        time_for_test =
-          ACE_OS::atoi (get_opts.optarg);
+      case 'x':
+        shutdown_server = 1;
         break;
 
-      case 'p':
+      case 'y':
         set_priority =
-          ACE_OS::atoi (get_opts.optarg);
-        break;
-
-      case 'i':
-        individual_continuous_worker_stats =
-          ACE_OS::atoi (get_opts.optarg);
-        break;
-
-      case 'm':
-        print_missed_invocations =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -114,16 +121,17 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-h <show history> "
-                           "-x [shutdown server] "
-                           "-k <ior> "
-                           "-r <rates file> "
                            "-c <number of continuous workers> "
-                           "-w <work> "
-                           "-t <time for test> "
-                           "-p <set priorities> "
+                           "-h <show history> "
                            "-i <print stats of individual continuous workers> "
+                           "-k <ior> "
                            "-m <print missed invocations for paced workers> "
+                           "-p <invocation priorities file> "
+                           "-r <rates file> "
+                           "-t <time for test> "
+                           "-w <work> "
+                           "-x [shutdown server] "
+                           "-y <set invocation priorities> "
                            "-z <timeout for max throughput measurement> "
                            "\n",
                            argv [0]),
@@ -131,87 +139,6 @@ parse_args (int argc, char *argv[])
       }
 
   // Indicates sucessful parsing of the command line
-  return 0;
-}
-
-typedef ACE_Array_Base<CORBA::ULong> Rates;
-
-int
-get_rates (const char *file_name,
-           Rates &rates,
-           CORBA::ULong &lowest_rate)
-{
-  //
-  // Read rates from a file.
-  //
-  FILE* file =
-    ACE_OS::fopen (file_name, "r");
-
-  if (file == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open rates file %s\n",
-                         file_name),
-                        -1);
-    }
-
-  ACE_Read_Buffer reader (file, 1);
-
-  char *string =
-    reader.read (EOF, ' ', '\0');
-
-  // Check for empty lanes file.
-  if (string == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nNo rates set!\n"));
-      return 0;
-    }
-
-  CORBA::ULong length =
-    reader.replaced () + 1;
-
-  rates.size (length);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "\nThere are %d rates: ",
-              length));
-
-  int result = 1;
-  char* working_string = string;
-  lowest_rate = ACE_UINT32_MAX;
-  for (CORBA::ULong i = 0; i < length; ++i)
-    {
-      result = ::sscanf (working_string,
-                         "%d",
-                         &rates[i]);
-      if (result == 0 || result == EOF)
-        break;
-
-      working_string += ACE_OS::strlen (working_string);
-      working_string += 1;
-
-      if (lowest_rate > rates[i])
-        lowest_rate = rates[i];
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "[%d] ",
-                  rates[i]));
-    }
-
-  reader.alloc ()->free (string);
-
-  if (result == 0 || result == EOF)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Parsing error in rates file %s\n",
-                         file_name),
-                        -1);
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "\n"));
-
   return 0;
 }
 
@@ -272,7 +199,7 @@ class Paced_Worker :
 public:
   Paced_Worker (ACE_Thread_Manager &thread_manager,
                 test_ptr test,
-                CORBA::ULong rate,
+                CORBA::Short rate,
                 CORBA::ULong iterations,
                 CORBA::Short priority,
                 RTCORBA::Current_ptr current,
@@ -294,7 +221,7 @@ public:
 
 Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
                             test_ptr test,
-                            CORBA::ULong rate,
+                            CORBA::Short rate,
                             CORBA::ULong iterations,
                             CORBA::Short priority,
                             RTCORBA::Current_ptr current,
@@ -696,15 +623,31 @@ main (int argc, char *argv[])
       RTCORBA::PriorityMapping &priority_mapping =
         *mapping_manager->mapping ();
 
-      Rates rates;
-      CORBA::ULong lowest_rate = 0;
-
+      Short_Array rates;
       result =
-        get_rates (rates_file,
-                   rates,
-                   lowest_rate);
+        get_values ("client",
+                    rates_file,
+                    "rates",
+                    rates);
       if (result != 0)
         return result;
+
+      Short_Array invocation_priorities;
+      result =
+        get_values ("client",
+                    invocation_priorities_file,
+                    "invocation priorities",
+                    invocation_priorities);
+      if (result != 0)
+        return result;
+
+      if (invocation_priorities.size () != 0 &&
+          invocation_priorities.size () != rates.size ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Number of invocation priorities (%d) != Number of rates (%d)\n",
+                           invocation_priorities.size (),
+                           rates.size ()),
+                          -1);
 
       synchronizers.number_of_workers_ =
         rates.size () + continuous_workers;
@@ -731,10 +674,16 @@ main (int argc, char *argv[])
            i < rates.size ();
            ++i)
         {
-          CORBA::Short priority =
-            CORBA::Short ((priority_range /
-                           double (rates.size ())) *
-                          (i + 1));
+          CORBA::Short priority = 0;
+
+          if (invocation_priorities.size () == 0)
+            priority =
+              CORBA::Short ((priority_range /
+                             double (rates.size ())) *
+                            (i + 1));
+          else
+            priority =
+              invocation_priorities[i];
 
           paced_workers[i] =
             new Paced_Worker (paced_workers_manager,
