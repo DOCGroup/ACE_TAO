@@ -43,10 +43,6 @@ module PortableInterceptor
       // This method will eventually changed to support
       // AMI.
 
-      IOP::ServiceContextList get_service_contexts ();
-      boolean set_service_contexts (in IOP::ServiceContextList sc);
-      // Accessor/mutator for the service context list.
-
       CORBA::Object get_object ();
       // Get the object reference the targeting object.
 
@@ -70,14 +66,17 @@ module PortableInterceptor
       // Server side request interceptor definition.
 
       void preinvoke (inout RequestInfo ri,
+                      inout IOP::ServiceContextList sc,
                       inout Cookies ck);
       // Interception pointer before invoking the servant method.
 
       void postinvoke (inout RequestInfo ri,
+                       inout IOP::ServiceContextList sc,
                        inout Cookies ck);
       // Interception pointer after invoking the servant method.
 
       void exception_occurred (inout RequestInfo ri,
+                               inout IOP::ServiceContextList sc,
                                inout Cookies ck);
       // Exception interception point.
     };
@@ -87,14 +86,17 @@ module PortableInterceptor
       // Client side interceptor.
 
       void preinvoke (inout RequestInfo ri,
+                      inout IOP::ServiceContextList sc,
                       inout Cookies ck);
       // Before remote invocation.
 
       void postinvoke (inout RequestInfo ri,
+                       inout IOP::ServiceContextList sc,
                        inout Cookies ck);
       // After returned from remote invocation.
 
       void exception_occurred (inout RequestInfo ri,
+                               inout IOP::ServiceContextList sc,
                                inout Cookies ck);
       // Exception occurred.
     };

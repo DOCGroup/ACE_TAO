@@ -10,11 +10,11 @@
 #ifndef _TAO_IDL_INTERCEPTORC_H_
 #define _TAO_IDL_INTERCEPTORC_H_
 
-#include "tao/IOPC.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/IOPC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -122,11 +122,9 @@ class TAO_Export Cookie : public virtual ACE_CORBA_1 (Object)
       }
 
     virtual char * myname (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -383,60 +381,46 @@ class TAO_Export RequestInfo : public virtual ACE_CORBA_1 (Object)
       }
 
     virtual CORBA::ULong get_request_id (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean response_expected (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual IOP::ServiceContextList * get_service_contexts (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean set_service_contexts (
-        const IOP::ServiceContextList & sc
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        const IOP::ServiceContextList & sc,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Object_ptr get_object (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual char * get_operation (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::NVList_ptr get_arguments (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean set_arguments (
-        CORBA::NVList_ptr args
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::NVList_ptr args,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -552,11 +536,9 @@ class TAO_Export Interceptor : public virtual ACE_CORBA_1 (Object)
       }
 
     virtual char * name (
-
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -673,27 +655,24 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 
     virtual void preinvoke (
         RequestInfo_ptr & ri,
-        Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void postinvoke (
         RequestInfo_ptr & ri,
-        Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void exception_occurred (
         RequestInfo_ptr & ri,
-        Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -810,27 +789,24 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
 
     virtual void preinvoke (
         RequestInfo_ptr & ri,
-        Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void postinvoke (
         RequestInfo_ptr & ri,
-        Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual void exception_occurred (
         RequestInfo_ptr & ri,
-        Cookies & ck
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+        Cookies & ck,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -880,7 +856,7 @@ void TAO_Export operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInt
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::ClientRequestInterceptor *&);
 
 #if defined (__ACE_INLINE__)
-#include "InterceptorC.i"
+#include "tao/InterceptorC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

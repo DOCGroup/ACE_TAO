@@ -7,12 +7,12 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "InterceptorC.h"
-#include "InterceptorS.h"
+#include "tao/InterceptorC.h"
+#include "tao/InterceptorS.h"
 #include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "InterceptorC.i"
+#include "tao/InterceptorC.i"
 #endif /* !defined INLINE */
 
 PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
