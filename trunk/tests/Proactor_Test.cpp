@@ -523,13 +523,13 @@ Acceptor::on_delete_receiver (Receiver & rcvr)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    rcvr.get_total_snd(),
-                    rcvr.get_total_w() );
+  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
+                   rcvr.get_total_snd (),
+                   rcvr.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    rcvr.get_total_rcv(),
-                    rcvr.get_total_r() );
+  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
+                   rcvr.get_total_rcv (),
+                   rcvr.get_total_r ());
   
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Receiver::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
@@ -999,13 +999,13 @@ Connector::on_delete_sender (Sender &sndr)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    sndr.get_total_snd(),
-                    sndr.get_total_w() );
+  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
+                   sndr.get_total_snd (),
+                   sndr.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    sndr.get_total_rcv(),
-                    sndr.get_total_r() );
+  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
+                   sndr.get_total_rcv (),
+                   sndr.get_total_r ());
   
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
@@ -1752,33 +1752,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    connector.get_total_snd(),
-                    connector.get_total_w() );
+  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
+                   connector.get_total_snd (),
+                   connector.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    connector.get_total_rcv(),
-                    connector.get_total_r() );
-  
+  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
+                   connector.get_total_rcv (),
+                   connector.get_total_r ());
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Connector/Senders  total bytes: snd=%s rcv=%s\n"),
               bufs,
-              bufr
-            ));
+              bufr));
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    acceptor.get_total_snd(),
-                    acceptor.get_total_w() );
+  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
+                   acceptor.get_total_snd (),
+                   acceptor.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    acceptor.get_total_rcv(),
-                    acceptor.get_total_r() );
+  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
+                   acceptor.get_total_rcv (),
+                   acceptor.get_total_r ());
   
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Acceptor/Receivers total bytes: snd=%s rcv=%s\n"),
               bufs,
-              bufr
-            ));
+              bufr));
 
   ACE_END_TEST;
 
