@@ -173,7 +173,7 @@ if (TAO_TRY_ENV.exception () != 0)
 
 // If continue is called, control will skip to the next TAO_CATCHANY
 // statement.
-#define TAO_CHECK_ENV(TAO_TRY_ENV) \
+#define TAO_CHECK_ENV \
 {\
 if (TAO_TRY_ENV.exception () != 0) \
   { \
