@@ -1,5 +1,10 @@
 Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/Key_List.cpp (set_output_types): Make sure that we leave an
+ 	  extra space between the struct tag and the wordlist so the
+ 	  compiler doesn't complain.  Thanks to Andy Gokhale for reporting
+ 	  this.
+
 	* src/gperf.cpp: Modified the main() program so that it doesn't
  	  print the starting time until AFTER we've parsed the arguments.
 
