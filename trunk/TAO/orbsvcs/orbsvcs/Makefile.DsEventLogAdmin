@@ -1061,8 +1061,8 @@ realclean: clean
  $(TAO_ROOT)/tao/debug.h
 
 .obj/DsEventLogAdminS.o .obj/DsEventLogAdminS.so .shobj/DsEventLogAdminS.o .shobj/DsEventLogAdminS.so: DsEventLogAdminS.cpp DsEventLogAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h CosEventCommS.h CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h CosEventChannelAdminS.h \
+ CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1265,8 +1265,7 @@ realclean: clean
  CosEventCommS.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i DsLogAdminS.h \
- TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
+ TimeBaseS.h $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1285,13 +1284,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h svc_utils_export.h TimeBaseC.i TimeBaseS_T.h \
- TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h \
- Log/log_export.h DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i \
- DsLogAdminS_T.cpp DsLogAdminS.i DsEventLogAdminC.h \
- Log/eventlog_export.h DsEventLogAdminC.i DsEventLogAdminS_T.h \
- DsEventLogAdminS_T.i DsEventLogAdminS_T.cpp DsEventLogAdminS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+ svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
+ TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h Log/log_export.h \
+ DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i DsLogAdminS_T.cpp \
+ DsLogAdminS.i DsEventLogAdminC.h Log/eventlog_export.h \
+ DsEventLogAdminC.i DsEventLogAdminS_T.h DsEventLogAdminS_T.i \
+ DsEventLogAdminS_T.cpp DsEventLogAdminS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -1624,8 +1623,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- TimeBaseC.i DsLogAdminC.i DsEventLogAdminC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+ DsLogAdminC.i DsEventLogAdminC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
