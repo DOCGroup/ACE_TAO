@@ -1,3 +1,9 @@
+Mon Apr  8 13:18:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Activation_Queue.h:
+          Corrected location of doxygen comments so that the right comment
+          is placed below the right method
+
 Sun Apr  7 18:04:56 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * tests/test_config.h (randomize):
