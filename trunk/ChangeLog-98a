@@ -4,6 +4,10 @@ Mon Mar  2 19:21:36 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
  	  "localname" and "globalname" to avoid problems on UNIX.  Thanks
  	  to John Mulhern <9107@MN3.LAWSON.lawson.com> for reporting this.
 
+	* ace/OS.h: Changed "C:\\temp\\" to "C:\\temp" to avoid some minor
+ 	  problems on NT.  Thanks to John Mulhern
+ 	  <9107@MN3.LAWSON.lawson.com> for reporting this.
+
         * netsvcs/lib/Log_Message_Receiver.cpp
           (Log_Message_Receiver_Impl): Removed some stray inline keywords.
           Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
