@@ -277,6 +277,7 @@
 		#include /**/ <mswsock.h>
 		#if defined (_MSC_VER)
 			#pragma comment(lib, "ws2_32.lib")
+			#pragma comment(lib, "mswsock.lib")
 		#endif /* _MSC_VER */
 	#endif /* _WINSOCK2API */
 
