@@ -1,3 +1,25 @@
+Tue Nov 21 12:06:09 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.h:	  
+
+	  Interceptors are local objects, so derive (via multiple
+	  inheritance) each interceptor from CORBA::LocalObject.
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp
+	  (receive_request):
+
+	  Throw CORBA::NO_PERMISSION() exception instead of the
+	  "Test_Interceptors::Invalid" exception.  Throwing a user
+	  exception is not allowed since it is not part of the throw spec,
+	  which is dictated by the
+	  PortableInterceptor::ServerRequestInterceptor interface.
+
+	* tests/Portable_Interceptors/Benchmark/README:
+
+	  Updated README.  "Pseudo-portable interceptors" no longer
+	  applies, since TAO now implements the standard Portable
+	  Interceptor interfaces.
+
 Tue Nov 21 13:30:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp:
@@ -37,7 +59,6 @@ Tue Nov 21 13:13:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tests/Multiple/Multiple.idl:
 
 	  Source file for the new collocation test.
-
 
 Tue Nov 21 09:40:51 2000  Ossama Othman  <ossama@uci.edu>
 

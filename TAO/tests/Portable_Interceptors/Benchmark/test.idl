@@ -1,9 +1,11 @@
+// -*- IDL -*-
+//
 // $Id$
 
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Interceptors
+//    TAO/tests/Portable_Interceptors
 //
 // = FILENAME
 //    test.idl
@@ -17,8 +19,7 @@
 
 module Test_Interceptors
 {
-  exception Invalid
-    {};
+  exception Invalid {};
 
   interface Secure_Vault
   {
@@ -34,19 +35,17 @@ module Test_Interceptors
       long check_num;
       long amount;
     };
-       
+
     short ready ();
     // No args/exceptions operation.
 
-    void authenticate (in string user)
-      raises (Invalid);
+    void authenticate (in string user);
     // throws a user exception.
 
     long update_records (in long id, in Record val);
     // Normal operation with a return val.
 
-   oneway void shutdown ();
+    oneway void shutdown ();
     // shutdown the ORB
-
   };
 };
