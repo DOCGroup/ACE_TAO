@@ -858,12 +858,6 @@ main (int argc, char *argv[])
                 &pTime) != K_OK)
     ACE_DEBUG ((LM_DEBUG,
                 "pccTimer has a pending bench mark\n"));
-#elif defined (VXWORKS)
-  // Shoot myself.  Otherwise, there's a General Protection Fault.
-  // This will leak memory, but that's preferable.  It looks like the
-  // problem might be due to static objects in libTAO.
-  int status;
-  ACE_OS::thr_exit (&status);
 #endif /* CHORUS */
   return 0;
 }
