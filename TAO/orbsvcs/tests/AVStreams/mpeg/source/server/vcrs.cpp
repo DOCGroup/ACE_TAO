@@ -104,7 +104,7 @@ static void clear_child(int sig)
   }
 }
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   int i, rttag = 0;
   int addrlen;
@@ -251,4 +251,5 @@ main(int argc, char *argv[])
       ACE_OS::exit (1);
     }
   }
+  return 0;
 }
