@@ -191,7 +191,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Except.i"
+#include "except.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_EXCEPT_H */
