@@ -44,3 +44,12 @@ how to run the following tests:
         . Param_Test
  
           Tests all the features of TAO's protocol engine.
+
+        . Connection_Purging
+
+          Tests how multiple conenctions are evicted when needed.
+
+        . Smart Proxies
+        
+          Tests the smart proxy feature which allows the user to specify 
+          a proxy in plaec of the default proxy (stub).
