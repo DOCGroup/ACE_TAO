@@ -1,7 +1,7 @@
 # $Id$
 #
-# LynxOS with g++.  Defaults to LynxOS Version 2.5.0.  For Version 3.0.0,
-# add "VERSION=3.0.0" to your make invocation.
+# LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 2.5.0,
+# for example, add "VERSION=2.5.0" to your make invocation.
 
 debug = 1
 shared_libs =
@@ -16,7 +16,7 @@ ifneq ($(shell uname -s),LynxOS)
   #### before running "make".
 
   ifeq (,$(VERSION))
-    VERSION=2.5.0
+    VERSION=3.0.0
   endif # VERSION
 
   ifeq (,$(LYNXTARGET))
