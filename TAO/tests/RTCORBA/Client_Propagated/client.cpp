@@ -2,6 +2,7 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -37,6 +38,21 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      // First check that we have sufficient priority range to run the
+      // test.
+      int max_priority =
+        ACE_Sched_Params::priority_max (ACE_SCHED_OTHER);
+      int min_priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
+
+      if ((max_priority + min_priority) / 2 + 2 > max_priority)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Not enough priority levels on this platform"
+                      "to run the test, aborting\n"));
+          return 0;
+        }
+
       // Initialize and obtain reference to the Test object.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -96,7 +112,28 @@ main (int argc, char *argv[])
         RTCORBA::Current::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      object = orb->resolve_initial_references ("PriorityMappingManager",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      TAO::PriorityMappingManager_var mapping_manager =
+        TAO::PriorityMappingManager::_narrow (object.in (),
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::PriorityMapping *pm =
+        mapping_manager->mapping ();
+
+      CORBA::Short native_priority =
+        (max_priority + min_priority) / 2;
+
       CORBA::Short desired_priority = 0;
+
+      if (pm->to_CORBA (native_priority, desired_priority) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot convert native priority %d to corba priority\n",
+                           native_priority),
+                          1);
+
       current->the_priority (desired_priority, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
