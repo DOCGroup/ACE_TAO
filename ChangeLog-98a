@@ -1,5 +1,10 @@
 Thu Mar 12 19:36:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ACE-INSTALL.html: Tidied up a bunch of things in this file.
+  	  Also, created a new $ACE_ROOT/os-patches/ directory and moved
+ 	  the patches for Linux and LynxOS into this in order to
+ 	  consolidate the patches into one location.
+
 	* ace/WFMO_Reactor.cpp (upcall): Cleaned up a bunch of code to (1)
  	  avoid a nasty "dangling else" bug and (2) simplify a bunch of
  	  if/if statements.  Thanks to Jonathan Biggar

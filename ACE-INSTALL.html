@@ -52,69 +52,64 @@ Newsgroup</A> or the <A HREF="mailto:ace-users@cs.wustl.edu">ACE
 mailing list</A> and we'll try to fix it for you.
 
 <p>The following table summarizes those platforms for which ACE
-is known to support well.
+is known to support well.<P>
 
 <table width="100%" border=1>
         <tr valign=top>
-          <td><b>Fully supported</b></td>
-          <td>Solaris 2.5, Windows NT (MSVC++ 4.5 and 5.0),
-              Linux, DEC alpha Windows NT (MSVC++ 5.0),
-              DEC alpha Linux, VxWorks, LynxOS, Digital UNIX 4.0,
+          <td><b>Fully supported (i.e., continually tested and used daily)</b></td>
+          <td>Solaris 2.5, Windows NT (MSVC++ 4.x and 5.0),
+              Linux, DEC Alpha Windows NT (MSVC++ 5.0),
+              DEC Alpha Linux, VxWorks, LynxOS, Digital UNIX 4.0,
               HP/UX, AIX
           </td>
         </tr>
         <tr valign=top bgcolor="#AFAFAF">
-          <td><b>Nearly fully supported</b></td>
+          <td><b>Nearly fully supported (i.e., periodically tested)</b></td>
           <td>Solaris 2.6, Windows 95, IRIX 6.x, MVS
           </td>
         </tr>
         <tr valign=top>
-          <td><b>Partially supported</b></td>
+          <td><b>Partially supported (i.e., infrequently tested)</b></td>
           <td>
               PSoS, Tandem, Chorus, SCO, UnixWare, SunOS 4.x, OSF/1,
               FreeBSD, NetBSD
           </td>
         </tr>
         <tr valign=top bgcolor="#AFAFAF">
-          <td><b>Planned support</b></td>
+          <td><b>Planned support (i.e., pending)</b></td>
           <td>
               Windows CE
           </td>
         </tr>
-        <tr>
-          <td colspan=2>
-              <p>Any UNIX variation is a potential target platform for
-              ACE.  Ideally, ACE will compile on any POSIX conforming
-              OS.
-          </td>
-        </tr>
 </table>
+
+<P>In general, any UNIX/POSIX variation is a potential target platform
+for ACE.  Ideally, ACE will compile on any POSIX conforming OS. 
 
 <P><HR><P>
 <H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
 
-<DL>
-<DT> <B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><BR><BR>
+<UL>
+<LI> <B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><P>
 
-<DD> All of ACE has been ported to the Win32 API (which includes
-	  Windows NT and Windows '95).  The entire release now
-	  compiles using the Microsoft Visual C++ 4.x and 5.0 compilers
-	  (the 2.0 compiler may also work, but we haven't tested it
-	  recently).  ACE can be built as both a static and dynamic
-	  library, using the Win32 installation process described
-	  below.<P>
+All of ACE has been ported to the Win32 API (which includes Windows NT
+and Windows '95).  The entire release now compiles using the Microsoft
+Visual C++ 4.x and 5.0 compilers (the 2.0 compiler may also work, but
+we haven't tested it recently).  ACE can be built as both a static and
+dynamic library, using the Win32 installation process described
+below.<P>
 
-<DT> <B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
-     C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <BR><BR>
+<LI> <B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
+     C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <P>
 
-<DD> All the source code and tests should build and run without
+All the source code and tests should build and run without
 	  any problems on the Solaris and SunOS platforms using the
 	  Sun C++ compilers.<P>
 
-<DT> <B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
-  Energize 3.2. </B> <BR><BR>
+<LI> <B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
+  Energize 3.2. </B> <P>
 
-<DD> Note that shared libraries do not interact very well with
+Note that shared libraries do not interact very well with
 	  Centerline C++ or Sun C++ on SunOS 4.1.x.  This is due to
 	  odd behavior of the SunOS 4.1.x linker, which (1) does not
 	  properly call constructors of global objects within shared
@@ -147,9 +142,9 @@ is known to support well.
 	  libThreads.a, and libSPIPE.a.  This occurs since SunOS 4.x
 	  does not support these features.<P>
 
-<DT> <B> AIX </B> <BR><BR>
+<LI> <B> AIX </B> <P>
 
-<DD> The ACE port to AIX assumes that the user has installed the
+ The ACE port to AIX assumes that the user has installed the
 	  AIX patch containing the dl*() APIs.  To use these APIs, IBM
 	  has created a separate product (free to AIX licensees)
 	  called shared library hookable symbols (or slhs/6000).  If
@@ -180,205 +175,27 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 	  <CODE>TEMPLATE_FILES=</CODE> in the Makefile. Now update the Makefile so that
 	  <CODE>FILES=ACE_All_Src</CODE> and <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>.<P>
 
-<DT><B>Linux</B><BR><BR>
+<LI><B>Linux</B><P>
 
-<DD>ACE has been ported to <A
+ACE has been ported to <A
 HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> using the GNU
-g++ 2.7.2 compiler.<P>
+g++ 2.7.2 compiler.  However, you may need to apply a number <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/os-patches/linux-patches.html">patches
+    to Linux</A> to get ACE working with LinuxThreads and with Alpha
+CPUs. <P>
 
-With RedHat 5.0 distributions of Linux, it's best to upgrade
-the distribution with these:
-<ul>
-  <li>egcs 1.0.1
-  <li>glibc-2.0.6 (from ftp://sunsite.unc.edu/pub/gnu plus Torbjörn's patch)
-  <li>linuxthreads 0.7? for the glibc-2.0.6 above
-</ul>
+<LI> <B> SCO UNIX </B><P>
 
-And, apply Torbjörn Lindgren's &lt;tl@funcom.com&gt; patch to
-glibc-2.0.6's LinuxThread:<p>
-
-<pre>
---- signals.c.old	Wed Jan 14 01:09:02 1998
-+++ signals.c	Wed Jan 14 01:11:37 1998
-@@ -82,7 +82,7 @@
-   pthread_mutex_lock(&sigwaited_mut);
-   /* Make sure no other thread is waiting on our signals */
- test_again:
--  for (s = 0; s &lt; NSIG; s++) {
-+  for (s = 1; s &lt; NSIG; s++) {
-     if (sigismember(set, s) && sigismember(&sigwaited, s)) {
-       pthread_cond_wait(&sigwaited_changed, &sigwaited_mut);
-       goto test_again;
-@@ -96,7 +96,7 @@
-   /* Install our signal handler on all signals in set,
-      and unblock them in mask.
-      Also mark those signals as being sigwaited on */
--  for (s = 1; s &lt;= NSIG; s++) {
-+  for (s = 1; s &lt; NSIG; s++) {
-     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
-       sigdelset(&mask, s);
-       action.sa_handler = __pthread_sighandler;
-@@ -121,7 +121,7 @@
-   self-&gt;p_cancel_jmp = NULL;
-   /* The signals are now reblocked. Restore the sighandlers. */
-   pthread_mutex_lock(&sigwaited_mut);
--  for (s = 1; s &lt;= NSIG; s++) {
-+  for (s = 1; s &lt; NSIG; s++) {
-     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
-       sigaction(s, &(saved_signals[s]), NULL);
-       sigdelset(&sigwaited, s);
-</pre>
-
-Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjörn
-Lindgren &lt;tl@funcom.com&gt;, and Oleg Krivosheev
-&lt;kriol@fnal.gov&gt; for this information; Torbjörn supplied the
-above patch.  With the above configuration, Jame and Torbjörn report
-that only ACE Thread_Manager_Test seg faults on Intel platforms!
-
-Without the following patch from Scott Snyder &lt;sss@d0linux01.fnal.gov&gt;,
-egcs 1.0.1 on Linux won't be able to compile
-netsvcs/lib/Server_Logging_Handler.cpp:
-
-<pre>
-1997-12-10  scott snyder  &lt;sss@d0linux01.fnal.gov&gt;
-
-	* method.c (make_thunk): Avoid name buffer overflow.
-
-
-Index: gcc/cp/method.c
-===================================================================
-RCS file: /d0sgi0/usr0/snyder/CVSROOT/egcs/gcc/cp/method.c,v
-retrieving revision 1.1.1.5
-diff -c -r1.1.1.5 method.c
-*** method.c    1997/12/08 21:06:03     1.1.1.5
---- method.c    1997/12/11 05:40:37
-***************
-*** 1811,1817 ****
-       tree function;
-       int delta;
-  {
-!   char buffer[250];
-    tree thunk_id;
-    tree thunk;
-    char *func_name;
---- 1811,1817 ----
-       tree function;
-       int delta;
-  {
-!   char *buffer;
-    tree thunk_id;
-    tree thunk;
-    char *func_name;
-***************
-*** 1822,1827 ****
---- 1822,1828 ----
-    if (TREE_CODE (func_decl) != FUNCTION_DECL)
-      abort ();
-    func_name = IDENTIFIER_POINTER (DECL_ASSEMBLER_NAME (func_decl));
-+   buffer = (char *)alloca (strlen (func_name) + 32);
-    if (delta&lt;=0)
-      sprintf (buffer, "__thunk_%d_%s", -delta, func_name);
-    else
-</pre>
-
-With RedHat 5.0 on Alpha CPUs, two system patches and one
-glibc-2.0.6/linuxthreads patch are necessary in addition to the above.
-The first patch is for the GNU assembler, gas.  It is only necessary
-on Alphas, and only when <code>-g</code> is used.  If you don't want
-to patch the assembler, you can enable the SUPPRESS_DASH_G option in
-the <code>platform_linux.GNu</code>.  Otherwise, this patch can be
-applied to the binutils gas source.  Then, rebuild and install as.
-The file to be patched is binutils-2.8.1/gas/config/tc-alpha.h:<p>
-
-<pre>
---- tc-alpha.h.orig	Mon May 26 12:32:38 1997
-+++ tc-alpha.h	Sat Feb 28 06:45:41 1998
-@@ -25,6 +25,8 @@
-
- #define TARGET_ARCH			bfd_arch_alpha
-
-+#define PAGE_SIZE 8192
-+
- #define TARGET_FORMAT (OUTPUT_FLAVOR == bfd_target_ecoff_flavour	\
- 		       ? "ecoff-littlealpha"				\
- 		       : OUTPUT_FLAVOR == bfd_target_elf_flavour	\
-</pre><p>
-
-In addition, you'll need to patch
-<code>/usr/src/linux/include/linux/posix_types.h</code> as follows
-to avoid compilation errors:<p>
-
-<pre>
---- posix_types.h.ORIGINAL	Wed Nov 12 12:01:56 1997
-+++ posix_types.h	Fri Feb 27 14:13:16 1998
-@@ -41,9 +41,14 @@
- #undef __FDMASK
- #define	__FDMASK(d)	(1UL &lt;&lt; ((d) % __NFDBITS))
-
-+#if defined (__KERNEL__)
- typedef struct fd_set {
- 	unsigned long fds_bits [__FDSET_LONGS];
- } __kernel_fd_set;
-+#else  /* ! __KERNEL__ */
-+#include &lt;gnu/types.h&gt;
-+typedef __fd_set __kernel_fd_set;
-+#endif /* ! __KERNEL__ */
-
- /* Type of a signal handler.  */
- typedef void (*__kernel_sighandler_t)(int);
-</pre><p>
-
-Finally, on Alpha only, I removed wrapsyscall from the LinuxThreads
-library by patching linuxthreads/Makefile:
-
-<pre>
-36c36
-&lt;                      semaphore wrapsyscall
----
-&gt;                      semaphore # wrapsyscall
-</pre>
-
-With that and the above configuration/pathes, all ACE tests run
-perfectly cleanly on Alpha!<p>
-
-<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-There is a bug in <code>getsockname ()</code> on versions of Linux
-through 2.0.30, at least.  <code>getsockname ()</code> returns an
-Internet host address of 127.0.0.1 (localhost) instead of 0.0.0.0 for
-sockets that aren't connected.  This bug prevents TAO servers from
-working correctly.  To fix it, comment out these two lines in function
-<code>inet_getname ()</code> in
-<code>/usr/src/linux/net/ipv4/af_inet.c</code>:
-
-<pre>
-	} else {
-		__u32 addr = sk-&gt;rcv_saddr;
-		if (!addr) {
-			addr = sk-&gt;saddr;
-/* comment out this line:  if (!addr) */
-/* comment out this line:  	addr = ip_my_addr(); */
-		}
-		sin-&gt;sin_port = sk-&gt;dummy_th.source;
-		sin-&gt;sin_addr.s_addr = addr;
-	}
-</pre>
-
-and rebuild your kernel.  This fix has been implemented in 2.1.x
-versions of the kernel.<p>
-
-
-<DT> <B> SCO UNIX </B> <BR><BR>
-
-<DD> ACE has been ported to SCO UNIX using the GNU g++ 2.7.2 compiler.
+ACE has been ported to SCO UNIX using the GNU g++ 2.7.2 compiler.
 Arturo Montes &lt<A
 HREF="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</A>&gt
 maintains this code.  In addition, he also maintains a version of <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/FSU-threads.ps.gz">FSU
 pthreads</A>.<P>
 
-<DT> <B> SGI IRIX 5.x and 6.x </B> <BR><BR>
+<LI> <B> SGI IRIX 5.x and 6.x </B> <P>
 
-<DD> ACE used to build fine using the SGI C++ and GNU GCC compilers for
+ACE used to build fine using the SGI C++ and GNU GCC compilers for
 	  IRIX 5.x.
 	  It has been ported to IRIX 6.x using the SGI MipsPro 7.1 C++
 	  compiler;
@@ -387,9 +204,9 @@ pthreads</A>.<P>
 	  O32 ABI.
 	  Please check the config files for the details.<P>
 
-<DT> <B> HP-UX 9.x and 10.x </B> <BR><BR>
+<LI> <B> HP-UX 9.x and 10.x </B> <P>
 
-<DD> HP sells 2 C++ compilers for HP-UX 10.x.  If you are using 9.x,
+HP sells 2 C++ compilers for HP-UX 10.x.  If you are using 9.x,
 	  there's only the first one.
 <UL>
 <LI>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
@@ -403,12 +220,12 @@ pthreads</A>.<P>
 </UL>
 <P>
 
-<DT> <B>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</B> <BR><BR>
+<LI> <B>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</B> <P>
 
-<DD> The OSF/1 C++ 5.4 through 5.7 compilers have problems with ACE's
+The OSF/1 C++ 5.4 through 5.7 compilers have problems with ACE's
 templates.  They compile the lib and most of the test programs,
-although they warn about template usage.  Most tests run, some
-dump core.<P>
+although they warn about template usage.  Most tests run, some dump
+core.<P>
 
 CXX 6.0 and 6.1 are _much_ improved in this regard:  they build all of
 ACE cleanly.  Please note that
@@ -427,108 +244,28 @@ kielmann@informatik.uni-siegen.de</A>&gt and David Trumble &lt<A
 HREF="mailto:trumble@cvg.enet.dec.com">trumble@cvg.enet.dec.com</A>&gt
 for help with this port.<P>
 
-<DT><B> UnixWare </B> <BR><BR>
-<DD>
+<LI><B> UnixWare </B> <P>
+
      Steve Huston &lt<A HREF="mailto:shuston@riverace.com">shuston@riverace.com</A>&gt
 	has ported ACE to work with UnixWare 2.01 and g++.<P>
 
 	Ganesh Pai &lt<A HREF="mailto:gpai@voicetek.com">gpai@voicetek.com</A>&gt
 	subsequently did the port for version 2.1.2, also with g++.<P>
 
-<DT><B>Chorus</B> <BR><BR>
-<DD>
+<LI><B>Chorus</B> <P>
 
      Wei Chiang &lt<A HREF="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</A>&gt
 	has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.<P>
 
-<DT><B>LynxOS</B> <BR><BR>
-<DD>
+<LI><B>LynxOS</B> <P>
+
      Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
-	has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.<P>
+	has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.    However, you may need to apply a number <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/os-patches/lynxos-patches.html">patches
+    to Lynxos</A> to get ACE working. <P>
 
-     With LynxOS 2.5.0-FCS version: 012797-G, you'll need to apply this
-     patch:<p>
-     <pre>ftp://ftp.lynx.com/pub/patches/v2.5-patches/v2.5-on-x86/000134-00.tar.Z
-     </pre><p>
+<LI><STRONG>VxWorks</STRONG> <P>
 
-     And, you'll need to apply the following four patches:
-     <ol>
-     <li><code>Patch /usr/include/netinet/in.h</code>:<p>
-<pre>
---- in.h.ORIGINAL	Sat Feb  8 09:58:28 1997
-+++ in.h	Wed Nov 26 15:41:04 1997
-@@ -278,8 +278,7 @@
- 	compiler, the macros are not defined:  Functions must be used.
- */
- static __inline__ unsigned short
--htons(arg)
--unsigned short arg;
-+htons(unsigned short arg)
- {
- 	unsigned short retval;
-
-@@ -292,8 +291,7 @@
- }
-
- static __inline__ unsigned long
--htonl(arg)
--unsigned long arg;
-+htonl(unsigned long arg)
- {
-	unsigned long retval;
-</pre><p>
-
-     <li><code>Patch /usr/include/name.h</code>:<p>
-<pre>
---- name.h.ORIGINAL	Sat Feb  8 11:57:36 1997
-+++ name.h	Wed Dec 24 11:00:57 1997
-@@ -112,7 +112,11 @@
- static __inline__ int _name_fchmod(int nsid, mode_t mode)
- { return _name_server(_NS_FCHMOD, nsid, mode); }
-
-+#if defined __cplusplus
-+static __inline__ int _name_fchown(int /* nsid */, uid_t owner, gid_t group)
-+#else
- static __inline__ int _name_fchown(int nsid, uid_t owner, gid_t group)
-+#endif /* __cplusplus */
- { return _name_server(_NS_FCHOWN, owner, group); }
-
- static __inline__ int _name_close(int nsid)
-</pre>
-
-     <li><code>Patch /usr/include/scsi.h</code>:<p>
-<pre>
---- scsi.h.ORIGINAL	Sat Feb  8 09:57:43 1997
-+++ scsi.h	Mon Dec  1 09:13:13 1997
-@@ -166,7 +166,7 @@
- ------------------------------------------------------------------------------
- */
- #define GET_DATA_BUFFER_STATUS          0x34	/* O     14.2.1 */
--#define GET WINDOW                      0x25	/* O     14.2.2 */
-+#define GET_WINDOW                      0x25	/* O     14.2.2 */
- #define OBJECT_POSITION                 0x31	/* O     14.2.3 */
- #define SCAN                            0x1B	/* O     14.2.5 */
- #define SET_WINDOW                      0x24	/* M     14.2.6 */
-</pre>
-
-     <li><code>Patch /usr/include/netdb.h</code>:<p>
-<pre>
---- netdb.h.ORIGINAL	Sat Feb  8 09:57:36 1997
-+++ netdb.h	Mon Dec  1 10:57:15 1997
-@@ -95,6 +95,8 @@
- extern struct protoent	*getprotobyname	_AP((char *));
- extern struct protoent  *getprotobynumber _AP((int));
- extern struct protoent  *getprotoent	_AP((void));
-+int sethostent _AP((int));
-+int endhostent _AP((void));
-
- /*
-  * Error return codes from gethostbyname() and gethostbyaddr()
-</pre>
-     </ol>
-
-<DT><STRONG>VxWorks</STRONG> <BR><BR>
-<DD>
      <A HREF="http://www.cs.wustl.edu/~levine/">David Levine</A> &lt<A
 HREF="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</A>&gt has
 ported ACE to VxWorks 5.2/5.3/5.3.1 with the GreenHills 1.8.8
@@ -539,7 +276,6 @@ work around some deficiencies with VxWorks 5.3/5.3.1.
 Some of these apply only with g++, at least thru version 2.7.2.
 That is the version that is shipped with Tornado 1.0.1/
 VxWorks 5.3.1.  The problems are:<P>
-
 <OL>
   <LI>The program entry point cannot be called ``main'' with g++.  ACE
       renames it to ``ace_main'' (configurable via ACE_MAIN) on VxWorks.
@@ -565,7 +301,6 @@ VxWorks 5.3.1.  The problems are:<P>
       very unlikely situation where it becomes a problem.
       Please see ace/config-vxworks5.2-g++.h for more information.<P>
 </OL>
-
 In addition, as noted <A HREF="#g++">below</A> following the
 discussion of the g++ -fno-implicit-templates option,
 -fno-implicit-templates is broken.  And, -O2 is not supported on some
@@ -585,9 +320,8 @@ unload the module, using unld, and reload it between runs.
 Alternatively, you could try calling <code>cplusDtors</code>
 and then <code>cplusCtors</code> between runs.<P>
 
-<DT><B>MVS OpenEdition</B> <BR><BR>
+<LI><B>MVS OpenEdition</B> <P>
 
-<DD>
 All of ACE has been ported to OpenEdition by Chuck Gehr &lt<A
 HREF="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</A>&gt.
 The ACE library, all the tests and most of the examples and apps build
@@ -610,12 +344,12 @@ clean.  There are still some problems that need to be ironed out:<P>
    This is mainly due to the way shared libraries are handled on MVS.  See
    <A HREF="#mvs">additional build tips for MVS</A> for more on
    this.<P>
-</DL>
+</UL>
 
 <HR>
 <H4><A NAME="g++">Compiling ACE with GNU g++</A></H4>
 
-If you use the GNU GCC g++ compiler please note the following:<P>
+If you use the GNU GCC g++ compiler please note the following:
 
 <UL>
         <LI>ACE transparently supports egcs.  Please use the appropriate
@@ -629,7 +363,7 @@ If you use the GNU GCC g++ compiler please note the following:<P>
         in the size of libACE.so.  To enable exception handling, add
         <code>exceptions=1</code> to your <code>make</code> command line
         invocation, or to your
-        <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.
+        <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.<P>
 
         <LI>With g++ 2.8.0, an internal compiler error is raised when
         trying to compile ACE_Map_Manager instantiations.  One workaround
@@ -638,7 +372,7 @@ If you use the GNU GCC g++ compiler please note the following:<P>
         <pre><code>% make optimize=0</code></pre>
 
         Or, you can edit your include/makeinclude/platform_sunos5_g++.GNU,
-        and comment out the <code>OCFLAGS</code> line.
+        and comment out the <code>OCFLAGS</code> line.<P>
 
  	<LI>Earlier (prior to 2.7.2) versions of g++ may not compile
         certain parts of ACE correctly due to compiler bugs.  Please
