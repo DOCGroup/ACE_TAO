@@ -1,3 +1,8 @@
+Wed Feb 25 16:06:59 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/{client,server}.{h,cpp}: Added callback
+	support 
+
 Wed Feb 25 16:04:49 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp,h: Added support for making
