@@ -83,6 +83,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
