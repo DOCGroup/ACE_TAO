@@ -1,3 +1,8 @@
+Mon Feb 10 19:28:43 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added AMH_Oneway directory
+
 Fri Feb  7 14:04:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
@@ -8,7 +13,7 @@ Fri Feb  7 14:04:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           read the number of operations or attributes the parent
           has. If an interface has no operations, the operations
           ACE_Configuration subsection will not have been created,
-          likewise for attributes. Thanks to Matej Sekoranja 
+          likewise for attributes. Thanks to Matej Sekoranja
           <matej.sekoranja@ijs.si> for pointing out the potential bug.
 
 Thu Feb  6 16:47:02 2003  Mayur Deshpande  <mayur@ics.uci.edu>
@@ -30,7 +35,7 @@ Thu Feb  6 16:47:02 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 	  Test to test Oneways and AMH. Client make 10 calls. Servers
 	  counts the calls. Before thr fix, the server hung and this
 	  generated an error mesg when the perl script (run_test.pl) ran.
-	
+
 Thu Feb 06 18:35:05 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Proxy_T.h:
@@ -40,8 +45,8 @@ Thu Feb 06 18:35:05 2003  Pradeep Gore  <pradeep@oomworks.com>
  	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
 
 	  Added the patch from Bruce MacDonald <brucemac@netcomuk.co.uk> to get
-	  Notification compiling on VC7/.NET 
-	
+	  Notification compiling on VC7/.NET
+
 Wed Feb  5 12:10:08 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp:
@@ -70,7 +75,7 @@ Wed Feb  5 13:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           CORBA::FullInterfaceDescription, contains fields for both
           attributes and operations, it doesn't seem necessary to include
           the _get_* and _set_* operations in the operation list. It also
-          seems that this behavior will make the TAO IFR more 
+          seems that this behavior will make the TAO IFR more
           iteroperable with IFRs from other ORB vendors. Thanks to
           Matej Sekoranja <matej.sekoranja@ijs.si> for pointing this out.
 

@@ -4,6 +4,7 @@
 
 DIRS = \
         AMH_Exceptions \
+        AMH_Oneway \
         AMI \
         AMI_Buffering \
         AMI_Timeouts \
