@@ -27,6 +27,8 @@
 
 // Platform specific directives
 // gcc defines __OpenBSD__ automatically for us.
+#include <sys/param.h>
+
 #if defined (ACE_HAS_THREADS)
 #if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
@@ -61,7 +63,11 @@
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM
 
 #define ACE_LACKS_UCONTEXT_H
-#define ACE_HAS_UCONTEXT_T
+
+// ucontext_t is in OpenBSD 3.5 and later.
+#if (OpenBSD >= 200405)
+# define ACE_HAS_UCONTEXT_T
+#endif /* OpenBSD >= 200405 */
 
 
 // OpenBSD has sigwait defined
