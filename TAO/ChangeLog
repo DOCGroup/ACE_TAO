@@ -1769,7 +1769,7 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
                     Started a new library with the interfaces removed from
                     PortableInterceptor.pidl.
 
-Sun May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+Sun May  4 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/Naming_Service/Naming_Service.{h,cpp} (parse_args):
           Made argc a reference so that parse_args() can properly remove
