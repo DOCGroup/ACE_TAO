@@ -226,7 +226,7 @@ TAO::TypeCode::Enum<StringType,
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -236,7 +236,7 @@ TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

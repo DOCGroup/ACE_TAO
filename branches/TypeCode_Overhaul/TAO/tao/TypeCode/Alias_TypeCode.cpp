@@ -144,4 +144,32 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::get_compact_typecode_i (
                                    ACE_ENV_ARG_PARAMETER);
 }
 
+template <typename StringType, class RefCountPolicy>
+char const *
+TAO::TypeCode::Alias<StringType, RefCountPolicy>::id_i (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  // Ownership is retained by the TypeCode, as required by the C++
+  // mapping.
+  return this->attributes_.id ();
+}
+
+template <typename StringType, class RefCountPolicy>
+char const *
+TAO::TypeCode::Alias<StringType, RefCountPolicy>::name_i (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  // Ownership is retained by the TypeCode, as required by the C++
+  // mapping.
+  return this->attributes_.name ();
+}
+
+template <typename StringType, class RefCountPolicy>
+CORBA::TypeCode_ptr
+TAO::TypeCode::Alias<StringType, RefCountPolicy>::content_type_i (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  return CORBA::TypeCode::_duplicate (*this->content_type_);
+}
+
 #endif  /*  TAO_ALIAS_TYPECODE_CPP */

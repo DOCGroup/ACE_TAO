@@ -1,13 +1,13 @@
 // $Id$
 
-#ifndef TAO_STRUCT_TYPECODE_CPP
-#define TAO_STRUCT_TYPECODE_CPP
+#ifndef TAO_VALUE_TYPECODE_CPP
+#define TAO_VALUE_TYPECODE_CPP
 
-#include "tao/Struct_TypeCode.h"
+#include "tao/Value_TypeCode.h"
 #include "tao/TypeCode_Field.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/Struct_TypeCode.inl"
+# include "tao/Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 
@@ -16,13 +16,13 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 bool
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::tao_marshal (
   TAO_OutputCDR & cdr) const
 {
-  // A tk_struct TypeCode has a "complex" parameter list type (see
+  // A tk_value TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
   // the CORBA specification), meaning that it must be marshaled into
   // a CDR encapsulation.
@@ -32,6 +32,8 @@ TAO::TypeCode::Struct<StringType,
     (cdr << TAO_ENCAP_BYTE_ORDER)
     && (cdr << this->base_attributes_.id ())
     && (cdr << this->base_attributes_.name ())
+    && (cdr << this->value_modifier_)
+    && (cdr << *this->concrete_base_)
     && (cdr << this->nfields_);
 
   if (!success)
@@ -45,7 +47,8 @@ TAO::TypeCode::Struct<StringType,
       Field<StringType> const & field = *i;
 
       if (!(cdr << field.get_name ())
-          || !(cdr << *(field.type)))
+          || !(cdr << *(field.type))
+          || !(cdr << field.visibility))
         return false;
     }
 
@@ -57,7 +60,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 void
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::tao_duplicate (void)
@@ -70,7 +73,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 void
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::tao_release (void)
@@ -83,7 +86,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::equal_i (
@@ -113,6 +116,10 @@ TAO::TypeCode::Struct<StringType,
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return 0;
 
+
+ADD MISSING ATTRIBUTES
+
+
       CORBA::TypeCode_ptr const lhs_tc = *(lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
@@ -136,7 +143,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::equivalent_i (
@@ -154,7 +161,7 @@ TAO::TypeCode::Struct<StringType,
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_struct directly since a
+  // Call kind_i() instead of using CORBA::tk_value directly since a
   // subclass, such as Except_TypeCode, can use this equivalent_i()
   // implementation.
   CORBA::TCKind const this_kind =
@@ -167,6 +174,10 @@ TAO::TypeCode::Struct<StringType,
   char const * const this_id = this->base_attributes_.id ();
   char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+
+
+ADD MISSING ATTRIBUTES
+
 
   if (ACE_OS::strlen (this_id) == 0
       || ACE_OS::strlen (tc_id) == 0)
@@ -211,13 +222,13 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 CORBA::TCKind
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return Struct_Traits<Kind>::kind;
+  return Value_Traits<Kind>::kind;
 }
 
 template <typename StringType,
@@ -225,7 +236,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::get_compact_typecode_i (
@@ -259,6 +270,7 @@ TAO::TypeCode::Struct<StringType,
             &(*(this->fields_[i].type)->get_compact_typecode (
                   ACE_ENV_ARG_PARAMETER));
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+          tc_fields[i].visibility = this->fields_[i].visibility;
         }
     }
 
@@ -276,12 +288,14 @@ TAO::TypeCode::Struct<StringType,
     this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  tc = adapter->_tao_create_struct_except_tc (this_kind,
-                                              this->base_attributes_.id (),
-                                              ""  /* empty name */,
-                                              tc_fields,
-                                              this->nfields_
-                                              ACE_ENV_ARG_PARAMETER);
+  tc = adapter->_tao_create_value_event_tc (this_kind,
+                                            this->base_attributes_.id (),
+                                            ""  /* empty name */,
+                                            this->value_modifier_,
+                                            *this->concrete_base_,
+                                            tc_fields,
+                                            this->nfields_
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   (void) safe_fields.release ();
@@ -294,7 +308,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 char const *
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::id_i (
@@ -310,7 +324,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 char const *
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::name_i (
@@ -326,7 +340,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 CORBA::ULong
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::member_count_i (
@@ -340,7 +354,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 char const *
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::member_name_i (
@@ -360,7 +374,7 @@ template <typename StringType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Struct<StringType,
+TAO::TypeCode::Value<StringType,
                       FieldArrayType,
                       Kind,
                       RefCountPolicy>::member_type_i (
@@ -374,4 +388,52 @@ TAO::TypeCode::Struct<StringType,
   return CORBA::TypeCode::_duplicate (*(this->fields_[index].type));
 }
 
-#endif  /* TAO_STRUCT_TYPECODE_CPP */
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
+CORBA::Visibility
+TAO::TypeCode::Value<StringType,
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::member_visibility_i (
+  ULong index
+  ACE_ENV_ARG_DECL) const
+{
+  if (index >= this->nfields_)
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      CORBA::TypeCode::_nil ());
+
+  return this->fields_[index].visibility));
+}
+
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
+CORBA::ValueModifier
+TAO::TypeCode::Value<StringType,
+                      FieldArrayType,
+                      Kind,
+                      RefCountPolicy>::type_modifier (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  return this->type_modifier_;
+}
+
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
+CORBA::TypeCode_ptr
+TAO::TypeCode::Value<StringType,
+                      FieldArrayType,
+                      Kind,
+                      RefCountPolicy>::concrete_base_type (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  return CORBA::TypeCode::_duplicate (*(this->concrete_base_));
+}
+
+
+#endif  /* TAO_VALUE_TYPECODE_CPP */
