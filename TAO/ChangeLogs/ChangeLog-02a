@@ -1,3 +1,7 @@
+Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * all Makefiles: updated dependencies.
+
 Sat Jul 08 14:39:38 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.h: added forward declaration of class
