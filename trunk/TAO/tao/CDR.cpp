@@ -92,8 +92,7 @@ void CDR::swap_16 (const char *orig, char* target)
 }
 
 int
-CDR::grow (ACE_Message_Block *mb,
-           size_t minsize)
+CDR::grow (ACE_Message_Block *mb, size_t minsize)
 {
   // Calculate the new buffer's length; if growing for encode, we
   // don't grow in "small" chunks because of the cost.
@@ -114,6 +113,9 @@ CDR::grow (ACE_Message_Block *mb,
     return 0;
   else
     {
+      if (newsize == 0)
+	newsize = CDR::DEFAULT_BUFSIZE;
+
       while (newsize < minsize)
         {
           if (newsize < CDR::EXP_GROWTH_MAX)
