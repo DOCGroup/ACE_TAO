@@ -630,40 +630,38 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       new_thr_desc->sync_->release ();
       return -1;
     }
-  else
-    {
+
 #if defined (ACE_HAS_WTHREADS)
-      // Have to duplicate handle if client asks for it.
-      // @@ How are thread handles implemented on AIX?  Do they
-      // also need to be duplicated?
-      if (t_handle != 0)
+  // Have to duplicate handle if client asks for it.
+  // @@ How are thread handles implemented on AIX?  Do they
+  // also need to be duplicated?
+  if (t_handle != 0)
 # if defined (ACE_HAS_WINCE)
-        *t_handle = thr_handle;
+    *t_handle = thr_handle;
 # else  /* ! ACE_HAS_WINCE */
-        (void) ::DuplicateHandle (::GetCurrentProcess (),
-                                  thr_handle,
-                                  ::GetCurrentProcess (),
-                                  t_handle,
-                                  0,
-                                  TRUE,
-                                  DUPLICATE_SAME_ACCESS);
+  (void) ::DuplicateHandle (::GetCurrentProcess (),
+                            thr_handle,
+                            ::GetCurrentProcess (),
+                            t_handle,
+                            0,
+                            TRUE,
+                            DUPLICATE_SAME_ACCESS);
 # endif /* ! ACE_HAS_WINCE */
 #else  /* ! ACE_HAS_WTHREADS */
-     if (t_handle != 0)
-       *t_handle = thr_handle;
+  if (t_handle != 0)
+    *t_handle = thr_handle;
 #endif /* ! ACE_HAS_WTHREADS && ! VXWORKS */
 
-      // append_thr also put the <new_thr_desc> into Thread_Manager's
-      // double-linked list.  Only after this point, can we manipulate
-      // double-linked list from a spawned thread's context.
-      return this->append_thr (*t_id,
-                               thr_handle,
-                               ACE_THR_SPAWNED,
-                               grp_id,
-                               task,
-                               flags,
-                               new_thr_desc.release ());
-    }
+  // append_thr also put the <new_thr_desc> into Thread_Manager's
+  // double-linked list.  Only after this point, can we manipulate
+  // double-linked list from a spawned thread's context.
+  return this->append_thr (*t_id,
+                           thr_handle,
+                           ACE_THR_SPAWNED,
+                           grp_id,
+                           task,
+                           flags,
+                           new_thr_desc.release ());
 }
 
 int
