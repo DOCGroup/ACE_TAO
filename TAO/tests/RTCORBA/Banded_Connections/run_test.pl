@@ -33,7 +33,7 @@ $server_args =
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=80 ";
 
 $client_args =
-    "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
+    "-n file://$iorfile1 -o file://$iorfile2 "
     ."-a 76 -b 80 -c 64";
 
 if ($^O eq "MSWin32")
@@ -46,7 +46,7 @@ if ($^O eq "MSWin32")
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=6 ";
 
     $client_args =
-        "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
+        "-n file://$iorfile1 -o file://$iorfile2 "
             ."-a 4 -b 6 -c 3";
 }
 

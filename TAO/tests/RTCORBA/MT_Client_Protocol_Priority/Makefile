@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_Strategies -lTAO
-
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
 BIN_UNCHECKED = server client
@@ -43,6 +41,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
+
+TAO_SRVR_LIBS := -lTAO_Strategies $(TAO_SRVR_LIBS)
+TAO_CLNT_LIBS := -lTAO_Strategies $(TAO_CLNT_LIBS)
 
 #----------------------------------------------------------------------------
 #       Local targets

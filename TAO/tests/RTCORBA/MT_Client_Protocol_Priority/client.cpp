@@ -5,6 +5,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Task.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 class Worker_Thread : public ACE_Task_Base
@@ -115,8 +117,8 @@ parse_args (int argc, char *argv[])
   if (priority1 < 0
       || priority2 < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Valid thread priorities must be specified\n. "
-                           "See README for command-line options\n"),
+                           "Valid thread priorities must be specified.\n"
+                           "See README for command-line options.\n"),
                           -1);
   return 0;
 }

@@ -23,7 +23,7 @@ some aspect of PriorityBandedConnectionPolicy:
    RTCORBA::PriorityBandedConnectionPolicy.  Attempt to register an
    object with priority that doesn't match the resources/configuration
    of that POA, i.e., its priority bands.  Should get BAD_PARAM exception.
- 
+
 (Client)
 
 4. Set RTCORBA::PriorityBandedConnectionPolicy on the object where
@@ -53,7 +53,7 @@ Scenario:
 
 To run (on Unix):
 -------
-$./server [-n <ior_output_file1> -o <ior_output_file2>] 
+$./server [-n <ior_output_file1> -o <ior_output_file2>]
           [-w <wrong_priority> -b <bands_file>]
            -p <poa_priority>
            -ORBdebuglevel 1 -ORBSvcConf server.conf
@@ -62,8 +62,7 @@ $./server [-n <ior_output_file1> -o <ior_output_file2>]
            [more endpoints if desired]
 
 $./client [-n <ior1> -o <ior2>]
-           -a <client_priority1> -b <client_priority2> -c <client_priority3> 
-           -ORBSvcConf client.conf
+           -a <client_priority1> -b <client_priority2> -c <client_priority3>
 
 
 Options:
@@ -82,8 +81,8 @@ Options:
 
 -b <bands_file>         Default: bands
                         Name of the file containing priority bands
-                        used for the test (on server and client).  
-                        
+                        used for the test (on server and client).
+
                         The format of the file is a single line, with
                         no leading or trailing spaces, with a list of
                         all bands' lows and highs.  Single space
@@ -93,7 +92,7 @@ Options:
 -p <poa_priority>       Default: -1, must be overridden.
                         SERVER_DECLARED priority of the poa.  Must
                         match one of the bands specified in the
-                        <bands_file>. 
+                        <bands_file>.
 
 -w <wrong_priority>     Default: -1
                         Priority not matching any of the priority
@@ -102,13 +101,13 @@ Options:
 -ORBdebuglevel 1        Default: none
                         This ORB option is useful for verifying that
                         correct band/threadpool lane are used during
-                        invocations. 
+                        invocations.
 
 The following are the required server ORB options for this test.
 These options help set up server resources to emulate POA
 threadpool with ORB pool.  Once POA threadpools are implemented, these
-options will go away.           
--ORBSvcConf server.conf 
+options will go away.
+-ORBSvcConf server.conf
 -ORBendpoint xxxx://targethost:0/priority=<priority_for_band1>
 -ORBendpoint xxxx://targethost:0/priority=<priority_for_band2>
 ... There must be enough endpoints to cover all bands specified in
@@ -123,7 +122,7 @@ the <bands_file>.  For an example, see run_test.pl
 -o <ior2>               Default: file://test2.ior
                         IOR for the second object (with
                         SERVER_DECLARED priority model and priority
-                        bands). 
+                        bands).
 
 -a <client_priority1>   Default: -1, must be overridden.
                         Client thread priority that will be used for
@@ -191,7 +190,7 @@ INV_POLICY exception is caught as expected.
 TAO (25332|5) IIOP connection from client<127.0.0.1:57368> on 17
 RTCORBA::CLIENT_PROPAGATED processing (25332|5): original thread priority 75 temporarily changed to 76
 
-Object bands: 
+Object bands:
 1) 65  69
 2) 74  76
 3) 80  80
@@ -199,7 +198,7 @@ Object priority: 76  Servant thread priority: 76
 Band 2 was used for this invocation
 TAO (25332|6) IIOP connection from client<127.0.0.1:57369> on 18
 
-Object bands: 
+Object bands:
 1) 65  69
 2) 74  76
 3) 80  80
@@ -212,7 +211,7 @@ INV_POLICY exception is caught as expected.
      Test 7
 TAO (25332|4) IIOP connection from client<127.0.0.1:57370> on 19
 
-Object bands: 
+Object bands:
 1) 65  69
 2) 74  76
 3) 80  80
@@ -220,6 +219,3 @@ Object priority: 67  Servant thread priority: 66
 Band 1 was used for this invocation
 
 Server ORB event loop finished
-
-
-

@@ -1,3 +1,30 @@
+Wed Dec  6 01:17:17 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/server.conf
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf
+
+	* tests/RTCORBA/Banded_Connections/README
+	* tests/RTCORBA/Banded_Connections/run_test.pl
+	* tests/RTCORBA/Client_Propagated/run_test.pl
+	* tests/RTCORBA/Client_Protocol/run_test.pl
+	* tests/RTCORBA/Server_Protocol/run_test.pl
+
+	* tests/RTCORBA/Banded_Connections/client.conf
+	* tests/RTCORBA/Client_Protocol/client_nt.conf
+	* tests/RTCORBA/Client_Protocol/svc.conf
+	* tests/RTCORBA/Client_Protocol/svc_nt.conf
+	* tests/RTCORBA/Client_Protocol/svc_unix.conf
+	* tests/RTCORBA/Server_Protocol/client_nt.conf
+	* tests/RTCORBA/Server_Protocol/server.conf
+	* tests/RTCORBA/Server_Protocol/server_nt.conf
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf
+	* tests/RTCORBA/Server_Protocol/svc.conf:
+
+	  Cleaned up RTCORBA tests after Priyanka's Strategy
+	  library-related changes: removed unnecessary config files,
+	  modified perl scripts to not use them.
+
 Tue Dec  5 19:56:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
@@ -5,7 +32,7 @@ Tue Dec  5 19:56:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Object.cpp:
 	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
 
-	  Added static const char* dynamic_adapter_name_ to 
+	  Added static const char* dynamic_adapter_name_ to
 	  TAO_ORB_Core, along with set and get methods. The get
 	  method is used in the CORBA::Object methods that create
 	  DII requests, and the set method is used in the static
@@ -20,10 +47,10 @@ Tue Dec  5 19:39:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/diffs/InterfaceC.i.diff:
 
 	  Replaced missing 'TAO_Export' macros on declarations
-	  of sequence CDR operators in the inline file used when 
+	  of sequence CDR operators in the inline file used when
 	  __ACE_INLINE__ is defined, and removed #if !defined guards
-	  and extra CDR operator declarations. Also updated diff file. 
-	  This fixes link errors in IFR_Service for the release build 
+	  and extra CDR operator declarations. Also updated diff file.
+	  This fixes link errors in IFR_Service for the release build
 	  on Win32.
 
 Tue Dec  5 15:47:23 2000  Marina Spivak  <marina@cs.wustl.edu>
@@ -54,7 +81,7 @@ Tue Dec  5 14:16:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
 
 	  Removed use of '_var_type' in generated code for the exception
-	  holder. This typedef is intended for use with template 
+	  holder. This typedef is intended for use with template
 	  programming, which is not the case here. In addition, old g++
 	  does not see the typedef since the compiler does not scope
 	  it properly.

@@ -5,6 +5,8 @@
 #include "tao/RTCORBAC.h"
 #include "tao/Pool_Per_Endpoint.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
@@ -178,12 +180,15 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      /*
       // Start ORB event loop.
       // @@ Currently we are using Reactor per priority to emulate
       // threadpool with lanes.  Once POA threadpools are implemented,
       // this code should be replaced with standard threadpool apis.
       TAO_Pool_Per_Endpoint pool (orb.in ());
       pool.run (ACE_TRY_ENV);
+      */
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
