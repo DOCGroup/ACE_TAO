@@ -258,13 +258,13 @@ ACE_Message_Block::total_capacity (void) const
   size_t size = 0;
 
   for (const ACE_Message_Block *i = this;
-       i != 0;     
+       i != 0;
        i = i->cont ())
     {
       size += i->capacity ();
     }
-     
-  return size;  
+
+  return size;
 }
 
 ACE_Data_Block::ACE_Data_Block (void)
@@ -536,6 +536,9 @@ ACE_Message_Block::init_i (size_t size,
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   this->execution_time_ = execution_time;
   this->deadline_time_ = deadline_time;
+#else
+  ACE_UNUSED_ARG (execution_time);
+  ACE_UNUSED_ARG (deadline_time);
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
   this->cont_ = msg_cont;
   this->next_ = 0;

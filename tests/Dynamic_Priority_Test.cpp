@@ -107,6 +107,7 @@ const int vx_max_queue = INT_MAX;
 const int vx_msg_size = 32;
 #endif /* defined (VXWORKS) */
 
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 // Loading parameters (number of messages to push through queues) for
 // performance tests.
 static int MIN_LOAD = 20;
@@ -257,8 +258,8 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
       supplier_args.array_[i]->msg_priority (i);
 
       // Assign every other message short or long execution time.
-      supplier_args.array_[i]->msg_execution_time (((i % 2) 
-                                                    ? slow_execution 
+      supplier_args.array_[i]->msg_execution_time (((i % 2)
+                                                    ? slow_execution
                                                     : fast_execution));
     }
 
@@ -535,8 +536,8 @@ run_performance_test (u_int min_load,
                           -1);
 
           // Assign every other message short or long execution time.
-          supplier_args.array_[i]->msg_execution_time (((i % 2) 
-                                                        ? slow_execution 
+          supplier_args.array_[i]->msg_execution_time (((i % 2)
+                                                        ? slow_execution
                                                         : fast_execution));
         }
 
@@ -689,6 +690,7 @@ run_performance_test (u_int min_load,
   delete laxity_queue;
   return 0;
 }
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 
 int
 main (int, ASYS_TCHAR *[])
