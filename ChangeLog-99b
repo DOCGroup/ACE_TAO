@@ -7,9 +7,9 @@ Fri Dec 10 15:55:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  ace/Configuration.h, and allows us to remove the "#ifdef
 	  ACE_HAS_THREADS" conditional in the template instantiations.
 
-	* m4/compilers.m4:
+	* m4/compiler.m4 (CXXFLAGS):
 
-	  Added missing flags that fix Sun C++ 5.0 weirdness.
+	  Added missing flags that fix Sun C++ 5.0 weirdness on Solaris.
 
 Fri Dec 10 14:35:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
