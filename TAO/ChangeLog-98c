@@ -1,3 +1,11 @@
+Mon Jul 20 11:46:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corba.h: 
+	  TAO_THROW_SPEC is a little different than ACE_THROW_SPEC, not
+	  only we need support for exceptions in the platform, we also
+	  would need them in the IDL compiler.
+	  Plus it gives a lot of warnings in MSVC++ 5.0
+
 Mon Jul 20 11:15:52 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	*  orbsvcs/orbsvcs/Trader/Trader.cpp:
