@@ -3,16 +3,14 @@ a primary server and see whether the client gives preference to
 contact a primary for its first invocation. When the primary is killed
 it contacts the secondary for next invocation.
 
-To aid this we have three executables. Two copies of the server are
-started. A manager is then to merge these two iors and designate the
-second as primary. The merged IOR is then written to another file.
+Two copies of the server are started. A manager is then to merge these
+two iors and designate the  second as primary. The merged IOR is then
+written to another file. This merged IOR is then used to make
+invocations on the server.
 
-The client is started with an option to read the merged IOR. Then
-invocations are then made.
 
 Run the application as follows:
 
 $./server -o <file1.ior>
 $./server -o <file2.ior>
 $./Manager -a file://<file1.ior> -b file://<file2.ior> -c <output.ior>
-$./client -k file://output.ior
