@@ -1,3 +1,12 @@
+Thu Apr  9 09:37:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc_T: Moved the ACE_Static_Allocator::dump() method into
+ 	  the Malloc_T.cpp file so we'd get a vtable...  Thanks to David
+ 	  Levine for reporting this.
+
+	* tests/Hash_Map_Manager_Test.cpp (run_test): Added a return
+	  value to make G++ and David Levine happy ;-).
+
 Wed Apr 08 17:29:01 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.cpp (open): There was a boo-boo in open() as
