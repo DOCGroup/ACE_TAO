@@ -143,8 +143,32 @@ CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
 {
 }
 
+CORBA_SystemException::CORBA_SystemException (const CORBA_SystemException &src)
+  : CORBA_Exception (src),
+    minor_ (src.minor_),
+    completed_ (src.completed_)
+{
+}
+
 CORBA_SystemException::~CORBA_SystemException (void)
 {
+}
+
+CORBA_SystemException &
+CORBA_SystemException::operator = (const CORBA_SystemException &src)
+{
+  if (this->type_)
+    this->type_->Release ();
+  this->type_ = src.type_;
+  if (this->type_)
+    this->type_->AddRef ();
+  
+  this->minor_ = src.minor_;
+  this->completed_ = src.completed_;
+
+  assert (this->type_ != 0);
+
+  return *this;
 }
 
 int
