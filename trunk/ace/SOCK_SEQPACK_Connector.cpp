@@ -136,7 +136,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       local_sap.get_addresses(local_inet_addrs, num_addresses);
 
 #if defined (ACE_HAS_LKSCTP)
-      sockaddr_storage *local_sockaddr = 0;
+      sockaddr_in *local_sockaddr = 0;
       sockaddr_in portst;
       int sn = sizeof(sockaddr);
 
@@ -156,7 +156,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       {      
         // allocate enough memory to hold the number of secondary addrs
         ACE_NEW_NORETURN(local_sockaddr,
-                         sockaddr_storage[num_addresses - 1]);
+                         sockaddr_in[num_addresses - 1]);
 
         // get sockaddr_in for the local handle
         if (ACE_OS::getsockname(new_association.get_handle (), 
@@ -175,7 +175,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
           local_inet_addrs[i].sin_port = portst.sin_port;
         }
 
-        // copy all of the secondary addrs into a sockaddr_storage structure
+        // copy all of the secondary addrs into a sockaddr structure
         for (size_t i = 0; i < num_addresses - 1; i++)
         {
           ACE_OS::memcpy(&(local_sockaddr[i]),
@@ -183,8 +183,9 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
                          sizeof(sockaddr_in));
         }
       
+        // bind other ifaces
         if (sctp_bindx(new_association.get_handle(), 
-                       local_sockaddr,
+                       ACE_reinterpret_cast(sockaddr *, local_sockaddr),
                        num_addresses - 1,
                        SCTP_BINDX_ADD_ADDR))
         {

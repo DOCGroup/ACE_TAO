@@ -12,8 +12,8 @@ kernels.
 LKSCTP adheres to the IETF's SCTP Sockets Draft API.  Please refer to that 
 document for API specifics.  
 
-Please be sure to use the latest test kernels.  The API changed at some point
-between Linux 2.5 and Linux 2.6.  
+You MUST use Linux 2.6-test4 or later.  Earlier versions have a different
+api.   
 
 Building ACE/TAO with LKSCTP support
 --------------------------------
