@@ -20,6 +20,16 @@ ACE_RCSID(ace, Synch_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
 
+// This constructor isn't inlined, because SunPRO C++ 4.2 + patch
+// 104631-07 has trouble compiled TAO with it inline.
+template <class ACE_LOCKING_MECHANISM>
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
+  : lock_ (0),
+    delete_lock_ (1)
+{
+  ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
+}
+
 template <class ACE_LOCK, class TYPE>
 ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
   : is_set_ (initial_value)
@@ -165,22 +175,22 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 {
 
 #if defined(CHORUS)
-  if (type == USYNC_PROCESS) 
+  if (type == USYNC_PROCESS)
     {
       // Let's see if the shared memory entity already exists.
       ACE_HANDLE fd = ACE_OS::shm_open (name,
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
-      if (fd == ACE_INVALID_HANDLE) 
+      if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
             fd = ACE_OS::shm_open (name,
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
-          else 
+          else
             return;
         }
-      else 
+      else
         {
           // We own this shared memory object!  Let's set its size.
           if (ACE_OS::ftruncate (fd,
@@ -197,7 +207,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
             }
         }
 
-      this->process_cond_ = 
+      this->process_cond_ =
         (ACE_cond_t *) ACE_OS::mmap (0,
                                      sizeof (ACE_cond_t),
                                      PROT_RDWR,
@@ -212,7 +222,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
           && ACE_OS::cond_init (this->process_cond_,
                                 type,
                                 name,
-                                arg) != 0) 
+                                arg) != 0)
         return;
     }
    // It is ok to fall through into the <cond_init> below if the
@@ -221,7 +231,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 
   // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition");
 
-  if (ACE_OS::cond_init (&this->cond_, 
+  if (ACE_OS::cond_init (&this->cond_,
                          type,
                          name,
                          arg) != 0)
@@ -930,4 +940,3 @@ ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 
 #endif /* ACE_SYNCH_T_C */
-
