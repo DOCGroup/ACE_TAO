@@ -36,6 +36,10 @@
 #include "RTCP.h"
 #include "source.h"
 
+#if !defined (__ACE_INLINE__)
+#include "source.i"
+#endif /* __ACE_INLINE__ */
+
 /* gray out src if no ctrl msgs for this many consecutive update intervals */
 #define CTRL_IDLE 8.
 

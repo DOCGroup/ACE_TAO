@@ -3,6 +3,10 @@
 #include "Policy.h"
 #include "FlowSpec_Entry.h"
 
+#if !defined(__ACE_INLINE__)
+#include "Policy.i"
+#endif /* __ACE_INLINE__ */
+
 TAO_AV_Policy::TAO_AV_Policy (CORBA::ULong type)
   :type_ (type)
 {
