@@ -68,5 +68,10 @@
 
 #define ACE_LACKS_STRRECVFD
 
+#if defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
+# define ACE_LACKS_PTRDIFF_T
+# define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
