@@ -29,6 +29,8 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+#if !defined (ACE_LACKS_FORK) && !defined (ACE_WIN32)
+
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
 // Parents <ACE_Malloc> base address in shared memory.
@@ -193,7 +195,6 @@ child (void)
 int
 main (int argc, ASYS_TCHAR *[])
 {
-#if !defined (ACE_LACKS_FORK) && !defined (ACE_WIN32)
   if (argc == 1)
     {
       ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
@@ -225,6 +226,7 @@ main (int argc, ASYS_TCHAR *[])
       p.wait ();
       myallocator ()->remove ();
       ACE_END_TEST;
+      return 0;
     }
   else
     {
@@ -244,14 +246,6 @@ main (int argc, ASYS_TCHAR *[])
       ACE_END_LOG;
       return 0;
     }
-#else
-  ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
-  ACE_UNUSED_ARG (argc);
-  ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("process creation is not supported on this platform\n")));
-  ACE_END_TEST;
-#endif /* !defined (ACE_LACKS_FORK) && !defined (ACE_WIN32) */
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -274,3 +268,14 @@ template class ACE_Based_Pointer<Long_Test>;
 #pragma instantiate ACE_Based_Pointer_Basic<Long>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#else
+int
+main (int argc, ASYS_TCHAR *[])
+{
+  ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("process creation is not supported on this platform\n")));
+  ACE_END_TEST;
+  return 0;
+}
+#endif /* !defined (ACE_LACKS_FORK) && !defined (ACE_WIN32) */
