@@ -90,62 +90,63 @@ TAO_UTO::absolute_time (CORBA::Environment &)
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto,
-                       CORBA::Environment &)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       if (comparison_type == CosTime::MidC)
         {
-          if (this->time (TAO_TRY_ENV) == uto->time (TAO_TRY_ENV))
+          if (this->time (ACE_TRY_ENV) == uto->time (ACE_TRY_ENV))
             {
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
               return CosTime::TCEqualTo;
             }
-          else if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
+          else if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
             {
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
               return CosTime::TCGreaterThan;
             }
           else
             return CosTime::TCLessThan;
         }
-      else if (this->time (TAO_TRY_ENV) == uto->time (TAO_TRY_ENV))
+      else if (this->time (ACE_TRY_ENV) == uto->time (ACE_TRY_ENV))
         {
-          TAO_CHECK_ENV;
-          if (this->inaccuracy (TAO_TRY_ENV) == 0 && uto->inaccuracy (TAO_TRY_ENV) == 0)
+          ACE_TRY_CHECK;
+          if (this->inaccuracy (ACE_TRY_ENV) == 0 && uto->inaccuracy (ACE_TRY_ENV) == 0)
             {
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
               return CosTime::TCEqualTo;
             }
         }
       else
         {
-          if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
+          if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
             {
-              TAO_CHECK_ENV;
-              if (this->time (TAO_TRY_ENV) - this->inaccuracy (TAO_TRY_ENV)
-                  > uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV))
+              ACE_TRY_CHECK;
+              if (this->time (ACE_TRY_ENV) - this->inaccuracy (ACE_TRY_ENV)
+                  > uto->time (ACE_TRY_ENV) - uto->inaccuracy (ACE_TRY_ENV))
                 {
-                  TAO_CHECK_ENV;
+                  ACE_TRY_CHECK;
                   return CosTime::TCGreaterThan;
                 }
             }
-          else if (this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV)
-                   < uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV))
+          else if (this->time (ACE_TRY_ENV) + this->inaccuracy (ACE_TRY_ENV)
+                   < uto->time (ACE_TRY_ENV) - uto->inaccuracy (ACE_TRY_ENV))
 
             {
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
               return CosTime::TCLessThan;
             }
         }
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception:");
+      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
     }
-  TAO_ENDTRY;
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+  
   return CosTime::TCIndeterminate;
 }
 
@@ -157,72 +158,74 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
-                           CORBA::Environment &TAO_IN_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_TIO *tio = 0;
 
-  // @@ Vishal:  This code doesn't make any sense to me also.
-
-  TAO_TRY
+  ACE_TRY
     {
-      if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
-        ACE_NEW_THROW_RETURN (tio,
-                              TAO_TIO (uto->time (TAO_TRY_ENV),
-                                       this->time (TAO_TRY_ENV)),
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              CosTime::TIO::_nil ());
+      if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
+        {
+	  ACE_NEW_THROW_EX (tio,
+			    TAO_TIO (uto->time (ACE_TRY_ENV),
+				     this->time (ACE_TRY_ENV)),
+			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+	  
+	  ACE_TRY_CHECK;
+	}
       else
-        ACE_NEW_THROW_RETURN (tio,
-                              TAO_TIO (this->time (TAO_TRY_ENV),
-                                       uto->time (TAO_TRY_ENV)),
-                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              CosTime::TIO::_nil ());
-      TAO_CHECK_ENV;
-
+        {
+	  ACE_NEW_THROW_EX (tio,
+			    TAO_TIO (this->time (ACE_TRY_ENV),
+				     uto->time (ACE_TRY_ENV)),
+			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+	  
+	  ACE_TRY_CHECK;
+	}
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception:");
+      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
       return CosTime::TIO::_nil ();
     }
-  TAO_ENDTRY;
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
+  
   return tio->_this ();
 }
 
-  // Returns a TIO object representing the error interval around the
-  // time value in the UTO.
+// Returns a TIO object representing the error interval around the
+// time value in the UTO.
 
 CosTime::TIO_ptr
-TAO_UTO::interval (CORBA::Environment &TAO_IN_ENV)
+TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_TIO *tio = 0;
-
-  TAO_TRY
+  
+  ACE_TRY
     {
       TimeBase::TimeT lower =
-        this->time (TAO_TRY_ENV) - this->inaccuracy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->time (ACE_TRY_ENV) - this->inaccuracy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       TimeBase::TimeT upper =
-        this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->time (ACE_TRY_ENV) + this->inaccuracy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      // @@ Vishal:  So is this code.  You can't throw_return from a try
-      // block.
-      ACE_NEW_THROW_RETURN (tio,
-                            TAO_TIO (lower,
-                                     upper),
-                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                            CosTime::TIO::_nil ());
-      TAO_CHECK_ENV;
+      ACE_NEW_THROW_EX (tio,
+			TAO_TIO (lower,
+				 upper),
+			CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_TRY_CHECK;      
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception:");
+      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
       return CosTime::TIO::_nil ();
     }
-  TAO_ENDTRY;
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
+  
   return tio->_this ();
 }
+
