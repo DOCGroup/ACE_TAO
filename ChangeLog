@@ -1,3 +1,16 @@
+Tue Dec 23 16:52:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+	  Reordered printing of make rules so that the standard targets
+	  (all, install, debug, etc.) are emitted into the makefile BEFORE
+	  the targets for each project.  This insures that 'all' remains
+	  the first target in the makefile, and is thus the default target
+	  when make is invoked without a target.
+
+	  This should resolve the problem where builds failed due to what
+	  looked like the IDL compiler not being completely built.
+	
 Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * netsvcs/lib/Makefile.bor:
