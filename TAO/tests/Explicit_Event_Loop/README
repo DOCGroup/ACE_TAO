@@ -1,11 +1,10 @@
 $Id$
 
-Explicit Event Loop test.
+This tests the methods work_pending() and perform_work() methods of
+the orb.  The simple time server, instead of calling orb->run(), has
+an loop in which work_pending() and perform_work() are called
+explicitly.  Its usage is specified below.
 
-This is a test of the methods work_pending() and perform_work() methods of the orb.
-The simple time server, instead of calling orb->run(), has an loop in which 
-work_pending() and perform_work() are called explicitly.   Its usage is specified 
-below.
 ______________________________________________________________________________
 This test has been adapted from code in chapter 3 of "Advanced CORBA 
 Programming with C++" by Michi Henning and Steve Vinoski. Copyright 1999. 
@@ -14,7 +13,6 @@ modifications to the source code have been made, with permission, by Mike
 Moran <mm4@cs.wustl.edu>.   All of these changes are documented in the file 
 CHANGES in this directory.
 ______________________________________________________________________________
-
 
 Summary:
     This is the simple time server given in chapter 3 of the book.

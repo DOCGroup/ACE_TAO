@@ -1,7 +1,7 @@
 # $Id$
 
 Introduction:
-------------
+
 This example illustrates the usage of the QtReactor from TAO.  The
 server creates a display dialog which has a lcd display. The client
 creates a dialog with a quit button & a slider. On dragging the slider
