@@ -1,3 +1,46 @@
+Fri Dec 24 13:06:59 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	The following fixes were motivated by problems discovered in a
+	configure script log file (config.log) that was generated on AIX,
+	and sent in by Mike Winter <Mike.Winter@Schwab.com>.
+
+	* THANKS:
+
+	  Added my Mike Winter to the THANKS list.
+
+	* acconfig.h:
+
+	  Removed an extraneous comment.
+
+	* configure.in:
+
+	  Added tests for ACE_HAS_BROKEN_XTI_MACROS and
+	  ACE_HAS_BROKEN_T_ERROR.
+
+	  Updated TLI/XTI preprocessor directives in TLI/XTI related
+	  tests.
+
+	  Fixed pthread_rwlock_t and pthread_rwlockattr_t structure
+	  tests.  Previously the tests were missing the header files to
+	  search in.
+
+	  AIX defines _THREAD_SAFE in <pthread.h>.  Check if it is defined
+	  after including <pthread.h>.
+
+	* ltcf-cxx.sh:
+
+	  Added Digital/Compaq C++ libtool support.
+
+	  Minor Sun C++ updates.
+
+	* ace/OS.h:
+
+	  AIX defines TCP_NODELAY and TCP_MAXSEG in tiuser.h so undefine
+	  them if ACE_HAS_BROKEN_XTI_MACROS is defined before including
+	  tiuser.h.
+
+	  Simplified TLI/XTI related macros.
+
 Fri Dec 24 08:04:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace:
