@@ -1,3 +1,12 @@
+Sun Jul 29 19:19:20 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.cpp (process_directive, process_directives):
+
+	  Wrap the ACE_GUARD_RETURN macro within an ACE_MT block.  The
+	  ACE_Static_Object_Lock declaration is only visible if
+	  ACE_HAS_THREADS is defined.  This truly fixes the
+	  single-threaded build problems.
+
 Sun Jul 29 19:06:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf.y (ace_obstack):

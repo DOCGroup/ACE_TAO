@@ -407,10 +407,10 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 
   ACE_UNUSED_ARG (directive);
 
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                    ace_mon,
-                    *ACE_Static_Object_Lock::instance (),
-                    -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                            ace_mon,
+                            *ACE_Static_Object_Lock::instance (),
+                            -1));
 
   ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (directive);
 
@@ -455,10 +455,10 @@ ACE_Service_Config::process_directives (void)
             }
           else
             {
-              ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                                ace_mon,
-                                *ACE_Static_Object_Lock::instance (),
-                                -1);
+              ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                                        ace_mon,
+                                        *ACE_Static_Object_Lock::instance (),
+                                        -1));
 
               ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (fp);
 
