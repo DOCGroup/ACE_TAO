@@ -42,9 +42,12 @@ The implementation of the concurrency service objects is located in
 the $TAO_ROOT/orbsvcs/orbsvcs/Concurrency directory and consists of
 the following files:
 
-        CC_Lock.{h,cpp} Wrapper around the locking mechanism
-
-        CC_LockSet.{h,cpp} Implementation of the lock set
+        CC_LockSet.{h,cpp} Implementation of the lock set. At present
+		there is only one implementation of the lock set which
+		implements multiple possesion semantics for both
+		transactional (which is not otherwise supported) and
+		non-transactional clients. Please see the comments in
+		the CC_LockSet.h file for further details.
 
         CC_LockSetFactory.{h,cpp} Iplementation of the lock set
                 factory
@@ -68,13 +71,21 @@ directory.  There are two types of tests:
         . A more extended test which requires two (or more)
           processes.
 
-The server accepts the following options:
+The client accepts the following options:
 
-        usage:  ./CC_client [-b] [-d] [-e] <test;arg1;arg2>
+        usage:  ./CC_client [-b] [-d]
+                        [-c] <stdin|testscriptname>
+                        [-e] <test;arg1;arg2>
                         [-f cc_factory-obj-ref-key-file]
                         [-k cc-obj-ref-key] [-x] [-s]
 
         . The [-b] option runs the basic tests.
+        . The [-c] option runs a test script against the concurrency
+          service server. This option is described in more detail in
+          the $TAO_ROOT/orbsvcs/tests/Concurrency/README file. It is
+          the intent that this type of testing will be used instead of
+          the [-b] and [-e] tests. These tests are retained for
+          backwards compatibility.
         . The [-d] option is the debug option.
         . The [-e] option is for running one of the extended tests. The
           format of the argument to the -e option is <test;arg1;arg2>
