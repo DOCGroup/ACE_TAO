@@ -26,21 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_CORBA_ShortSeq_I_
-#define _TAO_CDR_OP_CORBA_ShortSeq_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const CORBA::ShortSeq &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    CORBA::ShortSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_ShortSeq_I_ */
-
