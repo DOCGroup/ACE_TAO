@@ -1,3 +1,9 @@
+Sun Apr 15 21:27:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added new Configuration_Import_Export.{h,cpp}
+	  files.
+
 Sun Apr 15 19:33:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Configuration.cpp,
