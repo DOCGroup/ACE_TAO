@@ -1,3 +1,10 @@
+Mon Jul 19 09:50:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Future.cpp: Added ACE_TYPENAME to template-qualified types.
+        * ace/Future.cpp: Added #include "ace/Containers.h" to be sure the
+          types necessary for this class is available at template link
+          time.
+
 Mon Jul 19 08:12:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_cxx.GNU: added support
