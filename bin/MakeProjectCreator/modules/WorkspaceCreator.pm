@@ -305,7 +305,7 @@ sub generate_project_files {
         my(%perpi)       = ();
         my(@perprojects) = ();
         my($gpi)         = $generator->get_project_info();
-        $self->save_project_info($gen, $gpi, $dir, \@perprojects, \%perpi);
+        $self->save_project_info($gen, $gpi, ".", \@perprojects, \%perpi);
 
         ## Set our per project information
         $self->{'projects'}     = \@perprojects;
