@@ -1,9 +1,22 @@
+Fri Mar  9 18:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Crashed_Callback/Crashed_Callback.h:
+          Minor cosmetic fixes.
+
+        * tests/Crashed_Callback/Service.h:
+        * tests/Crashed_Callback/Service.cpp:
+        * tests/Crashed_Callback/server.cpp:
+          Print out an error if the test did not finish successfully.
+
+        * tests/Crashed_Callback/run_test.pl:
+          Simplify the structure a bit, thanks to Darrell.
+
 Fri Mar 09 16:16:56 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/FindPOA/FindPOA.cpp (main): Added additional test
-	  cases to make sure that the correct exception
-	  (PortableServer::POA::AdapterNonExistent) is raised when looking
-	  for a non-existant POA.
+        * examples/POA/FindPOA/FindPOA.cpp (main): Added additional test
+          cases to make sure that the correct exception
+          (PortableServer::POA::AdapterNonExistent) is raised when looking
+          for a non-existant POA.
 
 Fri Mar  9 16:06:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
