@@ -140,6 +140,34 @@ TAO_ORB_Core::service_context_list (
     }
 }
 
+ACE_INLINE void
+TAO_ORB_Core:: services_log_msg_rcv (TAO_Message_State_Factory &state)
+{
+    if (this->ft_service_.service_callback ())
+      {
+        this->ft_service_.service_callback ()->service_log_msg_rcv (state);
+      }
+}
+
+ACE_INLINE void
+TAO_ORB_Core:: services_log_msg_pre_upcall (TAO_ServerRequest &req)
+{
+    if (this->ft_service_.service_callback ())
+      {
+        this->ft_service_.service_callback ()->service_log_msg_pre_upcall (req);
+      }
+}
+
+ACE_INLINE void
+TAO_ORB_Core:: services_log_msg_post_upcall (TAO_ServerRequest &req)
+{
+    if (this->ft_service_.service_callback ())
+      {
+        this->ft_service_.service_callback ()->service_log_msg_post_upcall (req);
+      }
+}
+
+
 ACE_INLINE TAO_Fault_Tolerance_Service &
 TAO_ORB_Core::fault_tolerance_service (void)
 {
