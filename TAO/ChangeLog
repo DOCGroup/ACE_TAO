@@ -1,3 +1,8 @@
+Tue Feb 24 18:32:06 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+	  The client project requires native C++ exceptions
+
 Tue Feb 24 17:46:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/TAO-tutorials.html:
