@@ -1234,22 +1234,25 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
   while ((handle = handle_iter ()) != ACE_INVALID_HANDLE &&
          number_of_handlers_dispatched < number_of_active_handles)
     {
-      if (this->handler_rep_.find (handle) != 0)
-        {
-          ++number_of_handlers_dispatched;
+      ++number_of_handlers_dispatched;
 
-          this->notify_handle (handle,
-                               mask,
-                               ready_mask,
-                               this->handler_rep_.find (handle),
-                               callback);
-        }
+      this->notify_handle (handle,
+                           mask,
+                           ready_mask,
+                           this->handler_rep_.find (handle),
+                           callback);
 
       // clear the bit from that dispatch mask,
       // so when we need to restart the iteration (rebuilding the iterator...)
       // we will not dispatch the already dipatched handlers
       this->clear_dispatch_mask (handle, mask);
 
+      if (this->state_changed_)
+        {
+
+          handle_iter.reset_state ();
+          this->state_changed_ = false;
+        }
     }
 
   return 0;
