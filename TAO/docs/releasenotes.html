@@ -2,6 +2,7 @@
 <HEAD>
   <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
   <TITLE>TAO Release Information</TITLE>
+  <-- $Id$ -->
 </HEAD>
 
 <BODY text = "#000000"
@@ -104,25 +105,29 @@ Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 <BLOCKQUOTE>
   <P>Current status:</P>
   <UL>
-    <LI>The current real-time Event Channel is running under Orbix, fully distributed.
-        The main test has three processes, one runs the EC itself, one a
-	 Supplier and yet another a Consumer. 
-    <LI>The configuration runs can be done even on the distributed scenario,using
-    the Real-time Scheduling Service, which now has an IDL interface.
+    <LI>The current Event Channel is running under Orbix,
+    fully distributed,
+    the main test has three processes,
+    one runs the EC itself,
+    one a Supplier and yet another a Consumer.
+    <LI>The configuration runs can be done even on the distributed
+    scenario,
+    using the Real-time &quot;Scheduling Service&quot;,
+    which now has an IDL interface.
     <LI>At run-time (no config runs) there is no need to use the
-	 Real-time Scheduling Service, a faster, collocated
-	 implementation for the service is available. 
-    Obviously, the information is generated on the config runs and linked into
+    Real-time Scheduling Service,
+    a faster, collocated implementation for the service is available.
+    Obviously the information is generated on the config runs and linked into
     the program.
+    <LI>We are using an implementation of the standard
+    <A HREF="#naming">Naming Service</A>
+    for Orbix.
   </UL>
   <P>Future work:</P>
   <UL>
     <LI>Port to TAO (once IDL compiler is available and stable).
     <LI>Change to use standard Naming Service rather than current Orbix <CODE>_bind</CODE>/<CODE>_marker</CODE>
     calls.
-    <LI>The <A HREF="#naming">Naming Service</A> must be ported to TAO in order
-    for suppliers and consumers to obtain an object reference to the Event
-    Channel in a portable and reliable fashion.
     <LI>The Scheduling Service is completely independant of the EC and the
     configuration of suppliers or consumers. I think it would be convenient
     to have a library and binaries for it, including a tool to dump the results
