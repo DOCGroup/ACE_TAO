@@ -1,4 +1,5 @@
 // $Id$
 project: namingexe, rteventlogadmin {
+  exename   = RTEvent_Logging_Service
   includes += $(TAO_ROOT)/orbsvcs
 }
