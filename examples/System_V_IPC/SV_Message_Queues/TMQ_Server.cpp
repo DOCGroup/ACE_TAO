@@ -75,7 +75,7 @@ template class ACE_Typed_SV_Message<Message_Data>;
 
 #else
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));

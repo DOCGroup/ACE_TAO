@@ -20,7 +20,7 @@
 #include "Widget_Part.h"
 #include "Widget_Part_Factory.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
