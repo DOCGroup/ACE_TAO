@@ -133,9 +133,10 @@ DRV_cpp_init (void)
 
       if (cpp_path != 0)
         {
-          cpp_loc = new char[BUFSIZ];
-          ACE_OS::strcpy (cpp_loc, cpp_path);
-          ACE_OS::strcat (cpp_loc, "\\bin\\CL.exe");
+          char* tmp = new char[BUFSIZ];
+          ACE_OS::strcpy (tmp, cpp_path);
+          ACE_OS::strcat (tmp, "\\bin\\CL.exe");
+		  cpp_loc = tmp;
         }
       else
         cpp_loc = idl_global->cpp_location();
