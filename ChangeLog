@@ -1,3 +1,20 @@
+Mon Aug 13 14:01:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Fixed some hard-coded
+	  uses of .shobj and .obj.  Thanks to Shashi Bhushan
+ 	  <Shashi.Bhushan@lmco.com> for contributing these.
+
+	* ace/CDR_Stream.h: Added comments warning about the deletarious
+	  effects of not aligning buffers to ACE_InputCDR and
+ 	  ACE_OutputCDR properly.  Thanks to Alain Decamps
+ 	  <Alain.Decamps@PIDPA.be> for reporting this.
+
+Sun Aug 12 14:46:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
+	  that callers can figure out what's going wrong in a consistent
+ 	  way.
+
 Mon Aug 13 20:09:04 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.19 released.
@@ -20,6 +37,12 @@ Sun Aug 12 00:34:42 2001  Steve Huston  <shuston@riverace.com>
           to:  const ACE_TCHAR *msg_data (void) const. Makes it safer,
           and conforms to all current usage inside ACE. Also makes
           C++ Network Programming examples simpler :-)
+
+Sat Aug 11 09:01:11 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Thread.h:
+	* ace/Task.h: Added a list of other flags that can be passed to
+	  activate().
 
 Fri Aug 10 19:39:48 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -65,6 +88,12 @@ Fri Aug 10 11:06:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
           Changes to avoid warnings on HP-UX with aCC.
 
+Thu Aug  9 17:58:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
+	  try to purge the notifications if notify_handler_ is 0.  thanks
+ 	  to Steve Rahn <SRahn@rim.net> for reporting this.
+
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * ace/Hash_Map_Manager_T.i:
@@ -78,17 +107,23 @@ Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu Aug  9 11:51:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
-          have the -w flag removed from CCFLAGS in the above file. Looks
-          like the -w disables lots of warnings that may be useful.
+	* include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
+	  have the -w flag removed from CCFLAGS in the above file. Looks
+ 	  like the -w disables lots of warnings that may be useful.
 
 Thu Aug  9 11:41:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
-          problem. The InputCDR class had two constructors which were
-          similar if the default values for the arguments were
-          exercised. Thanks to Torbjorn Backstrom
-          <torbjorn.k.backstrom@volvo.com>  for reporting this.
+	* ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
+	  problem. The InputCDR class had two constructors which were
+ 	  similar if the default values for the arguments were
+ 	  exercised. Thanks to Torbjorn Backstrom
+ 	  <torbjorn.k.backstrom@volvo.com> for reporting this.
+
+Thu Aug  9 12:31:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS_String.cpp (strtok_r_emulation): Make sure to check
+	  for a NULL return from strtok() before calling strlen()!  Thanks
+ 	  to Boris Sukholitko <boriss@richfx.com> for reporting this.
 
 Wed Aug 08 21:27:50 2001  Ossama Othman  <ossama@uci.edu>
 

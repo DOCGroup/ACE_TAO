@@ -208,26 +208,26 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
     {
       int i;
 
-      for (i = ACE_DIV_BY_WORDSIZE(current_max - 1);
+      for (i = ACE_DIV_BY_WORDSIZE (current_max - 1);
            maskp[i] == 0;
            i--)
         continue;
 
 #if defined (ACE_PSOS)
-      this->max_handle_ = ACE_MULT_BY_WORDSIZE(i);
+      this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
            (val & ACE_MSB_MASK) != 0;
            val = (val << 1))
         this->max_handle_++;
 #elif 1 /* !defined(ACE_HAS_BIG_FD_SET) */
-      this->max_handle_ = ACE_MULT_BY_WORDSIZE(i);
+      this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
            (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
            val = (val >> 1) & ACE_MSB_MASK)
         this->max_handle_++;
 #else
       register u_long val = this->mask_.fds_bits[i];
-      this->max_handle_ = ACE_MULT_BY_WORDSIZE(i)
+      this->max_handle_ = ACE_MULT_BY_WORDSIZE (i)
         + ACE_Handle_Set::bitpos(val & ~(val - 1));
 #endif /* 1 */
     }

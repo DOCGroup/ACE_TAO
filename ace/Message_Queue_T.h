@@ -706,7 +706,6 @@ private:
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Factory
 {
-
 public:
   /// factory method for a statically prioritized ACE_Message_Queue
   static ACE_Message_Queue<ACE_SYNCH_USE> *
@@ -759,18 +758,18 @@ public:
  * @brief A threaded message queueing facility, modeled after the
  *        queueing facilities in System V STREAMs.
  *
- * An <ACE_Message_Queue_Ex> is the templatized wrapper of the central
- * queueing facility for messages in the ACE framework.  If
+ * An <ACE_Message_Queue_Ex> is a strongly-typed version of the
+ * <ACE_Message_Queue>.  If
  * <ACE_SYNCH_DECL> is <ACE_MT_SYNCH> then all operations are
  * thread-safe. Otherwise, if it's <ACE_NULL_SYNCH> then there's no
  * locking overhead.
  */
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
-class ACE_Message_Queue_Ex 
+class ACE_Message_Queue_Ex
 {
 public:
 
-  // = Defualt priority value.
+  // = Default priority value.
   enum
   {
     DEFUALT_PRIORITY = 0

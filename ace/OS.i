@@ -7319,7 +7319,7 @@ ACE_OS::set_errno_to_last_error (void)
 // Borland C++ Builder 4 has a bug in the RTL that resets the
 // <GetLastError> value to zero when errno is accessed.  Thus, we have
 // to use this to set errno to GetLastError.  It's bad, but only for
-// WIN32
+// WIN32.
 #   if defined(__BORLANDC__) && (__BORLANDC__ == 0x540) || defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   int last_error = ::GetLastError ();
   return errno = last_error;

@@ -10,8 +10,8 @@
 
 #BIN   	= main
 
-LIB = libJAWS.a
-SHLIB = libJAWS.$(SOEXT)
+LIB = libJAWS2.a
+SHLIB = libJAWS2.$(SOEXT)
 
 MYFILES  	= \
         Cache_Hash_T \

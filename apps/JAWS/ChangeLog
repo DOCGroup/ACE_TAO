@@ -1,9 +1,28 @@
+Mon Aug 13 14:04:44 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* Applied the following fixes courtesy of Blair Zajac
+ 	  <blair@gps.caltech.edu>:
+
+	  1) Allow a static libHTTPU.a to be built when
+             "make static_libs_only=1" is used.
+ 
+          2) When I try to build both JAWS and JAWS2 with the same
+             ACE_ROOT, the libJAWS.* that is built and installed first
+	     prevents the other JAWS from properly compiling.  This
+	     resolves this problem by renaming the JAWS2 library to
+	     libJAWS2.*.
+ 
+          3) The JAWS2 subdirectory is now descended into by
+	     apps/Makefile.	
+  
+          4) The Makefile in JAWS2 now descends into HTTPU and JAWS to
+             build those libraries.
+  
 Tue Jun 12 20:35:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* clients/Blobby/Blob_Handler.cpp:
 
 	  Fixed a size_t printf to make gcc happy on IA-64 Linux.
-
 
 Sun Feb 18 09:33:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
