@@ -11,7 +11,7 @@ int main(int,char**)
     Token token;
     token.run();
 
-        // And now and ACE_Mutex.
+        // And now the ACE_Mutex.
     Mutex mutex;
     mutex.run();
     
