@@ -40,7 +40,6 @@ static int individual_continuous_worker_stats = 0;
 static int print_missed_invocations = 0;
 static int continuous_workers_are_rt = 1;
 static ACE_hrtime_t test_start;
-static ACE_Time_Value start_of_test;
 static CORBA::ULong prime_number = 9619;
 
 struct Synchronizers
@@ -261,9 +260,6 @@ start_synchronization (test_ptr test,
           ACE_DEBUG ((LM_DEBUG,
                       "\n"));
 
-        start_of_test =
-          ACE_OS::gettimeofday ();
-
         test_start =
           ACE_OS::gethrtime ();
 
@@ -405,7 +401,7 @@ public:
                 Synchronizers &synchronizers);
 
   int svc (void);
-  ACE_Time_Value deadline_for_current_call (CORBA::ULong i);
+  ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
   void reset_priority (CORBA::Environment &ACE_TRY_ENV);
   void print_stats (ACE_hrtime_t test_end);
   int setup (CORBA::Environment &ACE_TRY_ENV);
@@ -419,7 +415,7 @@ public:
   Synchronizers &synchronizers_;
   CORBA::Short CORBA_priority_;
   CORBA::Short native_priority_;
-  ACE_Time_Value interval_between_calls_;
+  ACE_hrtime_t interval_between_calls_;
   CORBA::ULong deadlines_missed_;
 
   typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
@@ -448,7 +444,8 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
     deadlines_missed_ (0),
     missed_invocations_ (iterations)
 {
-  this->interval_between_calls_.set (1 / double (this->rate_));
+  this->interval_between_calls_ =
+    to_hrtime (1 / double (this->rate_), gsf);
 }
 
 void
@@ -468,15 +465,15 @@ Paced_Worker::reset_priority (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-ACE_Time_Value
+ACE_hrtime_t
 Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 {
-  ACE_Time_Value deadline_for_current_call =
+  ACE_hrtime_t deadline_for_current_call =
     this->interval_between_calls_;
 
   deadline_for_current_call *= i;
 
-  deadline_for_current_call += start_of_test;
+  deadline_for_current_call += test_start;
 
   return deadline_for_current_call;
 }
@@ -576,11 +573,11 @@ Paced_Worker::svc (void)
            i != this->history_.max_samples ();
            ++i)
         {
-          ACE_Time_Value deadline_for_current_call =
+          ACE_hrtime_t deadline_for_current_call =
             this->deadline_for_current_call (i);
 
-          ACE_Time_Value time_before_call =
-            ACE_OS::gettimeofday ();
+          ACE_hrtime_t time_before_call =
+            ACE_OS::gethrtime ();
 
           if (time_before_call > deadline_for_current_call)
             {
@@ -589,26 +586,24 @@ Paced_Worker::svc (void)
               continue;
             }
 
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-
           this->test_->method (work,
                                prime_number,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_hrtime_t end = ACE_OS::gethrtime ();
-          this->history_.sample (end - start);
-
-          ACE_Time_Value time_after_call =
-            ACE_OS::gettimeofday ();
+          ACE_hrtime_t time_after_call =
+            ACE_OS::gethrtime ();
+          this->history_.sample (time_after_call - time_before_call);
 
           if (time_after_call > deadline_for_current_call)
             continue;
 
-          ACE_Time_Value sleep_time =
+          ACE_hrtime_t sleep_time =
             deadline_for_current_call - time_after_call;
 
-          ACE_OS::sleep (sleep_time);
+          ACE_OS::sleep (ACE_Time_Value (0,
+                                         long (to_seconds (sleep_time, gsf) *
+                                               ACE_ONE_SECOND_IN_USECS)));
         }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
