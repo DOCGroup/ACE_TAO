@@ -20,10 +20,10 @@ TAO_Naming_Server::TAO_Naming_Server (void)
 
 TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       PortableServer::POA_ptr poa,
-                                      LPCTSTR persistence_location,
                                       size_t context_size,
                                       ACE_Time_Value *timeout,
-                                      int resolve_for_existing_naming_service)
+                                      int resolve_for_existing_naming_service,
+                                      LPCTSTR persistence_location)
   : naming_context_impl_ (0),
     naming_context_ (),
     ior_multicast_ (0),
@@ -31,10 +31,10 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
 {
   if (this->init (orb,
                   poa,
-                  persistence_location,
                   context_size,
                   timeout,
-                  resolve_for_existing_naming_service) == -1)
+                  resolve_for_existing_naming_service,
+                  persistence_location) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
                 "TAO_Naming_Server::init"));
@@ -44,10 +44,10 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa,
-                         LPCTSTR persistence_location,
                          size_t context_size,
                          ACE_Time_Value *timeout,
-                         int resolve_for_existing_naming_service)
+                         int resolve_for_existing_naming_service,
+                         LPCTSTR persistence_location)
 {
   CORBA::Object_var naming_obj;
 
