@@ -17,6 +17,8 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/os_include/os_netdb.h"
+
 
 
 ACE_RCSID (TAO_SSLIOP,

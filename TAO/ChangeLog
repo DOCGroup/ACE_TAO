@@ -1,22 +1,30 @@
+Sun Nov 23 20:43:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+	  #included "ace/os_include/os_netdb.h" to pacify Win32 VC6
+	  builds.  
+
 Sun Nov 23 20:09:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/RTCORBA_include.pidl:
-		* tao/RTCORBA/RTCORBA_includeC.h:
+	* tao/RTCORBA/RTCORBA_includeC.h:
 		
-		  New files, a .pidl which only includes RTCORBA.pidl, and
-		  the stub header file generated from it, hand-crafted to
-		  include RTCORBA.h instead of RTCORBAC.h. This pair of
-		  files allows applications to include RTCORBA.pidl in
-		  their IDL files by including RTCORBA_include.pidl instead
-		  and let the IDL compiler automatically include 
-		  RTCORBA_includeC.h in the associated generated file, thsu
-		  avoiding the error of including RTCORBAC.h directly.
+	  New files, a .pidl which only includes RTCORBA.pidl, and the
+	  stub header file generated from it, hand-crafted to include
+	  RTCORBA.h instead of RTCORBAC.h. This pair of files allows
+	  applications to include RTCORBA.pidl in their IDL files by
+	  including RTCORBA_include.pidl instead and let the IDL compiler
+	  automatically include  RTCORBA_includeC.h in the associated
+	  generated file, thus avoiding the error of including RTCORBAC.h
+	  directly. 
 		  
-		* tao/RTCORBA/RTCORBA.mpc:
+	* tao/RTCORBA/RTCORBA.mpc:
 		
-		  Added RTCORBA_includeC.h to the header file list.
+	  Added RTCORBA_includeC.h to the header file list.
 		  
-		* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
         * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
         * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
         * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
