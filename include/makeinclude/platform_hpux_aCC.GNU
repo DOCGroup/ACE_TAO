@@ -46,10 +46,8 @@ THR_DEFS	= -DACE_HAS_THREADS=0
 endif
 endif
 
-#
-# Suppress warning 829 (string literal to char * is deprecated)
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W829,302
+CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W302
 # Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from
 # the system header files.  667 is also suppressed, but the compiler still
 # tells you there was a future error, but at least you can pick out any real
