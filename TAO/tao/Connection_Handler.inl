@@ -10,19 +10,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (void)
 {
 }
 
-/*ACE_INLINE CORBA::Boolean
-TAO_Connection_Handler::is_registered (void)
-{
-  return this->is_registered_;
-}
-
-ACE_INLINE void
-TAO_Connection_Handler::is_registered (CORBA::Boolean flag)
-{
-  this->is_registered_ = flag;
-}
-*/
-
 ACE_INLINE TAO_ORB_Core *
 TAO_Connection_Handler::orb_core (void)
 {
@@ -39,4 +26,33 @@ ACE_INLINE TAO_Transport *
 TAO_Connection_Handler::transport (void)
 {
   return this->transport_;
+}
+
+
+ACE_INLINE int
+TAO_Connection_Handler::incr_pending_upcalls (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->pending_upcall_lock_, -1);
+
+  return ++this->pending_upcalls_;
+
+
+}
+
+ACE_INLINE int
+TAO_Connection_Handler::decr_pending_upcalls (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->pending_upcall_lock_, -1);
+
+  return --this->pending_upcalls_;
+}
+
+ACE_INLINE int
+TAO_Connection_Handler::pending_upcalls (void) const
+{
+  return this->pending_upcalls_;
 }

@@ -23,7 +23,6 @@ ACE_RCSID(tao, IIOP_Connection_Handler, "$Id$")
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    pending_upcalls_ (1),
     tcp_properties_ (0),
     resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
@@ -41,7 +40,6 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
                                                           void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    pending_upcalls_ (1),
     tcp_properties_ (ACE_static_cast
                      (TAO_IIOP_Properties *, arg)),
     resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
@@ -206,8 +204,9 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                handle,
                rm));
 
-  --this->pending_upcalls_;
-  if (this->pending_upcalls_ <= 0)
+  long upcalls = this->decr_pending_upcalls ();
+
+  if (upcalls <= 0)
     {
       if (this->transport ()->wait_strategy ()->is_registered ())
         {
@@ -331,7 +330,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
 {
   // Increase the reference count on the upcall that have passed us.
-  this->pending_upcalls_++;
+  this->incr_pending_upcalls ();
 
   this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
   TAO_Resume_Handle  resume_handle (this->orb_core (),
@@ -340,7 +339,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
   int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
-  if (--this->pending_upcalls_ <= 0)
+  if (this->decr_pending_upcalls () <= 0)
     retval = -1;
 
   if (retval == -1)

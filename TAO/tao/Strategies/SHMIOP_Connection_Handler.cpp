@@ -25,7 +25,6 @@ ACE_RCSID(Strategies, SHMIOP_Connection_Handler, "$Id$")
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    pending_upcalls_ (1),
     resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
   // This constructor should *never* get called, it is just here to
@@ -42,7 +41,6 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_
                                                               void *)
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    pending_upcalls_ (1),
     resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
   TAO_SHMIOP_Transport* specific_transport = 0;
@@ -182,8 +180,10 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  --this->pending_upcalls_;
-  if (this->pending_upcalls_ <= 0)
+  long pending =
+    this->decr_pending_upcalls ();
+
+  if (pending <= 0)
     {
       if (this->transport ()->wait_strategy ()->is_registered ())
         {
@@ -268,7 +268,7 @@ int
 TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Increase the reference count on the upcall that have passed us.
-  this->pending_upcalls_++;
+  this->incr_pending_upcalls ();
 
   this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
 
@@ -278,7 +278,7 @@ TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE)
   int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
-  if (--this->pending_upcalls_ <= 0)
+  if (this->decr_pending_upcalls () <= 0)
     retval = -1;
 
   if (retval == -1)
