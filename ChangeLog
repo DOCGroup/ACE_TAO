@@ -1,3 +1,17 @@
+Tue Sep 21 06:38:17 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          This is a fix for [Bug 1915].  I moved the block of code that
+          set up INSBIN and INSLIB before the include of wrapper_macros.GNU
+          to ensure that the values for 'install', 'dllout' and 'libout' are
+          used instead of the defaults found in wrapper_macros.GNU.  I
+          didn't use the patch supplied for this bug because it didn't take
+          into accout the possibility of overriding the INSBIN and INSLIB
+          values on the make command line.  Thanks to Thomas Girard
+          <thomas.g.girard@free.fr> for reporting this and supplying a
+          patch.
+
 Tue Sep 21 09:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QtReactor.cpp:
@@ -7,11 +21,11 @@ Tue Sep 21 09:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Sep 20 18:07:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/run_test.pl:
+        * tests/run_test.pl:
 
-	  Reverted the change "Sun Sep 19 20:36:43 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since it was giving
-	  troubles on every platform.
+          Reverted the change "Sun Sep 19 20:36:43 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since it was giving
+          troubles on every platform.
 
 Mon Sep 20 06:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -21,39 +35,39 @@ Mon Sep 20 06:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Sep 19 20:36:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/run_test.pl:
+        * tests/run_test.pl:
 
-	  Fix for BUG 1924. Please see
+          Fix for BUG 1924. Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1924
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1924
 
-	  for details. Thanks to Paul <paul at reeder dot cs> for the
-	  patch.
+          for details. Thanks to Paul <paul at reeder dot cs> for the
+          patch.
 
 Sun Sep 19 14:51:32 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* bin/tao_orb_tests.lst:
-	  Add yet another test to the list.
+        * bin/tao_orb_tests.lst:
+          Add yet another test to the list.
 
 Sun Sep 19 13:49:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* bin/MakeProjectCreator/config/global.features:
-	  Add new "boost" feature.  It should be enabled if you
-	  are planning to use the boost::unit_test_framework classes.
-	  Naturally you will also have to install boost (www.boost.org)
-	  I am writing unit tests for some classes, and I am too stubborn
-	  to use a sub-standard unit tests frameworks like cxxtest, but
-	  too smart to roll my own.
+        * bin/MakeProjectCreator/config/global.features:
+          Add new "boost" feature.  It should be enabled if you
+          are planning to use the boost::unit_test_framework classes.
+          Naturally you will also have to install boost (www.boost.org)
+          I am writing unit tests for some classes, and I am too stubborn
+          to use a sub-standard unit tests frameworks like cxxtest, but
+          too smart to roll my own.
 
-	* bin/MakeProjectCreator/config/boost_unit_test.mpb:
-	  New base project for unit tests based on the
-	  boost::unit_test_framework.  Try it, it is good for you.
+        * bin/MakeProjectCreator/config/boost_unit_test.mpb:
+          New base project for unit tests based on the
+          boost::unit_test_framework.  Try it, it is good for you.
 
 Sun Sep 19 08:03:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/msvc_cidlc.pl:
+        * bin/msvc_cidlc.pl:
 
-	  A new perl script to compile and build the CIDL compiler.
+          A new perl script to compile and build the CIDL compiler.
 
 Fri Sep 17 13:19:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
