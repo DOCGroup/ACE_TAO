@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Video_Control_i.h"
+#include "mpeg_server/Video_Server.h"
 
 Video_Control_i::Video_Control_i ()
 {
@@ -64,8 +65,14 @@ Video_Control_i::step (const Video_Control::STEPpara &para,
 CORBA::Boolean 
 Video_Control_i::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts,
-                       CORBA::Environment&)
+                       CORBA::Environment& env)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_i::play () called \n"));
+  VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler ()->play (para,
+                                                                                   vts,
+                                                                                   env);
+
   return 0;
 }
 

@@ -35,6 +35,7 @@
 #include "routine.h"
 #include "com.h"
 #include "Video_Control_i.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 
 #if defined (NATIVE_ATM)
 #include "atmcom.h"
@@ -180,6 +181,9 @@ private:
 
   TAO_ORB_Manager *orb_manager_;
   // the TAO ORB manager.
+
+  TAO_Naming_Server *naming_server_;
+  // the TAO naming server
 
   Video_Control_i *video_control_;
   // The Video_Control implementation object.
