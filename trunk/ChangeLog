@@ -1,3 +1,12 @@
+Fri Jul  4 07:29:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Added support for the -pipe command line option of the g++ compiler
+          on Win32. This uses pipes instead of intermediate files and speeds up
+          the compilation. This is enabled by default but can be disabled by
+          adding pipes=0 to your platform_macros.GNU file. Thanks to
+          Serge Kolgan <skolgan@trigraph.com> for this suggestion.
+
 Thu Jul  3 22:05:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-linux-common.h:
