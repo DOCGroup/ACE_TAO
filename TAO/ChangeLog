@@ -1,3 +1,16 @@
+Thu Jan  1 13:39:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
+	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
+	* tests/Smart_Proxies/Collocation/Makefile.main:
+
+	  Fixed some of the nagging problems.
+	
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+
+	  Fixed a compile error in Borland builds. Thanks to Johnny for
+	  reporting the problem.
+
 Thu Jan  1 19:07:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Makefile.bor:
