@@ -150,6 +150,9 @@
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_LACKS_SIGNED_CHAR
+
 // Use the poll() event demultiplexor rather than select().
 //#define ACE_USE_POLL
 
