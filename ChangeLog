@@ -1,3 +1,14 @@
+Fri Nov 16 07:22:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_release: Updated the script to copy the beta to a
+	  different location.  Have tested this by creating a dummy
+	  repository and a dummy export directory. Things worked
+	  fine. Hopefully the beta should go through without any hassle. 
+
+	  The script is tied to its usage on ace.cs. Needs to be
+	  changed. Will do that after this beta goes out. Having too many
+	  changes at the same time may not be good.
+
 Thu Nov 15 20:44:40 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* etc/Svc_Conf_l.cpp.diff: Updated.  Thanks to Kitty for reporting it.
