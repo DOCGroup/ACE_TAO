@@ -13,8 +13,8 @@ TCF_Loader::TCF_Loader (void)
 
 CORBA::Object_ptr
 TCF_Loader::create_object (CORBA::ORB_ptr orb,
-                           int argc,
-                           char * argv[],
+                           int,
+                           char * [],
                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
@@ -24,6 +24,8 @@ TCF_Loader::create_object (CORBA::ORB_ptr orb,
         orb->resolve_initial_references ("RootPOA",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      
+      cout << "will it compile now" << endl;
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in (),
