@@ -2089,37 +2089,37 @@ struct stat
 
 // THREAD-level values
 #     if defined(PRI_FIFO_MIN) && defined(PRI_FIFO_MAX) && defined(PRI_RR_MIN) && defined(PRI_RR_MAX) && defined(PRI_OTHER_MIN) && defined(PRI_OTHER_MAX)
-#       define ACE_THR_PRI_FIFO_MIN  PRI_FIFO_MIN
-#       define ACE_THR_PRI_FIFO_MAX  PRI_FIFO_MAX
-#       define ACE_THR_PRI_RR_MIN    PRI_RR_MIN
-#       define ACE_THR_PRI_RR_MAX    PRI_RR_MAX
-#       define ACE_THR_PRI_OTHER_MIN PRI_OTHER_MIN
-#       define ACE_THR_PRI_OTHER_MAX PRI_OTHER_MAX
+#       define ACE_THR_PRI_FIFO_MIN  (long) PRI_FIFO_MIN
+#       define ACE_THR_PRI_FIFO_MAX  (long) PRI_FIFO_MAX
+#       define ACE_THR_PRI_RR_MIN    (long) PRI_RR_MIN
+#       define ACE_THR_PRI_RR_MAX    (long) PRI_RR_MAX
+#       define ACE_THR_PRI_OTHER_MIN (long) PRI_OTHER_MIN
+#       define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
 #     elif defined (AIX)
-#       define ACE_THR_PRI_FIFO_MIN  PRIORITY_MIN
-#       define ACE_THR_PRI_FIFO_MAX  PRIORITY_MAX
-#       define ACE_THR_PRI_RR_MIN    PRIORITY_MIN
-#       define ACE_THR_PRI_RR_MAX    PRIORITY_MAX
-#       define ACE_THR_PRI_OTHER_MIN PRIORITY_MIN
-#       define ACE_THR_PRI_OTHER_MAX PRIORITY_MAX
+#       define ACE_THR_PRI_FIFO_MIN  (long) PRIORITY_MIN
+#       define ACE_THR_PRI_FIFO_MAX  (long) PRIORITY_MAX
+#       define ACE_THR_PRI_RR_MIN    (long) PRIORITY_MIN
+#       define ACE_THR_PRI_RR_MAX    (long) PRIORITY_MAX
+#       define ACE_THR_PRI_OTHER_MIN (long) PRIORITY_MIN
+#       define ACE_THR_PRI_OTHER_MAX (long) PRIORITY_MAX
 #     elif defined (sun)
         // SunOS 5.6 could use sched_get_priority_min/max () for FIFO
         // and RR.  But for OTHER, it returns negative values, which
         // can't be used.  sched_get_priority_min/max () aren't
         // supported in SunOS 5.5.1.
-#       define ACE_THR_PRI_FIFO_MIN  0
-#       define ACE_THR_PRI_FIFO_MAX  59
-#       define ACE_THR_PRI_RR_MIN    0
-#       define ACE_THR_PRI_RR_MAX    59
-#       define ACE_THR_PRI_OTHER_MIN 0
-#       define ACE_THR_PRI_OTHER_MAX 59
+#       define ACE_THR_PRI_FIFO_MIN  (long) 0
+#       define ACE_THR_PRI_FIFO_MAX  (long) 59
+#       define ACE_THR_PRI_RR_MIN    (long) 0
+#       define ACE_THR_PRI_RR_MAX    (long) 59
+#       define ACE_THR_PRI_OTHER_MIN (long) 0
+#       define ACE_THR_PRI_OTHER_MAX (long) 59
 #     else
-#       define ACE_THR_PRI_FIFO_MIN  ACE_PROC_PRI_FIFO_MIN
-#       define ACE_THR_PRI_FIFO_MAX  ACE_PROC_PRI_FIFO_MAX
-#       define ACE_THR_PRI_RR_MIN    ACE_PROC_PRI_RR_MIN
-#       define ACE_THR_PRI_RR_MAX    ACE_PROC_PRI_RR_MAX
-#       define ACE_THR_PRI_OTHER_MIN ACE_PROC_PRI_OTHER_MIN
-#       define ACE_THR_PRI_OTHER_MAX ACE_PROC_PRI_OTHER_MAX
+#       define ACE_THR_PRI_FIFO_MIN  (long) ACE_PROC_PRI_FIFO_MIN
+#       define ACE_THR_PRI_FIFO_MAX  (long) ACE_PROC_PRI_FIFO_MAX
+#       define ACE_THR_PRI_RR_MIN    (long) ACE_PROC_PRI_RR_MIN
+#       define ACE_THR_PRI_RR_MAX    (long) ACE_PROC_PRI_RR_MAX
+#       define ACE_THR_PRI_OTHER_MIN (long) ACE_PROC_PRI_OTHER_MIN
+#       define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
 #     endif
 #     if !defined(ACE_THR_PRI_FIFO_DEF)
 #       define ACE_THR_PRI_FIFO_DEF  ((ACE_THR_PRI_FIFO_MIN + ACE_THR_PRI_FIFO_MAX)/2)
