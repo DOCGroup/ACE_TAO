@@ -1,3 +1,8 @@
+Tue Dec  7 10:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional_MultipleORB/destroy.mpc:
+          Added missing Id tag
+
 Mon Dec  6 16:00:46 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
           This change solves a problem with the bi-dir policy
@@ -55,7 +60,7 @@ Mon Dec  6 16:00:46 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
           which lingered since the time the first ORB was created.
           In some cases it broke with SEGV, as when trying to access
           a previously deleted bi-dir policy validator.
-          
+
 Mon Dec  6 13:14:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
