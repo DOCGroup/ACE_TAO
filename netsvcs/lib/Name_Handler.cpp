@@ -5,6 +5,18 @@
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "Name_Handler.h"
+#include "ace/Singleton.h"
+
+// This helper class adds the correct default constructor to the
+// ACE_Naming_Context class so that we can use it in ACE_Singleton.
+class Naming_Context : public ACE_Naming_Context
+{
+public:
+  Naming_Context (void)
+    : ACE_Naming_Context (ACE_Naming_Context::NET_LOCAL) {}
+};
+
+typedef ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> NAMING_CONTEXT;
 
 // Simple macro that does bitwise AND -- useful in table lookup
 #define ACE_TABLE_MAP(INDEX, MASK) (INDEX & MASK)
@@ -134,9 +146,6 @@ ACE_Name_Handler::open (void *)
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
-  // Instantiate our associated ACE_Naming_Context
-  ACE_NEW_RETURN (naming_context_, ACE_Naming_Context (ACE_Naming_Context::NET_LOCAL), -1);
 
   return 0;
 }
@@ -335,14 +344,14 @@ ACE_Name_Handler::shared_bind (int rebind)
   if (rebind == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "request for BIND \n"));
-      result = this->naming_context_->bind (a_name, a_value,
-					    this->name_request_.type ());
+      result = NAMING_CONTEXT::instance ()->bind (a_name, a_value,
+                                                  this->name_request_.type ());
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "request for REBIND \n"));
-      result = this->naming_context_->rebind (a_name, a_value,
-					      this->name_request_.type ());
+      result = NAMING_CONTEXT::instance ()->rebind (a_name, a_value,
+                                                    this->name_request_.type ());
       if (result == 1)
 	result = 0;
     }
@@ -364,7 +373,7 @@ ACE_Name_Handler::resolve (void)
 
   ACE_WString avalue;
   char *atype;
-  if (this->naming_context_->resolve (a_name, avalue, atype) == 0)
+  if (NAMING_CONTEXT::instance ()->resolve (a_name, avalue, atype) == 0)
     {
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
 			    0, 0,
@@ -386,7 +395,7 @@ ACE_Name_Handler::unbind (void)
   ACE_DEBUG ((LM_DEBUG, "request for UNBIND \n"));
   ACE_WString a_name (this->name_request_.name (),
 		      this->name_request_.name_len () / sizeof (ACE_USHORT16));
-  if (this->naming_context_->unbind (a_name) == 0)
+  if (NAMING_CONTEXT::instance ()->unbind (a_name) == 0)
     return this->send_reply (ACE_Name_Reply::SUCCESS);
   else return this->send_reply (ACE_Name_Reply::FAILURE);
 }
@@ -441,7 +450,7 @@ ACE_Name_Handler::lists (void)
   ACE_DEBUG ((LM_DEBUG, list_table_[index].description_));
 
   // Call the appropriate method
-  if ((this->naming_context_->*list_table_[index].operation_) (set, pattern) != 0)
+  if ((NAMING_CONTEXT::instance ()->*list_table_[index].operation_) (set, pattern) != 0)
     {
       // None found so send blank request back
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
@@ -503,7 +512,7 @@ ACE_Name_Handler::lists_entries (void)
       return -1;
     }
 
-  if ((this->naming_context_->*ptmf) (set, pattern) != 0)
+  if ((NAMING_CONTEXT::instance ()->*ptmf) (set, pattern) != 0)
     {
       // None found so send blank request back.
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
@@ -545,12 +554,10 @@ ACE_Name_Handler::~ACE_Name_Handler (void)
   ACE_TRACE ("ACE_Name_Handler::~ACE_Name_Handler");
   ACE_DEBUG ((LM_DEBUG, "closing down Handle  %d\n",
 	      this->get_handle ()));
-
-  // Delete associated Naming Context.
-  delete this->naming_context_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<ACE_Name_Handler>;
@@ -559,6 +566,7 @@ template class ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>;
 template class ACE_Scheduling_Strategy<ACE_Name_Handler>;
 template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Concurrency_Strategy<ACE_Name_Handler>
