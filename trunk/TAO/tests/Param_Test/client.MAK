@@ -25,9 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "client - Win32 Release"
 
 OUTDIR=.
@@ -68,11 +65,44 @@ CLEAN :
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
+CPP=cl.exe
 CPP_PROJ=/nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D\
  "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\client.pch" /YX\
  /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 CPP_OBJS=.\Release/
 CPP_SBRS=.
+
+.c{$(CPP_OBJS)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(CPP_OBJS)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(CPP_OBJS)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(CPP_SBRS)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(CPP_SBRS)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(CPP_SBRS)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\client.bsc" 
 BSC32_SBRS= \
@@ -138,34 +168,12 @@ CLEAN :
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
+CPP=cl.exe
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D\
  "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\client.pch" /YX\
  /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\client.bsc" 
-BSC32_SBRS= \
-	
-LINK32=link.exe
-LINK32_FLAGS=TAO.lib aced.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)\client.pdb" /debug /machine:I386 /out:"$(OUTDIR)\client.exe"\
- /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" 
-LINK32_OBJS= \
-	"$(INTDIR)\client.obj" \
-	"$(INTDIR)\driver.obj" \
-	"$(INTDIR)\helper.obj" \
-	"$(INTDIR)\options.obj" \
-	"$(INTDIR)\param_testC.obj" \
-	"$(INTDIR)\results.obj" \
-	"$(INTDIR)\tests.obj"
-
-"$(OUTDIR)\client.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
 
 .c{$(CPP_OBJS)}.obj::
    $(CPP) @<<
@@ -196,6 +204,31 @@ LINK32_OBJS= \
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
+
+RSC=rc.exe
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\client.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+LINK32_FLAGS=TAO.lib aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)\client.pdb" /debug /machine:I386 /out:"$(OUTDIR)\client.exe"\
+ /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" 
+LINK32_OBJS= \
+	"$(INTDIR)\client.obj" \
+	"$(INTDIR)\driver.obj" \
+	"$(INTDIR)\helper.obj" \
+	"$(INTDIR)\options.obj" \
+	"$(INTDIR)\param_testC.obj" \
+	"$(INTDIR)\results.obj" \
+	"$(INTDIR)\tests.obj"
+
+"$(OUTDIR)\client.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 
 !IF "$(CFG)" == "client - Win32 Release" || "$(CFG)" == "client - Win32 Debug"
@@ -1102,9 +1135,6 @@ InputName=param_test
 !ENDIF 
 
 SOURCE=.\param_testC.cpp
-
-!IF  "$(CFG)" == "client - Win32 Release"
-
 DEP_CPP_PARAM=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
@@ -1319,14 +1349,6 @@ DEP_CPP_PARAM=\
 "$(INTDIR)\param_testC.obj" : $(SOURCE) $(DEP_CPP_PARAM) "$(INTDIR)"\
  ".\param_testC.h" ".\param_testC.i"
 
-
-!ELSEIF  "$(CFG)" == "client - Win32 Debug"
-
-
-"$(INTDIR)\param_testC.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ENDIF 
 
 SOURCE=.\results.cpp
 DEP_CPP_RESUL=\
