@@ -75,6 +75,7 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
                         RtecEventChannelAdmin::EventChannel_ptr ec
                         ACE_ENV_ARG_DECL)
 {
+  ACE_UNUSED_ARG(period);
   this->_consumer_id = consumer_id;
 
   //create consumer RT_Info

@@ -4,6 +4,7 @@
 #include "ECConfig.h"
 
 #include "ace/Arg_Shifter.h"
+#include "ace/OS_NS_strings.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 
 using namespace ConfigFactory;

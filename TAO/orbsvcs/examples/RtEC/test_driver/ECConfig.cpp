@@ -20,6 +20,12 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventCommC.h"
 
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "tao/ORB_Core.h"
+
 namespace TestConfig {
 
 template <class SCHED_STRAT>
@@ -31,6 +37,7 @@ ECConfig<SCHED_STRAT>::ECConfig (void)
   , importances(0)
   , crits(0)
   , test_done(new ACE_RW_Mutex())
+  , udp_mcast_address(ACE_DEFAULT_MULTICAST_ADDR ":10001")
   , configured (0) //false
 {
 }
@@ -178,6 +185,11 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
       this->connect_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
       this->suppliers.size(supp_size);
       this->connect_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      if (1) ///TODO Check whether or not FEDERATED; default to true
+        {
+          this->make_federated(ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
 
       ////////////////// Configured; compute schedule ///////////
       ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
@@ -340,6 +352,121 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
   this->event_channel =
     this->ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
+{
+  //This code taken from the $TAO_ROOT/orbsvcs/examples/RtEC/MCast example
+
+  // The next step is to setup the multicast gateways.
+  // There are two gateways involved, one sends the locally
+  // generated events to the federated peers, the second gateway
+  // receives multicast traffic and turns it into local events.
+
+  // The sender requires a helper object to select what
+  // multicast group will carry what traffic, this is the
+  // so-called 'Address Server'.
+  // The intention is that advanced applications can use different
+  // multicast groups for different events, this can exploit
+  // network interfaces that filter unwanted multicast traffic.
+  // The helper object is accessed through an IDL interface, so it
+  // can reside remotely.
+  // In this example, and in many application, using a fixed
+  // multicast group is enough, and a local address server is the
+  // right approach.
+
+  // First we convert the string into an INET address, then we
+  // convert that into the right IDL structure:
+  ACE_INET_Addr udp_addr (udp_mcast_address);
+  ACE_DEBUG ((LM_DEBUG,
+              "Multicast address is: %s\n",
+              udp_mcast_address));
+  RtecUDPAdmin::UDP_Addr addr;
+  addr.ipaddr = udp_addr.get_ip_address ();
+  addr.port   = udp_addr.get_port_number ();
+
+  // Now we create and activate the servant
+  this->as_impl.set_addr (addr);
+  this->address_server = as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // We need a local socket to send the data, open it and check
+  // that everything is OK:
+  if (this->endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Cannot open send endpoint\n"));
+    }
+
+  // Now we setup the sender:
+  this->sender = TAO_ECG_UDP_Sender::create();
+  this->sender->init (this->event_channel.in (),
+                      this->address_server.in (),
+                      &(this->endpoint)
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // Now we connect the sender as a consumer of events, it will
+  // receive any event from any source and send it to the "right"
+  // multicast group, as defined by the address server set above:
+  RtecEventChannelAdmin::ConsumerQOS sub;
+  sub.is_gateway = 1;
+
+  sub.dependencies.length (1);
+  sub.dependencies[0].event.header.type =
+    ACE_ES_EVENT_ANY;        // first free event type
+  sub.dependencies[0].event.header.source =
+    ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
+
+  sender->connect (sub ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // To receive events we need to setup an event handler:
+  this->receiver = TAO_ECG_UDP_Receiver::create();
+  TAO_ECG_Mcast_EH mcast_eh (&(*this->receiver));
+
+  // The event handler uses the ORB reactor to wait for multicast
+  // traffic:
+  mcast_eh.reactor (this->orb->orb_core ()->reactor ());
+
+  // The multicast Event Handler needs to know to what multicast
+  // groups it should listen to.  To do so it becomes an observer
+  // with the event channel, to determine the list of events
+  // required by all the local consumer.
+  // Then it register for the multicast groups that carry those
+  // events:
+  mcast_eh.open (this->event_channel.in ()
+                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // Again the receiver connects to the event channel as a
+  // supplier of events, using the Observer features to detect
+  // local consumers and their interests:
+  receiver->init (this->event_channel.in (),
+                  &endpoint,
+                  this->address_server.in ()
+                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // The Receiver is also a supplier of events.  The exact type of
+  // events is only known to the application, because it depends
+  // on the traffic carried by all the multicast groups that the
+  // different event handlers subscribe to.
+  // In this example we choose to simply describe our publications
+  // using wilcards, any event from any source.  More advanced
+  // application could use the Observer features in the event
+  // channel to update this information (and reduce the number of
+  // multicast groups that each receive subscribes to).
+  // In a future version the event channel could perform some of
+  // those tasks automatically
+  RtecEventChannelAdmin::SupplierQOS pub;
+  pub.publications.length (1);
+  pub.publications[0].event.header.type   = ACE_ES_EVENT_ANY;
+  pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
+  pub.is_gateway = 1;
+
+  this->receiver->connect (pub ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 }
 
 template <class SCHED_STRAT> void

@@ -5,6 +5,7 @@
 #include "TestConfig.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
 
 #include <stdlib.h> //for atol
 #include <sstream>  //for istringstream
