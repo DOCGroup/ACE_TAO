@@ -44,6 +44,14 @@
 // Used in OS.i to map an actor id into a KnCap.
 #define ACE_CHORUS_MAX_ACTORS 64
 
+#if !defined(CHORUS_4)
+# define ACE_LACKS_KEY_T
+#else
+# define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+# define ACE_NLOGGING	// Many ACE tests fail if logging is enabled
+			// I'm not quite sure why yet. elliott_c@ociweb.com
+#endif
+
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -70,7 +78,6 @@
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_GETSERVBYNAME
-#define ACE_LACKS_KEY_T
 #define ACE_LACKS_LONGLONG_T
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
