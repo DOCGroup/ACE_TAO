@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TypeCode/TypeCode.h"
+#include "tao/TypeCode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -95,7 +95,7 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/TypeCode/Empty_Param_TypeCode.inl"
+# include "tao/Empty_Param_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -11,7 +11,6 @@
 
 
 template <typename STRING_TYPE>
-char const *
 TAO::TypeCode::Value_Field<STRING_TYPE>::~Value_Field (void)
 {
   if (this->type)

@@ -322,19 +322,20 @@ TAO::TypeCode::Value<StringType,
                         CORBA::TypeCode::_nil ());
     }
 
-  tc = adapter->_tao_create_value_event_tc (Kind,
-                                            this->base_attributes_.id (),
-                                            ""  /* empty name */,
-                                            this->value_modifier_,
-                                            *this->concrete_base_,
-                                            tc_fields,
-                                            this->nfields_
-                                            ACE_ENV_ARG_PARAMETER);
+  CORBA::TypeCode_var tc =
+    adapter->_tao_create_value_event_tc (Kind,
+                                         this->base_attributes_.id (),
+                                         ""  /* empty name */,
+                                         this->value_modifier_,
+                                         *this->concrete_base_,
+                                         tc_fields,
+                                         this->nfields_
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   (void) safe_fields.release ();
 
-  return tc;
+  return tc._retn ();
 }
 
 template <typename StringType,
@@ -431,14 +432,14 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      Kind,
                      RefCountPolicy>::member_visibility_i (
-  ULong index
+  CORBA::ULong index
   ACE_ENV_ARG_DECL) const
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                       CORBA::TypeCode::_nil ());
 
-  return this->fields_[index].visibility));
+  return this->fields_[index].visibility;
 }
 
 template <typename StringType,
