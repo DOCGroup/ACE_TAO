@@ -104,8 +104,7 @@ Rotation is separate from addition to prevent recomputation.
 
 /* MD5 initialization. Begins an MD5 operation, writing a new context.
  */
-void MD5Init (context)
-MD5_CTX *context;                                        /* context */
+void MD5Init (MD5_CTX *context)
 {
   context->count[0] = context->count[1] = 0;
   /* Load magic initialization constants.
