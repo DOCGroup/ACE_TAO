@@ -59,7 +59,7 @@ static void set_label(Widget w, const char *p)
   XtVaSetValues (w,
                  XmNlabelString,
                  XmStringCreateLocalized( (char*) p),
-                 NULL);
+                 0);
 }
 #define LABEL_WIDGET xmLabelWidgetClass
 #define BUTTON_WIDGET xmPushButtonWidgetClass
@@ -83,14 +83,14 @@ static Widget create_box(Widget parent, const char *name)
 
 static void set_label(Widget w, const char *p)
 {
-    XtVaSetValues (w, XtNlabel, p, NULL);
+    XtVaSetValues (w, XtNlabel, p, 0);
 }
 #define LABEL_WIDGET labelWidgetClass
 #define BUTTON_WIDGET commandWidgetClass
 #define PRESS_ME_CALLBACK XtNcallback
 static Widget create_box(Widget parent, const char * name)
 {
-    return XtCreateWidget( (char*) name, boxWidgetClass, parent, NULL, 0);
+    return XtCreateWidget( (char*) name, boxWidgetClass, parent, 0, 0);
 }
 #endif /* ACE_HAS_MOTIF */
 
@@ -270,12 +270,12 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* HummingBird_X */
   topLevel = XtVaAppInitialize (&app_context,
                                 "XTReactor_Test",
-                                NULL,
+                                0,
                                 0,
                                 &argc,
                                 argv,
-                                NULL,
-                                NULL);
+                                0,
+                                0);
 
   digits_rc = create_box(topLevel, "digits_rc");
 
@@ -283,7 +283,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   goodbye = XtCreateWidget ( (char *) "goodbye",
                              BUTTON_WIDGET,
                              digits_rc,
-                             NULL,
+                             0,
                              0);
   set_label(goodbye, "Stop Test");
 
@@ -291,14 +291,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   PressMe = XtCreateWidget ((char *) "PressMe",
                             BUTTON_WIDGET,
                             digits_rc,
-                            NULL,
+                            0,
                             0);
 
   //Display for event counter
   lbl = XtCreateWidget ((char *) "label_for_event_one",
                         LABEL_WIDGET,
                         digits_rc,
-                        NULL,
+                        0,
                         0);
   set_label(lbl, "label_for_all_events");
   int ac = 0;
@@ -351,7 +351,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
-                                          NULL,
+                                          0,
                                           THR_NEW_LWP | THR_DETACHED);
 
   XtAppMainLoop (XtWidgetToApplicationContext (topLevel));
