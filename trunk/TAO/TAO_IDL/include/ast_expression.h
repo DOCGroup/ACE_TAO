@@ -149,24 +149,7 @@ public:
     ExprType et;
   };
 
-// Unfortunately, these are platform-dependent
-#if defined (_I64_MAX)
-# define LL_MAX _I64_MAX
-#elif defined LLONG_MAX
-# define LL_MAX LLONG_MAX
-#elif defined LONGLONG_MAX
-# define LL_MAX LONGLONG_MAX
-#endif
-
-#if defined (_UI64_MAX)
-# define ULL_MAX _UI64_MAX
-#elif defined (ULLONG_MAX)
-# define ULL_MAX ULLONG_MAX
-#elif defined (ULONGLONG_MAX)
-# define ULL_MAX ULONGLONG_MAX
-#endif
-
-  // Operations
+ // Operations
 
   // Constructor(s)
   AST_Expression(AST_Expression *v, ExprType t);
@@ -178,8 +161,6 @@ public:
   AST_Expression(long           l);
   AST_Expression(long           l, ExprType t);
   AST_Expression(unsigned long  ul);
-  AST_Expression(ACE_CDR::LongLong ll);
-  AST_Expression(ACE_CDR::ULongLong ull);
   AST_Expression(float          f);
   AST_Expression(double         d);
   AST_Expression(char           c);

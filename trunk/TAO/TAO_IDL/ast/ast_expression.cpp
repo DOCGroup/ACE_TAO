@@ -227,40 +227,6 @@ AST_Expression::AST_Expression(unsigned long ulv)
 }
 
 /*
- * An AST_Expression denoting an long long integer
- */
-AST_Expression::AST_Expression(ACE_CDR::LongLong llv)
-        : pd_ec(EC_none),
-    pd_ev(NULL),
-    pd_v1(NULL),
-    pd_v2(NULL),
-    pd_n(NULL)
-{
-  fill_definition_details();
-
-  pd_ev = new AST_ExprValue;
-  pd_ev->et = EV_longlong;
-  pd_ev->u.llval = llv;
-}
-
-/*
- * An AST_Expression denoting an unsigned long long integer
- */
-AST_Expression::AST_Expression(ACE_CDR::ULongLong ullv)
-        : pd_ec(EC_none),
-    pd_ev(NULL),
-    pd_v1(NULL),
-    pd_v2(NULL),
-    pd_n(NULL)
-{
-  fill_definition_details();
-
-  pd_ev = new AST_ExprValue;
-  pd_ev->et = EV_ulonglong;
-  pd_ev->u.ullval = ullv;
-}
-
-/*
  * An AST_Expression denoting a 32-bit floating point number
  */
 AST_Expression::AST_Expression(float fv)

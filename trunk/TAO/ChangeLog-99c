@@ -1,3 +1,13 @@
+Wed Apr  7 16:32:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/include/ast_expression.h:
+	  A quick fix for the DEC bug report by Rod Joseph &
+	  Barry Hoggard. More extensive changes are in
+	  progress. This fix just removes the declaration and
+	  definition of AST_Expression constructors taking
+	  ACE_CDR::LongLong and ACE_CDR::ULongLong args.
+
 Wed Apr  7 16:25:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp: Renamed references to
