@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef ECFL_PEER_H
-#define ECFL_PEER_H
+#ifndef ECFS_PEER_H
+#define ECFS_PEER_H
 
 #include "ControlS.h"
 
@@ -15,21 +15,21 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class ECFL_Peer
+ * @class ECFS_Peer
  *
  * @brief Implement the Control::Peer interface
  *
  */
-class ECFL_Peer
+class ECFS_Peer
  : public virtual POA_Control::Peer
  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
-  ECFL_Peer (CORBA::ORB_ptr orb);
+  ECFS_Peer (CORBA::ORB_ptr orb);
 
   /// Destructor
-  virtual ~ECFL_Peer (void);
+  virtual ~ECFS_Peer (void);
 
   /// Initialize the peer
   void init (PortableServer::POA_ptr poa,
@@ -50,7 +50,8 @@ public:
                                         CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Control::Samples* run_experiment (CORBA::Long experiment_id,
+  virtual Control::Samples* run_experiment (CORBA::Long consumer_count,
+                                            CORBA::Long experiment_id,
                                             CORBA::Long iterations,
                                             CORBA::Long_out gsf,
                                             CORBA::Environment &)
@@ -71,4 +72,4 @@ private:
   RtecEventChannelAdmin::EventChannel_var event_channel_;
 };
 
-#endif /* ECFL_PEER_H */
+#endif /* ECFS_PEER_H */
