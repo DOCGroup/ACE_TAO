@@ -297,6 +297,16 @@ ACE_Async_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
   return this->timer_queue_.cancel (timer_id, act);
 }
 
+template <class TQ> int
+ACE_Async_Timer_Queue_Adapter<TQ>::expire (void)
+{
+  // Block designated signals.
+  ACE_Sig_Guard sg (&this->mask_);
+  ACE_UNUSED_ARG (sg);
+
+  return this->timer_queue_.expire ();
+}
+
 template <class TQ> long 
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
 					     const void *act, 
@@ -340,7 +350,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *m
   // running, else just block those in the mask.
   : mask_ (mask)
 {
-  // The following code is necessary to selectively "block" all
+  // The following code is necessary to selectively "block" certain
   // signals when SIGALRM is running.  Also, we always restart system
   // calls that are interrupted by the signals.
 
