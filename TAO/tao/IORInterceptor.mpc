@@ -1,5 +1,5 @@
 //$Id$
-project(TAO_IORInterceptor): taolib, objreftemplate, core {
+project : taolib, objreftemplate, core {
   sharedname    = TAO_IORInterceptor
   dynamicflags  = TAO_IORINTERCEPTOR_BUILD_DLL
 

@@ -1,3 +1,31 @@
+Sun Aug  1 22:39:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/BiDir_GIOP.mpc:
+	* tao/Domain.mpc:
+	* tao/DynamicAny.mpc:
+	* tao/DynamicInterface.mpc:
+	* tao/IFR_Client.mpc:
+	* tao/IORInterceptor.mpc:
+	* tao/IORManipulation.mpc:
+	* tao/IORTable.mpc:
+	* tao/Messaging.mpc:
+	* tao/ObjRefTemplate.mpc:
+	* tao/PortableServer.mpc:
+	* tao/RTCORBA.mpc:
+	* tao/RTPortableServer.mpc:
+	* tao/RTScheduler.mpc:
+	* tao/SmartProxies.mpc:
+	* tao/Strategies.mpc:
+	* tao/TypeCodeFactory.mpc:
+	* tao/Utils.mpc:
+	* tao/Valuetype.mpc:
+	  Fix thinko.  When these files were moved from subdirectories, I
+	  first merged them into tao.mpc, which required explicit project
+	  names.  I didn't realize at that time that the precise name was
+	  significant.  This caused build failures due to bad dependencies.
+	  I've removed the explicit names since the projects have been
+	  split back into separate project files.
+
 Sun Aug  1 21:05:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/Makefile.am:
