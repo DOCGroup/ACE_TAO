@@ -821,24 +821,18 @@ nobase_include_HEADERS += \
   CosEvent/CEC_TypedProxyPushConsumer.h \
   CosEvent/CEC_TypedSupplierAdmin.h \
   CosEvent/CEC_ConsumerAdmin.i \
-  CosEvent/CEC_ConsumerControl.i \
   CosEvent/CEC_Default_Factory.i \
-  CosEvent/CEC_Dispatching.i \
   CosEvent/CEC_Dispatching_Task.i \
   CosEvent/CEC_DynamicImplementation.i \
   CosEvent/CEC_EventChannel.i \
-  CosEvent/CEC_Factory.i \
-  CosEvent/CEC_MT_Dispatching.i \
   CosEvent/CEC_ProxyPullConsumer.i \
   CosEvent/CEC_ProxyPullSupplier.i \
   CosEvent/CEC_ProxyPushConsumer.i \
   CosEvent/CEC_ProxyPushSupplier.i \
-  CosEvent/CEC_Pulling_Strategy.i \
   CosEvent/CEC_Reactive_ConsumerControl.i \
   CosEvent/CEC_Reactive_Pulling_Strategy.i \
   CosEvent/CEC_Reactive_SupplierControl.i \
   CosEvent/CEC_SupplierAdmin.i \
-  CosEvent/CEC_SupplierControl.i \
   CosEvent/CEC_TypedConsumerAdmin.i \
   CosEvent/CEC_TypedEvent.i \
   CosEvent/CEC_TypedEventChannel.i \

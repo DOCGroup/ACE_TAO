@@ -64,9 +64,5 @@ public:
 #endif /* 0 */
 };
 
-#if defined (__ACE_INLINE__)
-#include "CEC_Pulling_Strategy.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_PULLING_STRATEGY_H */

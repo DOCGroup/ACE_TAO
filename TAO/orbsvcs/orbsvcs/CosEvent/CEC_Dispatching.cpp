@@ -3,10 +3,6 @@
 #include "CEC_Dispatching.h"
 #include "CEC_ProxyPushSupplier.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "CEC_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(CosEvent, CEC_Dispatching, "$Id$")
 
 TAO_CEC_Dispatching::~TAO_CEC_Dispatching (void)
