@@ -39,7 +39,7 @@ class Cubit_Server
   //   init to initialize the cubit_server's state and then call run
   //   to run the orb.
 public:
-
+  // = Initialization and termination methods.
   Cubit_Server (void);
   // Default constructor
 

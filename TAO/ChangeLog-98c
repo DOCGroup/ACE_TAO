@@ -1,3 +1,14 @@
+Tue May 26 18:15:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i: Changed the implementation
+ 	  so there's now an init() method that must be called before using
+ 	  the NamingContext.  This is necessary to make sure we don't try
+ 	  to initialize the lock_ until the ORB has been initialized.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
+ 	  implementation to call init() on the NamingContext
+ 	  implementation.
+
 Tue May 26 16:24:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Server_Request.h: 

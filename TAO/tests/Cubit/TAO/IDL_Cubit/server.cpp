@@ -56,8 +56,8 @@ Cubit_Server::init (int argc,
                     char** argv,
                     CORBA::Environment& env)
 {
-  // Call the init of TAO_ORB_Manager to create a child POA
-  // under the root POA.
+  // Call the init of <TAO_ORB_Manager> to initialize the ORB and
+  // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa",
@@ -84,7 +84,9 @@ Cubit_Server::init (int argc,
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
 
@@ -154,10 +156,10 @@ main (int argc, char *argv[])
   Cubit_Server cubit_server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n \t IDL_Cubit:SERVER \n \n"));
+              "\n\tIDL_Cubit:SERVER\n\n"));
   TAO_TRY
     {
-      if (cubit_server.init (argc,argv,TAO_TRY_ENV) == -1)
+      if (cubit_server.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
       else
         {
