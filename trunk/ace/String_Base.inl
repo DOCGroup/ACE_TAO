@@ -168,6 +168,24 @@ ACE_String_Base<CHAR>::clear (int release)
   this->set(0, 0, release);
 }
 
+template <class CHAR> ACE_INLINE void
+ACE_String_Base<CHAR>::fast_clear (void)
+{
+  this->len_ = 0;
+  if (this->release_)
+    {
+      // String retains the original buffer.
+      if (this->rep_ != &ACE_String_Base<CHAR>::NULL_String_)
+        this->rep_[0] = 0;
+    }
+  else
+    {
+      // External buffer: string relinquishes control of it.
+      this->buf_len_ = 0;
+      this->rep_ = &ACE_String_Base<CHAR>::NULL_String_;
+    }
+}
+
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
 ACE_String_Base<CHAR>::substr (size_t offset,
                                ssize_t length) const

@@ -1,3 +1,15 @@
+Wed Jun 23 12:18:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/String_Base.{h inl}: Added new method, fast_clear(), which
+	  sets the string length to 0. Doesn't release string-allocated
+	  memory, but if the memory was externally supplied, it is no
+	  longer referenced from the string object. Thanks to
+	  Sergei Kuchin <skuchin@mqsoftware.com> for contributing this method.
+
+	* tests/SString_Test.cpp: Added smoke test for fast_clear().
+
+	* THANKS: Added Sergei Kuchin to the Hall of Fame.
+
 Wed Jun 23 14:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/footprint_stats.sh:
