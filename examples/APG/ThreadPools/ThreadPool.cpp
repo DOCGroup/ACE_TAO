@@ -102,7 +102,7 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = NULL;
+        ACE_Message_Block *mb = 0;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (0);
 
@@ -188,7 +188,7 @@ Manager::shut_down (void)
   ACE_TRACE (ACE_TEXT ("Manager::shut_down"));
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
     this->workers_.begin ();
-  Worker **worker_ptr = NULL;
+  Worker **worker_ptr = 0;
   do
     {
       iter.next (worker_ptr);

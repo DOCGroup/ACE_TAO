@@ -1,8 +1,23 @@
+Tue Feb 15 21:27:25 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+        * include/makeinclude/platform_lynxos.GNU:
+          Updated. Utilize new ACE_LYNXOS_* macros, removed some ancient
+          settings etc.
+        
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+          Replaced NULL with 0.
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          Utilize new ACE_LYNXOS_* macros to differentiate LynxOS
+          versions.
+        
 Tue Feb 15 10:23:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/Timer_Service.cpp (handle_close): 
-	  Make sure to cancel the timer when we're done.  Thanks to Scott
- 	  Z <sz@finsatconsulting.com> for reporting this.
+        * examples/Service_Configurator/Misc/Timer_Service.cpp (handle_close):
+          Make sure to cancel the timer when we're done.  Thanks to Scott
+          Z <sz@finsatconsulting.com> for reporting this.
 
 Tue Feb 15 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -17,96 +32,96 @@ Tue Feb 15 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb 14 20:19:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* protocols/ace/RMCast/Socket.h (Socket):
+        * protocols/ace/RMCast/Socket.h (Socket):
 
-	  Export this class in the shared library case.  Addresses
-	  link-time errors in MS Windows builds.
+          Export this class in the shared library case.  Addresses
+          link-time errors in MS Windows builds.
 
 Mon Feb 14 18:45:28 2005  Steve Huston  <shuston@riverace.com>
 
-	* protocols/ace/RMCast/Acknowledge.{h cpp}:
-	* protocols/ace/RMCast/Link.h:
-	* protocols/ace/RMCast/Protocol.{h cpp}:
-	* protocols/ace/RMCast/Retransmit.{h cpp}:
-	* protocols/ace/RMCast/Simulator.{h cpp}:
-	* protocols/ace/RMCast/Socket.{h cpp}:
-	* protocols/ace/RMCast/Stack.{h cpp}:
-	  Get RMCast's includes by #include "file.h", not
-	  #include <ace/RMCast/file.h>.
+        * protocols/ace/RMCast/Acknowledge.{h cpp}:
+        * protocols/ace/RMCast/Link.h:
+        * protocols/ace/RMCast/Protocol.{h cpp}:
+        * protocols/ace/RMCast/Retransmit.{h cpp}:
+        * protocols/ace/RMCast/Simulator.{h cpp}:
+        * protocols/ace/RMCast/Socket.{h cpp}:
+        * protocols/ace/RMCast/Stack.{h cpp}:
+          Get RMCast's includes by #include "file.h", not
+          #include <ace/RMCast/file.h>.
 
 Mon Feb 14 18:24:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_TLI.inl: Added "namespace ACE_OS" around all the methods,
-	  instead of prepending ACE_OS to the names. This continues some
-	  similar changes, such as to OS_NS_signal.inl.
+        * ace/OS_TLI.inl: Added "namespace ACE_OS" around all the methods,
+          instead of prepending ACE_OS to the names. This continues some
+          similar changes, such as to OS_NS_signal.inl.
 
-	* apps/JAWS3/jaws3/Asynch_IO.h:
-	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
-	* apps/JAWS3/jaws3/Concurrency_T.h:
-	* apps/JAWS3/jaws3/Event_Dispatcher.h:
-	* apps/JAWS3/jaws3/Options.h:
-	* apps/JAWS3/jaws3/Reactive_IO.h:
-	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
-	* apps/JAWS3/jaws3/Signal_Task.h:
-	* apps/JAWS3/jaws3/Synch_IO.h:
-	  Removed #include "ace/OS.h", replacing with other #includes
-	  as needed. If OS.h is included, some other OS_*.h files can get
-	  pulled in and sometimes ends up tentatively defining structs in
-	  ACE_OS's namespace. This can end up tripping HP-UX aCC. Not sure
-	  why it's only aCC and not other compilers as well, but there it is.
-	  Finally resolves some nagging compile errors on HP-UX.
+        * apps/JAWS3/jaws3/Asynch_IO.h:
+        * apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
+        * apps/JAWS3/jaws3/Concurrency_T.h:
+        * apps/JAWS3/jaws3/Event_Dispatcher.h:
+        * apps/JAWS3/jaws3/Options.h:
+        * apps/JAWS3/jaws3/Reactive_IO.h:
+        * apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
+        * apps/JAWS3/jaws3/Signal_Task.h:
+        * apps/JAWS3/jaws3/Synch_IO.h:
+          Removed #include "ace/OS.h", replacing with other #includes
+          as needed. If OS.h is included, some other OS_*.h files can get
+          pulled in and sometimes ends up tentatively defining structs in
+          ACE_OS's namespace. This can end up tripping HP-UX aCC. Not sure
+          why it's only aCC and not other compilers as well, but there it is.
+          Finally resolves some nagging compile errors on HP-UX.
 
-	* apps/JAWS3/jaws3/Concurrency.cpp:
-	* apps/JAWS3/jaws3/IO.cpp: Add missing OS_NS_* defines
-	  necessitated by no longer including OS.h.
+        * apps/JAWS3/jaws3/Concurrency.cpp:
+        * apps/JAWS3/jaws3/IO.cpp: Add missing OS_NS_* defines
+          necessitated by no longer including OS.h.
 
 Mon Feb 14 17:36:43 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/ace.mwc: Removed RMCast and TMCast, since they're now under
-	  protocols/ace.
+        * ace/ace.mwc: Removed RMCast and TMCast, since they're now under
+          protocols/ace.
 
-	* ace/Makefile.am:
-	* protocols/ace/Makefile.am: Moved RMCast and TMCast entries from
-	  the former to the latter.
+        * ace/Makefile.am:
+        * protocols/ace/Makefile.am: Moved RMCast and TMCast entries from
+          the former to the latter.
 
 Mon Feb 14 17:03:11 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/RMCast/Acknowledge.cpp:
-	* ace/RMCast/Acknowledge.h:
-	* ace/RMCast/Agent.tar.bz2:
-	* ace/RMCast/Bits.h:
-	* ace/RMCast/Link.cpp:
-	* ace/RMCast/Link.h:
-	* ace/RMCast/Protocol.cpp:
-	* ace/RMCast/Protocol.h:
-	* ace/RMCast/RMCast.mpc:
-	* ace/RMCast/Retransmit.cpp:
-	* ace/RMCast/Retransmit.h:
-	* ace/RMCast/Simulator.cpp:
-	* ace/RMCast/Simulator.h:
-	* ace/RMCast/Socket.cpp:
-	* ace/RMCast/Socket.h:
-	* ace/RMCast/Stack.cpp:
-	* ace/RMCast/Stack.h:
-	  Moved from ace/RMCast to protocols/ace/RMCast.
+        * ace/RMCast/Acknowledge.cpp:
+        * ace/RMCast/Acknowledge.h:
+        * ace/RMCast/Agent.tar.bz2:
+        * ace/RMCast/Bits.h:
+        * ace/RMCast/Link.cpp:
+        * ace/RMCast/Link.h:
+        * ace/RMCast/Protocol.cpp:
+        * ace/RMCast/Protocol.h:
+        * ace/RMCast/RMCast.mpc:
+        * ace/RMCast/Retransmit.cpp:
+        * ace/RMCast/Retransmit.h:
+        * ace/RMCast/Simulator.cpp:
+        * ace/RMCast/Simulator.h:
+        * ace/RMCast/Socket.cpp:
+        * ace/RMCast/Socket.h:
+        * ace/RMCast/Stack.cpp:
+        * ace/RMCast/Stack.h:
+          Moved from ace/RMCast to protocols/ace/RMCast.
 
-	* ace/TMCast/ACE_TMCast.pc.in:
-	* ace/TMCast/Export.hpp:
-	* ace/TMCast/FaultDetector.hpp:
-	* ace/TMCast/Group.cpp:
-	* ace/TMCast/Group.hpp:
-	* ace/TMCast/GroupFwd.hpp:
-	* ace/TMCast/LinkListener.hpp:
-	* ace/TMCast/MTQueue.cpp:
-	* ace/TMCast/MTQueue.hpp:
-	* ace/TMCast/Makefile.am:
-	* ace/TMCast/Messaging.hpp:
-	* ace/TMCast/Protocol.cpp:
-	* ace/TMCast/Protocol.hpp:
-	* ace/TMCast/README:
-	* ace/TMCast/TMCast.mpc:
-	* ace/TMCast/TransactionController.hpp:
-	  Moved from ace/TMCast to protocols/ace/TMCast.
+        * ace/TMCast/ACE_TMCast.pc.in:
+        * ace/TMCast/Export.hpp:
+        * ace/TMCast/FaultDetector.hpp:
+        * ace/TMCast/Group.cpp:
+        * ace/TMCast/Group.hpp:
+        * ace/TMCast/GroupFwd.hpp:
+        * ace/TMCast/LinkListener.hpp:
+        * ace/TMCast/MTQueue.cpp:
+        * ace/TMCast/MTQueue.hpp:
+        * ace/TMCast/Makefile.am:
+        * ace/TMCast/Messaging.hpp:
+        * ace/TMCast/Protocol.cpp:
+        * ace/TMCast/Protocol.hpp:
+        * ace/TMCast/README:
+        * ace/TMCast/TMCast.mpc:
+        * ace/TMCast/TransactionController.hpp:
+          Moved from ace/TMCast to protocols/ace/TMCast.
 
 Mon Feb 14 21:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -126,30 +141,30 @@ Mon Feb 14 23:08:52 2005  Olli Savia  <ops@iki.fi>
 
 Mon Feb 14 12:17:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Link.cpp:
+        * ace/RMCast/Link.cpp:
 
-	  Include "ace/OS_NS_sys_socket.h" to pull in ACE_OS::connect()
-	  prototype.
+          Include "ace/OS_NS_sys_socket.h" to pull in ACE_OS::connect()
+          prototype.
 
-	* ace/RMCast/Protocol.h:
+        * ace/RMCast/Protocol.h:
 
-	  Include "ace/OS_NS_string.h" to pull in ACE_OS::memcpy()
-	  prototype.
+          Include "ace/OS_NS_string.h" to pull in ACE_OS::memcpy()
+          prototype.
 
 Mon Feb 14 11:59:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RMCast/Protocol.h (id):
-	* ace/RMCast/Protocol.cpp (id):
+        * ace/RMCast/Protocol.h (id):
+        * ace/RMCast/Protocol.cpp (id):
 
-	  Moved static constant initialization out of class declaration.
-	  MSVC++ 6 cannot handle in-class static constant initialization.
-	  Thanks to Chad Elliot for pointing the problem.
+          Moved static constant initialization out of class declaration.
+          MSVC++ 6 cannot handle in-class static constant initialization.
+          Thanks to Chad Elliot for pointing the problem.
 
-	* ace/RMCast/Link.cpp (recv):
+        * ace/RMCast/Link.cpp (recv):
 
-	  Changed the "switch" expression to an "if/else" expression since
-	  the actual values of the cases are no longer available to the
-	  compiler when compiling this file.
+          Changed the "switch" expression to an "if/else" expression since
+          the actual values of the cases are no longer available to the
+          compiler when compiling this file.
 
 Mon Feb 14 20:37:56 2005  Olli Savia  <ops@iki.fi>
 
