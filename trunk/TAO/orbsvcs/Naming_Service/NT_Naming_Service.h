@@ -54,9 +54,14 @@ public:
   // Initialize the objects argc_ and argv_ attributes values.
 
 private:
-  // Keep track of the "command-line" arguments.
+  // = Keep track of the "command-line" arguments.
   int argc_;
+  int argc_save_;
+  // Argument count.
+
   char **argv_;
+  char **argv_save_; 
+  // Argument list.
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
 };
