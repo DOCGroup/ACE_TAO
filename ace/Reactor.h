@@ -173,6 +173,10 @@ public:
    * itself. Deactivating the Reactor would allow the Reactor to be
    * shutdown gracefully. Internally the Reactor calls deactivate ()
    * on the underlying implementation.
+   * Any queued notifications remain queued on return from this method.
+   * If the event loop is restarted in the future, the notifications
+   * will be dispatched then. If the reactor is closed or deleted without
+   * further dispatching, the notifications will be lost.
    */
   virtual int end_reactor_event_loop (void);
 
@@ -192,6 +196,10 @@ public:
                int delete_implementation = 0);
 
   /// Close down and release all resources.
+  /**
+   * Any notifications that remain queued on this reactor instance are
+   * lost.
+   */
   virtual ~ACE_Reactor (void);
 
   /**
