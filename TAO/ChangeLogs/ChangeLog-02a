@@ -1,3 +1,29 @@
+Mon Sep 18 18:58:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sht.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Removed generation of ACE_NESTED_CLASS in skeleton interceptor
+	  request info class constructor declarations, definitions, and
+	  private member declarations. The macro is intended to be used
+	  only when a type is used in the same scope in which it is
+	  declared. This is never the case with the skeleton version of
+	  portable interceptors, since the operation parameters are
+	  declared in the stub header files. Since the same visitor is
+	  reused to generate code on both TAO_CLientRequest_Info_* and
+	  TAO_ServerRequest_Info_* classes, a new substate value had to
+	  be added to TAO_CodeGen so the two cases could be distinguished.
+	  Thanks to Aniruddha Gokhale <gokhale@research.bell-labs.com>
+	  for pointing out the problem.
+
+	  Also modified source code and generated code to better conform
+	  to the ACE style guidelines.
+
 Mon Sep 18 15:09:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IIOP_Profile.cpp (parse_string): 
