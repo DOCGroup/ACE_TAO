@@ -2777,6 +2777,60 @@ SOURCE=.\Profile_Timer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\QoS_Session_Factory.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Impl.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Debug"
@@ -5472,6 +5526,18 @@ SOURCE=.\Profile_Timer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\QoS_Session.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RB_Tree.h
 # End Source File
 # Begin Source File
@@ -6273,6 +6339,10 @@ SOURCE=.\Process_Manager.i
 # Begin Source File
 
 SOURCE=.\Profile_Timer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Impl.i
 # End Source File
 # Begin Source File
 
