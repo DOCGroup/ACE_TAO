@@ -1,3 +1,9 @@
+Tue Dec 24 17:29:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* docs/ACE-subsets.html: Documented the compiler options that
+	  Steve Vranyes experimented and tested with to get a good
+	  footprint reduction on Solaris.  
+
 Tue Dec 24 07:31:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Argv_Type_Converter.h:
