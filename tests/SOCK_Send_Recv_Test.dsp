@@ -64,12 +64,12 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir "./ETS_DLL/Debug"
+# PROP Intermediate_Dir ".\ETS_LIB\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"./SOCK_Send_Recv_Test.exe" /pdbtype:sept /libpath:"..\ace"
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"./SOCK_Send_Recv_Test_ETS.exe" /pdbtype:sept /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
+# ADD LINK32 acesd.lib /nologo /subsystem:console /debug /machine:I386 /out:"./SOCK_Send_Recv_Test_ETS.exe" /pdbtype:sept /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
