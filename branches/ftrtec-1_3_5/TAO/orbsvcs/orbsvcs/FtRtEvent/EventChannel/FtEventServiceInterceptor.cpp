@@ -205,9 +205,6 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
-TAO_FTRTEC::TimeLogger time_logger;
-char msg_buf[512];
-
 void
 FtEventServiceInterceptor::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr ri
@@ -215,8 +212,6 @@ FtEventServiceInterceptor::receive_request_service_contexts (
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
-  time_logger.start();
-
   ACE_TRY_EX(block1) {
     FT::FTRequestServiceContext ft_request_service_context;
     IOP::ServiceContext_var service_context;
@@ -225,11 +220,6 @@ FtEventServiceInterceptor::receive_request_service_contexts (
       ft_request_service_context
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(block1);
-
-    ACE_OS::snprintf(msg_buf, 512, " Client_Id = %s, retension_id = %d " 
-                   , ft_request_service_context.client_id.in()
-                   , ft_request_service_context.retention_id);
-    time_logger.set_message(msg_buf);
 
     bool is_new_request = request_table_.is_new_request(
       ft_request_service_context.client_id.in(),
@@ -316,8 +306,6 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
     ft_request_service_context.retention_id,
     *(ri->result()) );
 
-  time_logger.stop();
-  time_logger.output();
 }
 
 void
