@@ -321,7 +321,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
     cur_size_ (0),
     allocator_ (alloc)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -340,7 +340,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
     cur_size_ (0),
     allocator_ (us.allocator_)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -355,7 +355,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
 template <class T> void
 ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
 
   if (this != &us)
     {
@@ -369,7 +369,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
 template <class T> void
 ACE_Unbounded_Queue<T>::dump (void) const
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
@@ -423,7 +423,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
 template <class T>
 ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
 
   this->delete_nodes ();
   ACE_DES_FREE_TEMPLATE (this->head_, this->allocator_->free,
@@ -434,7 +434,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 template <class T> int
 ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
 
   ACE_Node<T> *temp;
 
@@ -453,7 +453,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 template <class T> int
 ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
   ACE_Node<T> *temp;
 
@@ -478,7 +478,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 template <class T> int
 ACE_Unbounded_Queue<T>::dequeue_head (T &item)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::dequeue_head");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::dequeue_head");
 
   // Check for empty queue.
   if (this->is_empty ())
@@ -505,7 +505,7 @@ ACE_Unbounded_Queue<T>::reset (void)
 template <class T> int
 ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::get");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::get");
 
   ACE_Node<T> *curr = this->head_->next_;
 
@@ -532,7 +532,7 @@ template <class T> int
 ACE_Unbounded_Queue<T>::set (const T &item, 
 			     size_t index)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
+//   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
 
   ACE_Node<T> *curr = this->head_->next_;
 
