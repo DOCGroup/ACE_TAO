@@ -1,3 +1,9 @@
+Fri Aug 21 22:26:54 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (ACE_OS::gettimeofday): On Win32, instead of _ftime,
+	  use GetSystemTimeAsFileTime.  _ftime has a bug crossing from
+	  daylight time to standard time in the US.
+
 Fri Aug 21 22:13:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (thr_cancel, thr_setcanceltype): added #else
