@@ -25,7 +25,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo.h"
+#include "tao/ClientRequestInfo_i.h"
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -266,7 +266,7 @@ CORBA_IRObject_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get (
@@ -304,7 +304,7 @@ TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get::TAO_ClientRequestInfo_CORBA_I
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -355,7 +355,7 @@ TAO_ClientRequestInfo_CORBA_IRObject_def_kind_get::result (CORBA::DefinitionKind
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_IRObject_destroy : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_IRObject_destroy : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_IRObject_destroy (
@@ -391,7 +391,7 @@ TAO_ClientRequestInfo_CORBA_IRObject_destroy::TAO_ClientRequestInfo_CORBA_IRObje
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -1212,7 +1212,7 @@ CORBA_Contained_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_CORBA_Contained_id_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_id_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_id_get (
@@ -1250,7 +1250,7 @@ TAO_ClientRequestInfo_CORBA_Contained_id_get::TAO_ClientRequestInfo_CORBA_Contai
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -1301,7 +1301,7 @@ TAO_ClientRequestInfo_CORBA_Contained_id_get::result (char * result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_id_set : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_id_set : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_id_set (
@@ -1340,7 +1340,7 @@ TAO_ClientRequestInfo_CORBA_Contained_id_set::TAO_ClientRequestInfo_CORBA_Contai
     const char * id
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id)
 {}
 
@@ -1391,7 +1391,7 @@ TAO_ClientRequestInfo_CORBA_Contained_id_set::result (TAO_ENV_SINGLE_ARG_DECL)
   return result_any;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_name_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_name_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_name_get (
@@ -1429,7 +1429,7 @@ TAO_ClientRequestInfo_CORBA_Contained_name_get::TAO_ClientRequestInfo_CORBA_Cont
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -1480,7 +1480,7 @@ TAO_ClientRequestInfo_CORBA_Contained_name_get::result (char * result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_name_set : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_name_set : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_name_set (
@@ -1519,7 +1519,7 @@ TAO_ClientRequestInfo_CORBA_Contained_name_set::TAO_ClientRequestInfo_CORBA_Cont
     const char * name
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     name_ (name)
 {}
 
@@ -1570,7 +1570,7 @@ TAO_ClientRequestInfo_CORBA_Contained_name_set::result (TAO_ENV_SINGLE_ARG_DECL)
   return result_any;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_version_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_version_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_version_get (
@@ -1608,7 +1608,7 @@ TAO_ClientRequestInfo_CORBA_Contained_version_get::TAO_ClientRequestInfo_CORBA_C
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -1659,7 +1659,7 @@ TAO_ClientRequestInfo_CORBA_Contained_version_get::result (char * result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_version_set : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_version_set : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_version_set (
@@ -1698,7 +1698,7 @@ TAO_ClientRequestInfo_CORBA_Contained_version_set::TAO_ClientRequestInfo_CORBA_C
     const char * version
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     version_ (version)
 {}
 
@@ -1749,7 +1749,7 @@ TAO_ClientRequestInfo_CORBA_Contained_version_set::result (TAO_ENV_SINGLE_ARG_DE
   return result_any;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_defined_in_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_defined_in_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_defined_in_get (
@@ -1787,7 +1787,7 @@ TAO_ClientRequestInfo_CORBA_Contained_defined_in_get::TAO_ClientRequestInfo_CORB
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -1838,7 +1838,7 @@ TAO_ClientRequestInfo_CORBA_Contained_defined_in_get::result (CORBA_Container_pt
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_absolute_name_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_absolute_name_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_absolute_name_get (
@@ -1876,7 +1876,7 @@ TAO_ClientRequestInfo_CORBA_Contained_absolute_name_get::TAO_ClientRequestInfo_C
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -1927,7 +1927,7 @@ TAO_ClientRequestInfo_CORBA_Contained_absolute_name_get::result (char * result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_containing_repository_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_containing_repository_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_containing_repository_get (
@@ -1965,7 +1965,7 @@ TAO_ClientRequestInfo_CORBA_Contained_containing_repository_get::TAO_ClientReque
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -2016,7 +2016,7 @@ TAO_ClientRequestInfo_CORBA_Contained_containing_repository_get::result (CORBA_R
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_describe : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_describe : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_describe (
@@ -2054,7 +2054,7 @@ TAO_ClientRequestInfo_CORBA_Contained_describe::TAO_ClientRequestInfo_CORBA_Cont
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -2105,7 +2105,7 @@ TAO_ClientRequestInfo_CORBA_Contained_describe::result (CORBA_Contained::Descrip
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Contained_move : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Contained_move : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Contained_move (
@@ -2150,7 +2150,7 @@ TAO_ClientRequestInfo_CORBA_Contained_move::TAO_ClientRequestInfo_CORBA_Containe
     const char * new_version
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     new_container_ (new_container),
     new_name_ (new_name),
     new_version_ (new_version)
@@ -5908,7 +5908,7 @@ CORBA_Container_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_CORBA_Container_lookup : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_lookup : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_lookup (
@@ -5949,7 +5949,7 @@ TAO_ClientRequestInfo_CORBA_Container_lookup::TAO_ClientRequestInfo_CORBA_Contai
     const char * search_name
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     search_name_ (search_name)
 {}
 
@@ -6010,7 +6010,7 @@ TAO_ClientRequestInfo_CORBA_Container_lookup::result (CORBA_Contained_ptr result
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_contents : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_contents : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_contents (
@@ -6054,7 +6054,7 @@ TAO_ClientRequestInfo_CORBA_Container_contents::TAO_ClientRequestInfo_CORBA_Cont
     const CORBA::Boolean & exclude_inherited
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     limit_type_ (limit_type),
     exclude_inherited_ (exclude_inherited)
 {}
@@ -6119,7 +6119,7 @@ TAO_ClientRequestInfo_CORBA_Container_contents::result (CORBA_ContainedSeq * res
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_lookup_name : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_lookup_name : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_lookup_name (
@@ -6169,7 +6169,7 @@ TAO_ClientRequestInfo_CORBA_Container_lookup_name::TAO_ClientRequestInfo_CORBA_C
     const CORBA::Boolean & exclude_inherited
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     search_name_ (search_name),
     levels_to_search_ (levels_to_search),
     limit_type_ (limit_type),
@@ -6242,7 +6242,7 @@ TAO_ClientRequestInfo_CORBA_Container_lookup_name::result (CORBA_ContainedSeq * 
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_describe_contents : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_describe_contents : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_describe_contents (
@@ -6289,7 +6289,7 @@ TAO_ClientRequestInfo_CORBA_Container_describe_contents::TAO_ClientRequestInfo_C
     const CORBA::Long & max_returned_objs
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     limit_type_ (limit_type),
     exclude_inherited_ (exclude_inherited),
     max_returned_objs_ (max_returned_objs)
@@ -6358,7 +6358,7 @@ TAO_ClientRequestInfo_CORBA_Container_describe_contents::result (CORBA_Container
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_module : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_module : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_module (
@@ -6405,7 +6405,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_module::TAO_ClientRequestInfo_CORBA
     const char * version
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version)
@@ -6474,7 +6474,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_module::result (CORBA_ModuleDef_ptr
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_constant : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_constant : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_constant (
@@ -6527,7 +6527,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_constant::TAO_ClientRequestInfo_COR
     const CORBA::Any & value
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -6604,7 +6604,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_constant::result (CORBA_ConstantDef
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_struct : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_struct : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_struct (
@@ -6654,7 +6654,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_struct::TAO_ClientRequestInfo_CORBA
     const CORBA_StructMemberSeq & members
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -6727,7 +6727,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_struct::result (CORBA_StructDef_ptr
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_union : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_union : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_union (
@@ -6780,7 +6780,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_union::TAO_ClientRequestInfo_CORBA_
     const CORBA_UnionMemberSeq & members
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -6857,7 +6857,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_union::result (CORBA_UnionDef_ptr r
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_enum : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_enum : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_enum (
@@ -6907,7 +6907,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_enum::TAO_ClientRequestInfo_CORBA_C
     const CORBA_EnumMemberSeq & members
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -6980,7 +6980,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_enum::result (CORBA_EnumDef_ptr res
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_alias : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_alias : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_alias (
@@ -7030,7 +7030,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_alias::TAO_ClientRequestInfo_CORBA_
     CORBA_IDLType_ptr original_type
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -7103,7 +7103,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_alias::result (CORBA_AliasDef_ptr r
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_interface : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_interface : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_interface (
@@ -7153,7 +7153,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_interface::TAO_ClientRequestInfo_CO
     const CORBA_InterfaceDefSeq & base_interfaces
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -7226,7 +7226,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_interface::result (CORBA_InterfaceD
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_value : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_value : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_value (
@@ -7294,7 +7294,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_value::TAO_ClientRequestInfo_CORBA_
     const CORBA_InitializerSeq & initializers
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -7391,7 +7391,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_value::result (CORBA_ValueDef_ptr r
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_value_box : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_value_box : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_value_box (
@@ -7441,7 +7441,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_value_box::TAO_ClientRequestInfo_CO
     CORBA_IDLType_ptr original_type_def
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -7514,7 +7514,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_value_box::result (CORBA_ValueBoxDe
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_exception : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_exception : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_exception (
@@ -7564,7 +7564,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_exception::TAO_ClientRequestInfo_CO
     const CORBA_StructMemberSeq & members
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -7637,7 +7637,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_exception::result (CORBA_ExceptionD
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_native : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_native : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_native (
@@ -7684,7 +7684,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_native::TAO_ClientRequestInfo_CORBA
     const char * version
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version)
@@ -7753,7 +7753,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_native::result (CORBA_NativeDef_ptr
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_abstract_interface : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_abstract_interface : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_abstract_interface (
@@ -7803,7 +7803,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_abstract_interface::TAO_ClientReque
     const CORBA_AbstractInterfaceDefSeq & base_interfaces
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -7876,7 +7876,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_abstract_interface::result (CORBA_A
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_CORBA_Container_create_local_interface : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_Container_create_local_interface : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_Container_create_local_interface (
@@ -7926,7 +7926,7 @@ TAO_ClientRequestInfo_CORBA_Container_create_local_interface::TAO_ClientRequestI
     const CORBA_InterfaceDefSeq & base_interfaces
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -12591,7 +12591,7 @@ CORBA_IDLType_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_CORBA_IDLType_type_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_IDLType_type_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_IDLType_type_get (
@@ -12629,7 +12629,7 @@ TAO_ClientRequestInfo_CORBA_IDLType_type_get::TAO_ClientRequestInfo_CORBA_IDLTyp
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
