@@ -19,7 +19,7 @@ TAO_FTEC_ProxyPushSupplier::TAO_FTEC_ProxyPushSupplier(TAO_EC_Event_Channel_Base
 {
 }
 
-const PortableServer::ObjectId&
+const FtRtecEventChannelAdmin::ObjectId&
 TAO_FTEC_ProxyPushSupplier::id() const
 {
   return object_id_.in();
