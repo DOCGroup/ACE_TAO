@@ -65,7 +65,11 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
+#if defined (ACE_HAS_64BIT_LONGS)
+  int count = long (c);
+#else /* ! ACE_HAS_64BIT_LONGS */
   int count = int (c);
+#endif /* ! ACE_HAS_64BIT_LONGS */
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
