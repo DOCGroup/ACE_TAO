@@ -223,9 +223,9 @@ ImplRepo_i::register_server (const char *server,
                               "Environment: %s\n"
                               "Working Directory: %s\n\n",
                               server,
-                              options.command_line_,
-                              options.environment_,
-                              options.working_directory_));
+                              options.command_line_.in (),
+                              options.environment_.in (),
+                              options.working_directory_.in ()));
 
   Repository_Record rec (options.command_line_,
                          options.environment_,
