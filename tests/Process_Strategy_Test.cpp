@@ -420,7 +420,7 @@ Counting_Service::handle_input (ACE_HANDLE)
 
   bytes = this->peer ().recv (buf, len);
 
-  if (bytes <= 0 || (int) buf[0] == EOF)
+  if (bytes <= 0 || buf[0] == (char) EOF)
     return -1;
   else
     {
