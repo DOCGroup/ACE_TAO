@@ -1,3 +1,20 @@
+Sun Aug  1 15:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Wait_Strategy.h:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Valuetype/AbstractBase.h:
+          Doxygen improvement
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+          Removed not needed forward declarations
+
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+          Fixed vc71 conversion warnings
+
 Sun Aug  1 08:16:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/FtRtEvent.mpc:
@@ -22,7 +39,7 @@ Sun Aug  1 08:16:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 Sun Aug  1 09:10:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-04a:
-	  
+
 	  Moved the contents to the new directory.
 
 Sat Jul 31 11:14:00 2004  Ossama  <ossama@dre.vanderbilt.edu>
@@ -32,4 +49,4 @@ Sat Jul 31 11:14:00 2004  Ossama  <ossama@dre.vanderbilt.edu>
 Local Variables:
 add-log-time-format: current-time-string
 End:
-	
+
