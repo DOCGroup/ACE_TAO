@@ -26,11 +26,6 @@ Fri Jun 26 10:51:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           tokenizing ::~CLASS as ":: ~CLASS" and we wanted ":: ~ CLASS"
           (were class in a macro argument).
 
-Fri Jun 26 09:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
-
-        * tests/{tests.dsw, Makefile}: Added the Upgradable RW lock test
-          to the workspace.
-
 Fri Jun 26 09:48:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * VERSION: Updated this file to direct bug reports to
