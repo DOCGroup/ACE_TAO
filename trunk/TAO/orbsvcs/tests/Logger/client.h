@@ -4,10 +4,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/bin/Logger
+//    TAO/orbsvcs/tests/Logger
 //
 // = FILENAME
-//    clnt.h
+//    client.h
 //
 // = DESCRIPTION
 //    This program tests an implementation of a logger service.  It uses the
@@ -20,23 +20,23 @@
 //
 // ============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/LoggerC.h"
 
 class Logger_Client 
+{
   // = TITLE
-  //    Defines a class that encapsulates behaviour of the Logger client
-  //    example.  Provides a better understanding of the logic in an 
-  //    object oriented way.
+  //    Defines a class that encapsulates behaviour of the Logger
+  //    client example.  Provides a better understanding of the logic
+  //    in an object oriented way.
   //
   // = DESCRIPTION
   //    This class declares an interface to run the example client for
-  //    Logger CORBA server.  All the complexity for initializing the 
-  //    server is hidden in the class.  Just the run() interface is needed.
-{
+  //    Logger CORBA server.  All the complexity for initializing the
+  //    server is hidden in the class.  Just the run() interface is
+  //    needed.
 public:
   // = Constructor and destructor.
   Logger_Client (void);

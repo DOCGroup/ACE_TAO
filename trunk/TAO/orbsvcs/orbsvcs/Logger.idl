@@ -9,7 +9,6 @@ interface Logger
   //   @@ This interface is very simple-minded and can certainly be
   //   improved, e.g., by passing over more interesting logging
   //   records similar to what we do in <ACE_Log_Msg>.
-
   
   enum Log_Priority
   {
@@ -55,7 +54,6 @@ interface Logger
     // being a distinct tag, but that is invalid IDL syntax. Make sure to
     // adjust for this
   };
-
   
   struct Log_Record
   {
@@ -63,6 +61,7 @@ interface Logger
     long           time;      // Timestamp of the sender
     long           app_id;    // Process id of the sender
     long           host_addr; // IP address of the sender
+    // @@ Matt, let's make this the same size as the max ACE_Log_Record string. 
     string         msg_data;  // The logging message
   };
 
@@ -71,7 +70,6 @@ interface Logger
 
   //  attribute char verbose;
 };
-
 
 interface Logger_Factory
 {

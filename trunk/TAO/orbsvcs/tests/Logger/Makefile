@@ -15,12 +15,12 @@ endif # ! TAO_ROOT
 
 LDLIBS     =  -lorbsvcs -lTAO
 
-SRC = svr.cpp clnt.cpp
+SRC = server.cpp client.cpp
 
-logger_SVR_OBJS = svr.o
-logger_CLT_OBJS = clnt.o
+logger_SERVER_OBJS = server.o
+logger_CLIENT_OBJS = client.o
 
-BIN = svr clnt
+BIN = server client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -40,10 +40,10 @@ TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-svr:	$(addprefix $(VDIR),$(logger_SVR_OBJS))
+server:	$(addprefix $(VDIR),$(logger_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clnt:	$(addprefix $(VDIR),$(logger_CLT_OBJS))
+client:	$(addprefix $(VDIR),$(logger_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
@@ -51,7 +51,6 @@ realclean: clean
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
 
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1,3 +1,9 @@
+Fri Jun 26 21:24:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger: Rename clnt.{cpp,h} and svc.cpp to
+ 	  client.{cpp,h} and server.cpp to be more consistent with other
+ 	  naming schemes in TAO.
+
 Fri Jun 26 16:57:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/encode.cpp: 
