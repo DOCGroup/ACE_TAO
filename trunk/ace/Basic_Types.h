@@ -420,6 +420,24 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   endif /* LDBL_MAX_EXP */
 # endif /* ACE_SIZEOF_LONG_DOUBLE */
 
+// Max and min sizes for the ACE integer types.
+#define ACE_CHAR_MAX 0x7F
+#define ACE_CHAR_MIN -(ACE_CHAR_MAX)-1
+#define ACE_OCTET_MAX 0xFF
+#define ACE_INT16_MAX 0x7FFF
+#define ACE_INT16_MIN -(ACE_INT16_MAX)-1
+#define ACE_UINT16_MAX 0xFFFF
+#define ACE_WCHAR_MAX ACE_UINT16_MAX
+#define ACE_INT32_MAX 0x7FFFFFFF
+#define ACE_INT32_MIN -(ACE_INT32_MAX)-1
+#define ACE_UINT32_MAX 0xFFFFFFFF
+#define ACE_INT64_MAX ACE_UINT64_LITERAL(0x7FFFFFFFFFFFFFFF)
+#define ACE_INT64_MIN -(ACE_INT64_MAX)-1
+#define ACE_UINT64_MAX ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF)
+// These use ANSI/IEEE format.
+#define ACE_FLT_MAX 3.402823466e+38F
+#define ACE_DBL_MAX 1.7976931348623158e+308
+
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)
 #   if (BYTE_ORDER == LITTLE_ENDIAN)
