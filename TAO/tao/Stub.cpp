@@ -101,6 +101,29 @@ TAO_Stub::TAO_Stub (char *repository_id,
   this->base_profiles (profiles);
 }
 
+TAO_Stub::~TAO_Stub (void)
+{
+  assert (this->refcount_ == 0);
+
+  if (forward_profiles_)
+    reset_profiles ();
+
+  if (this->profile_in_use_ != 0)
+    {
+      this->profile_in_use_->reset_hint ();
+      // decrease reference count on profile
+      this->profile_in_use_->_decr_refcnt ();
+      this->profile_in_use_ = 0;
+    }
+
+  if (this->profile_lock_ptr_)
+    delete this->profile_lock_ptr_;
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  delete this->policies_;
+#endif /* TAO_HAS_CORBA_MESSAGING */
+}
+
 void
 TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
 {
@@ -820,6 +843,9 @@ TAO_Stub::get_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+
   if (this->policies_ == 0)
     return CORBA::Policy::_nil ();
 
@@ -831,6 +857,9 @@ TAO_Stub::get_client_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
@@ -847,6 +876,9 @@ TAO_Stub::get_client_policy (
 
   if (CORBA::is_nil (result.in ()))
     {
+      // @@ Must lock, but is is harder to implement than just modifying
+      //    this call: the ORB does take a lock to modify the policy
+      //    manager
       TAO_Policy_Manager *policy_manager =
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
@@ -960,7 +992,9 @@ TAO_Stub::set_policy_overrides (
      }
   else
     {
-      *policy_manager = *this->policies_;
+      policy_manager->copy_from (this->policies_,
+                                 ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       policy_manager->set_policy_overrides (policies,
                                             set_add,
                                             ACE_TRY_ENV);

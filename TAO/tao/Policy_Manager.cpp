@@ -14,6 +14,99 @@
 
 ACE_RCSID(tao, Policy_Manager, "$Id$")
 
+TAO_Policy_Manager_Impl::~TAO_Policy_Manager_Impl (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->cleanup_i (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions...
+    }
+  ACE_ENDTRY;
+}
+
+void
+TAO_Policy_Manager_Impl::copy_from (TAO_Policy_Manager_Impl* source,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (source == 0)
+    return;
+
+  this->cleanup_i (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (source->relative_roundtrip_timeout_ != 0)
+    {
+      CORBA::Policy_var copy =
+        source->relative_roundtrip_timeout_->copy (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      TAO_ServantBase* servant = copy->_servant ();
+      if (servant == 0)
+        ACE_THROW (CORBA::INTERNAL ());
+
+      POA_Messaging::RelativeRoundtripTimeoutPolicy *tmp =
+        ACE_static_cast(POA_Messaging::RelativeRoundtripTimeoutPolicy*,
+                        servant->_downcast ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0"));
+      if (tmp == 0)
+        ACE_THROW (CORBA::INTERNAL ());
+
+      this->relative_roundtrip_timeout_ = tmp;
+      this->relative_roundtrip_timeout_->_add_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+      this->count_++;
+    }
+
+  for (CORBA::ULong i = 0; i < source->other_policies_.length ();  ++i)
+    {
+      CORBA::Policy_ptr policy = source->other_policies_[i];
+      if (CORBA::is_nil (policy))
+        continue;
+
+      CORBA::Policy_var copy = policy->copy (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      CORBA::ULong length = this->other_policies_.length ();
+      this->other_policies_.length (length + 1);
+      this->other_policies_[length] = copy._retn ();
+      this->count_++;
+    }
+}
+
+void
+TAO_Policy_Manager_Impl::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  for (CORBA::ULong i = 0; i < this->other_policies_.length (); ++i)
+    {
+      this->other_policies_[i]->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
+      this->other_policies_[i] = CORBA::Policy::_nil ();
+    }
+  this->other_policies_.length (0);
+  if (this->relative_roundtrip_timeout_ != 0)
+    {
+      this->relative_roundtrip_timeout_->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
+      this->relative_roundtrip_timeout_->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+      this->relative_roundtrip_timeout_ = 0;
+    }
+  if (this->client_priority_ != 0)
+    {
+      this->client_priority_->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
+      this->client_priority_->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->client_priority_ = 0;
+    }
+  this->count_ = 0;
+}
+
   // @@ !!! Add comments regarding Policy lifetimes, etc.
 void
 TAO_Policy_Manager_Impl::set_policy_overrides (
@@ -28,33 +121,8 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
-      for (CORBA::ULong i = 0; i < this->other_policies_.length (); ++i)
-        {
-          this->other_policies_[i]->destroy (ACE_TRY_ENV);
-          ACE_CHECK;
-          this->other_policies_[i] = CORBA::Policy::_nil ();
-        }
-      this->other_policies_.length (0);
-      if (this->relative_roundtrip_timeout_ != 0)
-        {
-          this->relative_roundtrip_timeout_->destroy (ACE_TRY_ENV);
-          ACE_CHECK;
-          this->relative_roundtrip_timeout_->_remove_ref
-            (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          this->relative_roundtrip_timeout_ = 0;
-        }
-      if (this->client_priority_ != 0)
-        {
-          this->client_priority_->destroy (ACE_TRY_ENV);
-          ACE_CHECK;
-          this->client_priority_->_remove_ref (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          this->client_priority_ = 0;
-        }
-      this->count_ = 0;
+      this->cleanup_i (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
@@ -171,6 +239,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
                 this->other_policies_.length (length + 1);
                 this->other_policies_[j] = copy._retn ();
               }
+            this->count_++;
           }
           break;
         }
