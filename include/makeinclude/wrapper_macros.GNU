@@ -20,6 +20,9 @@
 #  ----             -----------
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
+#  include_env      Enable usage of CORBA::Environment parameters that is
+#                     compatible with TAO versions before 1.2.2.  Default:
+#                     disabled.  Has no effect when building with exceptions=0
 #  minimum_corba    Enable minimumCORBA support.  (Documented here, but
 #                     implemented in TAO/rules.TAO.GNU.)
 #  fast             Enable -fast option, e.g., with Sun C++.
@@ -471,6 +474,9 @@ ifneq ($(ssl),)
 endif # ssl
 
 ifeq ($(exceptions),0)
+  ifeq ($(include_env),1)
+    CPPFLAGS += -DACE_ENV_BKWD_COMPAT
+  endif
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
     ifneq ($(ACE_GNUG_ON_UNIXWARE),)
