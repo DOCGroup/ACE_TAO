@@ -64,7 +64,7 @@ for $test (@configurations)
 {
     if (PerlACE::waitforfile_timed ($test->{file}, 5) == -1)
     {
-        print STDERR "ERROR: cannot find ior file: $file\n";
+        print STDERR "ERROR: cannot find ior file: $test->{file}\n";
         $status = 1;
         goto kill_server;
     }
