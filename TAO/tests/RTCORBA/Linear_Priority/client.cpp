@@ -71,6 +71,8 @@ public:
 
   int svc (void);
 
+  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+
 private:
   test_var test_;
   RTCORBA::Current_var current_;
@@ -86,6 +88,44 @@ Worker_Thread::Worker_Thread (test_ptr test,
 {
 }
 
+void
+Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+{
+  // Try to validate the connection several times, ignoring transient
+  // exceptions.  If the connection can still not be setup, return
+  // failure.
+  CORBA::PolicyList_var inconsistent_policies;
+  int max_attempts = 10;
+  int current_attempt = 0;
+  for (;;)
+    {
+      ACE_TRY
+        {
+          ++current_attempt;
+          this->test_->_validate_connection (inconsistent_policies.out ()
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // If successful, we are done.
+          return;
+        }
+      ACE_CATCH (CORBA::TRANSIENT, exception)
+        {
+          // If we have reach our maximum number of tries, throw exception.
+          if (current_attempt == max_attempts)
+            ACE_RE_THROW;
+          // Otherwise, ignore...
+        }
+      ACE_CATCHANY
+        {
+          // Rethrow any other exceptions.
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+}
+
 int
 Worker_Thread::svc (void)
 {
@@ -93,6 +133,9 @@ Worker_Thread::svc (void)
     {
       this->current_->the_priority (this->priority_
                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->validate_connection (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i < iterations; i++)
