@@ -65,7 +65,7 @@ public:
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS
                                      )
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA_InvalidPolicies));
+                     CORBA::InvalidPolicies));
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
@@ -139,7 +139,7 @@ public:
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA_InvalidPolicies));
+                     CORBA::InvalidPolicies));
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
@@ -157,4 +157,3 @@ public:
 
 #include "ace/post.h"
 #endif /* TAO_POLICY_MANAGER_H */
-

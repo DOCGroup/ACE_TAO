@@ -66,6 +66,18 @@ CORBA_UnknownUserException::_raise (void)
   TAO_RAISE (*this);
 }
 
+CORBA::Exception *
+CORBA_UnknownUserException::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      CORBA_UnknownUserException (*this),
+      0
+    );
+  return result;
+}
+
 void
 CORBA_UnknownUserException::_tao_encode (
     TAO_OutputCDR &
@@ -87,4 +99,3 @@ CORBA_UnknownUserException::_type (void) const
 {
   return CORBA::_tc_UnknownUserException;
 }
-

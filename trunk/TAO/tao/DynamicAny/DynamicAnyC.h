@@ -60,48 +60,51 @@
 
 TAO_NAMESPACE  DynamicAny
 {
-
+  
 #if !defined (_DYNAMICANY_DYNANY___PTR_CH_)
 #define _DYNAMICANY_DYNANY___PTR_CH_
-
+  
   class DynAny;
   typedef DynAny *DynAny_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANY___VAR_CH_)
 #define _DYNAMICANY_DYNANY___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynAny_var : public TAO_Base_var
   {
   public:
     DynAny_var (void); // default constructor
-    DynAny_var (DynAny_ptr p) : ptr_ (p) {}
+    DynAny_var (DynAny_ptr p) : ptr_ (p) {} 
     DynAny_var (const DynAny_var &); // copy constructor
     ~DynAny_var (void); // destructor
-
+    
     DynAny_var &operator= (DynAny_ptr);
     DynAny_var &operator= (const DynAny_var &);
     DynAny_ptr operator-> (void) const;
-
+    
     operator const DynAny_ptr &() const;
     operator DynAny_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynAny_ptr in (void) const;
     DynAny_ptr &inout (void);
     DynAny_ptr &out (void);
     DynAny_ptr _retn (void);
     DynAny_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynAny_ptr tao_duplicate (DynAny_ptr);
     static void tao_release (DynAny_ptr);
     static DynAny_ptr tao_nil (void);
-    static DynAny_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynAny_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynAny_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -111,11 +114,11 @@ TAO_NAMESPACE  DynamicAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANY___OUT_CH_)
 #define _DYNAMICANY_DYNANY___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynAny_out
   {
   public:
@@ -128,19 +131,20 @@ TAO_NAMESPACE  DynamicAny
     operator DynAny_ptr &();
     DynAny_ptr &ptr (void);
     DynAny_ptr operator-> (void);
-
+  
   private:
     DynAny_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANY_CH_)
 #define _DYNAMICANY_DYNANY_CH_
-
-class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
+  
+  class TAO_DynamicAny_Export DynAny
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -148,82 +152,81 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
     typedef DynAny_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynAny_ptr _duplicate (DynAny_ptr obj);
+    
     static DynAny_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynAny_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynAny_ptr _nil (void)
       {
         return (DynAny_ptr)0;
       }
-
-
+    
+    
 #if !defined (_DYNAMICANY_DYNANY_INVALIDVALUE_CH_)
 #define _DYNAMICANY_DYNANY_INVALIDVALUE_CH_
-
+    
     class TAO_DynamicAny_Export InvalidValue : public CORBA::UserException
     {
     public:
-
+      
       InvalidValue (void);
-      // Default constructor.
-
       InvalidValue (const InvalidValue &);
-      // Copy constructor.
-
       ~InvalidValue (void);
-      // Destructor.
 
       InvalidValue &operator= (const InvalidValue &);
 
+      static InvalidValue *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         );
-
-      static InvalidValue *_downcast (CORBA::Exception *);
-
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception DynamicAny::DynAny::InvalidValue.
+      
+      
+    };
 
 
 #endif /* end #if !defined */
-
-
+    
+    
 #if !defined (_DYNAMICANY_DYNANY_TYPEMISMATCH_CH_)
 #define _DYNAMICANY_DYNANY_TYPEMISMATCH_CH_
-
+    
     class TAO_DynamicAny_Export TypeMismatch : public CORBA::UserException
     {
     public:
-
+      
       TypeMismatch (void);
-      // Default constructor.
-
       TypeMismatch (const TypeMismatch &);
-      // Copy constructor.
-
       ~TypeMismatch (void);
-      // Destructor.
 
       TypeMismatch &operator= (const TypeMismatch &);
+
+      static TypeMismatch *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -231,552 +234,580 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         );
-
-      static TypeMismatch *_downcast (CORBA::Exception *);
-
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception DynamicAny::DynAny::TypeMismatch.
+      
+      
+    };
 
 
 #endif /* end #if !defined */
-
+    
     virtual CORBA::TypeCode_ptr type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void assign (
         DynamicAny::DynAny_ptr dyn_any
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
       )) = 0;
-
+    
     virtual void from_any (
         const CORBA::Any & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Any * to_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual CORBA::Boolean equal (
         DynamicAny::DynAny_ptr dyn_any
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    virtual DynamicAny::DynAny_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAny_ptr copy (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void insert_boolean (
         CORBA::Boolean value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_octet (
         CORBA::Octet value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_char (
         CORBA::Char value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_short (
         CORBA::Short value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_ushort (
         CORBA::UShort value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_long (
         CORBA::Long value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_ulong (
         CORBA::ULong value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_float (
         CORBA::Float value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_double (
         CORBA::Double value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_string (
         const char * value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_reference (
         CORBA::Object_ptr value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_typecode (
         CORBA::TypeCode_ptr value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_longlong (
         CORBA::LongLong value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_ulonglong (
         CORBA::ULongLong value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_longdouble (
         CORBA::LongDouble value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_wchar (
         CORBA::WChar value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_wstring (
         const CORBA::WChar * value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_any (
         const CORBA::Any & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_dyn_any (
         DynamicAny::DynAny_ptr value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void insert_val (
         CORBA::ValueBase_ptr value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Boolean get_boolean (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Octet get_octet (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Char get_char (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Short get_short (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::UShort get_ushort (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Long get_long (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::ULong get_ulong (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Float get_float (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Double get_double (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual char * get_string (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Object_ptr get_reference (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::TypeCode_ptr get_typecode (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::LongLong get_longlong (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::ULongLong get_ulonglong (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::LongDouble get_longdouble (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::WChar get_wchar (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::WChar * get_wstring (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Any * get_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::DynAny_ptr get_dyn_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAny_ptr get_dyn_any (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::ValueBase_ptr get_val (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::Boolean seek (
         CORBA::Long index
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void rewind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual CORBA::Boolean next (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual CORBA::ULong component_count (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    virtual DynamicAny::DynAny_ptr current_component (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAny_ptr current_component (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynAny ();
-
+    DynAny (void);
+    
     virtual ~DynAny (void);
+  
   private:
     DynAny (const DynAny &);
     void operator= (const DynAny &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNFIXED___PTR_CH_)
 #define _DYNAMICANY_DYNFIXED___PTR_CH_
-
+  
   class DynFixed;
   typedef DynFixed *DynFixed_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNFIXED___VAR_CH_)
 #define _DYNAMICANY_DYNFIXED___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynFixed_var : public TAO_Base_var
   {
   public:
     DynFixed_var (void); // default constructor
-    DynFixed_var (DynFixed_ptr p) : ptr_ (p) {}
+    DynFixed_var (DynFixed_ptr p) : ptr_ (p) {} 
     DynFixed_var (const DynFixed_var &); // copy constructor
     ~DynFixed_var (void); // destructor
-
+    
     DynFixed_var &operator= (DynFixed_ptr);
     DynFixed_var &operator= (const DynFixed_var &);
     DynFixed_ptr operator-> (void) const;
-
+    
     operator const DynFixed_ptr &() const;
     operator DynFixed_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynFixed_ptr in (void) const;
     DynFixed_ptr &inout (void);
     DynFixed_ptr &out (void);
     DynFixed_ptr _retn (void);
     DynFixed_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynFixed_ptr tao_duplicate (DynFixed_ptr);
     static void tao_release (DynFixed_ptr);
     static DynFixed_ptr tao_nil (void);
-    static DynFixed_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynFixed_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynFixed_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -786,11 +817,11 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNFIXED___OUT_CH_)
 #define _DYNAMICANY_DYNFIXED___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynFixed_out
   {
   public:
@@ -803,19 +834,20 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
     operator DynFixed_ptr &();
     DynFixed_ptr &ptr (void);
     DynFixed_ptr operator-> (void);
-
+  
   private:
     DynFixed_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNFIXED_CH_)
 #define _DYNAMICANY_DYNFIXED_CH_
-
-class TAO_DynamicAny_Export DynFixed: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynFixed
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -823,98 +855,106 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
     typedef DynFixed_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynFixed_ptr _duplicate (DynFixed_ptr obj);
+    
     static DynFixed_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynFixed_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynFixed_ptr _nil (void)
       {
         return (DynFixed_ptr)0;
       }
-
+    
     virtual char * get_value (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual CORBA::Boolean set_value (
         const char * val
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynFixed ();
-
+    DynFixed (void);
+    
     virtual ~DynFixed (void);
+  
   private:
     DynFixed (const DynFixed &);
     void operator= (const DynFixed &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNENUM___PTR_CH_)
 #define _DYNAMICANY_DYNENUM___PTR_CH_
-
+  
   class DynEnum;
   typedef DynEnum *DynEnum_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNENUM___VAR_CH_)
 #define _DYNAMICANY_DYNENUM___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynEnum_var : public TAO_Base_var
   {
   public:
     DynEnum_var (void); // default constructor
-    DynEnum_var (DynEnum_ptr p) : ptr_ (p) {}
+    DynEnum_var (DynEnum_ptr p) : ptr_ (p) {} 
     DynEnum_var (const DynEnum_var &); // copy constructor
     ~DynEnum_var (void); // destructor
-
+    
     DynEnum_var &operator= (DynEnum_ptr);
     DynEnum_var &operator= (const DynEnum_var &);
     DynEnum_ptr operator-> (void) const;
-
+    
     operator const DynEnum_ptr &() const;
     operator DynEnum_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynEnum_ptr in (void) const;
     DynEnum_ptr &inout (void);
     DynEnum_ptr &out (void);
     DynEnum_ptr _retn (void);
     DynEnum_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynEnum_ptr tao_duplicate (DynEnum_ptr);
     static void tao_release (DynEnum_ptr);
     static DynEnum_ptr tao_nil (void);
-    static DynEnum_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynEnum_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynEnum_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -924,11 +964,11 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNENUM___OUT_CH_)
 #define _DYNAMICANY_DYNENUM___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynEnum_out
   {
   public:
@@ -941,19 +981,20 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
     operator DynEnum_ptr &();
     DynEnum_ptr &ptr (void);
     DynEnum_ptr operator-> (void);
-
+  
   private:
     DynEnum_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNENUM_CH_)
 #define _DYNAMICANY_DYNENUM_CH_
-
-class TAO_DynamicAny_Export DynEnum: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynEnum
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -961,121 +1002,129 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     typedef DynEnum_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynEnum_ptr _duplicate (DynEnum_ptr obj);
+    
     static DynEnum_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynEnum_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynEnum_ptr _nil (void)
       {
         return (DynEnum_ptr)0;
       }
-
+    
     virtual char * get_as_string (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_as_string (
         const char * value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::ULong get_as_ulong (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_as_ulong (
         CORBA::ULong value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynEnum ();
-
+    DynEnum (void);
+    
     virtual ~DynEnum (void);
+  
   private:
     DynEnum (const DynEnum &);
     void operator= (const DynEnum &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
+  
   typedef char * FieldName;
   typedef CORBA::String_var FieldName_var;
   typedef CORBA::String_out FieldName_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FieldName;
-
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FieldName;
+  
   struct NameValuePair;
   class NameValuePair_var;
-
+  
   struct TAO_DynamicAny_Export NameValuePair
   {
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameValuePair_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static void _tao_any_destructor (void*);
-
+    
     TAO_String_Manager id;
     CORBA::Any value;
+    
   };
-
+  
   class TAO_DynamicAny_Export NameValuePair_var
   {
   public:
-    NameValuePair_var (void); // default constructor
+    NameValuePair_var (void);
     NameValuePair_var (NameValuePair *);
-    NameValuePair_var (const NameValuePair_var &); // copy constructor
-    ~NameValuePair_var (void); // destructor
-
+    NameValuePair_var (const NameValuePair_var &);
+    ~NameValuePair_var (void);
+    
     NameValuePair_var &operator= (NameValuePair *);
     NameValuePair_var &operator= (const NameValuePair_var &);
     NameValuePair *operator-> (void);
     const NameValuePair *operator-> (void) const;
-
+    
     operator const NameValuePair &() const;
     operator NameValuePair &();
     operator NameValuePair &() const;
-    operator NameValuePair *&(); // variable-size types only
-
-    // in, inout, out, _retn
+    // Variable-size types only.
+    operator NameValuePair *&();
+    
+    // in, inout, out, _retn 
     const NameValuePair &in (void) const;
     NameValuePair &inout (void);
     NameValuePair *&out (void);
     NameValuePair *_retn (void);
     NameValuePair *ptr (void) const;
-
+  
   private:
     NameValuePair *ptr_;
   };
-
+  
   class TAO_DynamicAny_Export NameValuePair_out
   {
   public:
@@ -1087,143 +1136,154 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     operator NameValuePair *&();
     NameValuePair *&ptr (void);
     NameValuePair *operator-> (void);
-
+    
   private:
     NameValuePair *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const NameValuePair_var &);
   };
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePair;
-
-
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NameValuePair;
+  
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CH_
-
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void); // Default constructor.
-      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum,
+  
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void);
+    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         NameValuePair *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs);
-      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &operator= (const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs);
-      virtual ~_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void); // Dtor.
-      // = Accessors.
-      NameValuePair &operator[] (CORBA::ULong i);
-      const NameValuePair &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static NameValuePair *allocbuf (CORBA::ULong size);
-      static void freebuf (NameValuePair *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-      NameValuePair *get_buffer (CORBA::Boolean orphan = 0);
-      const NameValuePair *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (
+        const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs
+      );
+    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &operator= (
+        const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void);
+    
+    // = Accessors.
+    NameValuePair &operator[] (CORBA::ULong i);
+    const NameValuePair &operator[] (CORBA::ULong i) const;
+    
+    // = Static operations.
+    static NameValuePair *allocbuf (CORBA::ULong size);
+    static void freebuf (NameValuePair *buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    NameValuePair *get_buffer (CORBA::Boolean orphan = 0);
+    const NameValuePair *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         NameValuePair *data,
-        CORBA::Boolean release);
-    };
-
+        CORBA::Boolean release
+      );
+  };
+  
 #endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+  
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CH_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ_CH_
-
+  
   class NameValuePairSeq;
   class NameValuePairSeq_var;
-
+  
   // *************************************************************
   // NameValuePairSeq
   // *************************************************************
-
-  class TAO_DynamicAny_Export NameValuePairSeq : public
+  
+  class TAO_DynamicAny_Export NameValuePairSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
+  _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<NameValuePair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<NameValuePair>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     NameValuePairSeq (void); // default ctor
     NameValuePairSeq (CORBA::ULong max); // uses max size
     NameValuePairSeq (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      NameValuePair *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        NameValuePair *buffer, 
+        CORBA::Boolean release = 0
+      );
     NameValuePairSeq (const NameValuePairSeq &); // copy ctor
     ~NameValuePairSeq (void);
     static void _tao_any_destructor (void*);
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameValuePairSeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-
+    
+    
   };
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ___VAR_CH_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ___VAR_CH_
-
+  
   // *************************************************************
   // class DynamicAny::NameValuePairSeq_var
   // *************************************************************
-
+  
   class TAO_DynamicAny_Export NameValuePairSeq_var
   {
   public:
-    NameValuePairSeq_var (void); // default constructor
+    NameValuePairSeq_var (void);
     NameValuePairSeq_var (NameValuePairSeq *);
-    NameValuePairSeq_var (const NameValuePairSeq_var &); // copy constructor
-    ~NameValuePairSeq_var (void); // destructor
-
+    NameValuePairSeq_var (const NameValuePairSeq_var &);
+    ~NameValuePairSeq_var (void);
+    
     NameValuePairSeq_var &operator= (NameValuePairSeq *);
     NameValuePairSeq_var &operator= (const NameValuePairSeq_var &);
     NameValuePairSeq *operator-> (void);
     const NameValuePairSeq *operator-> (void) const;
-
+    
     operator const NameValuePairSeq &() const;
     operator NameValuePairSeq &();
     operator NameValuePairSeq &() const;
     operator NameValuePairSeq *&(); // variable-size base types only
-
+    
     NameValuePair & operator[] (CORBA::ULong index);
     const NameValuePair & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const NameValuePairSeq &in (void) const;
     NameValuePairSeq &inout (void);
     NameValuePairSeq *&out (void);
     NameValuePairSeq *_retn (void);
     NameValuePairSeq *ptr (void) const;
-
+  
   private:
     NameValuePairSeq *ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ___OUT_CH_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ___OUT_CH_
-
+  
   class TAO_DynamicAny_Export NameValuePairSeq_out
   {
   public:
@@ -1236,61 +1296,63 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     NameValuePairSeq *&ptr (void);
     NameValuePairSeq *operator-> (void);
     NameValuePair & operator[] (CORBA::ULong index);
-
+  
   private:
     NameValuePairSeq *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const NameValuePairSeq_var &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePairSeq;
-
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NameValuePairSeq;
+  
   struct NameDynAnyPair;
   class NameDynAnyPair_var;
-
+  
   struct TAO_DynamicAny_Export NameDynAnyPair
   {
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameDynAnyPair_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-        TAO_String_Manager id;
+    TAO_String_Manager id;
     ACE_NESTED_CLASS (DynamicAny, DynAny_var) value;
+    
   };
-
+  
   class TAO_DynamicAny_Export NameDynAnyPair_var
   {
   public:
-    NameDynAnyPair_var (void); // default constructor
+    NameDynAnyPair_var (void);
     NameDynAnyPair_var (NameDynAnyPair *);
-    NameDynAnyPair_var (const NameDynAnyPair_var &); // copy constructor
-    ~NameDynAnyPair_var (void); // destructor
-
+    NameDynAnyPair_var (const NameDynAnyPair_var &);
+    ~NameDynAnyPair_var (void);
+    
     NameDynAnyPair_var &operator= (NameDynAnyPair *);
     NameDynAnyPair_var &operator= (const NameDynAnyPair_var &);
     NameDynAnyPair *operator-> (void);
     const NameDynAnyPair *operator-> (void) const;
-
+    
     operator const NameDynAnyPair &() const;
     operator NameDynAnyPair &();
     operator NameDynAnyPair &() const;
-    operator NameDynAnyPair *&(); // variable-size types only
-
-    // in, inout, out, _retn
+    // Variable-size types only.
+    operator NameDynAnyPair *&();
+    
+    // in, inout, out, _retn 
     const NameDynAnyPair &in (void) const;
     NameDynAnyPair &inout (void);
     NameDynAnyPair *&out (void);
     NameDynAnyPair *_retn (void);
     NameDynAnyPair *ptr (void) const;
-
+  
   private:
     NameDynAnyPair *ptr_;
   };
-
+  
   class TAO_DynamicAny_Export NameDynAnyPair_out
   {
   public:
@@ -1302,141 +1364,152 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     operator NameDynAnyPair *&();
     NameDynAnyPair *&ptr (void);
     NameDynAnyPair *operator-> (void);
-
+    
   private:
     NameDynAnyPair *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const NameDynAnyPair_var &);
   };
-
-
+  
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_
-
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void); // Default constructor.
-      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum,
+  
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void);
+    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         NameDynAnyPair *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs);
-      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &operator= (const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs);
-      virtual ~_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void); // Dtor.
-      // = Accessors.
-      NameDynAnyPair &operator[] (CORBA::ULong i);
-      const NameDynAnyPair &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static NameDynAnyPair *allocbuf (CORBA::ULong size);
-      static void freebuf (NameDynAnyPair *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-      NameDynAnyPair *get_buffer (CORBA::Boolean orphan = 0);
-      const NameDynAnyPair *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (
+        const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs
+      );
+    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &operator= (
+        const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void);
+    
+    // = Accessors.
+    NameDynAnyPair &operator[] (CORBA::ULong i);
+    const NameDynAnyPair &operator[] (CORBA::ULong i) const;
+    
+    // = Static operations.
+    static NameDynAnyPair *allocbuf (CORBA::ULong size);
+    static void freebuf (NameDynAnyPair *buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    NameDynAnyPair *get_buffer (CORBA::Boolean orphan = 0);
+    const NameDynAnyPair *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         NameDynAnyPair *data,
-        CORBA::Boolean release);
-    };
-
+        CORBA::Boolean release
+      );
+  };
+  
 #endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+  
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_
-
+  
   class NameDynAnyPairSeq;
   class NameDynAnyPairSeq_var;
-
+  
   // *************************************************************
   // NameDynAnyPairSeq
   // *************************************************************
-
-  class TAO_DynamicAny_Export NameDynAnyPairSeq : public
+  
+  class TAO_DynamicAny_Export NameDynAnyPairSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
+  _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<NameDynAnyPair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<NameDynAnyPair>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     NameDynAnyPairSeq (void); // default ctor
     NameDynAnyPairSeq (CORBA::ULong max); // uses max size
     NameDynAnyPairSeq (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      NameDynAnyPair *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        NameDynAnyPair *buffer, 
+        CORBA::Boolean release = 0
+      );
     NameDynAnyPairSeq (const NameDynAnyPairSeq &); // copy ctor
     ~NameDynAnyPairSeq (void);
     static void _tao_any_destructor (void*);
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameDynAnyPairSeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-
+    
+    
   };
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ___VAR_CH_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ___VAR_CH_
-
+  
   // *************************************************************
   // class DynamicAny::NameDynAnyPairSeq_var
   // *************************************************************
-
+  
   class TAO_DynamicAny_Export NameDynAnyPairSeq_var
   {
   public:
-    NameDynAnyPairSeq_var (void); // default constructor
+    NameDynAnyPairSeq_var (void);
     NameDynAnyPairSeq_var (NameDynAnyPairSeq *);
-    NameDynAnyPairSeq_var (const NameDynAnyPairSeq_var &); // copy constructor
-    ~NameDynAnyPairSeq_var (void); // destructor
-
+    NameDynAnyPairSeq_var (const NameDynAnyPairSeq_var &);
+    ~NameDynAnyPairSeq_var (void);
+    
     NameDynAnyPairSeq_var &operator= (NameDynAnyPairSeq *);
     NameDynAnyPairSeq_var &operator= (const NameDynAnyPairSeq_var &);
     NameDynAnyPairSeq *operator-> (void);
     const NameDynAnyPairSeq *operator-> (void) const;
-
+    
     operator const NameDynAnyPairSeq &() const;
     operator NameDynAnyPairSeq &();
     operator NameDynAnyPairSeq &() const;
     operator NameDynAnyPairSeq *&(); // variable-size base types only
-
+    
     NameDynAnyPair & operator[] (CORBA::ULong index);
     const NameDynAnyPair & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const NameDynAnyPairSeq &in (void) const;
     NameDynAnyPairSeq &inout (void);
     NameDynAnyPairSeq *&out (void);
     NameDynAnyPairSeq *_retn (void);
     NameDynAnyPairSeq *ptr (void) const;
-
+  
   private:
     NameDynAnyPairSeq *ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ___OUT_CH_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ___OUT_CH_
-
+  
   class TAO_DynamicAny_Export NameDynAnyPairSeq_out
   {
   public:
@@ -1449,58 +1522,61 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     NameDynAnyPairSeq *&ptr (void);
     NameDynAnyPairSeq *operator-> (void);
     NameDynAnyPair & operator[] (CORBA::ULong index);
-
+  
   private:
     NameDynAnyPairSeq *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const NameDynAnyPairSeq_var &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSTRUCT___PTR_CH_)
 #define _DYNAMICANY_DYNSTRUCT___PTR_CH_
-
+  
   class DynStruct;
   typedef DynStruct *DynStruct_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSTRUCT___VAR_CH_)
 #define _DYNAMICANY_DYNSTRUCT___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynStruct_var : public TAO_Base_var
   {
   public:
     DynStruct_var (void); // default constructor
-    DynStruct_var (DynStruct_ptr p) : ptr_ (p) {}
+    DynStruct_var (DynStruct_ptr p) : ptr_ (p) {} 
     DynStruct_var (const DynStruct_var &); // copy constructor
     ~DynStruct_var (void); // destructor
-
+    
     DynStruct_var &operator= (DynStruct_ptr);
     DynStruct_var &operator= (const DynStruct_var &);
     DynStruct_ptr operator-> (void) const;
-
+    
     operator const DynStruct_ptr &() const;
     operator DynStruct_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynStruct_ptr in (void) const;
     DynStruct_ptr &inout (void);
     DynStruct_ptr &out (void);
     DynStruct_ptr _retn (void);
     DynStruct_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynStruct_ptr tao_duplicate (DynStruct_ptr);
     static void tao_release (DynStruct_ptr);
     static DynStruct_ptr tao_nil (void);
-    static DynStruct_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynStruct_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynStruct_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1510,11 +1586,11 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSTRUCT___OUT_CH_)
 #define _DYNAMICANY_DYNSTRUCT___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynStruct_out
   {
   public:
@@ -1527,19 +1603,20 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     operator DynStruct_ptr &();
     DynStruct_ptr &ptr (void);
     DynStruct_ptr operator-> (void);
-
+  
   private:
     DynStruct_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSTRUCT_CH_)
 #define _DYNAMICANY_DYNSTRUCT_CH_
-
-class TAO_DynamicAny_Export DynStruct: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynStruct
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1547,133 +1624,144 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
     typedef DynStruct_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynStruct_ptr _duplicate (DynStruct_ptr obj);
+    
     static DynStruct_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynStruct_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynStruct_ptr _nil (void)
       {
         return (DynStruct_ptr)0;
       }
-
+    
     virtual char * current_member_name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::TCKind current_member_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::NameValuePairSeq * get_members (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::NameValuePairSeq * get_members (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_members (
         const DynamicAny::NameValuePairSeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_members_as_dyn_any (
         const DynamicAny::NameDynAnyPairSeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynStruct ();
-
+    DynStruct (void);
+    
     virtual ~DynStruct (void);
+  
   private:
     DynStruct (const DynStruct &);
     void operator= (const DynStruct &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNUNION___PTR_CH_)
 #define _DYNAMICANY_DYNUNION___PTR_CH_
-
+  
   class DynUnion;
   typedef DynUnion *DynUnion_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNUNION___VAR_CH_)
 #define _DYNAMICANY_DYNUNION___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynUnion_var : public TAO_Base_var
   {
   public:
     DynUnion_var (void); // default constructor
-    DynUnion_var (DynUnion_ptr p) : ptr_ (p) {}
+    DynUnion_var (DynUnion_ptr p) : ptr_ (p) {} 
     DynUnion_var (const DynUnion_var &); // copy constructor
     ~DynUnion_var (void); // destructor
-
+    
     DynUnion_var &operator= (DynUnion_ptr);
     DynUnion_var &operator= (const DynUnion_var &);
     DynUnion_ptr operator-> (void) const;
-
+    
     operator const DynUnion_ptr &() const;
     operator DynUnion_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynUnion_ptr in (void) const;
     DynUnion_ptr &inout (void);
     DynUnion_ptr &out (void);
     DynUnion_ptr _retn (void);
     DynUnion_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynUnion_ptr tao_duplicate (DynUnion_ptr);
     static void tao_release (DynUnion_ptr);
     static DynUnion_ptr tao_nil (void);
-    static DynUnion_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynUnion_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynUnion_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1683,11 +1771,11 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNUNION___OUT_CH_)
 #define _DYNAMICANY_DYNUNION___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynUnion_out
   {
   public:
@@ -1700,19 +1788,20 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
     operator DynUnion_ptr &();
     DynUnion_ptr &ptr (void);
     DynUnion_ptr operator-> (void);
-
+  
   private:
     DynUnion_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNUNION_CH_)
 #define _DYNAMICANY_DYNUNION_CH_
-
-class TAO_DynamicAny_Export DynUnion: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynUnion
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1720,237 +1809,260 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     typedef DynUnion_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynUnion_ptr _duplicate (DynUnion_ptr obj);
+    
     static DynUnion_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynUnion_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynUnion_ptr _nil (void)
       {
         return (DynUnion_ptr)0;
       }
-
-    virtual DynamicAny::DynAny_ptr get_discriminator (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAny_ptr get_discriminator (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_discriminator (
         DynamicAny::DynAny_ptr d
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
       )) = 0;
-
+    
     virtual void set_to_default_member (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
       )) = 0;
-
+    
     virtual void set_to_no_active_member (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
       )) = 0;
-
+    
     virtual CORBA::Boolean has_no_active_member (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual CORBA::TCKind discriminator_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    virtual DynamicAny::DynAny_ptr member (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAny_ptr member (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual char * member_name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::TCKind member_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynUnion ();
-
+    DynUnion (void);
+    
     virtual ~DynUnion (void);
+  
   private:
     DynUnion (const DynUnion &);
     void operator= (const DynUnion &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CH_
-
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_DynamicAny_AnySeq : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_DynamicAny_AnySeq (void); // Default constructor.
-      _TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum,
+  
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_DynamicAny_AnySeq
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_DynamicAny_AnySeq (void);
+    _TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_DynamicAny_AnySeq (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         CORBA::Any *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_DynamicAny_AnySeq (const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs);
-      _TAO_Unbounded_Sequence_DynamicAny_AnySeq &operator= (const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs);
-      virtual ~_TAO_Unbounded_Sequence_DynamicAny_AnySeq (void); // Dtor.
-      // = Accessors.
-      CORBA::Any &operator[] (CORBA::ULong i);
-      const CORBA::Any &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static CORBA::Any *allocbuf (CORBA::ULong size);
-      static void freebuf (CORBA::Any *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-      CORBA::Any *get_buffer (CORBA::Boolean orphan = 0);
-      const CORBA::Any *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_DynamicAny_AnySeq (
+        const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs
+      );
+    _TAO_Unbounded_Sequence_DynamicAny_AnySeq &operator= (
+        const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_DynamicAny_AnySeq (void);
+    
+    // = Accessors.
+    CORBA::Any &operator[] (CORBA::ULong i);
+    const CORBA::Any &operator[] (CORBA::ULong i) const;
+    
+    // = Static operations.
+    static CORBA::Any *allocbuf (CORBA::ULong size);
+    static void freebuf (CORBA::Any *buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    CORBA::Any *get_buffer (CORBA::Boolean orphan = 0);
+    const CORBA::Any *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Any *data,
-        CORBA::Boolean release);
-    };
-
+        CORBA::Boolean release
+      );
+  };
+  
 #endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+  
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_DYNAMICANY_ANYSEQ_CH_)
 #define _DYNAMICANY_ANYSEQ_CH_
-
+  
   class AnySeq;
   class AnySeq_var;
-
+  
   // *************************************************************
   // AnySeq
   // *************************************************************
-
-  class TAO_DynamicAny_Export AnySeq : public
+  
+  class TAO_DynamicAny_Export AnySeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_DynamicAny_AnySeq
+  _TAO_Unbounded_Sequence_DynamicAny_AnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<CORBA::Any>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Any>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     AnySeq (void); // default ctor
     AnySeq (CORBA::ULong max); // uses max size
     AnySeq (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      CORBA::Any *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        CORBA::Any *buffer, 
+        CORBA::Boolean release = 0
+      );
     AnySeq (const AnySeq &); // copy ctor
     ~AnySeq (void);
     static void _tao_any_destructor (void*);
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef AnySeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-
+    
+    
   };
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_ANYSEQ___VAR_CH_)
 #define _DYNAMICANY_ANYSEQ___VAR_CH_
-
+  
   // *************************************************************
   // class DynamicAny::AnySeq_var
   // *************************************************************
-
+  
   class TAO_DynamicAny_Export AnySeq_var
   {
   public:
-    AnySeq_var (void); // default constructor
+    AnySeq_var (void);
     AnySeq_var (AnySeq *);
-    AnySeq_var (const AnySeq_var &); // copy constructor
-    ~AnySeq_var (void); // destructor
-
+    AnySeq_var (const AnySeq_var &);
+    ~AnySeq_var (void);
+    
     AnySeq_var &operator= (AnySeq *);
     AnySeq_var &operator= (const AnySeq_var &);
     AnySeq *operator-> (void);
     const AnySeq *operator-> (void) const;
-
+    
     operator const AnySeq &() const;
     operator AnySeq &();
     operator AnySeq &() const;
     operator AnySeq *&(); // variable-size base types only
-
+    
     CORBA::Any & operator[] (CORBA::ULong index);
     const CORBA::Any & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const AnySeq &in (void) const;
     AnySeq &inout (void);
     AnySeq *&out (void);
     AnySeq *_retn (void);
     AnySeq *ptr (void) const;
-
+  
   private:
     AnySeq *ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_ANYSEQ___OUT_CH_)
 #define _DYNAMICANY_ANYSEQ___OUT_CH_
-
+  
   class TAO_DynamicAny_Export AnySeq_out
   {
   public:
@@ -1963,145 +2075,160 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     AnySeq *&ptr (void);
     AnySeq *operator-> (void);
     CORBA::Any & operator[] (CORBA::ULong index);
-
+  
   private:
     AnySeq *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const AnySeq_var &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AnySeq;
-
-
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AnySeq;
+  
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CH_
-
-    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void);
-      _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum);
-      _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum,
+  
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void);
+    _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum);
+    _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         DynAny* *value,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq(const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs);
-      virtual ~_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void);
-      _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &operator= (const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs);
-      TAO_Object_Manager<DynamicAny::DynAny,DynamicAny::DynAny_var> operator[] (CORBA::ULong index) const;
-      static DynAny **allocbuf (CORBA::ULong nelems);
-      static void freebuf (DynAny **buffer);
-      // The Base_Sequence functions, please see tao/Sequence.h
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      DynAny* *get_buffer (CORBA::Boolean orphan = 0);
-      const DynAny* *get_buffer (void) const;
-      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-      virtual void _downcast (
-          void* target,
-          CORBA_Object *src
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-      virtual CORBA_Object* _upcast (void *src) const;
-
-    };
-
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (
+        const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs
+      );
+    _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &operator= (
+        const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs
+      );
+    virtual ~_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void);
+    
+    // = Accessors.
+    TAO_Object_Manager<DynamicAny::DynAny,DynamicAny::DynAny_var> operator[] (CORBA::ULong index) const;
+    
+    // = Static operations.
+    static DynAny **allocbuf (CORBA::ULong nelems);
+    static void freebuf (DynAny **buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    DynAny* *get_buffer (CORBA::Boolean orphan = 0);
+    const DynAny* *get_buffer (void) const;
+    virtual void _shrink_buffer (
+        CORBA::ULong nl,
+        CORBA::ULong ol
+      );
+    
+    virtual void _downcast (
+        void* target,
+        CORBA_Object *src
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    virtual CORBA_Object* _upcast (void *src) const;
+  };
+  
 #endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+  
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_DYNAMICANY_DYNANYSEQ_CH_)
 #define _DYNAMICANY_DYNANYSEQ_CH_
-
+  
   class DynAnySeq;
   class DynAnySeq_var;
-
+  
   // *************************************************************
   // DynAnySeq
   // *************************************************************
-
-  class TAO_DynamicAny_Export DynAnySeq : public
+  
+  class TAO_DynamicAny_Export DynAnySeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
+  _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Object_Sequence<DynAny,DynAny_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<DynAny,DynAny_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     DynAnySeq (void); // default ctor
     DynAnySeq (CORBA::ULong max); // uses max size
     DynAnySeq (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      DynAny_ptr *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        DynAny_ptr *buffer, 
+        CORBA::Boolean release = 0
+      );
     DynAnySeq (const DynAnySeq &); // copy ctor
     ~DynAnySeq (void);
     static void _tao_any_destructor (void*);
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynAnySeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-
+    
+    
   };
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANYSEQ___VAR_CH_)
 #define _DYNAMICANY_DYNANYSEQ___VAR_CH_
-
+  
   // *************************************************************
   // class DynamicAny::DynAnySeq_var
   // *************************************************************
-
+  
   class TAO_DynamicAny_Export DynAnySeq_var
   {
   public:
-    DynAnySeq_var (void); // default constructor
+    DynAnySeq_var (void);
     DynAnySeq_var (DynAnySeq *);
-    DynAnySeq_var (const DynAnySeq_var &); // copy constructor
-    ~DynAnySeq_var (void); // destructor
-
+    DynAnySeq_var (const DynAnySeq_var &);
+    ~DynAnySeq_var (void);
+    
     DynAnySeq_var &operator= (DynAnySeq *);
     DynAnySeq_var &operator= (const DynAnySeq_var &);
     DynAnySeq *operator-> (void);
     const DynAnySeq *operator-> (void) const;
-
+    
     operator const DynAnySeq &() const;
     operator DynAnySeq &();
     operator DynAnySeq &() const;
     operator DynAnySeq *&(); // variable-size base types only
-
+    
     TAO_Object_Manager<DynAny, DynAny_var> operator[] (CORBA::ULong index);
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const DynAnySeq &in (void) const;
     DynAnySeq &inout (void);
     DynAnySeq *&out (void);
     DynAnySeq *_retn (void);
     DynAnySeq *ptr (void) const;
-
+  
   private:
     DynAnySeq *ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANYSEQ___OUT_CH_)
 #define _DYNAMICANY_DYNANYSEQ___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynAnySeq_out
   {
   public:
@@ -2114,58 +2241,61 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     DynAnySeq *&ptr (void);
     DynAnySeq *operator-> (void);
     TAO_Object_Manager<DynAny, DynAny_var> operator[] (CORBA::ULong index);
-
+  
   private:
     DynAnySeq *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const DynAnySeq_var &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSEQUENCE___PTR_CH_)
 #define _DYNAMICANY_DYNSEQUENCE___PTR_CH_
-
+  
   class DynSequence;
   typedef DynSequence *DynSequence_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSEQUENCE___VAR_CH_)
 #define _DYNAMICANY_DYNSEQUENCE___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynSequence_var : public TAO_Base_var
   {
   public:
     DynSequence_var (void); // default constructor
-    DynSequence_var (DynSequence_ptr p) : ptr_ (p) {}
+    DynSequence_var (DynSequence_ptr p) : ptr_ (p) {} 
     DynSequence_var (const DynSequence_var &); // copy constructor
     ~DynSequence_var (void); // destructor
-
+    
     DynSequence_var &operator= (DynSequence_ptr);
     DynSequence_var &operator= (const DynSequence_var &);
     DynSequence_ptr operator-> (void) const;
-
+    
     operator const DynSequence_ptr &() const;
     operator DynSequence_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynSequence_ptr in (void) const;
     DynSequence_ptr &inout (void);
     DynSequence_ptr &out (void);
     DynSequence_ptr _retn (void);
     DynSequence_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynSequence_ptr tao_duplicate (DynSequence_ptr);
     static void tao_release (DynSequence_ptr);
     static DynSequence_ptr tao_nil (void);
-    static DynSequence_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynSequence_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynSequence_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2175,11 +2305,11 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSEQUENCE___OUT_CH_)
 #define _DYNAMICANY_DYNSEQUENCE___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynSequence_out
   {
   public:
@@ -2192,19 +2322,20 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     operator DynSequence_ptr &();
     DynSequence_ptr &ptr (void);
     DynSequence_ptr operator-> (void);
-
+  
   private:
     DynSequence_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNSEQUENCE_CH_)
 #define _DYNAMICANY_DYNSEQUENCE_CH_
-
-class TAO_DynamicAny_Export DynSequence: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynSequence
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2212,131 +2343,141 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
     typedef DynSequence_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynSequence_ptr _duplicate (DynSequence_ptr obj);
+    
     static DynSequence_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynSequence_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynSequence_ptr _nil (void)
       {
         return (DynSequence_ptr)0;
       }
-
+    
     virtual CORBA::ULong get_length (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_length (
         CORBA::ULong len
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::AnySeq * get_elements (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::AnySeq * get_elements (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_elements (
         const DynamicAny::AnySeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAnySeq * get_elements_as_dyn_any (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_elements_as_dyn_any (
         const DynamicAny::DynAnySeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynSequence ();
-
+    DynSequence (void);
+    
     virtual ~DynSequence (void);
+  
   private:
     DynSequence (const DynSequence &);
     void operator= (const DynSequence &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNARRAY___PTR_CH_)
 #define _DYNAMICANY_DYNARRAY___PTR_CH_
-
+  
   class DynArray;
   typedef DynArray *DynArray_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNARRAY___VAR_CH_)
 #define _DYNAMICANY_DYNARRAY___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynArray_var : public TAO_Base_var
   {
   public:
     DynArray_var (void); // default constructor
-    DynArray_var (DynArray_ptr p) : ptr_ (p) {}
+    DynArray_var (DynArray_ptr p) : ptr_ (p) {} 
     DynArray_var (const DynArray_var &); // copy constructor
     ~DynArray_var (void); // destructor
-
+    
     DynArray_var &operator= (DynArray_ptr);
     DynArray_var &operator= (const DynArray_var &);
     DynArray_ptr operator-> (void) const;
-
+    
     operator const DynArray_ptr &() const;
     operator DynArray_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynArray_ptr in (void) const;
     DynArray_ptr &inout (void);
     DynArray_ptr &out (void);
     DynArray_ptr _retn (void);
     DynArray_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynArray_ptr tao_duplicate (DynArray_ptr);
     static void tao_release (DynArray_ptr);
     static DynArray_ptr tao_nil (void);
-    static DynArray_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynArray_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynArray_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2346,11 +2487,11 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNARRAY___OUT_CH_)
 #define _DYNAMICANY_DYNARRAY___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynArray_out
   {
   public:
@@ -2363,19 +2504,20 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
     operator DynArray_ptr &();
     DynArray_ptr &ptr (void);
     DynArray_ptr operator-> (void);
-
+  
   private:
     DynArray_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNARRAY_CH_)
 #define _DYNAMICANY_DYNARRAY_CH_
-
-class TAO_DynamicAny_Export DynArray: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynArray
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2383,115 +2525,124 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
     typedef DynArray_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynArray_ptr _duplicate (DynArray_ptr obj);
+    
     static DynArray_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynArray_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynArray_ptr _nil (void)
       {
         return (DynArray_ptr)0;
       }
-
-    virtual DynamicAny::AnySeq * get_elements (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::AnySeq * get_elements (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_elements (
         const DynamicAny::AnySeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::DynAnySeq * get_elements_as_dyn_any (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_elements_as_dyn_any (
         const DynamicAny::DynAnySeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynArray ();
-
+    DynArray (void);
+    
     virtual ~DynArray (void);
+  
   private:
     DynArray (const DynArray &);
     void operator= (const DynArray &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNVALUE___PTR_CH_)
 #define _DYNAMICANY_DYNVALUE___PTR_CH_
-
+  
   class DynValue;
   typedef DynValue *DynValue_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNVALUE___VAR_CH_)
 #define _DYNAMICANY_DYNVALUE___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynValue_var : public TAO_Base_var
   {
   public:
     DynValue_var (void); // default constructor
-    DynValue_var (DynValue_ptr p) : ptr_ (p) {}
+    DynValue_var (DynValue_ptr p) : ptr_ (p) {} 
     DynValue_var (const DynValue_var &); // copy constructor
     ~DynValue_var (void); // destructor
-
+    
     DynValue_var &operator= (DynValue_ptr);
     DynValue_var &operator= (const DynValue_var &);
     DynValue_ptr operator-> (void) const;
-
+    
     operator const DynValue_ptr &() const;
     operator DynValue_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynValue_ptr in (void) const;
     DynValue_ptr &inout (void);
     DynValue_ptr &out (void);
     DynValue_ptr _retn (void);
     DynValue_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynValue_ptr tao_duplicate (DynValue_ptr);
     static void tao_release (DynValue_ptr);
     static DynValue_ptr tao_nil (void);
-    static DynValue_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynValue_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynValue_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2501,11 +2652,11 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNVALUE___OUT_CH_)
 #define _DYNAMICANY_DYNVALUE___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynValue_out
   {
   public:
@@ -2518,19 +2669,20 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
     operator DynValue_ptr &();
     DynValue_ptr &ptr (void);
     DynValue_ptr operator-> (void);
-
+  
   private:
     DynValue_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNVALUE_CH_)
 #define _DYNAMICANY_DYNVALUE_CH_
-
-class TAO_DynamicAny_Export DynValue: public virtual DynAny
+  
+  class TAO_DynamicAny_Export DynValue
+    : public virtual DynamicAny::DynAny
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2538,133 +2690,144 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
     typedef DynValue_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynValue_ptr _duplicate (DynValue_ptr obj);
+    
     static DynValue_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynValue_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynValue_ptr _nil (void)
       {
         return (DynValue_ptr)0;
       }
-
+    
     virtual char * current_member_name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual CORBA::TCKind current_member_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::NameValuePairSeq * get_members (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::NameValuePairSeq * get_members (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_members (
         const DynamicAny::NameValuePairSeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
-    virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    
+    virtual ::DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     virtual void set_members_as_dyn_any (
         const DynamicAny::NameDynAnyPairSeq & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException
+        , DynamicAny::DynAny::TypeMismatch
+        , DynamicAny::DynAny::InvalidValue
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynValue ();
-
+    DynValue (void);
+    
     virtual ~DynValue (void);
+  
   private:
     DynValue (const DynValue &);
     void operator= (const DynValue &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANYFACTORY___PTR_CH_)
 #define _DYNAMICANY_DYNANYFACTORY___PTR_CH_
-
+  
   class DynAnyFactory;
   typedef DynAnyFactory *DynAnyFactory_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANYFACTORY___VAR_CH_)
 #define _DYNAMICANY_DYNANYFACTORY___VAR_CH_
-
+  
   class TAO_DynamicAny_Export DynAnyFactory_var : public TAO_Base_var
   {
   public:
     DynAnyFactory_var (void); // default constructor
-    DynAnyFactory_var (DynAnyFactory_ptr p) : ptr_ (p) {}
+    DynAnyFactory_var (DynAnyFactory_ptr p) : ptr_ (p) {} 
     DynAnyFactory_var (const DynAnyFactory_var &); // copy constructor
     ~DynAnyFactory_var (void); // destructor
-
+    
     DynAnyFactory_var &operator= (DynAnyFactory_ptr);
     DynAnyFactory_var &operator= (const DynAnyFactory_var &);
     DynAnyFactory_ptr operator-> (void) const;
-
+    
     operator const DynAnyFactory_ptr &() const;
     operator DynAnyFactory_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     DynAnyFactory_ptr in (void) const;
     DynAnyFactory_ptr &inout (void);
     DynAnyFactory_ptr &out (void);
     DynAnyFactory_ptr _retn (void);
     DynAnyFactory_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static DynAnyFactory_ptr tao_duplicate (DynAnyFactory_ptr);
     static void tao_release (DynAnyFactory_ptr);
     static DynAnyFactory_ptr tao_nil (void);
-    static DynAnyFactory_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static DynAnyFactory_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     DynAnyFactory_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2674,11 +2837,11 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANYFACTORY___OUT_CH_)
 #define _DYNAMICANY_DYNANYFACTORY___OUT_CH_
-
+  
   class TAO_DynamicAny_Export DynAnyFactory_out
   {
   public:
@@ -2691,19 +2854,20 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
     operator DynAnyFactory_ptr &();
     DynAnyFactory_ptr &ptr (void);
     DynAnyFactory_ptr operator-> (void);
-
+  
   private:
     DynAnyFactory_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_DYNAMICANY_DYNANYFACTORY_CH_)
 #define _DYNAMICANY_DYNANYFACTORY_CH_
-
-class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
+  
+  class TAO_DynamicAny_Export DynAnyFactory
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2711,41 +2875,44 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
     typedef DynAnyFactory_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static DynAnyFactory_ptr _duplicate (DynAnyFactory_ptr obj);
+    
     static DynAnyFactory_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynAnyFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DynAnyFactory_ptr _nil (void)
       {
         return (DynAnyFactory_ptr)0;
       }
-
-
+    
+    
 #if !defined (_DYNAMICANY_DYNANYFACTORY_INCONSISTENTTYPECODE_CH_)
 #define _DYNAMICANY_DYNANYFACTORY_INCONSISTENTTYPECODE_CH_
-
+    
     class TAO_DynamicAny_Export InconsistentTypeCode : public CORBA::UserException
     {
     public:
-
+      
       InconsistentTypeCode (void);
-      // Default constructor.
-
       InconsistentTypeCode (const InconsistentTypeCode &);
-      // Copy constructor.
-
       ~InconsistentTypeCode (void);
-      // Destructor.
 
       InconsistentTypeCode &operator= (const InconsistentTypeCode &);
+
+      static InconsistentTypeCode *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -2753,57 +2920,54 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         );
-
-      static InconsistentTypeCode *_downcast (CORBA::Exception *);
-
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception DynamicAny::DynAnyFactory::InconsistentTypeCode.
+      
+      
+    };
 
 
 #endif /* end #if !defined */
-
-    virtual DynamicAny::DynAny_ptr create_dyn_any (
+    
+    virtual ::DynamicAny::DynAny_ptr create_dyn_any (
         const CORBA::Any & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAnyFactory::InconsistentTypeCode
+        CORBA::SystemException
+        , DynamicAny::DynAnyFactory::InconsistentTypeCode
       )) = 0;
-
-    virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
+    
+    virtual ::DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
         CORBA::TypeCode_ptr type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAnyFactory::InconsistentTypeCode
+        CORBA::SystemException
+        , DynamicAny::DynAnyFactory::InconsistentTypeCode
       )) = 0;
-
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    DynAnyFactory ();
-
+    DynAnyFactory (void);
+    
     virtual ~DynAnyFactory (void);
+  
   private:
     DynAnyFactory (const DynAnyFactory &);
     void operator= (const DynAnyFactory &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 }
 TAO_NAMESPACE_CLOSE // module DynamicAny
 

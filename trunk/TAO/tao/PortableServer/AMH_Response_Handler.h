@@ -14,10 +14,11 @@
 #ifndef TAO_AMH_RESPONSE_HANDLER_H
 #define TAO_AMH_RESPONSE_HANDLER_H
 
-#include "tao/Service_Context.h"
-#include "ace/Synch_T.h"
-
 #include "portableserver_export.h"
+
+#include "tao/Service_Context.h"
+#include "tao/CDR.h"
+#include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -155,7 +156,7 @@ private:
   // @@ Mayur: it depends on what form of the "State Pattern" you
   //    use.  The more generic form, as described in GoF, uses a class
   //    for each state, super-elegant but indeed a bit heavy handed.
-  //    The lighter-weight form (using a state variable  
+  //    The lighter-weight form (using a state variable
 
   /// Mutex to ensure the AMH-RH method call is thread-safe.
   TAO_SYNCH_MUTEX mutex_;

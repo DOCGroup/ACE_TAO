@@ -10,6 +10,7 @@ OBJFILES = \
 	$(OBJDIR)\Collocated_Object.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
 	$(OBJDIR)\Default_Policy_Validator.obj \
+	$(OBJDIR)\Default_ORTC.obj \
 	$(OBJDIR)\Default_Servant_Dispatcher.obj \
 	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
 	$(OBJDIR)\ImplRepoC.obj \

@@ -1,0 +1,61 @@
+--- orig/DomainC.h	Mon Feb  4 17:27:57 2002
++++ DomainC.h	Mon Feb  4 17:28:11 2002
+@@ -31,7 +31,7 @@
+ 
+ #include "TAO_Export.h"
+ #include "PolicyC.h"
+-#include "InterfaceDefC.h"
++#include "Sequence.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+--- orig/DomainC.cpp	Mon Feb  4 17:27:57 2002
++++ DomainC.cpp	Tue Feb  5 13:46:30 2002
+@@ -31,6 +31,9 @@
+ #include "tao/ClientInterceptorAdapter.h"
+ #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+ 
++#include "tao/IFR_Client_Adapter.h"
++#include "ace/Dynamic_Service.h"
++
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+ #endif /* __BORLANDC__ */
+@@ -1099,7 +1102,15 @@
+   parameter_list->length (2);
+   CORBA::ULong len = 0;
+   
+-    (*parameter_list)[len].argument <<=  this->object_type_;
++  TAO_IFR_Client_Adapter *adapter =
++    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
++        TAO_ORB_Core::ifr_client_adapter_name ()
++      );
++
++  adapter->interfacedef_any_insert (
++      (*parameter_list)[len].argument,
++      this->object_type_
++    );
+   (*parameter_list)[len].mode = CORBA::PARAM_IN;
+   len++;
+     (*parameter_list)[len].argument <<= CORBA::Any::from_boolean (this->constr_policy_);
+@@ -1186,6 +1197,11 @@
+   
+ #endif  /* TAO_HAS_INTERCEPTORS */
+   
++  TAO_IFR_Client_Adapter *adapter =
++    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
++        TAO_ORB_Core::ifr_client_adapter_name ()
++      );
++
+   for (;;)
+     {
+       _invoke_status = TAO_INVOKE_EXCEPTION;
+@@ -1234,7 +1250,7 @@
+ 
+           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+           if (!(
+-                            (_tao_out << object_type) &&
++              (adapter->interfacedef_cdr_insert (_tao_out, object_type)) &&
+               (_tao_out << CORBA::Any::from_boolean (constr_policy))
+             ))
+             TAO_INTERCEPTOR_THROW (

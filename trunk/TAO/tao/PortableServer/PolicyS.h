@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_CORBA_POLICYS_H_
-#define _TAO_IDL_CORBA_POLICYS_H_
+#ifndef _TAO_IDL_ORIG_POLICYS_H_
+#define _TAO_IDL_ORIG_POLICYS_H_
 
 #include "ace/pre.h"
 #include "tao/PolicyC.h"
@@ -35,6 +35,7 @@
 #include "tao/PortableServer/Collocated_Object.h"
 #include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
 #include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -46,26 +47,30 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-  class POA_CORBA_Policy;
-  typedef POA_CORBA_Policy *POA_CORBA_Policy_ptr;
+TAO_NAMESPACE  POA_CORBA
+{
+  class Policy;
+  typedef Policy *Policy_ptr;
   // Forward Classes Declaration
-  class POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl;
-  class POA_CORBA_TAO_Policy_Strategized_Proxy_Broker;
-
-  class TAO_PortableServer_Export POA_CORBA_Policy :  public virtual PortableServer::ServantBase
+  class _TAO_Policy_ThruPOA_Proxy_Impl;
+  class _TAO_Policy_Direct_Proxy_Impl;
+  class _TAO_Policy_Strategized_Proxy_Broker;
+  
+  class TAO_Export Policy
+    : public virtual PortableServer::ServantBase
   {
   protected:
-    POA_CORBA_Policy (void);
+    Policy (void);
 
   public:
-    POA_CORBA_Policy (const POA_CORBA_Policy& rhs);
-    virtual ~POA_CORBA_Policy (void);
+    Policy (const Policy& rhs);
+    virtual ~Policy (void);
 
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     virtual void* _downcast (
         const char* logical_type_id
@@ -99,33 +104,35 @@
       );
 
     ::CORBA::Policy *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::PolicyType policy_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    static void _get_policy_type_skel (
+    
+        static void _get_policy_type_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
 
-    virtual CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::CORBA::Policy_ptr copy (
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    static void copy_skel (
+    
+        static void copy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
@@ -133,13 +140,14 @@
       );
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    static void destroy_skel (
+    
+        static void destroy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
@@ -149,23 +157,23 @@
 
   };
 
-
+  
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration
+  //               Strategized Proxy Broker Declaration 
   //
-
-  class TAO_PortableServer_Export POA_CORBA_TAO_Policy_Strategized_Proxy_Broker : public virtual CORBA_TAO_Policy_Proxy_Broker
+  
+  class TAO_Export _TAO_Policy_Strategized_Proxy_Broker : public virtual ::CORBA::_TAO_Policy_Proxy_Broker
   {
-  public:
-   POA_CORBA_TAO_Policy_Strategized_Proxy_Broker (void);
-
-    virtual ~POA_CORBA_TAO_Policy_Strategized_Proxy_Broker (void);
-
-    virtual CORBA_TAO_Policy_Proxy_Impl &select_proxy (
+  public: 
+    _TAO_Policy_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_Policy_Strategized_Proxy_Broker (void);
+    
+    virtual ::CORBA::_TAO_Policy_Proxy_Impl &select_proxy (
       ::CORBA::Policy *object
       ACE_ENV_ARG_DECL
     );
-
+  
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -173,114 +181,120 @@
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-
+    
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
-    CORBA_TAO_Policy_Proxy_Impl
+    ::CORBA::_TAO_Policy_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-
+    
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-
+  
   public:
-    static POA_CORBA_TAO_Policy_Strategized_Proxy_Broker *the_TAO_Policy_Strategized_Proxy_Broker (void);
+    static _TAO_Policy_Strategized_Proxy_Broker *the_TAO_Policy_Strategized_Proxy_Broker (void);
   };
-
-
+  
+  
   //
-  //            End Strategized Proxy Broker Declaration
+  //            End Strategized Proxy Broker Declaration 
   ///////////////////////////////////////////////////////////////////////
-
-
+  
+  
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-
-  class TAO_PortableServer_Export POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl :
-    public virtual CORBA_TAO_Policy_Proxy_Impl,
+  
+  class TAO_Export _TAO_Policy_ThruPOA_Proxy_Impl : 
+    public virtual ::CORBA::_TAO_Policy_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
-   POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl (void);
-
-    virtual ~POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl (void) { }
-
+    _TAO_Policy_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_Policy_ThruPOA_Proxy_Impl (void) { }
+    
     virtual CORBA::PolicyType policy_type (
-        CORBA::Object_ptr _collocated_tao_target_
+        CORBA_Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-virtual CORBA::Policy_ptr copy (
-        CORBA::Object_ptr _collocated_tao_target_
+    
+    virtual ::CORBA::Policy_ptr copy (
+        CORBA_Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-virtual void destroy (
-        CORBA::Object_ptr _collocated_tao_target_
+    
+    virtual void destroy (
+        CORBA_Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-
+    
+    
   };
-
+  
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-
+  
+  
 ///////////////////////////////////////////////////////////////////////
 //                    Direct  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_CORBA_Policy_Direct_Proxy_Impl :
-  public virtual CORBA_TAO_Policy_Proxy_Impl,
+class TAO_Export _TAO_Policy_Direct_Proxy_Impl : 
+  public virtual CORBA::_TAO_Policy_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
 {
 public:
-  _TAO_CORBA_Policy_Direct_Proxy_Impl (void);
-
-  virtual ~_TAO_CORBA_Policy_Direct_Proxy_Impl (void) { }
-
+  _TAO_Policy_Direct_Proxy_Impl (void);
+  
+  virtual ~_TAO_Policy_Direct_Proxy_Impl (void) { }
+  
   virtual CORBA::PolicyType policy_type (
-    CORBA::Object_ptr _collocated_tao_target_
-    ACE_ENV_ARG_DECL
-  )
+      CORBA_Object *_collocated_tao_target_
+      ACE_ENV_ARG_DECL
+    )
     ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
-
-  virtual CORBA_Policy_ptr copy (
-                                 CORBA::Object_ptr _collocated_tao_target_
-                                 ACE_ENV_ARG_DECL
-                                 )
+      CORBA::SystemException
+    ));
+  
+  virtual ::CORBA::Policy_ptr copy (
+      CORBA_Object *_collocated_tao_target_
+      ACE_ENV_ARG_DECL
+    )
     ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+      CORBA::SystemException
+    ));
+  
+  virtual void destroy (
+      CORBA_Object *_collocated_tao_target_
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+  
+  };
 
-    virtual void destroy (
-                          CORBA::Object_ptr _collocated_tao_target_
-                          ACE_ENV_ARG_DECL
-                          )
-      ACE_THROW_SPEC ((
-                       CORBA::SystemException
-                       ));
-
-};
 
 //
 //                Direct  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
+
+}
+TAO_NAMESPACE_CLOSE // module CORBA
 
 #include "PolicyS_T.h"
 

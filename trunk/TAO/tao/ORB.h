@@ -77,26 +77,32 @@ public:
   friend class TAO_ORB_Core;
   friend TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
-  class TAO_Export InvalidName : public CORBA_UserException
+  class TAO_Export InvalidName : public CORBA::UserException
   {
   public:
     InvalidName (void);
     InvalidName (const InvalidName &);
     ~InvalidName (void);
+
     InvalidName &operator= (const InvalidName &);
+
+    static InvalidName *_downcast (CORBA::Exception *);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED);
+    virtual void _tao_encode (
+        TAO_OutputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      ) const;
 
-    /// = TAO extension
-    static InvalidName* _downcast (CORBA_Exception *ex);
-    static CORBA::Exception *_alloc (void);
-  };
-  static CORBA::TypeCode_ptr _tc_InvalidName;
+    virtual void _tao_decode (
+        TAO_InputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
+    };
 
   typedef char *ObjectId;
   typedef CORBA::String_var ObjectId_var;
@@ -603,18 +609,6 @@ public:
 private:
   CORBA::ORB_ptr &ptr_;
 };
-
-TAO_Export void
-operator<<= (CORBA::Any &, const CORBA::ORB::InvalidName &);
-TAO_Export void
-operator<<= (CORBA::Any &, CORBA::ORB::InvalidName*);
-TAO_Export CORBA::Boolean
-operator>>= (const CORBA::Any &, CORBA::ORB::InvalidName *&);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::ORB::InvalidName &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"

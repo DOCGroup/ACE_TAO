@@ -35,6 +35,33 @@ CORBA_TypeCode::Bounds::Bounds (void)
 {
 }
 
+CORBA_TypeCode::Bounds*
+CORBA_TypeCode::Bounds::_downcast (CORBA_Exception *ex)
+{
+  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0"))
+    return ACE_dynamic_cast (CORBA_TypeCode::Bounds*, ex);
+  return 0;
+}
+
+CORBA::Exception *CORBA_TypeCode::Bounds::_alloc (void)
+{
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::CORBA_TypeCode::Bounds, 0);
+  return retval;
+}
+
+CORBA::Exception *
+CORBA_TypeCode::Bounds::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      CORBA_TypeCode::Bounds (*this),
+      0
+    );
+  return result;
+}
+
 void CORBA_TypeCode::Bounds::_raise (void)
 {
   TAO_RAISE(*this);
@@ -55,26 +82,31 @@ void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &
 {
 }
 
-CORBA_TypeCode::Bounds*
-CORBA_TypeCode::Bounds::_downcast (CORBA_Exception *ex)
-{
-  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0"))
-    return ACE_dynamic_cast (CORBA_TypeCode::Bounds*, ex);
-  return 0;
-}
-
-int
-CORBA_TypeCode::Bounds::_is_a (const char* interface_id) const
-{
-  return ((ACE_OS::strcmp (interface_id,
-                          "IDL:omg.org/CORBA/TypeCode/Bounds:1.0")
-            == 0)
-          || CORBA_UserException::_is_a (interface_id));
-}
+// ****************************************************************
 
 CORBA_TypeCode::BadKind::BadKind (void)
   : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0")
 {
+}
+
+CORBA_TypeCode::BadKind*
+CORBA_TypeCode::BadKind::_downcast (CORBA_Exception *ex)
+{
+  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0"))
+    return ACE_dynamic_cast (CORBA_TypeCode::BadKind*, ex);
+  return 0;
+}
+
+CORBA::Exception *
+CORBA_TypeCode::BadKind::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      CORBA_TypeCode::BadKind (*this),
+      0
+    );
+  return result;
 }
 
 void CORBA_TypeCode::BadKind::_raise (void)
@@ -97,24 +129,7 @@ void CORBA_TypeCode::BadKind::_tao_decode (TAO_InputCDR &
 {
 }
 
-CORBA_TypeCode::BadKind*
-CORBA_TypeCode::BadKind::_downcast (CORBA_Exception *ex)
-{
-  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0"))
-    return ACE_dynamic_cast (CORBA_TypeCode::BadKind*, ex);
-  return 0;
-}
-
-int
-CORBA_TypeCode::BadKind::_is_a (const char* interface_id) const
-{
-  return ((ACE_OS::strcmp (interface_id,
-                          "IDL:omg.org/CORBA/TypeCode/BadKind:1.0")
-            == 0)
-          || CORBA_UserException::_is_a (interface_id));
-}
-
-// decreases the refcount and deletes when refcount reaches 0
+// ****************************************************************
 
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.

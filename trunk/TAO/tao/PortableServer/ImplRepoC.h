@@ -29,14 +29,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Object.h"
-#include "tao/ClientRequestInfo.h"
-#include "tao/Remote_Object_Proxy_Impl.h"
-#include "tao/Managed_Types.h"
-#include "tao/Sequence.h"
 #include "portableserver_export.h"
+
+#include "tao/Exception.h"
+#include "tao/Object.h"
+#include "tao/Sequence.h"
+#include "tao/Remote_Object_Proxy_Impl.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -168,13 +166,13 @@ TAO_NAMESPACE  ImplementationRepository
 
     static ServerObject_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerObject_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerObject_ptr _nil (void)
       {
@@ -184,23 +182,25 @@ TAO_NAMESPACE  ImplementationRepository
     static void _tao_any_destructor (void*);
 
     virtual void ping (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual void shutdown (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -212,7 +212,7 @@ TAO_NAMESPACE  ImplementationRepository
   protected:
     ServerObject (int collocated = 0);
 
-    // This methods travese the inheritance tree and set the
+    // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode
     virtual void ImplementationRepository_ServerObject_setup_collocation (int collocated);
 
@@ -371,7 +371,7 @@ TAO_NAMESPACE  ImplementationRepository
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerObject;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerObject;
 
   struct EnvironmentVariable;
   class EnvironmentVariable_var;
@@ -438,12 +438,12 @@ TAO_NAMESPACE  ImplementationRepository
     void operator= (const EnvironmentVariable_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EnvironmentVariable;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentVariable;
 
   typedef char * Address;
   typedef CORBA::String_var Address_var;
   typedef CORBA::String_out Address_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Address;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Address;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -606,7 +606,7 @@ TAO_NAMESPACE  ImplementationRepository
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EnvironmentList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentList;
 
   enum ActivationMode
   {
@@ -617,7 +617,7 @@ TAO_NAMESPACE  ImplementationRepository
   };
 
   typedef ActivationMode &ActivationMode_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ActivationMode;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ActivationMode;
 
   struct StartupOptions;
   class StartupOptions_var;
@@ -686,7 +686,7 @@ TAO_NAMESPACE  ImplementationRepository
     void operator= (const StartupOptions_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_StartupOptions;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StartupOptions;
 
   struct ServerInformation;
   class ServerInformation_var;
@@ -755,7 +755,7 @@ TAO_NAMESPACE  ImplementationRepository
     void operator= (const ServerInformation_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformation;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformation;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -918,7 +918,7 @@ TAO_NAMESPACE  ImplementationRepository
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformationList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationList;
 
   class ServerInformationIterator;
 
@@ -1104,13 +1104,13 @@ TAO_NAMESPACE  ImplementationRepository
 
     static Administration_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Administration_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Administration_ptr _nil (void)
       {
@@ -1128,17 +1128,17 @@ TAO_NAMESPACE  ImplementationRepository
     public:
 
       AlreadyRegistered (void);
-      // Default constructor.
-
       AlreadyRegistered (const AlreadyRegistered &);
-      // Copy constructor.
-
       ~AlreadyRegistered (void);
-      // Destructor.
+
+      AlreadyRegistered &operator= (const AlreadyRegistered &);
 
       static void _tao_any_destructor (void*);
 
-      AlreadyRegistered &operator= (const AlreadyRegistered &);
+      static AlreadyRegistered *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1152,15 +1152,11 @@ TAO_NAMESPACE  ImplementationRepository
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static AlreadyRegistered *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
       virtual CORBA::TypeCode_ptr _type (void) const;
-    }; // Exception ImplementationRepository::Administration::AlreadyRegistered.
+    };
 
-static CORBA::TypeCode_ptr _tc_AlreadyRegistered;
+static ::CORBA::TypeCode_ptr _tc_AlreadyRegistered;
 
 
 #endif /* end #if !defined */
@@ -1175,17 +1171,17 @@ static CORBA::TypeCode_ptr _tc_AlreadyRegistered;
       TAO_String_Manager reason;
 
       CannotActivate (void);
-      // Default constructor.
-
       CannotActivate (const CannotActivate &);
-      // Copy constructor.
-
       ~CannotActivate (void);
-      // Destructor.
+
+      CannotActivate &operator= (const CannotActivate &);
 
       static void _tao_any_destructor (void*);
 
-      CannotActivate &operator= (const CannotActivate &);
+      static CannotActivate *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1199,18 +1195,14 @@ static CORBA::TypeCode_ptr _tc_AlreadyRegistered;
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static CannotActivate *_downcast (CORBA::Exception *);
-
-      CannotActivate (
+            CannotActivate (
           const char * _tao_reason
         );
 
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
       virtual CORBA::TypeCode_ptr _type (void) const;
-    }; // Exception ImplementationRepository::Administration::CannotActivate.
+    };
 
-static CORBA::TypeCode_ptr _tc_CannotActivate;
+static ::CORBA::TypeCode_ptr _tc_CannotActivate;
 
 
 #endif /* end #if !defined */
@@ -1224,17 +1216,17 @@ static CORBA::TypeCode_ptr _tc_CannotActivate;
     public:
 
       NotFound (void);
-      // Default constructor.
-
       NotFound (const NotFound &);
-      // Copy constructor.
-
       ~NotFound (void);
-      // Destructor.
+
+      NotFound &operator= (const NotFound &);
 
       static void _tao_any_destructor (void*);
 
-      NotFound &operator= (const NotFound &);
+      static NotFound *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1248,110 +1240,106 @@ static CORBA::TypeCode_ptr _tc_CannotActivate;
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static NotFound *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
       virtual CORBA::TypeCode_ptr _type (void) const;
-    }; // Exception ImplementationRepository::Administration::NotFound.
+    };
 
-static CORBA::TypeCode_ptr _tc_NotFound;
+static ::CORBA::TypeCode_ptr _tc_NotFound;
 
 
 #endif /* end #if !defined */
 
     virtual void activate_server (
         const char * server
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound,
-        ImplementationRepository::Administration::CannotActivate
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::Administration::CannotActivate
       ));
 
     virtual void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::AlreadyRegistered
+        CORBA::SystemException
+        , ImplementationRepository::Administration::AlreadyRegistered
       ));
 
     virtual void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual void remove_server (
         const char * server
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void shutdown_server (
         const char * server
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual char * server_is_running (
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void server_is_shutting_down (
         const char * server
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void list (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -1363,7 +1351,7 @@ static CORBA::TypeCode_ptr _tc_NotFound;
   protected:
     Administration (int collocated = 0);
 
-    // This methods travese the inheritance tree and set the
+    // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode
     virtual void ImplementationRepository_Administration_setup_collocation (int collocated);
 
@@ -1404,9 +1392,9 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound,
-        ImplementationRepository::Administration::CannotActivate
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::Administration::CannotActivate
       )) = 0;
 
     virtual void register_server (
@@ -1416,8 +1404,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::AlreadyRegistered
+        CORBA::SystemException
+        , ImplementationRepository::Administration::AlreadyRegistered
       )) = 0;
 
     virtual void reregister_server (
@@ -1436,8 +1424,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       )) = 0;
 
     virtual void shutdown_server (
@@ -1446,8 +1434,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       )) = 0;
 
     virtual char * server_is_running (
@@ -1458,8 +1446,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       )) = 0;
 
     virtual void server_is_shutting_down (
@@ -1468,8 +1456,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       )) = 0;
 
     virtual void find (
@@ -1479,8 +1467,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       )) = 0;
 
     virtual void list (
@@ -1522,9 +1510,9 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound,
-        ImplementationRepository::Administration::CannotActivate
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::Administration::CannotActivate
       ));
 
     virtual void register_server (
@@ -1534,8 +1522,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::AlreadyRegistered
+        CORBA::SystemException
+        , ImplementationRepository::Administration::AlreadyRegistered
       ));
 
     virtual void reregister_server (
@@ -1554,8 +1542,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void shutdown_server (
@@ -1564,8 +1552,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual char * server_is_running (
@@ -1576,8 +1564,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void server_is_shutting_down (
@@ -1586,8 +1574,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void find (
@@ -1597,8 +1585,8 @@ static CORBA::TypeCode_ptr _tc_NotFound;
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ImplementationRepository::Administration::NotFound
+        CORBA::SystemException
+        , ImplementationRepository::Administration::NotFound
       ));
 
     virtual void list (
@@ -1682,7 +1670,86 @@ static CORBA::TypeCode_ptr _tc_NotFound;
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Administration;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Administration;
+
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___PTR_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___PTR_CH_
+
+  class ServerInformationIterator;
+  typedef ServerInformationIterator *ServerInformationIterator_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_
+
+  class TAO_PortableServer_Export ServerInformationIterator_var : public TAO_Base_var
+  {
+  public:
+    ServerInformationIterator_var (void); // default constructor
+    ServerInformationIterator_var (ServerInformationIterator_ptr p) : ptr_ (p) {}
+    ServerInformationIterator_var (const ServerInformationIterator_var &); // copy constructor
+    ~ServerInformationIterator_var (void); // destructor
+
+    ServerInformationIterator_var &operator= (ServerInformationIterator_ptr);
+    ServerInformationIterator_var &operator= (const ServerInformationIterator_var &);
+    ServerInformationIterator_ptr operator-> (void) const;
+
+    operator const ServerInformationIterator_ptr &() const;
+    operator ServerInformationIterator_ptr &();
+    // in, inout, out, _retn
+    ServerInformationIterator_ptr in (void) const;
+    ServerInformationIterator_ptr &inout (void);
+    ServerInformationIterator_ptr &out (void);
+    ServerInformationIterator_ptr _retn (void);
+    ServerInformationIterator_ptr ptr (void) const;
+
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ServerInformationIterator_ptr tao_duplicate (ServerInformationIterator_ptr);
+    static void tao_release (ServerInformationIterator_ptr);
+    static ServerInformationIterator_ptr tao_nil (void);
+    static ServerInformationIterator_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
+    static CORBA::Object * tao_upcast (void *);
+
+  private:
+    ServerInformationIterator_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServerInformationIterator_var (const TAO_Base_var &rhs);
+    ServerInformationIterator_var &operator= (const TAO_Base_var &rhs);
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___OUT_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___OUT_CH_
+
+  class TAO_PortableServer_Export ServerInformationIterator_out
+  {
+  public:
+    ServerInformationIterator_out (ServerInformationIterator_ptr &);
+    ServerInformationIterator_out (ServerInformationIterator_var &);
+    ServerInformationIterator_out (const ServerInformationIterator_out &);
+    ServerInformationIterator_out &operator= (const ServerInformationIterator_out &);
+    ServerInformationIterator_out &operator= (const ServerInformationIterator_var &);
+    ServerInformationIterator_out &operator= (ServerInformationIterator_ptr);
+    operator ServerInformationIterator_ptr &();
+    ServerInformationIterator_ptr &ptr (void);
+    ServerInformationIterator_ptr operator-> (void);
+
+  private:
+    ServerInformationIterator_ptr &ptr_;
+  };
+
+
+#endif /* end #if !defined */
 
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR_CH_)
@@ -1710,13 +1777,13 @@ static CORBA::TypeCode_ptr _tc_NotFound;
 
     static ServerInformationIterator_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerInformationIterator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerInformationIterator_ptr _nil (void)
       {
@@ -1728,23 +1795,24 @@ static CORBA::TypeCode_ptr _tc_NotFound;
     virtual CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -1756,7 +1824,7 @@ static CORBA::TypeCode_ptr _tc_NotFound;
   protected:
     ServerInformationIterator (int collocated = 0);
 
-    // This methods travese the inheritance tree and set the
+    // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode
     virtual void ImplementationRepository_ServerInformationIterator_setup_collocation (int collocated);
 
@@ -1919,7 +1987,7 @@ static CORBA::TypeCode_ptr _tc_NotFound;
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformationIterator;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationIterator;
 
 
 }

@@ -976,9 +976,10 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   else if (ACE_OS::strcmp (name_string, "TypeCode") == 0
            || ACE_OS::strcmp (name_string, "TCKind") == 0)
     {
-      // Occurrences of "TypeCode" in IDL files must be scoped with
-      // "CORBA" so we know we'll be in the CORBA module if we get
-      // this far, and we can use "this" for the scope of the iterator.
+      // Occurrences of "TypeCode" or TCKind in IDL files must be
+      // scoped with "CORBA" so we know we'll be in the CORBA module
+      // if we get this far, and we can use "this" for the scope of
+      // the iterator.
       UTL_ScopeActiveIterator corba_iter (this,
                                           UTL_Scope::IK_decls);
 
@@ -1205,7 +1206,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
   Identifier *item_name = 0;
 
-  idl_bool in_corba = 
+  idl_bool in_corba =
     ACE_OS::strcmp (e->get_string (), "CORBA") == 0;
 
   // Iterate over this scope.

@@ -1,64 +1,52 @@
-//
-// $Id$
-//
-// ================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   PortableServer.pidl
-//
-// = DESCRIPTION
-//
-//   This file was used to generate the code in PortableServerC.{h,i,cpp}
-//
-//   The command used to generate code from this file is:
-//
-//     tao_idl.exe \
-//          -Ge 1 \
-//          -Wb,export_macro=TAO_PortableServer_Export \
-//          -Wb,export_include="tao/corbafwd.h" \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          PortableServer.pidl
-//
-//   After the file is generated a patch from the diffs directory must
-//   be applied.  The patch:
-//
-//   - Disables parts of the code under certain configurations.
-//
-//   - Eliminates cycles in the include dependencies.
-//
-//   - Removes the extra environment option for (a) incarnate (b)
-//     etherealize (c) preinvoke and (d) postinvoke
-//
-//   - Adds non-idl components of PortableServer to the namespace.
-//     This includes (a) Servant (b) ServantBase (c) RefCountServantBase
-//     (d) Cookie (e) ObjectId_to_string (f) string_to_ObjectId (g)
-//     ObjectId_to_wstring (h) wstring_to_ObjectId (i) ServantBase_var
-//     (j) DynamicImplementation (k) LocalServantBase
-//
-//   Apply patches using the following commands:
-//
-//   patch < diffs\PortableServerC.h.diff
-//   patch < diffs\PortableServerC.i.diff
-//   patch < diffs\PortableServerC.cpp.diff
-
-//   Note: The diffs were generated with these commands:
-//
-//   diff -wub PortableServerC.h PortableServerC.h.mod > diffs\PortableServerC.h.diff
-//   diff -wub PortableServerC.i PortableServerC.i.mod > diffs\PortableServerC.i.diff
-//   diff -wub PortableServerC.cpp PortableServerC.cpp.mod > diffs\PortableServerC.cpp.diff
-//
-// ================================================================
+/**
+ * @file PortableServer.pidl
+ *
+ * $Id$
+ *   
+ * @brief Pre-compiled IDL source for the PortableServer module.
+ *
+ * This file was used to generate the code in
+ * PortableServerC.{h,i,cpp}, using the following command:
+ *
+ * tao_idl.exe \
+ *     -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *          -Wb,export_macro=TAO_PortableServer_Export \
+ *          -Wb,export_include="tao/corbafwd.h" \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          PortableServer.pidl
+ *
+ * After the file is generated a patch from the diffs directory must
+ * be applied.  The patch:
+ *
+ *   - Disables parts of the code under certain configurations.
+ *
+ *   - Eliminates cycles in the include dependencies.
+ *
+ *   - Adds non-idl components of PortableServer to the namespace.
+ *     This includes (a) Servant (b) ServantBase (c) RefCountServantBase
+ *     (d) Cookie (e) ObjectId_to_string (f) string_to_ObjectId (g)
+ *     ObjectId_to_wstring (h) wstring_to_ObjectId (i) ServantBase_var
+ *     (j) DynamicImplementation (k) LocalServantBase
+ *
+ * Apply patches using the following command:
+ *
+ *   patch < diffs/PortableServer.diff
+ *
+ * Note: The diffs were generated using:
+ *
+ *   for i in PortableServerC.{h,i,cpp}; do
+ *     diff -wub orig/$i $i > diffs/PortableServer.diff
+ *   done
+ */
 
 #ifndef _PORTABLESERVER_IDL_
 #define _PORTABLESERVER_IDL_
 
-#pragma prefix "omg.org"
-
 #include <orb.idl>
+#include <Current.pidl>
+
+#pragma prefix "omg.org"
 
 module PortableServer {
 #   pragma version PortableServer 2.3
@@ -298,11 +286,11 @@ module PortableServer {
         IDs reference_to_ids(in Object the_ref)
                               raises (NotAGroupObject);
 
-        void associate_reference_with_id (in Object ref, 
+        void associate_reference_with_id (in Object ref,
                                           in ObjectId oid)
                               raises (NotAGroupObject);
-          
-        void disassociate_reference_with_id (in Object ref, 
+
+        void disassociate_reference_with_id (in Object ref,
                                              in ObjectId oid)
                               raises (NotAGroupObject);
 
@@ -317,4 +305,5 @@ module PortableServer {
         ObjectId    get_object_id() raises (NoContext);
     };
 };
+
 #endif // _PORTABLESERVER_IDL_

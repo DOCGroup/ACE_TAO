@@ -1,79 +1,56 @@
-//
-// $Id$
-//
-// ================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Policy.pidl
-//
-// = DESCRIPTION
-//
-//   This file was used to generate the code in PolicyC.{h,i,cpp}.
-//   Also, skeleton code for the only non local Policy interface is
-//   generated from this pidl file and then the declaration code is
-//   moved to POA_CORBA.h and the definition is kept in PolicyS.cpp.
-//
-//   The steps to regenerate the code are as follows:
-//
-//   1. Patch this pidl file to (a) remove the CORBA module bringing
-//   the Policy interfaces to the global scope; and (b) rename the
-//   Policy interfaces to CORBA_Policy.
-//
-//   Apply patches using the following commands:
-//
-//   patch < diffs/Policy.pidl.diff
-//
-//   2. Run the tao_idl compiler on the patched pidl file.  The
-//   command used for this is:
-//
-//     tao_idl.exe
-//          -o orig
-//          -Ge 1
-//          -Wb,export_macro=TAO_Export
-//          -Wb,export_include="tao/corbafwd.h"
-//          -Wb,pre_include="ace/pre.h"
-//          -Wb,post_include="ace/post.h"
-//          Policy.pidl
-//
-//   3. Then patch the generated code.  This patch (a) fixes the
-//   interface repository IDs; (b) eliminates cycles in the include
-//   dependencies; (c) removes the extra CORBA module; (d) removes the
-//   extra Current interface; (e) adds the TAO_Encodable methods to
-//   the Policy class; (f) adds the PolicyErrorCode constants; (g)
-//   fixes the Policy class skeleton code to fit into the POA_CORBA
-//   namespace; and (h) removes the typecodes definitions.
-//
-//   Apply patches using the following commands:
-//
-//   patch < diffs/PolicyC.h.diff
-//   patch < diffs/PolicyC.i.diff
-//   patch < diffs/PolicyC.cpp.diff
-//
-//   patch < diffs/PolicyS.h.diff
-//
-//   4. You'll have to move the Policy skeleton definition from
-//   PolicyS.h to the POA_CORBA.h by hand.
-//
-//   5. Undo the patches to this pidl file.
-//
-//   patch -R < diffs/Policy.pidl.diff
-//
-//   Note: The diffs were generated with these commands:
-//
-//   diff -wbu Policy.pidl Policy.pidl.mod > diffs/Policy.pidl.diff
-//
-//   diff -wBbu orig/PolicyC.h PolicyC.h > diffs/PolicyC.h.diff
-//   diff -wBbu orig/PolicyC.i PolicyC.i > diffs/PolicyC.i.diff
-//   diff -wBbu orig/PolicyC.cpp PolicyC.cpp > diffs/PolicyC.cpp.diff
-//   diff -wBbu orig/PolicyS.h PolicyS.h > diffs/PolicyS.h.diff
-//
-// ================================================================
+/**
+ * @file Policy.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the CORBA::Policy related
+ * classes.
+ *
+ * This file is used to generate the code in PolicyC.{h,i,cpp}.
+ * Also, skeleton code for the only non local Policy interface is
+ * generated from this pidl file and then the declaration code is
+ * moved to tao/PortableServer/PolicyS.{h,i,cpp}
+ *
+ *   The steps to regenerate the code are as follows:
+ *
+ *   1. Run the tao_idl compiler on the patched pidl file.  The
+ *   command used for this is:
+ *
+ *     tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *          -Wb,export_macro=TAO_Export
+ *          -Wb,export_include="tao/corbafwd.h"
+ *          -Wb,pre_include="ace/pre.h"
+ *          -Wb,post_include="ace/post.h"
+ *          Policy.pidl
+ *
+ *   2. Then patch the generated code.  This patch (a) eliminates
+ *   cycles in the include dependencies; (b) adds the TAO_Encodable
+ *   methods to the Policy class; (c) fixes the #includes in the
+ *   PolicyS.h file.
+ *
+ *   Apply patches using the following commands:
+ *
+ *   cp orig/PolicyC.{h,i,cpp} .
+ *   cp orig/PolicyS.{h,i,cpp} PortableServer
+ *   cp orig/PolicyS_T.{h,i,cpp} PortableServer
+ *   patch < diffs/Policy.diff
+ *
+ *   Note: The diffs were generated with these commands:
+ *
+ *   for i in PolicyC.{h,i,cpp}; do
+ *     diff -wBbu orig/$i $i;
+ *   done > diffs/Policy.diff
+ *   for i in Policy{S,S_T}.{h,i,cpp}; do
+ *     diff -wBbu orig/$i PortableServer/$i;
+ *   done >> diffs/Policy.diff
+ */
 
-#ifndef TAO_CORBA_POLICY_IDL
-#define TAO_CORBA_POLICY_IDL
+#ifndef TAO_CORBA_POLICY_PIDL
+#define TAO_CORBA_POLICY_PIDL
+
+#include <Current.pidl>
+#include <Policy_Forward.pidl>
 
 #pragma prefix "omg.org"
 
@@ -96,22 +73,11 @@ module CORBA
     sequence<unsigned short> indices;
   };
 
-  typedef unsigned long PolicyType;
   interface Policy
   {
     readonly attribute PolicyType policy_type;
     Policy copy ();
     void destroy ();
-  };
-
-  typedef sequence<Policy> PolicyList;
-
-  typedef sequence<PolicyType> PolicyTypeSeq;
-
-  enum SetOverrideType
-  {
-    SET_OVERRIDE,
-    ADD_OVERRIDE
   };
 
   local interface PolicyManager
@@ -123,10 +89,6 @@ module CORBA
         raises (InvalidPolicies);
   };
 
-  local interface Current
-  {
-  };
-
   local interface PolicyCurrent : PolicyManager, Current
   {
   };
@@ -135,4 +97,4 @@ module CORBA
 
 #pragma prefix ""
 
-#endif /* TAO_CORBA_POLICY_IDL */
+#endif /* TAO_CORBA_POLICY_PIDL */

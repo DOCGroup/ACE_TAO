@@ -146,6 +146,7 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
+	$(OBJDIR)\Policy_ForwardC.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\Policy_Manager.obj \

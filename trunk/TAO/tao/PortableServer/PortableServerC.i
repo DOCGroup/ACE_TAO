@@ -1035,98 +1035,12 @@ PortableServer::IDs_out::operator[] (CORBA::ULong index)
 #if !defined (_PORTABLESERVER_THREADPOLICY___CI_)
 #define _PORTABLESERVER_THREADPOLICY___CI_
 
-ACE_INLINE PortableServer::ThreadPolicy_ptr
-tao_PortableServer_ThreadPolicy_duplicate (
-    PortableServer::ThreadPolicy_ptr p
-  )
-{
-  return PortableServer::ThreadPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_ThreadPolicy_release (
-    PortableServer::ThreadPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::ThreadPolicy_ptr
-tao_PortableServer_ThreadPolicy_nil (
-    void
-  )
-{
-  return PortableServer::ThreadPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::ThreadPolicy_ptr
-tao_PortableServer_ThreadPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ThreadPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_ThreadPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::ThreadPolicy **tmp =
-    ACE_static_cast (PortableServer::ThreadPolicy **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___CI_)
 #define _PORTABLESERVER_LIFESPANPOLICY___CI_
-
-ACE_INLINE PortableServer::LifespanPolicy_ptr
-tao_PortableServer_LifespanPolicy_duplicate (
-    PortableServer::LifespanPolicy_ptr p
-  )
-{
-  return PortableServer::LifespanPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_LifespanPolicy_release (
-    PortableServer::LifespanPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::LifespanPolicy_ptr
-tao_PortableServer_LifespanPolicy_nil (
-    void
-  )
-{
-  return PortableServer::LifespanPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::LifespanPolicy_ptr
-tao_PortableServer_LifespanPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::LifespanPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_LifespanPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::LifespanPolicy **tmp =
-    ACE_static_cast (PortableServer::LifespanPolicy **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1135,96 +1049,12 @@ tao_PortableServer_LifespanPolicy_upcast (
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___CI_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___CI_
 
-ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
-tao_PortableServer_IdUniquenessPolicy_duplicate (
-    PortableServer::IdUniquenessPolicy_ptr p
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_IdUniquenessPolicy_release (
-    PortableServer::IdUniquenessPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
-tao_PortableServer_IdUniquenessPolicy_nil (
-    void
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
-tao_PortableServer_IdUniquenessPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_IdUniquenessPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::IdUniquenessPolicy **tmp =
-    ACE_static_cast (PortableServer::IdUniquenessPolicy **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___CI_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___CI_
-
-ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
-tao_PortableServer_IdAssignmentPolicy_duplicate (
-    PortableServer::IdAssignmentPolicy_ptr p
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_IdAssignmentPolicy_release (
-    PortableServer::IdAssignmentPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
-tao_PortableServer_IdAssignmentPolicy_nil (
-    void
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
-tao_PortableServer_IdAssignmentPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_IdAssignmentPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::IdAssignmentPolicy **tmp =
-    ACE_static_cast (PortableServer::IdAssignmentPolicy **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1235,48 +1065,6 @@ tao_PortableServer_IdAssignmentPolicy_upcast (
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___CI_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___CI_
 
-ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
-tao_PortableServer_ImplicitActivationPolicy_duplicate (
-    PortableServer::ImplicitActivationPolicy_ptr p
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_ImplicitActivationPolicy_release (
-    PortableServer::ImplicitActivationPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
-tao_PortableServer_ImplicitActivationPolicy_nil (
-    void
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
-tao_PortableServer_ImplicitActivationPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_ImplicitActivationPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::ImplicitActivationPolicy **tmp =
-    ACE_static_cast (PortableServer::ImplicitActivationPolicy **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
@@ -1284,96 +1072,12 @@ tao_PortableServer_ImplicitActivationPolicy_upcast (
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___CI_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___CI_
 
-ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
-tao_PortableServer_ServantRetentionPolicy_duplicate (
-    PortableServer::ServantRetentionPolicy_ptr p
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_ServantRetentionPolicy_release (
-    PortableServer::ServantRetentionPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
-tao_PortableServer_ServantRetentionPolicy_nil (
-    void
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
-tao_PortableServer_ServantRetentionPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_ServantRetentionPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantRetentionPolicy **tmp =
-    ACE_static_cast (PortableServer::ServantRetentionPolicy **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___CI_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___CI_
-
-ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
-tao_PortableServer_RequestProcessingPolicy_duplicate (
-    PortableServer::RequestProcessingPolicy_ptr p
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_RequestProcessingPolicy_release (
-    PortableServer::RequestProcessingPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
-tao_PortableServer_RequestProcessingPolicy_nil (
-    void
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_nil ();
-}
-
-ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
-tao_PortableServer_RequestProcessingPolicy_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_RequestProcessingPolicy_upcast (
-    void *src
-  )
-{
-  PortableServer::RequestProcessingPolicy **tmp =
-    ACE_static_cast (PortableServer::RequestProcessingPolicy **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1388,98 +1092,12 @@ tao_PortableServer_RequestProcessingPolicy_upcast (
 #if !defined (_PORTABLESERVER_POAMANAGER___CI_)
 #define _PORTABLESERVER_POAMANAGER___CI_
 
-ACE_INLINE PortableServer::POAManager_ptr
-tao_PortableServer_POAManager_duplicate (
-    PortableServer::POAManager_ptr p
-  )
-{
-  return PortableServer::POAManager::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_POAManager_release (
-    PortableServer::POAManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::POAManager_ptr
-tao_PortableServer_POAManager_nil (
-    void
-  )
-{
-  return PortableServer::POAManager::_nil ();
-}
-
-ACE_INLINE PortableServer::POAManager_ptr
-tao_PortableServer_POAManager_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::POAManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_POAManager_upcast (
-    void *src
-  )
-{
-  PortableServer::POAManager **tmp =
-    ACE_static_cast (PortableServer::POAManager **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___CI_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___CI_
-
-ACE_INLINE PortableServer::AdapterActivator_ptr
-tao_PortableServer_AdapterActivator_duplicate (
-    PortableServer::AdapterActivator_ptr p
-  )
-{
-  return PortableServer::AdapterActivator::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_AdapterActivator_release (
-    PortableServer::AdapterActivator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::AdapterActivator_ptr
-tao_PortableServer_AdapterActivator_nil (
-    void
-  )
-{
-  return PortableServer::AdapterActivator::_nil ();
-}
-
-ACE_INLINE PortableServer::AdapterActivator_ptr
-tao_PortableServer_AdapterActivator_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::AdapterActivator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_AdapterActivator_upcast (
-    void *src
-  )
-{
-  PortableServer::AdapterActivator **tmp =
-    ACE_static_cast (PortableServer::AdapterActivator **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1488,48 +1106,6 @@ tao_PortableServer_AdapterActivator_upcast (
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___CI_)
 #define _PORTABLESERVER_SERVANTMANAGER___CI_
 
-ACE_INLINE PortableServer::ServantManager_ptr
-tao_PortableServer_ServantManager_duplicate (
-    PortableServer::ServantManager_ptr p
-  )
-{
-  return PortableServer::ServantManager::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_ServantManager_release (
-    PortableServer::ServantManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::ServantManager_ptr
-tao_PortableServer_ServantManager_nil (
-    void
-  )
-{
-  return PortableServer::ServantManager::_nil ();
-}
-
-ACE_INLINE PortableServer::ServantManager_ptr
-tao_PortableServer_ServantManager_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_ServantManager_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantManager **tmp =
-    ACE_static_cast (PortableServer::ServantManager **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
@@ -1537,96 +1113,12 @@ tao_PortableServer_ServantManager_upcast (
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___CI_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___CI_
 
-ACE_INLINE PortableServer::ServantActivator_ptr
-tao_PortableServer_ServantActivator_duplicate (
-    PortableServer::ServantActivator_ptr p
-  )
-{
-  return PortableServer::ServantActivator::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_ServantActivator_release (
-    PortableServer::ServantActivator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::ServantActivator_ptr
-tao_PortableServer_ServantActivator_nil (
-    void
-  )
-{
-  return PortableServer::ServantActivator::_nil ();
-}
-
-ACE_INLINE PortableServer::ServantActivator_ptr
-tao_PortableServer_ServantActivator_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantActivator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_ServantActivator_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantActivator **tmp =
-    ACE_static_cast (PortableServer::ServantActivator **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___CI_)
 #define _PORTABLESERVER_SERVANTLOCATOR___CI_
-
-ACE_INLINE PortableServer::ServantLocator_ptr
-tao_PortableServer_ServantLocator_duplicate (
-    PortableServer::ServantLocator_ptr p
-  )
-{
-  return PortableServer::ServantLocator::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_ServantLocator_release (
-    PortableServer::ServantLocator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::ServantLocator_ptr
-tao_PortableServer_ServantLocator_nil (
-    void
-  )
-{
-  return PortableServer::ServantLocator::_nil ();
-}
-
-ACE_INLINE PortableServer::ServantLocator_ptr
-tao_PortableServer_ServantLocator_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantLocator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_ServantLocator_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantLocator **tmp =
-    ACE_static_cast (PortableServer::ServantLocator **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1677,48 +1169,6 @@ tao_PortableServer_ServantLocator_upcast (
 #if !defined (_PORTABLESERVER_POA___CI_)
 #define _PORTABLESERVER_POA___CI_
 
-ACE_INLINE PortableServer::POA_ptr
-tao_PortableServer_POA_duplicate (
-    PortableServer::POA_ptr p
-  )
-{
-  return PortableServer::POA::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_POA_release (
-    PortableServer::POA_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::POA_ptr
-tao_PortableServer_POA_nil (
-    void
-  )
-{
-  return PortableServer::POA::_nil ();
-}
-
-ACE_INLINE PortableServer::POA_ptr
-tao_PortableServer_POA_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::POA::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_POA_upcast (
-    void *src
-  )
-{
-  PortableServer::POA **tmp =
-    ACE_static_cast (PortableServer::POA **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
@@ -1729,48 +1179,6 @@ tao_PortableServer_POA_upcast (
 
 #if !defined (_PORTABLESERVER_CURRENT___CI_)
 #define _PORTABLESERVER_CURRENT___CI_
-
-ACE_INLINE PortableServer::Current_ptr
-tao_PortableServer_Current_duplicate (
-    PortableServer::Current_ptr p
-  )
-{
-  return PortableServer::Current::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_PortableServer_Current_release (
-    PortableServer::Current_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE PortableServer::Current_ptr
-tao_PortableServer_Current_nil (
-    void
-  )
-{
-  return PortableServer::Current::_nil ();
-}
-
-ACE_INLINE PortableServer::Current_ptr
-tao_PortableServer_Current_narrow (
-    CORBA::Object *p ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_PortableServer_Current_upcast (
-    void *src
-  )
-{
-  PortableServer::Current **tmp =
-    ACE_static_cast (PortableServer::Current **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1993,5 +1401,4 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Reques
 
   return _tao_result;
 }
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -36,4 +36,3 @@ CORBA_SystemException::completed (CORBA::CompletionStatus c)
 {
   this->completed_ = c;
 }
-

@@ -8,6 +8,7 @@
 //   is:
 //
 //     tao_idl \
+//        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
 //          -Wb,export_macro=TAO_Export \
 //          -Wb,export_include="tao/TAO_Export.h" \
 //          -Wb,pre_include="ace/pre.h" \
