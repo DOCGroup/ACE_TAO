@@ -36,7 +36,8 @@
 
 //=====================[ constructor no args ]=========================
 Pdu::Pdu( void): vb_count_(0), pdu_type_(0), validity_(FALSE),
-error_index_(0), request_id_(0), notify_timestamp_(0)
+error_index_(0), request_id_(0), notify_timestamp_(0), error_status_(0),
+output_(0)
 {
 }
 
@@ -83,7 +84,7 @@ validity_(FALSE), error_index_(0), request_id_(0), notify_timestamp_(0)
 Pdu::~Pdu()
 {
   delete_all_vbs();
-  delete [] output;
+  delete [] output_;
 }
  
 
@@ -154,20 +155,20 @@ char * Pdu::to_string()
    for ( int z = 0; z < vb_count_; z++) 
        size += ACE_OS::strlen(vbs_[z]->to_string());
 
-  ACE_NEW_RETURN(output, char[size], "");
+  ACE_NEW_RETURN(output_, char[size], "");
 
   // print pdu header info
-  sprintf(output, "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
+  sprintf(output_, "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
  err idx: %d\n",     validity_, pdu_type_, request_id_,
     vb_count_, error_status_, error_index_ );
 
   // now append vb pairs in this object
    for ( z = 0; z < vb_count_; z++) {
-     ACE_OS::strcat(output, vbs_[z]->to_string());
-     ACE_OS::strcat(output, "\n\t");
+     ACE_OS::strcat(output_, vbs_[z]->to_string());
+     ACE_OS::strcat(output_, "\n\t");
    }
 
-  return output;
+  return output_;
 }
  
 
@@ -297,18 +298,18 @@ char *Pdu::agent_error_reason()
     char *val =  bad.to_string_value();
     const int HDR_SZ = 100;
 
-    if (!output) {
+    if (!output_) {
       int size = ACE_OS::strlen(pmsg) + ACE_OS::strlen(id) + 
            ACE_OS::strlen(val);
-      ACE_NEW_RETURN(output, char[size + HDR_SZ], "");
+      ACE_NEW_RETURN(output_, char[size + HDR_SZ], "");
     }
 
-    ACE_OS::sprintf(output, 
+    ACE_OS::sprintf(output_, 
 "FAIL PDU REPORT: pdu id: %d vb cnt: %d vb idx: %d \n\
 msg: %s vb oid: %s value: %s",
       get_request_id(), n_vbs, get_error_index(),  pmsg, id, val); 
 
-    return output;
+    return output_;
 }
 
 //=====================[ set the error status ]==========================

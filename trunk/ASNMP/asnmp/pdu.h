@@ -63,6 +63,8 @@ public:
   Pdu& operator+=( Vb &vb);
   // append a vb to the pdu
 
+  // TODO: add Pdu& operator-=(const Vb &vb);
+
   int get_vblist( Vb* pvbs, const int pvb_count);
   // extract all Vbs from Pdu
 
@@ -116,8 +118,8 @@ public:
   int valid() const;
   // returns validity of Pdu instance
 
-  int trim(const int position=1);
-  // trim off the last vb, if present
+  int trim(const int count=1);
+  // trim off count vbs from the end of the vb list
 
   int delete_vb( const int position);
   // delete a Vb anywhere within the Pdu
@@ -179,7 +181,7 @@ public:
     Oid notify_enterprise_;
     
    private:
-   char *output;                 
+   char *output_;                 
    // buffer for to_string()
 };
 
