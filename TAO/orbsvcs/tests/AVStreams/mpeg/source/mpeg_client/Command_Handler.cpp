@@ -215,7 +215,7 @@ Command_Handler::init_video (void)
             VBpid = -1;
           }
           usleep(10000);
-          VideoWrite(&tmp, 1);
+          this->close ();
           ComCloseConn(videoSocket);
           videoSocket = -1;
           while ((!VBbufEmpty()) || !VDbufEmpty()) {
@@ -627,7 +627,21 @@ Command_Handler::stat_stream (CORBA::Char_out ch,
 CORBA::Boolean 
 Command_Handler::close (void)
 {
-  return 0;
+  TAO_TRY
+    {
+      CORBA::Boolean result;
+      result = this->video_control_->close (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (result == (CORBA::B_FALSE))
+        return CORBA::B_FALSE;
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) close done \n"));
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("video_control_->close (..)");
+      return CORBA::B_FALSE;
+    }
+  TAO_ENDTRY;
 }
 
 
@@ -769,8 +783,44 @@ CORBA::Boolean
 Command_Handler::step (void)
                        
 {
-  ::step ();
-  return 0;
+  //  ::step ();
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Command_Handler::step ()\n"));
+  Video_Control::STEPpara_var para (new Video_Control::STEPpara);
+  this->stop_playing ();
+  NewCmd (CmdSTEP);
+  if (videoSocket >= 0 && shared->nextFrame <= shared->totalFrames)
+    { /* when shared->nextFrame == shared->totalFrame, it will force VS to send a ENDSEQ,
+         to let VD give out the remaining frame in its ring[] buffer */
+      para->sn = shared->cmdsn;
+      para->nextFrame = shared->nextFrame;
+      TAO_TRY
+        {
+          CORBA::Boolean result;
+          result = this->video_control_->step (para.in (),
+                                               TAO_TRY_ENV);
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) step done \n"));          
+          TAO_CHECK_ENV;
+          if (result == (CORBA::B_FALSE))
+            return CORBA::B_FALSE;
+          }
+        TAO_CATCHANY
+          {
+            TAO_TRY_ENV.print_exception ("video_control_->step (..)");
+            return CORBA::B_FALSE;
+          }
+        TAO_ENDTRY;
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) reached line %d in file %s\n", __LINE__, __FILE__));
+     /*
+        fprintf(stderr, "CTR: STEP . . . frame-%d\n", para.nextFrame);
+    */
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) reached line %d in file %s\n", __LINE__, __FILE__));
+    ::wait_display ();
+  }
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) reached line %d in file %s\n", __LINE__, __FILE__));
+  unsigned char tmp = CmdDONE;
+  CmdWrite(&tmp, 1);
+  return CORBA::B_TRUE;
 }
 
 CORBA::Boolean
@@ -1058,7 +1108,15 @@ int
 Command_Handler::volume (void)
                            
 {
-  ::volume ();
+  CmdRead((char *)&shared->volumePosition, 4);
+  if (audioSocket >= 0) {
+    SetAudioGain();
+  }
+  /*
+  unsigned char tmp = CmdDONE;
+  tmp = CmdDONE;
+  CmdWrite(&tmp, 1);
+  */
   return 0;
 }
 
@@ -1066,7 +1124,12 @@ int
 Command_Handler::balance (void)
                            
 {
-  ::balance ();
+  CmdRead((char *)&shared->balancePosition, 4);
+  /*
+  unsigned char tmp = CmdDONE;
+  tmp = CmdDONE;
+  CmdWrite(&tmp, 1);
+  */
   return 0;
 }
 
@@ -1156,7 +1219,6 @@ Command_Handler::stop (void)
 #ifdef STAT
   unsigned char preCmd = shared->cmd;
 #endif
-  unsigned char tmp = CmdDONE;
   /*
     fprintf(stderr, "CTR: STOP . . .\n");
   */
@@ -1166,236 +1228,10 @@ Command_Handler::stop (void)
     Fprintf(stderr, "CTR live video stat: average disp frame rate: %5.2f fps\n",
 	    shared->pictureRate * displayedFrames / shared->nextFrame);
   }
+  unsigned char tmp = CmdDONE;
   CmdWrite(&tmp, 1);
-  
-#ifdef STAT
-  if (shared->collectStat && preCmd == CmdPLAY && videoSocket >= 0)
-    {
-      int i;
-      int count = 0;
-      char ch;
-      char buf[100];
-      FILE *fp;
-    
-      for (;;)
-        {
-          sprintf(buf, "stat.%02d", count++);
-          if (access(buf, 0))
-            break;
-          if (count > 10000)
-            {
-              fprintf(stderr, "CTR generating stat file, weired thing happened.\n");
-              exit(1);
-            }
-        }
-      fprintf(stderr, "Statistics is being collected to file %s. . .", buf);
-      fp = fopen(buf, "w");
-      if (fp == NULL)
-        {
-          fprintf(stderr, "CTR failed to open %s for write.\n", buf);
-          perror("");
-          exit(1);
-        }
-      {
-        time_t val = time(NULL);
-        get_hostname(buf, 100);
-        buf[99] = 0;
-        fprintf(fp, "ClientHost: %s\n", buf);
-        fprintf(fp, "Date: %s\n", ctime(&val));
-      }
-      fprintf(fp, "VideoHost: %s\nVideoFile: %s\n", vh, vf);
-      fprintf(fp, "AudioHost: %s\nAudioFile: %s\n\n", ah, af);
-      fprintf(fp, "TotalFrames: %d\nTotalGroups: %d\n",
-              shared->totalFrames, shared->totalGroups);
-      fprintf(fp, "TotalHeaders: %d\n", shared->totalHeaders);
-      fprintf(fp, "PictureRate: %f\nPictureSize: %d x %d\n",
-              shared->pictureRate, shared->horizontalSize, shared->verticalSize);
-      fprintf(fp, "AverageFrameSize: %d\n", shared->averageFrameSize);
-      shared->pattern[shared->patternSize] = 0;
-      fprintf(fp, "Pattern(%d frames): %s\n", shared->patternSize, shared->pattern);
-      shared->pattern[shared->patternSize] = 'I';
 
-      fprintf(fp, "\nStartPlayRoundTripDelay: %d (millisec)\n",
-              shared->playRoundTripDelay);
-      fprintf(fp, "VBmaxBytes: %d\nVBdroppedFrames: %d\n",
-              shared->stat.VBmaxBytes, shared->stat.VBdroppedFrames);
-      fprintf(fp, "VBemptyTimes: %d\nVDlastFrameDecoded: %d\n",
-              shared->stat.VBemptyTimes, shared->stat.VDlastFrameDecoded);
-    
-      fprintf(fp, "\nVDframesDroppedWithoutReference: %d\n",
-              shared->stat.VDnoRef);
-      fprintf(fp, "VDframesDroppedAgainstSendPattern: %d\n",
-              shared->stat.VDagainstSendPattern);
-      fprintf(fp, "VDIframesDroppedTooLate: %d\n",
-              shared->stat.VDtooLateI);
-      fprintf(fp, "VDPframesDroppedTooLate: %d\n",
-              shared->stat.VDtooLateP);
-      fprintf(fp, "VDBframesDroppedTooLate: %d\n",
-              shared->stat.VDtooLateB);
-
-      fprintf(fp, "CTRframesDisplayedOnTime: %d\n", shared->stat.CTRdispOnTime);
-      fprintf(fp, "CTRframesDisplayedLate:   %d\n", shared->stat.CTRdispLate);
-      fprintf(fp, "CTRframesDroppedOutOrder: %d\n", shared->stat.CTRdropOutOrder);
-      fprintf(fp, "CTRframesDroppedLate:     %d\n", shared->stat.CTRdropLate);
-    
-      fprintf(fp,
-              "\nSpeedChangeHistory:\n(frameId, UPF, FPS, frameRateLimit, frames, dropped):\n");
-      for (i = 0; i < min(speedPtr, SPEEDHIST_SIZE); i ++)
-        fprintf(fp, "%-4d %-6d %6.2f %6.2f %-4d %d\n",
-                speedHistory[i].frameId, speedHistory[i].usecPerFrame,
-                1000000.0 / (double)speedHistory[i].usecPerFrame,
-                speedHistory[i].frameRateLimit,
-                speedHistory[i].frames, speedHistory[i].framesDropped);
-      if (speedPtr > SPEEDHIST_SIZE)
-        fprintf(fp, "Actual speed change times: %d (>%d)\n",
-                speedPtr, SPEEDHIST_SIZE);
-
-      fprintf(fp, "\nVDbufferFillLevel:\n(frames, times):\n");
-      for (i = 0; i < MAX_VDQUEUE_SIZE; i ++) {
-        if (shared->stat.VDqueue[i]) {
-          fprintf(fp, "%-6d %d\n", i, shared->stat.VDqueue[i]);
-        }
-      }
-
-      fprintf(fp, "\nVBmessageGap:\n(width, times):\n");
-      {
-        for (i = 0; i <= MSGGAP_MAX  - MSGGAP_MIN; i ++) {
-          if (shared->stat.VBmsgGaps[i]) {
-            fprintf(fp, "%-6d %d\n", i + MSGGAP_MIN, shared->stat.VBmsgGaps[i]);
-          }
-        }
-      }
-    
-      if (shared->stat.fbPacketNumber > 0)
-        {
-          fprintf(fp,
-                  "\nFeedbackPackets:\n(fId,addUPF,addf,rateLimit,frames,fdropped,advance):\n");
-          for (i = 0; i < min(shared->stat.fbPacketNumber, MAX_FB_PACKETS); i++)
-            fprintf(fp, "%-6d %-6d %-6d %6.2f %4d %4d %d\n",
-                    shared->stat.fbPackets[i].frameId,
-                    shared->stat.fbPackets[i].addUsecPerFrame,
-                    shared->stat.fbPackets[i].addFrames,
-                    shared->stat.fbPackets[i].frameRateLimit,
-                    shared->stat.fbPackets[i].frames,
-                    shared->stat.fbPackets[i].framesDropped,
-                    shared->stat.fbPackets[i].advance);
-          if (shared->stat.fbPacketNumber > MAX_FB_PACKETS)
-            fprintf(fp, "Actual # of FB packets: %d\n", shared->stat.fbPacketNumber);
-        }
-
-      ch = CmdSTATsent;
-      VideoWrite(&ch, 1);
-      fprintf(fp, "\n\nVSFramesSent:\n       ");
-      for (i = 0; i < 8; i++)
-        fprintf(fp, "%-10d", i * 10);
-      fprintf(fp, "\n       -----------------------------------------------------");
-      count = 0;
-      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
-        {
-          int j;
-          VideoRead(&ch, 1);
-          if (i % 10 == 0)
-            fprintf(fp, "\n%5d: ", i * 8);
-          for (j = 0; j < 8; j++)
-            {
-              if (ch & (1 << j))
-                {
-                  count ++;
-                  fputc('x', fp);
-                }
-              else
-                fputc('-', fp);
-            }
-        }
-      fprintf(fp, "\nVSTotalFramesSent: %d\n", count);
-      fprintf(fp, "\nVBFramesReceived:\n       ");
-      for (i = 0; i < 8; i++)
-        fprintf(fp, "%-10d", i * 10);
-      fprintf(fp, "\n       -----------------------------------------------------");
-      count = 0;
-      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
-        {
-          int j;
-          if (i % 10 == 0)
-            fprintf(fp, "\n%5d: ", i * 8);
-          for (j = 0; j < 8; j++)
-            {
-              if (shared->stat.VBframesReceived[i] & (1 << j))
-                {
-                  count ++;
-                  fputc('x', fp);
-                }
-              else
-                fputc('-', fp);
-            }
-        }
-      fprintf(fp, "\nVBTotalFramesReceived: %d\n", count);
-      fprintf(fp, "\nVDFramesDecoded:\n       ");
-      for (i = 0; i < 8; i++)
-        fprintf(fp, "%-10d", i * 10);
-      fprintf(fp, "\n       -----------------------------------------------------");
-      count = 0;
-      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
-        {
-          int j;
-          if (i % 10 == 0)
-            fprintf(fp, "\n%5d: ", i * 8);
-          for (j = 0; j < 8; j++)
-            {
-              if (shared->stat.VDframesDecoded[i] & (1 << j))
-                {
-                  count ++;
-                  fputc('x', fp);
-                }
-              else
-                fputc('-', fp);
-            }
-        }
-      fprintf(fp, "\nVDTotalFramesDecoded: %d\n", count);
-      fprintf(fp, "\nVPFramesDisplayed:\n       ");
-      for (i = 0; i < 8; i++)
-        fprintf(fp, "%-10d", i * 10);
-      fprintf(fp, "\n       -----------------------------------------------------");
-      count = 0;
-      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
-        {
-          int j;
-          if (i % 10 == 0)
-            fprintf(fp, "\n%5d: ", i * 8);
-          for (j = 0; j < 8; j++)
-            {
-              if (shared->stat.VPframesDisplayed[i] & (1 << j))
-                {
-                  count ++;
-                  fputc('x', fp);
-                }
-              else
-                fputc('-', fp);
-            }
-        }
-      fprintf(fp, "\nVPTotalFramesDisplayed: %d\n", count);
-
-      fprintf(fp, "\nVBBufferFillLevelHistory:\n       ");
-      for (i = 0; i < 10; i ++)
-        fprintf(fp, "%-7d", i);
-      fprintf(fp, "\n       -----------------------------------------------------");
-      for (i = 0; i < shared->totalFrames; i++)
-        {
-          if (i % 10 == 0)
-            fprintf(fp, "\n%5d: ", i / 10);
-          if (shared->stat.VBfillLevel[i] == SHRT_MIN)
-            fprintf(fp, "x      ");
-          else
-            fprintf(fp, "%-7d", shared->stat.VBfillLevel[i]);
-        }
-      fprintf(fp, "\nHistoryEnd\n");
-      fclose(fp);
-      fprintf(stderr, "Statistics collecting done.\n");
-    }
-#endif
-  
-  return 0;
-
+  return CORBA::B_TRUE;
 }
 
 int
