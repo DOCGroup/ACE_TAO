@@ -461,6 +461,29 @@ main (int argc, ASYS_TCHAR *argv[])
     else
       max_messages = ACE_OS::atoi (argv[1]);
 
+  // Be sure that the a timed out get sets the error code properly.
+  ACE_Message_Queue<ACE_SYNCH> q1;
+  if (!q1.is_empty ()) {
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("New queue is not empty!\n")));
+    status = 1;
+  }
+  else {
+    ACE_Message_Block *b;
+    ACE_Time_Value tv (ACE_OS::gettimeofday());   // Now
+    if (q1.dequeue_head (b, &tv) != -1) {
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Dequeued from empty queue!\n")));
+      status = 1;
+    }
+    else if (errno != EWOULDBLOCK) {
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                  ASYS_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
+      status = 1;
+    }
+    else {
+      status = 0;     // All is well
+    }
+  }
+
 #if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on
   // VxWorks.
