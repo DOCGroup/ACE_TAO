@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Reply_Dispatcher;
-class TAO_GIOP_Version;
+struct TAO_GIOP_Version;
 class TAO_InputCDR;
 
 class TAO_Export TAO_Request_Mux_Strategy
