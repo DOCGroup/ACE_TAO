@@ -3,8 +3,8 @@
 #include "Connection_Handler.h"
 #include "ORB_Core.h"
 #include "debug.h"
-#include "Resume_Handle.h"
 #include "Transport.h"
+#include "Resume_Handle.h"
 #include "Wait_Strategy.h"
 
 #include "ace/SOCK.h"
@@ -19,9 +19,11 @@ ACE_RCSID (tao,
            "$Id$")
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core)
-  , transport_ (0)
-  , tss_resources_ (orb_core->get_tss_resources ())
+  : orb_core_ (orb_core),
+#if !defined (TAO_HAS_COLLOCATION)
+    transport_ (0),
+#endif
+    tss_resources_ (orb_core->get_tss_resources ())
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
@@ -92,6 +94,8 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
 int
 TAO_Connection_Handler::svc_i (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   int result = 0;
 
   // Inheriting the ORB_Core tss stuff from the parent thread.
@@ -163,8 +167,12 @@ TAO_Connection_Handler::svc_i (void)
                  "TAO (%P|%t) - Connection_Handler::svc_i end\n"));
 
   return result;
+#endif
+
+  return 0;
 }
 
+#if !defined (TAO_HAS_COLLOCATION)
 void
 TAO_Connection_Handler::transport (TAO_Transport* transport)
 {
@@ -175,11 +183,14 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
       ACE_Event_Handler::Reference_Counting_Policy::ENABLED
     );
 }
+#endif
 
 int
 TAO_Connection_Handler::handle_output_eh (
     ACE_HANDLE, ACE_Event_Handler * eh)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   // Let the transport that it is going to be used
   (void) this->transport ()->update_transport ();
 
@@ -205,12 +216,19 @@ TAO_Connection_Handler::handle_output_eh (
     }
 
   return return_value;
+#else
+  ACE_UNUSED_ARG (eh);
+  return 0;
+#endif
 }
 
 int
 TAO_Connection_Handler::handle_input_eh (
   ACE_HANDLE h, ACE_Event_Handler *eh)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   // If we can't process upcalls just return
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
@@ -233,12 +251,19 @@ TAO_Connection_Handler::handle_input_eh (
     }
 
   return result;
+#else
+  ACE_UNUSED_ARG (eh);
+  ACE_UNUSED_ARG (h);
+  return 0;
+#endif
 }
 
 int
 TAO_Connection_Handler::handle_input_internal (
     ACE_HANDLE h, ACE_Event_Handler * eh)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   // Let the transport know that it is used
   (void) this->transport ()->update_transport ();
 
@@ -280,11 +305,20 @@ TAO_Connection_Handler::handle_input_internal (
     }
 
   return return_value;
+#else
+  ACE_UNUSED_ARG (eh);
+  ACE_UNUSED_ARG (h);
+  return 0;
+#endif
+
 }
 
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   // Save the ID for debugging messages
   ACE_HANDLE handle = eh->get_handle ();
 
@@ -380,8 +414,11 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
                    "close_connection_eh\n",
                    id));
     }
-
   return 1;
+#else
+  ACE_UNUSED_ARG (eh);
+  return 1;
+#endif
 }
 
 int
@@ -403,7 +440,11 @@ TAO_Connection_Handler::pos_io_hook (int & )
 int
 TAO_Connection_Handler::close_handler (void)
 {
+#if !defined (TAO_HAS_COLLOCATION)
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
   this->transport ()->remove_reference ();
   return 0;
+#else
+  return 0;
+#endif
 }
