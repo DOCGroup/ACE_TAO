@@ -11,7 +11,7 @@ project(BMDisplay_stub): ciao_client {
   idlflags += -Wb,skel_export_macro=BMDISPLAY_SVNT_Export 
   idlflags += -Wb,skel_export_include=BMDisplay_svnt_export.h
 
-  libs += BMDisplay_stub
+  libs += BasicSP_stub
 
   dynamicflags   = BMDISPLAY_STUB_BUILD_DLL
 
