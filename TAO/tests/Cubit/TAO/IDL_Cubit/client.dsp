@@ -86,7 +86,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\clnt.cpp
+SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
