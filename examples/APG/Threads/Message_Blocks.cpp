@@ -1,6 +1,8 @@
 // $Id$
 
-int main (int, char **)
+#include "ace/OS_main.h"
+
+int ACE_TMAIN (int, ACE_TCHAR **)
 {
 #if 0
 
@@ -17,13 +19,13 @@ int main (int, char **)
 
   const char *commandSeq= "CommandSeq#14";
   ACE_OS::sprintf (mb->wr_ptr (), commandSeq);
-  // Move the wr_ptr() forward in the buffer by the 
+  // Move the wr_ptr() forward in the buffer by the
   // amount of data we just put in.
   mb->wr_ptr (ACE_OS::strlen (commandSeq) +1);
 // Listing 2
 // Listing 3 code/ch12
-  ACE_DEBUG((LM_DEBUG, 
-             ACE_TEXT ("Command Sequence --> %s\n"), 
+  ACE_DEBUG((LM_DEBUG,
+             ACE_TEXT ("Command Sequence --> %s\n"),
              mb->rd_ptr ()));
   mb->rd_ptr (ACE_OS::strlen (mb->rd_ptr ())+1);
   mb->release ();
