@@ -33,6 +33,10 @@ class CosECSupplier : public POA_CosEventComm::PushSupplier,
   //   The CosECSupplier is a simple Push Supplier that connects to
   //   the CosEC and sends events to it.
 public:
+  // = Initializatiopn and termination methods.
+  CosECSupplier ();
+  // Constructor.
+
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
              CORBA::Environment &TAO_TRY_ENV);
   // This method connects the supplier to the EC.
@@ -64,6 +68,9 @@ private:
 
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin_;
   // We talk to the EC using this proxy.
+
+  int event_count_;
+  // The number of Events to send to the EC.
 };
 
 #endif /* COSECSUPPLIER_H_ */

@@ -3,10 +3,16 @@
 
 #include "CosECConsumer.h"
 
+CosECConsumer::CosECConsumer ()
+  :event_count_ (1)
+{
+  // No-Op.
+}
+
 int
 CosECConsumer::parse_args (int argc, char *argv [])
 {
- ACE_Get_Opt get_opt (argc, argv, "n:");
+ ACE_Get_Opt get_opt (argc, argv, "n:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -17,11 +23,16 @@ CosECConsumer::parse_args (int argc, char *argv [])
           this->service_name = get_opt.optarg;
           break;
 
+        case 'c':
+          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          break;
+
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       " -n <COS Event Service name>"
+                      " -c event_count"
                       " \n",
                       argv[0]));
           return -1;
@@ -87,16 +98,24 @@ CosECConsumer::push (const CORBA::Any &data,
                      CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "in CosECConsumer::push\n"));
+              "(%P):%s\n",
+              " - In CosECConsumer::push"));
 
-  CORBA_Any::dump (data);
+  ACE_DEBUG ((LM_DEBUG,
+              "Event count = %d\n",
+              this->event_count_));
 
-  //this->close (TAO_TRY_ENV);
-  //this->shutdown ();
-  // @@ if i disconnect the only running consumer here and start another one
-  // then the new consumer does not get events from a supplier.
-  // Instead the Rtec prints a message that the EC has 0 suppliers and consumers.
-  TAO_TRY_ENV;
+  if (--this->event_count_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P):%s\n",
+                  "exiting the consumer."));
+
+      this->close (TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+      this->shutdown ();
+    }
 }
 
 void
@@ -144,13 +163,18 @@ int
 main (int argc, char *argv[])
 {
   CosECConsumer cons;
+
   if (cons.init (argc, argv) == -1)
     return 1;
 
   if (cons.init_Consumer () == -1)
     return 1;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P): %s\n", "Started the consumer.."));
+
   cons.runORB ();
+
   cons.shutdown ();
 
   return 0;

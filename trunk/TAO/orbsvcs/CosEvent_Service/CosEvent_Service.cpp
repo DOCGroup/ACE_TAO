@@ -135,9 +135,9 @@ CosEvent_Service::parse_args (int argc, char *argv [])
                       " -r <RealTime Event Service name>"
                       " -s <global|local>"
                       " -l" // creates the RtEC locally.
-                      " -e [\"EventType_1, EventType_2...\" for ConsumerQOS]"
-                      " -o [\"EventSourceID_1, [EventSourceID_2...\" for ConsumerQOS]"
-                      " -p [Source, Event pairs] for SupplierQOS"
+                      " -e [\"EventType_1, EventType_2...\"] for ConsumerQOS."
+                      " -o [\"EventSourceID_1, [EventSourceID_2...\"] for ConsumerQOS."
+                      " -p [\"Source, Event\" pair] for SupplierQOS."
                       " \n",
                       argv[0]));
           return -1;
@@ -206,10 +206,6 @@ CosEvent_Service::start_Scheduler (void)
 {
   TAO_TRY
     {
-       CosNaming::Name schedule_name (1);
-       schedule_name.length (1);
-       schedule_name[0].id = CORBA::string_dup (this->schedule_name_);
-
       if (this->global_scheduler_ == 0)
         {
           this->scheduler_ =
@@ -225,28 +221,29 @@ CosEvent_Service::start_Scheduler (void)
                       "CosEvent_Service: The (local) scheduler IOR is <%s>\n",
                       str.in ()));
 
-          // Register the servant with the Naming Context....
-	  this->naming_client_->rebind (schedule_name,
-                                        this->scheduler_.in (),
-                                        TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-
           if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
             return -1;
         }
       else // get the global scheduler
         {
+          CosNaming::Name schedule_name (1);
+          schedule_name.length (1);
+          schedule_name[0].id = CORBA::string_dup (this->schedule_name_);
+
           CORBA::Object_var sched_obj =
             this->naming_client_->resolve (schedule_name,
                                            TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
           // The CORBA::Object_var object is downcast to
           // RtecScheduler::Scheduler using the <_narrow> method.
           this->scheduler_ =
             RtecScheduler::Scheduler::_narrow (sched_obj.in (),
                                                TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+          if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
+            return -1;
         }
 
       ACE_Scheduler_Factory::use_config (this->naming_client_.get_context());
@@ -320,27 +317,26 @@ CosEvent_Service::init_SupplierQOS (RtecScheduler::handle_t supp_handle)
                                       1);
         }
       else
-        do
-          {
-            int source_val = 0, type_val = 0;
-            source_val = ACE_OS::atoi (tok);
+        // we just use 1 source-type pair in the event channel.
+        // so scan for the 1st pair only.
+        {
+          int source_val = 0, type_val = 0;
+          source_val = ACE_OS::atoi (tok);
 
-            tok = ACE_OS::strtok (0, &c);
+          tok = ACE_OS::strtok (0, &c);
 
-            if (tok != 0)
-              type_val = ACE_OS::atoi (tok);
+          if (tok != 0)
+            type_val = ACE_OS::atoi (tok);
 
-            ACE_DEBUG ((LM_DEBUG, "supplier_qos::insert (%d, %d)\n",
-                        source_val, type_val));
+          ACE_DEBUG ((LM_DEBUG, "supplier_qos::insert (%d, %d)\n",
+                      source_val, type_val));
 
-            // Setup the QOS params..
-            this->supplier_qos_.insert (source_val,
-                                        type_val,
-                                        supp_handle,
-                                        1);
-            tok = ACE_OS::strtok (0, &c);
-          }
-        while (tok != 0);
+          // Setup the QOS params..
+          this->supplier_qos_.insert (source_val,
+                                      type_val,
+                                      supp_handle,
+                                      1);
+        }
     }
 }
 
@@ -457,6 +453,13 @@ CosEvent_Service::create_CosEC (void)
       this->cos_ec_ = this->ec_i_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
+      CORBA::String_var str = this->orb_->object_to_string (this->cos_ec_,
+                                                            TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "CosEvent_Service: The COSEC IOR is <%s>\n",
+                  str.in ()));
       return 0;
     }
   TAO_CATCHANY
@@ -578,17 +581,6 @@ CosEvent_Service::shutdown (void)
 {
  TAO_TRY
     {
-      if (this->global_scheduler_ == 0 &&
-          this->scheduler_ != RtecScheduler::Scheduler::_nil ())
-	{
-          CosNaming::Name schedule_name (1);
-          schedule_name.length (1);
-          schedule_name[0].id = CORBA::string_dup (this->schedule_name_);
-
-	  this->naming_client_->unbind (schedule_name, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
-
       if (this->cos_ec_ != CosEventChannelAdmin::EventChannel::_nil ())
         {
           // unbind the cosEC from the naming service.
