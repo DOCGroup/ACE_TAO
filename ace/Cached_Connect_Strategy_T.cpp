@@ -27,8 +27,8 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   (ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
-   MUTEX *mutex = 0,
-   int delete_mutex = 0)
+   MUTEX *mutex,
+   int delete_mutex)
     : ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX> (cre_s, 
                                                                              con_s,
                                                                              rec_s,
