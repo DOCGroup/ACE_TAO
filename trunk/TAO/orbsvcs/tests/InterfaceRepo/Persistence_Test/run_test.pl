@@ -42,7 +42,7 @@ $IFR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $IFR->Kill (); 
+    $IFR->Kill ();
     exit 1;
 }
 
@@ -68,7 +68,7 @@ $IFR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $IFR->Kill (); 
+    $IFR->Kill ();
     exit 1;
 }
 

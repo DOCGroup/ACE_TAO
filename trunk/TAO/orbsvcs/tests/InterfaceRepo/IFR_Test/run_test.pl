@@ -40,7 +40,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 unlink $iorfile;
 
 $SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " -o $iorfile" . " $locking");
-$CL = new PerlACE::Process ("IFR_Test", 
+$CL = new PerlACE::Process ("IFR_Test",
                             "-ORBInitRef InterfaceRepository=file://$iorfile"
                             . " $debug $test $iterations");
 
@@ -48,7 +48,7 @@ $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
