@@ -288,6 +288,18 @@ interface Param_Test
                         inout any ca2, 
                         out any ca3);
 
+  // Recursive structs. Contains a sequence of itself.
+  struct Recursive_Struct
+    {
+      long x;
+
+      sequence<Recursive_Struct> children;
+    };
+
+  Recursive_Struct test_recursive_struct (in Recursive_Struct rs1,
+                                          inout Recursive_Struct rs2,
+                                          out Recursive_Struct rs3);
+
   // multidimensional arrays (fixed). The following will give rise to a 3
   // dimensional array. The following will define a 3-dimensional array of size
   // DIM1 X DIM2 X DIM3
