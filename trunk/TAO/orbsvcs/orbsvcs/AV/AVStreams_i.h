@@ -524,12 +524,15 @@ public:
 
   TAO_AV_QoS &qos (void);
 
+  void TAO_Base_StreamEndPoint::protocol_object_set (void);
+  int TAO_Base_StreamEndPoint::is_protocol_object_set (void);
 
 protected:
+
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
   Flow_Handler_Map control_flow_handler_map_;
-
+  int protocol_object_set_;
 };
 
 // Forward declarations.
