@@ -31,7 +31,7 @@ public:
   enum { DEFAULT_COMMAND_LINE_BUF_LEN = 1024 };
 
   ACE_Process_Options (int inherit_environment = 1,
-		       int command_line_buf_len=DEFAULT_COMMAND_LINE_BUF_LEN);
+		       int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN);
   // If <inherit_environment> == 1, the new process will inherit the
   // environment of the current process.  <command_line_buf_len> is the
   // max strlen for command-line arguments.
@@ -52,11 +52,11 @@ public:
   // sure to set the others to ACE_INVALID_HANDLE.  Returns 0 on
   // success, -1 on failure.
 
-  int setenv (const char *format, ...);
+  int setenv (LPCTSTR format, ...);
   // <format> must be of the form "VARIABLE= VALUE".  There can not be
   // any spaces between VARIABLE and the equal sign.
 
-  int setenv (const char *variable_name, const char *format, ...);
+  int setenv (LPCTSTR variable_name, LPCTSTR format, ...);
   // Set a single environment variable, <variable_name>.  Since
   // different platforms separate each environment variable
   // differently, you must call this method once for each variable.
@@ -64,14 +64,14 @@ public:
   // So options->setenv ("FOO","one + two = %s", "three") will result
   // in "FOO=one + two = three".
 
-  int setenv (char *envp[]);
+  int setenv (LPTSTR envp[]);
   // Same as above with argv format.  <envp> must be null terminated.
 
-  void working_directory (const TCHAR *wd);
+  void working_directory (LPCTSTR wd);
   // Set the working directory for the process.  strlen of <wd> must
   // be <= MAXPATHLEN.
 
-  int command_line (const char *format, ...);
+  int command_line (LPCTSTR format, ...);
   // Set the command-line arguments.  <format> can use any printf
   // formats.  The first token in <format> should be the path to the
   // application.  This can either be a full path, relative path, or
@@ -80,7 +80,7 @@ public:
   // path to run a process, this method *must* be called!  Returns 0
   // on success, -1 on failure.
 
-  int command_line (char *argv[]);
+  int command_line (LPTSTR argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
 
   // ************************************************************
@@ -95,20 +95,10 @@ public:
   // Buffer of command-line options.  Returns exactly what was passed
   // to this->command_line.
 
-  char * const *command_line_argv (void);
-  // argv-style command-line options.  Parses and modifies the string
-  // created from this->command_line.  All spaces not in quotes ("" or
-  // '') are replaced with null (\0) bytes.  An argv array is built
-  // and returned with each entry pointing to the start of
-  // null-terminated string.  Returns { 0 } if nothing has been set.
-
   LPTSTR env_buf (void);
   // Null-terminated buffer of null terminated strings.  Each string
   // is an environment assignment "VARIABLE=value".  This buffer
   // should end with two null characters.
-
-  char **env_argv (void);
-  // argv-style array of environment settings.
 
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
@@ -139,6 +129,16 @@ public:
   void handle_inheritence (int);
   // Allows disabling of handle inheritence.
 #else /* All things not WIN32 */
+
+  char * const *command_line_argv (void);
+  // argv-style command-line options.  Parses and modifies the string
+  // created from this->command_line.  All spaces not in quotes ("" or
+  // '') are replaced with null (\0) bytes.  An argv array is built
+  // and returned with each entry pointing to the start of
+  // null-terminated string.  Returns { 0 } if nothing has been set.
+
+  char **env_argv (void);
+  // argv-style array of environment settings.
 
   // = Accessors for the standard handles.
   ACE_HANDLE get_stdin (void);
@@ -209,13 +209,13 @@ protected:
   TCHAR environment_buf_[ENVIRONMENT_BUFFER];
   // Buffer containing all environment strings.
 
-  char *environment_argv_[MAX_ENVIRONMENT_ARGS];
+  LPTSTR environment_argv_[MAX_ENVIRONMENT_ARGS];
   // Pointers into environment_buf_.
 
   LPTSTR command_line_buf_;
-  // Buffer of command-line arguments.  E.g., "-f foo -b bar".
+  // Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
 
-  char *command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
+  LPTSTR command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
   // Argv-style command-line arguments.
 
   int command_line_argv_calculated_;
@@ -293,10 +293,10 @@ public:
   // Default construction.
 
   ACE_Process_Old (char *argv[],
-		      ACE_HANDLE std_in,
-		      ACE_HANDLE std_out = ACE_INVALID_HANDLE,
-		      ACE_HANDLE std_err = ACE_INVALID_HANDLE,
-		      char *envp[] = 0);
+		   ACE_HANDLE std_in,
+		   ACE_HANDLE std_out = ACE_INVALID_HANDLE,
+		   ACE_HANDLE std_err = ACE_INVALID_HANDLE,
+		   char *envp[] = 0);
   // Set the standard handles of the new process to the respective
   // handles and start the new process (using <execvp>/<execve> on
   // UNIX and <CreateProcess> on Win32>).  If <argv> is non-NULL it
@@ -374,24 +374,24 @@ class ACE_Export ACE_Tokenizer
 //    (e.g., printf ("\"like a quoted string\"").
 {
 public:
-  ACE_Tokenizer (char *buffer);
+  ACE_Tokenizer (LPTSTR buffer);
   // <buffer> will be parsed.
 
-  int delimiter (char d);
+  int delimiter (TCHAR d);
   // <d> is a delimiter.  Returns 0 on success, -1 if there is no
   // memory left.
 
-  int delimiter_replace (char d, char replacement);
+  int delimiter_replace (TCHAR d, TCHAR replacement);
   // <d> is a delimiter and, when found, will be replaced by
   // <replacement>.  Returns 0 on success, -1 if there is no memory
   // left.
 
-  int preserve_designators (char start, char stop, int strip=1);
+  int preserve_designators (TCHAR start, TCHAR stop, int strip=1);
   // For instance, quotes, or '(' and ')'.  Returns 0 on success, -1
   // if there is no memory left.  If <strip> == 1, then the preserve
   // designators will be stripped from the tokens returned by next.
 
-  char *next (void);
+  LPTSTR next (void);
   // Returns the next token.
 
   enum { 
@@ -400,17 +400,17 @@ public:
   };
 
 protected:
-  int is_delimiter (char d, int &replace, char &r);
+  int is_delimiter (TCHAR d, int &replace, TCHAR &r);
   // Returns 1 if <d> is a delimiter, 0 otherwise.  If <d> should be
   // replaced with <r>, <replace> is set to 1, otherwise 0.
 
-  int is_preserve_designator (char start, char &stop, int &strip);
+  int is_preserve_designator (TCHAR start, TCHAR &stop, int &strip);
   // If <start> is a start preserve designator, returns 1 and sets
   // <stop> to the stop designator.  Returns 0 if <start> is not a
   // preserve designator.
  
 private:
-  char *buffer_;
+  LPTSTR buffer_;
   int index_;
 
   struct Preserve_Entry
@@ -424,9 +424,9 @@ private:
     //    -)-.  The strip determines whether the designators should be
     //    removed from the token.
   {
-    char start_;
+    TCHAR start_;
     // E.g., "(".
-    char stop_;
+    TCHAR stop_;
     // E.g., ")".
     int strip_;
     // Whether the designators should be removed from the token.
@@ -444,9 +444,9 @@ private:
     // = DESCRIPTION
     //    Describes a delimiter for the tokenizer.
   {
-    char delimiter_;
+    TCHAR delimiter_;
     // Most commonly a space ' '.
-    char replacement_;
+    TCHAR replacement_;
     // What occurrences of delimiter_ should be replaced with.
     int replace_;
     // Whether replacement_ should be used.  This should be replaced
