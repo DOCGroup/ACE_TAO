@@ -23,7 +23,9 @@ Tue Sep  8 17:28:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  The correct way to set the length of the Message_Block inside a
 	  decoded octet sequences is to do it on the decoding code, using
 	  the ::replace() method brings all kind of problems a
-	  crashes. Especially if the 
+	  crashes. Especially if the sequence is encoded, as in the
+	  $TAO_ROOT/orbsvcs/EC_Custom_Marshal example.  Thanks to Dave
+	  Meyer <dmeyer@std.saic.com> for finding out this problem.
 
 Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
