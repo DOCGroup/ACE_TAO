@@ -1,3 +1,74 @@
+Fri Jan 18 16:42:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientInterceptorAdapter.h:
+
+	  No need to include corbafwd.h, ClientRequestInfo.h.  Forward
+	  declaring classes is sufficient.
+
+	  Added a new "TAO_ClientRequestInfo *" member.  It is the cached
+	  value of the object retrieved from TSS.
+
+	* tao/ClientInterceptorAdapter.inl:
+
+	  Initialize the new "info_" member in the base member initializer
+	  list.
+
+	* tao/ClientInterceptorAdapter.cpp:
+
+	  Updated all interception point methods to accept pointers to the
+	  new TAO_ClientRequestInfo_i pointer.
+
+	* tao/ClientRequestInfo_i.h:
+	* tao/ClientRequestInfo_i.inl:
+	* tao/ClientRequestInfo_i.cpp:
+
+	  New files containing the new "underlying" implementation of the
+	  PortableInterceptor::ClientRequestInfo interface.  They
+	  basically contain the implementation that was previously found
+	  in TAO_ClientRequestInfo.  This new class, i.e.
+	  "TAO_ClientRequestInfo_i," does not inherit from any class.  All
+	  operation-specific ClientRequestInfo subclasses in the client
+	  stubs now inherit from this class.  This removes a lock
+	  initialization from the critical path, and replaces it with a
+	  TSS access.  This should improve performance on the client side
+	  significantly in both cases where interceptors were registered
+	  and not registered with the ORB.   [Bug 874]
+
+	* tao/ClientRequestInfo.h:
+
+	  No need to include "StringSeqC.h."
+
+	  Added a new "TAO_ClientRequestInfo_Guard" class that is designed
+	  to ensure the swapping of TAO_ClientRequestInfo_i pointers in a
+	  TAO_ClientRequestInfo object is performed in an exception-safe
+	  manner when interception points are being invoked.
+
+	* tao/ClientRequestInfo.inl:
+	* tao/ClientRequestInfo.cpp:
+
+	  Moved implementation code to the new TAO_ClientRequestInfo_i
+	  class.
+
+	  Added "TAO_ClientRequestInfo_Guard" class implementation.
+	
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+
+	  Store a TAO_ClientRequestInfo object in the ORB_Core's TSS
+	  resources.
+
+	* tao/DomainC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+
+	  Updated to use new TAO_ClientRequestInfo_i class.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+
+	  Updated generated code to use new TAO_ClientRequestInfo_i class.
+	  [Bug 874]
+
 Fri Jan 18 17:29:36 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/TAO_Server_Request.h:
