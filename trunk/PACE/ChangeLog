@@ -1,3 +1,11 @@
+Tue Jun 27 22:03:52 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * pace/posix/stdlib.inl (pace_rand_r): on Linux and
+          SunOS, rand_r isn't available if certains macros
+          aren't defined, so reflect that.  rand_r doesn't
+          appear anywhere in the LynxOS 3.1.0 headers, so
+          NO_SUPPORT there as well.
+
 Tue Jun 27 16:35:20 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/aio.h:
@@ -7,7 +15,7 @@ Tue Jun 27 16:35:20 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Tue Jun 27 14:32:40 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * pace/posix/aio.h: 
+        * pace/posix/aio.h:
 
         * tests/Makefile (ACELIB):
           Defining PACE_HAS_INLINE from the Makefile and adding the PACE
