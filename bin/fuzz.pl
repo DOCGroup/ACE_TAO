@@ -297,7 +297,7 @@ sub check_for_streams_include ()
                 if (/FUZZ\: disable check_for_streams_include/) {
                     $disable = 1;
                 }
-                if (/FUZZ\: enable check_for_steams_include/) {
+                if (/FUZZ\: enable check_for_streams_include/) {
                     $disable = 0;
                 }
                 if ($disable == 0
