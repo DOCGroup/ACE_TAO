@@ -79,7 +79,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "&& obj->_servant() != 0)" << be_idt_nl
       << "servant = obj->_servant()->_downcast (\""
       << node->repoID () << "\");" << be_uidt_nl;
-           
+
   *os << "if (servant == 0)" << be_idt_nl
       << "return new " << node->name () << "(stub);" << be_uidt_nl;
 
@@ -108,7 +108,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "&& obj->_servant() != 0)" << be_idt_nl
       << "servant = obj->_servant()->_downcast (\""
       << node->repoID () << "\");" << be_uidt_nl;
-           
+
   *os << "if (servant == 0)" << be_idt_nl
       << "return new " << node->name () << "(stub);" << be_uidt_nl;
 
@@ -118,6 +118,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "_ptr, servant)," << be_nl
       << "stub" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  // The _duplicate method
+  *os << node->name () << "_ptr " << be_nl
+      << node->name () << "::_duplicate ("
+      << node->name () << "_ptr obj)" << be_nl
+      << "{" << be_idt_nl
+      << "if (!CORBA::is_nil (obj))" << be_idt_nl
+      << "obj->_incr_refcnt ();" << be_uidt_nl
+      << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface

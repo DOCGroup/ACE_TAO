@@ -69,17 +69,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     " (void) // destructor" << be_nl;
   *os << "{}\n\n";
 
-  // The _duplicate method
-  *os << "ACE_INLINE "
-      << node->name () << "_ptr " << be_nl
-      << node->name () << "::_duplicate ("
-      << node->name () << "_ptr obj)" << be_nl
-      << "{" << be_idt_nl
-      << "if (!CORBA::is_nil (obj))" << be_idt_nl
-      << "obj->_incr_refcnt ();" << be_uidt_nl
-      << "return obj;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   // _nil method
   *os << "ACE_INLINE "
       << node->name () << "_ptr" << be_nl
