@@ -39,6 +39,10 @@ Fri Apr 23 20:28:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Trader/Trader.h:
 	* orbsvcs/tests/FtRtEvent/PushConsumer.h:
 	* orbsvcs/tests/FtRtEvent/PushSupplier.h:
+	* examples/Callback_Quoter/Notifier_i.cpp:
+	* examples/Callback_Quoter/Notifier_i.h:
+	* examples/Simple/chat/Broadcaster_i.cpp:
+	* examples/Simple/chat/Broadcaster_i.h:
 
 	  Changed return types for equality, relational and logical
 	  operators to "bool", as is the norm for modern C++.
