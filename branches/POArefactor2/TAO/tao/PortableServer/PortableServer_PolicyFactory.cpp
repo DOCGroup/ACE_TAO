@@ -38,7 +38,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::ThreadPolicyValue>::create (
               "ThreadPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
   if (type == PortableServer::LIFESPAN_POLICY_ID)
