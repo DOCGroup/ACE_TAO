@@ -17,7 +17,7 @@
 #if !defined (TAO_AV_SFP_H)
 #define TAO_AV_SFP_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/sfpC.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
@@ -63,7 +63,7 @@ typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERAT
 typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> TAO_SFP_Fragment_Table;
 typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex> TAO_SFP_Fragment_Table_Map;
 
-class TAO_ORBSVCS_Export TAO_SFP_Frame_State
+class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
   TAO_SFP_Frame_State (void);
@@ -86,7 +86,7 @@ public:
 class TAO_AV_Transport;
 class TAO_AV_Core;
 
-class TAO_ORBSVCS_Export TAO_SFP_Base
+class TAO_AV_Export TAO_SFP_Base
 {
 public:
   // default arguments to pass to use for the ORB
@@ -194,7 +194,7 @@ protected:
 // Beware the SFP_Base code relies on the Singleton being initialized.
 typedef ACE_Singleton <TAO_SFP_Base,ACE_SYNCH_MUTEX> TAO_SFP_BASE;
 
-class TAO_ORBSVCS_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
+class TAO_AV_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_SFP_Object (TAO_AV_Callback *callback,
@@ -227,7 +227,7 @@ protected:
   TAO_SFP_Frame_State state_;
 };
 
-class TAO_ORBSVCS_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
+class TAO_AV_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
 {
 public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
@@ -238,7 +238,7 @@ protected:
   CORBA::ULong credit_sequence_num_;
 };
 
-class TAO_ORBSVCS_Export TAO_SFP_Consumer_Object : public TAO_SFP_Object
+class TAO_AV_Export TAO_SFP_Consumer_Object : public TAO_SFP_Object
 {
 public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
@@ -247,7 +247,7 @@ public:
   virtual int handle_input (void);
 };
 
-class TAO_ORBSVCS_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
+class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   TAO_AV_SFP_Factory (void);

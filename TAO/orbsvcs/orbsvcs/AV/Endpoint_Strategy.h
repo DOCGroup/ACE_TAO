@@ -28,7 +28,7 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Strategy
+class TAO_AV_Export TAO_AV_Endpoint_Strategy
 {
   // = DESCRIPTION
   //    Base class to define various endpoint strategies
@@ -65,7 +65,7 @@ protected:
 
 // ----------------------------------------------------------------------
 
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
+class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy
   : public TAO_AV_Endpoint_Strategy
 {
   // = DESCRIPTION
@@ -113,7 +113,7 @@ protected:
 
 // ----------------------------------------------------------------------
 
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
+class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_A
   : public TAO_AV_Endpoint_Process_Strategy
 {
   // = DESCRIPTION
@@ -139,7 +139,7 @@ protected:
 
 // ----------------------------------------------------------------------
 
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
+class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_B
   : public TAO_AV_Endpoint_Process_Strategy
 {
   // = DESCRIPTION

@@ -278,7 +278,7 @@ protected:
   // Pre-allocated memory to receive the data...
 };
 
-class TAO_ORBSVCS_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
+class TAO_AV_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   TAO_AV_RTP_Flow_Factory (void);

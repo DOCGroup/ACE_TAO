@@ -32,7 +32,7 @@ class TAO_FlowSpec_Entry;
 //forward declaration.
 class TAO_AV_Transport_Factory;
 
-class TAO_ORBSVCS_Export TAO_AV_Transport_Item
+class TAO_AV_Export TAO_AV_Transport_Item
 {
 public:
   TAO_AV_Transport_Item (const ACE_CString &name);
@@ -59,7 +59,7 @@ private:
 
 class TAO_AV_Flow_Protocol_Factory;
 
-class TAO_ORBSVCS_Export TAO_AV_Flow_Protocol_Item
+class TAO_AV_Export TAO_AV_Flow_Protocol_Item
 {
 public:
   TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
@@ -101,7 +101,7 @@ typedef ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*>
 typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
 typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
 
-class TAO_ORBSVCS_Export TAO_AV_Core
+class TAO_AV_Export TAO_AV_Core
 {
 public:
   enum EndPoint {TAO_AV_ENDPOINT_A,TAO_AV_ENDPOINT_B};
