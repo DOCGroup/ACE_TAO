@@ -1,3 +1,8 @@
+Mon Aug 24 14:45:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Property/run_test.pl: Now uses uniqueid for the
+	  -ORBnameserviceport argument 
+
 Mon Aug 24 14:36:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Environment.cpp: 

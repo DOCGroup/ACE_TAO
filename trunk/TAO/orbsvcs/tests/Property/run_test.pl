@@ -17,8 +17,7 @@ $sleeptime = 6;
 
 # variables for parameters
 
-#$nsport = 20000 + uniqueid ();
-$nsport = 2882;
+$nsport = 20000 + uniqueid ();
 sub name_server
 {
     my $args = "-ORBnameserviceport $nsport";
