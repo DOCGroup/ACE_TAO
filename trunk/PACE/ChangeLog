@@ -1,5 +1,21 @@
 Fri Jul  7 02:18:02 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
+	* pace/posix/dirent.*:
+	* pace/posix/pthread.*:
+	* pace/posix/sched.h:
+	* pace/posix/signal.*:
+	* pace/posix/stat.*:
+	* pace/posix/time.*:
+	* pace/posix/utsname.inl:
+	  Fixed a problem with certain typedefs not being
+	  exposed in other .inl files due to an odd
+	  interaction of the #pragma once style protections
+	  present in the header files. A few structs were redefined
+	  a second time outside of their header file.
+
+	  Also, pace_stat was changed to pace_stat_s to avoid a conflict
+	  witht the pace_stat() function.
+
         * pace/win32/termios.*:
         * pace/win32/wait.h:
         * pace/win32/utsname.*:
