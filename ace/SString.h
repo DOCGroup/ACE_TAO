@@ -46,6 +46,10 @@ public:
   ACE_CString (const ACE_CString &);
   // Copy constructor.
 
+  ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *allocator = 0);
+  // Constructor that copies <s> into dynamically allocated memory.
+  // Probable loss of data. Please use with care.
+
   ~ACE_CString (void);
   // Deletes the memory...
 
@@ -61,6 +65,9 @@ public:
 
   char *rep (void) const;
   // Get a copy of the underlying pointer.
+
+  const char *fast_rep (void) const;
+  // Get at the underlying representation directly!
 
   void operator += (const ACE_CString &);
   // Concat operator (copies memory).
@@ -134,7 +141,7 @@ public:
   // Set the underlying pointer.  Since this does not copy memory or
   // delete existing memory use with extreme caution!!!
 
-  char *rep (void) const;
+  const char *rep (void) const;
   // Get the underlying pointer.
 
   void operator += (const ACE_SString &);
@@ -225,7 +232,7 @@ public:
   char *char_rep (void) const;
   // Transform into a copy of the ASCII character representation.
 
-  ACE_USHORT16 *fast_rep (void) const;
+  const ACE_USHORT16 *fast_rep (void) const;
   // Get at the underlying representation directly!
 
   int strstr (const ACE_WString &s) const;
@@ -244,12 +251,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  static size_t wstrlen (const ACE_USHORT16 *);
+  // Computes the length of a "0" terminated ACE_USHORT16 *.
+
 private:
   ACE_Allocator *allocator_;
   // Pointer to a memory allocator.
-
-  size_t wstrlen (const ACE_USHORT16 *);
-  // Computes the length of a "0" terminated ACE_USHORT16 *.
 
   size_t len_;
   // Length of the ACE_WString.

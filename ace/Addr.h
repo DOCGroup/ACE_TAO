@@ -53,12 +53,6 @@ public:
   virtual void set_addr (void *, int len);
   // Set a pointer to the address.
 
-  virtual int addr_to_string (char addr[], size_t) const;
-  // Transform the current address into string format. 
-
-  virtual int string_to_addr (const char addr[]);
-  // Transform the string into the current addressing format.
-
   // = Equality/inequality tests
   virtual int operator == (const ACE_Addr &sap) const;
   // Check for address equality.

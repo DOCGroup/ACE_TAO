@@ -491,14 +491,14 @@ class ACE_Export ACE_Predefined_Naming_Contexts
 public:
   static int connect (ACE_Registry::Naming_Context &naming_context,
 		      HKEY predefined = HKEY_LOCAL_MACHINE,
-		      LPCSTR machine_name = 0);
+		      LPCTSTR machine_name = 0);
   // Factory method for connecting to predefined registries.  This
   // method works for both remote and local machines.  However, for
   // remote machines, HKEY_CLASSES_ROOT and HKEY_CURRENT_USER types
   // are not allowed
 
 private:
-  static int is_local_host (LPCSTR machine_name);
+  static int is_local_host (LPCTSTR machine_name);
   // Check if <machine_name> is the local host
 
 };

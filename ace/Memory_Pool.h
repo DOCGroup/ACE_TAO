@@ -43,7 +43,7 @@ class ACE_Export ACE_Sbrk_Memory_Pool
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
-  ACE_Sbrk_Memory_Pool (const char *backing_store_name = 0, 
+  ACE_Sbrk_Memory_Pool (LPCTSTR backing_store_name = 0, 
 			const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -104,11 +104,11 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
 {
 public:
   // = Initialization method.
-  ACE_Shared_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
 				  size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
 				  size_t file_perms = ACE_DEFAULT_FILE_PERMS);
 
-  const char *base_addr_;
+  char *base_addr_;
   // Base address of the memory-mapped backing store.
 
   size_t max_segments_;
@@ -127,7 +127,7 @@ class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
-  ACE_Shared_Memory_Pool (const char *backing_store_name = 0,
+  ACE_Shared_Memory_Pool (LPCTSTR backing_store_name = 0,
 			  const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -237,7 +237,7 @@ class ACE_Export ACE_Local_Memory_Pool
 public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
-  ACE_Local_Memory_Pool (const char *backing_store_name = 0,
+  ACE_Local_Memory_Pool (LPCTSTR backing_store_name = 0,
 			 const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -295,11 +295,11 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
 public:
   // = Initialization method.
-  ACE_MMAP_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_MMAP_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
 				int write_each_page = 1);
 
-  const char *base_addr_;
+  char *base_addr_;
   // Base address of the memory-mapped backing store.
 
   int use_fixed_addr_;
@@ -320,7 +320,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_MMAP_Memory_Pool (const char *backing_store_name = 0,
+  ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
 			const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -406,7 +406,7 @@ protected:
   // Should we write a byte to each page to forceably allocate memory
   // for this backing store?
 
-  char backing_store_name_[MAXPATHLEN];
+  TCHAR backing_store_name_[MAXPATHLEN];
   // Name of the backing store where the shared memory pool is kept.
 };
 
@@ -425,7 +425,7 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 public:
   // = Initialization and termination methods.
 
-  ACE_Lite_MMAP_Memory_Pool (const char *backing_store_name = 0,
+  ACE_Lite_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
 			     const OPTIONS *options = 0);
   // Initialize the pool.
 

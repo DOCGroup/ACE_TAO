@@ -84,6 +84,38 @@ ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
     }
 }
 
+// Constructor that copies <s> into dynamically allocated memory.
+// Probable loss of data. Please use with care.
+
+ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
+  : allocator_ (alloc)
+{
+  ACE_TRACE ("ACE_CString::ACE_CString");
+
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Service_Config::alloc ();
+
+  if (s == 0)
+    {
+      this->len_ = 0;
+      this->rep_ = 0;
+    }
+  else
+    {
+      this->len_ = ACE_WString::wstrlen (s);
+      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+
+      // Copy the ACE_USHORT16 * string byte-by-byte into the char *
+      // string.
+      for (size_t i = 0; i < this->len_; i++)
+#pragma warning(disable: 4244)  // Possible loss of data	
+	this->rep_[i] = (ACE_USHORT16) s[i];
+#pragma warning(default: 4244)  // Possible loss of data
+
+      this->rep_[this->len_] = '\0';
+    }
+}
+
 // Constructor that actually copies memory.
 
 ACE_CString::ACE_CString (const char *s, 
@@ -367,6 +399,7 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
     this->allocator_ = ACE_Service_Config::alloc ();
 }
 
+/* static */
 size_t
 ACE_WString::wstrlen (const ACE_USHORT16 *s)
 {

@@ -34,7 +34,7 @@ public:
 			int share = MAP_PRIVATE, 
 			char *addr = 0, 
 			off_t pos = 0);
-  ACE_Shared_Memory_MM (char file_name[], 
+  ACE_Shared_Memory_MM (LPTSTR file_name, 
 			int len = -1, 
 			int flags = O_RDWR | O_CREAT,
 			int mode = ACE_DEFAULT_FILE_PERMS, 
@@ -49,7 +49,7 @@ public:
 	    char *addr = 0, 
 	    off_t pos = 0);
 
-  int open (char file_name[], 
+  int open (LPTSTR file_name, 
 	    int len = -1, 
 	    int flags = O_RDWR | O_CREAT, 
 	    int mode = ACE_DEFAULT_FILE_PERMS, 

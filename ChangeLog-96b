@@ -1,3 +1,104 @@
+Mon Dec  9 02:06:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/SString: Made accessors return const references.
+
+	* ace/OS.h: Added macro ACE_WIDE_STRING which allows the
+ 	  conversion of char* to wchar_t* when UNICODE is turned on.
+	
+	* ace: Added/Fixed UNICODE behavior of the following:
+
+	  /* Local_Name_Space */
+	  ACE_Local_Name_Space_T::context_file_
+	
+	  /* ACE */
+	  ACE::basename
+	
+	  /* Token */
+	  ACE_Token::ACE_Token 
+
+	  /* Synch */
+	  ACE_File_Lock::ACE_File_Lock
+
+	  /* SPIPE_Addr */
+	  ACE_SPIPE_Addr::addr_to_string
+	  ACE_SPIPE_Addr::set	
+	
+	  /* FILE_Addr */
+	  ACE_FILE_Addr::addr_to_string
+	
+	  /* DEV_Addr */
+	  ACE_DEV_Addr::addr_to_string
+	
+	  /* Addr */
+	  ACE_Addr::addr_to_string
+	  ACE_Addr::string_to_addr
+	  Note: These two were removed from the base class since they are
+	  not common to all Address classes.
+	  
+	  /* Malloc */
+	  ACE_Allocator_Adapter::ACE_Allocator_Adapter
+	  ACE_Malloc::ACE_Malloc
+	
+	  /* Process */
+	  ACE_Process::start
+	
+	  /* Shared_Memory_MM */
+	  ACE_Shared_Memory_MM::ACE_Shared_Memory_MM
+	  ACE_Shared_Memory_MM::open
+
+	  /* Proactor */
+	  ACE_Overlapped_File::ACE_Overlapped_File
+	  ACE_Overlapped_File::open
+
+	  /* Log_msg */
+	  ACE_Log_Msg::open
+
+	  /* Naming_Context */
+	  ACE_Name_Options::namespace_dir
+	  ACE_Name_Options::process_dir
+	  ACE_Name_Options::database
+
+	  /* Registry */
+	  ACE_Predefined_Naming_Contexts::connect
+	  ACE_Predefined_Naming_Contexts::is_local_host
+
+	  /* SString */
+	  ACE_CString::ACE_CString
+	  
+	  /* Mem_Map */
+	  ACE_Mem_Map::ACE_Mem_Map
+	  ACE_Mem_Map::map
+	
+	  /* Service_Config */
+	  ACE_Service_Config::logger_key_
+
+	  /* System_Time */	
+	  ACE_System_Time::ACE_System_Time 
+	
+	  /* Memory_Pool */
+	  ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool
+	  ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool 
+	  ACE_Local_Memory_Pool::ACE_Local_Memory_Pool
+	  ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool 
+	  ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool
+	
+	  /* OS */
+	  ACE_OS::strstr
+	  ACE_OS::strdup
+	  ACE_OS::hostname	  
+	  ACE_OS::open	  
+	  ACE_OS::unlink
+	  ACE_OS::dlopen
+	  ACE_OS::dlsym
+	  ACE_OS::cuserid
+	  ACE_OS::fork_exec
+	  ACE_OS::sprintf
+	  ACE_OS::access
+	  ACE_OS::fopen
+	  ACE_OS::getenv
+	  ACE_OS::system
+
+	
 Sun Dec  8 19:00:45 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Reactor.cpp (handle_events): Updated this method to use the

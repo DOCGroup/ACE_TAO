@@ -310,7 +310,7 @@ private:
   static const char *service_config_file_;
   // Name of service configuration file.
 
-  static const char *logger_key_;
+  static LPCTSTR logger_key_;
   // Where to write the logging output.
 
   //static ACE_Static_Svc_Descriptor service_list_[];

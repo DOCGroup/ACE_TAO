@@ -45,7 +45,7 @@ public:
   // <remove> is called make sure to call <dup> on the <handle> before
   // closing it.
 
-  ACE_File_Lock (const char *filename, int flags, mode_t mode = 0);
+  ACE_File_Lock (LPCTSTR filename, int flags, mode_t mode = 0);
   // Open the <filename> with <flags> and <mode> and set the result to
   // <handle_>.
   

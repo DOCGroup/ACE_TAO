@@ -20,7 +20,7 @@
 
 // Separator for components in a name 
 /* static */
-const ACE_Registry::Istring ACE_Registry::STRING_SEPARATOR = "\\";
+const ACE_Registry::Istring ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
 
 
 // Simple binding constructor
@@ -1046,15 +1046,15 @@ ACE_Registry::Binding_Iterator::Iteration_Complete::next_n (u_long how_many,
 int
 ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_context,
 					 HKEY predefined,
-					 LPCSTR machine_name)
+					 LPCTSTR machine_name)
 {
   long result = -1;
 
-  if (machine_name != 0 && ACE_OS::strcmp ("localhost", machine_name) == 0)
+  if (machine_name != 0 && ACE_OS::strcmp (__TEXT ("localhost"), machine_name) == 0)
     machine_name = 0;
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
-    result = ::RegConnectRegistry ((LPSTR) machine_name,
+    result = ::RegConnectRegistry ((LPTSTR) machine_name,
 				   predefined,
 				   &naming_context.key_);
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
@@ -1074,7 +1074,7 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 // Check if <machine_name> is the local host
 /* static */
 int
-ACE_Predefined_Naming_Contexts::is_local_host (LPCSTR machine_name)
+ACE_Predefined_Naming_Contexts::is_local_host (LPCTSTR machine_name)
 {
   TCHAR local_host[MAXHOSTNAMELEN];
   int result = ACE_OS::hostname (local_host, sizeof (local_host));

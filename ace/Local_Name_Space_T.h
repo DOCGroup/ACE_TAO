@@ -209,7 +209,7 @@ private:
   ACE_Name_Options *name_options_;
   // Keep track of the options such as database name etc
 
-  char context_file_[MAXNAMELEN];
+  TCHAR context_file_[MAXNAMELEN];
   // Name of the file used as the backing store.
 
   LOCK lock_;

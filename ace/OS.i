@@ -621,8 +621,8 @@ ACE_OS::unlink (const char *path)
 #endif /* VXWORKS */
 }
 
-ACE_INLINE char *
-ACE_OS::cuserid (char *user, size_t maxlen)
+ACE_INLINE LPTSTR
+ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 {
 // ACE_TRACE ("ACE_OS::cuserid");
 #if defined (VXWORKS)
@@ -3967,11 +3967,11 @@ ACE_OS::uname (struct utsname *name)
 }
 
 ACE_INLINE int 
-ACE_OS::hostname (char name[], size_t maxnamelen)
+ACE_OS::hostname (char *name, size_t maxnamelen)
 {
 // ACE_TRACE ("ACE_OS::uname");
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerName (name, LPDWORD (&maxnamelen)), 
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
 #else /* !ACE_WIN32 */
   struct utsname host_info;
@@ -4107,7 +4107,7 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 #endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   return handle;
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::LoadLibrary (filename), void *, 0);
+  ACE_OSCALL_RETURN (::LoadLibraryA (filename), void *, 0);
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -4554,22 +4554,21 @@ ACE_OS::shmget (key_t key, int size, int flags)
 }
 
 ACE_INLINE ACE_HANDLE 
-ACE_OS::open (LPCTSTR filename,
+ACE_OS::open (const char *filename,
 	      int mode, 
 	      int perms)
 {
-// ACE_TRACE ("ACE_OS::open");
-#if defined (ACE_WIN32)
+  // ACE_TRACE ("ACE_OS::open");
   // Warning: This function ignores _O_APPEND
-
+#if defined (ACE_WIN32)
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
     access = GENERIC_WRITE;
   else if (ACE_BIT_ENABLED (mode, O_RDWR))
     access = GENERIC_READ | GENERIC_WRITE;
-
+  
   DWORD creation = OPEN_EXISTING;
-
+  
   if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
     creation = CREATE_NEW;
   else if (ACE_BIT_ENABLED (mode, _O_CREAT))
@@ -4583,11 +4582,11 @@ ACE_OS::open (LPCTSTR filename,
   if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
     flags |= FILE_FLAG_DELETE_ON_CLOSE;
 
-  ACE_HANDLE h = ::CreateFile (filename, access, 
-			       FILE_SHARE_READ | FILE_SHARE_WRITE,
-			       0, creation, 
-			       flags,
-			       0);
+  ACE_HANDLE h = ::CreateFileA (filename, access, 
+				FILE_SHARE_READ | FILE_SHARE_WRITE,
+				0, creation, 
+				flags,
+				0);
 
   if (h == ACE_INVALID_HANDLE)
     {
@@ -5295,22 +5294,6 @@ ACE_OS::strcat (wchar_t *s, const wchar_t *t)
   return ::wcscat (s, t);
 }
 
-#if 0
-ACE_INLINE wchar_t *
-ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
-{
-// ACE_TRACE ("ACE_OS::strstr");
-  return ::wcsstr (s, t);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strdup (const wchar_t *s)
-{
-// ACE_TRACE ("ACE_OS::strdup");
-  return ::wcsdup (s);
-}
-#endif /* 0 */
-
 ACE_INLINE wchar_t *
 ACE_OS::strchr (const wchar_t *s, int c)
 {
@@ -5373,4 +5356,147 @@ ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 // ACE_TRACE ("ACE_OS::strtol");
   return ::wcstol (s, ptr, base);
 }
+
+/*
+ACE_INLINE int
+ACE_OS::isspace (wint_t c)
+{
+  ACE_OSCALL_RETURN (::iswspace (c), int, -1);    
+}
+*/
+#if defined (ACE_WIN32)
+
+ACE_INLINE wchar_t *
+ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
+{
+// ACE_TRACE ("ACE_OS::strstr");
+  return ::wcsstr (s, t);
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strdup (const wchar_t *s)
+{
+// ACE_TRACE ("ACE_OS::strdup");
+  return ::wcsdup (s);
+}
+
+ACE_INLINE int 
+ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
+{
+  // ACE_TRACE ("ACE_OS::uname");
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)), 
+				       ace_result_), int, -1);
+}
+
+ACE_INLINE ACE_HANDLE 
+ACE_OS::open (const wchar_t *filename,
+	      int mode, 
+	      int perms)
+{
+  // ACE_TRACE ("ACE_OS::open");
+  // Warning: This function ignores _O_APPEND
+  DWORD access = GENERIC_READ;
+  if (ACE_BIT_ENABLED (mode, O_WRONLY))
+    access = GENERIC_WRITE;
+  else if (ACE_BIT_ENABLED (mode, O_RDWR))
+    access = GENERIC_READ | GENERIC_WRITE;
+
+  DWORD creation = OPEN_EXISTING;
+
+  if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
+    creation = CREATE_NEW;
+  else if (ACE_BIT_ENABLED (mode, _O_CREAT))
+    creation = OPEN_ALWAYS;
+  else if (ACE_BIT_ENABLED (mode, _O_TRUNC))
+    creation = TRUNCATE_EXISTING;
+
+  DWORD flags = 0;
+  if (ACE_BIT_ENABLED (mode, FILE_FLAG_OVERLAPPED))
+    flags = FILE_FLAG_OVERLAPPED;
+  if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
+    flags |= FILE_FLAG_DELETE_ON_CLOSE;
+
+  ACE_HANDLE h = ::CreateFileW (filename, access, 
+				FILE_SHARE_READ | FILE_SHARE_WRITE,
+				0, creation, 
+				flags,
+				0);
+
+  if (h == ACE_INVALID_HANDLE)
+    {
+      switch ((errno = ::GetLastError ()))
+	{
+	case ERROR_FILE_EXISTS:
+	  errno = EEXIST;
+	}
+    }
+  return h;
+}
+
+ACE_INLINE int 
+ACE_OS::unlink (const wchar_t *path)
+{
+  // ACE_TRACE ("ACE_OS::unlink");
+  ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
+}
+
+ACE_INLINE void *
+ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
+{
+  // ACE_TRACE ("ACE_OS::dlopen");
+  ACE_OSCALL_RETURN (::LoadLibraryW (filename), void *, 0);
+}
+
+ACE_INLINE int 
+ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::sprintf");
+  int result;
+  ACE_WString w_format (format);
+  va_list ap;
+  va_start (ap, w_format);
+  ACE_OSCALL (::vswprintf (buf, w_format.fast_rep (), ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+ACE_INLINE int 
+ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::sprintf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::getenv (const wchar_t *symbol)
+{
+  // ACE_TRACE ("ACE_OS::getenv");
+  ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
+}
+
+ACE_INLINE int 
+ACE_OS::access (const wchar_t *path, int amode)
+{
+  // ACE_TRACE ("ACE_OS::access");
+  ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);  
+}
+
+ACE_INLINE FILE *
+ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
+{
+  ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);    
+}
+
+ACE_INLINE int 
+ACE_OS::system (const wchar_t *command)
+{
+  ACE_OSCALL_RETURN (::_wsystem (command), int, -1);    
+}
+
+#endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */

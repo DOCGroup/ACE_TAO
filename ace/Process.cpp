@@ -3,6 +3,7 @@
 
 #include "ace/Process.h"
 #include "ace/ARGV.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process.i"
@@ -112,7 +113,7 @@ ACE_Process::start (char *argv[])
 #if defined (ACE_WIN32)
   ACE_ARGV argv_buf (argv);
 
-  char *buf = argv_buf.buf ();
+  LPTSTR buf = (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ());
 
   if (buf == 0)
     return -1;

@@ -43,7 +43,7 @@ public:
   // smoothly slow down or speed up the local system clock to reach
   // the system time of the master clock.
 
-  ACE_System_Time (const char *poolname = ACE_DEFAULT_BACKING_STORE);
+  ACE_System_Time (LPCTSTR poolname = ACE_DEFAULT_BACKING_STORE);
   // Default constructor.
 
   ~ACE_System_Time (void);

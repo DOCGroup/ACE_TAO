@@ -30,7 +30,7 @@ ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m,
   ACE_TRACE ("ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry");
 }
 
-ACE_Token::ACE_Token (const char *name, void *any)
+ACE_Token::ACE_Token (LPCTSTR name, void *any)
   : head_ (0), 
     tail_ (0), 
     lock_ (name, any),

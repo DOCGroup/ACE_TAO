@@ -362,7 +362,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager");
   // Get directory name
-  const char *dir = this->name_options_->namespace_dir ();
+  LPCTSTR dir = this->name_options_->namespace_dir ();
 
   // Use process name as the file name.
   size_t len = ACE_OS::strlen (dir);

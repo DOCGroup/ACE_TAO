@@ -212,13 +212,27 @@ const char *
 ACE::basename (const char *pathname, char delim)
 {
   ACE_TRACE ("ACE::basename");
-  const char *temp = ::strrchr (pathname, delim);
+  const char *temp = ACE_OS::strrchr (pathname, delim);
     
   if (temp == 0)
     return pathname;
   else
     return temp + 1;
 }
+
+#if defined (ACE_HAS_UNICODE)
+const wchar_t *
+ACE::basename (const wchar_t *pathname, wchar_t delim)
+{
+  ACE_TRACE ("ACE::basename");
+  const wchar_t *temp = ACE_OS::strrchr (pathname, delim);
+    
+  if (temp == 0)
+    return pathname;
+  else
+    return temp + 1;
+}
+#endif /* ACE_HAS_UNICODE */
 
 // Miscellaneous static methods used throughout ACE.
 
