@@ -42,7 +42,7 @@ class TAO_ORBInitializer_Registry
 {
   friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                  ACE_ENV_ARG_DECL);
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,

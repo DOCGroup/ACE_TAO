@@ -2454,10 +2454,15 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
 
       CORBA::TypeCode_ptr label_tc;
 
+      const CORBA::ULong slot =
+        ACE_static_cast (
+          CORBA::ULong,
+          this->private_default_index_i (ACE_ENV_SINGLE_ARG_PARAMETER));
+      ACE_CHECK_RETURN (0);
+
       // If we are computing the label for the default index,
       // the label must contain an octet value of 0.
-      if (i == (ACE_static_cast (CORBA::ULong,
-                                 this->private_default_index_i ())))
+      if (i == slot)
         {
           label_tc = CORBA::_tc_octet;
 
