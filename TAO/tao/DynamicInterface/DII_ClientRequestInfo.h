@@ -17,7 +17,7 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "tao/ClientRequestInfo_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +25,8 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/ClientRequestInfo_i.h"
 #include "tao/DynamicInterface/Request.h"
+
 
 /**
  * @class TAO_DII_ClientRequestInfo
@@ -71,14 +71,13 @@ private:
 
 private:
 
-  CORBA::Request_var _request;
-  CORBA::Long _result;
+  CORBA::Request_var request_;
+  CORBA::Long result_;
 
 };
 
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/post.h"
-
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #endif  /* TAO_DII_CLIENT_REQUEST_INFO_H */

@@ -1,3 +1,22 @@
+Mon Feb 24 08:44:39 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicInterface/DII_ClientRequestInfo.h:
+
+	  Fixed problem where "ace/post.h" was not included in
+	  interceptor disabled builds.
+
+	  Fixed problem that prevented the TAO_DII_ClientRequestInfo class
+	  from ever being visible.  A preprocessor check for
+	  "TAO_HAS_INTERCEPTORS == 1" was being performed before any
+	  headers that defined "TAO_HAS_INTERCEPTORS" were included
+	  meaning that condition always evaluated to false.
+
+	* tao/DynamicInterface/DII_ClientRequestInfo.cpp:
+
+	  Fixed syntax errors that were exposed by the code actually being
+	  made visible.  The above change also fixes "unresolved symbol"
+	  errors that have appeared in some builds.
+
 Mon Feb 24 15:35:23 2003  Edward Scott  <eas@prismtechnologies.com>
 
 	* tao/DynamicAny/DynUnion_i.h: 
