@@ -1,3 +1,10 @@
+Fri Nov 12 12:13:29 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Made _BSD_INCLUDES and ACE_HAS_CHARPTR_DL
+          be defined only for pre-AIX 4.3. Thanks to Greg Siebers
+          <gsiebers@vignette.com> for these changes.
+          Set ACE_LACKS_PLACEMENT_OPERATOR_DELETE for IBM C++ 3.6 and prior.
+
 Fri Nov 12 11:50:19 1999  Nanbor Wang  <nanbor@ace.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added ACE lib/dll naming rules.
