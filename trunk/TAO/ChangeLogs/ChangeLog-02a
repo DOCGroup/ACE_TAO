@@ -1,10 +1,15 @@
+Sat Apr 21 19:30:35 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/TradingLib.dsp: Fixed the library output
+	  directory to conform with our pattern.
+
 Sat Apr 21 16:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/Performace/UDP_PerformanceClient.cpp:
         * examples/PluggableUDP/tests/Performace/UDP_i.cpp:
-	  
+
 	  Fixed the test output.
-	
+
 Sat Apr 21 05:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
@@ -24,7 +29,7 @@ Sat Apr 21 05:05:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * examples/PluggableUDP/DIOP/TAO_DIOP.dsw:
 
           Added dependencies correctly.
-          
+
         * examples/PluggableUDP/tests/Basic/client.cpp:
 
           Fixed a race condition when the client would shutdown.
