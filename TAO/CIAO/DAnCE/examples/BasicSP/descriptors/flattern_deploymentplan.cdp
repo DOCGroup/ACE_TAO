@@ -12,70 +12,7 @@
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/BMClosedED:1.0</supportedType>
-    <supportedType>IDL:BasicSP/BMDevice:1.0</supportedType>
-    <supportedType>IDL:BasicSP/BMDisplay:1.0</supportedType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType>
-    <!--
-    <idlFile></idlFile>
-    <configProperty></configProperty>
-    -->
-    
-    <port>
-      <name>in_avail</name>
-      <specificType>IDL:BasicSP/DataAvailable:1.0</specificType>
-      <supportedType>IDL:BasicSP/DataAvailable:1.0</supportedType>
-      <provider>false</provider>
-      <exclusiveProvider>false</exclusiveProvider>
-      <exclusiveUser>false</exclusiveUser>
-      <optional>false</optional>
-      <kind>EventConsumer</kind>
-    </port>
-    
-    <port>
-      <name>out_avail</name>
-      <specificType>IDL:BasicSP/DataAvailable:1.0</specificType>
-      <supportedType>IDL:BasicSP/DataAvailable:1.0</supportedType>
-      <provider>true</provider>
-      <exclusiveProvider>false</exclusiveProvider>
-      <exclusiveUser>false</exclusiveUser>
-      <optional>false</optional>
-      <kind>EventPublisher</kind>
-    </port>
-    
-    <port>
-      <name>dataout</name>
-      <specificType>IDL:BasicSP/ReadData:1.0</specificType>
-      <supportedType>IDL:BasicSP/ReadData:1.0</supportedType>
-      <provider>true</provider>
-      <exclusiveProvider>false</exclusiveProvider>
-      <exclusiveUser>false</exclusiveUser>
-      <optional>false</optional>
-      <kind>Facet</kind>
-    </port>
-    
-    <port>
-      <name>datain</name>
-      <specificType>IDL:BasicSP/ReadData:1.0</specificType>
-      <supportedType>IDL:BasicSP/ReadData:1.0</supportedType>
-      <provider>true</provider>
-      <exclusiveProvider>false</exclusiveProvider>
-      <exclusiveUser>false</exclusiveUser>
-      <optional>false</optional>
-      <kind>SimplexReceptacle</kind>
-    </port>
-    
-    <port>
-      <name>data_read</name>
-      <specificType>IDL:BasicSP/ReadData:1.0</specificType>
-      <supportedType>IDL:BasicSP/ReadData:1.0</supportedType>
-      <provider>false></provider>
-      <exclusiveProvider>false</exclusiveProvider>
-      <exclusiveUser>false</exclusiveUser>
-      <optional>false</optional>
-      <kind>Facet</kind>
-    </port>
-    
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
     <port>
       <name>timeout</name>
       <specificType>IDL:BasicSP/TimeOut:1.0</specificType>
@@ -86,22 +23,6 @@
       <optional>false</optional>
       <kind>EventConsumer</kind>
     </port>
-      
-    <port>
-      <name>comp_data</name>
-      <specificType>IDL:BasicSP/ReadData:1.0</specificType>
-      <supportedType>IDL:BasicSP/ReadData:1.0</supportedType>
-      <provider>false</provider>
-      <exclusiveProvider>false</exclusiveProvider>
-      <exclusiveUser>false</exclusiveUser>
-      <optional>false</optional>
-      <kind>SimplexReceptacle</kind>
-    </port>
-
-    <!--
-    <property></property>
-    <infoProperty></infoProperty>
-    -->
   </realizes>
   
   <implementation id="BasicSP-BMClosedED-mdd">

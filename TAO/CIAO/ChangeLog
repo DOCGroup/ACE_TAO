@@ -1,3 +1,10 @@
+Wed Apr 06 11:12:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/examples/BasicSP/descriptors/flattern_deploymentplan.cdp
+
+	  Cleaned this a little bit. Removed most <SupportedType> and 
+	  <port> tags from the <realizes> tag.
+
 Wed Apr 06 10:30:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/descriptors/NodeManagerMap.dat
