@@ -391,7 +391,7 @@ ACE_Unbounded_Queue<T>::dequeue_head (T &item)
   ACE_Node<T> *temp = this->head_->next_;
 
   item = temp->item_;
-  this->head_->next = temp_->next_;
+  this->head_->next_ = temp->next_;
   delete temp;
   --this->cur_size_;
   return 0;
