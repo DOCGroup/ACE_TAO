@@ -30,9 +30,6 @@ Session::~Session (void)
 int
 Session::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Session::svc, start\n"));
-
   this->barrier_.wait ();
 
   /// Automatically decrease the reference count at the end of the
@@ -76,8 +73,6 @@ Session::svc (void)
         this->active_thread_count_--;
         if (this->more_work ())
           {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Session::svc, end\n"));
             return 0;
           }
       }
@@ -91,8 +86,6 @@ Session::svc (void)
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Session::svc, end\n"));
   return 0;
 }
 

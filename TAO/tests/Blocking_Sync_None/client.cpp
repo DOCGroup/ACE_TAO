@@ -105,6 +105,7 @@ main (int argc, char *argv[])
       Test::Payload payload(payload_length);
       payload.length (payload_length);
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test running . . .\n"));
       int blocked_calls = 0;
       for (int i = 0; i != iterations; ++i)
         {
@@ -122,9 +123,6 @@ main (int argc, char *argv[])
             {
               blocked_calls++;
             }
-
-          if (i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, "Iteration %d finished\n", i));
         }
 
       blocking_sync_none->shutdown (ACE_TRY_ENV);

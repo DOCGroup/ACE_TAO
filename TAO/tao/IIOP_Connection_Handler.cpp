@@ -121,7 +121,7 @@ TAO_IIOP_Connection_Handler::open (void*)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) IIOP connection from client")
+                  ACE_TEXT ("TAO (%P|%t) IIOP connection to peer ")
                   ACE_TEXT ("<%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
