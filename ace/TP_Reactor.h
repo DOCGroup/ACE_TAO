@@ -287,8 +287,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = Internal methods that do the actual work.
+
+  /// Template method from the base class.
+  virtual void clear_dispatch_mask (ACE_HANDLE handle,
+                                    ACE_Reactor_Mask mask);
 
   /// Dispatch just 1 signal, timer, notification handlers
   int dispatch_i (ACE_Time_Value *max_wait_time,

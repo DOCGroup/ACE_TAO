@@ -17,7 +17,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Priority_Reactor)
 // Initialize ACE_Select_Reactor.
 
 #define npriorities \
-	ACE_Event_Handler::HI_PRIORITY-ACE_Event_Handler::LO_PRIORITY+1
+        ACE_Event_Handler::HI_PRIORITY-ACE_Event_Handler::LO_PRIORITY+1
 
 void
 ACE_Priority_Reactor::init_bucket (void)
@@ -71,24 +71,11 @@ ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
   delete tuple_allocator_;
 }
 
-int
-ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
-                                       int& number_dispatched,
-                                       int mask,
-                                       ACE_Handle_Set& dispatch_mask,
-                                       ACE_Handle_Set& ready_mask,
-                                       ACE_EH_PTMF callback)
+void
+ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
+                                    int &min_priority,
+                                    int &max_priority)
 {
-  ACE_TRACE ("ACE_Priority_Reactor::dispatch_io_set");
-
-  if (number_of_active_handles == 0)
-    return 0;
-
-  // The range for which there exists any Event_Tuple is computed on
-  // the ordering loop, minimizing iterations on the dispatching loop.
-  int min_priority = ACE_Event_Handler::HI_PRIORITY;
-  int max_priority = ACE_Event_Handler::LO_PRIORITY;
-
   ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
 
   for (ACE_HANDLE handle;
@@ -113,29 +100,65 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
         max_priority = prio;
     }
 
+}
+
+int
+ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
+                                       int& number_dispatched,
+                                       int mask,
+                                       ACE_Handle_Set& dispatch_mask,
+                                       ACE_Handle_Set& ready_mask,
+                                       ACE_EH_PTMF callback)
+{
+  ACE_TRACE ("ACE_Priority_Reactor::dispatch_io_set");
+
+  if (number_of_active_handles == 0)
+    return 0;
+
+  // The range for which there exists any Event_Tuple is computed on
+  // the ordering loop, minimizing iterations on the dispatching loop.
+  int min_priority =
+    ACE_Event_Handler::HI_PRIORITY;
+  int max_priority =
+    ACE_Event_Handler::LO_PRIORITY;
+
+  (void) this->build_bucket (dispatch_mask,
+                             min_priority,
+                             max_priority);
+
   for (int i = max_priority; i >= min_priority; --i)
     {
-      // Remove all the entries from the wrappers
       while (!bucket_[i]->is_empty ()
-             && number_dispatched < number_of_active_handles
-             && this->state_changed_ == 0)
+             && number_dispatched < number_of_active_handles)
         {
+
           ACE_Event_Tuple et;
+
           bucket_[i]->dequeue_head (et);
+
           this->notify_handle (et.handle_,
                                mask,
                                ready_mask,
                                et.event_handler_,
                                callback);
           number_dispatched++;
+
+          // clear the bit from that dispatch mask,
+          // so when we need to restart the iteration (rebuilding the iterator...)
+          // we will not dispatch the already dipatched handlers
+          this->clear_dispatch_mask (et.handle_,
+                                     mask);
+
+          if (this->state_changed_)
+            {
+              this->state_changed_ = false; // so it will not rebuild it ...
+            }
         }
+
       // Even if we are aborting the loop due to this->state_changed
       // or another error we still want to cleanup the buckets.
       bucket_[i]->reset ();
     }
-
-  if (number_dispatched > 0 && this->state_changed_)
-    return -1;
 
   return 0;
 }
