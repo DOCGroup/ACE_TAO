@@ -122,6 +122,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , purging_order_ (0)
   , recv_buffer_size_ (0)
   , sent_byte_count_ (0)
+  , is_connected_ (false)
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)

@@ -217,7 +217,10 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
           // When the wait returns -1, the transport is not connected, else it is
 // is this right??
-          svc_handler->transport ()->is_connected(result != -1);
+		  if (result == 0)
+            {
+              svc_handler->transport ()->is_connected(true);
+            }
 //		  svc_handler->transport ()->is_connected(false);
         }
       else

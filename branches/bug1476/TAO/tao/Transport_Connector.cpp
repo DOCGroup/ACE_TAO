@@ -261,14 +261,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           int result = this->active_connect_strategy_->wait(base_transport->connection_handler(),
                                                             &zero);
 
-          if (result == -1) // todo, check also for closure
-            {
-			  // connection not ready yet, just use this base_transport
-         		return base_transport;
-
-
-            }
-          else
+// this is not correct
+          if (result == 0)
             {
 			  // We now have a connection
 
@@ -302,6 +296,14 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 			  }
 
             }
+          else
+          {
+			  // connection not ready yet, just use this base_transport
+         		return base_transport;
+// check for closure?
+
+            }
+
 // todo
 // what now then thsi is closed, then we should close it, zap it from the cache and make
 		  // a new connection
