@@ -711,6 +711,7 @@ TAO::FT_ReplicationManager::set_primary_member (
     , FT::BadReplicationStyle
   ))
 {
+  METHOD_ENTRY (TAO::FT_ReplicationManager::set_primary_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
   TAO::PG_Object_Group * group = 0;
   if (this->object_group_map_.find_group (object_group, group))
@@ -734,7 +735,7 @@ TAO::FT_ReplicationManager::set_primary_member (
   {
     ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), PortableGroup::ObjectGroup::_nil ());
   }
-  return result._retn ();
+  METHOD_RETURN (TAO::FT_ReplicationManager::set_primary_member) result._retn ();
 }
 
 PortableGroup::ObjectGroup_ptr
@@ -963,7 +964,7 @@ TAO::FT_ReplicationManager::create_object (
   // entry in our object group map
 
   // first find the properties for this type of object group
-  TAO_PG::Properties_Decoder * typeid_properties 
+  TAO_PG::Properties_Decoder * typeid_properties
     = this->properties_support_.find_typeid_properties (
       type_id
       ACE_ENV_ARG_PARAMETER);
@@ -972,6 +973,7 @@ TAO::FT_ReplicationManager::create_object (
   TAO::PG_Object_Group * objectGroup
     = TAO::PG_Object_Group::create (
       this->orb_.in (),
+      this->poa_.in (),
       obj.in (),
       type_id,
       the_criteria,

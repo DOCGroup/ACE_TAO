@@ -10,13 +10,6 @@
 #include <orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
 #include <orbsvcs/PortableGroup/PG_Utils.h>
 
-/**
- * The single POA used to manage object groups
- */
-//static
-PortableServer::POA_var TAO::PG_Object_Group::poa_;
-
-
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
     const PortableGroup::Location & location)
@@ -59,7 +52,7 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
 
 TAO::PG_Object_Group::PG_Object_Group (
   CORBA::ORB_ptr orb,
-  TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
+  TAO::PG_Object_Group_Manipulator * manipulator,
   CORBA::Object_ptr empty_group,
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
@@ -67,7 +60,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   TAO_PG::Properties_Decoder * type_properties)
     : internals_()
     , orb_ (CORBA::ORB::_duplicate (orb))
-    , iorm_ (TAO_IOP::TAO_IOR_Manipulation::_duplicate(iorm))
+    , manipulator_ (manipulator)
     , empty_ (1)
     , role_ (type_id)
     , tagged_component_ (tagged_component)
@@ -85,23 +78,20 @@ TAO::PG_Object_Group::PG_Object_Group (
 //static
 TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   CORBA::ORB_ptr orb,
+  PortableServer::POA_ptr poa,
   CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
   TAO_PG::Properties_Decoder * type_properties
   ACE_ENV_ARG_DECL)
 {
-  //@@ Might be worthwhile making iorm_ static
-  // rather than resolving it for each new group.
-  TAO_IOP::TAO_IOR_Manipulation_var iorm;
-  // Get an object reference for the ORB's IORManipulation object.
-  CORBA::Object_var iorm_obj = orb->resolve_initial_references (
-    TAO_OBJID_IORMANIPULATION ACE_ENV_ARG_PARAMETER);
+  TAO::PG_Object_Group_Manipulator * manipulator = 0;
+  ACE_NEW_THROW_EX (manipulator,
+    TAO::PG_Object_Group_Manipulator (),
+    CORBA::NO_MEMORY ());
+  int init_ok = manipulator->init (orb, poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  iorm = TAO_IOP::TAO_IOR_Manipulation::_narrow (
-    iorm_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-  if (CORBA::is_nil (iorm.in ()))
+  if(init_ok)
   {
     if (TAO_debug_level > 3)
     {
@@ -128,7 +118,7 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
     objectGroup,
     TAO::PG_Object_Group (
       orb,
-      iorm.in(),
+      manipulator,
       empty_group,
       tagged_component,
       type_id,
@@ -142,6 +132,8 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
 
 TAO::PG_Object_Group::~PG_Object_Group ()
 {
+  delete manipulator_;
+  manipulator_ = 0;
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       this->members_.begin())
@@ -151,6 +143,8 @@ TAO::PG_Object_Group::~PG_Object_Group ()
     this->members_.unbind((*it).ext_id_);
   }
 }
+
+
 
 #if 0   // may want this again someday
 /////////////////////
@@ -276,7 +270,7 @@ void TAO::PG_Object_Group::add_member (
   {
     // remove the original profile.  It's a dummy entry supplied by create_object.
     cleaned =
-      this->iorm_->remove_profiles (cleaned.in (), this->reference_.in () ACE_ENV_ARG_PARAMETER);
+      this->manipulator_->remove_profiles (cleaned.in (), this->reference_.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     this->empty_ = 0;
   }
@@ -289,7 +283,7 @@ void TAO::PG_Object_Group::add_member (
 
   // Now merge the list into one new IOGR
   PortableGroup::ObjectGroup_var new_reference =
-    this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+    this->manipulator_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var member_ior = this->orb_->string_to_object (member_ior_string ACE_ENV_ARG_PARAMETER);
@@ -348,18 +342,9 @@ int TAO::PG_Object_Group::set_primary_member (
     }
     info->is_primary_ = 1;
 
-    //remove primary
-    int sts = this->iorm_->is_primary_set (prop, this->reference_.in () ACE_ENV_ARG_PARAMETER);
+    int set_ok = this->manipulator_->set_primary (prop, this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
-    if (sts)
-    {
-      (void)this->iorm_->remove_primary_tag (prop, this->reference_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-    }
-
-    sts = this->iorm_->set_primary (prop, info->member_.in (), this->reference_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-    if (! sts)
+    if (! set_ok)
     {
       if (TAO_debug_level > 3)
       {
@@ -415,7 +400,7 @@ void TAO::PG_Object_Group::remove_member (
     if (this->members_.current_size() > 0)
     {
       this->reference_ =
-        this->iorm_->remove_profiles (this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
+        this->manipulator_->remove_profiles (this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
     else
@@ -570,48 +555,6 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
     }
   }
 }
-
-#if 0   // debug code
-void TAO::PG_Object_Group::dump_membership (TAO_IOP::TAO_IOR_Manipulation_ptr iorm, const char * label, PortableGroup::ObjectGroup_ptr member) const
-{
-  FT::TagFTGroupTaggedComponent ft_tag_component;
-  TAO_FT_IOGR_Property prop (ft_tag_component);
-  if (iorm->is_primary_set (&prop, member))
-  {
-    ACE_DEBUG ( (LM_DEBUG,
-      ACE_TEXT ("%T %n (%P|%t) - %s: PRIMARY member.\n"),
-      label
-      ));
-  }
-  else
-  {
-    ACE_DEBUG ( (LM_DEBUG,
-      ACE_TEXT ("%T %n (%P|%t) - %s: backup member.\n"),
-      label
-      ));
-  }
-
-  PortableGroup::TagGroupTaggedComponent tag_component;
-  if (TAO::PG_Utils::get_tagged_component (member, tag_component))
-  {
-    ACE_DEBUG ( (LM_DEBUG,
-      ACE_TEXT ("%T %n (%P|%t) - %s: Group: .")
-      ACE_TEXT (" version: %u\n"),
-
-      label,
-      tag_component.object_group_ref_version
-      ));
-  }
-  else
-  {
-    ACE_DEBUG ( (LM_DEBUG,
-      ACE_TEXT ("%T %n (%P|%t) - %s: No group information found.\n"),
-      label
-      ));
-  }
-}
-#endif // debug code
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

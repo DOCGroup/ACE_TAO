@@ -24,11 +24,10 @@
 
 #include "PG_ObjectGroup_Map.h"
 #include "PG_Location_Map.h"
-
+#include "PG_Object_Group_Manipulator.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
-#include "tao/IORManipulation/IORManip_Loader.h"
 
 /// Forward declarations
 class TAO_PG_GenericFactory;
@@ -302,8 +301,8 @@ private:
   /// Reference to the POA that created the object group references.
   PortableServer::POA_var poa_;
 
-  /// The ORBs IORManipulation object
-  TAO_IOP::TAO_IOR_Manipulation_var iorm_;
+  /// The ObjectGroup Manipulation object
+  TAO::PG_Object_Group_Manipulator manipulator_;
 
   /// The underlying table that contains all object group
   /// information.
@@ -320,14 +319,7 @@ private:
   /// Lock used to synchronize access to the underlying tables.
   TAO_SYNCH_MUTEX lock_;
 
-  /// Lock used to synchronize access to next_ogid_.
-  TAO_SYNCH_MUTEX lock_ogid_;
-
-  /// Next ogid to be allocated.
-  PortableGroup::ObjectGroupId next_ogid_;
-
 };
-
 
 #include /**/ "ace/post.h"
 

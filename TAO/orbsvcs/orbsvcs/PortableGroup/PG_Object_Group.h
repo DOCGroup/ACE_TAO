@@ -40,11 +40,18 @@ namespace TAO
 #include <ace/Hash_Map_Manager_T.h>
 #include "PG_Location_Hash.h"
 #include "PG_Location_Equal_To.h"
-#include <tao/IORManipulation/IORC.h>
+#include "PG_Object_Group_Manipulator.h"
 
 /////////////////////
 // Forward references
 
+namespace TAO_IOP
+{
+  class TAO_IOR_Property;
+}
+
+////////////////
+// Class declarations
 namespace TAO
 {
   /**
@@ -110,7 +117,7 @@ namespace TAO
   private:
     PG_Object_Group (
       CORBA::ORB_ptr orb,
-      TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
+      TAO::PG_Object_Group_Manipulator * manipulator,
       CORBA::Object_ptr empty_group,
       const PortableGroup::TagGroupTaggedComponent & tag_component,
       const char * type_id,
@@ -118,16 +125,6 @@ namespace TAO
       TAO_PG::Properties_Decoder * type_properties);
 
   public:
-    /**
-     * Static creation method needed because exceptions can happen.
-     */
-    static PG_Object_Group * create (
-      CORBA::ORB_ptr orb,
-      CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      TAO_PG::Properties_Decoder * type_properties
-      ACE_ENV_ARG_DECL);
 
     /// Destructor
     ~PG_Object_Group ();
@@ -198,8 +195,6 @@ namespace TAO
       ACE_THROW_SPEC ( (CORBA::SystemException,
                        PortableGroup::ObjectNotAdded));
 
-
-
     /**
      * set the replica at the given location to be primary.
      * Note: This should return void and throw FT::PrimaryNotSet
@@ -230,7 +225,6 @@ namespace TAO
     int increment_version ();
     void distribute_iogr (ACE_ENV_ARG_DECL);
 
-
     /////////////////////////
     // Forbidden methods
   private:
@@ -243,20 +237,20 @@ namespace TAO
     // Static Methods
   public:
     /**
-     * Set the poa to be used to manage object groups
-     * Note: this is NOT the poa used to create object group members.
-     * @param poa the poa to use
+     * Static creation method needed because exceptions can happen.
      */
-    static void set_poa (PortableServer::POA_ptr poa);
+    static PG_Object_Group * create (
+      CORBA::ORB_ptr orb,
+      PortableServer::POA_ptr poa,
+      CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
+      const char * type_id,
+      const PortableGroup::Criteria & the_criteria,
+      TAO_PG::Properties_Decoder * type_properties
+      ACE_ENV_ARG_DECL);
 
     ///////////////
     // Static Data
   private:
-    /**
-     * The POA used to manage object groups
-     */
-    static PortableServer::POA_var poa_;
-
 
     ///////////////
     // Data Members
@@ -270,8 +264,8 @@ namespace TAO
 
     CORBA::ORB_var orb_;
 
-    // The ORB's IORManipulation object
-    TAO_IOP::TAO_IOR_Manipulation_var iorm_;
+    // The object group manipulator
+    TAO::PG_Object_Group_Manipulator * manipulator_;
 
     /// boolean true if empty group
     int empty_;
@@ -293,7 +287,6 @@ namespace TAO
      * the reference (IOGR) to this group
      */
     PortableGroup::ObjectGroup_var reference_;
-
 
     /**
      * The CORBA object id assigned to this object group
