@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_TRY_MACROS_H)
+#ifndef TAO_TRY_MACROS_H
 #define TAO_TRY_MACROS_H
 
 #include "tao/orbconf.h"

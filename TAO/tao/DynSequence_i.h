@@ -13,7 +13,7 @@
 //
 // ===================================================================
 
-#if !defined TAO_DYNSEQUENCE_I_H
+#ifndef TAO_DYNSEQUENCE_I_H
 #define TAO_DYNSEQUENCE_I_H
 
 #include "ace/Containers.h"

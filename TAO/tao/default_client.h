@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_DEFAULT_CLIENT_H)
+#ifndef TAO_DEFAULT_CLIENT_H
 #  define TAO_DEFAULT_CLIENT_H
 
 #include "tao/corba.h"

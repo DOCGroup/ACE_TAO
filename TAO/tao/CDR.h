@@ -41,7 +41,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_CDR_H)
+#ifndef TAO_CDR_H
 #define TAO_CDR_H
 
 class TAO_Export CDR

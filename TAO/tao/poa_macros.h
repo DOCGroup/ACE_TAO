@@ -1,7 +1,7 @@
 // $Id$
 
-#if !defined (POA_MACROS_H)
-#define POA_MACROS_H
+#ifndef TAO_POA_MACROS_H
+#define TAO_POA_MACROS_H
 
 #include "tao/try_macros.h"
 
@@ -18,4 +18,4 @@
 #define TAO_POA_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN,ENV) \
   TAO_READ_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,RETURN,ENV,CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO))
 
-#endif /* POA_MACROS_H */
+#endif /* TAO_POA_MACROS_H */

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ORB_CORE_H)
+#ifndef TAO_ORB_CORE_H
 #  define TAO_ORB_CORE_H
 
 #  include "tao/corba.h"

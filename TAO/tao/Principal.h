@@ -17,7 +17,7 @@
 // 
 // ============================================================================
 
-#if !defined (TAO_PRINCIPAL_H)
+#ifndef TAO_PRINCIPAL_H
 #  define TAO_PRINCIPAL_H
 
 class TAO_Export CORBA_Principal

@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-#if !defined (_TAO_IDL_CORBA_DYNANYC_H_)
-#define _TAO_IDL_CORBA_DYNANYC_H_
+#ifndef TAO_IDL_CORBA_DYNANYC_H_
+#define TAO_IDL_CORBA_DYNANYC_H_
 
 #include "tao/corba.h"
 

@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_REQUEST_H)
+#ifndef TAO_REQUEST_H
 #  define TAO_REQUEST_ H
 
 class TAO_Export CORBA_Request

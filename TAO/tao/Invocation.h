@@ -24,7 +24,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_INVOCATION_H)
+#ifndef TAO_INVOCATION_H
 #  define TAO_INVOCATION_H
 
 #include "tao/CDR.h"
