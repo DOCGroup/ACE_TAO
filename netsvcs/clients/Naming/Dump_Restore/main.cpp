@@ -14,8 +14,7 @@ main (int argc, char *argv[])
   // Get a handler
   Dump_Restore client_handler (argc, argv);
 
-  for (;;)
-    daemon.run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop ();
   
   /* NOTREACHED */
   ACE_DEBUG ((LM_DEBUG, "leaving main\n"));
