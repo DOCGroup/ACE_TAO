@@ -45,7 +45,7 @@ DEFINE_GUID (IID_CORBA_Principal,
 ULONG __stdcall
 CORBA_Principal::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, principal_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->lock_, 0));
 
   return ++refcount_;
 }
