@@ -64,7 +64,7 @@ ACE_Fixed_Set<T, SIZE>::operator = (const ACE_Fixed_Set<T, SIZE> &fs)
   if (this == &fs)
     return;
 
-  this->cur_size_ = bs.cur_size_;
+  this->cur_size_ = fs.cur_size_;
 
   for (size_t i = 0; i < this->cur_size_; i++)
     this->search_structure_[i] = fs.search_structure_[i];
@@ -104,7 +104,7 @@ ACE_Fixed_Set<T, SIZE>::find (T &item, size_t index) const
     return 0;
   else
     {
-      item = this->search_structure_[i].item_;
+      item = this->search_structure_[index].item_;
       return 1;
     }
 
