@@ -189,6 +189,9 @@ public:
   // Look up a predefined type by its ExprType.
   virtual AST_Decl *lookup_primitive_type (AST_Expression::ExprType);
 
+  // Look up one of the pseudo-object types.
+  AST_Decl *lookup_pseudo (Identifier *);
+
   // How many entries are used?
   virtual unsigned long nmembers (void);
 
