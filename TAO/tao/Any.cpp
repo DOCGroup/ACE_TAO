@@ -55,14 +55,19 @@ void
 CORBA_Any::type (CORBA::TypeCode_ptr tc,
                  CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->type_->equivalent (tc, ACE_TRY_ENV))
+  CORBA::Boolean equiv = this->type_->equivalent (tc,
+                                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (equiv)
     {
-      ACE_CHECK;
       CORBA::release (this->type_);
       this->type_ = CORBA::TypeCode::_duplicate (tc);
     }
   else
-    ACE_THROW (CORBA::BAD_TYPECODE ());
+    {
+      ACE_THROW (CORBA::BAD_TYPECODE ());
+    }
 }
 
 // TAO doesn't give any guarantees if the value returned by value can
