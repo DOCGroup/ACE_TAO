@@ -64,7 +64,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   fd,
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-        ACE_Reactor::end_event_loop ();
+        ACE_Reactor::instance()->end_reactor_event_loop ();
       return 0;
     }
   else
@@ -81,14 +81,14 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               ACE_TEXT ("(%t) svr close; fd: 0x%x, rcvd %d msgs\n"),
               fd,
               this->nr_msgs_rcvd_));
-  
+
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
                ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
-  
+
   this->destroy ();
   return 0;
 }
@@ -141,7 +141,7 @@ class Client: public ACE_Task_Base
       ACE_OS::sleep (3);
       const ACE_TCHAR *msg =
         ACE_TEXT ("Message from Connection worker");
-      
+
       ACE_TCHAR buf [BUFSIZ];
       buf[0] = ACE_OS::strlen (msg) + 1;
       ACE_OS::strcpy (&buf[1], msg);
