@@ -128,10 +128,10 @@ ACE_High_Res_Timer::get_cpuinfo (void)
             }
           else if (::sscanf (buf, "cpu MHz : %lf\n", &mhertz) == 1)
             {
-              if (supported)
-                {
-                  scale_factor = (ACE_UINT32) (mhertz + 0.5);
-                }
+              // If the line "cpu MHz : xxx" is present, then it's a
+              // reliable measure of the CPU speed - according to the
+              // kernel-source.
+              scale_factor = (ACE_UINT32) (mhertz + 0.5);
               break;
             }
           else if (::sscanf (buf, "bogomips : %lf\n", &bmips) == 1
