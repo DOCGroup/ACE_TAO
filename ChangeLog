@@ -1,3 +1,8 @@
+Fri Jun 25 08:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Env_Value_T.h:
+          Doxygen fixes
+
 Fri Jun 25 08:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Based_Pointer_Repository.cpp:
