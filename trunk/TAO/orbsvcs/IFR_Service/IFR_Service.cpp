@@ -11,7 +11,7 @@
 ACE_RCSID(IFR_Service, IFR_Service, "$Id$")
 
 IFR_Service::IFR_Service (void)
-  : servant_locator_ (),
+  : servant_locator_impl_ (0),
     ior_multicast_ (0),
     config_ (0),
     repo_impl_ (0),
@@ -233,12 +233,12 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
 int
 IFR_Service::create_locator (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_NEW_THROW_EX (this->servant_locator_,
+  ACE_NEW_THROW_EX (this->servant_locator_impl_,
                     IFR_ServantLocator (this->repo_impl_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
-  this->ir_object_poa_->set_servant_manager (this->servant_locator_.in (),
+  this->ir_object_poa_->set_servant_manager (this->servant_locator_impl_,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 

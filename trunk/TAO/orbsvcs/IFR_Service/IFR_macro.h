@@ -12,7 +12,7 @@
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, \
                             monitor, \
                             this->repo_->lock (), \
-                            CORBA::SystemException ( \
+                            CORBA::TRANSIENT ( \
                               CORBA_SystemException::_tao_minor_code ( \
                                 TAO_GUARD_FAILURE, \
                                 0), \
@@ -45,7 +45,7 @@
   ACE_READ_GUARD_THROW_EX (ACE_Lock, \
                            monitor, \
                            this->repo_->lock (), \
-                           CORBA::SystemException ( \
+                           CORBA::TRANSIENT ( \
                              CORBA_SystemException::_tao_minor_code ( \
                                TAO_GUARD_FAILURE, \
                                0), \

@@ -86,7 +86,7 @@ TAO_Contained_i::destroy_i (CORBA::Environment &)
 }
 
 char *
-TAO_Contained_i::id (CORBA::Environment &)
+TAO_Contained_i::id (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -113,8 +113,8 @@ TAO_Contained_i::id (const char *id,
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->id_i (const char *id,
-              CORBA::Environment &ACE_TRY_ENV);
+  this->id_i (id,
+              ACE_TRY_ENV);
 }
 
 void
@@ -163,7 +163,7 @@ TAO_Contained_i::id_i (const char *id,
 }
 
 char *
-TAO_Contained_i::name (CORBA::Environment &)
+TAO_Contained_i::name (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -184,7 +184,7 @@ TAO_Contained_i::name_i (CORBA::Environment &)
 }
 
 char *
-TAO_Contained_i::version (CORBA::Environment &)
+TAO_Contained_i::version (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -216,8 +216,8 @@ TAO_Contained_i::name (const char *name,
 }
 
 void
-TAO_Contained_i::name (const char *name,
-                       CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::name_i (const char *name,
+                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check if name already exists in this container.
@@ -254,13 +254,13 @@ TAO_Contained_i::name (const char *name,
 
 void
 TAO_Contained_i::version (const char *version,
-                          CORBA::Environment &)
+                          CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->version_i (const char *version,
-                   CORBA::Environment &);
+  this->version_i (version,
+                   ACE_TRY_ENV);
 }
 
 void
