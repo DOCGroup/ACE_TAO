@@ -1,13 +1,13 @@
 // $Id$
 
-#include "common/FileCharStream.h"
-#include "common/StrCharStream.h"
-#include "parser/parser/Parser.h"
+#include "ACEXML/common/FileCharStream.h"
+#include "ACEXML/common/StrCharStream.h"
+#include "ACEXML/parser/parser/Parser.h"
 #include "Svcconf_Handler.h"
 #include "ace/Get_Opt.h"
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR *filename = 0;
 
