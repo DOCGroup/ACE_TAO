@@ -63,6 +63,8 @@ $(VBIN): $(VLIBS)
 # single makefile--note that we filter out any that are already present.
 VBUILD = $(IDL_SRC) $(VLIBS) $(VBIN) $(filter-out $(IDL_SRC) $(VLIBS) $(VBIN), $(BUILD))
 
+$(VBIN) $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
+
 build.local: $(VBUILD)
 
 # By setting SUFFIXES to nothing, we turn off all implicit rules, and force
