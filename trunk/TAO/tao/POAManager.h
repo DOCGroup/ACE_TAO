@@ -40,17 +40,17 @@ public:
     UNKNOWN
   };
 
-  virtual void activate (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual void activate (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   virtual void hold_requests (CORBA::Boolean wait_for_completion,
-                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   virtual void discard_requests (CORBA::Boolean wait_for_completion,
-                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                 CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   virtual void deactivate (CORBA::Boolean etherealize_objects,
                            CORBA::Boolean wait_for_completion,
-                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   TAO_POA_Manager (void);
 
@@ -58,23 +58,37 @@ public:
 
   virtual ~TAO_POA_Manager (void);
 
-  virtual Processing_State state (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual Processing_State state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
+
+  virtual void activate_i (CORBA_Environment &ACE_TRY_ENV);
+
+  virtual void hold_requests_i (CORBA::Boolean wait_for_completion,
+                                CORBA_Environment &ACE_TRY_ENV);
+
+  virtual void discard_requests_i (CORBA::Boolean wait_for_completion,
+                                   CORBA_Environment &ACE_TRY_ENV);
+
+  virtual void deactivate_i (CORBA::Boolean etherealize_objects,
+                             CORBA::Boolean wait_for_completion,
+                             CORBA_Environment &ACE_TRY_ENV);
 
   virtual ACE_Lock &lock (void);
 
   virtual void remove_poa (TAO_POA *poa,
-                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   virtual void remove_poa_i (TAO_POA *poa,
-                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   virtual void register_poa (TAO_POA *poa,
-                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   virtual void register_poa_i (TAO_POA *poa,
-                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                               CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  virtual void destroy (void);
 
   Processing_State state_;
 

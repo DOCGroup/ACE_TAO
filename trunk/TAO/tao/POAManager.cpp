@@ -24,33 +24,23 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 }
 
 void
-TAO_POA_Manager::activate (CORBA::Environment &env)
+TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
-
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
   // AdapterInactive exception is raised.  Entering the active state
   // enables the associated POAs to process requests.
 
   if (this->state_ == TAO_POA_Manager::INACTIVE)
-    {
-      CORBA::Exception *exception = new PortableServer::POAManager::AdapterInactive;
-      env.exception (exception);
-      return;
-    }
+    ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
     this->state_ = TAO_POA_Manager::ACTIVE;
 }
 
 void
-TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
-                                CORBA::Environment &env)
+TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
-
   // This operation changes the state of the POA manager to
   // holding. If issued while the POA manager is in the inactive
   // state, the AdapterInactive exception is raised.  Entering the
@@ -60,11 +50,7 @@ TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
   // state.
 
   if (this->state_ == TAO_POA_Manager::INACTIVE)
-    {
-      CORBA::Exception *exception = new PortableServer::POAManager::AdapterInactive;
-      env.exception (exception);
-      return;
-    }
+    ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
     this->state_ = TAO_POA_Manager::HOLDING;
 
@@ -80,12 +66,9 @@ TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
 }
 
 void
-TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion,
-                                   CORBA::Environment &env)
+TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
-
   // This operation changes the state of the POA manager to
   // discarding. If issued while the POA manager is in the inactive
   // state, the AdapterInactive exception is raised.  Entering the
@@ -96,11 +79,7 @@ TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion,
   // client.
 
   if (this->state_ == TAO_POA_Manager::INACTIVE)
-    {
-      CORBA::Exception *exception = new PortableServer::POAManager::AdapterInactive;
-      env.exception (exception);
-      return;
-    }
+    ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
     this->state_ = TAO_POA_Manager::DISCARDING;
 
@@ -116,13 +95,10 @@ TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion,
 }
 
 void
-TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
-                             CORBA::Boolean wait_for_completion,
-                             CORBA::Environment &env)
+TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
+                               CORBA::Boolean wait_for_completion,
+                               CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
-
   this->closing_down_ = 1;
 
   // This operation changes the state of the POA manager to
@@ -132,11 +108,7 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
   // have not begun to be executed as well as any new requests.
 
   if (this->state_ == TAO_POA_Manager::INACTIVE)
-    {
-      CORBA::Exception *exception = new PortableServer::POAManager::AdapterInactive;
-      env.exception (exception);
-      return;
-    }
+    ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
     this->state_ = TAO_POA_Manager::INACTIVE;
 
@@ -152,14 +124,14 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
   // crisis (for example, unrecoverable error) situation.
 
   for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end ()
-         && env.exception () == 0;
+       iterator != this->poa_collection_.end ();
        ++iterator)
     {
       TAO_POA *poa = *iterator;
-      poa->destroy (etherealize_objects,
-                    wait_for_completion,
-                    env);
+      poa->etherealize_servants (etherealize_objects,
+                                 wait_for_completion,
+                                 ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   // If the wait_for_completion parameter is FALSE, this operation
@@ -180,17 +152,17 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
 }
 
 TAO_POA_Manager::Processing_State
-TAO_POA_Manager::state (CORBA::Environment &env)
+TAO_POA_Manager::state (CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), TAO_POA_Manager::UNKNOWN, env);
+  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), TAO_POA_Manager::UNKNOWN, ACE_TRY_ENV);
 
   return this->state_;
 }
 
 void
 TAO_POA_Manager::remove_poa (TAO_POA *poa,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
   // If we are not closing down, we must remove this poa from our
   // collection.
@@ -200,49 +172,48 @@ TAO_POA_Manager::remove_poa (TAO_POA *poa,
       TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
 
       this->remove_poa_i (poa,
-                          env);
+                          ACE_TRY_ENV);
     }
 
   // If we are closing down, we are currently iterating over our poa
   // collection and there is not need to remove this poa from our
   // collection.
+
+  // @@ This may cause segfault if another thread gets a hold at this
+  // POAManager but gets blocked on register POA waiting for
+  // remove_poa to complete.  I think we need to use the client side mapping
+  // to refcount this.
+  if (this->poa_collection_.is_empty ())
+    this->destroy ();
 }
 
 void
 TAO_POA_Manager::remove_poa_i (TAO_POA *poa,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   int result = this->poa_collection_.remove (poa);
 
   if (result != 0)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
-    }
+    ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO));
 }
 
 void
 TAO_POA_Manager::register_poa (TAO_POA *poa,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->register_poa_i (poa,
-                        env);
+                        ACE_TRY_ENV);
 }
 
 void
 TAO_POA_Manager::register_poa_i (TAO_POA *poa,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   int result = this->poa_collection_.insert (poa);
 
   if (result != 0)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
-    }
+    ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO));
 }

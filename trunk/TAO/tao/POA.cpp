@@ -85,54 +85,59 @@ TAO_Thread_Policy::TAO_Thread_Policy (const TAO_Thread_Policy &rhs)
 }
 
 PortableServer::ThreadPolicyValue
-TAO_Thread_Policy::value (CORBA::Environment &env)
+TAO_Thread_Policy::value (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Thread_Policy::copy (CORBA::Environment &env)
+TAO_Thread_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
   auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (*this));
 
-  CORBA::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (ACE_TRY_ENV);
 
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the
+  // implementation object
+  new_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Thread_Policy::destroy (CORBA::Environment &env)
+TAO_Thread_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
+  ACE_TRY
     {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
+      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      delete this;
+      return;
+    }
+  ACE_ENDTRY;
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Thread_Policy::policy_type (CORBA::Environment &env)
+TAO_Thread_Policy::policy_type (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -158,53 +163,58 @@ TAO_Lifespan_Policy::TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs)
 }
 
 PortableServer::LifespanPolicyValue
-TAO_Lifespan_Policy::value (CORBA::Environment &env)
+TAO_Lifespan_Policy::value (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Lifespan_Policy::copy (CORBA::Environment &env)
+TAO_Lifespan_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
   auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (*this));
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  CORBA::Policy_var result = new_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the
+  // implementation object
+  new_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Lifespan_Policy::destroy (CORBA::Environment &env)
+TAO_Lifespan_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
+  ACE_TRY
     {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
+      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      delete this;
+      return;
+    }
+  ACE_ENDTRY;
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Lifespan_Policy::policy_type (CORBA::Environment &env)
+TAO_Lifespan_Policy::policy_type (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -230,53 +240,59 @@ TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Poli
 }
 
 PortableServer::IdUniquenessPolicyValue
-TAO_Id_Uniqueness_Policy::value (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::value (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
   auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (*this));
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  CORBA::Policy_var result = new_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the
+  // implementation object
+  new_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
+  ACE_TRY
     {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
+      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      delete this;
+      return;
+    }
+  ACE_ENDTRY;
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -302,53 +318,58 @@ TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Poli
 }
 
 PortableServer::IdAssignmentPolicyValue
-TAO_Id_Assignment_Policy::value (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::value (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Id_Assignment_Policy::copy (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
   auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (*this));
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  CORBA::Policy_var result = new_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the
+  // implementation object
+  new_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Id_Assignment_Policy::destroy (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
+  ACE_TRY
     {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
+      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      delete this;
+      return;
+    }
+  ACE_ENDTRY;
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -1189,7 +1210,7 @@ TAO_POA::find_POA_i_optimized (const TAO_POA::String &adapter_name,
 void
 TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                     CORBA::Boolean wait_for_completion,
-                    CORBA::Environment &env)
+                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->closing_down_ = 1;
 
@@ -1201,25 +1222,20 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   // Remove POA from the parent
   if (this->parent_ != 0)
-    this->parent_->delete_child (this->name_, env);
-
-  if (env.exception () != 0)
-    return;
+    this->parent_->delete_child (this->name_, ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
-       iterator != this->children_.end ()
-         && env.exception () == 0;
+       iterator != this->children_.end ();
        ++iterator)
     {
       TAO_POA *child_poa = (*iterator).int_id_;
       child_poa->destroy (etherealize_objects,
                           wait_for_completion,
-                          env);
+                          ACE_TRY_ENV);
+      ACE_CHECK;
     }
-
-  if (env.exception () != 0)
-    return;
 
   // When a POA is destroyed, any requests that have started execution
   // continue to completion. Any requests that have not started
@@ -1236,6 +1252,22 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // invoke operations on the POA will receive the OBJECT_NOT_EXIST
   // exception.
 
+  this->etherealize_servants (etherealize_objects,
+                              wait_for_completion,
+                              ACE_TRY_ENV);
+
+  // If the wait_for_completion parameter is TRUE, the destroy
+  // operation will return only after all requests in process have
+  // completed and all invocations of etherealize have
+  // completed. Otherwise, the destroy operation returns after
+  // destroying the POAs.
+}
+
+void
+TAO_POA::etherealize_servants (CORBA::Boolean etherealize_objects,
+                               CORBA::Boolean wait_for_completion,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
   // Remove the registered objects
   if (etherealize_objects)
     {
@@ -1243,15 +1275,13 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
           !CORBA::is_nil (this->servant_activator_.in ()))
         {
-          PortableServer::POA_var self = this->_this (env);
-          if (env.exception () != 0)
-            return;
+          PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
+          ACE_CHECK;
 
           while (1)
             {
               TAO_Active_Object_Map::iterator iterator = this->active_object_map ().begin ();
-              if (iterator == this->active_object_map ().end ()
-                  || env.exception () != 0)
+              if (iterator == this->active_object_map ().end ())
                 break;
 
               PortableServer::Servant servant = 0;
@@ -1260,11 +1290,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
               // Remove from the active object map
               int result = this->active_object_map ().unbind (id, servant);
               if (result != 0)
-                {
-                  CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-                  env.exception (exception);
-                  return;
-                }
+                ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO));
 
               CORBA::Boolean remaining_activations = 0;
 
@@ -1278,19 +1304,15 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                                      servant,
                                                      1,
                                                      remaining_activations,
-                                                     env);
+                                                     ACE_TRY_ENV);
+              ACE_CHECK;
             }
         }
     }
 
-  // If the wait_for_completion parameter is TRUE, the destroy
-  // operation will return only after all requests in process have
-  // completed and all invocations of etherealize have
-  // completed. Otherwise, the destroy operation returns after
-  // destroying the POAs.
-
   ACE_UNUSED_ARG (wait_for_completion);
 }
+
 
 void
 TAO_POA::delete_child (const TAO_POA::String &child,
