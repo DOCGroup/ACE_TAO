@@ -1,3 +1,9 @@
+Wed Aug 11 22:20:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl:
+
+	  Priority of OS.h and Synch.h inclusions have been reduced.
+
 Wed Aug 11 11:55:46 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/event.mpb

@@ -1290,10 +1290,6 @@ print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
 check_for_noncvs_files () if ($opt_l >= 1);
-# Commenting out the following checks for short while before BFO. We
-# don't want to have noise that we cannot fix for the time being.
-check_for_synch_include () if ($opt_l >= 1);
-check_for_OS_h_include () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 1);
 check_for_dependency_file () if ($opt_l >= 1);
 check_for_makefile_variable () if ($opt_l >= 1);
@@ -1302,6 +1298,8 @@ check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
+check_for_synch_include () if ($opt_l >= 6);
+check_for_OS_h_include () if ($opt_l >= 6);
 check_for_line_length () if ($opt_l >= 8);
 check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
