@@ -1,3 +1,9 @@
+Tue Jun 29 21:06:17 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.cpp: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	  Fixed the exception problems reported by Carlos. Thanks Carlos. 
+
 Tue Jun 29 20:57:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Simple/chat/Broadcaster_i.cpp:
