@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+	Abstract_Interface \
         AMH_Exceptions \
         AMI \
         AMI_Buffering \
