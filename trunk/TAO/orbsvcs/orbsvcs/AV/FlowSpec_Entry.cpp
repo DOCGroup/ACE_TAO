@@ -118,8 +118,10 @@ TAO_FlowSpec_Entry::set_protocol (void)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL3_4;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL1") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL1;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_RTP_UDP;
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0){
+        this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
+        flow_protocol_ = "RTP";
+      }
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/AAL5") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_RTP_AAL5;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"IPX") == 0)
