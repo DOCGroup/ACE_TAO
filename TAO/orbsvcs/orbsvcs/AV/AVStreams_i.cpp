@@ -94,7 +94,7 @@ TAO_Basic_StreamCtrl::push_event (const char *the_event,
   ACE_UNUSED_ARG (env);
 }
 
-// Used to control the flow protocol parameters.
+// @@ Need to throw not-supported exception here
 void
 TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &the_spec, 
                                     const char *fp_name, 
@@ -345,6 +345,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
   return 0;
 }
   
+// @@ Need to throw not-supported exception here
 CORBA::Boolean 
 TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos, 
                                 const AVStreams::flowSpec &the_flows,  
@@ -353,6 +354,7 @@ TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
   return 0;
 }
   
+// @@ Need to throw not-supported exception here
 CORBA::Boolean 
 TAO_StreamEndPoint::set_protocol_restriction (const AVStreams::protocolSpec &the_pspec,  
                                               CORBA::Environment &env)
@@ -366,6 +368,7 @@ TAO_StreamEndPoint::disconnect (const AVStreams::flowSpec &the_spec,
 {
 }
   
+// @@ Need to throw not-supported exception here
 void 
 TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &the_spec, 
                                   const char *fp_name, 
@@ -374,6 +377,7 @@ TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &the_spec,
 {
 }
 
+// @@ Need to throw not-supported exception here
 CORBA::Object_ptr 
 TAO_StreamEndPoint::get_fep (const char *flow_name,  
                              CORBA::Environment &env)
@@ -381,6 +385,7 @@ TAO_StreamEndPoint::get_fep (const char *flow_name,
   return 0;
 }
   
+// @@ Need to throw not-supported exception here
 char * 
 TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,  
                              CORBA::Environment &env)
@@ -388,18 +393,21 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,
   return 0;
 }
   
+// @@ Need to throw not-supported exception here
 void 
 TAO_StreamEndPoint::remove_fep (const char *fep_name,  
                                 CORBA::Environment &env)
 {
 }
   
+// @@ Need to throw not-supported exception here
 void 
 TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator,  
                                     CORBA::Environment &env)
 {
 }
 
+// @@ Need to throw not-supported exception here
 void 
 TAO_StreamEndPoint::set_key (const char *flow_name, 
                              const encryption_key & the_key,
@@ -407,6 +415,7 @@ TAO_StreamEndPoint::set_key (const char *flow_name,
 {
 }
   
+// @@ Need to throw not-supported exception here
 void 
 TAO_StreamEndPoint::set_source_id (CORBA::Long source_id,  
                                    CORBA::Environment &env)
@@ -449,6 +458,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 }
 
 
+// @@ Need to throw not-supported exception here
 CORBA::Boolean 
 TAO_Client_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos, 
                                     AVStreams::flowSpec &the_spec,  
@@ -457,6 +467,7 @@ TAO_Client_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos,
   return 0;
 }
   
+// @@ Need to throw not-supported exception here
 CORBA::Boolean 
 TAO_Client_StreamEndPoint::connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep, 
                                     AVStreams::streamQoS &the_qos, 
@@ -466,6 +477,7 @@ TAO_Client_StreamEndPoint::connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
   return 0;
 }
   
+// @@ Need to throw not-supported exception here
 void 
 TAO_Client_StreamEndPoint::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep, 
                                        const AVStreams::flowSpec &theSpec,  
@@ -473,6 +485,7 @@ TAO_Client_StreamEndPoint::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_
 {
 }
   
+// @@ Need to throw not-supported exception here
 TAO_Client_StreamEndPoint::~TAO_Client_StreamEndPoint (void)
 {
 }
@@ -565,6 +578,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   return CORBA::B_TRUE;
 }
 
+// @@ Need to throw not-supported exception here
 CORBA::Boolean 
 TAO_VDev::set_Mcast_peer (AVStreams::StreamCtrl_ptr the_ctrl, 
                           AVStreams::MCastConfigIf_ptr a_mcastconfigif, 
