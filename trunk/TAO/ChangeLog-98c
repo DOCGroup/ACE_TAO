@@ -1,3 +1,8 @@
+Wed Jul 15 15:44:10 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Invocation.cpp: Carlos corrected his omission of code to
+          invoke before waiting for a reply.
+
 Wed Jul 15 12:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/Connect.{h,cpp}: Changed handle_input and send_request
