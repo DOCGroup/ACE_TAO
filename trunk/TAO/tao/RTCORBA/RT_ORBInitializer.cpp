@@ -1,10 +1,10 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "RT_ORBInitializer.h"
 
-ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
+
+ACE_RCSID (RTCORBA,
+           RT_ORBInitializer,
+           "$Id$")
+
 
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "tao/RTCORBA/RTCORBAC.h"
@@ -14,9 +14,6 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "RT_Protocols_Hooks.h"
 #include "Priority_Mapping_Manager.h"
 #include "Network_Priority_Mapping_Manager.h"
-#include "tao/Exception.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORBInitInfo.h"
 #include "RT_ORB_Loader.h"
 #include "RT_Stub_Factory.h"
 #include "RT_Endpoint_Selector_Factory.h"
@@ -27,6 +24,11 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "RT_ORB.h"
 #include "RT_Current.h"
 #include "RT_Thread_Lane_Resources_Manager.h"
+
+#include "tao/Exception.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORBInitInfo.h"
+#include "tao/debug.h"
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -152,38 +154,42 @@ TAO_RT_ORBInitializer::pre_init (
     }
 
   // Set the Priority_Mapping_Manager
-  TAO_Network_Priority_Mapping_Manager *network_manager = 0;
+  TAO_Network_Priority_Mapping_Manager * network_manager = 0;
+
+  // @@ There is a potential memory leak here.  If the new() below
+  //    throws an exception, the memory for the network priority
+  //    mapping allocated above will be leaked.  Use an auto_ptr<> or
+  //    the appropriate memory management tool.
 
   ACE_NEW_THROW_EX (network_manager,
                     TAO_Network_Priority_Mapping_Manager (npm),
                     CORBA::NO_MEMORY (
-                                      CORBA::SystemException::_tao_minor_code (
-                    TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                                      CORBA::COMPLETED_NO));
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-
-  TAO_Network_Priority_Mapping_Manager_var safe_network_manager = network_manager;
+  TAO_Network_Priority_Mapping_Manager_var safe_network_manager =
+    network_manager;
 
   info->register_initial_reference ("NetworkPriorityMappingManager",
                                     network_manager
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
-  //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-                                                           ACE_ENV_ARG_PARAMETER);
+  TAO_ORBInitInfo_var tao_info =
+    TAO_ORBInitInfo::_narrow (info
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Security_ORBInitializer::pre_init:\n"
+                    "(%P|%t) TAO_RT_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
@@ -227,14 +233,16 @@ TAO_RT_ORBInitializer::pre_init (
 
   tao_info->orb_core ()->orb_params ()->scope_policy (this->scope_policy_);
 
-  /* We need to store sched_policy_flags_ and not sched_policy_ in the
+  /*
+   * We need to store sched_policy_flags_ and not sched_policy_ in the
    * orb_params(), because in TAO_Thread_Lane::create_dynamic_threads(),
    * the flags are passed to ACE_Task_Base::activate() in order to set
    * the priority.
    */
   tao_info->orb_core ()->orb_params ()->sched_policy (this->sched_policy_flags_);
 
-  /* Based on what the scheduling policy is, set the priority to the lowest
+  /* 
+   * Based on what the scheduling policy is, set the priority to the lowest
    * priority for that scheduling policy.  We need to do this in order to
    * set the pthread policy for pthread_setschedparam().
    * Also, we want the pthread policy and priority to be set to a sensible
@@ -246,22 +254,35 @@ TAO_RT_ORBInitializer::pre_init (
   ACE_Thread::self(thr_id);
 
   int result = ACE_OS::thr_getprio(thr_id, priority);
-  if ( result != 0 ) {
-     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_getprio failed, priority %d errno: %d %m\n", priority, errno));
-     return;
-  }
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N,%l) ACE_OS::thr_getprio failed, "
+                  "priority %d errno: %d %m\n",
+                  priority,
+                  errno));
+      return;
+    }
 
-  int priority_min = ACE_Sched_Params::priority_min(this->sched_policy_);
-  int priority_max = ACE_Sched_Params::priority_max(this->sched_policy_);
-  if(priority < priority_min || priority > priority_max) {  // Check this
-     priority = priority_min;
-  }
+  const int priority_min =
+    ACE_Sched_Params::priority_min (this->sched_policy_);
+  const int priority_max =
+    ACE_Sched_Params::priority_max (this->sched_policy_);
+
+  if (priority < priority_min || priority > priority_max)   // Check this
+    {
+      priority = priority_min;
+    }
 
   result = ACE_OS::thr_setprio(thr_id, priority, this->sched_policy_);
-  if ( result != 0 ) {
-     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_setprio failed, priority %d errno: %d %m\n", priority, errno));
-  }
-
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N,%l) ACE_OS::thr_setprio failed, "
+                  "priority %d errno: %d %m\n",
+                  priority,
+                  errno));
+    }
 }
 
 void
