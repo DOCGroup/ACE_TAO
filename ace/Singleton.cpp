@@ -51,10 +51,13 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
   if (singleton == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      if (ACE_Object_Manager::starting_up ())
+      if (ACE_Object_Manager::starting_up () ||
+          ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
+          // Or, the ACE_Object_Manager instance has been destroyed,
+          // so the preallocated lock is not available.
 #endif /* ACE_MT_SAFE */
           ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
@@ -133,10 +136,13 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
   if (singleton == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      if (ACE_Object_Manager::starting_up ())
+      if (ACE_Object_Manager::starting_up () ||
+          ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
+          // Or, the ACE_Object_Manager instance has been destroyed,
+          // so the preallocated lock is not available.
 #endif /* ACE_MT_SAFE */
           ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
 
