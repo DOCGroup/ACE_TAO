@@ -40,6 +40,13 @@ endif # PATH
 
 PERL_PATH = perl
 
+ifeq (win32,$(findstring win32,$(WIND_HOST_TYPE)))
+  #### GNU make on WIN32 needs double double quotes.
+  ACE_QUOTE =""
+else  # ! win32 host
+  ACE_QUOTE ="
+endif # ! win32 host
+
 #### BEGIN target CPU-specific settings
 
 #### This is kind of messy so that it can support multiple
@@ -94,7 +101,7 @@ CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
 INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
-                  "$(COMPILE.c) -traditional" \
+                  $(ACE_QUOTE)$(COMPILE.c) -traditional$(ACE_QUOTE) \
                   -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
