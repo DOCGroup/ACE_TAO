@@ -1,3 +1,12 @@
+Wed Jun 18 23:29:20 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+	* orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
+
+	  Updated
+	
 Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify_Service/Notify_Service.cpp:
