@@ -1,5 +1,9 @@
-#ifndef CCF_CODE_GENERATION_KIT_INDENTATION_IDL
-#define CCF_CODE_GENERATION_KIT_INDENTATION_IDL
+// file      : CCF/CodeGenerationKit/IndentationIDL.hpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#ifndef CCF_CODE_GENERATION_KIT_INDENTATION_IDL_HPP
+#define CCF_CODE_GENERATION_KIT_INDENTATION_IDL_HPP
 
 #include <deque>
 
@@ -212,4 +216,4 @@ namespace Indentation
   };
 }
 
-#endif // CCF_CODE_GENERATION_KIT_INDENTATION_IDL
+#endif // CCF_CODE_GENERATION_KIT_INDENTATION_IDL_HPP

@@ -1,6 +1,6 @@
 # file      : CCF/Makefile.alt
 # author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-# cvs-id    : $id$
+# cvs-id    : $Id$
 
 root := ..
 
@@ -11,7 +11,7 @@ $(call include, $(root)/Config.rules)
 $(call include, $(UTILITY_ROOT)/BuildRules/Recursion.pre.rules)
 
 target_makefile_list  :=
-target_directory_list := IDL2 IDL3 CIDL CodeGenerationKit
+target_directory_list := IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
 default_makefile_name := Makefile.alt
 
 $(call include, $(UTILITY_ROOT)/BuildRules/Recursion.post.rules)

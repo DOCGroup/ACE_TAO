@@ -1,6 +1,6 @@
-// file   : CCF/CompilerElements/Context.hpp
-// author : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// file      : CCF/CompilerElements/Context.hpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
 
 #ifndef CCF_COMPILER_ELEMENTS_CONTEXT_HPP
 #define CCF_COMPILER_ELEMENTS_CONTEXT_HPP

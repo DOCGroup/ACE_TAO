@@ -1,6 +1,6 @@
 // file      : CCF/CIDL/Traversal/Composition.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_CIDL_TRAVERSAL_COMPOSITION_HPP
 #define CCF_CIDL_TRAVERSAL_COMPOSITION_HPP

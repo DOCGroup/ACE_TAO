@@ -1,6 +1,6 @@
 # file      : CCF/CIDL/Makefile.archive
 # author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-# cvs-id    : $id$
+# cvs-id    : $Id$
 
 root = ../..
 

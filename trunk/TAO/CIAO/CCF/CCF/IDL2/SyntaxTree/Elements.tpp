@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/SyntaxTree/Elements.tpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 namespace CCF
 {

@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/SemanticAction/Impl/Interface.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
 

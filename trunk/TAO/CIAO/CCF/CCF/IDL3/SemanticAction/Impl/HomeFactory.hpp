@@ -1,6 +1,6 @@
 // file      : CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL3_SEMANTIC_ACTION_IMPL_HOME_FACTORY_HPP
 #define CCF_IDL3_SEMANTIC_ACTION_IMPL_HOME_FACTORY_HPP

@@ -1,6 +1,6 @@
 // file      : CCF/IDL3/Traversal/EventType.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #include "CCF/IDL3/Traversal/EventType.hpp"
 

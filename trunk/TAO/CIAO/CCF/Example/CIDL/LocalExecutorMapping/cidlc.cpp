@@ -1,6 +1,6 @@
 // file      : CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #include "CCF/CompilerElements/FileSystem.hpp"
 #include "CCF/CompilerElements/TokenStream.hpp"
