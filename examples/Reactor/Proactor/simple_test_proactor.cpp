@@ -31,7 +31,6 @@ ACE_RCSID(Proactor, test_proactor, "simple_test_proactor.cpp,v 1.1 1999/05/18 22
 
 static char *file = "simple_test_proactor.cpp";
 static char *dump_file = "simple_output";
-static int initial_read_size = BUFSIZ;
 
 class Simple_Tester : public ACE_Handler
 {

@@ -112,7 +112,7 @@ Receiver::~Receiver (void)
 
 void
 Receiver::open (ACE_HANDLE handle,
-		ACE_Message_Block &message_block)
+		ACE_Message_Block &)
 {
   // New connection, initiate stuff
   

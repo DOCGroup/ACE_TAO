@@ -77,7 +77,7 @@ public:
     {}
   // Destructor.
   
-  void complete (u_long bytes_transferred,
+  void complete (u_long,
                  int success,
                  const void *completion_key,
                  u_long error)
@@ -171,8 +171,11 @@ private:
 };
 
 int
-main (int argc, char *argv [])
+main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P | %t):Test starts \n"));
 
