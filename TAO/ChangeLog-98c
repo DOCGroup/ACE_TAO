@@ -1,3 +1,14 @@
+Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
+
+	* tests/Cubit/TAO/clnt.cpp (main): Added a simple class
+	  ACE_Winsock_proper_shutdown here to shutdown winsock properly.
+  	  This class should be removed later once we figure out how to
+	  close down winsock properly from ACE.
+
+	* tests/Cubit/TAO/svc.conf: Changed the name of shared object from
+	  libTAO to TAO.  Added configuration lines for using debug
+	  version of TAO library on NT.
+
 Sun Oct 26 01:01:32 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.16, released Sun Oct 26 01:01:32 1997.
