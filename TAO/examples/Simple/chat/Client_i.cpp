@@ -86,14 +86,16 @@ Client_i::init (int argc, char *argv[])
   TAO_TRY
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (argc,
-				    argv,
-				    0,
-				    TAO_TRY_ENV);
+      this->orb_manager_.init (argc,
+                               argv,
+                               0,
+                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      CORBA::ORB_var orb = this->orb_manager_.orb ();
+
       // set the orb in the receiver_i_ object.
-      this->receiver_i_.orb (this->orb_.in ());
+      this->receiver_i_.orb (orb.in ());
 
       // read the ior from file
       if (this->read_ior (this->ior_file_name_) != 0)
@@ -103,8 +105,8 @@ Client_i::init (int argc, char *argv[])
 			  -1);
 
       CORBA::Object_var server_object =
-	this->orb_->string_to_object (this->ior_,
-				      TAO_TRY_ENV);
+	orb->string_to_object (this->ior_,
+                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (server_object.in ()))
@@ -149,6 +151,10 @@ Client_i::run (void)
 
   TAO_TRY
     {
+      PortableServer::POAManager_var poa_manager = this->orb_manager_.poa_manager ();
+      poa_manager->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       this->receiver_var_ =
 	this->receiver_i_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -160,7 +166,8 @@ Client_i::run (void)
       TAO_CHECK_ENV;
 
       // Run the ORB.
-      this->orb_->run ();
+      this->orb_manager_.run (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
