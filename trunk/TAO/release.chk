@@ -47,10 +47,10 @@ Legend:
 [111xx ] 	SII ubstring
 [111xx ] 	SII fixed_struct
 [x0xxx ] 	SII strseq
-[x00xx ] 	SII var_struct
-[x00xx ] 	SII nested_struct
-[x00xx ] 	SII struct_seq
-[x00xx ] 	SII objref
+[000xx ] 	SII var_struct
+[000xx ] 	SII nested_struct
+[000xx ] 	SII struct_seq
+[000xx ] 	SII objref
 
 [x1xxx ] 	DII short
 [x1xxx ] 	DII ubstring
