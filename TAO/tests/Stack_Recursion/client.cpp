@@ -81,6 +81,12 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
                   count));
 
+      // shutdown the remote ORB
+      sender->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+
+
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
