@@ -1,3 +1,13 @@
+Tue Sep 18 15:55:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/README: Updated with information about new tests.
+
+	* tests/TAO_Tests.dsw: Added Cache_Growth_Test and
+	  Exposed_Policies.
+	
+	* tests/Cache_Growth_Test/Hello.cpp (get_string): transport_cache
+	  is now in the lane resources.
+
 Tue Sep 18 13:05:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile:

@@ -15,53 +15,73 @@ Each individual subdirectory contains a README file with more
 information on the corresponding test.  The list of tests so far
 includes the following:
 
+        . Banded_Connections
+
+          Test for RTCORBA::PriorityBandedConnection policy.
+
         . Client_Propagated
 
-          Tests PriorityModelPolicy with RTCORBA::CLIENT_PROPAGATED
-          value.
-
-        . Server_Declared
-
-          Tests PriorityModelPolicy with RTCORBA::SERVER_DECLARED
-          value.
-
-        . Server_Protocol
-
-          Tests various settings of RTCORBA::ServerProtocolPolicy.
+          Test for RTCORBA::PriorityModel policy with
+          RTCORBA::CLIENT_PROPAGATED value.
 
         . Client_Protocol
 
-          Tests various settings of RTCORBA::ClientProtocolPolicy.
+          Test for RTCORBA::ClientProtocol policy.
 
-        . Private_Connection
+        . Collocation
+          
+          Test for collocation when using thread pools and lanes.
 
-          Tests RTCORBA::PrivateConnectionPolicy support.
+        . Destroy_Thread_Pool
 
-        . Banded_Connections
-
-          Tests RTCORBA::PriorityBandedConnectionPolicy.
+          Test for creating and destroying thread pools (with and
+          without lanes).
 
         . Explicit_Binding
 
-          Tests <Object::_validate_connection>.
+          Test for <Object::_validate_connection>.
+
+        . Linear_Priority
+
+          Test for Linear Priority mapping.  Also combines and tests
+          several RT policies in different ways.
 
         . MT_Client_Protocol_Priority
 
-          Multithreaded client test. Two client threads [with
-          different priorities and different ClientProtocolPolicy
-          Current-level overrides] concurrently making invocations on
-          one object reference, which has a CLIENT_PROPAGATED priority
-          model.
+          Test for multi-threaded clients using the
+          RTCORBA::ClientProtocol policy.
+
+        . ORB_init
+
+          Test for creation and destruction of multiple RT ORBs.
+          
+        . Persistent_IOR
+
+          Test for -ORBEndpoint option. Also makes sure that user
+          cannot use thread pools and persistence simultaneously.
+
+        . Policy_Combinations
+
+          Test that combines and tests several RT policies in
+          different ways.
+
+        . Private_Connection
+
+          Test for RTCORBA::PrivateConnection policy.
 
         . RTMutex
 
-          Tests RTCORBA::Mutex.
+          Test for RTCORBA::Mutex.
+
+        . Server_Declared
+
+          Test for RTCORBA::PriorityModel policy with
+          RTCORBA::SERVER_DECLARED value.
+
+        . Server_Protocol
+
+          Test for RTCORBA::ServerProtocol policy.
 
         . Thread_Pool
         
           Tests the creation and use of thread pools.
-
-        . ORB_init
-
-          Tests the creation and destruction of multiple RT enabled ORBs.
-

@@ -303,6 +303,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Cache Grow Client"=.\Cache_Growth_Test\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Cache Grow Server"=.\Cache_Growth_Test\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Client_Leaks Child"=.\Client_Leaks\child.dsp - Package Owner=<4>
 
 Package=<5>
@@ -351,18 +375,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Collocation_Test_Stubs DLL"=.\Collocation\Collocation_Test_Stubs.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Collocation"=.\Collocation\Collocation.dsp - Package Owner=<4>
 
 Package=<5>
@@ -389,6 +401,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Collocation Test Stubs DLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Collocation Test Stubs DLL"=.\Collocation\Collocation_Test_Stubs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -441,7 +465,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Crashed_Callback Client"=.\Crashed_Callback\client.dsp - Package Owner=<4>
+Project: "Crashed_Callback Server"=.\Crashed_Callback\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -453,7 +477,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Crashed_Callback Server"=.\Crashed_Callback\server.dsp - Package Owner=<4>
+Project: "Crashed_Callbacks Client"=.\Crashed_Callback\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -591,6 +615,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Exposed_Policies Client"=.\Exposed_Policies\Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Exposed_Policies Server"=.\Exposed_Policies\Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Faults Client"=.\Faults\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -603,7 +651,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Faults Middle"=.\Faults\middle.dsp - Package Owner=<4>
+Project: "Faults Middle Server"=.\Faults\middle.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -651,7 +699,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Forwarding client"=.\Forwarding\client.dsp - Package Owner=<4>
+Project: "Forwarding Client"=.\Forwarding\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -663,7 +711,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Forwarding server"=.\Forwarding\server.dsp - Package Owner=<4>
+Project: "Forwarding Server"=.\Forwarding\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -723,7 +771,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Leader_Followers client"=.\Leader_Followers\client.dsp - Package Owner=<4>
+Project: "Leader_Followers Client"=.\Leader_Followers\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -735,7 +783,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Leader_Followers server"=.\Leader_Followers\server.dsp - Package Owner=<4>
+Project: "Leader_Followers Server"=.\Leader_Followers\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -795,7 +843,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MProfile client"=.\MProfile\client.dsp - Package Owner=<4>
+Project: "MProfile Client"=.\MProfile\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -807,7 +855,31 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MProfile server"=.\MProfile\server.dsp - Package Owner=<4>
+Project: "MProfile Server"=.\MProfile\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT Timeout Client"=.\MT_Timeout\MT_Timeout_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT Timeout Server"=.\MT_Timeout\MT_Timeout_Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -879,43 +951,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT Timeout Client"=.\MT_Timeout\MT_Timeout_Client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "MT Timeout Server"=.\MT_Timeout\MT_Timeout_Server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Multiple Client"=.\Multiple\Client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Multiple Server"=.\Multiple\Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -940,6 +976,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Multiple Inheritance Server"=.\Multiple_Inheritance\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Multiple Server"=.\Multiple\Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1132,18 +1180,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Object_Loader Driver"=.\Object_Loader\driver.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Object_Loader Test_DLL"=.\Object_Loader\Test_DLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1395,7 +1431,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Single_Read client"=.\Single_Read\client.dsp - Package Owner=<4>
+Project: "Single_Read Client"=.\Single_Read\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1407,7 +1443,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Single_Read server"=.\Single_Read\server.dsp - Package Owner=<4>
+Project: "Single_Read Server"=.\Single_Read\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1419,7 +1455,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Timed_Buffered_Oneways client"=.\Timed_Buffered_Oneways\client.dsp - Package Owner=<4>
+Project: "Test_DLL"=.\Object_Loader\Test_DLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1431,7 +1467,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Timed_Buffered_Oneways server"=.\Timed_Buffered_Oneways\server.dsp - Package Owner=<4>
+Project: "Timed_Buffered_Oneways Client"=.\Timed_Buffered_Oneways\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Timed_Buffered_Oneways Server"=.\Timed_Buffered_Oneways\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1467,7 +1515,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IDL_Test"=.\IDL_Test\idl_test.dsp - Package Owner=<4>
+Project: "idl_test"=.\IDL_Test\idl_test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
