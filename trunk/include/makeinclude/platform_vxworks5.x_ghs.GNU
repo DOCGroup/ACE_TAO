@@ -1,17 +1,17 @@
-# VxWorks 5.2 with Green Hills 1.8.8
-# *not* using Orbix
+# VxWorks 5.2-5.3.1 with Green Hills 1.8.8
+
 CC		= cxvxppc
 CXX		= $(CC)
 CFLAGS		+= $(DCFLAGS)
 CCFLAGS		+= $(CFLAGS) --no_rtti
 DCFLAGS		+= -g
-DLD		= $(CXX) 
+DLD		= $(CXX)
 LD		= $(CXX)
 LIBS            += /appl/newgreen/vxppc603/indlib.o
 PIC		=
-AR		= ax 
+AR		= ax
 ARFLAGS		= rv
-RANLIB		= /bin/true 
+RANLIB		= /bin/true
 PRELIB	= (echo "int main() { return 0; }" > gcctemp.c && \
 	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
 	  $(CXX) $(INCLDIRS) $^ $(LDFLAGS) $(LIBS); \
