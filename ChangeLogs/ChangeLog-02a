@@ -1,17 +1,26 @@
+Fri Jan 19 15:08:37 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.cpp:
+          I disabled too much in the commit at 10:50am... Now it seems to
+          be OK.
+
+        * ace/Makefile:
+          Remove extra -v
+
 Fri Jan 19 13:16:49 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: 
-	  Added new options to the CCFLAGS so that the known future errors
-	  arising because of HPUX are suppressed. 
-	
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Added new options to the CCFLAGS so that the known future errors
+          arising because of HPUX are suppressed.
+
 Fri Jan 19 13:01:13 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/SSL/Makefile: 
-	  Put a check for defining ACE_SHLIBS to get it compiled on HPUX.
-	
-	* ace/RMCast/Makefile: 
-	* ace/Makefile : 
-	  Updated dependencies
+        * ace/SSL/Makefile:
+          Put a check for defining ACE_SHLIBS to get it compiled on HPUX.
+
+        * ace/RMCast/Makefile:
+        * ace/Makefile :
+          Updated dependencies
 
         * ace/config-all.h
           Fix a build problem on HP-UX 11.00 with aCC A.03.25.  The macro
@@ -19,29 +28,29 @@ Fri Jan 19 13:01:13 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
           RWSTD_NO_NAMESPACE to _NAMESPACE_STD.  NOTE: I did preserve the
           check for RWSTD_NO_NAMESPACE with aCC versions less than A.03.25.
 
-          Thanks to Chad Elliott  <elliott_c@ociweb.com> for making this fix. 
+          Thanks to Chad Elliott  <elliott_c@ociweb.com> for making this fix.
 
 Fri Jan 19 11:22:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/tutorials/022/client_handler.cpp : 
-	* docs/tutorials/022/client_hander.h :
-	* docs/tutorials/022/Acceptor_Service.cpp : 	
-	* docs/tutorials/022/Acceptor_Service.h : 	
-	* docs/tutorials/022/server.cpp : 	
-	* docs/tutorials/022/Makefile : 	
+        * docs/tutorials/022/client_handler.cpp :
+        * docs/tutorials/022/client_hander.h :
+        * docs/tutorials/022/Acceptor_Service.cpp :
+        * docs/tutorials/022/Acceptor_Service.h :
+        * docs/tutorials/022/server.cpp :
+        * docs/tutorials/022/Makefile :
 
-	* docs/tutorials/022/client/Makefile: 
-	* docs/tutorials/022/client/client.cpp: 
+        * docs/tutorials/022/client/Makefile:
+        * docs/tutorials/022/client/client.cpp:
 
-	* docs/tutorials/022/page01.html: 
-	* docs/tutorials/022/page02.html: 
-	* docs/tutorials/022/page03.html: 
-	* docs/tutorials/022/page04.html: 
-	* docs/tutorials/022/page05.html: 
+        * docs/tutorials/022/page01.html:
+        * docs/tutorials/022/page02.html:
+        * docs/tutorials/022/page03.html:
+        * docs/tutorials/022/page04.html:
+        * docs/tutorials/022/page05.html:
 
-	  Developed a new tutorial for the ACE_Service_Configurator.
-	  Based on the ACE tutorial 005. 
-	  
+          Developed a new tutorial for the ACE_Service_Configurator.
+          Based on the ACE tutorial 005.
+
 Fri Jan 19 10:50:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.cpp:
