@@ -132,8 +132,8 @@ public:
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecUDPAdmin::AddrServer_ptr addr_server,
-             TAO_ECG_UDP_Out_Endpoint* endpoint,
-             CORBA::Environment &_env);
+             TAO_ECG_UDP_Out_Endpoint *endpoint,
+             CORBA::Environment &env = TAO_default_environment ());
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
   // scheduler.
@@ -149,20 +149,20 @@ public:
   // Setting the MTU can fail if the value is too small (at least the
   // header + 8 bytes must fit).
 
-  void shutdown (CORBA::Environment&);
+  void shutdown (CORBA::Environment & = TAO_default_environment ());
   // Disconnect and shutdown the sender, no further connections will
   // work unless init() is called again.
 
-  void open (RtecEventChannelAdmin::ConsumerQOS& sub,
-             CORBA::Environment& env);
+  void open (RtecEventChannelAdmin::ConsumerQOS &sub,
+             CORBA::Environment &env = TAO_default_environment ());
   // Connect (or reconnect) to the EC with the given subscriptions.
 
-  void close (CORBA::Environment& _env);
+  void close (CORBA::Environment &env = TAO_default_environment ());
   // Disconnect from the EC, but reconnection is still possible.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &);
+  virtual void disconnect_push_consumer (CORBA::Environment & = TAO_default_environment ());
   virtual void push (const RtecEventComm::EventSet &events,
-                     CORBA::Environment &);
+                     CORBA::Environment & = TAO_default_environment ());
   // The PushConsumer methods.
 
 private:
@@ -178,7 +178,7 @@ private:
                       CORBA::ULong fragment_count,
                       iovec iov[],
                       int iovcnt,
-                      CORBA::Environment& _env);
+                      CORBA::Environment &env = TAO_default_environment ());
   // Send one fragment, the first entry in the iovec is used to send
   // the header, the rest of the iovec array should contain pointers
   // to the actual data.
@@ -336,7 +336,7 @@ public:
   // Return a buffer for the fragment at offset <fragment_offset>
 
   void decode (RtecEventComm::EventSet& event,
-               CORBA::Environment& _env);
+               CORBA::Environment &env = TAO_default_environment ());
   // Decode the events, the message must be complete.
 
   void inc_timeout (void);
@@ -427,7 +427,7 @@ public:
              ACE_Reactor *reactor,
              const ACE_Time_Value &expire_interval,
              int max_timeout,
-             CORBA::Environment &_env);
+             CORBA::Environment &env = TAO_default_environment ());
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
   // scheduler.
@@ -437,14 +437,14 @@ public:
   // @@ TODO part of the RT_Info is hardcoded, we need to make it
   // parametric.
 
-  void shutdown (CORBA::Environment&);
+  void shutdown (CORBA::Environment & = TAO_default_environment ());
   // Disconnect and shutdown the gateway, no further connectsions
 
   void open (RtecEventChannelAdmin::SupplierQOS& pub,
-             CORBA::Environment &env);
+             CORBA::Environment &env = TAO_default_environment ());
   // Connect to the EC using the given publications lists.
 
-  virtual void close (CORBA::Environment& env);
+  virtual void close (CORBA::Environment &env = TAO_default_environment ());
   // Disconnect to the EC.
 
   int handle_input (ACE_SOCK_Dgram& dgram);
@@ -458,12 +458,12 @@ public:
   // messages...
 
   // The PushSupplier method.
-  virtual void disconnect_push_supplier (CORBA::Environment &);
+  virtual void disconnect_push_supplier (CORBA::Environment & = TAO_default_environment ());
 
 
   void get_addr (const RtecEventComm::EventHeader& header,
                  RtecUDPAdmin::UDP_Addr_out addr,
-                 CORBA::Environment& env);
+                 CORBA::Environment &env = TAO_default_environment ());
   // Call the RtecUDPAdmin::AddrServer
 
 private:
@@ -550,14 +550,14 @@ public:
   TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv);
 
   int open (RtecEventChannelAdmin::EventChannel_ptr ec,
-            CORBA::Environment& _env);
+            CORBA::Environment &env = TAO_default_environment ());
   // Register for changes in the EC subscription list.
   // When the subscription list becomes non-empty we join the proper
   // multicast groups (using the receiver to translate between event
   // types and mcast groups) and the class registers itself with the
   // reactor.
 
-  int close (CORBA::Environment& _env);
+  int close (CORBA::Environment &env = TAO_default_environment ());
   // Remove ourselves from the event channel, unsubscribe from the
   // multicast groups, close the sockets and unsubscribe from the
   // reactor.
@@ -567,9 +567,9 @@ public:
   // Reactor callbacks
 
   void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                        CORBA::Environment& _env);
+                        CORBA::Environment &env = TAO_default_environment ());
   void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-                        CORBA::Environment& _env);
+                        CORBA::Environment &env = TAO_default_environment ());
   // The Observer methods
 
   class Observer : public POA_RtecEventChannelAdmin::Observer
@@ -589,12 +589,12 @@ public:
 
     // The Observer methods
     virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                                  CORBA::Environment& _env);
+                                  CORBA::Environment &env = TAO_default_environment ());
     virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-                                  CORBA::Environment& _env);
+                                  CORBA::Environment &env = TAO_default_environment ());
 
   private:
-    TAO_ECG_Mcast_EH* eh_;
+    TAO_ECG_Mcast_EH *eh_;
     // Our callback object.
   };
 
