@@ -490,11 +490,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -525,6 +520,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -774,11 +774,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -809,6 +804,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -1052,11 +1052,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1091,6 +1086,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -1331,11 +1331,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1370,6 +1365,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -1613,11 +1613,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1652,6 +1647,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -1899,11 +1899,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1934,6 +1929,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -2189,11 +2189,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2224,6 +2219,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -2484,11 +2484,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2519,6 +2514,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -2775,11 +2775,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2810,6 +2805,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3055,11 +3055,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3094,6 +3089,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3336,11 +3336,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3375,6 +3370,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3618,11 +3618,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3657,6 +3652,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3897,11 +3897,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3936,6 +3931,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4178,11 +4178,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4217,6 +4212,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4459,11 +4459,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4498,6 +4493,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4738,11 +4738,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4777,6 +4772,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5023,11 +5023,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5058,6 +5053,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5302,11 +5302,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5341,6 +5336,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5581,11 +5581,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5620,6 +5615,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5873,11 +5873,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5912,6 +5907,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6156,11 +6156,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6195,6 +6190,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6440,11 +6440,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6479,6 +6474,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6717,11 +6717,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6756,6 +6751,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6994,11 +6994,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7033,6 +7028,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7272,11 +7272,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7311,6 +7306,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7551,11 +7551,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7590,6 +7585,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7828,11 +7828,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7867,6 +7862,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8107,11 +8107,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8146,6 +8141,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8386,11 +8386,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8425,6 +8420,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8665,11 +8665,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8704,6 +8699,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8942,11 +8942,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8981,6 +8976,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -9219,11 +9219,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9258,6 +9253,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -9497,11 +9497,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9536,6 +9531,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -9774,11 +9774,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9813,6 +9808,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -10051,11 +10051,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10090,6 +10085,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -10328,11 +10328,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10367,6 +10362,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -10605,11 +10605,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10644,6 +10639,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -10882,11 +10882,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10921,6 +10916,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -11159,11 +11159,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11198,6 +11193,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -11437,11 +11437,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11476,6 +11471,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -11717,11 +11717,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11756,6 +11751,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -11995,11 +11995,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12034,6 +12029,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -12275,11 +12275,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12315,6 +12310,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -12622,11 +12622,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12657,6 +12652,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -12951,11 +12951,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12986,6 +12981,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -13280,11 +13280,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13315,6 +13310,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -13605,11 +13605,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13640,6 +13635,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -13923,11 +13923,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13962,6 +13957,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -14246,11 +14246,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14285,6 +14280,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -14535,11 +14535,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14574,6 +14569,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -14866,11 +14866,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14905,6 +14900,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -15151,11 +15151,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15190,6 +15185,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -15439,11 +15439,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15478,6 +15473,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -15759,11 +15759,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15799,6 +15794,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -16038,11 +16038,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16077,6 +16072,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -16320,11 +16320,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16360,6 +16355,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -16669,11 +16669,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16708,6 +16703,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -16954,11 +16954,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16993,6 +16988,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -17239,11 +17239,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17278,6 +17273,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -17524,11 +17524,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17563,6 +17558,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -17809,11 +17809,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17844,6 +17839,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -18108,11 +18108,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18148,6 +18143,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -18460,11 +18460,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18500,6 +18495,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -18834,11 +18834,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18873,6 +18868,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -19175,11 +19175,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19214,6 +19209,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -19511,11 +19511,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19550,6 +19545,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -19839,11 +19839,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19881,6 +19876,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -20133,11 +20133,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20175,6 +20170,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -20424,11 +20424,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20463,6 +20458,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -20764,11 +20764,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20803,6 +20798,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -21063,11 +21063,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -21106,6 +21101,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -21393,11 +21393,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -21432,6 +21427,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -21682,11 +21682,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -21721,6 +21716,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -22014,11 +22014,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22053,6 +22048,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -22302,11 +22302,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22341,6 +22336,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -22590,11 +22590,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22629,6 +22624,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -22913,11 +22913,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22953,6 +22948,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -23192,11 +23192,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23232,6 +23227,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -23471,11 +23471,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23511,6 +23506,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -23802,11 +23802,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23842,6 +23837,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -24134,11 +24134,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24173,6 +24168,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -24419,11 +24419,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24458,6 +24453,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -24704,11 +24704,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24739,6 +24734,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -25005,11 +25005,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25044,6 +25039,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -25290,11 +25290,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25329,6 +25324,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -25596,11 +25596,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25635,6 +25630,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -25932,11 +25932,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25971,6 +25966,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -26271,11 +26271,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26310,6 +26305,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -26610,11 +26610,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26649,6 +26644,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -26935,11 +26935,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26974,6 +26969,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -27285,11 +27285,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27324,6 +27319,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -27575,11 +27575,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27598,11 +27593,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27641,6 +27631,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -27971,11 +27966,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28014,6 +28004,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -28350,11 +28345,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28389,6 +28379,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -28633,11 +28628,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28672,6 +28662,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -28957,11 +28952,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28997,6 +28987,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -29324,11 +29319,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29367,6 +29357,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -29696,11 +29691,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29740,6 +29730,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -30056,11 +30051,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30101,6 +30091,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -30426,11 +30421,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30461,6 +30451,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -30745,11 +30740,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30792,6 +30782,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -31100,11 +31095,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31135,6 +31125,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -31402,11 +31397,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31449,6 +31439,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -31768,11 +31763,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31798,6 +31788,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -32073,11 +32068,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32112,6 +32102,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -32374,11 +32369,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32416,6 +32406,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -32660,11 +32655,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32699,6 +32689,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -32967,11 +32962,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33005,6 +32995,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -33257,11 +33252,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33313,6 +33303,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -33574,11 +33569,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33615,6 +33605,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -33881,11 +33876,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33920,6 +33910,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -34165,11 +34160,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34208,6 +34198,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -34453,11 +34448,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34494,6 +34484,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -34742,11 +34737,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34780,6 +34770,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -35032,11 +35027,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35071,6 +35061,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -35339,11 +35334,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35378,6 +35368,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -35622,11 +35617,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35678,6 +35668,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -35905,11 +35900,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35947,6 +35937,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -36203,11 +36198,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -36245,6 +36235,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -36503,11 +36498,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -36559,6 +36549,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -36804,11 +36799,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -36860,6 +36850,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -37104,11 +37099,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37160,6 +37150,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -37406,11 +37401,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37462,6 +37452,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -37704,11 +37699,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37760,6 +37750,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -38021,11 +38016,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -38077,6 +38067,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -38334,11 +38329,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -38390,6 +38380,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -38648,11 +38643,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -38704,6 +38694,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -38947,11 +38942,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -38986,6 +38976,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -39230,11 +39225,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -39286,6 +39276,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -39534,11 +39529,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -39573,6 +39563,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -39818,11 +39813,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -39874,6 +39864,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -40095,11 +40090,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -40138,6 +40128,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -40382,11 +40377,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -40421,6 +40411,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -40671,11 +40666,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -40706,6 +40696,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -40964,11 +40959,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -41013,6 +41003,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
@@ -41293,11 +41288,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -41328,6 +41318,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -41586,11 +41581,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -41621,6 +41611,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -41881,11 +41876,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -41920,6 +41910,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -42200,11 +42195,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -42239,6 +42229,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -42500,11 +42495,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -42539,6 +42529,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -42783,11 +42778,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -42827,6 +42817,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -43071,11 +43066,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -43116,6 +43106,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -43366,11 +43361,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -43411,6 +43401,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -43658,11 +43653,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -43714,6 +43704,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -43939,11 +43934,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -43995,6 +43985,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -44220,11 +44215,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -44276,6 +44266,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -44512,11 +44507,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -44551,6 +44541,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -44823,11 +44818,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -44862,6 +44852,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -45138,11 +45133,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -45173,6 +45163,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -45441,11 +45436,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -45476,6 +45466,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -45747,11 +45742,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -45782,6 +45772,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -46048,11 +46043,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -46083,6 +46073,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -46353,11 +46348,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -46388,6 +46378,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -46646,11 +46641,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -46702,6 +46692,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -46933,11 +46928,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -46972,6 +46962,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -47220,11 +47215,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -47259,6 +47249,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -47505,11 +47500,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -47546,6 +47536,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -47829,11 +47824,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -47870,6 +47860,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -48167,11 +48162,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -48208,6 +48198,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -48496,11 +48491,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -48535,6 +48525,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -48817,11 +48812,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -48858,6 +48848,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -49146,11 +49141,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -49187,6 +49177,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -49482,11 +49477,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -49521,6 +49511,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -49810,11 +49805,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -49849,6 +49839,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -50138,11 +50133,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -50177,6 +50167,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -50464,11 +50459,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -50503,6 +50493,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -50795,11 +50790,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -50834,6 +50824,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -51126,11 +51121,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -51165,6 +51155,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -51452,11 +51447,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -51493,6 +51483,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -51776,11 +51771,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -51820,6 +51810,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -52112,11 +52107,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -52151,6 +52141,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -52439,11 +52434,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -52478,6 +52468,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -52725,11 +52720,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -52764,6 +52754,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -53045,11 +53040,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -53084,6 +53074,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -53366,11 +53361,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -53405,6 +53395,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -53687,11 +53682,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -53726,6 +53716,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -54007,11 +54002,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -54046,6 +54036,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -54318,11 +54313,6 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -54374,6 +54364,11 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \

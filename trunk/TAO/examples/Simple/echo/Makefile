@@ -93,6 +93,7 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -109,8 +110,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -125,6 +129,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -247,14 +260,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -358,12 +363,14 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i EchoC.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ EchoC.i
 
 .obj/EchoS.o .obj/EchoS.so .shobj/EchoS.o .shobj/EchoS.so: EchoS.cpp EchoS.h EchoC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -380,8 +387,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -396,6 +406,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -518,14 +537,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -629,8 +640,8 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i EchoC.i \
- EchoS_T.h EchoS_T.i EchoS_T.cpp EchoS.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ EchoC.i EchoS_T.h EchoS_T.i EchoS_T.cpp EchoS.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Echo_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
@@ -640,6 +651,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -652,8 +664,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -668,6 +683,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -707,6 +731,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -718,8 +744,6 @@ realclean: clean
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -792,14 +816,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -941,6 +957,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -953,8 +970,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -969,6 +989,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -1008,6 +1037,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1019,8 +1050,6 @@ realclean: clean
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -1093,14 +1122,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1239,6 +1260,7 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1255,8 +1277,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1271,6 +1296,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -1393,14 +1427,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1504,8 +1530,8 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i EchoC.i \
- EchoS_T.h EchoS_T.i EchoS_T.cpp EchoS.i
+ $(TAO_ROOT)/tao/BoundsC.i \
+ EchoC.i EchoS_T.h EchoS_T.i EchoS_T.cpp EchoS.i
 
 .obj/Echo_Client_i.o .obj/Echo_Client_i.so .shobj/Echo_Client_i.o .shobj/Echo_Client_i.so: Echo_Client_i.cpp Echo_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
@@ -1515,6 +1541,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1527,8 +1554,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1543,6 +1573,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -1582,6 +1621,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1593,8 +1634,6 @@ realclean: clean
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -1667,14 +1706,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1816,6 +1847,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1828,8 +1860,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1844,6 +1879,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -1883,6 +1927,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1894,8 +1940,6 @@ realclean: clean
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -1968,14 +2012,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \

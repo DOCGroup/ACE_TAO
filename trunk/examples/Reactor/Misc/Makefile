@@ -52,6 +52,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -93,6 +94,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
@@ -114,6 +127,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -148,6 +162,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -174,14 +200,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
 .obj/test_demuxing.o .obj/test_demuxing.so .shobj/test_demuxing.o .shobj/test_demuxing.so: test_demuxing.cpp \
@@ -191,6 +209,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -225,6 +244,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -252,14 +283,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -312,6 +335,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -332,6 +356,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -372,6 +397,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
@@ -394,14 +431,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -455,6 +484,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -489,6 +519,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -521,6 +563,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -561,6 +604,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
@@ -597,14 +652,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -643,6 +690,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_time_value.o .obj/test_time_value.so .shobj/test_time_value.o .shobj/test_time_value.so: test_time_value.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -658,6 +706,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -679,6 +728,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -716,6 +766,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \

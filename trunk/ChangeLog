@@ -1,53 +1,57 @@
+Sun Mar 12 21:10:13 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * many Makefiles: updated dependencies.
+
 Fri Mar 10 00:17:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/ACE-netsvcs.html: Updated this document.  Thanks to
-	  Charles Meier <cmeier@concentus-tech.com> for contributing this.
+        * netsvcs/ACE-netsvcs.html: Updated this document.  Thanks to
+          Charles Meier <cmeier@concentus-tech.com> for contributing this.
 
-	* ace/WIN32_Proactor.cpp (ACE_WIN32_Proactor): Replaced
-	  this->completion_port_ with 0 in the call to
- 	  CreateIoCompletionPort() to make it more clear what's going on.
+        * ace/WIN32_Proactor.cpp (ACE_WIN32_Proactor): Replaced
+          this->completion_port_ with 0 in the call to
+          CreateIoCompletionPort() to make it more clear what's going on.
 
-	* ace/SPIPE_Acceptor.cpp: Very minor reformatting of the code to
-	  conform to ACE guidelines.
+        * ace/SPIPE_Acceptor.cpp: Very minor reformatting of the code to
+          conform to ACE guidelines.
 
 Thu Mar 09 23:12:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (flock_init): On Win32, the hEvent in strut overlapped
-	  should initialized to NULL.  This was causing Naming_Test to
-	  fail on Windows 2000.  Thanks to <cody.dean@mindspring.com> for
-	  pointing this out. [Bug 485]
+        * ace/OS.i (flock_init): On Win32, the hEvent in strut overlapped
+          should initialized to NULL.  This was causing Naming_Test to
+          fail on Windows 2000.  Thanks to <cody.dean@mindspring.com> for
+          pointing this out. [Bug 485]
 
 Thu Mar  9 19:49:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Reactor.h: Clarified that ACE_Reactor::end_event_loop() should
-	 only be used for the "singleton reactor" and not for user defined
- 	  reactors.  Thanks to Adrian Miranda <ade@psg.com> for motivating
- 	  this.
+        * ace/Reactor.h: Clarified that ACE_Reactor::end_event_loop() should
+          only be used for the "singleton reactor" and not for user defined
+          reactors.  Thanks to Adrian Miranda <ade@psg.com> for motivating
+          this.
 
 Thu Mar 09 18:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* ace/Asynch_IO.h:
-	* ace/Asynch_IO_Impl.h:
-	* ace/POSIX_Asynch_IO.h:
-	* ace/POSIX_Proactor.h:
-	* ace/Proactor.h:
-	* ace/Proactor_Impl.h:
-	* ace/WIN32_Asynch_IO.h:
-	* ace/WIN32_Proactor.h:
-	* ace/config-aix-4.1.x.h:
-	* ace/config-aix-4.2.x.h:
-	* ace/config-aix-4.3.x.h:
+        * ace/Asynch_IO.h:
+        * ace/Asynch_IO_Impl.h:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Proactor.h:
+        * ace/Proactor.h:
+        * ace/Proactor_Impl.h:
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Proactor.h:
+        * ace/config-aix-4.1.x.h:
+        * ace/config-aix-4.2.x.h:
+        * ace/config-aix-4.3.x.h:
 
-	  These files were using the  #if !defined (WHATEVER) as multiple
-	  inclusion guard instead of  #ifndef WHATEVER. Thanks to Paul
-	  Calabrese <calabrese_p@ociweb.com> for reporting that.
+          These files were using the  #if !defined (WHATEVER) as multiple
+          inclusion guard instead of  #ifndef WHATEVER. Thanks to Paul
+          Calabrese <calabrese_p@ociweb.com> for reporting that.
 
-	* ace/config-visualage.h:
-	* ace/CLASSIX/CLASSIX_Port_Default.h:
-	* ace/Svc_Conf_Tokens.h:
+        * ace/config-visualage.h:
+        * ace/CLASSIX/CLASSIX_Port_Default.h:
+        * ace/Svc_Conf_Tokens.h:
 
-	  While this file were missing multiple inclusion guard. Thanks to
-	  Paul Calabrese <calabrese_p@ociweb.com> for reporting that.
+          While this file were missing multiple inclusion guard. Thanks to
+          Paul Calabrese <calabrese_p@ociweb.com> for reporting that.
 
 Thu Mar 09 18:06:52 2000  Steve Huston  <shuston@riverace.com>
 

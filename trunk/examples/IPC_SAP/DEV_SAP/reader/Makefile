@@ -44,8 +44,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/reader.o .obj/reader.so .shobj/reader.o .shobj/reader.so: reader.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/reader.o .obj/reader.so .shobj/reader.o .shobj/reader.so: reader.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \

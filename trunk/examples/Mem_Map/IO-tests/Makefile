@@ -41,8 +41,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IO_Test.o .obj/IO_Test.so .shobj/IO_Test.o .shobj/IO_Test.so: IO_Test.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/IO_Test.o .obj/IO_Test.so .shobj/IO_Test.o .shobj/IO_Test.so: IO_Test.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -55,7 +57,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Mem_Map.i IO_Test.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ IO_Test.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \

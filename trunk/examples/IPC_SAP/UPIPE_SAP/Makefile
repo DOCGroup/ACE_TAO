@@ -40,10 +40,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ex1.o .obj/ex1.so .shobj/ex1.o .shobj/ex1.so: ex1.cpp $(ACE_ROOT)/ace/Stream.h \
+.obj/ex1.o .obj/ex1.so .shobj/ex1.o .shobj/ex1.so: ex1.cpp \
+ $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -58,8 +60,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -74,6 +79,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -124,14 +138,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -190,6 +196,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -204,8 +211,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -220,6 +230,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -270,14 +289,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -337,6 +348,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -351,8 +363,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -367,6 +382,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -417,14 +441,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
