@@ -671,10 +671,14 @@ start_servants (void)
               "Creating servant with high priority %d\n", priority));
 
   // Make the high priority task an active object.
-  high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-                               1,
-                               0,
-                               priority);
+  if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
+                                    1,
+                                    0,
+                                    priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
+                  "high_priority_task->activate"));
+    }
 
   // Create an array to hold pointers to the low priority tasks.
   Cubit_Task **low_priority_task;
@@ -714,10 +718,14 @@ start_servants (void)
                       -1);
 
       // Make the low priority task an active object.
-      low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
+    if (low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                        1,
                                        0,
-                                       priority);
+                                       priority) == -1)
+      {
+        ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
+                    "low_priority_task[i]->activate"));
+      }
 
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -772,10 +780,15 @@ start_servants (void)
                                               ACE_SCOPE_THREAD);
 
   //  Make the factory low priority task an active object.
-  factory_task->activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (factory_task->activate (THR_BOUND | ACE_SCHED_FIFO,
                           1,
                           0,
-                          priority);
+                          priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
+                  "factory_task->activate"));
+    }
+
   return 0;
 }
 
