@@ -409,6 +409,9 @@ ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)
+ACE_HAS_ONLY_SCHED_FIFO                 Platform, e.g., HP NonStop OSS,
+                                        only supports SCHED_FIFO
+                                        POSIX scheduling policy.
 ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5,
                                         only supports SCHED_OTHER
                                         POSIX scheduling policy.
@@ -535,6 +538,8 @@ ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
 ACE_HAS_SOCKLEN_T                       Platform provides socklen_t
                                         type, such as Linux with
                                         glibc2.
+ACE_HAS_SOCK_BUF_SIZE_MAX               Platform limits the maximum socket
+                                        message size.
 ACE_HAS_SPARCWORKS_401_SIGNALS          Compiler has brain-damaged
                                         SPARCwork SunOS 4.x signal
                                         prototype...
@@ -693,6 +698,9 @@ ACE_HAS_XTI                             Platform has XTI
 ACE_INITIALIZE_MEMORY_BEFORE_USE        Memory is explicitly initialized before
                                         use. Useful when using a profiler like
                                         purify or valgrind
+ACE_HRTIME_T_IS_BASIC_TYPE              ACE_hrtime_t is a basic type that 
+                                        doesn't require ACE_U64_TO_U32 
+                                        conversion
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
                                         VxWorks and Chorus)
 ACE_LACKS_ACE_IOSTREAM                  Platform can not build
