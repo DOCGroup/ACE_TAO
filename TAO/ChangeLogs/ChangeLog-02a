@@ -1,3 +1,12 @@
+Fri Nov 17 14:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Param_Test/client.bor:
+        * tests/Param_Test/server.bor:
+        * tests/RTCORBA/Banded_Connections/client.bor:
+        * tests/RTCORBA/Banded_Connections/server.bor:
+
+          Added IDLFILES to these makefiles.
+
 Fri Nov 17 10:59:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/DynamicInterface/Dynamic_Implementation.cpp:
