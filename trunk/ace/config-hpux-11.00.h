@@ -179,6 +179,10 @@
 
 #include /**/ <sys/stdsyms.h>
 
+#if defined (_INCLUDE_HPUX_SOURCE)
+#  define ACE_HAS_SNPRINTF
+#endif
+
 // HP-UX is a POSIX-compliant system - see what's available.
 #include "ace/config-posix.h"
 
