@@ -1,31 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-
-ACE_INLINE ACE_CE_Errno *
-ACE_CE_Errno::instance ()
-{
-  // This should be inlined.
-  return ACE_CE_Errno::instance_;
-}
-
-ACE_INLINE
-ACE_CE_Errno::operator int (void) const
-{
-  return (int) TlsGetValue (ACE_CE_Errno::errno_key_);
-}
-
-ACE_INLINE int
-ACE_CE_Errno::operator= (int x)
-{
-  // error checking?
-  TlsSetValue (ACE_CE_Errno::errno_key_, (void *) x);
-  return x;
-}
-
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
 ACE_INLINE
 ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
                                   int error)

@@ -194,17 +194,19 @@ namespace ACE_OS {
   extern ACE_Export
   void *realloc (void *, size_t);
 
-#if !defined (ACE_LACKS_REALPATH)
+#if !defined (ACE_HAS_WINCE)
+#  if !defined (ACE_LACKS_REALPATH)
   ACE_NAMESPACE_INLINE_FUNCTION
-#else
+#  else
   extern ACE_Export
-#endif /* !ACE_LACKS_REALPATH */
+#  endif /* !ACE_LACKS_REALPATH */
   char *realpath (const char *file_name, char *resolved_name);
 
-#if defined (ACE_HAS_WCHAR)
+#  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *realpath (const wchar_t *file_name, wchar_t *resolved_name);
-#endif /* ACE_HAS_WCHAR */
+#  endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WINCE */
 
   // exit_hook and set_exit_hook not in spec
   /// Function that is called by <ACE_OS::exit>, if non-null.

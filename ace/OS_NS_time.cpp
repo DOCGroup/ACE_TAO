@@ -12,23 +12,27 @@ ACE_RCSID(ace, OS_NS_time, "$Id$")
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
 
-// hmmm, should this be only for ACE_MT_SAFE? dhinton
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-# if defined (ACE_HAS_WINCE)
-const wchar_t *ACE_OS::day_of_week_name[] = {ACE_LIB_TEXT ("Sun"), ACE_LIB_TEXT ("Mon"),
-                                             ACE_LIB_TEXT ("Tue"), ACE_LIB_TEXT ("Wed"),
-                                             ACE_LIB_TEXT ("Thu"), ACE_LIB_TEXT ("Fri"),
-                                             ACE_LIB_TEXT ("Sat")};
-const wchar_t *ACE_OS::month_name[] = {ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
-                                       ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
-                                       ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
-                                       ACE_LIB_TEXT ("Jul"), ACE_LIB_TEXT ("Aug"),
-                                       ACE_LIB_TEXT ("Sep"), ACE_LIB_TEXT ("Oct"),
-                                       ACE_LIB_TEXT ("Nov"), ACE_LIB_TEXT ("Dec") };
+#if defined (ACE_HAS_WINCE)
+#  include "ace/OS_NS_stdio.h"     /* Need ACE_OS::sprintf() */
+const wchar_t *ACE_OS::day_of_week_name[7] =
+                                     {ACE_LIB_TEXT ("Sun"),
+                                      ACE_LIB_TEXT ("Mon"),
+                                      ACE_LIB_TEXT ("Tue"),
+                                      ACE_LIB_TEXT ("Wed"),
+                                      ACE_LIB_TEXT ("Thu"),
+                                      ACE_LIB_TEXT ("Fri"),
+                                      ACE_LIB_TEXT ("Sat")};
+
+const wchar_t *ACE_OS::month_name[12] =
+                                {ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
+                                 ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
+                                 ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
+                                 ACE_LIB_TEXT ("Jul"), ACE_LIB_TEXT ("Aug"),
+                                 ACE_LIB_TEXT ("Sep"), ACE_LIB_TEXT ("Oct"),
+                                 ACE_LIB_TEXT ("Nov"), ACE_LIB_TEXT ("Dec") };
 
 static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
-# endif /* ACE_HAS_WINCE */
-#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+#endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_PSOS)
 
