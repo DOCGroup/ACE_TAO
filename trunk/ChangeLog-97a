@@ -1,3 +1,17 @@
+Tue Feb 18 21:24:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/IOStream.h,README: replaced ACE_WIN32 conditional with
+	  ACE_LACKS_IOSTREAM_FX.
+
+	* ace/config-{mvs,win*}.h: added #define ACE_LACKS_IOSTREAM_FX.
+
+	* examples/Reactor/Misc/test_demuxing.cpp: removed unused
+	  variable "done".
+
+	* examples/Reactor/Misc/test_signals_1.cpp (main),
+	  examples/Reactor/Ntalker/ntalker.cpp (main):
+	  added ACE_UNUSED_ARG (sig);.
+
 Tue Feb 18 17:15:24 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/ace.mdp, ace/mak: Modified release configuration to build
