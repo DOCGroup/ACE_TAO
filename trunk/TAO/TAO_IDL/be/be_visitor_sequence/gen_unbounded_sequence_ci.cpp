@@ -187,9 +187,19 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   pt->accept (visitor);
   *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
-      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
-      << "tmp1[i] = tmp2[i];" << be_uidt_nl
-      << be_nl
+      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl;
+
+  if (pt->node_type () == AST_Decl::NT_array)
+    {
+      pt->accept (visitor);
+      *os << "_var::copy (tmp1[i], tmp2[i]);" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "tmp1[i] = tmp2[i];" << be_uidt_nl;
+    }
+
+  *os << be_nl
       << "this->buffer_ = tmp1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
@@ -236,9 +246,19 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   pt->accept (visitor); 
   *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
-      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
-      << "tmp1[i] = tmp2[i];" << be_uidt_nl
-      << be_nl
+      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl;
+
+  if (pt->node_type () == AST_Decl::NT_array)
+    {
+      pt->accept (visitor);
+      *os << "_var::copy (tmp1[i], tmp2[i]);" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "tmp1[i] = tmp2[i];" << be_uidt_nl;
+    }
+
+  *os << be_nl
       << "return *this;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;

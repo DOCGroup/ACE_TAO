@@ -689,6 +689,198 @@ public:
 
 // *************************************************************
 
+template<class T, class T_var>
+class TAO_Unbounded_Array_Sequence : public TAO_Unbounded_Base_Sequence
+{
+  // = TITLE
+  //   Parametric sequence for arrays.
+  //
+  // = DESCRIPTION
+  //   The IDL mapping for arrays includes some unique allocation,
+  //   deallocation, and copying functions, and precludes
+  //   direct assignment of one array to another. Also, the
+  //   Any and CDR operators use a special class derived from
+  //   the array. For these reasons, we use a special class for
+  //   sequences of arrays, parametrized on the array element type.
+public:
+  // = Initialization and termination methods.
+
+  TAO_Unbounded_Array_Sequence (void);
+  // default ctor
+
+  TAO_Unbounded_Array_Sequence (CORBA::ULong max);
+  // Constructor with a "hint" for the maximum capacity.
+
+  TAO_Unbounded_Array_Sequence (CORBA::ULong maximum,
+                                CORBA::ULong length,
+                                T *data,
+                                CORBA::Boolean release=0);
+  // Constructor with a given buffer.
+
+  TAO_Unbounded_Array_Sequence(const TAO_Unbounded_Array_Sequence<T, T_var> &);
+  // Copy ctor, deep copies.
+
+  ~TAO_Unbounded_Array_Sequence (void);
+  // dtor releases all the contained elements.
+
+  TAO_Unbounded_Array_Sequence<T, T_var> &operator= (
+      const TAO_Unbounded_Array_Sequence <T, T_var> &
+    );
+  // The assignment operator first releases all object reference
+  // members and frees all string members, and then performs a
+  // deepcopy to create a new structure.
+
+  // = Accessors.
+  T &operator[] (CORBA::ULong);
+  // operator []
+
+  const T &operator[] (CORBA::ULong) const;
+  // operator []
+
+  static T *allocbuf (CORBA::ULong);
+  // The allocbuf function allocates a vector of T elements that can
+  // be passed to the T *data constructor.
+
+  static void freebuf (T *);
+  // Release all the elements.
+
+  virtual void _allocate_buffer (CORBA::ULong length);
+  // allocate a buffer of the requested length. The buffer is allocated for the
+  // right type
+
+  virtual void _deallocate_buffer (void);
+  // deallocate the buffer
+
+  // = orbos/98-01-11 proposed extensions.
+  T *get_buffer (CORBA::Boolean orphan = 0);
+  // Allows read-write access to the underlying buffer.  If <orphan>
+  // is FALSE the sequence returns a pointer to its buffer, allocating
+  // one if it has not yet done so.  The number of elements in the
+  // buffer can be determined from the sequence <length> accessor.
+  //
+  // If the <orphan> argument to <get_buffer> is FALSE, the sequence
+  // maintains ownership of the underlying buffer.  Elements in the
+  // returned buffer may be directly replaced by the caller.  
+  //
+  // If the <orphan> argument to <get_buffer> is TRUE, the sequence
+  // yields ownership of the buffer to the caller.  If <orphan> is
+  // TRUE and the sequence does not own its buffer (i.e., its
+  // <release> flag is FALSE), the return value is a null pointer.  If
+  // the buffer is taken from the sequence using this form of
+  // <get_buffer>, the sequence reverts to the same state it would
+  // have if constructed using its default constructor.  The caller
+  // becomes responsible for eventually freeing each element of the
+  // returned buffer (for strings, wide string, and object
+  // references), and then freeing the returned buffer itself using
+  // <freebuf>.
+
+  const T *get_buffer (void) const;
+  // This function allows read-only access to the sequence buffer.
+  // The sequence returns its buffer, allocating one of one has not
+  // yet been allocated.  No direct modification of the returned
+  // buffer by the caller is permitted.
+
+  void replace (CORBA::ULong max,
+                CORBA::ULong length,
+                T *data,
+                CORBA::Boolean release = 0);
+  // Allows the buffer underlying a sequence to be replaced.  The
+  // parameters to <replace> are identical in type, order, and purpose
+  // to those for the <T *data> constructor for the sequence.
+};
+
+// *************************************************************
+
+template<class T, class T_var, size_t MAX>
+class TAO_Bounded_Array_Sequence : public TAO_Bounded_Base_Sequence
+{
+  // = TITLE
+  //   Bounded version of TAO_Unbounded_Array_Sequence.
+  //
+  // = DESCRIPTION
+  //   Please see the documentation for the unbounded case.
+  //
+public:
+  // = Initialization and termination methods.
+
+  TAO_Bounded_Array_Sequence (void);
+  // default ctor.
+
+  TAO_Bounded_Array_Sequence (CORBA::ULong length,
+                              T *value,
+                              CORBA::Boolean release=0);
+  // Constructor from data.
+
+  TAO_Bounded_Array_Sequence (const TAO_Bounded_Array_Sequence<T, T_var, MAX> &);
+  // Copy constructor.
+
+  ~TAO_Bounded_Array_Sequence (void);
+  // destructor
+
+  TAO_Bounded_Array_Sequence &operator= (const TAO_Bounded_Array_Sequence<T, T_var, MAX> &);
+  // Assignment from another Bounded sequence.
+
+  // = Accessors.
+  T &operator[] (CORBA::ULong);
+  // operator []
+
+  const T &operator[] (CORBA::ULong) const;
+  // operator []
+
+  static T *allocbuf (CORBA::ULong length);
+  // Allocate storage for a sequence..
+
+  static void freebuf (T *buffer);
+  // Free a buffer allocated by allocbuf() and release each element on
+  // it.
+
+  virtual void _allocate_buffer (CORBA::ULong length);
+  // allocate a buffer of the requested length. The buffer is allocated for the
+  // right type
+
+  virtual void _deallocate_buffer (void);
+  // deallocate the buffer
+
+  // = orbos/98-01-11 proposed extensions.
+  T *get_buffer (CORBA::Boolean orphan = 0);
+  // Allows read-write access to the underlying buffer.  If <orphan>
+  // is FALSE the sequence returns a pointer to its buffer, allocating
+  // one if it has not yet done so.  The number of elements in the
+  // buffer can be determined from the sequence <length> accessor.
+  //
+  // If the <orphan> argument to <get_buffer> is FALSE, the sequence
+  // maintains ownership of the underlying buffer.  Elements in the
+  // returned buffer may be directly replaced by the caller.  
+  //
+  // If the <orphan> argument to <get_buffer> is TRUE, the sequence
+  // yields ownership of the buffer to the caller.  If <orphan> is
+  // TRUE and the sequence does not own its buffer (i.e., its
+  // <release> flag is FALSE), the return value is a null pointer.  If
+  // the buffer is taken from the sequence using this form of
+  // <get_buffer>, the sequence reverts to the same state it would
+  // have if constructed using its default constructor.  The caller
+  // becomes responsible for eventually freeing each element of the
+  // returned buffer (for strings, wide string, and object
+  // references), and then freeing the returned buffer itself using
+  // <freebuf>.
+
+  const T *get_buffer (void) const;
+  // This function allows read-only access to the sequence buffer.
+  // The sequence returns its buffer, allocating one of one has not
+  // yet been allocated.  No direct modification of the returned
+  // buffer by the caller is permitted.
+
+  void replace (CORBA::ULong max,
+                CORBA::ULong length,
+                T *data,
+                CORBA::Boolean release = 0);
+  // Allows the buffer underlying a sequence to be replaced.  The
+  // parameters to <replace> are identical in type, order, and purpose
+  // to those for the <T *data> constructor for the sequence.
+};
+
+// *************************************************************
+
 template<size_t MAX>
 class TAO_Bounded_String_Sequence : public TAO_Bounded_Base_Sequence
 {

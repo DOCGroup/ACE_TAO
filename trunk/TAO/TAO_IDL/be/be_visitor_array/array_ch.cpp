@@ -252,32 +252,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   *os << "\n";
 
-#if 0
-  // Typecode for an anonymous array will not be required anywhere since we do
-  // not generate the Any operators for anonymous types
-
-  // is this a typedefined array? if so, then let the typedef deal with
-  // generation of the typecode
-  if (!this->ctx_->tdef ())
-    {
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      be_visitor_context ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_ch::"
-                             "visit_array - "
-                             "TypeCode declaration failed\n"
-                             ), -1);
-        }
-      delete visitor;
-    }
-#endif /* 0 */
-
   // generate the endif macro
   os->gen_endif ();
 
@@ -347,6 +321,12 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   *os << "operator " << namebuf << "_slice * const &() const;"
       << be_nl;
   *os << "operator " << namebuf << "_slice *&();" << be_nl;
+
+  // Non-spec helper function used if array is a sequence element.
+  *os << "//Calls " << namebuf << "_copy "
+      << "(used in sequences of " << namebuf << ")." << be_nl;
+  *os << "static void copy (" << namebuf << "_slice *_tao_to, "
+      << "const " << namebuf << "_slice *_tao_from);" << be_nl;
 
   // in, inout, out and _retn
   *os << "// in, inout, out, _retn " << be_nl;

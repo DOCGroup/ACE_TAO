@@ -64,9 +64,21 @@ be_visitor_sequence_base::visit_node (be_type *node)
     bt = node;
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ());
+    {
+      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_ARRAY_SEQ_CH_TEMPLATE_VAR)
+        {
+          *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+        }
+      else
+        {
+          *os << bt->nested_type_name (this->ctx_->scope ());
+        }
+    }
   else
-    *os << bt->name ();
+    {
+      *os << bt->name ();
+    }
+
   return 0;
 }
 

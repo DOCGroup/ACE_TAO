@@ -496,6 +496,9 @@ public:
     // means we are not generating the assignment operator
     TAO_UNION_COPY_CONSTRUCTOR,
 
+    // generating the _var template parameter in sequence of arrays.
+    TAO_ARRAY_SEQ_CH_TEMPLATE_VAR,
+
     // used to denote either error or don't care
     TAO_SUB_STATE_UNKNOWN
   };

@@ -274,6 +274,15 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "return this->ptr_[index];" << be_uidt_nl;
   *os << "}\n\n";
 
+  // copy (in case we are a sequence element)
+  os->indent ();
+  *os << "ACE_INLINE void" << be_nl;
+  *os << fname << "::copy (" << nodename << "_slice *_tao_to, "
+      << "const " << nodename << "_slice *_tao_from)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << nodename << "_copy (_tao_to, _tao_from);" << be_uidt_nl;
+  *os << "}\n\n";
+
   // in, inout, out, and _retn
   os->indent ();
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;

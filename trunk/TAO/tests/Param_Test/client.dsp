@@ -91,6 +91,10 @@ SOURCE=.\any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\bd_array_seq.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\bd_long_seq.cpp
 # End Source File
 # Begin Source File
@@ -195,6 +199,10 @@ SOURCE=.\ub_any_seq.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ub_array_seq.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ub_long_seq.cpp
 # End Source File
 # Begin Source File
@@ -244,6 +252,10 @@ SOURCE=.\var_struct.cpp
 # Begin Source File
 
 SOURCE=.\any.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_array_seq.h
 # End Source File
 # Begin Source File
 
@@ -348,6 +360,10 @@ SOURCE=.\typecode.h
 # Begin Source File
 
 SOURCE=.\ub_any_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_array_seq.h
 # End Source File
 # Begin Source File
 
