@@ -17,6 +17,13 @@
 #ifndef TAO_MONITOR_H
 #define TAO_MONITOR_H
 
+class TAO_Lockable
+{
+public:
+
+  virtual ACE_Lock& lock (void) = 0;
+};
+
 template <class TYPE, class TAO_LOCK>
 class TAO_Monitor : public TYPE
 {
