@@ -27,7 +27,8 @@ PP_Test_Server::parse_args (void)
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.optarg), 
+                            -1);
         break;
       case '?':
       default:
@@ -37,7 +38,7 @@ PP_Test_Server::parse_args (void)
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
-                          1);
+                          -1);
       }
 
   // Indicates successful parsing of command line.
@@ -63,9 +64,11 @@ PP_Test_Server::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  this->parse_args ();
-  // @@ Check for the return value here.
-
+  if (this->parse_args () == -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "parse_args"),
+                      -1);
   // Get the orb
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
