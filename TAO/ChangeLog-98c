@@ -1,3 +1,7 @@
+Fri May 15 09:33:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.1.22 released.
+
 Fri May 15 08:40:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: added template
