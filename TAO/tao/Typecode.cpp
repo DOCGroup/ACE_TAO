@@ -857,6 +857,13 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
       CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
+      // One of our members may be recursive, but not through us.
+      if (my_member_tc->parent_ != 0
+          && my_member_tc->parent_ == tc_member_tc->parent_
+          && my_member_tc->tc_base_ == tc_member_tc->tc_base_
+          && my_member_tc->root_tc_base_ == tc_member_tc->root_tc_base_)
+        continue;
+
       CORBA::Boolean flag =
         my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
