@@ -10,7 +10,8 @@
 //    Task_Client.h
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee ,Sergio Flores-Gaitan and Nagarajan Surendran.
+//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan, and
+//    Nagarajan Surendran.
 //
 // ============================================================================
 
@@ -38,21 +39,23 @@
 #include "Timer.h"
 
 #if defined (CHORUS)
-#include "pccTimer.h"
+# include "pccTimer.h"
 #endif /* CHORUS */
 
 #if defined(ACE_HAS_EXCEPTIONS)
-// Some plaforms define an exception structure in math.h...
-#define exception _math_exception
-#include /**/ <math.h>
-#undef exception
+  // Some plaforms define an exception structure in math.h...
+# if defined (__GNUG__)
+    // And some compilers have this workaround.  Disable it with this
+    // #define, to avoid warning about multiple #defines of exception.
+#   define _MATH_H_WRAPPER
+# endif /* __GNUG__ */
+# define exception _math_exception
+# include /**/ <math.h>
+# undef exception
 #else
-#include /**/ <math.h>
+# include /**/ <math.h>
 #endif /* ACE_HAS_EXCEPTIONS */
 
-// I will integrate this, together with the sqrt() function when
-// the implementation is complete.  --Sergio.
-// levine 1 nov 98 % Note: I removed fabs () because we no longer use it.
 #if defined (ACE_LACKS_FLOATING_POINT)
 // The following is just temporary, until we finish the sqrt()
 // implementation.
