@@ -1,3 +1,8 @@
+Tue Jun 24 03:50:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Based_Pointer_Repository.h:
+          Added include of os_stddef.h to pick up size_t.
+
 Tue Jun 24 02:00:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * etc/ace/doxygen:
