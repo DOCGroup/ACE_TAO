@@ -1,3 +1,9 @@
+Fri Mar 21 15:43:32 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Collocation/Makefile: Add .NOTPARALLEL to the makefile to
+          prevent the IDL compiler from being run simultaneously and
+          errantly trashing the DiamondS.cpp file.
+
 Fri Mar 21 15:27:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/ImplRepoC.cpp:
@@ -69,12 +75,12 @@ Wed Mar 19 18:04:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
 
-	  Added no-op specialization for 
+	  Added no-op specialization for
 	  Any_Dual_Impl_T<CORBA::Exception>::extract(). A working version is
 	  not needed, since the spec requires only insertion operators for
 	  CORBA::Exception, but the no-op specialization prevents an error
 	  in compilers that require explicit template instantiationm, since
-	  the unspecialized version calls the constructor, and 
+	  the unspecialized version calls the constructor, and
 	  CORBA::Exception is (and is required to be) an abstract class.
 
 Wed Mar 19 12:52:22 2003  Ossama Othman  <ossama@uci.edu>

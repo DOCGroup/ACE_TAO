@@ -1,4 +1,4 @@
-#----------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
 #
 # $Id$
 #
@@ -20,6 +20,8 @@ MKLIST = \
 	Makefile.stub \
 	Makefile.impl \
 	Makefile.test
+
+.NOTPARALLEL:
 
 all debug profile optimize install deinstall clean realclean clobber depend idl_stubs:
 %.mkfile: %
