@@ -143,7 +143,7 @@ Baseline_Test_Options::print_result (void)
               "Average time: %d nanoseconds.\n",
               tv.sec (), tv.usec (),
               this->current_iteration_,
-              nsec / this->current_iteration_));
+              (int) (nsec / this->current_iteration_)));
 }
 
 Baseline_Test::Baseline_Test (void)
