@@ -1,3 +1,23 @@
+Thu Dec  2 21:21:47 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDLbe/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDLbe/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDLbe/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDLbe/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDLbe/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDLbe/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDLbe/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDLbe/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        
+          Fixed mistake in generated code where we were instantiating
+          an Abstract_Invocation_Adapter when regenerating an operation
+          in a concrete interface or component which is from an
+          inherited or supported abstract interface. Also made a
+          change to mark the argument types of such operations so
+          that the TAO::Arg_Traits<> specializations for them can
+          be regenerated as well.
+
 Thu Dec  2 13:11:22 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Topology_Object.h:
