@@ -487,6 +487,36 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
+// =======================================================
+// Hand-crafted
+
+CORBA::Policy_ptr
+TAO::Objref_Traits<CORBA::Policy>::tao_duplicate (CORBA::Policy_ptr p)
+{
+  return CORBA::Policy::_duplicate (p);
+}
+
+void
+TAO::Objref_Traits<CORBA::Policy>::tao_release (CORBA::Policy_ptr p)
+{
+  CORBA::release (p);
+}
+
+CORBA::Policy_ptr
+TAO::Objref_Traits<CORBA::Policy>::tao_nil (void)
+{
+  return CORBA::Policy::_nil ();
+}
+
+CORBA::Boolean
+TAO::Objref_Traits<CORBA::Policy>::tao_marshal (CORBA::Policy_ptr p,
+                                                TAO_OutputCDR & cdr)
+{
+  return p->marshal (cdr);
+}
+
+// =================================================================
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 

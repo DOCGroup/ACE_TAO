@@ -23,6 +23,7 @@
 #include "ace/Array_Base.h"
 #include "ace/OS.h"  // for ACE_CLEANUP_FUNC
 
+
 /**
  * @class TAO_Cleanup_Func_Registry
  *

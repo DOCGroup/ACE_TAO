@@ -159,7 +159,7 @@ template <typename T, typename T_var, typename T_life>
 ACE_INLINE
 TAO_Object_Manager<T,T_var,T_life>::operator const T_var () const
 {
-  return T_life::tao_duplicate (*this->ptr_);
+  return TAO::Objref_Traits<T>::tao_duplicate (*this->ptr_);
 }
 
 template <typename T, typename T_var, typename T_life>

@@ -9,6 +9,22 @@ ACE_RCSID (tao,
            Value_VarOut_T, 
            "$Id$")
 
+template<typename T>
+void
+TAO::Value_Traits<T>::tao_add_ref (T * p)
+{
+  CORBA::add_ref (p);
+}
+
+template<typename T>
+void
+TAO::Value_Traits<T>::tao_remove_ref (T * p)
+{
+  CORBA::remove_ref (p);
+}
+
+// ===============================================================
+
 template <typename T, typename T_life>
 TAO_Value_Var_T<T,T_life>::TAO_Value_Var_T (void)
   : ptr_ (0)
@@ -36,21 +52,21 @@ TAO_Value_Var_T<T,T_life>::TAO_Value_Var_T (
     const TAO_Value_Var_T<T,T_life> & p
   )
 {
-  T_life::tao_add_ref (p.ptr ());
+  TAO::Value_Traits<T>::tao_add_ref (p.ptr ());
   this->ptr_ = p.ptr ();
 }
 
 template <typename T, typename T_life>
 TAO_Value_Var_T<T,T_life>::~TAO_Value_Var_T (void)
 {
-  T_life::tao_remove_ref (this->ptr_);
+  TAO::Value_Traits<T>::tao_remove_ref (this->ptr_);
 }
 
 template <typename T, typename T_life>
 TAO_Value_Var_T<T,T_life> &
 TAO_Value_Var_T<T,T_life>::operator= (T * p)
 {
-  T_life::tao_remove_ref (this->ptr_);
+  TAO::Value_Traits<T>::tao_remove_ref (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
@@ -61,9 +77,9 @@ TAO_Value_Var_T<T,T_life>::operator= (const TAO_Value_Var_T & p)
 {
   if (this != &p)
   {
-    T_life::tao_remove_ref (this->ptr_);
+    TAO::Value_Traits<T>::tao_remove_ref (this->ptr_);
     T * tmp = p.ptr ();
-    T_life::tao_add_ref (tmp);
+    TAO::Value_Traits<T>::tao_add_ref (tmp);
     this->ptr_ = tmp;
   }
   
@@ -107,7 +123,7 @@ template <typename T, typename T_life>
 T *&
 TAO_Value_Var_T<T,T_life>::out (void)
 {
-  T_life::tao_remove_ref (this->ptr_);
+  TAO::Value_Traits<T>::tao_remove_ref (this->ptr_);
   this->ptr_ = 0;
   return this->ptr_;
 }
@@ -134,7 +150,7 @@ template <typename T, typename T_life>
 TAO_Value_Out_T<T,T_life>::TAO_Value_Out_T (TAO_Value_Var_T<T,T_life> & p)
   : ptr_ (p.out ())
 {
-  T_life::tao_remove_ref (this->ptr_);
+  TAO::Value_Traits<T>::tao_remove_ref (this->ptr_);
   this->ptr_ = 0;
 }
 
@@ -156,7 +172,7 @@ TAO_Value_Out_T<T,T_life> &
 TAO_Value_Out_T<T,T_life>::operator= (const TAO_Value_Var_T<T,T_life> & p)
 {
   T * tmp = p.ptr ();
-  T_life::tao_add_ref (tmp);
+  TAO::Value_Traits<T>::tao_add_ref (tmp);
   this->ptr_ = tmp;
   return *this;
 }
