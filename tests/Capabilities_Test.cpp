@@ -27,7 +27,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-static int 
+static int
 load_config (void)
 {
   const char *config = "Capabilities_Test.cfg";
@@ -52,7 +52,7 @@ load_config (void)
   ACE_DEBUG ((LM_DEBUG,
               "integer = %d\n",
               n));
-  
+
   ACE_CString s;
   caps.getval ("string", s);
 
@@ -62,8 +62,8 @@ load_config (void)
   return 0;
 }
 
-int 
-main (int argc, char *argv[])
+int
+main (int, char *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Capabilities_Test"));
 
