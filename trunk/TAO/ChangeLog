@@ -1,3 +1,9 @@
+Sun Dec  7 12:26:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+	  
+	  Fixed a compile error due to the changes in IOP_IOR.pidl.
+
 Sun Dec  7 17:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/AMH/Sink_Server/mt_server.dsp:

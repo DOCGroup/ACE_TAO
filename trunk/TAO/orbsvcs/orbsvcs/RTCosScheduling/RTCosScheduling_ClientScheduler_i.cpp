@@ -434,7 +434,7 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       // (that is how service contexts send data)
       sc.context_data =
         ACE_reinterpret_cast(
-          IOP::ServiceContext::_tao_seq_CORBA_Octet_ &,
+          CORBA::OctetSeq &,
           *this->codec_->encode (the_priority_as_any));
       ACE_TRY_CHECK;
 
