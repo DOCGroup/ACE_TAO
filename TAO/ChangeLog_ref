@@ -19,6 +19,11 @@ Fri May  9 13:49:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           New class that will wrap all the pre- and post-upcall
           activities of the *_skel operations.
 
+        * tao/TAO.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+          Added new files to projects.
+
 Fri May  9 12:24:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corba.h:
