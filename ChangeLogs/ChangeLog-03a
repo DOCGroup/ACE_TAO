@@ -1,3 +1,9 @@
+Thu Mar 01 07:29:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Fixed typos in the Service_Context_Manipulation test.  It was
+          running in platforms where it shouldn't
+
 Thu Mar 01 07:07:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/recurse.bor:
