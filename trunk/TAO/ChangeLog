@@ -1,3 +1,21 @@
+Mon Aug 26 14:41:19 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+
+          An overhaul of the earlier fix
+
+          Sun Aug 25 16:36:53 2002  Jeff Parsons <parsons@cs.wustl.edu>.
+
+          The new approach strips off any -I prefixes that may have
+          been added by the preprocessor, when an #include filename
+          is read by the lexer. This enables IDL file validation to
+          use straight strcmp instead of finding a substring. A new
+          function was added to IDL_GLobalData to perform the
+          stripping.
+
 Sun Aug 25 20:52:29 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsw:
