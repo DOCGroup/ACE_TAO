@@ -1,35 +1,46 @@
+Thu Jul 08 21:34:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: on PowerPC, set
+          ACE_NEEDS_HUGE_THREAD_STACKSIZE to 32000, instead of
+          its apparent default of 15000.  On both x86 and ppc,
+          #define ACE_MAP_FIXED to 0 to try to disable it.
+
+        * tests/Recursive_Mutex_Test.cpp (main): removed explicit
+          stack size setting, now that we're using
+          ACE_NEEDS_HUGE_THREAD_STACKSIZE on LynxOS/PPC.
+
 Thu Jul 08 18:47:23 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.cpp:
-	  Changed:
-	  entry->ext_id_.state (ACE_Recyclable::IDLE);
-	  to 
-	  entry->ext_id_.state (ACE_Recyclable::IDLE_AND_PURGABLE);
+        * ace/Cached_Connect_Strategy_T.cpp:
+          Changed:
+          entry->ext_id_.state (ACE_Recyclable::IDLE);
+          to
+          entry->ext_id_.state (ACE_Recyclable::IDLE_AND_PURGABLE);
 
-	* ace/Caching_Utility_T.{h,cpp}:
-	  Added ACE_Recyclable_Handler_Caching_Utility which takes care
-	  that the svc_handler to be purged is in the IDLE_AND_PURGABLE
-	  state.
-	  Made method minimum () virtual.
+        * ace/Caching_Utility_T.{h,cpp}:
+          Added ACE_Recyclable_Handler_Caching_Utility which takes care
+          that the svc_handler to be purged is in the IDLE_AND_PURGABLE
+          state.
+          Made method minimum () virtual.
 
-	* ace/Strategies.h: 
-	  Added IDLE_AND_PURGABLE and IDLE_BUT_NOT_PURGABLE states and
-	  removed IDLE state  from the enum. This change was necessary to
-	  take care of AMI using the Mux Strategy.
-		  
-	* ace/Strategies_T.cpp (cache_i):
-	  Made entry state ACE_Recyclable::IDLE_AND_PURGABLE.
+        * ace/Strategies.h:
+          Added IDLE_AND_PURGABLE and IDLE_BUT_NOT_PURGABLE states and
+          removed IDLE state  from the enum. This change was necessary to
+          take care of AMI using the Mux Strategy.
 
-	* ace/Startegies_T.i (operator==):
-	  Added checks for the ACE_Recyclable::IDLE_AND_PURGABLE and
-	  ACE_Recyclable::IDLE_BUT_NOT_PURGABLE states.
+        * ace/Strategies_T.cpp (cache_i):
+          Made entry state ACE_Recyclable::IDLE_AND_PURGABLE.
 
- 	  Thanks to Irfan <irfan@cs.wustl.edu> of the DOC group for
-	  helping with this.
-	
+        * ace/Startegies_T.i (operator==):
+          Added checks for the ACE_Recyclable::IDLE_AND_PURGABLE and
+          ACE_Recyclable::IDLE_BUT_NOT_PURGABLE states.
+
+          Thanks to Irfan <irfan@cs.wustl.edu> of the DOC group for
+          helping with this.
+
 Thu Jul 08 18:47:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Cache_Map_Manager_Test.cpp: Simplified code and output.
+        * tests/Cache_Map_Manager_Test.cpp: Simplified code and output.
 
 Thu Jul 08 14:56:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
