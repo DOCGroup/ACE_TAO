@@ -1,10 +1,22 @@
+Tue Jul 29 19:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/RtecBase.idl:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h:
+        * orbsvcs/orbsvcs/Event/ EC_MT_Dispatching.h:
+          Fixed doxygen warnings.
+
 Tue Jul 29 09:04:08 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/ORBEndpoint.html: Updated this document so that the DIOP
 	  section points to the examples/PluggableUDP/DIOP/README file,
  	  which describes the limitations with DIOP.  Thanks to
 	  Michael Kircher for motivating this!
- 
+
 Tue Jul 29 10:08:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Metrics/Metrics.dsp:
@@ -20,9 +32,9 @@ Tue Jul 29 09:24:16 2003  Gan Deng  <gan.deng@vanderbilt.edu>
  	  clear_cache () function the unbind () function call will make
  	  the iterator to be invalid.
 
-Tue Jul 29 01:08:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+Tue Jul 29 01:08:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/DT_Creator.cpp: 
+	* examples/RTScheduling/DT_Creator.cpp:
 
 	  Removed the inclusion of file Task.h. This should fix the Debian
 	  builds.
@@ -32,9 +44,9 @@ Mon Jul 28 18:37:27 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 	* tao/Muxed_TMS.cpp
 	  Modify the TAO_Muxed_TMS::clear_cache () function, which
 	  is supposed to be modified fully in the last patch at:
-	  
+
 	  Tue Jul 15 10:18:07 2003  Gan Deng  <gan.deng@vanderbilt.edu>
-	  
+
 Mon Jul 28 16:12:15 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tao/Exception.h
@@ -47,7 +59,7 @@ Mon Jul 28 16:12:15 2003  Gan Deng  <gan.deng@vanderbilt.edu>
           specification for Exception type has been fulfilled. Some
           constructors, copy constructors and assignment operators which
           are supposed be be put into the "protected" section in class
-	  declaration still remained in the "public" section. These 
+	  declaration still remained in the "public" section. These
 	  changes will be made later when we full migrate to MS VC++
 	  7.0 or later version.
 
@@ -61,7 +73,7 @@ Mon Jul 28 14:46:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO_Static.dsp:
 
-          Added new files from 
+          Added new files from
 
           Mon Jul 28 12:34:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -97,9 +109,9 @@ Mon Jul 28 12:34:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Any_SystemException.cpp: New Any_Impl classes to be used by
 	  different concrete CORBA::SystemException  types. The way it was
 	  done before added a lot of footprint.
-	
+
 	* tao/Exception.cpp: Use TAO::Any_SystemException class for Any
-	  extraction and insertion operators. 
+	  extraction and insertion operators.
 
 	* tao/Makefile.tao:
 	* tao/tao.mpc:
@@ -426,7 +438,7 @@ Fri Jul 25 13:15:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/Param_Test/except.cpp:
         * tests/Param_Test/param_test_i.cpp:
 
-          Changed the logic inside the catch blocks of 
+          Changed the logic inside the catch blocks of
           Test_Exception::dii_req_invoke and Test_Exception::run_sii_test.
           Changes in progress to TAO's exception classes have been
           producing errors in exception handling that were not caught
@@ -699,11 +711,11 @@ Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	Common Files
 	------------
 
-	* examples/RTScheduling/Job.idl:                
-	* examples/RTScheduling/Job_i.cpp:              
-	* examples/RTScheduling/Job_i.h:           
-	* examples/RTScheduling/DT_Creator.cpp:       
-	* examples/RTScheduling/DT_Creator.h:              
+	* examples/RTScheduling/Job.idl:
+	* examples/RTScheduling/Job_i.cpp:
+	* examples/RTScheduling/Job_i.h:
+	* examples/RTScheduling/DT_Creator.cpp:
+	* examples/RTScheduling/DT_Creator.h:
         * examples/RTScheduling/Synch.idl:
         * examples/RTScheduling/Synch_i.cpp:
         * examples/RTScheduling/Synch_i.h:
@@ -712,13 +724,13 @@ Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
         * examples/RTScheduling/Task_Stats.inl:
 	* examples/RTScheduling/Thread_Task.cpp:
 	* examples/RTScheduling/Thread_Task.h:
-        * examples/RTScheduling/POA_Holder.h:	
+        * examples/RTScheduling/POA_Holder.h:
 	* examples/RTScheduling/POA_Holder.cpp:
 	* examples/RTScheduling/Starter.h:
-        * examples/RTScheduling/Starter.cpp:	
-	* examples/RTScheduling/Makefile: 	
+        * examples/RTScheduling/Starter.cpp:
+	* examples/RTScheduling/Makefile:
 	* examples/RTScheduling/README:
-	
+
 
 Wed Jul 23 14:45:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
