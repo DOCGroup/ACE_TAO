@@ -9,7 +9,7 @@ LSRC =  $(SCHEDULE_SRCS)
 
 SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTSched -lTAO_CosNaming  -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Scheduling_Service
 

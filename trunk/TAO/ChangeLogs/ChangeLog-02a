@@ -1,61 +1,78 @@
+Wed Mar  7 20:07:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/LifeCycle_Service/Makefile:
+        * orbsvcs/Logging_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+          Add missing libraries for QNX
+
+        * tests/Collocation/Makefile.impl:
+          Add libraries missing for Tru64/CXX
+
 Wed Mar  7 19:36:45 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple/Makefile: 
-	* orbsvcs/tests/AVStreams/Makefile: 
+        * orbsvcs/tests/AVStreams/Simple/Makefile:
+        * orbsvcs/tests/AVStreams/Makefile:
 
-	  Added the Makefiles to compile the Simple test.
+          Added the Makefiles to compile the Simple test.
 
 Wed Mar 07 19:19:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer:
+        * tao/PortableServer:
 
-	  The SINGLE_THREAD_MODEL was not implemented correctly in the
-	  POA.  As documented in Bug 483, the spec was misread to
-	  understand that two threads cannot call the same servant in
-	  a single threaded POA.  The spec actually meant that any two
-	  servants in a single threaded POA cannot be called
-	  simultaneously.  This was fixed by the following changes:
+          The SINGLE_THREAD_MODEL was not implemented correctly in the
+          POA.  As documented in Bug 483, the spec was misread to
+          understand that two threads cannot call the same servant in
+          a single threaded POA.  The spec actually meant that any two
+          servants in a single threaded POA cannot be called
+          simultaneously.  This was fixed by the following changes:
 
-	  - There is one lock per single threaded POA instead of one
-	    lock per servant.
+          - There is one lock per single threaded POA instead of one
+            lock per servant.
 
-	  - Since the lock is now on the POA instead of being on the
-	    servant, there is no need to set up the per servant lock
-	    when the servant is registered or when the servant is
-	    removed from the POA.  Thus the <teardown_servant_lock>
-	    and the <establish_servant_lock> were removed from the
-	    POA.
+          - Since the lock is now on the POA instead of being on the
+            servant, there is no need to set up the per servant lock
+            when the servant is registered or when the servant is
+            removed from the POA.  Thus the <teardown_servant_lock>
+            and the <establish_servant_lock> were removed from the
+            POA.
 
-	  - The lock type was changed from regular to recursive.
+          - The lock type was changed from regular to recursive.
 
-	* tests/POA/Single_Threaded_POA: 
+        * tests/POA/Single_Threaded_POA:
 
           New test added. This program tests to make sure that two threads
-	  cannot call servants in a single threaded POA simultaneously.
-	  At the same time, it makes sure that a servant can call itself
-	  or other servants in the same POA while in an upcall.
+          cannot call servants in a single threaded POA simultaneously.
+          At the same time, it makes sure that a servant can call itself
+          or other servants in the same POA while in an upcall.
 
-	* Updated the following files wrt the new test:
+        * Updated the following files wrt the new test:
 
-	  ACE_wrappers/TAO/tests/TAO_Tests.dsw
-	  ACE_wrappers/TAO/tests/POA/Makefile
-	  ACE_wrappers/TAO/tests/POA/README
-	  ACE_wrappers/bin/auto_compile_win32.pl
-	  ACE_wrappers/bin/auto_run_tests.lst
-	
-	* tao/ORB_Core.cpp:
+          ACE_wrappers/TAO/tests/TAO_Tests.dsw
+          ACE_wrappers/TAO/tests/POA/Makefile
+          ACE_wrappers/TAO/tests/POA/README
+          ACE_wrappers/bin/auto_compile_win32.pl
+          ACE_wrappers/bin/auto_run_tests.lst
+
+        * tao/ORB_Core.cpp:
 
           - There was a memory leak when an ORB was not explicitly
-	    destroyed or shutdown by the user.  The fix was to call
-	    TAO_ORB_Core::shutdown() from TAO_ORB_Core::fini().  This
-	    will ensure that the Object Adapter(s) gets closed,
-	    reactor registry is shutdown, the threads are canceled,
-	    etc. when the user does not explicitly destroyed or
-	    shutdown the ORB.  This fixes move than Bug 406 since it
-	    cleans up after the user even when the user does not call
-	    shutdown() or destroy() on the ORB.
+            destroyed or shutdown by the user.  The fix was to call
+            TAO_ORB_Core::shutdown() from TAO_ORB_Core::fini().  This
+            will ensure that the Object Adapter(s) gets closed,
+            reactor registry is shutdown, the threads are canceled,
+            etc. when the user does not explicitly destroyed or
+            shutdown the ORB.  This fixes move than Bug 406 since it
+            cleans up after the user even when the user does not call
+            shutdown() or destroy() on the ORB.
 
-	  - There was a guard added to avoid repeated shutdowns and
+          - There was a guard added to avoid repeated shutdowns and
             then there was no need to guard repeated destroys.
 
           - Ossama's change to make <root_poa_> a ptr from the
@@ -86,19 +103,19 @@ Wed Mar  7 16:17:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Added to previous fix to handle case where the
           return value is a struct or union of fixed size.
           In these cases, the return value is not a pointer,
-          so ACE_CHECK_RETURN must return the result of a 
+          so ACE_CHECK_RETURN must return the result of a
           call to the default constructor.
 
 Wed Mar 07 11:35:03 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Advanced/ch_21/Makefile (LDLIBS): Added missing
-	  PortableServer library.  Fixes Bug 809.
+        * examples/Advanced/ch_21/Makefile (LDLIBS): Added missing
+          PortableServer library.  Fixes Bug 809.
 
 Wed Mar  7 13:03:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/Makefile:
-	* examples/Makefile:
-	  Added DIOP and tests to the non-windows builds.
+        * examples/PluggableUDP/Makefile:
+        * examples/Makefile:
+          Added DIOP and tests to the non-windows builds.
 
 Wed Mar  7 12:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -131,12 +148,12 @@ Wed Mar  7 08:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Mar 07 08:01:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Stub.cpp (~TAO_Stub):
+        * tao/Stub.cpp (~TAO_Stub):
 
-	  Make sure the returned TAO_Endpoint pointer is non-zero before
-	  invoking methods through it.  It could be zero in the case of
-	  profiles created by other ORBs.  Thanks to Goran Lowkrantz
-	  <goran.lowkrantz@ismobile.com> for submitting the fix.
+          Make sure the returned TAO_Endpoint pointer is non-zero before
+          invoking methods through it.  It could be zero in the case of
+          profiles created by other ORBs.  Thanks to Goran Lowkrantz
+          <goran.lowkrantz@ismobile.com> for submitting the fix.
 
 Wed Mar  7 08:39:56 2001  Chad Elliott  <elliott_c@ociweb.com>
 

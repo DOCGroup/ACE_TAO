@@ -10,7 +10,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosTrading -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO
 
 SRC = Trading_Server.cpp Trading_Service.cpp
 
