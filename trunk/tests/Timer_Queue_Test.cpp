@@ -85,7 +85,7 @@ public:
     if (*act == 007)
       result = -1; // This is the special value to trigger a handle_close
 
-    delete arg;
+    delete act;
     return result;
   }
 
@@ -119,9 +119,9 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (result != 0);
 
   tq->cancel (timer_id, &timer_act);
-  delete timer_act;
+  delete (void *) timer_act;
   tq->cancel (timer_id2, &timer_act);
-  delete timer_act;
+  delete (void *) timer_act;
 
   ACE_ASSERT (tq->is_empty () == 1);
   ACE_ASSERT (eh.close_count_ == 0);
@@ -151,7 +151,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (eh.close_count_ == 0);
   result = tq->cancel (timer_id, &timer_act, 0);
   ACE_ASSERT (result == 1);
-  delete timer_act;
+  delete (void *) timer_act;
 
   ACE_ASSERT (tq->is_empty () == 0);
   ACE_ASSERT (eh.close_count_ == 1);
@@ -207,11 +207,11 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (eh.close_count_ == 2);
   result = tq->cancel (timer_id, &timer_act);
   ACE_ASSERT (result != -1);
-  delete timer_act;
+  delete (void *) timer_act;
 
   result = tq->cancel (timer_id2, &timer_act);
   ACE_ASSERT (result != -1);
-  delete timer_act;
+  delete (void *) timer_act;
 
   ACE_ASSERT (eh.close_count_ == 2); // Only one call to handle_close() even though two timers
   ACE_ASSERT (tq->is_empty () != 0);
@@ -248,12 +248,12 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (eh.close_count_ == 3);
 
   result = tq->cancel (timer_id, &timer_act);
-  delete timer_act;
+  delete (void *) timer_act;
   ACE_ASSERT (result == 1);
   ACE_ASSERT (eh.close_count_ == 3);
 
   result = tq->cancel (timer_id2, &timer_act);
-  delete timer_act;
+  delete (void *) timer_act;
   ACE_ASSERT (result == 1);
   ACE_ASSERT (eh.close_count_ == 3);
 
@@ -321,7 +321,7 @@ test_performance (ACE_Timer_Queue *tq,
   for (i = max_iterations - 1; i >= 0; i--)
     {
       tq->cancel (timer_ids[i], &timer_act);
-      delete timer_act;
+      delete (void *) timer_act;
     }
 
   timer.stop ();
@@ -394,7 +394,7 @@ test_performance (ACE_Timer_Queue *tq,
   for (i = max_iterations - 1; i >= 0; i--)
     {
       tq->cancel (timer_ids[i], &timer_act);
-      delete timer_act;
+      delete (void *) timer_act;
     }
 
   ACE_ASSERT (tq->is_empty () != 0);

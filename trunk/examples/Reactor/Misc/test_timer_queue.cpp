@@ -57,7 +57,7 @@ test_functionality (ACE_Timer_Queue *tq)
 
   result = tq->cancel (timer_id1, &timer_act);
   ACE_ASSERT (result == 1);  
-  delete timer_act;
+  delete (void *) timer_act;
   result = tq->is_empty ();
   ACE_ASSERT (!result);
 
@@ -73,10 +73,10 @@ test_functionality (ACE_Timer_Queue *tq)
 
   result = tq->cancel (timer_id1, &timer_act);
   ACE_ASSERT (result == 1);
-  delete timer_act;
+  delete (void *) timer_act;
   result = tq->cancel (timer_id2, &timer_act);
   ACE_ASSERT (result == 1);
-  delete timer_act;
+  delete (void *) timer_act;
   result = tq->is_empty ();
   ACE_ASSERT (result == 1);
   result = tq->expire ();
