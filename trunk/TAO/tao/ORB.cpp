@@ -1264,12 +1264,16 @@ CORBA::ORB_init (int &argc,
   //
   // It doesn't make sense for argc to be zero and argv to be
   // non-empty/zero, or for argc to be greater than zero and argv be
-  // zero/empty.
+  // zero.
   size_t argv0_len = (argv ? (*argv ? ACE_OS::strlen (*argv) : 0) : 0);
-  if ((argc < 1 && argv0_len != 0) ||
-      (argc != 0 && argv0_len == 0))
+  if ((argc == 0 && argv0_len != 0) ||
+      (argc != 0 && (argv == 0 || argv[0] == 0)))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
                         CORBA::ORB::_nil ());
     }
 
