@@ -1,4 +1,4 @@
-Wed Jan 23 16:14:43  Boris Kolpackov  <bosk@ipmce.ru>
+Wed Jan 23 16:14:43 2002 Boris Kolpackov  <bosk@ipmce.ru>
         
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
 	  
