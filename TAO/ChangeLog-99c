@@ -10,8 +10,8 @@ Tue Sep 21 22:06:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (get_service_information):
 
-	  CORBA::ORB::get_service_information is unimplemented.  It should 
-	  throw a NO_IMPLEMENT exception, not simply return 0.
+	  CORBA::ORB::get_service_information() is unimplemented.  It
+	  should throw a NO_IMPLEMENT exception, not simply return 0.
 
 	* tao/ORB.cpp (create_list):
 
