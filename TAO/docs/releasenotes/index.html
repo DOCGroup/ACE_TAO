@@ -1053,7 +1053,8 @@ be built and linked if an application does not intend to call those functions. I
 it does, however, the application should have
 #include "tao/TypeCodeFactory_Adapter_Impl.h" or something similar in it somewhere,
 and also link to the TAO_TypeCodeFactory library. This will automatically load the
-library if it has been compiled.</li><p>
+library if it has been compiled. Please see the example in 
+ACE_ROOT/TAO/examples/TypeCode_Creation.</li><p>
 
 <li> The CORBA::Object::_get_interface() method has been implemented. This method will
 resolve the IFR of the target object (whether local or remote), and return the
