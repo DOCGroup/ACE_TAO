@@ -22,7 +22,7 @@
 
 /**
  * @class Fill_ACE_QoS
-i* 
+ * 
  * This class helps users to add new flow specs and provides
  * utility functions for filling up the flow specs for simplex/duplex
  * sessions.
