@@ -1,3 +1,11 @@
+Fri Jan 31 19:39:48 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.cpp (ctor): reordered initializers
+	  to match declaration order.
+
+	* tests/Time_Value_Test.cpp: cast double argument to long
+	  because there no longer is a constructor that takes a double.
+
 Fri Jan 31 10:01:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.{h,cpp}: removed #include of
