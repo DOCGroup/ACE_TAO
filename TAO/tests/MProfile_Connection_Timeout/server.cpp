@@ -8,11 +8,11 @@ ACE_RCSID(MProfile_Connection_Timeout,
           "$Id$")
 
 const char *ior_output_file = 0;
-
+int orb_run = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,6 +20,9 @@ parse_args (int argc, char *argv[])
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
+        break;
+      case 'r':
+        orb_run = 1;
         break;
       case '?':
       default:
@@ -93,9 +96,12 @@ main (int argc, char *argv[])
         }
 
 
-      // No need to run th eevnt loop. We want to exit anyway..
-      /*orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;*/
+      // RUn the event loop if needed
+      if (orb_run)
+        {
+          orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 

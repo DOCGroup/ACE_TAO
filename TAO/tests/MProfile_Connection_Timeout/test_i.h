@@ -9,7 +9,7 @@
 //   test_i.h
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@uci.edu>
+//   Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu>
 //
 // ============================================================================
 
@@ -34,7 +34,7 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  CORBA::Long remote_call (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  CORBA::ULongLong remote_call (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
