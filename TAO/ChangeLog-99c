@@ -1,3 +1,8 @@
+Fri Nov 12 08:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/UIOP_Profile.cpp:
+	  Fixed typo in the latest changed by Irfan.
+
 Thu Nov 11 21:05:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
