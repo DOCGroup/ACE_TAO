@@ -472,14 +472,18 @@ TAO_GIOP_Message_Base::consolidate_fragments (TAO_Queued_Data *dqd,
   sqd->msg_block_->rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // If we have a fragment header skip the header length too..
-  if (sqd->minor_version_ == 2)
+  if (sqd->minor_version_ == 2 &&
+      sqd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
     sqd->msg_block_->rd_ptr (TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
 
   // Get the length of the incoming message block..
   int incoming_size = sqd->msg_block_->length ();
 
   // Increase the size of the destination message block
-  dqd->msg_block_->size (incoming_size);
+  ACE_Message_Block *mb = dqd->msg_block_;
+
+  ACE_CDR::grow (mb,
+                 mb->size () + incoming_size);
 
   // Copy the data
   dqd->msg_block_->copy (sqd->msg_block_->rd_ptr (),
@@ -499,9 +503,13 @@ TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
   qd->minor_version_ =
     this->message_state_.giop_version_.minor;
 
-  qd->more_fragments_ =
-    this->message_state_.more_fragments_;
+  //qd->more_fragments_ = this->message_state_.more_fragments_;
 
+  if (this->message_state_.more_fragments_)
+    qd->more_fragments_ = 1;
+  else
+    qd->more_fragments_ = 0;
+  
   qd->msg_type_=
     this->message_type (this->message_state_);
 

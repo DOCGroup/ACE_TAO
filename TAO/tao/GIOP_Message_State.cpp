@@ -236,7 +236,9 @@ TAO_GIOP_Message_State::parse_fragment_header (char *buf,
 
   // By this point we are doubly sure that we have a more or less
   // valid GIOP message with a valid major revision number.
-  if (this->giop_version_.minor == 2 && length > len)
+  if (this->giop_version_.minor == 2 &&
+      this->message_type_ == TAO_GIOP_FRAGMENT &&
+      length > len)
     {
       // Fragmented message in GIOP 1.2 should have a fragment header
       // following the GIOP header.  Grab the rd_ptr to get that

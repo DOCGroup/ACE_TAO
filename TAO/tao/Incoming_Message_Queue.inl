@@ -57,8 +57,7 @@ TAO_Incoming_Message_Queue::is_tail_complete (void)
     return -1;
 
   if (this->size_ &&
-      this->queued_data_->missing_data_ == 0 &&
-      this->queued_data_->more_fragments_ == 0)
+      this->queued_data_->missing_data_ == 0)
     return 1;
 
   return 0;
@@ -72,7 +71,7 @@ TAO_Incoming_Message_Queue::is_head_complete (void)
 
   if (this->size_  &&
       this->queued_data_->next_->missing_data_ == 0 &&
-      this->queued_data_->more_fragments_ == 0)
+      this->queued_data_->next_->more_fragments_ == 0)
     return 1;
 
   return 0;
@@ -85,7 +84,7 @@ TAO_Incoming_Message_Queue::is_tail_fragmented (void)
     return 0;
 
   if (this->size_  &&
-      this->queued_data_->more_fragments_ == 0)
+      this->queued_data_->more_fragments_ == 1)
     return 1;
 
   return 0;
