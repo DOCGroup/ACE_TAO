@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -p
 # $Id$
 #
 # This is the UNIX version of the one-button ACE tests.
@@ -86,7 +86,7 @@ run_command=
 chorus=1
 if [ $# -eq 1 ]; then
   target=$1
-  if rsh $target help | head -1 | egrep CHORUS > /dev/null; then
+  if rsh $target help | head -1 | egrep -i CHORUS > /dev/null; then
     run_command=arun
     chorus=
   else
@@ -158,8 +158,18 @@ if [ ! "$chorus" ]; then
 fi # ! chorus
 
 ACE_BUILD_COMPONENTS=`$ACE_ROOT/bin/ace_components --ace`
-OTHER=`echo $ACE_BUILD_COMPONENTS | egrep ' Other '`
-TOKEN=`echo $ACE_BUILD_COMPONENTS | egrep ' Token '`
+echo $ACE_BUILD_COMPONENTS | egrep ' Other ' > /dev/null
+if [ $? ]; then
+  OTHER=1
+else
+  OTHER=0
+fi
+echo $ACE_BUILD_COMPONENTS | egrep ' Token ' > /dev/null
+if [ $? ]; then
+  TOKEN=1
+else
+  TOKEN=0
+fi
 
 libDLL_Test=
 if [ -f libDLL_Test$shlib_suffix ]; then
@@ -183,7 +193,9 @@ if [ $sysname != 'procnto' ]; then
   ulimit -d 65536
 fi # ! procnto
 
-while read i; do
+IFS=" 	
+"
+for i in `cat run_tests.lst`; do
 
   case $i in
     */*)
@@ -209,7 +221,7 @@ while read i; do
     fi
   fi
 
-done <run_tests.lst
+done
 
 echo "Finished ACE version $ace_version tests."
 
