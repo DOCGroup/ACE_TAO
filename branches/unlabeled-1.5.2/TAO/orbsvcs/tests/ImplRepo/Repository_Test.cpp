@@ -3,13 +3,13 @@
 
 #include "../../ImplRepo_Service/Repository.h"
 
-const char *NAME_VALUE = "server";
-const char *COMM_LINE_VALUE = "server -i";
-const char *ENV_VALUE = "null environment";
-const char *HOST_VALUE = "maxixe.cs.wustl.edu";
+ASYS_TCHAR *NAME_VALUE = ASYS_TEXT ("server");
+ASYS_TCHAR *COMM_LINE_VALUE = ASYS_TEXT ("server -i");
+ASYS_TCHAR *ENV_VALUE = ASYS_TEXT ("null environment");
+ASYS_TCHAR *HOST_VALUE = ASYS_TEXT ("maxixe.cs.wustl.edu");
 const int PORT_VALUE = 20000;
-const char *PING_IOR_VALUE = "iiop://maxixe/ping";
-const char *WDIR_VALUE = ".";
+ASYS_TCHAR *PING_IOR_VALUE = ASYS_TEXT ("iiop://maxixe/ping");
+ASYS_TCHAR *WDIR_VALUE = ASYS_TEXT (".");
 
 // Just tests the functionality of the Repository
 
@@ -17,7 +17,7 @@ int main (int argc, char *argv[])
 {
   int test_success = 1;
   Repository rep;
-  Repository::Record new_rec, rec;
+  Repository_Record new_rec, rec;
 
   new_rec.comm_line = ACE::strnew (COMM_LINE_VALUE);
   new_rec.env = ACE::strnew (ENV_VALUE);
@@ -99,7 +99,7 @@ int main (int argc, char *argv[])
 
   // Try some of the single accessors
 
-  char *cl, *env, *ping_ior;
+  ASYS_TCHAR *cl, *env, *ping_ior;
 
   ACE_DEBUG ((LM_DEBUG, "=Performing Single Accessor Test\n"));
 
