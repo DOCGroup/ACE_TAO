@@ -1581,8 +1581,8 @@ be_interface::gen_gperf_lookup_methods (void)
     {
       ACE_OS::close (input);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p:File open failed on server skeleton file\n",
-                         "open"));
+                         "%p:File open failed on server skeleton file\n"),
+                        -1);
     }
 
   // Set the handles now in the process options.
