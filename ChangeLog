@@ -1,3 +1,9 @@
+Sun Feb  8 15:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/bor.mpd:
+	  Also generate a realclean target for the IDL files so that IDL
+          generated files are removed when running a realclean.
+
 Sun Feb  8 14:25:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/cbx.mpd:
