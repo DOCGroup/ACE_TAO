@@ -1,3 +1,9 @@
+Mon Dec 13 02:28:06 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/FL_Cube/FL_Cube.mpc (Module):
+	* examples/AMI/FL_Callback/FL_Callback.mpc (Module):
+	Dependence on tao_flreactor changed into ace_fl.
+
 Mon Dec 13 00:38:28 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tao/Strategies/advanced_resource.h (Module):
