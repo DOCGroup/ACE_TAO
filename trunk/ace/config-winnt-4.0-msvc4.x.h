@@ -108,6 +108,8 @@
 #define ACE_HAS_UNICODE
 //#define ACE_HAS_STANDARD_CPP_LIBRARY
 
+#define ACE_HAS_PENTIUM
+
 // Uncomment these if you want to integrate ACE and Orbix in Win32.
 // #define ACE_HAS_ORBIX
 // #define ACE_HAS_MT_ORBIX
