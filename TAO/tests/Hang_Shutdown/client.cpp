@@ -240,7 +240,7 @@ namespace TAO
 
           ACE_Thread_Manager::instance ()->wait ();
 
-          orb->destroy (ACE_ENV_SINGLE_ARG_DECL);
+          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
         }

@@ -1,3 +1,10 @@
+Wed Mar 16 15:21:56 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Hang_Shutdown/test_i.h: 
+	* tests/Hang_Shutdown/client.cpp:
+
+	  Fixed compile errors in emulated exception builds.
+
 Wed Mar 16 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTScheduling/Current/test.cpp:
