@@ -2,6 +2,7 @@
 
 #include "Blob.h"
 #include "Blob_Handler.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Blobby, Blob, "$Id$")
 
