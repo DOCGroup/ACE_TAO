@@ -87,5 +87,17 @@ extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
 #  define _isatty isatty
 #endif /* __BORLANDC__ */
 
+#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+   // Header information snarfed from compiler provided header files
+   // that are not included because there is already an identically
+   // named file provided with pSOS, which does not have this info
+   // from compiler supplied header
+   extern int getopt(int, char *const *, const char *);
+   int isatty (int h);
+#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
+
+
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_UNISTD_H */
