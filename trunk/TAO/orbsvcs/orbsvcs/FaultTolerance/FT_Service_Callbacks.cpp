@@ -95,7 +95,7 @@ TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub *stub,
   // Search for the TaggedComponent that we want
   if (pfile_tagged.get_component (tagged_component) == 1)
     {
-      // We just return here as we would have parsed he whole IOR list
+      // We just return here as we would have parsed the whole IOR list
       return 0;
     }
 
@@ -157,15 +157,17 @@ TAO_FT_Service_Callbacks::service_create_policy (
     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
-  if (type == FT::REQUEST_DURATION_POLICY)
-    {
-      policy = TAO_FT_Request_Duration_Policy::create (val,
-                                                       ACE_TRY_ENV);
-    }
-
-  return policy;
+  if (type ==  FT::REQUEST_DURATION_POLICY)
+    return  TAO_FT_Request_Duration_Policy::create (val,
+                                                    ACE_TRY_ENV);
+  else if (type == FT::HEARTBEAT_POLICY)
+    return TAO_FT_Heart_Beat_Policy::create (val,
+                                             ACE_TRY_ENV);
+  else if (type == FT::HEARTBEAT_ENABLED_POLICY)
+    return TAO_FT_Heart_Beat_Enabled_Policy::create (val,
+                                                     ACE_TRY_ENV);
+  return  CORBA::Policy::_nil ();
 }
 
 void
@@ -217,7 +219,7 @@ TAO_FT_Service_Callbacks::request_service_context (
     ACE_THROW (CORBA::MARSHAL ());
 
   if (cdr <<
-      stub->orb_core ()->fault_tolerance_service ().new_retention_id ()
+      stub->orb_core ()->fault_tolerance_service ().retention_id ()
       == 0)
     ACE_THROW (CORBA::MARSHAL ());
 
@@ -238,7 +240,8 @@ TAO_FT_Service_Callbacks::request_service_context (
   TimeBase::TimeT exp_time = 0;
 
   // if we have a non-null policy set
-  if (!CORBA::is_nil (policy.in ()))
+  if (!CORBA::is_nil (policy.in ()) &&
+      policy->policy_type () == FT::REQUEST_DURATION_POLICY)
     {
       FT::RequestDurationPolicy_var duration_policy =
         FT::RequestDurationPolicy::_narrow (policy.in ());
@@ -438,7 +441,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
       == 1)
     {
       // Look for the FT_REQUEST context id
-      for (CORBA::Long i = 0;
+      for (CORBA::ULong i = 0;
            i < service_list.length ();
            i++)
         {
