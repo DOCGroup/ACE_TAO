@@ -1,3 +1,8 @@
+Wed Jan 22 01:24:51 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Message_Queue_T.h: Corrected the documentation for ACE_Message_Block_Ex
+	  so it says ACE_MESSAGE_TYPE rather than ACE_Message_Block.
+
 Tue Jan 21 21:44:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/examples/SAXPrint/broken.xml: Added a new broken XML file

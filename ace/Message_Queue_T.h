@@ -963,7 +963,7 @@ public:
   // elapses, (in which case errno = EWOULDBLOCK).
 
   /**
-   * Retrieve the first <ACE_Message_Block> without removing it.  Note
+   * Retrieve the first <ACE_MESSAGE_TYPE> without removing it.  Note
    * that <timeout> uses <{absolute}> time rather than <{relative}>
    * time.  If the <timeout> elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
@@ -975,7 +975,7 @@ public:
                                  ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
+   * Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
    * accordance with its <msg_priority> (0 is lowest priority).  FIFO
    * order is maintained when messages of the same priority are
    * inserted consecutively.  Note that <timeout> uses <{absolute}>
@@ -989,7 +989,7 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
+   * Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
    * accordance with its <msg_deadline_time>.  FIFO
    * order is maintained when messages of the same deadline time are
    * inserted consecutively.  Note that <timeout> uses <{absolute}>
@@ -1012,7 +1012,7 @@ public:
                        ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> at the end of the queue.  Note
+   * Enqueue an <ACE_MESSAGE_TYPE *> at the end of the queue.  Note
    * that <timeout> uses <{absolute}> time rather than <{relative}>
    * time.  If the <timeout> elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
@@ -1024,7 +1024,7 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> at the head of the queue.  Note
+   * Enqueue an <ACE_MESSAGE_TYPE *> at the head of the queue.  Note
    * that <timeout> uses <{absolute}> time rather than <{relative}>
    * time.  If the <timeout> elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
@@ -1041,7 +1041,7 @@ public:
   // This method is an alias for the following <dequeue_head> method.
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> at the head of the
+   * Dequeue and return the <ACE_MESSAGE_TYPE *> at the head of the
    * queue.  Note that <timeout> uses <{absolute}> time rather than
    * <{relative}> time.  If the <timeout> elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
@@ -1053,7 +1053,7 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> that has the lowest
+   * Dequeue and return the <ACE_MESSAGE_TYPE *> that has the lowest
    * priority.  Note that <timeout> uses <{absolute}> time rather than
    * <{relative}> time.  If the <timeout> elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
@@ -1065,7 +1065,7 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> at the tail of the
+   * Dequeue and return the <ACE_MESSAGE_TYPE *> at the tail of the
    * queue.  Note that <timeout> uses <{absolute}> time rather than
    * <{relative}> time.  If the <timeout> elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
@@ -1077,7 +1077,7 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> with the lowest
+   * Dequeue and return the <ACE_MESSAGE_TYPE *> with the lowest
    * deadline time.  Note that <timeout> uses <{absolute}> time rather than
    * <{relative}> time.  If the <timeout> elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
@@ -1142,7 +1142,7 @@ public:
   /**
    * Set the low watermark, which determines how many bytes must be in
    * the queue before supplier threads are allowed to enqueue
-   * additional <ACE_Message_Block>s.
+   * additional <ACE_MESSAGE_TYPE>s.
    */
   virtual void low_water_mark (size_t lwm);
 
