@@ -117,12 +117,9 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                 return 0;
               }
 
-            // But if it was generated inside a module or something similar then
-            // we must prefix the enum value with something...
-            be_decl* decl =
-              scope->decl ();
-            *os << decl->fullname () << "::" 
-                << node->value_to_name (dv.u.enum_val);
+            // The function value_to_name() takes care of adding
+            // any necessary scoping to the output.
+            *os << node->value_to_name (dv.u.enum_val);
             break;
           }
         case AST_Expression::EV_longlong:
