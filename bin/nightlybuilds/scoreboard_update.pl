@@ -205,15 +205,15 @@ sub load_web_dir ($)
 
     my $ua = LWP::UserAgent->new;
 
-    ### We are impatient, so don't wait more than 10 seconds for a
+    ### We are impatient, so don't wait more than 20 seconds for a
     ### response (the default was 180 seconds)
-    $ua->timeout(10);
+    $ua->timeout(20);
 
     my $request = HTTP::Request->new('GET', $address);
     my $response = $ua->request($request);
 
     if (!$response->is_success ()) {
-        warn 'load_web_dir (): Could not load web directory';
+        print "        ERROR: Could not load web dir\n";
         return ();
     }
     
@@ -238,7 +238,7 @@ sub load_web_dir ($)
             }
         }
     }
-    elsif ($server =~ m/Apache/) {
+    elsif ($server =~ m/Apache/ || $server =~ m/Boa/) {
         my @contents = split /\n/, $content;
 
         ### Now look for files
