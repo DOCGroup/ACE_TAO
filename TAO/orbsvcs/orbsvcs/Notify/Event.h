@@ -88,9 +88,7 @@ public:
   virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const = 0;
 
   /// Return a pointer to a copy of this event on the heap
-  /// Originals should make a copy to return.
-  /// Copies may return "this".
-  virtual const TAO_Notify_Event * copy_on_heap () const = 0;
+  const TAO_Notify_Event * copy_on_heap (ACE_ENV_SINGLE_ARG_DECL) const;
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR & cdr) const = 0;
@@ -109,6 +107,10 @@ public:
   const TAO_Notify_Property_Boolean& reliable(void) const;
 
 protected:
+
+  /// Return a pointer to a copy of this event on the heap
+  virtual TAO_Notify_Event * copy (ACE_ENV_SINGLE_ARG_DECL) const = 0;
+
   /// = QoS properties
 
   /// Priority.
@@ -119,16 +121,16 @@ protected:
 
   /// Reliability
   TAO_Notify_Property_Boolean reliable_;
-};
 
-//typedef ACE_Refcounted_Auto_Ptr<const TAO_Notify_Event, TAO_SYNCH_MUTEX> TAO_Notify_Event_var_Base;
+  TAO_Notify_Event * event_on_heap_;
+};
 
 typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> TAO_Notify_Event_var_Base;
 
 /**
  * @class TAO_Notify_Event_var
  *
- * @brief A Non-Copy version of the ACE_Refcounted_Auto_Ptr that hides the constructors.
+ * @brief A Non-Copy version of the smart pointer that hides the constructors.
  *
  */
 class TAO_Notify_Event_var : public TAO_Notify_Event_var_Base
@@ -145,7 +147,7 @@ protected:
 /**
  * @class TAO_Notify_Event
  *
- * @brief A version of the ACE_Refcounted_Auto_Ptr that allows construction from a TAO_Notify_Event
+ * @brief A smart pointer that allows construction from a TAO_Notify_Event
  *
  */
 class TAO_Notify_Event_Copy_var : public TAO_Notify_Event_var
@@ -157,8 +159,6 @@ public:
   /// Constructor
   TAO_Notify_Event_Copy_var (const TAO_Notify_Event* event);
 };
-
-typedef ACE_Unbounded_Queue<TAO_Notify_Event_var> TAO_Notify_Event_Collection;
 
 #if defined (__ACE_INLINE__)
 #include "Event.inl"

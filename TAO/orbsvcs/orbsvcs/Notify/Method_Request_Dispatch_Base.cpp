@@ -15,12 +15,11 @@ ACE_RCSID (Notify,
            TAO_Notify_Method_Request_Dispatch_Base,
            "$Id$")
 
-
 TAO_Notify_Method_Request_Dispatch_Base::TAO_Notify_Method_Request_Dispatch_Base (
       const TAO_Notify_Event * event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
-  : event_ (event)
+  : TAO_Notify_Method_Request_Event_Base (event)
   , proxy_supplier_ (proxy_supplier)
   , filtering_ (filtering)
 {
@@ -57,16 +56,59 @@ TAO_Notify_Method_Request_Dispatch_Base::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 
       if (consumer != 0)
         {
-          consumer->push (this->event_ ACE_ENV_ARG_PARAMETER);
+          consumer->deliver (this ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Notify_Method_Request_Dispatch::: error sending event. \n ");
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        ACE_TEXT ("TAO_Notify_Method_Request_Dispatch::: error sending event.\n ")
+        );
     }
   ACE_ENDTRY;
 
   return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+TAO_Notify_Method_Request_Event_Base::TAO_Notify_Method_Request_Event_Base (
+  const TAO_Notify_Event * event)
+  : event_ (event)
+{
+}
+
+
+TAO_Notify_Method_Request_Event_Base::TAO_Notify_Method_Request_Event_Base (
+    const TAO_Notify_Method_Request_Event_Base & rhs,
+    const TAO_Notify_Event * event)
+  : event_ (event)
+{
+}
+
+TAO_Notify_Method_Request_Event_Base::~TAO_Notify_Method_Request_Event_Base()
+{
+}
+
+void
+TAO_Notify_Method_Request_Event_Base::complete ()
+{
+  int todo_request_complete;
+}
+
+
+unsigned long
+TAO_Notify_Method_Request_Event_Base::sequence ()
+{
+  int todo_request_sequence;
+  return 0;
+}
+
+bool
+TAO_Notify_Method_Request_Event_Base::should_retry ()
+{
+  int todo_request_should_retry;
+  return false;
 }

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -75,10 +75,12 @@ public:
   /// \return the new event, or NULL if this is the wrong type of event.
   static TAO_Notify_AnyEvent * unmarshal (TAO_InputCDR & cdr);
 
+protected:
   /// returns a copy of this event allocated from the heap
-  virtual const TAO_Notify_Event * copy_on_heap ()const;
+  virtual TAO_Notify_Event * copy (ACE_ENV_SINGLE_ARG_DECL) const;
 
 protected:
+
   /// Any Event
   const CORBA::Any* event_;
 
@@ -104,7 +106,7 @@ public:
   ~TAO_Notify_AnyEvent ();
 
   /// return this
-  virtual const TAO_Notify_Event * copy_on_heap ()const;
+  virtual const TAO_Notify_Event * copy_on_heap (ACE_ENV_SINGLE_ARG_DECL)const;
 
 protected:
   /// Copy of the Event.

@@ -49,18 +49,6 @@ TAO_Notify_PushConsumer::release (void)
 }
 
 void
-TAO_Notify_PushConsumer::push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
-{
-  event->push (this ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_PushConsumer::push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL)
-{
-  event->push (this ACE_ENV_ARG_PARAMETER);
-}
-
-void
 TAO_Notify_PushConsumer::push (const CORBA::Any& payload ACE_ENV_ARG_DECL)
 {
   this->push_consumer_->push (payload ACE_ENV_ARG_PARAMETER);
@@ -75,6 +63,18 @@ TAO_Notify_PushConsumer::push (const CosNotification::StructuredEvent& event ACE
 
   this->push_consumer_->push (any ACE_ENV_ARG_PARAMETER);
 }
+
+/// Push a batch of events to this consumer.
+void
+TAO_Notify_PushConsumer::push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_ASSERT(false);
+  ACE_UNUSED_ARG (event);
+  // TODO exception?
+}
+
+
+
 bool
 TAO_Notify_PushConsumer::get_ior (ACE_CString & iorstr) const
 {
@@ -94,4 +94,11 @@ TAO_Notify_PushConsumer::get_ior (ACE_CString & iorstr) const
   }
   ACE_ENDTRY;
   return result;
+}
+
+void
+TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
+    ACE_ENV_ARG_DECL)
+{
+  int todo_reconnect;
 }

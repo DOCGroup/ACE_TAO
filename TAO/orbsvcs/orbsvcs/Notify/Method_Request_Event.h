@@ -20,6 +20,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Method_Request.h"
+#include "Method_Request_Dispatch.h" // for Request_Event_Base.  s/b moved
+#include "Event.h"
 
 /**
  * @class TAO_Notify_Method_Request_Event
@@ -27,24 +29,25 @@
  * @brief A method request for storing events.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event : public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
+  : public TAO_Notify_Method_Request
+  , public TAO_Notify_Method_Request_Event_Base
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Event_var& event);
+  /// Not the event_var is passed as a separate parameter to avoid throwing
+  /// exceptions from the constructor if it's necessary to copy the event.
+  TAO_Notify_Method_Request_Event (
+    const TAO_Notify_Method_Request_Event_Base & prev_request,
+    const TAO_Notify_Event_var & event_var);
 
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Event ();
 
-  /// Execute the Request
+  /// satisfy the pure virtual method.  Should never be called.
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Obtain the event.
-  const TAO_Notify_Event_var& event (void);
-
-protected:
-  /// The event.
-  const TAO_Notify_Event_var event_;
+private:
+  TAO_Notify_Event_var event_var_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -52,6 +52,8 @@ MultiTypes_SequencePushConsumer::MultiTypes_SequencePushConsumer (MultiTypes* cl
 {
 }
 
+// TODO: if the batch contains more than one event this counts only one received event
+// Since this should *never* happen, I'm not fixing it now.
 void
 MultiTypes_SequencePushConsumer::push_structured_events (const CosNotification::EventBatch & /*notifications*/
                                                          ACE_ENV_ARG_DECL_NOT_USED
@@ -359,7 +361,8 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
         break;
 
       {
-        if (this->orb_->work_pending ())
+        ACE_Time_Value tv (0,1000);
+        if (this->orb_->work_pending (tv))
           this->orb_->perform_work ();
       }
     }

@@ -16,7 +16,7 @@
 
 #include "Property.h"
 #include "Property_Boolean.h"
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #include "ace/SString.h"
 #include "ace/Vector_T.h"

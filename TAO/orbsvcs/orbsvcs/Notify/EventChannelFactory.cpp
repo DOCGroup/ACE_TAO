@@ -25,8 +25,10 @@ ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 #include "Seq_Worker_T.h"
 
 #include "tao/debug.h"
-#define DEBUG_OFFSET 0
-#define DEBUG_LEVEL (TAO_debug_level + DEBUG_OFFSET)
+//#define DEBUG_LEVEL 10
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
 
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel
                              , CosNotifyChannelAdmin::EventChannel

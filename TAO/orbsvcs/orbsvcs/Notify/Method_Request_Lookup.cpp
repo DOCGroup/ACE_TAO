@@ -19,11 +19,11 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
       const TAO_Notify_Event_var& event,
       TAO_Notify_ProxyConsumer* proxy_consumer)
-  : TAO_Notify_Method_Request_Lookup_Base (event.get (), proxy_consumer)
+  : TAO_Notify_Method_Request (event.get ())
+  , TAO_Notify_Method_Request_Lookup_Base (event.get (), proxy_consumer)
   , event_var_ (event)
   , proxy_guard_ (proxy_consumer)
 {
-  this->init (event);
 }
 
 TAO_Notify_Method_Request_Lookup::~TAO_Notify_Method_Request_Lookup ()
