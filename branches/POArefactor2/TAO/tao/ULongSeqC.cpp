@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "ULongSeqC.h"
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ULongSeqC.i"
+#include "ULongSeqC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -97,7 +97,7 @@ void CORBA::ULongSeq::_tao_any_destructor (
   )
 {
   ULongSeq * _tao_tmp_pointer =
-    ACE_static_cast (ULongSeq *, _tao_void_pointer);
+    static_cast<ULongSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -114,7 +114,7 @@ CORBA::Boolean operator<< (
     const CORBA::ULongSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -162,7 +162,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ULongSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -207,4 +207,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
