@@ -585,7 +585,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:
+  // = This should be protected but some C++ compilers complain...
+public:
 #if defined (CHORUS)
   ACE_mutex_t *process_lock_;
   // This lock resides in shared memory.
