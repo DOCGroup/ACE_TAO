@@ -150,8 +150,8 @@ public:
                                    ACE_Equal_To<ACE_TString>,
                                    ACE_Null_Mutex> HASH_IMR_ITER;
 
-  int init (ACE_Configuration *config);
-  // Initializes the configuration persistent storage based on <config>
+  int init ();
+  // Initializes the Server Repository
 
   int add (const ACE_TString POA_name,
            const ACE_TString logical_server_name,
@@ -199,7 +199,6 @@ public:
 
 private:
   HASH_IMR_MAP repository_;
-  ACE_Configuration* config_;
   ACE_Configuration_Section_Key servers_;
 };
 

@@ -40,26 +40,33 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'p': // persistent heap implementation
         {
-          ACE_Configuration_Heap* heap = new ACE_Configuration_Heap;
-          if(heap->open(get_opts.optarg))
-          {
-            ACE_ERROR_RETURN((LM_ERROR,
-                              "Error:: Opening persistent heap file '%s'\n",
-                              get_opts.optarg), -2);
-          }
-          config_ = heap;
+          ACE_Configuration_Heap* heap;
+          ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
+          
+          if (heap->open(get_opts.optarg))
+            {
+              ACE_ERROR_RETURN((LM_ERROR,
+                                "Error:: Opening persistent heap file '%s'\n",
+                                get_opts.optarg), -2);
+            }
+          this->config_ = heap;
         }
         break;
 #if defined(ACE_WIN32)
       case 'r': // win32 registry implementation
         {
-          HKEY root = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, "Software\\TAO\\IR");
-          config_ = new ACE_Configuration_Win32Registry(root);
+          HKEY root = 
+            ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, 
+                                                         "Software\\TAO\\IR");
+          ACE_NEW_RETURN (this->config_, 
+                          ACE_Configuration_Win32Registry(root),
+                          -1);
         }
         break;
 #endif
       case 't': // Set timeout value
-        this->startup_timeout_ = ACE_Time_Value (ACE_OS::atoi (get_opts.optarg));
+        this->startup_timeout_ = 
+          ACE_Time_Value (ACE_OS::atoi (get_opts.optarg));
         break;
       case '?':  // display help for use of the server.
       default:
@@ -76,12 +83,14 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   // if no persistent implementation specified, use a simple heap
-  if(!config_)
-  {
-    ACE_Configuration_Heap* heap = new ACE_Configuration_Heap;
-    heap->open();
-    config_ = heap;
-  }
+  if (!this->config_)
+    {
+      ACE_Configuration_Heap *heap;
+
+      ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
+      heap->open ();
+      this->config_ = heap;
+    }
 
   // Indicates successful parsing of command line.
   return 0;

@@ -113,7 +113,6 @@ Server_Info::get_running_info (ACE_TString &location,
 // Default Constructor
 
 Server_Repository::Server_Repository ()
-: config_ (0)
 {
   // Nothing
 }
@@ -123,24 +122,23 @@ Server_Repository::Server_Repository ()
 
 Server_Repository::~Server_Repository ()
 {
-  delete this->config_;
+  // Nothing
 }
 
 
 // Initialize the the configuration class.
 
 int
-Server_Repository::init (ACE_Configuration* config)
+Server_Repository::init ()
 {
-  delete this->config_;
-  this->config_ = config;
- 
+  ACE_Configuration *config = OPTIONS::instance ()->config ();
+
   // iterate through the list of registered servers and register them
-  this->config_->open_section(config_->root_section(), "Servers", 1, this->servers_);
+  config->open_section(config->root_section(), "Servers", 1, this->servers_);
   int index = 0;
   ACE_TString name;
  
-  while (this->config_->enumerate_sections (servers_, index, name) == 0)
+  while (config->enumerate_sections (servers_, index, name) == 0)
     {
       ACE_TString logical, startup, working_dir, activation_str;
       Server_Info::ActivationMode activation;
@@ -150,11 +148,11 @@ Server_Repository::init (ACE_Configuration* config)
       ACE_Configuration_Section_Key server_key;
       int error = 0;
    
-      error += this->config_->open_section (this->servers_, name.c_str(), 0, server_key);
-      error += this->config_->get_string_value (server_key, "LogicalServer", logical);
-      error += this->config_->get_string_value (server_key, "StartupCommand", startup);
-      error += this->config_->get_string_value (server_key, "WorkingDir", working_dir);
-      error += this->config_->get_string_value (server_key, "Activation", activation_str);
+      error += config->open_section (this->servers_, name.c_str(), 0, server_key);
+      error += config->get_string_value (server_key, "LogicalServer", logical);
+      error += config->get_string_value (server_key, "StartupCommand", startup);
+      error += config->get_string_value (server_key, "WorkingDir", working_dir);
+      error += config->get_string_value (server_key, "Activation", activation_str);
       activation = convert_str_to_mode (activation_str.c_str ());
 
       // Maybe environments variables?? need a straight forward way to store env vars
@@ -181,13 +179,15 @@ Server_Repository::add (const ACE_TString POA_name,
                         const ACE_TString working_dir,
                         const Server_Info::ActivationMode activation)
 {
-  // Add this to the persistent configuration; environment_vars??
+  ACE_Configuration *config = OPTIONS::instance ()->config ();
+  
+  // @@ Add this to the persistent configuration; environment_vars??
   ACE_Configuration_Section_Key server;
-  this->config_->open_section (this->servers_, POA_name.c_str(), 1, server);
-  this->config_->set_string_value (server, "LogicalServer", logical_server_name);
-  this->config_->set_string_value (server, "StartupCommand", startup_command);
-  this->config_->set_string_value (server, "WorkingDir", working_dir);
-  this->config_->set_string_value (server, "Activation", convert_mode_to_str (activation));
+  config->open_section (this->servers_, POA_name.c_str(), 1, server);
+  config->set_string_value (server, "LogicalServer", logical_server_name);
+  config->set_string_value (server, "StartupCommand", startup_command);
+  config->set_string_value (server, "WorkingDir", working_dir);
+  config->set_string_value (server, "Activation", convert_mode_to_str (activation));
 
   Server_Info *new_server;
   ACE_NEW_RETURN (new_server,
@@ -306,8 +306,10 @@ Server_Repository::starting_up (const ACE_TString POA_name)
 int
 Server_Repository::remove (const ACE_TString POA_name)
 {
+  ACE_Configuration *config = OPTIONS::instance ()->config ();
+
   // Remove the persistent configuration information
-  this->config_->remove_section (this->servers_, POA_name.c_str(), 1);
+  config->remove_section (this->servers_, POA_name.c_str(), 1);
 
   return this->repository_.unbind (POA_name);
 }
