@@ -322,9 +322,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Event_Handler_T.i \
- $(ACE_ROOT)/ace/Event_Handler_T.cpp
+ $(ACE_ROOT)/ace/Event_Handler.i
 .obj/test_reactors.o .obj/test_reactors.so .shobj/test_reactors.o .shobj/test_reactors.so: test_reactors.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
