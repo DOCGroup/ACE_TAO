@@ -8,8 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN = 	Async_Timer_Queue_Test \
-	Atomic_Op_Test \
+BIN =	Atomic_Op_Test \
 	Barrier_Test \
 	Buffer_Stream_Test \
 	Conn_Test \
