@@ -40,7 +40,7 @@ TAO_NAMESPACE  POA_Messaging
 {
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
-  
+
   // Forward Classes Declaration
   class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
   class _TAO_ReplyHandler_Direct_Proxy_Impl;
@@ -102,12 +102,12 @@ TAO_NAMESPACE  POA_Messaging
 
 
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
   class TAO_PortableServer_Export _TAO_ReplyHandler_Strategized_Proxy_Broker : public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_ReplyHandler_Strategized_Proxy_Broker (void);
 
     virtual ~_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
@@ -116,35 +116,36 @@ TAO_NAMESPACE  POA_Messaging
       ::Messaging::ReplyHandler *object,
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
-  
+
   private:
-  
+
   // Helper methods that takes care to create the proxy
   // as soon as their use is necessary.
     void create_proxy (
       TAO_ORB_Core::TAO_Collocation_Strategies strategy,
       CORBA::Environment &ACE_TRY_ENV
     );
-  
+
   private:
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Messaging::_TAO_ReplyHandler_Proxy_Impl
      *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
-    
+
     ACE_SYNCH_MUTEX mutex_;
+
+  public:
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
+
+    static _TAO_ReplyHandler_Strategized_Proxy_Broker *the_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
   };
-  
-  // This funxtion is used to get an handle to the unique instance
-  // of the Strategized Proxy Broker that is available for a given
-  // interface.
-  
-  _TAO_ReplyHandler_Strategized_Proxy_Broker *the_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
-  
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
 
 
@@ -152,13 +153,13 @@ TAO_NAMESPACE  POA_Messaging
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl : 
+class TAO_PortableServer_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl :
   public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
   ~_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void);
-  
+
   };
 
 
@@ -171,13 +172,13 @@ public:
 //                    Direct  Impl. Declaration
 //
 
- class TAO_PortableServer_Export _TAO_ReplyHandler_Direct_Proxy_Impl : 
+ class TAO_PortableServer_Export _TAO_ReplyHandler_Direct_Proxy_Impl :
   public virtual Messaging::_TAO_ReplyHandler_Proxy_Impl,
   public virtual TAO_Direct_Object_Proxy_Impl
  {
  public:
    ~_TAO_ReplyHandler_Direct_Proxy_Impl (void);
-   
+
  };
 
 //

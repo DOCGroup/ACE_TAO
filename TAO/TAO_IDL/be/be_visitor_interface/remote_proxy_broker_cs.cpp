@@ -38,7 +38,7 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
 
   *os << "// Factory function Implementation." << be_nl
       << node->full_remote_proxy_broker_name ()
-      << " *" << node->client_enclosing_scope () << "the"
+      << " *" << node->full_remote_proxy_broker_name () << "::the"
       << node->remote_proxy_broker_name ()
       << " (void)" << be_nl
       << "{" << be_idt_nl
