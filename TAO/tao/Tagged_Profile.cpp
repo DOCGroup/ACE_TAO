@@ -1,12 +1,12 @@
 // $Id$
 
-#include "tao/Tagged_Profile.h"
-#include "tao/ORB_Core.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Pluggable.h"
-#include "tao/debug.h"
-#include "tao/target_specification.h"
+#include "Tagged_Profile.h"
+#include "ORB_Core.h"
+#include "Acceptor_Registry.h"
+#include "Transport_Acceptor.h"
+#include "Thread_Lane_Resources.h"
+#include "debug.h"
+#include "target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Profile.i"

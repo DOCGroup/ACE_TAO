@@ -1,24 +1,5 @@
 // -*- C++ -*-
 // $Id$
-
-ACE_INLINE TAO_EndpointSet &
-TAO_ORB_Parameters::preconnects (void)
-{
-  return this->preconnects_list_;
-}
-
-ACE_INLINE int
-TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
-{
-  return this->parse_endpoints (preconnects, this->preconnects ());
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::add_preconnect (ACE_CString &preconnect)
-{
-  this->preconnects ().enqueue_tail (preconnect);
-}
-
 ACE_INLINE TAO_EndpointSet &
 TAO_ORB_Parameters::endpoints (void)
 {
@@ -189,3 +170,31 @@ TAO_ORB_Parameters::scope_policy (long x)
 {
   this->scope_policy_ = x;
 }
+
+
+#if 0
+
+/*
+ *
+ *  TODO: Needs to be removed
+ *
+ */
+
+ACE_INLINE TAO_EndpointSet &
+TAO_ORB_Parameters::preconnects (void)
+{
+  return this->preconnects_list_;
+}
+
+ACE_INLINE int
+TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
+{
+  return this->parse_endpoints (preconnects, this->preconnects ());
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::add_preconnect (ACE_CString &preconnect)
+{
+  this->preconnects ().enqueue_tail (preconnect);
+}
+#endif /*if 0*/
