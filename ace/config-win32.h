@@ -25,11 +25,12 @@
 //                        will be used from ACE.
 // #define ACE_HAS_MFC
 
-// Comment this out if you don't want to use STRICT type checking.
+// Uncomment this out if you want to use STRICT type checking.
+// It is disabled by default because it will break existing application code.
 //  Setting applies to  : building ACE, linking with ACE 
 //  Runtime restrictions: -
 //  Additonal notes		: ACE_HAS_MFC implies ACE_HAS_STRICT
-#define ACE_HAS_STRICT
+// #define ACE_HAS_STRICT
 
 // Turn off the following define if you want to disable threading.
 // Compile using multi-thread libraries.
