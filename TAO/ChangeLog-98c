@@ -1,3 +1,15 @@
+Fri Oct 30 15:21:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance_tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+	  Fixed the collocation test.  It was broken when we stop using
+	  Naming Service with the test.  Also, separate out the
+	  shutdown_server method out since it needs to do more than an
+	  ordinary shutdown call to the server when we are testing the
+	  collocation.  Notice that Irfan is currently fixing this and in
+	  the future, we'll no longer need to treat collocated object
+	  specially. 
+
 Fri Oct 30 15:10:16 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* performance_tests/Demux/CodeGen
