@@ -212,12 +212,16 @@ public:
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
                                      CORBA::SetOverrideType set_add,
                                      CORBA::Environment &ACE_TRY_ENV =
                                      CORBA::Environment::default_environment ()
-                                     );
+                                     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CORBA_InvalidPolicies));
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -345,13 +349,17 @@ public:
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CORBA_InvalidPolicies));
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 

@@ -9,7 +9,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/GIOP_Message_Acceptors.h"
-
+#include "tao/Server_Strategy_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
@@ -153,14 +153,18 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
   // completely connected.
   ACE_INET_Addr addr;
 
+  char client[MAXHOSTNAMELEN + 16];
+
+  // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+    return -1;
+
+  // Verify that we can resolve the peer hostname.
+  else if (addr.addr_to_string (client, sizeof (client)) == -1)
     return -1;
 
   if (TAO_debug_level > 0)
     {
-      char client[MAXHOSTNAMELEN + 16];
-      (void) addr.addr_to_string (client, sizeof (client));
-
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) IIOP connection from client")
                   ACE_TEXT ("<%s> on %d\n"),
@@ -208,14 +212,26 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::handle_close ")
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("IIOP_Server_Connection_Handler::handle_close ")
                  ACE_TEXT ("(%d, %d)\n"),
                  handle,
                  rm));
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    return TAO_SVC_HANDLER::handle_close (handle, rm);
+    {
+      // Remove the handle from the ORB Core's handle set so that it
+      // isn't included in the set that is passed to the reactor upon
+      // ORB destruction.
+      TAO_Server_Strategy_Factory *f =
+        this->orb_core_->server_factory ();
+
+      if (f->activate_server_connections () == 0)
+        (void) this->orb_core_->remove_handle (handle);
+
+      return TAO_SVC_HANDLER::handle_close (handle, rm);
+    }
 
   return 0;
 }

@@ -191,9 +191,9 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
       ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
                         leader_follower.reverse_lock (), -1);
 
-      // @@ Do we need to do this?
       // Become owner of the reactor.
-      orb_core->reactor ()->owner (ACE_Thread::self ());
+      ACE_Reactor *reactor = orb_core->reactor ();
+      reactor->owner (ACE_Thread::self ());
 
       // Run the reactor event loop.
 
@@ -205,7 +205,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
       while (1)
         {
           // Run the event loop.
-          result = orb_core->reactor ()->handle_events (max_wait_time);
+          result = reactor->handle_events (max_wait_time);
 
           // If we got our reply, no need to run the event loop any
           // further.

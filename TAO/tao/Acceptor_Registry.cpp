@@ -228,6 +228,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         }
     }
 
+  // No longer need the endpoint set since all associated acceptors
+  // have been opened by now.  Reclaim the memory used by the endpoint
+  // set.
+  endpoint_set.reset ();
+
   return 0;
 }
 

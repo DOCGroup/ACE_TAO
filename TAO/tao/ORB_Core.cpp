@@ -121,7 +121,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0),
-    refcount_ (1)
+    refcount_ (1),
+    handle_set_ ()
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -1280,6 +1281,19 @@ TAO_ORB_Core::fini (void)
       delete this->acceptor_registry_;
     }
 
+  // Shutdown all open connections that are registered with the ORB
+  // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
+  // used here since the reactor should invoke each handle's
+  // corresponding ACE_Event_Handler::handle_close() method to ensure
+  // that the connection is shutdown gracefully.
+
+  // @@ Will the Server_Strategy_Factory still be around by the time
+  //    this method is invoked?  Specifically, is it possible that
+  //    the Server_Strategy_Factory will already have been unloaded?
+  if (this->server_factory ()->activate_server_connections () == 0)
+    (void) this->reactor ()->remove_handler (this->handle_set_,
+                                             ACE_Event_Handler::ALL_EVENTS_MASK);
+
   TAO_Internal::close_services ();
 
   // @@ This is not needed since the default resource factory
@@ -1709,6 +1723,9 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (ret == -1)
     return -1;
 
+  // Fetch the Reactor
+  ACE_Reactor *r = this->reactor ();
+
   int result = 1;
   // 1 to detect that nothing went wrong
 
@@ -1738,12 +1755,15 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
             return result;
         }
 
-      ACE_Reactor *r = this->reactor ();
-
       // Set the owning thread of the Reactor to the one which we're
       // currently in.  This is necessary b/c it's possible that the
       // application is calling us from a thread other than that in which
       // the Reactor's CTOR (which sets the owner) was called.
+      //
+      // We need to do this on every iteration because the reactor may be
+      // acquired by one of the client threads in the LF waiting
+      // strategy
+
       r->owner (ACE_Thread::self ());
 
       if (TAO_debug_level >= 3)
