@@ -27,7 +27,7 @@ class frame_handler: public ACE_Event_Handler
   int handle_timeout (const ACE_Time_Value &/* tv */,
                       const void *arg = 0)
     {
-       ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
+      //       ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
        if (fragment)
          {
            size_t mb_len = SFP_MAX_PACKET_SIZE*2;
@@ -116,9 +116,9 @@ main (int argc, char **argv)
                          TAO_ORB_Core_instance ()->reactor ());
 
   result = orb_manager.run ();
-  if (result == 0)
-    ACE_DEBUG ((LM_DEBUG,"ORB run timed out\n"));
-  else if (result == -1)
-    ACE_DEBUG ((LM_DEBUG,"ORB run error\n"));
+//   if (result == 0)
+//     ACE_DEBUG ((LM_DEBUG,"ORB run timed out\n"));
+//   else if (result == -1)
+//     ACE_DEBUG ((LM_DEBUG,"ORB run error\n"));
   return 0;
 }
