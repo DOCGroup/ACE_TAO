@@ -93,7 +93,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
   }
 }
 
-#if !defined (ACE_HAS_STHREADS)
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
 // Tests the amount of time spent in a timed wait.
 
 static int 
@@ -175,7 +175,7 @@ worker (void *)
   return 0;
 }
 
-#endif /* !ACE_HAS_STHREADS */
+#endif /* !ACE_HAS_STHREADS && !ACE_HAS_POSIX_SEM */
 #endif /* ACE_HAS_THREADS */
 
 // Test semaphore functionality
@@ -188,7 +188,7 @@ int main (int argc, ASYS_TCHAR *argv[])
   parse_args (argc, argv);
   ACE_OS::srand (ACE_OS::time (0L));
 
-#if !defined (ACE_HAS_STHREADS)
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
   // Test timed waits.
   for (size_t i = 0; i < test_timeout_count; i++)
     if (test_timeout () != 0)
@@ -209,8 +209,8 @@ int main (int argc, ASYS_TCHAR *argv[])
 	      ASYS_TEXT ("Worker threads timed out %d percent of the time\n"), percent));
 #else
   ACE_ERROR ((LM_ERROR,
-	      ASYS_TEXT ("Timed semaphores are not supported with native Solaris threads\n")));
-#endif /* ACE_HAS_STHREADS */
+	      ASYS_TEXT ("Timed semaphores are not supported with native Solaris threads or on POSIX semaphores\n")));
+#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
