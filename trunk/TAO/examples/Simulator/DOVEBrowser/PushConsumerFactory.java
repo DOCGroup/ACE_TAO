@@ -27,20 +27,22 @@ public class PushConsumerFactory {
   private Weapons weapons_;
 
 
-  public PushConsumerFactory (DataHandler dataHandler, String nameServiceIOR) //, java.applet.Applet applet)
+  public PushConsumerFactory (DataHandler dataHandler, String nameServiceIOR, java.applet.Applet applet)
     {
       try {      
 	dataHandler_ = dataHandler;
-	orb_ = org.omg.CORBA.ORB.init (); // applet, null);
+	orb_ = org.omg.CORBA.ORB.init (applet, null);
 	boa_ = orb_.BOA_init ();
 	
 	// Get the Naming Service initial reference
 	
 	if (nameServiceIOR == null) {      
-	  NS_Resolve ns_resolve_ = new NS_Resolve ();
-     	  naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
+		System.out.println ("Using the lookup protocol!");
+		NS_Resolve ns_resolve_ = new NS_Resolve ();
+		naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
 	}
 	else {
+	  System.out.println ("Using the following IOR: " + nameServiceIOR);
 	  naming_service_object_ = orb_.string_to_object (nameServiceIOR);
 	}
 
