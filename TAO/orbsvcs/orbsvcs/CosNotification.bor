@@ -66,10 +66,11 @@ RESOURCE = $(OBJDIR)\CosNotification.res
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
+        $(TAO_DYNAMICANY_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_SVC_UTILS_CFLAGS) \
 	$(TAO_EVENT_CFLAGS) \
-	$(TAO_TRADING_CFLAGS) \
+        $(TAO_ETCL_CFLAGS) \
 	$(TAO_NOTIFY_CFLAGS) \
 	-DTAO_NOTIFY_BUILD_DLL
 
@@ -83,10 +84,11 @@ INCLUDES = Notify\*.h Notify\*.i Notify\*_T.cpp
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
+        $(TAO_DYNAMICANY_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_SVC_UTILS_LIB) \
 	$(TAO_EVENT_LIB) \
-	$(TAO_TRADING_LIB)
+        $(TAO_ETCL_LIB)
 
 all: idl_src_files
 
