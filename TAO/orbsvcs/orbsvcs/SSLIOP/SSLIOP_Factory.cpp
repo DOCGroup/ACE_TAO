@@ -3,7 +3,7 @@
 #include "SSLIOP_Factory.h"
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
-#include "SSL_Context.h"
+#include "ace/SSL/SSL_Context.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, SSLIOP_Factory, "$Id$")

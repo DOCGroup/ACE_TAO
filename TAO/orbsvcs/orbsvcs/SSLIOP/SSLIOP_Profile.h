@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 #include "SSLIOP_Export.h"
 
 class TAO_SSLIOP_Client_Connection_Handler;

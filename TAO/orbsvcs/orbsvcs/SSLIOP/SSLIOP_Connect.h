@@ -26,7 +26,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSL_SOCK_Stream.h"
+#include "ace/SSL/SSL_SOCK_Stream.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
