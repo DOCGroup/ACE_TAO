@@ -1499,7 +1499,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
   return this->orb_resources_.output_cdr_buffer_allocator_;
 }
 
-ACE_INLINE ACE_Data_Block*
+ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
   ACE_Data_Block *nb = 0;
