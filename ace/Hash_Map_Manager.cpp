@@ -9,7 +9,7 @@
 //    Hash_Map_Manager.cpp
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
