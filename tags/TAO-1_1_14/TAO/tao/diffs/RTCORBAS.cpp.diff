@@ -1,0 +1,19 @@
+--- orig/RTCORBAS.cpp	Sun Mar  4 10:31:22 2001
++++ RTCORBAS.cpp	Sun Mar  4 10:51:41 2001
+@@ -22,6 +22,10 @@
+ #ifndef _TAO_IDL_ORIG_RTCORBAS_CPP_
+ #define _TAO_IDL_ORIG_RTCORBAS_CPP_
+ 
++#include "tao/orbconf.h"
++
++#if (TAO_HAS_RT_CORBA == 1)
++
+ #include "RTCORBAS.h"
+ #include "tao/PortableServer/Object_Adapter.h"
+ #include "tao/PortableServer/Operation_Table.h"
+@@ -40,3 +44,5 @@
+ 
+ 
+ #endif /* ifndef */
++
++#endif /* (TAO_HAS_RT_CORBA == 1) */
