@@ -44,8 +44,7 @@ Wed Oct  9 09:28:28 2002  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS):
 
 	  Due to popular demand and broken builds, temporarily removed the
-	  four Event Logging Services from the list of ORB services to
-	  build. 
+	  four Logging Services from the list of ORB services to build.
 
 Tue Oct  8 16:28:05 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
