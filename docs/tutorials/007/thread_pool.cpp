@@ -24,7 +24,7 @@ Thread_Pool::Thread_Pool(void)
  */
 int Thread_Pool::open( int _pool_size )
 {
-  return this->activate(THR_NEW_LWP|THR_DETACHED,_pool_size);
+  return this->activate(THR_NEW_LWP,_pool_size);
 }
 
 /*
