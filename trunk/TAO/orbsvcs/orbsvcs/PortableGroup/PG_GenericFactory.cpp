@@ -3,6 +3,7 @@
 #include "PG_ObjectGroupManager.h"
 #include "PG_PropertyManager.h"
 #include "PG_Property_Utils.h"
+#include "PG_Group_Guard.h"
 #include "PG_conf.h"
 
 //#include "ace/Auto_Ptr.h"
@@ -26,7 +27,6 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
 
 TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
 {
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   TAO_PG_Factory_Map::iterator end = this->factory_map_.end ();
@@ -136,7 +136,14 @@ TAO_PG_GenericFactory::create_object (
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::ULong factory_infos_count =
+  TAO_PG_Factory_Set factory_set;
+
+  TAO_PG_Group_Guard group_guard (*this,
+                                  factory_set,
+                                  this->object_group_manager_,
+                                  oid.in ());
+
+  const CORBA::ULong factory_infos_count =
     (factory_infos == 0 ? 0 : factory_infos->length ());
 
   if (factory_infos_count > 0
@@ -147,7 +154,8 @@ TAO_PG_GenericFactory::create_object (
                                    oid.in (),
                                    type_id,
                                    *factory_infos,
-                                   initial_number_members
+                                   initial_number_members,
+                                   factory_set
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
@@ -178,6 +186,8 @@ TAO_PG_GenericFactory::create_object (
     this->next_fcid_++;
   }
 
+  group_guard.release ();
+
   return object_group._retn ();
 }
 
@@ -198,6 +208,8 @@ TAO_PG_GenericFactory::delete_object (
 
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
+      // If no entry exists in the factory map, infrastructure
+      // controlled membership was not used.
       TAO_PG_Factory_Map::ENTRY *entry = 0;
       if (this->factory_map_.find (fcid, entry) == 0)
         {
@@ -207,6 +219,9 @@ TAO_PG_GenericFactory::delete_object (
                                  0  /* Do not ignore exceptions */
                                  ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          if (this->factory_map_.unbind (fcid) != 0)
+            ACE_THROW (CORBA::INTERNAL ());
         }
     }
   else
@@ -232,6 +247,7 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
                                         ACE_ENV_ARG_DECL)
 {
   const size_t len = factory_set.size ();
+
   size_t ilen = len;
   for (size_t i = 0; i != len; ++i)
     {
@@ -287,16 +303,17 @@ TAO_PG_GenericFactory::poa (PortableServer::POA_ptr p)
 
 void
 TAO_PG_GenericFactory::populate_object_group (
-  CORBA::ULong fcid,
+  const CORBA::ULong fcid,
   PortableGroup::ObjectGroup_ptr object_group,
   const PortableServer::ObjectId & oid,
   const char * type_id,
   const PortableGroup::FactoryInfos & factory_infos,
-  const PortableGroup::InitialNumberMembersValue initial_number_members
+  const PortableGroup::InitialNumberMembersValue initial_number_members,
+  TAO_PG_Factory_Set & factory_set
   ACE_ENV_ARG_DECL)
 {
   CORBA::ULong factory_infos_count = factory_infos.length ();
-  TAO_PG_Factory_Set factory_set (factory_infos_count);
+  factory_set.size (factory_infos_count);
   for (CORBA::ULong j = 0; j < initial_number_members; ++j)
     {
       const PortableGroup::FactoryInfo &factory_info =
@@ -486,6 +503,9 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
+  const CORBA::ULong factory_infos_count =
+    (factory_infos == 0 ? 0 : factory_infos->length ());
+
   // InitialNumberMembers
   name[0].id =
     CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
@@ -499,9 +519,6 @@ TAO_PG_GenericFactory::process_criteria (
 
   if (membership_style == PortableGroup::MEMB_INF_CTRL)
     {
-      CORBA::ULong factory_infos_count =
-        (factory_infos == 0 ? 0 : factory_infos->length ());
-
       // If the number of factories is less than the initial number of
       // members or the desired number of initial members cannot
       // possibly be created.
@@ -533,7 +550,8 @@ TAO_PG_GenericFactory::process_criteria (
   //       check since the "name" and "value" variables have been
   //       changed.
   if (membership_style == PortableGroup::MEMB_INF_CTRL
-      && minimum_number_members < initial_number_members)
+      && (minimum_number_members < initial_number_members
+          || minimum_number_members > factory_infos_count))
     {
       unmet_criteria[uc].nam = name;
       unmet_criteria[uc++].val = value;
