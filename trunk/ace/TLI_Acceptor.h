@@ -28,7 +28,7 @@
 
 // Forward reference...
 class ACE_TLI_Request_Queue;
-class ACE_Time_Value
+class ACE_Time_Value;
 
 /**
  * @class ACE_TLI_Acceptor
