@@ -33,8 +33,8 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "netsvcs - Win32 Debug"
-MTL=mktyplib.exe
 RSC=rc.exe
+MTL=mktyplib.exe
 CPP=cl.exe
 
 !IF  "$(CFG)" == "netsvcs - Win32 Release"
@@ -305,6 +305,9 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -400,17 +403,23 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
@@ -524,6 +533,9 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
@@ -634,7 +646,10 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Message_Block.h"\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -651,6 +666,7 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
@@ -658,6 +674,10 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
@@ -801,6 +821,9 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -883,6 +906,8 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
@@ -899,17 +924,25 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -934,6 +967,10 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Time_Request_Reply.h"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -1035,6 +1072,9 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -1127,6 +1167,8 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
@@ -1143,17 +1185,25 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -1177,6 +1227,10 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\TLI.h"\
 	{$(INCLUDE)}"\ace\TLI.i"\
 	{$(INCLUDE)}"\ace\TLI_Acceptor.h"\
@@ -1348,9 +1402,7 @@ DEP_CPP_NAME_=\
 DEP_CPP_NAME_=\
 	"..\..\ace\config-win32.h"\
 	".\Name_Handler.h"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -1364,8 +1416,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
 	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
@@ -1375,11 +1425,8 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -1398,14 +1445,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
 	{$(INCLUDE)}"\ace\Name_Proxy.h"\
 	{$(INCLUDE)}"\ace\Name_Request_Reply.h"\
 	{$(INCLUDE)}"\ace\Name_Space.h"\
@@ -1421,8 +1460,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -1443,35 +1480,18 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
@@ -1479,8 +1499,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
-	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -1575,6 +1593,9 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -1688,7 +1709,10 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Message_Block.h"\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -1705,6 +1729,7 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
@@ -1712,6 +1737,10 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
