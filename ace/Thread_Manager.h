@@ -185,6 +185,9 @@ public:
   // <ACE_Task_Base> associated with this thread.;
 
 protected:
+  void reset (void);
+  // Reset this base thread descriptor.
+
   ACE_thread_t thr_id_;
   // Unique thread ID.
 
@@ -280,6 +283,9 @@ public:
   // of g++ couldn't grok this code without it.
 
 private:
+  void reset (ACE_Thread_Manager *tm);
+  // Reset this thread descriptor.
+
 #if !defined (ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   void at_pop (int apply = 1);
   // Pop an At_Thread_Exit from at thread termination list, apply the at

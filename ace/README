@@ -108,6 +108,11 @@ ACE_THREADS_DONT_INHERIT_LOG_MSG        Specify this if you don't want
                                         threads to inherit parent
                                         thread's ACE_Log_Msg
                                         properties.
+ACE_THREAD_MANAGER_USES_SAFE_SPAWN      Disable the "check before lock" feature
+                                        in ACE_Thread_Manager.  Defining this
+                                        macro avoids a potential race condition
+                                        on platforms with aggressive read/write
+                                        reordering.
 ACE_HAS_GNUG_PRE_2_8                    Compiling with g++ prior to
                                         version 2.8.0.
 ACE_HAS_ONE_DEFINITION_RULE             Compiler enforces C++ One

@@ -1,14 +1,46 @@
+Tue Feb 29 23:36:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/README:
+	* ace/Thread_Manager.h:
+	* ace/Thread_Manager.i:
+	* ace/Thread_Manager.cpp (append_thr): Moved thread descriptor
+	  reset statement into reset.
+
+	  (reset): Added reset methods to
+	  ACE_Thread_Descriptor and ACE_Thread_Descriptor_Base to reset
+	  Thread_Descriptor back to its initialized state.
+
+	  (ACE_Thread_Descriptor): Removed reset statements for
+	  cleanup_info_.  They are handle by ACE_Cleanup_Info's contructor
+	  already.
+
+	  (acquire_release): Added a macro
+	  ACE_THREAD_MANAGER_USES_SAFE_SPAWN to disable double-checked
+	  locking.  When this macro is defined, a spawned thread will
+	  always acquire the release the <sync_> lock before starting any
+	  other initialization.  This should avoid a potential race
+	  condition on some platforms (i.e., DEC Alpha, Marced) using
+	  aggressive read/write reordering strategies.
+
+	  (spawn_i): Call <reset> method on the "new" thread descriptor
+	  after acquiring a thread descriptor from the freelist.  This
+	  change moved most of the thread descriptor initialization code
+	  from append_thr into <reset>, before spawning the thread.
+
+	  Thanks to John Hickin <hickin@nortelnetworks.com> for motivating
+	  these changes.
+
 Tue Feb 29 21:18:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.cpp:
 
-          One more warning cleaned up from my get_temp_dir () change.  
+          One more warning cleaned up from my get_temp_dir () change.
           Hopefully the last (crossing my fingers).
 
         * ace/ace_dll.dsp:
         * ace/ace_lib.dsp:
 
-          Missing some header files, thanks to Andres Kruse 
+          Missing some header files, thanks to Andres Kruse
           <andres.kruse@creaturelabs.com> for noticing.
 
         * ace/OS.h:
@@ -16,8 +48,8 @@ Tue Feb 29 21:18:12 2000  Darrell Brunsch <brunsch@uci.edu>
           Even when ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS was not defined,
           ACE_SEH_TRY and family was still being defined to the seh
           commands (like __try) on Win32.  When the above macro is not
-          defined, they are now noops.  Thanks to Natarajan Kalpathy 
-          <Natarajan_Kalpathy@mw.3com.com> for reporting this.  
+          defined, they are now noops.  Thanks to Natarajan Kalpathy
+          <Natarajan_Kalpathy@mw.3com.com> for reporting this.
 
 Tue Feb 29 16:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
