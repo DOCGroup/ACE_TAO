@@ -52,18 +52,21 @@ JAWS_Default_Dispatch_Policy::concurrency (void)
 }
 
 void
-JAWS_Default_Dispatch_Policy::io (JAWS_IO *)
+JAWS_Default_Dispatch_Policy::io (JAWS_IO *io)
 {
+  this->io_ = io;
 }
 
 void
-JAWS_Default_Dispatch_Policy::ioh_factory (JAWS_IO_Handler_Factory *)
+JAWS_Default_Dispatch_Policy::ioh_factory (JAWS_IO_Handler_Factory *iohf)
 {
+  this->ioh_factory_ = iohf;
 }
 
 void
-JAWS_Default_Dispatch_Policy::acceptor (JAWS_IO_Acceptor *)
+JAWS_Default_Dispatch_Policy::acceptor (JAWS_IO_Acceptor *acceptor)
 {
+  this->acceptor_ = acceptor;
 }
 
 void
