@@ -12,6 +12,7 @@ DIRS  =	benchmark \
 	mpeg \
 	server_discovery \
 	sfp \
+	Latency \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -1124,112 +1124,164 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       TAO_AV_QoS qos (stream_qos);
       // Now go thru the list of flow endpoint and match them.
       // uses the first match policy.
-      FlowEndPoint_Map_Iterator a_feps_iterator (*map_a), b_feps_iterator (*map_b);
+      FlowEndPoint_Map_Iterator a_feps_iterator (*map_a);
       FlowEndPoint_Map_Entry *a_feps_entry, *b_feps_entry;
       ACE_TRY_EX (flow_connect)
         {
 
-          for (;a_feps_iterator.next (a_feps_entry) != 0;a_feps_iterator.advance ())
+          for (;a_feps_iterator.next (a_feps_entry) != 0;
+               a_feps_iterator.advance ())
             {
-              for (;b_feps_iterator.next (b_feps_entry) != 0; b_feps_iterator.advance ())
+              AVStreams::FlowEndPoint_ptr fep_a = a_feps_entry->int_id_;
+              AVStreams::FlowEndPoint_var connected_to =
+                fep_a->get_connected_fep (ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX (flow_connect);
+
+              if (!CORBA::is_nil (connected_to.in ()))
                 {
-                  AVStreams::FlowEndPoint_ptr fep_a = a_feps_entry->int_id_;
+                  // Skip this one, it is already connected...
+                  continue;
+                }
+
+              FlowEndPoint_Map_Iterator b_feps_iterator (*map_b);
+              for (;b_feps_iterator.next (b_feps_entry) != 0;
+                   b_feps_iterator.advance ())
+                {
                   AVStreams::FlowEndPoint_ptr fep_b = b_feps_entry->int_id_;
                   AVStreams::FlowConnection_var flow_connection;
-                  if (CORBA::is_nil (fep_b->get_connected_fep ()))
+                  
+                  AVStreams::FlowEndPoint_var connected_to =
+                    fep_b->get_connected_fep (ACE_TRY_ENV);
+                  ACE_TRY_CHECK_EX (flow_connect);
+
+                  if (!CORBA::is_nil (connected_to.in ()))
                     {
-                      if (fep_a->is_fep_compatible (fep_b,
-                                                    ACE_TRY_ENV) == 1)
+                      // Skip this one, it is already connected...
+                      continue;
+                    }
+
+                  if (fep_a->is_fep_compatible (fep_b,
+                                                ACE_TRY_ENV) == 1)
+                    {
+                      ACE_TRY_CHECK_EX (flow_connect);
+                      // assume that flow names are same so that we
+                      // can use either of them.
+                      CORBA::Object_var flow_connection_obj;
+                      CORBA::Any_var flowname_any =
+                        fep_a->get_property_value ("Flow",
+                                                   ACE_TRY_ENV);
+                      ACE_TRY_CHECK_EX (flow_connect);
+                      char *flowname = 0;
+                      flowname_any.in () >>= flowname;
+                      ACE_TRY_EX (flow_connection)
                         {
+                          flow_connection_obj =
+                            this->get_flow_connection (flowname,
+                                                       ACE_TRY_ENV);
+                          ACE_TRY_CHECK_EX (flow_connection);
+                          flow_connection =
+                            AVStreams::FlowConnection::_narrow (flow_connection_obj.in (),
+                                                                ACE_TRY_ENV);
+                          ACE_TRY_CHECK_EX (flow_connection);
+                        }
+                      ACE_CATCHANY
+                        {
+                          TAO_FlowConnection *flowConnection;
+                          ACE_NEW_RETURN (flowConnection,
+                                          TAO_FlowConnection,
+                                          0);
+                          flow_connection = flowConnection->_this (ACE_TRY_ENV);
                           ACE_TRY_CHECK_EX (flow_connect);
-                          // assume that flow names are same so that we
-                          // can use either of them.
-                          CORBA::Object_var flow_connection_obj;
-                          CORBA::Any_var flowname_any = fep_a->get_property_value ("Flow",
-                                                                                   ACE_TRY_ENV);
-                          ACE_TRY_CHECK_EX (flow_connect);
-                          char *flowname = 0;
-                          flowname_any.in () >>= flowname;
-                          ACE_TRY_EX (flow_connection)
-                            {
-                              flow_connection_obj =
-                              this->get_flow_connection (flowname,
-                                                         ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (flow_connection);
-                              flow_connection = AVStreams::FlowConnection::_narrow (flow_connection_obj.in (),
-                                                                                    ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (flow_connection);
-                            }
-                          ACE_CATCHANY
-                            {
-                              TAO_FlowConnection *flowConnection;
-                              ACE_NEW_RETURN (flowConnection,
-                                              TAO_FlowConnection,
-                                              0);
-                              flow_connection = flowConnection->_this (ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (flow_connect);
-                              this->set_flow_connection (flowname,
-                                                         flow_connection.in (),
-                                                         ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (flow_connect);
-                            }
-                          ACE_ENDTRY;
-                          ACE_CHECK_RETURN (0);
-
-                          // make sure that a_feps is flow_producer and b_feps is flow_consumer
-                          // There should be a way to find which flow endpoint is producer and which is consumer.
-                          AVStreams::FlowProducer_var producer = AVStreams::FlowProducer::_nil ();
-                          AVStreams::FlowConsumer_var consumer = AVStreams::FlowConsumer::_nil ();
-
-                          ACE_TRY_EX (producer_check)
-                            {
-                              producer = AVStreams::FlowProducer::_narrow (fep_a,ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (producer_check);
-                              consumer =
-                                AVStreams::FlowConsumer::_narrow (fep_b,ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (producer_check);
-                            }
-                          ACE_CATCHANY
-                            {
-                              producer = AVStreams::FlowProducer::_narrow (fep_b,ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (flow_connect);
-                              consumer = AVStreams::FlowConsumer::_narrow (fep_a,ACE_TRY_ENV);
-                              ACE_TRY_CHECK_EX (flow_connect);
-                            }
-                          ACE_ENDTRY;
-                          ACE_CHECK_RETURN (0);
-                          CORBA::String_var fep_a_name,fep_b_name;
-                          CORBA::String temp_name;
-                          flowname_any = fep_a->get_property_value ("FlowName",ACE_TRY_ENV);
-                          flowname_any.in () >>= temp_name;
-                          fep_a_name = CORBA::string_dup (temp_name);
-                          flowname_any = fep_b->get_property_value ("FlowName",ACE_TRY_ENV);
-                          flowname_any.in () >>= temp_name;
-                          fep_b_name = CORBA::string_dup (temp_name);
-                          AVStreams::QoS flow_qos;
-                          flow_qos.QoSType = fep_a_name;
-                          flow_qos.QoSParams.length (0);
-                          result = qos.get_flow_qos (fep_a_name.in (),flow_qos);
-                          if (result == -1)
-                            {
-                              flow_qos.QoSType = fep_b_name;
-                              result = qos.get_flow_qos (fep_b_name.in (),flow_qos);
-                              if (result == -1)
-                                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"No QoS Specified for this flow"));
-                            }
-                          flow_connection->connect (producer.in (),
-                                                    consumer.in (),
-                                                    flow_qos,
-                                                    ACE_TRY_ENV);
+                          this->set_flow_connection (flowname,
+                                                     flow_connection.in (),
+                                                     ACE_TRY_ENV);
                           ACE_TRY_CHECK_EX (flow_connect);
                         }
+                      ACE_ENDTRY;
+                      ACE_CHECK_RETURN (0);
+
+                      // make sure that a_feps is flow_producer
+                      // and b_feps is flow_consumer 
+                      // There should be a way to find which flow
+                      // endpoint is producer and which is
+                      // consumer.
+
+                      AVStreams::FlowProducer_var producer;
+                      AVStreams::FlowConsumer_var consumer;
+
+                      ACE_TRY_EX (producer_check)
+                        {
+                          producer =
+                            AVStreams::FlowProducer::_narrow (fep_a,
+                                                              ACE_TRY_ENV);
+                          ACE_TRY_CHECK_EX (producer_check);
+                          consumer =
+                            AVStreams::FlowConsumer::_narrow (fep_b,
+                                                              ACE_TRY_ENV);
+                          ACE_TRY_CHECK_EX (producer_check);
+
+                          // If the types don't match then try in
+                          // the opposite order
+                          if (CORBA::is_nil (producer.in ()))
+                            {
+                              producer =
+                                AVStreams::FlowProducer::_narrow (fep_b,
+                                                                  ACE_TRY_ENV);
+                              ACE_TRY_CHECK_EX (producer_check);
+                              consumer =
+                                AVStreams::FlowConsumer::_narrow (fep_a,
+                                                                  ACE_TRY_ENV);
+                              ACE_TRY_CHECK_EX (producer_check);
+                            }
+                          // At this point they should both be
+                          // non-nil
+                          // @@ raise an exception (which one?) if 
+                          // this is not true...
+                          ACE_ASSERT (!CORBA::is_nil (producer.in ()));
+                          ACE_ASSERT (!CORBA::is_nil (consumer.in ()));
+                        }
+                      ACE_CATCHANY
+                        {
+                          ACE_RETHROW;
+                        }
+                      ACE_ENDTRY;
+                      ACE_CHECK_RETURN (0);
+                      CORBA::String_var fep_a_name,fep_b_name;
+                      CORBA::String temp_name;
+                      flowname_any = fep_a->get_property_value ("FlowName",
+                                                                ACE_TRY_ENV);
+                      flowname_any.in () >>= temp_name;
+                      fep_a_name = CORBA::string_dup (temp_name);
+                      flowname_any = fep_b->get_property_value ("FlowName",
+                                                                ACE_TRY_ENV);
+                      flowname_any.in () >>= temp_name;
+                      fep_b_name = CORBA::string_dup (temp_name);
+                      AVStreams::QoS flow_qos;
+                      flow_qos.QoSType = fep_a_name;
+                      flow_qos.QoSParams.length (0);
+                      result = qos.get_flow_qos (fep_a_name.in (),flow_qos);
+                      if (result == -1)
+                        {
+                          flow_qos.QoSType = fep_b_name;
+                          result = qos.get_flow_qos (fep_b_name.in (),
+                                                     flow_qos);
+                          if (result == -1 && TAO_debug_level > 0)
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "No QoS Specified for this flow <%s>\n", flowname));
+                        }
+                      flow_connection->connect (producer.in (),
+                                                consumer.in (),
+                                                flow_qos,
+                                                ACE_TRY_ENV);
+                      ACE_TRY_CHECK_EX (flow_connect);
                     }
                 }
             }
         }
       ACE_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_StreamCtrl::bind:flow_connect block");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "TAO_StreamCtrl::bind:flow_connect block");
           return 0;
         }
       ACE_ENDTRY;
@@ -2898,7 +2950,8 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                                                     the_vdev,
                                                     ACE_TRY_ENV) == -1)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%P|%t) Error in create_A\n"),
+                                 "TAO_MMDevice::create_A_B (%P|%t) - "
+                                 "error in create_A\n"),
                                 0);
             sep = sep_a;
           }
@@ -2909,7 +2962,8 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                                                     the_vdev,
                                                     ACE_TRY_ENV) == -1)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%P|%t) Error in create_A\n"),
+                                 "TAO_MMDevice::create_A_B (%P|%t) - "
+                                 "error in create_B\n"),
                                 0);
             sep = sep_b;
           }
@@ -3945,7 +3999,7 @@ TAO_FlowEndPoint::get_connected_fep (CORBA::Environment &)
                    AVStreams::notConnected,
                    AVStreams::notSupported))
 {
-  return this->peer_fep_.in ();
+  return AVStreams::FlowEndPoint::_duplicate (this->peer_fep_.in ());
 }
 
 CORBA::Boolean
@@ -4076,6 +4130,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
                    AVStreams::formatMismatch,
                    AVStreams::deviceQosMismatch))
 {
+  const char *exception_message = "";
   ACE_TRY
     {
       // check whether the passed flowendpoint is compatible with this flowendpoint.
@@ -4084,12 +4139,15 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
       CORBA::Any_var format_ptr;
       CORBA::String_var my_format,peer_format;
       CORBA::String temp_format;
+
+      exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format";
       format_ptr = this->get_property_value ("Format",
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
       format_ptr.in () >>= temp_format;
       my_format = CORBA::string_dup (temp_format);
       // get my peer's format value
+      exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format[2]";
       format_ptr = peer_fep->get_property_value ("Format",
                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -4103,11 +4161,17 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
       CORBA::Any_var AvailableProtocols_ptr;
       AVStreams::protocolSpec my_protocol_spec,peer_protocol_spec;
       AVStreams::protocolSpec_ptr temp_protocols;;
+
+      exception_message =
+        "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols";
       AvailableProtocols_ptr = this->get_property_value ("AvailableProtocols",
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
       AvailableProtocols_ptr.in () >>= temp_protocols;
       my_protocol_spec = *temp_protocols;
+
+      exception_message =
+        "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols[2]";
       AvailableProtocols_ptr = peer_fep->get_property_value ("AvailableProtocols",
                                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -4135,9 +4199,15 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
       if (!protocol_match)
         return 0;
     }
+  ACE_CATCH (CosPropertyService::PropertyNotFound, nf)
+    {
+      ACE_PRINT_EXCEPTION (nf,
+                           exception_message);
+    }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_FlowEndPoint::is_fep_compatible");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "TAO_FlowEndPoint::is_fep_compatible");
       return 0;
     }
   ACE_ENDTRY;
@@ -4154,7 +4224,8 @@ TAO_FlowEndPoint::set_peer (AVStreams::FlowConnection_ptr /* the_fc */,
                    AVStreams::QoSRequestFailed,
                    AVStreams::streamOpFailed))
 {
-  this->peer_fep_ = the_peer_fep;
+  this->peer_fep_ =
+    AVStreams::FlowEndPoint::_duplicate (the_peer_fep);
   return 1;
 }
 
