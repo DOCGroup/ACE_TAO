@@ -230,10 +230,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   for (size_t ai = 0;
        ai < this->aiocb_list_max_size_;
        ai++)
-    {
-      aiocb_list_[ai] = 0;
-      result_list_[ai] = 0;
-    }
+    aiocb_list_[ai] = 0;
   ACE_UNUSED_ARG (tq);
 #else /* ACE_HAS_AIO_CALLS */
   // create the completion port
@@ -594,7 +591,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   timeout.tv_sec = milli_seconds;
   timeout.tv_nsec = 0;
 
-  // Alex, I think we want to revise this implementation so that it
+  // @@ Alex, I think we want to revise this implementation so that it
   // DOESN'T need to use aio_suspend, which is going to be
   // non-scalable since we need to search the aiocb_list...  Instead,
   // we need to use the sigtimedwait(3R) in conjunction with the POSIX
@@ -602,7 +599,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   // Let's talk about how to make this work.
   if (aio_suspend (this->aiocb_list_,
                    this->aiocb_list_max_size_,
-                   &timeout) < 0)
+                   &timeout) == -1)
     // If failure is coz of timeout, then return *0* but set errno
     // appropriately. This is what the WinNT proactor does.
     if (errno ==  EAGAIN)
@@ -616,13 +613,12 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 
   // Check which aio has finished.
   size_t ai;
-
+  ssize_t nbytes = 0;
   for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
     // Analyze error and return values.
     if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
       {
-        // @@ Alex, should this be == -1 or < 0?
-        if (aio_return (aiocb_list_[ai]) < 0)
+        if ((nbytes = aio_return (aiocb_list_[ai])) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%p):AIO failed"),
                             -1);
@@ -640,24 +636,26 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
     return 0;
 
   // Get the values for the completed aio.
-  size_t bytes_transferred = aiocb_list_[ai]->aio_nbytes;
 
-  void *completion_key =
-    (void *) aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
+  // Bytes transfered is what the aio_return gives back.
+  size_t bytes_transferred = nbytes;
 
+  //@@
+  void *completion_key = 0;
+
+  // Retrive the result pointer.
   ACE_Asynch_Result *asynch_result =
-    this->result_list_[ai];
+    (ACE_Asynch_Result *) aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
 
   // Invalidate entry in the aiocb list.
   delete this->aiocb_list_[ai];
   this->aiocb_list_[ai] = 0;
   this->aiocb_list_cur_size_--;
-  this->result_list_[ai] = 0;
 
   // Call the application code.
   this->application_specific_code (asynch_result,
                                    bytes_transferred,
-                                   ACE_TRUE,
+                                   1,
                                    completion_key,
                                    0);
 
@@ -837,8 +835,7 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 
 #if defined (ACE_HAS_AIO_CALLS)
 int
-ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr,
-                                    ACE_Asynch_Result *result)
+ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr)
 {
   // Is there any place?
   if (this->aiocb_list_cur_size_ >= this->aiocb_list_max_size_)
@@ -857,7 +854,6 @@ ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr,
 
   // Store the pointers.
   this->aiocb_list_[ai] = aiocb_ptr;
-  this->result_list_[ai] = result;
   this->aiocb_list_cur_size_ ++;
   return 0;
 }
