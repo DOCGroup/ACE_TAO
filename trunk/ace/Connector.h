@@ -142,16 +142,6 @@ public:
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
-
-  virtual int connect (SVC_HANDLER *&svc_handler,
-                       SVC_HANDLER *&sh_copy,
-                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-                       const ACE_PEER_CONNECTOR_ADDR &local_addr
-                         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
-                       int reuse_addr = 0,
-                       int flags = O_RDWR,
-                       int perms = 0);
   // Initiate connection of <svc_handler> to peer at <remote_addr>
   // using <synch_options>.  If the caller wants to designate the
   // selected <local_addr> they can (and can also insist that the
@@ -159,6 +149,22 @@ public:
   // 1). <flags> and <perms> can be used to pass any flags that are
   // needed to perform specific operations such as opening a file
   // within connect with certain permissions.
+
+  virtual int connect (SVC_HANDLER *&svc_handler_hint,
+                       SVC_HANDLER *&svc_handler,
+                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+                       const ACE_PEER_CONNECTOR_ADDR &local_addr
+                         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       int reuse_addr = 0,
+                       int flags = O_RDWR,
+                       int perms = 0);
+  // A variation on the previous connect(), on cached connectors the
+  // <svc_handler_hint> variable can be used as a hint for future
+  // lookups. Since this variable is modified in the context of the
+  // internal cache its use is thread-safe.  But the actual
+  // svc_handler for the current connection is returned in the second
+  // parameter <svc_handler>.
 
   virtual int connect_n (size_t n,
                          SVC_HANDLER *svc_handlers[],

@@ -1,3 +1,8 @@
+Tue Jun  1 15:02:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Connector.h:
+	  Documented the new connect() method
+
 Tue Jun 01 11:18:03 1999    <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_end_event_loop.cpp:
