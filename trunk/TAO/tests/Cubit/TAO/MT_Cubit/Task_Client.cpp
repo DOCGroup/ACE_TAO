@@ -3,43 +3,46 @@
 #include "Task_Client.h"
 #include "ace/Stats.h"
 
+#include "cubit_i.h"
+
 #if defined (NO_ACE_QUANTIFY)
 #include "quantify.h"
 #endif /* NO_ACE_QUANTIFY */
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
-  Task_State::Task_State (int argc, char **argv)
-    : key_ ("Cubit"),
-      loop_count_ (1000),
-      thread_count_ (2),
-      datatype_ (CB_OCTET),
-      argc_ (argc),
-      argv_ (argv),
-      thread_per_rate_ (0),
-      global_jitter_array_ (0),
-      shutdown_ (0),
-      oneway_ (0),
-      use_name_service_ (1),
-      one_to_n_test_ (0),
-      context_switch_test_ (0),
-      ior_file_ (0),
-      granularity_ (1),
-      use_utilization_test_ (0),
-      high_priority_loop_count_ (0),
-      use_multiple_priority_ (0),
-      utilization_task_started_ (0),
-      run_server_utilization_test_ (0),
-      util_time_ (0),
-      ready_ (0),
-      ready_cnd_ (ready_mtx_)
+Task_State::Task_State (int argc, char **argv)
+  : key_ ("Cubit"),
+    loop_count_ (1000),
+    thread_count_ (2),
+    datatype_ (CB_OCTET),
+    argc_ (argc),
+    argv_ (argv),
+    thread_per_rate_ (0),
+    global_jitter_array_ (0),
+    shutdown_ (0),
+    oneway_ (0),
+    use_name_service_ (1),
+    one_to_n_test_ (0),
+    context_switch_test_ (0),
+    ior_file_ (0),
+    granularity_ (1),
+    use_utilization_test_ (0),
+    high_priority_loop_count_ (0),
+    use_multiple_priority_ (0),
+    utilization_task_started_ (0),
+    util_time_ (0),
+    ready_ (0),
+    ready_cnd_ (ready_mtx_),
+    remote_invocations_ (1),
+    util_test_time_ (0)
 {
 }
 
 int
 Task_State::parse_args (int argc,char **argv)
 {
-  ACE_Get_Opt opts (argc, argv, "U:mu:sn:t:d:rxof:g:1c");
+  ACE_Get_Opt opts (argc, argv, "U:mu:sn:t:d:rxof:g:1cl");
   int c;
   int datatype;
 
@@ -50,9 +53,8 @@ Task_State::parse_args (int argc,char **argv)
       if (granularity_ < 1)
         granularity_ = 1;
       break;
-    case 'U':
-      run_server_utilization_test_ = 1;
-      util_time_ = ACE_OS::atoi (opts.optarg);
+    case 'l':
+      remote_invocations_ = 0;
       break;
     case 'c':
       context_switch_test_ = 1;
@@ -62,7 +64,7 @@ Task_State::parse_args (int argc,char **argv)
       break;
     case 'u':
       use_utilization_test_ = 1;
-      util_time_ = ACE_OS::atoi (opts.optarg);
+      loop_count_ = util_time_ = ACE_OS::atoi (opts.optarg);
       break;
     case 's':
       use_name_service_ = 0;
@@ -127,16 +129,10 @@ Task_State::parse_args (int argc,char **argv)
   if (thread_per_rate_ == 1)
     thread_count_ = 4;
 
-  if (run_server_utilization_test_ == 1)
-    {
-      shutdown_ = 1;
-      thread_count_ = 1;
-      datatype_ = CB_OCTET;
-    }
-
   if (use_utilization_test_ == 1)
     {
       thread_count_ = 1;
+      shutdown_ = 1;
     }
 
   // allocate the array of character pointers.
@@ -437,12 +433,14 @@ Client::svc (void)
       env.print_exception ("ORB_init()\n");
       return -1;
     }
+ACE_DEBUG ((LM_DEBUG, "in svc() ts_->one_ior_ = \"%s\"\n", ts_->one_ior_));
 
   if (this->id_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
       int result;
       result = this->ts_->parse_args (argc,argv);
+ACE_DEBUG ((LM_DEBUG, "in svc(), AFTER parse_args()  ts_->one_ior_ = \"%s\"\n", ts_->one_ior_));
       if (result < 0)
         return -1;
       ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
@@ -584,9 +582,11 @@ Client::svc (void)
               }
           }
 
+ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", ts_->one_ior_, this->id_, naming_success));
+
         if (naming_success == CORBA::B_FALSE)
           {
-            char *my_ior = ts_->iors_[this->id_];
+            char *my_ior = ts_->use_utilization_test_ == 1? ts_->one_ior_ : ts_->iors_[this->id_];
 
             // if we are running the "1 to n" test make sure all low
             // priority clients use only 1 low priority servant.
@@ -710,6 +710,7 @@ Client::run_tests (Cubit_ptr cb,
                    Cubit_Datatypes datatype,
                    double frequency)
 {
+  Cubit_i cb_impl;
   CORBA::Environment env;
   u_int i = 0;
   u_int call_count = 0;
@@ -750,9 +751,15 @@ Client::run_tests (Cubit_ptr cb,
 
   ACE_High_Res_Timer timer_;
 
+  // Elapsed time will be in microseconds.
+  ACE_Time_Value delta_t;
+
+  if (ts_->use_utilization_test_ == 1)
+    timer_.start ();
+
   // Make the calls in a loop.
 
-  //  ACE_DEBUG((LM_DEBUG,"(%P|%t)loop_count:%d",loop_count));
+  ACE_DEBUG((LM_DEBUG,"(%P|%t)loop_count:%d",loop_count));
   for (i = 0;
        // keep running for loop count, OR
        i < loop_count ||
@@ -761,20 +768,12 @@ Client::run_tests (Cubit_ptr cb,
          (id_ == 0 && ts_->thread_count_ > 1) ||
          // keep running if test is thread_per_rate and we're not the
          // lowest frequency thread.
-         (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)) ||
-         // continous loop if we are running the utilization test
-         (ts_->use_utilization_test_ == 1) ||
-         // continous loop if we are running the SERVER utilization test
-         (ts_->run_server_utilization_test_ == 1);
+         (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1));
        i++)
     {
-      // Elapsed time will be in microseconds.
-      ACE_Time_Value delta_t;
-
       // start timing a call
       if ( (i % ts_->granularity_) == 0 &&
-           (ts_->use_utilization_test_ == 0) &&
-           (ts_->run_server_utilization_test_ == 0)
+           (ts_->use_utilization_test_ == 0) 
            )
         {
           // delay a sufficient amount of time to be able to enforce
@@ -784,7 +783,6 @@ Client::run_tests (Cubit_ptr cb,
                                        ? 0
                                        : (sleep_time - delta)));
           ACE_OS::sleep (tv);
-
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
@@ -806,7 +804,10 @@ Client::run_tests (Cubit_ptr cb,
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
 #endif /* NO_ACE_QUANTIFY */
-                ret_octet = cb->cube_octet (arg_octet, env);
+		if (ts_->remote_invocations_ == 1)
+		  ret_octet = cb->cube_octet (arg_octet, env);
+		else
+		  ret_octet = cb_impl.cube_octet (arg_octet, env);
 
 #if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
@@ -986,8 +987,7 @@ Client::run_tests (Cubit_ptr cb,
 
       // stop the timer
       if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) &&
-           (ts_->use_utilization_test_ == 0) &&
-           (ts_->run_server_utilization_test_ == 0)
+           (ts_->use_utilization_test_ == 0) 
            )
         {
 #if defined (CHORUS)
@@ -1075,27 +1075,23 @@ Client::run_tests (Cubit_ptr cb,
               }
           }
 
-      if (ts_->use_utilization_test_ == 1 ||
-          ts_->run_server_utilization_test_ == 1)
-        {
-          countdown.update ();
-          if (max_wait_time == ACE_Time_Value::zero)
-            {
-              ts_->loop_count_ = call_count;
-              break;
-            }
-        }
-
     } /* end of for () */
 
   if (id_ == 0)
     ts_->high_priority_loop_count_ = call_count;
 
+  if (ts_->use_utilization_test_ == 1)
+    {
+      timer_.stop ();
+      timer_.elapsed_time (delta_t);
+      ts_->util_test_time_ = ((double) delta_t.sec () +
+			      (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
+    }
+
   // perform latency stats onlt if we are not running the utilization
   // tests.
   if (call_count > 0 &&
-      (ts_->use_utilization_test_ == 0) &&
-      (ts_->run_server_utilization_test_ == 0)
+      (ts_->use_utilization_test_ == 0) 
       )
     {
       if (error_count == 0)

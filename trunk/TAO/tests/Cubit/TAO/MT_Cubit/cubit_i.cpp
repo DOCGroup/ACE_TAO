@@ -5,9 +5,7 @@
 
 ACE_RCSID(MT_Cubit, cubit_i, "$Id$")
 
-Cubit_i::Cubit_i (Task_State *ts)
-  :ts_ (ts),
-   util_started_ (0)
+Cubit_i::Cubit_i (void)
 {
 }
 
@@ -19,16 +17,6 @@ CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o,
                      CORBA::Environment &)
 {
-  if (ts_->run_server_utilization_test_ == 1 && 
-      ts_->utilization_task_started_ == 0 && 
-      this->util_started_ == 0 )
-    {
-      this->util_started_ = 1;
-      ts_->barrier_->wait ();
-    }
-  
-  ts_->loop_count_++;
-
   return (CORBA::Octet) (o * o * o);
 }
 
@@ -70,7 +58,4 @@ void Cubit_i::shutdown (CORBA::Environment &)
 	      "(%t) Calling TAO_ORB_Core_instance ()->orb ()->shutdown ()\n"));
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
-
-  // this is to signal the utilization thread to exit its loop.
-  ts_->utilization_task_started_ = 0;
 }

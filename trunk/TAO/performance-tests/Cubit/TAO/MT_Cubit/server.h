@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#if !defined (SERVER_H)
+#define SERVER_H
 // ============================================================================
 //
 // = LIBRARY
@@ -37,6 +39,7 @@
 #include "cubit_i.h"
 #include "Task_Client.h"
 #include "Util_Thread.h"
+#include "Globals.h"
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
@@ -54,36 +57,6 @@ public:
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
 
-class Globals
-{
-public:
-  Globals (void);
-  int parse_args (int argc, char **argv);
-  char hostname[BUFSIZ];
-  char *ior_file;
-  int base_port;
-  u_int num_of_objs;
-  u_int use_name_service;
-  u_int thread_per_rate;
-  u_int use_multiple_priority;
-  u_int run_utilization_test;
-  int ready_;
-  // ready flag used by the high priority thread to wake up the low
-  // priority threads after it's parsed the arguments.
-
-  ACE_SYNCH_MUTEX ready_mtx_;
-  // mutex for the condition variable.
-
-  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
-  // condition variable for the low priority threads to wait 
-  //until the high priority thread is done with the arguments parsing.
-  
-  ACE_Barrier *barrier_;
-  // Barrier for the multiple clients to synchronize after binding to
-  // the servants.
-
-};
-
 typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
 
 class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -94,7 +67,6 @@ public:
   Cubit_Task (const char *args,
               const char* orbname,
               u_int num_of_objs,
-	      Task_State *ts,
 	      ACE_Thread_Manager *thr_mgr,
 	      u_int task_id);
   // Constructor.
@@ -145,9 +117,6 @@ private:
   CosNaming::NamingContext_var mt_cubit_context_;
   // context where all MT Cubit objects will be created.
 
-  Task_State *ts_;
-  // state for the utilization thread to synchronize with the servants.
-
   TAO_ORB_Manager orb_manager_;
   // The TAO ORB Manager
 
@@ -162,9 +131,16 @@ class Server
 public:
   // default constructor
   int initialize (int argc, char **argv);
-  int start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts);
-  Util_Thread * start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts);
+  int start_servants (ACE_Thread_Manager *serv_thr_mgr);
 private:
   int argc_;
   char **argv_;
 };
+#endif /* SERVER_H */
+
+
+
+
+
+
+

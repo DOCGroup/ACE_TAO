@@ -38,8 +38,6 @@ Util_Thread::svc (void)
               "(%t) )))))))) "
               "utilization test STARTED at %D\n"));
 
-  this->ts_->utilization_task_started_ = 1;
-
   this->ts_->timer_.start ();
 
   this->run_computations ();
@@ -96,9 +94,6 @@ Util_Thread::run_computations (void)
       this->number_of_computations_ ++;
       //            ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
                             // if it really helps.
-
-      if (ts_->utilization_task_started_ == 0)
-	break;
     }
 
   return 0;
