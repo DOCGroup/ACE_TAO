@@ -3,7 +3,7 @@
 
 // ============================================================================
 //
-// = LIBRARY 
+// = LIBRARY
 //    ace
 //
 // = FILENAME
@@ -13,6 +13,7 @@
 //    Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 // ============================================================================
+
 #ifndef OPTIMAL_CACHE_MAP_MANAGER_T_H
 #define OPTIMAL_CACHE_MAP_MANAGER_T_H
 
@@ -27,55 +28,62 @@
 
 // Forward declaration.
 class ACE_Allocator;
+
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY>
 class ACE_Optimal_Cache_Map_Iterator;
+
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY>
 class ACE_Optimal_Cache_Map_Reverse_Iterator;
+
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY>
 class ACE_Optimal_Cache_Map_Manager
-{ 
+{
   // = TITLE
-  //     Defines a abstraction which will take care of caching of a map.
+  //     Defines a abstraction which will purge entries from a map.
   //     The map considered is the ACE_Hash_Map_Manager.
   //
   // = DESCRIPTION
-  //     The Optimal_Cache_Map_Manager will prepare the map given into its
-  //     custody for purging on demand. The strategy for caching is
-  //     decided by the developer and provided to the Cache Manager
-  //     who acts as a agent and communicates between the Map and the
-  //     Strategy for purging entries from the map.
-  //     To tap the optimal methods like find (key, value, entry) present
-  //     in the ACE_Hash_Map_Manager, it is used as the default map.
+
+  //     The Optimal_Cache_Map_Manager will manage the map it contains
+  //     and provide purging on demand from the map. The strategy for
+  //     caching is decided by the user and provided to the Cache
+  //     Manager.  The Cache Manager acts as a agent and communicates
+  //     between the Map and the Strategy for purging entries from the
+  //     map.  To tap the optimal methods like find(key,value,entry)
+  //     present in the ACE_Hash_Map_Manager,
+  //     Optimal_Cache_Map_Manager provides extra functionality on top
+  //     of the Cache_Map_Manager.
   //
-  //     No locking mechanism provided since locking at this level isnt efficient.
-  //     Locking has to be provided by the application.
-public:  
-  
+  //     No locking mechanism provided since locking at this level
+  //     isnt efficient.  Locking has to be provided by the
+  //     application.
+public:
+
   // = Traits.
   typedef KEY key_type;
   typedef VALUE mapped_type;
-  
+
   typedef ACE_TYPENAME CACHING_STRATEGY::ATTRIBUTES ATTRIBUTES;
   typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-  // The actual value mapped to the key in the cache. The <attributes>
-  // are used by the strategy and is transperant to the cache user.
+  // The actual value mapped to the key in the map. The <attributes>
+  // are used by the strategy and is transparent to the user of this
+  // class.
 
-  typedef ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> MAP;
-  typedef ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> >  CACHE_ENTRY;
-  
+  typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> MAP;
+  typedef ACE_Hash_Map_Entry<KEY, CACHE_VALUE> CACHE_ENTRY;
+
   friend class ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY>;
   friend class ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Optimal_Cache_Map_Iterator<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> ITERATOR;
-  typedef ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE,  HASH_KEY, COMPARE_KEYS,  CACHING_STRATEGY> REVERSE_ITERATOR;
+  typedef ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> ITERATOR;
+  typedef ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> REVERSE_ITERATOR;
 
    // = STL-style iterator typedefs.
-  typedef ACE_Optimal_Cache_Map_Iterator<KEY, VALUE,  HASH_KEY, COMPARE_KEYS,  CACHING_STRATEGY> iterator;
-  typedef ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE,  HASH_KEY, COMPARE_KEYS,  CACHING_STRATEGY> reverse_iterator; 
+  typedef ITERATOR iterator;
+  typedef REVERSE_ITERATOR reverse_iterator;
 
   // = Initialization and termination methods.
-
   ACE_Optimal_Cache_Map_Manager (ACE_Allocator *alloc = 0,
                                  ATTRIBUTES attributes = 0,
                                  int purge_percent = 10);
@@ -90,15 +98,15 @@ public:
   ~ACE_Optimal_Cache_Map_Manager (void);
   // Close down a <Optimal_Cache_Map_Manager> and release dynamically allocated
   // resources.
-  
+
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = 0);
   // Initialise a cache with size <length>.
-  
+
   int close (void);
   // Close down a cache and release dynamically allocated resources.
-  
-  int bind (const KEY &key, 
+
+  int bind (const KEY &key,
             const VALUE &value);
   // Associate <key> with <value>.  If <key> is already in the
   // MAP then the ENTRY is not changed.  Returns 0 if a new entry is
@@ -111,7 +119,7 @@ public:
   // Same as a normal bind, except the cache entry is also passed back
   // to the caller.  The entry in this case will either be the newly
   // created entry, or the existing one.
-  
+
   int find (const KEY &key,
             VALUE &value);
   // Loopkup entry<key,value> in the cache.
@@ -137,10 +145,10 @@ public:
   // in the cache for caches that do not allow user specified keys.
   // However, for caches that allow user specified keys, if the key is
   // not in the cache, a new <key>/<value> association is created.
-  
+
   int rebind (const KEY &key,
               const VALUE &value,
-              KEY &old_key, 
+              KEY &old_key,
               VALUE &old_value);
   // Reassociate <key> with <value>, storing the old key and value
   // into the "out" parameters <old_key> and <old_value>.  The
@@ -164,7 +172,7 @@ public:
   // new <key>/<value> association is created.  Returns 1 if an
   // attempt is made to bind an existing entry.  This function fails
   // for maps that do not allow user specified keys.
-  
+
   int trybind (const KEY &key,
                VALUE &value,
                ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry);
@@ -175,7 +183,7 @@ public:
   int unbind (const KEY &key);
   // Remove <key> from the cache.
 
-  int unbind (const KEY &key, 
+  int unbind (const KEY &key,
               VALUE &value);
   // Remove <key> from the cache, and return the <value> associated with
   // <key>.
@@ -191,7 +199,7 @@ public:
 
   size_t total_size (void);
   // Return the total size of the cache.
-  
+
   void dump (void) const;
   // Dumps the state of the object.
 
@@ -223,27 +231,27 @@ protected:
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY>
 class ACE_Optimal_Cache_Map_Iterator
 {
-  // = TITLE  
+  // = TITLE
   //     Defines a iterator for the Optimal_Cache_Map_Manager.
   //
   // = DESCRIPTION
   //     Implementation to be provided by the iterator of the map
-  //     managed by the ACE_Optimal_Cache_Map_Manager. 
+  //     managed by the ACE_Optimal_Cache_Map_Manager.
 
 public:
- 
+
   // = Traits.
   typedef ACE_TYPENAME CACHING_STRATEGY::ATTRIBUTES ATTRIBUTES;
   typedef ACE_Pair <VALUE, ATTRIBUTES> CACHE_VALUE;
   // The actual value mapped to the key in the cache. The <attributes>
   // are used by the strategy and is transperant to the cache user.
- 
+
   typedef ACE_Reference_Pair<KEY, VALUE> value_type;
   typedef ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> IMPLEMENTATION;
   // = Initialisation and termination methods.
 
   ACE_Optimal_Cache_Map_Iterator (const ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &iterator_impl);
-                         
+
   ACE_Optimal_Cache_Map_Iterator (const ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> &rhs);
   // Copy constructor.
 
@@ -265,13 +273,13 @@ public:
 
   ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> &operator++ (void);
   // Prefix advance
-  
+
   ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> operator++ (int);
   // Postfix advance.
 
   ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> &operator-- (void);
-  // Prefix reverse. 
-  
+  // Prefix reverse.
+
   ACE_Optimal_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> operator-- (int);
   // Postfix reverse.
 
@@ -279,8 +287,8 @@ public:
   // Returns the iterator of the internal map in the custody of the Optimal_Cache_Map_Manager.
 
   void dump (void) const;
-  // Dump the state of an object.  
-  
+  // Dump the state of an object.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
@@ -294,27 +302,27 @@ protected:
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY>
 class ACE_Optimal_Cache_Map_Reverse_Iterator
 {
-  // = TITLE  
+  // = TITLE
   //     Defines a reverse iterator for the Optimal_Cache_Map_Manager.
   //
   // = DESCRIPTION
   //     Implementation to be provided by the reverse iterator of the map
-  //     managed by thr Optimal_Cache_Map_manager. 
+  //     managed by thr Optimal_Cache_Map_manager.
 
 public:
- 
+
   // = Traits.
   typedef ACE_TYPENAME CACHING_STRATEGY::ATTRIBUTES ATTRIBUTES;
   typedef ACE_Pair <VALUE, ATTRIBUTES> CACHE_VALUE;
   // The actual value mapped to the key in the cache. The <attributes>
   // are used by the strategy and is transperant to the cache user.
- 
+
   typedef ACE_Reference_Pair<KEY, VALUE> value_type;
   typedef ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> REVERSE_IMPLEMENTATION;
   // = Initialisation and termination methods.
 
   ACE_Optimal_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
-                         
+
   ACE_Optimal_Cache_Map_Reverse_Iterator (const ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> &rhs);
   // Copy constructor.
 
@@ -336,13 +344,13 @@ public:
 
   ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> &operator++ (void);
   // Prefix advance
-  
+
   ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> operator++ (int);
   // Postfix advance.
 
   ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> &operator-- (void);
-  // Prefix reverse. 
-  
+  // Prefix reverse.
+
   ACE_Optimal_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY> operator-- (int);
   // Postfix reverse.
 
@@ -350,8 +358,8 @@ public:
   // Returns the iterator of the internal map in the custody of the Optimal_Cache_Map_Manager.
 
   void dump (void) const;
-  // Dump the state of an object.  
-  
+  // Dump the state of an object.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 

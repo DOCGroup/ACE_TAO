@@ -4,7 +4,7 @@
 #define CACHED_CONNECT_STRATEGY_T_C
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define ACE_LACKS_PRAGMA_ONCE 
+#define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE.h"
@@ -230,7 +230,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
    ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::CONNECTION_CACHE_ENTRY *&entry,
    int &found)
 {
-  
+
   ACE::set_handle_limit (OPTIONS::instance ()->handle_limit ());
   //ACE_DEBUG ((LM_DEBUG, "MAX handles %d \n", ACE::max_handles ()));
   // Explicit type conversion
@@ -246,24 +246,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       // Create a new svc_handler
       if (this->make_svc_handler (sh) == -1)
         return -1;
-       
-      // Actively establish the connection.  This is a timed blocking
-      // connect.
-      if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                       remote_addr,
-                                                       timeout,
-                                                       local_addr,
-                                                       reuse_addr,
-                                                       flags,
-                                                       perms) == -1)
+
+      if (this->connect (...) == -1)
         {
-          // If connect() failed because of timeouts, we have to
-          // reject the connection entirely. This is necessary since
-          // currently there is no way for the non-blocking connects
-          // to complete and for the <Connector> to notify the cache
-          // of the completion of connect().
-          if (errno == EWOULDBLOCK)
-            errno = ENOTSUP;
           return -1;
         }
       else
@@ -282,17 +267,65 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     {
       // Set the flag
       found = 1;
-      
+
       // Get the cached <svc_handler>
       sh = entry->int_id_.first ();
-      
+
       // Tell the <svc_handler> that it should prepare itself for
       // being recycled.
       this->prepare_for_recycling (sh);
     }
-  
+
   return 0;
-  
+
+}
+
+connect ()
+{
+  // Actively establish the connection.  This is a timed blocking
+  // connect.
+  if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                   remote_addr,
+                                                   timeout,
+                                                   local_addr,
+                                                   reuse_addr,
+                                                   flags,
+                                                   perms) == -1)
+    {
+      // If connect() failed because of timeouts, we have to reject
+      // the connection entirely. This is necessary since currently
+      // there is no way for the non-blocking connects to complete and
+      // for the <Connector> to notify the cache of the completion of
+      // connect().
+      if (errno == EWOULDBLOCK)
+        errno = ENOTSUP;
+      else if (errno == EMFILE)
+        {
+          // @@purge here...
+
+          // Try connecting again.
+          if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                           remote_addr,
+                                                           timeout,
+                                                           local_addr,
+                                                           reuse_addr,
+                                                           flags,
+                                                           perms) == -1)
+            {
+              if (errno == EWOULDBLOCK)
+                errno = ENOTSUP;
+              return -1;
+            }
+        }
+      else
+        {
+          return -1;
+        }
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
@@ -328,7 +361,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                               found);
     if (result != 0)
       return result;
-      
+
   }
 
   // If it is a new connection, activate it.
@@ -417,7 +450,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // Check if the user passed a hint svc_handler
   if (sh != 0)
     {
-      
+
       int result = this->check_hint_i (sh,
                                        remote_addr,
                                        timeout,
@@ -427,7 +460,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                        perms,
                                        entry,
                                        found);
+      // @@ Remove debugging
       ACE_DEBUG ((LM_DEBUG, "ACE_Cached_Connect_Strategy_Ex::connect_svc_handler_i CHECK_HINT_I result = %d\n", result));
+
       if (result != 0)
         return result;
     }
@@ -444,19 +479,22 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                                        perms,
                                                        entry,
                                                        found);
-      
+
+      // @@ Purging here is not correct...
+
       if (result != 0)
         {
-          // If the connect failed due to the process running out of file descriptors then,
-          // auto_purging of some connections are done from the CONNECTION_CACHE. This frees
-          // the descriptors which get used in the connect process and hence the same method is 
-          // called again!
+          // If the connect failed due to the process running out of
+          // file descriptors then, auto_purging of some connections
+          // are done from the CONNECTION_CACHE. This frees the
+          // descriptors which get used in the connect process and
+          // hence the same method is called again!
           if (errno == EMFILE)
             {
               int result = this->connection_cache_.purge ();
               if (result == -1)
                 return result;
-              
+
               if (this->find_or_create_svc_handler_i (sh,
                                                       remote_addr,
                                                       timeout,
@@ -476,10 +514,10 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // For all successful cases: mark the <svc_handler> in the cache
   // as being <in_use>.  Therefore recyclable is BUSY.
   entry->ext_id_.state (ACE_Recyclable::BUSY);
-  
+
   // And increment the refcount
   entry->ext_id_.increment ();
-  
+
   return 0;
 }
 
@@ -503,7 +541,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
-  
+
   entry->ext_id_.state (ACE_Recyclable::IDLE);
 
   return 0;
@@ -522,11 +560,10 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::purge_i (const void *recycling_act)
 {
-
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
 
-  return this->connection_cache_.unbind (entry); 
+  return this->connection_cache_.unbind (entry);
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX> int
@@ -543,7 +580,7 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class 
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::mark_as_closed_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
-  CONNECTION_CACHE_ENTRY  *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
+  CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
 
   // Mark the <svc_handler> in the cache as CLOSED.
   entry->ext_id_.state (ACE_Recyclable::CLOSED);
@@ -557,7 +594,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // Excluded other threads from changing cache while we take this
   // entry out.
   ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
- 
+
   return this->cleanup_hint_i (recycling_act);
 }
 
