@@ -1,3 +1,13 @@
+Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Queue_T.i: Changed the computation of is_empty_() so
+ 	  that it doesn't consider the queue to be empty unless the
+ 	  cur_bytes_ <= the low_water_mark_ (which defaults to 0 so that
+ 	  no existing code is affected).  This change makes it possible
+ 	  for producer/consumer threading applications to avoid the "silly
+ 	  window syndrome."  Thanks to Umar Syyid <usyyid@hns.com> for
+ 	  suggesting this.
+
 Wed Aug 05 00:10:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (strnstr (both Unicode and Multibyte versions)): 
