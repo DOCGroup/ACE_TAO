@@ -370,10 +370,10 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

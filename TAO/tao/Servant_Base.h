@@ -1,3 +1,4 @@
+
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
@@ -150,7 +151,7 @@ protected:
 
 private:
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> ref_count_;
   // Reference counter.
 };
 

@@ -596,6 +596,30 @@ TAO_POA::root_key_type_length (void)
   return sizeof (char);
 }
 
+ACE_INLINE CORBA::ULong
+TAO_POA::outstanding_requests (void) const
+{
+  return this->outstanding_requests_;
+}
+
+ACE_INLINE void
+TAO_POA::outstanding_requests (CORBA::ULong new_outstanding_requests)
+{
+  this->outstanding_requests_ = new_outstanding_requests;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_POA::increment_outstanding_requests (void)
+{
+  return ++this->outstanding_requests_;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_POA::decrement_outstanding_requests (void)
+{
+  return --this->outstanding_requests_;
+}
+
 ACE_INLINE void
 TAO_POA_Current::clear (void)
 {

@@ -60,6 +60,7 @@ public:
     PortableServer::ObjectId system_id_;
     PortableServer::Servant servant_;
     CORBA::UShort reference_count_;
+    CORBA::Boolean deactivated_;
   };
 
   TAO_Active_Object_Map (int user_id_policy,

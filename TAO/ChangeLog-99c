@@ -1,3 +1,80 @@
+Tue Apr 27 16:48:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA:
+
+	  - destroy_i: If the <wait_for_completion> parameter is TRUE, the
+	    destroy operation will return only after all requests in
+	    process have completed and all invocations of etherealize have
+	    completed. Otherwise, the destroy operation returns after
+	    destroying the POAs.
+
+	    If a servant manager is associated with the POA,
+	    ServantLocator::etherealize will be invoked with the oid and
+	    the servant. (The deactivate_object operation does not wait
+	    for the etherealize operation to complete before
+	    deactivate_object returns.)
+
+	    If the POA has no ServantActivator associated with it, the POA
+	    implementation calls _remove_ref when all operation
+	    invocations have completed. If there is a ServantActivator,
+	    the Servant is consumed by the call to
+	    ServantActivator::etherealize instead.
+
+	* tao/Object_Adapter:
+
+	  - Non_Servant_Upcall: This class helps us with a recursive
+	    thread lock without using a recursive thread lock.
+	    Non_Servant_Upcall has a magic constructor and destructor.  We
+	    unlock the Object_Adapter lock for the duration of the
+	    non-servant (i.e., adapter activator and servant activator)
+	    upcalls; reacquiring once the upcalls complete.  Even though
+	    we are releasing the lock, other threads will not be able to
+	    make progress since
+	    <Object_Adapter::non_servant_upcall_in_progress_> has been
+	    set.
+
+	  - Outstanding_Requests: This class helps us by increasing
+	    <POA::outstanding_requests_> for the duration of the servant
+	    upcall. Outstanding_Requests has a magic constructor and
+	    destructor.  We increment <POA::outstanding_requests_> in the
+	    constructor.  We decrement <POA::outstanding_requests_> in the
+	    destructor.  Note that the lock is released after
+	    <POA::outstanding_requests_> is increased and
+	    <POA::outstanding_requests_> is decreased after the lock has
+	    been reacquired.
+
+	* tao/Active_Object_Map:
+
+	  - Added <deactivated_> flag to each entry in the map. This flag
+	    is needed because there is a period of time between an
+	    object's deactivation and the etherealization (during which
+	    outstanding requests are being processed) in which arriving
+	    requests on that object should not be passed to its
+	    servant. During this period, requests targeted for such an
+	    object act as if the POA were in holding state until
+	    etherealize completes. If etherealize is called as a
+	    consequence of a deactivate call with a etherealize_objects
+	    parameter of TRUE, incoming requests are rejected.
+
+	  - bind_using_system_id(): Removed extra code: entry->system_id_
+	    = entry->user_id_; this was already happening in
+	    TAO_Active_Hint_Strategy::bind().
+
+	  - unbind_using_user_id(): Only unbind servant if non-zero.
+
+	* tao/Servant_Base.h (TAO_ServantBase): Change reference count
+	  from ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> to
+	  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>.  This way we can utilize
+	  the InterlockedIncrement / InterlockedDecrement specializations
+	  for Atomic_Op on NT.
+
+	* tao/ORB_Core.cpp (create_and_set_root_poa): Fixed POA
+	  constructor call.
+
+	* tao/default_server.cpp (enable_poa_locking): Changed server
+	  factory to simply inform Object Adapter if POA locking should be
+	  enabled.  The Object Adapter will create the proper lock.
+
 Tue Apr 27 19:11:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: added some additional
