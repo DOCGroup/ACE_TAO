@@ -428,7 +428,7 @@ if [ $install -ne 0 ]; then
     find tao -type f -name "*.idl" -print | cpio -p -d -V $TAO_DIR/include
     find tao -type f -name "*.pidl" -print | cpio -p -d -V $TAO_DIR/include
     find tao -type f -name "*.h" -print | grep -v "^config\.h" | cpio -p -d -V $TAO_DIR/include
-    find tao -type f -name "*.i" -print | cpio -p -d -V $TAO_DIR/include
+    find tao -type f -name "*.i" -o -name "*.inl" -print | cpio -p -d -V $TAO_DIR/include
     find tao -type f -name "*.cpp" -print | cpio -p -d -V $TAO_DIR/include
 
     # NOTE: may need all .h, .i and .cpp under TAO/orbsvcs, instead of just TAO/orbsvcs/orbsvcs
@@ -436,7 +436,7 @@ if [ $install -ne 0 ]; then
     find orbsvcs -type f -name "*.idl" -print | cpio -p -d -V $TAO_DIR/include
     find orbsvcs -type f -name "*.pidl" -print | cpio -p -d -V $TAO_DIR/include
     find orbsvcs -type f -name "*.h" -print | grep -v "^config\.h" | cpio -p -d -V $TAO_DIR/include
-    find orbsvcs -type f -name "*.i" -print | cpio -p -d -V $TAO_DIR/include
+    find orbsvcs -type f -name "*.i" -o -name "*.inl" -print | cpio -p -d -V $TAO_DIR/include
     find orbsvcs -type f -name "*.cpp" -print | cpio -p -d -V $TAO_DIR/include
     cd ..
 
@@ -467,7 +467,7 @@ if [ $install -ne 0 ]; then
     # copy ACE includes
     echo "Copying include files..."
     find ace -type f -name "*.h" -print | grep -v "^config\.h" | cpio -p -d -V $ACE_DIR/include
-    find ace -type f -name "*.i" -print | cpio -p -d -V $ACE_DIR/include
+    find ace -type f -name "*.i" -o -name "*.inl" -print | cpio -p -d -V $ACE_DIR/include
     find ace -type f -name "*.cpp" -print | cpio -p -d -V $ACE_DIR/include
     cp ace/config.h $ACE_DIR/$ACE_ARCH/include/ace/config.h && rm $ACE_DIR/include/ace/config.h
 

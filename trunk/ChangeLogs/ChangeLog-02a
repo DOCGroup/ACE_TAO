@@ -1,3 +1,10 @@
+Wed Mar  6 21:42:37 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * bin/ace-install:
+
+          Make sure that the .inl files are also installed. Thanks to
+          Carsten Prescher<carsten.prescher@sysde.eads.net> for reporting this.
+
 Wed Mar  6 18:30:49 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Thread_Per_Connection_Logging_Server.h:
