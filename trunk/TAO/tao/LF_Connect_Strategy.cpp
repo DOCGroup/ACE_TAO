@@ -71,7 +71,7 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
     }
 
   TAO_Leader_Follower &leader_follower =
-    transport->orb_core ()->leader_follower ();
+    this->orb_core_->leader_follower ();
 
   int result =
     leader_follower.wait_for_event (ch,

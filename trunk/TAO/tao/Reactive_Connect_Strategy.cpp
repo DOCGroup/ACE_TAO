@@ -47,19 +47,15 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                 ACE_LIB_TEXT ("(%P|%t) Waiting in the Reactor for")
                 ACE_LIB_TEXT (" connection completion - wait () \n")));
 
-  TAO_Transport *transport =
-    ch->transport ();
-
   int result = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_ORB_Core *orb_core = transport->orb_core ();
-
       while (ch->keep_waiting ())
         {
-          result = orb_core->run (max_wait_time, 1 ACE_ENV_ARG_PARAMETER);
+          result =
+            this->orb_core_->run (max_wait_time, 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Did we timeout? If so, stop running the loop.
