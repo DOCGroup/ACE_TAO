@@ -7,8 +7,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-// Processor type, if necessary.
+// Processor type, if necessary.  GreenHills defines "ppc".
+#if defined (ppc)
 #define ACE_HAS_POWERPC
+#endif /* ppc */
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
