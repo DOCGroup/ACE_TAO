@@ -113,7 +113,9 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/XTI_ATM_Mcast.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_XTI_ATM */
 #endif /* ACE_XTI_ATM_MCAST_H */

@@ -7,8 +7,9 @@ ACE_RCSID(ace, ATM_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_ATM)
 
-// Put the actual definitions of the ACE_ATM_Request and
-// ACE_ATM_Request_Queue classes here to hide them from clients...
+#if !defined (__ACE_INLINE__)
+#include "ace/ATM_Acceptor.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Acceptor)
 

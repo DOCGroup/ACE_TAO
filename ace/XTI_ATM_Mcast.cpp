@@ -8,6 +8,10 @@ ACE_RCSID(ace, XTI_ATM_Mcast, "$Id$")
 
 #if defined (ACE_HAS_XTI_ATM)
 
+#if !defined (__ACE_INLINE__)
+#include "ace/XTI_ATM_Mcast.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_XTI_ATM_Mcast)
 
 void

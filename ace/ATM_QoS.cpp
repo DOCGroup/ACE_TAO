@@ -3,13 +3,13 @@
 #define ACE_BUILD_DLL
 #include "ace/ATM_QoS.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/ATM_QoS.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, ATM_QoS, "$Id$")
 
 #if defined (ACE_HAS_ATM)
+
+#if !defined (__ACE_INLINE__)
+#include "ace/ATM_QoS.i"
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
 #define BHLI_MAGIC "FORE_ATM"
