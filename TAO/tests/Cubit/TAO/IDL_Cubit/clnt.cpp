@@ -40,7 +40,7 @@ Cubit_Client::Cubit_Client (void)
     call_count_ (0),
     error_count_ (0)
 {
-  ACE_Env_Value<unsigned long> defport(quote(TAO_DEFAULT_SERVER_PORT),
+  ACE_Env_Value<CORBA::uShort> defport(quote(TAO_DEFAULT_SERVER_PORT),
                                        TAO_DEFAULT_SERVER_PORT);
   portnum_ = defport;
 }
