@@ -40,6 +40,6 @@ run_test.pl:
     The script starts up a new Naming Service, starts thc server and client, 
     and when the client has completed terminates the server and NamingService.
 
-
-
-
+Running:
+    Please run the Naming Service first, then run the server program and
+    finally run the client program.
