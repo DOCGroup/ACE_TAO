@@ -1,24 +1,33 @@
+Fri Nov 12 08:25:25 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Msg.cpp (open,log,dump): ensure that there
+          is a message_queue_ by calling get_lock () in multithreaded
+          applications.  This solves the problem where the first
+          thread that uses a Log_Msg terminates before any other
+          threads create a Log_Msg instance.  Thanks to
+          Mike Mazurek <mmazurek@std.saic.com> for reporting this.
+
 Thu Nov 11 20:46:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* examples/Configuration/Makefile:
+        * examples/Configuration/Makefile:
 
-	  Added a Makefile for this example.
-	
-	* examples/Configuration/config_test.cpp:
+          Added a Makefile for this example.
 
-	  ACEified this example, and corrected several errors and
-	  warnings.
+        * examples/Configuration/config_test.cpp:
+
+          ACEified this example, and corrected several errors and
+          warnings.
 
 Thu Nov 11 20:28:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Local_Tokens.cpp:
-	* ace/OS.cpp:
-	  Removed gcc-2.95 warnings about mismatch format and arguments,
-	  the warning only shows up under gcc-2.95 for alphas.
-	  We use <long> to print the addresses which produces correct
-	  results in all the platforms we have access to.
-	  Thanks to Cristian Ferretti <cfs@mat.puc.cl> for pointing this
-	  out.
+        * ace/Local_Tokens.cpp:
+        * ace/OS.cpp:
+          Removed gcc-2.95 warnings about mismatch format and arguments,
+          the warning only shows up under gcc-2.95 for alphas.
+          We use <long> to print the addresses which produces correct
+          results in all the platforms we have access to.
+          Thanks to Cristian Ferretti <cfs@mat.puc.cl> for pointing this
+          out.
 
 Thu Nov 11 19:55:52 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -26,52 +35,52 @@ Thu Nov 11 19:55:52 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * ace/Configuration.cpp:
         * examples/Configuration/config_test.cpp:
           MSVC doesn't like _export and _import so changed them to
-          export_config and import_config.  
+          export_config and import_config.
 
 Thu Nov 11 18:41:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Configuration.h:
-	* ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Configuration.cpp:
 
-	  "path_" variable was allocated with strdup(), but deallocated
-	  with delete().  free() should be used instead.
+          "path_" variable was allocated with strdup(), but deallocated
+          with delete().  free() should be used instead.
 
-	  Added missing class members to member initializer lists.
+          Added missing class members to member initializer lists.
 
-	  Changed name of export() to _export().  "export" is a C++
-	  keyword, and shouldn't be used as function name.  The import()
-	  method was changed to _import() for sake of being consistent.
+          Changed name of export() to _export().  "export" is a C++
+          keyword, and shouldn't be used as function name.  The import()
+          method was changed to _import() for sake of being consistent.
 
-	  Removed duplicate template instantiations.
+          Removed duplicate template instantiations.
 
 Thu Nov 11 17:09:19 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Configuration.h:
         * ace/Configuration.cpp:
           ACE-ified the code.  Also fixed miscellaneous compiler warnings
-          and put in template specialization code.  
+          and put in template specialization code.
 
 Thu Nov 11 12:10:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp,
-	  ace/Process.cpp: It looks like the thread that's going to use
- 	  the Process_Manager object must do a setpgid (0, 0) in order to
- 	  establish a process group for its children.  Apparently, when
- 	  you run the test program from the command line, the shell sets
- 	  the process up in a group of its own, but when you run it from
- 	  the test script, it's a member of the script's group.  In the
- 	  latter case, when you spawn a child process, you can't add it to
- 	  your own group (because your group doesn't exist!).  Thanks to
- 	  Dave Madden <dhm@mersenne.com> for contributing this fix.
+        * ace/Process_Manager.cpp,
+          ace/Process.cpp: It looks like the thread that's going to use
+          the Process_Manager object must do a setpgid (0, 0) in order to
+          establish a process group for its children.  Apparently, when
+          you run the test program from the command line, the shell sets
+          the process up in a group of its own, but when you run it from
+          the test script, it's a member of the script's group.  In the
+          latter case, when you spawn a child process, you can't add it to
+          your own group (because your group doesn't exist!).  Thanks to
+          Dave Madden <dhm@mersenne.com> for contributing this fix.
 
 Thu Nov 11 01:54:55 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* ace/Log_Msg.h (msg_ostream):
-	* ace/Log_Msg.cpp (msg_ostream):
-	* ace/Log_Msg.cpp (~ACE_Log_Msg):
+        * ace/Log_Msg.h (msg_ostream):
+        * ace/Log_Msg.cpp (msg_ostream):
+        * ace/Log_Msg.cpp (~ACE_Log_Msg):
 
-	  Added a member to flag whether or not Log_Msg object
-	  assumes responsibility for destroying its ostream_*.
+          Added a member to flag whether or not Log_Msg object
+          assumes responsibility for destroying its ostream_*.
 
 Wed Nov 10 23:29:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -95,179 +104,179 @@ Wed Nov 10 23:29:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Nov 10 22:12:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Enabled the CVS directory check so that ACE's stock Makefiles
-	  won't get inadvertently clobbered by developers who want to
-	  experiment with the configure script.
+          Enabled the CVS directory check so that ACE's stock Makefiles
+          won't get inadvertently clobbered by developers who want to
+          experiment with the configure script.
 
-	* m4/acinclude.m4:
+        * m4/acinclude.m4:
 
-	  Made CVS directory check more verbose.  It now provides an
-	  example of how to avoid the error it detects, i.e. it provides
-	  an example that demonstrates to do a build without affecting the
-	  source.
+          Made CVS directory check more verbose.  It now provides an
+          example of how to avoid the error it detects, i.e. it provides
+          an example that demonstrates to do a build without affecting the
+          source.
 
-	* Makefile.in:
-	* ace/Makefile.in:
-	* ace/config.h.in:
-	* apps/gperf/src/Makefile.in:
-	* apps/gperf/Makefile.in:
-	* apps/Makefile.in:
-	* netsvcs/clients/Logger/Makefile.in:
-	* netsvcs/clients/Naming/Client/Makefile.in:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile.in:
-	* netsvcs/clients/Naming/Makefile.in:
-	* netsvcs/clients/Tokens/collection/Makefile.in:
-	* netsvcs/clients/Tokens/deadlock/Makefile.in:
-	* netsvcs/clients/Tokens/invariant/Makefile.in:
-	* netsvcs/clients/Tokens/manual/Makefile.in:
-	* netsvcs/clients/Tokens/mutex/Makefile.in:
-	* netsvcs/clients/Tokens/rw_lock/Makefile.in:
-	* netsvcs/clients/Tokens/Makefile.in:
-	* netsvcs/clients/Makefile.in:
-	* netsvcs/lib/Makefile.in:
-	* netsvcs/servers/Makefile.in:
-	* netsvcs/Makefile.in:
-	* man/html/Makefile.in:
-	* man/man3/Makefile.in:
-	* man/Makefile.in:
-	* tests/Makefile.in:
+        * Makefile.in:
+        * ace/Makefile.in:
+        * ace/config.h.in:
+        * apps/gperf/src/Makefile.in:
+        * apps/gperf/Makefile.in:
+        * apps/Makefile.in:
+        * netsvcs/clients/Logger/Makefile.in:
+        * netsvcs/clients/Naming/Client/Makefile.in:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.in:
+        * netsvcs/clients/Naming/Makefile.in:
+        * netsvcs/clients/Tokens/collection/Makefile.in:
+        * netsvcs/clients/Tokens/deadlock/Makefile.in:
+        * netsvcs/clients/Tokens/invariant/Makefile.in:
+        * netsvcs/clients/Tokens/manual/Makefile.in:
+        * netsvcs/clients/Tokens/mutex/Makefile.in:
+        * netsvcs/clients/Tokens/rw_lock/Makefile.in:
+        * netsvcs/clients/Tokens/Makefile.in:
+        * netsvcs/clients/Makefile.in:
+        * netsvcs/lib/Makefile.in:
+        * netsvcs/servers/Makefile.in:
+        * netsvcs/Makefile.in:
+        * man/html/Makefile.in:
+        * man/man3/Makefile.in:
+        * man/Makefile.in:
+        * tests/Makefile.in:
 
-	  Added these files so that developers who don't have GNU
-	  Autoconf, Automake and Libtool can run the configure script and
-	  attempt builds to provide feedback to us.
+          Added these files so that developers who don't have GNU
+          Autoconf, Automake and Libtool can run the configure script and
+          attempt builds to provide feedback to us.
 
 Wed Nov 10 21:35:47 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* m4/compiler.m4:
+        * m4/compiler.m4:
 
-	  Added some default flags for compilers on IRIX.
+          Added some default flags for compilers on IRIX.
 
-	* m4/threads.m4:
+        * m4/threads.m4:
 
-	  Added more thread library checks in an effort to figure out if a
-	  thread library really is needed, in the case that the initial
-	  check for pthread_create succeeds without the need of a thread
-	  library.  Such a problem occurred on IRIX.  This modification
-	  should correct the problem.
+          Added more thread library checks in an effort to figure out if a
+          thread library really is needed, in the case that the initial
+          check for pthread_create succeeds without the need of a thread
+          library.  Such a problem occurred on IRIX.  This modification
+          should correct the problem.
 
 Wed Nov 10 10:55:34 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.i (memset, thr_self, thr_getspecific):
+        * ace/OS.i (memset, thr_self, thr_getspecific):
 
-	  Commented the ACE_TRACE statements. On some compiler/platform
-	  combinations these methods get called before the Object Manager
-	  is initialized, which causes the ACE_TRACE call to seg fault
-	  when tracing is enabled in ACE.
+          Commented the ACE_TRACE statements. On some compiler/platform
+          combinations these methods get called before the Object Manager
+          is initialized, which causes the ACE_TRACE call to seg fault
+          when tracing is enabled in ACE.
 
 Tue Nov  9 17:50:01 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/config-hpux-10.x-hpc++.h:
+        * ace/config-hpux-10.x-hpc++.h:
           Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE since it doesn't seem
           to be supported on aCC.
 
 Tue Nov  9 15:47:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/XtReactor.cpp (TimerCallbackProc):
+        * ace/XtReactor.cpp (TimerCallbackProc):
 
-	  Fixed "unused argument" warning.
+          Fixed "unused argument" warning.
 
 Tue Nov  9 14:57:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Minor comment updates.
+          Minor comment updates.
 
-	* m4/features.m4:
+        * m4/features.m4:
 
-	  Fixed asynchronous IO tests.  The tests now properly detect
-	  working asynchronous IO on Linux, for example.
+          Fixed asynchronous IO tests.  The tests now properly detect
+          working asynchronous IO on Linux, for example.
 
-	  Force asynchronous IO tests to be performed after the thread
-	  detection tests in case the real time functions depend on the
-	  thread library.
+          Force asynchronous IO tests to be performed after the thread
+          detection tests in case the real time functions depend on the
+          thread library.
 
 Tue Nov  9 10:11:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-	  for the GCC 2.8 and earlier family of compilers since they don't
- 	  seem to support this feature.
+        * ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+          for the GCC 2.8 and earlier family of compilers since they don't
+          seem to support this feature.
 
 Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp: Removed the unused parameter `n'.  Thanks
-	  to David Levine for reporting this.
+        * ace/Svc_Handler.cpp: Removed the unused parameter `n'.  Thanks
+          to David Levine for reporting this.
 
 Mon Nov  8 16:34:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
+        * acconfig.h:
+        * configure.in:
 
-	  Added autoconf support/tests for the following ACE macros:
+          Added autoconf support/tests for the following ACE macros:
 
-		ACE_HAS_STRPTIME
-		ACE_LACKS_NATIVE_STRPTIME
-		ACE_LACKS_PLACEMENT_OPERATOR_NEW
-		ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+                ACE_HAS_STRPTIME
+                ACE_LACKS_NATIVE_STRPTIME
+                ACE_LACKS_PLACEMENT_OPERATOR_NEW
+                ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
 Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_NEW
-	  for older versions of G++.  Thanks to David Levine for reporting
- 	  this.
+        * ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_NEW
+          for older versions of G++.  Thanks to David Levine for reporting
+          this.
 
-	* ace/config-sunos5.5.h: Added a #define for
-	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle problems with
- 	  SunC++ 4.2.
+        * ace/config-sunos5.5.h: Added a #define for
+          ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle problems with
+          SunC++ 4.2.
 
-	* ace/Svc_Handler: Not all C++ compilers support placement
-	  operator delete, so we need to #ifdef for it.  Thanks to Andy
- 	  Gokhale for reporting this.
+        * ace/Svc_Handler: Not all C++ compilers support placement
+          operator delete, so we need to #ifdef for it.  Thanks to Andy
+          Gokhale for reporting this.
 
 Sun Nov 07 23:36:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/run_tests.bat:
-	* tests/tests.dsw:
-	* tests/Auto_IncDec.dsp:
-	* tests/version_tests/version_tests.dsw:
-	* tests/version_tests/Auto_IncDec_Test.dsp: Added Auto_IncDec_Test
-	  for MSVC workspaces.
+        * tests/run_tests.bat:
+        * tests/tests.dsw:
+        * tests/Auto_IncDec.dsp:
+        * tests/version_tests/version_tests.dsw:
+        * tests/version_tests/Auto_IncDec_Test.dsp: Added Auto_IncDec_Test
+          for MSVC workspaces.
 
 Sun Nov  7 12:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Handler: Added two new placement operator new() and
- 	  delete() operations so that it is possible to allocate an
- 	  ACE_Svc_Handler from a custom allocator.  Thanks to Edan Ayal
- 	  <EdanA@cti2.com> for contributing this.
+        * ace/Svc_Handler: Added two new placement operator new() and
+          delete() operations so that it is possible to allocate an
+          ACE_Svc_Handler from a custom allocator.  Thanks to Edan Ayal
+          <EdanA@cti2.com> for contributing this.
 
-	* tests/run_tests.lst: Added Auto_IncDec_Test to the tests.
+        * tests/run_tests.lst: Added Auto_IncDec_Test to the tests.
 
-	* ace/Makefile,
-	  tests/Makefile: Added the new Auto_IncDec* stuff to the
- 	  makefiles.
+        * ace/Makefile,
+          tests/Makefile: Added the new Auto_IncDec* stuff to the
+          makefiles.
 
-	* ace: Added Auto_IncDec_T.{h,i,cpp} to the ACE release.  This class
-	  automatically increments and decrements a parameterized counter.
-	  Thanks to Edan Ayal <EdanA@cti2.com> for contributing this.
+        * ace: Added Auto_IncDec_T.{h,i,cpp} to the ACE release.  This class
+          automatically increments and decrements a parameterized counter.
+          Thanks to Edan Ayal <EdanA@cti2.com> for contributing this.
 
-	* tests/Auto_IncDec_Test.cpp: Added a test for the ACE_Auto_IncDec
-	  class.  Thanks to Edan Ayal <EdanA@cti2.com> for contributing
- 	  this.
+        * tests/Auto_IncDec_Test.cpp: Added a test for the ACE_Auto_IncDec
+          class.  Thanks to Edan Ayal <EdanA@cti2.com> for contributing
+          this.
 
 Fri Nov 05 14:26:38 1999  Jim Buck  <jim@nowsol.com>
 
         * ace/OS.cpp (ACE_Time_Value::set): fixed calculation of
           microsecond part.  This change restores the correct pre-ACE 5.0
- 	  behavior.
+          behavior.
 
 Fri Nov  5 07:58:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Memory_Pool.i: Fixed stupid typos in Memory_Pool.i.
-	  Thanks to Jeff Parsons for reporting this.
+        * ace/Memory_Pool.i: Fixed stupid typos in Memory_Pool.i.
+          Thanks to Jeff Parsons for reporting this.
 
-	* ace/Memory_Pool.i: Default arguments shouldn't be in the
-	  *.i signatures.  Thanks to Andy Gokhale for reporting this.
+        * ace/Memory_Pool.i: Default arguments shouldn't be in the
+          *.i signatures.  Thanks to Andy Gokhale for reporting this.
 
 Thu Nov  4 08:36:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
