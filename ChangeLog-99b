@@ -1,65 +1,73 @@
+Thu Jun 10 10:17:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: with Sun C++ 5.0, #define
+          _RWSTD_NO_EXCEPTIONS 1 if exceptions are not enabled.
+          This avoids a warning about throw expressions being
+          ignored with -noex.  See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h
+          for more information.
+
 Wed Jun  9 21:45:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Svc_Handler_Test.cpp (main): Revised the test a bit to
-	  make it more clear what's going on.
+        * tests/Svc_Handler_Test.cpp (main): Revised the test a bit to
+          make it more clear what's going on.
 
-	* ace/Svc_Handler.cpp: Fixed a typo in flush() -- we need to
- 	  update the temp pointer with temp->cont() *not* entry->cont().
+        * ace/Svc_Handler.cpp: Fixed a typo in flush() -- we need to
+          update the temp pointer with temp->cont() *not* entry->cont().
 
-	* ace/Svc_Handler.cpp (dump): Fixed a typo -- I wasn't
-	  comparing the pointer to 0, I was comparing the
-	  ACE_Time_Value!
+        * ace/Svc_Handler.cpp (dump): Fixed a typo -- I wasn't
+          comparing the pointer to 0, I was comparing the
+          ACE_Time_Value!
 
 Wed Jun  9 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/config-psos-diab-ppc.h: added ACE_HAS_NONCONST_SELECT_TIMEVAL
+        * ace/config-psos-diab-ppc.h: added ACE_HAS_NONCONST_SELECT_TIMEVAL
 
         * tests/RB_Tree_Test.cpp: fixed constness issues revealed by SunC++
           5.0, added return value assertions for insert calls, added typedefs.
 
 Wed Jun  9 20:40:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.cpp:
-	  Added new methods to support message reassembly in GIOP 1.1
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+          Added new methods to support message reassembly in GIOP 1.1
 
 Wed Jun  9 15:32:37 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ace/Message_Queue_T: Added a lock() accessor method so that
- 	  other components can access the lock used by a Message Queue.
+        * ace/Message_Queue_T: Added a lock() accessor method so that
+          other components can access the lock used by a Message Queue.
 
-	* ace/Svc_Handler.cpp: Added better support for timeout handling
- 	  for the ACE_Buffered_Svc_Handler.
+        * ace/Svc_Handler.cpp: Added better support for timeout handling
+          for the ACE_Buffered_Svc_Handler.
 
-	* ace/Svc_Handler: Split the buffering portion of ACE_Svc_Handler
- 	  off into a separate class called ACE_Buffered_Svc_Handler to
- 	  avoid adding extra space and complexity to the existing
- 	  ACE_Svc_Handler.  Thanks to Irfan for suggesting this, as well
- 	  as also suggesting ways to improve the performance by caching
- 	  the current size of the buffer.
+        * ace/Svc_Handler: Split the buffering portion of ACE_Svc_Handler
+          off into a separate class called ACE_Buffered_Svc_Handler to
+          avoid adding extra space and complexity to the existing
+          ACE_Svc_Handler.  Thanks to Irfan for suggesting this, as well
+          as also suggesting ways to improve the performance by caching
+          the current size of the buffer.
 
-	* ace/OS.h: Added a patch to work around some problems with macros
- 	  for USYNCH_THREAD.  Thanks to David Levine and Russ Noseworthy
- 	  for this.
+        * ace/OS.h: Added a patch to work around some problems with macros
+          for USYNCH_THREAD.  Thanks to David Levine and Russ Noseworthy
+          for this.
 
-	* examples/Threads/task_five.cpp (main): Improved the form and
-	  content of this example a bit.
+        * examples/Threads/task_five.cpp (main): Improved the form and
+          content of this example a bit.
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU,
-	* include/makeinclude/platform_sunos5_g++.GNU,
-	* include/makeinclude/platform_irix6.x_g++.GNU,
-	* include/makeinclude/platform_linux_lxpthread.GNU,
-	* include/makeinclude/platform_irix6.x_sgic++.GNU:
-	  Added support to make it easier to override various settings
-	  in platform_macros files.  Thanks to Dave Meyer
-	  <dmeyer@lima.arl.std.saic.com> for contributing this.
+        * include/makeinclude/platform_sunos5_sunc++.GNU,
+        * include/makeinclude/platform_sunos5_g++.GNU,
+        * include/makeinclude/platform_irix6.x_g++.GNU,
+        * include/makeinclude/platform_linux_lxpthread.GNU,
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+          Added support to make it easier to override various settings
+          in platform_macros files.  Thanks to Dave Meyer
+          <dmeyer@lima.arl.std.saic.com> for contributing this.
 
-	* ace/SPIPE_Stream: Added sendv(), sendv_n(), and recvv_n()
- 	  methods to SPIPE_Stream.  Thank to Carlos for pointing this out.
+        * ace/SPIPE_Stream: Added sendv(), sendv_n(), and recvv_n()
+          methods to SPIPE_Stream.  Thank to Carlos for pointing this out.
 
         * ace/config-mvs.h: Changed the size of the ACE_SIZEOF_DOUBLE and
- 	  ACE_SIZEOF_LONG_DOUBLE from 4 and to 8 and 16, respectively.
-  	  Thanks to Jim Rogers for reporting this.
+          ACE_SIZEOF_LONG_DOUBLE from 4 and to 8 and 16, respectively.
+          Thanks to Jim Rogers for reporting this.
 
         * ace/config-mvs.h: Added ACE_HAS_NONCONST_SELECT_TIMEVAL on the
           advice of Jim Rogers <jrogers@viasoft.com>.
@@ -94,15 +102,15 @@ Wed Jun  9 15:32:37 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 Wed Jun  9 12:23:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/version_tests/version_tests.dsw:
-	* tests/run_tests.bat:
-	* tests/run_tests.psosim:
-	* tests/run_tests.vxworks:
-	  Added Svc_Handler_Test to these.
+        * tests/version_tests/version_tests.dsw:
+        * tests/run_tests.bat:
+        * tests/run_tests.psosim:
+        * tests/run_tests.vxworks:
+          Added Svc_Handler_Test to these.
 
-	* tests/tests.dsw:
-	  Added Svc_Handler_Test.dsp (created and checked in by
-	  Nanbor) to the workspace.
+        * tests/tests.dsw:
+          Added Svc_Handler_Test.dsp (created and checked in by
+          Nanbor) to the workspace.
 
 Wed Jun  9 10:46:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
