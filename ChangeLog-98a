@@ -1,3 +1,28 @@
+Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_NOTSUP_RETURN): Moved its definition to the end of
+	  this file where __TEXT has already been defined.  WinCE needs to
+	  use wchar.  
+
+	  (struct utsname): Moved this definition after all datatypes are
+	  filled in.  Reverted my previous changed on it.
+
+	  Win32 only: Added wchar version of ACE_OS::{perror,fprintf,
+	  vsprintf,sprintf}.
+
+	  Windows CE only:  Undefined some char version function in class
+	  ACE_OS.  They are of no use on CE anyway.
+	
+	* ace/OS.i (fdopen): Added wchar version of ACE_OS::fdopen, it is
+ 	  only available on Win32.
+
+	  Windows CE only:  Added implementation for c-styled file
+	  functions.  Type FILE * is mapped to Win32 HANLDE under the hood
+	  and Win32 API's are used to emulate these functions.  
+
+	* ace/OS.cpp: Removed some char version functions and added some
+	  wchar functions.
+
 Sun Feb 01 15:12:49 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/OrdMultiSet_Test.cpp: added an ACE test for the 
