@@ -59,8 +59,10 @@ TAO_ORB_Core::TAO_ORB_Core (void)
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0),
     default_environment_ (0),
-    tss_environment_ (this),
-    policy_current_ (&this->initial_policy_current_)
+    tss_environment_ (this)
+#if defined (TAO_HAS_CORBA_MESSAGING)
+    , policy_current_ (&this->initial_policy_current_)
+#endif /* TAO_HAS_CORBA_MESSAGING */
 {
 }
 
