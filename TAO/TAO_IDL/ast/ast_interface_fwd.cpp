@@ -154,6 +154,19 @@ AST_InterfaceFwd::dump (ostream &o)
   this->local_name ()->dump (o);
 }
 
+int
+AST_InterfaceFwd::accept (ast_visitor *visitor)
+{
+  if (this->is_valuetype ())
+    {
+      return visitor->visit_valuetype_fwd (this);
+    }
+  else
+    {
+      return visitor->visit_interface_fwd (this);
+    }
+}
+
 // Data accessors.
 
 AST_Interface *

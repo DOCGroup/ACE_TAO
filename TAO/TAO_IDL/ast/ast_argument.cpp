@@ -97,7 +97,7 @@ direction_to_string (AST_Argument::Direction d)
 // Constructor(s) and destructor.
 
 AST_Argument::AST_Argument (void)
-  : pd_direction(dir_IN)
+  : pd_direction (dir_IN)
 {
 }
 
@@ -126,8 +126,14 @@ AST_Argument::~AST_Argument (void)
 void
 AST_Argument::dump (ostream &o)
 {
-  o << direction_to_string(pd_direction) << " ";
+  o << direction_to_string (pd_direction) << " ";
   AST_Field::dump (o);
+}
+
+int
+AST_Argument::accept (ast_visitor *visitor)
+{
+  return visitor->visit_argument (this);
 }
 
 // Data accessors.

@@ -90,6 +90,9 @@ public:
   // AST Dumping.
   virtual void dump (ostream &o);
 
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
+
 private:
   friend class FE_Declarator;
   friend int tao_yyparse (void);

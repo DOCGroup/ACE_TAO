@@ -100,6 +100,9 @@ public:
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Type);
+
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

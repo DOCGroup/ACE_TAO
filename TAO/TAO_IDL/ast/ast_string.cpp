@@ -129,6 +129,12 @@ AST_String::dump(ostream &o)
   o << ">";
 }
 
+int
+AST_String::accept (ast_visitor *visitor)
+{
+  return visitor->visit_string (this);
+}
+
 // Data accessors.
 
 AST_Expression *

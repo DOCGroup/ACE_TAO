@@ -473,6 +473,12 @@ AST_Operation::dump (ostream &o)
     }
 }
 
+int
+AST_Operation::accept (ast_visitor *visitor)
+{
+  return visitor->visit_operation (this);
+}
+
 // Data accessors
 
 AST_Type *

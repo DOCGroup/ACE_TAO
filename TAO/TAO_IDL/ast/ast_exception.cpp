@@ -411,6 +411,12 @@ AST_Exception::dump (ostream &o)
   o << "}";
 }
 
+int
+AST_Exception::accept (ast_visitor *visitor)
+{
+  return visitor->visit_exception (this);
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Exception, AST_Structure)
 IMPL_NARROW_FROM_DECL(AST_Exception)

@@ -213,6 +213,10 @@ SOURCE=.\ast\ast_union_label.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_visitor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\fe\fe_declarator.cpp
 # End Source File
 # Begin Source File
@@ -430,6 +434,10 @@ SOURCE=.\include\ast_union_branch.h
 # Begin Source File
 
 SOURCE=.\include\ast_union_label.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_visitor.h
 # End Source File
 # Begin Source File
 

@@ -234,6 +234,9 @@ public:
   // AST Dumping.
   virtual void dump (ostream &o);
 
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
+
   // Cleanup method.
   virtual void destroy (void);
 

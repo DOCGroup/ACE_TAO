@@ -205,7 +205,7 @@ iter_lookup_by_name_local (AST_Decl *d,
     }
 }
 
-//  Constructors
+//  Constructors.
 
 UTL_Scope::UTL_Scope (void)
   : pd_scope_node_type (AST_Decl::NT_module),
@@ -241,7 +241,12 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
 {
 }
 
-// Private operations
+// Destructor.
+UTL_Scope::~UTL_Scope (void)
+{
+}
+
+// Private operations.
 
 static AST_Decl *
 add_type (AST_Type *type)
@@ -316,13 +321,13 @@ UTL_Scope::lookup_for_add (AST_Decl *d,
                                0);
 }
 
-// Public operations
+// Public operations.
 
 // Narrowing
 IMPL_NARROW_METHODS0(UTL_Scope)
 IMPL_NARROW_FROM_SCOPE(UTL_Scope)
 
-// Scope Management Protocol
+// Scope Management Protocol.
 //
 // All members of the protocol defined in UTL_Scope simply return the node
 // and don't do a thing. These members are simply dummies to retain
@@ -417,7 +422,7 @@ UTL_Scope::add_attribute (AST_Attribute *a)
 {
   if (a == 0) 
     {
-      return NULL;
+      return 0;
     }
 
   a->set_added (I_TRUE);
@@ -643,7 +648,7 @@ UTL_Scope::add_native (AST_Native *n)
   return n;
 }
 
-// Protected Front End Scope Management Protocol
+// Protected Front End Scope Management Protocol.
 //
 // All members of the protocol defined in UTL_Scope simply return NULL
 // and don't do a thing. This ensures that runtime errors will discover
@@ -893,7 +898,7 @@ UTL_Scope::call_add (void)
 
 // Private lookup mechanism.
 
-// Lookup the node for a primitive (built in) type
+// Lookup the node for a primitive (built in) type.
 AST_Decl *
 UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 {
@@ -1010,8 +1015,8 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
   AST_Interface *i = AST_Interface::narrow_from_scope (this);
-  AST_Interface **is;
-  long nis;
+  AST_Interface **is = 0;
+  long nis = -1;
 
   // This scope is not an interface.
   if (i == 0)
@@ -1027,7 +1032,7 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
       return 0;
     }
 
-  //OK, loop through inherited interfaces.
+  // OK, loop through inherited interfaces.
 
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
@@ -1036,11 +1041,12 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
     {
       d = (*is)->lookup_by_name (e, 
                                  treat_as_ref, 
-                                 0 /* not in_parent */);
+                                 0 /* not in parent */);
       if (d != 0) 
         {
 	        if (d_before == 0) 
-            {   // First result found.
+            {   
+              // First result found.
 	            d_before = d;
 	          }
         	else 
@@ -1168,7 +1174,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
     }
 }
 
-// Implements lookup by name for scoped names
+// Implements lookup by name for scoped names.
 AST_Decl *
 UTL_Scope::lookup_by_name (UTL_ScopedName *e, 
                            idl_bool treat_as_ref,
@@ -1177,7 +1183,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   AST_Decl *d = 0;
   UTL_Scope *t = 0;
 
-  // Empty name? error
+  // Empty name? Error.
   if (e == 0) 
     {
       return 0;
@@ -1239,8 +1245,8 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         {
 
           // Special case for scope which is an interface. We have to look
-          // in the inherited interfaces as well..
-	        // Look before parent scopes !
+          // in the inherited interfaces as well.
+	        // Look before parent scopes.
           if (pd_scope_node_type == AST_Decl::NT_interface)
             {
               d = look_in_inherited (e, 
@@ -1271,7 +1277,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
             }
 
           // If treat_as_ref is true and d is not NULL, add d to
-          // set of nodes referenced here
+          // set of nodes referenced here.
           if (treat_as_ref && d != 0)
             {
               Identifier *id = 0;
@@ -1327,7 +1333,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                 }
             }
 
-          // OK, now return whatever we found
+          // OK, now return whatever we found.
           return d;
         }
 
@@ -1343,7 +1349,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // If treat_as_ref is true and d is not 0, add d to
-      // set of nodes referenced here
+      // set of nodes referenced here.
       if (treat_as_ref && d != 0)
         {
           add_to_referenced (d, 
@@ -1351,7 +1357,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                              0);
         }
 
-      // All OK, name fully resolved
+      // All OK, name fully resolved.
       if (d != 0)
         {
           return d;
@@ -1806,9 +1812,9 @@ UTL_Scope::referenced (AST_Decl *e,
   return I_FALSE;
 }
 
-// Redefinition of inherited virtual operations
+// Redefinition of inherited virtual operations.
 
-// AST Dumping
+// AST Dumping.
 void
 UTL_Scope::dump (ostream &o)
 {
@@ -1877,6 +1883,12 @@ UTL_Scope::dump (ostream &o)
     }
 
   idl_global->indent ()->decrease ();
+}
+
+int
+UTL_Scope::accept (ast_visitor *visitor)
+{
+  return visitor->visit_scope (this);
 }
 
 // How many entries are defined?

@@ -112,6 +112,9 @@ public:
   // Cleanup function.
   virtual void destroy (void);
 
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
+
 private:
   friend int tao_yyparse (void);
 

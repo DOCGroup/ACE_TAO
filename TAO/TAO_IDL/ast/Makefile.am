@@ -47,7 +47,8 @@ libast_la_SOURCES = \
   ast_typedef.cpp \
   ast_union.cpp \
   ast_union_branch.cpp \
-  ast_union_label.cpp
+  ast_union_label.cpp \
+  ast_visitor.cpp
 
 
 ## Clean up some additional files/directories possibly created during

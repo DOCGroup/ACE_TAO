@@ -187,6 +187,12 @@ AST_Root::dump (ostream &o)
   UTL_Scope::dump (o);
 }
 
+int
+AST_Root::accept (ast_visitor *visitor)
+{
+  return visitor->visit_root (this);
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Root, AST_Module)
 IMPL_NARROW_FROM_DECL(AST_Root)

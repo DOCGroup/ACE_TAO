@@ -926,6 +926,12 @@ AST_Module::destroy (void)
 {
 }
 
+int
+AST_Module::accept (ast_visitor *visitor)
+{
+  return visitor->visit_module (this);
+}
+
 // Narrowing methods
 IMPL_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Module)

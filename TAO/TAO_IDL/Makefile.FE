@@ -59,6 +59,7 @@ FILES = fe/fe_declarator \
         ast/ast_generator \
         ast/ast_redef \
         ast/ast_recursive \
+	ast/ast_visitor \
         util/utl_scope \
         util/utl_stack \
         util/utl_string \

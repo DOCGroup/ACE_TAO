@@ -142,6 +142,12 @@ AST_Field::dump (ostream &o)
   this->local_name ()->dump (o);
 }
 
+int
+AST_Field::accept (ast_visitor *visitor)
+{
+  return visitor->visit_field (this);
+}
+
 // Data accessors.
 
 AST_Type *
