@@ -95,13 +95,11 @@ public:
 
 protected:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Map;
+          COSPROPERTY_HASH_MAP;
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          CosProperty_Hash_Entry;
-  typedef CosProperty_Hash_Entry *
-          CosProperty_Hash_Entry_ptr;
+          COSPROPERTY_HASH_ENTRY;
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Iterator;
+          COSPROPERTY_HASH_ITERATOR;
   // Typedefs are useful.
 
   CORBA::Boolean is_type_allowed (CORBA::TypeCode_ptr type);
@@ -116,7 +114,7 @@ protected:
 
   // XXX:This public: is a hack to keep the compiler complain about access violation.
 public:
-  CosProperty_Hash_Map hash_table_;
+  COSPROPERTY_HASH_MAP hash_table_;
   // This Hash_Table manages storage for our properties.
 
 protected:

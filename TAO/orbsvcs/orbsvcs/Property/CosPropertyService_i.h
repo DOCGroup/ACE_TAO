@@ -26,8 +26,10 @@
 #include "orbsvcs/orbsvcs_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
@@ -39,6 +41,7 @@ class TAO_ORBSVCS_Export CosProperty_Hash_Key
   //     ACE_Hash_Map_Manager.
 public:
   // = Initialization and termination methods.
+
   CosProperty_Hash_Key (void);
   // Default constructor.
 
@@ -60,8 +63,10 @@ public:
   virtual u_long hash (void) const;
   // The function that computes a hash value.
 
-  CosPropertyService::PropertyName_var pname_;
-  // This is still the public variable.
+// private:
+
+  CosPropertyService::PropertyName pname_;
+  // Storage pointer.
 };
 
 class TAO_ORBSVCS_Export CosProperty_Hash_Value
@@ -85,15 +90,75 @@ public:
   virtual ~CosProperty_Hash_Value (void);
   // Destructor.
 
-  CORBA::Any_var pvalue_;
+//private:
+  
+  CORBA::Any pvalue_;
   // property value.
 
   CosPropertyService::PropertyModeType pmode_;
   // Property Mode.
 };
 
+// Forward declaration.
+template <class T>
+class TAO_PropertySet;
+
+class TAO_ORBSVCS_Export TAO_PropertyNamesIterator : public virtual PortableServer::RefCountServantBase,
+                                                     public virtual POA_CosPropertyService::PropertyNamesIterator
+{
+  // = TITLE
+  //     The PropertyNamesIterator interface allows a client to
+  //     iterate through the names using the next_one or next_n operations.
+  //
+  // = DESCRIPTION
+  //     A PropertySet maintains a set of name-value pairs. The
+  //     get_all_property_names operation returns a sequence of names
+  //     (PropertyNames). If there are additional names, the
+  //     get_all_property_names operation returns an object supporting
+  //     the PropertyNamesIterator interface with the additional names.
+public:
+  // = Initialization and termination methods.
+  TAO_PropertyNamesIterator (TAO_PropertySet<POA_CosPropertyService::PropertySet> &property_set);
+  // Constructor.
+
+  virtual ~TAO_PropertyNamesIterator (void);
+  // Destructor.
+
+  virtual void reset (CORBA::Environment &env);
+  // The reset operation resets the position in an iterator to the
+  // first property name, if one exists.
+
+  virtual CORBA::Boolean next_one (CORBA::String_out property_name,
+                                   CORBA::Environment &env);
+  // The next_one operation returns true if an item exists at the
+  // current position in the iterator with an output parameter of a
+  // property name. A return of false signifies no more items in the iterator.
+
+
+  virtual CORBA::Boolean next_n (CORBA::ULong how_many,
+                                 CosPropertyService::PropertyNames_out property_names,
+                                 CORBA::Environment &env);
+  // The next_n operation returns true if an item exists at the
+  // current position in the iterator and the how_many parameter was
+  // set greater than zero. The output is a PropertyNames sequence
+  // with at most the how_many number of names. A return of false
+  // signifies no more items in the iterator.
+
+  virtual void destroy (CORBA::Environment &env);
+  // Destroys the iterator.
+private:
+  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+          COSPROPERTY_HASH_MAP;
+  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+          COSPROPERTY_HASH_ITERATOR;
+  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
+          COSPROPERTY_HASH_ENTRY;
+
+  COSPROPERTY_HASH_ITERATOR iterator_;
+  // The Iterator object.
+};
+
 // forward declarations.
-class TAO_PropertyNamesIterator;
 class TAO_PropertiesIterator;
 
 // Include templates here.
@@ -277,62 +342,8 @@ private:
   // keep track all of them so that we can delete them at the end.
 };
 
-class TAO_ORBSVCS_Export TAO_PropertyNamesIterator :  public virtual POA_CosPropertyService::PropertyNamesIterator
-{
-  // = TITLE
-  //     The PropertyNamesIterator interface allows a client to
-  //     iterate through the names using the next_one or next_n operations.
-  //
-  // = DESCRIPTION
-  //     A PropertySet maintains a set of name-value pairs. The
-  //     get_all_property_names operation returns a sequence of names
-  //     (PropertyNames). If there are additional names, the
-  //     get_all_property_names operation returns an object supporting
-  //     the PropertyNamesIterator interface with the additional names.
-public:
-  // = Initialization and termination methods.
-  TAO_PropertyNamesIterator (TAO_PropertySet<POA_CosPropertyService::PropertySet> &property_set);
-  // Constructor.
-
-  virtual ~TAO_PropertyNamesIterator (void);
-  // Destructor.
-
-  virtual void reset (CORBA::Environment &env);
-  // The reset operation resets the position in an iterator to the
-  // first property name, if one exists.
-
-  virtual CORBA::Boolean next_one (CORBA::String_out property_name,
-                                   CORBA::Environment &env);
-  // The next_one operation returns true if an item exists at the
-  // current position in the iterator with an output parameter of a
-  // property name. A return of false signifies no more items in the iterator.
-
-
-  virtual CORBA::Boolean next_n (CORBA::ULong how_many,
-                                 CosPropertyService::PropertyNames_out property_names,
-                                 CORBA::Environment &env);
-  // The next_n operation returns true if an item exists at the
-  // current position in the iterator and the how_many parameter was
-  // set greater than zero. The output is a PropertyNames sequence
-  // with at most the how_many number of names. A return of false
-  // signifies no more items in the iterator.
-
-  virtual void destroy (CORBA::Environment &env);
-  // Destroys the iterator.
-private:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Map;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Iterator;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          CosProperty_Hash_Entry;
-  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-
-  CosProperty_Hash_Iterator iterator_;
-  // The Iterator object.
-};
-
-class TAO_ORBSVCS_Export TAO_PropertiesIterator :  public virtual POA_CosPropertyService::PropertiesIterator
+class TAO_ORBSVCS_Export TAO_PropertiesIterator : public virtual PortableServer::RefCountServantBase,
+                                                  public virtual POA_CosPropertyService::PropertiesIterator
 {
   // = TITLE
   //     Thid class implements PropertiesIterator interface allows a client to
@@ -378,14 +389,13 @@ public:
 
 private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Map;
+          COSPROPERTY_HASH_MAP;
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Iterator;
+          COSPROPERTY_HASH_ITERATOR;
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          CosProperty_Hash_Entry;
-  typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
+          COSPROPERTY_HASH_ENTRY;
 
-  CosProperty_Hash_Iterator iterator_;
+  COSPROPERTY_HASH_ITERATOR iterator_;
   // The iterator object.
 };
 
