@@ -4,10 +4,7 @@
 // We need this to get the status of ACE_NTRACE...
 
 #define ACE_BUILD_DLL
-#if !defined (ACE_USER_CONFIG_H)
-#define ACE_USER_CONFIG_H
-#include "ace/config.h"
-#endif /* ACE_USER_CONFIG_H */
+#include "ace/inc_user_config.h"
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
@@ -57,33 +54,33 @@ ACE_Trace::is_tracing(void)
 
 // Enable the tracing facility.
 
-void 
-ACE_Trace::start_tracing (void) 
-{ 
+void
+ACE_Trace::start_tracing (void)
+{
   ACE_Trace::enable_tracing_ = 1;
 }
 
-// Disable the tracing facility. 
+// Disable the tracing facility.
 
-void 
-ACE_Trace::stop_tracing (void)  
-{ 
-  ACE_Trace::enable_tracing_ = 0; 
+void
+ACE_Trace::stop_tracing (void)
+{
+  ACE_Trace::enable_tracing_ = 0;
 }
 
-// Change the nesting indentation level. 
+// Change the nesting indentation level.
 
-void 
-ACE_Trace::set_nesting_indent (int indent) 
-{ 
-  ACE_Trace::nesting_indent_ = indent; 
+void
+ACE_Trace::set_nesting_indent (int indent)
+{
+  ACE_Trace::nesting_indent_ = indent;
 }
 
 // Perform the first part of the trace, which prints out the string N,
 // the LINE, and the ACE_FILE as the function is entered.
 
-ACE_Trace::ACE_Trace (const char *n, 
-		      int line, 
+ACE_Trace::ACE_Trace (const char *n,
+		      int line,
 		      const char *file)
 {
   this->name_ = n;
@@ -106,7 +103,7 @@ ACE_Trace::ACE_Trace (const char *n,
 // Perform the second part of the trace, which prints out the NAME as
 // the function is exited.
 
-ACE_Trace::~ACE_Trace (void) 
+ACE_Trace::~ACE_Trace (void)
 {
   if (ACE_Trace::enable_tracing_)
     {
@@ -115,11 +112,10 @@ ACE_Trace::~ACE_Trace (void)
 	  && lm->trace_active () == 0)
 	{
 	  lm->trace_active (1);
-	  ACE_DEBUG ((LM_TRACE, "%*s(%t) leaving %s\n", 
+	  ACE_DEBUG ((LM_TRACE, "%*s(%t) leaving %s\n",
 		      ACE_Trace::nesting_indent_ * lm->dec (),
 		      "", this->name_));
 	  lm->trace_active (0);
 	}
     }
 }
-
