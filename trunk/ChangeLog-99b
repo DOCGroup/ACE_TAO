@@ -23,20 +23,20 @@ Tue Mar 16 14:25:03 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Mar 16 12:20:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Service_Config.h (ACE_Service_Config): 
-	Added documentation for the parse_args () method. This was in 
-	request to Bill Rizzi <rizzi@softserv.com>.
+        * ace/Service_Config.h (ACE_Service_Config):
+        Added documentation for the parse_args () method. This was in
+        request to Bill Rizzi <rizzi@softserv.com>.
 
 Tue Mar 16 10:57:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Conf.l: Added a new method ace_yy_delete_parse_buffer()
- 	  that frees up FLEX buffers when the program is done.  Thanks to
- 	  Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
- 	  this fix.
+        * ace/Svc_Conf.l: Added a new method ace_yy_delete_parse_buffer()
+          that frees up FLEX buffers when the program is done.  Thanks to
+          Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
+          this fix.
 
-	* examples/ASX/Message_Queue/buffer_stream.cpp (main): Changed pm
- 	  to cm and vice versa to be consistent.  Thanks to Rainer Blome
- 	  <rainer_blome@de.ibm.com> for reporting this.
+        * examples/ASX/Message_Queue/buffer_stream.cpp (main): Changed pm
+          to cm and vice versa to be consistent.  Thanks to Rainer Blome
+          <rainer_blome@de.ibm.com> for reporting this.
 
 Tue Mar 16 10:50:42 1999  Steve Huston  <shuston@riverace.com>
 
@@ -49,10 +49,10 @@ Tue Mar 16 10:50:42 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Mar 16 10:38:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Hash_Bucket_T.cpp: 
-	  Removed default parameter declaration from the constructor for
-	  ACE_Hash_Bucket_Manager definition. Default parameter
-	  declarations can only show up in the function declaration.
+        * ace/Hash_Bucket_T.cpp:
+          Removed default parameter declaration from the constructor for
+          ACE_Hash_Bucket_Manager definition. Default parameter
+          declarations can only show up in the function declaration.
 
 Tue Mar 16 10:25:53 1999  Steve Huston  <shuston@riverace.com>
 
@@ -129,79 +129,79 @@ Mon Mar 15 19:05:22 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Mar 15 00:26:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/ACE-netsvcs.html: Updated this to document the current
- 	  version.  Thanks to Bill Rizzi <rizzi@softserv.com> for
- 	  reporting this.
+        * netsvcs/ACE-netsvcs.html: Updated this to document the current
+          version.  Thanks to Bill Rizzi <rizzi@softserv.com> for
+          reporting this.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Make sure that debug
- 	  messages go to stderr and log messages go to stdout.  Thanks to
- 	  Bill Rizzi <rizzi@softserv.com> for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp: Make sure that debug
+          messages go to stderr and log messages go to stdout.  Thanks to
+          Bill Rizzi <rizzi@softserv.com> for reporting this.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (fini): Oops, fixed a
- 	  minor buglet with return values.  Thanks to David for reporting
- 	  this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (fini): Oops, fixed a
+          minor buglet with return values.  Thanks to David for reporting
+          this.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (send): Added a check to
- 	  make sure we don't crash if the ostream is NULL.  Thanks to Bill
- 	  Rizzi <rizzi@softserv.com> for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (send): Added a check to
+          make sure we don't crash if the ostream is NULL.  Thanks to Bill
+          Rizzi <rizzi@softserv.com> for reporting this.
 
 Sun Mar 14 22:54:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (init): Added an
- 	  ACE_OS::unlink() to prevent STREAM pipes from getting confused
- 	  if this application doesn't shutdown gracefully.  Thanks to Bill
- 	  Rizzi <rizzi@softserv.com> for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (init): Added an
+          ACE_OS::unlink() to prevent STREAM pipes from getting confused
+          if this application doesn't shutdown gracefully.  Thanks to Bill
+          Rizzi <rizzi@softserv.com> for reporting this.
 
 Sun Mar 14 19:51:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in: Added real-time support library `-lrt' check to
-	  asynchronous IO functions/libraries checks.
+        * configure.in: Added real-time support library `-lrt' check to
+          asynchronous IO functions/libraries checks.
 
-	  GNU glibc 2.1 adds support for the POSIX 1b real-time
- 	  specification in the library `librt'.  The POSIX asynchronous IO
- 	  functions may be found in that library.  Currently, `-lpthread'
- 	  must also be linked to in addition to `-lrt'.
+          GNU glibc 2.1 adds support for the POSIX 1b real-time
+          specification in the library `librt'.  The POSIX asynchronous IO
+          functions may be found in that library.  Currently, `-lpthread'
+          must also be linked to in addition to `-lrt'.
 
 Sun Mar 14 17:20:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Msg: Generalized the enable_debug_messages() and
- 	  disable_debug_messages() methods so they can be used to enable
- 	  or disable arbitrary priorities.  Thanks to Susan Liebeskind
- 	  <shl@janis.gtri.gatech.edu> for suggesting this.
+        * ace/Log_Msg: Generalized the enable_debug_messages() and
+          disable_debug_messages() methods so they can be used to enable
+          or disable arbitrary priorities.  Thanks to Susan Liebeskind
+          <shl@janis.gtri.gatech.edu> for suggesting this.
 
 Sun Mar 14 14:46:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/OS.i (tzset,timezone):  pSOS doesn't support these two
-	  functions.
+        * ace/OS.i (tzset,timezone):  pSOS doesn't support these two
+          functions.
 
-	* ace/OS.{cpp, h}: added comments clarifying usage for 
+        * ace/OS.{cpp, h}: added comments clarifying usage for
           ACE_Time_Value::max_time, use of ACE_PSOS_TM in ACE_OS::signal ().
 
 Sun Mar 14 01:30:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (tzset,timezone):  WinCE doesn't support these two
-	  functions.
+        * ace/OS.i (tzset,timezone):  WinCE doesn't support these two
+          functions.
 
 Sat Mar 13 12:14:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Thread_Manager: Changed the following methods:
+        * ace/Thread_Manager: Changed the following methods:
 
-	  int task_list (..)
-	  int thread_list (...)
-	  int hthread_list (..)
-	  int thread_grp_list (...)
-	  int hthread_grp_list (...)
+          int task_list (..)
+          int thread_list (...)
+          int hthread_list (..)
+          int thread_grp_list (...)
+          int hthread_grp_list (...)
 
-	  to return actual number of fetched values.
+          to return actual number of fetched values.
 
-	* ace/Thread_Manager: Added two new methods, task_all_list() and
- 	  thread_all_list(), which return lists of all the tasks and
- 	  threads in a Thread_Manager, respectively.  Thanks to Zoran
- 	  Ivanovic <zorani@pathcom.com> for contributing this.
+        * ace/Thread_Manager: Added two new methods, task_all_list() and
+          thread_all_list(), which return lists of all the tasks and
+          threads in a Thread_Manager, respectively.  Thanks to Zoran
+          Ivanovic <zorani@pathcom.com> for contributing this.
 
-	* ace/Shared_Memory_{MM,SV}.h: Clarified the relationship of
-	  these classes to the more powerful ACE_Malloc<> abstraction.
-	  Thanks to Ti Z <tiz@cisco.com> for suggesting this.
+        * ace/Shared_Memory_{MM,SV}.h: Clarified the relationship of
+          these classes to the more powerful ACE_Malloc<> abstraction.
+          Thanks to Ti Z <tiz@cisco.com> for suggesting this.
 
 Sat Mar 13 13:27:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -223,9 +223,9 @@ Sat Mar 13 13:27:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Mar 13 16:16:13 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/021: Added some comments to page04 about the
- 	  template parameters and the use of the ACE_LOCK parameter in
- 	  particular.  (Thanks to Bala for the suggestion.)
+        * docs/tutorials/021: Added some comments to page04 about the
+          template parameters and the use of the ACE_LOCK parameter in
+          particular.  (Thanks to Bala for the suggestion.)
 
 Sat Mar 13 00:37:17 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -373,7 +373,7 @@ Wed Mar 10 10:13:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Wed Mar 10 08:52:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus.GNU: fixed
-          exceptions=1 support.  Thanks to Wei Chang for
+          exceptions=1 support.  Thanks to Wei Chiang for
           reporting this.
 
         * include/makeinclude/wrapper_macros.GNU: added exceptions=1
@@ -423,7 +423,7 @@ Tue Mar 09 15:15:19 1999  David L. Levine  <levine@cs.wustl.edu>
           for suggesting this.
 
         * include/makeinclude/platform_chorus_ghs.GNU: added exceptions
-          make option support.  Thanks to Wei Chang for reporting that
+          make option support.  Thanks to Wei Chiang for reporting that
           it wasn't supported.
 
 Tue Mar  9 12:59:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
