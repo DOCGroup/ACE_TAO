@@ -881,8 +881,9 @@ For the most part, you should be able to follow the instructions above
 to build ACE and applications that use it.  Start with the
 <a href="#unix">Unix instructions</a> for Unix hosts, or
 <a href="#win32">Win32</a> instructions for Windows NT hosts,
-but substitute the appropriate VxWorks configuration file (and
-platform_macros file, on Unix).<P>
+but substitute the appropriate VxWorks configuration file and
+platform_macros file.  Please see below for information on
+<a href="#VxWorks/NT">building ACE on NT hosts for VxWorks targets</a>.<P>
 
 You'll have to let ACE know the target type at compile time.
 There are several ways to do this; please see the
@@ -1003,6 +1004,160 @@ without the ACE library by added <code>ACELIB=</code> to the make
 invocation when building them.  When they are loaded onto the target,
 the should load against the symbols from the ACE library from the
 first executable that was loaded.<p>
+
+<h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
+The following, very useful information was contributed by
+<a href="http://people.qualcomm.com/cryan">Chris Ryan</a>.  It is
+under construction; please submit corrections or additions.<p>
+
+<ol>
+  <li>Create UNIX-like environment in NT Command Prompt windows by
+      downloading GNU bash, perl, and so forth from your favorite ftp
+      site. I went to <a href="ftp://ftp.cygnus.com/pub/gnu-win32/latest/">ftp://ftp.cygnus.com/pub/gnu-win32/latest/</a>
+      and downloaded <code>cdk.exe</code> and installed that on my NT box.
+      I downloaded perl5.0 from where I can't remember.  There may have been
+      bits and pieces from other places for things like <code>vi</code> and
+      <code>less</code>.
+
+  <li>Download latest ACE.  Create 2 parallel trees, say
+      <code>/ace/ACE_wrappers.NT</code> and
+      <code>/ace/ACE_wrappers.vxworks</code>.  The NT tree is for building
+      <code>aced.dll</code> and <code>tao_idl.exe</code> as currently
+      documented for ACE/TAO on NT/VC++5.0. The VxWorks tree is the
+      cross compilation tree.
+
+  <li>Path setting that seems to be working is:<p>
+      <pre>
+/tornado/host/x86-win32/bin:
+/tornado/host/x86-win32/lib/gcc-lib/i386-wrs-vxworks/cygnus-2.7.2-960126:
+/tornado/host/x86-win32/i386-wrs-vxworks/bin:
+/ace/ace_wrappers/bin:
+/gnuwin32/b18/H-i386-cygwin32/bin:
+/gnuwin32/b18/tcl/bin:
+/WINNT/system32:
+/WINNT:
+/WINNT/system32/nls/ENGLISH:
+/bin
+</pre>
+
+    Other environment variables:<p>
+<pre>
+WIND_BASE=/tornado
+SHELL=/bin/sh.exe
+TERM=pcbios
+TAO_ROOT=/ace/ACE_wrappers.vxworks/TAO
+CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.EXE
+GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/
+WIND_HOST_TYPE=x86-win32
+ACE_ROOT=/ace/ACE_wrappers.vxworks
+</pre>
+
+  <li><code>/tornado</code> is the root of the Tornado install
+    (<code>$WIND_BASE</code>).
+
+  <li><code>/gnuwin32</code> is the root of a Cygnus GNU download and install.
+
+  <li><code>/bin</code> content is:<p>
+<pre>
+aced.dll
+cygwin.dll
+perl.exe
+rm.exe
+sh.exe
+true
+</pre>
+
+  <code>aced.dll</code> is produced in an ACE NT source tree according to
+  documented procedure for NT VC++5.0 ACE build.
+
+  <code>cygwin.dll</code> is from the Cygnus GNU software download and install.
+
+  <li>Basically, follow documented procedure for ACE build/install on UNIX
+    platform. Create a <code>$ACE_ROOT/ace/config.h</code> that looks like:<p>
+<pre>
+#define __ACE_INLINE__ 0
+#define ACE_HAS_DLL 0
+#include "config-vxworks5.x.h"
+</pre>
+
+    And create a <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>
+    that looks like:<p>
+<pre>
+WIND_BASE = /tornado
+WIND_HOST_TYPE = x86-win32
+PATH += :$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin
+CPU = I80486
+include $(ACE_ROOT)/include/makeinclude/platform_NTvxworks5.x_g++.GNU
+</pre>
+
+    (But, I guess the PATH+= line is superfluous based on the PATH as shown 
+    previously).
+
+    Finally, create a
+    <code>$ACE_ROOT/include/makeinclude/platform_NTvxworks5.x_g++.GNU</code>
+    with diff output from 'diff platform_vxworks5.x_g++.GNU
+    platform_NTvxworks5.x_g++.GNU' that looks like:
+
+<pre>
+58c58
+&lt; HOST_DIR        = $(WIND_BASE)/host/sun4-solaris2
+---
+&gt; HOST_DIR        = $(WIND_BASE)/host/x86-win32
+62,63c62,63
+&lt; CXX             = g++$(TOOLENV)
+&lt; CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin
+-fno-defer-pop -fvolatile -nostdinc -nostdlib -pipe -Wall
+---
+&gt; CXX             = $(CC)
+&gt; CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
+                -fvolatile -nostdinc -nostdlib -Wall #-pipe
+</pre>
+
+  <li>Now, follow the existing documentation for a UNIX platform build of ACE
+      such as:
+        <pre>
+        cd $ACE_ROOT/ace; make
+        </pre>
+
+  <li>To build $ACE_ROOT/tests, I had to use the <code>make.exe</code> in the 
+    <code>/gnuwin32/b18/H-i386-cygwin32/bin</code> directory as I couldn't get
+    make shipped with Tornado to run ace_ld and I couldn't figure out any
+    other work around.<p>
+
+    <pre>
+    cd $ACE_ROOT/tests; /gnuwin32/b18/H-i386-cygwin32/bin/make 
+    </pre>
+
+  Also, running the tests works as already documented.
+</ol>
+
+<h5>TAO on NT Tornado host, VxWorks target.</h5>
+
+<ol>
+  <li>Build ACE and TAO_IDL in the NT tree as already documented. As
+      mentioned above, I put <code>aced.dll</code> in <code>/bin</code>.
+
+  <li>Copy TAO_IDL/tao_idl.exe to TAO_IDL directory in the ACE/TAO vxworks
+      source tree. (I didn't spend any time yet looking for the place where the
+      makefiles are using the absolute path to tao_idl.exe.)
+
+  <li>Build orbsvcs.
+    <pre>
+    CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
+    cd $TAO_ROOT/orbsvcs/orbsvcs
+    /gnuwin32/b18/H-i386-cygwin32/bin/make 
+    </pre>
+
+  <li>Build $TAO_ROOT/tao
+    <pre>
+    CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
+    cd $TAO_ROOT/tao
+    /gnuwin32/b18/H-i386-cygwin32/bin/make 
+    </pre>
+
+  <li>Build $TAO_ROOT/tests
+</ol>
+
 
 <HR>
 <H3><A NAME="svcsinstall">Building and Installing ACE Network Services</A></H3>
