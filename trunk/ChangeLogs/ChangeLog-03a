@@ -1,3 +1,15 @@
+Fri Apr 12 15:03:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Set JAVADOC_AUTOBRIEF to YES. From now on, when there is only
+          javadoc style comments, there first line until the first '.' is
+          used as brief comment. In the brief class description a lof of more
+          methods will have a description.
+
+        * Timer_Heap_T.h:
+          Change the comment style for method remove_first from doxygen style
+          to javadoc style
+
 Fri Apr 12 13:32:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/WFMO_Reactor.h:
