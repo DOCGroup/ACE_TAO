@@ -1938,6 +1938,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "POA Non_Servant_Upcalls"=.\tests\POA\Non_Servant_Upcalls\Non_Servant_Upcalls.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "POA Default Servant Client"=.\examples\POA\Default_Servant\client.dsp - Package Owner=<4>
 
 Package=<5>
