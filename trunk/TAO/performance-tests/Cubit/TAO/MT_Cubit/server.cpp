@@ -22,16 +22,6 @@
 
 ACE_RCSID(MT_Cubit, server, "$Id$")
 
-// Global options used to configure various parameters.
-// static char hostname[BUFSIZ];
-// static char *ior_file = 0;
-// static int base_port = ACE_DEFAULT_SERVER_PORT;
-// static u_int num_of_objs = 2;
-// static u_int use_name_service = 1;
-// static u_int thread_per_rate = 0;
-// static u_int use_multiple_priority = 0;
-// static u_int run_utilization_test = 0;
-
 Globals::Globals (void)
   :ior_file (0),
    base_port (ACE_DEFAULT_SERVER_PORT),
@@ -127,7 +117,6 @@ Cubit_Task::Cubit_Task (void)
 Cubit_Task::Cubit_Task (const char *args,
                         const char *orbname,
                         u_int num_of_objs,
-                        ACE_Barrier *barrier,
                         Task_State *ts,
                         ACE_Thread_Manager *thr_mgr,
                         u_int task_id)
@@ -137,7 +126,6 @@ Cubit_Task::Cubit_Task (const char *args,
     orbargs_ ((char *) args),
     num_of_objs_ (num_of_objs),
     servants_ (0),
-    barrier_ (barrier),
     servants_iors_ (0),
     task_id_ (task_id),
     ts_ (ts)
@@ -175,7 +163,6 @@ Cubit_Task::svc (void)
       this->poa_manager_->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      //      this->barrier_->wait ();
       GLOBALS::instance ()->barrier_->wait ();
 
       // Handle requests for this object until we're killed, or one of
@@ -503,12 +490,12 @@ Server::initialize (int argc, char **argv)
 }
 
 int
-Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts)
+Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
 {
 
   ACE_ARGV  tmp_args (this->argv_);
-  char high_thread_args[BUFSIZ];
-  char low_thread_args[BUFSIZ];
+  char high_thread_args[3*BUFSIZ];
+  char low_thread_args[3*BUFSIZ];
 
   ACE_OS::strcpy (high_thread_args,
                   tmp_args.buf ());
@@ -517,7 +504,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
   char *args1;
 
   ACE_NEW_RETURN (args1,
-                  char[BUFSIZ],
+                  char[3*BUFSIZ],
                   -1);
   int i;
 
@@ -539,12 +526,10 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                   -1);
 
   ACE_OS::sprintf (args1,
-                   "-ORBport %d "
                    "-ORBhost %s "
                    "-ORBobjrefstyle URL "
                    "-ORBsndsock 32768 "
                    "-ORBrcvsock 32768 ",
-                   GLOBALS::instance ()->base_port,
                    GLOBALS::instance ()->hostname);
 
   ACE_OS::strcat (high_thread_args,args1);
@@ -554,7 +539,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                   Cubit_Task (high_thread_args,
                               "internet",
                               1,
-                              &start_barrier,
                               ts,
                               serv_thr_mgr,
                               0), //task id 0.
@@ -672,20 +656,18 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
       char *new_args;
 
       ACE_NEW_RETURN (args,
-                      char [BUFSIZ],
+                      char [3*BUFSIZ],
                       -1);
 
       ACE_NEW_RETURN (new_args,
-                      char [BUFSIZ],
+                      char [3*BUFSIZ],
                       -1);
       ACE_OS::strcpy (new_args,low_thread_args);
       ACE_OS::sprintf (args,
-                       "-ORBport %d "
                        "-ORBhost %s "
                        "-ORBobjrefstyle URL "
                        "-ORBsndsock 32768 "
                        "-ORBrcvsock 32768 ",
-                       GLOBALS::instance ()->base_port + i,
                        GLOBALS::instance ()->hostname);
 
       ACE_OS::strcat (new_args,args);
@@ -694,7 +676,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                       Cubit_Task (new_args,
 				  "internet",
 				  1,
-				  &start_barrier,
 				  ts,
 				  serv_thr_mgr,
 				  i),
@@ -733,7 +714,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
         }
     } /* end of for() */
 
-  //  start_barrier.wait ();
   GLOBALS::instance ()->barrier_->wait ();
 
   // Write the ior's to a file so the client can read them.
@@ -930,8 +910,7 @@ main (int argc, char *argv[])
   quantify_start_recording_data();
 #endif /* NO_ACE_QUANTIFY */
 
-  ACE_Barrier start_barrier (1);
-  if (server.start_servants (&servant_thread_manager,start_barrier,&ts) != 0)
+  if (server.start_servants (&servant_thread_manager,&ts) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
