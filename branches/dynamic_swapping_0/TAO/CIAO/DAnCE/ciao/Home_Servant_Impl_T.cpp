@@ -5,6 +5,7 @@
 
 #include "Home_Servant_Impl_T.h"
 
+
 namespace CIAO
 {
   template <typename BASE_SKEL,
