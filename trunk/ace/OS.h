@@ -5843,9 +5843,9 @@ public:
                     ACE_OVERLAPPED_COMPLETION_FUNC func);
   // QoS-enabled <ioctl>.
   static int ioctl (ACE_HANDLE socket,
-					u_long io_control_code,
+                    u_long io_control_code,
                     ACE_QoS &ace_qos,
-   			        u_long *bytes_returned,
+                    u_long *bytes_returned,
                     void *buffer_p = 0,
                     u_long buffer = 0,
                     ACE_OVERLAPPED *overlapped = 0,
