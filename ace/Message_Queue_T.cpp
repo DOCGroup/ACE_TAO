@@ -241,7 +241,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio (ACE_MESSAGE
                                                                      ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio");
-  
+
   ACE_Message_Block *mb;
 
   int cur_count = this->queue_.dequeue_prio (mb, timeout);
@@ -267,7 +267,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail (ACE_MESSAGE
                                                                      ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail");
-  
+
   ACE_Message_Block *mb;
 
   int cur_count = this->queue_.dequeue_tail (mb, timeout);
@@ -293,7 +293,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline (ACE_MES
                                                                          ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline");
-  
+
   ACE_Message_Block *mb;
 
   int cur_count = this->queue_.dequeue_deadline (mb, timeout);
@@ -881,7 +881,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
       this->head_ = chosen->next ();
     }
   else
-    { 
+    {
       chosen->prev ()->next (chosen->next ());
     }
 
@@ -904,13 +904,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
   this->cur_count_--;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;                        
+    this->head_ = this->tail_ = 0;
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
       && this->signal_enqueue_waiters () == -1)
-    return -1;                                 
+    return -1;
   else
     return this->cur_count_;
 }
@@ -997,7 +997,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
       this->head_ = chosen->next ();
     }
   else
-    { 
+    {
       chosen->prev ()->next (chosen->next ());
     }
 
@@ -1020,13 +1020,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
   this->cur_count_--;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;                        
+    this->head_ = this->tail_ = 0;
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
       && this->signal_enqueue_waiters () == -1)
-    return -1;                                 
+    return -1;
   else
     return this->cur_count_;
 #else
