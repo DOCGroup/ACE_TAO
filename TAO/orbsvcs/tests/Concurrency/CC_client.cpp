@@ -1,4 +1,22 @@
+/* -*- C++ -*- */
 // $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/tests
+//
+// = FILENAME
+//    CC_client.h
+//
+// = DESCRIPTION
+//      This is the test class for the concurrency service. The class
+//      implements a client to the concurrency service.
+//      This file contains the main function for the test.
+//
+// = AUTHORS
+//	Torben Worm <tworm@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/Read_Buffer.h"
 #include "CC_client.h"
@@ -6,13 +24,15 @@
 // Constructor.
 CC_Client::CC_Client (void)
   : naming_service_ (0),
-  cc_factory_ior_file_ (0),
-  cc_factory_key_ (0),
-  f_handle_ (ACE_INVALID_HANDLE),
-  shutdown_ (0),
-  use_naming_service_ (1),
-  run_basic_tests_ (0),
-  run_extended_tests_ (0)
+    cc_factory_ior_file_ (0),
+    cc_factory_key_ (0),
+    f_handle_ (ACE_INVALID_HANDLE),
+    shutdown_ (0),
+    use_naming_service_ (1),
+    run_basic_tests_ (0),
+    run_extended_tests_ (0),
+    use_script_file_ (0),
+    script_file_ (0)
 {
 }
 
@@ -60,7 +80,7 @@ CC_Client::read_ior (char *filename)
 int
 CC_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dsf:k:xbhe:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dc:sf:k:xbhe:");
   int c;
   int result;
 
@@ -70,12 +90,16 @@ CC_Client::parse_args (void)
       case 'b':  // debug flag
         this->run_basic_tests_ = 1;
         break;
-      case 'e':  // debug flag
-        run_extended_tests_ = 1;
-        this->extended_tests_params_ = ACE_OS::strdup (get_opts.optarg);
+      case 'c':
+        this->use_script_file_ = 1;
+        this->script_file_ = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'd':  // debug flag
         TAO_debug_level++;
+        break;
+      case 'e':  // debug flag
+        run_extended_tests_ = 1;
+        this->extended_tests_params_ = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.optarg);
@@ -130,6 +154,25 @@ CC_Client::run (void)
       if(success==CC_FAIL)
         ACE_DEBUG((LM_DEBUG, "Extended tests did not succeed\n"));
       tests_run = 1;
+    }
+
+  if(this->use_script_file_ && success == CC_SUCCESS)
+    {
+      cmdlist = new CC_CommandList();
+      FILE *f;
+
+      // Open the command file for parsing if the filename!=stdin
+      if(ACE_OS::strcmp(this->script_file_, "stdin")!=0)
+        {
+          f = ACE_OS::fopen(this->script_file_, "r");
+          if(f==0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s\n",
+                               this->script_file_),
+                              -1);
+          CC_commandin = f;
+        }
+      CC_commandparse();
     }
 
   // Other tests go here
@@ -290,6 +333,7 @@ CC_Client::print_usage (void)
   ACE_ERROR ((LM_ERROR,
               "usage:  %s"
               " [-b]"
+              " [-c] cc-test-script"
               " [-d]"
               " [-f cc_factory-obj-ref-key-file]"
               " [-k cc-obj-ref-key]"
