@@ -3,8 +3,8 @@
 //
 
 #include "Stock_Consumer.h"
-#include <orbsvcs/CosNamingC.h>
-#include <orbsvcs/Event_Utilities.h>
+#include <orbsvcs/orbsvcs/CosNamingC.h>
+#include <orbsvcs/orbsvcs/Event_Utilities.h>
 #include "ace/streams.h"
 #include "ace/OS_NS_string.h"
 

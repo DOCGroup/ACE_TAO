@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Stock_i.h"
-#include <orbsvcs/Event_Utilities.h>
+#include <orbsvcs/orbsvcs/Event_Utilities.h>
 
 ///derive a class from the tie template class to release itself by ref_count
 class MyTieStock:public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
