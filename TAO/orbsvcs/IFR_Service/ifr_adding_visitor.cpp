@@ -974,7 +974,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
         }
 
       AST_Expression::AST_ExprValue *ev = node->constant_value ()->ev ();
-      AST_Decl *td = ev->tdef;
+      AST_Decl *td = node->constant_value ()->get_tdef ();
 
       if (td != 0 && td->node_type () == AST_Decl::NT_typedef)
         {
