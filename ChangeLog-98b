@@ -1,10 +1,15 @@
 Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Pool_Reactor_Test.cpp: moved #include of
-          tests/Thread_Pool_Reactor_Test.h inside the ACE_HAS_THREADS
+          tests/Thread_Pool_Reactor_Test.h inside of ACE_HAS_THREADS
           protection, so that it will compile without thread support.
           Thanks to Jan Perman <Jan.Perman@osd.uab.ericsson.se> for
           reporting this.
+
+        * tests/MT_Reactor_Timer_Test.cpp: moved "the_reactor" declaration
+          outside of ACE_HAS_THREADS protection, so that it will compile
+          without thread support.  Thanks to Jan Perman
+          <Jan.Perman@osd.uab.ericsson.se> for reporting this.
 
 Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
 
