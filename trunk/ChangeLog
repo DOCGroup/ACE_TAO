@@ -1,3 +1,10 @@
+Thu Aug 26 09:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated instructions to build SSL with Borland C++, no OpenSSL
+          patch is necessary anymore and now MPC must be used. Updated HPUX
+          supported platforms.
+
 Thu Aug 26 07:58:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * ace/config-linux-common.h:
