@@ -54,10 +54,7 @@ be_structure::compute_member_count (void)
         {
           // get the next AST decl node
           d = si->item ();
-          if (!d->imported ())
-            {
-              this->member_count_++;
-            }
+          this->member_count_++;
           si->next ();
         } // end of while
       delete si; // free the iterator object
