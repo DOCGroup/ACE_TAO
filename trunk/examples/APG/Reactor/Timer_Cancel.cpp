@@ -97,6 +97,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                                               mutateTimer);
   // Listing 3
 
+#else
+   ACE_UNUSED_ARG (timerId);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
