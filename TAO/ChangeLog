@@ -1,3 +1,16 @@
+Tue Jul 30 18:13:42 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tests/Big_Reply/Makefile:
+	* tests/Big_Twoways/Makefile:
+	* tests/Big_Request_Muxing/Makefile:
+	* tests/Oneways_Invoking_Twoways/Makefile:
+	* tests/AMI_Buffering/Makefile:
+	* tests/DLL_ORB/Makefile:
+	* tests/Two_objects/Makefile:
+	* tests/Nested_Upcall_Crash/Makefile:
+	  Updated dependencies.
+	
+
 Wed Jul 31 01:05:23 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* docs/releasenotes/index.html: Updated AV Service information.
