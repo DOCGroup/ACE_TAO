@@ -261,10 +261,6 @@ cuserid() may not exist, or it is not desirable to use it.  The
 implementation requires ACE_LACKS_PWD_FUNCTIONS to be undefined and
 that the geteuid() system call exists.])
 
-AH_TEMPLATE([ACE_HAS_ANSI_CASTS],
-[Platform supports new C++ style casts (dynamic_cast, static_cast,
-reinterpret_cast and const_cast)])
-
 AH_TEMPLATE([ACE_DEFAULT_THREAD_KEYS],
 [Number of TSS keys, with ACE_HAS_TSS_EMULATION _only_.  Defaults to 64.])
 
@@ -683,9 +679,7 @@ AH_TEMPLATE([ACE_LACKS_FCNTL],[Platform lacks POSIX-style fcntl ()])
 
 AH_TEMPLATE([ACE_LACKS_FSYNC],[Platform lacks fsync()])
 
-AH_TEMPLATE([ACE_LACKS_RTTI],
-[Compiler does not support dynamic_cast.  Usually used with
-   ACE_HAS_ANSI_CASTS])
+AH_TEMPLATE([ACE_LACKS_RTTI],[Compiler does not support dynamic_cast.])
 
 AH_TEMPLATE([ACE_LACKS_READDIR_R],[Platform lacks readdir_r()])
 
