@@ -93,7 +93,7 @@ TAO_Persistent_Bindings_Map::destroy (void)
   allocator_->free (map_);
 }
 
-HASH_MAP *
+TAO_Persistent_Bindings_Map::HASH_MAP *
 TAO_Persistent_Bindings_Map::map (void)
 {
   return map_;
