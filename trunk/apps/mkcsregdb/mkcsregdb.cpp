@@ -8,7 +8,9 @@
  * copy of this file, with the registry_db_ array properly initialized.
  */
 
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Codeset_Registry.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"

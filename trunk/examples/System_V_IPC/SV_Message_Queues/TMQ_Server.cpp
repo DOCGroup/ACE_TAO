@@ -4,7 +4,10 @@
 #include "ace/Typed_SV_Message_Queue.h"
 
 #include "test.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"

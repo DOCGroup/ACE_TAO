@@ -57,7 +57,6 @@
 #include "ace/Signal.h"
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"

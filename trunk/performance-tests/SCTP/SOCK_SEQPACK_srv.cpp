@@ -7,7 +7,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/CDR_Stream.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/os_include/arpa/os_inet.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_string.h"

@@ -11,6 +11,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \

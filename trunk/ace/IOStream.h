@@ -34,8 +34,6 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#include "ace/streams.h"
-
 #  if defined (ACE_HAS_STRING_CLASS)
 #    if defined (ACE_WIN32) && defined (_MSC_VER)
 typedef CString ACE_IOStream_String;

@@ -21,7 +21,10 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Framework_Component.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"

@@ -21,6 +21,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_stat.h"
 
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)

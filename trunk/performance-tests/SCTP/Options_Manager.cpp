@@ -24,7 +24,10 @@ extern "C" {
 #endif
 
 #include "Options_Manager.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_arpa_inet.h"
 

@@ -3,7 +3,10 @@
 #include "ace/Logging_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"

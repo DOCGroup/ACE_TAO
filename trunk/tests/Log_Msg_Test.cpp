@@ -20,7 +20,9 @@
 //
 // ============================================================================
 
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/FILE_Connector.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg_Callback.h"
