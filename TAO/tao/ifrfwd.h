@@ -450,7 +450,7 @@ TAO_NAMESPACE  IR
   typedef CORBA::String_out ContextIdentifier_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ContextIdentifier;
 
-  enum TAO_Export DefinitionKind
+  enum DefinitionKind
     {
         dk_none,
         dk_all,
