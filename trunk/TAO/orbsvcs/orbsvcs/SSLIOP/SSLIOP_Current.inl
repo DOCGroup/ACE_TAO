@@ -2,6 +2,12 @@
 //
 // $Id$
 
+ACE_INLINE void
+TAO_SSLIOP_Current::tss_slot (size_t slot)
+{
+  this->tss_slot_ = slot;
+}
+
 ACE_INLINE int
 TAO_SSLIOP_Current::implementation (TAO_SSLIOP_Current_Impl *impl)
 {
