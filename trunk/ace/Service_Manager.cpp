@@ -1,4 +1,3 @@
-// Service_Manager.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -23,12 +22,12 @@ ACE_Service_Manager::dump (void) const
   ACE_TRACE ("ACE_Service_Manager::dump");
 }
 
-// Static variables. 
+// Static variables.
 
 u_short ACE_Service_Manager::DEFAULT_PORT_ = 10000;
 
 ACE_Service_Manager::ACE_Service_Manager (void)
-  : debug_ (0), 
+  : debug_ (0),
     signum_ (SIGHUP)
 {
   ACE_TRACE ("ACE_Service_Manager::ACE_Service_Manager");
@@ -40,7 +39,7 @@ ACE_Service_Manager::suspend (void)
   ACE_TRACE ("ACE_Service_Manager::suspend");
   return ACE_Reactor::instance ()->suspend_handler (this);
 }
-     
+
 int
 ACE_Service_Manager::resume (void)
 {
@@ -59,7 +58,7 @@ ACE_Service_Manager::open (const ACE_INET_Addr &sia)
   return 0;
 }
 
-int 
+int
 ACE_Service_Manager::info (ASYS_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Service_Manager::info");
@@ -68,11 +67,11 @@ ACE_Service_Manager::info (ASYS_TCHAR **strp, size_t length) const
 
   if (this->acceptor_.get_local_addr (sa) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf,
                    ASYS_TEXT ("%d/%s %s"),
                    sa.get_port_number (),
-                   ASYS_TEXT ("tcp"), 
+                   ASYS_TEXT ("tcp"),
                    ASYS_TEXT ("# lists all services in the daemon\n"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -92,24 +91,24 @@ ACE_Service_Manager::init (int argc, ASYS_TCHAR *argv[])
      switch (c)
        {
        case 'd':
-	 this->debug_ = 1;
-	 break;
-       case 'p': 
-	 local_addr.set ((u_short) ACE_OS::atoi (getopt.optarg));
-	 break;
+         this->debug_ = 1;
+         break;
+       case 'p':
+         local_addr.set ((u_short) ACE_OS::atoi (getopt.optarg));
+         break;
        case 's':
-	 this->signum_ = ACE_OS::atoi (getopt.optarg);
-	 break;
+         this->signum_ = ACE_OS::atoi (getopt.optarg);
+         break;
        default:
-	 break;
+         break;
        }
-  
+
   if (this->open (local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")), -1);
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (this,
+  else if (ACE_Reactor::instance ()->register_handler
+           (this,
             ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("registering service with ACE_Reactor\n")),
@@ -130,22 +129,26 @@ ACE_Service_Manager::fini (void)
   ACE_TRACE ("ACE_Service_Manager::fini");
 
   if (this->get_handle () != ACE_INVALID_HANDLE)
-    return ACE_Reactor::instance ()->remove_handler 
+    return ACE_Reactor::instance ()->remove_handler
       (this,
        ACE_Event_Handler::ACCEPT_MASK);
   return 0;
 }
-  
+
 ACE_HANDLE
 ACE_Service_Manager::get_handle (void) const
-{ 
+{
   ACE_TRACE ("ACE_Service_Manager::get_handle");
-  return this->acceptor_.get_handle (); 
+  return this->acceptor_.get_handle ();
 }
 
 int
 ACE_Service_Manager::handle_signal (int sig, siginfo_t *, ucontext_t *)
 {
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (sig);
+#endif /* ACE_NDEBUG */
+
   ACE_TRACE ("ACE_Service_Manager::handle_signal");
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
@@ -155,7 +158,7 @@ ACE_Service_Manager::handle_signal (int sig, siginfo_t *, ucontext_t *)
 }
 
 // Determine all the services offered by this daemon and return the
-// information back to the client. 
+// information back to the client.
 
 int
 ACE_Service_Manager::list_services (void)
@@ -163,8 +166,8 @@ ACE_Service_Manager::list_services (void)
   ACE_TRACE ("ACE_Service_Manager::list_services");
   ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
 
-  for (const ACE_Service_Type *sr; 
-       sri.next (sr) != 0; 
+  for (const ACE_Service_Type *sr;
+       sri.next (sr) != 0;
        sri.advance ())
     {
       int len = ACE_OS::strlen (sr->name ()) + 1;
@@ -179,22 +182,22 @@ ACE_Service_Manager::list_services (void)
       len += sr->type ()->info (&p, sizeof buf - len);
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("len = %d, info = %s%s"),
                     len,
                     buf,
                     buf[len - 1] == '\n' ? ASYS_TEXT ("") : ASYS_TEXT ("\n")));
 
       if (len > 0)
-	{
-	  ssize_t n = this->client_stream_.send_n (ASYS_MULTIBYTE_STRING (buf),
+        {
+          ssize_t n = this->client_stream_.send_n (ASYS_MULTIBYTE_STRING (buf),
                                                    len);
 
-	  if (n != len || (n == -1 && errno != EPIPE))
-	    ACE_ERROR ((LM_ERROR,
+          if (n != len || (n == -1 && errno != EPIPE))
+            ACE_ERROR ((LM_ERROR,
                         ASYS_TEXT ("%p\n"),
                         ASYS_TEXT ("send_n")));
-	}
+        }
     }
 
   return 0;
@@ -226,7 +229,7 @@ ACE_Service_Manager::reconfigure_services (void)
 // Accept new connection from client and carry out the service they
 // request.
 
-int 
+int
 ACE_Service_Manager::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Service_Manager::handle_input");
@@ -251,13 +254,13 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("client_stream fd = %d\n"),
-		 this->client_stream_.get_handle ()));
+                 this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
       if (this->client_stream_.get_remote_addr (sa) == -1)
-	return -1;
+        return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("accepted from host %s at port %d\n"), 
+                  ASYS_TEXT ("accepted from host %s at port %d\n"),
                   sa.get_host_name (),
                   sa.get_port_number ()));
     }
@@ -270,7 +273,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     {
     case -1:
       if (this->debug_)
-	ACE_DEBUG ((LM_ERROR,
+        ACE_DEBUG ((LM_ERROR,
                     ASYS_TEXT ("%p\n"),
                     ASYS_TEXT ("recv")));
       break;
@@ -279,30 +282,30 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     default:
       {
-	char *p;
+        char *p;
 
-	// Kill trailing newlines.
-	for (p = request; 
-	     (*p != '\0') && (*p != '\r') && (*p != '\n'); 
-	     p++)
-	  continue;
+        // Kill trailing newlines.
+        for (p = request;
+             (*p != '\0') && (*p != '\r') && (*p != '\n');
+             p++)
+          continue;
 
-	*p = '\0';
+        *p = '\0';
 
-	ACE_Event_Handler *old_signal_handler = 0;
-	ACE_Reactor::instance ()->register_handler (SIGPIPE,
+        ACE_Event_Handler *old_signal_handler = 0;
+        ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                     this,
                                                     0,
-						    &old_signal_handler);
-	if (ACE_OS::strcmp (request, "help") == 0)
-	  this->list_services ();
-	else if (ACE_OS::strcmp (request, "reconfigure") == 0)
-	  this->reconfigure_services ();
-	
-	// Additional management services may be handled here... 
+                                                    &old_signal_handler);
+        if (ACE_OS::strcmp (request, "help") == 0)
+          this->list_services ();
+        else if (ACE_OS::strcmp (request, "reconfigure") == 0)
+          this->reconfigure_services ();
 
-	// Restore existing SIGPIPE handler
-	ACE_Reactor::instance ()->register_handler (SIGPIPE,
+        // Additional management services may be handled here...
+
+        // Restore existing SIGPIPE handler
+        ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                     old_signal_handler);
       }
     }

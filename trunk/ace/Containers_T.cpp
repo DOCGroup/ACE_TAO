@@ -399,7 +399,9 @@ ACE_Unbounded_Queue<T>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
+#if !defined (ACE_NDEBUG)
   size_t count = 1;
+#endif /* ! ACE_NDEBUG */
 
   for (ACE_Unbounded_Queue_Iterator<T> iter (*(ACE_Unbounded_Queue<T> *) this);
        iter.next (item) != 0;
@@ -1491,7 +1493,9 @@ ACE_Unbounded_Set<T>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
+#if !defined (ACE_NDEBUG)
   size_t count = 1;
+#endif /* ! ACE_NDEBUG */
 
   for (ACE_Unbounded_Set_Iterator<T> iter (*(ACE_Unbounded_Set<T> *) this);
        iter.next (item) != 0;

@@ -256,6 +256,10 @@ ACE_YYSTYPE ace_yyvs[ACE_YYSTACKSIZE];
 void
 ace_yyerror (const char *s)
 {
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (s);
+#endif /* ACE_NDEBUG */
+
   ACE_ERROR ((LM_ERROR,
               ASYS_TEXT ("[error %d] on line %d: %s\n"),
               ++ace_yyerrno,
@@ -272,8 +276,8 @@ ace_get_module (ACE_Static_Node *str_rec,
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
-  ACE_Stream_Type *st = sr == 0 
-    ? 0 
+  ACE_Stream_Type *st = sr == 0
+    ? 0
     : ACE_dynamic_cast (ACE_Stream_Type *,
                         ACE_const_cast (ACE_Service_Type_Impl *,
                                         type));
@@ -392,7 +396,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 396 "Svc_Conf_y.cpp"
+#line 400 "Svc_Conf_y.cpp"
 #define ACE_YYABORT goto ace_yyabort
 #define ACE_YYACCEPT goto ace_yyaccept
 #define ACE_YYERROR goto ace_yyerrlab
@@ -969,7 +973,7 @@ case 41:
 #line 298 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 972 "Svc_Conf_y.cpp"
+#line 976 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;
