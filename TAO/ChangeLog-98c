@@ -1,3 +1,31 @@
+Tue Dec  9 11:55:50 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/compat/objbase.h: Added NOERROR as #define if we're not on
+ 	WIN32 so that IDL-generated code would continue to work.
+
+	* tao/tao_internals.cpp: Changed faked Resource Factory resource
+ 	source specifier to "tss" rather than "global".
+
+	* tao/orb_core.*: Added resource_factory() accessor to
+ 	TAO_ORB_Core.  This will create a default instance if it can't
+ 	locate one in the Service Repository, which will allow
+ 	applications to not encounter a hard failure when a svc.conf file
+ 	is missing.  A warning message is emitted stating that a default
+ 	is being used.  Applications should not rely on the default
+ 	settings, as it is very likely that the applicat might require
+ 	alternate settings for proper desired operation.
+
+	* tao/default_server.*: Added TAO_Reactive_Strategy template
+ 	class to use in place of the ACE_Reactive_Strategy.  It's only
+ 	difference from ACE_Reactive_Strategy is that instead of using the
+ 	reactor provided in the open method, it always uses that found
+ 	through the TAO_ORB_Core_instance().  This fix was motivated by a
+ 	general problem which was only observable on VxWorks with a
+ 	special pseudo-network transport.
+
+	* tao/connect.cpp: Added code to fail gracefully if socket buffer
+ 	size changes are not supported.
+
 Mon Dec  8 13:11:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: 
