@@ -1,35 +1,50 @@
+Fri Feb 20 21:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Simple/time/client_static.dsp:
+	* examples/Simple/time/server_static.dsp:
+	* orbsvcs/Event_Service/Event_Service_static.dsp:
+	* orbsvcs/Event_Service/Event_Service_static.dsw:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC_static.dsp:
+	* orbsvcs/Naming_Service/Naming_Server_static.dsp:
+	* orbsvcs/Naming_Service/Naming_Server_static.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
+	* TAO_IDL/tao_idl_static.dsp:
+	  Removed these static msvc6 project files. Use MPC to generate these
+	  if you need them. These are outdated and should have gone before 1.4
+	  was released.
+
 Fri Feb 20 15:00:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
-	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp: 	
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
 
 	  Added command line arguments to specify the number and size of
 	  frames to be sent from the sender to the reciever.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
 
 	  Contains operations for collecting and recording inter-frame
 	  arrival times. It is used by the receiver for collecting stats.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
 
 	  Modified to include compilation of the Receiver_Stats file.
-	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h: 
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
 
 	  Modified to use Receiver_Stats to collect and record the
 	  inter-frame arrival times to a stats file.
 
-	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
 
 	  Modified the script in order to allow the user to specify the
 	  transport protocols and debug levels at the command line.
-	
-	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: 
+
+	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
 
 	  Modified the script in order to allow the user to specify the
 	  debug levels at the command line.
