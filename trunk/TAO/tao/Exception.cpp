@@ -318,7 +318,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
                         &CORBA::_tc_any, 0,
                         TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA_INITIALIZE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
@@ -374,7 +374,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
                         &TC_completion_status, 0,
                         TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA_INITIALIZE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return
@@ -528,7 +528,7 @@ STANDARD_EXCEPTION_LIST
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA_##name :: CORBA_##name (void) \
   :  CORBA_SystemException (CORBA::_tc_ ## name, \
-                            0xffff0000L, \
+                            TAO_DEFAULT_MINOR_CODE, \
                             CORBA::COMPLETED_NO) \
 { \
 }
@@ -539,6 +539,7 @@ STANDARD_EXCEPTION_LIST
 
 CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
                                           CORBA::TypeCode_ptr *tc_list)
+  : ref_count_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
     this->add (tc_list [i]);
@@ -582,11 +583,27 @@ CORBA_ExceptionList::item (CORBA::ULong index,
       return CORBA::TypeCode::_duplicate (*tc);
     }
 }
+
 void
 CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &env)
 {
   // unimplemented
   env.clear ();
+}
+
+CORBA_ExceptionList_ptr
+CORBA_ExceptionList::_duplicate (void)
+{
+  ++this->ref_count_;
+  return this;
+}
+
+void
+CORBA_ExceptionList::_destroy (void)
+{
+  CORBA::ULong current = --this->ref_count_;
+  if (current == 0)
+    delete this;
 }
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)

@@ -193,8 +193,8 @@ private:
 class TAO_Export CORBA_ ## name : public CORBA_SystemException { \
 public: \
   CORBA_ ## name (void); \
-  CORBA_ ## name (CORBA::CompletionStatus completed, \
-                  CORBA::ULong code = 0xffff0000L) \
+  CORBA_ ## name (CORBA::ULong code, \
+                  CORBA::CompletionStatus completed) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
   virtual void _raise (void); \
@@ -307,6 +307,10 @@ public:
   // list of system exceptions
 };
 
+
+class CORBA_ExceptionList;
+typedef CORBA_ExceptionList* CORBA_ExceptionList_ptr;
+
 class CORBA_ExceptionList
 {
   // = TITLE
@@ -328,6 +332,12 @@ public:
 
   CORBA::ULong count ();
   // return the number of elements
+
+  CORBA_ExceptionList_ptr _duplicate (void);
+
+  void _destroy (void);
+
+  static CORBA_ExceptionList_ptr _nil ();
 
   void add (CORBA::TypeCode_ptr tc);
   // add a TypeCode to the list
@@ -351,8 +361,36 @@ private:
   CORBA_ExceptionList (const CORBA_ExceptionList &);
   CORBA_ExceptionList &operator= (const CORBA_ExceptionList &);
 
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+  // Reference counter.
+
   ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
   // internal list of typecodes
+};
+
+class TAO_Export CORBA_ExceptionList_var
+{
+public:
+  CORBA_ExceptionList_var (void); // default constructor
+  CORBA_ExceptionList_var (CORBA_ExceptionList_ptr);
+  CORBA_ExceptionList_var (const CORBA_ExceptionList_var &); // copy constructor
+  ~CORBA_ExceptionList_var (void); // destructor
+
+  CORBA_ExceptionList_var &operator= (CORBA_ExceptionList_ptr);
+  CORBA_ExceptionList_var &operator= (const CORBA_ExceptionList_var &);
+  CORBA_ExceptionList_ptr operator-> (void) const;
+
+  operator const CORBA_ExceptionList_ptr &() const;
+  operator CORBA_ExceptionList_ptr &();
+  // in, inout, out, _retn
+  CORBA_ExceptionList_ptr in (void) const;
+  CORBA_ExceptionList_ptr &inout (void);
+  CORBA_ExceptionList_ptr &out (void);
+  CORBA_ExceptionList_ptr _retn (void);
+  CORBA_ExceptionList_ptr ptr (void) const;
+
+private:
+  CORBA_ExceptionList_ptr ptr_;
 };
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
