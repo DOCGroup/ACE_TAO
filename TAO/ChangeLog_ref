@@ -2,6 +2,10 @@ Sun Oct 26 10:29:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_tmplinst.cpp:
 
+          Added #include of be_exception.h.
+
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+
           Added missing generation of explicit template instantiation
           of the Any class associated with exceptions, and also made
           indentation changes to the generation of explicit template
