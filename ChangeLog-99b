@@ -1,3 +1,9 @@
+Sun May 16 20:38:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CDR_Stream.{h,i} (current): Added this accesor function for
+	  Flick IDL compiler.  Thanks to Tim Stack <stack@aros.net> for
+	  recommending this.
+
 Sun May 16 20:08:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp (handler,worker):
