@@ -1,3 +1,20 @@
+Thu Jul 13 14:30:16 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+        * orbsvcs/tests/AVStreams/Latency/control.dsp:
+        * orbsvcs/tests/AVStreams/Latency/ping.dsp:
+        * orbsvcs/tests/AVStreams/Latency/pong.dsp:
+        * performance-tests/Callback/client.dsp:
+        * performance-tests/Callback/server.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * tests/Collocation/Collocation.dsp:
+        * tests/Exposed_Policies/Client.dsp:
+        * tests/Exposed_Policies/Server.dsp:
+
+          Add in missing path for TAO_Strategies library.
+
 Fri Jul 13 10:48:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union/union_cs.cpp:
