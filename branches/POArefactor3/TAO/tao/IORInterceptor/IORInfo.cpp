@@ -186,7 +186,7 @@ TAO_IORInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
       // once the POA has invoked all IORInterceptor interception
       // points.  This also prevents memory access violations from
       // occuring if the POA is destroyed before this IORInfo object.
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO::VMCID,
                                           CORBA::COMPLETED_NO));
     }
 }

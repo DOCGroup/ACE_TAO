@@ -41,7 +41,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
                                     ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM
                           ),
                         CORBA::COMPLETED_MAYBE
@@ -62,7 +62,7 @@ TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                     ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM
                           ),
                         CORBA::COMPLETED_MAYBE
@@ -127,7 +127,7 @@ TAO_Dynamic_Adapter_Impl::create_exception_list (
                     CORBA::ExceptionList,
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM
                           ),
                         CORBA::COMPLETED_NO

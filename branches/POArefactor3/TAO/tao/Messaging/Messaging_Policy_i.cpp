@@ -129,7 +129,7 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val
   TAO_RelativeRoundtripTimeoutPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_RelativeRoundtripTimeoutPolicy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -155,7 +155,7 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_RelativeRoundtripTimeoutPolicy* tmp;
   ACE_NEW_THROW_EX (tmp, TAO_RelativeRoundtripTimeoutPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 

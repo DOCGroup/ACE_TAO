@@ -143,7 +143,7 @@ TAO_ClientRequestInfo_i::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
                     IOP::TaggedProfile,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -194,7 +194,7 @@ TAO_ClientRequestInfo_i::received_exception (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::Any,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -250,7 +250,7 @@ TAO_ClientRequestInfo_i::get_effective_component (
                             IOP::TaggedComponent,
                             CORBA::NO_MEMORY (
                               CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
+                                TAO::VMCID,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (0);
@@ -301,7 +301,7 @@ TAO_ClientRequestInfo_i::get_effective_components (
                                 IOP::TaggedComponentSeq,
                                 CORBA::NO_MEMORY (
                                   CORBA::SystemException::_tao_minor_code (
-                                    TAO_DEFAULT_MINOR_CODE,
+                                    TAO::VMCID,
                                     ENOMEM),
                                   CORBA::COMPLETED_NO));
               ACE_CHECK_RETURN (0);
@@ -344,7 +344,7 @@ TAO_ClientRequestInfo_i::get_request_policy (CORBA::PolicyType type
 
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
                     0);

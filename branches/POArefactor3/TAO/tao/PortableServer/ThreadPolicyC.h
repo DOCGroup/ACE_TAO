@@ -93,8 +93,7 @@ namespace PortableServer
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
-    SINGLE_THREAD_MODEL,
-    MAIN_THREAD_MODEL
+    SINGLE_THREAD_MODEL
   };
   
 #if (TAO_HAS_MINIMUM_POA == 0)

@@ -130,7 +130,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val
   TAO_ConnectionTimeoutPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ConnectionTimeoutPolicy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -156,7 +156,7 @@ TAO_ConnectionTimeoutPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_ConnectionTimeoutPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ConnectionTimeoutPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 

@@ -489,7 +489,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
   CORBA::PolicyList *client_exposed_policies = 0;
   ACE_NEW_THROW_EX (client_exposed_policies,
                     CORBA::PolicyList (),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
@@ -528,7 +528,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
       ACE_NEW_THROW_EX (priority_model_policy,
                         TAO_PriorityModelPolicy (RTCORBA::PriorityModel (priority_model),
                                                  priority),
-                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                        CORBA::NO_MEMORY (TAO::VMCID,
                                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 

@@ -32,7 +32,7 @@ TAO_RT_Stub_Factory::create_stub (const char *repository_id,
 
   ACE_NEW_THROW_EX (retval,
                     TAO_RT_Stub (repository_id, profiles, orb_core),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_MAYBE));
 
   ACE_CHECK_RETURN (retval);

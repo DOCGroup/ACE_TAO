@@ -40,7 +40,7 @@ TAO_RTScheduler_Current::init (TAO_ORB_Core* orb
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (orb),
                     CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (
-                                        TAO_DEFAULT_MINOR_CODE,
+                                        TAO::VMCID,
                                         ENOMEM),
                                       CORBA::COMPLETED_NO));
   this->rt_current_ = current;
@@ -83,7 +83,7 @@ TAO_RTScheduler_Current::begin_scheduling_segment (
                                                    &this->dt_hash_),
                         CORBA::NO_MEMORY (
                                           CORBA::SystemException::_tao_minor_code (
-                                          TAO_DEFAULT_MINOR_CODE,
+                                          TAO::VMCID,
                                           ENOMEM),
                                           CORBA::COMPLETED_NO));
       ACE_CHECK;
@@ -427,7 +427,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
                                                      this),
                           CORBA::NO_MEMORY (
                                             CORBA::SystemException::_tao_minor_code (
-                                          TAO_DEFAULT_MINOR_CODE,
+                                          TAO::VMCID,
                                           ENOMEM),
                                           CORBA::COMPLETED_NO));
         ACE_CHECK;
