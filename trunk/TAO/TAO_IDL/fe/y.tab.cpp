@@ -836,7 +836,7 @@ char * tao_yyreds[] =
  * Copyright (c) 1993 by Sun Microsystems, Inc.
  */
 
-#pragma ident	"@(#)yaccpar	6.14	97/01/16 SMI"
+// #pragma ident	"@(#)yaccpar	6.14	97/01/16 SMI"
 
 /*
 ** Skeleton parser driver for yacc output
@@ -899,7 +899,7 @@ int tao_yychar;			/* current input token number */
 #define TAO_YYLEX()		tao_yycvtok(tao_yylex())
 /*
 ** tao_yycvtok - return a token if i is a wchar_t value that exceeds 255.
-**	If i<255, i itself is the token.  If i>255 but the neither 
+**	If i<255, i itself is the token.  If i>255 but the neither
 **	of the 30th or 31st bit is on, i is already a token.
 */
 #if defined(__STDC__) || defined(__cplusplus)
@@ -920,7 +920,7 @@ int tao_yycvtok(i) int i;
 		while ((last>=first)&&(first>=0)) {/*Binary search loop*/
 			mid = (first+last)/2;
 			j = tao_yymbchars[mid].character;
-			if( j==i ){/*Found*/ 
+			if( j==i ){/*Found*/
 				return tao_yymbchars[mid].tvalue;
 			}else if( j<i ){
 				first = mid + 1;
@@ -1361,7 +1361,7 @@ int tao_yyparse()
 	*/
 	switch( tao_yytmp )
 	{
-		
+
 case 4:
 # line 240 "fe/idl.tao_yy"
 {
@@ -3316,4 +3316,3 @@ case 285:
 	}
 	goto tao_yystack;		/* reset registers in driver code */
 }
-
