@@ -321,7 +321,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 
     short result = run_tests (server.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    CORBA::String_var server_orb = 
+    CORBA::String_var server_orb =
       server->orb_name(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_ERROR ((LM_ERROR,
