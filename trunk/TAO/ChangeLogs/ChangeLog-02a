@@ -1,3 +1,10 @@
+Mon Dec  4 17:36:22 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+	  Same as the change below.
+
 Mon Dec  4 15:58:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Profile.h
