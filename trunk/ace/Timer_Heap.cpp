@@ -3,6 +3,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_Heap.h"
+#include "ace/Strategies.h"
 
 ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator (ACE_Timer_Heap &heap)
   : timer_heap_ (heap)
@@ -29,8 +30,10 @@ ACE_Timer_Heap_Iterator::next (ACE_Timer_Node *&node,
 }
 
 ACE_Timer_Heap::ACE_Timer_Heap (size_t size,
-				int preallocate)
-  : max_size_ (size),
+				int preallocate,
+				ACE_Upcall_Strategy *upcall_strategy)
+  : ACE_Timer_Queue (upcall_strategy),
+    max_size_ (size),
     cur_size_ (0),
     iterator_ (*this),
     timer_ids_freelist_ (0),
@@ -248,29 +251,27 @@ ACE_Timer_Heap::grow_heap (void)
 
    ACE_NEW (new_timer_ids, int[new_size]);
 
-   ACE_OS::memcpy (new_timer_ids, 
-		   this->timer_ids_, 
-		   max_size_ * sizeof *this->timer_ids_);
+   ACE_OS::memcpy (new_timer_ids, this->timer_ids_, max_size_ * sizeof (int));
 
    delete [] timer_ids_;
    this->timer_ids_ = new_timer_ids;
 
-   // Add the new elements to the end of the "freelist"
+   // and add the new elements to the end of the "freelist"
    for (size_t i = this->max_size_; i < new_size; i++)
      this->timer_ids_[i] = -((int) (i + 1));
 
    // Grow the preallocation array (if using preallocation)
    if (this->preallocated_nodes_ != 0)
    {
-      // Create a new array with max_size elements to link in to
-      // existing list.
+      // Create a new array with max_size elements to link in
+      // to existing list.
       ACE_NEW (this->preallocated_nodes_, 
 	       ACE_Timer_Node[this->max_size_]);
 
-      // Add it to the set for later deletion
+      // add it to the set for later deletion
       this->preallocated_node_set_.insert (this->preallocated_nodes_);      
       
-      // Link new nodes together (as for original list).
+      // link new nodes together (as for original list)
       for (size_t k = 1; k < this->max_size_; k++)
 	this->preallocated_nodes_[k - 1].next_ = 
 	  &this->preallocated_nodes_[k];
@@ -278,7 +279,7 @@ ACE_Timer_Heap::grow_heap (void)
       // NULL-terminate the new list.
       this->preallocated_nodes_[this->max_size_ - 1].next_ = 0;
 
-      // Link new array to the end of the existling list.
+      // link new array to the end of the existling list
       if (this->preallocated_nodes_freelist_ == 0)
 	this->preallocated_nodes_freelist_ = &preallocated_nodes_[0];
       else
@@ -287,7 +288,7 @@ ACE_Timer_Heap::grow_heap (void)
 	
 	  for (ACE_Timer_Node* current = this->preallocated_nodes_freelist_->next_;
 	       current != 0;
-	       current = current->next_)
+	      current = current->next_)
 	    previous = current;
 
 	  previous->next_ = &this->preallocated_nodes_[0];

@@ -47,6 +47,9 @@ protected:
   // Pointer to the <ACE_Timer_Heap> that we are iterating over.
 };
 
+// Forward declaration.
+class ACE_Upcall_Strategy;
+
 class ACE_Export ACE_Timer_Heap : public ACE_Timer_Queue
   // = TITLE 
   //      Provides a very fast and predictable timer implementation.
@@ -65,7 +68,8 @@ class ACE_Export ACE_Timer_Heap : public ACE_Timer_Queue
 public:
   // = Initialization and termination methods.
   ACE_Timer_Heap (size_t size = ACE_DEFAULT_TIMERS,
-		  int preallocated = 0);
+		  int preallocated = 0,
+		  ACE_Upcall_Strategy *upcall_strategy = 0);
   // The Constructor creates a heap with <size> elements.  If
   // <preallocated> is non-0 then we'll pre-allocate all the memory
   // for the <ACE_Timer_Nodes>.  This saves time and is more

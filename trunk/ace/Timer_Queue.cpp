@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Timer_Queue.h"
+#include "ace/Strategies.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue.i"
@@ -108,9 +109,10 @@ ACE_Timer_Queue::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
-ACE_Timer_Queue::ACE_Timer_Queue (void)
+ACE_Timer_Queue::ACE_Timer_Queue (ACE_Upcall_Strategy *upcall_strategy)
   : gettimeofday_ (ACE_OS::gettimeofday),
-    timer_skew_ (0, ACE_TIMER_SKEW)
+    timer_skew_ (0, ACE_TIMER_SKEW),
+    upcall_strategy_ (upcall_strategy)
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
@@ -160,9 +162,7 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 	  reclaim = 0;
 	}
 
-      // Perform the callback.
-      if (handler->handle_timeout (cur_time, arg) == -1)
-	this->cancel (handler, 0); // 0 means "call handle_close()".
+      this->upcall (handler, arg, cur_time);
 
       if (reclaim)
 	// Call the factory method to free up the node.
@@ -173,6 +173,23 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 
   return number_of_timers_expired;
 }
+
+void
+ACE_Timer_Queue::upcall (ACE_Event_Handler *handler,
+			 const void *arg,
+			 const ACE_Time_Value &cur_time)
+{
+  if (this->upcall_strategy_ == 0)
+    {
+      // Perform the callback.
+      if (handler->handle_timeout (cur_time, arg) == -1)
+	this->cancel (handler, 0); // 0 means "call handle_close()".
+    }
+  else
+    // Pass the information along to the strategy
+    this->upcall_strategy_->upcall (handler, arg, cur_time);
+}
+
 
 ACE_Time_Value
 ACE_Timer_Queue::gettimeofday (void)
@@ -186,4 +203,14 @@ ACE_Timer_Queue::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
 {
   gettimeofday_ = gettimeofday;
 }
+
+#if defined (ACE_MT_SAFE)
+
+ACE_Recursive_Thread_Mutex &
+ACE_Timer_Queue::lock (void)
+{
+  return this->lock_;
+}
+
+#endif /* ACE_MT_SAFE */
 

@@ -46,6 +46,9 @@ protected:
   // Pointer to the <ACE_Timer_List> that we are iterating over.
 };
 
+// Forward declaration.
+class ACE_Upcall_Strategy;
+
 class ACE_Export ACE_Timer_List : public ACE_Timer_Queue
   // = TITLE 
   //      Provides a simple implementation of timers.
@@ -68,7 +71,7 @@ class ACE_Export ACE_Timer_List : public ACE_Timer_Queue
   friend class ACE_Timer_List_Iterator;
 public: 
   // = Initialization and termination methods.
-  ACE_Timer_List (void);
+  ACE_Timer_List (ACE_Upcall_Strategy *upcall_strategy = 0);
   // Default constructor.
 
   virtual ~ACE_Timer_List (void);

@@ -1,3 +1,45 @@
+Tue Apr 22 01:38:14 1997    <irfan@TWOSTEP>
+
+	* ace/Timer_Queue: Added ACE_Upcall_Strategy as a parameter to the
+ 	  constructor.  <expire> will call <upcall_strategy->upcall> if
+ 	  <upcall_strategy> is not 0. Else it will call <handle_timeout>
+ 	  on the <Event_Handler>. Thus ACE_Upcall_Strategy becomes a
+ 	  vehicle for extending the behavior of ACE_Timer_Queue wrt the
+ 	  upcall (callback) *without subclassing*.  Hence, it's an example
+ 	  of the Bridge/Strategy patterns.
+
+	  This also affected ACE_Timer_List and ACE_Timer_Heap
+
+	* ace/Strategies: Added ACE_Upcall_Strategy.
+
+	* ace/Proactor: Added timing support to the <handle_event> calls.
+
+	* ace/Asynch_IO: ACE_Handler now supports handle_timeout.
+
+	* ace/Proactor: Added timer support for the new Proactor.  This
+ 	  new scheme allows any of the threads in the "thread pool"
+ 	  waiting on the completion port of the Proactor to execute the
+ 	  callback routine of the handler.
+
+	  The implementation included adding ACE_Proactor_Timer_Handler
+ 	  class that has a thread that will wait on the earliest time in a
+ 	  timer queue and an event. When a timer expires, the thread will
+ 	  post a completion event on the port and go back to waiting on
+ 	  the timer queue and event. If the event is signaled, the thread
+ 	  will refresh the time it is currently waiting on (in case the
+ 	  earliest time has changed).
+
+	  The ACE_Proactor::Asynch_Timer class is posted to the completion
+ 	  port when a timer expires. When the <complete> method of this
+ 	  object is called, the <handler>'s handle_timeout method will be
+ 	  called.
+	
+	* examples/Reactor/Proactor/test_timeout: This example illustrates
+ 	  the new timer features in the Proactor
+
+	* examples/Reactor/Proactor/test_proactor.{mdp,mak}: Added new
+ 	  example.
+
 Tue Apr 22 00:21:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/OS/Process/process.cpp (main): Replaced the use of
