@@ -51,9 +51,7 @@ public:
 
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
+
 
 public:
 
@@ -70,6 +68,10 @@ public:
   typedef ACE_Strategy_Connector<TAO_IIOP_SSL_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
           TAO_IIOP_SSL_BASE_CONNECTOR;
+
+protected:
+  int make_connect (TAO_GIOP_Invocation *invocation,
+                    TAO_Transport_Descriptor_Interface *desc);
 
 private:
 
