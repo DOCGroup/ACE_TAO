@@ -503,7 +503,7 @@ else # ! shared_libs
   endif # ! static_libs
 endif # ! shared_libs
 
-VLDLIBS := $(LDLIBS) $(ACELIB) $(LIBS)
+VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
 
 ifeq ($(probe),0)
   override probe =
