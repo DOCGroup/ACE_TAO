@@ -755,8 +755,7 @@ ACE_Process_Manager::wait (pid_t pid,
                       HANDLE[current_count_],
                       ACE_INVALID_PID);
 
-      size_t i;
-      for (i = 0;
+      for (size_t i = 0;
            i < current_count_;
            ++i)
         handles[i] =
@@ -781,7 +780,7 @@ ACE_Process_Manager::wait (pid_t pid,
 
           if (idx != -1)
             {
-              pid = process_table_[i].process_->getpid ();
+              pid = process_table_[idx].process_->getpid ();
               result = ::GetExitCodeProcess (handles[result - WAIT_OBJECT_0],
                                              status);
               if (result == 0)
