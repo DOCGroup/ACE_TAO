@@ -726,6 +726,9 @@ namespace ACE_OS {}
 #  define ACE_OS_TLI ACE_OS
 #endif /* ACE_OS_TLI */
 
+// Keep this at the bottom of the file.  It contains the main macros.
+#include "ace/OS_main.h"
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_ALL_H */

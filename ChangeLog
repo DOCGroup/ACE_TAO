@@ -1,3 +1,12 @@
+Wed Nov  5 23:26:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-all.h:
+          Added #include of OS_main.h to pick up the main macros that
+          handle instantiating ACE_Object_Manager when
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER is defined. Thanks to Justin
+          Michel <michel_j@ociweb.com> for identifying the problem and
+          suggesting the solution.
+
 Wed Nov  5 21:47:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_Thread.h:
