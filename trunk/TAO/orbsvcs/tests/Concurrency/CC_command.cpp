@@ -40,7 +40,7 @@ CC_Command::CC_Command(void)
 }
 
 CosConcurrencyControl::LockSet_var
-CC_Command::GetLockSet (char *lock_set_name,
+CC_Command::GetLockSet (const char *lock_set_name,
                         CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
@@ -48,7 +48,8 @@ CC_Command::GetLockSet (char *lock_set_name,
       if(ACE_OS::strcmp(lock_set_name, "")!=0)
         {
           CORBA::Object_var ccls_obj =
-            CC_naming_service::Instance()->get_obj_from_name (ACE_const_cast (char *, ""), lock_set_name,
+            CC_naming_service::Instance()->get_obj_from_name ("",
+                                                              lock_set_name,
                                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -82,8 +83,8 @@ CORBA::Exception *CC_Command::excep_ = 0;
 
 CosConcurrencyControl::LockSet_var CC_Command::cc_lockset_(0);
 
-CC_Start_Cmd::CC_Start_Cmd(char *config_file_name)
-  : cfg_name_ (config_file_name)
+CC_Start_Cmd::CC_Start_Cmd (const char *config_file_name)
+  : cfg_name_ (ACE_OS::strdup (config_file_name))
 {
   //  printf("CC_Start_Cmd::CC_Start_Cmd: config: %s\n", config_file_name);
 }
@@ -91,7 +92,7 @@ CC_Start_Cmd::CC_Start_Cmd(char *config_file_name)
 CC_Start_Cmd::~CC_Start_Cmd()
 {
   // cfg_name_ is allocated in the lexer with strdup
-  if(cfg_name_)
+  if (cfg_name_)
     {
       ACE_OS::free(cfg_name_);
       cfg_name_ = 0;
@@ -129,8 +130,8 @@ int CC_Start_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_CreateLockSet_Cmd::CC_CreateLockSet_Cmd(char *lock_set_name)
-  : name_ (lock_set_name)
+CC_CreateLockSet_Cmd::CC_CreateLockSet_Cmd (const char *lock_set_name)
+  : name_ (ACE_OS::strdup (lock_set_name))
 {
   //  printf("CC_CreateLockSet_Cmd::CC_CreateLockSet_Cmd: lock set: %s\n",
   //         lock_set_name);
@@ -185,9 +186,10 @@ int CC_CreateLockSet_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_Lock_Cmd::CC_Lock_Cmd(char *lock_set_name,
-                         CosConcurrencyControl::lock_mode mode)
-  : name_(lock_set_name), mode_(mode)
+CC_Lock_Cmd::CC_Lock_Cmd (const char *lock_set_name,
+                          CosConcurrencyControl::lock_mode mode)
+  : name_ (ACE_OS::strdup (lock_set_name)),
+    mode_(mode)
 {
   //  printf("CC_Lock_Cmd::CC_Lock_Cmd: lock set: %s, mode: %s\n",
   //         lock_set_name, CC_TestUtils::get_lock_mode_name(mode));
@@ -195,6 +197,7 @@ CC_Lock_Cmd::CC_Lock_Cmd(char *lock_set_name,
 
 CC_Lock_Cmd::~CC_Lock_Cmd()
 {
+  ACE_OS::free (this->name_);
 }
 
 int CC_Lock_Cmd::execute(void)
@@ -213,7 +216,8 @@ int CC_Lock_Cmd::execute(void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_, ACE_TRY_ENV);
+      CosConcurrencyControl::LockSet_var ccls =
+        GetLockSet(name_, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ccls->lock (mode_,
                   ACE_TRY_ENV);
@@ -229,9 +233,10 @@ int CC_Lock_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_UnLock_Cmd::CC_UnLock_Cmd(char *lock_set_name,
-                             CosConcurrencyControl::lock_mode mode)
-  : name_(lock_set_name), mode_ (mode)
+CC_UnLock_Cmd::CC_UnLock_Cmd (const char *lock_set_name,
+                              CosConcurrencyControl::lock_mode mode)
+  : name_ (ACE_OS::strdup (lock_set_name)),
+    mode_ (mode)
 {
   //  printf("CC_UnLock_Cmd::CC_UnLock_Cmd: lock set: %s, mode: %s\n",
   //         lock_set_name, CC_TestUtils::get_lock_mode_name(mode));
@@ -239,6 +244,7 @@ CC_UnLock_Cmd::CC_UnLock_Cmd(char *lock_set_name,
 
 CC_UnLock_Cmd::~CC_UnLock_Cmd()
 {
+  ACE_OS::free (this->name_);
 }
 
 int CC_UnLock_Cmd::execute(void)
@@ -275,9 +281,10 @@ int CC_UnLock_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_TryLock_Cmd::CC_TryLock_Cmd(char *lock_set_name,
-                               CosConcurrencyControl::lock_mode mode)
-  : name_ (lock_set_name), mode_ (mode)
+CC_TryLock_Cmd::CC_TryLock_Cmd (const char *lock_set_name,
+                                CosConcurrencyControl::lock_mode mode)
+  : name_ (ACE_OS::strdup (lock_set_name)),
+    mode_ (mode)
 {
   //  printf("CC_TryLock_Cmd::CC_TryLock_Cmd: lock set: %s, mode %s\n",
   //         lock_set_name, CC_TestUtils::get_lock_mode_name(mode));
@@ -285,6 +292,7 @@ CC_TryLock_Cmd::CC_TryLock_Cmd(char *lock_set_name,
 
 CC_TryLock_Cmd::~CC_TryLock_Cmd()
 {
+  ACE_OS::free (this->name_);
 }
 
 int CC_TryLock_Cmd::execute(void)
@@ -334,10 +342,13 @@ int CC_TryLock_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_ChangeMode_Cmd::CC_ChangeMode_Cmd(char *lock_set_name,
-                                     CosConcurrencyControl::lock_mode held_mode,
-                                     CosConcurrencyControl::lock_mode new_mode)
-  : name_(lock_set_name), held_mode_ (held_mode), new_mode_ (new_mode)
+CC_ChangeMode_Cmd::
+    CC_ChangeMode_Cmd (const char *lock_set_name,
+                       CosConcurrencyControl::lock_mode held_mode,
+                       CosConcurrencyControl::lock_mode new_mode)
+  : name_(ACE_OS::strdup (lock_set_name)),
+    held_mode_ (held_mode),
+    new_mode_ (new_mode)
 {
   //  printf("CC_ChangeMode_Cmd::CC_ChangeMode_Cmd: lock set: %s, held mode: %s, new mode: %s\n",
   //         lock_set_name,
@@ -347,6 +358,7 @@ CC_ChangeMode_Cmd::CC_ChangeMode_Cmd(char *lock_set_name,
 
 CC_ChangeMode_Cmd::~CC_ChangeMode_Cmd()
 {
+  ACE_OS::strdup (this->name_);
 }
 
 int CC_ChangeMode_Cmd::execute(void)
@@ -432,13 +444,14 @@ int CC_Repeat_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_Wait_Cmd::CC_Wait_Cmd(char *prompt)
-  : prompt_ (prompt)
+CC_Wait_Cmd::CC_Wait_Cmd (const char *prompt)
+  : prompt_ (ACE_OS::strdup (prompt))
 {
 }
 
 CC_Wait_Cmd::~CC_Wait_Cmd()
 {
+  ACE_OS::free (this->prompt_);
 }
 
 int CC_Wait_Cmd::execute(void)
@@ -459,16 +472,15 @@ int CC_Wait_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_Excep_Cmd::CC_Excep_Cmd(char *excep)
-  : ex_(excep)
+CC_Excep_Cmd::CC_Excep_Cmd (const char *excep)
+  : ex_ (ACE_OS::strdup (excep))
 {
   //  printf("CC_Excep_Cmd::CC_Excep_Cmd: excep: %s\n", excep);
 }
 
 CC_Excep_Cmd::~CC_Excep_Cmd(void)
 {
-  if(ex_)
-    delete ex_;
+  ACE_OS::free (this->ex_);
 }
 
 int
@@ -510,18 +522,14 @@ CC_Dummy_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_Print_Cmd::CC_Print_Cmd(char * message)
-  : msg_ (message)
+CC_Print_Cmd::CC_Print_Cmd (const char * message)
+  : msg_ (ACE_OS::strdup (message))
 {
 }
 
 CC_Print_Cmd::~CC_Print_Cmd(void)
 {
-  if(msg_)
-    {
-      ACE_OS::free(msg_);
-      msg_ = 0;
-    }
+  ACE_OS::free(msg_);
 }
 
 int
@@ -531,8 +539,8 @@ CC_Print_Cmd::execute(void)
   return 1; // CC_SUCCESS
 }
 
-CC_Lookup_Cmd::CC_Lookup_Cmd(char *lock_set_name)
-  : name_ (lock_set_name)
+CC_Lookup_Cmd::CC_Lookup_Cmd (const char *lock_set_name)
+  : name_ (ACE_OS::strdup (lock_set_name))
 {
 }
 
@@ -565,7 +573,8 @@ CC_Lookup_Cmd::execute(void)
       ACE_TRY
         {
           CORBA::Object_var ccls_obj =
-            CC_naming_service::Instance()->get_obj_from_name (ACE_const_cast (char *, ""), name_,
+            CC_naming_service::Instance()->get_obj_from_name ("",
+                                                              name_,
                                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
 

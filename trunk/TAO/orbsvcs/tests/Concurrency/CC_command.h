@@ -44,7 +44,8 @@ class CC_Command
 
  protected:
   CosConcurrencyControl::LockSet_var
-    GetLockSet(char *lock_set_name, CORBA::Environment &_env);
+    GetLockSet (const char *lock_set_name,
+                CORBA::Environment &_env);
   // Function to look up the lock set we are operating on, or if the
   // name is "" return the global lock set variable
 
@@ -65,7 +66,7 @@ class CC_Command
  private:
 };
 
-class CC_Start_Cmd:public CC_Command
+class CC_Start_Cmd : public CC_Command
   // = TITLE
   //    Defines a class for the start command
   //
@@ -76,7 +77,7 @@ class CC_Start_Cmd:public CC_Command
   //   running at the same time.
 {
  public:
-  CC_Start_Cmd(char *config_file_name);
+  CC_Start_Cmd (const char *config_file_name);
   // Constructor
 
   virtual ~CC_Start_Cmd();
@@ -86,12 +87,12 @@ class CC_Start_Cmd:public CC_Command
   // Start the child process. The current version does not wait for the
   // process to terminate.
 
- private:
+private:
   char *cfg_name_;
   // The name of the script file
 };
 
-class CC_CreateLockSet_Cmd:public CC_Command
+class CC_CreateLockSet_Cmd : public CC_Command
   // = TITLE
   //    Defines a class for the create command on the lock set factory
   //
@@ -101,17 +102,17 @@ class CC_CreateLockSet_Cmd:public CC_Command
   //   name.
 {
  public:
-  CC_CreateLockSet_Cmd(char *lock_set_name);
+  CC_CreateLockSet_Cmd (const char *lock_set_name);
   // Constructor
 
-  virtual ~CC_CreateLockSet_Cmd();
+  virtual ~CC_CreateLockSet_Cmd ();
   // Destructor
 
   virtual int execute(void);
   // Executes the command, i.e. creates the lock set and binds the name
   // in the naming service.
 
- private:
+private:
   char *name_;
   // The name used to bind in the naming service.
 };
@@ -125,7 +126,8 @@ class CC_Lock_Cmd:public CC_Command
   //   is looked up in the naming service.
 {
  public:
-  CC_Lock_Cmd(char *lock_set_name, CosConcurrencyControl::lock_mode mode);
+  CC_Lock_Cmd(const char *lock_set_name,
+              CosConcurrencyControl::lock_mode mode);
   // Constructor.
 
   virtual ~CC_Lock_Cmd();
@@ -135,7 +137,7 @@ class CC_Lock_Cmd:public CC_Command
   // Executes the command, i.e. looks up the lock set with the requested
   // name in the naming server and executes the lock command on that lock set.
 
- private:
+private:
   char *name_;
   // The name to look up in the naming service.
 
@@ -152,7 +154,8 @@ class CC_UnLock_Cmd:public CC_Command
   //   is looked up in the naming service.
 {
  public:
-  CC_UnLock_Cmd(char *lock_set_name, CosConcurrencyControl::lock_mode mode);
+  CC_UnLock_Cmd(const char *lock_set_name,
+                CosConcurrencyControl::lock_mode mode);
   // Constructor.
 
   virtual ~CC_UnLock_Cmd();
@@ -163,7 +166,7 @@ class CC_UnLock_Cmd:public CC_Command
   // name in the naming server and executes the unlock command on that
   // lock set.
 
- private:
+private:
   char *name_;
   // The name to look up in the naming service.
 
@@ -180,7 +183,8 @@ class CC_TryLock_Cmd:public CC_Command
   //   is looked up in the naming service.
 {
  public:
-  CC_TryLock_Cmd(char *lock_set_name, CosConcurrencyControl::lock_mode mode);
+  CC_TryLock_Cmd(const char *lock_set_name,
+                 CosConcurrencyControl::lock_mode mode);
   // Constructor
 
   virtual ~CC_TryLock_Cmd();
@@ -191,7 +195,7 @@ class CC_TryLock_Cmd:public CC_Command
   // name in the naming server and executes the try_lock command on that
   // lock set.
 
- private:
+private:
   char *name_;
   // The name to look up in the naming service.
 
@@ -208,9 +212,9 @@ class CC_ChangeMode_Cmd:public CC_Command
   //   The lock set is looked up in the naming service.
 {
  public:
-  CC_ChangeMode_Cmd(char *lock_set_name,
-                    CosConcurrencyControl::lock_mode held_mode,
-                    CosConcurrencyControl::lock_mode new_mode);
+  CC_ChangeMode_Cmd (const char *lock_set_name,
+                     CosConcurrencyControl::lock_mode held_mode,
+                     CosConcurrencyControl::lock_mode new_mode);
   // Constructor
 
   virtual ~CC_ChangeMode_Cmd();
@@ -221,7 +225,7 @@ class CC_ChangeMode_Cmd:public CC_Command
   // name in the naming server and executes the change_mode command on that
   // lock set.
 
- private:
+private:
   char *name_;
   // The name to look up in the naming service.
 
@@ -289,7 +293,7 @@ class CC_Wait_Cmd:public CC_Command
   //   different prompts, e.g. instructions.
 {
  public:
-  CC_Wait_Cmd(char *prompt);
+  CC_Wait_Cmd (const char *prompt);
   // Constructor.
 
   virtual ~CC_Wait_Cmd();
@@ -298,12 +302,12 @@ class CC_Wait_Cmd:public CC_Command
   virtual int execute(void);
   // Executes the command.
 
- private:
+private:
   char *prompt_;
   // The prompt to print on the screen
 };
 
-class CC_Excep_Cmd: public CC_Command
+class CC_Excep_Cmd : public CC_Command
   // = TITLE
   //    Defines a class for the excep command
   //
@@ -313,7 +317,7 @@ class CC_Excep_Cmd: public CC_Command
   //   as part of the testing.
 {
  public:
-  CC_Excep_Cmd(char *excep);
+  CC_Excep_Cmd (const char *excep);
   // Constructor.
 
   virtual ~CC_Excep_Cmd(void);
@@ -324,7 +328,7 @@ class CC_Excep_Cmd: public CC_Command
   // and if that's the case check that it is of the expected type. If not the
   // test fails.
 
- private:
+private:
   char *ex_;
   // The string representation of the expected exception
 };
@@ -358,8 +362,8 @@ class CC_Print_Cmd: public CC_Command
   //   This class represents the print command. This command is used to
   //   print a message on stdout
 {
- public:
-  CC_Print_Cmd(char *message);
+public:
+  CC_Print_Cmd (const char *message);
   // Constructor.
 
   virtual ~CC_Print_Cmd(void);
@@ -368,7 +372,7 @@ class CC_Print_Cmd: public CC_Command
   virtual int execute(void);
   // Executes the command.
 
- private:
+private:
   char *msg_;
   // Holds the message to print
 };
@@ -382,8 +386,8 @@ class CC_Lookup_Cmd:public CC_Command
   //   is looked up in the naming service and the class variable
   //   cc_lockset_ is set accordingly.
 {
- public:
-  CC_Lookup_Cmd(char *lock_set_name);
+public:
+  CC_Lookup_Cmd (const char *lock_set_name);
   // Constructor
 
   virtual ~CC_Lookup_Cmd();
@@ -393,7 +397,7 @@ class CC_Lookup_Cmd:public CC_Command
   // Executes the command, i.e. looks up the lock set with the requested
   // name in the naming server and sets the cc_lockset_ variable.
 
- private:
+private:
   char *name_;
   // The name to look up in the naming service.
 
@@ -409,7 +413,7 @@ class CC_CommandElem
   //    and a pointer to the next element in the list.
 {
  public:
-  CC_CommandElem(CC_Command *cmd, CC_CommandElem *next);
+  CC_CommandElem (CC_Command *cmd, CC_CommandElem *next);
   // Constructor.
 
   ~CC_CommandElem(void);
