@@ -38,15 +38,13 @@ Quoter_Generic_Factory_Impl::supports (const CosLifeCycle::Key &factory_key,
   return 0;
 }
 
-CORBA::Object_ptr
-Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key, 
-                                            const CosLifeCycle::Criteria &the_criteria,
-                                            CORBA::Environment &_env_there)
+
+
+CosNaming::NamingContext_ptr
+Quoter_Generic_Factory_Impl::get_naming_context (const CosLifeCycle::Key &factory_key,
+                                                 CORBA::Environment &env_here,
+                                                 CORBA::Environment &_env_there)
 {
-  ACE_UNUSED_ARG (the_criteria);
-
-  CORBA::Environment env_here;
-
   // Get a reference to the ORB.
   CORBA::ORB_ptr orb_ptr =
     TAO_ORB_Core_instance ()->orb ();
@@ -99,15 +97,32 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       return 0;
     }
 
+
+  return CosNaming::NamingContext::_duplicate (quoterNamingContext_var.in ());
+}
+
+
+  
+CORBA::Object_ptr
+Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key, 
+                                            const CosLifeCycle::Criteria &the_criteria,
+                                            CORBA::Environment &_env_there)
+{
+  ACE_UNUSED_ARG (the_criteria);
+
+  CORBA::Environment env_here;
+
+  CosNaming::NamingContext_var quoterNamingContext_var = 
+    this->get_naming_context (factory_key,
+                              env_here, 
+                              _env_there);
+
   // ** now a proper reference to the quoter naming context is
   // available
 
   // Fill in the name of the Quoter Factory.
-  // CosNaming::Name factory_Name (1);  // max = 1 
-  // factory_Name.length (1);
-  // factory_Name[0].id = CORBA::string_dup ("Quoter_Factory");
   // Take the key supplied to search for a Quoter Factory
-  CosNaming::Name factory_Name = (CosNaming::Name) factory_key;
+  CosNaming::Name factory_Name = (CosNaming::Name) factory_key;  
 
   // Try to get a reference to a Quoter Factory
   CORBA::Object_var quoterFactoryObject_var =  
