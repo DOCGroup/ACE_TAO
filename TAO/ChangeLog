@@ -1,3 +1,11 @@
+Mon Dec 29 14:43:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+	  I cannot fathom why the following tests were prevented from
+	  compiling in minimum_corba builds. Fixed the MPC files to get
+	  them compiling. 
+
 Mon Dec 29 14:36:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
