@@ -1,5 +1,19 @@
 Fri Oct 10 18:39:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests/Service_Config_Test.cpp: Moved the static member function
+ 	  called cleanup() out into a stand-alone extern "C" function
+ 	  called test_singleton_cleanup() to workaround MVS C++ compiler
+ 	  bugs.  Thanks to Chuck Gehr for reporting this.
+
+	* ace/Task.cpp: Solved the age old MVS C++ problem where we can't
+ 	  register C++ static member functions as C callback functions.
+  	  The solution here was to create a C wrapper to do the callback.
+	  Thanks to Chuck Gehr for reporting this.
+
+	* tests/Service_Config_Test.cpp: Made the destructor of
+ 	  Test_Singleton public to work around bugs with the MVS C++
+ 	  compiler.  Thanks to Chuck Gehr for reporting this.
+
 	* ace/ACE,
 	  ace/Proactor,
 	  ace/SOCK_Connector,
