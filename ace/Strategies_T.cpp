@@ -644,35 +644,15 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 }
 
 template <class SVC_HANDLER>
-ACE_Scheduling_Strategy<SVC_HANDLER>::ACE_Scheduling_Strategy (SVC_HANDLER *scheduler)
-  : scheduler_ (scheduler),
-    delete_scheduler_ (0)
+ACE_Scheduling_Strategy<SVC_HANDLER>::ACE_Scheduling_Strategy (SVC_HANDLER *)
 {
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::ACE_Scheduling_Strategy");
-
-  if (this->scheduler_ == 0)
-    {
-      // Create a new SVC_HANDLER and assign the global Thread_Manager
-      // and Reactor to it...
-      ACE_NEW (this->scheduler_, SVC_HANDLER);
-
-      if (this->scheduler_->thr_mgr () == 0)
-        this->scheduler_->thr_mgr (ACE_Thread_Manager::instance ());
-
-      if (this->scheduler_->reactor () == 0)
-        this->scheduler_->reactor (ACE_Reactor::instance ());
-
-      this->delete_scheduler_ = 1;
-    }
 }
 
 template <class SVC_HANDLER>
 ACE_Scheduling_Strategy<SVC_HANDLER>::~ACE_Scheduling_Strategy (void)
 {
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::~ACE_Scheduling_Strategy");
-
-  if (this->delete_scheduler_)
-    this->scheduler_->destroy ();
 }
 
 template <class SVC_HANDLER> void
@@ -681,8 +661,6 @@ ACE_Scheduling_Strategy<SVC_HANDLER>::dump (void) const
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("scheduler_ = %x"), this->scheduler_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ndelete_scheduler_ = %d"), this->delete_scheduler_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -706,13 +684,25 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strat
   : ACE_Scheduling_Strategy<SVC_HANDLER> (scheduler)
 {
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strategy");
+
+  if (scheduler == 0 || scheduler->reactor () == 0)
+    this->reactor_ = ACE_Reactor::instance ();
+  else
+    this->reactor_ = this->scheduler_->reactor ();
 }
 
 template <class SVC_HANDLER> int
 ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::suspend (void)
 {
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::suspend");
-  return this->scheduler_->reactor ()->suspend_handlers ();
+  return this->reactor_->suspend_handlers ();
+}
+
+template <class SVC_HANDLER> int
+ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume (void)
+{
+  ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume");
+  return this->reactor_->resume_handlers ();
 }
 
 template <class SVC_HANDLER> void
@@ -723,33 +713,31 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump (void) const
   ACE_Scheduling_Strategy<SVC_HANDLER>::dump ();
 }
 
-template <class SVC_HANDLER> int
-ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume (void)
-{
-  ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume");
-  return this->scheduler_->reactor ()->resume_handlers ();
-}
-
 template <class SVC_HANDLER>
 ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy
   (SVC_HANDLER *scheduler)
   : ACE_Scheduling_Strategy<SVC_HANDLER> (scheduler)
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy");
+
+  if (scheduler == 0 || scheduler->thr_mgr () == 0)
+    this->thr_mgr_ = ACE_Thread_Manager::instance ();
+  else
+    this->thr_mgr_ = this->scheduler_->thr_mgr ();
 }
 
 template <class SVC_HANDLER> int
 ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::suspend (void)
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::suspend");
-  return this->scheduler_->thr_mgr ()->suspend_all ();
+  return this->thr_mgr_->suspend_all ();
 }
 
 template <class SVC_HANDLER> int
 ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::resume (void)
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::resume");
-  return this->scheduler_->thr_mgr ()->resume_all ();
+  return this->thr_mgr_->resume_all ();
 }
 
 template <class SVC_HANDLER> void
