@@ -564,12 +564,6 @@ public:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   
-  // Type is a known service type.
-  
-  CORBA::Boolean find_property (CosTrading::PropertySeq &properties,
-				const char *property_name,
-				CORBA::ULong &position);
-  
  private:
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
