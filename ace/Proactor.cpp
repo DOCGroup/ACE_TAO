@@ -8,7 +8,7 @@ ACE_RCSID(ace, Proactor, "$Id$")
 
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 // This only works on Win32 platforms and on Unix platforms with aio
-// calls. 
+// calls.
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
@@ -39,7 +39,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
     delete_implementation_ (delete_implementation)
 {
   this->implementation (implementation);
-  
+
   if (this->implementation () == 0)
     {
 #if defined (ACE_HAS_AIO_CALLS)
@@ -50,7 +50,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
   #else /* Default is to use the AIOCB one */
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
-  #endif 
+  #endif
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.
       ACE_NEW (implementation, ACE_WIN32_Proactor);
@@ -148,7 +148,7 @@ int
 ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
-  
+
   while (ACE_Proactor::end_event_loop_ == 0
          && tv != ACE_Time_Value::zero)
     {
@@ -260,14 +260,6 @@ ACE_Proactor::handle_events (void)
   return this->implementation ()->handle_events ();
 }
 
-#if 0
-int
-ACE_Proactor::post_completion (ACE_Asynch_Result *result)
-{
-  return this->implementation ()->post_completion (result);
-}
-#endif /* 0 */
-
 int
 ACE_Proactor::wake_up_dispatch_threads (void)
 {
@@ -308,7 +300,7 @@ ACE_Proactor::implementation (void) const
 ACE_Asynch_Read_Stream_Impl *
 ACE_Proactor::create_asynch_read_stream (void)
 {
-  return this->implementation ()->create_asynch_read_stream (); 
+  return this->implementation ()->create_asynch_read_stream ();
 }
 
 ACE_Asynch_Write_Stream_Impl *
@@ -316,7 +308,7 @@ ACE_Proactor::create_asynch_write_stream (void)
 {
   return this->implementation ()->create_asynch_write_stream ();
 }
-  
+
 ACE_Asynch_Read_File_Impl *
 ACE_Proactor::create_asynch_read_file (void)
 {
@@ -328,7 +320,7 @@ ACE_Proactor::create_asynch_write_file (void)
 {
   return this->implementation ()->create_asynch_write_file ();
 }
- 
+
 ACE_Asynch_Accept_Impl *
 ACE_Proactor::create_asynch_accept (void)
 {
@@ -356,10 +348,10 @@ ACE_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                                     bytes_to_read,
                                                                     act,
                                                                     event,
-                                                                    priority); 
+                                                                    priority);
 }
 
-  
+
 ACE_Asynch_Write_Stream_Result_Impl *
 ACE_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                  ACE_HANDLE handle,
@@ -378,9 +370,9 @@ ACE_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                                      event,
                                                                      priority);
 }
-  
 
-  
+
+
 ACE_Asynch_Read_File_Result_Impl *
 ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                               ACE_HANDLE handle,
@@ -391,7 +383,7 @@ ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                               u_long offset_high,
                                               ACE_HANDLE event,
                                               int priority)
-  
+
 {
   return this->implementation ()->create_asynch_read_file_result (handler,
                                                                   handle,
@@ -405,7 +397,7 @@ ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
 }
 
 
-  
+
 ACE_Asynch_Write_File_Result_Impl *
 ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                ACE_HANDLE handle,
@@ -428,8 +420,8 @@ ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                                    event,
                                                                    priority);
 }
- 
-  
+
+
 ACE_Asynch_Accept_Result_Impl *
 ACE_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                            ACE_HANDLE listen_handle,

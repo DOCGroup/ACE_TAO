@@ -30,7 +30,7 @@ class ACE_Export ACE_WIN32_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SY
   //     to waiting on the timer queue and event. If the event is
   //     signaled, the thread will refresh the time it is currently
   //     waiting on (in case the earliest time has changed)
-  
+
   friend class ACE_WIN32_Proactor;
   // Proactor has special privileges
   // Access needed to: timer_event_
@@ -41,13 +41,13 @@ public:
 
   ~ACE_WIN32_Proactor_Timer_Handler (void);
   // Destructor.
-  
- protected:
+
+protected:
   virtual int svc (void);
   // Run by a daemon thread to handle deferred processing. In other
   // words, this method will do the waiting on the earliest timer and
   // event.
-  
+
   ACE_Auto_Event timer_event_;
   // Event to wait on.
 
@@ -79,19 +79,19 @@ ACE_WIN32_Proactor_Timer_Handler::svc (void)
 {
   u_long time;
   ACE_Time_Value absolute_time;
-  
+
   while (this->shutting_down_ == 0)
     {
       // default value
       time = ACE_INFINITE;
-      
+
       // If the timer queue is not empty
       if (!this->win32_proactor_.timer_queue ()->is_empty ())
 	{
 	  // Get the earliest absolute time.
 	  absolute_time =
             this->win32_proactor_.timer_queue ()->earliest_time () -
-            this->win32_proactor_.timer_queue ()->gettimeofday ();  
+            this->win32_proactor_.timer_queue ()->gettimeofday ();
 
 	  // Time to wait.
 	  time = absolute_time.msec ();
@@ -130,7 +130,7 @@ ACE_WIN32_Proactor_Handle_Timeout_Upcall::ACE_WIN32_Proactor_Handle_Timeout_Upca
 
 int
 ACE_WIN32_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
-												   ACE_Handler *handler,
+                                                   ACE_Handler *handler,
                                                    const void *act,
                                                    const ACE_Time_Value &time)
 {
@@ -361,7 +361,7 @@ ACE_WIN32_Proactor::cancel_timer (long timer_id,
 
 int
 ACE_WIN32_Proactor::cancel_timer (ACE_Handler &handler,
-                            int dont_call_handle_close)
+                                  int dont_call_handle_close)
 {
   // No need to signal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
@@ -388,7 +388,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream (void)
                   0);
   return implementation;
 }
-  
+
 ACE_Asynch_Read_File_Impl *
 ACE_WIN32_Proactor::create_asynch_read_file (void)
 {
@@ -398,17 +398,17 @@ ACE_WIN32_Proactor::create_asynch_read_file (void)
                   0);
   return  implementation;
 }
-  
+
 ACE_Asynch_Write_File_Impl *
 ACE_WIN32_Proactor::create_asynch_write_file (void)
 {
   ACE_Asynch_Write_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_WIN32_Asynch_Write_File (this), 
+                  ACE_WIN32_Asynch_Write_File (this),
                   0);
   return  implementation;
-} 
-  
+}
+
 ACE_Asynch_Accept_Impl *
 ACE_WIN32_Proactor::create_asynch_accept (void)
 {
@@ -527,13 +527,13 @@ ACE_WIN32_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
 
 ACE_Asynch_Accept_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_accept_result (ACE_Handler &handler,
-                                           ACE_HANDLE listen_handle,
-                                           ACE_HANDLE accept_handle,
-                                           ACE_Message_Block &message_block,
-                                           u_long bytes_to_read,
-                                           const void* act,
-                                           ACE_HANDLE event,
-                                           int priority)
+                                                 ACE_HANDLE listen_handle,
+                                                 ACE_HANDLE accept_handle,
+                                                 ACE_Message_Block &message_block,
+                                                 u_long bytes_to_read,
+                                                 const void* act,
+                                                 ACE_HANDLE event,
+                                                 int priority)
 {
   ACE_Asynch_Accept_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -719,7 +719,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   // Post a completion
   if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
                                     0, // number of bytes tranferred
-                                    0,// completion key
+                                    0, // completion key
                                     result // overlapped
                                     ) == FALSE)
     {
@@ -856,7 +856,7 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
 #pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Handler *,\
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Wheel_T<ACE_Handler *,
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
+ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Wheel_Iterator_T<ACE_Handler *,\
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

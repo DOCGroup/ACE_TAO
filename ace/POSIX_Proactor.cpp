@@ -132,19 +132,12 @@ ACE_POSIX_Proactor::cancel_timer (ACE_Handler &handler,
                                   int dont_call_handle_close)
 {
   ACE_NOTSUP_RETURN (-1);
-#if 0  
+#if 0
   // No need to signal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
   return this->timer_queue_->cancel (&handler,
                                      dont_call_handle_close);
 #endif /* 0 */
-}
-
-int
-ACE_POSIX_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
-{
-  ACE_UNUSED_ARG (result);
-  return 0;
 }
 
 #if 0
@@ -382,7 +375,7 @@ ACE_POSIX_Proactor::close_dispatch_threads (int)
 size_t
 ACE_POSIX_Proactor::number_of_threads (void) const
 {
-  // @@ Implement it. 
+  // @@ Implement it.
   return 0;
 }
 
@@ -448,14 +441,14 @@ class ACE_Export ACE_AIO_Accept_Handler : public ACE_Handler
   //     the notify pipe. We expect that to read 4 bytes from the
   //     notify pipe, for each <accept> call. Before giving this
   //     message block to another <accept>, we update <wr_ptr> and put
-  //     it in its initial position. 
+  //     it in its initial position.
 public:
   ACE_AIO_Accept_Handler (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
   // Constructor. You need the posix proactor because you need to call
   // things like application_specific_code etc. Having the main
   // proactor is good so that life is easier when we use Asynch_Read,
   // while issuing asynchronous read on the notify pipe.
-  
+
   virtual ~ACE_AIO_Accept_Handler (void);
   // Destructor.
 
@@ -465,7 +458,7 @@ public:
   // Proactor pointer when it creates this object and so we have this
   // method so that it can set it when it gets it.
 #endif /* 0 */
-            
+
   int notify (ACE_POSIX_Asynch_Accept_Result *result);
   // Send this Result to Proactor through the notification pipe.
 
@@ -484,7 +477,7 @@ private:
 
   ACE_Message_Block message_block_;
   // Message block to get ACE_Asynch_Accept::Result pointer from
-  // ACE_Asych_Accept. 
+  // ACE_Asych_Accept.
 
   ACE_Pipe pipe_;
   // Pipe for the communication between Proactor and the
@@ -514,8 +507,8 @@ ACE_AIO_Accept_Handler::ACE_AIO_Accept_Handler (ACE_POSIX_AIOCB_Proactor *posix_
     ACE_ERROR ((LM_ERROR,
                 "%N:%l:%p\n",
                 "Open on Read Stream failed"));
-  
-  // Issue an asynch_read on the read_stream of the notify pipe. 
+
+  // Issue an asynch_read on the read_stream of the notify pipe.
   if (this->read_stream_.read (this->message_block_,
                                sizeof (ACE_POSIX_Asynch_Accept_Result *),
                                0, // ACT
@@ -550,24 +543,24 @@ ACE_AIO_Accept_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
 {
   // @@
   ACE_DEBUG ((LM_DEBUG, "ACE_AIO_Accept_Handler::handle_read_stream called\n"));
-  
+
   // The message block actually contains the ACE_POSIX_Asynch_Accept_Result
-  // pointer.  
+  // pointer.
   ACE_POSIX_Asynch_Accept_Result *accept_result = 0;
   accept_result = *(ACE_POSIX_Asynch_Accept_Result **) result.message_block ().rd_ptr ();
-  
+
   // Do the upcall.
   this->posix_aiocb_proactor_->application_specific_code (accept_result,
                                                           0,  // No Bytes transferred.
                                                           1,  // Success.
                                                           0,  // Completion token.
                                                           0); // Error.
-  
+
   // Set the message block properly. Put the <wr_ptr> back in the
-  // initial position. 
+  // initial position.
   if (this->message_block_.length () > 0)
       this->message_block_.wr_ptr (this->message_block_.rd_ptr ());
-  
+
   // One accept has completed. Issue a read to handle any <accept>s in
   // the future.
   if (this->read_stream_.read (this->message_block_,
@@ -616,6 +609,13 @@ ACE_POSIX_AIOCB_Proactor::handle_events (void)
   return this->handle_events (ACE_INFINITE);
 }
 
+int
+ACE_POSIX_AIOCB_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
+{
+  ACE_UNUSED_ARG (result);
+  return 0;
+}
+
 ACE_Asynch_Read_Stream_Impl *
 ACE_POSIX_AIOCB_Proactor::create_asynch_read_stream (void)
 {
@@ -635,7 +635,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_write_stream (void)
                   0);
   return implementation;
 }
-  
+
 ACE_Asynch_Read_File_Impl *
 ACE_POSIX_AIOCB_Proactor::create_asynch_read_file (void)
 {
@@ -645,17 +645,17 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_read_file (void)
                   0);
   return  implementation;
 }
-  
+
 ACE_Asynch_Write_File_Impl *
 ACE_POSIX_AIOCB_Proactor::create_asynch_write_file (void)
 {
   ACE_Asynch_Write_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Write_File (this), 
+                  ACE_POSIX_AIOCB_Asynch_Write_File (this),
                   0);
   return  implementation;
-} 
-  
+}
+
 ACE_Asynch_Accept_Impl *
 ACE_POSIX_AIOCB_Proactor::create_asynch_accept (void)
 {
@@ -680,7 +680,7 @@ int
 ACE_POSIX_AIOCB_Proactor::notify_asynch_accept (ACE_POSIX_Asynch_Accept_Result* result)
 {
   this->aio_accept_handler_->notify (result);
-  
+
   return 0;
 }
 
@@ -690,13 +690,13 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
   if (this->aiocb_list_cur_size_ == 0)
     // No aio is pending.
     return 0;
-  
+
   // Wait for asynch operation to complete.
   // @@ Assing milli seconds correctly.
   timespec timeout;
   timeout.tv_sec = milli_seconds;
   timeout.tv_nsec = 0;
-  
+
   if (aio_suspend (this->aiocb_list_,
                    this->aiocb_list_max_size_,
                    &timeout) == -1)
@@ -725,7 +725,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
         continue;
 
       // Analyze error and return values.
-      
+
       // Get the error status of the aio_ operation.
       error_status = aio_error (aiocb_list_[ai]);
       if (error_status == -1)
@@ -734,18 +734,18 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                            "Error:%p\n",
                            "<aio_error> has failed"),
                           -1);
-      
+
       if (error_status == EINPROGRESS)
         // <aio_> operation is still in progress.
         continue;
-      
-      // Error_status is not -1 and not EINPROGRESS. So, an <aio_> 
+
+      // Error_status is not -1 and not EINPROGRESS. So, an <aio_>
       // operation has finished (successfully or unsuccessfully!!!)
 
       ACE_ERROR ((LM_ERROR,
                   "%N:%l:error_status = %d\n",
                   error_status));
-      
+
       // Get the return_status of the <aio_> operation.
       return_status = aio_return (aiocb_list_[ai]);
       if (return_status == -1)
@@ -762,11 +762,11 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
           break;
         }
     }
-  
+
   if (ai == this->aiocb_list_max_size_)
     // Nothing completed.
     return 0;
-  
+
   // Retrive the result pointer.
   ACE_POSIX_Asynch_Result *asynch_result =
     // dynamic_cast <ACE_POSIX_Asynch_Result *> (this->aiocb_list_[ai]);
@@ -776,20 +776,20 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                        "Error:%N:%l:%p\n",
                        "Dynamic cast failed"),
                       -1);
-                       
+
   // Invalidate entry in the aiocb list.
   this->aiocb_list_[ai] = 0;
   this->aiocb_list_cur_size_--;
-  
+
   // Call the application code.
   // @@ Pass <errno> instead of 0. Check out on LynxOS. It is set
   // to 77 somewhere.
-  this->application_specific_code (asynch_result, 
+  this->application_specific_code (asynch_result,
                                    return_status, // Bytes transferred.
                                    1,             // Success
                                    0,             // No completion key.
                                    error_status); // Error
-  
+
   return 0;
 }
 
@@ -854,7 +854,7 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (aiocb *aiocb_ptr)
 
   return 0;
 }
-  
+
 // *********************************************************************
 
 ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
@@ -864,18 +864,18 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
     ACE_ERROR ((LM_ERROR,
                 "Error:%p\n",
                 "Couldn't init the RT completion signal set"));
-  
-  if (sigaddset (&this->RT_completion_signals_, ACE_SIG_AIO) < 0) 
+
+  if (sigaddset (&this->RT_completion_signals_, ACE_SIG_AIO) < 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:%p\n",
                 "Couldnt init the RT completion signal set"));
-  
+
   // Mask them.
   if (sigprocmask (SIG_BLOCK, &RT_completion_signals_, 0) < 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:%p\n",
                 "Couldnt mask the RT completion signals"));
-  
+
   // Setting up the handler(actually Null handler) for these signals.
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
@@ -914,6 +914,13 @@ ACE_POSIX_SIG_Proactor::handle_events (void)
   return this->handle_events (ACE_INFINITE);
 }
 
+int
+ACE_POSIX_SIG_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
+{
+  ACE_UNUSED_ARG (result);
+  return 0;
+}
+
 ACE_Asynch_Read_Stream_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_read_stream (void)
 {
@@ -929,7 +936,7 @@ ACE_POSIX_SIG_Proactor::create_asynch_write_stream (void)
   ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Write_Stream (this), 0);
   return  implementation;
 }
-  
+
 ACE_Asynch_Read_File_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_read_file (void)
 {
@@ -937,15 +944,15 @@ ACE_POSIX_SIG_Proactor::create_asynch_read_file (void)
   ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Read_File (this), 0);
   return  implementation;
 }
-  
+
 ACE_Asynch_Write_File_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_write_file (void)
 {
   ACE_Asynch_Write_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Write_File (this), 0);
   return  implementation;
-} 
-  
+}
+
 ACE_Asynch_Accept_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_accept (void)
 {
@@ -972,15 +979,15 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   timespec timeout;
   timeout.tv_sec = milli_seconds;
   timeout.tv_nsec = 0;
-  
+
   // To get back the signal info.
   siginfo_t sig_info;
-  
+
   // Await the RT completion signal.
   int sig_return = sigtimedwait (&this->RT_completion_signals_,
                                  &sig_info,
                                  &timeout);
-  
+
   // Error case.
   // If failure is coz of timeout, then return *0* but set
   // errno appropriately. This is what the WinNT proactor
@@ -990,35 +997,35 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                        "Error:%p\n",
                        "Waiting for RT completion signals"),
                       0);
-  
+
   // RT completion signals returned.
   if (sig_return != ACE_SIG_AIO)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
                        sig_return),
                       -1);
-  
+
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG,
               "Sig number found in the sig_info block : %d\n",
               sig_info.si_signo));
-  
+
   // Is the signo returned consistent?
   if (sig_info.si_signo != sig_return)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Inconsistent signal number (%d) in the signal info block\n",
                        sig_info.si_signo),
                       -1);
-  
+
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG,
               "Signal code for this signal delivery : %d\n",
               sig_info.si_code));
-  
+
   // Retrive the result pointer.
   ACE_POSIX_Asynch_Result *asynch_result =
     (ACE_POSIX_Asynch_Result *) sig_info.si_value.sival_ptr;
-  
+
   // Check the <signal code> and act according to that.
   if (sig_info.si_code == SI_ASYNCIO)
     {
@@ -1027,7 +1034,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
       // is valid. Otherwise <aio_error> will bomb.
       aiocb* aiocb_ptr =
         (aiocb *)asynch_result;
-      
+
       // Analyze error and return values. Return values are
       // actually <errno>'s associated with the <aio_> call
       // corresponding to aiocb_ptr.
@@ -1037,11 +1044,11 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                            "Error:%p\n",
                            "Invalid control block was sent to <aio_error> for compleion querying"),
                           -1);
-      
+
       // Completion signal has been received, so it can't be in
-      // progress.  
+      // progress.
       // ACE_ASSERT (error_status != EINPROGRESS)
-      
+
       // No error occured in the AIO operation.
       int return_status = aio_return (aiocb_ptr);
       if (return_status == -1)
@@ -1066,7 +1073,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
     {
       // @@ Just debugging.
       ACE_DEBUG ((LM_DEBUG, "<sigqueue>'d signal received\n"));
-      
+
       this->application_specific_code (asynch_result,
                                        0, // No bytes transferred.
                                        1, // Result : True.
@@ -1079,7 +1086,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                        "Unexpected signal code (%d) returned on completion querying\n",
                        sig_info.si_code),
                       -1);
-  
+
   return 0;
 }
 

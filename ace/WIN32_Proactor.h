@@ -53,9 +53,9 @@ public:
   // Proactor has special privileges, access needed to: proactor ().
 
   typedef ACE_Timer_Queue_T<ACE_Handler *,
-                            ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_QUEUE;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_QUEUE;
 
   ACE_WIN32_Proactor_Handle_Timeout_Upcall (void);
   // Constructor.
@@ -81,7 +81,7 @@ protected:
   // Set the proactor. This will fail, if one is already set!
 
   ACE_WIN32_Proactor *win32_proactor_;
-  // Handle to the proactor. This is needed for the completion port. 
+  // Handle to the proactor. This is needed for the completion port.
 };
 
 class ACE_Export ACE_WIN32_Proactor : public ACE_Proactor_Impl
@@ -102,40 +102,40 @@ public:
   // Access needed to: Asynch_Timer, and completion_port_.
 
   // = Here are the typedefs that the <ACE_WIN32_Proactor> uses.
-  
+
   typedef ACE_Timer_Queue_T<ACE_Handler *,
-                            ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_QUEUE;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_QUEUE;
   typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
-                                     ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                                     ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_QUEUE_ITERATOR;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_QUEUE_ITERATOR;
   typedef ACE_Timer_List_T<ACE_Handler *,
-                           ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_LIST;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_LIST;
   typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
-                                    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                                    ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_LIST_ITERATOR;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_LIST_ITERATOR;
   typedef ACE_Timer_Heap_T<ACE_Handler *,
-                           ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_HEAP;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_HEAP;
   typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
-                                    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                                    ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_HEAP_ITERATOR;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_HEAP_ITERATOR;
   typedef ACE_Timer_Wheel_T<ACE_Handler *,
-                            ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_WHEEL;
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_WHEEL;
   typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
-                                     ACE_WIN32_Proactor_Handle_Timeout_Upcall,
-                                     ACE_SYNCH_RECURSIVE_MUTEX>
-          TIMER_WHEEL_ITERATOR;
-  
+    ACE_WIN32_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_WHEEL_ITERATOR;
+
   ACE_WIN32_Proactor (size_t number_of_threads = 0,
                       TIMER_QUEUE *tq = 0,
                       int used_with_reactor_event_loop = 0);
@@ -143,7 +143,7 @@ public:
 
   virtual ~ACE_WIN32_Proactor (void);
   // Virtual destruction.
-  
+
   virtual int close (void);
   // Close the IO completion port.
 
@@ -222,7 +222,7 @@ public:
 
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // Number of thread used as a parameter to CreatIoCompletionPort. 
+  // Number of thread used as a parameter to CreatIoCompletionPort.
 
   TIMER_QUEUE *timer_queue (void) const;
   void timer_queue (TIMER_QUEUE *timer_queue);
@@ -232,15 +232,15 @@ public:
   // Get the event handle.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
-  
+
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
-  
+
   virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
-  
+
   virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
-  
+
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
-  
+
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
   // Methods used to create Asynch_IO_Result objects. We create the right
@@ -253,7 +253,7 @@ public:
                                                                                 const void* act,
                                                                                 ACE_HANDLE event,
                                                                                 int priority = 0);
-  
+
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
@@ -261,7 +261,7 @@ public:
                                                                                   const void* act,
                                                                                   ACE_HANDLE event,
                                                                                   int priority = 0);
-  
+
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
                                                                             ACE_HANDLE handle,
                                                                             ACE_Message_Block &message_block,
@@ -271,7 +271,7 @@ public:
                                                                             u_long offset_high,
                                                                             ACE_HANDLE event,
                                                                             int priority = 0);
-  
+
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
                                                                               ACE_HANDLE handle,
                                                                               ACE_Message_Block &message_block,
@@ -281,7 +281,7 @@ public:
                                                                               u_long offset_high,
                                                                               ACE_HANDLE event,
                                                                               int priority = 0);
-  
+
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
                                                                       ACE_HANDLE listen_handle,
                                                                       ACE_HANDLE accept_handle,
@@ -316,7 +316,7 @@ protected:
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return.
-  
+
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
 				  int success,
@@ -329,10 +329,10 @@ protected:
   ACE_HANDLE completion_port_;
   // Handle for the completion port. Unix doesnt have completion
   // ports.
- 
+
   size_t number_of_threads_;
   // This number is passed to the <CreatIOCompletionPort> system
-  // call. 
+  // call.
 
   TIMER_QUEUE *timer_queue_;
   // Timer Queue.
@@ -366,19 +366,19 @@ public:
   friend class ACE_WIN32_Proactor_Handle_Timeout_Upcall;
   // Timer Handler has special privileges
   // Access needed to: convert Asynch_Timer into an OVERLAPPED
-  
+
   ACE_WIN32_Asynch_Timer (ACE_Handler &handler,
                           const void *act,
                           const ACE_Time_Value &tv,
                           ACE_HANDLE event = ACE_INVALID_HANDLE);
-  
+
 protected:
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0);
   // This method calls the <handler>'s handle_timeout method
-  
+
   ACE_Time_Value time_;
   // Time value requested by caller
 };
