@@ -1,6 +1,7 @@
 Thu Oct 12 19:38:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
 
 	  Added new files introduced by Priyanka's footprint reduction
 	  effort.
