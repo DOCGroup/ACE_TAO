@@ -1,3 +1,14 @@
+Thu May  8 14:19:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/ORT/Makefile:
+
+          Removed the -Gv option from the IDL compiler command line.
+
+        * Server_IORInterceptor.h:
+
+          Added #include of the file in the TAO_IORInterceptor library
+          containing the base class PortableServer::IORInterceptor.
+
 Thu May  8 10:48:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/AMH/Sink_Server/Base_Server.cpp:
