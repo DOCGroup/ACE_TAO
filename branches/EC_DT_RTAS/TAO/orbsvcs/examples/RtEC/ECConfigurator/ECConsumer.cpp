@@ -17,7 +17,7 @@
 ACE_RCSID(EC_Examples, ECConsumer, "$Id$")
 
 ECConsumer::ECConsumer (EventTypeVector &sub_types, Service_Handler * handler)
-  : worktime_(0,0)
+  : _worktime(0,0)
   , handler_(handler)
   , sub_types_(sub_types)
 {
@@ -26,7 +26,7 @@ ECConsumer::ECConsumer (EventTypeVector &sub_types, Service_Handler * handler)
 ECConsumer::ECConsumer (EventTypeVector &sub_types,
                         ACE_Time_Value& worktime,
                         Service_Handler *handler)
-  : worktime_(worktime)
+  : _worktime(worktime)
   , handler_(handler)
   , sub_types_(sub_types)
 {
@@ -64,21 +64,17 @@ ECConsumer::push (const RtecEventComm::EventSet& events
     }
 
   ACE_High_Res_Timer timer;
-  ACE_Time_Value elapsed_time;
+  ACE_Time_Value elapsed_time(ACE_Time_Value::zero);
 
   static CORBA::ULong prime_number = 9619899;
 
   ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) worktime is %isec %iusec\n",
-             this->worktime_.sec(),this->worktime_.usec()));
-
-  // DEBUG
-  //this->worktime_.set(0,200000);
-  // END DEBUG
+             this->_worktime.sec(),this->_worktime.usec()));
 
   ACE_Time_Value start_time(ACE_OS::gettimeofday());
   timer.start();
   int j=0;
-  while (elapsed_time <= this->worktime_)
+  while (elapsed_time <= this->_worktime)
     {
       //ACE_DEBUG((LM_DEBUG,"%isec %iusec elapsed\n",elapsed_time.sec(),elapsed_time.usec()));
 
@@ -113,8 +109,16 @@ ECConsumer::push (const RtecEventComm::EventSet& events
   for(; siter != this->dependants_.end(); ++siter)
     {
       SupplierVector::value_type supplier = *siter;
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) processing dependant %d\n",supplier->get_id()));
       supplier->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
     }
+
+  ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) finished processing dependants\n"));
+  // DEBUG
+//   static int t = 0;
+//   if (t++ >= 2)
+//     this->_worktime.set(0,200000);
+  // END DEBUG
 
   if (this->handler_ != 0)
     {
@@ -133,7 +137,7 @@ ECConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ECConsumer::setWorkTime(ACE_Time_Value& worktime)
 {
-  this->worktime_.set(worktime.sec(),worktime.usec());
+  this->_worktime.set(worktime.sec(),worktime.usec());
 }
 
 void

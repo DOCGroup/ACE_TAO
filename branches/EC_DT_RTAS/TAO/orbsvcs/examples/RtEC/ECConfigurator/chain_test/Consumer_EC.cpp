@@ -36,16 +36,16 @@ main (int argc, char *argv[])
       Arguments args;
       args.filename_.set(ACE_TEXT("consumerec.xml"));
 
+      // ORB initialization boiler plate...
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       // parse args for config filename
       if (parse_args(argc,argv,args) == -1)
         {
           return 1;
         }
-
-      // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);

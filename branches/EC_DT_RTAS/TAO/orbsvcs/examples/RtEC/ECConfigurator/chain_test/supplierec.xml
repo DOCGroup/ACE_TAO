@@ -6,12 +6,12 @@
 <!-- Define the events -->
 <!-- THESE NEED TO BE THE SAME AS DEFINED IN THE CLIENT XML! -->
 <Timeout name="Subtask1 Timeout" >
-  <Period>200</Period> <!-- in msec -->
+  <Period>5000</Period> <!-- in msec -->
   <Phase>0</Phase> <!-- in msec -->
 </Timeout>
   
 <Event name="Subtask1 Trigger" type="16">
-  <Period>200</Period> <!-- in msec -->
+  <Period>5000</Period> <!-- in msec -->
   <Phase>0</Phase> <!-- in msec -->
   <Criticality value="VERY_LOW" />
   <Importance value="VERY_LOW" />
@@ -20,10 +20,19 @@
 </Event>
 
 <Event name="Subtask2 Trigger" type="17">
-  <Period>200</Period> <!-- in msec -->
+  <Period>5000</Period> <!-- in msec -->
   <Phase>0</Phase> <!-- in msec -->
   <Criticality value="VERY_LOW" />
   <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<Event name="Subtask3 Trigger" type="18">
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+  <Criticality value="VERY_HIGH" />
+  <Importance value="VERY_HIGH" />
   <WorstExecution>50</WorstExecution> <!-- in msec -->
   <TypicalExecution>50</TypicalExecution> <!-- in msec -->
 </Event>
