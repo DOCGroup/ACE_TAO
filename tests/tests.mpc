@@ -1111,7 +1111,9 @@ project(SOCK Send Recv Test IPV6) : acetest {
   }
 }
 
-
-
-
-
+project(SOCK Test IPv6) : acetest {
+  exename = SOCK_Test_IPv6
+  Source_Files {
+  SOCK_Test_IPv6.cpp
+  }
+}

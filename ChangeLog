@@ -1,3 +1,10 @@
+Sat Jan 17 00:12:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/run_tests.lst:
+	* tests/tests.mpc:
+
+	  Added missing tests.
+
 Fri Jan 16 23:57:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/INET_Addr_Test_IPV6.cpp:
