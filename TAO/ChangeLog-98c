@@ -1,9 +1,18 @@
+Wed Oct 22 19:37:22 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO IDL Compiler: Improvements made so that the server-side
+	skeletons for operations now generate valid code. The code
+	generated for the Cubit.idl was compiling cleanly. It is under
+	test currently to see if it runs.
+
+	* Some progress in handling forward declarations of interfaces.
+
 Wed Oct 22 12:55:19 1997    <nw1@CHA-CHA>
 
 	* tao/poa.h:  Added ACE_Svc_Export to class CORBA_POA.
 
 	* tao/TAO.{mdp,mak}:  Updated files in project file.
-	
+
 	* tao/TAO.dsp: Removed boa, Orb_Core and added poa, orb_core to
  	  the project file.
 
@@ -70,7 +79,7 @@ Mon Oct 20 23:42:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	  tests/TAO/MT-Cubit/server/svr.cpp,
 	  tests/TAO/cubitS.cpp,
 	  tests/TAO/svr.cpp,
-	  tests/TAO/test1_svr.cpp: Changed BOA to POA to reflect the 
+	  tests/TAO/test1_svr.cpp: Changed BOA to POA to reflect the
 	  new naming conventions.
 
 	* tao/stub.i (STUB_Object): Removed a stray default value from the
@@ -106,7 +115,7 @@ Mon Oct 20 16:30:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/stub.i: Created new file with inline methods for
  	STUB_Object.
-	
+
 	* tao/stub.h: Moved inline method definitions into a new
  	file--stub.i.
 
@@ -161,9 +170,9 @@ Thu Oct 16 11:15:00 1997  Brian R. Mendel <brian.r.mendel@boeing.com>
 
         * tao/server_factory.cpp: Added instantiation pragma for VxWorks for
           ACE_Acceptor.  Added the template to the specialization section, also.
-        
+
         * tao/orbobj.cpp: Added instantiation pragma for VxWorks for
-          ACE_Cached_Connect_Strategy and ACE_Hash_Map_Manager for 
+          ACE_Cached_Connect_Strategy and ACE_Hash_Map_Manager for
           ACE_Null_Mutex instantiations.  Also, added these to the template
           specialization sections.
 
@@ -243,7 +252,7 @@ Thu Oct  9 23:17:37 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 Thu Oct  9 11:33:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/giop.cpp: 
+	* tao/giop.cpp:
 	  There was a minor sintax error.
 
 Tue Oct 07 09:34:35 1997    <brian.r.mendel@boeing.com>
@@ -259,7 +268,7 @@ Tue Oct 07 07:05:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Oct 06 22:11:40 1997    <nw1@CHA-CHA>
 
-	* tests/Cubit/TAO/cubit_i.cpp (Cubit_please_exit): 
+	* tests/Cubit/TAO/cubit_i.cpp (Cubit_please_exit):
 	* tests/Cubit/TAO/cubitS.cpp (_skel_Cubit): Changed to use the new
 	  TAO_ORB_CORE_instance () global function.
 
@@ -286,13 +295,13 @@ Mon Oct  6 20:06:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 Sat Oct  4 20:08:57 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tao/TAO.{dsp,dsw}: Added tao_internals.cpp into project file
-	  list. 
+	  list.
 
 	* tao/tao_internals.h (TAO_Internal): Added ACE_Svc_Export and
 	  $ I d $.
 
 	* tao/tao_internals.i (open_services): Added default return value
-	  0. 
+	  0.
 
 	* tao/tao_internals.cpp: Added #include "tao/tao_internals.h" and
 	  the CVS $ I d $ field.  Also, we should include inline (.i) file
@@ -346,11 +355,11 @@ Wed Oct  1 10:44:55 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/varout.h: Fixed some template errors in class
 	TAO_Object_out. This was pointed to me by Carlos as he was
-	compiling TAO in SGI. 
+	compiling TAO in SGI.
 
 Wed Oct  1 09:10:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* docs/releasenotes.html: 
+	* docs/releasenotes.html:
 	  Updated information on the Event Channel, the use of the Naming
 	  Service is no longer a plan, it is done already.
 
@@ -367,7 +376,7 @@ Tue Sep 30 17:27:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* <RELEASE>: Tagged a release for limited consumption until the
  	Service Configurator bug is fixed.
-	
+
 	* tests/multiCubit/svr.cpp: Added code to properly release CORBA
  	objects.  Delays between task activations simply aid in debugging
  	and are not necessary.
@@ -399,7 +408,7 @@ Mon Sep 29 13:50:34 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO ORB changes:
 
 	any.*: Added _var and _out classes.
-	
+
 	corbacom.{h,i} : Added _out types for primitive types, added _out and
 	updated _var classes for String. Added corbacom.i for implementing
 	the String's _var and _out classes
@@ -409,7 +418,7 @@ Mon Sep 29 13:50:34 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* Alpha release of TAO IDL compiler added to this release. This is
 	an alpha release and we are currently putting it to rigorous
-	test. A large amount of code for the back end is added under the 
+	test. A large amount of code for the back end is added under the
 	TAO/TAO_IDL/be_include and TAO/TAO_IDL/be/ directories.
 
 	In addition, some amount of ACEification done to methods belonging
@@ -620,7 +629,7 @@ Wed Sep 03 06:15:00 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 Tue Sep 02 18:32:12 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
 	* tao/orbobj.cpp:  Added include for Service_Repository.h to orbobj.h
-   
+
 	* tao/debug.cpp: Removed the TAO_NEEDS_UNUSED_VARIABLES #defines
  	around the debug_stream declaration.  debug_stream is used by
  	dmsg_filter in debug.cpp.  Changed SYSTEM_EXCEPTION to
@@ -688,28 +697,28 @@ Thu Aug 28 14:04:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Mon Aug 18 16:39:40 1997  Carlos O'Ryan  <coryan@mambo.cs.wustl.edu>
 
-	* Makefile for TAO compiler: 
+	* Makefile for TAO compiler:
 	  $(SOEXT) must be used instead of just .so, the former does not
 	  work on all platforms, notably HP-UX.
 
 Mon Aug 18 16:39:29 1997  Carlos O'Ryan  <coryan@mambo.cs.wustl.edu>
 
-	* tao/Makefile: 
-	* tests/Demux_Test/CodeGen/Makefile: 
+	* tao/Makefile:
+	* tests/Demux_Test/CodeGen/Makefile:
 	  $(SOEXT) must be used instead of just .so, the former does not
 	  work on all platforms, notably HP-UX.
 
 Sun Aug 17 16:53:42 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* IIOP/test/Orbeline/client/Profile_Timer.h: 
-	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.h: 
-	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.h: 
-	* tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: 
-	* tests/Cubit/VisiBroker/base_server/Profile_Timer.h: 
-	* tests/Cubit/VisiBroker/client/Profile_Timer.cpp: 
-	* tests/Cubit/VisiBroker/client/Profile_Timer.h: 
+	* IIOP/test/Orbeline/client/Profile_Timer.h:
+	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp:
+	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.h:
+	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.cpp:
+	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.h:
+	* tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp:
+	* tests/Cubit/VisiBroker/base_server/Profile_Timer.h:
+	* tests/Cubit/VisiBroker/client/Profile_Timer.cpp:
+	* tests/Cubit/VisiBroker/client/Profile_Timer.h:
 	We no longer use timestruct_t in ACE, it is a SYSVism; we use
 	timespec_t instead.
 
@@ -843,7 +852,7 @@ Sun Aug 10 08:56:20 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO/tests/Demux_Test: Included code that tests various
 	demultiplexing strategies in TAO. At this point, however, the code
 	will not work because of changes in TAO. This will be done
-	next. A README file provides additional details. 
+	next. A README file provides additional details.
 
 	* TAO/Benchmark: A suite of benchmarking tests have been
 	included. This is still in the preliminary stages of
@@ -888,7 +897,7 @@ Sat Aug  9 12:37:05 1997  Brian Mendel  <brian.r.mendel@boeing.com>
         ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION section as well?
 
         * tao/default.bld: Added build file for VxWorks.
-      
+
         * tao/tao.bld: Added build file for VxWorks.
 
 Fri Aug  8 14:25:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
@@ -945,12 +954,12 @@ Wed Aug  6 18:28:41 1997  Chris Cleeland  <cleeland@swarm.cs.wustl.edu>
 
 Wed Aug  6 17:27:44 1997  Brian R. Mendel  <brian.r.mendel@boeing.com>
 
-        * tao/typecode.h: Removed qualified name in typecode.h to eliminate 
+        * tao/typecode.h: Removed qualified name in typecode.h to eliminate
           compiler warnings by the GHS compiler.  Line 297.
- 
+
         * tao/decode.cpp: Changed wchar_t* to CORBA_WChar* to eliminate
           compiler errors on GHS compiler.  Lines 142, 216, 729, 1371, and 1475.
-        
+
         * tao/typecode.cpp: Deleted unreachable break statements at lines
           429, and 477, 904, and 947.
 
@@ -1000,7 +1009,7 @@ Thu Jul 31 16:19:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/corba.h: Removed incorrect #include "tao/corba.h" in this
  	file.  Bad form.
-	
+
 Thu Jul 31 15:19:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/*.{h,i,cpp}: Changed all #include of specific
@@ -1032,7 +1041,7 @@ Wed Jul 30 16:55:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	TAO_Active_Demux_OpTable::bind().
 
 Wed Jul 30 14:18:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
-	
+
 	* tao/Makefile: Corrected automatic definition of TAO_ROOT and
  	fixed all dependencies on tao header/inline files.
 
@@ -1114,7 +1123,7 @@ Thu Jul 17 10:08:45 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
  	called "align_binary". This error has been fixed. The macros for
  	align_binary and ptr_align_binary are now exactly as the original
  	inline functions.
-	
+
 	* tao/any.{h,cpp}: Added comments. In addition, in the code for
 	Any::replace, we check if "_value" exists before trying to
 	DEEP_FREE it. Otherwise this was resulting in a segmentation fault
@@ -1128,7 +1137,7 @@ Thu Jul 17 10:08:45 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
 	* tao/corbacom.h: Added lots of comments for the CORBA_String_var class
 
 	* tao/decode.cpp: Made TAO_Marshal_Union::decode to work, added comments.
-	
+
 	* tao/encode.cpp: Made TAO_Marshal_Union::encode to work, added comments.
 
 	* tao/factories.{h,cpp}: Added lots of comments. Removed "void
@@ -1196,27 +1205,27 @@ Wed Jul 16 14:17:01 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 Wed Jul 16 11:34:36 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/boa.cpp: Removed some unused code.
-	
+
 	* tao/compat/objbase.h: Added explicit check for prior inclusion
  	of ace/OS.h, with an error being produced if it's not included.
   	This will help keep me honest and remember to always include OS.h
  	beforehand, since I do most of my development on non-WIN32
  	platforms.
-	
+
 	* tao/*.{h,cpp}: Added #include "ace/OS.h" before every inclusion
  	of <objbase.h>.  This is required on WIN32 platforms because
  	objbase.h eventually ends up including <winsock.h>, which is the
  	wrong version of winsock from what ACE requires.  Thus, by
  	including OS.h prior to objbase.h, objbase.h ends up not trying to
  	include a winsock header.
-	
+
 	* tao/orbobj.cpp: Added missing #include for tao/debug.h.
-	
+
 Wed Jul 16 10:55:55 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/PC_Install.bat: removed it since it isn't needed anymore
 
-	* tao/TAO.dsp: Changed include path and removed calling of 
+	* tao/TAO.dsp: Changed include path and removed calling of
 	  PC_Install.bat
 
 	* tests/Cubit/TAO/{client,server}.dsp: Changed include path
@@ -1228,7 +1237,7 @@ Tue Jul 15 16:13:53 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	happening was the fact that, upon client exit, there were upwards
  	of 15 references to the object references.  Now it's only 5-7
  	(more work to go).
-	
+
 	* tests/Cubit/TAO/*: Changed all #include paths to be "tao/...".
   	Also, changes to orb.h (see below) obviated additional header
  	inclusion in certain files.
@@ -1257,14 +1266,14 @@ Tue Jul 15 16:13:53 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* tao/Makefile: Eliminated the need to copy files into a "proto/"
  	directory; now, everything is built into and used from the "tao"
  	directory.
-  	
+
 	There is also a new, optional, environment
  	variable--TAO_ROOT--which should be set to the ".../TAO"
  	directory.  If it's not set, the Makefile will set it to
  	$WRAPPER_ROOT/TAO.
-  	
+
 	Lastly, libcorba.* has changed to libTAO.*.
-	
+
 	* tao/orb.h: Eliminated many header files which had been
  	explicitly included here and were causing all manner of problems
  	with circular includes.  Library components must now be careful to
@@ -1273,9 +1282,9 @@ Tue Jul 15 16:13:53 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Fri Jul 11 12:12:40 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/TAO.dsp: changed to use ace-r.dll in the release 
+	* tao/TAO.dsp: changed to use ace-r.dll in the release
 	  version
-	
+
 	* tests/Cubit/TAO/{client,server}.dsp: changed to use ace-r.dll
 	  and tao-r.dll for the release versions.
 
@@ -1283,7 +1292,7 @@ Thu Jul 10 15:47:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* docs/: Removed the following obsolete files: README.apm,
  	BUILDING, and TESTS.
-	
+
 	* tao/params.*: Moved the instance() methods into the .cpp from
  	the .i, as well as the declaration for the singleton locks.
   	Having the singleton locks declared in the .i file caused much
@@ -1297,7 +1306,7 @@ Thu Jul 10 15:47:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/roa.*: Removed get_request() method.  This should improve
  	our McCabe scores ;-)
-	
+
 	* tao/boa.h: Removed get_request() method.
 
 Wed Jul  9 14:44:31 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -1308,7 +1317,7 @@ Tue Jul  8 20:52:06 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/PC_Install.bat: Made it very quiet.
 
-	* tao/params.{cpp,h,i}: Changed TAO_OA_PARAMS from a 
+	* tao/params.{cpp,h,i}: Changed TAO_OA_PARAMS from a
 	  ACE_Singleton to a plain singleton by just integrating the
 	  ACE_Singleton code into the class.
 
@@ -1329,10 +1338,10 @@ Tue Jul  8 12:44:14 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Jul  8 10:21:27 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/typecode.cpp: Changed a few loop counters from int to 
+	* tao/typecode.cpp: Changed a few loop counters from int to
 	  CORBA_ULong to get rid of unsigned/signed comparison warnings
 
-	* tao/orbobj.cpp: Got rid of a "*" before a comment.  Looked like 
+	* tao/orbobj.cpp: Got rid of a "*" before a comment.  Looked like
 	  a typo
 
 	* tao/PC_Install.bat: Replaced "#...." with "rem ...."
@@ -1347,7 +1356,7 @@ Mon Jul  7 20:59:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  getopt().  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
 	  reporting this.
 
-	* TAO/tao/orbconf.h (SIZEOF_LONG_DOUBLE): Added a 
+	* TAO/tao/orbconf.h (SIZEOF_LONG_DOUBLE): Added a
 	  #define for M_UNIX.  Thanks to Arturo Montes
 	  <mitosys@colomsat.net.co> for reporting this.
 
@@ -1371,7 +1380,7 @@ Sat Jul  5 16:12:31 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/typecode.i: Cleaned up lots of minor warnings with the code
 	  that are only revealed when running GCC.  The code should now
-	  compile almost completely cleanly with -wall. 
+	  compile almost completely cleanly with -wall.
 
 	* tao/typecode.{i,h}: Changed the name of TC_PRV_State to
 	  TC_Private_State.
@@ -1434,12 +1443,12 @@ Fri Jul  4 00:18:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Thu Jul  3 16:16:14 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* Added ACE_Svc_Export to a couple of declarations to make NT 
+	* Added ACE_Svc_Export to a couple of declarations to make NT
 	  happier
 
 Thu Jul  3 13:43:20 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* Added Visual C++ 5.0 project and workspace files for the TAO 
+	* Added Visual C++ 5.0 project and workspace files for the TAO
 	  library and Cubit test
 
 Wed Jul  2 12:44:42 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
@@ -1533,7 +1542,7 @@ Thu Jun 26 09:49:38 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
 	decode.cpp, deep_free.cpp, and deep_copy.cpp. The marshal.h file
 	defines classes for an abstract MarshalObject. The factory is
 	responsible to return a concrete specialized instance of the
-	MarshalObject. 
+	MarshalObject.
 
 	* Updated the CORBA_TypeCode class so that it now provides all the
 	CORBA_2.0 compliant operations. These include length(),
@@ -1571,11 +1580,11 @@ Thu Jun  5 10:09:01 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 Wed May 23 14:39:01 1997  Brian Mendel  <bmendel@mdc.com>
 
-        * IIOP/lib/objtable.{h,cpp}:  Added template specialization of 
+        * IIOP/lib/objtable.{h,cpp}:  Added template specialization of
         ACE_Hash_Map_Manager for char*'s.
 
         * IIOP/test/cubitS.cpp:  Fixed type_id to be of type CORBA_String_var.
-        Also, added a debug msg to print the object address to show the 
+        Also, added a debug msg to print the object address to show the
         object for which the request is made.
 
         * IIOP/test/svr.cpp:  Added capability to create multiple Cubit
@@ -1653,8 +1662,8 @@ Tue May 20 14:39:00 1997  Brian Mendel  <bmendel@mdc.com>
 
 	* IIOP/test/*: Commited changes to Cubit Example as a current snapshot
           of required changes.
-	
-        * IIOP/lib/*: Changes required for header file includes.  Added 
+
+        * IIOP/lib/*: Changes required for header file includes.  Added
           conditionals around _IIOP_BUILD_
 
 Tue May 20 13:55:58 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
@@ -1664,11 +1673,11 @@ Tue May 20 13:55:58 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 Tue May 20 13:04:00 1997  Brian Mendel <bmendel@mdc.com>
 
-	* IIOP/lib/debug.cpp: Deleted spaces between flockfile (f) and 
-	funlockfile (f).  Changed instances of debug_filter to 
+	* IIOP/lib/debug.cpp: Deleted spaces between flockfile (f) and
+	funlockfile (f).  Changed instances of debug_filter to
 	TAO_debug_filter.  Deleted space between emit_prefix (stream).
 
-	* IIOP/lib/cdr.cpp Added undef(s) for ACE_INLINE and 
+	* IIOP/lib/cdr.cpp Added undef(s) for ACE_INLINE and
           do_undef_on_ACE_INLINE to eliminate redefinition problems.
 
 
@@ -1740,7 +1749,7 @@ Sat May 17 17:18:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* First pass at providing a backend to the SunSoft's CORBA IDL
 	compiler front end.
-	
+
 Fri May 16 17:30:31 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/svrrqst.*: Corrected some comments, adjusted some
@@ -1840,7 +1849,7 @@ Thu May 15 15:54:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	is what CORBA_ORB_init() will now return.  Modified
  	string_to_object() so that it sets the ORB on the CORBA_Object
  	that it returns.
-	
+
 	* IIOP/lib/{iiopobj,nvlist}.h: Added some responsive commentary.
 
 	* IIOP/lib/giop.cpp: Modified connection establishment code in
@@ -1872,7 +1881,7 @@ Mon May 12 17:02:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* IIOP/lib/roa.*: Moved short method into an inline file.
   	Miscellaneous reformatting.  Adjustment to new type names
  	(prefaced by TAO_ for namespace protection).
-	
+
 	* IIOP/lib/object.*: Moved short methods into an inline file.
   	Changed lookup()/register_op() to find()/bind() for consistency
  	with established ACE APIs.  Miscellaneous reformatting.
@@ -1925,9 +1934,9 @@ Mon May  5 20:28:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/boa.hh: Added 2 pure virtual methods (shutting_down and
 	clean_shutdown).
-	
+
 	In addition, the "register_obj" method was added. It was missing before.
-	
+
 	* IIOP/lib/corbacom.cpp: String_var's constructor bug is fixed. It
 	was trying to free storage that was never allocated.
 
@@ -1966,14 +1975,14 @@ Fri May  2 08:48:29 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/object.hh: Modified the signature of register_op on
 	TAO_Operation_Table to take a second argument to be a pointer to
-	the actual skeleton. 
+	the actual skeleton.
 
 	Thanks to Brian Mendel for reporting this.
 
 Thu May  1 16:46:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/object.{hh,cpp}: Added a method that can set the parent
-	pointer. 
+	pointer.
 
 	* IIOP/lib/params.cpp: A hook has been provided in ROA_Factory to
 	enable the user to use a user-defined demux strategy.
@@ -1981,12 +1990,12 @@ Thu May  1 16:46:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 Wed Apr 30 22:00:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/objtable.{hh,cpp}: Added two new files that define
-	different object demultiplexing strategies. 
+	different object demultiplexing strategies.
 
 	* IIOP/lib/Makefile: Added objtable as additional source file to compile.
 
 	* IIOP/lib/boa.cpp: Provided the default destructor for the
-	TAO_Object_Table. 
+	TAO_Object_Table.
 
 	* IIOP/lib/boa.cpp: Provided the default destructor for the
 	TAO_Operation_Table.
@@ -2044,10 +2053,10 @@ Tue Apr 29 11:52:48 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	method to class CORBA_ORB. Users can now pass arguments to
 	BOA_init. Eventually, we want to make this method return any of
 	the specialized OA's depending on the arguments. Right now, we get
-	a pointer to the ROA. 
+	a pointer to the ROA.
 
 	* IIOP/lib/params.{hh,i}: Added some more methods and enum
-	declarations to the ROA_PARAMS singleton. 
+	declarations to the ROA_PARAMS singleton.
 
 	* IIOP/lib/principa.hh: Moved the CORBA_Principal_ptr declaration
 	to orb.hh.
@@ -2151,17 +2160,17 @@ Fri Apr 18 08:09:19 1997  Brian Mendel   <bmendel@mdc.com>
 
 	* cdr.hh,corbacom.{hh,cpp},giop.cpp,marshall.cpp,typecode.cpp:
  	Changes required for WChar missed in earlier committed code.
-	
+
 	* connmgr.cpp: Changes required for select statement.
-	
+
 	* nvlist.cpp: Conditional include for memory.h added.  VxWorks
  	does not have memory.h.
 
 	* object.cpp: Added conditional for VXWORKS to define
  	IID_IUnknown.
-	
+
 	* orbconf.hh: Minor tuning of the configuration file.
-	
+
 	* tcpoa.{hh,cpp}: Added VXWORKS conditional includes.
 
 	* toa.cpp: Added VXWORKS conditional includes.
@@ -2171,11 +2180,11 @@ Mon Apr 15 17:01:00 1997  Brian Mendel  <bmendel@mdc.com>
 
 	* roa.cpp: Added return statement to ROA_Handler::open(void*)
  	method.
-	
+
 	* giop.cpp: Modified giop::read_buffer to replace undefined fc
  	with peer.get_handle().  Modified giop::incoming_message method
  	parameter list to match function prototype exactly.
-	
+
 	* tcpoa.cpp: Replaced fd instances in debug messages with
  	peer.get_handle() calls.
 
@@ -2259,7 +2268,7 @@ Wed Apr  9 15:43:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	to use threads, calling activate() in ROA_Handler::open() if that
  	flag is set, and creating ROA_Handler::svc() that simply loops
  	calling handle_input().
-	
+
 Tue Apr  8 11:14:57 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/test/svr.cpp: Moved setting of upcall(), forwarder(),
@@ -2341,5 +2350,3 @@ Wed Mar 19 10:25:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 Thu Mar 13 14:06:28 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ChangeLog: Added the ChangeLog.
-	
-
