@@ -1,3 +1,11 @@
+Tue May 25 16:54:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/SOCK_Send_Recv_Test.cpp:
+          Fixed a signed/unsigned mismatch warning and
+          changed several uses of static_cast to
+          reinterpret_cast. This is a belated entry, I put it
+	  first in TAO/ChangeLog by mistake.
+
 Tue May 25 15:19:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_ghs.GNU: added
