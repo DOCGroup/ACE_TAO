@@ -107,17 +107,11 @@ public:
   void operator<<= (const char*);
   // insert unbounded strings
 
-  void operator<<= (CORBA::TypeCode_ptr&);
-  // insert a TypeCode - copying version
+  void operator<<= (CORBA::TypeCode_ptr);
+  // insert a TypeCode
 
-  void operator<<= (CORBA::TypeCode_ptr*);
-  // insert a TypeCode - non-copying version
-
-  void operator<<= (CORBA::Object_ptr&);
-  // insert an object reference - copying version
-
-  void operator<<= (CORBA::Object_ptr*);
-  // insert an object reference - non-copying version
+  void operator<<= (CORBA::Object_ptr);
+  // insert an object reference
 
   // =type safe extraction
 
