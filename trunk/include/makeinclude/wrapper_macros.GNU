@@ -141,10 +141,10 @@ YACC            = yacc
 
 # Define SOEXT trailing digits if platform needs it.
 ifeq ($(versioned_so),1)
-  ACE_LDSO_Major_Minor_Version_Number := $(shell echo .`perl -ne  'if (/ACE version/) \
+  ACE_LDSO_Version_Number := $(shell echo .`perl -ne  'if (/ACE version/) \
       { s/[^0-9]+(\d+\.\d+)\.\d+.+/\1/ ; print }' ${ACE_ROOT}/VERSION `)
 else
-  ACE_LDSO_Major_Minor_Version_Number =
+  ACE_LDSO_Version_Number =
 endif
 
 #----------------------------------------------------------------------------
