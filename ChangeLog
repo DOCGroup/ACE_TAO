@@ -1,3 +1,21 @@
+Mon May 19 11:13:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SSL/Makefile.bor:
+        * tests/RMCast/Makefile.bor:
+          Changed location of Test_Output lib
+
+        * tests/Test_Output.bor:
+          Changed location to core_bindir, else we can't find the lib from
+          other makefiles.
+
+        * tests/Makefile.bor:
+          Trigger makefile for Tests.bor and Test_Output.bor, this makes
+          it possible to make sure that Test_Output is build first
+
+        * tests/Tests.bor:
+          Contents of the original Makefile.bor. This because it is not
+          possible to make sure that Test_Output is build first.
+
 Mon May 19 04:30:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/*.icc:
