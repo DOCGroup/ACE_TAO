@@ -9,10 +9,11 @@
 int
 main (int argc, char *argv[])
 {
+  ACEXML_DefaultHandler *handler = 0;
   {
-    if (argc != 2)
+    if (argc < 2)
       {
-        cerr << "Usage: SAXPrint <XML filename>" << endl;
+        cerr << "Usage: SAXPrint <XML filename> [-n]" << endl;
         return 1;
       }
 
@@ -27,14 +28,22 @@ main (int argc, char *argv[])
         return 1;
       }
 
+    if (argc == 2)              //
+      ACE_NEW_RETURN (handler,
+                      ACEXML_Print_Handler (),
+                      -1);
+    else
+      ACE_NEW_RETURN (handler,
+                      ACEXML_SAXPrint_Handler (),
+                      -1);
+
     ACEXML_Parser parser;
-    ACEXML_Print_Handler handler;
     ACEXML_InputSource input(fstm);
 
-    parser.setContentHandler (&handler);
-    parser.setDTDHandler (&handler);
-    parser.setErrorHandler (&handler);
-    parser.setEntityResolver (&handler);
+    parser.setContentHandler (handler);
+    parser.setDTDHandler (handler);
+    parser.setErrorHandler (handler);
+    parser.setEntityResolver (handler);
 
     ACEXML_Env xmlenv;
 
@@ -43,7 +52,7 @@ main (int argc, char *argv[])
       xmlenv.exception ()->print ();
 
     cout << "\r\r\r";
-
   }
+  delete handler;
   return 0;
 }
