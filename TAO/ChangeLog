@@ -1,3 +1,58 @@
+Mon Nov  3 10:17:06 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Add support to update group members' IOGRS.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+          Change method signature of tao_update_object_group.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+          Minor formatting change in object group id conversion to string.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Track Location of member in member structure.
+          Distribute new IOGR to group members.
+          Use 2-argument version of tao_update_object_group_method
+          Temporary: dump IOGRs to files during IOGR distribution.
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Create fault detector for new group member.
+
+        * orbsvcs/tests/FT_App/run_test_iogr.pl:
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+        * orbsvcs/tests/FT_App/run_test_rmregistry.pl:
+          Use file:// IOR syntax to pass IOGR to client.
+
+
+        * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_Client_Unit.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+          Use ACE_CHECK macros correctly, now that I (think I) understand them.
+
+        * tao/Object.cpp:
+          Add additional diagnostic information to error message.
+
+        These changes were made in the oci_haft branch.
+
 Fri Oct 31 11:38:07 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
@@ -10,18 +65,20 @@ Fri Oct 31 11:38:07 2003  Steve Totten  <totten_s@ociweb.com>
           id of a failed object group so we can unregister factories by
           location and type.
 
+        These changes were made in the oci_haft branch.
+
 Fri Oct 31 10:14:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
 
-	  Added a comment for Dale
-	
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	 
-	  Fix in the main trunk trunk never got moved to the branch. 
+          Added a comment for Dale
 
-	  These changes are in oci_haft_branch. They haven't been compiled
-	  yet. 
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+
+          Fix in the main trunk trunk never got moved to the branch.
+
+          These changes are in oci_haft_branch. They haven't been compiled
+          yet.
 
 Thu Oct 30 10:08:11 2003  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -34,8 +91,8 @@ Wed Oct 29 18:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
 
-	  Made a simple mistake while trying to look at the number of
-	  arguments. 
+          Made a simple mistake while trying to look at the number of
+          arguments.
 
           These changes were made in the oci_haft branch.
 

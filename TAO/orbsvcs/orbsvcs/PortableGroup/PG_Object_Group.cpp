@@ -12,23 +12,28 @@
 /**
  * The single POA used to manage object groups
  */
-//static 
+//static
 PortableServer::POA_var TAO::PG_Object_Group::poa_;
 
 
-TAO::PG_Object_Group::MemberInfo::MemberInfo (CORBA::Object_var member)
-  : member_(member)
+TAO::PG_Object_Group::MemberInfo::MemberInfo (
+    CORBA::Object_ptr member,
+    const PortableGroup::Location & location)
+  : member_ (CORBA::Object::_duplicate (member))
+  , location_ (location)
   , factory_(PortableGroup::GenericFactory::_nil())
 {
 }
 
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
-    CORBA::Object_var member, 
-    PortableGroup::GenericFactory_var factory, 
+    CORBA::Object_ptr member,
+    const PortableGroup::Location & location,
+    PortableGroup::GenericFactory_ptr factory,
     PortableGroup::GenericFactory::FactoryCreationId factory_id)
-  : member_(member)
-  , factory_(factory)
-  , factory_id_(factory_id)
+  : member_ (CORBA::Object::_duplicate (member))
+  , factory_ (PortableGroup::GenericFactory::_duplicate (factory))
+  , factory_id_ (factory_id)
+  , location_ (location)
 {
 }
 
@@ -49,6 +54,7 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
   }
 }
 
+/*
 TAO::PG_Object_Group::PG_Object_Group ()
     : role_ ("")
     , type_id_ ("")
@@ -58,13 +64,15 @@ TAO::PG_Object_Group::PG_Object_Group ()
     , properties_ (0)
 {
 }
-
+*/
 
 TAO::PG_Object_Group::PG_Object_Group (
+  CORBA::ORB_ptr orb,
   PortableGroup::ObjectGroupId oid,
   const char * type_id,
   PortableGroup::Criteria the_criteria)
-    : role_ (type_id)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+    , role_ (type_id)
     , type_id_ (CORBA::string_dup(type_id))
     , group_id_(oid)
     , reference_ (0)
@@ -75,7 +83,7 @@ TAO::PG_Object_Group::PG_Object_Group (
 
 TAO::PG_Object_Group::~PG_Object_Group ()
 {
-  for (MemberMap_Iterator it = this->members_.begin(); 
+  for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       this->members_.begin())
   {
@@ -85,11 +93,32 @@ TAO::PG_Object_Group::~PG_Object_Group ()
   }
 }
 
-void TAO::PG_Object_Group::set_reference (PortableGroup::ObjectGroup_ptr reference, int distribute)
+
+void dump_ior (const char * base, unsigned long version, const char * iogr)
+{
+  char filename[1000];
+  sprintf(filename, "%s_%lu.iogr", base, version );
+
+  FILE * iorfile = fopen(filename, "w");
+  fwrite (iogr, 1, strlen(iogr), iorfile);
+  fclose (iorfile);
+}
+
+
+void TAO::PG_Object_Group::set_reference (
+  PortableGroup::ObjectGroup_ptr reference,
+  PortableGroup::ObjectGroupRefVersion version,
+  int distribute
+  ACE_ENV_ARG_DECL)
 {
   this->reference_ = PortableGroup::ObjectGroup::_duplicate (reference);
+  this->version_ = version;
+  this->IOGR_ = this->orb_->object_to_string (reference ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   if (distribute)
   {
+    size_t n_rep = 0; // for dump_ior below
     for ( MemberMap_Iterator it = members_.begin();
       it != members_.end();
       ++it)
@@ -100,7 +129,16 @@ void TAO::PG_Object_Group::set_reference (PortableGroup::ObjectGroup_ptr referen
       {
         ACE_TRY_NEW_ENV
         {
-          uog->tao_update_object_group (PortableGroup::ObjectGroup::_duplicate (this->reference_));
+          ACE_DEBUG ((LM_DEBUG,
+            "PG_Object_Group pushing IOGR to member: %s@%s.\n",
+            this->role_.c_str(),
+            ACE_static_cast(const char *, info->location_[0].id)
+            ));
+          dump_ior ("group", this->version_, this->IOGR_);
+          CORBA::String_var replica_ior = this->orb_->object_to_string(uog.in() ACE_ENV_ARG_PARAMETER);
+          dump_ior ("replica", n_rep++, replica_ior);
+
+          uog->tao_update_object_group (this->IOGR_, this->version_);
         }
         ACE_CATCHANY
         {
@@ -207,7 +245,7 @@ void TAO::PG_Object_Group::add_member (
     PortableGroup::ObjectNotAdded))
 {
   MemberInfo * info = 0;
-  ACE_NEW_THROW_EX (info, MemberInfo(member),
+  ACE_NEW_THROW_EX (info, MemberInfo(member, the_location),
     CORBA::NO_MEMORY());
 
   if (members_.bind (the_location, info) != 0)
@@ -262,7 +300,6 @@ CORBA::Object_ptr TAO::PG_Object_Group::get_member_ref (
 }
 #endif
 
-#ifdef NOT_IMPLEMENTED
 void TAO::PG_Object_Group::set_properties_dynamically (
     const PortableGroup::Properties & overrides
     ACE_ENV_ARG_DECL)
@@ -270,9 +307,10 @@ void TAO::PG_Object_Group::set_properties_dynamically (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  int todo;
+  this->properties_ = overrides;
+  int todo_parse_properties_for_special_value;
+  int todo_override_rather_than_replace_question;
 }
-#endif
 
 void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result) const
 {

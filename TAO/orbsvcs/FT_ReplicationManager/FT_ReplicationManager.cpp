@@ -624,22 +624,62 @@ TAO::FT_ReplicationManager::set_primary_member (
     object_group,
     the_location
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ACE_CHECK_RETURN (CORBA::Object::_nil());
 
   if (CORBA::is_nil (member) )
   {
     ACE_THROW (PortableGroup::MemberNotFound ());
-    ACE_CHECK;
+    ACE_CHECK_RETURN (CORBA::Object::_nil());
   }
-  FT::TagFTGroupTaggedComponent ft_tag_component;
-  TAO_FT_IOGR_Property prop (ft_tag_component);
+
+  FT::TagFTGroupTaggedComponent tag_component;
+  TAO_FT_IOGR_Property prop (tag_component);
+
+  //remove primary
+  if (iorm_->is_primary_set (&prop, object_group ACE_ENV_ARG_PARAMETER))
+  {
+    ACE_CHECK_RETURN (CORBA::Object::_nil());
+    (void)iorm_->remove_primary_tag (&prop, object_group ACE_ENV_ARG_PARAMETER);
+  }
+
   if (! iorm_->set_primary (&prop, member, object_group ACE_ENV_ARG_PARAMETER))
   {
     ACE_ERROR ((LM_ERROR,
       "ReplicationManager::set_primary_member: Can't set primary in IOGR .\n"
       ));
+    ACE_THROW( FT::PrimaryNotSet());
   }
-  ACE_CHECK;
+  ACE_CHECK_RETURN (CORBA::Object::_nil());
+
+
+  if (! TAO::PG_Utils::get_tagged_component (object_group, tag_component))
+  {
+    ACE_THROW (PortableGroup::ObjectGroupNotFound());
+  }
+
+  tag_component.object_group_ref_version += 1;
+  ACE_DEBUG ((LM_DEBUG,
+    "set_primary_member: Setting IOGR version to %u\n", ACE_static_cast(unsigned, tag_component.object_group_ref_version)
+    ));
+
+  // Set the property
+  TAO::PG_Utils::set_tagged_component (object_group, tag_component ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  ///////////////////////
+  // Now we do it again using
+  // our own object group collection
+  TAO::PG_Object_Group * group;
+  if (this->object_group_map_.find_group (object_group, group))
+  {
+//    group->set_primary (member ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    // Set the new group reference
+    // and distribute it to all members
+    group->set_reference (object_group, tag_component.object_group_ref_version, 1);
+  }
+
+
   return object_group->_duplicate (object_group);
 }
 
@@ -700,31 +740,31 @@ TAO::FT_ReplicationManager::add_member (
       the_location,
       member
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
 
   iors [1] = member;
 
   // Now merge the list into one new IOGR
   PortableGroup::ObjectGroup_var merged =
     iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
 
   if (first_member)
   {
     // remove the original profile.  It's a dummy entry supplied by create_object.
     PortableGroup::ObjectGroup_var cleaned =
       iorm_->remove_profiles (merged, object_group);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
     if (! iorm_->set_primary (&prop, member, cleaned.in () ACE_ENV_ARG_PARAMETER))
     {
       ACE_ERROR ((LM_ERROR,
         "Can't set primary in IOGR after adding first replica.\n"
         ));
     }
-    ACE_CHECK;
+    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
     merged = cleaned;
   }
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
 
   tag_component.object_group_ref_version += 1;
   ACE_DEBUG ((LM_DEBUG,
@@ -734,7 +774,7 @@ TAO::FT_ReplicationManager::add_member (
   // Set the property
   TAO::PG_Utils::set_tagged_component (merged,
                                        tag_component);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
 
   ///////////////////////
   // Now we do it again using
@@ -746,7 +786,7 @@ TAO::FT_ReplicationManager::add_member (
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
     // Set the new group reference
     // and distribute it to all members
-    group->set_reference (merged, 1);
+    group->set_reference (merged, tag_component.object_group_ref_version, 1);
   }
   return merged._retn();
 
@@ -871,7 +911,7 @@ TAO::FT_ReplicationManager::create_object (
   ////////////////////////////////
   // then create the corresponding
   // entry in our object group map
-  
+
   PortableGroup::ObjectGroupId oid;
   if (! ((*factory_creation_id) >>= oid ))
   {
@@ -885,10 +925,10 @@ TAO::FT_ReplicationManager::create_object (
   TAO::PG_Object_Group * objectGroup;
   ACE_NEW_THROW_EX (
     objectGroup,
-    TAO::PG_Object_Group (oid, type_id, the_criteria),
+    TAO::PG_Object_Group (this->orb_, oid, type_id, the_criteria),
     CORBA::NO_MEMORY());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  
+
   this->object_group_map_.insert_group(oid, objectGroup);
 
   return obj._retn();

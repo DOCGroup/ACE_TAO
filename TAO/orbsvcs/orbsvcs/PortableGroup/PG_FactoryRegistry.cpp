@@ -175,26 +175,26 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   // Register with the POA.
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   // find my identity as a corba object
   this->this_obj_ =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
 
   if (this->ior_output_file_ != 0)
@@ -211,7 +211,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN(-1);
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -221,14 +221,14 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN(-1);
 
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
     this->naming_context_->rebind (this->this_name_, this->this_obj_.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN(-1);
   }
 
   return result;

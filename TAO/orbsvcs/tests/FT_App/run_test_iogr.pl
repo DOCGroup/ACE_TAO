@@ -188,9 +188,9 @@ if ($simulated) {
 }else{
   print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
   $CTR = new PerlACE::Process (".$build_directory/ft_create", "-ORBInitRef ReplicationManager=file://$rm_ior -r $role1 -r $role2 -r $role1 -u $role3 -g -i");
-  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
-  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica2_iogr -c testscript");
-  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica3_iogr -c testscript");
+  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
+  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica2_iogr -c testscript");
+  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_iogr -c testscript");
 }
 
 #######################

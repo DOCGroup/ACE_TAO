@@ -186,7 +186,7 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
     );
   }
   ACE_ENDTRY;
-  ACE_CHECK;
+  ACE_CHECK_RETURN(1);
 
 #if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)

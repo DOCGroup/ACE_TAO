@@ -21,13 +21,15 @@
 
 
 FTAPP::FT_Creator::FT_Creator ()
-  : registry_ior_(0)
-  , registry_(0)
-  , replication_manager_(0)
-  , have_replication_manager_(0)
-  , make_iogr_(0)
-  , write_iors_(1)
-  , iogr_seq_(0)
+  : registry_ior_ (0)
+  , registry_ (0)
+  , replication_manager_ (0)
+  , have_replication_manager_ (0)
+  , write_iors_ (0)
+  , write_iogr_ (0)
+  , iogr_seq_ (0)
+  , ns_register_ (1)
+  , prefix_ ("")
 {
 }
 
@@ -40,7 +42,7 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "r:f:u:gi");
+  ACE_Get_Opt get_opts (argc, argv, "r:ignf:u:p:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -65,13 +67,25 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
       case 'g':
       {
-        make_iogr_ = !make_iogr_;
+        this->write_iogr_ = !this->write_iogr_;
         break;
       }
 
       case 'i':
       {
-        write_iors_ = ! write_iors_;
+        this->write_iors_ = ! this->write_iors_;
+        break;
+      }
+
+      case 'n':
+      {
+        this->ns_register_ = !this->ns_register_;
+        break;
+      }
+
+      case 'p':
+      {
+        this->prefix_ = get_opts.opt_arg();
         break;
       }
 
@@ -91,9 +105,9 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
     }
   }
 
-  if ( this->create_roles_.size() == 0 && this->unregister_roles_.size())
+  if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
   {
-    std::cerr << "Creator: neither create (-t) nor kill (-k) specified.  Nothing to do." << std::endl;
+    std::cerr << "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do." << std::endl;
     usage (std::cerr);
     result = -1;
   }
@@ -103,13 +117,15 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
 void FTAPP::FT_Creator::usage(ostream & out)const
 {
-  out << "usage"
-      << " -r <role for objects to be created>"
-      << " -f <factory registry ior file> (if not specified, ReplicationManager is used.)"
-      << " -u <role to be unregistered (for testing factory registry)>"
-      << " -g (toggle write iogr for each group (default is not to write iogrs))"
-      << " -i (toggle write ior for each object (default is to write iors))"
-      << std::endl;
+  out << "usage\n"
+      << " -r <role for objects to be created>\n"
+      << " -f <factory registry ior file> (if not specified, ReplicationManager is used.)\n"
+      << " -u <role to be unregistered (for testing factory registry)>\n"
+      << " -i (toggle write ior for each object (default false))\n"
+      << " -p <prefix for registration & file names>\n"
+      << " -g (toggle write iogr to file (default false))\n"
+      << " -n (toggle register iogr with name service (default true))\n"
+      ;
 }
 
 
@@ -123,11 +139,28 @@ int FTAPP::FT_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   if ( this->registry_ior_ != 0)
   {
     result = this->creator_.set_factory_registry(this->registry_ior_  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
   }
 
   result = this->creator_.init (orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  if (this->ns_register_)
+  {
+    CORBA::Object_var naming_obj =
+      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+
+    if (CORBA::is_nil(naming_obj.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%T %n (%P|%t) Unable to find the Naming Service\n"),
+                        1);
+    }
+    this->naming_context_=
+      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+  }
 
   return result;
 }
@@ -140,7 +173,55 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   {
     const char * role = this->create_roles_[nType].c_str();
     std::cout << std::endl << "Creator: Creating group of " << role << std::endl;
-    result = this->creator_.create_group (role, this->write_iors_, this->make_iogr_);
+    PortableGroup::ObjectGroup_var group = this->creator_.create_group (
+      role,
+      this->write_iors_
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (1);
+
+    if (this->write_iogr_)
+    {
+      CORBA::String_var iogr = this->orb_->object_to_string (group ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (1);
+
+      char iogr_filename[1000];
+      ACE_OS::snprintf (iogr_filename, sizeof(iogr_filename)-1, "%s%s_%d.iogr",
+        this->prefix_,
+        role,
+        this->iogr_seq_);
+      FILE * iogr_file = fopen (iogr_filename, "w");
+      if (iogr_file != 0)
+      {
+        char const * siogr = ACE_static_cast (const char *, iogr);
+        fwrite (siogr, 1, strlen(siogr), iogr_file);
+        fclose (iogr_file);
+      }
+      else
+      {
+        std::cerr << "Can't open iogr output file " << iogr_filename << std::endl;
+        result = 1;
+      }
+    }
+
+    if(this->ns_register_)
+    {
+      char iogr_name[1000];
+      ACE_OS::snprintf (iogr_name, sizeof(iogr_name)-1, "%s_%s_%d",
+        this->prefix_,
+        role,
+        this->iogr_seq_);
+
+      CosNaming::Name this_name (1);
+      this_name.length (1);
+      this_name[0].id = CORBA::string_dup (iogr_name);
+
+      this->naming_context_->rebind (this_name, group.in()
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (1);
+    }
+
+    iogr_seq_ += 1;
+
   }
 
   typeCount = this->unregister_roles_.size();

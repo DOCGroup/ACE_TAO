@@ -221,26 +221,26 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Register with the POA.
 
   this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // find my IOR
 
   CORBA::Object_var this_obj =
     this->poa_->id_to_reference (objectId_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   this->ior_ = this->orb_->object_to_string (this_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   this->identity_ = "FaultDetectorFactory";
 
@@ -328,7 +328,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -338,14 +338,14 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
     this->naming_context_ =
       ::CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
     this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN (-1);
   }
 
   return result;
@@ -371,7 +371,7 @@ int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
       FT::FAULT_DETECTOR_ROLE_NAME,
       this->location_
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
     this->registered_ = 0;
   }
   return 0;

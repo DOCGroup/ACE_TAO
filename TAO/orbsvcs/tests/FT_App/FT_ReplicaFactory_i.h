@@ -266,7 +266,6 @@ private:
    */
   int quit_on_idle_;
 
-
   /**
    * bool: use a single call to unregister.
    */

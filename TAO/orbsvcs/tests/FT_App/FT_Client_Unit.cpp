@@ -265,7 +265,7 @@ int FTClientUnitMain::run ()
                           argv_,
                           0
                           ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
 
   FT_UnitTests unitTests(orb_);
@@ -285,7 +285,7 @@ int FTClientUnitMain::run ()
   {
     ACE_TRY_NEW_ENV
     {
-    result = do_commands(unitTests, more, command);
+      result = do_commands(unitTests, more, command);
       ACE_TRY_CHECK;
     }
     ACE_CATCH (CORBA::SystemException, sysex)

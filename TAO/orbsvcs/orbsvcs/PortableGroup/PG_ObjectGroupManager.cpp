@@ -522,8 +522,8 @@ void TAO_PG_ObjectGroupManager::allocate_ogid (PortableGroup::ObjectGroupId & og
 PortableServer::ObjectId * TAO_PG_ObjectGroupManager::convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid)
 {
   // 4294967295 -- Largest 32 bit unsigned integer
-  char oid_str[sizeof("4294967295") + 1];
-  ACE_OS::snprintf (oid_str, sizeof(oid_str) - 1,
+  char oid_str[11];
+  ACE_OS::snprintf (oid_str, sizeof(oid_str),
                    "%lu",
                    ACE_static_cast (ACE_UINT32,ogid));
   oid_str[sizeof(oid_str) - 1] = '\0';

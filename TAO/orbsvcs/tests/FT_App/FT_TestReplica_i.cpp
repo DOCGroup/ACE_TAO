@@ -67,19 +67,23 @@ namespace
 
 // Macros to simplify suicide.
 #define KEVORKIAN(value, method)                                   \
-  if (this->death_pending_ == (FT_TEST::TestReplica::value)){            \
+  if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
     suicide (#value " in method " #method);                        \
-    CORBA::OBJECT_NOT_EXIST ex;                                    \
-    ACE_THROW(ex);                                                 \
+    ACE_THROW (CORBA::NO_RESPONSE (                                \
+      CORBA::SystemException::_tao_minor_code (                    \
+            TAO_DEFAULT_MINOR_CODE,                                \
+            EFAULT),                                               \
+            CORBA::COMPLETED_NO));                                 \
     } else ;
 
 #define KEVORKIAN_DURING(method)                                   \
-  if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_STATE_CHANGE  \
-    || this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLICATION  \
-    || this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){     \
+  if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
     suicide ("read-only method " #method);                         \
-    CORBA::OBJECT_NOT_EXIST ex;                                    \
-    ACE_THROW(ex);                                                 \
+    ACE_THROW (CORBA::NO_RESPONSE (                                \
+      CORBA::SystemException::_tao_minor_code (                    \
+            TAO_DEFAULT_MINOR_CODE,                                \
+            EFAULT),                                               \
+            CORBA::COMPLETED_NO));                                 \
     } else ;
 
 
@@ -187,16 +191,16 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
 
   // Register with the POA.
 
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -288,8 +292,11 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 #endif // FT_TEST_LACKS_STATE
 }
 
-void FT_TestReplica_i::tao_update_object_group ( PortableGroup::ObjectGroup_ptr iogr
-  ACE_ENV_ARG_DECL)
+void FT_TestReplica_i::tao_update_object_group (
+    const char * iogr,
+    PortableGroup::ObjectGroupRefVersion version
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT());

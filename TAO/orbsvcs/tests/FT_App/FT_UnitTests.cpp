@@ -863,7 +863,7 @@ int FT_UnitTests::readIORFile(const char * fileName, CORBA::String_var & ior)
     {
       buffer[fileSize] = '\0';
       ior = CORBA::string_dup(buffer);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (0);
       result = 1; // success
     }
     delete[] buffer;

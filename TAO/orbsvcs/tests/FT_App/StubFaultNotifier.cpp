@@ -178,21 +178,21 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Register with the POA.
 
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // find my identity as a corba object
   CORBA::Object_var this_obj =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   //////////////////////////////////////////
   // resolve references to detector factory
@@ -278,7 +278,7 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
             criteria.in(),
             factory_creation_id
             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN (-1);
         }
       }
     }
@@ -303,7 +303,7 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (-1);
 
       if (CORBA::is_nil(naming_obj.in ())){
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -313,15 +313,15 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (-1);
 
       CosNaming::Name this_name (1);
       this_name.length (1);
       this_name[0].id = CORBA::string_dup (this->ns_name_);
 
-      naming_context->rebind (this_name, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
+      naming_context->rebind (this_name, this_obj.in()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (-1);
     }
   }
   return result;
@@ -482,4 +482,3 @@ int StubFaultNotifier::idle(int & result)
 # pragma instantiate ACE_Vector < const char * >
 # pragma instantiate ACE_Vector < FT::PullMonitorable_var >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

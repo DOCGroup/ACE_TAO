@@ -71,16 +71,13 @@ namespace FTAPP
     StringVec unregister_roles_;
 
 
-  ::FT::ReplicationManager_var replication_manager_;
+    CosNaming::NamingContext_var naming_context_;
+
+    ::FT::ReplicationManager_var replication_manager_;
     /**
      * bool: true if we have a real replication manager
      */
     int have_replication_manager_;
-
-    /**
-     * bool: true if we should create IOGR's
-     */
-    int make_iogr_;
 
     /**
      * bool:  true if we should write individual IOR files
@@ -88,9 +85,25 @@ namespace FTAPP
     int write_iors_;
 
     /**
+     * bool:  true if we should write IOGR to a file
+     */
+    int write_iogr_;
+
+    /**
+     * bool:  true if we should write IOGR to a Name Service
+     */
+    int ns_register_;
+
+    /**
      * sequence number applied to created IOGRs
      */
     unsigned long iogr_seq_;
+
+    /**
+     * prefix for names
+     */
+    const char * prefix_;
+
 
   };
 

@@ -149,9 +149,9 @@ namespace TAO
     if (fgvsc.object_group_ref_version >
         this->object_group_ref_version_)
       {
-	// @@ Dale, could you please make this a warning. Add TAO_debug_level 
-	// around this. 
-	//  Further pass in a operation name to this method and make a check here. 
+  // @@ Dale, could you please make this a warning. Add TAO_debug_level
+  // around this.
+  //  Further pass in a operation name to this method and make a check here.
         ACE_ERROR ((LM_ERROR,
                     "TAO-FT (%P|%t) - Wrong version information "
                     "within the interceptor [%u | %u] \n",
@@ -221,8 +221,7 @@ namespace TAO
       ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (param->length () > 1 ||
-        param->length () == 0)
+    if (param->length () != 2)
       ACE_THROW (CORBA::TRANSIENT ());
 
 

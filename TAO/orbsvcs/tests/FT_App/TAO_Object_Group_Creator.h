@@ -48,7 +48,12 @@ namespace TAO
 
     /////////////////
     // functionality
-    int create_group(const char * role, int write_iors, int write_iogr ACE_ENV_ARG_DECL);
+    CORBA::Object_ptr create_group(
+        const char * role,
+        int write_iors
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     int unregister_role(const char * role ACE_ENV_ARG_DECL);
 
     ////////////
@@ -59,6 +64,14 @@ namespace TAO
     // implementation
   private:
     int write_ior_file(const char * outputFile, const char * ior);
+
+  int create_detector_for_replica (
+    CORBA::Object_ptr replica,
+    const char * role,
+    const char * type_id,
+    PortableGroup::ObjectGroupId group_id,
+    const PortableGroup::Location & location
+    ACE_ENV_ARG_DECL);
 
     ////////////////////
     // forbidden methods
@@ -72,18 +85,16 @@ namespace TAO
     CORBA::ORB_var orb_;
     PortableGroup::FactoryRegistry_var registry_;
 
-  ::FT::ReplicationManager_var replication_manager_;
+    ::FT::ReplicationManager_var replication_manager_;
+
+    ::PortableGroup::FactoryInfos_var detector_infos_;
+    CORBA::String_var detector_type_id_;
+
 
     /**
      * bool: true if we have a real replication manager
      */
     int have_replication_manager_;
-
-    /**
-     * sequence number applied to created IOGRs
-     */
-    unsigned long iogr_seq_;
-
   };
 
 } // namespace TAO
