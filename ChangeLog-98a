@@ -1,3 +1,9 @@
+Tue Dec 23 19:05:32 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/IOStream_Test.cpp (server): Changed sleep(30) to
+	  sleep(5).  This seems more reasonable.  Thanks to 
+	  James Johnson for this suggestion.
+
 Tue Dec 23 16:43:14 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/README: Added descriptions for ACE_HAS_PTHREADS_1003_DOT_1C (this
