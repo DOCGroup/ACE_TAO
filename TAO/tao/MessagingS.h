@@ -1887,12 +1887,6 @@ private:
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
   };
 
   class TAO_Export _tao_collocated_Poller     : public virtual Messaging::Poller,

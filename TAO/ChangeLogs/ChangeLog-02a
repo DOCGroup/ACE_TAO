@@ -1,3 +1,9 @@
+Tue Jan 11 16:46:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PollableS.cpp:
+	* tao/PollableC.cpp:
+	* tao/MessagingS.h: Fixed compile errors in AMI code.
+
 Tue Jan 11 11:20:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/server.cpp (set_rt_mode):
