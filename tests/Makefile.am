@@ -47,6 +47,7 @@ endif
 
 ## Build the shared library needed for the DLL_Test
 noinst_LTLIBRARIES = libDLL_Test.la
+libDLL_Test_la_LDFLAGS = -module
 libDLL_Test_la_SOURCES = $(DLL_Test_SOURCES)
 
 ## Build the test programs
