@@ -27,6 +27,7 @@
 // (IIOP forwarding) that BOA doesn't provide.
 //
 #include	<connmgr.hh>
+#include        <params.hh>
 #include	<roa.hh>
 
 // extern char 	*optarg;	// missing on some platforms
@@ -217,7 +218,7 @@ main (
   CORBA_Boolean	do_threads = CORBA_B_FALSE;
   CORBA_String	key = (CORBA_String) "key0";
   ACE_INET_Addr svraddr;
-  ROA_Parameters* params = ROA_Parameters::instance();
+  ROA_Parameters* params = ROA_PARAMS::instance();
   char		*orb_name = "internet";
   int			idle = -1;
 

@@ -1,3 +1,15 @@
+Tue Apr 22 16:15:52 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/connect.cpp (open): Removed code obsoleted by use of
+ 	the Strategy_Acceptor.
+
+	* IIOP/lib/{roa.cpp,connect.cpp},IIOP/tests/svr.cpp: Changes to
+ 	use new singletons described below.
+
+	* IIOP/lib/params.*: Changed ROA_Parameters and ROA_Factory to use
+ 	ACE_Singleton<>.  The singleton types are now named ROA_PARAMS and
+ 	ROA_FACTORY.
+
 Mon Apr 21 23:44:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* IIOP/lib/roa.cpp (ROA): Changed spelling of clientAcceptor_ to

@@ -18,7 +18,7 @@ ROA_Handler::ROA_Handler(ACE_Thread_Manager* t)
   // Grab the singleton...at some later point in time
   // we can provide an argumented CTOR to have per-instance
   // parameters.
-  params_ = ROA_Parameters::instance();
+  params_ = ROA_PARAMS::instance();
   ACE_ASSERT (params_ != 0);
 }
 
@@ -30,27 +30,7 @@ ROA_Handler::open(void*)
   if (this->peer().get_remote_addr(addr) == -1)
     return -1;
 
-  if (params_->using_threads())
-    {
-      if (activate(params_->thread_flags()) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "ROA_Handler unable to spawn a thread: %p\n", "spawn"), -1);
-      else
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%P|%t) threaded connection from client %s\n",
-		    addr.get_host_name()));
-      return 0;
-    }
-  else
-    {
-      if (ACE_Service_Config::reactor()->register_handler(this, ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%P|%t) can't register with reactor\n"), -1);
-      else
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%P|%t) connection from client %s\n",
-		    addr.get_host_name()));
-      return 0;
-    }
+  return 0;
 }
 
 int
