@@ -1,3 +1,11 @@
+Tue Mar 08 08:49:12 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp (make_connection): 
+
+	  Fixed a compile error due to the changes in 
+
+	  Mon Mar 07 16:37:25 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
 Mon Mar 07 21:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Server_Request.i:

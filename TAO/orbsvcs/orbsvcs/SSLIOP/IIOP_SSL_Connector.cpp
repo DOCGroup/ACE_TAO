@@ -157,7 +157,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked ())
+  if (!r->blocked_connect ())
     {
       synch_options.timeout (ACE_Time_Value::zero);
       max_wait_time = &tmp_zero;

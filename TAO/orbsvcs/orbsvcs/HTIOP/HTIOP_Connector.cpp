@@ -186,12 +186,12 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   ACE_Synch_Options synch_options;
 
   this->active_connect_strategy_->synch_options (timeout,
-						 synch_options);
+                                                 synch_options);
 
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked ())
+  if (!r->blocked_connect ())
     {
       synch_options.timeout (ACE_Time_Value::zero);
       timeout = &tmp_zero;
