@@ -1,3 +1,9 @@
+Wed Sep 22 13:05:55 1999  Jim Rogers <jrogers@viasoft.com>
+
+        * ace/Codeset_IBM1047.cpp: added #include "ace/inc_user_config.h"
+          at the beginning, to properly pick up the ACE_MVS #define
+          on MVS.
+
 Wed Sep 22 11:20:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h:  use u_long for ptr_arith_t, even
