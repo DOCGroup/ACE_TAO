@@ -395,6 +395,15 @@ public:
   // Copies <t> to <s>, returning a pointer to the end of the copied
   // region (rather than the beginning, a la <strcpy>.
 
+  static char *strsplit_r (char *s,
+                           const char *token,
+                           char *&next_start);
+  // Splits string <s> into pieces separated by the string <token>.
+  // <next_start> is an opaque cookie handed back by the call to store
+  // its state for the next invocation, thus making it re-entrant.
+  // This operates very similar to Perl's <split> function except that
+  // it returns pieces one at a time instead of into an array.
+
   static size_t strrepl (char *s, char search, char replace);
   // Replace all instances of <search> in <s> with <replace>.  Returns
   // the number of replacements made.

@@ -1,3 +1,11 @@
+Fri Nov 14 23:36:12 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* ace/{OS,ACE}.{h,i} (strsplit_r): Moved strsplit_r from ACE_OS to
+ 	  ACE, which is where it should go.
+
+	* ace/ACE.cpp (ldfind): Changed uses of strsplit_r to be scoped
+ 	  under ACE rather than ACE_OS.
+
 Fri Nov 14 22:57:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks*.h: added ACE_LACKS_NETDB_REENTRANT_FUNCTIONS.
@@ -21,14 +29,16 @@ Fri Nov 14 17:41:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Fri Nov 14 17:08:00 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-        * ace/OS.* (strsplit_r): Added fix by Scott * for this.
+	* ace/OS.i (strsplit_r): Added fixes so that this properly returns
+ 	  the last piece.  Thanks to Scott Herscher <scott@expersoft.com> for
+ 	  submitting this!  Also beefed up the comments.
 
-        * ace/OS.h: Added definitions to work around VxWorks' lack of
-          proper ANSI C/C++ prototypes for the functions found in
-          <arpa/inet.h>.  The definitions were taken from Solaris 2.5.1, but
-          appear to work just fine.  For now this is only in effect when
-          compiling with the Green Hills (ghs) environment, but it should
-          probably be used for others (such as g++) as well.
+	* ace/OS.h: Added definitions to work around VxWorks' lack of
+ 	  proper ANSI C/C++ prototypes for the functions found in
+ 	  <arpa/inet.h>.  The definitions were taken from Solaris 2.5.1, but
+ 	  appear to work just fine.  For now this is only in effect when
+ 	  compiling with the Green Hills (ghs) environment, but it should
+ 	  probably be used for others (such as g++) as well.
 
 Fri Nov 14 01:10:33 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
