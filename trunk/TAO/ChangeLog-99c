@@ -1,126 +1,134 @@
+Thu Apr 15 15:40:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * all orbscvs/tests/AVStreams Makefiles: added BIN2, LIB2,
+          and SHLIB2 support for make realclean.
+
+        * orbsvcs/tests/AVStreams/server_discovery/Makefile:
+          added Video_Discovery.idl to make realclean target.
+
 Thu Apr 15 13:22:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB_Core.h:
-	* tao/TAO.dsp: 
-	* tao/TAO_Static.dsp: 
-	  Fixed some problems with compilation under NT.
+        * tao/ORB.h:
+        * tao/ORB_Core.h:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Fixed some problems with compilation under NT.
 
 Thu Apr 15 10:44:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	* tao/TAO_Internal.cpp:
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	  Each ORB creates its own ORB_Core.  The ORB_Core is no longer a
-	  TSS singleton, instead it keeps some of its resources in TSS
-	  storage, but it is a per-ORB resource.
-	  TAO_ORB_Core_instance() returns the ORB_Core of the default ORB.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Each ORB creates its own ORB_Core.  The ORB_Core is no longer a
+          TSS singleton, instead it keeps some of its resources in TSS
+          storage, but it is a per-ORB resource.
+          TAO_ORB_Core_instance() returns the ORB_Core of the default ORB.
 
-	* tao/default_server.h:
-	* tao/default_server.cpp:
-	* tao/Server_Strategy_Factory.h:
-	* tao/Server_Strategy_Factory.cpp:
-	  The open() method receives the ORB_Core as a parameter to avoid
-	  recursive calls to TAO_ORB_Core_instance() during startup.
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+          The open() method receives the ORB_Core as a parameter to avoid
+          recursive calls to TAO_ORB_Core_instance() during startup.
 
-	* tao/default_server.h:
-	* tao/default_server.cpp:
-	  Moved the {MT,ST}_Connect_Creation_Strategy classes to this file 
-	  because here is where they are used, not in the ORB_Core.
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+          Moved the {MT,ST}_Connect_Creation_Strategy classes to this file
+          because here is where they are used, not in the ORB_Core.
 
-	* tao/IIOP_Connector.cpp:
-	  Moved template instantiations required on this file from
-	  ORB_Core.cpp
+        * tao/IIOP_Connector.cpp:
+          Moved template instantiations required on this file from
+          ORB_Core.cpp
 
-	* tao/Servant_Base.cpp:
-	* tao/POAManager.cpp:
-	* tao/Object_Adapter.h:
-	* tao/Object_Adapter.i:
-	* tao/Invocation.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/Connect.cpp:
-	  Added some includes because they were removed from ORB_Core.h
+        * tao/Servant_Base.cpp:
+        * tao/POAManager.cpp:
+        * tao/Object_Adapter.h:
+        * tao/Object_Adapter.i:
+        * tao/Invocation.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/Connect.cpp:
+          Added some includes because they were removed from ORB_Core.h
 
-	* tao/Connect.h:
-	* tao/params.h:
-	* tao/params.i:
-	* docs/Options.html:
-	  Removed deprecated OA options.
+        * tao/Connect.h:
+        * tao/params.h:
+        * tao/params.i:
+        * docs/Options.html:
+          Removed deprecated OA options.
 
-	* tao/Resource_Factory.h:
-	* tao/Resource_Factory.cpp:
-	* tao/default_resource.h:
-	* tao/default_resource.i:
-	* tao/default_resource.cpp:
-	  Separated the Resource_Factory from the ORB_Core files, also
-	  separated the Resource_Factorty from its default implementation, 
-	  as we do for the client and server strategy factories.
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.i:
+        * tao/default_resource.cpp:
+          Separated the Resource_Factory from the ORB_Core files, also
+          separated the Resource_Factorty from its default implementation,
+          as we do for the client and server strategy factories.
 
-	* tests/MT_Client/client.global.conf:
-	* tests/MT_Client/client.tss.conf:
-	* tests/NestedUpcall/MT_Client_Test/client.conf:
-	* examples/POA/On_Demand_Loading/svc.conf:
-	* examples/Quoter/client.conf:
-	* examples/Quoter/server.conf:
-	* examples/Simulator/DOVEMIB/svc.conf:
-	* examples/Simulator/Event_Supplier/svc.conf:
-	* orbsvcs/tests/AVStreams/benchmark/clnt.conf:
-	* orbsvcs/tests/AVStreams/benchmark/svc.conf:
-	* orbsvcs/tests/AVStreams/mpeg/source/client/svc.conf:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/svc.conf:
-	* orbsvcs/tests/ImplRepo/implrepo.conf:
-	* orbsvcs/tests/ImplRepo/svc.conf:
-	* orbsvcs/tests/Time/implrepo.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
-	* performance-tests/Thruput/TAO/svc.conf:
-	  Updated the configuration files, to reflect the new name of the
-	  default resource factory.
+        * tests/MT_Client/client.global.conf:
+        * tests/MT_Client/client.tss.conf:
+        * tests/NestedUpcall/MT_Client_Test/client.conf:
+        * examples/POA/On_Demand_Loading/svc.conf:
+        * examples/Quoter/client.conf:
+        * examples/Quoter/server.conf:
+        * examples/Simulator/DOVEMIB/svc.conf:
+        * examples/Simulator/Event_Supplier/svc.conf:
+        * orbsvcs/tests/AVStreams/benchmark/clnt.conf:
+        * orbsvcs/tests/AVStreams/benchmark/svc.conf:
+        * orbsvcs/tests/AVStreams/mpeg/source/client/svc.conf:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/svc.conf:
+        * orbsvcs/tests/ImplRepo/implrepo.conf:
+        * orbsvcs/tests/ImplRepo/svc.conf:
+        * orbsvcs/tests/Time/implrepo.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+        * performance-tests/Thruput/TAO/svc.conf:
+          Updated the configuration files, to reflect the new name of the
+          default resource factory.
 
 Wed Apr 14 20:38:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PolicyC.cpp: Added missing template instantiations.  Thanks
-	  to Robert V. Head <rhead@virtc.com> for reporting them.
+        * tao/PolicyC.cpp: Added missing template instantiations.  Thanks
+          to Robert V. Head <rhead@virtc.com> for reporting them.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Added missing instantiation
-	  for TAO_PropertySet<POA_AVStreams::StreamEndPoint>.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Added missing instantiation
+          for TAO_PropertySet<POA_AVStreams::StreamEndPoint>.
 
-	* tao/Object_Adapter.cpp: Removed trailing semi-colon from #pragma
-	  instantiate.
+        * tao/Object_Adapter.cpp: Removed trailing semi-colon from #pragma
+          instantiate.
 
 Wed Apr 14 16:43:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  One of the strings removed in ORB_Core::init() was not
-	  duplicated first.
+        * tao/ORB_Core.cpp:
+          One of the strings removed in ORB_Core::init() was not
+          duplicated first.
 
 Wed Apr 14 15:33:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i_T.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Replaced all uses of TAO_TRY macros with ACE_TRY macros.
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i_T.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Replaced all uses of TAO_TRY macros with ACE_TRY macros.
 
 Wed Apr 14 15:25:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/be_visitor_sequnce/gen_object_manager_ch.cpp
-	* TAO_IDL/be_visitor_sequnce/gen_object_manager_ci.cpp
-	Added a new -> operator and also removed a 'const' signature
-	for the .in method in TAO_Object_Manager_{Name}_Sequence classes
-	that are generated by the IDL compiler. This has been in TAO
-	for sometime now..
-	---------------------------------------------
-	tao/Sequence_T.i (operator->): Added operator-> to
+        * TAO_IDL/be_visitor_sequnce/gen_object_manager_ch.cpp
+        * TAO_IDL/be_visitor_sequnce/gen_object_manager_ci.cpp
+        Added a new -> operator and also removed a 'const' signature
+        for the .in method in TAO_Object_Manager_{Name}_Sequence classes
+        that are generated by the IDL compiler. This has been in TAO
+        for sometime now..
+        ---------------------------------------------
+        tao/Sequence_T.i (operator->): Added operator-> to
           TAO_Object_Manager.  Also, made the in() method return a
           non-const pointer
-	-------------------------------------------
+        -------------------------------------------
 Wed Apr 14 13:01:13 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed template instantiation
-	errors. Thanks to Andy Gokhale for reporting this.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed template instantiation
+        errors. Thanks to Andy Gokhale for reporting this.
 
 Wed Apr 14 07:06:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
