@@ -13,6 +13,13 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
 	  assignments in "if" conditionals to avoid g++ warnings.
 
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp (handle_timeout):
+	  removed declaration of unused arg "tv".
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (main):
+	  removed declarations of unused args "argc" and "argv".  And,
+	  updated template instantiations.
+
 Tue Oct 14 03:13:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.17, released Tue Oct 14 03:13:38 1997.
