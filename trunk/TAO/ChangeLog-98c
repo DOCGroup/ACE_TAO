@@ -1,3 +1,7 @@
+Tue Sep 22 16:16:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Updated dependencies for many Makefiles.
+
 Tue Sep 22 15:33:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
