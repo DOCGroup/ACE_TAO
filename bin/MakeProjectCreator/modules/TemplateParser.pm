@@ -209,6 +209,9 @@ sub relative {
             }
             $val = "../" x $count;
             $val =~ s/\/$//;
+            if ($self->{'prjc'}->convert_slashes()) {
+              $val =~ s/\//\\/g;
+            }
             $value =~ s/\$\([^)]+\)/$val/;
           }
         }

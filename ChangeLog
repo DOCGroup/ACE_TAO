@@ -1,3 +1,10 @@
+Wed Jul 10 07:22:24 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          If the project creator needs the slashes converted, then
+          do so when generating relative paths.
+
 Tue Jul  9 23:24:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU:
