@@ -1,14 +1,23 @@
-// @(#)cubit.idl	1.1 95/09/10
-// Copyright 1994-1995 by Sun Microsystems, Inc.
-
-//#pragma prefix	"Eng.SUN.COM"
-//#pragma version Cubit 1.1
+// $Id$
 
 interface Cubit
+  // = TITLE
+  //    Defines an interface that encapsulates operations that cube
+  //    numbers.
+  //
+  // = DESCRIPTION
+  //    This interface encapsulates operations that cube
+  //    octets, shorts, longs, structs and unions.
+
 {
   octet	cube_octet (in octet o);
+  // cube an octet
+
   short	cube_short (in short s);
+  // cube a short
+
   long	cube_long (in long l);
+  // cube a long
 
   struct Many
   {
@@ -18,6 +27,7 @@ interface Cubit
   };
 
   Many cube_struct (in Many values);
+  // Cube a struct
 
   enum discrim
   {
@@ -28,6 +38,7 @@ interface Cubit
     e_4th,
     e_5th
   };
+  // Enumeration of the different elements in a union.
 
   union oneof switch (discrim)
     {
@@ -45,13 +56,18 @@ interface Cubit
       // default:
       // Many cm;
     };
+  // Union of different types.
 
   oneof	cube_union (in oneof values);
+  // cube a union.
 
   oneway void please_exit ();
+  // shutdown the application.
 };
 
 interface Cubit_Factory
+  // = TITLE 
+  //    Creates Cubit objects 
 {
   Cubit make_cubit (in string key);
 };

@@ -1,14 +1,17 @@
-// @(#)svr.cpp	05/14/97
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
+// $Id$
+
+// ============================================================================
 //
-// TEST:	simple IIOP server for "cubit.idl" interface.
+// = LIBRARY
+//    TAO/tests/IDL_Cubit
+// 
+// = FILENAME
+//    svr.cpp
 //
-// Starts up, builds an objref, prints its string in debug mode,
-// listens for messages, responds to them.
-//
-// Modified version of Cubit Example written by Sun Microsystems Inc.
-// Modified by: Brian Mendel and Andy Gokhale
+// = AUTHOR
+//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
+// 
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
