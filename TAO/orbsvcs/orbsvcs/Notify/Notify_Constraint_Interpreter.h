@@ -19,10 +19,10 @@
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 
-#include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
-#include "orbsvcs/orbsvcs/Trader/Interpreter.h"
-#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Interpreter.h"
+#include "orbsvcs/CosNotifyFilterS.h"
 
 class TAO_Constraint_Evaluator;
 

@@ -78,14 +78,13 @@ TAO_Notify_FilterAdmin_i::add_filter (
     CosNotifyFilter::Filter::_duplicate (new_filter);
 
   if (filter_list_.bind (new_id, new_filter_var) == -1)
-    {
-      filter_ids_.put (new_id); // return the id to the pool
-
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        0);
-    }
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      0);
   else
-    return new_id;
+    {
+      this->filter_ids_.next ();
+      return new_id;
+    }
 }
 
 void TAO_Notify_FilterAdmin_i::remove_filter (

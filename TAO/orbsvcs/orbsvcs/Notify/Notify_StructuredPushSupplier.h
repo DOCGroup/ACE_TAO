@@ -21,10 +21,11 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 
-class TAO_ORBSVCS_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyComm::StructuredPushSupplier
+class TAO_ORBSVCS_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_StructuredPushSupplier
+  //
   // = DESCRIPTION
   //
   //
@@ -33,21 +34,11 @@ class TAO_ORBSVCS_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyC
   TAO_Notify_StructuredPushSupplier (void);
   // Constructor.
 
-  ~TAO_Notify_StructuredPushSupplier ();
-  // Destructor
+  void init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/);
+  // Init
 
-  CosNotifyComm::StructuredPushSupplier_ptr get_ref (void);
-  // Conver to object ref.
-
-  void open (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
-             CORBA::Environment& ACE_TRY_ENV);
-  // This method connects the consumer to the EC.
-
-  void close (CORBA::Environment &ACE_TRY_ENV);
-  // Disconnect from the EC.
-
-  void connect (CORBA::Environment &ACE_TRY_ENV);
-  // Connect the CosECConsumer to the EventChannel.
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV);
+  // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
   void disconnect (CORBA::Environment &ACE_TRY_ENV);
@@ -56,6 +47,20 @@ class TAO_ORBSVCS_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyC
   virtual void send_event (const CosNotification::StructuredEvent& event,
                            CORBA::Environment &ACE_TRY_ENV);
   // Send one event.
+
+
+  void deactivate (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Deactivate the object.
+
+  // = ServantBase operations
+  PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+
+  CosNotifyChannelAdmin::ProxyID my_id_;
+  // This supplier's id.
+
+protected:
+  virtual ~TAO_Notify_StructuredPushSupplier ();
+  // Destructor
 
   // = NotifySubscribe
     virtual void subscription_change (
@@ -76,12 +81,9 @@ class TAO_ORBSVCS_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyC
         CORBA::SystemException
       ));
 
- protected:
-  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The consumeradmin that we get our proxy consumer from.
-
-  CosNotifyChannelAdmin::ProxyID supplieradmin_proxy_id_;
-  // The proxy's id.
+  // = Data members
+  PortableServer::POA_ptr default_POA_;
+  // The default POA.
 
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
   // The proxy that we are connected to.
