@@ -37,7 +37,7 @@ ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
 ACE_DLL::~ACE_DLL (void)
 {
   // CLose the library only if it hasn't been already.
-  if (this->close_on_destruction_ == 1
+  if (this->close_on_destruction_ != 0
       && this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     this->close ();
 }

@@ -38,13 +38,13 @@ class ACE_Export ACE_DLL
 public:
   // = Initialization and termination methods.
 
-  ACE_DLL (int close_on_destruction = 0);
+  ACE_DLL (int close_on_destruction = 1);
   // Default constructor.  By default, the <close> operation on the
   // object will be invoked before it is destroyed.
 
   ACE_DLL (ACE_DL_TYPE dll_name = 0,
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
-           int close_on_destruction = 0);
+           int close_on_destruction = 1);
   // This constructor opens and dynamically links <dll_name>.  The
   // default mode is <RTLD_LAZY>, which loads identifier symbols but
   // not the symbols for functions, which are loaded dynamically
