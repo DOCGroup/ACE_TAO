@@ -1,3 +1,8 @@
+Thu Sep 11 10:59:12 1997    <nw1@CHA-CHA>
+
+	* Log_Msg.cpp (close): On Win32, ACE_Log_Msg_Manager needs to
+	  delete main thread's ACE_Log_Msg instance also.
+	
 Thu Sep 11 10:37:00 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
 
 	* ace/ACE.cpp: 
