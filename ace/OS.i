@@ -667,18 +667,6 @@ ACE_OS::fsync (ACE_HANDLE handle)
 # endif /* ACE_LACKS_FSYNC */
 }
 
-ACE_INLINE gid_t
-ACE_OS::getgid (void)
-{
-  ACE_TRACE ("ACE_OS::getgid");
-# if defined (VXWORKS) || defined(CHORUS) || defined (ACE_PSOS)
-  // getgid() is not supported:  just one group anyways
-  return 0;
-# else
-  ACE_OSCALL_RETURN (::getgid (), gid_t, (gid_t) -1);
-# endif /* VXWORKS */
-}
-
 ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
@@ -850,13 +838,6 @@ ACE_OS::mktemp (char *s)
 }
 #   endif /* !ACE_LACKS_MKTEMP */
 # endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
-
-ACE_INLINE uid_t
-ACE_OS::getgid (void)
-{
-  ACE_TRACE ("ACE_OS::getgid");
-  ACE_NOTSUP_RETURN (-1);
-}
 
 ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
@@ -12585,6 +12566,36 @@ ACE_OS::getuid (void)
   ACE_NOTSUP_RETURN (ACE_static_cast (uid_t, -1));
 #else
   ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
+# endif /* VXWORKS */
+}
+
+ACE_INLINE int
+ACE_OS::setgid (gid_t gid)
+{
+  ACE_TRACE ("ACE_OS::setgid");
+# if defined (VXWORKS) || defined (ACE_PSOS)
+  // setgid() is not supported:  just one user anyways
+  ACE_UNUSED_ARG (gid);
+  return 0;
+# elif defined (ACE_WIN32) || defined(CHORUS)
+  ACE_UNUSED_ARG (gid);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::setgid (gid), int,  -1);
+# endif /* VXWORKS */
+}
+
+ACE_INLINE gid_t
+ACE_OS::getgid (void)
+{
+  ACE_TRACE ("ACE_OS::getgid");
+# if defined (VXWORKS) || defined (ACE_PSOS)
+  // getgid() is not supported:  just one user anyways
+  return 0;
+# elif defined (ACE_WIN32) || defined(CHORUS)
+  ACE_NOTSUP_RETURN (ACE_static_cast (gid_t, -1));
+#else
+  ACE_OSCALL_RETURN (::getgid (), gid_t, (gid_t) -1);
 # endif /* VXWORKS */
 }
 
