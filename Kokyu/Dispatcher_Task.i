@@ -51,7 +51,7 @@ Dispatcher_Task::get_curr_config_info() const
 }
 
 ACE_INLINE
-int 
+int
 Dispatcher_Task::enqueue (Dispatch_Queue_Item *qitem)
 {
 #ifdef KOKYU_HAS_RELEASE_GUARD
@@ -63,6 +63,8 @@ Dispatcher_Task::enqueue (Dispatch_Queue_Item *qitem)
   this->putq (qitem);
   //@BT INSTRUMENT with event ID: EVENT_ENQUEUED Measure time from
   //event enqueue into dispatch queue to actual dispatch
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event enqueue at %u\n",tv.msec()));
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
   //if qos_info is not in map, this should add it
@@ -79,8 +81,8 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         ACE_Data_Block *data_block,
         int flags,
         ACE_Allocator* mb_allocator)
- : ACE_Message_Block (data_block, 
-                      flags, 
+ : ACE_Message_Block (data_block,
+                      flags,
                       mb_allocator),
    command_ (cmd), qos_info_ (qos_info)
 
