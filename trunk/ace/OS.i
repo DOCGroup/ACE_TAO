@@ -4525,7 +4525,8 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
   // On Win32, the regular macros can be used, as this is not an issue.
 
 #if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);#else
+  ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
+#else
 
   int ace_result_;
   do
