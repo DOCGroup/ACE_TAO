@@ -1,3 +1,8 @@
+Thu Jun 17 09:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Bounded_Packet_Relay/BPR_Drivers_T.cpp:
+          Added missing include to fix compile error in HPUX build
+
 Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
@@ -10,9 +15,9 @@ Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
         * ace/OS_NS_Thread.inl:
         * ace/README:
           Added new config knob ACE_LACKS_RWLOCKATTR_PSHARED for those
-          systems which support thread but not processes scope rwlocks. 
+          systems which support thread but not processes scope rwlocks.
           This fixes bugzilla bug 1841.
-        
+
         * configure.ac:
         * m4/config_h.m4:
         * ace/README:
