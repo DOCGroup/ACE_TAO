@@ -1,3 +1,22 @@
+Tue Jul 07 14:36:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce_dll.dsp: Added Stats.cpp into project.
+
+	* ace/README: Added a new directive
+	  ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS and its documentation.
+	
+	* ace/config-win32-common.h: Defined
+	  ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS for Win32 except CE. 
+	
+	* ace/Log_Msg.{h,cpp}:
+	* ace/OS.{h,i,cpp}: Changed to use ifdef
+	  ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS for structural exception
+	  code. 
+	  
+	* ace/Token.cpp:
+	* ace/Stats.cpp:
+	* ace/High_Res_Timer.cpp: Made them CE friendly.
+
 Tue Jul 07 09:26:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread_Manager.h: updated comments that describe
