@@ -195,7 +195,7 @@ AST_Module::fe_add_module (AST_Module *t)
         }
 
       const char *prev_prefix = d->prefix ();
-      const char *this_prefix = this->prefix ();
+      const char *this_prefix = t->prefix ();
 
       if (ACE_OS::strcmp (this_prefix, "") == 0)
         {
