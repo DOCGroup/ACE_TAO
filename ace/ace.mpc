@@ -396,16 +396,12 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
     OS.inl
-    OS_Dirent.inl
     OS_Memory.inl
     OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     Swap.inl
-    Synch.inl
-    Synch_T.inl
     TSS_T.inl
-    Test_and_Set.inl
     Unbounded_Set_Ex.inl
     ace_wchar.inl
   }
