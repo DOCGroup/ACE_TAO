@@ -14,8 +14,14 @@ static const char *ior = "file://test.ior";
 // Default iterations.
 static CORBA::ULong iterations = 100;
 
-// Default argument value.
+// Default amount of work.
 static CORBA::ULong work = 0;
+
+// Benchmark payload based operations?
+static int payload_test = 0;
+
+// Default payload size.
+static CORBA::ULong payload_size = 0;
 
 // Default number of invocations to buffer before flushing.
 static CORBA::ULong buffering_queue_size = iterations / 2;
@@ -54,37 +60,50 @@ print_params (void)
       else if (sync_scope == Messaging::SYNC_WITH_TARGET)
         one_way_style = "SYNC_WITH_TARGET";
 
+      const char *payload_style = 0;
+      if (payload_test)
+        payload_style = "Payload based";
+      else
+        payload_style = "Work based";
+
       ACE_DEBUG ((LM_DEBUG,
-                  "\nTesting oneway requests: %s\n",
-                  one_way_style));
+                  "\nTesting oneway requests: %s : %s\n",
+                  one_way_style,
+                  payload_style));
+
+      if (sync_scope == Messaging::SYNC_NONE)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Request queue limited to %d messages\n",
+                      buffering_queue_size));
+        }
+
+      if (payload_test)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Payload size %d bytes\n",
+                      payload_size));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "%d invocations\n",
               iterations));
-
-  if (!test_twoway && sync_scope == Messaging::SYNC_NONE)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Request queue limited to %d messages\n",
-                  buffering_queue_size));
-    }
 }
 
 static void
-twoway_test (Test_ptr server,
-             CORBA::Environment &ACE_TRY_ENV)
+twoway_work_test (Test_ptr server,
+                  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_Throughput_Stats latency;
-
   ACE_hrtime_t base = ACE_OS::gethrtime ();
 
   for (CORBA::ULong i = 0; i != iterations; ++i)
     {
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-      server->twoway_op (work,
-                         ACE_TRY_ENV);
+      server->twoway_work_test (work,
+                                ACE_TRY_ENV);
 
       ACE_CHECK;
 
@@ -98,19 +117,46 @@ twoway_test (Test_ptr server,
 }
 
 static void
-oneway_test (Test_ptr server,
-             CORBA::Environment &ACE_TRY_ENV)
+oneway_work_test (Test_ptr server,
+                  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_Throughput_Stats latency;
-
   ACE_hrtime_t base = ACE_OS::gethrtime ();
 
   for (CORBA::ULong i = 0; i != iterations; ++i)
     {
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-      server->oneway_op (work,
-                         ACE_TRY_ENV);
+      server->oneway_work_test (work,
+                                ACE_TRY_ENV);
+
+      ACE_CHECK;
+
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
+
+      latency.sample (now - base,
+                      now - latency_base);
+    }
+
+  latency.dump_results ("Oneway", gsf);
+}
+
+static void
+oneway_payload_test (Test_ptr server,
+                     CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_Throughput_Stats latency;
+  ACE_hrtime_t base = ACE_OS::gethrtime ();
+
+  Test::data data (payload_size);
+  data.length (payload_size);
+
+  for (CORBA::ULong i = 0; i != iterations; ++i)
+    {
+      ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
+
+      server->oneway_payload_test (data,
+                                   ACE_TRY_ENV);
 
       ACE_CHECK;
 
@@ -126,13 +172,21 @@ oneway_test (Test_ptr server,
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:t:m:w:x");
+  ACE_Get_Opt get_opts (argc, argv, "ps:k:i:t:m:w:x");
   int error = 0;
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 's':
+        payload_size = ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'p':
+        payload_test = 1;
+        break;
+
       case 'i':
         iterations = ACE_OS::atoi (get_opts.optarg);
         break;
@@ -182,6 +236,8 @@ parse_args (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "usage:  %s "
                        "-k <ior> "
+                       "-s <payload size> "
+                       "-p <payload based test> "
                        "-i <# of iterations> "
                        "-t <none|transport|server|target|twoway> "
                        "-m <message count> "
@@ -293,8 +349,8 @@ main (int argc, char *argv[])
       // Run the test.
       if (test_twoway)
         {
-          twoway_test (server.in (),
-                       ACE_TRY_ENV);
+          twoway_work_test (server.in (),
+                            ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else
@@ -368,8 +424,12 @@ main (int argc, char *argv[])
             }
 
           // Run the oneway test.
-          oneway_test (server.in (),
-                       ACE_TRY_ENV);
+          if (payload_test)
+            oneway_payload_test (server.in (),
+                                 ACE_TRY_ENV);
+          else
+            oneway_work_test (server.in (),
+                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
