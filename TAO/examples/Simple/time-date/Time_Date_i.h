@@ -39,11 +39,14 @@ public:
   // Destructor
 
   virtual void bin_date (CORBA::Long_out time_date,
-                         CORBA::Environment &);
+                         CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   // Obtain the time and date in binary format.
 
   virtual void str_date (CORBA::String_out time_date,
-                         CORBA::Environment &);
+                         CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Obtain the time and date in string format.
 
   void orb (CORBA::ORB_ptr orb_ptr);
