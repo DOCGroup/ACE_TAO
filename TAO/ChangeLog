@@ -1,3 +1,16 @@
+Thu Jan 29 11:57:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        
+          For abstract interfaces, in the body of the generated
+          *_setup_collocation() method, added a check for non-zero
+          collocation factory function pointer to the existing 
+          check for a non-zero 'collocated' argument. As the generated
+          code stands right now, this argument will always be 0 for
+          abstract interfaces, but the extra check was added as a
+          "belt-and-suspenders" level of safety in case the 
+          generated code logic changes in the future.
+
 Thu Jan 29 11:23:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
