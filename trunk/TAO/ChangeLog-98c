@@ -1,3 +1,26 @@
+Mon Jan 19 15:41:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp (create_servants): Added a
+	  final return statement to avoid warnings.
+	  (ACE_THR_PRI_FIFO_DEF): This macro is not defined on NT.  I
+	  ifdef'ed the priority setting statement out temporarily until we
+	  figure out a way to map NT's thread priority values to pthread's
+	  priority values.
+
+	* tests/Cubit/TAO/MT_Cubit/server.dsp: Updated project file.
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (Cubit_Client): Changed the
+	  data type of <defport> to CORBA::UShort.
+
+	* tests/Param_Test/options.{h,cpp} (portnum): Changed it to type
+ 	  CORBA::UShort.
+
+	* tests/Param_Test/helper.cpp (gen_fixed_struct): Added
+ 	  parenthesis to avoid warnings.
+
+	* tao/sequence.h (TAO_Unbounded_String_Sequence): Added TAO_Export
+ 	  to class TAO_Unbounded_String_Sequence.
+
 Mon Jan 19 11:24:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/sequence_T.i: 
