@@ -12,11 +12,11 @@
 #include "ace/Log_Record.h"
 #include "ace/streams.h"
 
-#include <string>
-
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
                             (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
-#  error "Must add to config.h: #define ACE_HAS_STANDARD_CPP_LIBRARY 1"
+#  include <stdio.h>
+#else
+#  include <string>
 #endif
 
 int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
@@ -111,6 +111,22 @@ int main (int argc, char *argv[])
   if (connector.connect (logging_client.peer (), server_addr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect()"), 1);
 
+#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+  for (;;) {
+    char user_input[ACE_Log_Record::MAXLOGMSGLEN];
+    if (!gets (user_input))
+      break;
+
+    ACE_Time_Value now (ACE_OS::gettimeofday ());
+    ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
+    log_record.msg_data (user_input);
+    if (logging_client.send (log_record) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n", "logging_client.send()"), 1);
+  }
+#else
+
   // Limit the number of characters read on each record
   cin.width (ACE_Log_Record::MAXLOGMSGLEN);
 
@@ -127,6 +143,7 @@ int main (int argc, char *argv[])
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n", "logging_client.send()"), 1);
   }
+#endif
 
   return 0; // Logging_Client destructor closes TCP connection.
 }
