@@ -1,3 +1,8 @@
+Sun Sep 27 19:25:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	  Added some more comments.
+
 Sun Sep 27 00:58:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Object_Table.cpp: Cleaned up the code a bit and got it to

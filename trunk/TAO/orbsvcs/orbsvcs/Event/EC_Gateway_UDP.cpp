@@ -141,32 +141,37 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s) - ", events.length ()));
 
-  // @@ TODO, there is an extra data copy here, we should do the event
-  // modification without it and only compact the necessary events.
-  // int count = 0;
-  RtecEventComm::EventSet out (events.length ());
+  // Send each event in a separate message.
+  // @@ TODO It is interesting to group events destined to the
+  // same mcast group in a single message.
   for (u_int i = 0; i < events.length (); ++i)
     {
+      // To avoid loops we keep a TTL field on the events and skip the
+      // events with TTL <= 0
       if (events[i].header.ttl <= 0)
         continue;
 
       const RtecEventComm::Event& e = events[i];
 
-      // Copy only the header...
+      // We need to modify the TTL field, but copying the entire event
+      // would be wasteful; instead we create a new header and only
+      // modify the header portion.
       RtecEventComm::EventHeader header = e.header;
       header.ttl--;
 
+      // Grab the right mcast group for this event...
       RtecUDPAdmin::UDP_Addr udp_addr;
       this->addr_server_->get_addr (header, udp_addr, _env);
       TAO_CHECK_ENV_RETURN_VOID(_env);
 
+      // Start building the message
       TAO_OutputCDR cdr;
       cdr.write_boolean (TAO_ENCAP_BYTE_ORDER);
       cdr.write_ulong (0); // Place holder for size...
 
       // Marshal as if it was a sequence of one element, notice how we
-      // marshal a modified version of the header, but the data is not
-      // copied...
+      // marshal a modified version of the header, but the payload is
+      // marshal without any extra copies.
       cdr.write_ulong (1);
       cdr.encode (RtecEventComm::_tc_EventHeader, &header, 0, _env);
       TAO_CHECK_ENV_RETURN_VOID(_env);
@@ -174,6 +179,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, _env);
       TAO_CHECK_ENV_RETURN_VOID(_env);
 
+      // Now fill up the <size> field on the header.
       CORBA::ULong bodylen = cdr.total_length ();
       char* buf = ACE_const_cast(char*,cdr.buffer ());
       buf += 4;
