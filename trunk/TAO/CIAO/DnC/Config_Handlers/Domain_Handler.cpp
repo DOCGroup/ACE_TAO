@@ -226,8 +226,8 @@ namespace CIAO
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
           int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.interconnect.length ());
-          domain.interconnect.length (i + 1);
+          CORBA::ULong i (domain.infoProperty.length ());
+          domain.infoProperty.length (i + 1);
           if (length == 1)
             {
               Property_Handler::process_Property 
