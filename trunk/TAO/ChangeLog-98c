@@ -1,3 +1,21 @@
+Wed Dec 30 23:04:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Servant_Manager.h:
+	  Made <dllname_> and <create_symbol_> as ACE_CString variables.
+	  Thanks to Irfan for suggesting it.
+	
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
+	  (parse_string): Changed the method to implement simpler parsing
+	  using  ACE_CString methods.
+
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
+	  (create_dll_object_id): Concatenation achieved very simply using
+	  ACE_CString variable.
+
+	* examples/POA/On_Demand_Loading/README: Thanks to Doug for
+	  modifying it and making the concept used in the example much
+	  clearer.
+
 Wed Dec 30 22:52:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: on ghs/VxWorks, removed -g suppression for
