@@ -17,6 +17,7 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
@@ -25,7 +26,6 @@
 #include "ace/Method_Object.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 

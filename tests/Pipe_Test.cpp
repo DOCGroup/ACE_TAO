@@ -16,10 +16,10 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Pipe.h"
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
-#include "test_config.h"
 
 static int close_pipe = 1;
 static int child_process = 0;

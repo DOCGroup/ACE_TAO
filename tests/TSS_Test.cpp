@@ -20,10 +20,10 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 #include "TSS_Test_Errno.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 

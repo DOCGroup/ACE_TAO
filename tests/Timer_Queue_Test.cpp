@@ -20,6 +20,7 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_List.h"
@@ -27,7 +28,6 @@
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue.h"
-#include "test_config.h"
 
 template <class T> void
 randomize_array (T array[], size_t size)

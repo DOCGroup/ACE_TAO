@@ -19,9 +19,9 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
-#include "test_config.h"
 
 static int done = 0;
 static int count = 0;

@@ -17,10 +17,10 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
 

@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-#include "ace/Synch.h"
 #include "tests/test_config.h"
+#include "ace/Synch.h"
 
 #if defined (ACE_HAS_THREADS)
 

@@ -17,9 +17,9 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Signal.h"
 #include "ace/Timer_List.h"
-#include "test_config.h"
 
 class Timer_Handler : public ACE_Event_Handler
   // = TITLE

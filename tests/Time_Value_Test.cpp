@@ -19,6 +19,7 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/config.h"
 
 // Force test of ACE_U_LongLong class on all platforms, except ACE_WIN32.
@@ -40,7 +41,6 @@
 #endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_LONGLONG_T */
 
 #include "ace/ACE.h"
-#include "test_config.h"
 
 
 #if ! defined (ACE_WIN32)

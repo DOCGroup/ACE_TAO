@@ -18,9 +18,8 @@
 // 
 // ============================================================================
 
-
-#include "ace/OS.h"
 #include "test_config.h"
+#include "ace/OS.h"
 
 void 
 siglistset(sigset_t x, int *sigset) 

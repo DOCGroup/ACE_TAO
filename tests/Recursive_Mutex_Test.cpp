@@ -18,11 +18,10 @@
 // 
 // ============================================================================
 
-
+#include "test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 

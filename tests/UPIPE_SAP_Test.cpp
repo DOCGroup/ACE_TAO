@@ -17,11 +17,11 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/Service_Config.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
 

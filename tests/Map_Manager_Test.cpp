@@ -18,11 +18,11 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Map_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
-#include "test_config.h"
 
 typedef ACE_Null_Mutex MUTEX;
 typedef size_t VALUE;

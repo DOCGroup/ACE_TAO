@@ -16,10 +16,10 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
-#include "test_config.h"
 
 static int release_mutex = 1;
 static int child_process = 0;

@@ -19,9 +19,9 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
