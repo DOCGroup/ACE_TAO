@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "nested_struct.h"
 
 ACE_RCSID(Param_Test, nested_struct, "$Id$")
@@ -29,8 +27,8 @@ ACE_RCSID(Param_Test, nested_struct, "$Id$")
 Test_Nested_Struct::Test_Nested_Struct (void)
   : opname_ (CORBA::string_dup ("test_nested_struct")),
     inout_ (new Param_Test::Nested_Struct),
-    out_ (0),
-    ret_ (0)
+    out_ (new Param_Test::Nested_Struct),
+    ret_ (new Param_Test::Nested_Struct)
 {
 }
 
@@ -76,9 +74,9 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr objref,
 int
 Test_Nested_Struct::reset_parameters (void)
 {
-  this->inout_ = new Param_Test::Nested_Struct; // delete the previous one
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->inout_ = new Param_Test::Nested_Struct; // delete the previous ones
+  this->out_ = new Param_Test::Nested_Struct;
+  this->ret_ = new Param_Test::Nested_Struct;
   return 0;
 }
 
@@ -108,7 +106,7 @@ Test_Nested_Struct::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (Param_Test::_tc_Nested_Struct,
-                      0,//this->dii_out_,
+                      &this->out_.inout (), // .out () causes crash
                       CORBA::B_FALSE);
 
   // add parameters
@@ -118,30 +116,27 @@ Test_Nested_Struct::add_args (CORBA::NVList_ptr param_list,
 
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Nested_Struct,
-                                            0,//this->dii_ret_,
+                                            &this->ret_.inout (), // see above
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Nested_Struct::check_validity_engine (Param_Test::Nested_Struct the_in,
-                                           Param_Test::Nested_Struct the_inout,
-                                           Param_Test::Nested_Struct the_out,
-                                           Param_Test::Nested_Struct the_ret)
+Test_Nested_Struct::check_validity (void)
 {
   CORBA::Boolean flag = 0;
-  if ((the_in.vs.seq.length () == the_inout.vs.seq.length ()) &&
-      (the_in.vs.seq.length () == the_out.vs.seq.length ()) &&
-      (the_in.vs.seq.length () == the_ret.vs.seq.length ()))
+  if ((this->in_.vs.seq.length () == this->inout_->vs.seq.length ()) &&
+      (this->in_.vs.seq.length () == this->out_->vs.seq.length ()) &&
+      (this->in_.vs.seq.length () == this->ret_->vs.seq.length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < the_in.vs.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; i++)
         {
-          if (ACE_OS::strcmp (the_in.vs.seq[i], the_inout.vs.seq[i]) ||
-              ACE_OS::strcmp (the_in.vs.seq[i], the_out.vs.seq[i]) ||
-              ACE_OS::strcmp (the_in.vs.seq[i], the_ret.vs.seq[i]))
+          if (ACE_OS::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
+              ACE_OS::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
+              ACE_OS::strcmp (this->in_.vs.seq[i], this->ret_->vs.seq[i]))
             // not equal
             flag = 0;
         }
@@ -150,27 +145,10 @@ Test_Nested_Struct::check_validity_engine (Param_Test::Nested_Struct the_in,
 }
 
 CORBA::Boolean
-Test_Nested_Struct::check_validity (void)
-{
-  return check_validity_engine (this->in_,
-                                this->inout_.in (),
-                                this->out_.in (),
-                                this->ret_.in ()); 
-}
-
-CORBA::Boolean
 Test_Nested_Struct::check_validity (CORBA::Request_ptr req)
 {
-
-  CORBA::Environment env;
-
-  *req->arguments ()->item (2, env)->value () >>= this->dii_out_;
-  *req->result ()->value () >>= this->dii_ret_;
-
-  return this->check_validity_engine (this->in_,
-                                      this->inout_.in (),
-                                      *this->dii_out_,
-                                      *this->dii_ret_);
+  ACE_UNUSED_ARG (req);
+  return this->check_validity ();
 }
 
 void

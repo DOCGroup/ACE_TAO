@@ -1,3 +1,13 @@
+Sat Aug  8 22:47:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Param_Test/fixed_array.{h,cpp}:
+	* Param_Test/var_array.{h,cpp}:
+	* Param_Test/var_struct.{h,cpp}:
+	* Param_Test/nested_struct.{h,cpp}:
+	* Param_Test/any.{h,cpp}:
+
+	  DII tests now work with _vars and are CORBA-compliant.
+
 Sat Aug  8 21:28:33 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Exception.h: 

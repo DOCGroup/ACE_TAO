@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "var_array.h"
 
 ACE_RCSID(Param_Test, var_array, "$Id$")
@@ -27,7 +25,9 @@ ACE_RCSID(Param_Test, var_array, "$Id$")
 // ************************************************************************
 
 Test_Var_Array::Test_Var_Array (void)
-  : opname_ (CORBA::string_dup ("test_var_array"))
+  : opname_ (CORBA::string_dup ("test_var_array")),
+    out_ (new Param_Test::Var_Array),
+    ret_ (new Param_Test::Var_Array)
 {
 }
 
@@ -67,6 +67,8 @@ Test_Var_Array::reset_parameters (void)
   // free the out, and return value arrays
   Param_Test::Var_Array_free (this->out_._retn ());
   Param_Test::Var_Array_free (this->ret_._retn ());
+  this->out_ = new Param_Test::Var_Array;
+  this->ret_ = new Param_Test::Var_Array;
   return 0;
 }
 
@@ -98,7 +100,7 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (Param_Test::_tc_Var_Array,
-                      this->dii_out_,
+                      this->out_,
                       CORBA::B_FALSE);
 
   // add parameters
@@ -108,7 +110,7 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Array,
-                                            this->dii_ret_,
+                                            this->ret_,
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
@@ -117,38 +119,24 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
 CORBA::Boolean
 Test_Var_Array::check_validity (void)
 {
-  return this->check_validity_engine (this->in_,
-                                      this->inout_,
-                                      this->out_.in (),
-                                      this->ret_.in ());
-}
-
-CORBA::Boolean
-Test_Var_Array::check_validity (CORBA::Request_ptr req)
-{
-  return this->check_validity_engine (this->in_,
-                                      this->inout_,
-                                      this->dii_out_,
-                                      this->dii_ret_);
-}
-
-CORBA::Boolean 
-Test_Var_Array::check_validity_engine (const Param_Test::Var_Array the_in,
-                                       const Param_Test::Var_Array the_inout,
-                                       const Param_Test::Var_Array the_out,
-                                       const Param_Test::Var_Array the_ret)
-{
-  if (this->compare (the_in, the_inout) &&
-      this->compare (the_in, the_out) &&
-      this->compare (the_in, the_ret))
+  if (this->compare (this->in_, this->inout_) &&
+      this->compare (this->in_, this->out_.in ()) &&
+      this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
     return 0;
 }
 
 CORBA::Boolean
+Test_Var_Array::check_validity (CORBA::Request_ptr req)
+{
+  ACE_UNUSED_ARG (req);
+  return this->check_validity ();
+}
+
+CORBA::Boolean
 Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
-                           const Param_Test::Var_Array_slice *a2)
+                         const Param_Test::Var_Array_slice *a2)
 {
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
     {
