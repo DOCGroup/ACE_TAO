@@ -18,7 +18,7 @@
 
 #include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
-#include "event_export.h"
+#include /**/ "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

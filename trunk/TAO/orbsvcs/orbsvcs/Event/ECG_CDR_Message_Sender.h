@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "event_export.h"
+#include /**/ "event_export.h"
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
 #include "tao/Environment.h"

@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventCommC.h"
-#include "event_export.h"
+#include /**/ "event_export.h"
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
 

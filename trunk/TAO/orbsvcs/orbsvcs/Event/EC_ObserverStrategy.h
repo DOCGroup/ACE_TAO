@@ -27,7 +27,7 @@
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "event_export.h"
+#include /**/ "event_export.h"
 
 class ACE_Lock;
 class TAO_EC_Event_Channel_Base;

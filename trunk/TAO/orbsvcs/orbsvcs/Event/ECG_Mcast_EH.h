@@ -26,8 +26,8 @@
 #include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
-#include "orbsvcs/Event/event_export.h"
-#include "orbsvcs/Event/ECG_Adapters.h"
+#include /**/ "event_export.h"
+#include "ECG_Adapters.h"
 #include "EC_Lifetime_Utils.h"
 #include "EC_Lifetime_Utils_T.h"
 

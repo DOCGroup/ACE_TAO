@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 
 /**
  * @class TAO_EC_Simple_AddrServer
