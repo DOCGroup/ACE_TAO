@@ -19,6 +19,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
+#include "../../orbsvcs/Notify/Service.h"
 #include "orbsvcs/DsLogAdminC.h"
 #include "orbsvcs/DsNotifyLogAdminC.h"
 #include "orbsvcs/Log/NotifyLogFactory_i.h"
@@ -60,6 +61,8 @@ protected:
   int init_ORB (int& argc, char *argv []
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
+
+  TAO_NS_Service* notify_service_;
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
