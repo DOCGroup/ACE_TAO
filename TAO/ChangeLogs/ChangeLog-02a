@@ -1,3 +1,9 @@
+Fri Mar 30 18:52:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Collocation/Makefile:
+        * orbsvcs/IFR_Service/Makefile:
+          Fix another two misplaced idl_stubs
+
 Fri Mar 30 19:04:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/Makefile:
@@ -25,27 +31,27 @@ Fri Mar 30 19:04:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Mar 30 18:16:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/BiDir_GIOP/BiDirGIOP.cpp (parse_policy): Fixed a compile
-	  problem in builds with exceptions on. Thanks to Craig Rodrigues
-	  for reporting this.
+        * tao/BiDir_GIOP/BiDirGIOP.cpp (parse_policy): Fixed a compile
+          problem in builds with exceptions on. Thanks to Craig Rodrigues
+          for reporting this.
 
 Fri Mar 30 17:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/*/Makefile: Updated dependencies.
+        * tao/*/Makefile: Updated dependencies.
 
 Fri Mar 30 16:07:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp: Fixed fuzz warnings. 
+        * orbsvcs/tests/Simple_Naming/client.cpp: Fixed fuzz warnings.
 
 Fri Mar 30 16:01:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Fixed fuzz warnings that were
-	  missed in the last run.
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Fixed fuzz warnings that were
+          missed in the last run.
 
 Fri Mar 30 15:45:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp: Removed the BiDirection GIOP files that have been
-	  moved to a library of its own.
+        * tao/TAO.dsp: Removed the BiDirection GIOP files that have been
+          moved to a library of its own.
 
 Fri Mar 30 15:04:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
