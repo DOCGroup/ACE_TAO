@@ -1,3 +1,34 @@
+Wed Mar 11 14:37:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/Makefile: Included be_visitor_exception.cpp and ran make
+	depend
+
+	* TAO_IDL/be/be_interpretive.cpp: The factory is now able to
+	produce concrete visitors for exceptions.
+
+	* TAO_IDL/be/be_visitor_args.cpp
+	  TAO_IDL/be_include/be_visitor_args.h: Added a method
+	  "void_return_type" that determines if the operation return type
+	  was "void" or not. This was necessary since we were incorrectly
+	  generating ACE_NEW_RETURN statements in stubs for cases that had
+	  void return types
+
+	* TAO_IDL/be/be_visitor_context.cpp
+	  TAO_IDL/be_include/be_visitor_context.h: Added a boolean data
+	  member that indicates whether we are generating the special
+	  constructor in the exceptions.
+
+	* TAO_IDL/be/be_visitor_exception.cpp
+	  TAO_IDL/be/be_visitor_exception.h: Added  various visitors for
+	  exception handling.
+
+	* TAO_IDL/be/be_visitor_{struct, union, module, interface,
+	sequence}.cpp: Made sure that code is not generated for imported
+	types.
+
+	* TAO_IDL/be/be_visitor_typedef.cpp: Eliminated the multiple
+	declaration of typedefed variables and their typecodes.
+
 Wed Mar 11 12:54:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Explicit_Activation/server.cpp (main): The server was

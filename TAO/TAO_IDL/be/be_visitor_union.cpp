@@ -129,7 +129,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
                    // still the same
 
 
-  if (!node->cli_hdr_gen ())
+  if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
+                                                   // not imported
     {
       os = this->ctx_->stream ();
 
@@ -304,7 +305,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
                    // still the same
 
 
-  if (!node->cli_inline_gen ())
+  if (!node->cli_inline_gen () && !node->imported ())
     {
       os = this->ctx_->stream ();
 
@@ -417,7 +418,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   TAO_OutStream *os; // output stream
   be_type *bt; // for discriminant type
 
-  if (!node->cli_stub_gen ())
+  if (!node->cli_stub_gen () && !node->imported ())
     {
       os = this->ctx_->stream ();
 

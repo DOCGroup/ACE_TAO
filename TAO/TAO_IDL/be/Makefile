@@ -63,6 +63,7 @@ BE_FILES	= \
 		be_visitor_context \
 		be_visitor_decl \
 		be_visitor_enum \
+		be_visitor_exception \
 		be_visitor_field \
 		be_visitor_interface \
 		be_visitor_interface_fwd \

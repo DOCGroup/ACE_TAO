@@ -140,6 +140,9 @@ public:
   virtual ~be_visitor_args_pre_docall_cs (void);
   // destructor
 
+  virtual int void_return_type (void);
+  // return true if the operation return type is void
+
   virtual int visit_argument (be_argument *node);
   // visit the argument node
 
