@@ -151,7 +151,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
 
-      UDP_var udp_var = UDP::_narrow (obj, ACE_TRY_ENV);
+      UDP_var udp_var = UDP::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (udp_var.in ()))
@@ -183,7 +183,7 @@ main (int argc, char *argv[])
       if (orb_threads > 1)
         ACE_Thread_Manager::instance ()->spawn_n (orb_threads-1,
                                                   svc,
-                                                  orb);
+                                                  orb.in ());
                                               
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

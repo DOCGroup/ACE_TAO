@@ -1,6 +1,8 @@
 Sat Apr 21 01:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/Performance/UDP_i.cpp:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+        * examples/PluggableUDP/tests/Performance/PerformanceClient.cpp:
 
           Fixed compiler warnings.
 
