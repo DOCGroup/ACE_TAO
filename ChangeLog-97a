@@ -1,3 +1,15 @@
+Tue Feb 11 11:26:03 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i},config-vxworks*.h,README: added ACE_HAS_CLOCK_GETTIME,
+	  and only support ACE_OS::clock_gettime if that's defined.
+	  It can be supported on Solaris 2.5, but -lposix4 is then required.
+
+	* examples/Logger/simple-server/Logging_Handler.cpp (handle_input):
+	  cast "len" to ssize_t to prevent mixed signed/unsigned comparison.
+
+	* examples/Logger/simple-server/server_loggerd.cpp (main):
+	  added ACE_UNUSED_ARG (sa);.
+
 Mon Feb 10 15:27:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Timer_Queue: Added a virtual destructor so that subclasses
