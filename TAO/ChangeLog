@@ -1,3 +1,12 @@
+Thu Feb 24 22:09:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Upcall_Wrapper.cpp (upcall):
+
+	  Instantiate TAO_PICurrent_Guard and perform upcall within their
+	  own scope prior to invocation of an ending interception point.
+	  Addresses a regression that was introduced after the skeleton
+	  refactoring branch merge.
+
 Thu Feb 24 17:34:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_skel_helper):
