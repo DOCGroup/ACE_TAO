@@ -49,6 +49,9 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
   //else valid timer_id
   this->timers_.bind(qitem,timer_id);
 
+  //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
+  //between release and enqueue into dispatch queue because of RG
+
   //buffer until timer expires
   return this->rgq_.enqueue_deadline(qitem,&tv);
 }
@@ -89,6 +92,10 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       //else got timer_id
       this->react_.cancel_timer(timer_id);
       
+      //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
+      //time between release and enqueue into dispatch queue because
+      //of RG
+
       this->task_->enqueue(qitem);
 
       ++begin;

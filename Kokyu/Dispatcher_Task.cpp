@@ -113,6 +113,8 @@ Dispatcher_Task::svc (void)
         else
           ACE_ERROR ((LM_ERROR,
                       "EC (%P|%t) getq error in Dispatching Queue\n"));
+      //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
+      //between event released (enqueued) and dispatched
 
       //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
 
@@ -128,7 +130,11 @@ Dispatcher_Task::svc (void)
       Dispatch_Command* command = qitem->command ();
 
       ACE_ASSERT(command != 0);
+      //@BT INSTRUMENT with event ID: EVENT_START_DISPATCHING Measure
+      //time to actually dispatch event
       int result = command->execute ();
+      //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
+      //Measure time to actually dispatch event
 
       if (command->can_be_deleted ())
         command->destroy ();
@@ -179,8 +185,10 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
 
   if (now < release)
     {
-      //defer until last release time + period
+      //defer until last release time + period 
       this->deferrer_.dispatch(qitem);
+      //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
+      //between original dispatch and dispatch because of RG
     }
   else 
     {
