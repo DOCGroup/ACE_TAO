@@ -55,36 +55,6 @@ module LoadBalancing
   interface LoadNotifier;
   interface LoadMonitor;
 
-  typedef unsigned long long ObjectGroupId;
-  typedef unsigned long ObjectGroupRefVersion;
-
-  typedef CORBA::RepositoryId TypeId;
-  typedef Object ObjectGroup;
-  typedef CosNaming::Name Name;
-  typedef any Value;
-
-  struct Property {
-    Name nam;
-    Value val;
-  };
-  typedef sequence<Property> Properties;
-
-  typedef Name Location;
-  typedef sequence<Location> Locations;
-
-  typedef Properties Criteria;
-
-  struct FactoryInfo {
-    GenericFactory the_factory;
-    Location the_location;
-    Criteria the_criteria;
-  };
-  typedef sequence<FactoryInfo> FactoryInfos;
-
-  typedef unsigned short MembershipStyle;
-  const MembershipStyle MEMB_APP_CTRL = 0;
-  const MembershipStyle MEMB_INF_CTRL = 1;
-
   typedef unsigned short MonitoringStyle;
   const MonitoringStyle PULL = 0;
   const MonitoringStyle PUSH = 1;
@@ -95,9 +65,6 @@ module LoadBalancing
   const MonitoringGranularity LOC = 1;
   const MonitoringGranularity LOC_AND_TYPE = 2;
 
-  typedef unsigned short InitialNumberReplicas;
-  typedef unsigned short MinimumNumberReplicas;
-
   typedef unsigned short ClientBinding;
   const ClientBinding PER_SESSION = 0;
   const ClientBinding PER_REQUEST = 1;
@@ -107,140 +74,14 @@ module LoadBalancing
   const BalancingPolicy NON_ADAPTIVE = 0;
   const BalancingPolicy ADAPTIVE = 1;
 
-  exception InterfaceNotFound {};
-  exception ObjectGroupNotFound {};
-  exception MemberNotFound {};
-  exception ObjectNotFound {};
-  exception MemberAlreadyPresent {};
-  exception BadReplicationStyle {};
-  exception ObjectNotCreated {};
-  exception ObjectNotAdded {};
-  exception PrimaryNotSet {};
-  exception UnsupportedProperty {
-    Name nam;
-  };
-  exception InvalidProperty {
-    Name nam;
-    Value val;
-  };
-  exception NoFactory {
-    Location the_location;
-    TypeId type_id;
-  };
-  exception InvalidCriteria {
-    Criteria invalid_criteria;
-  };
-  exception CannotMeetCriteria {
-    Criteria unmet_criteria;
-  };
   exception MonitorAlreadyPresent {};
   exception LocationNotFound {};
 
-  /// Specification of PropertyManager Interface which
-  /// ReplicationManager Inherits
-  interface PropertyManager {
-    void set_default_properties (in Properties props)
-      raises (InvalidProperty,
-              UnsupportedProperty);
-
-    Properties get_default_properties ();
-
-    void remove_default_properties (in Properties props)
-      raises (InvalidProperty,
-              UnsupportedProperty);
-
-    void set_type_properties (in TypeId type_id,
-                              in Properties overrides)
-      raises (InvalidProperty,
-              UnsupportedProperty);
-
-    Properties get_type_properties (in TypeId type_id);
-
-    void remove_type_properties (in TypeId type_id,
-                                 in Properties props)
-      raises (InvalidProperty,
-              UnsupportedProperty);
-
-    void set_properties_dynamically (in ObjectGroup object_group,
-                                     in Properties overrides)
-      raises (ObjectGroupNotFound,
-              InvalidProperty,
-              UnsupportedProperty);
-
-    Properties get_properties (in ObjectGroup object_group)
-      raises (ObjectGroupNotFound);
-  };
-
-  /// Specification of ObjectGroupManager Interface which
-  /// ReplicationManager Inherits
-  interface ObjectGroupManager {
-    ObjectGroup create_member (in ObjectGroup object_group,
-                               in Location the_location,
-                               in TypeId type_id,
-                               in Criteria the_criteria)
-      raises (ObjectGroupNotFound,
-              MemberAlreadyPresent,
-              NoFactory,
-              ObjectNotCreated,
-              InvalidCriteria,
-              CannotMeetCriteria);
-
-    ObjectGroup add_member (in ObjectGroup object_group,
-                            in Location the_location,
-                            in Object member)
-      raises (ObjectGroupNotFound,
-              // CORBA::INV_OBJREF,  // @@ Missing declaration
-              MemberAlreadyPresent,
-              ObjectNotAdded);
-
-    ObjectGroup remove_member (in ObjectGroup object_group,
-                               in Location the_location)
-      raises (ObjectGroupNotFound,
-              MemberNotFound);
-
-//     ObjectGroup set_primary_member (in ObjectGroup object_group,
-//                                     in Location the_location)
-//       raises (ObjectGroupNotFound,
-//               MemberNotFound,
-//               PrimaryNotSet,
-//               BadReplicationStyle);
-
-    Locations locations_of_members (in ObjectGroup object_group)
-      raises (ObjectGroupNotFound);
-
-    ObjectGroupId get_object_group_id (in ObjectGroup object_group)
-      raises (ObjectGroupNotFound);
-
-    ObjectGroup get_object_group_ref (in ObjectGroup object_group)
-      raises (ObjectGroupNotFound);
-
-    Object get_member_ref (in ObjectGroup object_group,
-                           in Location loc)
-      raises (ObjectGroupNotFound,
-              MemberNotFound);
-  };
-
-  /// Specification of GenericFactory Interface which
-  /// ReplicationManager Inherits and Application Objects Implement
-  interface GenericFactory {
-    typedef any FactoryCreationId;
-
-    Object create_object (in TypeId type_id,
-                          in Criteria the_criteria,
-                          out FactoryCreationId factory_creation_id)
-      raises (NoFactory,
-              ObjectNotCreated,
-              InvalidCriteria,
-              InvalidProperty,
-              CannotMeetCriteria);
-
-    void delete_object (in FactoryCreationId factory_creation_id)
-      raises (ObjectNotFound);
-  };
-
   /// Specification of ReplicationManager Interface
-  interface ReplicationManager : PropertyManager, ObjectGroupManager,
-    GenericFactory {
+  interface ReplicationManager :
+    PortableGroup::PropertyManager,
+    PortableGroup::ObjectGroupManager,
+    PortableGroup::GenericFactory {
 
     void register_load_notifier (in LoadNotifier load_notifier);
 

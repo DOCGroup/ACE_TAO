@@ -16,12 +16,15 @@
 
 #include "ace/pre.h"
 
-#include "orbsvcs/LoadBalancingS.h"
 #include "LoadBalancing_export.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/LoadBalancingS.h"
+#include "LB_Location_Map.h"
+
 
 // class TAO_LB_ReplicaProxy;
 struct TAO_LB_ObjectGroup_Map_Entry;
@@ -51,20 +54,16 @@ public:
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-//   /// Insert ReplicaProxy servant into the set of replica proxies upon
-//   /// which the load balancing algorithm is performed.
-//   virtual int insert (TAO_LB_ReplicaProxy *) = 0;
-
-//   /// Remove ReplicaProxy servant from the set of replica proxies.
-//   virtual int remove (TAO_LB_ReplicaProxy *) = 0;
-
+  /// Analyze the loads at each location and force client request
+  /// redirection, if necessary, or disable the redirection at a given
+  /// location.
   /**
-   * The load on one proxy has changed.
    * @@ Ossama: see my comments on LoadBalancing_i about changing the
    * signature of this method.
    */
-//   virtual void load_changed (TAO_LB_ReplicaProxy *proxy,
-//                              CORBA::Environment &ACE_TRY_ENV);
+  virtual void analyze_loads (TAO_LB_Location_Map &location_map,
+                              CORBA::Environment &ACE_TRY_ENV);
+
 };
 
 

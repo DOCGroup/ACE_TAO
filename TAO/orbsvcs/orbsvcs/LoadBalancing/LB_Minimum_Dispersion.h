@@ -54,18 +54,21 @@ public:
   /// Destructor
   ~TAO_LB_Minimum_Dispersion_Strategy (void);
 
-  // = The TAO_LB_LoadBalancing_Strategy methods
+  /**
+   * @name The TAO_LB_LoadBalancing_Strategy methods
+   */
+  //@{
+
   virtual CORBA::Object_ptr replica (TAO_LB_ObjectGroup_Map_Entry *entry,
                                      CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-//   virtual void load_changed (TAO_LB_ReplicaProxy *,
-//                              CORBA::Environment &ACE_TRY_ENV);
+  virtual void analyze_loads (TAO_LB_Location_Map &location_map,
+                              CORBA::Environment &ACE_TRY_ENV);
+
+  //@}
 
 private:
-
-//   /// Set containing the ReplicaProxy servants.
-//   TAO_LB_ReplicaProxySet proxies_;
 
 //   /// Lock used to ensure atomic access to state retained by this
 //   /// class.
