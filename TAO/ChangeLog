@@ -1,3 +1,10 @@
+Thu Jul  3 17:44:43 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* examples/RTCORBA/Activity/Makefile: Added 'main' to the FILES so
+	  that we'd have a main().  This should get rid of the compile
+	  errors seen on various platforms where crt1.o can't find a
+	  reference to main().
+
 Thu Jul  3 11:48:40 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/tests/Redundant_Naming/client.cpp: Initialized ns[12]ref
