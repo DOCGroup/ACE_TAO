@@ -1,3 +1,12 @@
+Tue Apr 20 20:27:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/*:  Added an options class for storing
+          program options and also changed the repository class to not
+          use the ACE Naming Context.  It doesn't have persistence now, 
+          but that will be added soon.
+          
+        * orbsvcs/tests/ImplRepo/*:  Changed to work with the above changes.
+
 Tue Apr 20 17:31:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs: Performed copy editing on a bunch of documentation and
