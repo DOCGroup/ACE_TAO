@@ -1,5 +1,10 @@
 Wed Apr 28 16:53:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* examples/Reactor/Proactor/Aio_Platform_Test_C.cpp: Added this
+	file, a simple C version of the
+	$ACE_ROOT/tests/Aio_Platforms_Test.cpp. Useful for submitting bug
+	reports etc. 
+
 	* ace/Proactor.cpp: 
 	* ace/POSIX_Asynch_IO.cpp: Fixed old g++ warnings
 
