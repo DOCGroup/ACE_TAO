@@ -3,9 +3,6 @@
 //
 
 #include "Handler_i.h"
-#include <iostream>
-
-using namespace std;
 
 Single_Query_Stock_Handler_i::
     Single_Query_Stock_Handler_i (int *response_count)

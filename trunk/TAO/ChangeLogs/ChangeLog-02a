@@ -1,8 +1,31 @@
 Thu Mar 29 11:14:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
+        * docs/tutorials/Quoter/AMI/Handler_i.cpp:
         * docs/tutorials/Quoter/AMI/client.cpp:
         * docs/tutorials/Quoter/AMI/server.cpp:
+        * docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Event_Service/client.cpp:
+        * docs/tutorials/Quoter/Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * docs/tutorials/Quoter/Simple/Server/server.cpp:
         * docs/tutorials/Quoter/AMI/Handler_i.cpp:
+        * docs/tutorials/Quoter/AMI/client.cpp:
+        * docs/tutorials/Quoter/AMI/server.cpp:
         * docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
         * docs/tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
         * docs/tutorials/Quoter/Event_Service/client.cpp:
@@ -11,7 +34,6 @@ Thu Mar 29 11:14:14 2001  Carlos O'Ryan  <coryan@uci.edu>
         * docs/tutorials/Quoter/Naming_Service/client.cpp:
         * docs/tutorials/Quoter/Naming_Service/server.cpp:
         * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
-        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
         * docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
         * docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
         * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
@@ -28,8 +50,11 @@ Thu Mar 29 11:14:14 2001  Carlos O'Ryan  <coryan@uci.edu>
           Instead of using std::cout & friends we use good ol' cout, this
           avoids problems with all those platforms where ACE is configured
           to use the OLD iotstreams.
-          But we also include a 'using namespace std;' to avoid problems
-          with compliant platforms.
+          Also remove the #include <iostream> line, because it gives MSVC
+          fits (for good reasons).
+
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
+          Fixed g++ warnings
 
 Thu Mar 29 10:15:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -17,10 +17,6 @@
 #include "Stock_Factory_i.h"
 #include "tao/IORTable/IORTable.h"
 
-#include <iostream>
-
-using namespace std;
-
 int main (int argc, char* argv[])
 {
   try {
